@@ -16,8 +16,6 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {PagesModule} from './pages/pages.module';
 
-
-
 registerLocaleData(ru);
 
 @NgModule({
@@ -31,7 +29,7 @@ registerLocaleData(ru);
         IconsProviderModule,
         NzLayoutModule,
         NzMenuModule,
-        PagesModule
+        PagesModule,
     ],
     // eslint-disable-next-line camelcase
     providers: [{provide: NZ_I18N, useValue: ru_RU}],
