@@ -104,7 +104,7 @@ module.exports = {
             settings: {
                 'import/parsers': {'@typescript-eslint/parser': ['.ts']},
                 'import/resolver': {
-                    'eslint-import-resolver-typescript': true,
+                    'eslint-import-resolver-typescript': false,
                     typescript: {
                         alwaysTryTypes: true,
                     },
@@ -262,6 +262,14 @@ module.exports = {
                         ],
                         format: null,
                         modifiers: ['requiresQuotes'],
+                    },
+                    {
+                        selector: 'interface',
+                        format: ['PascalCase'],
+                        custom: {
+                            regex: '^I[A-Z]',
+                            match: true,
+                        },
                     },
                 ],
                 '@typescript-eslint/ban-ts-comment': 'warn',

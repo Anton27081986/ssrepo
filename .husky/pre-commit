@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-#npx run lint
+#npx lint-staged
+npm run prettier:fix:all
+ng lint
