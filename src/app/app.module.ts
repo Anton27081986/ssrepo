@@ -9,12 +9,10 @@ import ru from '@angular/common/locales/ru';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NzLayoutModule} from 'ng-zorro-antd/layout';
-import {NzMenuModule} from 'ng-zorro-antd/menu';
-import {IconsProviderModule} from './icons-provider.module';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {PagesModule} from './pages/pages.module';
+import {MainModule} from './shared/layouts/main/main.module';
 
 registerLocaleData(ru);
 
@@ -26,10 +24,8 @@ registerLocaleData(ru);
         FormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        IconsProviderModule,
-        NzLayoutModule,
-        NzMenuModule,
         PagesModule,
+        MainModule,
     ],
     // eslint-disable-next-line camelcase
     providers: [{provide: NZ_I18N, useValue: ru_RU}],

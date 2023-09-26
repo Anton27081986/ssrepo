@@ -1,12 +1,21 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {MainComponent} from './shared/layouts/main/main.component';
 
 const routes: Routes = [
-    {path: '', pathMatch: 'full', redirectTo: '/welcome'},
+    {path: '', pathMatch: 'full', redirectTo: '/main'},
     {
-        path: 'welcome',
-        loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomeModule),
+        path: '',
+        component: MainComponent,
+        children: [
+            {
+                path: 'main',
+                loadChildren: () =>
+                    import('./shared/layouts/top-menu/top-menu.module').then(m => m.TopMenuModule),
+            },
+        ],
     },
+    {path: '**', redirectTo: ''},
 ];
 
 @NgModule({
