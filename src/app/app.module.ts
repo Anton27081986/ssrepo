@@ -11,21 +11,20 @@ import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
-import {PagesModule} from './pages/pages.module';
-import {MainModule} from './shared/layouts/main/main.module';
+import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
+import {LayoutsModule} from './shared/layouts/layouts.module';
 
 registerLocaleData(ru);
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, WrapperComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
         FormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        PagesModule,
-        MainModule,
+        LayoutsModule,
     ],
     // eslint-disable-next-line camelcase
     providers: [{provide: NZ_I18N, useValue: ru_RU}],

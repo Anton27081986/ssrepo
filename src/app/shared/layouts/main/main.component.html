@@ -1,37 +1,35 @@
-<nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
-    <div class="sidebar-logo">
-      <a href="/">
-        <img src="" alt="erp-ss" />
-      </a>
+<nz-layout>
+  <nz-header>
+    <div class="logo" [routerLink]="AppRoutes.root">
+      <img src="assets/images/logo/logo.svg" alt="ss" />
     </div>
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Контрагенты" nzIcon=""></li>
-      <li nz-submenu nzOpen nzTitle="Торговля" nzIcon=""></li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <span class="trigger"
-                  nz-icon
-                  [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></span>
-        </span>
+    <div class="nav-wrap">
+      <div class="nav-left">
+        <ul nz-menu nzTheme="light" nzMode="horizontal">
+          <li nz-menu-item [routerLink]="['partners']">Контрагенты</li>
+          <li nz-menu-item [routerLink]="">Торговля</li>
+          <li nz-menu-item [routerLink]="">Финансы</li>
+          <li nz-menu-item [routerLink]="">Склад</li>
+          <li nz-menu-item [routerLink]="">Отчеты</li>
+          <li nz-menu-item [routerLink]="">Персонал</li>
+          <li nz-menu-item [routerLink]="">Система</li>
+          <li nz-menu-item [routerLink]="">Настроить пункты</li>
+        </ul>
       </div>
-    </nz-header>
-    <nz-content>
-      <div class="inner-content">
-        <router-outlet></router-outlet>
+      <div class="nav-right">
+        <span>right</span>
       </div>
-    </nz-content>
-  </nz-layout>
+    </div>
+  </nz-header>
+  <nz-content>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>Главная</nz-breadcrumb-item>
+      <nz-breadcrumb-item>Торговля</nz-breadcrumb-item>
+      <nz-breadcrumb-item>Финансы</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer>SS ©2023</nz-footer>
 </nz-layout>
-
-

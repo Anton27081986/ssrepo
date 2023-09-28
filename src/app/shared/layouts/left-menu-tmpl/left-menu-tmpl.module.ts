@@ -1,15 +1,14 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {RouterLink, RouterOutlet} from '@angular/router';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
-import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
-import {MainComponent} from './main.component';
+import {RouterLink, RouterOutlet} from '@angular/router';
+import {LeftMenuTmplComponent} from './left-menu-tmpl.component';
 import {IconsProviderModule} from '../../../icons-provider.module';
 
 @NgModule({
-    declarations: [MainComponent],
+    declarations: [LeftMenuTmplComponent],
     imports: [
         CommonModule,
         NzIconModule,
@@ -18,7 +17,6 @@ import {IconsProviderModule} from '../../../icons-provider.module';
         RouterLink,
         RouterOutlet,
         IconsProviderModule,
-        NzBreadCrumbModule,
     ],
 })
-export class MainModule {}
+export class LeftMenuTmplModule {}
