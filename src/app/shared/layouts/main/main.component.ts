@@ -9,7 +9,7 @@ import {AppRoutes} from '../../constants/routes';
 })
 export class MainComponent {
     protected readonly AppRoutes = AppRoutes;
-    quickViewVisible: unknown;
+    quickViewVisible = false;
 
     quickViewToggle() {
         return null;
