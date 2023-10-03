@@ -1,3 +1,7 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+
+@include ng-deep;
+
 :host {
     display: flex;
     text-rendering: optimizeLegibility;
@@ -7,6 +11,83 @@
 
 .app-layout {
     height: 100vh;
+}
+
+nz-layout {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (min-width: 390px) and (max-width: 413px) {
+    nz-layout {
+        max-width: 390px;
+        margin: 0 auto;
+    }
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (min-width: 414px) and (max-width: 639px) {
+    nz-layout {
+        max-width: 414px;
+        margin: 0 auto;
+    }
+}
+
+// Medium devices (tablets, 640px and up)
+@media screen and (min-width: 640px) and (max-width: 767px) {
+    nz-layout {
+        max-width: 640px;
+        margin: 0 auto;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media screen and (min-width: 768px) and (max-width: 799px) {
+    nz-layout {
+        max-width: 768px;
+        margin: 0 auto;
+    }
+}
+
+// Medium devices (tablets, 800px and up)
+@media screen and (min-width: 800px) and (max-width: 1199px) {
+    nz-layout {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+// Medium devices (tablets, 1200px and up)
+@media screen and (min-width: 1200px) and (max-width: 1365px) {
+    nz-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+
+// Large devices (desktops, 1366px and up)
+@media screen and (min-width: 1366px) and (max-width: 1535px) {
+    nz-layout {
+        max-width: 1366px;
+        margin: 0 auto;
+    }
+}
+
+// Extra large devices (large desktops, 1536px and up)
+@media screen and (min-width: 1536px) and (max-width: 1919px) {
+    nz-layout {
+        max-width: 1536px;
+        margin: 0 auto;
+    }
+}
+
+// Extra large devices (large desktops, 1920px and up)
+@media screen and (min-width: 1920px) and (max-width: 3000px) {
+    nz-layout {
+        max-width: 1920px;
+        margin: 0 auto;
+    }
 }
 
 .logo {
@@ -24,6 +105,7 @@ nz-breadcrumb {
 
 nz-content {
     padding: 0 50px;
+    margin: 0 auto;
 }
 
 nz-footer {
@@ -36,13 +118,94 @@ nz-footer {
     min-height: 280px;
 }
 
-.ant-layout-header {
+:host ::ng-deep .ant-layout-header {
     color: #000;
     line-height: 64px;
+    height: 74px;
     background: #ffffff;
 }
 
 .nav-wrap {
     display: flex;
     justify-content: space-between;
+}
+
+.nav-right ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-right ul > li {
+    padding-left: 24px;
+}
+
+/*Support menu*/
+.support-menu {
+    margin-top: 24px;
+}
+
+.support-menu span {
+    padding: 0 50px 0 50px;
+}
+
+.slider {
+    border-radius: 30px;
+    margin-top: 24px;
+    max-width: 1281px;
+    min-width: 100%;
+    height: 400px;
+    background-color: #1a1818;
+}
+
+.widget {
+    width: 1280px;
+    height: 143px;
+    margin-top: 60px;
+    background-color: white;
+    border-radius: 30px;
+}
+
+.hr-widget {
+    margin-top: 39px;
+}
+
+.sells {
+    width: 1280px;
+    height: 472px;
+    background-color: antiquewhite;
+    margin-top: 60px;
+    border-radius: 30px;
+}
+
+.hr-sells {
+    margin-top: 58px;
+}
+
+.phishing {
+    width: 100%;
+    height: 387px;
+    background-color: aquamarine;
+    border-radius: 30px;
+    margin-top: 59px;
+}
+
+.banner-nophishing {
+    margin-top: 40px;
+    height: 84px;
+    border-radius: 20px;
+    background-color: blue;
+}
+
+.hr-banner-nophishing {
+    margin-top: 60px;
+}
+
+.say-thankyou {
+    margin-top: 60px;
+    height: 636px;
+    background: chocolate;
+}
+
+.hr-say-thankyou {
+    margin-top: 60px;
 }
