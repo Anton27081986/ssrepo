@@ -137,87 +137,86 @@ nz-footer {
     margin-top: 60px;
 }
 
-
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 390px) and (max-width: 413px) {
-  nz-layout {
-    max-width: 390px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 390px;
+        margin: 0 auto;
+    }
 }
 
 // Medium devices (tablets, 414px and up)
 @media screen and (min-width: 414px) and (max-width: 639px) {
-  nz-layout {
-    max-width: 414px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 414px;
+        margin: 0 auto;
+    }
 }
 
 // Medium devices (tablets, 640px and up)
 @media screen and (min-width: 640px) and (max-width: 767px) {
-  nz-layout {
-    max-width: 640px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 640px;
+        margin: 0 auto;
+    }
 }
 
 // Medium devices (tablets, 768px and up)
 @media screen and (min-width: 768px) and (max-width: 799px) {
-  nz-layout {
-    max-width: 768px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 768px;
+        margin: 0 auto;
+    }
 }
 
 // Medium devices (tablets, 800px and up)
 @media screen and (min-width: 800px) and (max-width: 1199px) {
-  nz-layout {
-    max-width: 800px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 800px;
+        margin: 0 auto;
+    }
 }
 
 // Medium devices (tablets, 1200px and up)
 @media screen and (min-width: 1200px) and (max-width: 1365px) {
-  nz-layout {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-  .ant-menu-horizontal:not(.ant-menu-dark)>.ant-menu-item {
-    padding: 0 8px;
-  }
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item {
+        padding: 0 8px;
+    }
 
-  .support-menu span {
-    padding: 0 20px;
-  }
+    .support-menu span {
+        padding: 0 20px;
+    }
 
-  nz-content {
-    width: 1200px;
-  }
+    nz-content {
+        width: 1200px;
+    }
 }
 
 // Large devices (desktops, 1366px and up)
 @media screen and (min-width: 1366px) and (max-width: 1535px) {
-  nz-layout {
-    max-width: 1366px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 1366px;
+        margin: 0 auto;
+    }
 }
 
 // Extra large devices (large desktops, 1536px and up)
 @media screen and (min-width: 1536px) and (max-width: 1919px) {
-  nz-layout {
-    max-width: 1536px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 1536px;
+        margin: 0 auto;
+    }
 }
 
 // Extra large devices (large desktops, 1920px and up)
 @media screen and (min-width: 1920px) and (max-width: 3000px) {
-  nz-layout {
-    max-width: 1920px;
-    margin: 0 auto;
-  }
+    nz-layout {
+        max-width: 1920px;
+        margin: 0 auto;
+    }
 }
