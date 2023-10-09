@@ -103,6 +103,45 @@
                     }
                 }
             }
+        },
+        "ssnab-ui": {
+            "projectType": "library",
+            "root": "projects/ssnab-ui",
+            "sourceRoot": "projects/ssnab-ui/src",
+            "prefix": "lib",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:ng-packagr",
+                    "options": {
+                        "project": "projects/ssnab-ui/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "projects/ssnab-ui/tsconfig.lib.prod.json"
+                        },
+                        "development": {
+                            "tsConfig": "projects/ssnab-ui/tsconfig.lib.json"
+                        }
+                    },
+                    "defaultConfiguration": "production"
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "tsConfig": "projects/ssnab-ui/tsconfig.spec.json",
+                        "polyfills": ["zone.js", "zone.js/testing"]
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-eslint/builder:lint",
+                    "options": {
+                        "lintFilePatterns": [
+                            "projects/ssnab-ui/**/*.ts",
+                            "projects/ssnab-ui/**/*.html"
+                        ]
+                    }
+                }
+            }
         }
     },
     "cli": {

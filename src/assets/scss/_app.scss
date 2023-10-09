@@ -2,6 +2,19 @@
 @import 'mixins';
 @import 'reset';
 
+/*******************/
+/*** Components ***/
+/*****************/
+
+/*General*/
+@import 'components/general/typorgraphy';
+@import 'components/general/buttons';
+@import 'components/general/icons';
+
 /*Layout*/
 @import 'components/layout/breakpoint';
 @import 'components/layout/grid';
+
+/*Utilities*/
+@import 'utilities/_utilities';
+@import 'utilities/_tools-ssnab';

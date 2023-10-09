@@ -11,7 +11,16 @@ export class MainComponent {
     protected readonly AppRoutes = AppRoutes;
     quickViewVisible = false;
 
-    quickViewToggle() {
-        return null;
+    notificationList = [
+        {
+            title: 'You received a new message',
+            time: '8 min',
+            icon: 'mail',
+            color: 'ant-avatar',
+        },
+    ];
+
+    quickViewToggle(): void {
+        // this.quickViewVisible = !this.quickViewVisible;
     }
 }

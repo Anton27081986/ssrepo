@@ -72,7 +72,8 @@ nz-footer {
     margin-top: 24px;
 }
 
-.support-menu span {
+.support-menu div {
+    text-align: center;
     padding: 0 50px;
 }
 
@@ -188,7 +189,7 @@ nz-footer {
         padding: 0 8px;
     }
 
-    .support-menu span {
+    .support-menu div {
         padding: 0 20px;
     }
 

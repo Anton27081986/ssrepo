@@ -13,11 +13,59 @@
           <li nz-menu-item [routerLink]="">Отчеты</li>
           <li nz-menu-item [routerLink]="">Персонал</li>
           <li nz-menu-item [routerLink]="">Система</li>
-          <li nz-menu-item [routerLink]="">Настроить пункты</li>
         </ul>
       </div>
       <div class="nav-right">
         <ul>
+          <li>
+            <span nz-icon nzType="search" nzTheme="outline"></span>
+          </li>
+          <li>
+<!--            [nzDropdownMenu]="popNotification"-->
+            <a nz-dropdown nzTrigger="click" [nzPlacement]="'bottomRight'">
+              <nz-badge nzDot>
+                <i nz-icon nzType="bell" theme="outline"></i>
+              </nz-badge>
+            </a>
+            <nz-dropdown-menu #popNotification="nzDropdownMenu">
+              <div nz-menu class="pop-notification">
+                <div class="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
+                  <p class="text-dark font-weight-semibold m-b-0">
+                    <i nz-icon nzType="bell" theme="outline"></i>
+                    <span class="m-l-10">Notification</span>
+                  </p>
+                  <a nz-button nzType="link" nzSize="small" class="p-v-5" [routerLink]="''">
+                    <small>View All</small>
+                  </a>
+                </div>
+                <ng-scrollbar class="overflow-y-auto scrollbar">
+                  <nz-list class="ant-list-item-links" [nzDataSource]="notificationList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
+                    <ng-template #item let-item>
+                      <nz-list-item>
+                        <a [routerLink]="''">
+                          <div class="d-flex">
+                            <nz-avatar [nzIcon]="item.icon" [ngClass]="item.color"></nz-avatar>
+                            <div class="m-l-15">
+                              <p class="m-b-0 text-dark">{{item.title}}</p>
+                              <p class="m-b-0">
+                                <small>{{item.time}} ago</small>
+                              </p>
+                            </div>
+                          </div>
+                        </a>
+                      </nz-list-item>
+                    </ng-template>
+                  </nz-list>
+                </ng-scrollbar>
+              </div>
+            </nz-dropdown-menu>
+          </li>
+          <li>
+            <span nz-icon nzType="user" nzTheme="outline"></span>
+          </li>
+          <li>
+            <span>Мой профиль</span>
+          </li>
           <li>
             <a (click)="quickViewToggle()">
               <i nz-icon nzType="appstore" theme="outline"></i>
@@ -27,15 +75,6 @@
                 <!--                <app-quick-view></app-quick-view>-->
               </ng-container>
             </nz-drawer>
-          </li>
-          <li>
-            <span nz-icon nzType="user" nzTheme="outline"></span>
-          </li>
-          <li>
-            <span>Мой профиль</span>
-          </li>
-          <li>
-            <span nz-icon nzType="search" nzTheme="outline"></span>
           </li>
         </ul>
       </div>
@@ -47,12 +86,12 @@
 <!--      <nz-breadcrumb-item>Торговля</nz-breadcrumb-item>-->
 <!--      <nz-breadcrumb-item>Финансы</nz-breadcrumb-item>-->
 <!--    </nz-breadcrumb>-->
-    <div class="support-menu">
-      <span>Пт, 17 сент. 2023, 37 неделя</span>
-      <span>8080 поддержка КИСП</span>
-      <span>8000 Техподдержка ЦО</span>
-      <span>3100 Техподдержка Калуга</span>
-      <span>Задать вопрос</span>
+    <div class="support-menu" nz-row nzJustify="space-evenly">
+      <div nz-col nzSpan="4">Пт, 17 сент. 2023, 37 неделя</div>
+      <div nz-col nzSpan="4">8080 поддержка КИСП</div>
+      <div nz-col nzSpan="4">8000 Техподдержка ЦО</div>
+      <div nz-col nzSpan="4">3100 Техподдержка Калуга</div>
+      <div nz-col nzSpan="4">Задать вопрос</div>
     </div>
     <div class="slider"></div>
     <div class="widget"></div>
@@ -65,12 +104,11 @@
     <div class="say-thankyou"></div>
     <hr class="hr-say-thankyou" />
 
-
-<!--    <div class="scroll-content-container ">-->
-<!--      <div class="content-container inner-content">-->
-<!--        <router-outlet></router-outlet>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div class="scroll-content-container ">
+      <div class="content-container inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
 
   </nz-content>
   <nz-footer>SS ©2023</nz-footer>

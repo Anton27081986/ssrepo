@@ -3,10 +3,6 @@ import {Routes, RouterModule} from '@angular/router';
 import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
 import {MainComponent} from './shared/layouts/main/main.component';
 import {AppRoutes} from './shared/constants/routes';
-import {SignInComponent} from './pages/auth/sign-in/sign-in.component';
-import {SignUpComponent} from './pages/auth/sign-up/sign-up.component';
-import {ForgotPasswordComponent} from './pages/auth/forgot-password/forgot-password.component';
-import {ResetPasswordComponent} from './pages/auth/reset-password/reset-password.component';
 
 const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: ''},
@@ -14,22 +10,6 @@ const routes: Routes = [
         path: '',
         component: MainComponent,
         children: [
-            {
-                path: AppRoutes.signIn,
-                component: SignInComponent,
-            },
-            {
-                path: AppRoutes.signUp,
-                component: SignUpComponent,
-            },
-            {
-                path: AppRoutes.forgotPassword,
-                component: ForgotPasswordComponent,
-            },
-            {
-                path: AppRoutes.resetPassword,
-                component: ResetPasswordComponent,
-            },
             {
                 path: AppRoutes.start,
                 loadChildren: () => import('./pages/start/start.module').then(m => m.StartModule),
@@ -40,12 +20,17 @@ const routes: Routes = [
                 children: [
                     {
                         path: 'partners',
+                        // canActivate: [AuthGuards],
                         loadChildren: () =>
                             import('./pages/partners/partners.module').then(m => m.PartnersModule),
                     },
                 ],
             },
         ],
+    },
+    {
+        path: 'auth',
+        loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
     },
     {path: '**', redirectTo: ''},
 ];
