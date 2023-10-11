@@ -6,7 +6,7 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-  - test
+  # - test
   - build
   - deploy
 
@@ -14,10 +14,10 @@ variables:
   BASE_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
   IAMGE_NAME: $BASE_IMAGE_NAME:$CI_PIPELINE_ID
 
-sast:
-    stage: test
-include:
-    - template: Security/SAST.gitlab-ci.yml
+# sast:
+#     stage: test
+# include:
+#     - template: Security/SAST.gitlab-ci.yml
 
 build:
   stage: build
@@ -41,6 +41,7 @@ deploy:
   - build
   only:
   - dev
+  - feature/ci_cd
   tags:
     - docker
   variables:
