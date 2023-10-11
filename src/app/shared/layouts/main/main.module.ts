@@ -13,8 +13,8 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {NgScrollbarModule} from 'ngx-scrollbar';
+import {IconsProviderModule} from '@app/icons-provider.module';
 import {MainComponent} from './main.component';
-import {IconsProviderModule} from '../../../icons-provider.module';
 
 @NgModule({
     declarations: [MainComponent],

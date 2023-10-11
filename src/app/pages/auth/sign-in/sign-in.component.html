@@ -9,18 +9,18 @@
               <img class="img-fluid" alt="" src="assets/images/logo/Big Blue.png" />
               <h2 class="m-b-0">Вход</h2>
             </div>
-            <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form" (ngSubmit)="submitForm()">
+            <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form" (ngSubmit)="onSubmit()">
               <nz-form-item>
                 <nz-form-label nzRequired nzFor="userName">Имя</nz-form-label>
                 <nz-form-control nzErrorTip="Введите имя">
                   <nz-input-group [nzPrefix]="prefixUser">
-                    <input type="text" nz-input formControlName="userName" placeholder="Имя" />
+                    <input type="text" nz-input formControlName="username" placeholder="Имя" />
                   </nz-input-group>
                 </nz-form-control>
               </nz-form-item>
               <nz-form-item class="relative">
                 <nz-form-label nzRequired nzFor="password">Пароль</nz-form-label>
-                <a class="float-right font-size-13 text-muted position-right" [routerLink]="['/authentication/reset-password-1']">Забыли пароль?</a>
+                <a class="float-right font-size-13 text-muted position-right" [routerLink]="['/auth/reset-password']">Забыли пароль?</a>
                 <nz-form-control nzErrorTip="Введите парроль">
                   <nz-input-group [nzPrefix]="prefixLock">
                     <input type="password" nz-input formControlName="password" placeholder="Пароль" />
@@ -31,7 +31,7 @@
                 <nz-form-control>
                   <div class="d-flex align-items-center justify-content-between">
                     <span class="font-size-13 text-muted">Нет аккаунта?
-                      <a class="small" [routerLink]="['/authentication/sign-up-1']"> Зарегистрироваться</a>
+                      <a class="small" [routerLink]="['/auth/sign-up']"> Зарегистрироваться</a>
                     </span>
                     <button nz-button class="login-form-button" [nzType]="'primary'">Вход</button>
                   </div>
