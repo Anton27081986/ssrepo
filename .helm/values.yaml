@@ -1,0 +1,35 @@
+component: frontend
+partOf: ss-erp
+env: ""
+
+image:
+  tag: latest
+  repository: registry-git.ssnab.it
+
+replicas: 1
+
+service:
+  port: 80
+
+ingress:
+  enabled: false
+  host: ""
+  tls:
+    enabled: false
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-headers: >-
+      DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,X-AISTO-TOKEN
+    nginx.ingress.kubernetes.io/enable-cors: 'true'
+  path: /
+environment: ''
+
+config:
+  envs: {}
+
+resources:
+  requests:
+    memory: 64Mi
+    cpu: 100m
+  limits:
+    memory: 128Mi
+    cpu: 500m
