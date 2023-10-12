@@ -190,9 +190,7 @@ $spacers: map-merge(
 // Fonts
 //
 // Font-weight, line-height, font-size
-$font-family-sans-serif:
-    'Inter',
-    sans-serif;
+$font-family-sans-serif: 'Inter', sans-serif;
 $font-family-base: $font-family-sans-serif !default;
 
 $font-weight-light: 300 !default;
