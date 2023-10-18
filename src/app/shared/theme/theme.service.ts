@@ -37,7 +37,7 @@ export class ThemeService {
         });
     }
 
-    private loadTheme(firstLoad = true): Promise<Event> {
+    loadTheme(firstLoad = true): Promise<Event> {
         const theme = this.currentTheme;
 
         if (firstLoad) {
@@ -60,7 +60,7 @@ export class ThemeService {
         });
     }
 
-    private toggleTheme(): Promise<Event> {
+    toggleTheme(): Promise<Event> {
         this.currentTheme = this.reverseTheme(this.currentTheme);
 
         return this.loadTheme(false);
