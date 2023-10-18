@@ -15,9 +15,10 @@ import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {IconsProviderModule} from '@app/icons-provider.module';
 import {MainComponent} from './main.component';
+import {SliderComponent} from '@app/components/slider/slider.component';
 
 @NgModule({
-    declarations: [MainComponent],
+    declarations: [MainComponent, SliderComponent],
     imports: [
         CommonModule,
         NzIconModule,

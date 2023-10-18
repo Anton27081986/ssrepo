@@ -1,7 +1,5 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 
-@include ng-deep;
-
 :host {
     display: flex;
     text-rendering: optimizeLegibility;
@@ -81,16 +79,18 @@ nz-footer {
     background-color: #f4f5f6;
 }
 
-:host ::ng-deep .ant-layout-header {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    color: #000;
-    // line-height: 84px;
-    height: 84px;
-    background: #ffffff;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
+@include ng-deep {
+    .ant-layout-header {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        color: #000;
+        // line-height: 84px;
+        height: 84px;
+        background: #ffffff;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
 }
 
 .nav-wrap {
@@ -118,8 +118,23 @@ nz-footer {
     }
 }
 
-:host ::ng-deep svg {
-    fill: #f4f5f6;
+@include ng-deep {
+    svg {
+        fill: #f4f5f6;
+        font-size: 21px;
+    }
+}
+
+@include ng-deep {
+    .ant-badge-dot {
+        z-index: auto;
+        width: 18px;
+        min-width: 18px;
+        height: 18px;
+        background: #4770ff !important;
+        top: -8px;
+        right: -5px;
+    }
 }
 
 /*Support menu*/
@@ -240,6 +255,12 @@ nz-footer {
 
 // Medium devices (tablets, 1200px and up)
 @media screen and (min-width: 1200px) and (max-width: 1365px) {
+    .nav-wrap {
+        li {
+            font-size: 10px;
+        }
+    }
+
     nz-layout {
         margin: 0 auto;
     }

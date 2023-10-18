@@ -23,6 +23,8 @@ import {LayoutsModule} from './shared/layouts/layouts.module';
 import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {AppInitializerProvider} from './app-initializer.service';
+import {ComponentsModule} from '@app/components/components.module';
 
 registerLocaleData(ru);
 
@@ -42,8 +44,10 @@ registerLocaleData(ru);
         NzInputModule,
         NzButtonModule,
         NzIconModule,
+        ComponentsModule,
     ],
     providers: [
+        AppInitializerProvider,
         // eslint-disable-next-line camelcase
         {provide: NZ_I18N, useValue: ru_RU},
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
