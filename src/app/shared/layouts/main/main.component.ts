@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {AppRoutes} from '@app/common/routes';
 import {NzIconService} from 'ng-zorro-antd/icon';
+import {ThemeService} from 'src/app/shared/theme/theme.service';
 
 @Component({
     selector: 'app-main',
@@ -33,7 +34,10 @@ export class MainComponent {
         '<path d="M18.14 18.14L18.01 18.01M18.01 3.99L18.14 3.86L18.01 3.99ZM3.86 18.14L3.99 18.01L3.86 18.14ZM11 1.08V1V1.08ZM11 21V20.92V21ZM1.08 11H1H1.08ZM21 11H20.92H21ZM3.99 3.99L3.86 3.86L3.99 3.99Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
 
-    constructor(private readonly iconService: NzIconService) {
+    constructor(
+        private readonly iconService: NzIconService,
+        private readonly themeService: ThemeService,
+    ) {
         this.iconService.addIconLiteral('ss:search', this.iconSearch);
         this.iconService.addIconLiteral('ss:remind', this.iconRemind);
         this.iconService.addIconLiteral('ss:burger', this.iconBurger);
@@ -55,5 +59,9 @@ export class MainComponent {
 
     quickViewToggle(): void {
         // this.quickViewVisible = !this.quickViewVisible;
+    }
+
+    toggleTheme(): void {
+        this.themeService.toggleTheme().then();
     }
 }

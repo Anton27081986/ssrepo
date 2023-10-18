@@ -3,14 +3,15 @@
     <div class="logo" [routerLink]="AppRoutes.root">
       <img src="assets/images/logo/logo.svg" alt="ssnab" />
     </div>
-    <div class="my-menu">
-      <div class="icon-bg burger">
-          <span nz-icon nzType="ss:burger" nzTheme="outline"></span>
-      </div>
-    </div>
+<!--    <div class="my-menu">-->
+<!--      <div class="icon-bg burger">-->
+<!--          <span nz-icon nzType="ss:burger" nzTheme="outline"></span>-->
+<!--      </div>-->
+<!--    </div>-->
     <div class="nav-wrap">
       <div class="nav-left">
         <ul nz-menu nzTheme="light" nzMode="horizontal">
+          <li nz-menu-item>Моё меню</li>
           <li nz-menu-item [routerLink]="['partners']">Контрагенты</li>
           <li nz-menu-item [routerLink]="">Торговля</li>
           <li nz-menu-item [routerLink]="">Финансы</li>
@@ -25,7 +26,7 @@
           <div class="icon-bg">
             <span nz-icon nzType="ss:search" nzTheme="outline"></span>
           </div>
-          <div class="icon-bg">
+          <div class="icon-bg" (click)="toggleTheme()">
             <span nz-icon nzType="ss:moon" nzTheme="outline"></span>
           </div>
           <div class="icon-bg">
@@ -77,7 +78,7 @@
     </div>
   </nz-header>
   <nz-content>
-<!--    <nz-breadcrumb>-->
+    <!--    <nz-breadcrumb>-->
 <!--      <nz-breadcrumb-item>Главная</nz-breadcrumb-item>-->
 <!--      <nz-breadcrumb-item>Торговля</nz-breadcrumb-item>-->
 <!--      <nz-breadcrumb-item>Финансы</nz-breadcrumb-item>-->
@@ -89,7 +90,9 @@
       <div nz-col nzSpan="4">3100 Техподдержка Калуга</div>
       <div nz-col nzSpan="4">Задать вопрос</div>
     </div>
-    <div class="slider"></div>
+    <div class="slider">
+      <app-slider></app-slider>
+    </div>
     <div class="widget"></div>
     <hr class="hr-widget" />
     <div class="sells"></div>
