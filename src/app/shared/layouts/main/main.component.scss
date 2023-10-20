@@ -102,9 +102,9 @@ nz-footer {
     }
 
     .ant-layout-content {
-      max-width: 1280px;
-      display: flex;
-      justify-content: start;
+        max-width: 1280px;
+        display: flex;
+        justify-content: start;
     }
 }
 
@@ -264,7 +264,7 @@ nz-footer {
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 390px) and (max-width: 413px) {
     .nav-left {
-      display: none;
+        display: none;
     }
 
     nz-layout {
@@ -276,7 +276,7 @@ nz-footer {
 // Medium devices (tablets, 414px and up)
 @media screen and (min-width: 414px) and (max-width: 639px) {
     .nav-left {
-      display: none;
+        display: none;
     }
 
     nz-layout {
@@ -288,7 +288,7 @@ nz-footer {
 // Medium devices (tablets, 640px and up)
 @media screen and (min-width: 640px) and (max-width: 767px) {
     .nav-left {
-      display: none;
+        display: none;
     }
 
     nz-layout {
@@ -300,7 +300,7 @@ nz-footer {
 // Medium devices (tablets, 768px and up)
 @media screen and (min-width: 768px) and (max-width: 799px) {
     .nav-left {
-      display: none;
+        display: none;
     }
 
     nz-layout {
@@ -311,9 +311,9 @@ nz-footer {
 
 // Medium devices (tablets, 800px and up)
 @media screen and (min-width: 800px) and (max-width: 1199px) {
-  .nav-left {
-    display: none;
-  }
+    .nav-left {
+        display: none;
+    }
 
     nz-layout {
         // max-width: 800px;
