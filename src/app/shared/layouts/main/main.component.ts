@@ -46,7 +46,6 @@ export class MainComponent {
     }
 
     protected readonly AppRoutes = AppRoutes;
-    quickViewVisible = false;
 
     notificationList = [
         {
@@ -56,10 +55,6 @@ export class MainComponent {
             color: 'ant-avatar',
         },
     ];
-
-    quickViewToggle(): void {
-        // this.quickViewVisible = !this.quickViewVisible;
-    }
 
     toggleTheme(): void {
         this.themeService.toggleTheme().then();

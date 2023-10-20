@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
@@ -16,6 +16,7 @@ import {NgScrollbarModule} from 'ngx-scrollbar';
 import {IconsProviderModule} from '@app/icons-provider.module';
 import {MainComponent} from './main.component';
 import {SliderComponent} from '@app/components/slider/slider.component';
+import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 
 @NgModule({
     declarations: [MainComponent, SliderComponent],
@@ -36,6 +37,8 @@ import {SliderComponent} from '@app/components/slider/slider.component';
         NzAvatarModule,
         NgScrollbarModule,
         IconsProviderModule,
+        NzCarouselModule,
+        NgOptimizedImage,
     ],
 })
 export class MainModule {}
