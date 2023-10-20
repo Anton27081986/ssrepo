@@ -19,12 +19,43 @@ nz-layout {
 }
 
 .logo {
-    width: 120px;
-    float: left;
+    display: flex;
+    img {
+        padding-left: 30px;
+    }
+}
+
+.burger {
+    margin-left: 34px;
+}
+
+.icon-bg {
+    background: #f4f5f6;
+    border-radius: 16px;
+    border: 1px #e4e8ea solid;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
 }
 
 [nz-menu] {
-    line-height: 64px;
+    line-height: 84px;
+}
+
+.nav-left {
+    margin-left: 14px;
+    li {
+        color: #22223a;
+        font-size: 16px;
+        font-family: Inter, serif;
+        font-weight: 500;
+        word-wrap: break-word;
+        padding: unset;
+        padding-left: 20px;
+    }
 }
 
 nz-breadcrumb {
@@ -46,11 +77,20 @@ nz-footer {
     min-height: 280px;
 }
 
+.ant-layout {
+    background-color: #f4f5f6;
+}
+
 :host ::ng-deep .ant-layout-header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
     color: #000;
-    line-height: 64px;
-    height: 74px;
+    // line-height: 84px;
+    height: 84px;
     background: #ffffff;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
 }
 
 .nav-wrap {
@@ -65,6 +105,21 @@ nz-footer {
 
 .nav-right ul > li {
     padding-left: 24px;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 21px;
+
+    div {
+        margin-left: 12px;
+    }
+}
+
+:host ::ng-deep svg {
+    fill: #f4f5f6;
 }
 
 /*Support menu*/
@@ -138,6 +193,11 @@ nz-footer {
     margin-top: 60px;
 }
 
+.ant-layout-footer {
+    background-color: #202629;
+    color: #fff;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 390px) and (max-width: 413px) {
     nz-layout {
@@ -181,12 +241,7 @@ nz-footer {
 // Medium devices (tablets, 1200px and up)
 @media screen and (min-width: 1200px) and (max-width: 1365px) {
     nz-layout {
-        max-width: 1200px;
         margin: 0 auto;
-    }
-
-    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item {
-        padding: 0 8px;
     }
 
     .support-menu div {
@@ -201,7 +256,6 @@ nz-footer {
 // Large devices (desktops, 1366px and up)
 @media screen and (min-width: 1366px) and (max-width: 1535px) {
     nz-layout {
-        max-width: 1366px;
         margin: 0 auto;
     }
 }
@@ -209,7 +263,6 @@ nz-footer {
 // Extra large devices (large desktops, 1536px and up)
 @media screen and (min-width: 1536px) and (max-width: 1919px) {
     nz-layout {
-        max-width: 1536px;
         margin: 0 auto;
     }
 }
@@ -217,7 +270,7 @@ nz-footer {
 // Extra large devices (large desktops, 1920px and up)
 @media screen and (min-width: 1920px) and (max-width: 3000px) {
     nz-layout {
-        max-width: 1920px;
+        max-width: 1440px;
         margin: 0 auto;
     }
 }
