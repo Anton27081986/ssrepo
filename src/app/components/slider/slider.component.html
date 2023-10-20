@@ -1,1 +1,9 @@
-<p>slider!</p>
+<div class="slider-bl" nz-row nzJustify="center">
+  <div nz-col nzSpan="24">
+    <nz-carousel [nzEffect]="'fade'">
+      <div nz-carousel-content *ngFor="let index of array">
+        <img ngSrc="{{ index }}" alt="Slide" />
+      </div>
+    </nz-carousel>
+  </div>
+</div>
