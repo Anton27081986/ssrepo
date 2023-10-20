@@ -1,0 +1,5 @@
+env: dev
+
+ingress:
+    enabled: true
+    host: erp-dev.ssnab.it
