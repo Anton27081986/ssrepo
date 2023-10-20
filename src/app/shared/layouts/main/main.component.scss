@@ -12,14 +12,14 @@
 }
 
 nz-layout {
-    max-width: 1440px;
+    // max-width: 1440px;
     margin: 0 auto;
 }
 
 .logo {
     display: flex;
     img {
-        padding-left: 30px;
+        // padding-left: 30px;
     }
 }
 
@@ -52,7 +52,7 @@ nz-layout {
 .nav-left {
     li:first-child {
         font-weight: bold;
-        padding-left: 23px;
+        padding-left: 21px;
     }
     li {
         color: #22223a;
@@ -70,7 +70,7 @@ nz-breadcrumb {
 }
 
 nz-content {
-    padding: 0 50px;
+    // padding: 0 50px;
     margin: 0 auto;
 }
 
@@ -99,6 +99,12 @@ nz-footer {
         background: #ffffff;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
+    }
+
+    .ant-layout-content {
+      max-width: 1280px;
+      display: flex;
+      justify-content: start;
     }
 }
 
@@ -245,45 +251,72 @@ nz-footer {
 .ant-layout-footer {
     background-color: #202629;
     color: #fff;
-    margin-top: 20px;
+    // margin-top: 20px;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-top: 181px;
 }
 
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 390px) and (max-width: 413px) {
+    .nav-left {
+      display: none;
+    }
+
     nz-layout {
-        max-width: 390px;
+        // max-width: 390px;
         margin: 0 auto;
     }
 }
 
 // Medium devices (tablets, 414px and up)
 @media screen and (min-width: 414px) and (max-width: 639px) {
+    .nav-left {
+      display: none;
+    }
+
     nz-layout {
-        max-width: 414px;
+        // max-width: 414px;
         margin: 0 auto;
     }
 }
 
 // Medium devices (tablets, 640px and up)
 @media screen and (min-width: 640px) and (max-width: 767px) {
+    .nav-left {
+      display: none;
+    }
+
     nz-layout {
-        max-width: 640px;
+        // max-width: 640px;
         margin: 0 auto;
     }
 }
 
 // Medium devices (tablets, 768px and up)
 @media screen and (min-width: 768px) and (max-width: 799px) {
+    .nav-left {
+      display: none;
+    }
+
     nz-layout {
-        max-width: 768px;
+        // max-width: 768px;
         margin: 0 auto;
     }
 }
 
 // Medium devices (tablets, 800px and up)
 @media screen and (min-width: 800px) and (max-width: 1199px) {
+  .nav-left {
+    display: none;
+  }
+
     nz-layout {
-        max-width: 800px;
+        // max-width: 800px;
         margin: 0 auto;
     }
 }
@@ -305,7 +338,7 @@ nz-footer {
     }
 
     nz-content {
-        width: 1200px;
+        // width: 1200px;
     }
 }
 
@@ -326,7 +359,7 @@ nz-footer {
 // Extra large devices (large desktops, 1920px and up)
 @media screen and (min-width: 1920px) and (max-width: 3000px) {
     nz-layout {
-        max-width: 1440px;
+        // max-width: 1440px;
         margin: 0 auto;
     }
 }

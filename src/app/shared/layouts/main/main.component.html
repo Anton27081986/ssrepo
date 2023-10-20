@@ -1,28 +1,29 @@
 <nz-layout>
   <nz-header>
-    <div class="logo" [routerLink]="AppRoutes.root">
-      <img src="assets/images/logo/logo.svg" alt="ssnab" />
-    </div>
-<!--    <div class="my-menu">-->
-<!--      <div class="icon-bg burger">-->
-<!--          <span nz-icon nzType="ss:burger" nzTheme="outline"></span>-->
-<!--      </div>-->
-<!--    </div>-->
-    <div class="nav-wrap">
-      <div class="nav-left">
-        <ul nz-menu nzTheme="light" nzMode="horizontal">
-          <li nz-menu-item>Мое меню</li>
-          <li nz-menu-item [routerLink]="['partners']">Контрагенты</li>
-          <li nz-menu-item [routerLink]="">Торговля</li>
-          <li nz-menu-item [routerLink]="">Финансы</li>
-          <li nz-menu-item [routerLink]="">Склад</li>
-          <li nz-menu-item [routerLink]="">Календарь</li>
-          <li nz-menu-item [routerLink]="">Отчеты</li>
-          <li nz-menu-item [routerLink]="">Персонал</li>
-          <li nz-menu-item [routerLink]="">Система</li>
-        </ul>
+    <nz-content>
+      <div class="logo" [routerLink]="AppRoutes.root">
+        <img src="assets/images/logo/logo.svg" alt="ssnab" />
       </div>
-      <div class="nav-right">
+      <!--    <div class="my-menu">-->
+      <!--      <div class="icon-bg burger">-->
+      <!--          <span nz-icon nzType="ss:burger" nzTheme="outline"></span>-->
+      <!--      </div>-->
+      <!--    </div>-->
+      <div class="nav-wrap">
+        <div class="nav-left">
+          <ul nz-menu nzTheme="light" nzMode="horizontal">
+            <li nz-menu-item>Мое меню</li>
+            <li nz-menu-item [routerLink]="['partners']">Контрагенты</li>
+            <li nz-menu-item [routerLink]="">Торговля</li>
+            <li nz-menu-item [routerLink]="">Финансы</li>
+            <li nz-menu-item [routerLink]="">Склад</li>
+            <li nz-menu-item [routerLink]="">Календарь</li>
+            <li nz-menu-item [routerLink]="">Отчеты</li>
+            <li nz-menu-item [routerLink]="">Персонал</li>
+            <li nz-menu-item [routerLink]="">Система</li>
+          </ul>
+        </div>
+        <div class="nav-right">
           <div class="icon-bg">
             <span nz-icon nzType="ss:search" nzTheme="outline"></span>
           </div>
@@ -77,7 +78,8 @@
             <div class="title">Мой профиль</div>
           </div>
         </div>
-    </div>
+      </div>
+    </nz-content>
   </nz-header>
   <nz-content>
     <!--    <nz-breadcrumb>-->
@@ -111,5 +113,12 @@
 <!--    </div>-->
 
   </nz-content>
-  <nz-footer>SS ©2023</nz-footer>
+  <nz-footer>
+    <nz-content>
+      <div class="logo" [routerLink]="AppRoutes.root">
+        <img src="assets/images/logo/logo_footer.png" alt="ssnab" />
+      </div>
+      <div class="nav-wrap"></div>
+    </nz-content>
+  </nz-footer>
 </nz-layout>
