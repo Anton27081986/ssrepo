@@ -1,0 +1,5 @@
+env: test
+
+ingress:
+  enabled: true
+  host: erp-test.ssnab.it

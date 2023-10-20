@@ -34,7 +34,7 @@ build:
     - docker build -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile 
     - docker push $IAMGE_NAME
 
-deploy:
+deploy:dev:
   stage: deploy
   image: dtzar/helm-kubectl:3.12.3
   needs:
@@ -50,3 +50,19 @@ deploy:
   script:
     - |
       helm --kubeconfig $DEV_KUBECONFIG upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-develop.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
+
+deploy:test:
+  stage: deploy
+  image: dtzar/helm-kubectl:3.12.3
+  needs:
+  - build
+  only:
+  - test
+  tags:
+    - docker
+  variables:
+    PROJECT: $CI_PROJECT_NAME
+    NAMESAPCE: erp-test
+  script:
+    - |
+      helm --kubeconfig $DEV_KUBECONFIG upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-test.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
