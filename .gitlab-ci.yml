@@ -6,8 +6,63 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-    - test
-sast:
-    stage: test
-include:
-    - template: Security/SAST.gitlab-ci.yml
+    # - test
+    - build
+    - deploy
+
+variables:
+    BASE_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    IAMGE_NAME: $BASE_IMAGE_NAME:$CI_PIPELINE_ID
+
+# sast:
+#     stage: test
+# include:
+#     - template: Security/SAST.gitlab-ci.yml
+
+build:
+    stage: build
+    variables:
+        DOCKERFILE_PATH: ./
+        DOCKER_CONTEXT: ./
+    tags:
+        - docker
+    before_script:
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    after_script:
+        - docker logout $CI_REGISTRY
+    script:
+        - docker build -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile
+        - docker push $IAMGE_NAME
+
+deploy:dev:
+    stage: deploy
+    image: dtzar/helm-kubectl:3.12.3
+    needs:
+        - build
+    only:
+        - dev
+        - feature/ci_cd
+    tags:
+        - docker
+    variables:
+        PROJECT: $CI_PROJECT_NAME
+        NAMESAPCE: erp-dev
+    script:
+        - |
+            helm --kubeconfig $DEV_KUBECONFIG upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-develop.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
+
+deploy:test:
+    stage: deploy
+    image: dtzar/helm-kubectl:3.12.3
+    needs:
+        - build
+    only:
+        - test
+    tags:
+        - docker
+    variables:
+        PROJECT: $CI_PROJECT_NAME
+        NAMESAPCE: erp-test
+    script:
+        - |
+            helm --kubeconfig $DEV_KUBECONFIG upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-test.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME

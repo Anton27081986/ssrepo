@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
 import {MainComponent} from './shared/layouts/main/main.component';
-import {AppRoutes} from './shared/constants/routes';
+import {AppRoutes} from './common/routes';
 
 const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: ''},

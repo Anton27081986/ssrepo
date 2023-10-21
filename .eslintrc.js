@@ -136,6 +136,7 @@ module.exports = {
                 '@typescript-eslint/no-duplicate-imports': 'error',
                 '@typescript-eslint/consistent-type-imports': 'off',
                 'no-param-reassign': 'off',
+                'dot-notation': 'warn',
                 'no-case-declarations': 'error',
                 'no-console': ['error', {allow: ['info', 'assert', 'warn', 'error']}],
                 'no-implicit-coercion': ['error', {allow: ['!!']}],

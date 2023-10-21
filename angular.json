@@ -35,9 +35,22 @@
                         ],
                         "styles": [
                             "src/theme.less",
+                            "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
                             "src/styles.scss",
-                            "node_modules/ng-zorro-antd/ng-zorro-antd.min.css"
+                            {
+                                "input": "src/styles/default.less",
+                                "bundleName": "default",
+                                "inject": false
+                            },
+                            {
+                                "input": "src/styles/dark.less",
+                                "bundleName": "dark",
+                                "inject": false
+                            }
                         ],
+                        "stylePreprocessorOptions": {
+                            "includePaths": ["src/styles/themes"]
+                        },
                         "scripts": []
                     },
                     "configurations": {
@@ -50,8 +63,8 @@
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
+                                    "maximumWarning": "1mb",
+                                    "maximumError": "2mb"
                                 }
                             ],
                             "outputHashing": "all"

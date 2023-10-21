@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {AppRoutes} from '../../constants/routes';
+import {AppRoutes} from '@app/common/routes';
 
 @Component({
     selector: 'app-wrapper',
