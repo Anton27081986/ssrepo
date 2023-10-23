@@ -1,0 +1,147 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+
+@include ng-deep {
+    .ant-layout-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;
+        // line-height: 84px;
+        height: 84px;
+        background: #ffffff;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.nav-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-right ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-right ul > li {
+    padding-left: 24px;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+
+    div {
+        margin-left: 10px;
+    }
+}
+
+@include ng-deep {
+    svg {
+        fill: #f4f5f6;
+        font-size: 21px;
+    }
+}
+
+.remind {
+    position: relative;
+}
+
+.remind-dot {
+    position: absolute;
+    border-radius: 50%;
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    background: #4770ff !important;
+    top: -7px;
+    right: -5px;
+
+    span {
+        position: absolute;
+        top: -23px;
+        right: 5px;
+        color: #ffffff;
+        font-size: 12px;
+        font-family: 'Inter', serif;
+    }
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    border-radius: 18px;
+    background: #f4f5f6;
+    border: 1px #e4e8ea solid;
+    font-family: Inter, serif;
+    font-size: 16px;
+    font-weight: bold;
+
+    .icon-bg {
+        margin-left: 0;
+        overflow: hidden;
+    }
+
+    .title {
+        padding-right: 14px;
+    }
+}
+
+.nav-left {
+    li:first-child {
+        font-weight: bold;
+        padding-left: 21px;
+    }
+    li {
+        color: #22223a;
+        font-size: 16px;
+        font-family: Inter, serif;
+        font-weight: 500;
+        word-wrap: break-word;
+        padding: unset;
+        padding-left: 19.4px;
+    }
+}
+
+.logo {
+    display: flex;
+    img {
+        // padding-left: 30px;
+    }
+}
+
+.burger {
+    margin-left: 34px;
+}
+
+.icon-bg {
+    background: #f4f5f6;
+    border-radius: 16px;
+    border: 1px #e4e8ea solid;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+[nz-menu] {
+    line-height: 84px;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 800px) {
+    .nav-left {
+        display: none;
+    }
+}

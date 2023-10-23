@@ -1,3 +1,5 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+
 [nz-carousel-content] {
     text-align: center;
     height: 400px;
@@ -14,9 +16,45 @@ h3 {
 }
 
 .slider {
-    margin-top: 24px;
+    position: relative;
+    margin-top: 31px;
     max-width: 100%;
     width: 1280px;
+    height: 400px;
+
+    .arrow {
+        position: absolute;
+        top: calc(50% - 20px);
+        background: #5a6164;
+        border-radius: 16px;
+        border: 1px #57585a solid;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .prev {
+        left: 31px;
+    }
+
+    .next {
+        transform: rotate(180deg);
+        right: 31px;
+    }
+}
+
+@include ng-deep {
+    .ant-carousel .slick-dots li {
+        // width: 10px!important; // убрать расстояние при анимации
+    }
+
+    .ant-carousel .slick-dots li button {
+        height: 10px !important;
+        width: 10px !important;
+        border-radius: 10px !important;
+    }
 }
 
 // Medium devices (tablets, 414px and up)

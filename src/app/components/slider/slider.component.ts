@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 
 @Component({
     selector: 'app-slider',
@@ -12,4 +13,16 @@ export class SliderComponent {
         'assets/images/slider/2.png',
         'assets/images/slider/3.png',
     ];
+
+    @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
+
+    next() {
+        // @ts-ignore
+        this.myCarousel.next();
+    }
+
+    prev() {
+        // @ts-ignore
+        this.myCarousel.pre();
+    }
 }

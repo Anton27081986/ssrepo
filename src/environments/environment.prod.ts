@@ -4,4 +4,5 @@ export const environment = {
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
     applicationTitle: 'ERPSS',
+    tabTitle: 'Прод',
 };
