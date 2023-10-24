@@ -3,6 +3,6 @@ export const environment = {
     apiUrl: 'http://localhost:5000/api',
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
-    applicationTitle: 'ERPSS',
-    tabTitle: 'Test',
+    applicationTitle: 'ERP SSNAB',
+    tabTitle: 'TEST',
 };

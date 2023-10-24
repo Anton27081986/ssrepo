@@ -12,6 +12,6 @@ export class AppComponent {
     title!: string;
 
     constructor(private readonly titleService: Title) {
-        this.titleService.setTitle(`${environment.applicationTitle} - ${environment.tabTitle}`);
+        this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
     }
 }

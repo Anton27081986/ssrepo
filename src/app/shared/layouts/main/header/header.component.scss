@@ -11,13 +11,50 @@
         background: #ffffff;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
+
+        .ant-menu {
+            line-height: 84px;
+        }
+
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover::after {
+        }
+
+        .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
+        }
     }
 
     .header {
         display: flex;
         justify-content: space-between;
+
+        .logo {
+        }
+
+        .nav-wrap {
+            svg {
+                fill: #f4f5f6;
+
+                path {
+                    stroke: #000000;
+                }
+            }
+        }
+
+        .burger {
+            display: none;
+        }
     }
 }
+
+//@include ng-deep {
+//    svg {
+//        fill: #f4f5f6;
+//
+//        path {
+//            stroke: #000000;
+//        }
+//    }
+//}
 
 .nav-wrap {
     display: flex;
@@ -44,13 +81,6 @@
     }
 }
 
-@include ng-deep {
-    svg {
-        fill: #f4f5f6;
-        font-size: 21px;
-    }
-}
-
 .remind {
     position: relative;
 }
@@ -73,6 +103,10 @@
         font-size: 12px;
         font-family: 'Inter', serif;
     }
+}
+
+.menu {
+    display: none;
 }
 
 .profile {
@@ -114,13 +148,15 @@
 
 .logo {
     display: flex;
-    img {
-        // padding-left: 30px;
-    }
-}
+    cursor: pointer;
 
-.burger {
-    margin-left: 34px;
+    span {
+        display: flex;
+        align-items: center;
+
+        svg {
+        }
+    }
 }
 
 .icon-bg {
@@ -133,6 +169,7 @@
     justify-content: center;
     align-items: center;
     font-size: 20px;
+    cursor: pointer;
 }
 
 [nz-menu] {
@@ -140,8 +177,46 @@
 }
 
 // Small devices (landscape phones, 576px and up)
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1326px) {
     .nav-left {
         display: none;
+    }
+
+    .profile {
+        .title {
+            display: none;
+        }
+    }
+
+    .header {
+        .burger {
+            display: flex;
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 801px) {
+    .nav-left {
+        display: none;
+    }
+
+    .profile {
+        .title {
+            display: none;
+        }
+    }
+
+    .header {
+        .burger {
+            display: flex;
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 415px) {
+    .ant-layout-header {
+        padding: 0 26px;
     }
 }
