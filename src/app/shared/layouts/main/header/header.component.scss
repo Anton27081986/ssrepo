@@ -131,9 +131,14 @@
 }
 
 .nav-left {
+    .menu {
+        display: flex;
+        margin-bottom: 0;
+    }
+
     li:first-child {
         font-weight: bold;
-        padding-left: 21px;
+        margin-left: 21px;
     }
     li {
         color: #22223a;
@@ -141,8 +146,16 @@
         font-family: Inter, serif;
         font-weight: 500;
         word-wrap: break-word;
-        padding: unset;
-        padding-left: 19.4px;
+        // padding: unset;
+        // margin-left: 19.4px;
+        padding: 0px 8.7px;
+        list-style-type: none;
+
+        &:hover {
+            background-color: #f4f5f6;
+            border-radius: 10px;
+            cursor: pointer;
+        }
     }
 }
 
