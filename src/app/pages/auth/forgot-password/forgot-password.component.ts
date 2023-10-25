@@ -9,7 +9,7 @@ import {AuthenticationService} from '@auth/services/authentication.service';
     styleUrls: ['./forgot-password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ForgotPasswordComponent implements OnInit{
+export class ForgotPasswordComponent implements OnInit {
     loginForm!: FormGroup;
     error: unknown = '';
 
