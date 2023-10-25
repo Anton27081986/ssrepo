@@ -19,6 +19,7 @@ import {SliderComponent} from '@app/components/slider/slider.component';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {FooterComponent} from '@app/shared/layouts/main/footer/footer.component';
 import {HeaderComponent} from '@app/shared/layouts/main/header/header.component';
+import {PagesModule} from '@app/pages/pages.module';
 
 @NgModule({
     declarations: [
@@ -47,6 +48,7 @@ import {HeaderComponent} from '@app/shared/layouts/main/header/header.component'
         IconsProviderModule,
         NgOptimizedImage,
         NzCarouselModule,
+        PagesModule,
     ],
 })
 export class MainModule {}

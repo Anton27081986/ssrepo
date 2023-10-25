@@ -1,3 +1,44 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+
+@include ng-deep {
+    .ant-card-body {
+        padding: 0 36px;
+    }
+}
+
+.auth {
+    .logo {
+        h2 {
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 24px;
+        }
+    }
+
+    .ant-card-bordered {
+        border-radius: 30px;
+        width: 372px;
+        height: 396px;
+    }
+
+    form {
+        .ant-input-affix-wrapper {
+            border-radius: 16px;
+            height: 50px;
+        }
+
+        .ant-form-item {
+            margin-bottom: 12px;
+        }
+
+        .login-form-button {
+            width: 100%;
+            font-weight: bold;
+            font-size: 16px;
+        }
+    }
+}
+
 .relative {
     .position-right {
         position: absolute;

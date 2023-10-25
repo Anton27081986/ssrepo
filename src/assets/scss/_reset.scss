@@ -1,44 +1,51 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+
 body {
-    font-family: $font-family-base;
+    // Разобраться с приоритетами
+    font-family: $font-family-inter;
     background-color: $body-bg;
     color: $body-color;
-}
 
-a {
-    color: $link-color;
-
-    &:active,
-    &:hover {
-        color: $link-hover-color;
+    a {
+        color: $link-color;
     }
 
-    &:focus {
-        text-decoration: none;
-    }
+    a {
+        color: $link-color;
 
-    &.text-gray,
-    &.text-muted {
+        &:active,
         &:hover {
-            color: $gray-dark !important;
+            color: $link-hover-color;
+        }
+
+        &:focus {
+            text-decoration: none;
+        }
+
+        &.text-gray,
+        &.text-muted {
+            &:hover {
+                color: $gray-dark !important;
+            }
+        }
+
+        &.text-dark {
+            &:hover {
+                color: $link-hover-color !important;
+            }
+        }
+
+        &.file {
+            &:hover {
+                background-color: #f9fbfd;
+            }
         }
     }
 
-    &.text-dark {
-        &:hover {
-            color: $link-hover-color !important;
-        }
+    hr {
+        border: 0;
+        border-top: 1px solid $border-color;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
     }
-
-    &.file {
-        &:hover {
-            background-color: #f9fbfd;
-        }
-    }
-}
-
-hr {
-    border: 0;
-    border-top: 1px solid $border-color;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
 }

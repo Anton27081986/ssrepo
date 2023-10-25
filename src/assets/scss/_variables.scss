@@ -10,7 +10,7 @@ $red: #de4436 !default;
 $orange: #fa8c16 !default;
 $gold: #ffc107 !default;
 $green: #52c41a !default;
-$blue: #3f87f5 !default;
+$blue: #4770ff !default;
 $cyan: #00c9a7 !default;
 $purple: #886cff !default;
 $magenta: #eb2f96 !default;
@@ -193,6 +193,8 @@ $spacers: map-merge(
 $font-family-sans-serif: 'Inter', sans-serif;
 $font-family-base: $font-family-sans-serif !default;
 
+$font-family-inter: 'Inter', serif !important; // Убрать important
+
 $font-weight-light: 300 !default;
 $font-weight-normal: 400 !default;
 $font-weight-semibold: 500 !default;
@@ -229,7 +231,7 @@ $text-muted: rgba($gray-light, 0.7) !default;
 // Border
 //
 // Define border properties
-$border-color: #edf2f9 !default;
+$border-color: #828282 !default;
 $border-radius: 0.25rem !default;
 $border-radius-lg: 0.3rem !default;
 $border-radius-sm: 0.2rem !default;
@@ -244,7 +246,7 @@ $border-width: 1px !default;
 $btn-padding-x: 1.25rem !default;
 $btn-padding-y: 0.65rem !default;
 $btn-line-height: 1.25 !default;
-$btn-size: 2.5rem !default;
+$btn-size: 3rem !default;
 $btn-font-weight: $font-weight-normal !default;
 $btn-box-shadow:
     inset 0 1px 0 rgba($white, 0.15),

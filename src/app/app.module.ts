@@ -14,8 +14,6 @@ import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzIconModule} from 'ng-zorro-antd/icon';
-import {AuthModule} from '@auth/auth.module';
-import {SignInComponent} from '@auth/sign-in/sign-in.component';
 import {JwtInterceptor} from '@app/helpers/jwt.interceptor';
 import {fakeBackendProvider} from '@app/helpers/fake-backend';
 import {ErrorInterceptor} from '@app/core/error.interceptor';
@@ -29,7 +27,7 @@ import {ComponentsModule} from '@app/components/components.module';
 registerLocaleData(ru);
 
 @NgModule({
-    declarations: [AppComponent, WrapperComponent, SignInComponent],
+    declarations: [AppComponent, WrapperComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -37,7 +35,6 @@ registerLocaleData(ru);
         HttpClientModule,
         BrowserAnimationsModule,
         LayoutsModule,
-        AuthModule,
         NzCardModule,
         ReactiveFormsModule,
         NzFormModule,
