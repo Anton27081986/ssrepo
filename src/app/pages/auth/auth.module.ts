@@ -9,9 +9,12 @@ import {NzCardModule} from 'ng-zorro-antd/card';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzButtonModule} from 'ng-zorro-antd/button';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {ResetPasswordComponent} from '@auth/reset-password/reset-password.component';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 
 @NgModule({
-    declarations: [SignInComponent, ForgotPasswordComponent],
+    declarations: [SignInComponent, ForgotPasswordComponent, ResetPasswordComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -21,6 +24,8 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
         NzInputModule,
         ReactiveFormsModule,
         NzButtonModule,
+        NzIconModule,
+        NzToolTipModule,
     ],
 })
 export class AuthModule {}

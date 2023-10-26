@@ -11,7 +11,11 @@ import {AuthenticationService} from '@auth/services/authentication.service';
 })
 export class ForgotPasswordComponent implements OnInit {
     loginForm!: FormGroup;
+    loading = false;
+    submitted = false;
     error: unknown = '';
+
+    password?: string;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -27,8 +31,13 @@ export class ForgotPasswordComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required],
+            email: [
+                null,
+                [
+                    Validators.required,
+                    Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+                ],
+            ],
         });
     }
 
