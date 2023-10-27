@@ -13,7 +13,7 @@
         border-bottom-right-radius: 30px;
 
         .ant-menu {
-            line-height: 84px;
+            // line-height: 84px;
         }
 
         .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover::after {
@@ -133,6 +133,7 @@
 .nav-left {
     .menu {
         display: flex;
+        align-items: center;
         margin-bottom: 0;
     }
 
@@ -148,13 +149,17 @@
         word-wrap: break-word;
         // padding: unset;
         // margin-left: 19.4px;
-        padding: 0px 8.7px;
+        padding: 0 8.7px;
         list-style-type: none;
 
         &:hover {
             background-color: #f4f5f6;
+            height: 44px;
             border-radius: 10px;
             cursor: pointer;
+            vertical-align: center;
+            display: flex;
+            align-items: center;
         }
     }
 }
@@ -186,7 +191,7 @@
 }
 
 [nz-menu] {
-    line-height: 84px;
+    // line-height: 84px;
 }
 
 // Small devices (landscape phones, 576px and up)

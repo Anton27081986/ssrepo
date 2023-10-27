@@ -1,19 +1,21 @@
-.ant-form-item-explain-error {
-    color: #ee1c25;
-    font-weight: 600;
-}
+body {
+    .ant-form-item-explain-error {
+        color: #ee1c25;
+        font-weight: 600;
+    }
 
-.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
+    .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
         .ant-input-affix-wrapper-borderless
     ).ant-input-affix-wrapper {
-    border-color: #ee1c25;
-}
+        border-color: #ee1c25;
+    }
 
-.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
+    .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
         .ant-input-affix-wrapper-borderless
     ).ant-input-affix-wrapper,
-.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
+    .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
         .ant-input-affix-wrapper-borderless
     ).ant-input-affix-wrapper:hover {
-    border-color: #ee1c25;
+        border-color: #ee1c25;
+    }
 }
