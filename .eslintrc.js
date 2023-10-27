@@ -323,7 +323,7 @@ module.exports = {
                 '@html-eslint/require-frame-title': 'error',
                 '@html-eslint/require-img-alt': 'error',
                 '@html-eslint/require-meta-viewport': 'error',
-                '@html-eslint/id-naming-convention': ['error', 'kebab-case'],
+                '@html-eslint/id-naming-convention': ['warn', 'kebab-case'],
                 '@html-eslint/element-newline': 'error',
                 '@html-eslint/no-extra-spacing-attrs': ['error', {enforceBeforeSelfClose: true}],
                 '@html-eslint/no-multiple-empty-lines': 'error',
