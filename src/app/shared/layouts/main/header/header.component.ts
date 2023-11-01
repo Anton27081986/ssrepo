@@ -10,6 +10,7 @@ import {ThemeService} from '@app/shared/theme/theme.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
+    //  TODO вынести в common
     private readonly iconSearch =
         '<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
 
@@ -79,6 +80,16 @@ export class HeaderComponent {
         '<path d="M81 12.375V9.09766H81.543C81.7279 8.96484 81.8971 8.77734 82.0508 8.53516C82.2044 8.29036 82.3359 7.95312 82.4453 7.52344C82.5547 7.09115 82.6328 6.52604 82.6797 5.82812L82.9062 2.44531H88.1992V9.09766H89.0742V12.3672H87.4492V10.4453H82.625V12.375H81ZM83.4961 9.09766H86.5742V3.83984H84.4297L84.3047 5.82812C84.2708 6.35677 84.2148 6.82552 84.1367 7.23438C84.0612 7.64323 83.9688 8.0013 83.8594 8.30859C83.7526 8.61328 83.6315 8.8763 83.4961 9.09766Z" fill="#314381"/>\n' +
         '</svg>';
 
+    private readonly iconClose =
+        '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<g opacity="0.3">\n' +
+        '<rect width="2.04274" height="16.3419" rx="1" transform="matrix(0.707103 0.707111 -0.707103 0.707111 12.0557 0.5)" fill="#22223A"/>\n' +
+        '<rect width="2.04274" height="16.3419" rx="1" transform="matrix(-0.707103 0.707111 -0.707103 -0.707111 13.501 12.0557)" fill="#22223A"/>\n' +
+        '</g>\n' +
+        '</svg>';
+
+    private statusInputSearch = false;
+
     constructor(
         private readonly iconService: NzIconService,
         private readonly themeService: ThemeService,
@@ -90,6 +101,7 @@ export class HeaderComponent {
         this.iconService.addIconLiteral('ss:sun', this.iconSun);
         this.iconService.addIconLiteral('ss:logo', this.iconLogoHeader);
         this.iconService.addIconLiteral('ss:logofooter', this.iconLogoFooter);
+        this.iconService.addIconLiteral('ss:close', this.iconClose);
     }
 
     protected readonly AppRoutes = AppRoutes;
@@ -103,7 +115,14 @@ export class HeaderComponent {
         },
     ];
 
+    typeIcon!: 'ss:search';
+
     toggleTheme(): void {
         this.themeService.toggleTheme().then();
+    }
+
+    openSearch(event: Event) {
+        event.stopPropagation();
+        this.statusInputSearch = !this.statusInputSearch;
     }
 }

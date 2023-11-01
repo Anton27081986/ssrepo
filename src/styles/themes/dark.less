@@ -5,75 +5,94 @@
 
 body {
     color: #ffffff;
-}
 
-// Убрать !important
-.ant-layout-header {
-    background-color: #000000 !important;
+    // Убрать !important
+    .ant-layout-header {
+        background-color: #000000 !important;
 
-    .nav-left {
-        .menu {
-            li {
-                color: #ffffff;
-                &:hover {
-                    background-color: #31393d;
+        .nav-left {
+            .menu {
+                li {
+                    color: #ffffff;
+                    &:hover {
+                        background-color: #31393d;
+                    }
                 }
             }
         }
     }
-}
 
-.ant-menu-item {
-    color: #ffffff !important;
-}
-
-.ant-layout {
-    background-color: #000000 !important;
-}
-
-.ant-layout-footer {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-}
-
-svg {
-    fill: #31393d !important;
-
-    path {
-        stroke: #ffffff !important;
+    .ant-menu-item {
+        color: #ffffff !important;
     }
-}
 
-.header,
-.footer {
-    .logo {
-        svg {
-            path {
-                fill: #f4f5f6;
-            }
+    .ant-layout {
+        background-color: #000000 !important;
+    }
+
+    .ant-layout-footer {
+        background-color: #000000 !important;
+        color: #ffffff !important;
+    }
+
+    svg {
+        fill: #31393d !important;
+
+        path {
+            stroke: #ffffff !important;
         }
     }
 
-    .burger {
-        svg {
-            stroke: #f4f5f6;
-            fill: #f4f5f6;
+    .header,
+    .footer {
+        .logo {
+            svg {
+                path {
+                    fill: #f4f5f6;
+                }
+            }
+        }
 
-            path {
-                fill: #f4f5f6;
+        .burger {
+            svg {
                 stroke: #f4f5f6;
+                fill: #f4f5f6;
+
+                path {
+                    fill: #f4f5f6;
+                    stroke: #f4f5f6;
+                }
             }
+        }
+    }
+
+    .header {
+        .search-header {
+            svg {
+                stroke: #ffffff;
+            }
+        }
+    }
+
+    .icon-bg {
+        background-color: #31393d !important;
+        border: 1px #313131 solid !important;
+    }
+
+    .profile {
+        background-color: #31393d !important;
+        border: 1px #313131 solid !important;
+        color: #ffffff;
+    }
+
+    form {
+        .ant-input-affix-wrapper {
+            background: black;
+            color: #fff;
         }
     }
 }
 
-.icon-bg {
-    background-color: #31393d !important;
-    border: 1px #313131 solid !important;
-}
-
-.profile {
-    background-color: #31393d !important;
-    border: 1px #313131 solid !important;
+:host ::ng-deep .ant-menu-light .ant-menu-submenu-title {
     color: #ffffff;
 }

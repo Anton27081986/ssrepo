@@ -10,32 +10,28 @@
             </svg>
           </span>
       </div>
-<!--      <div class="menu">-->
-<!--        <div class="icon-bg burger">-->
-<!--            <span nz-icon nzType="ss:burger" nzTheme="outline"></span>-->
-<!--        </div>-->
-<!--      </div>-->
+      <div class="menu">
+        <div class="icon-bg burger">
+            <span nz-icon nzType="ss:burger" nzTheme="outline"></span>
+        </div>
+      </div>
       <div class="nav-wrap">
         <div class="nav-left">
-          <ul class="menu">
-            <li>Мое меню</li>
-            <li [routerLink]="['partners']">Контрагенты</li>
-            <li [routerLink]="">Торговля</li>
-            <li [routerLink]="">Финансы</li>
-            <li [routerLink]="">Склад</li>
-            <li [routerLink]="">Календарь</li>
-            <li [routerLink]="">Отчеты</li>
-            <li [routerLink]="">Персонал</li>
-            <li [routerLink]="">Система</li>
-          </ul>
+          <app-main-menu></app-main-menu>
         </div>
         <div class="nav-right">
         <div class="icon-bg burger">
             <span nz-icon nzType="ss:burger" nzTheme="outline"></span>
         </div>
-          <div class="icon-bg">
-            <span nz-icon nzType="ss:search" nzTheme="outline"></span>
-          </div>
+
+            <div class="search-header">
+                <app-search *ngIf="statusInputSearch"></app-search>
+
+                <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''">
+                    <span nz-icon [nzType]="statusInputSearch ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearch($event)"></span>
+                </div>
+            </div>
+
           <div class="icon-bg" (click)="toggleTheme()">
             <span nz-icon nzType="ss:moon" nzTheme="outline"></span>
           </div>
@@ -91,3 +87,4 @@
     </div>
   </nz-content>
 </nz-header>
+<app-mobile-menu></app-mobile-menu>

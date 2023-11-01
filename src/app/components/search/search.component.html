@@ -1,0 +1,23 @@
+<div class="search">
+  <span class="">
+    <form nz-form [formGroup]="searchInput" class="search-form" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixSearch">
+            <input type="text" nz-input formControlName="search" placeholder="Введите запрос" [(ngModel)]="title" (input)="search()" />
+          </nz-input-group>
+        </nz-form-control>
+        <ng-template #prefixSearch>
+          <i nz-icon nzType="search"></i>
+        </ng-template>
+      </nz-form-item>
+    </form>
+  </span>
+<!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
+<!--        <app-result-item-->
+<!--            *ngFor="let book of books"-->
+<!--            [book]="book"-->
+<!--            [title]="title"-->
+<!--        ></app-result-item>-->
+<!--    </div>-->
+</div>

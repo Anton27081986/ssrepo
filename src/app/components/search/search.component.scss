@@ -1,0 +1,26 @@
+:host {
+    // position: relative;
+    position: absolute;
+    right: 3px;
+    top: -4px;
+    width: 370px;
+    z-index: 2;
+}
+
+.search {
+    form {
+        .ant-input-affix-wrapper {
+            height: 44px;
+        }
+    }
+
+    .result {
+        position: absolute;
+        top: 47px;
+        background: #fff;
+        border-radius: 8px;
+        width: 100%;
+        padding: 12px;
+        z-index: 1;
+    }
+}

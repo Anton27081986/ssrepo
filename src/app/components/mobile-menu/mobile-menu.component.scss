@@ -1,0 +1,91 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+::ng-deep .ant-menu-submenu:after {
+    content: unset;
+    top: -10px;
+    left: 3px;
+    position: absolute;
+    z-index: 5;
+}
+
+.mobile-menu {
+    margin: 0 auto;
+}
+
+.close {
+    display: none;
+}
+
+.open {
+    display: block;
+}
+
+::ng-deep .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: $black;
+}
+
+::ng-deep .ant-tabs-top > .ant-tabs-nav::before {
+    border-bottom: unset;
+}
+
+::ng-deep .ant-tabs-tab:hover {
+    color: $black;
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (min-width: 414px) and (max-width: 519px) {
+    .mobile-menu {
+        width: 519px;
+    }
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (max-width: 416px) {
+    .mobile-menu {
+        width: 416px;
+    }
+
+    ::ng-deep .ant-tabs-nav-operations {
+        display: table !important;
+    }
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (min-width: 520px) and (max-width: 639px) {
+    .mobile-menu {
+        width: 639px;
+    }
+}
+
+// Medium devices (tablets, 640px and up)
+@media screen and (min-width: 640px) and (max-width: 767px) {
+    .mobile-menu {
+        width: 767px;
+    }
+}
+
+// Medium devices (tablets, 768px and up)
+@media screen and (min-width: 768px) and (max-width: 799px) {
+    .mobile-menu {
+        width: 799px;
+    }
+}
+
+// Medium devices (tablets, 800px and up)
+@media screen and (min-width: 800px) and (max-width: 1199px) {
+    .mobile-menu {
+        width: 1199px;
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 1326px) {
+    .mobile-menu {
+        width: 1326px;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+}
