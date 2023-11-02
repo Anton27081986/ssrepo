@@ -107,6 +107,10 @@
     height: 400px;
 }
 
+::ng-deep .menu-item-custom::-webkit-scrollbar {
+    display: none;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 1325px) {
     ::ng-deep .ant-menu-submenu.ant-menu-submenu-popup {
