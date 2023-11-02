@@ -1,4 +1,4 @@
-<nz-header>
+<nz-header [ngClass]="statusInputSearchMobile ? 'mobile' : ''">
   <nz-content>
     <div class="header">
       <div class="logo" [routerLink]="AppRoutes.root">
@@ -10,27 +10,26 @@
             </svg>
           </span>
       </div>
-      <div class="menu">
-        <div class="icon-bg burger">
-            <span nz-icon nzType="ss:burger" nzTheme="outline"></span>
-        </div>
-      </div>
       <div class="nav-wrap">
         <div class="nav-left">
           <app-main-menu></app-main-menu>
         </div>
         <div class="nav-right">
-        <div class="icon-bg burger">
-            <span nz-icon nzType="ss:burger" nzTheme="outline"></span>
+        <div class="icon-bg burger" (click)="menuToggle($event)">
+          <span nz-icon [nzType]="statusBurger ? 'ss:close' : 'ss:burger'" nzTheme="outline"></span>
         </div>
 
-            <div class="search-header">
-                <app-search *ngIf="statusInputSearch"></app-search>
+          <div class="search-header">
+              <app-search *ngIf="statusInputSearch"></app-search>
 
-                <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''">
-                    <span nz-icon [nzType]="statusInputSearch ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearch($event)"></span>
-                </div>
+              <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''">
+                  <span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearch($event)"></span>
+              </div>
+
+            <div class="icon-bg search-mobile">
+              <span nz-icon [nzType]="statusInputSearchMobile ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearchMobile($event)"></span>
             </div>
+          </div>
 
           <div class="icon-bg" (click)="toggleTheme()">
             <span nz-icon nzType="ss:moon" nzTheme="outline"></span>
@@ -85,6 +84,12 @@
         </div>
       </div>
     </div>
+
+    <app-search *ngIf="statusInputSearchMobile" [ngClass]="statusInputSearchMobile ? 'mobile' : ''"></app-search>
+
   </nz-content>
 </nz-header>
-<app-mobile-menu></app-mobile-menu>
+
+<nz-content>
+  <app-mobile-menu [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
+</nz-content>

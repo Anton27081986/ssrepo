@@ -91,8 +91,54 @@ body {
             color: #fff;
         }
     }
+
+    .icon-bg.burger {
+        svg {
+            rect {
+                fill: #ffffff;
+            }
+        }
+    }
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom {
+    padding: 36px;
 }
 
 :host ::ng-deep .ant-menu-light .ant-menu-submenu-title {
+    color: #ffffff;
+}
+
+/** Мобильное меню */
+.ant-menu .ng-star-inserted {
+    color: #ffffff;
+}
+
+.ant-tabs-tab + .ant-tabs-tab {
+    margin: 0 0 0 8px;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #ffffff;
+}
+
+.ant-tabs-tab.ng-star-inserted {
+    // color: #22223a;
+    padding: 10px;
+}
+
+.ant-tabs-tab {
+    border: 2px #e4e8ea solid;
+}
+
+.ant-menu-submenu > .ant-menu {
+    border-radius: 30px;
+}
+
+.ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
+    padding: 36px;
+}
+
+.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title {
     color: #ffffff;
 }

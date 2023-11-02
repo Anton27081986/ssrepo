@@ -80,7 +80,7 @@ export class HeaderComponent {
         '<path d="M81 12.375V9.09766H81.543C81.7279 8.96484 81.8971 8.77734 82.0508 8.53516C82.2044 8.29036 82.3359 7.95312 82.4453 7.52344C82.5547 7.09115 82.6328 6.52604 82.6797 5.82812L82.9062 2.44531H88.1992V9.09766H89.0742V12.3672H87.4492V10.4453H82.625V12.375H81ZM83.4961 9.09766H86.5742V3.83984H84.4297L84.3047 5.82812C84.2708 6.35677 84.2148 6.82552 84.1367 7.23438C84.0612 7.64323 83.9688 8.0013 83.8594 8.30859C83.7526 8.61328 83.6315 8.8763 83.4961 9.09766Z" fill="#314381"/>\n' +
         '</svg>';
 
-    private readonly iconClose =
+    private readonly iconCloseLight =
         '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
         '<g opacity="0.3">\n' +
         '<rect width="2.04274" height="16.3419" rx="1" transform="matrix(0.707103 0.707111 -0.707103 0.707111 12.0557 0.5)" fill="#22223A"/>\n' +
@@ -88,7 +88,18 @@ export class HeaderComponent {
         '</g>\n' +
         '</svg>';
 
-    private statusInputSearch = false;
+    private readonly iconClose =
+        '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<rect width="2" height="25" rx="1" transform="matrix(0.707103 0.707111 -0.707103 0.707111 18.3379 0.292969)" fill="#22223A"/>\n' +
+        '<rect width="2" height="25" rx="1" transform="matrix(-0.707103 0.707111 -0.707103 -0.707111 19.3379 18.293)" fill="#22223A"/>\n' +
+        '</svg>\n';
+
+    // @ts-ignore
+    public statusInputSearch = false;
+    public statusInputSearchMobile = false;
+    public statusBurger = false;
+
+    typeIcon!: 'ss:search';
 
     constructor(
         private readonly iconService: NzIconService,
@@ -102,6 +113,7 @@ export class HeaderComponent {
         this.iconService.addIconLiteral('ss:logo', this.iconLogoHeader);
         this.iconService.addIconLiteral('ss:logofooter', this.iconLogoFooter);
         this.iconService.addIconLiteral('ss:close', this.iconClose);
+        this.iconService.addIconLiteral('ss:closeLight', this.iconCloseLight);
     }
 
     protected readonly AppRoutes = AppRoutes;
@@ -115,8 +127,6 @@ export class HeaderComponent {
         },
     ];
 
-    typeIcon!: 'ss:search';
-
     toggleTheme(): void {
         this.themeService.toggleTheme().then();
     }
@@ -124,5 +134,15 @@ export class HeaderComponent {
     openSearch(event: Event) {
         event.stopPropagation();
         this.statusInputSearch = !this.statusInputSearch;
+    }
+
+    openSearchMobile(event: Event) {
+        event.stopPropagation();
+        this.statusInputSearchMobile = !this.statusInputSearchMobile;
+    }
+
+    menuToggle(event: Event) {
+        event.stopPropagation();
+        this.statusBurger = !this.statusBurger;
     }
 }

@@ -10,15 +10,7 @@
 }
 
 .mobile-menu {
-    margin: 0 auto;
-}
-
-.close {
-    display: none;
-}
-
-.open {
-    display: block;
+    margin: 22px auto 0 auto;
 }
 
 ::ng-deep .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -31,6 +23,95 @@
 
 ::ng-deep .ant-tabs-tab:hover {
     color: $black;
+}
+
+::ng-deep {
+    .ant-tabs-tab.ant-tabs-tab-active {
+        padding: 10px;
+        background-color: #4770ff !important;
+        border: 2px $gray solid;
+    }
+
+    .ant-tabs-tab {
+        border: 2px #f4f5f6 solid;
+        padding: 10px;
+        border-radius: 16px;
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+
+    .ant-tabs-tab + .ant-tabs-tab {
+        margin: 0 0 0 8px;
+        border: 2px $gray solid;
+    }
+
+    .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+        display: none;
+    }
+
+    .ant-menu-submenu .ant-menu-submenu-title {
+        padding-left: 4px !important;
+        color: $black;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .ant-menu-submenu .ant-menu-item {
+        padding-left: 4px !important;
+        color: $black;
+    }
+
+    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+        color: $white;
+    }
+
+    .ant-menu-light .ant-menu-submenu-title:hover {
+        color: $black;
+    }
+
+    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+        background-color: $gray-light;
+    }
+
+    .ant-menu.ant-menu-root {
+        background-color: unset;
+    }
+
+    .ant-menu .ng-star-inserted {
+        background-color: unset;
+    }
+
+    .ant-menu .ant-menu-item.ant-menu-item-selected {
+        color: $blue;
+    }
+
+    .ant-menu-inline .ant-menu-item {
+        font-size: 14px;
+    }
+
+    .ant-menu-inline .ant-menu-item::after {
+        border-right: 3px solid $blue;
+    }
+
+    .ant-menu-submenu-arrow {
+        color: $black;
+    }
+
+    .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-expand-icon,
+    .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+        color: $blue;
+    }
+
+    .ant-menu-submenu.ant-menu-submenu-inline {
+        border-bottom: 1px $gray solid;
+    }
+
+    .ant-menu-submenu-title:active {
+        background-color: unset !important;
+    }
+
+    .ant-tabs-tab {
+        border: 2px #e4e8ea solid;
+    }
 }
 
 // Medium devices (tablets, 414px and up)
@@ -52,14 +133,32 @@
 }
 
 // Medium devices (tablets, 414px and up)
-@media screen and (min-width: 520px) and (max-width: 639px) {
+@media screen and (max-width: 545px) {
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (min-width: 520px) and (max-width: 599px) {
+    .mobile-menu {
+        width: 599px;
+    }
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (min-width: 600px) and (max-width: 639px) {
     .mobile-menu {
         width: 639px;
     }
 }
 
 // Medium devices (tablets, 640px and up)
-@media screen and (min-width: 640px) and (max-width: 767px) {
+@media screen and (min-width: 640px) and (max-width: 699px) {
+    .mobile-menu {
+        width: 699px;
+    }
+}
+
+// Medium devices (tablets, 640px and up)
+@media screen and (min-width: 700px) and (max-width: 767px) {
     .mobile-menu {
         width: 767px;
     }
@@ -73,7 +172,14 @@
 }
 
 // Medium devices (tablets, 800px and up)
-@media screen and (min-width: 800px) and (max-width: 1199px) {
+@media screen and (min-width: 800px) and (max-width: 999px) {
+    .mobile-menu {
+        width: 999px;
+    }
+}
+
+// Medium devices (tablets, 800px and up)
+@media screen and (min-width: 1000px) and (max-width: 1199px) {
     .mobile-menu {
         width: 1199px;
     }

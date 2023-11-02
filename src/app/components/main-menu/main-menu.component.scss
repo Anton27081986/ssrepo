@@ -68,8 +68,12 @@
     top: 19px;
     left: -30px;
     border-radius: 30px;
-    padding: 36px;
+    // padding: 36px;
     z-index: 7;
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
+    padding: 36px;
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
@@ -98,6 +102,14 @@
     padding-left: 0;
 }
 
-.ant-menu-submenu ant-menu-submenu-popup {
+::ng-deep .ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
     width: 647px;
+    height: 400px;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 1325px) {
+    ::ng-deep .ant-menu-submenu.ant-menu-submenu-popup {
+        display: none;
+    }
 }

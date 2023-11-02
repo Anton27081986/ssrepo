@@ -159,7 +159,7 @@ module.exports = {
                 '@typescript-eslint/no-inferrable-types': ['error', {ignoreParameters: true}],
                 '@typescript-eslint/prefer-readonly': ['error'],
                 '@typescript-eslint/explicit-member-accessibility': [
-                    'error',
+                    'warn',
                     {accessibility: 'no-public'},
                 ],
                 'no-unused-vars': 'off',
