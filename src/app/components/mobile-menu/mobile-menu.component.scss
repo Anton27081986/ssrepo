@@ -11,6 +11,8 @@
 
 .mobile-menu {
     margin: 22px auto 0 auto;
+    display: flex;
+    justify-content: center;
 }
 
 ::ng-deep .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -188,10 +190,10 @@
 // Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 1326px) {
     .mobile-menu {
-        width: 1326px;
+       //  width: 1326px;
     }
 
     .mobile-menu {
-        display: block;
+        display: flex;
     }
 }
