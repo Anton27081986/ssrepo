@@ -1,9 +1,24 @@
 <div class="slider" nz-row nzJustify="center">
   <div nz-col nzSpan="24">
-    <nz-carousel [nzEffect]="'fade'">
+    <nz-carousel
+      [nzAutoPlay]="true"
+      [nzAutoPlaySpeed]="3000"
+      [nzEffect]="'fade'"
+      [nzEnableSwipe]="true"
+      [nzLoop]="true">
       <div nz-carousel-content *ngFor="let index of array">
         <img ngSrc="{{ index }}" alt="Slide" fill="" />
       </div>
     </nz-carousel>
   </div>
+
+  <span class="arrow next" nz-button (click)="next()">
+    <img src="assets/images/slider/arrow.png" alt="" />
+  </span>
+
+  <span class="arrow prev" nz-button (click)="prev()">
+    <img src="assets/images/slider/arrow.png" alt="arrow" />
+  </span>
 </div>
+
+

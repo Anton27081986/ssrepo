@@ -1,0 +1,119 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.menu {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    color: $black;
+    height: 44px;
+    line-height: 44px;
+
+    li:first-child {
+        font-weight: bold;
+        margin-left: 21px;
+    }
+
+    li {
+        color: $black;
+        font-size: 16px;
+        font-family: Inter, serif;
+        font-weight: 500;
+        padding: 0 7.2px !important;
+        border-radius: 10px;
+    }
+}
+
+// Пункт с подменю
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu {
+    padding: 0;
+}
+
+.ant-menu-item:hover,
+.ant-menu-submenu:hover {
+    background-color: #f4f5f6;
+    border-radius: 10px;
+    // height: 44px;
+
+    //display: flex;
+    //align-items: center;
+    //line-height: 44px;
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item {
+    padding: 0;
+}
+
+.ant-menu-horizontal > .ant-menu-submenu::after {
+    display: none;
+}
+
+.ant-menu-horizontal > .ant-menu-item::after {
+    display: none;
+}
+
+@include ng-deep() {
+    .ant-menu-light .ant-menu-submenu-title,
+    .ant-menu-light .ant-menu-item {
+        color: $black;
+    }
+
+    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
+        color: $black;
+    }
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom {
+    position: relative;
+    top: 19px;
+    left: -30px;
+    border-radius: 30px;
+    // padding: 36px;
+    z-index: 7;
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
+    padding: 36px;
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+::ng-deep .ant-menu-submenu:after {
+    content: url("data:image/svg+xml,%3Csvg width='46' height='29' viewBox='0 0 46 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24.8892 1.94331L44.3193 24.3627C45.7224 25.9816 44.5724 28.5 42.4301 28.5H3.56989C1.42757 28.5 0.277599 25.9816 1.68067 24.3627L21.1108 1.94331C22.1077 0.79308 23.8924 0.79308 24.8892 1.94331Z' fill='white' stroke='%23E4E8EA'/%3E%3C/svg%3E");
+    top: -10px;
+    left: 3px;
+    position: absolute;
+    z-index: 5;
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom .ant-menu-item-group-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: $black;
+    padding-left: 0;
+}
+
+::ng-deep .ant-menu-submenu .menu-item-custom .ant-menu-item-group-list .ant-menu-item {
+    font-size: 14px;
+    color: $black;
+    padding-left: 0;
+}
+
+::ng-deep .ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
+    width: 647px;
+    height: 400px;
+}
+
+::ng-deep .menu-item-custom::-webkit-scrollbar {
+    display: none;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 1325px) {
+    ::ng-deep .ant-menu-submenu.ant-menu-submenu-popup {
+        display: none;
+    }
+}

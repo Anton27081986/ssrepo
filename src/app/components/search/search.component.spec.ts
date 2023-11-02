@@ -1,16 +1,16 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {TopMenuComponent} from './top-menu.component';
+import {SearchComponent} from './search.component';
 
-describe('TopMenuComponent', () => {
-    let component: TopMenuComponent;
-    let fixture: ComponentFixture<TopMenuComponent>;
+describe('SearchComponent', () => {
+    let component: SearchComponent;
+    let fixture: ComponentFixture<SearchComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            declarations: [TopMenuComponent],
+            declarations: [SearchComponent],
         });
-        fixture = TestBed.createComponent(TopMenuComponent);
+        fixture = TestBed.createComponent(SearchComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

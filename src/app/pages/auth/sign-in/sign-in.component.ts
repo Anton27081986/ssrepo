@@ -16,6 +16,9 @@ export class SignInComponent implements OnInit {
     submitted = false;
     error: unknown = '';
 
+    passwordVisible = false;
+    password?: string;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly route: ActivatedRoute,
@@ -30,7 +33,13 @@ export class SignInComponent implements OnInit {
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
+            login: [
+                'test@mail.com',
+                [
+                    Validators.required,
+                    Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+                ],
+            ],
             password: ['', Validators.required],
         });
     }
@@ -50,7 +59,7 @@ export class SignInComponent implements OnInit {
 
         this.loading = true;
         this.authenticationService
-            .login(this.f.username.value, this.f.password.value)
+            .login(this.f.login.value, this.f.password.value)
             .pipe(first())
             .subscribe({
                 next: () => {

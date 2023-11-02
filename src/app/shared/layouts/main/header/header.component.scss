@@ -1,0 +1,265 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+@include ng-deep {
+    .ant-layout-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000;
+        height: 84px;
+        background: #ffffff;
+        border-bottom-left-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+
+        .logo {
+        }
+
+        .nav-wrap {
+            svg {
+                fill: #f4f5f6;
+
+                path {
+                    stroke: #000000;
+                }
+            }
+        }
+
+        .search-mobile {
+            svg {
+                stroke: $white;
+            }
+        }
+
+        .burger {
+            display: none;
+        }
+    }
+}
+
+app-mobile-menu {
+    display: none;
+}
+
+.nav-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-right ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.nav-right ul > li {
+    padding-left: 24px;
+}
+
+.nav-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 15px;
+
+    .search-header {
+        position: relative;
+        margin-left: 0;
+
+        .small {
+            width: 36px;
+            height: 36px;
+            margin-right: 8px;
+            border-radius: 14px;
+            font-size: 12px;
+        }
+    }
+
+    div {
+        margin-left: 10px;
+    }
+}
+
+.remind {
+    position: relative;
+}
+
+.remind-dot {
+    position: absolute;
+    border-radius: 50%;
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    background: #4770ff !important;
+    top: -7px;
+    right: -5px;
+
+    span {
+        position: absolute;
+        top: -23px;
+        right: 5px;
+        color: #ffffff;
+        font-size: 12px;
+        font-family: 'Inter', serif;
+    }
+}
+
+.menu {
+    display: none;
+}
+
+.close {
+    display: none;
+}
+
+.open {
+    display: block;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    border-radius: 18px;
+    background: #f4f5f6;
+    border: 1px #e4e8ea solid;
+    font-family: Inter, serif;
+    font-size: 16px;
+    font-weight: bold;
+
+    .icon-bg {
+        margin-left: 0;
+        overflow: hidden;
+    }
+
+    .title {
+        padding-right: 14px;
+    }
+}
+
+.logo {
+    display: flex;
+    cursor: pointer;
+
+    span {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.icon-bg {
+    background: #f4f5f6;
+    border-radius: 16px;
+    border: 1px #e4e8ea solid;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.search {
+    position: relative;
+    z-index: 3;
+}
+
+.search-mobile {
+    display: none;
+}
+
+[nz-menu] {
+    // line-height: 84px;
+}
+
+app-search.mobile {
+    opacity: 0;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (min-width: 1325px) {
+    .open {
+        display: none;
+    }
+
+    .ant-layout-header app-mobile-menu {
+        // display: none;
+    }
+}
+
+@media screen and (max-width: 1326px) {
+    .nav-left {
+        display: none;
+    }
+
+    .profile {
+        .title {
+            display: none;
+        }
+    }
+
+    .header {
+        .burger {
+            display: flex;
+        }
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 801px) {
+    .nav-left {
+        display: none;
+    }
+
+    .profile {
+        .title {
+            display: none;
+        }
+    }
+
+    .header {
+        .burger {
+            display: flex;
+        }
+    }
+}
+
+// Medium devices (tablets, 414px and up)
+@media screen and (max-width: 545px) {
+    .search {
+        display: none;
+    }
+
+    .search-mobile {
+        display: flex;
+    }
+
+    .ant-layout-header.mobile {
+        display: block;
+        height: 160px;
+        align-items: unset;
+        padding-top: 20px;
+        width: 100%;
+    }
+
+    app-search {
+        position: static;
+        top: 88px;
+    }
+
+    app-search.mobile {
+        opacity: 1;
+    }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 415px) {
+    .ant-layout-header {
+        // padding: 0 26px;
+    }
+}

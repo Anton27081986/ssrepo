@@ -1,4 +1,6 @@
 import {Component} from '@angular/core';
+import {environment} from '@environments/environment';
+import {Title} from '@angular/platform-browser';
 
 @Component({
     selector: 'app-root',
@@ -8,4 +10,8 @@ import {Component} from '@angular/core';
 export class AppComponent {
     isCollapsed = false;
     title!: string;
+
+    constructor(private readonly titleService: Title) {
+        this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
+    }
 }
