@@ -1,5 +1,9 @@
 <ul nz-menu nzMode="horizontal" class="menu">
-  <li nz-submenu nzTitle="Избранное" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false">
+  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name_category }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false"></li>
+</ul>
+
+<ul nz-menu nzMode="horizontal" class="menu">
+  <li nz-submenu nzTitle="Избранное" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="true">
     <ul>
       <li nz-menu-group nzTitle="Наши дистрибьюторы">
         <ul>

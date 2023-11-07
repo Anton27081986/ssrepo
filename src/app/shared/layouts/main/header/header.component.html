@@ -12,7 +12,7 @@
       </div>
       <div class="nav-wrap">
         <div class="nav-left">
-          <app-main-menu></app-main-menu>
+          <app-main-menu [menu]="listMenu"></app-main-menu>
         </div>
         <div class="nav-right">
         <div class="icon-bg burger" (click)="menuToggle($event)">
@@ -20,20 +20,16 @@
         </div>
 
           <div class="search-header">
-              <app-search *ngIf="statusInputSearch"></app-search>
+            <app-search *ngIf="statusInputSearch"></app-search>
 
-              <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''">
-                  <span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearch($event)"></span>
-              </div>
+            <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''">
+                <span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearch($event)"></span>
+            </div>
 
             <div class="icon-bg search-mobile">
               <span nz-icon [nzType]="statusInputSearchMobile ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearchMobile($event)"></span>
             </div>
           </div>
-
-<!--          <div class="icon-bg" (click)="toggleTheme()">-->
-<!--            <span nz-icon nzType="ss:moon" nzTheme="outline"></span>-->
-<!--          </div>-->
           <div class="icon-bg remind">
             <span class="remind-dot">
               <span>1</span>
@@ -75,7 +71,7 @@
               </div>
             </nz-dropdown-menu>
           </div>
-          <div class="profile">
+          <div class="profile" [routerLink]="'profile'">
             <div class="icon-bg">
               <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />
             </div>
@@ -91,5 +87,5 @@
 </nz-header>
 
 <nz-content>
-  <app-mobile-menu [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
+  <app-mobile-menu [menu]="listMenu" [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
 </nz-content>

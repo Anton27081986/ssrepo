@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
 import {MainComponent} from './shared/layouts/main/main.component';
-import {AppRoutes} from './common/routes';
+
 
 const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: ''},
@@ -11,7 +11,7 @@ const routes: Routes = [
         component: MainComponent,
         children: [
             {
-                path: AppRoutes.start,
+                path: '',
                 loadChildren: () => import('./pages/start/start.module').then(m => m.StartModule),
             },
             {
@@ -23,6 +23,12 @@ const routes: Routes = [
                         // canActivate: [AuthGuards],
                         loadChildren: () =>
                             import('./pages/partners/partners.module').then(m => m.PartnersModule),
+                    },
+                    {
+                        path: 'profile',
+                        // canActivate: [AuthGuards],
+                        loadChildren: () =>
+                            import('./pages/profile/profile.module').then(m => m.ProfileModule),
                     },
                 ],
             },

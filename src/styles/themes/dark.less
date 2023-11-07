@@ -8,10 +8,12 @@ body {
 
     // Убрать !important
     .ant-layout-header {
-        background-color: #000000 !important;
+        background-color: #202629 !important;
 
         .nav-left {
             .menu {
+                background-color: #202629 !important;
+
                 li {
                     color: #ffffff;
                     &:hover {
@@ -22,16 +24,37 @@ body {
         }
     }
 
+    // popup menu
+    .ant-menu-submenu-popup > .ant-menu {
+        background-color: #20282c;
+
+        .ant-menu-item {
+            &:hover {
+                background-color: #31393d;
+            }
+        }
+    }
+
     .ant-menu-item {
         color: #ffffff !important;
     }
 
     .ant-layout {
-        background-color: #000000 !important;
+        background-color: #292e30 !important;
+    }
+
+    .ant-layout-content {
+        .content-container {
+            background: #292e30;
+        }
+    }
+
+    app-footer {
+        background-color: #292e30 !important;
     }
 
     .ant-layout-footer {
-        background-color: #000000 !important;
+        background-color: #202629 !important;
         color: #ffffff !important;
     }
 

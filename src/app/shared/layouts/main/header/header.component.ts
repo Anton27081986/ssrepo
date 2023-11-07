@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AppRoutes} from '@app/common/routes';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {ThemeService} from '@app/shared/theme/theme.service';
+import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
     selector: 'app-header',
@@ -9,7 +9,7 @@ import {ThemeService} from '@app/shared/theme/theme.service';
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
     //  TODO вынести в common
     private readonly iconSearch =
         '<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
@@ -98,12 +98,13 @@ export class HeaderComponent {
     public statusInputSearch = false;
     public statusInputSearchMobile = false;
     public statusBurger = false;
+    public listMenu: any;
 
     typeIcon!: 'ss:search';
 
     constructor(
+        private readonly apiService: ApiService,
         private readonly iconService: NzIconService,
-        private readonly themeService: ThemeService,
     ) {
         this.iconService.addIconLiteral('ss:search', this.iconSearch);
         this.iconService.addIconLiteral('ss:remind', this.iconRemind);
@@ -116,6 +117,15 @@ export class HeaderComponent {
         this.iconService.addIconLiteral('ss:closeLight', this.iconCloseLight);
     }
 
+    ngOnInit(): any {
+        this.apiService
+            .getMenuListJson()
+            .pipe()
+            .subscribe(item => {
+                this.listMenu = item;
+            });
+    }
+
     protected readonly AppRoutes = AppRoutes;
 
     notificationList = [
@@ -126,10 +136,6 @@ export class HeaderComponent {
             color: 'ant-avatar',
         },
     ];
-
-    toggleTheme(): void {
-        this.themeService.toggleTheme().then();
-    }
 
     openSearch(event: Event) {
         event.stopPropagation();

@@ -1,0 +1,17 @@
+.settings {
+    display: flex;
+    justify-content: end;
+
+    .theme {
+        margin-right: 16px;
+        margin-top: 24px;
+        display: flex;
+        justify-content: center;
+
+        cursor: pointer;
+
+        .icon-bg {
+            margin-left: 12px;
+        }
+    }
+}

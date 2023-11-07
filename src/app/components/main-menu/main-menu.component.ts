@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-main-menu',
@@ -6,4 +6,6 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
     styleUrls: ['./main-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainMenuComponent {}
+export class MainMenuComponent {
+    @Input() menu: any;
+}
