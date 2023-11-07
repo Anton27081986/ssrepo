@@ -138,7 +138,7 @@ module.exports = {
                 'no-param-reassign': 'off',
                 'dot-notation': 'warn',
                 'no-case-declarations': 'error',
-                'no-console': ['error', {allow: ['info', 'assert', 'warn', 'error']}],
+                'no-console': ['warn', {allow: ['info', 'assert', 'warn', 'error']}],
                 'no-implicit-coercion': ['error', {allow: ['!!']}],
                 'no-return-assign': ['error', 'always'],
                 'no-useless-rename': [

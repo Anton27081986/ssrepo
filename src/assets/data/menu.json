@@ -10,17 +10,19 @@
                     {
                         "id": "0",
                         "name": "Реестр заказов Дистрибьюторов",
-                        "url": "https://ssnab.it"
+                        "url": "https://ssnab.it/Public/Distrib/Orders"
                     },
                     {
                         "id": "1",
-                        "name": "Журнал обратной связи"
+                        "name": "Журнал обратной связи",
+                        "url": "https://ssnab.it/Public/Distrib/Feedbacks"
                     }
                 ]
             },
             {
                 "id": "1",
-                "name": "Справочник контрагентов"
+                "name": "Справочник контрагентов",
+                "url": "https://ssnab.it/catalog/preds"
             }
         ]
     },
@@ -34,17 +36,20 @@
                 "items": [
                     {
                         "id": "0",
-                        "name": "Реестр заказов Дистрибьюторов"
+                        "name": "Реестр заказов Дистрибьюторов",
+                        "url": "https://ssnab.it/Public/Distrib/Orders"
                     },
                     {
                         "id": "1",
-                        "name": "Журнал обратной связи"
+                        "name": "Журнал обратной связи",
+                        "url": "https://ssnab.it/Public/Distrib/Feedbacks"
                     }
                 ]
             },
             {
                 "id": "1",
-                "name": "Справочник контрагентов"
+                "name": "Справочник контрагентов",
+                "url": "https://ssnab.it/catalog/preds"
             }
         ]
     },
@@ -58,11 +63,13 @@
                 "items": [
                     {
                         "id": "0",
-                        "name": "Журнал контрактов покупателей"
+                        "name": "Журнал контрактов покупателей",
+                        "url": "https://ssnab.it/Sales/Contracts"
                     },
                     {
                         "id": "1",
-                        "name": "Регламент планирования продаж"
+                        "name": "Регламент планирования продаж",
+                        "url": "https://ssnab.it/Ss/Sales/PlanMolsTovs/Reglament.aspx"
                     }
                 ]
             },
@@ -73,11 +80,13 @@
                     {
                         "id": "0",
                         "name": "Рабочий календарь",
+                        "url": "https://ssnab.it/Ss/Personal/Calendar/Calendar.aspx",
                         "sub_items": "1"
                     },
                     {
                         "id": "1",
                         "name": "Журнал лучших менеджеров",
+                        "url": "https://ssnab.it/personal/molsbest",
                         "sub_items": "1"
                     }
                 ]
@@ -94,11 +103,13 @@
                 "items": [
                     {
                         "id": "0",
-                        "name": "Справочник товарных позиций"
+                        "name": "Справочник товарных позиций",
+                        "url": "https://ssnab.it/Catalog/Tovs"
                     },
                     {
                         "id": "1",
-                        "name": "Справочник товарных продуктов"
+                        "name": "Справочник товарных продуктов",
+                        "url": "https://ssnab.it/ss/Catalog/Tov/TovsProducts.aspx"
                     }
                 ]
             },
@@ -108,11 +119,13 @@
                 "items": [
                     {
                         "id": "0",
-                        "name": "Журнал заказа  образцов"
+                        "name": "Журнал заказа  образцов",
+                        "url": "https://ssnab.it/Sales/SmOrders"
                     },
                     {
                         "id": "1",
-                        "name": "Журнал путевых листов"
+                        "name": "Журнал путевых листов",
+                        "url": "https://ssnab.it/Ss/Sales/SMOrdersRoutes.aspx"
                     }
                 ]
             }
@@ -129,11 +142,13 @@
                     {
                         "id": "0",
                         "name": "Журнал книг по р/с",
+                        "url": "https://ssnab.it/Ss/Fin/Findoc/FindocBooks.aspx?BookTypeId=2",
                         "sub_items": "1"
                     },
                     {
                         "id": "1",
                         "name": "Выписки по р/счетам",
+                        "url": "https://ssnab.it/Ss/Fin/Findoc/FindocBook.aspx?BookTypeId=2",
                         "sub_items": "1"
                     }
                 ]
@@ -144,11 +159,13 @@
                 "items": [
                     {
                         "id": "1",
-                        "name": "Управление ККМ"
+                        "name": "Управление ККМ",
+                        "url": "https://ssnab.it/fin/kkm#/kkm"
                     },
                     {
                         "id": "1",
-                        "name": "Журнал книг по кассе"
+                        "name": "Журнал книг по кассе",
+                        "url": "https://ssnab.it/Ss/Fin/Findoc/FindocBooks.aspx?BookTypeId=1"
                     }
                 ]
             }
@@ -164,11 +181,13 @@
                 "items": [
                     {
                         "id": "0",
-                        "name": "График отгрузок"
+                        "name": "График отгрузок",
+                        "url": "https://ssnab.it/Lgs/PlanShip"
                     },
                     {
                         "id": "1",
-                        "name": "Заявки на расчет цены склада"
+                        "name": "Заявки на расчет цены склада",
+                        "url": "https://ssnab.it/Lgs/Prices"
                     }
                 ]
             },
@@ -178,11 +197,13 @@
                 "items": [
                     {
                         "id": "1",
-                        "name": "Справочник поставщиков (КИСП)"
+                        "name": "Справочник поставщиков (КИСП)",
+                        "url": "https://ssnab.it/Ss/Lgs/Vendors/Vendors.aspx"
                     },
                     {
                         "id": "1",
-                        "name": "Справочник поставщиков"
+                        "name": "Справочник поставщиков",
+                        "url": "https://ssnab.it/Ss/Lgs/Vendors/Vendors.aspx"
                     }
                 ]
             }
@@ -198,11 +219,13 @@
                 "items": [
                     {
                         "id": "0",
-                        "name": "Отчёт по остаткам (старый)"
+                        "name": "Отчёт по остаткам (старый)",
+                        "url": "https://ssnab.it/"
                     },
                     {
                         "id": "1",
-                        "name": "Отчёт по остаткам"
+                        "name": "Отчёт по остаткам",
+                        "url": "https://ssnab.it/"
                     }
                 ]
             },
@@ -212,11 +235,13 @@
                 "items": [
                     {
                         "id": "1",
-                        "name": "Отчёт ДДС"
+                        "name": "Отчёт ДДС",
+                        "url": "https://ssnab.it/"
                     },
                     {
                         "id": "1",
-                        "name": "Отчет ДДС (бюджеты)"
+                        "name": "Отчет ДДС (бюджеты)",
+                        "url": "https://ssnab.it/"
                     }
                 ]
             }

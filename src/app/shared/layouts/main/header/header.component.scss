@@ -191,6 +191,10 @@ app-search.mobile {
     .ant-layout-header app-mobile-menu {
         // display: none;
     }
+
+    .nav-wrap {
+        flex: auto;
+    }
 }
 
 @media screen and (max-width: 1326px) {
@@ -237,7 +241,7 @@ app-search.mobile {
     }
 
     .search-mobile {
-        display: flex;
+        // display: flex;
     }
 
     .ant-layout-header.mobile {

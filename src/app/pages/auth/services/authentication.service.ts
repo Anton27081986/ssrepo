@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {environment} from '@environments/environment';
@@ -36,6 +36,16 @@ export class AuthenticationService {
                     return user;
                 }),
             );
+    }
+
+    loginBasic(Username: string, Password: string): Observable<any> {
+        console.log('basic');
+
+        return this.http.post<IUser>(`https://ssnab.it/login`, {Username, Password}).pipe(
+            tap(user => {
+                console.log('user', user);
+            }),
+        );
     }
 
     logout() {

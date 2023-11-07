@@ -6,6 +6,7 @@ import {
     HttpInterceptor,
     HttpResponse,
     HttpErrorResponse,
+    HttpClient,
 } from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 
@@ -14,9 +15,21 @@ import {AuthenticationService} from '@auth/services/authentication.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private readonly authenticationService: AuthenticationService) {}
+    constructor(
+        private readonly http: HttpClient,
+        private readonly authenticationService: AuthenticationService,
+    ) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        this.authenticationService
+            .loginBasic('nekrasov_va', 'RH$x9U&Lx@KYRB2')
+            .pipe()
+            .subscribe(data => {
+                console.log('data', data);
+            });
+
+        console.log('ауф');
+
         // add auth header with jwt if user is logged in and request is to api url
         const user = this.authenticationService.userValue;
         const isLoggedIn = user?.token;

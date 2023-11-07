@@ -1,5 +1,15 @@
 <ul nz-menu nzMode="horizontal" class="menu">
-  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name_category }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false"></li>
+  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name_category }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false">
+    <ul>
+      <li *ngFor="let subcategory of item.sub_category" nz-menu-group nzTitle="{{ subcategory.name }}">
+        <ul>
+          <li *ngFor="let subitem of subcategory.items" nz-menu-item>
+            <a href="{{ subitem.url }}" target="_blank">{{ subitem.name }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
 </ul>
 
 <!--<ul nz-menu nzMode="horizontal" class="menu">-->

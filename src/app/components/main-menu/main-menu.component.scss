@@ -33,11 +33,16 @@
 .ant-menu-submenu:hover {
     background-color: #f4f5f6;
     border-radius: 10px;
-    // height: 44px;
+}
 
-    //display: flex;
-    //align-items: center;
-    //line-height: 44px;
+.ant-menu-item:active,
+.ant-menu-submenu:active {
+    // background-color: #f4f5f6;
+    border-radius: 10px;
+}
+
+::ng-deep .ant-menu-submenu-popup > .ant-menu .ant-menu-item:hover {
+    padding: 0 8px 0 8px !important;
 }
 
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item {
@@ -60,6 +65,12 @@
 
     .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
         color: $black;
+    }
+}
+
+::ng-deep {
+    .ant-menu-item-selected {
+        border-radius: 10px !important;
     }
 }
 

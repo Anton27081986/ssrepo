@@ -96,7 +96,7 @@ export class HeaderComponent implements OnInit {
 
     // @ts-ignore
     public statusInputSearch = false;
-    public statusInputSearchMobile = false;
+    public statusInputSearchMobile = true;
     public statusBurger = false;
     public listMenu: any;
 
