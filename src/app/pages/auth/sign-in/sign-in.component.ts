@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
+import {tap} from "rxjs";
 
 @Component({
     selector: 'app-sign-in',
@@ -67,11 +68,11 @@ export class SignInComponent implements OnInit {
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return false;
-        }
+        // if (this.loginForm.invalid) {
+        //     return;
+        // }
 
-        // this.loading = true;
+        this.loading = true;
         // this.authenticationService
         //     .login(this.f.login.value, this.f.password.value)
         //     .pipe(first())
