@@ -110,7 +110,7 @@
                             "browserTarget": "erpss:build:development"
                         },
                         "staging": {
-                            "browserTarget": "erpss:build:development"
+                            "browserTarget": "erpss:build:staging"
                         }
                     },
                     "defaultConfiguration": "development"
