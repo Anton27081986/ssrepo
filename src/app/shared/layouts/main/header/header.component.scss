@@ -255,8 +255,12 @@ app-search.mobile {
     }
 
     // Logo centering
-    .nav-right,
-    .icon-bg remind {
+    .nav-right {
+        margin-left: 0;
+    }
+
+    // Logo centering
+    .nav-right .icon-bg.remind {
         margin-left: 0;
     }
 }
