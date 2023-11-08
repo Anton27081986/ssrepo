@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {tap} from "rxjs";
+import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-sign-in',
