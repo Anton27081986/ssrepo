@@ -21,11 +21,19 @@ export class JwtInterceptor implements HttpInterceptor {
     ) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // this.authenticationService.loginBasic('', '')
-        //     .pipe()
-        //     .subscribe(data => {
-        //        //  console.log('data', data);
-        //     });
+        this.authenticationService
+            .loginBasic('nekrasov_va', 'RH$x9U&Lx@KYRB2')
+            .pipe(tap(val => console.log('val', val)))
+            .subscribe(
+                data => {
+                    if (data) {
+                        console.log('data', data);
+                    }
+                },
+                // (error): any => {
+                //     console.log(error);
+                // },
+            );
 
         // add auth header with jwt if user is logged in and request is to api url
         const user = this.authenticationService.userValue;

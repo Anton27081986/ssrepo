@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable, tap} from 'rxjs';
+import {BehaviorSubject, Observable, take, takeLast, tap} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {environment} from '@environments/environment';
@@ -38,12 +38,25 @@ export class AuthenticationService {
             );
     }
 
+    // Basic Auth
     loginBasic(Username: string, Password: string): Observable<any> {
-        return this.http.post<IUser>(`https://ssnab.it/login`, {Username, Password}, {}).pipe(
-            tap(user => {
-                console.log('user', user);
-            }),
-        );
+        return this.http
+            .post<any>(
+                `https://ssnab.it/login`,
+                {Username, Password},
+                {
+                    headers: {
+                        'Access-Control-Allow-Origin': '*',
+                    },
+                },
+            )
+            .pipe(
+                take(1),
+                takeLast(1),
+                tap(user => {
+                    console.log('user', user);
+                }),
+            );
     }
 
     logout() {
