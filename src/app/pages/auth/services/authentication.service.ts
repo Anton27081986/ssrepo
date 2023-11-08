@@ -39,9 +39,7 @@ export class AuthenticationService {
     }
 
     loginBasic(Username: string, Password: string): Observable<any> {
-        console.log('basic');
-
-        return this.http.post<IUser>(`https://ssnab.it/login`, {Username, Password}).pipe(
+        return this.http.post<IUser>(`https://ssnab.it/login`, {Username, Password}, {}).pipe(
             tap(user => {
                 console.log('user', user);
             }),

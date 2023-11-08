@@ -182,6 +182,10 @@ app-search.mobile {
     opacity: 0;
 }
 
+.mobile-burger {
+    display: none;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 1325px) {
     .open {
@@ -231,6 +235,27 @@ app-search.mobile {
         .burger {
             display: flex;
         }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .logo {
+        flex: auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-burger {
+        display: flex;
+    }
+
+    .header .burger {
+        display: none;
+    }
+
+    // Logo centering
+    .nav-right, .icon-bg remind {
+        margin-left: 0;
     }
 }
 
