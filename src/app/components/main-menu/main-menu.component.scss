@@ -69,6 +69,14 @@
 }
 
 ::ng-deep {
+    .ant-menu-submenu-title {
+        text-transform: lowercase;
+
+        &:first-letter {
+            text-transform: uppercase;
+        }
+    }
+
     .ant-menu-item-selected {
         border-radius: 10px !important;
     }
@@ -105,6 +113,12 @@
     font-weight: bold;
     color: $black;
     padding-left: 0;
+
+    text-transform: lowercase;
+
+    &:first-letter {
+        text-transform: uppercase;
+    }
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom .ant-menu-item-group-list .ant-menu-item {

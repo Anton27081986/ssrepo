@@ -24,6 +24,20 @@
     }
 }
 
+::ng-deep {
+    .anticon.search-icon-suffix {
+        font-size: 24px;
+
+        svg {
+            fill: #a1a2ab;
+        }
+    }
+
+    .ant-input-affix-wrapper,
+    .ant-input.ant-input-stepperless {
+        background-color: #f4f5f6;
+    }
+}
 // Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 545px) {
     .search {
