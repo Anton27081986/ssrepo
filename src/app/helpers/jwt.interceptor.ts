@@ -25,14 +25,13 @@ export class JwtInterceptor implements HttpInterceptor {
             .loginBasic('nekrasov_va', 'RH$x9U&Lx@KYRB2')
             .pipe(tap(val => console.log('val', val)))
             .subscribe(
-                data => {
+                (data: any) => {
                     if (data) {
                         console.log('data', data);
                     }
                 },
-                // (error): any => {
-                //     console.log(error);
-                // },
+                (err: unknown) => console.log('HTTP Error', err),
+                () => console.log('HTTP request completed.'),
             );
 
         // add auth header with jwt if user is logged in and request is to api url
