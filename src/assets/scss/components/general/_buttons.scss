@@ -9,15 +9,6 @@ body {
         height: $btn-size;
         border-radius: $border-radius;
 
-        svg {
-            fill-opacity: 1;
-            stroke: $blue;
-            path {
-                fill-opacity: 1;
-                stroke: $blue;
-            }
-        }
-
         &:hover,
         &:focus {
             background-color: $gray-lighter;
