@@ -10,12 +10,18 @@ import {MainMenuComponent} from './main-menu/main-menu.component';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
 import {MobileMenuComponent} from './mobile-menu/mobile-menu.component';
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
-import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import {NzButtonModule} from "ng-zorro-antd/button";
-import {RouterLink} from "@angular/router";
+import {ProfilePopupComponent} from './profile-popup/profile-popup.component';
+import {NzButtonModule} from 'ng-zorro-antd/button';
+import {RouterLink} from '@angular/router';
 
 @NgModule({
-    declarations: [SearchComponent, ResultItemComponent, MainMenuComponent, MobileMenuComponent, ProfilePopupComponent],
+    declarations: [
+        SearchComponent,
+        ResultItemComponent,
+        MainMenuComponent,
+        MobileMenuComponent,
+        ProfilePopupComponent,
+    ],
     imports: [
         CommonModule,
         NzFormModule,

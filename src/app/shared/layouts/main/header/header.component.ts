@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AppRoutes} from '@app/common/routes';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {AppIcons} from "@app/common/icons";
+import {AppIcons} from '@app/common/icons';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +11,6 @@ import {AppIcons} from "@app/common/icons";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-
     // @ts-ignore
     public statusInputSearch = false;
     public statusInputSearchMobile = true;

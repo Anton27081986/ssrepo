@@ -1,5 +1,5 @@
 export class AppIcons {
-   static iconSearch =
+    static iconSearch =
         '<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
 
     static iconRemind =
