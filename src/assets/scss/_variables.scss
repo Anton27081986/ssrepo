@@ -15,7 +15,7 @@ $blue: #4770ff !default;
 // Create grayscale
 $gray-dark: #2a2a2a !default;
 $gray: #e4e8ea !default;
-$gray-light: #ebeff2 !default;
+$gray-light: #f4f5f6 !default;
 $gray-lighter: #ededed !default;
 $gray-lightest: #f1f2f3 !default;
 $content: #f4f5f6 !default;
@@ -45,7 +45,7 @@ $tone-loop: (
 );
 
 // State Colors
-$brand-primary: $blue !default;
+$brand-primary: $gray-light !default;
 $brand-secondary: $blue !default;
 $brand-success: $blue !default;
 $brand-info: $blue !default;
@@ -174,7 +174,7 @@ $font-weight-base: $font-weight-normal !default;
 
 $line-height-base: 1.5 !default;
 
-$font-size-base: 0.875rem !default;
+$font-size-base: 0.8125rem !default;
 $font-size-xl: 1.25rem !default;
 $font-size-lg: 1rem !default;
 $font-size-sm: 0.75rem !default;
@@ -205,11 +205,11 @@ $text-muted: rgba($gray-light, 0.7) !default;
 $border-color: #828282 !default;
 $border-radius: 0.25rem !default;
 $border-radius-lg: 0.3rem !default;
-$border-radius-sm: 0.2rem !default;
+$border-radius-sm: 1rem !default;
 $border-radius-xs: 0.125rem !default;
 $border-radius-circle: 50% !default;
-$border-radius-round: 50px !default;
-$border-width: 1px !default;
+$border-radius-round: 3.125rem !default;
+$border-width: 0.0625rem !default;
 
 // Buttons
 //
@@ -236,7 +236,7 @@ $btn-danger-border: $btn-danger-bg !default;
 $btn-link-disabled-color: $gray-lighter !default;
 $btn-disabled-color: $gray-lighter !default;
 
-$btn-size-sm: 2rem !default;
+$btn-size-sm: 2.4rem !default;
 $btn-size-lg: 3rem !default;
 
 $btn-padding-x-sm: 1rem !default;
@@ -277,7 +277,7 @@ $table-selected: rgba($brand-primary, 0.1) !default;
 $table-has-action-hover-bg: darken(#f2f2f2, 2%) !default;
 $table-column-sort-bg: $table-hover !default;
 $table-border: $border-color !default;
-$table-border-radius: 4px !default;
+$table-border-radius: 0.25rem !default;
 $table-column-sorter-size: 0.9375rem;
 $table-row-expand-icon-size: 1.0625rem !default;
 

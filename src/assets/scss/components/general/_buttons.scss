@@ -9,6 +9,15 @@ body {
         height: $btn-size;
         border-radius: $border-radius;
 
+        svg {
+            fill-opacity: 1;
+            stroke: $blue;
+            path {
+                fill-opacity: 1;
+                stroke: $blue;
+            }
+        }
+
         &:hover,
         &:focus {
             background-color: $gray-lighter;
@@ -44,6 +53,7 @@ body {
         padding: $btn-padding-y-sm $btn-padding-x-sm;
         font-size: $font-size-base;
         border-radius: $border-radius;
+        font-weight: bold;
     }
 
     .ant-btn-lg {
@@ -146,11 +156,7 @@ body {
 
         &.ant-btn-sm {
             height: $btn-size-sm;
-            border-radius: $btn-size-sm;
-            border-top-left-radius: $btn-size-sm;
-            border-top-right-radius: $btn-size-sm;
-            border-bottom-right-radius: $btn-size-sm;
-            border-bottom-left-radius: $btn-size-sm;
+            border-radius: $border-radius-sm;
             padding: 0 $btn-padding-x-sm;
         }
     }
@@ -186,8 +192,7 @@ body {
     .ant-btn-primary {
         background-color: $brand-primary;
         border-color: $brand-primary;
-        color: $white;
-        border-radius: 16px;
+        color: $black;
 
         &:hover,
         &:focus {

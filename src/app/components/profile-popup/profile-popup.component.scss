@@ -1,0 +1,72 @@
+// Popup profile
+::ng-deep {
+    .profile-popup {
+        position: relative;
+        top: 22px;
+        background-color: white;
+        width: 337px;
+        border-radius: 30px;
+        padding: 37px 21px 37px 21px;
+
+        .personal {
+            display: flex;
+
+            .titles {
+                margin-left: 21px;
+
+                .fio {
+                    font-size: 18px;
+                    font-weight: bold;
+                    line-height: 19px;
+                    margin-top: 6px;
+                }
+                .job {
+                    font-size: 12px;
+                    line-height: 13px;
+                    margin-top: 10px;
+                }
+            }
+        }
+
+        .contacts {
+            margin-top: 28px;
+
+            .item {
+                display: flex;
+                justify-content: space-between;
+
+                .icon {
+                    svg {
+                        fill: white;
+                    }
+                }
+
+                span:nth-child(2) {
+                    margin-left: 6px;
+                }
+
+                .title {
+                    font-size: 12px;
+                }
+
+                .description {
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+            }
+
+            .item:nth-child(2) {
+                margin-top: 7px;
+            }
+        }
+
+        .manager {
+            display: flex;
+            margin-top: 41px;
+        }
+
+        .card-list {
+            margin-top: 60px;
+        }
+    }
+}

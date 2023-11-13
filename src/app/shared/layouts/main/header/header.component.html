@@ -72,12 +72,18 @@
               </div>
             </nz-dropdown-menu>
           </div>
-          <div class="profile" [routerLink]="'profile'">
-            <div class="icon-bg">
-              <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />
+
+            <div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
+              <div class="icon-bg">
+                <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />
+              </div>
+              <div class="title">Мой профиль</div>
+
+              <nz-dropdown-menu #popProfile="nzDropdownMenu">
+                <app-profile-popup></app-profile-popup>
+              </nz-dropdown-menu>
             </div>
-            <div class="title">Мой профиль</div>
-          </div>
+
         </div>
       </div>
     </div>

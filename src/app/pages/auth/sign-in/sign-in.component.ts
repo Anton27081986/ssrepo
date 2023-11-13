@@ -50,8 +50,6 @@ export class SignInComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log('submit');
-
         this.authenticationService
             .loginBasic('nekrasov_va', 'RH$x9U&Lx@KYRB2')
             .pipe(tap(val => console.log('val', val)))
