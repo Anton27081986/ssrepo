@@ -40,15 +40,13 @@ export class AuthenticationService {
 
     // Basic Auth
     loginBasic(Username: string, Password: string): Observable<any> {
-        return this.http
-            .post<any>(`https://ssnab.it/login`, {Username, Password}, {})
-            .pipe(
-                take(1),
-                takeLast(1),
-                tap(user => {
-                    console.log('user', user);
-                }),
-            );
+        return this.http.post<any>(`https://ssnab.it/login`, {Username, Password}, {}).pipe(
+            take(1),
+            takeLast(1),
+            tap(user => {
+                console.log('user', user);
+            }),
+        );
     }
 
     logout() {
