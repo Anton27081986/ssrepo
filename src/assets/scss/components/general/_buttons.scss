@@ -183,7 +183,8 @@ body {
     .ant-btn-primary {
         background-color: $brand-primary;
         border-color: $brand-primary;
-        color: $black;
+        color: $white;
+        border-radius: 16px;
 
         &:hover,
         &:focus {
