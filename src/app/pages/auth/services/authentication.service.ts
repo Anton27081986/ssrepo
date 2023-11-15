@@ -12,6 +12,10 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
+    // public headers = new HttpHeaders()
+    //     .set('content-type', 'application/json')
+    //     .set('Access-Control-Allow-Origin', '*');
+
     constructor(
         private readonly router: Router,
         private readonly http: HttpClient,
@@ -40,13 +44,15 @@ export class AuthenticationService {
 
     // Basic Auth
     loginBasic(Username: string, Password: string): Observable<any> {
-        return this.http.post<any>(`https://ssnab.it/login`, {Username, Password}, {}).pipe(
-            take(1),
-            takeLast(1),
-            tap(user => {
-                console.log('user', user);
-            }),
-        );
+        return this.http
+            .post<any>(`https://ssnab.it/login?ReturnUrl=/index`, {Username, Password}, {})
+            .pipe(
+                take(1),
+                takeLast(1),
+                tap(user => {
+                    console.log('user', user);
+                }),
+            );
     }
 
     logout() {

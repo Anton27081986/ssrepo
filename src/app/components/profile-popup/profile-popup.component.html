@@ -3,7 +3,7 @@
     <div class="card">
       <div class="personal">
         <div class="img">
-          <img ngSrc="assets/images/profile/user.png" alt="user" height="80" width="80" />
+          <img src="assets/images/profile/user-popup.png" alt="user" />
         </div>
         <div class="titles">
           <div class="fio">
@@ -36,20 +36,18 @@
       </div>
     </div>
     <div class="manager">
-      <button [routerLink]="'profile'" nz-button nzType="primary" [nzSize]="'small'" nzShape="round">
-        Настройки
-        <span class="icon" nz-icon nzType="setting"></span>
-      </button>
-      <button nz-button nzType="primary" [nzSize]="'small'" nzShape="round">
-        Выйти
-        <span class="icon" nz-icon nzType="ss:exit"></span>
-      </button>
+      <div [routerLink]="'profile'">
+        <span>Настройки</span>
+      </div>
+      <div nz-button>
+        <span>Выйти</span>
+      </div>
     </div>
     <div class="card-list">
       <div class="card">
         <div class="personal">
           <div class="img">
-            <img ngSrc="assets/images/profile/user.png" alt="user" height="56" width="44" />
+            <img ngSrc="assets/images/profile/users.png" alt="user" height="56" width="44" />
           </div>
           <div class="titles">
             <div class="fio">
@@ -61,7 +59,7 @@
       <div class="card">
         <div class="personal">
           <div class="img">
-            <img ngSrc="assets/images/profile/user.png" alt="user" height="56" width="44" />
+            <img ngSrc="assets/images/profile/users.png" alt="user" height="56" width="44" />
           </div>
           <div class="titles">
             <div class="fio">
@@ -73,7 +71,7 @@
       <div class="card">
         <div class="personal">
           <div class="img">
-            <img ngSrc="assets/images/profile/user.png" alt="user" height="56" width="44" />
+            <img ngSrc="assets/images/profile/users.png" alt="user" height="56" width="44" />
           </div>
           <div class="titles">
             <div class="fio">

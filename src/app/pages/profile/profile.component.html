@@ -1,8 +1,27 @@
-<div class="settings" (click)="toggleTheme()">
-  <div class="theme">
-    <div class="title">Сменить тему</div>
-    <div class="icon-bg">
-      <span nz-icon nzType="ss:moon" nzTheme="outline"></span>
+<div class="settings">
+  <div class="left-menu">
+    <div class="group">
+      <div class="item">
+        <span></span>
+        <span>Настройки профиля</span>
+        <span></span>
+      </div>
+    </div>
+    <div class="group">
+      <div class="item">
+        <span></span>
+        <span>Настроить пункты моего меню</span>
+        <span></span>
+      </div>
+    </div>
+    <div class="group">
+      <div class="item" (click)="toggleTheme()">
+        <span nz-icon nzType="ss:moon" nzTheme="outline"></span>
+        <span>Тема оформления</span>
+        <span></span>
+      </div>
     </div>
   </div>
+  <div class="container"></div>
+
 </div>

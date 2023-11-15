@@ -2,7 +2,7 @@
 ::ng-deep {
     .profile-popup {
         position: relative;
-        top: 22px;
+        top: 25px;
         background-color: white;
         width: 337px;
         border-radius: 30px;
@@ -11,25 +11,33 @@
         .personal {
             display: flex;
 
+            .img {
+                border-radius: 10px;
+
+                img {
+                    object-fit: cover;
+                }
+            }
+
             .titles {
-                margin-left: 21px;
+                margin-left: 19px;
 
                 .fio {
                     font-size: 18px;
                     font-weight: bold;
                     line-height: 19px;
-                    margin-top: 6px;
+                    margin-top: 1px;
                 }
                 .job {
                     font-size: 12px;
-                    line-height: 13px;
-                    margin-top: 10px;
+                    line-height: 15px;
+                    margin-top: 16px;
                 }
             }
         }
 
         .contacts {
-            margin-top: 28px;
+            margin-top: 17px;
 
             .item {
                 display: flex;
@@ -42,7 +50,7 @@
                 }
 
                 span:nth-child(2) {
-                    margin-left: 6px;
+                    margin-left: 7px;
                 }
 
                 .title {
@@ -64,6 +72,8 @@
             display: flex;
             justify-content: space-between;
             margin-top: 41px;
+            border-top: 1px solid #2a2a2a;
+            border-bottom: 1px solid #2a2a2a;
         }
 
         .card-list {
