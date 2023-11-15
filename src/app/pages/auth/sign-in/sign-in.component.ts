@@ -51,7 +51,7 @@ export class SignInComponent implements OnInit {
 
     onSubmit() {
         this.authenticationService
-            .loginBasic('nekrasov_va', 'jN*Bgf9.*f#&FBr')
+            .loginBasic('nekrasov_va', 'jN*Bgf9.*f#&FBr', '/index')
             .pipe(tap(val => console.log('val', val)))
             .subscribe(
                 (data: any) => {

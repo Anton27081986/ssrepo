@@ -43,9 +43,9 @@ export class AuthenticationService {
     }
 
     // Basic Auth
-    loginBasic(Username: string, Password: string): Observable<any> {
+    loginBasic(Username: string, Password: string, ReturnUrl: string): Observable<any> {
         return this.http
-            .post<any>(`https://ssnab.it/login?ReturnUrl=/index`, {Username, Password}, {})
+            .post<any>(`https://ssnab.it/login?ReturnUrl=/index`, {Username, Password, ReturnUrl}, {})
             .pipe(
                 take(1),
                 takeLast(1),
