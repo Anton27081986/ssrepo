@@ -5,7 +5,7 @@
         <div class="img">
           <img src="assets/images/profile/user-popup.png" alt="user" />
         </div>
-        <div class="titles">
+        <div class="title">
           <div class="fio">
             <span>Гришин Пантелей Серапионович</span>
           </div>
@@ -35,23 +35,34 @@
         </div>
       </div>
     </div>
+    <hr />
     <div class="manager">
-      <div [routerLink]="'profile'">
-        <span>Настройки</span>
+      <div [routerLink]="'profile'" class="button-icon-left">
+        <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
+        <span class="title">Настройки профиля</span>
       </div>
-      <div nz-button>
-        <span>Выйти</span>
+      <div class="button-icon-left">
+        <span class="icon exit-icon" nz-icon [nzType]="'ss:exit'"></span>
+        <span class="title">Выйти</span>
       </div>
     </div>
+    <hr />
     <div class="card-list">
+      <div class="accordion">
+        <span class="title">Связь с другими сотрудниками</span>
+        <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
+      </div>
       <div class="card">
         <div class="personal">
           <div class="img">
-            <img ngSrc="assets/images/profile/users.png" alt="user" height="56" width="44" />
+            <img src="assets/images/profile/users.png" alt="users" />
           </div>
-          <div class="titles">
+          <div class="title">
             <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
+              <span>Иванов Михаил Михайлович</span>
+            </div>
+            <div class="job">
+              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
             </div>
           </div>
         </div>
@@ -59,11 +70,14 @@
       <div class="card">
         <div class="personal">
           <div class="img">
-            <img ngSrc="assets/images/profile/users.png" alt="user" height="56" width="44" />
+            <img src="assets/images/profile/users.png" alt="users" />
           </div>
-          <div class="titles">
+          <div class="title">
             <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
+              <span>Иванов Михаил Михайлович</span>
+            </div>
+            <div class="job">
+              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
             </div>
           </div>
         </div>
@@ -71,11 +85,29 @@
       <div class="card">
         <div class="personal">
           <div class="img">
-            <img ngSrc="assets/images/profile/users.png" alt="user" height="56" width="44" />
+            <img src="assets/images/profile/users.png" alt="users" />
           </div>
-          <div class="titles">
+          <div class="title">
             <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
+              <span>Иванов Михаил Михайлович</span>
+            </div>
+            <div class="job">
+              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="personal">
+          <div class="img">
+            <img src="assets/images/profile/users.png" alt="users" />
+          </div>
+          <div class="title">
+            <div class="fio">
+              <span>Иванов Михаил Михайлович</span>
+            </div>
+            <div class="job">
+              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
             </div>
           </div>
         </div>

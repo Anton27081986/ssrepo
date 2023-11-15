@@ -94,14 +94,21 @@ export class AppIcons {
         '</svg>';
 
     static exit =
-        '<svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-        '<path d="M8.97656 3.9575C8.79573 1.8575 7.71656 1 5.35406 1H5.27823C2.67073 1 1.62656 2.04417 1.62656 4.65167V8.455C1.62656 11.0625 2.67073 12.1067 5.27823 12.1067H5.35406C7.69906 12.1067 8.77823 11.2608 8.97073 9.19583" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-        '<path d="M4.83398 6.54736H12.3473" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-        '<path d="M11.0469 4.59326L13.001 6.54743L11.0469 8.5016" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M13.7217 6.24192C13.4956 3.61692 12.1467 2.54504 9.19355 2.54504H9.09876C5.83939 2.54504 4.53418 3.85025 4.53418 7.10963V11.8638C4.53418 15.1232 5.83939 16.4284 9.09876 16.4284H9.19355C12.1248 16.4284 13.4738 15.3711 13.7144 12.7898" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M8.54395 9.47937H17.9356" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M16.3096 7.03662L18.7523 9.47933L16.3096 11.922" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
 
     static settings =
-        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-        '<path d="M13.4231 5.45831C13.0745 5.30597 12.8666 4.94303 12.9069 4.56441L13.0946 2.84606C11.5794 1.97008 11.4207 1.87822 9.90556 1L8.51553 2.0216C8.20937 2.24788 7.79147 2.24788 7.48307 2.0216L6.09304 1C4.5801 1.87822 4.4192 1.97008 2.90626 2.84606L3.09175 4.56441C3.13421 4.94303 2.92414 5.30597 2.57551 5.45831L1 6.15506V9.84493L2.57551 10.5439C2.92414 10.6963 3.13421 11.0592 3.09175 11.4378L2.90626 13.1562C4.4192 14.0322 4.5801 14.124 6.09304 15L7.48307 13.9806C7.79147 13.7544 8.20937 13.7544 8.51553 13.9806L9.90556 15C11.4207 14.124 11.5794 14.0322 13.0946 13.1562L12.9069 11.4378C12.8666 11.0592 13.0745 10.6963 13.4231 10.5439L15.0008 9.84493V6.15506L13.4231 5.45831ZM7.9993 11.0525C6.31875 11.0525 4.95554 9.68587 4.95554 8.00112C4.95554 6.31637 6.31875 4.94975 7.9993 4.94975C9.67985 4.94975 11.0431 6.31637 11.0431 8.00112C11.0431 9.68587 9.68208 11.0525 7.9993 11.0525Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M8.25244 1.54517H6.75244C3.00244 1.54517 1.50244 3.04517 1.50244 6.79517V11.2952C1.50244 15.0452 3.00244 16.5452 6.75244 16.5452H11.2524C15.0024 16.5452 16.5024 15.0452 16.5024 11.2952V9.79516" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M12.0289 2.30999L6.11893 8.21999C5.89393 8.44499 5.66893 8.88749 5.62393 9.20999L5.30143 11.4675C5.18143 12.285 5.75893 12.855 6.57643 12.7425L8.83393 12.42C9.14893 12.375 9.59143 12.15 9.82393 11.925L15.7339 6.01499C16.7539 4.99499 17.2339 3.80999 15.7339 2.30999C14.2339 0.809989 13.0489 1.28999 12.0289 2.30999Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M11.1841 3.15747C11.6866 4.94997 13.0891 6.35247 14.8891 6.86247" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '</svg>';
+
+    static arrowBottom =
+        '<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="#22223A" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
 }

@@ -16,5 +16,6 @@ export class ProfilePopupComponent {
     ) {
         this.iconService.addIconLiteral('ss:exit', AppIcons.exit);
         this.iconService.addIconLiteral('ss:settings', AppIcons.settings);
+        this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
     }
 }
