@@ -17,9 +17,6 @@
         display: flex;
         justify-content: space-between;
 
-        .logo {
-        }
-
         .nav-wrap {
             svg {
                 fill: #f4f5f6;
@@ -216,6 +213,10 @@ app-search.mobile {
     .header {
         .burger {
             display: flex;
+
+            .anticon {
+                fill-opacity: 1 !important;
+            }
         }
     }
 }

@@ -52,4 +52,8 @@ body {
     .ant-menu-horizontal {
         border-bottom: unset;
     }
+
+    .anticon svg {
+        fill-opacity: 0;
+    }
 }
