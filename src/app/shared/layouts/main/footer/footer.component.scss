@@ -120,7 +120,7 @@ nz-footer {
     }
 
     .ant-layout-footer .footer .group-wrapper {
-        margin-left: 0!important;
+        margin-left: 0 !important;
     }
 }
 
@@ -131,7 +131,8 @@ nz-footer {
         .footer {
             justify-content: space-between;
 
-            .copyright {}
+            .copyright {
+            }
 
             .logo {
                 display: flex;
