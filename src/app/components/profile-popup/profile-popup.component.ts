@@ -10,6 +10,8 @@ import {AppIcons} from '@app/common/icons';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePopupComponent {
+    public statusAccordion = false;
+
     constructor(
         private readonly apiService: ApiService,
         private readonly iconService: NzIconService,
@@ -17,5 +19,6 @@ export class ProfilePopupComponent {
         this.iconService.addIconLiteral('ss:exit', AppIcons.exit);
         this.iconService.addIconLiteral('ss:settings', AppIcons.settings);
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
+        this.iconService.addIconLiteral('ss:enter', AppIcons.enter);
     }
 }

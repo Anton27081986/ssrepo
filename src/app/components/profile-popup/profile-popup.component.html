@@ -48,70 +48,76 @@
     </div>
     <hr />
     <div class="card-list">
-      <div class="accordion">
+      <div class="accordion" (click)="statusAccordion=!statusAccordion;">
         <span class="title">Связь с другими сотрудниками</span>
         <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
       </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/users.png" alt="users" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Иванов Михаил Михайлович</span>
+      <ng-container *ngIf="statusAccordion">
+        <div class="card">
+          <div class="personal">
+            <div class="img">
+              <img src="assets/images/profile/users.png" alt="users" />
             </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+            <div class="title">
+              <div class="fio">
+                <span>Иванов Михаил Михайлович</span>
+              </div>
+              <div class="job">
+                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/users.png" alt="users" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Иванов Михаил Михайлович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
+            <span class="icon exit-icon" nz-icon [nzType]="'ss:enter'"></span>
           </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/users.png" alt="users" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Иванов Михаил Михайлович</span>
+        <div class="card">
+          <div class="personal">
+            <div class="img">
+              <img src="assets/images/profile/users.png" alt="users" />
             </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+            <div class="title">
+              <div class="fio">
+                <span>Иванов Михаил Михайлович</span>
+              </div>
+              <div class="job">
+                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/users.png" alt="users" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Иванов Михаил Михайлович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
+            <span class="icon exit-icon" nz-icon [nzType]="'ss:enter'"></span>
           </div>
         </div>
-      </div>
+        <div class="card">
+          <div class="personal">
+            <div class="img">
+              <img src="assets/images/profile/users.png" alt="users" />
+            </div>
+            <div class="title">
+              <div class="fio">
+                <span>Иванов Михаил Михайлович</span>
+              </div>
+              <div class="job">
+                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              </div>
+            </div>
+            <span class="icon exit-icon" nz-icon [nzType]="'ss:enter'"></span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="personal">
+            <div class="img">
+              <img src="assets/images/profile/users.png" alt="users" />
+            </div>
+            <div class="title">
+              <div class="fio">
+                <span>Иванов Михаил Михайлович</span>
+              </div>
+              <div class="job">
+                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              </div>
+            </div>
+            <span class="icon exit-icon" nz-icon [nzType]="'ss:enter'"></span>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>

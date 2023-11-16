@@ -111,4 +111,11 @@ export class AppIcons {
         '<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
         '<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="#22223A" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
+
+    static enter =
+        '<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M5.19189 4.45518C5.37273 2.35518 6.45189 1.49768 8.81439 1.49768H8.89023C11.4977 1.49768 12.5419 2.54185 12.5419 5.14935V8.95268C12.5419 11.5602 11.4977 12.6043 8.89023 12.6043H8.81439C6.46939 12.6043 5.39023 11.7585 5.19773 9.69351" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M1.16846 7.04517H8.68179" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M7.37939 5.09094L9.33356 7.04511L7.37939 8.99928" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '</svg>';
 }
