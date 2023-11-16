@@ -53,7 +53,13 @@ body {
         border-bottom: unset;
     }
 
-    .anticon svg {
-        fill-opacity: 0;
+    .ant-menu-item a:hover {
+        color: #4770FF!important;
     }
 }
+
+.anticon {
+    fill-opacity: 0;
+}
+
+

@@ -46,7 +46,7 @@ export class AuthenticationService {
     loginBasic(Username: string, Password: string, ReturnUrl: string): Observable<any> {
         return this.http
             .post<any>(
-                `https://cisp.ssnab.ru/login?ReturnUrl=https://erp-dev.ssnab.it/`,
+                `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it/`,
                 {Username, Password, ReturnUrl},
                 {},
             )

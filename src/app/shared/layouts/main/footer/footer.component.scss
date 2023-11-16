@@ -15,15 +15,12 @@
 
     .footer {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-wrap: wrap;
 
         .logo {
-            margin-top: 12px;
             display: flex;
-            flex-direction: column;
-            min-width: 277px;
-            width: 277px;
+            align-items: center;
             cursor: pointer;
 
             div {
@@ -45,49 +42,57 @@
             }
         }
 
-        .nav-right {
+        .copyright {
             display: flex;
-            align-items: flex-start;
-            margin-left: 0;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 37px;
+        }
 
-            .item:first-child {
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            margin-left: 35px;
+
+            .nav-right {
+                display: flex;
+                align-items: flex-start;
                 margin-left: 0;
-            }
 
-            .item {
-                text-align: start;
-                margin-top: 11px;
-                width: 174px;
-                margin-left: 76px;
-
-                span {
-                    font-size: 16px;
-                    font-family: Inter, serif;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    line-height: 17.6px;
-                    word-wrap: break-word;
+                .item:first-child {
+                    margin-left: 0;
                 }
 
-                ul {
-                    display: flex;
-                    flex-direction: column;
-                    margin-top: 11px;
-                    list-style-type: none;
+                .item {
+                    text-align: start;
+                    margin-left: 40px;
 
-                    li:first-child {
-                        margin-top: 0;
+                    span {
+                        font-size: 12px;
                     }
 
-                    li {
-                        text-align: left;
-                        font-size: 14px;
-                        font-family: Inter, serif;
-                        font-weight: 400;
-                        word-wrap: break-word;
-                        padding-left: 0;
-                        margin-top: 11px;
-                        cursor: pointer;
+                    span:nth-child(2) {
+                        margin-left: 3px;
+                        color: $blue;
+                    }
+                }
+            }
+
+        }
+
+        .icons {
+            margin-left: 38px;
+
+            .icon-bg {
+                width: 32px;
+                height: 32px;
+                border-radius: 10px;
+                background-color: $white;
+
+                ::ng-deep .anticon {
+                    path {
+                        stroke: $black;
                     }
                 }
             }

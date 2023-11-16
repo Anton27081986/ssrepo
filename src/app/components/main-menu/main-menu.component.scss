@@ -31,7 +31,7 @@
 
 .ant-menu-item:hover,
 .ant-menu-submenu:hover {
-    background-color: #f4f5f6;
+    background-color: #ffffff;
     border-radius: 10px;
 }
 
@@ -42,7 +42,7 @@
 }
 
 ::ng-deep .ant-menu-submenu-popup > .ant-menu .ant-menu-item:hover {
-    padding: 0 8px 0 8px !important;
+    // padding: 0!important;
 }
 
 .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item {
@@ -64,7 +64,7 @@
     }
 
     .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
-        color: $black;
+        // color: $black;
     }
 }
 
