@@ -81,13 +81,22 @@
         }
 
         .icons {
-            margin-left: 38px;
+            .group-wrapper {
+                display: flex;
+                justify-items: flex-start;
+                margin-left: 38px;
+            }
+
+            .icon-bg:first-child {
+                margin-left: 0;
+            }
 
             .icon-bg {
                 width: 32px;
                 height: 32px;
                 border-radius: 10px;
                 background-color: $white;
+                margin-left: 8px;
 
                 ::ng-deep .anticon {
                     path {
@@ -103,11 +112,27 @@ nz-footer {
     text-align: center;
 }
 
+@media screen and (max-width: 1370px) {
+    .ant-layout-footer .icons {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto 0 auto;
+    }
+
+    .ant-layout-footer .footer .group-wrapper {
+        margin-left: 0!important;
+    }
+}
+
 @media screen and (max-width: 801px) {
     .ant-layout-footer {
         margin-top: 446px;
 
         .footer {
+            justify-content: space-between;
+
+            .copyright {}
+
             .logo {
                 display: flex;
                 flex-direction: row;
@@ -129,25 +154,24 @@ nz-footer {
             }
 
             .nav-wrap {
-                width: 100%;
+                margin-top: 4px;
 
                 .nav-right {
                     flex-wrap: wrap;
-                    justify-content: space-between;
+                    justify-content: space-around;
 
                     .item {
-                        width: unset;
                         margin-left: 0;
-                        margin-top: 36px;
-
-                        span {
-                            font-size: 14px;
-                        }
-
-                        li {
-                            font-size: 12px;
-                        }
+                        margin-top: 12px;
                     }
+                }
+            }
+
+            .icons {
+                margin-top: 20px;
+
+                .group-wrapper {
+                    margin-left: 0;
                 }
             }
         }

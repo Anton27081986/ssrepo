@@ -236,6 +236,10 @@ app-search.mobile {
 
     .mobile-burger {
         display: flex;
+
+        .anticon {
+            fill-opacity: 1;
+        }
     }
 
     .header .burger {
