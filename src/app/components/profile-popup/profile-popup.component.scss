@@ -136,12 +136,13 @@
                 .personal {
                     position: relative;
 
-                    .exit-icon {
+                    .enter-icon {
                         position: absolute;
                         right: 17px;
                         bottom: 0;
                         font-size: 17px;
                         fill-opacity: 0;
+                        cursor: pointer;
                     }
 
                     .title {
