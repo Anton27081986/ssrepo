@@ -14,8 +14,10 @@ export class AuthenticationService {
 
     public headers = new HttpHeaders()
         .set('content-type', 'application/x-www-form-urlencoded')
-        .set('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
-
+        .set(
+            'Accept',
+            'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        );
 
     constructor(
         private readonly router: Router,
@@ -50,12 +52,12 @@ export class AuthenticationService {
                 `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it/`,
                 {Username, Password, ReturnUrl},
                 {
-                    'headers': this.headers,
-                    'withCredentials': true,
-                    'observe': 'response',
-                    'params': {Username,Password,ReturnUrl},
-                    'responseType': 'text' as 'json',
-                    'reportProgress': true
+                    headers: this.headers,
+                    withCredentials: true,
+                    observe: 'response',
+                    params: {Username, Password, ReturnUrl},
+                    responseType: 'text' as 'json',
+                    reportProgress: true,
                 },
             )
             .pipe(
