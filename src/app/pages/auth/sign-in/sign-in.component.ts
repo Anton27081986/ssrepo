@@ -2,7 +2,6 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-sign-in',
@@ -52,7 +51,7 @@ export class SignInComponent implements OnInit {
     onSubmit() {
         this.authenticationService
             .loginBasic('nekrasov_va', 'jN*Bgf9.*f#&FBr', 'https://erp-dev.ssnab.it/')
-            .pipe(tap(val => console.log('val', val)))
+            .pipe()
             .subscribe(
                 (data: any) => {
                     if (data) {

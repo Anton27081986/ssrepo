@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject, Observable, take, takeLast, tap} from 'rxjs';
+import {BehaviorSubject, Observable, take} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {environment} from '@environments/environment';
@@ -55,17 +55,13 @@ export class AuthenticationService {
                     headers: this.headers,
                     withCredentials: true,
                     observe: 'response',
-                    params: {Username, Password, ReturnUrl},
+                    // params: {Username, Password, ReturnUrl},
                     responseType: 'text' as 'json',
                     reportProgress: true,
                 },
             )
             .pipe(
-                take(1),
-                takeLast(1),
-                tap(user => {
-                    console.log('user', user);
-                }),
+                take(1)
             );
     }
 
