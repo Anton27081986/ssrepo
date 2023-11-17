@@ -60,9 +60,7 @@ export class AuthenticationService {
                     reportProgress: true,
                 },
             )
-            .pipe(
-                take(1)
-            );
+            .pipe(take(1));
     }
 
     logout() {
