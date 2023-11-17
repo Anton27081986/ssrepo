@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable, take, takeLast, tap} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -12,9 +12,10 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
-    // public headers = new HttpHeaders()
-    //     .set('content-type', 'application/json')
-    //     .set('Access-Control-Allow-Origin', '*');
+    public headers = new HttpHeaders()
+        .set('content-type', 'application/x-www-form-urlencoded')
+        .set('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8')
+
 
     constructor(
         private readonly router: Router,
@@ -48,7 +49,14 @@ export class AuthenticationService {
             .post<any>(
                 `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it/`,
                 {Username, Password, ReturnUrl},
-                {},
+                {
+                    'headers': this.headers,
+                    'withCredentials': true,
+                    'observe': 'response',
+                    'params': {Username,Password,ReturnUrl},
+                    'responseType': 'text' as 'json',
+                    'reportProgress': true
+                },
             )
             .pipe(
                 take(1),
