@@ -7,6 +7,12 @@
     justify-content: center;
 
     ::ng-deep {
+        .ant-tabs-content-holder {
+            background-color: $white;
+            border-radius: 16px;
+            // padding: 8px;
+        }
+
         .ant-tabs-nav-operations {
             display: none;
         }
@@ -56,8 +62,9 @@
         .ant-menu-submenu .ant-menu-submenu-title {
             padding-left: 4px !important;
             color: $black;
-            font-size: 14px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -0.16px;
         }
 
         .ant-menu-submenu .ant-menu-item {

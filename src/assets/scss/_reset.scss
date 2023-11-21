@@ -56,6 +56,10 @@ body {
     .ant-menu-item a:hover {
         color: #4770ff !important;
     }
+
+    .ant-menu.ant-menu-root {
+        border: unset;
+    }
 }
 
 .anticon {
