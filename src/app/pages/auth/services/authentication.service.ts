@@ -52,7 +52,7 @@ export class AuthenticationService {
                 `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it/`,
                 {Username, Password, ReturnUrl},
                 {
-                    headers: this.headers,
+                    // headers: this.headers,
                     withCredentials: true,
                     observe: 'response',
                     // params: {Username, Password, ReturnUrl},
