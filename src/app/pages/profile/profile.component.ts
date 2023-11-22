@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ThemeService} from '@app/shared/theme/theme.service';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from "@app/common/icons";
+import {AppIcons} from '@app/common/icons';
 
 @Component({
     selector: 'app-profile',
