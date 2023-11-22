@@ -8,6 +8,7 @@ import {NzRadioModule} from 'ng-zorro-antd/radio';
 import {NzInputNumberModule} from 'ng-zorro-antd/input-number';
 import {NzTabsModule} from 'ng-zorro-antd/tabs';
 import {FormsModule} from '@angular/forms';
+import {NzSwitchModule} from "ng-zorro-antd/switch";
 
 @NgModule({
     declarations: [ProfileComponent],
@@ -19,6 +20,7 @@ import {FormsModule} from '@angular/forms';
         NzRadioModule,
         NzInputNumberModule,
         NzTabsModule,
+        NzSwitchModule,
     ],
 })
 export class ProfileModule {}

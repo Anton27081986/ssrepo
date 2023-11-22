@@ -17,6 +17,11 @@ export class ProfilePopupComponent {
         private readonly iconService: NzIconService,
     ) {
         this.iconService.addIconLiteral('ss:exit', AppIcons.exit);
+        this.iconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
+
+
+        this.iconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
+
         this.iconService.addIconLiteral('ss:settings', AppIcons.settings);
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:enter', AppIcons.enter);
