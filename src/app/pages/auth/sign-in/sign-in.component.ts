@@ -50,7 +50,7 @@ export class SignInComponent implements OnInit {
 
     onSubmit() {
         this.authenticationService
-            .loginBasic('nekrasov_va', 'jN*Bgf9.*f#&FBr', 'https://erp-dev.ssnab.it/')
+            .loginBasic('nekrasov_va', 'jN*Bgf9.*f#&FBr', 'https://erp-dev.ssnab.it')
             .pipe()
             .subscribe(
                 (data: any) => {
