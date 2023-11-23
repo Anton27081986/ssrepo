@@ -25,18 +25,18 @@ export class SignInComponent implements OnInit {
         private readonly authenticationService: AuthenticationService, // fake
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.userValue) {
-            this.router.navigate(['/']);
-        }
+        // if (this.authenticationService.userValue) {
+        //     this.router.navigate(['/']);
+        // }
     }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
             login: [
-                'test@mail.com',
+                '',
                 [
                     Validators.required,
-                    Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
                 ],
             ],
             password: ['', Validators.required],
@@ -50,7 +50,7 @@ export class SignInComponent implements OnInit {
 
     onSubmit() {
         this.authenticationService
-            .loginBasic('nekrasov_va', 'jN*Bgf9.*f#&FBr', 'https://erp-dev.ssnab.it')
+            .loginBasic(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
             .pipe()
             .subscribe(
                 (data: any) => {

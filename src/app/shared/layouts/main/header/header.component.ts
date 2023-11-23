@@ -3,6 +3,7 @@ import {AppRoutes} from '@app/common/routes';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {AppIcons} from '@app/common/icons';
+import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 
 @Component({
     selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit {
     public statusInputSearch = false;
     public statusInputSearchMobile = true;
     public statusBurger = false;
-    public listMenu: any;
+    public listMenu!: IMainMenu[];
 
     typeIcon!: 'ss:search';
 
@@ -38,12 +39,9 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit(): any {
-        this.apiService
-            .getMenuListJson()
-            .pipe()
-            .subscribe(item => {
-                this.listMenu = item;
-            });
+        this.apiService.getMenuListJson().subscribe(item => {
+            this.listMenu = item;
+        });
     }
 
     protected readonly AppRoutes = AppRoutes;

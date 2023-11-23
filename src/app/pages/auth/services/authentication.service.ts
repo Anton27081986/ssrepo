@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable, take} from 'rxjs';
 import {map} from 'rxjs/operators';
 
@@ -18,6 +18,8 @@ export class AuthenticationService {
             'Accept',
             'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         );
+
+    public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it'});
 
     constructor(
         private readonly router: Router,
@@ -46,16 +48,16 @@ export class AuthenticationService {
     }
 
     // Basic Auth
-    loginBasic(Username: string, Password: string, ReturnUrl: string): Observable<any> {
+    loginBasic(Username: string, Password: string): Observable<any> {
         return this.http
             .post<any>(
-                `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it`,
-                {Username, Password, ReturnUrl},
+                `https://ssnab.it/login`,
+                {Username, Password},
                 {
                     headers: this.headers,
                     withCredentials: true,
                     observe: 'response',
-                    // params: {Username, Password, ReturnUrl},
+                    params: this.params,
                     responseType: 'text' as 'json',
                     reportProgress: true,
                 },

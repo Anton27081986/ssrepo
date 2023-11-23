@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 
 @Injectable({
     providedIn: 'root',
@@ -8,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 export class ApiService {
     constructor(private readonly http: HttpClient) {}
 
-    public getMenuListJson(): Observable<any[]> {
-        return this.http.get<any[]>('./assets/data/menu.json');
+    public getMenuListJson(): Observable<IMainMenu[]> {
+        return this.http.get<IMainMenu[]>('./assets/data/menu.json');
     }
 }

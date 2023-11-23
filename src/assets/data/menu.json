@@ -1,247 +1,2147 @@
 [
     {
-        "id": "0",
-        "name_category": "Избранное",
-        "sub_category": [
+        "name": "КОНТРАГЕНТЫ",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=148",
+        "items": [
             {
-                "id": "0",
                 "name": "НАШИ ДИСТРИБЬЮТОРЫ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Реестр заказов Дистрибьюторов",
-                        "url": "https://ssnab.it/Public/Distrib/Orders"
+                        "link": "https://ssnab.it/Public/Distrib/Orders",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Журнал обратной связи",
-                        "url": "https://ssnab.it/Public/Distrib/Feedbacks"
+                        "link": "https://ssnab.it/Public/Distrib/Feedbacks",
+                        "items": null
                     }
                 ]
             },
             {
-                "id": "1",
                 "name": "Справочник контрагентов",
-                "url": "https://ssnab.it/catalog/preds"
-            }
-        ]
-    },
-    {
-        "id": "1",
-        "name_category": "КОНТРАГЕНТЫ",
-        "sub_category": [
-            {
-                "id": "0",
-                "name": "НАШИ ДИСТРИБЬЮТОРЫ",
-                "items": [
-                    {
-                        "id": "0",
-                        "name": "Реестр заказов Дистрибьюторов",
-                        "url": "https://ssnab.it/Public/Distrib/Orders"
-                    },
-                    {
-                        "id": "1",
-                        "name": "Журнал обратной связи",
-                        "url": "https://ssnab.it/Public/Distrib/Feedbacks"
-                    }
-                ]
+                "link": "https://ssnab.it/catalog/preds",
+                "items": null
             },
             {
-                "id": "1",
-                "name": "Справочник контрагентов",
-                "url": "https://ssnab.it/catalog/preds"
+                "name": "Журнал контактных лиц",
+                "link": "https://ssnab.it/crm/subscribers",
+                "items": null
+            },
+            {
+                "name": "Реестр благодарностей",
+                "link": "https://ssnab.it/catalog/preds/thanks",
+                "items": null
+            },
+            {
+                "name": "Журнал подписки на новости РИМ",
+                "link": "https://ssnab.it/ss/crm/rss/paroles.aspx",
+                "items": null
+            },
+            {
+                "name": "Справочник клиентов (паролей)",
+                "link": "https://ssnab.it/catalog/paroles",
+                "items": null
+            },
+            {
+                "name": "Товарная ведомость по клиенту",
+                "link": "https://ssnab.it/Ss/Sales/AgentOborot.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал заявок на передачу клиентов",
+                "link": "https://ssnab.it/Catalog/Paroles/Moves",
+                "items": null
+            },
+            {
+                "name": "Журнал заявок на изменение пароля",
+                "link": "https://ssnab.it/catalog/paroles/changes",
+                "items": null
+            },
+            {
+                "name": "Журнал восстановления контрагентов из архива",
+                "link": "https://ssnab.it/Catalog/Preds/Restores",
+                "items": null
+            },
+            {
+                "name": "Журнал лимитов кредитования клиентов",
+                "link": "https://ssnab.it/ss/Catalog/Pred/PredsLimits.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал заявок кредитования клиентов",
+                "link": "https://ssnab.it/ss/Catalog/Pred/PredsCredits.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал договоров c контрагентами",
+                "link": "https://ssnab.it/ss/Catalog/Pred/PredsDogs.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал заявок на посещение ЦО",
+                "link": "https://ssnab.it/ss/CRM/Horders.aspx",
+                "items": null
+            },
+            {
+                "name": "Реестр долгов по документам покупателей",
+                "link": "https://ssnab.it/Ss/Stock/SDocsCollector31.aspx",
+                "items": null
+            },
+            {
+                "name": "Реестр долгов по документам поставщиков",
+                "link": "https://ssnab.it/Ss/Stock/SDocsCollector37.aspx",
+                "items": null
             }
         ]
     },
     {
-        "id": "2",
-        "name_category": "ТОРГОВЛЯ",
-        "sub_category": [
+        "name": "ТОРГОВЛЯ",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=153",
+        "items": [
             {
-                "id": "0",
                 "name": "ПЛАНИРОВАНИЕ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Журнал контрактов покупателей",
-                        "url": "https://ssnab.it/Sales/Contracts"
+                        "link": "https://ssnab.it/Sales/Contracts",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Регламент планирования продаж",
-                        "url": "https://ssnab.it/Ss/Sales/PlanMolsTovs/Reglament.aspx"
+                        "link": "https://ssnab.it/Ss/Sales/PlanMolsTovs/Reglament.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Лимиты планирования продаж",
+                        "link": "https://ssnab.it/Sales/PlanMolsTovs/limits",
+                        "items": null
+                    },
+                    {
+                        "name": "Реестр дефицитов",
+                        "link": "https://ssnab.it/Sales/PmtLimitDeficits",
+                        "items": null
+                    },
+                    {
+                        "name": "Потерянные продажи",
+                        "link": "https://ssnab.it/Sales/PmtDeficitSales",
+                        "items": null
+                    },
+                    {
+                        "name": "Планирование продаж (только для просмотра)",
+                        "link": "https://ssnab.it/Sales/PlanMolsTovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Реестр карточек потребности МП (планирование здесь)",
+                        "link": "https://ssnab.it/pmt#!/needcards",
+                        "items": null
+                    },
+                    {
+                        "name": "Монитор планирования МП",
+                        "link": "https://ssnab.it/pmt#!/planmanage",
+                        "items": null
+                    },
+                    {
+                        "name": "Планирование дохода продаж",
+                        "link": "https://ssnab.it/sales/planmolstovs/profits",
+                        "items": null
+                    },
+                    {
+                        "name": "Ведомость управления ТМЗ",
+                        "link": "https://ssnab.it/sales/pmtprovides/tmz",
+                        "items": null
+                    },
+                    {
+                        "name": "Новые товарные позиции",
+                        "link": "https://ssnab.it/catalog/tovsnews",
+                        "items": null
+                    },
+                    {
+                        "name": "Новые товарные продукты",
+                        "link": "https://ssnab.it/Catalog/tsmp",
+                        "items": null
+                    },
+                    {
+                        "name": "Реестр Заявок на АК",
+                        "link": "https://ssnab.it/Catalog/TsmpAKOrders",
+                        "items": null
+                    },
+                    {
+                        "name": "Детализация обеспечения",
+                        "link": "https://ssnab.it/sales/pmtprovides",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал квотирования",
+                        "link": "https://ssnab.it/sales/pmtquotes",
+                        "items": null
                     }
                 ]
             },
             {
-                "id": "1",
                 "name": "МОДЕЛИ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Рабочий календарь",
-                        "url": "https://ssnab.it/Ss/Personal/Calendar/Calendar.aspx",
-                        "sub_items": "1"
+                        "link": "https://ssnab.it/Ss/Personal/Calendar/Calendar.aspx",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Журнал лучших менеджеров",
-                        "url": "https://ssnab.it/personal/molsbest",
-                        "sub_items": "1"
+                        "link": "https://ssnab.it/personal/molsbest",
+                        "items": null
                     }
                 ]
+            },
+            {
+                "name": "АССОРТИМЕНТ-РИМ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Журнал РИМ",
+                        "link": "https://ssnab.it/catalog/rims",
+                        "items": null
+                    },
+                    {
+                        "name": "Группы эффективных решений",
+                        "link": "https://ssnab.it/catalog/esolutions",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник лент новостей",
+                        "link": "https://ssnab.it/crm/subscribers/categories",
+                        "items": null
+                    },
+                    {
+                        "name": "Виды готовой продукции",
+                        "link": "https://ssnab.it/catalog/products/",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал бонусов технологов",
+                        "link": "https://ssnab.it/kpi/techbonuses",
+                        "items": null
+                    },
+                    {
+                        "name": "Зоны ответственности технологов",
+                        "link": "https://ssnab.it/ss/catalog/rim/TechScopes.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Шаблоны РИМ",
+                        "link": "https://ssnab.it/ss/catalog/Rim/RimTemplates.aspx",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПРОЕКТЫ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Проектное управление",
+                        "link": "https://ssnab.it/projects/projects",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Мой ассортимент",
+                "link": "https://ssnab.it/catalog/rims/search",
+                "items": null
+            },
+            {
+                "name": "Лента новостей РИМ",
+                "link": "https://ssnab.it/ss/crm/rss/rimrss.aspx",
+                "items": null
+            },
+            {
+                "name": "Центр технологической поддержки",
+                "link": "https://ssnab.it/ss/projects/ttasks/ttasks.aspx",
+                "items": null
+            },
+            {
+                "name": "Прайс-лист",
+                "link": "https://ssnab.it/sales/plist",
+                "items": null
+            },
+            {
+                "name": "Прайс-листы интернет торговых площадок",
+                "link": "https://ssnab.it/eshop/places",
+                "items": null
+            },
+            {
+                "name": "Информационное табло по ассортименту",
+                "link": "https://ssnab.it/Ss/Sales/TovsInfo/Board.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал цен КД/ДФ",
+                "link": "https://ssnab.it/Ss/Sales/PlistFd.aspx",
+                "items": null
+            },
+            {
+                "name": "Остатки менеджера/отдела",
+                "link": "https://ssnab.it/Sales/Orders/Bunktov?showMe=true",
+                "items": null
+            },
+            {
+                "name": "Реестр заявок на продажу",
+                "link": "https://ssnab.it/Sales/Orders",
+                "items": null
+            },
+            {
+                "name": "Реестр заявок на возврат/претензий",
+                "link": "https://ssnab.it/Sales/Orders32",
+                "items": null
+            },
+            {
+                "name": "Журнал брака продукции ЗЛ",
+                "link": "https://ssnab.it/mfs/defectnews#/",
+                "items": null
+            },
+            {
+                "name": "Реестр заявок на перемещение",
+                "link": "https://ssnab.it/Sales/Orders/Orders47",
+                "items": null
+            },
+            {
+                "name": "Реестр накладных на реализацию",
+                "link": "https://ssnab.it/Stock/Sdocs?EXTRA_ID=1",
+                "items": null
+            },
+            {
+                "name": "Реестр оплат покупателей",
+                "link": "https://ssnab.it/Ss/Fin/Pays.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал учёта ПМП",
+                "link": "https://ssnab.it/Ss/Sales/Dus.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал учета бонусов",
+                "link": "https://ssnab.it/Fin/FindocOrders/Bonuses",
+                "items": null
+            },
+            {
+                "name": "Действующий ассортимент (ДНП)",
+                "link": "https://ssnab.it/catalog/pmttovs",
+                "items": null
+            },
+            {
+                "name": "Журнал спецификаций ТП",
+                "link": "https://ssnab.it/catalog/specification#/",
+                "items": null
+            },
+            {
+                "name": "Журнал спецификаций B2C",
+                "link": "https://ssnab.it/catalog/specificationb2cs#/",
+                "items": null
+            },
+            {
+                "name": "ЛК Логиста",
+                "link": "https://ssnab.it/personal/events#",
+                "items": null
             }
         ]
     },
     {
-        "id": "3",
-        "name_category": "СКЛАД",
-        "sub_category": [
+        "name": "СКЛАД",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=188",
+        "items": [
             {
-                "id": "0",
                 "name": "СПРАВОЧНИКИ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Справочник товарных позиций",
-                        "url": "https://ssnab.it/Catalog/Tovs"
+                        "link": "https://ssnab.it/Catalog/Tovs",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Справочник товарных продуктов",
-                        "url": "https://ssnab.it/ss/Catalog/Tov/TovsProducts.aspx"
+                        "link": "https://ssnab.it/ss/Catalog/Tov/TovsProducts.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник групп товарных позиций",
+                        "link": "https://ssnab.it/catalog/tovs/pgroups",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник видов готовой продукции",
+                        "link": "https://ssnab.it/catalog/products",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник складов",
+                        "link": "https://ssnab.it/stock/bunks",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник цехов",
+                        "link": "https://ssnab.it/mfs/sections",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник бригад",
+                        "link": "https://ssnab.it/Mfs/Brigades",
+                        "items": null
                     }
                 ]
             },
             {
-                "id": "1",
                 "name": "РАБОТА С ОБРАЗЦАМИ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Журнал заказа  образцов",
-                        "url": "https://ssnab.it/Sales/SmOrders"
+                        "link": "https://ssnab.it/Sales/SmOrders",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Журнал путевых листов",
-                        "url": "https://ssnab.it/Ss/Sales/SMOrdersRoutes.aspx"
+                        "link": "https://ssnab.it/Ss/Sales/SMOrdersRoutes.aspx",
+                        "items": null
                     }
                 ]
+            },
+            {
+                "name": "ПРОИЗВОДСТВО",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Оприходование готовой продукции",
+                        "link": "https://ssnab.it/Stock/WmsExchange/MfsEventTovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал рецептур",
+                        "link": "https://ssnab.it/Mfs/ReceiptsNews",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал штаммов",
+                        "link": "https://ssnab.ithttps://cisp.ssnab.ru/strains",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал актов приема-передачи штаммов",
+                        "link": "https://ssnab.it/mfs/straindocs/",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал контроля качества",
+                        "link": "https://ssnab.it/Mfs/Quality?SOURCE_BUNK_ID=891",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал контроля качества(Калуга)",
+                        "link": "https://ssnab.it/Mfs/Quality?SOURCE_BUNK_ID=892",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал контроля качества (Фермы)",
+                        "link": "https://ssnab.it/mfs/farmquality#/",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал несоответствий",
+                        "link": "https://ssnab.it/mfs/dissonances",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал замены сырья",
+                        "link": "https://ssnab.it/mfs/changes",
+                        "items": null
+                    },
+                    {
+                        "name": "Расчёт сырья для производства",
+                        "link": "https://ssnab.it/mfs/mfscalc",
+                        "items": null
+                    },
+                    {
+                        "name": "Технологические аналоги",
+                        "link": "https://ssnab.it/Mfs/Analogs",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник участков производства",
+                        "link": "https://ssnab.it/mfs/sections/",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник групп оборудования",
+                        "link": "https://ssnab.it/mfs/toir/",
+                        "items": null
+                    },
+                    {
+                        "name": "Табель производства",
+                        "link": "https://ssnab.it/mfs/zp",
+                        "items": null
+                    },
+                    {
+                        "name": "План производства",
+                        "link": "https://ssnab.it/mfs/mfsordersop/index",
+                        "items": null
+                    },
+                    {
+                        "name": "Производственный норматив",
+                        "link": "https://ssnab.it/fin/finmfsnorm#/items",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПРОИЗВОДСТВО (ПЛАНИРОВАНИЕ)",
+                "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1973",
+                "items": [
+                    {
+                        "name": "Планирование ГП (оперативный план)",
+                        "link": "https://ssnab.it/Ss/Mfs/Plan/PlanDays.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Планирование ГП (обеспечение)",
+                        "link": "https://ssnab.it/sales/pmtprovides/gp",
+                        "items": null
+                    },
+                    {
+                        "name": "Планирование ГП",
+                        "link": "https://ssnab.it/pmt/#!/mfsorders",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПРОИЗВОДСТВО (\"ШОКОЛАДКА\")",
+                "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1763",
+                "items": [
+                    {
+                        "name": "Действующие рецептуры (шоколадка)",
+                        "link": "https://ssnab.it/Ss/Mfs/Prv/Receipts.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал формирования загрузок",
+                        "link": "https://ssnab.it/Ss/Mfs/Prv/LoadingsList.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал загрузок",
+                        "link": "https://ssnab.it/Ss/Mfs/Prv/Loadings.aspx",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПРОИЗВОДСТВО (ЗАКВАСКИ)",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Планирование",
+                        "link": "https://ssnab.it/mfs/projects",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Реестр товарных документов",
+                "link": "https://ssnab.it/Stock/Sdocs",
+                "items": null
+            },
+            {
+                "name": "Реестр приходных накладных",
+                "link": "https://ssnab.it/Stock/Sdocs?EXTRA_ID=2",
+                "items": null
+            },
+            {
+                "name": "Складские остатки",
+                "link": "https://ssnab.it/Stock/Bunktov/Bunktovs",
+                "items": null
+            },
+            {
+                "name": "Складские остатки (NEW)",
+                "link": "https://ssnab.it/Stock/Bunktov",
+                "items": null
+            },
+            {
+                "name": "Персонифицированные остатки (TEST)",
+                "link": "https://ssnab.ithttps://cisp.ssnab.ru/personate",
+                "items": null
+            },
+            {
+                "name": "Складские остатки (перемещение)",
+                "link": "https://ssnab.it/Stock/Sdocs/Add/47",
+                "items": null
+            },
+            {
+                "name": "Оборотная ведомость по складу",
+                "link": "https://ssnab.it/Ss/Stock/OborotBunk.aspx",
+                "items": null
+            },
+            {
+                "name": "Оборотная ведомость по товарной позиции",
+                "link": "https://ssnab.it/Ss/Stock/OborotBunkTov.aspx",
+                "items": null
+            },
+            {
+                "name": "Ведомость распределенных продаж",
+                "link": "https://ssnab.it/Ss/Stock/AutobunksSchemas.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал разрешительных товарных документов",
+                "link": "https://ssnab.it/Catalog/Certificates",
+                "items": null
+            },
+            {
+                "name": "Перераспределение транспортных расходов",
+                "link": "https://ssnab.it/Stock/Transp",
+                "items": null
+            },
+            {
+                "name": "Учет показателей приборов",
+                "link": "https://ssnab.it/fin/CommunalPays",
+                "items": null
+            },
+            {
+                "name": "Журнал пересортов",
+                "link": "https://ssnab.it/stock/order38/orders/",
+                "items": null
+            },
+            {
+                "name": "Журнал бронирования (тестирование)",
+                "link": "https://ssnab.ithttps://test.ssnab.ru/pmt#!/reserves",
+                "items": null
             }
         ]
     },
     {
-        "id": "4",
-        "name_category": "ФИНАНСЫ",
-        "sub_category": [
+        "name": "ФИНАНСЫ",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=175",
+        "items": [
             {
-                "id": "0",
+                "name": "АНАЛИЗ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Реестр эффективности клиентов",
+                        "link": "https://ssnab.it/catalog/kpiparoles/kpiparoles?BOOK_ID=1",
+                        "items": null
+                    }
+                ]
+            },
+            {
                 "name": "РАСЧЕТНЫЕ СЧЕТА",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Журнал книг по р/с",
-                        "url": "https://ssnab.it/Ss/Fin/Findoc/FindocBooks.aspx?BookTypeId=2",
-                        "sub_items": "1"
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocBooks.aspx?BookTypeId=2",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Выписки по р/счетам",
-                        "url": "https://ssnab.it/Ss/Fin/Findoc/FindocBook.aspx?BookTypeId=2",
-                        "sub_items": "1"
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocBook.aspx?BookTypeId=2",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость по р/с",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocOborot.aspx?BookTypeId=2",
+                        "items": null
+                    },
+                    {
+                        "name": "Реестр платежных поручений",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/Findocs.aspx?paymentOrder=1",
+                        "items": null
                     }
                 ]
             },
             {
-                "id": "1",
                 "name": "КАССА",
+                "link": null,
                 "items": [
                     {
-                        "id": "1",
                         "name": "Управление ККМ",
-                        "url": "https://ssnab.it/fin/kkm#/kkm"
+                        "link": "https://ssnab.it/fin/kkm#/kkm",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Журнал книг по кассе",
-                        "url": "https://ssnab.it/Ss/Fin/Findoc/FindocBooks.aspx?BookTypeId=1"
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocBooks.aspx?BookTypeId=1",
+                        "items": null
+                    },
+                    {
+                        "name": "Выписки по кассовым книгам",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocBook.aspx?BookTypeId=1",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость по кассе",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocOborot.aspx?BookTypeId=1",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал ведомостей з/п",
+                        "link": "https://ssnab.it/Ss/Fin/ZpOrders/ZpOrders.aspx",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "СЕБЕСТОИМОСТЬ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Ведомость планирования себестоимости",
+                        "link": "https://ssnab.it/Sales/PlanPrices",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал приходов",
+                        "link": "https://ssnab.it/Ss/Fin/Cost/CstIndoc.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость по себестоимости",
+                        "link": "https://ssnab.it/Ss/Fin/Cost/CstBookSum.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Расчёт стоимости ГП",
+                        "link": "https://ssnab.it/Mfs/MfsCalcPrice",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ВЗАИМОРАСЧЕТЫ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Оборотная ведомость по покупателям",
+                        "link": "https://ssnab.it/Ss/Fin/DbtBookSum.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Выписка по покупателю",
+                        "link": "https://ssnab.it/fin/dbt#/dbtagent?SHOW_TOVS_WAITING=true&GROUP_EXPANDED=true&IS_DBT=true",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость по поставщикам",
+                        "link": "https://ssnab.it/Ss/Fin/DbtBookSum.aspx?isDbt=0",
+                        "items": null
+                    },
+                    {
+                        "name": "Выписка по поставщику",
+                        "link": "https://ssnab.it/fin/dbt#/dbtagent?SHOW_TOVS_WAITING=true&GROUP_EXPANDED=true&IS_DBT=false",
+                        "items": null
+                    },
+                    {
+                        "name": "Неоплаченный товар покупателей",
+                        "link": "https://ssnab.it/Fin/Dbt#/nopaid",
+                        "items": null
+                    },
+                    {
+                        "name": "Корректировка остатков по покупателям",
+                        "link": "https://ssnab.it/Ss/Fin/DbtSaldoStart.aspx?Type=751",
+                        "items": null
+                    },
+                    {
+                        "name": "Корректировка остатков по поставщикам",
+                        "link": "https://ssnab.it/Ss/Fin/DbtSaldoStart.aspx?Type=750",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал сверок взаиморасчетов с контрагентами",
+                        "link": "https://ssnab.it/Ss/Fin/PredsDbtRevises.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал аудита ПДЗ",
+                        "link": "https://ssnab.it/catalog/preds/auditpdz",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "БЮДЖЕТИРОВАНИЕ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Планирование БДР/ДДС",
+                        "link": "https://ssnab.it/Fin/PlanBdr",
+                        "items": null
+                    },
+                    {
+                        "name": "Выписка БДР",
+                        "link": "https://ssnab.it/Ss/Fin/Bdr/Bdr.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник статей БДР",
+                        "link": "https://ssnab.it/Fin/CostArticles",
+                        "items": null
+                    },
+                    {
+                        "name": "Администрирование БДР",
+                        "link": "https://ssnab.it/Fin/BdrDepts",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник ЦФО",
+                        "link": "https://ssnab.it/fin/cfo",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ЖУРНАЛЫ УЧЕТА",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Типы хозяйственных операций",
+                        "link": "https://ssnab.it/Ss/FA/DocTypes.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал операций по р/с",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/Findocs.aspx?BookTypeId=2",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал операций по кассе",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/Findocs.aspx?BookTypeId=1",
+                        "items": null
+                    },
+                    {
+                        "name": "Сводная оборотная ведомость по оплатам",
+                        "link": "https://ssnab.it/Ss/Fin/FindocOborotSum.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал начислений",
+                        "link": "https://ssnab.it/Ss/Fin/Expanses.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал авансовых отчетов, ссуд",
+                        "link": "https://ssnab.it/fin/advances",
+                        "items": null
+                    },
+                    {
+                        "name": "Заявки на закупку основных средств",
+                        "link": "https://ssnab.it/fa/orders/index",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал заявок на оплату",
+                        "link": "https://ssnab.it/fin/findocorders",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал согласования платежей",
+                        "link": "https://ssnab.it/fin/findocpays",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал доверенностей сотрудникам",
+                        "link": "https://ssnab.it/Ss/Fin/Warrants.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал транзитных операций",
+                        "link": "https://ssnab.it/Ss/Fin/Findoc/FindocTransits.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал входящих услуг 1С",
+                        "link": "https://ssnab.it/Fin/Indocs",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ОС,НМА",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Журнал объектов ОС,НМА",
+                        "link": "https://ssnab.it/ss/fa/FaAssets/FaAssetsObjs.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал операций ОС,НМА",
+                        "link": "https://ssnab.it/ss/fa/FaAssets/FaAssets.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал перемещений ОС,НМА",
+                        "link": "https://ssnab.it/fa/assets/moves",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник Группы объектов ОС,НМА",
+                        "link": "https://ssnab.it/ss/fa/FaAssets/FaAssetsGroups.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник Места эксплуатации ОС,НМА",
+                        "link": "https://ssnab.it/ss/fa/FaAssets/FaAssetsPlaces.aspx",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "СЕЛЬСКОЕ ХОЗЯЙСТВО",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Журнал операций С/Х",
+                        "link": "https://ssnab.it/Agro",
+                        "items": null
+                    },
+                    {
+                        "name": "Складские остатки",
+                        "link": "https://ssnab.it/Agro/Agro/BunkTovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость",
+                        "link": "https://ssnab.it/Agro/Agro/Oborot",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник материалов",
+                        "link": "https://ssnab.it/Agro/List/Materials",
+                        "items": null
+                    },
+                    {
+                        "name": "Типы операций по учёту материалов",
+                        "link": "https://ssnab.it/Agro/List/MaterialTypes",
+                        "items": null
+                    },
+                    {
+                        "name": "Номенклатура (животные и с/х продукция)",
+                        "link": "https://ssnab.it/Agro/List/Products",
+                        "items": null
+                    },
+                    {
+                        "name": "Типы операций по учёту в с/х",
+                        "link": "https://ssnab.it/Agro/List/ProductTypes",
+                        "items": null
+                    },
+                    {
+                        "name": "Склады учёта",
+                        "link": "https://ssnab.it/Agro/List/Bunks",
+                        "items": null
+                    },
+                    {
+                        "name": "Проекты",
+                        "link": "https://ssnab.it/Agro/List/Projects",
+                        "items": null
+                    },
+                    {
+                        "name": "Фермы",
+                        "link": "https://ssnab.ithttps://cisp.ssnab.ru/ferms",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "СТРОИТЕЛЬСТВО И МАТЕРИАЛЫ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Журнал операций строительства",
+                        "link": "https://ssnab.it/Fa/Build",
+                        "items": null
+                    },
+                    {
+                        "name": "Складские остатки",
+                        "link": "https://ssnab.it/Fa/Build/BunkTovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость",
+                        "link": "https://ssnab.it/Fa/Build/Oborot",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник материалов",
+                        "link": "https://ssnab.it/Fa/Build/Tovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Типы операций по учёту материалов",
+                        "link": "https://ssnab.it/Fa/Build/Types",
+                        "items": null
+                    },
+                    {
+                        "name": "Проекты",
+                        "link": "https://ssnab.it/Fa/Build/Projects",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал СМР",
+                        "link": "https://ssnab.it/fa/buildorders",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ЗАПЧАСТИ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Журнал операций по учету запчастей",
+                        "link": "https://ssnab.it/Catalog/Spares",
+                        "items": null
+                    },
+                    {
+                        "name": "Складские остатки",
+                        "link": "https://ssnab.it/Catalog/Spares/BunkTovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость",
+                        "link": "https://ssnab.it/Catalog/Spares/Oborot",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник запчастей",
+                        "link": "https://ssnab.it/Catalog/Spares/List/Materials",
+                        "items": null
+                    },
+                    {
+                        "name": "Типы хозяйственных операций по учёту ЗЧ",
+                        "link": "https://ssnab.it/Catalog/Spares/List/MaterialTypes",
+                        "items": null
+                    },
+                    {
+                        "name": "Склады учёта",
+                        "link": "https://ssnab.it/Catalog/Spares/List/Bunks",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал учета инструмента",
+                        "link": "https://ssnab.it/Catalog/Equipment",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "МЕТОДОЛОГИЯ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Журнал проводок",
+                        "link": "https://ssnab.it/Ss/Fa/Rules.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал формирования проводок",
+                        "link": "https://ssnab.it/ss/fa/FaBooks.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "План счетов",
+                        "link": "https://ssnab.it/ss/fa/Accounts.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник статей БДР (БДДС)",
+                        "link": "https://ssnab.it/Fin/CostArticles?dds",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник типов документов",
+                        "link": "https://ssnab.it/Ss/FA/DocTypes.aspx?FA",
+                        "items": null
                     }
                 ]
             }
         ]
     },
     {
-        "id": "5",
-        "name_category": "ЗАКУПКИ",
-        "sub_category": [
+        "name": "ЗАКУПКИ",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1364",
+        "items": [
             {
-                "id": "0",
                 "name": "ПЛАНИРОВАНИЕ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "График отгрузок",
-                        "url": "https://ssnab.it/Lgs/PlanShip"
+                        "link": "https://ssnab.it/Lgs/PlanShip",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Заявки на расчет цены склада",
-                        "url": "https://ssnab.it/Lgs/Prices"
+                        "link": "https://ssnab.it/Lgs/Prices",
+                        "items": null
+                    },
+                    {
+                        "name": "Транзитные сроки по поставщикам",
+                        "link": "https://ssnab.it/Ss/Lgs/VendorTranzit.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Сводная информация",
+                        "link": "https://ssnab.it/lgs/plan/planmonth",
+                        "items": null
+                    },
+                    {
+                        "name": "График заказов ТМЗ",
+                        "link": "https://ssnab.it/pmt#!/tmzmanage",
+                        "items": null
+                    },
+                    {
+                        "name": "Виза руководителя закупки",
+                        "link": "https://ssnab.it/pmt#!/tmzorders?statusId=22",
+                        "items": null
+                    },
+                    {
+                        "name": "Квартальный план приходов",
+                        "link": "https://ssnab.ithttps://cisp.ssnab.ru/provides",
+                        "items": null
+                    },
+                    {
+                        "name": "План МЗ",
+                        "link": "https://ssnab.it/pmt/#!/planmz/default",
+                        "items": null
+                    },
+                    {
+                        "name": "График заказов МЗ",
+                        "link": "https://ssnab.it/pmt#!/mz/orders",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал расчёта сырья (калькулятор)",
+                        "link": "https://ssnab.it/mfs/calc1",
+                        "items": null
+                    },
+                    {
+                        "name": "План производства переработки молока",
+                        "link": "https://ssnab.it/mfs/calc2",
+                        "items": null
                     }
                 ]
             },
             {
-                "id": "1",
-                "name": "ПОСТАВЩИКИ",
+                "name": "ЛОГИСТИКА",
+                "link": null,
                 "items": [
                     {
-                        "id": "1",
-                        "name": "Справочник поставщиков (КИСП)",
-                        "url": "https://ssnab.it/Ss/Lgs/Vendors/Vendors.aspx"
-                    },
-                    {
-                        "id": "1",
-                        "name": "Справочник поставщиков",
-                        "url": "https://ssnab.it/Ss/Lgs/Vendors/Vendors.aspx"
+                        "name": "Транспортный журнал",
+                        "link": "https://ssnab.it/lgservice/#!/journal",
+                        "items": null
                     }
                 ]
+            },
+            {
+                "name": "ПОСТАВЩИКИ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Справочник поставщиков (КИСП)",
+                        "link": "https://ssnab.it/Ss/Lgs/Vendors/Vendors.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Справочник поставщиков",
+                        "link": "https://ssnab.it/Ss/Lgs/Connect.aspx?refPage=MainFrame.asp?menuid=20",
+                        "items": null
+                    },
+                    {
+                        "name": "Контракты с поставщиками",
+                        "link": "https://ssnab.it/Ss/Lgs/Connect.aspx?refPage=MainFrame.asp?menuid=8",
+                        "items": null
+                    },
+                    {
+                        "name": "Продукция поставщиков",
+                        "link": "https://ssnab.it/lgs/vendorstovs",
+                        "items": null
+                    },
+                    {
+                        "name": "Журнал брака сырья",
+                        "link": "https://ssnab.it/Stock/Rdefects",
+                        "items": null
+                    },
+                    {
+                        "name": "Расчет оценки поставщика",
+                        "link": "https://ssnab.it/cropservice/",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ЗАЯВКИ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Заявки на отгрузку",
+                        "link": "https://ssnab.it/Ss/Lgs/Connect.aspx?refPage=MainFrame.asp?menuid=23",
+                        "items": null
+                    },
+                    {
+                        "name": "Товары в заявках",
+                        "link": "https://ssnab.it/Ss/Lgs/Connect.aspx?refPage=MainFrame.asp?menuid=22",
+                        "items": null
+                    },
+                    {
+                        "name": "План поставок",
+                        "link": "https://ssnab.it/Ss/Lgs/Connect.aspx?refPage=MainFrame.asp?menuid=84",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Оценка приходов",
+                "link": "https://ssnab.ithttps://cisp.ssnab.ru/provides/#!/score",
+                "items": null
+            },
+            {
+                "name": "Планирование закупок",
+                "link": "https://ssnab.it/sales/pmtprovides/mz",
+                "items": null
+            },
+            {
+                "name": "Журнал карточек отгрузок",
+                "link": "https://ssnab.it/Ss/Lgs/Card/LgsCards.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал инвойсов поставщиков",
+                "link": "https://ssnab.it/SS/lgs/Vendors/Invoices.aspx",
+                "items": null
+            },
+            {
+                "name": "Товары в пути",
+                "link": "https://ssnab.it/Ss/Stock/TovsWaiting.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал поиска образцов",
+                "link": "https://ssnab.it/lgs/samples#/",
+                "items": null
+            },
+            {
+                "name": "Журнал лимитов кредитования поставщиков",
+                "link": "https://ssnab.it/Ss/Lgs/Vendors/CreditLimits.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал расчета оптимальных условий закупки",
+                "link": "https://ssnab.it/Ss/lgs/BuyPrices.aspx",
+                "items": null
+            },
+            {
+                "name": "Лист согласования цены закупки",
+                "link": "https://ssnab.it/Ss/lgs/LgsPriceAgreements.aspx",
+                "items": null
+            },
+            {
+                "name": "Журнал контроля приходов",
+                "link": "https://ssnab.it/Ss/lgs/IndocControl.aspx",
+                "items": null
+            },
+            {
+                "name": "График оплат поставщикам",
+                "link": "https://ssnab.it/Fin/PaymentSchedule",
+                "items": null
             }
         ]
     },
     {
-        "id": "6",
-        "name_category": "ОТЧЕТЫ",
-        "sub_category": [
+        "name": "ОТЧЕТЫ",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1383",
+        "items": [
             {
-                "id": "0",
                 "name": "ТМЗ",
+                "link": null,
                 "items": [
                     {
-                        "id": "0",
                         "name": "Отчёт по остаткам (старый)",
-                        "url": "https://ssnab.it/"
+                        "link": "https://ssnab.it/reports/report/BunkLefts",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Отчёт по остаткам",
-                        "url": "https://ssnab.it/"
+                        "link": "https://ssnab.it/reports/report/BunkLeftsNew",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по потерянным продажам",
+                        "link": "https://ssnab.it/reports/report/PmtDeficitsSales",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по потерянным продажам, потенциальным",
+                        "link": "https://ssnab.it/reports/report/PmtDeficitsSalesPotential",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по движению товаров",
+                        "link": "https://ssnab.it/reports/report/CstBook",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по возвратам",
+                        "link": "https://ssnab.it/reports/report/TmzOrders32",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по возвратам 2",
+                        "link": "https://ssnab.it/reports/report/TmzOrders32_2",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по расчетам с поставщиками (закуп)",
+                        "link": "https://ssnab.it/reports/report/CdtNopaid",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт \"Оборотная ведомость по складу\"",
+                        "link": "https://ssnab.it/reports/report/BunkOborot",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по товарам в пути",
+                        "link": "https://ssnab.it/reports/report/TovsWaiting",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по товарам в пути (БЕ) на дату",
+                        "link": "https://ssnab.it/reports/report/TovsWaitingBuDate",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по логистическим затратам",
+                        "link": "https://ssnab.it/reports/report/LgsCosts",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по простоям",
+                        "link": "https://ssnab.it/reports/report/LgsCustomIdle",
+                        "items": null
+                    },
+                    {
+                        "name": "Сверка Иван-Поле WMS",
+                        "link": "https://ssnab.it/reports/report/IvanWmsReconciliation",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по ТМЗ: Остатки, Перемещения, Планы",
+                        "link": "https://ssnab.it/reports/report/Tmz2",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по Логистическим Услугам",
+                        "link": "https://ssnab.it/reports/report/LgsExpanses",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по персонификации",
+                        "link": "https://ssnab.it/reports/report/personate",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по остаткам из WMS (Иван-поле)",
+                        "link": "https://ssnab.it/reports/report/BunktovIp",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по Плану Приходов",
+                        "link": "https://ssnab.it/reports/report/DeliveriesPlan",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по контролю остатков Пищ.химии",
+                        "link": "https://ssnab.it/reports/report/BunktovChemControl",
+                        "items": null
+                    },
+                    {
+                        "name": "Сравнение плановой и фактической приемки сырья на цеховой склад",
+                        "link": "https://ssnab.it/reports/report/PlanFactChemControl",
+                        "items": null
                     }
                 ]
             },
             {
-                "id": "1",
                 "name": "ФИНАНСЫ",
+                "link": null,
                 "items": [
                     {
-                        "id": "1",
                         "name": "Отчёт ДДС",
-                        "url": "https://ssnab.it/"
+                        "link": "https://ssnab.it/reports/report/DDS",
+                        "items": null
                     },
                     {
-                        "id": "1",
                         "name": "Отчет ДДС (бюджеты)",
-                        "url": "https://ssnab.it/"
+                        "link": "https://ssnab.it/reports/report/ddsbudget",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет По Выручке",
+                        "link": "https://ssnab.it/reports/report/DDSR",
+                        "items": null
+                    },
+                    {
+                        "name": "Оборотная ведомость по фин. Книгам",
+                        "link": "https://ssnab.it/reports/report/FindocsOborot",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт БДР (новый)",
+                        "link": "https://ssnab.it/reports/report/BDR",
+                        "items": null
+                    },
+                    {
+                        "name": "Сводный отчёт по поставщикам",
+                        "link": "https://ssnab.it/reports/report/CdtBookSum",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по расчетам с поставщиками (фин)",
+                        "link": "https://ssnab.it/reports/report/CdtNopaidFin",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по а/о, ссудам",
+                        "link": "https://ssnab.it/reports/report/DbtAdvances",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по приходам",
+                        "link": "https://ssnab.it/reports/report/SDocIn",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по реализации",
+                        "link": "https://ssnab.it/reports/report/SDocOut",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по стоимостной об.ведомости",
+                        "link": "https://ssnab.it/reports/report/cstBunkCost",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по выпуску готовой продукции",
+                        "link": "https://ssnab.it/reports/report/MfsOutput",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по ОС",
+                        "link": "https://ssnab.it/Reports/Report/FaAssets",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по амортизации ОС, НМА",
+                        "link": "https://ssnab.it/reports/report/FaAssetsAmortizations",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по производственным планам",
+                        "link": "https://ssnab.it/reports/report/MfsPlanDays",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по лизинговым договорам",
+                        "link": "https://ssnab.it/reports/report/PdLeasing",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по кредитным договорам",
+                        "link": "https://ssnab.it/reports/report/PdCredits2",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по ценам",
+                        "link": "https://ssnab.it/reports/report/SalesPrices",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по сопоставлению оплат и отгрузок",
+                        "link": "https://ssnab.it/reports/report/FindocSdoc",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по себестоимости продукции с/х",
+                        "link": "https://ssnab.it/Reports/Report/AgroBdr",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по аудиту связанных документов",
+                        "link": "https://ssnab.it/reports/report/AuditDocRefs",
+                        "items": null
+                    },
+                    {
+                        "name": "Контроль авансовых отчётов",
+                        "link": "https://ssnab.it/reports/report/AdvancesControl",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по товарным документам и статьям затрат",
+                        "link": "https://ssnab.it/Reports/Report/SdocCostsArticles",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по детализации планирования затрат",
+                        "link": "https://ssnab.it/reports/report/BdrDetails",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по детализации планирования затрат по проектам",
+                        "link": "https://ssnab.it/reports/report/BdrInvestDetails",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по движению запчастей",
+                        "link": "https://ssnab.it/reports/report/SpareDocTov/",
+                        "items": null
+                    },
+                    {
+                        "name": "Детализация БДР",
+                        "link": "https://ssnab.it/reports/report/BdrDetails2",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по контролю разнесения документов",
+                        "link": "https://ssnab.it/reports/report/DocsPostingControl",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по соответствию цен прихода и выпуска ГП с плановой ценой",
+                        "link": "https://ssnab.it/reports/report/SDocInExt",
+                        "items": null
+                    },
+                    {
+                        "name": "Проверка задвоений WMS ИП",
+                        "link": "https://ssnab.it/reports/report/IvanCheckDoubles",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет для расчета доходности инвестиций",
+                        "link": "https://ssnab.it/reports/report/InvestmentCalc",
+                        "items": null
+                    },
+                    {
+                        "name": "Аналитика для расчета ТЭО",
+                        "link": "https://ssnab.it/reports/report/AnalyticForTeoCalc",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПОКАЗАТЕЛИ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Отчёт по штрафам ПДЗ",
+                        "link": "https://ssnab.it/reports/report/DbtForfeits",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по КП (по ТПР)",
+                        "link": "https://ssnab.it/reports/report/ParolesProducts5",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по победам",
+                        "link": "https://ssnab.it/reports/report/MolsTasks5",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по истории лимитов продаж",
+                        "link": "https://ssnab.it/reports/report/LimitsHist",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по выделенному ассортименту по МП",
+                        "link": "https://ssnab.it/reports/report/assortmentMp",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по задачам ЛК",
+                        "link": "https://ssnab.it/reports/report/LkTasks",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по себестоимости продукции с/х (молоко)_1",
+                        "link": "https://ssnab.it/reports/report/SbstSh1",
+                        "items": null
+                    },
+                    {
+                        "name": " Отчет по потенциальным ПКП (по ТПР)",
+                        "link": "https://ssnab.it/reports/report/Ppr",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по удаленной работе",
+                        "link": "https://ssnab.it/reports/report/molsstatouter",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по Спринт-Задачам",
+                        "link": "https://ssnab.it/reports/report/sprinttasks",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по оценкам заявок на оплату",
+                        "link": "https://ssnab.it/reports/report/findocordergrades",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по ПМП",
+                        "link": "https://ssnab.it/reports/report/pmpreport",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по оценке приходов",
+                        "link": "https://ssnab.it/reports/report/buyscore",
+                        "items": null
+                    },
+                    {
+                        "name": "Активность МП",
+                        "link": "https://ssnab.it/reports/report/MpActivityByParoles",
+                        "items": null
+                    },
+                    {
+                        "name": "Рейтинг ОТ",
+                        "link": "https://ssnab.it/reports/report/LkOtGradesCalc",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по лояльность клиентов",
+                        "link": "https://ssnab.it/reports/report/CustomerLoyalty",
+                        "items": null
+                    },
+                    {
+                        "name": "Кол-во просмотров по рейтингам",
+                        "link": "https://ssnab.it/reports/report/RatingsView",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по журналу замены сырья",
+                        "link": "https://ssnab.it/reports/report/changestovsreport",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по рейтингам",
+                        "link": "https://ssnab.it/reports/report/lkgrades",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПЕРСОНАЛ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Отчёт по согласованию договоров",
+                        "link": "https://ssnab.it/reports/report/FDocsOverdue",
+                        "items": null
+                    },
+                    {
+                        "name": " Отчет по программе \"Наставничество\"",
+                        "link": "https://ssnab.it/reports/report/MolMentor",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет по заявкам на перевод",
+                        "link": "https://ssnab.it/reports/report/TranslationOrdersList",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ПОДПИСКА",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Отчёт по Отправленной новости",
+                        "link": "https://ssnab.it/reports/report/CrmRssInfo",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчет о прочтении новостей",
+                        "link": "https://ssnab.it/reports/report/CrmRssMolsInfo",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "ДОПОЛНИТЕЛЬНО",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Онлайн отчет",
+                        "link": "https://ssnab.it/reports/report/OnlineReport",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по продажам (план/факт) (КБ)",
+                        "link": "https://ssnab.it/reports/report/PlanMolsTovs2",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по изменениям планов продаж",
+                        "link": "https://ssnab.it/reports/report/PlanMolsTovsChg",
+                        "items": null
+                    },
+                    {
+                        "name": "Подсчет заказов по источникам рекламы",
+                        "link": "https://ssnab.it/reports/report/CrmQueriesReport",
+                        "items": null
+                    },
+                    {
+                        "name": "----------------------------------------------------",
+                        "link": "https://ssnab.itseparator2320",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по РИМ",
+                        "link": "https://ssnab.it/reports/report/RimTodo",
+                        "items": null
+                    },
+                    {
+                        "name": "Отчёт по ЖНТПР",
+                        "link": "https://ssnab.it/reports/report/TsmpAprobation",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "КОНТРАГЕНТЫ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "ДР Клиентов",
+                        "link": "https://ssnab.it/reports/report/PredsContactsBirthday",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Публикация отчётов …",
+                "link": "https://ssnab.it/ReportsFiles/Upload",
+                "items": null
+            },
+            {
+                "name": "Отчёт по продажам (план/факт)",
+                "link": "https://ssnab.it/reports/report/PlanMolsTovs",
+                "items": null
+            },
+            {
+                "name": " Отчет по продажам (план/факт) Китай",
+                "link": "https://ssnab.it/reports/report/PlanFactChina",
+                "items": null
+            },
+            {
+                "name": "Отчет по продажам (план/факт) Д по отраслям",
+                "link": "https://ssnab.it/reports/report/PlanFactDistr",
+                "items": null
+            },
+            {
+                "name": "Отчёт по продажам (план/факт) Иван-Поле",
+                "link": "https://ssnab.it/reports/report/PlanMolsTovsIP",
+                "items": null
+            },
+            {
+                "name": "Отчёт продаж онлайн",
+                "link": "https://ssnab.it/Ss/Reports/Pivots/PlanMolsTovs.pivot",
+                "items": null
+            },
+            {
+                "name": "Сводный отчёт по покупателям",
+                "link": "https://ssnab.it/reports/report/DbtBookSum",
+                "items": null
+            },
+            {
+                "name": "Отчёт по расчетам с покупателями",
+                "link": "https://ssnab.it/reports/report/DbtNopaid",
+                "items": null
+            },
+            {
+                "name": "Отчёт \"Отгрузки-оплаты-дебиторы\"",
+                "link": "https://ssnab.it/reports/report/DbtSalePay",
+                "items": null
+            },
+            {
+                "name": "АГРОСИГНАЛ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Планы работ",
+                        "link": "https://ssnab.it/reports/report/AgroChecklistOvc",
+                        "items": null
+                    },
+                    {
+                        "name": "План-Факт",
+                        "link": "https://ssnab.it/reports/report/AgroPlanFact",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Отчёт по клиентской базе",
+                "link": "https://ssnab.it/reports/report/AzParolesTovGroups",
+                "items": null
+            },
+            {
+                "name": "Отчёт по журналу руководителя",
+                "link": "https://ssnab.it/reports/report/JChief",
+                "items": null
+            },
+            {
+                "name": "Отчёт по командировкам",
+                "link": "https://ssnab.it/reports/report/MolsCalendar",
+                "items": null
+            },
+            {
+                "name": "Отчет по транспортным расходам до покупателей (план/факт)",
+                "link": "https://ssnab.it/reports/report/SalesTransport",
+                "items": null
+            },
+            {
+                "name": "Нормативные МП",
+                "link": "https://ssnab.it/reports/report/FedNormativMp",
+                "items": null
+            },
+            {
+                "name": "Отчет по МП работающим 9 мес",
+                "link": "https://ssnab.it/reports/report/FedMp9Mes",
+                "items": null
+            },
+            {
+                "name": "Хорека общепит",
+                "link": "https://ssnab.it/reports/report/FedHorecaObwepit",
+                "items": null
+            },
+            {
+                "name": "Отчет по журналу задач и поручений",
+                "link": "https://ssnab.it/reports/report/tasks",
+                "items": null
+            },
+            {
+                "name": "Отчет по заказам образцов",
+                "link": "https://ssnab.it/reports/report/SmordersSdoc",
+                "items": null
+            },
+            {
+                "name": "Отчет по поставщикам ТМЦ",
+                "link": "https://ssnab.it/reports/report/SuppliersTMC",
+                "items": null
+            },
+            {
+                "name": "Отчет по анализу конкурентов поставщиков ТМЦ",
+                "link": "https://ssnab.it/reports/report/SuppliersAnalyticCompetitorsTMC",
+                "items": null
+            },
+            {
+                "name": "Отчет по лимитам дефицитов",
+                "link": "https://ssnab.it/reports/report/PmtLimitDeficits",
+                "items": null
+            }
+        ]
+    },
+    {
+        "name": "ПЕРСОНАЛ",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1421",
+        "items": [
+            {
+                "name": "ОБУЧЕНИЕ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Корпоративный университет",
+                        "link": "https://ssnab.it/ss/personal/OpenStudyLogon.aspx",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Журнал задач и поручений",
+                "link": "https://ssnab.it/Personal/Tasks",
+                "items": null
+            },
+            {
+                "name": "Система сбора и анализа информации",
+                "link": "https://ssnab.ithttps://cisp.ssnab.ru/examining",
+                "items": null
+            },
+            {
+                "name": "Сотрудники компании",
+                "link": "https://ssnab.it/personal/mols/my",
+                "items": null
+            },
+            {
+                "name": "Методика расчета",
+                "link": "https://ssnab.it/personal/mpoffice/methodologies",
+                "items": null
+            },
+            {
+                "name": "Монитор руководителя",
+                "link": "https://ssnab.it/Personal/Tasks/TasksMonitor",
+                "items": null
+            },
+            {
+                "name": "ЛИЧНЫЙ КАБИНЕТ МП",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Задачи",
+                        "link": "https://ssnab.it/personal/mpoffice/#/app/mptasks",
+                        "items": null
+                    },
+                    {
+                        "name": "Календарь",
+                        "link": "https://ssnab.it/personal/mpoffice/#/app/calendar",
+                        "items": null
+                    },
+                    {
+                        "name": "Квартальные задачи",
+                        "link": "https://ssnab.it/kpi/rtasks/plans",
+                        "items": null
+                    },
+                    {
+                        "name": "Помощь по результативным спринтам",
+                        "link": "https://ssnab.it/personal/mpoffice/#/app/taskrequests/",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "КАБИНЕТ РУКОВОДИТЕЛЯ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Главная страница",
+                        "link": "https://ssnab.it/personal/mpoffice#/app/lkr",
+                        "items": null
+                    },
+                    {
+                        "name": "Сводный отчёт по задачам",
+                        "link": "https://ssnab.it/reports/report/SolutionsReport",
+                        "items": null
+                    },
+                    {
+                        "name": "Сводный отчет по точкам роста",
+                        "link": "https://ssnab.it/reports/report/IndicatorsReport",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "Филиалы компании",
+                "link": "https://ssnab.it/Personal/Branches",
+                "items": null
+            },
+            {
+                "name": "Подразделения компании",
+                "link": "https://ssnab.it/personal/depts",
+                "items": null
+            },
+            {
+                "name": "Открытки подразделений",
+                "link": "https://ssnab.it/Personal/DeptsFeedbacks",
+                "items": null
+            },
+            {
+                "name": "Помощь сотруднику",
+                "link": "https://ssnab.it/Personal/MolsResp",
+                "items": null
+            },
+            {
+                "name": "Журнал командировочных направлений",
+                "link": "https://ssnab.it/Personal/Trips",
+                "items": null
+            },
+            {
+                "name": "Журнал командировок",
+                "link": "https://ssnab.it/personal/btrips",
+                "items": null
+            },
+            {
+                "name": "Журнал распоряжений",
+                "link": "https://ssnab.it/personal/cdocs",
+                "items": null
+            },
+            {
+                "name": "Журнал согласования договоров",
+                "link": "https://ssnab.it/Personal/FDocs",
+                "items": null
+            },
+            {
+                "name": "Журнал руководителя",
+                "link": "https://ssnab.it/SS/Personal/JChief/JChiefs.aspx",
+                "items": null
+            },
+            {
+                "name": "Модуль управления запросами (МУЗа)",
+                "link": "https://ssnab.it/crm/queries",
+                "items": null
+            },
+            {
+                "name": "Подписка на новости РИМ",
+                "link": "https://ssnab.it/Ss/CRM/RSS/Mols.aspx",
+                "items": null
+            },
+            {
+                "name": "Онлайн-меню кафетерий",
+                "link": "https://ssnab.it/Personal/TOrders",
+                "items": null
+            },
+            {
+                "name": "Голосование",
+                "link": "https://ssnab.it/Personal/Votes/Votes",
+                "items": null
+            },
+            {
+                "name": "Индикаторы активности",
+                "link": "https://ssnab.it/personal/mols/tasks",
+                "items": null
+            },
+            {
+                "name": "Оценки по Рейтингам",
+                "link": "https://ssnab.it/personal/molsrank#/",
+                "items": null
+            },
+            {
+                "name": "Оценки клуба руководителей",
+                "link": "https://ssnab.it/personal/TeamRank#/",
+                "items": null
+            },
+            {
+                "name": "Оценки дистрибьюторов",
+                "link": "https://ssnab.it/personal/distrank#/",
+                "items": null
+            },
+            {
+                "name": "Напоминания о днях рождения",
+                "link": "https://ssnab.it/personal/mols/reminder",
+                "items": null
+            },
+            {
+                "name": "Заявки на перевод",
+                "link": "https://ssnab.it/personal/translation/orders",
+                "items": null
+            },
+            {
+                "name": "Резерв переговорных",
+                "link": "https://ssnab.it/personal/rorders",
+                "items": null
+            },
+            {
+                "name": "Реестр сообщений МКИСП",
+                "link": "https://ssnab.it/Messages/MobilesHistory",
+                "items": null
+            },
+            {
+                "name": "Журнал заявок на подбор персонала",
+                "link": "https://ssnab.it/Personal/molsorder/",
+                "items": null
+            },
+            {
+                "name": "Турнирные таблицы игр",
+                "link": "https://ssnab.it/personal/piksgames",
+                "items": null
+            },
+            {
+                "name": "Задачи на закупку подарков",
+                "link": "https://ssnab.it/reports/report/ContactsPresents",
+                "items": null
+            },
+            {
+                "name": "Личный кабинет ОТ",
+                "link": "https://ssnab.it/personal/Events",
+                "items": null
+            },
+            {
+                "name": "Реестр Награждений",
+                "link": "https://ssnab.it/personal/molsawards#/?EXTRA_ID=1",
+                "items": null
+            }
+        ]
+    },
+    {
+        "name": "СИСТЕМА",
+        "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1511",
+        "items": [
+            {
+                "name": "Нумерация документов",
+                "link": "https://ssnab.it/enums",
+                "items": null
+            },
+            {
+                "name": "Использование КИСП",
+                "link": "https://ssnab.it/reports/report/CispUsed",
+                "items": null
+            },
+            {
+                "name": "АДМИНИСТРИРОВАНИЕ",
+                "link": null,
+                "items": [
+                    {
+                        "name": "Reports 2.0",
+                        "link": "https://ssnab.ithttps://cisp.ssnab.ru:4403",
+                        "items": null
+                    },
+                    {
+                        "name": "Расчет регистров",
+                        "link": "https://ssnab.it/Catalog/ReportsCalcs",
+                        "items": null
+                    },
+                    {
+                        "name": "Аудиенции",
+                        "link": "https://ssnab.it/Ss/Admin/Audiences.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Фасадные сервисы",
+                        "link": "https://ssnab.it/Ss/Admin/Services.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Новости",
+                        "link": "https://ssnab.it/Ss/Admin/NewsList.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Push уведомления (настройка)",
+                        "link": "https://ssnab.ithttps://cisp.ssnab.ru/messaging",
+                        "items": null
+                    }
+                ]
+            },
+            {
+                "name": "РАБОТА С 1C",
+                "link": "https://ssnab.it/Ss/Index.aspx?MenuGroupId=1516",
+                "items": [
+                    {
+                        "name": "Склады 1C",
+                        "link": "https://ssnab.it/Ss/IC/BunksMap.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Контрагенты 1C",
+                        "link": "https://ssnab.it/Ss/IC/PredsMap.aspx",
+                        "items": null
+                    },
+                    {
+                        "name": "Экспорт 1C",
+                        "link": "https://ssnab.it/IC/Export",
+                        "items": null
                     }
                 ]
             }

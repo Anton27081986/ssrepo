@@ -109,6 +109,7 @@
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom .ant-menu-item-group-title {
+    width: 280px;
     font-size: 16px;
     font-weight: bold;
     color: $black;
@@ -122,6 +123,7 @@
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom .ant-menu-item-group-list .ant-menu-item {
+    width: 282px;
     font-size: 14px;
     color: $black;
     padding-left: 0;
