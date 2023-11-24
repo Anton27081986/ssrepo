@@ -1,10 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable, take} from 'rxjs';
-import {map} from 'rxjs/operators';
-
-import {environment} from '@environments/environment';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {IUser} from '@app/pages/auth/models/user';
 
 @Injectable({providedIn: 'root'})
@@ -12,14 +9,14 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
-    public headers = new HttpHeaders()
-        .set('content-type', 'application/x-www-form-urlencoded')
-        .set(
-            'Accept',
-            'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        );
+    public baseUrl = `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it/`;
 
-    public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it'});
+    public headers = new HttpHeaders().set('content-type', 'application/x-www-form-urlencoded');
+
+    public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
+        'ReturnUrl',
+        'https://erp-dev.ssnab.it/',
+    );
 
     constructor(
         private readonly router: Router,
@@ -33,36 +30,45 @@ export class AuthenticationService {
         return this.userSubject.value;
     }
 
-    login(username: string, password: string): Observable<IUser> {
-        return this.http
-            .post<IUser>(`${environment.apiUrl}/users/authenticate`, {username, password})
-            .pipe(
-                map(user => {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('user', JSON.stringify(user));
-                    this.userSubject.next(user);
-
-                    return user;
-                }),
-            );
-    }
-
     // Basic Auth
-    loginBasic(Username: string, Password: string): Observable<any> {
-        return this.http
-            .post<any>(
-                `https://ssnab.it/login`,
-                {Username, Password},
-                {
-                    headers: this.headers,
-                    withCredentials: true,
-                    observe: 'response',
-                    params: this.params,
-                    responseType: 'text' as 'json',
-                    reportProgress: true,
-                },
-            )
-            .pipe(take(1));
+    // loginBasicOld(Username: string, Password: string): Observable<any> {
+    //     return this.http
+    //         .post<any>(
+    //             `https://ssnab.it/login`,
+    //             {Username, Password},
+    //             {
+    //                 headers: this.headers,
+    //                 withCredentials: true,
+    //                 observe: 'body',
+    //                 params: this.params,
+    //                 responseType: 'json',
+    //                 reportProgress: true,
+    //             },
+    //         )
+    //         .pipe(take(1));
+    // }
+
+    loginBasic(userName: string, password: string) {
+        const headers = new Headers();
+
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('No-Auth', 'True');
+
+        const body = new URLSearchParams();
+
+        body.set('Username', userName);
+        body.set('Password', password);
+        body.set('grant_type', 'password');
+
+        return this.http.post(this.baseUrl, body.toString(), {
+            headers: this.headers,
+            withCredentials: true,
+            observe: 'body',
+            // params: this.params,
+            responseType: 'json',
+            reportProgress: true,
+        });
     }
 
     logout() {
