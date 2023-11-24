@@ -9,13 +9,14 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
-    public baseUrl = `https://ssnab.it/login?ReturnUrl=https://erp-dev.ssnab.it/`;
+    public baseUrl = `https://ssnab.it/login`;
 
-    public headers = new HttpHeaders().set('content-type', 'application/x-www-form-urlencoded');
+    public headers = new HttpHeaders()
+    .set('Accept', 'application/json')
+    .set('Content-Type', 'application/x-www-form-urlencoded')
 
     public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
-        'ReturnUrl',
-        'https://erp-dev.ssnab.it/',
+        'ReturnUrl', 'https://erp-dev.ssnab.it/',
     );
 
     constructor(
@@ -30,31 +31,7 @@ export class AuthenticationService {
         return this.userSubject.value;
     }
 
-    // Basic Auth
-    // loginBasicOld(Username: string, Password: string): Observable<any> {
-    //     return this.http
-    //         .post<any>(
-    //             `https://ssnab.it/login`,
-    //             {Username, Password},
-    //             {
-    //                 headers: this.headers,
-    //                 withCredentials: true,
-    //                 observe: 'body',
-    //                 params: this.params,
-    //                 responseType: 'json',
-    //                 reportProgress: true,
-    //             },
-    //         )
-    //         .pipe(take(1));
-    // }
-
     loginBasic(userName: string, password: string) {
-        const headers = new Headers();
-
-        headers.append('Accept', 'application/json');
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
-        headers.append('No-Auth', 'True');
-
         const body = new URLSearchParams();
 
         body.set('Username', userName);
@@ -63,9 +40,9 @@ export class AuthenticationService {
 
         return this.http.post(this.baseUrl, body.toString(), {
             headers: this.headers,
-            withCredentials: true,
+            // withCredentials: true,
             observe: 'body',
-            // params: this.params,
+            params: this.params,
             responseType: 'json',
             reportProgress: true,
         });
