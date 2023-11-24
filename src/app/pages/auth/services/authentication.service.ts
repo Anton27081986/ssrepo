@@ -12,11 +12,12 @@ export class AuthenticationService {
     public baseUrl = `https://ssnab.it/login`;
 
     public headers = new HttpHeaders()
-    .set('Accept', 'application/json')
-    .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/x-www-form-urlencoded');
 
     public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
-        'ReturnUrl', 'https://erp-dev.ssnab.it/',
+        'ReturnUrl',
+        'https://erp-dev.ssnab.it/',
     );
 
     constructor(
