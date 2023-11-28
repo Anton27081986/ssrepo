@@ -9,7 +9,7 @@ import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class HeaderComponent implements OnInit {
     // @ts-ignore
@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): any {
         this.apiService.getMenuListJson().subscribe(item => {
+            console.log('item', item.menu);
             this.listMenu = item.menu;
         });
     }

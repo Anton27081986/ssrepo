@@ -23,7 +23,6 @@ export class FooterComponent implements OnInit {
 
     ngOnInit(): any {
         this.apiService.getSocialLink().subscribe(item => {
-            console.log('item.items', item.items);
             this.listIcon = item.items;
         });
     }
