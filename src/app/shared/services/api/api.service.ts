@@ -10,6 +10,7 @@ export class ApiService {
     constructor(private readonly http: HttpClient) {}
 
     public getMenuListJson(): Observable<IMainMenu[]> {
-        return this.http.get<IMainMenu[]>('./assets/data/menu.json');
+        // return this.http.get<IMainMenu[]>('./assets/data/menu.json');
+        return this.http.get<IMainMenu[]>('https://erp-dev.ssnab.it/api/company/menu');
     }
 }
