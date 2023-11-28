@@ -7,7 +7,7 @@ export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // console.log('Intercepting Request withCredentials=true ');
         request = request.clone({
-            withCredentials: true,
+            // withCredentials: true,
         });
 
         return next.handle(request);
