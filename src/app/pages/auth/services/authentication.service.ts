@@ -13,7 +13,7 @@ export class AuthenticationService {
 
     public headers = new HttpHeaders()
         .set('Accept', 'application/json')
-        .set('Access-Control-Allow-Origin', 'https://erp-dev.ssnab.it')
+        // .set('Access-Control-Allow-Origin', 'https://erp-dev.ssnab.it')
         .set('Content-Type', 'application/x-www-form-urlencoded');
 
     public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(

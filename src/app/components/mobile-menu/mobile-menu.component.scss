@@ -2,9 +2,14 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 .mobile-menu {
-    margin: 22px auto 0 auto;
-    display: flex;
-    justify-content: center;
+    //position: fixed;
+
+    .container {
+        margin: 22px auto 0 auto;
+        display: flex;
+        justify-content: center;
+        z-index: 20;
+    }
 
     ::ng-deep {
         .ant-tabs-content-holder {
@@ -123,6 +128,11 @@
 
         .ant-tabs-tab {
             border: 2px #e4e8ea solid;
+        }
+
+        .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap.ant-tabs-nav-wrap-ping-right::after,
+        .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap.ant-tabs-nav-wrap-ping-right::before {
+            opacity: 0 !important;
         }
     }
 }

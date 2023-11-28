@@ -9,8 +9,11 @@ import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 export class ApiService {
     constructor(private readonly http: HttpClient) {}
 
-    public getMenuListJson(): Observable<IMainMenu[]> {
-        // return this.http.get<IMainMenu[]>('./assets/data/menu.json');
+    public getMenuListJson(): Observable<any> {
         return this.http.get<IMainMenu[]>('https://erp-dev.ssnab.it/api/company/menu');
+    }
+
+    public getSocialLink(): Observable<any> {
+        return this.http.get<any>('https://erp-dev.ssnab.it/api/company/settings/favoriteLinks');
     }
 }

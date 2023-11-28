@@ -73,36 +73,13 @@
       </div>
       <div class="icons">
         <div class="group-wrapper">
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
-          <div class="icon-bg mail-social">
-            <span nz-icon [nzType]="'ss:mail'" class="mail-icon" nzTheme="outline"></span>
-          </div>
+          <ng-container *ngFor="let item of listIcon">
+            <div class="favicon">
+              <a href="{{item.linkUrl}}" target="_blank">
+                <img src="{{item.faviconIconUrl}}" alt="{{item.linkUrl}}" />
+              </a>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>

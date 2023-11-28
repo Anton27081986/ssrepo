@@ -1,3 +1,4 @@
 export interface IMainMenu {
-    menu: [];
+    name: string;
+    link: string;
 }

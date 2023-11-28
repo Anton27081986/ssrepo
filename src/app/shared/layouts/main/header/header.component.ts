@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): any {
         this.apiService.getMenuListJson().subscribe(item => {
-            this.listMenu = item;
+            this.listMenu = item.menu;
         });
     }
 

@@ -1,71 +1,17 @@
 <div class="mobile-menu">
-<!--<div class="mobile-menu">-->
-  <nz-tabset>
-    <nz-tab nzTitle="Избранное">
-      <ul nz-menu nzMode="inline">
-        <li nz-submenu nzTitle="Контрагенты">
-          <ul>
-            <li nz-menu-item>Справочник контрагентов</li>
-            <li nz-menu-item>Реестр благодарностей</li>
-            <li nz-menu-item>Товарная ведомость по клиенту</li>
-            <li nz-menu-item>Реестр долгов по документам покупателей</li>
-            <li nz-menu-item>Реестр долгов по документам поставщиков</li>
-          </ul>
-        </li>
-        <li nz-submenu nzTitle="Navigation Three">
-          <ul>
-            <li nz-menu-item>Option 11</li>
-            <li nz-menu-item>Option 12</li>
-            <li nz-menu-item>Option 13</li>
-          </ul>
-        </li>
-      </ul>
-    </nz-tab>
-    <nz-tab nzTitle="Контрагенты">
-      <ul nz-menu nzMode="inline">
-        <li nz-submenu nzTitle="Контрагенты">
-          <ul>
-            <li nz-menu-item>Справочник контрагентов</li>
-            <li nz-menu-item>Реестр благодарностей</li>
-            <li nz-menu-item>Товарная ведомость по клиенту</li>
-            <li nz-menu-item>Реестр долгов по документам покупателей</li>
-            <li nz-menu-item>Реестр долгов по документам поставщиков</li>
-          </ul>
-        </li>
-        <li nz-submenu nzTitle="Navigation Three">
-          <ul>
-            <li nz-menu-item>Option 11</li>
-            <li nz-menu-item>Option 12</li>
-            <li nz-menu-item>Option 13</li>
-          </ul>
-        </li>
-      </ul>
-    </nz-tab>
-    <nz-tab nzTitle="Tab 3">
-      <ul nz-menu nzMode="inline">
-        <li nz-submenu nzTitle="Navigation Two">
-          <ul>
-            <li nz-menu-item>Option 5</li>
-            <li nz-menu-item>Option 6</li>
-          </ul>
-        </li>
-        <li nz-submenu nzTitle="Navigation Three">
-          <ul>
-            <li nz-menu-item>Option 11</li>
-            <li nz-menu-item>Option 12</li>
-            <li nz-menu-item>Option 13</li>
-          </ul>
-        </li>
-      </ul>
-    </nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-    <nz-tab nzTitle="Tab 4"></nz-tab>
-  </nz-tabset>
+  <div class="container">
+    <nz-tabset>
+      <nz-tab *ngFor="let item of menu" nzTitle="{{ item.name }}">
+        <ul nz-menu nzMode="inline">
+          <li *ngFor="let subcategory of item.items" nz-submenu nzTitle="{{ subcategory.name }}">
+            <ul>
+              <li *ngFor="let subitem of subcategory.items" nz-menu-item>
+                <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nz-tab>
+    </nz-tabset>
+  </div>
 </div>

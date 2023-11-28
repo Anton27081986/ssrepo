@@ -104,6 +104,19 @@
                     }
                 }
             }
+
+            .favicon {
+                cursor: pointer;
+                margin-left: 10px;
+
+                img {
+                    width: 28px;
+                }
+            }
+
+            .favicon:first-child {
+                margin-left: 0;
+            }
         }
     }
 }
