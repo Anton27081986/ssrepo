@@ -8,4 +8,8 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 })
 export class MainMenuComponent {
     @Input() menu: any;
+
+    identify(index: any, item: any): any {
+        return item.id;
+    }
 }

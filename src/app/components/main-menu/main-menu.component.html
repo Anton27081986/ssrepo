@@ -1,13 +1,28 @@
 <ul nz-menu nzMode="horizontal" class="menu">
-  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false">
+  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="true">
     <ul>
-      <li *ngFor="let subcategory of item.items" nz-menu-group nzTitle="{{ subcategory.name }}">
-        <ul>
-          <li *ngFor="let subitem of subcategory.items" nz-menu-item>
-            <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
-          </li>
-        </ul>
-      </li>
+      <ng-container *ngFor="let subcategory of item.items; index as i">
+        <li nz-menu-group [nzTitle]="titleTpl" [class]="subcategory.link ? 'url': 'no-url'">
+          <ul>
+            <li *ngFor="let subitem of subcategory.items" nz-menu-item>
+              <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
+            </li>
+          </ul>
+        </li>
+        <ng-template #titleTpl>
+          <span>
+            <ng-container *ngIf="!subcategory.link">
+                {{ subcategory.name }}
+            </ng-container>
+
+            <ng-container *ngIf="subcategory.link">
+                <a href="{{ subcategory.link }}" class="without-url">{{ subcategory.name }}</a>
+            </ng-container>
+          </span>
+        </ng-template>
+
+      </ng-container>
     </ul>
   </li>
 </ul>
+

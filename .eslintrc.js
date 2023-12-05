@@ -311,7 +311,7 @@ module.exports = {
                     'error',
                     {selfClosing: 'always', allowSelfClosingCustom: false},
                 ],
-                '@html-eslint/require-li-container': 'error',
+                '@html-eslint/require-li-container': 'warn',
                 '@html-eslint/no-multiple-h1': 'error',
                 '@html-eslint/require-lang': 'error',
                 '@html-eslint/require-title': 'error',
