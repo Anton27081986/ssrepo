@@ -11,10 +11,16 @@ export class ApiService {
     constructor(private readonly http: HttpClient) {}
 
     public getMenuListJson(): Observable<any> {
-        return this.http.get<IMainMenu[]>(`${environment.apiUrl} + '/menu'`);
+        return this.http.get<IMainMenu[]>(`${environment.apiUrl}/menu`, {
+            // withCredentials: false,
+        });
     }
 
     public getSocialLink(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl} + '/settings/favoriteLinks'`);
+        return this.http.get<any[]>(`${environment.apiUrl}/settings/favoriteLinks`);
+    }
+
+    public getBanners(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/banners`);
     }
 }

@@ -1,5 +1,5 @@
 <ul nz-menu nzMode="horizontal" class="menu">
-  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="true">
+  <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false">
     <ul>
       <ng-container *ngFor="let subcategory of item.items; index as i">
         <li nz-menu-group [nzTitle]="titleTpl" [class]="subcategory.link ? 'url': 'no-url'">
@@ -16,7 +16,7 @@
             </ng-container>
 
             <ng-container *ngIf="subcategory.link">
-                <a href="{{ subcategory.link }}" class="without-url">{{ subcategory.name }}</a>
+                <a href="{{ subcategory.link }}" target="_blank" class="without-url">{{ subcategory.name }}</a>
             </ng-container>
           </span>
         </ng-template>

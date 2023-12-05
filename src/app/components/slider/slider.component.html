@@ -6,8 +6,8 @@
       [nzEffect]="'fade'"
       [nzEnableSwipe]="true"
       [nzLoop]="true">
-      <div nz-carousel-content *ngFor="let index of array">
-        <img ngSrc="{{ index }}" alt="Slide" fill="" />
+      <div nz-carousel-content *ngFor="let index of banners | async;">
+        <img ngSrc="{{ index.imageUrl }}" alt="{{ index.imageUrl }}" fill="" />
       </div>
     </nz-carousel>
   </div>
