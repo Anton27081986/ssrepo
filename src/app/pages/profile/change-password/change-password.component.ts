@@ -32,15 +32,14 @@ export class ChangePasswordComponent {
 
     ngOnInit() {
         this.myPasswordForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
+            username: ['', Validators.required],
             password: ['', Validators.required],
+            passwordRepeat: ['', Validators.required],
         });
+    }
+
+    get f() {
+        return this.myPasswordForm.controls;
     }
 
     onSubmit() {}

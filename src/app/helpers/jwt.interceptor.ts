@@ -9,8 +9,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
         // искл withCredentials для авторизацию в старом кисп
         if (request.url.indexOf('ssnab.it/login') !== -1) {
+            console.log('middle', request.url.indexOf('ssnab.it/login') !== -1);
+
             request = request.clone({
-                withCredentials: false,
+                withCredentials: true,
             });
         }
 
