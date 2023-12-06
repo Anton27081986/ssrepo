@@ -1,0 +1,47 @@
+@use 'src/assets/scss/_app.scss' as *;
+
+.my-menu {
+    p {
+        font-size: 16px;
+        line-height: 22px;
+        margin-top: 10px;
+    }
+
+    ::ng-deep .ant-form-vertical .ant-form-item {
+        width: 375px;
+    }
+
+    .filter {
+        display: flex;
+        justify-content: space-between;
+
+        .search {
+            svg {
+                // font-size: 30px;
+            }
+        }
+    }
+    .select {
+        display: flex;
+        justify-content: space-between;
+
+        .groups {
+            width: 375px;
+            border-radius: 30px;
+            border: 1px solid $border-color;
+            background-color: $gray-light;
+            margin-top: 20px;
+            padding: 11px 15px 11px 28px;
+
+            .item {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 9px;
+
+                span {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}

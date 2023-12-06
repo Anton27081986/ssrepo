@@ -1,0 +1,66 @@
+<div class="title">
+  <h1>Настроить пункты избранного</h1>
+</div>
+
+<div class="my-menu">
+  <p>Добавляйте в панель быстрого доступа наиболее удобные для вас пункты меню. Перетащите из левой колонки в правую чтобы они отображались в избранном в шапке</p>
+
+    <form nz-form [formGroup]="myMenuForm" nzLayout="vertical" class="settings-form m-t-35" (ngSubmit)="onSubmit()">
+      <div class="filter">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+              <input type="email" nz-input formControlName="login" placeholder="Поиск по общему меню" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="email" nz-input formControlName="login" placeholder="Выбранные пункты Избранного" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="select">
+        <div class="groups from">
+          <div class="item">
+            <span>Журнал контрактов покупателей</span>
+            <span nz-icon nzType="ss:arrowRight"></span>
+          </div>
+          <div class="item">
+            <span>Регламент планирования продаж</span>
+            <span nz-icon nzType="ss:arrowRight"></span>
+          </div>
+          <div class="item">
+            <span>Лимиты планирования продаж</span>
+            <span nz-icon nzType="ss:arrowRight"></span>
+          </div>
+        </div>
+        <div class="groups to">
+          <div class="item">
+            <span>Журнал контрактов покупателей</span>
+            <span nz-icon nzType="ss:closeLight"></span>
+          </div>
+          <div class="item">
+            <span>Регламент планирования продаж</span>
+            <span nz-icon nzType="ss:closeLight"></span>
+          </div>
+          <div class="item">
+            <span>Лимиты планирования продаж</span>
+            <span nz-icon nzType="ss:closeLight"></span>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <ng-template #suffixIconSearch>
+      <span class="search" nz-icon nzType="ss:search"></span>
+    </ng-template>
+
+    <ng-template #prefixUser>
+      <i class="star" nz-icon nzType="ss:star"></i>
+    </ng-template>
+</div>
+
+

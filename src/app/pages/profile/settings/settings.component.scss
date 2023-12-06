@@ -1,0 +1,39 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/assets/scss/_app.scss' as *;
+
+.settings {
+    ::ng-deep .ant-form-vertical .ant-form-item-label > label {
+        font-size: 12px;
+    }
+
+    display: flex;
+
+    .photo {
+        margin-top: 26px;
+
+        .img {
+            width: 110px;
+            height: 110px;
+
+            img {
+                width: 110px;
+                height: 110px;
+            }
+        }
+    }
+    .feilds {
+        height: 600px;
+        margin-left: 43px;
+
+        ::ng-deep .ant-form-vertical .ant-form-item {
+            width: 300px;
+        }
+
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+}

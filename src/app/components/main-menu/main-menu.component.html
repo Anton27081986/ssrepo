@@ -1,4 +1,5 @@
 <ul nz-menu nzMode="horizontal" class="menu">
+  <li nz-submenu nzTitle="Избранное"></li>
   <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzPlacement]="'topLeft'" [nzOpen]="false">
     <ul>
       <ng-container *ngFor="let subcategory of item.items; index as i">

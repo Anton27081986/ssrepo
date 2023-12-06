@@ -3,6 +3,8 @@
 
 ::ng-deep {
     .profile-popup {
+        border: 1px solid $border-color;
+
         hr {
             margin-top: 15px;
             margin-bottom: 0;

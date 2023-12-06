@@ -1,34 +1,34 @@
 <div class="settings">
   <div class="left-menu">
     <div class="group">
-      <div class="item">
+      <div class="item" [routerLink]="'settings'">
         <span class="icon left-icon" nz-icon [nzType]="'ss:settings'"></span>
         <span class="title">Настройки профиля</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
-      <div class="item">
+      <div class="item" [routerLink]="'change-password'">
         <span class="icon left-icon" nz-icon [nzType]="'ss:password'"></span>
         <span class="title">Изменить пароль</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
-      <div class="item">
+      <div class="item" [routerLink]="'manager-profiles'">
         <span class="icon left-icon" nz-icon [nzType]="'ss:profile'"></span>
         <span class="title">Управление другими профилями</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
     </div>
     <div class="group">
-      <div class="item">
+      <div class="item" [routerLink]="'my-menu'">
         <span class="icon left-icon" nz-icon [nzType]="'ss:star'"></span>
         <span class="title">Настроить пункты моего меню</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
-      <div class="item">
+      <div class="item" [routerLink]="'order-widgets'">
         <span class="icon left-icon" nz-icon [nzType]="'ss:sort'"></span>
         <span class="title">Упорядочить виджеты</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
-      <div class="item">
+      <div class="item" [routerLink]="'notifications'">
         <span class="icon left-icon icon-remind" nz-icon [nzType]="'ss:iconRemind'"></span>
         <span class="title">Уведомления</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
@@ -39,7 +39,7 @@
         <span class="icon left-icon" nz-icon [nzType]="'ss:theme'"></span>
         <div class="title-ext">
           <span class="title">Тема оформления</span>
-          <span class="subtitle">Включить темную тему</span>
+          <span class="subtitle">Включ ить темную тему</span>
         </div>
         <div class="toggle">
           <nz-switch [(ngModel)]="switchValue" (ngModelChange)="toggleTheme()"></nz-switch>
@@ -50,12 +50,7 @@
 
   <div class="content">
     <div class="container">
-      <div class="title">
-        <h1>Основная информация</h1>
-      </div>
-      <div class="card">
-
-      </div>
+        <router-outlet></router-outlet>
     </div>
   </div>
 

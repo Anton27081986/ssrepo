@@ -12,9 +12,19 @@ body {
 
     .profile-popup {
         background-color: #1b2123;
+        border: 0.5px solid #394245;
 
         .manager .button-icon-left {
             background-color: #4770ff;
+        }
+    }
+
+    .title {
+        color: #ffffff !important;
+
+        h1,
+        .h1 {
+            color: #ffffff !important;
         }
     }
 
@@ -42,7 +52,7 @@ body {
 
         .ant-menu-item {
             &:hover {
-                background-color: #31393d;
+                background-color: unset;
             }
         }
     }
@@ -52,17 +62,17 @@ body {
     }
 
     .ant-layout {
-        background-color: #292e30 !important;
+        background-color: #0e0f10 !important;
     }
 
     .ant-layout-content {
         .content-container {
-            background: #292e30;
+            background: #0e0f10;
         }
     }
 
     app-footer {
-        background-color: #292e30 !important;
+        background-color: #0e0f10 !important;
     }
 
     .ant-layout-footer {
@@ -129,12 +139,12 @@ body {
     form {
         // Background search
         .ant-input-affix-wrapper {
-            background: #31393d;
+            background-color: #31393d !important;
             color: #fff;
         }
         // Background search
         .ant-input.ant-input-stepperless {
-            background-color: #31393d;
+            background-color: #31393d !important;
         }
     }
 
@@ -154,14 +164,56 @@ body {
             }
         }
     }
+
+    .settings {
+        .content {
+            background-color: #1b2023 !important;
+        }
+    }
+
+    .content {
+        background-color: #0e0f10 !important;
+    }
+
+    .group {
+        background-color: #202629 !important;
+    }
+
+    .item {
+        background-color: #202629 !important;
+    }
 }
 
-::ng-deep .ant-menu-submenu .menu-item-custom {
-    padding: 36px;
+// Главное меню
+
+::ng-deep .ant-menu-submenu-placement-bottom {
+    //top: -4px!important;
+    //position: relative;
+}
+
+.ant-menu-submenu .menu-item-custom {
+    top: 4px !important;
+}
+
+::ng-deep .ant-menu-submenu:after {
+    content: url('data:image/svg+xml,<svg width="46" height="29" viewBox="0 0 46 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.7329 1.61585C21.9292 0.235568 24.0708 0.235569 25.2671 1.61585L44.6972 24.0352C46.3809 25.9779 45.0009 29 42.4301 29H3.56989C0.999115 29 -0.380858 25.9779 1.30282 24.0352L20.7329 1.61585Z" fill="%23202629"/></svg>') !important;
 }
 
 :host ::ng-deep .ant-menu-light .ant-menu-submenu-title {
     color: #ffffff;
+}
+
+.menu-item-custom::-webkit-scrollbar-track {
+    background-color: #202629;
+}
+
+.menu-item-custom {
+    scrollbar-color: #ffffff;
+    scrollbar-width: thin;
+}
+
+.menu-item-custom::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
 }
 
 /** Мобильное меню */
@@ -194,6 +246,11 @@ body {
     padding: 36px;
 }
 
-.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title {
+.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title,
+.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title .without-url {
     color: #ffffff;
+}
+
+.ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
+    border: 0.5px solid #394245;
 }
