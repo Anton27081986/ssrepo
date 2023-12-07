@@ -12,7 +12,7 @@ export class ApiService {
 
     public getMenuListJson(): Observable<any> {
         return this.http.get<IMainMenu[]>(`${environment.apiUrl}/menu`, {
-            // withCredentials: false,
+            withCredentials: false,
         });
     }
 
@@ -22,5 +22,23 @@ export class ApiService {
 
     public getBanners(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/banners`);
+    }
+
+    public getAccounts(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/accounts`);
+    }
+
+    public getWidgets(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/widgets`);
+    }
+
+    // Получить прочие настройки пользователя
+    public getSettings(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/settings`);
+    }
+
+    // Theme
+    public getTheme(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/theme`);
     }
 }

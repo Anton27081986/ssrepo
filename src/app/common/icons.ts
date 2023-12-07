@@ -117,6 +117,20 @@ export class AppIcons {
         '<path d="M1 13L7 7C4.99717 4.99717 3.00283 3.00283 1 1" stroke="#D9D9D9" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
 
+    static arrowRightH =
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<rect width="24" height="24" rx="8" transform="matrix(-1 0 0 1 24 0)" fill="#22223A" fill-opacity="0.1"/>\n' +
+        '<path d="M12.5728 16.8125L17.5 12C15.8553 10.3936 14.2175 8.79394 12.5728 7.1875" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M17.5 12H6.5" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '</svg>';
+
+    static closeFill =
+        '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<rect width="24" height="24" rx="8" transform="matrix(-1 0 0 1 24 0)" fill="#22223A" fill-opacity="0.1"/>\n' +
+        '<path d="M16.75 16.75L8.25 8.25" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M8.25 16.75L16.75 8.25" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '</svg>\n';
+
     static enter =
         '<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
         '<path d="M5.19189 4.45518C5.37273 2.35518 6.45189 1.49768 8.81439 1.49768H8.89023C11.4977 1.49768 12.5419 2.54185 12.5419 5.14935V8.95268C12.5419 11.5602 11.4977 12.6043 8.89023 12.6043H8.81439C6.46939 12.6043 5.39023 11.7585 5.19773 9.69351" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +

@@ -4,6 +4,10 @@
 @layout-header-background: @component-background;
 
 body {
+    p {
+        color: #ffffff!important;
+    }
+
     color: #ffffff;
 
     .wrapper {
@@ -19,12 +23,26 @@ body {
         }
     }
 
+    .select {
+        .groups {
+            background-color: #202629!important;
+            border: 1px solid #394245!important;
+        }
+    }
+
     .title {
         color: #ffffff !important;
 
         h1,
         .h1 {
             color: #ffffff !important;
+        }
+    }
+
+    .filter {
+        .favorite-title {
+            background-color: #202629!important;
+            border: 1px solid #394245!important;
         }
     }
 
@@ -84,7 +102,7 @@ body {
         fill: #31393d !important;
 
         path {
-            stroke: #ffffff !important;
+           stroke: #ffffff !important;
         }
     }
 
@@ -93,7 +111,8 @@ body {
         .logo {
             svg {
                 path {
-                    fill: #f4f5f6;
+                   fill: #f4f5f6;
+                    // stroke: #4770ff !important;
                 }
             }
         }
@@ -139,12 +158,12 @@ body {
     form {
         // Background search
         .ant-input-affix-wrapper {
-            background-color: #31393d !important;
+            background-color: #202629 !important;
             color: #fff;
         }
         // Background search
         .ant-input.ant-input-stepperless {
-            background-color: #31393d !important;
+            background-color: #202629 !important;
         }
     }
 

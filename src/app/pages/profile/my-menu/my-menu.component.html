@@ -14,49 +14,67 @@
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
-        <nz-form-item>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input formControlName="login" value="Выбранные пункты Избранного" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
 
-<!--        <div class="favorite-title">-->
-<!--          <span nz-icon nzType="ss:star"></span>-->
-<!--          <span>Выбранные пункты Избранного</span>-->
-<!--        </div>-->
+        <div class="favorite-title">
+          <span class="icon" nz-icon nzType="ss:star"></span>
+          <span class="text">Выбранные пункты Избранного</span>
+        </div>
 
       </div>
       <div class="select">
         <div class="groups from">
+          <div class="category">
+            <div class="title">
+              <span>ТОРГОВЛЯ</span>
+              <span nz-icon nzType="ss:arrowBottom"></span>
+            </div>
+            <div class="items"></div>
+          </div>
+          <div class="category">
+            <div class="title">
+              <span>Ассортимент РИМ</span>
+              <span nz-icon nzType="ss:arrowBottom"></span>
+            </div>
+            <div class="items"></div>
+          </div>
+          <div class="category">
+            <div class="title">
+              <span>Планирование</span>
+              <span nz-icon nzType="ss:arrowBottom"></span>
+            </div>
+            <div class="items"></div>
+          </div>
           <div class="item">
             <span>Журнал контрактов покупателей</span>
-            <span nz-icon nzType="ss:arrowRight"></span>
+            <span nz-icon nzType="ss:arrowRightH"></span>
           </div>
           <div class="item">
             <span>Регламент планирования продаж</span>
-            <span nz-icon nzType="ss:arrowRight"></span>
+            <span nz-icon nzType="ss:arrowRightH"></span>
           </div>
           <div class="item">
             <span>Лимиты планирования продаж</span>
-            <span nz-icon nzType="ss:arrowRight"></span>
+            <span nz-icon nzType="ss:arrowRightH"></span>
           </div>
         </div>
         <div class="groups to">
           <div class="item">
             <span>Журнал контрактов покупателей</span>
-            <span nz-icon nzType="ss:closeLight"></span>
+            <span nz-icon nzType="ss:closeFill"></span>
           </div>
           <div class="item">
             <span>Регламент планирования продаж</span>
-            <span nz-icon nzType="ss:closeLight"></span>
+            <span nz-icon nzType="ss:closeFill"></span>
           </div>
           <div class="item">
             <span>Лимиты планирования продаж</span>
-            <span nz-icon nzType="ss:closeLight"></span>
+            <span nz-icon nzType="ss:closeFill"></span>
           </div>
         </div>
+      </div>
+
+      <div class="d-flex justify-content-center m-b-30 m-t-45">
+        <button nz-button class="my-menu-button" [nzType]="'primary'">Сохранить изменения</button>
       </div>
     </form>
 

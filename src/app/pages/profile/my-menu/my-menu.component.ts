@@ -18,8 +18,11 @@ export class MyMenuComponent {
     ) {
         this.iconService.addIconLiteral('ss:search', AppIcons.iconSearch);
         this.iconService.addIconLiteral('ss:favorite', AppIcons.star);
-        this.iconService.addIconLiteral('ss:closeLight', AppIcons.iconCloseLight);
-        this.iconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
+
+        this.iconService.addIconLiteral('ss:closeFill', AppIcons.closeFill);
+        this.iconService.addIconLiteral('ss:arrowRightH', AppIcons.arrowRightH);
+
+        this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
     }
 
     ngOnInit() {
