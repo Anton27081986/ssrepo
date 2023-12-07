@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {NzIconService} from "ng-zorro-antd/icon";
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NzIconService} from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'app-recovery-password',
-  templateUrl: './recovery-password.component.html',
-  styleUrls: ['./recovery-password.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-recovery-password',
+    templateUrl: './recovery-password.component.html',
+    styleUrls: ['./recovery-password.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecoveryPasswordComponent {
     recoveryForm!: FormGroup;

@@ -19,7 +19,7 @@ import {MyMenuComponent} from './my-menu/my-menu.component';
 import {ManagerComponent} from './manager/manager.component';
 import {OrderWidgetsComponent} from './order-widgets/order-widgets.component';
 import {NotificationsComponent} from './notifications/notifications.component';
-import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
+import {RecoveryPasswordComponent} from './recovery-password/recovery-password.component';
 
 @NgModule({
     declarations: [
