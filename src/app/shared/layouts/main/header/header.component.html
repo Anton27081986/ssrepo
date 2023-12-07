@@ -31,46 +31,9 @@
               <span nz-icon [nzType]="statusInputSearchMobile ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearchMobile($event)"></span>
             </div>
           </div>
-          <div class="icon-bg remind">
-            <span class="remind-dot">
-              <span>1</span>
-            </span>
 
-            <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="popNotification" [nzPlacement]="'bottomRight'">
-              <i nz-icon nzType="ss:remind" theme="outline"></i>
-            </a>
-            <nz-dropdown-menu #popNotification="nzDropdownMenu">
-              <div nz-menu class="pop-notification">
-                <div class="p-v-15 p-h-25 border-bottom d-flex justify-content-between align-items-center">
-                  <p class="text-dark font-weight-semibold m-b-0">
-                    <i nz-icon nzType="bell" theme="outline"></i>
-                    <span class="m-l-10">Уведомления</span>
-                  </p>
-                  <a nz-button nzType="link" nzSize="small" class="p-v-5" [routerLink]="''">
-                    <small>Показать все</small>
-                  </a>
-                </div>
-                <ng-scrollbar class="overflow-y-auto scrollbar">
-                  <nz-list class="ant-list-item-links" [nzDataSource]="notificationList" [nzRenderItem]="item" [nzItemLayout]="'horizontal'">
-                    <ng-template #item let-item>
-                      <nz-list-item>
-                        <a [routerLink]="''">
-                          <div class="d-flex">
-                            <nz-avatar [nzIcon]="item.icon" [ngClass]="item.color"></nz-avatar>
-                            <div class="m-l-15">
-                              <p class="m-b-0 text-dark">{{item.title}}</p>
-                              <p class="m-b-0">
-                                <small>{{item.time}} ago</small>
-                              </p>
-                            </div>
-                          </div>
-                        </a>
-                      </nz-list-item>
-                    </ng-template>
-                  </nz-list>
-                </ng-scrollbar>
-              </div>
-            </nz-dropdown-menu>
+          <div>
+            <app-notification></app-notification>
           </div>
 
             <div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">

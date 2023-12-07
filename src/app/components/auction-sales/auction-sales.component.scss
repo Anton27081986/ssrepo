@@ -1,0 +1,50 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.auction-sales {
+    .header {
+        display: flex;
+        justify-content: space-between;
+
+        .open-all-table {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .table {
+        margin-top: 20px;
+
+        ::ng-deep {
+            .ant-table {
+                border-radius: $border-radius;
+                overflow: hidden;
+            }
+
+            .ant-table-thead > tr > th {
+                height: 45px;
+                text-align: center;
+                background: #e6ebee;
+                padding: 2px 2px;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .ant-table-thead > tr > th:nth-child(1) {
+                width: 520px;
+            }
+
+            .ant-table-tbody > tr > td {
+                padding: 13px 19px;
+                font-size: 16px;
+                color: $black;
+                font-weight: 600;
+                text-align: center;
+            }
+
+            .ant-table-tbody > tr > td:nth-child(1) {
+                text-align: left;
+            }
+        }
+    }
+}

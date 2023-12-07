@@ -13,6 +13,14 @@ import {NzTabsModule} from 'ng-zorro-antd/tabs';
 import {ProfilePopupComponent} from './profile-popup/profile-popup.component';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {RouterLink} from '@angular/router';
+import {AuctionSalesComponent} from './auction-sales/auction-sales.component';
+import {NzTableModule} from 'ng-zorro-antd/table';
+import {NzDividerModule} from 'ng-zorro-antd/divider';
+import {NotificationComponent} from './notification/notification.component';
+import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
+import {NgScrollbar} from 'ngx-scrollbar';
+import {NzListModule} from 'ng-zorro-antd/list';
+import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 
 @NgModule({
     declarations: [
@@ -21,6 +29,8 @@ import {RouterLink} from '@angular/router';
         MainMenuComponent,
         MobileMenuComponent,
         ProfilePopupComponent,
+        AuctionSalesComponent,
+        NotificationComponent,
     ],
     imports: [
         CommonModule,
@@ -33,7 +43,20 @@ import {RouterLink} from '@angular/router';
         NzTabsModule,
         NzButtonModule,
         NgOptimizedImage,
+        NzTableModule,
+        NzDividerModule,
+        NzDropDownModule,
+        NgScrollbar,
+        NzListModule,
+        NzAvatarModule,
     ],
-    exports: [SearchComponent, MainMenuComponent, MobileMenuComponent, ProfilePopupComponent],
+    exports: [
+        SearchComponent,
+        MainMenuComponent,
+        MobileMenuComponent,
+        ProfilePopupComponent,
+        AuctionSalesComponent,
+        NotificationComponent,
+    ],
 })
 export class ComponentsModule {}

@@ -60,7 +60,7 @@ body {
             line-height: $btn-line-height;
 
             &.ant-btn-sm {
-                padding-top: 0.45rem !important;
+                padding-top: 0.65rem !important;
             }
 
             &.ant-btn-lg {
@@ -185,6 +185,7 @@ body {
         border-color: $brand-primary;
         color: $white;
         border-radius: 16px;
+        font-size: 16px;
 
         &:hover,
         &:focus {

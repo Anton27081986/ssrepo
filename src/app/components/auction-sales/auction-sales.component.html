@@ -1,0 +1,46 @@
+<div class="auction-sales">
+  <div class="header">
+    <div>
+      <div class="title">
+        <h1>АУКЦИОННЫЕ ПРОДАЖИ</h1>
+      </div>
+      <div class="subtitle">
+        <h2>Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</h2>
+      </div>
+    </div>
+    <div class="open-all-table">
+      <div>
+        <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="table">
+      <nz-table #basicTable [nzData]="listOfData">
+        <thead>
+        <tr>
+          <th>ТП</th>
+          <th>Доступность</th>
+          <th>Цена прайса</th>
+          <th>Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.name }}</td>
+          <td>{{ data.availability }} ru</td>
+          <td>{{ data.price }} USD</td>
+          <td>{{ data.amount }}</td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+<!--    <div class="count">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">...</div>
+    </div>-->
+  </div>
+</div>
