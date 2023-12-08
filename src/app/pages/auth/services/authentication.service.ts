@@ -37,14 +37,17 @@ export class AuthenticationService {
         return this.userSubject.value;
     }
 
-    loginBasic(userName: string, password: string) {
-        const body = new URLSearchParams();
-
-        body.set('username', userName);
-        body.set('password', password);
+    loginBasic(username: string, password: string) {
+        // const body = new URLSearchParams();
+        //
+        // body.set("username", "nekrasov_va");
+        // body.set("password", "jN*Bgf9.*f#&FBr");
         // body.set('grant_type', 'password');
 
-        return this.http.post(this.baseUrl, body.toString(), {
+        const body = {username, password};
+
+        // body.toString()
+        return this.http.post(this.baseUrl, JSON.stringify(body), {
             headers: this.headers,
             // withCredentials: true,
             observe: 'body',
