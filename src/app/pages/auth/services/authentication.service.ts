@@ -9,17 +9,20 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
-    public baseUrl = `https://ssnab.it/login`;
+    // public baseUrl = `https://ssnab.it/login`;
+    public baseUrl = `https://erp-dev.ssnab.it/api/auth/Auth/login`;
 
     public headers = new HttpHeaders()
         .set('Accept', 'application/json')
         // .set('Access-Control-Allow-Origin', 'https://erp-dev.ssnab.it')
         .set('Content-Type', 'application/x-www-form-urlencoded');
 
-    public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
-        'ReturnUrl',
-        'https://erp-dev.ssnab.it/',
-    );
+    // public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
+    //     'ReturnUrl',
+    //     'https://erp-dev.ssnab.it/',
+    // );
+
+    public params = new HttpParams();
 
     constructor(
         private readonly router: Router,

@@ -104,13 +104,16 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "erpss:build:production"
+                            "browserTarget": "erpss:build:production",
+                            "port": 5000
                         },
                         "development": {
-                            "browserTarget": "erpss:build:development"
+                            "browserTarget": "erpss:build:development",
+                            "port": 5000
                         },
                         "staging": {
-                            "browserTarget": "erpss:build:staging"
+                            "browserTarget": "erpss:build:staging",
+                            "port": 5000
                         }
                     },
                     "defaultConfiguration": "development"
