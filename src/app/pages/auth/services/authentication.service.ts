@@ -18,12 +18,12 @@ export class AuthenticationService {
         // .set('Content-Type', 'application/x-www-form-urlencoded');
         .set('Content-Type', 'application/json');
 
-    // public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
-    //     'ReturnUrl',
-    //     'https://erp-dev.ssnab.it/',
-    // );
+    public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
+        'ReturnUrl',
+        'https://erp-dev.ssnab.it/',
+    );
 
-    public params = new HttpParams();
+    // public params = new HttpParams();
 
     constructor(
         private readonly router: Router,
