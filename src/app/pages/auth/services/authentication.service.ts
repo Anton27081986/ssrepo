@@ -40,9 +40,9 @@ export class AuthenticationService {
     loginBasic(userName: string, password: string) {
         const body = new URLSearchParams();
 
-        body.set('Username', userName);
-        body.set('Password', password);
-        body.set('grant_type', 'password');
+        body.set('username', userName);
+        body.set('password', password);
+        // body.set('grant_type', 'password');
 
         return this.http.post(this.baseUrl, body.toString(), {
             headers: this.headers,
