@@ -106,85 +106,99 @@ export class AuctionSalesComponent {
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
             price: '4,23',
             amount: '19 840',
-        },        {
+        },
+        {
             key: '3',
             name: 'Пищевая добавка - Эритритол (Erithritol) (Е968)',
             availability: 'На складе',
