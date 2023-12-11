@@ -98,9 +98,9 @@
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
-    -webkit-columns: 2;
-    -moz-columns: 2;
-    columns: 2;
+    -webkit-columns: 1;
+    -moz-columns: 1;
+    columns: 1;
 }
 
 ::ng-deep .ant-menu-submenu:after {
@@ -139,7 +139,7 @@
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom .ant-menu-item-group-list .ant-menu-item {
-    width: 282px;
+    // width: 282px;
     font-size: 14px;
     color: $black;
     padding-left: 0;
@@ -171,19 +171,20 @@
         background-color: $white;
         border-radius: 60px;
         margin: 24px;
+        // margin: 24px 10px!important;
     }
 
     .menu-item-custom::-webkit-scrollbar-thumb {
         box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        // border: 10px solid #303030!important;
     }
 
     .menu-item-custom {
+        border-right: 20px solid #ffffff!important;
+        box-sizing: border-box;
         scrollbar-width: thin;
-    }
-
-    .menu-item-custom {
         scrollbar-color: $gray-light;
-        scrollbar-width: thin;
+
     }
 }
 
