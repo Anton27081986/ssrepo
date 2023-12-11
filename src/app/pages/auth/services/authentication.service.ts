@@ -10,7 +10,7 @@ export class AuthenticationService {
     user: Observable<IUser | null>;
 
     // public baseUrl = `https://ssnab.it/login`;
-    public baseUrl = `https://erp-dev.ssnab.it/api/auth/Auth/login`;
+    public baseUrl = `https://erp-dev.ssnab.it/api/auth/login`;
 
     public headers = new HttpHeaders()
         .set('Accept', 'application/json')
