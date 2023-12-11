@@ -156,9 +156,10 @@
 }
 
 ::ng-deep .ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
-    width: 647px;
-    height: 400px;
-    // border: 1px solid $border-color;
+    width: 700px;
+    height: 420px;
+    border-top: 8px solid #ffffff;
+    border-bottom: 8px solid #ffffff;
 }
 
 ::ng-deep {
