@@ -10,15 +10,13 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
-    // public baseUrl = `https://erp-dev.ssnab.it/`;
-
     public headers = new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json');
 
-    public params = new HttpParams({fromString: 'ReturnUrl=https://erp-dev.ssnab.it/'}).set(
+    public params = new HttpParams({fromString: `ReturnUrl=${environment.apiUrl}`}).set(
         'ReturnUrl',
-        'https://erp-dev.ssnab.it/',
+        environment.apiUrl,
     );
 
     constructor(
@@ -30,22 +28,8 @@ export class AuthenticationService {
     }
 
     get userValue(): IUser {
-        console.log('userSubject.value', this.userSubject.value);
-
         return this.userSubject.value;
     }
-
-    // loginBasic(username: string, password: string) {
-    //     const body = {username, password};
-    //
-    //     return this.http.post( `${this.baseUrl}api/auth/login`, JSON.stringify(body), {
-    //         headers: this.headers,
-    //         observe: 'body',
-    //         params: this.params,
-    //         responseType: 'json',
-    //         reportProgress: true,
-    //     });
-    // }
 
     login(username: string, password: string) {
         return this.http

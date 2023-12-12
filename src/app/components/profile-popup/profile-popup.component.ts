@@ -38,7 +38,6 @@ export class ProfilePopupComponent {
             .pipe()
             .subscribe(data => {
                 this.profile = data;
-                console.log('this.profile', this.profile);
             });
 
         // this.profileData = this.userService.getProfile();

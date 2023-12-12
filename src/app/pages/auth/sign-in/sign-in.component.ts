@@ -70,18 +70,23 @@ export class SignInComponent implements OnInit {
         this.authenticationService
             .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
             .pipe(first())
-            .subscribe({
-                next: () => {
+            .subscribe(
+                (data: any) => {
                     // get return url from query parameters or default to home page
 
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
                     this.router.navigateByUrl(returnUrl);
+
+                    if (data) {
+                        // console.log('data', data);
+                    }
                 },
-                // error: error => {
-                //     this.error = error;
-                //     this.loading = false;
-                // },
-            });
+                (err: unknown) => {
+                    console.log('HTTP Error', err);
+                    this.loading = false;
+                },
+                () => console.log('HTTP request completed.'),
+            );
     }
 }
