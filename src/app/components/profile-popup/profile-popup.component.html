@@ -7,10 +7,10 @@
         </div>
         <div class="title">
           <div class="fio">
-            <span>Гришин Пантелей Серапионович</span>
+            <span>{{ profile!.name }} </span>
           </div>
           <div class="job">
-            <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+            <span>{{ profile!.position }} {{ profile?.department }}</span>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
             <span class="title">Внутренний телефон:</span>
           </div>
           <div>
-            <span class="description">123 44</span>
+            <span class="description">{{ profile?.phone }}</span>
           </div>
         </div>
         <div class="item">
@@ -30,7 +30,7 @@
             <span class="title">Email:</span>
           </div>
           <div>
-            <span class="description">vivanovmm</span>
+            <span class="description">{{ profile?.email }}</span>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
         <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
         <span class="title">Настройки профиля</span>
       </div>
-      <div class="button-icon-left">
+      <div class="button-icon-left" (click)="logout()">
         <span class="icon exit-icon" nz-icon [nzType]="'ss:exit'"></span>
         <span class="title">Выйти</span>
       </div>

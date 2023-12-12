@@ -11,34 +11,34 @@ export class ApiService {
     constructor(private readonly http: HttpClient) {}
 
     public getMenuListJson(): Observable<any> {
-        return this.http.get<IMainMenu[]>(`${environment.apiUrl}/menu`, {
+        return this.http.get<IMainMenu[]>(`${environment.apiUrl}/api/company/menu`, {
             withCredentials: false,
         });
     }
 
     public getSocialLink(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/settings/favoriteLinks`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings/favoriteLinks`);
     }
 
     public getBanners(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/banners`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/banners`);
     }
 
     public getAccounts(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/accounts`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/accounts`);
     }
 
     public getWidgets(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/widgets`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/widgets`);
     }
 
     // Получить прочие настройки пользователя
     public getSettings(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/settings`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings`);
     }
 
     // Theme
     public getTheme(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/theme`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/theme`);
     }
 }

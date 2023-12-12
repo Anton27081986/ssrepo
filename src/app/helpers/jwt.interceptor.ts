@@ -1,19 +1,26 @@
 import {Injectable} from '@angular/core';
 import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {AuthenticationService} from '@auth/services/authentication.service';
+import {environment} from '@environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
+    constructor(private readonly authenticationService: AuthenticationService) {}
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // искл withCredentials для авторизацию в старом кисп
-        if (request.url.indexOf('login') !== -1) {
-            console.log('middle', request.url.indexOf('login') !== -1);
+        // add auth header with jwt if user is logged in and request is to api url
+        const user = this.authenticationService.userValue;
+        const isLoggedIn = user?.token;
+        const isApiUrl = request.url.startsWith(environment.apiUrl);
 
+        if (isLoggedIn && isApiUrl) {
             request = request.clone({
-                withCredentials: true,
+                setHeaders: {
+                    Authorization: `Bearer ${user.token}`,
+                },
+                withCredentials: false,
             });
-
-            console.log('Intercepting Request withCredentials = true ');
         }
 
         return next.handle(request);
