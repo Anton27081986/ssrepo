@@ -11,7 +11,12 @@
                 </svg>
               <h2 class="m-b-0 m-t-12">Войдите в аккаунт</h2>
             </div>
-            <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form m-t-25" (ngSubmit)="onSubmit()">
+
+            <div *ngIf="errorState" class="error-message">
+              <span>Неверный логин или пароль</span>
+            </div>
+
+            <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form m-t-25 p-b-40" (ngSubmit)="onSubmit()">
               <nz-form-item>
                 <nz-form-control nzErrorTip="Введите логин">
                   <nz-input-group [nzPrefix]="prefixUser">

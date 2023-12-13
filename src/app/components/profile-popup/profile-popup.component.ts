@@ -9,12 +9,11 @@ import {AuthenticationService} from '@auth/services/authentication.service';
     selector: 'app-profile-popup',
     templateUrl: './profile-popup.component.html',
     styleUrls: ['./profile-popup.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProfilePopupComponent {
     public statusAccordion = false;
-    // public profileData!: Observable<any>;
-    public profile!: any;
+    public profileData!: any;
 
     constructor(
         private readonly apiService: ApiService,
@@ -37,10 +36,8 @@ export class ProfilePopupComponent {
             .getProfile()
             .pipe()
             .subscribe(data => {
-                this.profile = data;
+                this.profileData = [data];
             });
-
-        // this.profileData = this.userService.getProfile();
     }
 
     logout(): void {

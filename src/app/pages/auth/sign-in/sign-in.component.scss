@@ -22,7 +22,6 @@
     .ant-card-bordered {
         border-radius: 30px;
         width: 372px;
-        //height: 396px;
     }
 }
 
@@ -30,5 +29,15 @@
     .position-right {
         position: absolute;
         right: 0;
+    }
+}
+
+.error-message {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    span {
+        color: #ee1c25;
     }
 }

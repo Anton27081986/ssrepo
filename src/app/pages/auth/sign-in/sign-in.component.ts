@@ -3,18 +3,20 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
 import {first} from 'rxjs';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html',
     styleUrls: ['./sign-in.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SignInComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
     submitted = false;
     error: unknown = '';
+    errorState = false;
 
     passwordVisible = false;
     password?: string;
@@ -23,7 +25,8 @@ export class SignInComponent implements OnInit {
         private readonly formBuilder: FormBuilder,
         private readonly route: ActivatedRoute,
         private readonly router: Router,
-        private readonly authenticationService: AuthenticationService, // fake
+        private readonly authenticationService: AuthenticationService,
+        private readonly message: NzMessageService,
     ) {}
 
     ngOnInit() {
@@ -44,21 +47,11 @@ export class SignInComponent implements OnInit {
         return this.loginForm.controls;
     }
 
-    onSubmit() {
-        //  базовая авторизация в КИСП
-        // this.authenticationService
-        //     .loginBasic(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
-        //     .pipe()
-        //     .subscribe(
-        //         (data: any) => {
-        //             if (data) {
-        //                 // console.log('data', data);
-        //             }
-        //         },
-        //         (err: unknown) => console.log('HTTP Error', err),
-        //         // () => console.log('HTTP request completed.'),
-        //     );
+    createMessage(type: string): void {
+        this.message.create(type, `This is a message of ${type}`);
+    }
 
+    onSubmit() {
         this.submitted = true;
 
         // stop here if form is invalid
@@ -83,8 +76,12 @@ export class SignInComponent implements OnInit {
                     }
                 },
                 (err: unknown) => {
-                    console.log('HTTP Error', err);
                     this.loading = false;
+                    console.log('HTTP Error', err);
+                    this.error = err;
+                    this.errorState = true;
+                    // this.stateDescription = err.message; // настроить текст ошибки
+                    // this.createMessage('error'); // всплывающее окно с ошибкой
                 },
                 () => console.log('HTTP request completed.'),
             );
