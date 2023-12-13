@@ -53,70 +53,24 @@
         <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
       </div>
       <ng-container *ngIf="statusAccordion">
-        <div class="card">
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/users.png" alt="users" />
-            </div>
-            <div class="title">
-              <div class="fio">
-                <span>Иванов Михаил Михайлович</span>
+        <ng-container *ngFor="let account of accounts | async">
+          <div class="card">
+            <div class="personal">
+              <div class="img">
+                <img src="{{ account.avatarUrl }}" alt="users" />
               </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              <div class="title">
+                <div class="fio">
+                  <span>{{ account.userName }}</span>
+                </div>
+                <div class="job">
+                  <span>{{ account.position }} {{ account.department }}</span>
+                </div>
               </div>
+              <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
             </div>
-            <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
           </div>
-        </div>
-        <div class="card">
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/users.png" alt="users" />
-            </div>
-            <div class="title">
-              <div class="fio">
-                <span>Иванов Михаил Михайлович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-            <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/users.png" alt="users" />
-            </div>
-            <div class="title">
-              <div class="fio">
-                <span>Иванов Михаил Михайлович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-            <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
-          </div>
-        </div>
-        <div class="card">
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/users.png" alt="users" />
-            </div>
-            <div class="title">
-              <div class="fio">
-                <span>Иванов Михаил Михайлович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-            <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
-          </div>
-        </div>
+        </ng-container>
       </ng-container>
     </div>
   </div>

@@ -1,0 +1,138 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.thankyou {
+    margin-top: 60px;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        .open-all-table {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .content {
+        .card-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            .card {
+                width: 408px;
+                height: 130px;
+                border-radius: 16px;
+                border: 1px solid $border-color;
+                background-color: $white;
+                padding: 20px;
+                margin-top: 30px;
+
+                // flex: 1 0 200px;
+
+                .personal {
+                    position: relative;
+                    display: flex;
+
+                    .img {
+                        border-radius: 14px;
+                        overflow: hidden;
+                        flex: none;
+
+                        img {
+                            width: 90px;
+                            height: 90px;
+                            object-fit: cover;
+                        }
+                    }
+
+                    .enter-icon {
+                        position: absolute;
+                        right: 17px;
+                        bottom: 0;
+                        font-size: 17px;
+                        fill-opacity: 0;
+                        cursor: pointer;
+                    }
+
+                    .title {
+                        margin-left: 19px;
+                    }
+
+                    .fio {
+                        font-size: 17.6px;
+                        font-weight: bold;
+                        line-height: 20px;
+                        margin-top: 7px;
+                    }
+
+                    .job {
+                        max-width: 186px;
+                        font-size: 11.8px;
+                        line-height: 14px;
+                        font-weight: 500;
+                        margin-top: 8px;
+                    }
+                }
+            }
+            .card:last-child {
+                // margin-left: 28px;
+            }
+        }
+        .card-list:after {
+            //content: '';
+            //flex: auto;
+        }
+
+        .bottom-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 40px;
+
+            div {
+                display: flex;
+            }
+
+            div:last-child {
+                margin-left: 32px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .thankyou {
+        margin: 80px 20px 0 20px;
+
+        .header {
+            .open-all-table {
+                display: none;
+            }
+
+            .title h1 {
+                text-align: center;
+                margin-bottom: 0.3rem !important;
+            }
+
+            .subtitle h2 {
+                text-align: center;
+                line-height: 19px !important;
+            }
+        }
+
+        .content {
+            .card-list {
+                justify-content: center;
+            }
+            .bottom-panel {
+                justify-content: center;
+            }
+        }
+    }
+}

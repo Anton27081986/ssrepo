@@ -21,6 +21,7 @@ import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
 import {NgScrollbar} from 'ngx-scrollbar';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {NzAvatarModule} from 'ng-zorro-antd/avatar';
+import {ThankyouComponent} from './thankyou/thankyou.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import {NzAvatarModule} from 'ng-zorro-antd/avatar';
         ProfilePopupComponent,
         AuctionSalesComponent,
         NotificationComponent,
+        ThankyouComponent,
     ],
     imports: [
         CommonModule,
@@ -57,6 +59,7 @@ import {NzAvatarModule} from 'ng-zorro-antd/avatar';
         ProfilePopupComponent,
         AuctionSalesComponent,
         NotificationComponent,
+        ThankyouComponent,
     ],
 })
 export class ComponentsModule {}

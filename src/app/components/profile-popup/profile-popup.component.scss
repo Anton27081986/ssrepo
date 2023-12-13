@@ -138,6 +138,17 @@
                 .personal {
                     position: relative;
 
+                    .img {
+                        border-radius: 14px;
+                        overflow: hidden;
+
+                        img {
+                            width: 44px;
+                            height: 44px;
+                            object-fit: cover;
+                        }
+                    }
+
                     .enter-icon {
                         position: absolute;
                         right: 17px;

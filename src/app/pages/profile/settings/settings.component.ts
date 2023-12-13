@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
     settingsForm!: FormGroup;
+    value?: any;
 
     constructor(private readonly formBuilder: FormBuilder) {}
 
@@ -22,6 +23,7 @@ export class SettingsComponent implements OnInit {
                 ],
             ],
             password: ['', Validators.required],
+            disabled: true,
         });
     }
 

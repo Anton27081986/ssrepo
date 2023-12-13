@@ -8,74 +8,73 @@
             <img src="assets/images/profile/user-popup.png" alt="user" />
           </div>
           <div class="m-t-8">
-            <button nz-button class="download-button" [nzType]="'primary'">Загрузить</button>
+            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>
           </div>
       </div>
   </div>
-
   <div class="feilds">
     <form nz-form [formGroup]="settingsForm" nzLayout="vertical" class="settings-form m-t-20" (ngSubmit)="onSubmit()">
       <nz-form-item>
         <nz-form-label nzFor="userName">Имя</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Имя" />
+            <input type="email" nz-input formControlName="login" placeholder="Имя" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">Фамилия</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Фамилия" />
+            <input type="email" nz-input formControlName="login" placeholder="Фамилия" [disabled]="false" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">Отчество</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Отчество" />
+            <input type="email" nz-input formControlName="login" placeholder="Отчество" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">Дата рождения</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Дата рождения" />
+            <input type="email" nz-input formControlName="login" placeholder="Дата рождения" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">Подразделение</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Подразделение" />
+            <input type="email" nz-input formControlName="login" placeholder="Подразделение" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">Должность</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Должность" />
+            <input type="email" nz-input formControlName="login" placeholder="Должность" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">E-mail</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="E-mail" />
+            <input type="email" nz-input formControlName="login" placeholder="E-mail" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzFor="userName">Телефон</nz-form-label>
-        <nz-form-control nzErrorTip="Введите логин">
+        <nz-form-control>
           <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input formControlName="login" placeholder="Телефон" />
+            <input type="email" nz-input formControlName="login" placeholder="Телефон" [disabled]="true" />
           </nz-input-group>
         </nz-form-control>
       </nz-form-item>
