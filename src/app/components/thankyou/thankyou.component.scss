@@ -7,6 +7,7 @@
     .header {
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         h1 {
             text-transform: uppercase;
@@ -15,6 +16,49 @@
         .open-all-table {
             display: flex;
             align-items: center;
+        }
+
+        .calendar {
+            position: relative;
+
+            .ant-picker {
+                width: 244px;
+                height: 52px;
+                border-radius: 16px;
+                padding: 4px 20px 4px 54px;
+
+                ::ng-deep .ant-picker-suffix {
+                    .anticon.search-icon-suffix {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            ::ng-deep .ant-picker-input > input {
+                font-size: 16px !important;
+            }
+
+            .calendar-icon {
+                position: absolute;
+                top: 14px;
+                left: 22px;
+            }
+
+            ::ng-deep .anticon {
+                font-size: 22px;
+            }
+
+            ::ng-deep .ant-picker-suffix {
+                .anticon {
+                    path {
+                        stroke: #d9d9d9 !important;
+                    }
+                }
+            }
+
+            ::ng-deep.ant-picker-input:hover .ant-picker-clear {
+                opacity: 0;
+            }
         }
     }
 
@@ -25,6 +69,7 @@
             justify-content: space-between;
 
             .card {
+                position: relative;
                 width: 408px;
                 height: 130px;
                 border-radius: 16px;
@@ -79,6 +124,43 @@
                         margin-top: 8px;
                     }
                 }
+
+                .icons {
+                    .medal-icon {
+                        position: absolute;
+                        right: 16px;
+                        top: 20px;
+                    }
+
+                    .count {
+                        position: absolute;
+                        right: 20px;
+                        bottom: 13px;
+
+                        border-radius: 30px;
+                        background-color: $blue;
+                        color: $white;
+                        height: 28px;
+                        width: 28px;
+
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding-right: 1px;
+                        font-weight: 500;
+                    }
+
+                    ::ng-deep .anticon {
+                        fill-opacity: 1;
+                        font-size: 34px;
+
+                        path {
+                            //stroke: #4770FF!important;
+                            //fill: #4770FF!important;
+                        }
+                    }
+                }
             }
             .card:last-child {
                 // margin-left: 28px;
@@ -99,8 +181,48 @@
                 display: flex;
             }
 
-            div:last-child {
-                margin-left: 32px;
+            //div:last-child {
+            //    margin-left: 29px;
+            //}
+
+            .total-week {
+                align-items: center;
+
+                span {
+                    font-size: 19.8px;
+                }
+
+                span:nth-child(2) {
+                    margin-left: 8px;
+                    font-weight: 700;
+                    color: $blue;
+                }
+            }
+
+            .total-time {
+                margin-left: 29px;
+                align-items: center;
+
+                span {
+                    font-size: 16px;
+                }
+
+                span:nth-child(2) {
+                    margin-left: 4px;
+                    font-weight: 700;
+                    line-height: normal;
+                    letter-spacing: -0.16px;
+                }
+            }
+
+            ::ng-deep .anticon {
+                font-size: 21px;
+                margin-right: 7px;
+
+                path {
+                    //stroke: #4770FF!important;
+                    //fill: #4770FF!important;
+                }
             }
         }
     }
@@ -112,26 +234,78 @@
 
         .header {
             .open-all-table {
-                display: none;
             }
 
             .title h1 {
                 text-align: center;
                 margin-bottom: 0.3rem !important;
+                line-height: 34px;
+                margin-top: 4px;
             }
 
-            .subtitle h2 {
-                text-align: center;
-                line-height: 19px !important;
+            .subtitle {
+                margin-top: 12px;
+
+                h2 {
+                    text-align: center;
+                    line-height: 19px !important;
+                }
+            }
+
+            .calendar {
+                margin-top: 25px;
+
+                .ant-picker {
+                    width: 372px;
+                }
             }
         }
 
         .content {
             .card-list {
                 justify-content: center;
+
+                .card {
+                    width: 100%;
+                    height: 116px;
+                    margin-top: 20px;
+                    padding: 12px;
+
+                    .icons {
+                        .medal-icon {
+                            right: 12px;
+                            top: 11px;
+                        }
+
+                        .count {
+                            right: 14px;
+                            bottom: 9px;
+                        }
+                    }
+                }
             }
             .bottom-panel {
-                justify-content: center;
+                margin-top: 32px;
+                justify-content: space-between;
+
+                .total-week {
+                    span {
+                        font-size: 15.8px;
+                    }
+                }
+
+                .total-time {
+                    span {
+                        font-size: 15.8px;
+                    }
+                }
+
+                .button {
+                    margin-top: 14px;
+                    margin-left: 0;
+
+                    width: 100%;
+                }
             }
         }
     }

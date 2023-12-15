@@ -4,7 +4,7 @@ import {SearchComponent} from './search/search.component';
 import {ResultItemComponent} from './search/result-item/result-item.component';
 import {NzFormModule} from 'ng-zorro-antd/form';
 import {NzInputModule} from 'ng-zorro-antd/input';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {MainMenuComponent} from './main-menu/main-menu.component';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
@@ -22,6 +22,7 @@ import {NgScrollbar} from 'ngx-scrollbar';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {ThankyouComponent} from './thankyou/thankyou.component';
+import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import {ThankyouComponent} from './thankyou/thankyou.component';
     ],
     imports: [
         CommonModule,
+        FormsModule,
         NzFormModule,
         NzInputModule,
         ReactiveFormsModule,
@@ -51,6 +53,7 @@ import {ThankyouComponent} from './thankyou/thankyou.component';
         NgScrollbar,
         NzListModule,
         NzAvatarModule,
+        NzDatePickerModule,
     ],
     exports: [
         SearchComponent,

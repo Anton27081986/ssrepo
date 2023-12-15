@@ -42,9 +42,6 @@ export class ProfilePopupComponent {
             });
 
         this.accounts = this.apiService.getAccounts().pipe(map(({accounts}) => accounts));
-        // this.apiService.getBanners().pipe().subscribe(data => this.accounts = data )
-
-        console.log('this.accounts', this.accounts);
     }
 
     logout(): void {
