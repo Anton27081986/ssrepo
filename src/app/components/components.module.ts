@@ -65,6 +65,7 @@ import {ThankColleagueComponent} from './thank-colleague/thank-colleague.compone
         AuctionSalesComponent,
         NotificationComponent,
         ThankyouComponent,
+        ThankColleagueComponent,
     ],
 })
 export class ComponentsModule {}

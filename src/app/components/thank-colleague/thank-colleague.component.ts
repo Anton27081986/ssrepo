@@ -6,4 +6,6 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
     styleUrls: ['./thank-colleague.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThankColleagueComponent {}
+export class ThankColleagueComponent {
+    date: any;
+}

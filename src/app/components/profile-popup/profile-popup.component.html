@@ -47,31 +47,32 @@
       </div>
     </div>
     <hr />
-    <div class="card-list">
+    <ng-container *ngIf="accounts">
+     <div class="card-list">
       <div class="accordion" (click)="statusAccordion=!statusAccordion;">
         <span class="title">Связь с другими сотрудниками</span>
         <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
       </div>
-      <ng-container *ngIf="statusAccordion">
         <ng-container *ngFor="let account of accounts | async">
           <div class="card">
             <div class="personal">
               <div class="img">
-                <img src="{{ account.avatarUrl }}" alt="users" />
+                <img src="{{ account?.avatarUrl }}" alt="users" />
               </div>
               <div class="title">
                 <div class="fio">
-                  <span>{{ account.userName }}</span>
+                  <span>{{ account?.userName }}</span>
                 </div>
                 <div class="job">
-                  <span>{{ account.position }} {{ account.department }}</span>
+                  <span>{{ account?.position }} {{ account?.department }}</span>
                 </div>
               </div>
               <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
             </div>
           </div>
         </ng-container>
-      </ng-container>
+
     </div>
+    </ng-container>
   </div>
 </div>

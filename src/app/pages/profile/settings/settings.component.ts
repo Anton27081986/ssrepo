@@ -1,17 +1,22 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '@auth/services/user.service';
 
 @Component({
     selector: 'app-settings',
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SettingsComponent implements OnInit {
     settingsForm!: FormGroup;
     value?: any;
+    public profileData!: any;
 
-    constructor(private readonly formBuilder: FormBuilder) {}
+    constructor(
+        private readonly formBuilder: FormBuilder,
+        private readonly userService: UserService,
+    ) {}
 
     ngOnInit() {
         this.settingsForm = this.formBuilder.group({
@@ -25,6 +30,13 @@ export class SettingsComponent implements OnInit {
             password: ['', Validators.required],
             disabled: true,
         });
+
+        this.userService
+            .getProfile()
+            .pipe()
+            .subscribe(data => {
+                this.profileData = data;
+            });
     }
 
     onSubmit() {}
