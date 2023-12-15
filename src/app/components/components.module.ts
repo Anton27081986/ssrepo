@@ -23,7 +23,7 @@ import {NzListModule} from 'ng-zorro-antd/list';
 import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {ThankyouComponent} from './thankyou/thankyou.component';
 import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
-import { ThankColleagueComponent } from './thank-colleague/thank-colleague.component';
+import {ThankColleagueComponent} from './thank-colleague/thank-colleague.component';
 
 @NgModule({
     declarations: [
