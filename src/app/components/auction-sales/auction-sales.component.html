@@ -17,7 +17,7 @@
 
   <div class="content">
     <div class="table">
-      <nz-table #basicTable [nzData]="listOfData">
+      <nz-table #basicTable [nzData]="auctions | async">
         <thead>
         <tr>
           <th>ТП</th>
@@ -28,14 +28,14 @@
         </thead>
         <tbody>
         <tr *ngFor="let data of basicTable.data">
-          <td>{{ data.name }}</td>
-          <td>{{ data.availability }}</td>
+          <td>{{ data.tovName }}</td>
+          <td>{{ data.source }}</td>
           <td>
             {{ data.price }}
-            <span>USD</span>
+            <span>{{ data.currency }}</span>
           </td>
-          <td>{{ data.amount }}
-            <span>кг</span>
+          <td>{{ data.quantity }}
+            <span>{{ data.tovUnitName }}</span>
           </td>
         </tr>
         </tbody>
