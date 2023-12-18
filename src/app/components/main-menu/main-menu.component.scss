@@ -68,17 +68,19 @@
     }
 }
 
-::ng-deep {
-    .ant-menu-submenu-title {
-        text-transform: lowercase;
+.menu {
+    ::ng-deep {
+        .ant-menu-submenu-title {
+            text-transform: lowercase;
 
-        &:first-letter {
-            text-transform: uppercase;
+            &:first-letter {
+                text-transform: uppercase;
+            }
         }
-    }
 
-    .ant-menu-item-selected {
-        border-radius: 10px !important;
+        .ant-menu-item-selected {
+            border-radius: 10px !important;
+        }
     }
 }
 

@@ -3,12 +3,13 @@
 
 .mobile-menu {
     //position: fixed;
+    margin: 13px auto 0 auto;
 
     .container {
-        margin: 22px auto 0 auto;
         display: flex;
         justify-content: center;
         z-index: 20;
+        // margin-right: -7px;
     }
 
     ::ng-deep {
@@ -16,6 +17,7 @@
             background-color: $white;
             border-radius: 16px;
             // padding: 8px;
+            // margin-right: 9px;
         }
 
         .ant-tabs-nav-operations {
@@ -43,7 +45,7 @@
         }
 
         .ant-tabs-tab.ant-tabs-tab-active {
-            padding: 10px;
+            padding: 13px;
             background-color: #4770ff !important;
             border: 2px $gray solid;
         }
@@ -65,15 +67,25 @@
         }
 
         .ant-menu-submenu .ant-menu-submenu-title {
-            padding-left: 4px !important;
+            padding-left: 23px !important;
             color: $black;
             font-size: 16px;
             font-weight: 500;
             letter-spacing: -0.16px;
+
+            .without-url {
+                color: $black;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .without-url-item + ::ng-deep .ant-menu-submenu-arrow {
+                display: none !important;
+            }
         }
 
         .ant-menu-submenu .ant-menu-item {
-            padding-left: 4px !important;
+            padding-left: 22px !important;
             color: $black;
         }
 
@@ -122,6 +134,10 @@
             border-bottom: 1px $gray solid;
         }
 
+        .without-url-li {
+            border-bottom: unset !important;
+        }
+
         .ant-menu-submenu-title:active {
             background-color: unset !important;
         }
@@ -137,78 +153,79 @@
     }
 }
 
-// Medium devices (tablets, 414px and up)
+@media screen and (min-width: 240px) and (max-width: 414px) {
+    ::ng-deep .ant-tabs {
+        width: 300px;
+    }
+    .mobile-menu {
+        width: 414px;
+    }
+}
+
 @media screen and (min-width: 414px) and (max-width: 519px) {
+    ::ng-deep .ant-tabs {
+        width: 380px;
+    }
     .mobile-menu {
         width: 519px;
     }
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (max-width: 416px) {
     .mobile-menu {
         width: 416px;
     }
-
-    //::ng-deep .ant-tabs-nav-operations {
-    //    display: table !important;
-    //}
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (max-width: 545px) {
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (min-width: 520px) and (max-width: 599px) {
+    ::ng-deep .ant-tabs {
+        width: 500px;
+    }
+
     .mobile-menu {
         width: 599px;
     }
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (min-width: 600px) and (max-width: 639px) {
     .mobile-menu {
         width: 639px;
     }
 }
 
-// Medium devices (tablets, 640px and up)
 @media screen and (min-width: 640px) and (max-width: 699px) {
     .mobile-menu {
         width: 699px;
     }
 }
 
-// Medium devices (tablets, 640px and up)
 @media screen and (min-width: 700px) and (max-width: 767px) {
     .mobile-menu {
         width: 767px;
     }
 }
 
-// Medium devices (tablets, 768px and up)
 @media screen and (min-width: 768px) and (max-width: 799px) {
     .mobile-menu {
         width: 799px;
     }
 }
 
-// Medium devices (tablets, 800px and up)
 @media screen and (min-width: 800px) and (max-width: 999px) {
     .mobile-menu {
         width: 999px;
     }
 }
 
-// Medium devices (tablets, 800px and up)
 @media screen and (min-width: 1000px) and (max-width: 1199px) {
     .mobile-menu {
         width: 1199px;
     }
 }
 
-// Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 1326px) {
     .mobile-menu {
         display: flex;

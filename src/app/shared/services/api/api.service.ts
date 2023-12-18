@@ -25,11 +25,7 @@ export class ApiService {
     }
 
     public getAccounts(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/company/accounts`);
-    }
-
-    public getWidgets(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/company/widgets`);
+        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/friends`);
     }
 
     // Получить прочие настройки пользователя
@@ -40,5 +36,10 @@ export class ApiService {
     // Theme
     public getTheme(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/theme`);
+    }
+
+    // Sale
+    public getAuctions(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/sales/widget`);
     }
 }

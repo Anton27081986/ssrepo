@@ -1,4 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {Observable} from 'rxjs';
+import {ApiService} from '@app/shared/services/api/api.service';
 
 interface IPerson {
     key: string;
@@ -14,7 +16,7 @@ interface IPerson {
     styleUrls: ['./auction-sales.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuctionSalesComponent {
+export class AuctionSalesComponent implements OnInit {
     listOfData: IPerson[] = [
         {
             key: '1',
@@ -206,4 +208,12 @@ export class AuctionSalesComponent {
             amount: '19 840',
         },
     ];
+
+    public auctions!: Observable<any>;
+
+    constructor(private readonly apiService: ApiService) {}
+
+    ngOnInit(): any {
+        this.apiService.getAuctions().subscribe(console.log);
+    }
 }

@@ -3,13 +3,32 @@
     <nz-tabset>
       <nz-tab *ngFor="let item of menu" nzTitle="{{ item.name }}">
         <ul nz-menu nzMode="inline">
-          <li *ngFor="let subcategory of item.items" nz-submenu nzTitle="{{ subcategory.name }}">
-            <ul>
-              <li *ngFor="let subitem of subcategory.items" nz-menu-item>
-                <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
-              </li>
-            </ul>
-          </li>
+
+          <ng-container *ngFor="let subcategory of item.items">
+
+            <li nz-submenu [nzTitle]="titleTpl" [class]="subcategory.link ? 'without-url-li' : ''">
+              <ul>
+                <li *ngFor="let subitem of subcategory.items" nz-menu-item>
+                  <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
+                </li>
+              </ul>
+            </li>
+
+            <ng-template #titleTpl>
+              <span [class]="subcategory.link ? 'without-url-item' : ''">
+                <ng-container *ngIf="!subcategory.link">
+                    {{ subcategory.name }}
+                </ng-container>
+
+                <ng-container *ngIf="subcategory.link">
+                    <a href="{{ subcategory.link }}" target="_blank" class="without-url">{{ subcategory.name }}</a>
+                </ng-container>
+              </span>
+            </ng-template>
+
+
+          </ng-container>
+
         </ul>
       </nz-tab>
     </nz-tabset>

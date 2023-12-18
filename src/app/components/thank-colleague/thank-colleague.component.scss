@@ -33,7 +33,7 @@
                 border-radius: 16px;
                 border: 1px solid $border-color;
                 background-color: $white;
-                padding: 17px 20px 20px 20px;
+                padding: 15px 20px 20px 20px;
 
                 // flex: 1 0 200px;
 
@@ -51,27 +51,40 @@
                             overflow: hidden;
                             flex: none;
                             margin-top: 3px;
-                            width: 53px;
-                            height: 53px;
+                            width: 50px;
+                            height: 50px;
                             background-color: #886cff;
 
                             img {
-                                width: 53px;
-                                height: 53px;
+                                width: 50px;
+                                height: 50px;
                                 object-fit: cover;
                             }
                         }
 
                         .img-from {
                             position: absolute;
-                            top: 0;
+                            top: 3;
                             left: 0;
                         }
                         .img-to {
                             position: absolute;
-                            bottom: 0;
+                            bottom: 3px;
                             right: 0;
                         }
+                    }
+
+                    .images:after {
+                        content: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1C7.43045 2.20106 12.3012 7.87174 12.3012 14.6885" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/><path d="M16.0002 10.2599L12.3882 15L7.66797 11.3693" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/></svg>');
+                        position: absolute;
+                        top: 13px;
+                        right: 10px;
+                    }
+                    .images:before {
+                        content: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1C2.20106 7.43045 7.87174 12.3012 14.6885 12.3012" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/><path d="M10.2598 16.0002L14.9998 12.3882L11.3691 7.66797" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/></svg>');
+                        position: absolute;
+                        bottom: 5px;
+                        left: 10px;
                     }
 
                     .enter-icon {
@@ -138,6 +151,56 @@
                         fill-opacity: 1;
                         font-size: 34px;
                     }
+                }
+
+                .message {
+                    font-size: 11.8px;
+                    font-style: normal;
+                    font-weight: 500;
+                    margin-top: 14px;
+                    line-height: 16.7px;
+                    width: 340px;
+                    // max-height: 48px;
+                    // overflow-y: scroll;
+                }
+
+                .info {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 12px;
+
+                    .left-group {
+                        display: flex;
+                    }
+                }
+                .like {
+                    background-color: $gray-light;
+                    color: $blue;
+                    font-size: 12px;
+                    width: 50px;
+                    height: 32px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+                .comment {
+                    background-color: $gray-light;
+                    color: $blue;
+                    font-size: 12px;
+                    width: 50px;
+                    height: 32px;
+                    border-radius: 8px;
+                    margin-left: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+                .date {
+                    display: flex;
+                    align-items: center;
+                    font-size: 10px;
+                    font-weight: 600;
                 }
             }
             .card:last-child {

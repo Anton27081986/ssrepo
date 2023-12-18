@@ -24,6 +24,8 @@ import {NzAvatarModule} from 'ng-zorro-antd/avatar';
 import {ThankyouComponent} from './thankyou/thankyou.component';
 import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
 import {ThankColleagueComponent} from './thank-colleague/thank-colleague.component';
+import {MaxLengthTextPipe} from '@app/shared/pipe/max-length-text.pipe';
+import {UpFirstPipe} from '@app/shared/pipe/up-first.pipe';
 
 @NgModule({
     declarations: [
@@ -56,6 +58,8 @@ import {ThankColleagueComponent} from './thank-colleague/thank-colleague.compone
         NzListModule,
         NzAvatarModule,
         NzDatePickerModule,
+        MaxLengthTextPipe,
+        UpFirstPipe,
     ],
     exports: [
         SearchComponent,
