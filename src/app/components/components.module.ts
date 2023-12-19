@@ -26,6 +26,10 @@ import {NzDatePickerModule} from 'ng-zorro-antd/date-picker';
 import {ThankColleagueComponent} from './thank-colleague/thank-colleague.component';
 import {MaxLengthTextPipe} from '@app/shared/pipe/max-length-text.pipe';
 import {UpFirstPipe} from '@app/shared/pipe/up-first.pipe';
+import {NzPaginationModule} from 'ng-zorro-antd/pagination';
+import {VictoryComponent} from './victory/victory.component';
+import {BirthdayComponent} from './birthday/birthday.component';
+import {RatingComponent} from './rating/rating.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +42,9 @@ import {UpFirstPipe} from '@app/shared/pipe/up-first.pipe';
         NotificationComponent,
         ThankyouComponent,
         ThankColleagueComponent,
+        VictoryComponent,
+        BirthdayComponent,
+        RatingComponent,
     ],
     imports: [
         CommonModule,
@@ -60,6 +67,7 @@ import {UpFirstPipe} from '@app/shared/pipe/up-first.pipe';
         NzDatePickerModule,
         MaxLengthTextPipe,
         UpFirstPipe,
+        NzPaginationModule,
     ],
     exports: [
         SearchComponent,
@@ -70,6 +78,8 @@ import {UpFirstPipe} from '@app/shared/pipe/up-first.pipe';
         NotificationComponent,
         ThankyouComponent,
         ThankColleagueComponent,
+        BirthdayComponent,
+        VictoryComponent,
     ],
 })
 export class ComponentsModule {}

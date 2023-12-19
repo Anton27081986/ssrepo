@@ -21,6 +21,15 @@ body {
         .manager .button-icon-left {
             background-color: #4770ff;
         }
+
+        .card {
+            background-color: #1b2123 !important;
+            border: unset !important;
+        }
+
+        .item {
+            background-color: #1b2123 !important;
+        }
     }
 
     .select {
@@ -247,6 +256,13 @@ body {
     //position: relative;
 }
 
+.ant-menu-submenu-inline .ant-menu-submenu-arrow::after {
+    color: #ffffff;
+}
+.ant-menu-submenu-inline .ant-menu-submenu-arrow::before {
+    color: #ffffff;
+}
+
 .ant-menu-submenu .menu-item-custom {
     top: 4px !important;
     border-right: 20px solid #20282c !important;
@@ -283,8 +299,39 @@ body {
     color: #ffffff;
 }
 
-.ant-tabs-tab + .ant-tabs-tab {
-    margin: 0 0 0 8px;
+.mobile-menu .ant-menu.ant-menu-root {
+    // background-color: #31393d !important;
+    background-color: #0e0f10 !important;
+}
+
+.mobile-menu .ant-menu-submenu .ant-menu-submenu-title .without-url {
+    color: #ffffff !important;
+}
+
+.mobile-menu .ant-tabs-tab + .ant-tabs-tab,
+.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
+    border: 1px #394245 solid !important;
+}
+
+.ant-tabs-tab {
+    border: 1px #394245 solid !important;
+}
+
+.mobile-menu .ant-menu-submenu.ant-menu-submenu-inline {
+    // color: #394245!important;
+    border-bottom: 1px #394245 solid !important;
+}
+
+.mobile-menu .ant-tabs-content-holder {
+    border-radius: 0 !important;
+}
+
+.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
+    // border: 1px!important;
+}
+
+.mobile-menu .ant-menu-submenu.without-url-li {
+    border-bottom: unset !important;
 }
 
 .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
@@ -318,4 +365,36 @@ body {
     border-top: 8px solid #202629;
     border-bottom: 8px solid #202629;
     outline: 0.5px solid #394245;
+}
+
+.mobile-menu .ant-menu-submenu .ant-menu-submenu-title {
+    padding-left: 0 !important;
+}
+
+// Аукционные продажи
+body {
+    .auction-sales .table .ant-table-cell a {
+        color: #ffffff !important;
+    }
+}
+
+.content .card-list .card .icon path {
+    stroke: #4770ff !important;
+}
+
+.content .card-list .card {
+    .message {
+        top: 4px !important;
+        border-right: 20px solid #31393d !important;
+        scrollbar-color: #c7d0d2 !important;
+        width: 386px !important;
+    }
+
+    .message::-webkit-scrollbar-track {
+        background-color: #31393d !important;
+    }
+
+    .message::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
+    }
 }

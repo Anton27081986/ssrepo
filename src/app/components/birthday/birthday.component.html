@@ -1,0 +1,26 @@
+<div class="birthday">
+  <div class="header">
+    <div>
+      <div class="title">
+        <h1>ДНИ РОЖДЕНИЯ</h1>
+      </div>
+    </div>
+    <div class="open-all-table">
+      <div class="button">
+        <button nz-button class="button" [nzType]="'primary'">
+          <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
+          Добавить напоминание
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="card-list">
+      <div class="card"></div>
+    </div>
+    <div class="bottom-panel">
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="19" [nzPageSize]="10"></nz-pagination>
+    </div>
+  </div>
+</div>

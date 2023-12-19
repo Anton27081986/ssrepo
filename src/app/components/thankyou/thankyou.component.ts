@@ -18,6 +18,7 @@ export class ThankyouComponent {
         this.iconService.addIconLiteral('ss:medalSilver', AppIcons.medalSilver);
         this.iconService.addIconLiteral('ss:medalBronze', AppIcons.medalBronze);
         this.iconService.addIconLiteral('ss:like', AppIcons.like);
+        this.iconService.addIconLiteral('ss:comment', AppIcons.comment);
     }
 
     onChange(result: Date): void {

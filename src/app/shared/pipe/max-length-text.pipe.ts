@@ -5,8 +5,7 @@ import {Pipe, PipeTransform} from '@angular/core';
     standalone: true,
 })
 export class MaxLengthTextPipe implements PipeTransform {
-    transform(): unknown {
-        // return value?.slice(0, number) + '...';
-        return null;
+    transform(value?: string, number?: number | undefined): string {
+        return `${value?.slice(0, number)}'...'`;
     }
 }

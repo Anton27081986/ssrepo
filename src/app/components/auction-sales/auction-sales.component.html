@@ -10,7 +10,9 @@
     </div>
     <div class="open-all-table">
       <div>
-        <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
+        <a href="">
+          <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
+        </a>
       </div>
     </div>
   </div>
@@ -28,7 +30,9 @@
         </thead>
         <tbody>
         <tr *ngFor="let data of basicTable.data">
-          <td>{{ data.tovName }}</td>
+          <td>
+            <a href="{{ data.detailUrl }}" target="_blank">{{ data.tovName }}</a>
+          </td>
           <td>{{ data.source }}</td>
           <td>
             {{ data.price }}

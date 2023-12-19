@@ -3,6 +3,7 @@ import {IUser} from '@auth/models/user';
 import {AuthenticationService} from '@auth/services/authentication.service';
 import {first} from 'rxjs';
 import {UserService} from '@auth/services/user.service';
+import {ThemeService} from '@app/shared/theme/theme.service';
 
 @Component({
     selector: 'app-start',
@@ -16,6 +17,7 @@ export class StartComponent {
     userFromApi?: IUser;
 
     constructor(
+        private readonly themeService: ThemeService,
         private readonly userService: UserService,
         private readonly authenticationService: AuthenticationService,
     ) {
@@ -32,5 +34,11 @@ export class StartComponent {
                 this.loading = false;
                 this.userFromApi = user;
             });
+
+        // this.toggleTheme()
+    }
+
+    toggleTheme(): void {
+        this.themeService.toggleTheme().then();
     }
 }

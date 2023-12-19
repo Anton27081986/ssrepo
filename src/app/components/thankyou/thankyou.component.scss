@@ -15,11 +15,13 @@
 
         .open-all-table {
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
         .calendar {
             position: relative;
+            margin-top: 40px;
 
             .ant-picker {
                 width: 244px;
@@ -59,6 +61,64 @@
             ::ng-deep.ant-picker-input:hover .ant-picker-clear {
                 opacity: 0;
             }
+        }
+
+        .top-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 40px;
+
+            div {
+                display: flex;
+            }
+
+            //div:last-child {
+            //    margin-left: 29px;
+            //}
+
+            .total-week {
+                align-items: center;
+
+                span {
+                    font-size: 19.8px;
+                }
+
+                span:nth-child(2) {
+                    margin-left: 8px;
+                    font-weight: 700;
+                    color: $blue;
+                }
+            }
+
+            .total-time {
+                margin-left: 29px;
+                align-items: center;
+
+                span {
+                    font-size: 16px;
+                }
+
+                span:nth-child(2) {
+                    margin-left: 4px;
+                    font-weight: 700;
+                    line-height: normal;
+                    letter-spacing: -0.16px;
+                }
+            }
+
+            ::ng-deep .anticon {
+                font-size: 21px;
+                margin-right: 7px;
+
+                path {
+                    //stroke: #4770FF!important;
+                    //fill: #4770FF!important;
+                }
+            }
+        }
+        .top-panel-mobile {
+            display: none;
         }
     }
 
@@ -170,61 +230,6 @@
             //content: '';
             //flex: auto;
         }
-
-        .bottom-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 40px;
-
-            div {
-                display: flex;
-            }
-
-            //div:last-child {
-            //    margin-left: 29px;
-            //}
-
-            .total-week {
-                align-items: center;
-
-                span {
-                    font-size: 19.8px;
-                }
-
-                span:nth-child(2) {
-                    margin-left: 8px;
-                    font-weight: 700;
-                    color: $blue;
-                }
-            }
-
-            .total-time {
-                margin-left: 29px;
-                align-items: center;
-
-                span {
-                    font-size: 16px;
-                }
-
-                span:nth-child(2) {
-                    margin-left: 4px;
-                    font-weight: 700;
-                    line-height: normal;
-                    letter-spacing: -0.16px;
-                }
-            }
-
-            ::ng-deep .anticon {
-                font-size: 21px;
-                margin-right: 7px;
-
-                path {
-                    //stroke: #4770FF!important;
-                    //fill: #4770FF!important;
-                }
-            }
-        }
     }
 }
 
@@ -259,6 +264,33 @@
                     width: 372px;
                 }
             }
+            .top-panel {
+                margin-top: 32px;
+                justify-content: space-between;
+                display: none;
+
+                .total-week {
+                    span {
+                        font-size: 15.8px;
+                    }
+                }
+
+                .total-time {
+                    span {
+                        font-size: 15.8px;
+                    }
+                }
+
+                .button {
+                    margin-top: 14px;
+                    margin-left: 0;
+
+                    width: 100%;
+                }
+            }
+            .top-panel-mobile {
+                display: flex;
+            }
         }
 
         .content {
@@ -282,29 +314,6 @@
                             bottom: 9px;
                         }
                     }
-                }
-            }
-            .bottom-panel {
-                margin-top: 32px;
-                justify-content: space-between;
-
-                .total-week {
-                    span {
-                        font-size: 15.8px;
-                    }
-                }
-
-                .total-time {
-                    span {
-                        font-size: 15.8px;
-                    }
-                }
-
-                .button {
-                    margin-top: 14px;
-                    margin-left: 0;
-
-                    width: 100%;
                 }
             }
         }
