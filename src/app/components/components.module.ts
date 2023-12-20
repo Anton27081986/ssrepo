@@ -30,6 +30,7 @@ import {NzPaginationModule} from 'ng-zorro-antd/pagination';
 import {VictoryComponent} from './victory/victory.component';
 import {BirthdayComponent} from './birthday/birthday.component';
 import {RatingComponent} from './rating/rating.component';
+import {NzModalModule} from 'ng-zorro-antd/modal';
 
 @NgModule({
     declarations: [
@@ -68,6 +69,7 @@ import {RatingComponent} from './rating/rating.component';
         MaxLengthTextPipe,
         UpFirstPipe,
         NzPaginationModule,
+        NzModalModule,
     ],
     exports: [
         SearchComponent,
