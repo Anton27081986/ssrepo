@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {NzIconService} from "ng-zorro-antd/icon";
-import {AppIcons} from "@app/common/icons";
+import {NzIconService} from 'ng-zorro-antd/icon';
+import {AppIcons} from '@app/common/icons';
 
 @Component({
     selector: 'app-victory',
@@ -9,7 +9,6 @@ import {AppIcons} from "@app/common/icons";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VictoryComponent {
-
     constructor(private readonly iconService: NzIconService) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -20,5 +19,4 @@ export class VictoryComponent {
         this.iconService.addIconLiteral('ss:comment', AppIcons.comment);
         this.iconService.addIconLiteral('ss:plus', AppIcons.plus);
     }
-
 }
