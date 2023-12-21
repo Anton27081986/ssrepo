@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '@auth/services/user.service';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-settings',
