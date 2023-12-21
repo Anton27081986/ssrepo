@@ -4,7 +4,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {AppIcons} from '@app/common/icons';
 import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
-import {UserService} from "@auth/services/user.service";
+import {UserService} from '@auth/services/user.service';
 
 @Component({
     selector: 'app-header',
@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit {
             .pipe()
             .subscribe(data => {
                 this.profileData = [data];
-                console.log('profileData',  this.profileData);
+                console.log('profileData', this.profileData);
             });
     }
 
