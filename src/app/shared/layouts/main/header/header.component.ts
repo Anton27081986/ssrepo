@@ -4,6 +4,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {AppIcons} from '@app/common/icons';
 import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
+import {UserService} from "@auth/services/user.service";
 
 @Component({
     selector: 'app-header',
@@ -17,12 +18,14 @@ export class HeaderComponent implements OnInit {
     public statusInputSearchMobile = true;
     public statusBurger = false;
     public listMenu!: IMainMenu[];
+    public profileData!: any;
 
     typeIcon!: 'ss:search';
 
     constructor(
         private readonly apiService: ApiService,
         private readonly iconService: NzIconService,
+        private readonly userService: UserService,
     ) {
         this.iconService.addIconLiteral('ss:search', AppIcons.iconSearch);
         this.iconService.addIconLiteral('ss:remind', AppIcons.iconRemind);
@@ -42,6 +45,14 @@ export class HeaderComponent implements OnInit {
         this.apiService.getMenuListJson().subscribe(item => {
             this.listMenu = item.menu;
         });
+
+        this.userService
+            .getProfile()
+            .pipe()
+            .subscribe(data => {
+                this.profileData = [data];
+                console.log('profileData',  this.profileData);
+            });
     }
 
     protected readonly AppRoutes = AppRoutes;

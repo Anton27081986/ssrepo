@@ -22,20 +22,20 @@
 
     </div>
     <div class="open-all-table">
-      <div class="button">
-        <a href="https://ssnab.it/index#formPredsThanks" target="_blank" rel="noreferrer">
-          <button nz-button class="button" [nzType]="'primary'">
-            <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
-            Поблагодарить партнера
-          </button>
-        </a>
-      </div>
       <div class="calendar">
         <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
         <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
         <ng-template #sufixCalendar>
           <i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
         </ng-template>
+      </div>
+      <div class="button">
+        <a href="https://ssnab.it/catalog/preds/thank#/create" target="_blank" rel="noreferrer">
+          <button nz-button class="button" [nzType]="'primary'">
+            <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
+            Поблагодарить партнера
+          </button>
+        </a>
       </div>
       <div class="top-panel top-panel-mobile">
         <div>

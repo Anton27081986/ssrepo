@@ -31,9 +31,15 @@ body {
         }
     }
 
+    .ant-form-item-explain {
+        position: absolute;
+    }
     .ant-form-item-explain-error {
         color: #ee1c25;
         font-weight: 600;
+        position: absolute;
+        top: 50px;
+        width: 220px;
     }
 
     .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(

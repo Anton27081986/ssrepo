@@ -32,10 +32,15 @@
     }
 }
 
+.ant-form-vertical .ant-form-item {
+    margin-bottom: 30px;
+}
+
 .error-message {
+    position: absolute;
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: 0;
 
     span {
         color: #ee1c25;
