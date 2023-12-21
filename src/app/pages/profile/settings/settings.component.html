@@ -6,14 +6,23 @@
   <div class="photo">
       <div class="personal">
         <div class="img">
+          <!--   <img src="{{ profileData?.avatarUr }}" alt="user" />-->
 
-            <ng-container *ngIf="!profileData?.avatarUr">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </ng-container>
+<!--            <ng-container *ngIf="!profileData?.avatarUr">-->
+<!--              <img src="assets/images/profile/user-popup.png" alt="user" />-->
+<!--            </ng-container>-->
 
-            <ng-container *ngIf="profileData?.avatarUr">
-              <img src="{{ profileData?.avatarUr }}" alt="user" />
-            </ng-container>
+<!--            <ng-container *ngIf="profileData?.avatarUr">-->
+<!--              <img src="{{ profileData?.avatarUr }}" alt="user" />-->
+<!--            </ng-container>-->
+
+          <ng-container *ngIf="!profileData!.avatarUrl; else image">
+            <img src="assets/images/profile/user-popup.png" alt="user" />
+          </ng-container>
+
+          <ng-template #image>
+            <img src="{{ profileData!.avatarUrl }}" alt="user" />
+          </ng-template>
 
           </div>
           <div class="m-t-8">

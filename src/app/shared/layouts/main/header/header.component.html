@@ -39,13 +39,24 @@
             <div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
               <div class="icon-bg">
 <!--                <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />-->
-                <ng-container *ngIf="!profileData?.avatarUr">
-                  <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />
+
+<!--                <ng-container *ngIf="!profileData?.avatarUr">-->
+<!--                  <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />-->
+<!--                </ng-container>-->
+
+<!--                <ng-container *ngIf="profileData?.avatarUr">-->
+<!--                  <img src="{{ profileData?.avatarUr }}" alt="user" />-->
+<!--                </ng-container>-->
+
+                <ng-container *ngIf="!profileData!.avatarUrl; else image">
+<!--                  <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />-->
+                  <img src="{{ profileData!.avatarUrl }}" alt="user" height="44" width="44" />
                 </ng-container>
 
-                <ng-container *ngIf="profileData?.avatarUr">
-                  <img src="{{ profileData?.avatarUr }}" alt="user" />
-                </ng-container>
+                <ng-template #image>
+                  <img src="{{ profileData!.avatarUrl }}" alt="user" />
+                </ng-template>
+
               </div>
               <div class="title">Мой профиль</div>
 

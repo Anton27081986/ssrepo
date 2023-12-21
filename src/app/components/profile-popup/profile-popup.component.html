@@ -3,14 +3,23 @@
     <div class="card">
       <div class="personal">
         <div class="img">
+          <!-- <img src="{{ profile!.avatarUrl }}" alt="user" />-->
 
-          <ng-container *ngIf="!profile!.avatarUrl">
+<!--          <ng-container *ngIf="profile!.avatarUrl">-->
+<!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
+<!--          </ng-container>-->
+
+<!--          <ng-container *ngElse="profile!.avatarUrl">-->
+<!--            <img src="{{ profile!.avatarUrl }}" alt="user" />-->
+<!--          </ng-container>-->
+
+          <ng-container *ngIf="!profile!.avatarUrl; else image">
             <img src="assets/images/profile/user-popup.png" alt="user" />
           </ng-container>
 
-          <ng-container *ngIf="profile!.avatarUrl">
+          <ng-template #image>
             <img src="{{ profile!.avatarUrl }}" alt="user" />
-          </ng-container>
+          </ng-template>
 
         </div>
         <div class="title">
