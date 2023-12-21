@@ -9,8 +9,8 @@
       </div>
     </div>
     <div class="open-all-table">
-      <div>
-        <a href="https://ssnab.it/Sales/PlanMolsTovs/Proficits">
+      <div *ngIf="auctionAll | async as url">
+        <a href="{{ url.allListLink }}" target="_blank">
           <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
         </a>
       </div>

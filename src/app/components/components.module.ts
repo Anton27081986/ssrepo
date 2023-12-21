@@ -31,6 +31,7 @@ import {VictoryComponent} from './victory/victory.component';
 import {BirthdayComponent} from './birthday/birthday.component';
 import {RatingComponent} from './rating/rating.component';
 import {NzModalModule} from 'ng-zorro-antd/modal';
+import {NzSelectModule} from 'ng-zorro-antd/select';
 
 @NgModule({
     declarations: [
@@ -70,6 +71,7 @@ import {NzModalModule} from 'ng-zorro-antd/modal';
         UpFirstPipe,
         NzPaginationModule,
         NzModalModule,
+        NzSelectModule,
     ],
     exports: [
         SearchComponent,

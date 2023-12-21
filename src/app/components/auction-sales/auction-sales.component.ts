@@ -10,10 +10,12 @@ import {ApiService} from '@app/shared/services/api/api.service';
 })
 export class AuctionSalesComponent implements OnInit {
     public auctions!: Observable<any>;
+    public auctionAll!: Observable<any>;
 
     constructor(private readonly apiService: ApiService) {}
 
     ngOnInit(): any {
         this.auctions = this.apiService.getAuctions().pipe(map(({items}) => items));
+        this.auctionAll = this.apiService.getAuctions().pipe();
     }
 }

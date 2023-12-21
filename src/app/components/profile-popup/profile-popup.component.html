@@ -10,7 +10,10 @@
             <span>{{ profile!.name }} </span>
           </div>
           <div class="job">
-            <span>{{ profile!.position }} {{ profile?.department }}</span>
+            <div>
+              <div>{{ profile?.position }}</div>
+              <div>{{ profile?.department }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -18,10 +21,19 @@
         <div class="item">
           <div>
             <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
-            <span class="title">Внутренний телефон:</span>
+            <span class="title">Tелефон:</span>
           </div>
           <div>
             <span class="description">{{ profile?.phone }}</span>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+            <span class="title">Внутренний телефон:</span>
+          </div>
+          <div>
+            <span class="description">{{ profile?.phoneLocal }}</span>
           </div>
         </div>
         <div class="item">
@@ -64,7 +76,10 @@
                   <span>{{ account?.userName }}</span>
                 </div>
                 <div class="job">
-                  <span>{{ account?.position }} {{ account?.department }}</span>
+                  <div>
+                    <div>{{ account?.position }}</div>
+                    <div>{{ account?.department }}</div>
+                  </div>
                 </div>
               </div>
               <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>

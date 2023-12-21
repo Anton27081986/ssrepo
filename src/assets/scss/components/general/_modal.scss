@@ -1,0 +1,38 @@
+.ant-modal {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
+    width: 553px !important;
+
+    .ant-modal-header {
+        background-color: $blue;
+    }
+
+    .field-tile {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .ant-modal-title {
+        font-size: 16px;
+        color: #ffffff;
+        margin-left: 10px;
+    }
+
+    .field-tile {
+        font-weight: 600;
+    }
+
+    .ant-modal-body {
+        padding: 0 20px;
+    }
+
+    .ant-form-item {
+        margin-top: 20px;
+    }
+
+    .ant-modal-footer {
+        border-top: unset;
+        padding: 6px 6px 21px 9px;
+    }
+}

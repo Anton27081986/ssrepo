@@ -23,49 +23,12 @@
     </div>
     <div class="open-all-table">
       <div class="button">
-        <button nz-button class="button" [nzType]="'primary'" (click)="showModal()">
-          <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
-          Поблагодарить партнера
-        </button>
-
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-          <ng-container *nzModalContent>
-            <div>
-              <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form m-t-25 p-b-40" (ngSubmit)="onSubmit()">
-                <nz-form-item>
-                  <nz-form-control nzErrorTip="">
-                    <nz-input-group [nzPrefix]="prefixUser">
-                      <input type="email" nz-input formControlName="login" placeholder="Кому" />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                  <nz-form-control nzErrorTip="">
-                    <nz-input-group [nzPrefix]="prefixUser">
-                      <input type="email" nz-input formControlName="login" placeholder="Не забывайте благодарить коллег!" />
-                    </nz-input-group>
-                  </nz-form-control>
-                </nz-form-item>
-
-                <nz-form-item>
-                  <nz-form-control>
-                    <div class="send d-flex flex-column">
-                      <div class="m-t-8">
-                        <button nz-button class="login-form-button" [nzType]="'primary'">Сказать спасибо</button>
-                      </div>
-                    </div>
-                  </nz-form-control>
-                </nz-form-item>
-              </form>
-
-              <ng-template #prefixUser>
-                <i nz-icon nzType="user"></i>
-              </ng-template>
-
-            </div>
-          </ng-container>
-        </nz-modal>
-
+        <a href="https://ssnab.it/index#formPredsThanks" target="_blank" rel="noreferrer">
+          <button nz-button class="button" [nzType]="'primary'">
+            <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
+            Поблагодарить партнера
+          </button>
+        </a>
       </div>
       <div class="calendar">
         <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
