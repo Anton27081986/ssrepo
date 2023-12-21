@@ -5,7 +5,7 @@ import {ApiService} from '@app/shared/services/api/api.service';
 import {AppIcons} from '@app/common/icons';
 import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 import {UserService} from '@auth/services/user.service';
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -54,10 +54,11 @@ export class HeaderComponent implements OnInit {
             .pipe()
             .subscribe(data => {
                 this.profileData = [data];
-                // console.log('profileData', this.profileData);
+                console.log('profileData', this.profileData);
             });
 
-        this.profile = this.userService.getProfile().pipe(map(console.log));
+        //  this.profile = this.userService.getProfile().pipe(map(console.log));
+        //  this.profile = this.userService.getProfile().pipe(map(console.log));
     }
 
     protected readonly AppRoutes = AppRoutes;
