@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '@auth/services/user.service';
+import {Observable} from "rxjs";
 
 @Component({
     selector: 'app-settings',
@@ -12,6 +13,7 @@ export class SettingsComponent implements OnInit {
     settingsForm!: FormGroup;
     value?: any;
     public profileData!: any;
+    public profile!: Observable<any>;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -37,6 +39,8 @@ export class SettingsComponent implements OnInit {
             .subscribe(data => {
                 this.profileData = data;
             });
+
+        this.profile = this.userService.getProfile();
     }
 
     onSubmit() {}

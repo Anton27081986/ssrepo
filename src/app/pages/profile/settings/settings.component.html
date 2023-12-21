@@ -6,8 +6,12 @@
   <div class="photo">
       <div class="personal">
         <div class="img">
+          <ng-container *ngIf="profile | async as url">
+            <img src="{{ url.avatarUrl }}" alt="user" />
+          </ng-container>
+
           <!--   <img src="{{ profileData?.avatarUr }}" alt="user" />-->
-          <img src="{{ profileData?.avatarUrl }}" alt="user" />
+<!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
 
 <!--            <ng-container *ngIf="!profileData?.avatarUr">-->
 <!--              <img src="assets/images/profile/user-popup.png" alt="user" />-->

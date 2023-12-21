@@ -49,15 +49,15 @@ export class HeaderComponent implements OnInit {
             this.listMenu = item.menu;
         });
 
-        this.userService
+/*        this.userService
             .getProfile()
             .pipe()
             .subscribe(data => {
                 this.profileData = [data];
                 // console.log('profileData', this.profileData);
-            });
+            });*/
 
-        //  this.profile = this.userService.getProfile().pipe(map(console.log));
+        this.profile = this.userService.getProfile();
         //  this.profile = this.userService.getProfile().pipe(map(console.log));
     }
 

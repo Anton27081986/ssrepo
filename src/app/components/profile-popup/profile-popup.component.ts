@@ -4,7 +4,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {UserService} from '@auth/services/user.service';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {map} from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-profile-popup',
@@ -16,6 +16,8 @@ export class ProfilePopupComponent {
     public statusAccordion = false;
     public accounts!: any;
     public profileData!: any;
+
+    public profile!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -41,6 +43,7 @@ export class ProfilePopupComponent {
                 this.profileData = [data];
             });
 
+        this.profile = this.userService.getProfile();
         this.accounts = this.apiService.getAccounts().pipe(map(({accounts}) => accounts));
     }
 

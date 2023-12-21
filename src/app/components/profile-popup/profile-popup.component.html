@@ -1,9 +1,14 @@
 <div class="profile-popup">
-  <div class="wrapper" *ngFor="let profile of profileData">
+  <div class="wrapper" *ngIf="profile | async as url">
     <div class="card">
       <div class="personal">
         <div class="img">
-          <img src="{{ profileData?.avatarUrl }}" alt="user" />
+
+          <ng-container>
+            <img src="{{ url!.avatarUrl }}" alt="user" />
+          </ng-container>
+
+<!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
 
           <!--          <ng-container *ngIf="!profile!.avatarUrl; else image">-->
 <!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
@@ -16,12 +21,12 @@
         </div>
         <div class="title">
           <div class="fio">
-            <span>{{ profile!.name }} </span>
+            <span>{{ url!.name }} </span>
           </div>
           <div class="job">
             <div>
-              <div>{{ profile?.position }}</div>
-              <div>{{ profile?.department }}</div>
+              <div>{{ url?.position }}</div>
+              <div>{{ url?.department }}</div>
             </div>
           </div>
         </div>
@@ -33,7 +38,7 @@
             <span class="title">Tелефон:</span>
           </div>
           <div>
-            <span class="description">{{ profile?.phone }}</span>
+            <span class="description">{{ url?.phone }}</span>
           </div>
         </div>
         <div class="item">
@@ -42,7 +47,7 @@
             <span class="title">Внутренний телефон:</span>
           </div>
           <div>
-            <span class="description">{{ profile?.phoneLocal }}</span>
+            <span class="description">{{ url?.phoneLocal }}</span>
           </div>
         </div>
         <div class="item">
@@ -51,7 +56,7 @@
             <span class="title">Email:</span>
           </div>
           <div>
-            <span class="description">{{ profile?.email }}</span>
+            <span class="description">{{ url?.email }}</span>
           </div>
         </div>
       </div>
