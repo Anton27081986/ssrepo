@@ -38,23 +38,19 @@
 
             <div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
               <div class="icon-bg">
-<!--                <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />-->
 
-<!--                <ng-container *ngIf="!profileData?.avatarUr">-->
+<!--                <ng-container *ngIf="profile | async">-->
+
+                  <ng-container *ngFor="let index of profile | async;">
+                    <img src="{{ index?.avatarUrl }}" alt="user" height="44" width="44" />
+                  </ng-container>
+
 <!--                  <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />-->
 <!--                </ng-container>-->
 
-<!--                <ng-container *ngIf="profileData?.avatarUr">-->
-<!--                  <img src="{{ profileData?.avatarUr }}" alt="user" />-->
-<!--                </ng-container>-->
-
-                <ng-container *ngIf="!profileData?.avatarUrl; else image">
-                  <img ngSrc="assets/images/profile/user.png" alt="user" height="44" width="44" />
-                </ng-container>
-
                 <ng-template #image>
-                  <img src="{{ profileData?.avatarUrl }}" alt="user1" />
-                  <img src="{{ profileData!.avatarUrl }}" alt="user2" />
+<!--                  <img src="{{ profileData?.avatarUrl }}" alt="user1" />-->
+<!--                  <img src="{{ profile!.avatarUrl }}" alt="user2" />-->
                 </ng-template>
 
               </div>
