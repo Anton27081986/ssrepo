@@ -259,4 +259,10 @@ export class AppIcons {
         '<path d="M9.99607 9.16667H10.0036" stroke="#4770FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '<path d="M6.66209 9.16667H6.66957" stroke="#4770FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
+
+    static plus =
+        '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<rect width="2" height="16" rx="0.999999" transform="matrix(-5.47909e-06 1 -1 5.47909e-06 16 6.99927)" fill="white"/>\n' +
+        '<rect width="2" height="16" rx="0.999999" transform="matrix(-1 5.3948e-06 5.56338e-06 -1 9 16)" fill="white"/>\n' +
+        '</svg>';
 }
