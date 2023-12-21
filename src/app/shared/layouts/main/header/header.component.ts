@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit {
             .pipe()
             .subscribe(data => {
                 this.profileData = [data];
-                console.log('profileData', this.profileData);
+                // console.log('profileData', this.profileData);
             });
 
         //  this.profile = this.userService.getProfile().pipe(map(console.log));

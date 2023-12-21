@@ -109,6 +109,13 @@ app-mobile-menu {
     .icon-bg {
         margin-left: 0;
         overflow: hidden;
+        width: 44px;
+        flex: none;
+        border-radius: 16px;
+
+        img {
+            width: 44px;
+        }
     }
 
     .title {

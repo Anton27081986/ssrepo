@@ -14,8 +14,8 @@ import {map} from 'rxjs';
 })
 export class ProfilePopupComponent {
     public statusAccordion = false;
-    public profileData!: any;
     public accounts!: any;
+    public profileData!: any;
 
     constructor(
         private readonly apiService: ApiService,
