@@ -16,9 +16,7 @@ export class ThankColleagueComponent {
     submitted = false;
     isConfirmLoading = false;
 
-    constructor(
-        private readonly formBuilder: FormBuilder,
-    ) {}
+    constructor(private readonly formBuilder: FormBuilder) {}
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
