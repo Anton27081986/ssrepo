@@ -9,7 +9,9 @@
 
       <ng-container *ngIf="banners | async">
         <div nz-carousel-content *ngFor="let index of banners | async;">
-          <img ngSrc="{{ index.imageUrl }}" alt="{{ index.text }}" fill="" />
+          <a href="{{index.linkUrl}}" target="_blank" rel="noreferrer">
+            <img ngSrc="{{ index.imageUrl }}" alt="{{ index.text }}" fill="" />
+          </a>
         </div>
       </ng-container>
 
