@@ -758,4 +758,19 @@
             }
         }
     }
+
+
+    ::ng-deep {
+        .ant-modal {
+            // width: 558px !important;
+
+            .ant-modal-header {}
+
+            .ant-modal-body {
+                .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+                    margin-left: 0!important;
+                }
+            }
+        }
+    }
 }

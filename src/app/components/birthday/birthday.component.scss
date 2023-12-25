@@ -15,7 +15,111 @@
 
         .open-all-table {
             display: flex;
+            //flex-direction: column;
             align-items: center;
+        }
+
+        .calendar {
+            position: relative;
+            margin-right: 16px;
+            // margin-top: 40px;
+
+            .ant-picker {
+                width: 244px;
+                height: 52px;
+                border-radius: 16px;
+                padding: 4px 20px 4px 54px;
+
+                ::ng-deep .ant-picker-suffix {
+                    .anticon.search-icon-suffix {
+                        font-size: 16px;
+                    }
+                }
+            }
+
+            ::ng-deep .ant-picker-input > input {
+                font-size: 16px !important;
+            }
+
+            .calendar-icon {
+                position: absolute;
+                top: 14px;
+                left: 22px;
+            }
+
+            ::ng-deep .anticon {
+                font-size: 22px;
+            }
+
+            ::ng-deep .ant-picker-suffix {
+                .anticon {
+                    path {
+                        stroke: #d9d9d9 !important;
+                    }
+                }
+            }
+
+            ::ng-deep.ant-picker-input:hover .ant-picker-clear {
+                opacity: 0;
+            }
+        }
+
+        .top-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 40px;
+
+            div {
+                display: flex;
+            }
+
+            //div:last-child {
+            //    margin-left: 29px;
+            //}
+
+            .total-week {
+                align-items: center;
+
+                span {
+                    font-size: 19.8px;
+                }
+
+                span:nth-child(2) {
+                    margin-left: 8px;
+                    font-weight: 700;
+                    color: $blue;
+                }
+            }
+
+            .total-time {
+                margin-left: 29px;
+                align-items: center;
+
+                span {
+                    font-size: 16px;
+                }
+
+                span:nth-child(2) {
+                    margin-left: 4px;
+                    font-weight: 700;
+                    line-height: normal;
+                    letter-spacing: -0.16px;
+                }
+            }
+
+            ::ng-deep .anticon {
+                font-size: 21px;
+                margin-right: 7px;
+
+                path {
+                    //stroke: #4770FF!important;
+                    //fill: #4770FF!important;
+                }
+            }
+        }
+        .top-panel-mobile {
+            display: none;
         }
     }
 
@@ -28,63 +132,29 @@
             .card {
                 position: relative;
                 width: 408px;
-                height: auto;
+                height: 130px;
                 border-radius: 16px;
                 border: 1px solid $border-color;
                 background-color: $white;
-                padding: 15px 20px 20px 20px;
-                margin-top: 37px;
+                padding: 20px;
+                margin-top: 30px;
 
                 // flex: 1 0 200px;
 
-                .personals {
+                .personal {
                     position: relative;
                     display: flex;
 
-                    .images {
-                        position: relative;
-                        width: 80px;
+                    .img {
+                        border-radius: 14px;
+                        overflow: hidden;
+                        flex: none;
 
-                        .img {
-                            position: absolute;
-                            border-radius: 14px;
-                            overflow: hidden;
-                            flex: none;
-                            margin-top: 3px;
-                            width: 50px;
-                            height: 50px;
-                            background-color: #886cff;
-
-                            img {
-                                width: 50px;
-                                height: 50px;
-                                object-fit: cover;
-                            }
+                        img {
+                            width: 90px;
+                            height: 90px;
+                            object-fit: cover;
                         }
-
-                        .img-from {
-                            position: absolute;
-                            top: 3;
-                            left: 0;
-                        }
-                        .img-to {
-                            position: absolute;
-                            bottom: 3px;
-                            right: 0;
-                        }
-                    }
-
-                    .images:after {
-                        content: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1C7.43045 2.20106 12.3012 7.87174 12.3012 14.6885" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/><path d="M16.0002 10.2599L12.3882 15L7.66797 11.3693" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/></svg>');
-                        position: absolute;
-                        top: 13px;
-                        right: 10px;
-                    }
-                    .images:before {
-                        content: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1C2.20106 7.43045 7.87174 12.3012 14.6885 12.3012" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/><path d="M10.2598 16.0002L14.9998 12.3882L11.3691 7.66797" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/></svg>');
-                        position: absolute;
-                        bottom: 5px;
-                        left: 10px;
                     }
 
                     .enter-icon {
@@ -96,20 +166,15 @@
                         cursor: pointer;
                     }
 
-                    .sub-title {
-                        font-size: 12px;
-                        font-weight: 600;
-                    }
-
                     .title {
-                        margin-left: 24px;
+                        margin-left: 19px;
                     }
 
                     .fio {
-                        font-size: 13.6px;
+                        font-size: 17.6px;
                         font-weight: bold;
                         line-height: 20px;
-                        margin-top: 0;
+                        margin-top: 7px;
                     }
 
                     .job {
@@ -128,85 +193,33 @@
                         top: 20px;
                     }
 
+                    .count {
+                        position: absolute;
+                        right: 20px;
+                        bottom: 13px;
+
+                        border-radius: 30px;
+                        background-color: $blue;
+                        color: $white;
+                        height: 28px;
+                        width: 28px;
+
+                        text-align: center;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        padding-right: 1px;
+                        font-weight: 500;
+                    }
+
                     ::ng-deep .anticon {
                         fill-opacity: 1;
                         font-size: 34px;
-                    }
-                }
 
-                .message {
-                    width: 377px;
-                    overflow-y: scroll;
-
-                    .text {
-                        font-size: 11.8px;
-                        font-style: normal;
-                        font-weight: 500;
-                        margin-top: 14px;
-                        line-height: 16.7px;
-                        height: 50px;
-                    }
-                }
-
-                .info {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 6px;
-
-                    .count {
-                        padding-right: 6px;
-                    }
-
-                    .left-group {
-                        display: flex;
-                    }
-                }
-
-                .icon {
-                    font-size: 20px;
-
-                    ::ng-deep path {
-                        stroke: $blue;
-                    }
-                }
-
-                .like {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 50px;
-                    height: 32px;
-                    border-radius: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    padding-left: 1px;
-                    cursor: pointer;
-
-                    .like-icon {
-                        padding-left: 1px;
-                    }
-                }
-                .comment {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 50px;
-                    height: 32px;
-                    border-radius: 8px;
-                    margin-left: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    cursor: pointer;
-                }
-                .date {
-                    display: flex;
-                    align-items: center;
-                    font-weight: 600;
-
-                    span {
-                        font-size: 9px;
+                        path {
+                            //stroke: #4770FF!important;
+                            //fill: #4770FF!important;
+                        }
                     }
                 }
             }
@@ -218,42 +231,12 @@
             //content: '';
             //flex: auto;
         }
-
-        .bottom-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 27px;
-        }
-    }
-}
-
-::ng-deep {
-    .message::-webkit-scrollbar {
-        width: 4px;
-        height: 48px;
-    }
-
-    .message::-webkit-scrollbar-track {
-        background-color: $gray;
-        border-radius: 60px;
-        // margin: 24px;
-        height: 48px;
-    }
-
-    .message::-webkit-scrollbar-thumb {
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .message {
-        border-right: 10px solid #ffffff !important;
-        box-sizing: border-box;
-        scrollbar-width: thin;
-        scrollbar-color: $gray-light;
     }
 }
 
 .bottom-panel {
+    margin-top: 27px;
+
     ::ng-deep {
         .ant-pagination-item:hover a {
             color: $blue;
@@ -302,14 +285,21 @@
 }
 
 @media screen and (max-width: 414px) {
-    .thank-colleague {
+    .birthday {
         margin: 80px 20px 0 20px;
 
         .header {
             justify-content: center;
 
             .open-all-table {
-                margin-top: 18px;
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+
+                .calendar {
+                    margin-right: 0;
+                }
             }
 
             .title h1 {
@@ -327,6 +317,46 @@
                     line-height: 19px !important;
                 }
             }
+
+            .calendar {
+                margin-top: 25px;
+
+                .ant-picker {
+                    width: 372px;
+                }
+            }
+
+            .button {
+                margin-top: 10px;
+            }
+
+            .top-panel {
+                margin-top: 32px;
+                justify-content: space-between;
+                display: none;
+
+                .total-week {
+                    span {
+                        font-size: 15.8px;
+                    }
+                }
+
+                .total-time {
+                    span {
+                        font-size: 15.8px;
+                    }
+                }
+
+                .button {
+                    margin-top: 14px;
+                    margin-left: 0;
+
+                    width: 100%;
+                }
+            }
+            .top-panel-mobile {
+                display: flex;
+            }
         }
 
         .content {
@@ -335,6 +365,7 @@
 
                 .card {
                     width: 100%;
+                    height: 116px;
                     margin-top: 20px;
                     padding: 12px;
 
@@ -343,12 +374,13 @@
                             right: 12px;
                             top: 11px;
                         }
+
+                        .count {
+                            right: 14px;
+                            bottom: 9px;
+                        }
                     }
                 }
-            }
-            .bottom-panel {
-                margin-top: 32px;
-                justify-content: space-between;
             }
         }
     }

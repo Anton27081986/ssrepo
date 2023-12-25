@@ -4,6 +4,9 @@
       <div class="title">
         <h1>ДНИ РОЖДЕНИЯ</h1>
       </div>
+      <div class="subtitle">
+        <h2>Не забывайте поздравить коллег и партнеров!</h2>
+      </div>
     </div>
     <div class="open-all-table">
       <div class="button">
@@ -17,10 +20,28 @@
 
   <div class="content">
     <div class="card-list">
-      <div class="card"></div>
+      <div class="card">
+        <div class="personal">
+          <div class="img">
+            <img src="assets/images/profile/user-popup.png" alt="user" />
+          </div>
+          <div class="title">
+            <div class="fio">
+              <span>Гришин Пантелей Серапионович</span>
+            </div>
+            <div class="job">
+              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+            </div>
+          </div>
+        </div>
+        <div class="icons">
+          <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+          <span class="count">18</span>
+        </div>
+      </div>
     </div>
     <div class="bottom-panel">
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="19" [nzPageSize]="10"></nz-pagination>
+      <nz-pagination [nzPageIndex]="1" [nzTotal]="19" [nzPageSize]="19"></nz-pagination>
     </div>
   </div>
 </div>
