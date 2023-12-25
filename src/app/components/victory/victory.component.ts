@@ -19,6 +19,8 @@ export class VictoryComponent {
 
     checked = true;
 
+    title: any;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
@@ -35,6 +37,8 @@ export class VictoryComponent {
         this.iconService.addIconLiteral('ss:openOut', AppIcons.openOut);
         this.iconService.addIconLiteral('ss:onePeople', AppIcons.onePeople);
         this.iconService.addIconLiteral('ss:twoPeople', AppIcons.twoPeople);
+        this.iconService.addIconLiteral('ss:iconClose', AppIcons.iconClose);
+        this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
     }
 
     submitted = false;
@@ -64,23 +68,44 @@ export class VictoryComponent {
         this.loading = true;
     }
 
+    // Модальное окно Добавить победы
     showModalAdd(): void {
         this.isVisibleAdd = true;
     }
 
     handleOk(): void {
-        // this.isVisibleAdd = false;
+        this.isVisibleAdd = false;
     }
 
     handleCancel(): void {
         this.isVisibleAdd = false;
     }
 
+    // Модальное окно раскрытой карточки
+    showModalOpenOut(): void {
+        this.isVisibleOpenOut = true;
+    }
+
+    handleCancelOpenOut(): void {
+        this.isVisibleOpenOut = false;
+    }
+
+    handleOkOpenOut(): void {
+        this.isVisibleOpenOut = false;
+    }
+
+    // Модальное окно комментариев
     showModalComments(): void {
         this.isVisibleComments = true;
     }
 
-    showModalOpenOut(): void {
-        this.isVisibleOpenOut = true;
+    handleCancelComments(): void {
+        this.isVisibleComments = false;
     }
+
+    handleOkComments(): void {
+        this.isVisibleComments = false;
+    }
+
+    search() {}
 }

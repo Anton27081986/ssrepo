@@ -13,6 +13,18 @@
         border-bottom-right-radius: 30px;
     }
 
+    .fly-header {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
+    }
+
     .header {
         display: flex;
         justify-content: space-between;

@@ -239,10 +239,17 @@
         margin: 80px 20px 0 20px;
 
         .header {
+            justify-content: center;
+
             .open-all-table {
+                width: 100%;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+
+                .calendar {
+                    margin-right: 0;
+                }
             }
 
             .title h1 {

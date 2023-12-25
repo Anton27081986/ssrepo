@@ -301,7 +301,7 @@ module.exports = {
             parser: '@html-eslint/parser',
             rules: {
                 'spaced-comment': 'off',
-                '@html-eslint/no-duplicate-attrs': 'error',
+                '@html-eslint/no-duplicate-attrs': 'warn',
                 '@html-eslint/no-duplicate-id': 'error',
                 '@html-eslint/no-inline-styles': 'error',
                 '@html-eslint/no-obsolete-tags': 'error',

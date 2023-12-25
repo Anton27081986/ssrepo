@@ -2,7 +2,18 @@
     border-radius: 16px !important;
     overflow: hidden !important;
     padding-bottom: 0 !important;
-    width: 553px !important;
+    // width: 553px !important;
+
+    .ant-modal-close {
+        svg {
+            fill-opacity: 1;
+
+            path {
+                fill: #fff;
+                stroke: #fff;
+            }
+        }
+    }
 
     .ant-modal-header {
         background-color: $blue;

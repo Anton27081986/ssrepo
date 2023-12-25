@@ -307,8 +307,13 @@
 
         .header {
             justify-content: center;
+            flex-direction: column;
 
             .open-all-table {
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 margin-top: 18px;
             }
 
@@ -337,6 +342,12 @@
                     width: 100%;
                     margin-top: 20px;
                     padding: 12px;
+
+                    .personals {
+                        .message {
+                            width: 100% !important;
+                        }
+                    }
 
                     .icons {
                         .medal-icon {

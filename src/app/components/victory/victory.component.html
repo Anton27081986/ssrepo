@@ -6,6 +6,35 @@
       </div>
     </div>
     <div class="open-all-table">
+      <div class="search">
+        <span class="">
+          <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group [nzSuffix]="prefixSearch">
+                  <input type="text" nz-input formControlName="search" placeholder="Введите запрос" [(ngModel)]="title" (input)="search()" />
+                </nz-input-group>
+              </nz-form-control>
+              <ng-template #prefixSearch>
+                <i nz-icon nzType="search" class="search-icon-suffix"></i>
+              </ng-template>
+            </nz-form-item>
+          </form>
+        </span>
+        <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
+        <!--        <app-result-item-->
+        <!--            *ngFor="let book of books"-->
+        <!--            [book]="book"-->
+        <!--            [title]="title"-->
+        <!--        ></app-result-item>-->
+        <!--    </div>-->
+      </div>
+      <div class="select-group">
+        <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="jack" nzLabel="1 группа"></nz-option>
+          <nz-option nzValue="lucy" nzLabel="2 группа"></nz-option>
+        </nz-select>
+      </div>
       <div class="button" (click)="showModalAdd()">
         <button nz-button class="button" [nzType]="'primary'">
           <span class="plus-icon" nz-icon [nzType]="'ss:plus'"></span>
@@ -66,7 +95,7 @@
                 <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
                 <span class="count">12</span>
               </div>
-              <div class="comment">
+              <div class="comment" (click)="showModalComments()">
                 <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
                 <span class="count">5</span>
               </div>
@@ -74,7 +103,7 @@
                 <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
               </div>
             </div>
-            <div class="openOut">
+            <div class="openOut" (click)="showModalOpenOut()">
               <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
             </div>
           </div>
@@ -93,36 +122,54 @@
   <ng-container *nzModalContent>
     <div>
       <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
+
         <nz-form-item>
           <span class="field-tile">Описание:</span>
-          <div>
-            <textarea nz-input placeholder="Поделитесь своим достижением" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+          <div class="textarea">
+            <textarea nz-input placeholder="Поделитесь своим достижением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
+            <div class="icon-bg attach">
+              <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
+            </div>
           </div>
 
           <div class="checkbox-group">
-            <label nz-checkbox [(ngModel)]="checked">Персональная победа</label>
-            <label nz-checkbox [(ngModel)]="checked">Совместная победа</label>
+            <label nz-checkbox [(ngModel)]="checked" [ngModelOptions]="{ standalone: true }">Персональная победа</label>
+            <label nz-checkbox [(ngModel)]="checked" [ngModelOptions]="{ standalone: true }">Совместная победа</label>
           </div>
 
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-control>
-            <nz-select ngModel="lucy" nzPlaceHolder="Выберите ваших коллег из списка или введите фамилию">
+            <nz-select ngModel="lucy" nzPlaceHolder="Выберите ваших коллег из списка или введите фамилию" [ngModelOptions]="{ standalone: true }">
               <nz-option nzValue="jack" nzLabel="Гришин Пантелей Серапионович"></nz-option>
               <nz-option nzValue="lucy" nzLabel="Гришин Пантелей Серапионович"></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
 
+        <div class="tag-selected-name">
+          <div class="item-tag">
+            <span>Шубникова А.К.</span>
+            <span class="close-icon icon" nz-icon [nzType]="'ss:iconClose'"></span>
+          </div>
+        </div>
+
         <nz-form-item>
           <nz-form-control>
-            <nz-select ngModel="lucy" nzPlaceHolder="Укажите ТПР">
+            <nz-select ngModel="lucy" nzPlaceHolder="Укажите ТПР" [ngModelOptions]="{ standalone: true }">
               <nz-option nzValue="jack" nzLabel="Съешь ещё этих мягких французских булок, да выпей же чаю. Съешь..."></nz-option>
               <nz-option nzValue="lucy" nzLabel="Съешь ещё этих мягких французских булок, да выпей же чаю. Съешь..."></nz-option>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
+
+        <div class="tag-selected-name">
+          <div class="item-tag">
+            <span>Культура бактериальная...</span>
+            <span class="close-icon icon" nz-icon [nzType]="'ss:iconClose'"></span>
+          </div>
+        </div>
 
       </form>
       <ng-template #prefixUser>
@@ -139,3 +186,257 @@
     </div>
   </div>
 </nz-modal>
+
+<nz-modal class="openout-modal" [(nzVisible)]="isVisibleOpenOut" nzTitle="Информация о пользователе" (nzOnCancel)="handleCancelOpenOut()" (nzOnOk)="handleOkOpenOut()" [nzFooter]="null" (nzOnCancel)="false" [nzWidth]="365">
+  <ng-container *nzModalContent>
+    <div class="openout-modal">
+      <div class="card">
+        <div class="personal">
+          <div class="img">
+
+            <ng-container>
+              <img src="assets/images/profile/user-popup.png" alt="user" />
+            </ng-container>
+
+            <!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
+
+            <!--          <ng-container *ngIf="!profile!.avatarUrl; else image">-->
+            <!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
+            <!--          </ng-container>-->
+
+            <!--          <ng-template #image>-->
+            <!--            <img src="{{ profile!.avatarUrl }}" alt="user" />-->
+            <!--          </ng-template>-->
+
+          </div>
+          <div class="title">
+            <div class="fio">
+              <span>Гришин Пантелей Серапионович</span>
+            </div>
+            <div class="job">
+              <div>
+                <div>Руководитель Отдела продаж</div>
+                <div>Союзснаб-Ташкент</div>
+              </div>
+            </div>
+            <div class="code">
+              (9592342) VRN-W-006
+            </div>
+          </div>
+        </div>
+        <div class="contacts">
+          <div class="item">
+            <div>
+              <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+              <span class="title">Внутренний телефон:</span>
+            </div>
+            <div>
+              <span class="description">123 44</span>
+            </div>
+          </div>
+          <div class="item">
+            <div>
+              <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+              <span class="title">Skype:</span>
+            </div>
+            <div>
+              <span class="description">123 44}</span>
+            </div>
+          </div>
+          <div class="item">
+            <div>
+              <span class="icon" nz-icon [nzType]="'ss:phone'"></span>
+              <span class="title">Телефон:</span>
+            </div>
+            <div>
+              <span class="description">(4732) 636345</span>
+            </div>
+          </div>
+          <div class="item">
+            <div>
+              <span class="icon" nz-icon [nzType]="'ss:mail'"></span>
+              <span class="title">Email:</span>
+            </div>
+            <div>
+              <span class="description">vivanovmm@ssnab.ru</span>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="item">
+            <div>
+              <span class="title">Руководитель направления:</span>
+            </div>
+            <div>
+              <span class="description">Черников Д.Л.</span>
+            </div>
+          </div>
+          <div class="item">
+            <div>
+              <span class="title">Руководитель подразделения:</span>
+            </div>
+            <div>
+              <span class="description">Полозова (ДФ) Л.Г.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</nz-modal>
+
+<nz-modal class="comments-modal" [(nzVisible)]="isVisibleComments" nzTitle="Графова Н.В. Победа № 35423" [nzFooter]="null" (nzOnCancel)="false" (nzOnCancel)="handleCancelComments()" (nzOnOk)="handleOkComments()" [nzWidth]="560">
+  <ng-container *nzModalContent>
+    <div>
+      <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
+
+        <div class="comments-modal">
+          <div class="card list">
+            <div class="personal">
+              <div class="img">
+                <img src="assets/images/profile/user-popup.png" alt="user" />
+              </div>
+
+              <div class="title">
+                <div class="fio">
+                  <span>Гришин Пантелей Серапионович</span>
+                </div>
+                <div class="job">
+                  <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                </div>
+              </div>
+            </div>
+            <div class="icons">
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+            </div>
+
+            <div class="info">
+              <div class="left-group">
+
+                <div class="modal-people-likes" [ngClass]="peoplelikesOpen? 'active' : ''">
+                  <span class="title">Нравится:</span>
+                  <div class="list-item">
+                    <div class="item">
+                      <img src="assets/images/profile/user-popup.png" alt="user" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="like" (mouseenter)="peoplelikesOpen=!peoplelikesOpen;" (mouseleave)="peoplelikesOpen=!peoplelikesOpen;">
+                  <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
+                  <span class="count">12</span>
+                </div>
+                <div class="comment" (click)="showModalComments()">
+                  <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+                  <span class="count">5</span>
+                </div>
+                <div class="medal">
+                  <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
+                </div>
+              </div>
+              <div class="date">
+                <span>Дата: </span>
+                <span> 20.11.23 11:35</span>
+              </div>
+            </div>
+
+            <div class="comments">
+              <div class="title">Комментарии:</div>
+              <div class="card list">
+                <div class="personal">
+                  <div class="img">
+                    <img src="assets/images/profile/user-popup.png" alt="user" />
+                  </div>
+
+                  <div class="title">
+                    <div class="fio">
+                      <span>Черников Денис Львович</span>
+                    </div>
+                    <div class="job">
+                      <span>Генеральный директор</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="message">
+                  <div class="text">
+                    Съешь ещё этих мягких французских булок, да выпей же чаю. Съешь ещё этих мягких французских булок, да выпей же чаю.
+                  </div>
+                </div>
+                <div class="date">
+                  <span>Сегодня в 11:35</span>
+                </div>
+              </div>
+              <div class="card list">
+                <div class="personal">
+                  <div class="img">
+                    <img src="assets/images/profile/user-popup.png" alt="user" />
+                  </div>
+
+                  <div class="title">
+                    <div class="fio">
+                      <span>Гришин Пантелей Серапионович</span>
+                    </div>
+                    <div class="job">
+                      <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="message">
+                  <div class="text">
+                    Съешь ещё этих мягких французских булок, да выпей же чаю. Съешь ещё этих мягких французских булок, да выпей же чаю.
+                  </div>
+                </div>
+                <div class="date">
+                  <span>Сегодня в 11:35</span>
+                </div>
+              </div>
+              <div class="card list">
+                <div class="personal">
+                  <div class="img">
+                    <img src="assets/images/profile/user-popup.png" alt="user" />
+                  </div>
+
+                  <div class="title">
+                    <div class="fio">
+                      <span>Гришин Пантелей Серапионович</span>
+                    </div>
+                    <div class="job">
+                      <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="message">
+                  <div class="text">
+                    Съешь ещё этих мягких французских булок, да выпей же чаю. Съешь ещё этих мягких французских булок, да выпей же чаю.
+                  </div>
+                </div>
+                <div class="date">
+                  <span>Сегодня в 11:35</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="send-comments">
+
+              <nz-form-item>
+                <span class="field-tile">Оставить комментарий:</span>
+                <div class="textarea">
+                  <textarea nz-input placeholder="Поделитесь своим мнением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
+                  <div class="icon-bg attach">
+                    <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
+                  </div>
+                </div>
+
+              </nz-form-item>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </ng-container>
+</nz-modal>
+
+
