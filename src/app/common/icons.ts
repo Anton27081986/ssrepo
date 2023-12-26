@@ -303,4 +303,14 @@ export class AppIcons {
         '<svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
         '<path d="M10.3035 9.13743L8.03935 11.4016C6.78352 12.6574 6.78352 14.6833 8.03935 15.9391C9.29518 17.1949 11.321 17.1949 12.5769 15.9391L16.1427 12.3733C18.6452 9.87076 18.6452 5.80076 16.1427 3.29826C13.6402 0.795762 9.57018 0.795762 7.06768 3.29826L3.18102 7.18493C1.03602 9.32993 1.03602 12.8133 3.18102 14.9674" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
+
+    static blocknote =
+        '<svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M17.3611 5.35165L14.6932 16.0629C14.5032 16.8625 13.7907 17.4166 12.9673 17.4166H2.56482C1.3694 17.4166 0.514414 16.2449 0.870664 15.097L4.20357 4.39377C4.43316 3.6496 5.12192 3.13495 5.89775 3.13495H15.6352C16.3873 3.13495 17.0127 3.59412 17.274 4.22745C17.4244 4.56787 17.4561 4.95582 17.3611 5.35165Z" stroke="white" stroke-width="1.5" stroke-miterlimit="10"/>\n' +
+        '<path d="M12.666 17.4167H16.4502C17.4714 17.4167 18.271 16.5537 18.1998 15.5325L17.416 4.75" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M7.66406 5.05082L8.4874 1.63086" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M12.9668 5.05873L13.711 1.62292" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M6.0957 9.5H12.429" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '<path d="M5.30469 12.6667H11.638" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '</svg>';
 }

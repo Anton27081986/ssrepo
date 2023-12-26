@@ -33,6 +33,7 @@ import {RatingComponent} from './rating/rating.component';
 import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
+import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 
 @NgModule({
     declarations: [
@@ -74,6 +75,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
         NzModalModule,
         NzSelectModule,
         NzCheckboxModule,
+        NzCarouselModule,
     ],
     exports: [
         SearchComponent,
@@ -86,6 +88,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
         ThankColleagueComponent,
         BirthdayComponent,
         VictoryComponent,
+        RatingComponent,
     ],
 })
 export class ComponentsModule {}

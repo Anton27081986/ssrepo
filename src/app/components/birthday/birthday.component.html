@@ -11,37 +11,301 @@
     <div class="open-all-table">
       <div class="button">
         <button nz-button class="button" [nzType]="'primary'">
-          <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
+          <span class="like-icon" nz-icon [nzType]="'ss:blocknote'"></span>
           Добавить напоминание
         </button>
       </div>
     </div>
   </div>
 
-  <div class="content">
-    <div class="card-list">
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
+  <div class="panel"></div>
+
+  <div class="tabs">
+    <div class="calendar">
+      <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+      <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
+      <ng-template #sufixCalendar>
+        <i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
+      </ng-template>
+    </div>
+    <nz-tabset [nzTabPosition]="'top'" [nzType]="'line'">
+
+
+      <nz-tab nzTitle="28.11.23">
+
+        <!--<div class="content">
+          <div class="card-list">
+
+            <div class="slider" nz-row nzJustify="center">
+              <div nz-col nzSpan="3">
+                <nz-carousel
+                  [nzAutoPlay]="true"
+                  [nzAutoPlaySpeed]="3000"
+                  [nzEffect]="'fade'"
+                  [nzEnableSwipe]="true"
+                  [nzLoop]="true">
+
+                  <div class="card" nz-carousel-content>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="assets/images/profile/user-popup.png" alt="user" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>Гришин Пантелей Серапионович</span>
+                        </div>
+                        <div class="job">
+                          <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                      <span class="count">18</span>
+                    </div>
+                  </div>
+                  <div class="card" nz-carousel-content>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="assets/images/profile/user-popup.png" alt="user" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>Гришин Пантелей Серапионович 2</span>
+                        </div>
+                        <div class="job">
+                          <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                      <span class="count">18</span>
+                    </div>
+                  </div>
+                  <div class="card" nz-carousel-content>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="assets/images/profile/user-popup.png" alt="user" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>Гришин Пантелей Серапионович 3</span>
+                        </div>
+                        <div class="job">
+                          <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons" nz-carousel-content>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                      <span class="count">18</span>
+                    </div>
+                  </div>
+                  <div class="card" nz-carousel-content>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="assets/images/profile/user-popup.png" alt="user" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>Гришин Пантелей Серапионович</span>
+                        </div>
+                        <div class="job">
+                          <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                      <span class="count">18</span>
+                    </div>
+                  </div >
+                  <div class="card" nz-carousel-content>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="assets/images/profile/user-popup.png" alt="user" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>Гришин Пантелей Серапионович</span>
+                        </div>
+                        <div class="job">
+                          <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                      <span class="count">18</span>
+                    </div>
+                  </div>
+                  <div class="card" nz-carousel-content>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="assets/images/profile/user-popup.png" alt="user" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>Гришин Пантелей Серапионович</span>
+                        </div>
+                        <div class="job">
+                          <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                      <span class="count">18</span>
+                    </div>
+                  </div>
+
+                </nz-carousel>
+              </div>
+
+              <span class="arrow next" nz-button (click)="next()">
+            <img src="assets/images/slider/arrow.png" alt="" />
+          </span>
+
+              <span class="arrow prev" nz-button (click)="prev()">
+            <img src="assets/images/slider/arrow.png" alt="arrow" />
+          </span>
             </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+
+          </div>
+        </div>-->
+
+        <div class="content">
+          <div class="card-list">
+            <div class="card">
+              <div class="personal">
+                <div class="img">
+                  <img src="assets/images/profile/user-popup.png" alt="user" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>Гришин Пантелей Серапионович</span>
+                  </div>
+                  <div class="job">
+                    <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="personal">
+                <div class="img">
+                  <img src="assets/images/profile/user-popup.png" alt="user" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>Гришин Пантелей Серапионович</span>
+                  </div>
+                  <div class="job">
+                    <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  </div>
+                </div>
+              </div>
+              <div class="icons">
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                <span class="count">18</span>
+              </div>
+            </div>
+            <div class="card">
+              <div class="personal">
+                <div class="img">
+                  <img src="assets/images/profile/user-popup.png" alt="user" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>Гришин Пантелей Серапионович</span>
+                  </div>
+                  <div class="job">
+                    <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  </div>
+                </div>
+              </div>
+              <div class="icons">
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                <span class="count">18</span>
+              </div>
+            </div>
+            <div class="card">
+              <div class="personal">
+                <div class="img">
+                  <img src="assets/images/profile/user-popup.png" alt="user" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>Гришин Пантелей Серапионович</span>
+                  </div>
+                  <div class="job">
+                    <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  </div>
+                </div>
+              </div>
+              <div class="icons">
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                <span class="count">18</span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="icons">
-          <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          <span class="count">18</span>
+
+      </nz-tab>
+
+      <nz-tab nzTitle="29.11.23">
+        <div class="content">
+          <div class="card-list">
+            <div class="card">
+              <div class="personal">
+                <div class="img">
+                  <img src="assets/images/profile/user-popup.png" alt="user" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>Гришин Пантелей Серапионович</span>
+                  </div>
+                  <div class="job">
+                    <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  </div>
+                </div>
+              </div>
+              <div class="icons">
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                <span class="count">18</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="bottom-panel">
-      <nz-pagination [nzPageIndex]="1" [nzTotal]="19" [nzPageSize]="19"></nz-pagination>
-    </div>
+      </nz-tab>
+      <nz-tab nzTitle="30.11.23">
+        <div class="content">
+          <div class="card-list">
+            <div class="card">
+              <div class="personal">
+                <div class="img">
+                  <img src="assets/images/profile/user-popup.png" alt="user" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>Гришин Пантелей Серапионович</span>
+                  </div>
+                  <div class="job">
+                    <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  </div>
+                </div>
+              </div>
+              <div class="icons">
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
+                <span class="count">18</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
+
   </div>
+
 </div>

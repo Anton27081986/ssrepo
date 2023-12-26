@@ -15,271 +15,200 @@
 
         .open-all-table {
             display: flex;
-            //flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    :host {
+        display: flex;
+        justify-content: center;
+    }
+
+    [nz-carousel-content] {
+        overflow: hidden;
+        border-radius: 30px;
+    }
+
+    h3 {
+        color: #fff;
+        margin-bottom: 0;
+        user-select: none;
+    }
+
+    .slider {
+        position: relative;
+        margin-top: 31px;
+        max-width: 100%;
+        width: 1280px;
+        height: 400px;
+
+        .arrow {
+            position: absolute;
+            top: calc(50% - 20px);
+            background: #5a6164;
+            border-radius: 16px;
+            border: 1px #57585a solid;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
             align-items: center;
         }
 
-        .calendar {
-            position: relative;
-            margin-right: 16px;
-            // margin-top: 40px;
-
-            .ant-picker {
-                width: 244px;
-                height: 52px;
-                border-radius: 16px;
-                padding: 4px 20px 4px 54px;
-
-                ::ng-deep .ant-picker-suffix {
-                    .anticon.search-icon-suffix {
-                        font-size: 16px;
-                    }
-                }
-            }
-
-            ::ng-deep .ant-picker-input > input {
-                font-size: 16px !important;
-            }
-
-            .calendar-icon {
-                position: absolute;
-                top: 14px;
-                left: 22px;
-            }
-
-            ::ng-deep .anticon {
-                font-size: 22px;
-            }
-
-            ::ng-deep .ant-picker-suffix {
-                .anticon {
-                    path {
-                        stroke: #d9d9d9 !important;
-                    }
-                }
-            }
-
-            ::ng-deep.ant-picker-input:hover .ant-picker-clear {
-                opacity: 0;
-            }
+        .prev {
+            left: 31px;
         }
 
-        .top-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 40px;
-
-            div {
-                display: flex;
-            }
-
-            //div:last-child {
-            //    margin-left: 29px;
-            //}
-
-            .total-week {
-                align-items: center;
-
-                span {
-                    font-size: 19.8px;
-                }
-
-                span:nth-child(2) {
-                    margin-left: 8px;
-                    font-weight: 700;
-                    color: $blue;
-                }
-            }
-
-            .total-time {
-                margin-left: 29px;
-                align-items: center;
-
-                span {
-                    font-size: 16px;
-                }
-
-                span:nth-child(2) {
-                    margin-left: 4px;
-                    font-weight: 700;
-                    line-height: normal;
-                    letter-spacing: -0.16px;
-                }
-            }
-
-            ::ng-deep .anticon {
-                font-size: 21px;
-                margin-right: 7px;
-
-                path {
-                    //stroke: #4770FF!important;
-                    //fill: #4770FF!important;
-                }
-            }
-        }
-        .top-panel-mobile {
-            display: none;
+        .next {
+            transform: rotate(180deg);
+            right: 31px;
         }
     }
 
-    .content {
-        .card-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+    .tabs {
+        position: relative;
+        margin-top: 24px;
 
-            .card {
-                position: relative;
-                width: 408px;
-                height: 130px;
-                border-radius: 16px;
-                border: 1px solid $border-color;
+        ::ng-deep {
+            .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
+                justify-content: right;
+            }
+
+            .ant-tabs-tab {
+                border: 1px solid $border-color !important;
+                border-radius: $border-radius-big !important;
                 background-color: $white;
-                padding: 20px;
-                margin-top: 30px;
+                font-size: 16px;
+                padding: 12.5px 20px 12.5px 20px;
+            }
 
-                // flex: 1 0 200px;
+            .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+                background-color: unset;
+            }
 
-                .personal {
+            .ant-tabs-tab.ant-tabs-tab-active {
+                .ant-tabs-tab-btn {
+                    color: $black;
+                }
+            }
+
+            .ant-tabs-top > .ant-tabs-nav::before {
+                border-bottom: unset;
+            }
+        }
+
+        .content {
+            .card-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+
+                .card {
                     position: relative;
-                    display: flex;
+                    width: 297px;
+                    height: 110px;
+                    border-radius: 16px;
+                    border: 1px solid $border-color;
+                    background-color: $white;
+                    padding: 20px;
 
-                    .img {
-                        border-radius: 14px;
-                        overflow: hidden;
-                        flex: none;
+                    // flex: 1 0 200px;
 
-                        img {
-                            width: 90px;
-                            height: 90px;
-                            object-fit: cover;
-                        }
-                    }
-
-                    .enter-icon {
-                        position: absolute;
-                        right: 17px;
-                        bottom: 0;
-                        font-size: 17px;
-                        fill-opacity: 0;
-                        cursor: pointer;
-                    }
-
-                    .title {
-                        margin-left: 19px;
-                    }
-
-                    .fio {
-                        font-size: 17.6px;
-                        font-weight: bold;
-                        line-height: 20px;
-                        margin-top: 7px;
-                    }
-
-                    .job {
-                        max-width: 186px;
-                        font-size: 11.8px;
-                        line-height: 14px;
-                        font-weight: 500;
-                        margin-top: 8px;
-                    }
-                }
-
-                .icons {
-                    .medal-icon {
-                        position: absolute;
-                        right: 16px;
-                        top: 20px;
-                    }
-
-                    .count {
-                        position: absolute;
-                        right: 20px;
-                        bottom: 13px;
-
-                        border-radius: 30px;
-                        background-color: $blue;
-                        color: $white;
-                        height: 28px;
-                        width: 28px;
-
-                        text-align: center;
+                    .personal {
+                        position: relative;
                         display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding-right: 1px;
-                        font-weight: 500;
+
+                        .img {
+                            border-radius: 16px;
+                            overflow: hidden;
+                            flex: none;
+
+                            img {
+                                width: 60px;
+                                height: 70px;
+                                object-fit: cover;
+                            }
+                        }
+
+                        .enter-icon {
+                            position: absolute;
+                            right: 17px;
+                            bottom: 0;
+                            font-size: 17px;
+                            fill-opacity: 0;
+                            cursor: pointer;
+                        }
+
+                        .title {
+                            margin-left: 14px;
+                        }
+
+                        .fio {
+                            font-size: 17.6px;
+                            font-weight: bold;
+                            line-height: 20px;
+                        }
+
+                        .job {
+                            max-width: 186px;
+                            font-size: 11.8px;
+                            line-height: 14px;
+                            font-weight: 500;
+                            margin-top: 3px;
+                        }
                     }
 
-                    ::ng-deep .anticon {
-                        fill-opacity: 1;
-                        font-size: 34px;
+                    .icons {
+                        .medal-icon {
+                            position: absolute;
+                            right: 16px;
+                            top: 20px;
+                        }
 
-                        path {
-                            //stroke: #4770FF!important;
-                            //fill: #4770FF!important;
+                        .count {
+                            position: absolute;
+                            right: 20px;
+                            bottom: 13px;
+
+                            border-radius: 30px;
+                            background-color: $blue;
+                            color: $white;
+                            height: 28px;
+                            width: 28px;
+
+                            text-align: center;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding-right: 1px;
+                            font-weight: 500;
+                        }
+
+                        ::ng-deep .anticon {
+                            fill-opacity: 1;
+                            font-size: 34px;
+
+                            path {
+                                //stroke: #4770FF!important;
+                                //fill: #4770FF!important;
+                            }
                         }
                     }
                 }
+                .card:last-child {
+                    // margin-left: 28px;
+                }
             }
-            .card:last-child {
-                // margin-left: 28px;
+            .card-list:after {
+                //content: '';
+                //flex: auto;
             }
         }
-        .card-list:after {
-            //content: '';
-            //flex: auto;
-        }
-    }
-}
 
-.bottom-panel {
-    margin-top: 27px;
-
-    ::ng-deep {
-        .ant-pagination-item:hover a {
-            color: $blue;
-        }
-
-        .ant-pagination ul,
-        .ant-pagination ol {
-            margin-left: 0;
-        }
-
-        .ant-table-pagination.ant-pagination {
-            margin: 21px 0 !important;
-        }
-
-        .ant-pagination-prev,
-        .ant-pagination-next {
-            display: none;
-        }
-
-        .ant-pagination-item-active,
-        .ant-pagination-item {
-            font-size: 16px;
-            line-height: 39px;
-            font-weight: 600;
-            background: #fff;
-            border-color: $border-color;
-            border-radius: 10px;
-            height: 40px;
-            width: 40px;
-            margin-right: 8px;
-        }
-
-        .ant-pagination-item-active a {
-            color: $black;
-        }
-
-        .ant-table-pagination.ant-pagination {
-            margin: 21px 0 !important;
-        }
-
-        .ant-pagination.mini .ant-pagination-item {
-            min-width: 44px;
-            height: 44px;
+        .calendar {
+            position: absolute;
+            top: 0;
+            z-index: 1;
         }
     }
 }
@@ -328,6 +257,7 @@
 
             .button {
                 margin-top: 10px;
+                width: 100%;
             }
 
             .top-panel {
@@ -359,25 +289,47 @@
             }
         }
 
-        .content {
-            .card-list {
+        .tabs {
+            ::ng-deep .ant-tabs-nav-wrap {
+                justify-content: center !important;
+            }
+
+            .calendar {
+                position: relative;
+                display: flex;
                 justify-content: center;
+                width: 100%;
 
-                .card {
+                ::ng-deep .ant-picker {
                     width: 100%;
-                    height: 116px;
-                    margin-top: 20px;
-                    padding: 12px;
+                }
+            }
 
-                    .icons {
-                        .medal-icon {
-                            right: 12px;
-                            top: 11px;
-                        }
+            .ant-tabs {
+                margin-top: 20px;
+                width: 100%;
+            }
 
-                        .count {
-                            right: 14px;
-                            bottom: 9px;
+            .content {
+                .card-list {
+                    justify-content: center;
+
+                    .card {
+                        width: 100%;
+                        height: 116px;
+                        margin-top: 20px;
+                        padding: 12px;
+
+                        .icons {
+                            .medal-icon {
+                                right: 12px;
+                                top: 11px;
+                            }
+
+                            .count {
+                                right: 14px;
+                                bottom: 9px;
+                            }
                         }
                     }
                 }

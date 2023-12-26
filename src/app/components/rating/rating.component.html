@@ -3,407 +3,91 @@
     <div>
       <div class="title">
         <h1>рейтинг сотрудников</h1>
+        <div class="rating-item">
+          <span>4,2 / 1987</span>
+        </div>
       </div>
     </div>
     <div class="open-all-table">
-      <div class="button">
-        <button nz-button class="button" [nzType]="'primary'">
-          <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
-          Поблагодарить коллегу
-        </button>
+      <div class="search">
+        <span class="">
+          <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group [nzSuffix]="prefixSearch">
+                  <input type="text" nz-input formControlName="search" placeholder="Поиск по ФИО" [(ngModel)]="title" (input)="search()" />
+                </nz-input-group>
+              </nz-form-control>
+              <ng-template #prefixSearch>
+                <i nz-icon nzType="search" class="search-icon-suffix"></i>
+              </ng-template>
+            </nz-form-item>
+          </form>
+        </span>
+        <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
+        <!--        <app-result-item-->
+        <!--            *ngFor="let book of books"-->
+        <!--            [book]="book"-->
+        <!--            [title]="title"-->
+        <!--        ></app-result-item>-->
+        <!--    </div>-->
+      </div>
+      <div class="select-group">
+        <nz-select ngModel="lucy" nzPlaceHolder="48 (27.11.23-03.12.23)" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="jack" nzLabel="49 (27.11.23-03.12.23)"></nz-option>
+          <nz-option nzValue="lucy" nzLabel="50 (27.11.23-03.12.23)"></nz-option>
+        </nz-select>
       </div>
     </div>
   </div>
 
   <div class="content">
-    <div class="card-list">
-      <div class="card">
-        <div>
-          <div class="personals">
-
-            <div class="images">
-              <div class="img img-from">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-            </div>
-
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>Сегодня в 11:35</span>
-            </div>
-          </div>
-        </div>
+    <div class="rating-list">
+      <div class="rating-item">
+        <span>СЗЛ</span>
+        <span>5,3 / 4</span>
       </div>
-      <div class="card">
-        <div>
-          <div class="personals">
-
-            <div class="images">
-              <div class="img img-from">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-            </div>
-
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>Сегодня в 11:35</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personals">
-
-            <div class="images">
-              <div class="img img-from">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-            </div>
-
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>Сегодня в 11:35</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personals">
-
-            <div class="images">
-              <div class="img img-from">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-            </div>
-
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>Сегодня в 11:35</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personals">
-
-            <div class="images">
-              <div class="img img-from">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-            </div>
-
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>Сегодня в 11:35</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personals">
-
-            <div class="images">
-              <div class="img img-from">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
-              </div>
-            </div>
-
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>Гришин Пантелей Серапионович</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>Сегодня в 11:35</span>
-            </div>
-          </div>
-        </div>
+      <div class="rating-item">
+        <span>ФМА</span>
+        <span> 5,0 / 4</span>
       </div>
     </div>
+
+    <div class="title-card">
+      Отдел продаж:
+    </div>
+
+    <div class="card-list">
+
+      <div class="card">
+        <div>
+          <div class="personal">
+            <div class="img">
+              <img src="assets/images/profile/user-popup.png" alt="user" />
+            </div>
+
+            <span class="medal-icon icon" nz-icon [nzType]="'ss:medalGold'"></span>
+
+            <div class="title">
+              <div class="fio">
+                <span>Гришин Пантелей Серапионович</span>
+              </div>
+              <div class="job">
+                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              </div>
+            </div>
+          </div>
+          <div class="icons">
+            <span class="count count-top">4,4</span>
+            <span class="count count-bottom">4,4</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
     <div class="bottom-panel">
-      <nz-pagination [nzPageIndex]="2" [nzTotal]="19" [nzPageSize]="8"></nz-pagination>
+      <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
     </div>
   </div>
 </div>
