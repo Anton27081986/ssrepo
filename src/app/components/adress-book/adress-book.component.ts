@@ -33,7 +33,8 @@ export class AdressBookComponent {
         this.iconService.addIconLiteral('ss:twoPeople', AppIcons.twoPeople);
         this.iconService.addIconLiteral('ss:iconClose', AppIcons.iconClose);
         this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
-        this.iconService.addIconLiteral('ss:heart', AppIcons.heart);
+        this.iconService.addIconLiteral('ss:favorite', AppIcons.favorite);
+        this.iconService.addIconLiteral('ss:call', AppIcons.call);
     }
 
     submitted = false;

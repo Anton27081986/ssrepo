@@ -33,6 +33,10 @@
 
             .button {
                 margin-left: 10px;
+
+                .favorite-text {
+                    display: none;
+                }
             }
 
             .select-group {
@@ -52,9 +56,11 @@
             }
 
             .search {
+                margin-left: 12px;
                 .ant-input-affix-wrapper {
                     min-height: 52px;
                     height: 52px;
+                    width: 385px;
                 }
 
                 .ant-form-item-control-input {
@@ -73,13 +79,13 @@
 
             .card {
                 position: relative;
-                width: 408px;
+                width: 400px;
                 height: auto;
                 border-radius: 16px;
-                border: 1px solid $border-color;
-                background-color: $white;
-                padding: 15px 20px 20px 20px;
-                margin-top: 37px;
+                border: 1px solid #e4e8ea;
+                background-color: #fff;
+                padding: 20px 20px 20px 20px;
+                margin-top: 20px;
 
                 // flex: 1 0 200px;
 
@@ -95,8 +101,8 @@
                         z-index: 0;
 
                         img {
-                            width: 90px;
-                            height: 90px;
+                            width: 60px;
+                            height: 60px;
                             object-fit: cover;
                         }
                     }
@@ -136,11 +142,11 @@
                     }
 
                     .title {
-                        margin-left: 19px;
+                        margin-left: 18px;
                     }
 
                     .fio {
-                        font-size: 17.6px;
+                        font-size: 13.6px;
                         font-weight: bold;
                         line-height: 20px;
                         margin-top: 7px;
@@ -151,12 +157,12 @@
                         font-size: 11.8px;
                         line-height: 14px;
                         font-weight: 500;
-                        margin-top: 8px;
+                        margin-top: 2px;
                     }
                 }
 
                 .icons {
-                    .medal-icon {
+                    .favorite-icon {
                         position: absolute;
                         right: 16px;
                         top: 20px;
@@ -166,8 +172,9 @@
                         font-size: 20px !important;
 
                         path {
-                            fill-opacity: 0;
-                            stroke: $black;
+                            fill-opacity: 1;
+                            stroke: $blue;
+                            fill: $blue;
                         }
                     }
                 }
@@ -266,47 +273,6 @@
                         stroke: $blue;
                     }
                 }
-
-                .like {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 50px;
-                    height: 32px;
-                    border-radius: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    padding-left: 1px;
-                    cursor: pointer;
-
-                    .like-icon {
-                        padding-left: 1px;
-                    }
-                }
-
-                .comment,
-                .medal,
-                .openOut {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 50px;
-                    height: 32px;
-                    border-radius: 8px;
-                    margin-left: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    cursor: pointer;
-                }
-
-                .openOut {
-                    width: 30px;
-                    ::ng-deep svg {
-                        font-size: 33px;
-                    }
-                }
             }
             .card:last-child {
                 // margin-left: 28px;
@@ -315,6 +281,42 @@
         .card-list:after {
             //content: '';
             //flex: auto;
+        }
+
+        .contacts {
+            display: flex;
+            margin-top: 8px;
+
+            .call {
+                color: $white;
+                background-color: $blue;
+                padding: 0 8px;
+                border-radius: 5px;
+
+                span:nth-child(1) {
+                    font-size: 9.7px;
+                }
+                span:nth-child(2) {
+                    padding-left: 4px;
+
+                    ::ng-deep path {
+                        font-size: 14px;
+                        stroke: $white;
+                    }
+                }
+            }
+            .mail {
+                padding-left: 22px;
+                font-size: 12px;
+                color: $blue;
+
+                span:nth-child(1) {
+                    font-weight: 600;
+                }
+                span:nth-child(2) {
+                    opacity: 0.6;
+                }
+            }
         }
 
         .bottom-panel {
@@ -710,7 +712,14 @@
                 margin-top: 18px;
 
                 .search {
+                    margin-left: 0;
                     width: 100%;
+
+                    .ant-input-affix-wrapper {
+                        min-height: 52px;
+                        height: 52px;
+                        width: 100%;
+                    }
                 }
 
                 .select-group {
@@ -727,7 +736,9 @@
                     margin-left: 0;
                     margin-top: 6px;
 
-                    button {
+                    .favorite-text {
+                        display: block;
+                        padding-right: 19px;
                     }
                 }
             }
