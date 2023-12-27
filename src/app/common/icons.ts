@@ -313,4 +313,19 @@ export class AppIcons {
         '<path d="M6.0957 9.5H12.429" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '<path d="M5.30469 12.6667H11.638" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</svg>';
+
+    static triangleBottom =
+        '<svg width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M3.65882 5.6915C4.05246 6.30382 4.94754 6.30382 5.34118 5.6915L8.00951 1.54076C8.43734 0.875247 7.9595 0 7.16833 0H1.83167C1.0405 0 0.562658 0.875246 0.990487 1.54076L3.65882 5.6915Z" fill="#EE1C25"/>\n' +
+        '</svg>';
+
+    static triangleTop =
+        '<svg width="9" height="7" viewBox="0 0 9 7" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M3.65882 1.3085C4.05246 0.696177 4.94754 0.696177 5.34118 1.3085L8.00951 5.45924C8.43734 6.12475 7.9595 7 7.16833 7H1.83167C1.0405 7 0.562658 6.12475 0.990487 5.45924L3.65882 1.3085Z" fill="#50D155"/>\n' +
+        '</svg>';
+
+    static heart =
+        '<svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+        '<path d="M9.98953 16.9746C9.72036 17.0696 9.27703 17.0696 9.00786 16.9746C6.71203 16.1908 1.58203 12.9212 1.58203 7.37958C1.58203 4.93333 3.55328 2.95416 5.9837 2.95416C7.42453 2.95416 8.69911 3.65083 9.4987 4.7275C10.2983 3.65083 11.5808 2.95416 13.0137 2.95416C15.4441 2.95416 17.4154 4.93333 17.4154 7.37958C17.4154 12.9212 12.2854 16.1908 9.98953 16.9746Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+        '</svg>';
 }

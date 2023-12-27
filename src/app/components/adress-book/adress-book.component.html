@@ -1,0 +1,72 @@
+<div class="address-book">
+  <div class="header">
+    <div>
+      <div class="title">
+        <h1>Адресная книга</h1>
+      </div>
+    </div>
+    <div class="open-all-table">
+      <div class="search">
+        <span class="">
+          <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group [nzSuffix]="prefixSearch">
+                  <input type="text" nz-input formControlName="search" placeholder="Поиск по сотрудникам" [(ngModel)]="title" (input)="search()" />
+                </nz-input-group>
+              </nz-form-control>
+              <ng-template #prefixSearch>
+                <i nz-icon nzType="search" class="search-icon-suffix"></i>
+              </ng-template>
+            </nz-form-item>
+          </form>
+        </span>
+        <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
+        <!--        <app-result-item-->
+        <!--            *ngFor="let book of books"-->
+        <!--            [book]="book"-->
+        <!--            [title]="title"-->
+        <!--        ></app-result-item>-->
+        <!--    </div>-->
+      </div>
+      <div class="button">
+        <button nz-button class="button" [nzType]="'primary'">
+          <span class="plus-icon" nz-icon [nzType]="'ss:heart'"></span>
+          Избранные контакты
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="card-list">
+
+      <div class="card">
+        <div>
+          <div class="personal">
+            <div class="img">
+              <img src="assets/images/profile/user-popup.png" alt="user" />
+            </div>
+
+            <div class="title">
+              <div class="fio">
+                <span>Гришин Пантелей Серапионович</span>
+              </div>
+              <div class="job">
+                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+              </div>
+            </div>
+          </div>
+          <div class="icons">
+            <span class="medal-icon" nz-icon [nzType]="'ss:heart'"></span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="bottom-panel">
+      <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
+    </div>
+  </div>
+</div>

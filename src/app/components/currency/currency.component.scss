@@ -1,7 +1,7 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
 
-.rating {
+.currency {
     margin-top: 60px;
 
     .header {
@@ -15,31 +15,7 @@
             align-items: center;
 
             h1 {
-                margin-bottom: 0 !important;
-            }
-        }
-
-        .rating-item {
-            display: flex;
-            width: 144px;
-            height: 52px;
-            padding: 10px 20px;
-            justify-content: center;
-            align-items: center;
-            gap: 9px;
-            flex-shrink: 0;
-            color: $white;
-
-            border-radius: 16px;
-            border: 1px solid #698aff;
-
-            background: #4770ff;
-
-            margin-left: 31px;
-
-            span {
-                font-size: 16px;
-                font-weight: 700;
+                // margin-bottom: 0 !important;
             }
         }
 
@@ -49,12 +25,7 @@
 
         .open-all-table {
             display: flex;
-            // align-items: center;
-
-            .ant-input-affix-wrapper,
-            .ant-input.ant-input-stepperless {
-                background-color: #ffffff !important;
-            }
+            align-items: center;
 
             ::ng-deep .anticon {
                 fill-opacity: 1;
@@ -95,32 +66,107 @@
     }
 
     .content {
-        .rating-list {
+        .currency-list:first-child {
+            margin-top: 28px;
+        }
+
+        .currency-list {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
-            margin-top: 30px;
+            justify-content: space-between;
 
-            .rating-item {
-                display: flex;
-                width: 144px;
-                height: 52px;
-                padding: 10px 20px;
-                justify-content: center;
-                align-items: center;
-                gap: 9px;
-                flex-shrink: 0;
-
-                border-radius: 16px;
-                border: 1px solid #e4e8ea;
-
-                background: $white;
-
-                margin-right: 19px;
-
-                span {
+            .currency-item {
+                .title {
                     font-size: 16px;
+                }
+
+                .name {
+                    font-weight: 600;
+                }
+
+                .value {
                     font-weight: 700;
+
+                    ::ng-deep svg {
+                        font-size: 10px !important;
+                        fill-opacity: 1;
+                    }
+
+                    .value-1 {
+                        .price {
+                            padding-left: 17px;
+                            font-size: 20px;
+                            font-weight: bold;
+                        }
+                    }
+
+                    .value-2 {
+                        padding-left: 1px;
+                        font-size: 12px;
+                        letter-spacing: -0.12px;
+                        font-weight: 600;
+
+                        .difference {
+                            padding-left: 4px;
+                        }
+                        .percent {
+                            padding-left: 4px;
+                        }
+                    }
+                }
+
+                .name:last-child,
+                .value:last-child {
+                    display: flex;
+                    height: 52px;
+                    padding: 12px 16px;
+                    align-items: center;
+                    gap: 30px;
+                    flex-shrink: 0;
+                    border-radius: 10px;
+                    border: 1px solid #e4e8ea;
+
+                    background: #fff;
+                    margin-top: 12px;
+                    font-size: 15.6px;
+                }
+
+                .value {
+                    .value-1 {
+                    }
+                    .value-1 {
+                    }
+                    .value-1 {
+                    }
+                }
+            }
+
+            .currency-item:nth-child(1) {
+                max-width: 360px;
+                width: 100%;
+            }
+
+            .currency-item:nth-child(2) {
+                max-width: 229px;
+                width: 100%;
+            }
+
+            .currency-item:nth-child(3) {
+                max-width: 229px;
+                width: 100%;
+            }
+
+            .currency-item:nth-child(4) {
+                max-width: 229px;
+                width: 100%;
+            }
+
+            .currency-item-value {
+                .value-1 {
+                }
+                .value-2 {
+                }
+                .value-3 {
                 }
             }
         }
@@ -781,13 +827,13 @@
 }
 
 @media screen and (max-width: 414px) {
-    .rating {
+    .currency {
         margin: 80px 20px 0 20px;
 
         .title {
             flex-direction: column;
 
-            .rating-item {
+            .currency-item {
                 margin-left: 0;
                 width: 100%;
                 margin-top: 20px;
@@ -852,6 +898,13 @@
         }
 
         .content {
+            .currency-list {
+                .currency-item {
+                    max-width: 100% !important;
+                    margin-top: 16px;
+                }
+            }
+
             .card-list {
                 justify-content: center;
 

@@ -34,6 +34,8 @@ import {NzModalModule} from 'ng-zorro-antd/modal';
 import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
+import {CurrencyComponent} from './currency/currency.component';
+import {AdressBookComponent} from './adress-book/adress-book.component';
 
 @NgModule({
     declarations: [
@@ -49,6 +51,8 @@ import {NzCarouselModule} from 'ng-zorro-antd/carousel';
         VictoryComponent,
         BirthdayComponent,
         RatingComponent,
+        CurrencyComponent,
+        AdressBookComponent,
     ],
     imports: [
         CommonModule,
@@ -89,6 +93,8 @@ import {NzCarouselModule} from 'ng-zorro-antd/carousel';
         BirthdayComponent,
         VictoryComponent,
         RatingComponent,
+        CurrencyComponent,
+        AdressBookComponent,
     ],
 })
 export class ComponentsModule {}
