@@ -303,7 +303,7 @@ module.exports = {
                 'spaced-comment': 'off',
                 '@html-eslint/no-duplicate-attrs': 'warn',
                 '@html-eslint/no-duplicate-id': 'error',
-                '@html-eslint/no-inline-styles': 'error',
+                '@html-eslint/no-inline-styles': 'warn',
                 '@html-eslint/no-obsolete-tags': 'error',
                 '@html-eslint/no-target-blank': 'error',
                 '@html-eslint/require-button-type': 'off',
