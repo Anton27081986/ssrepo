@@ -37,6 +37,7 @@ export class RatingComponent {
 
     submitted = false;
     isConfirmLoading = false;
+    selectedValue = null;
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({

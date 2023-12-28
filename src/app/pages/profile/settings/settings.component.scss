@@ -7,6 +7,10 @@
         font-size: 12px;
     }
 
+    ::ng-deep .ant-input[disabled] {
+        color: #000000 !important;
+    }
+
     display: flex;
 
     .photo {

@@ -21,6 +21,8 @@ export class VictoryComponent {
 
     title: any;
 
+    selectedValue = null;
+
     constructor(
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
