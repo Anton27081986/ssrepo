@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
+import {map, Observable, take} from 'rxjs';
+import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
     selector: 'app-birthday',
@@ -11,10 +13,14 @@ import {AppIcons} from '@app/common/icons';
 })
 export class BirthdayComponent {
     @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
+    public birthdayList!: Observable<any>;
 
     date = null;
 
-    constructor(private readonly iconService: NzIconService) {
+    constructor(
+        private readonly iconService: NzIconService,
+        private readonly apiService: ApiService,
+    ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
         this.iconService.addIconLiteral('ss:medalGold', AppIcons.medalGold);
@@ -24,6 +30,14 @@ export class BirthdayComponent {
         this.iconService.addIconLiteral('ss:comment', AppIcons.comment);
         this.iconService.addIconLiteral('ss:plus', AppIcons.plus);
         this.iconService.addIconLiteral('ss:blocknote', AppIcons.blocknote);
+    }
+
+    ngOnInit(): any {
+        this.birthdayList = this.apiService.getBirthday().pipe(
+            take(3),
+            map(({days}) => days.slice(0, 3)),
+        );
+        // this.birthdayList = this.apiService.getBirthday().pipe(map(console.log));
     }
 
     onChange(result: Date): void {

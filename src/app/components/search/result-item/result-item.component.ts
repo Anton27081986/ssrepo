@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-result-item',
@@ -6,4 +6,6 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
     styleUrls: ['./result-item.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResultItemComponent {}
+export class ResultItemComponent {
+    @Input() user: any;
+}

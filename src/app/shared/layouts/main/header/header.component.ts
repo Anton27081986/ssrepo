@@ -48,15 +48,11 @@ export class HeaderComponent implements OnInit {
     ngOnInit(): any {
         this.apiService.getFavoriteMenu().subscribe(item => {
             this.favoritemenu = item.menu;
-
-            console.log('favoritemenu', this.favoritemenu);
         });
 
         this.apiService.getMenuListJson().subscribe(item => {
             this.listMenu = item.menu;
             this.listMenu.unshift({link: '', name: 'Избранное', items: this.favoritemenu});
-
-            console.log('this.listMenu', this.listMenu);
         });
 
         // this.favoritemenu = this.apiService.getFavoriteMenu().pipe(map(({menu}) => menu));

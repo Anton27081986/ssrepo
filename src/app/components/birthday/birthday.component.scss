@@ -101,7 +101,8 @@
             .card-list {
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                justify-content: flex-start;
+                gap: 30px;
 
                 .card {
                     position: relative;
