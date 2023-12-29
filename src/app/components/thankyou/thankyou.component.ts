@@ -11,7 +11,6 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThankyouComponent {
-    // date = null;
     public thankyouList!: Observable<any>;
     date = null;
 
@@ -30,11 +29,6 @@ export class ThankyouComponent {
     }
 
     ngOnInit(): any {
-        this.thankyouList = this.apiService.getPartnerThanks(this.date);
-        console.log('this.thankyouList', this.thankyouList);
-    }
-
-    onChange(result: Date): void {
-        console.log('onChange: ', result);
+        this.thankyouList = this.apiService.getPartnerThanks();
     }
 }
