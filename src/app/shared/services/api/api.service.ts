@@ -58,4 +58,14 @@ export class ApiService {
             params: new HttpParams().set('q', title),
         });
     }
+
+    // Спасибо партнеру
+    public getPartnerThanks(): Observable<any> {
+        return this.http.get<any[]>(
+            `${environment.apiUrl}/api/awards/partnerThanks?date=04.12.2023`,
+            {
+                // params: new HttpParams().set('date', '04.12.2023'),
+            },
+        );
+    }
 }

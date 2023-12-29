@@ -1,4 +1,4 @@
-<div class="thankyou">
+<div class="thankyou" *ngIf="thankyouList | async as thankyou">
   <div class="header">
     <div>
       <div class="title">
@@ -11,11 +11,11 @@
         <div>
           <div class="total-week">
             <span>Всего за неделю:</span>
-            <span>397</span>
+            <span>{{ thankyou?.weekCount }}</span>
           </div>
           <div class="total-time">
             <span>За все время:</span>
-            <span>18 831</span>
+            <span>{{ thankyou?.totalCount }}</span>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         </ng-template>
       </div>
       <div class="button">
-        <a href="https://ssnab.it/catalog/preds/thank#/create" target="_blank" rel="noreferrer">
+        <a href="{{ thankyou?.addNewThanksLink }}" target="_blank" rel="noreferrer">
           <button nz-button class="button" [nzType]="'primary'">
             <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
             Поблагодарить партнера
@@ -54,153 +54,35 @@
 
   <div class="content">
     <div class="card-list">
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
+      <ng-container>
+        <div class="card" *ngFor="let thank of thankyou.items;">
+          <div class="personal">
+            <div class="img">
+              <img src="{{ thank?.avatarUrl }}" alt="user" />
+            </div>
+            <div class="title">
+              <div class="fio">
+                <span>{{ thank.name }}</span>
+              </div>
+              <div class="job">
+                <div>{{ thank?.position }}</div>
+                <div>{{ thank?.department }}</div>
+              </div>
+            </div>
           </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-        <div class="icons">
-          <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          <span class="count">18</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
+          <div class="icons">
+
+            <ng-container [ngSwitch]="thank?.place">
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
+            </ng-container>
+
+            <span class="count">{{ thank?.thanksCount }}</span>
           </div>
         </div>
-        <div class="icons">
-          <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'"></span>
-          <span class="count">18</span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-        <div class="icons">
-          <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'"></span>
-          <span class="count"></span>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-            <img src="assets/images/profile/user-popup.png" alt="user" />
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-            </div>
-          </div>
-        </div>
-      </div>
+      </ng-container>
+
     </div>
 
   </div>
