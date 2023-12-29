@@ -16,6 +16,10 @@ export class ApiService {
         });
     }
 
+    public getFavoriteMenu(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/menu/favorite`);
+    }
+
     public getSocialLink(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings/favoriteLinks`);
     }

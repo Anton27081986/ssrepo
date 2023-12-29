@@ -3,7 +3,6 @@ import {AppRoutes} from '@app/common/routes';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {AppIcons} from '@app/common/icons';
-import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 import {UserService} from '@auth/services/user.service';
 import {Observable} from 'rxjs';
 
@@ -18,10 +17,12 @@ export class HeaderComponent implements OnInit {
     public statusInputSearch = false;
     public statusInputSearchMobile = true;
     public statusBurger = false;
-    public listMenu!: IMainMenu[];
+    public listMenu!: any; // IMainMenu[]
 
     public profileData!: any;
     public profile!: Observable<any>;
+    // public favoritemenu!: Observable<any>;
+    public favoritemenu!: any; // IMainMenu[]
 
     typeIcon!: 'ss:search';
 
@@ -45,20 +46,23 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit(): any {
-        this.apiService.getMenuListJson().subscribe(item => {
-            this.listMenu = item.menu;
+        this.apiService.getFavoriteMenu().subscribe(item => {
+            this.favoritemenu = item.menu;
+
+            console.log('favoritemenu', this.favoritemenu);
         });
 
-        /*        this.userService
-            .getProfile()
-            .pipe()
-            .subscribe(data => {
-                this.profileData = [data];
-                // console.log('profileData', this.profileData);
-            });*/
+        this.apiService.getMenuListJson().subscribe(item => {
+            this.listMenu = item.menu;
+            this.listMenu.unshift({link: '', name: 'Избранное', items: this.favoritemenu});
+
+            console.log('this.listMenu', this.listMenu);
+        });
+
+        // this.favoritemenu = this.apiService.getFavoriteMenu().pipe(map(({menu}) => menu));
 
         this.profile = this.userService.getProfile();
-        //  this.profile = this.userService.getProfile().pipe(map(console.log));
+        // this.profile = this.userService.getProfile().pipe(map(console.log));
     }
 
     protected readonly AppRoutes = AppRoutes;
