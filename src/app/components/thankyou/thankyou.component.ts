@@ -31,4 +31,8 @@ export class ThankyouComponent {
     ngOnInit(): any {
         this.thankyouList = this.apiService.getPartnerThanks();
     }
+
+    onChange(result: Date): void {
+        console.log('onChange: ', result);
+    }
 }
