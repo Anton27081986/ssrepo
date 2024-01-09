@@ -78,6 +78,11 @@
             .currency-item {
                 .title {
                     font-size: 16px;
+                    display: none;
+                }
+
+                .title:first-child {
+                    display: block;
                 }
 
                 .name {
@@ -95,7 +100,7 @@
                     .value-1 {
                         .price {
                             padding-left: 17px;
-                            font-size: 20px;
+                            font-size: 16px;
                             font-weight: bold;
                         }
                     }

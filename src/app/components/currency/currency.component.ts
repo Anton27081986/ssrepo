@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
+import {Observable} from 'rxjs';
+import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
     selector: 'app-currency',
@@ -9,13 +11,15 @@ import {AppIcons} from '@app/common/icons';
     styleUrls: ['./currency.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrencyComponent {
+export class CurrencyComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
     checked = true;
     title: any;
+    public currencyList!: Observable<any>;
 
     constructor(
+        private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
     ) {
@@ -41,6 +45,7 @@ export class CurrencyComponent {
     isConfirmLoading = false;
 
     ngOnInit() {
+        this.currencyList = this.apiService.getCurrency();
         this.loginForm = this.formBuilder.group({
             login: [
                 '',

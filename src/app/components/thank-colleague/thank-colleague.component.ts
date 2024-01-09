@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Observable} from "rxjs";
+import {ApiService} from "@app/shared/services/api/api.service";
 // import {NzModalRef} from "ng-zorro-antd/modal";
 
 @Component({
@@ -16,9 +18,16 @@ export class ThankColleagueComponent {
     submitted = false;
     isConfirmLoading = false;
 
-    constructor(private readonly formBuilder: FormBuilder) {}
+    public thankColleagueList!: Observable<any>;
+
+    constructor(
+        private readonly apiService: ApiService,
+        private readonly formBuilder: FormBuilder,
+    ) {}
 
     ngOnInit() {
+        this.thankColleagueList = this.apiService.getThanksColleague();
+
         this.loginForm = this.formBuilder.group({
             login: [
                 '',

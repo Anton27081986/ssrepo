@@ -1,4 +1,4 @@
-<div class="currency">
+<div class="currency" *ngIf="currencyList | async as currency">
   <div class="header">
     <div>
       <div class="title">
@@ -10,7 +10,7 @@
     </div>
     <div class="open-all-table">
       <div class="button">
-        <a href="https://ssnab.it/catalog/ccyrates" target="_blank" rel="noreferrer">
+        <a href="{{ currency?.lintToAll }}" target="_blank" rel="noreferrer">
           <button nz-button class="button" [nzType]="'primary'">
           Открыть всю таблицу
         </button></a>
@@ -19,16 +19,16 @@
   </div>
 
   <div class="content">
-    <div class="currency-list">
+    <div class="currency-list" *ngFor="let item of currency.items">
       <div class="currency-item currency-item-name">
         <div class="title">Валюта:</div>
-        <div class="name">Доллар (USD) / Рубль (RUB)</div>
+        <div class="name">{{ item?.currencyName }}</div>
       </div>
       <div class="currency-item currency-item-value">
         <div class="title">Вчера:</div>
         <div class="value">
           <div class="value-1">
-            <span class="price">89.82</span>
+            <span class="price">{{ item?.yesterdayRate }}</span>
           </div>
           <div class="value-2">
             <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleBottom'"></span>
@@ -41,7 +41,7 @@
         <div class="title">Сегодня:</div>
         <div class="value">
           <div class="value-1">
-            <span class="price">89.82</span>
+            <span class="price">{{ item?.todayRate }}</span>
           </div>
           <div class="value-2">
             <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleTop'"></span>
@@ -54,91 +54,12 @@
         <div class="title">Завтра:</div>
         <div class="value">
           <div class="value-1">
-            <span class="price">-</span>
-          </div>
-          <div class="value-2">
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleBottom'"></span>
-            <span class="difference">-</span>
-            <span class="percent">-</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="currency-list">
-      <div class="currency-item currency-item-name">
-        <div class="name">Евро (EUR) / Рубль (RUB)</div>
-      </div>
-      <div class="currency-item currency-item-value">
-        <div class="value">
-          <div class="value-1">
-            <span class="price">89.82</span>
-          </div>
-          <div class="value-2">
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleBottom'"></span>
-            <span class="difference">0.18</span>
-            <span class="percent">0.2%</span>
-          </div>
-        </div>
-      </div>
-      <div class="currency-item currency-item-value">
-        <div class="value">
-          <div class="value-1">
-            <span class="price">89.82</span>
-          </div>
-          <div class="value-2">
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleTop'"></span>
-            <span class="difference">0.18</span>
-            <span class="percent">0.2%</span>
-          </div>
-        </div>
-      </div>
-      <div class="currency-item currency-item-value">
-        <div class="value">
-          <div class="value-1">
-            <span class="price">-</span>
-          </div>
-          <div class="value-2">
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleBottom'"></span>
-            <span class="difference">-</span>
-            <span class="percent">-</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="currency-list">
-      <div class="currency-item currency-item-name">
-        <div class="name">Фунт стерлингов (GBP) / Рубль (RUB)</div>
-      </div>
-      <div class="currency-item currency-item-value">
-        <div class="value">
-          <div class="value-1">
-            <span class="price">89.82</span>
-          </div>
-          <div class="value-2">
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleBottom'"></span>
-            <span class="difference">0.18</span>
-            <span class="percent">0.2%</span>
-          </div>
-        </div>
-      </div>
-      <div class="currency-item currency-item-value">
-        <div class="value">
-          <div class="value-1">
-            <span class="price">89.82</span>
-          </div>
-          <div class="value-2">
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleTop'"></span>
-            <span class="difference">0.18</span>
-            <span class="percent">0.2%</span>
-          </div>
-        </div>
-      </div>
-      <div class="currency-item currency-item-value">
-        <div class="value">
-          <div class="value-1">
-            <span class="price">-</span>
+            <ng-container *ngIf="item.tomorrowRate; else noCurrency">
+              <span class="price">{{ item?.tomorrowRate }}</span>
+            </ng-container>
+            <ng-template #noCurrency>
+              <span class="price">-</span>
+            </ng-template>
           </div>
           <div class="value-2">
             <span class="medal-icon icon" nz-icon [nzType]="'ss:triangleBottom'"></span>

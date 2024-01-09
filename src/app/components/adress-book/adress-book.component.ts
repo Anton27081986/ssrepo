@@ -2,6 +2,8 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
+import {ApiService} from "@app/shared/services/api/api.service";
+import {map, Observable, tap} from "rxjs";
 
 @Component({
     selector: 'app-adress-book',
@@ -14,8 +16,10 @@ export class AdressBookComponent {
     loading = false;
     checked = true;
     title: any;
+    public addressBooks!: Observable<any>;
 
     constructor(
+        private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
     ) {
@@ -41,6 +45,8 @@ export class AdressBookComponent {
     isConfirmLoading = false;
 
     ngOnInit() {
+        this.addressBooks = this.apiService.getAddressBooks().pipe(tap(console.log));
+
         this.loginForm = this.formBuilder.group({
             login: [
                 '',

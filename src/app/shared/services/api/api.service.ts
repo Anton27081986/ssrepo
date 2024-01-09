@@ -68,4 +68,24 @@ export class ApiService {
             },
         );
     }
+
+    // Спасибо коллеге
+    public getThanksColleague(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/thanks`);
+    }
+
+    // Адресная книга
+    public getAddressBooks(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/AddressBook`);
+    }
+
+    // Валюты
+    public getCurrency(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/company/Currency`);
+    }
+
+    // Wins список групп
+    public getWinsGroups(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/groups`);
+    }
 }

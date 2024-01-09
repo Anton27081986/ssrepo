@@ -40,9 +40,9 @@
   </div>
 
   <div class="content">
-    <div class="card-list">
+    <div class="card-list" *ngIf="addressBooks | async as addressBook">
 
-      <div class="card">
+      <div class="card" *ngFor="let item of addressBook.items;">
         <div>
           <div class="personal">
             <div class="img">
@@ -51,7 +51,7 @@
 
             <div class="title">
               <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
+                <span>{{ item.name }}</span>
               </div>
               <div class="job">
                 <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
@@ -75,6 +75,7 @@
 
         </div>
       </div>
+
       <div class="card">
         <div>
           <div class="personal">
@@ -93,237 +94,6 @@
           </div>
           <div class="icons">
             <span class="favorite-icon fill" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon fill" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
           </div>
 
           <div class="contacts">
