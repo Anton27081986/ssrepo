@@ -30,9 +30,10 @@
         <!--    </div>-->
       </div>
       <div class="select-group">
-        <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [(ngModel)]="selectedValue" [ngModelOptions]="{ standalone: true }">
-          <nz-option nzValue="jack" nzLabel="1 группа"></nz-option>
-          <nz-option nzValue="lucy" nzLabel="2 группа"></nz-option>
+<!--        [(ngModel)]="selectedValue"  -->
+
+        <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
+          <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
         </nz-select>
       </div>
       <div class="button" (click)="showModalAdd()">

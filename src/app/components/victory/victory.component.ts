@@ -3,7 +3,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from "@app/shared/services/api/api.service";
-import {map, Observable} from "rxjs";
+import {map, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-victory',
@@ -25,6 +25,7 @@ export class VictoryComponent implements OnInit {
 
     selectedValue = null;
     public winsList!: Observable<any>;
+    public winsGroupsList!: Observable<any>;
 
     pageSize = 6;
     pageIndex = 1;
@@ -55,6 +56,7 @@ export class VictoryComponent implements OnInit {
 
     ngOnInit() {
         this.winsList = this.apiService.getWins().pipe(map(({items}) => items));
+        this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
 
         this.loginForm = this.formBuilder.group({
             login: [
