@@ -6,7 +6,8 @@
       </div>
     </div>
     <div class="open-all-table">
-      <div class="search">
+
+<!--      <div class="search">
         <span class="">
           <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
             <nz-form-item>
@@ -21,21 +22,21 @@
             </nz-form-item>
           </form>
         </span>
-        <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
-        <!--        <app-result-item-->
-        <!--            *ngFor="let book of books"-->
-        <!--            [book]="book"-->
-        <!--            [title]="title"-->
-        <!--        ></app-result-item>-->
-        <!--    </div>-->
+        &lt;!&ndash;    <div class="result" *ngIf="books && showWindowResult" #result>&ndash;&gt;
+        &lt;!&ndash;        <app-result-item&ndash;&gt;
+        &lt;!&ndash;            *ngFor="let book of books"&ndash;&gt;
+        &lt;!&ndash;            [book]="book"&ndash;&gt;
+        &lt;!&ndash;            [title]="title"&ndash;&gt;
+        &lt;!&ndash;        ></app-result-item>&ndash;&gt;
+        &lt;!&ndash;    </div>&ndash;&gt;
       </div>
       <div class="select-group">
-<!--        [(ngModel)]="selectedValue"  -->
-
+&lt;!&ndash;        [(ngModel)]="selectedValue"  &ndash;&gt;
         <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
           <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
         </nz-select>
-      </div>
+      </div>-->
+
       <div class="button" (click)="showModalAdd()">
         <button nz-button class="button" [nzType]="'primary'">
           <span class="plus-icon" nz-icon [nzType]="'ss:plus'"></span>
@@ -69,8 +70,8 @@
                         <span>{{ item.user.name }}</span>
                       </div>
                       <div class="job">
-                        <div>{{ item?.position }}</div>
-                        <div>{{ item?.department }}</div>
+                        <div>{{ item?.user.position }}</div>
+                        <div>{{ item?.user.department }}</div>
                       </div>
                     </div>
                   </div>
@@ -83,7 +84,7 @@
                   </div>
 
                   <div class="date">
-                    <span>{{ item?.createdDate | date }}</span>
+                    <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
                   </div>
 
                   <div class="message">

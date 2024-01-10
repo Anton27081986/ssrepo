@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
-import {map, Observable, take} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
@@ -33,10 +33,7 @@ export class BirthdayComponent {
     }
 
     ngOnInit(): any {
-        this.birthdayList = this.apiService.getBirthday().pipe(
-            take(3),
-            map(({days}) => days.slice(0, 3)),
-        );
+        this.birthdayList = this.apiService.getBirthday().pipe(map(({days}) => days));
         // this.birthdayList = this.apiService.getBirthday().pipe(map(console.log));
     }
 

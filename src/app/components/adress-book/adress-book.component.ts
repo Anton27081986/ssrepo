@@ -2,8 +2,8 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
-import {ApiService} from "@app/shared/services/api/api.service";
-import {map, Observable, tap} from "rxjs";
+import {ApiService} from '@app/shared/services/api/api.service';
+import {Observable, tap} from 'rxjs';
 
 @Component({
     selector: 'app-adress-book',
