@@ -62,9 +62,11 @@
 
     .content {
         .card-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            ::ng-deep .ant-list-items {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
 
             .card {
                 position: relative;

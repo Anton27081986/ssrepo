@@ -36,6 +36,7 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {CurrencyComponent} from './currency/currency.component';
 import {AdressBookComponent} from './adress-book/adress-book.component';
+import {NzCardModule} from "ng-zorro-antd/card";
 
 @NgModule({
     declarations: [
@@ -80,6 +81,7 @@ import {AdressBookComponent} from './adress-book/adress-book.component';
         NzSelectModule,
         NzCheckboxModule,
         NzCarouselModule,
+        NzCardModule,
     ],
     exports: [
         SearchComponent,

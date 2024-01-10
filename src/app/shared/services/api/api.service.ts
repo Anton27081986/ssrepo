@@ -88,4 +88,9 @@ export class ApiService {
     public getWinsGroups(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/groups`);
     }
+
+    // Wins список побед по группам
+    public getWins(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins`);
+    }
 }

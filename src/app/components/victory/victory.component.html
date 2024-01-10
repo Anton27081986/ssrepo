@@ -45,82 +45,112 @@
   </div>
 
   <div class="content">
-    <div class="card-list">
 
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
+    <ng-container *ngIf="winsList | async as wins">
+      <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
 
-            <span class="people-icon icon" nz-icon [nzType]="'ss:onePeople'"></span>
+        <ng-template #item let-item>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
+              <!--              <nz-card [nzTitle]="item.name">-->
 
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
+              <div class="card">
+                <div>
+                  <div class="personal">
+                    <div class="img">
+                      <img src="{{ item.user.avatarUrl }}" alt="user" />
+                    </div>
+
+                    <span class="people-icon icon" nz-icon [nzType]="'ss:onePeople'"></span>
+
+                    <div class="title">
+                      <div class="fio">
+                        <span>{{ item.user.name }}</span>
+                      </div>
+                      <div class="job">
+                        <div>{{ item?.position }}</div>
+                        <div>{{ item?.department }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icons">
+                    <ng-container [ngSwitch]="item?.award">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
+                    </ng-container>
+                  </div>
+
+                  <div class="date">
+                    <span>{{ item?.createdDate | date }}</span>
+                  </div>
+
+                  <div class="message">
+                    <div class="text">
+                      {{ item.note }}
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="left-group">
+
+                      <div class="modal-people-likes" [ngClass]="peoplelikesOpen? 'active' : ''">
+                        <span class="title">Нравится:</span>
+                        <!--                <div class="list-item">-->
+                        <!--                  <div class="item">-->
+                        <!--                    <img src="assets/images/profile/user-popup.png" alt="user" />-->
+                        <!--                  </div>-->
+                        <!--                </div>-->
+
+                        <nz-avatar-group class="list-item">
+                          <nz-avatar class="item" nzIcon="user" nzSrc="assets/images/profile/user-popup.png"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Яна"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nz-tooltip nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
+                        </nz-avatar-group>
+                      </div>
+
+                      <!--              (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"
+                                        (mouseenter)="peoplelikesOpen=!peoplelikesOpen;"
+                      -->
+                      <div class="like">
+                        <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
+                        <span class="count" (click)="peoplelikesOpen=!peoplelikesOpen;">{{ item.likesCount }}</span>
+                      </div>
+                      <div class="comment" (click)="showModalComments()">
+                        <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+                        <span class="count">{{ item.commentsCount }}</span>
+                      </div>
+                      <div class="medal">
+                        <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
+                      </div>
+                    </div>
+                    <div class="openOut" (click)="showModalOpenOut()">
+                      <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
-          </div>
 
-          <div class="date">
-            <span>Сегодня в 11:35</span>
-          </div>
+              <!--              </nz-card>-->
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
 
-          <div class="message">
-            <div class="text">
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-              Съешь ещё этих мягких французских булок, да выпей же чаю. Всё ускоряющаяся эволюция компьютерных технологий предъявила жёсткие требования ...
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
+        <ng-template #pagination>
+          <nz-pagination [nzPageIndex]="pageIndex"
+                         [nzPageSize]="pageSize"
+                         [nzTotal]="wins.length"
+                         (nzPageIndexChange)="pageIndex = $event"
+                         (nzPageSizeChange)="pageSize = $event">
 
-              <div class="modal-people-likes" [ngClass]="peoplelikesOpen? 'active' : ''">
-                <span class="title">Нравится:</span>
-<!--                <div class="list-item">-->
-<!--                  <div class="item">-->
-<!--                    <img src="assets/images/profile/user-popup.png" alt="user" />-->
-<!--                  </div>-->
-<!--                </div>-->
+          </nz-pagination>
+        </ng-template>
+      </nz-list>
 
-                <nz-avatar-group class="list-item">
-                  <nz-avatar class="item" nzIcon="user" nzSrc="assets/images/profile/user-popup.png"></nz-avatar>
-                  <nz-avatar class="item" style="background-color: #4770ff" nzText="Яна"></nz-avatar>
-                  <nz-avatar class="item" style="background-color: #4770ff" nz-tooltip nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
-                  <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                  <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                  <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                </nz-avatar-group>
-              </div>
+    </ng-container>
 
-<!--              (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"-->
-              <div class="like" (mouseenter)="peoplelikesOpen=!peoplelikesOpen;">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">12</span>
-              </div>
-              <div class="comment" (click)="showModalComments()">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">5</span>
-              </div>
-              <div class="medal">
-                <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
-              </div>
-            </div>
-            <div class="openOut" (click)="showModalOpenOut()">
-              <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
     <div class="bottom-panel">
       <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
     </div>

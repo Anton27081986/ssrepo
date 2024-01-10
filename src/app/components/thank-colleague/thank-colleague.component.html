@@ -51,77 +51,105 @@
   </div>
 
   <div class="content">
-    <div class="card-list" *ngIf="thankColleagueList | async as thankyou">
-      <div class="card" *ngFor="let item of thankyou.items;">
-        <span></span>
-        <div>
-          <div class="personals">
+    <ng-container *ngIf="thankColleagueList | async as thankyou">
 
-            <div class="images">
-              <div class="img img-from">
-                <img src="{{ item.fromUser.avatarUrl }}" alt="user" />
-              </div>
-              <div class="img img-to">
-                <img src="{{ item.toUser.avatarUrl }}" alt="user" />
-              </div>
-            </div>
+<!--      <ng-container *ngFor="let item of thankyou.items;">
+<ng-container *ngFor="let item of thankyou.items;"> -->
 
-            <div class="from-to">
-              <div class="from">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">От кого:</span>
-                    <div class="fio">
-                      <span>{{ item.fromUser.name }}</span>
+<!--      <div>{{ thankyou | json }}</div>-->
+
+      <nz-list class="card-list" [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
+
+      <ng-template #item let-item>
+            <nz-list-item [nzContent]="nzContent">
+              <ng-template #nzContent>
+                <!--              <nz-card [nzTitle]="item.name">-->
+
+                <div class="card">
+                  <div>
+                    <div class="personals">
+
+                      <div class="images">
+                        <div class="img img-from">
+                          <img src="{{ item.fromUser.avatarUrl }}" alt="user" />
+                        </div>
+                        <div class="img img-to">
+                          <img src="{{ item.toUser.avatarUrl }}" alt="user" />
+                        </div>
+                      </div>
+
+                      <div class="from-to">
+                        <div class="from">
+                          <div class="personal">
+                            <div class="title">
+                              <span class="sub-title">От кого:</span>
+                              <div class="fio">
+                                <span>{{ item.fromUser.name }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="to">
+                          <div class="personal">
+                            <div class="title">
+                              <span class="sub-title">Кому:</span>
+                              <div class="fio">
+                                <span>{{ item.toUser.name }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="icons">
+                      <ng-container [ngSwitch]="item?.award">
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
+                      </ng-container>
+                    </div>
+                    <div class="message">
+                      <div class="text">
+                        {{ item.text }}
+                      </div>
+                    </div>
+                    <div class="info">
+                      <div class="left-group">
+                        <div class="like">
+                          <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
+                          <span class="count">{{ item.likesCount }}</span>
+                        </div>
+                        <div class="comment">
+                          <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+                          <span class="count">{{ item.commentsCount }}</span>
+                        </div>
+                      </div>
+                      <div class="date">
+                        <span>{{ item.createdDate | date }}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="to">
-                <div class="personal">
-                  <div class="title">
-                    <span class="sub-title">Кому:</span>
-                    <div class="fio">
-                      <span>{{ item.toUser.name }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-          </div>
-          <div class="icons">
-            <ng-container [ngSwitch]="item?.award">
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
-            </ng-container>
-          </div>
-          <div class="message">
-            <div class="text">
-              {{ item.text }}
-            </div>
-          </div>
-          <div class="info">
-            <div class="left-group">
-              <div class="like">
-                <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                <span class="count">{{ item.likesCount }}</span>
-              </div>
-              <div class="comment">
-                <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                <span class="count">{{ item.commentsCount }}</span>
-              </div>
-            </div>
-            <div class="date">
-              <span>{{ item.createdDate | date }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="bottom-panel">
-      <nz-pagination [nzPageIndex]="2" [nzTotal]="19" [nzPageSize]="8"></nz-pagination>
-    </div>
+                <!--              </nz-card>-->
+              </ng-template>
+            </nz-list-item>
+          </ng-template>
+
+        <ng-template #pagination>
+          <nz-pagination [nzPageIndex]="pageIndex"
+                         [nzPageSize]="pageSize"
+                         [nzTotal]="thankyou.length"
+                         (nzPageIndexChange)="pageIndex = $event"
+                         (nzPageSizeChange)="pageSize = $event">
+
+          </nz-pagination>
+        </ng-template>
+      </nz-list>
+<!--      </ng-container>-->
+
+
+    </ng-container>
   </div>
 </div>

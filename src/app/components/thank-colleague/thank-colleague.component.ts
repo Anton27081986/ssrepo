@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {ApiService} from "@app/shared/services/api/api.service";
 // import {NzModalRef} from "ng-zorro-antd/modal";
 
@@ -10,7 +10,7 @@ import {ApiService} from "@app/shared/services/api/api.service";
     styleUrls: ['./thank-colleague.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThankColleagueComponent {
+export class ThankColleagueComponent implements OnInit {
     date: any;
     isVisible = false;
     loginForm!: FormGroup;
@@ -20,13 +20,18 @@ export class ThankColleagueComponent {
 
     public thankColleagueList!: Observable<any>;
 
+    pageSize = 6;
+    pageIndex = 1;
+
     constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
     ) {}
 
     ngOnInit() {
-        this.thankColleagueList = this.apiService.getThanksColleague();
+        this.thankColleagueList = this.apiService
+            .getThanksColleague()
+            .pipe(map(({items}) => items));
 
         this.loginForm = this.formBuilder.group({
             login: [

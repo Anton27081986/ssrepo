@@ -21,9 +21,11 @@
 
     .content {
         .card-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            ::ng-deep .ant-list-items {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
 
             .card {
                 position: relative;
@@ -250,54 +252,6 @@
         box-sizing: border-box;
         scrollbar-width: thin;
         scrollbar-color: $gray-light;
-    }
-}
-
-.bottom-panel {
-    ::ng-deep {
-        .ant-pagination-item:hover a {
-            color: $blue;
-        }
-
-        .ant-pagination ul,
-        .ant-pagination ol {
-            margin-left: 0;
-        }
-
-        .ant-table-pagination.ant-pagination {
-            margin: 21px 0 !important;
-        }
-
-        .ant-pagination-prev,
-        .ant-pagination-next {
-            display: none;
-        }
-
-        .ant-pagination-item-active,
-        .ant-pagination-item {
-            font-size: 16px;
-            line-height: 39px;
-            font-weight: 600;
-            background: #fff;
-            border-color: $border-color;
-            border-radius: 10px;
-            height: 40px;
-            width: 40px;
-            margin-right: 8px;
-        }
-
-        .ant-pagination-item-active a {
-            color: $black;
-        }
-
-        .ant-table-pagination.ant-pagination {
-            margin: 21px 0 !important;
-        }
-
-        .ant-pagination.mini .ant-pagination-item {
-            min-width: 44px;
-            height: 44px;
-        }
     }
 }
 

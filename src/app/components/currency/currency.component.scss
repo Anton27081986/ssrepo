@@ -81,10 +81,6 @@
                     display: none;
                 }
 
-                .title:first-child {
-                    display: block;
-                }
-
                 .name {
                     font-weight: 600;
                 }
@@ -173,6 +169,12 @@
                 }
                 .value-3 {
                 }
+            }
+        }
+
+        .currency-list:first-child {
+            .title {
+                display: block!important;
             }
         }
 
