@@ -33,7 +33,7 @@
         <ng-container *ngIf="birthdayList | async as birthday">
 
           <ng-container *ngFor="let date of birthday;">
-            <nz-tab nzTitle="{{ date.name | date: 'dd.MM.yyyy' }}">
+            <nz-tab nzTitle="{{ date.name }}">
 
               <div class="content">
                 <div class="card-list">

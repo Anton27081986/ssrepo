@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {NZ_MODAL_DATA, NzModalRef} from 'ng-zorro-antd/modal';
-import {map} from 'rxjs';
 
 @Component({
     selector: 'app-modal-info',

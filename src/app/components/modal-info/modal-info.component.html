@@ -1,16 +1,16 @@
 <!--
-<div class="openout-modal" [(nzVisible)]="isVisibleOpenOut" nzTitle="Информация о пользователе" (nzOnCancel)="handleCancelOpenOut()" (nzOnOk)="handleOkOpenOut()" [nzFooter]="null" (nzOnCancel)="false" [nzWidth]="365">
+<nz-modal class="openout-modal" [(nzVisible)]="isVisibleOpenOut" nzTitle="Информация о пользователе" (nzOnCancel)="handleCancelOpenOut()" (nzOnOk)="handleOkOpenOut()" [nzFooter]="null" (nzOnCancel)="false" [nzWidth]="365">
 -->
 <div>
 <!--  <ng-container *nzModalContent>-->
     <div class="openout-modal">
-      <span>{{ nzModalData | json }}</span>
+<!--      <span>{{ nzModalData | json }}</span>-->
       <div class="card">
         <div class="personal">
           <div class="img">
 
             <ng-container>
-              <img src="{{ nzModalData?.avatarUrl }}" alt="user" />
+              <img src="{{ nzModalData?.data?.user?.avatarUrl }}" alt="user" />
             </ng-container>
 
             <!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
@@ -30,12 +30,12 @@
             </div>
             <div class="job">
               <div>
-                <div>{{ nzModalData?.data?.position }}!</div>
-                <div>{{ nzModalData?.data?.department }}!!</div>
+                <div>{{ nzModalData?.data?.user?.position }}</div>
+                <div>{{ nzModalData?.data?.user?.department }}</div>
               </div>
             </div>
             <div class="code">
-              (9592342) VRN-W-006112
+              ({{ nzModalData?.data?.user?.id }})
             </div>
           </div>
         </div>

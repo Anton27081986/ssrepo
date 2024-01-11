@@ -106,8 +106,9 @@ export class VictoryComponent implements OnInit {
             .create({
                 nzClosable: false,
                 nzFooter: null,
-                nzNoAnimation: true,
-                nzWidth: '845px',
+                nzTitle: 'Информация о пользователе',
+                nzNoAnimation: false,
+                nzWidth: '365px',
                 nzContent: ModalInfoComponent,
                 nzViewContainerRef: this.viewContainerRef,
                 nzData: {
