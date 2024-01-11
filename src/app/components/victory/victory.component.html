@@ -39,7 +39,6 @@
 
       <div class="button" (click)="showModalAdd()">
         <button nz-button class="button" [nzType]="'primary'">
-          <span class="plus-icon" nz-icon [nzType]="'ss:plus'"></span>
           Добавить победу
         </button>
       </div>
@@ -116,6 +115,7 @@
                       <!--              (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"
                                         (mouseenter)="peoplelikesOpen=!peoplelikesOpen;"
                       -->
+
                       <div class="like">
                         <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
                         <span class="count" (click)="peoplelikesOpen=!peoplelikesOpen;">{{ item.likesCount }}</span>
@@ -128,11 +128,13 @@
                         <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
                       </div>
                     </div>
-                    <div class="openOut" (click)="showModalOpenOut()">
+                    <div class="openOut" (click)="showModalOpenOut(item)">
                       <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
                     </div>
                   </div>
                 </div>
+
+
               </div>
 
               <!--              </nz-card>-->
@@ -158,7 +160,6 @@
 <!--    </div>-->
   </div>
 </div>
-
 
 <nz-modal class="add-modal" [(nzVisible)]="isVisibleAdd" nzTitle="Делитесь вашими победами, ведь успех заразителен!" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
   <ng-container *nzModalContent>
@@ -227,106 +228,6 @@
       </div>
     </div>
   </div>
-</nz-modal>
-
-<nz-modal class="openout-modal" [(nzVisible)]="isVisibleOpenOut" nzTitle="Информация о пользователе" (nzOnCancel)="handleCancelOpenOut()" (nzOnOk)="handleOkOpenOut()" [nzFooter]="null" (nzOnCancel)="false" [nzWidth]="365">
-  <ng-container *nzModalContent>
-    <div class="openout-modal">
-      <div class="card">
-        <div class="personal">
-          <div class="img">
-
-            <ng-container>
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </ng-container>
-
-            <!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
-
-            <!--          <ng-container *ngIf="!profile!.avatarUrl; else image">-->
-            <!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
-            <!--          </ng-container>-->
-
-            <!--          <ng-template #image>-->
-            <!--            <img src="{{ profile!.avatarUrl }}" alt="user" />-->
-            <!--          </ng-template>-->
-
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>Гришин Пантелей Серапионович</span>
-            </div>
-            <div class="job">
-              <div>
-                <div>Руководитель Отдела продаж</div>
-                <div>Союзснаб-Ташкент</div>
-              </div>
-            </div>
-            <div class="code">
-              (9592342) VRN-W-006
-            </div>
-          </div>
-        </div>
-        <div class="contacts">
-          <div class="item">
-            <div>
-              <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
-              <span class="title">Внутренний телефон:</span>
-            </div>
-            <div>
-              <span class="description">123 44</span>
-            </div>
-          </div>
-          <div class="item">
-            <div>
-              <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
-              <span class="title">Skype:</span>
-            </div>
-            <div>
-              <span class="description">123 44}</span>
-            </div>
-          </div>
-          <div class="item">
-            <div>
-              <span class="icon" nz-icon [nzType]="'ss:phone'"></span>
-              <span class="title">Телефон:</span>
-            </div>
-            <div>
-              <span class="description">(4732) 636345</span>
-            </div>
-          </div>
-          <div class="item">
-            <div>
-              <span class="icon" nz-icon [nzType]="'ss:mail'"></span>
-              <span class="title">Email:</span>
-            </div>
-            <div>
-              <span class="description">vivanovmm@ssnab.ru</span>
-            </div>
-          </div>
-
-          <hr />
-
-          <div class="item">
-            <div>
-              <span class="title">Руководитель направления:</span>
-            </div>
-            <div>
-              <span class="description">Черников Д.Л.</span>
-            </div>
-          </div>
-          <div class="item">
-            <div>
-              <span class="title">Руководитель подразделения:</span>
-            </div>
-            <div>
-              <span class="description">Полозова (ДФ) Л.Г.</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </ng-container>
 </nz-modal>
 
 <nz-modal class="comments-modal" [(nzVisible)]="isVisibleComments" nzTitle="Графова Н.В. Победа № 35423" [nzFooter]="null" (nzOnCancel)="false" (nzOnCancel)="handleCancelComments()" (nzOnOk)="handleOkComments()" [nzWidth]="560">

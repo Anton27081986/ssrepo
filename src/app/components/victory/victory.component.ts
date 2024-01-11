@@ -1,9 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {map, Observable} from 'rxjs';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {ModalInfoComponent} from '@app/components/modal-info/modal-info.component';
 
 @Component({
     selector: 'app-victory',
@@ -24,8 +26,8 @@ export class VictoryComponent implements OnInit {
     title: any;
 
     selectedValue = null;
-    public winsList!: Observable<any>;
-    public winsGroupsList!: Observable<any>;
+    winsList!: Observable<any>;
+    winsGroupsList!: Observable<any>;
 
     pageSize = 6;
     pageIndex = 1;
@@ -34,6 +36,8 @@ export class VictoryComponent implements OnInit {
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
+        public modal: NzModalService,
+        private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -95,8 +99,22 @@ export class VictoryComponent implements OnInit {
     }
 
     // Модальное окно раскрытой карточки
-    showModalOpenOut(): void {
-        this.isVisibleOpenOut = true;
+    showModalOpenOut(item: any): void {
+        console.log('item', typeof item);
+
+        this.modal
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzNoAnimation: true,
+                nzWidth: '845px',
+                nzContent: ModalInfoComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                },
+            })
+            .afterClose.subscribe();
     }
 
     handleCancelOpenOut(): void {

@@ -65,7 +65,7 @@
           <nz-form-label nzFor="userName">Дата рождения</nz-form-label>
           <nz-form-control>
             <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input placeholder="Дата рождения" value="{{ profileData?.birthDate | date }}" [disabled]="true" />
+              <input type="email" nz-input placeholder="Дата рождения" value="{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}" [disabled]="true" />
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>

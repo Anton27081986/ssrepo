@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {map, Observable} from "rxjs";
-import {ApiService} from "@app/shared/services/api/api.service";
+import {map, Observable} from 'rxjs';
+import {ApiService} from '@app/shared/services/api/api.service';
 // import {NzModalRef} from "ng-zorro-antd/modal";
 
 @Component({

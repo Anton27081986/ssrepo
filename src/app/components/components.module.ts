@@ -36,7 +36,8 @@ import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {CurrencyComponent} from './currency/currency.component';
 import {AdressBookComponent} from './adress-book/adress-book.component';
-import {NzCardModule} from "ng-zorro-antd/card";
+import {NzCardModule} from 'ng-zorro-antd/card';
+import { ModalInfoComponent } from './modal-info/modal-info.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +55,7 @@ import {NzCardModule} from "ng-zorro-antd/card";
         RatingComponent,
         CurrencyComponent,
         AdressBookComponent,
+        ModalInfoComponent,
     ],
     imports: [
         CommonModule,
