@@ -85,16 +85,14 @@
                     display: flex;
 
                     .img {
-                        position: relative;
                         border-radius: 14px;
                         overflow: hidden;
                         flex: none;
-                        z-index: 0;
+                        width: 90px;
+                        height: 90px;
 
                         img {
                             width: 90px;
-                            height: 90px;
-                            object-fit: cover;
                         }
                     }
 

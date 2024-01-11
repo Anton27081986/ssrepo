@@ -37,7 +37,7 @@ import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {CurrencyComponent} from './currency/currency.component';
 import {AdressBookComponent} from './adress-book/adress-book.component';
 import {NzCardModule} from 'ng-zorro-antd/card';
-import { ModalInfoComponent } from './modal-info/modal-info.component';
+import {ModalInfoComponent} from './modal-info/modal-info.component';
 
 @NgModule({
     declarations: [
