@@ -1,16 +1,8 @@
 import {Injectable} from '@angular/core';
-import {
-    HttpRequest,
-    HttpHandler,
-    HttpEvent,
-    HttpInterceptor,
-    HttpResponse,
-    HttpErrorResponse,
-} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
-
-import {environment} from '@environments/environment';
+import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
+import {Observable} from 'rxjs';
 import {AuthenticationService} from '@auth/services/authentication.service';
+import {environment} from '@environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -27,24 +19,10 @@ export class JwtInterceptor implements HttpInterceptor {
                 setHeaders: {
                     Authorization: `Bearer ${user.token}`,
                 },
+                withCredentials: false,
             });
         }
 
-        return next.handle(request).pipe(
-            tap(
-                event => {
-                    if (event instanceof HttpResponse) {
-                        // console.log('Server response');
-                    }
-                },
-                (err: unknown) => {
-                    if (err instanceof HttpErrorResponse) {
-                        if (err.status === 401) {
-                            // console.log('Unauthorized');
-                        }
-                    }
-                },
-            ),
-        );
+        return next.handle(request);
     }
 }

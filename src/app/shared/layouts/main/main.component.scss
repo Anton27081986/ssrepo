@@ -1,14 +1,15 @@
 @use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
 
 :host {
     display: flex;
     text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    //-webkit-font-smoothing: antialiased;
+    //-moz-osx-font-smoothing: grayscale;
 }
 
 .app-layout {
-    height: 100vh;
+    // height: 100vh;
 }
 
 nz-layout {
@@ -22,14 +23,6 @@ nz-layout {
     }
 }
 
-.slider-bl {
-    border-radius: 30px;
-    margin-top: 24px;
-    width: 100%;
-    height: 400px;
-    background-color: #1a1818;
-}
-
 nz-breadcrumb {
     margin: 16px 0;
 }
@@ -37,11 +30,12 @@ nz-breadcrumb {
 nz-content {
     // padding: 0 50px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .inner-content {
-    background: #fff;
-    padding: 24px;
+    background: $content;
+    // padding: 24px;
     min-height: 280px;
 }
 

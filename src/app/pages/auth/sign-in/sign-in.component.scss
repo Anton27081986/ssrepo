@@ -7,6 +7,10 @@
 }
 
 .auth {
+    .anticon {
+        fill-opacity: 1;
+    }
+
     .logo {
         h2 {
             margin-top: 10px;
@@ -18,7 +22,6 @@
     .ant-card-bordered {
         border-radius: 30px;
         width: 372px;
-        //height: 396px;
     }
 }
 
@@ -26,5 +29,20 @@
     .position-right {
         position: absolute;
         right: 0;
+    }
+}
+
+.ant-form-vertical .ant-form-item {
+    margin-bottom: 30px;
+}
+
+.error-message {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+
+    span {
+        color: #ee1c25;
     }
 }

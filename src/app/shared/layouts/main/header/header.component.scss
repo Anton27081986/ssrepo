@@ -6,23 +6,33 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #000;
+        color: $black;
         height: 84px;
-        background: #ffffff;
+        background: $white;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
+    }
+
+    .fly-header {
+        position: fixed;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 1;
     }
 
     .header {
         display: flex;
         justify-content: space-between;
 
-        .logo {
-        }
-
         .nav-wrap {
             svg {
                 fill: #f4f5f6;
+                fill-opacity: 1;
 
                 path {
                     stroke: #000000;
@@ -84,30 +94,6 @@ app-mobile-menu {
     }
 }
 
-.remind {
-    position: relative;
-}
-
-.remind-dot {
-    position: absolute;
-    border-radius: 50%;
-    width: 18px;
-    min-width: 18px;
-    height: 18px;
-    background: #4770ff !important;
-    top: -7px;
-    right: -5px;
-
-    span {
-        position: absolute;
-        top: -23px;
-        right: 5px;
-        color: #ffffff;
-        font-size: 12px;
-        font-family: 'Inter', serif;
-    }
-}
-
 .menu {
     display: none;
 }
@@ -130,10 +116,19 @@ app-mobile-menu {
     font-family: Inter, serif;
     font-size: 16px;
     font-weight: bold;
+    cursor: pointer;
 
     .icon-bg {
         margin-left: 0;
         overflow: hidden;
+        width: 44px;
+        flex: none;
+        border-radius: 16px;
+
+        img {
+            width: 44px;
+            padding-top: 17px;
+        }
     }
 
     .title {
@@ -151,19 +146,6 @@ app-mobile-menu {
     }
 }
 
-.icon-bg {
-    background: #f4f5f6;
-    border-radius: 16px;
-    border: 1px #e4e8ea solid;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    cursor: pointer;
-}
-
 .search {
     position: relative;
     z-index: 3;
@@ -179,6 +161,11 @@ app-mobile-menu {
 
 app-search.mobile {
     opacity: 0;
+    z-index: -1;
+}
+
+.mobile-burger {
+    display: none;
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -189,6 +176,10 @@ app-search.mobile {
 
     .ant-layout-header app-mobile-menu {
         // display: none;
+    }
+
+    .nav-wrap {
+        flex: auto;
     }
 }
 
@@ -206,6 +197,10 @@ app-search.mobile {
     .header {
         .burger {
             display: flex;
+
+            .anticon {
+                fill-opacity: 1;
+            }
         }
     }
 }
@@ -229,6 +224,36 @@ app-search.mobile {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .logo {
+        flex: auto;
+        display: flex;
+        justify-content: center;
+    }
+
+    .mobile-burger {
+        display: flex;
+
+        .anticon {
+            fill-opacity: 1;
+        }
+    }
+
+    .header .burger {
+        display: none;
+    }
+
+    // Logo centering
+    .nav-right {
+        margin-left: 0;
+    }
+
+    // Logo centering
+    .nav-right .icon-bg.remind {
+        margin-left: 0;
+    }
+}
+
 // Medium devices (tablets, 414px and up)
 @media screen and (max-width: 545px) {
     .search {
@@ -236,7 +261,7 @@ app-search.mobile {
     }
 
     .search-mobile {
-        display: flex;
+        // display: flex;
     }
 
     .ant-layout-header.mobile {
@@ -255,6 +280,13 @@ app-search.mobile {
     app-search.mobile {
         opacity: 1;
     }
+}
+
+.back {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
 }
 
 // Small devices (landscape phones, 576px and up)

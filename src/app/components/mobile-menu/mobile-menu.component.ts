@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
     selector: 'app-mobile-menu',
@@ -6,4 +6,6 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
     styleUrls: ['./mobile-menu.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MobileMenuComponent {}
+export class MobileMenuComponent {
+    @Input() menu: any;
+}

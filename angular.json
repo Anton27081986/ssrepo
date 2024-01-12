@@ -64,8 +64,8 @@
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "4mb",
-                                    "maximumError": "2mb"
+                                    "maximumWarning": "8mb",
+                                    "maximumError": "4mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",
@@ -104,13 +104,16 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "erpss:build:production"
+                            "browserTarget": "erpss:build:production",
+                            "port": 5000
                         },
                         "development": {
-                            "browserTarget": "erpss:build:development"
+                            "browserTarget": "erpss:build:development",
+                            "port": 5000
                         },
                         "staging": {
-                            "browserTarget": "erpss:build:development"
+                            "browserTarget": "erpss:build:staging",
+                            "port": 5000
                         }
                     },
                     "defaultConfiguration": "development"
@@ -181,6 +184,7 @@
         }
     },
     "cli": {
-        "schematicCollections": ["@angular-eslint/schematics"]
+        "schematicCollections": ["@angular-eslint/schematics"],
+        "analytics": false
     }
 }

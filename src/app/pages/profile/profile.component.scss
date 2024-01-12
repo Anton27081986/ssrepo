@@ -1,0 +1,106 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.settings {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;
+
+    .left-menu {
+        width: 366px;
+
+        .group:first-child {
+            margin-top: 0;
+        }
+
+        .group {
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 20px;
+            background-color: $white;
+
+            .item {
+                position: relative;
+                display: flex;
+                align-items: center;
+                height: 60px;
+                background-color: $white;
+                border-bottom: 1px solid $border-color;
+                margin: 0 20px 0 20px;
+                cursor: pointer;
+
+                .title {
+                    color: $black;
+                    margin-left: 11px;
+                    font-size: 16px;
+                }
+
+                .left-icon {
+                    ::ng-deep {
+                        svg {
+                            font-size: 21px;
+                        }
+                    }
+                }
+
+                .right-icon {
+                    position: absolute;
+                    right: -4px;
+
+                    ::ng-deep {
+                        path {
+                            stroke: #d9d9d9;
+                        }
+                    }
+                }
+
+                .toggle {
+                    position: absolute;
+                    right: -4px;
+                }
+
+                .icon-remind {
+                    ::ng-deep {
+                        path {
+                            stroke: $blue;
+                        }
+                    }
+                }
+
+                .title-ext {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: baseline;
+
+                    .subtitle {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            .item:last-child {
+                border-bottom: unset;
+            }
+        }
+    }
+
+    .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .content {
+        border-radius: 20px;
+        margin-left: 20px;
+        background-color: $white;
+        width: 894px;
+        padding: 35px 50px 40px 48px;
+
+        .title {
+            h1 {
+                font-size: 26px;
+                font-weight: 600;
+            }
+        }
+    }
+}

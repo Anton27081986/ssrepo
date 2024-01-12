@@ -18,8 +18,9 @@ ingress:
         enabled: false
     annotations:
         nginx.ingress.kubernetes.io/cors-allow-headers: >-
-            DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization,X-AISTO-TOKEN
+            *
         nginx.ingress.kubernetes.io/enable-cors: 'true'
+        nginx.ingress.kubernetes.io/cors-allow-origin: "https://erp-dev.ssnab.it"
     path: /
 environment: ''
 

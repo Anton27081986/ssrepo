@@ -11,7 +11,12 @@
                 </svg>
               <h2 class="m-b-0 m-t-12">Войдите в аккаунт</h2>
             </div>
-            <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form m-t-25" (ngSubmit)="onSubmit()">
+
+            <div *ngIf="errorState" class="error-message">
+              <span>Неверный логин или пароль</span>
+            </div>
+
+            <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="login-form m-t-25 p-b-40" (ngSubmit)="onSubmit()">
               <nz-form-item>
                 <nz-form-control nzErrorTip="Введите логин">
                   <nz-input-group [nzPrefix]="prefixUser">
@@ -21,7 +26,7 @@
               </nz-form-item>
               <nz-form-item class="relative">
                 <nz-form-control nzErrorTip="Введите пароль">
-                  <nz-input-group [nzPrefix]="prefixLock">
+                  <nz-input-group [nzSuffix]="prefixLock">
                     <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password" placeholder="Пароль" [(ngModel)]="password" />
                   </nz-input-group>
                 <ng-template #prefixLock>
@@ -39,7 +44,7 @@
                     <div class="font-size-12 text-muted">
                       <a class="small" [routerLink]="['/auth/forgot-password']">Не помню пароль</a>
                     </div>
-                    <div class="m-b-30 m-t-24">
+                    <div class="m-t-8">
                       <button nz-button class="login-form-button" [nzType]="'primary'">Войти</button>
                     </div>
                   </div>
