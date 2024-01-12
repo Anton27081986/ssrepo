@@ -31,4 +31,12 @@ export class AppComponent {
     logout() {
         this.authenticationService.logout();
     }
+
+    get isAdmin() {
+        return this.user?.role === Role.Admin;
+    }
+
+    logout() {
+        this.authenticationService.logout();
+    }
 }
