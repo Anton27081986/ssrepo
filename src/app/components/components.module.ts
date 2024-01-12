@@ -37,7 +37,11 @@ import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {CurrencyComponent} from './currency/currency.component';
 import {AdressBookComponent} from './adress-book/adress-book.component';
 import {NzCardModule} from 'ng-zorro-antd/card';
-import {ModalInfoComponent} from './modal-info/modal-info.component';
+import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {AddVictoryModalComponent} from './victory/modal/add-victory-modal/add-victory-modal.component';
+import {CommentsModalComponent} from './victory/modal/comments-modal/comments-modal.component';
+import {PeopleLikeModalComponent} from './victory/modal/people-like-modal/people-like-modal.component';
+import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory.component';
 
 @NgModule({
     declarations: [
@@ -56,6 +60,10 @@ import {ModalInfoComponent} from './modal-info/modal-info.component';
         CurrencyComponent,
         AdressBookComponent,
         ModalInfoComponent,
+        AddVictoryModalComponent,
+        CommentsModalComponent,
+        PeopleLikeModalComponent,
+        PartyVictoryComponent,
     ],
     imports: [
         CommonModule,

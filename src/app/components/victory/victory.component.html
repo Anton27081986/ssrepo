@@ -7,13 +7,14 @@
     </div>
     <div class="open-all-table">
 
-<!--      <div class="search">
+      <ng-container *ngIf="searchPanelVisible">
+        <div class="search">
         <span class="">
           <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
             <nz-form-item>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Введите запрос" [(ngModel)]="title" (input)="search()" />
+                  <input type="text" nz-input formControlName="search" placeholder="Введите запрос" (input)="search()" />
                 </nz-input-group>
               </nz-form-control>
               <ng-template #prefixSearch>
@@ -22,20 +23,21 @@
             </nz-form-item>
           </form>
         </span>
-        &lt;!&ndash;    <div class="result" *ngIf="books && showWindowResult" #result>&ndash;&gt;
-        &lt;!&ndash;        <app-result-item&ndash;&gt;
-        &lt;!&ndash;            *ngFor="let book of books"&ndash;&gt;
-        &lt;!&ndash;            [book]="book"&ndash;&gt;
-        &lt;!&ndash;            [title]="title"&ndash;&gt;
-        &lt;!&ndash;        ></app-result-item>&ndash;&gt;
-        &lt;!&ndash;    </div>&ndash;&gt;
-      </div>
-      <div class="select-group">
-&lt;!&ndash;        [(ngModel)]="selectedValue"  &ndash;&gt;
-        <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
-          <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
-        </nz-select>
-      </div>-->
+          <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
+          <!--        <app-result-item-->
+          <!--            *ngFor="let book of books"-->
+          <!--            [book]="book"-->
+          <!--            [title]="title"-->
+          <!--        ></app-result-item>-->
+          <!--    </div>-->
+        </div>
+        <div class="select-group">
+          <!--        [(ngModel)]="selectedValue"  -->
+          <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
+            <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
+          </nz-select>
+        </div>
+      </ng-container>
 
       <div class="button" (click)="showModalAdd()">
         <button nz-button class="button" [nzType]="'primary'">
@@ -66,7 +68,7 @@
 
                     <div class="title">
                       <div class="fio">
-                        <span>{{ item.user.name }}</span>
+                        <span>{{ item?.user?.lastName }} {{  item?.user?.firstName }} {{  item?.user?.surName }}</span>
                       </div>
                       <div class="job">
                         <div>{{ item?.user.position }}</div>

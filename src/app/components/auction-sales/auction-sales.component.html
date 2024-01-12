@@ -19,7 +19,12 @@
 
   <div class="content">
     <div class="table">
-      <nz-table #basicTable [nzData]="auctions | async">
+      <nz-table #basicTable
+                [nzData]="auctions | async"
+                [nzFrontPagination]="false"
+                [nzTotal]="30"
+                [nzPageIndex]="1"
+                [nzPageSize]="6">
         <thead>
         <tr>
           <th>ТП</th>

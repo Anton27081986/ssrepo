@@ -46,12 +46,12 @@
         <div>
           <div class="personal">
             <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
+              <img src="{{ item?.avatarUrl }}" alt="user" />
             </div>
 
             <div class="title">
               <div class="fio">
-                <span>{{ item.name }}</span>
+                <span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
               </div>
               <div class="job">
                 <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
@@ -59,46 +59,13 @@
             </div>
           </div>
           <div class="icons">
+<!--             class="favorite-icon fill" - заполнененое избраное-->
             <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
           </div>
 
           <div class="contacts">
             <div class="call">
-              <span>1155</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-            <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="card">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
-            </div>
-
-            <div class="title">
-              <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
-              </div>
-              <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon fill" nz-icon [nzType]="'ss:favorite'"></span>
-          </div>
-
-          <div class="contacts">
-            <div class="call">
-              <span>1155</span>
+              <span>{{ item?.phoneLocal }}</span>
               <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
             </div>
             <div class="mail">

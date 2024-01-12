@@ -3,15 +3,15 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {map, Observable} from 'rxjs';
+import {Observable, map} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {ModalInfoComponent} from '@app/components/modal-info/modal-info.component';
+import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 
 @Component({
     selector: 'app-victory',
     templateUrl: './victory.component.html',
     styleUrls: ['./victory.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class VictoryComponent implements OnInit {
     peoplelikesOpen = false;
@@ -25,18 +25,20 @@ export class VictoryComponent implements OnInit {
 
     title: any;
 
-    selectedValue = null;
     winsList!: Observable<any>;
+
     winsGroupsList!: Observable<any>;
 
     pageSize = 6;
     pageIndex = 1;
 
+    searchPanelVisible = false;
+
     constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
-        public modal: NzModalService,
+        public modalInfoUser: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
@@ -100,9 +102,7 @@ export class VictoryComponent implements OnInit {
 
     // Модальное окно раскрытой карточки
     showModalOpenOut(item: any): void {
-        console.log('item', typeof item);
-
-        this.modal
+        this.modalInfoUser
             .create({
                 nzClosable: false,
                 nzFooter: null,
@@ -116,14 +116,6 @@ export class VictoryComponent implements OnInit {
                 },
             })
             .afterClose.subscribe();
-    }
-
-    handleCancelOpenOut(): void {
-        this.isVisibleOpenOut = false;
-    }
-
-    handleOkOpenOut(): void {
-        this.isVisibleOpenOut = false;
     }
 
     // Модальное окно комментариев

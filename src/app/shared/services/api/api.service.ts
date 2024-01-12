@@ -52,13 +52,6 @@ export class ApiService {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/birthdays`);
     }
 
-    // Поиск пользователей по ФИО
-    public getUsersByFIO(title: string): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/search`, {
-            params: new HttpParams().set('q', title),
-        });
-    }
-
     // Спасибо партнеру
     public getPartnerThanks(): Observable<any> {
         return this.http.get<any[]>(
@@ -92,5 +85,17 @@ export class ApiService {
     // Wins список побед по группам
     public getWins(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins`);
+    }
+
+    // Поиск пользователей по ФИО
+    public getUsersByFIO(title: string): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/search`, {
+            params: new HttpParams().set('q', title),
+        });
+    }
+
+    // Получение пользователя по id
+    public getUserById(id: string): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/${id}`);
     }
 }

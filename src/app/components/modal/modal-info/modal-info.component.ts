@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {NZ_MODAL_DATA, NzModalRef} from 'ng-zorro-antd/modal';
+import {Observable} from 'rxjs';
+import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
     selector: 'app-modal-info',
@@ -8,19 +10,17 @@ import {NZ_MODAL_DATA, NzModalRef} from 'ng-zorro-antd/modal';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalInfoComponent implements OnInit {
-    // @Input() data?: any;
-
-    // isVisibleOpenOut = true;
     readonly nzModalData: any = inject(NZ_MODAL_DATA);
-    data: any;
+    userData!: Observable<any>;
 
-    constructor(private readonly modal: NzModalRef) {}
+    constructor(
+        private readonly modal: NzModalRef,
+        private readonly apiService: ApiService,
+    ) {}
 
     ngOnInit(): void {
-        this.data = this.nzModalData;
-
-        console.log('nzModalData', this.nzModalData);
-        console.log('this.data', this.data);
+        console.log('nzModalData', this.nzModalData.data);
+        this.userData = this.apiService.getUserById(this.nzModalData.data.user.id);
     }
 
     closeModal(): void {
@@ -29,13 +29,5 @@ export class ModalInfoComponent implements OnInit {
 
     saveAndCloseModal(value: boolean): void {
         this.modal.destroy(value);
-    }
-
-    handleCancelOpenOut(): void {
-        // this.isVisibleOpenOut = false;
-    }
-
-    handleOkOpenOut(): void {
-        // this.isVisibleOpenOut = false;
     }
 }
