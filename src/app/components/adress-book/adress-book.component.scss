@@ -94,11 +94,11 @@
                         overflow: hidden;
                         flex: none;
                         z-index: 0;
+                        width: 60px;
+                        height: 60px;
 
                         img {
                             width: 60px;
-                            height: 60px;
-                            object-fit: cover;
                         }
                     }
 
