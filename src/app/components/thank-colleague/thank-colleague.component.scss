@@ -1,0 +1,320 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.thank-colleague {
+    margin-top: 60px;
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        h1 {
+            text-transform: uppercase;
+        }
+
+        .open-all-table {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .content {
+        .card-list {
+            ::ng-deep .ant-list-items {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .card {
+                position: relative;
+                width: 408px;
+                height: auto;
+                border-radius: 16px;
+                border: 1px solid $border-color;
+                background-color: $white;
+                padding: 15px 20px 20px 20px;
+                margin-top: 37px;
+
+                // flex: 1 0 200px;
+
+                .personals {
+                    position: relative;
+                    display: flex;
+
+                    .images {
+                        position: relative;
+                        width: 80px;
+
+                        .img {
+                            position: absolute;
+                            border-radius: 14px;
+                            overflow: hidden;
+                            flex: none;
+                            margin-top: 3px;
+                            width: 50px;
+                            height: 50px;
+                            // background-color: #886cff;
+
+                            img {
+                                width: 50px;
+                                //height: 50px;
+                                //object-fit: cover;
+                            }
+                        }
+
+                        .img-from {
+                            position: absolute;
+                            top: 3;
+                            left: 0;
+                        }
+                        .img-to {
+                            position: absolute;
+                            bottom: 3px;
+                            right: 0;
+                        }
+                    }
+
+                    .images:after {
+                        content: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1C7.43045 2.20106 12.3012 7.87174 12.3012 14.6885" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/><path d="M16.0002 10.2599L12.3882 15L7.66797 11.3693" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/></svg>');
+                        position: absolute;
+                        top: 13px;
+                        right: 10px;
+                    }
+                    .images:before {
+                        content: url('data:image/svg+xml,<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1C2.20106 7.43045 7.87174 12.3012 14.6885 12.3012" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/><path d="M10.2598 16.0002L14.9998 12.3882L11.3691 7.66797" stroke="%23E4E8EA" stroke-width="1.5" stroke-miterlimit="10"/></svg>');
+                        position: absolute;
+                        bottom: 5px;
+                        left: 10px;
+                    }
+
+                    .enter-icon {
+                        position: absolute;
+                        right: 17px;
+                        bottom: 0;
+                        font-size: 17px;
+                        fill-opacity: 0;
+                        cursor: pointer;
+                    }
+
+                    .sub-title {
+                        font-size: 12px;
+                        font-weight: 600;
+                    }
+
+                    .title {
+                        margin-left: 24px;
+                    }
+
+                    .fio {
+                        font-size: 13.6px;
+                        font-weight: bold;
+                        line-height: 20px;
+                        margin-top: 0;
+                    }
+
+                    .job {
+                        max-width: 186px;
+                        font-size: 11.8px;
+                        line-height: 14px;
+                        font-weight: 500;
+                        margin-top: 8px;
+                    }
+                }
+
+                .icons {
+                    .medal-icon {
+                        position: absolute;
+                        right: 16px;
+                        top: 20px;
+                    }
+
+                    ::ng-deep .anticon {
+                        fill-opacity: 1;
+                        font-size: 34px;
+                    }
+                }
+
+                .message {
+                    width: 377px;
+                    overflow-y: scroll;
+
+                    .text {
+                        font-size: 11.8px;
+                        font-style: normal;
+                        font-weight: 500;
+                        margin-top: 14px;
+                        line-height: 16.7px;
+                        height: 50px;
+                    }
+                }
+
+                .info {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 6px;
+
+                    .count {
+                        padding-right: 6px;
+                    }
+
+                    .left-group {
+                        display: flex;
+                    }
+                }
+
+                .icon {
+                    font-size: 20px;
+
+                    ::ng-deep path {
+                        stroke: $blue;
+                    }
+                }
+
+                .like {
+                    background-color: $gray-light;
+                    color: $blue;
+                    font-size: 12px;
+                    width: 50px;
+                    height: 32px;
+                    border-radius: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    padding-left: 1px;
+                    cursor: pointer;
+
+                    .like-icon {
+                        padding-left: 1px;
+                    }
+                }
+                .comment {
+                    background-color: $gray-light;
+                    color: $blue;
+                    font-size: 12px;
+                    width: 50px;
+                    height: 32px;
+                    border-radius: 8px;
+                    margin-left: 8px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-around;
+                    cursor: pointer;
+                }
+                .date {
+                    display: flex;
+                    align-items: center;
+                    font-weight: 600;
+
+                    span {
+                        font-size: 9px;
+                    }
+                }
+            }
+            .card:last-child {
+                // margin-left: 28px;
+            }
+        }
+        .card-list:after {
+            //content: '';
+            //flex: auto;
+        }
+
+        .bottom-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 27px;
+        }
+    }
+}
+
+::ng-deep {
+    .message::-webkit-scrollbar {
+        width: 4px;
+        height: 48px;
+    }
+
+    .message::-webkit-scrollbar-track {
+        background-color: $gray;
+        border-radius: 60px;
+        // margin: 24px;
+        height: 48px;
+    }
+
+    .message::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .message {
+        border-right: 10px solid #ffffff !important;
+        box-sizing: border-box;
+        scrollbar-width: thin;
+        scrollbar-color: $gray-light;
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .thank-colleague {
+        margin: 80px 20px 0 20px;
+
+        .header {
+            justify-content: center;
+            flex-direction: column;
+
+            .open-all-table {
+                width: 100%;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 18px;
+            }
+
+            .title h1 {
+                text-align: center;
+                margin-bottom: 0.3rem !important;
+                line-height: 34px;
+                margin-top: 4px;
+            }
+
+            .subtitle {
+                margin-top: 12px;
+
+                h2 {
+                    text-align: center;
+                    line-height: 19px !important;
+                }
+            }
+        }
+
+        .content {
+            .card-list {
+                justify-content: center;
+
+                .card {
+                    width: 100%;
+                    margin-top: 20px;
+                    padding: 12px;
+
+                    .personals {
+                        .message {
+                            width: 100% !important;
+                        }
+                    }
+
+                    .icons {
+                        .medal-icon {
+                            right: 12px;
+                            top: 11px;
+                        }
+                    }
+                }
+            }
+            .bottom-panel {
+                margin-top: 32px;
+                justify-content: space-between;
+            }
+        }
+    }
+}

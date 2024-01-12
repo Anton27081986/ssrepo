@@ -1,0 +1,30 @@
+<div class="slider" nz-row nzJustify="center">
+  <div nz-col nzSpan="24">
+    <nz-carousel
+      [nzAutoPlay]="true"
+      [nzAutoPlaySpeed]="3000"
+      [nzEffect]="'fade'"
+      [nzEnableSwipe]="true"
+      [nzLoop]="true">
+
+      <ng-container *ngIf="banners | async">
+        <div nz-carousel-content *ngFor="let index of banners | async;">
+          <a href="{{index.linkUrl}}" target="_blank" rel="noreferrer">
+            <img ngSrc="{{ index.imageUrl }}" alt="{{ index.text }}" fill="" />
+          </a>
+        </div>
+      </ng-container>
+
+    </nz-carousel>
+  </div>
+
+  <span class="arrow next" nz-button (click)="next()">
+    <img src="assets/images/slider/arrow.png" alt="" />
+  </span>
+
+  <span class="arrow prev" nz-button (click)="prev()">
+    <img src="assets/images/slider/arrow.png" alt="arrow" />
+  </span>
+</div>
+
+
