@@ -1,0 +1,107 @@
+<div class="profile-popup">
+  <div class="wrapper" *ngIf="profile | async as url">
+    <div class="card">
+      <div class="personal">
+        <div class="img">
+
+          <ng-container>
+            <img src="{{ url!.avatarUrl }}" alt="user" />
+          </ng-container>
+
+<!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
+
+          <!--          <ng-container *ngIf="!profile!.avatarUrl; else image">-->
+<!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
+<!--          </ng-container>-->
+
+<!--          <ng-template #image>-->
+<!--            <img src="{{ profile!.avatarUrl }}" alt="user" />-->
+<!--          </ng-template>-->
+
+        </div>
+        <div class="title">
+          <div class="fio">
+            <span>{{ url!.name }} </span>
+          </div>
+          <div class="job">
+            <div>
+              <div>{{ url?.position }}</div>
+              <div>{{ url?.department }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contacts">
+        <div class="item">
+          <div>
+            <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+            <span class="title">Tелефон:</span>
+          </div>
+          <div>
+            <span class="description">{{ url?.phone }}</span>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+            <span class="title">Внутренний телефон:</span>
+          </div>
+          <div>
+            <span class="description">{{ url?.phoneLocal }}</span>
+          </div>
+        </div>
+        <div class="item">
+          <div>
+            <span class="icon" nz-icon [nzType]="'ss:mail'"></span>
+            <span class="title">Email:</span>
+          </div>
+          <div>
+            <span class="description">{{ url?.email }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="manager">
+      <div [routerLink]="'profile/settings'" class="button-icon-left">
+        <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
+        <span class="title">Настройки профиля</span>
+      </div>
+      <div class="button-icon-left" (click)="logout()">
+        <span class="icon exit-icon" nz-icon [nzType]="'ss:exit'"></span>
+        <span class="title">Выйти</span>
+      </div>
+    </div>
+    <hr />
+    <ng-container *ngIf="accounts">
+     <div class="card-list">
+      <div class="accordion" (click)="statusAccordion=!statusAccordion;">
+        <span class="title">Связь с другими сотрудниками</span>
+        <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
+      </div>
+        <ng-container *ngFor="let account of accounts | async">
+          <div class="card">
+            <div class="personal">
+              <div class="img">
+                <img src="{{ account?.avatarUrl }}" alt="users" />
+              </div>
+              <div class="title">
+                <div class="fio">
+                  <span>{{ account?.userName }}</span>
+                </div>
+                <div class="job">
+                  <div>
+                    <div>{{ account?.position }}</div>
+                    <div>{{ account?.department }}</div>
+                  </div>
+                </div>
+              </div>
+              <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
+            </div>
+          </div>
+        </ng-container>
+
+    </div>
+    </ng-container>
+  </div>
+</div>

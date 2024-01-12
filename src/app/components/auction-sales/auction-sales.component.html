@@ -1,0 +1,63 @@
+<div class="auction-sales">
+  <div class="header">
+    <div>
+      <div class="title">
+        <h1>АУКЦИОННЫЕ ПРОДАЖИ</h1>
+      </div>
+      <div class="subtitle">
+        <h2>Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</h2>
+      </div>
+    </div>
+    <div class="open-all-table">
+      <div *ngIf="auctionAll | async as url">
+        <a href="{{ url.allListLink }}" target="_blank">
+          <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="table">
+      <nz-table #basicTable
+                [nzData]="auctions | async"
+                [nzFrontPagination]="false"
+                [nzTotal]="30"
+                [nzPageIndex]="1"
+                [nzPageSize]="6">
+        <thead>
+        <tr>
+          <th>ТП</th>
+          <th>Доступность</th>
+          <th>Цена прайса</th>
+          <th>Количество</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>
+            <a href="{{ data.detailUrl }}" target="_blank">{{ data.tovName }}</a>
+          </td>
+          <td>{{ data.source }}</td>
+          <td>
+            {{ data.price }}
+            <span>{{ data.currency }}</span>
+          </td>
+          <td>{{ data.quantity }}
+            <span>{{ data.tovUnitName }}</span>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+
+      <div class="open-all-table bottom">
+        <div>
+          <a href="https://ssnab.it/Sales/PlanMolsTovs/Proficits">
+            <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

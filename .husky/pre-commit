@@ -3,4 +3,4 @@
 
 #npx lint-staged
 npm run prettier:fix:all
-ng lint
+npm run lint

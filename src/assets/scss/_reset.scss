@@ -3,7 +3,7 @@
 body {
     // Разобраться с приоритетами
     font-family: $font-family-inter;
-    background-color: $body-bg;
+    background-color: $gray;
     color: $body-color;
 
     a {
@@ -45,11 +45,76 @@ body {
     hr {
         border: 0;
         border-top: 1px solid $border-color;
-        margin-top: 2rem;
-        margin-bottom: 2rem;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
     .ant-menu-horizontal {
         border-bottom: unset;
     }
+
+    .ant-menu-item a:hover {
+        color: #4770ff !important;
+    }
+
+    .ant-menu.ant-menu-root {
+        border: unset;
+    }
+
+    .ant-list-split .ant-list-item {
+        border-bottom: unset;
+    }
+
+    .ant-list-item {
+        padding: unset;
+    }
+
+    // Пагинация
+    .ant-pagination-item:hover a {
+        color: $blue;
+    }
+
+    .ant-pagination ul,
+    .ant-pagination ol {
+        margin-left: 0;
+    }
+
+    .ant-table-pagination.ant-pagination {
+        margin: 21px 0 !important;
+    }
+
+    .ant-pagination-prev,
+    .ant-pagination-next {
+        display: none;
+    }
+
+    .ant-pagination-item-active,
+    .ant-pagination-item {
+        font-size: 16px;
+        line-height: 39px;
+        font-weight: 600;
+        background: #fff;
+        border-color: $border-color;
+        border-radius: 10px;
+        height: 40px;
+        width: 40px;
+        margin-right: 8px;
+    }
+
+    .ant-pagination-item-active a {
+        color: $blue;
+    }
+
+    .ant-table-pagination.ant-pagination {
+        margin: 21px 0 !important;
+    }
+
+    .ant-pagination.mini .ant-pagination-item {
+        min-width: 44px;
+        height: 44px;
+    }
+}
+
+.anticon {
+    fill-opacity: 0;
 }

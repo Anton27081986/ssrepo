@@ -7,7 +7,6 @@ import {RouterLink} from '@angular/router';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzCardModule} from 'ng-zorro-antd/card';
-import {AuthModule} from '@auth/auth.module';
 
 @NgModule({
     declarations: [],
@@ -20,7 +19,6 @@ import {AuthModule} from '@auth/auth.module';
         NzButtonModule,
         NzIconModule,
         NzCardModule,
-        AuthModule,
     ],
 })
 export class PagesModule {}

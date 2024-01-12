@@ -15,7 +15,6 @@ import {NzInputModule} from 'ng-zorro-antd/input';
 import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {JwtInterceptor} from '@app/helpers/jwt.interceptor';
-import {fakeBackendProvider} from '@app/helpers/fake-backend';
 import {ErrorInterceptor} from '@app/core/error.interceptor';
 import {LayoutsModule} from './shared/layouts/layouts.module';
 import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
@@ -49,7 +48,6 @@ registerLocaleData(ru);
         {provide: NZ_I18N, useValue: ru_RU},
         {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
         {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-        fakeBackendProvider,
     ],
     bootstrap: [AppComponent],
 })

@@ -50,3 +50,16 @@ ul {
         }
     }
 }
+
+.icon-bg {
+    background: #f4f5f6;
+    border-radius: 16px;
+    border: 1px #e4e8ea solid;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
+}

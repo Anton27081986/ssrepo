@@ -1,16 +1,23 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-
-import {environment} from '@environments/environment';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {BehaviorSubject, map, Observable} from 'rxjs';
 import {IUser} from '@app/pages/auth/models/user';
+import {environment} from '@environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
+
+    public headers = new HttpHeaders()
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json');
+
+    public params = new HttpParams({fromString: `ReturnUrl=${environment.apiUrl}`}).set(
+        'ReturnUrl',
+        environment.apiUrl,
+    );
 
     constructor(
         private readonly router: Router,
@@ -24,9 +31,19 @@ export class AuthenticationService {
         return this.userSubject.value;
     }
 
-    login(username: string, password: string): Observable<IUser> {
+    login(username: string, password: string) {
         return this.http
-            .post<IUser>(`${environment.apiUrl}/users/authenticate`, {username, password})
+            .post<any>(
+                `${environment.apiUrl}/api/auth/login`,
+                {username, password},
+                {
+                    headers: this.headers,
+                    observe: 'body',
+                    params: this.params,
+                    responseType: 'json',
+                    reportProgress: true,
+                },
+            )
             .pipe(
                 map(user => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -42,6 +59,6 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('user');
         this.userSubject.next(null as unknown as IUser);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/sign-in']);
     }
 }

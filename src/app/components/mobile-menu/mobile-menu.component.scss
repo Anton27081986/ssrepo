@@ -1,198 +1,240 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
 
-::ng-deep .ant-menu-submenu:after {
-    content: unset;
-    top: -10px;
-    left: 3px;
-    position: absolute;
-    z-index: 5;
-}
-
 .mobile-menu {
-    margin: 22px auto 0 auto;
-    display: flex;
-    justify-content: center;
+    //position: fixed;
+    margin: 13px auto 0 auto;
+
+    .container {
+        display: flex;
+        justify-content: center;
+        z-index: 20;
+        // margin-right: -7px;
+    }
+
+    ::ng-deep {
+        .ant-tabs-content-holder {
+            background-color: $white;
+            border-radius: 16px;
+            // padding: 8px;
+            // margin-right: 9px;
+        }
+
+        .ant-tabs-nav-operations {
+            display: none;
+        }
+
+        .ant-menu-submenu:after {
+            content: unset;
+            top: -10px;
+            left: 3px;
+            position: absolute;
+            z-index: 5;
+        }
+
+        .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+            color: $black;
+        }
+
+        .ant-tabs-top > .ant-tabs-nav::before {
+            border-bottom: unset;
+        }
+
+        .ant-tabs-tab:hover {
+            color: $black;
+        }
+
+        .ant-tabs-tab.ant-tabs-tab-active {
+            padding: 13px;
+            background-color: #4770ff !important;
+            border: 2px $gray solid;
+        }
+
+        .ant-tabs-tab {
+            border: 2px #f4f5f6 solid;
+            padding: 10px;
+            border-radius: 16px;
+            background-color: rgba(0, 0, 0, 0) !important;
+        }
+
+        .ant-tabs-tab + .ant-tabs-tab {
+            margin: 0 0 0 8px;
+            border: 1px $gray solid;
+        }
+
+        .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
+            display: none;
+        }
+
+        .ant-menu-submenu .ant-menu-submenu-title {
+            padding-left: 23px;
+            color: $black;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -0.16px;
+
+            .without-url {
+                color: $black;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .without-url-item + ::ng-deep .ant-menu-submenu-arrow {
+                display: none !important;
+            }
+        }
+
+        .ant-menu-submenu .ant-menu-item {
+            padding-left: 22px !important;
+            color: $black;
+        }
+
+        .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+            color: $white;
+        }
+
+        .ant-menu-light .ant-menu-submenu-title:hover {
+            color: $black;
+        }
+
+        .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+            background-color: $gray-light;
+        }
+
+        .ant-menu.ant-menu-root {
+            background-color: unset;
+        }
+
+        .ant-menu .ng-star-inserted {
+            background-color: unset;
+        }
+
+        .ant-menu .ant-menu-item.ant-menu-item-selected {
+            color: $blue;
+        }
+
+        .ant-menu-inline .ant-menu-item {
+            font-size: 14px;
+        }
+
+        .ant-menu-inline .ant-menu-item::after {
+            border-right: 3px solid $blue;
+        }
+
+        .ant-menu-submenu-arrow {
+            color: $black;
+        }
+
+        .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-expand-icon,
+        .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+            color: $blue;
+        }
+
+        .ant-menu-submenu.ant-menu-submenu-inline {
+            border-bottom: 1px $gray solid;
+        }
+
+        .ant-menu-submenu.ant-menu-submenu-inline:last-child {
+            border-bottom: 0 $gray solid;
+        }
+
+        .ant-menu-submenu.ant-menu-submenu-inline:first-child {
+            border-top: 0 $gray solid;
+        }
+
+        .without-url-li {
+            border-bottom: unset !important;
+        }
+
+        .ant-menu-submenu-title:active {
+            background-color: unset !important;
+        }
+
+        .ant-tabs-tab {
+            border: 2px #e4e8ea solid;
+        }
+
+        .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap.ant-tabs-nav-wrap-ping-right::after,
+        .ant-tabs-top > .ant-tabs-nav .ant-tabs-nav-wrap.ant-tabs-nav-wrap-ping-right::before {
+            opacity: 0 !important;
+        }
+    }
 }
 
-::ng-deep .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    color: $black;
-}
-
-::ng-deep .ant-tabs-top > .ant-tabs-nav::before {
-    border-bottom: unset;
-}
-
-::ng-deep .ant-tabs-tab:hover {
-    color: $black;
-}
-
-::ng-deep {
-    .ant-tabs-tab.ant-tabs-tab-active {
-        padding: 10px;
-        background-color: #4770ff !important;
-        border: 2px $gray solid;
+@media screen and (min-width: 240px) and (max-width: 414px) {
+    ::ng-deep .ant-tabs {
+        width: 300px;
     }
-
-    .ant-tabs-tab {
-        border: 2px #f4f5f6 solid;
-        padding: 10px;
-        border-radius: 16px;
-        background-color: rgba(0, 0, 0, 0) !important;
-    }
-
-    .ant-tabs-tab + .ant-tabs-tab {
-        margin: 0 0 0 8px;
-        border: 2px $gray solid;
-    }
-
-    .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
-        display: none;
-    }
-
-    .ant-menu-submenu .ant-menu-submenu-title {
-        padding-left: 4px !important;
-        color: $black;
-        font-size: 14px;
-        font-weight: bold;
-    }
-
-    .ant-menu-submenu .ant-menu-item {
-        padding-left: 4px !important;
-        color: $black;
-    }
-
-    .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-        color: $white;
-    }
-
-    .ant-menu-light .ant-menu-submenu-title:hover {
-        color: $black;
-    }
-
-    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-        background-color: $gray-light;
-    }
-
-    .ant-menu.ant-menu-root {
-        background-color: unset;
-    }
-
-    .ant-menu .ng-star-inserted {
-        background-color: unset;
-    }
-
-    .ant-menu .ant-menu-item.ant-menu-item-selected {
-        color: $blue;
-    }
-
-    .ant-menu-inline .ant-menu-item {
-        font-size: 14px;
-    }
-
-    .ant-menu-inline .ant-menu-item::after {
-        border-right: 3px solid $blue;
-    }
-
-    .ant-menu-submenu-arrow {
-        color: $black;
-    }
-
-    .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-expand-icon,
-    .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
-        color: $blue;
-    }
-
-    .ant-menu-submenu.ant-menu-submenu-inline {
-        border-bottom: 1px $gray solid;
-    }
-
-    .ant-menu-submenu-title:active {
-        background-color: unset !important;
-    }
-
-    .ant-tabs-tab {
-        border: 2px #e4e8ea solid;
+    .mobile-menu {
+        width: 414px;
     }
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (min-width: 414px) and (max-width: 519px) {
+    ::ng-deep .ant-tabs {
+        width: 380px;
+    }
     .mobile-menu {
         width: 519px;
     }
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (max-width: 416px) {
     .mobile-menu {
         width: 416px;
     }
-
-    ::ng-deep .ant-tabs-nav-operations {
-        display: table !important;
-    }
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (max-width: 545px) {
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (min-width: 520px) and (max-width: 599px) {
+    ::ng-deep .ant-tabs {
+        width: 500px;
+    }
+
     .mobile-menu {
         width: 599px;
     }
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (min-width: 600px) and (max-width: 639px) {
     .mobile-menu {
         width: 639px;
     }
 }
 
-// Medium devices (tablets, 640px and up)
 @media screen and (min-width: 640px) and (max-width: 699px) {
     .mobile-menu {
         width: 699px;
     }
 }
 
-// Medium devices (tablets, 640px and up)
 @media screen and (min-width: 700px) and (max-width: 767px) {
     .mobile-menu {
         width: 767px;
     }
 }
 
-// Medium devices (tablets, 768px and up)
 @media screen and (min-width: 768px) and (max-width: 799px) {
     .mobile-menu {
         width: 799px;
     }
 }
 
-// Medium devices (tablets, 800px and up)
 @media screen and (min-width: 800px) and (max-width: 999px) {
     .mobile-menu {
         width: 999px;
     }
 }
 
-// Medium devices (tablets, 800px and up)
 @media screen and (min-width: 1000px) and (max-width: 1199px) {
     .mobile-menu {
         width: 1199px;
     }
 }
 
-// Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 1326px) {
-    .mobile-menu {
-        //  width: 1326px;
-    }
-
     .mobile-menu {
         display: flex;
     }

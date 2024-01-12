@@ -2,6 +2,7 @@
 
 // Custom Color
 $custom-1: #fff !default;
+$arrow: #d9d9d9 !default;
 
 // Start with assigning color names to specific hex values.
 $white: #fff !default;
@@ -15,19 +16,14 @@ $blue: #4770ff !default;
 // Create grayscale
 $gray-dark: #2a2a2a !default;
 $gray: #e4e8ea !default;
-$gray-light: #ebeff2 !default;
+$gray-light: #f4f5f6 !default;
 $gray-lighter: #ededed !default;
 $gray-lightest: #f1f2f3 !default;
+$content: #f4f5f6 !default;
 
 // Two Tones
 $tone-red: $red !default;
 $tone-red-light: rgba($red, 0.05) !default;
-
-$tone-orange: $orange !default;
-$tone-orange-light: rgba($orange, 0.1) !default;
-
-$tone-gold: $gold !default;
-$tone-gold-light: rgba($gold, 0.1) !default;
 
 $tone-green: $green !default;
 $tone-green-light: rgba($green, 0.1) !default;
@@ -37,15 +33,13 @@ $tone-blue-light: rgba($blue, 0.1) !default;
 
 $tone-loop: (
     'red' $tone-red $tone-red-light,
-    'orange' $tone-orange $tone-orange-light,
-    'gold' $tone-gold $tone-gold-light,
     'green' $tone-green $tone-green-light,
     'blue' $tone-blue $tone-blue-light
 );
 
 // State Colors
 $brand-primary: $blue !default;
-$brand-secondary: $blue !default;
+$brand-secondary: $gray-light !default;
 $brand-success: $blue !default;
 $brand-info: $blue !default;
 $brand-warning: $gold !default;
@@ -173,7 +167,7 @@ $font-weight-base: $font-weight-normal !default;
 
 $line-height-base: 1.5 !default;
 
-$font-size-base: 0.875rem !default;
+$font-size-base: 0.8125rem !default;
 $font-size-xl: 1.25rem !default;
 $font-size-lg: 1rem !default;
 $font-size-sm: 0.75rem !default;
@@ -201,14 +195,15 @@ $text-muted: rgba($gray-light, 0.7) !default;
 // Border
 //
 // Define border properties
-$border-color: #828282 !default;
-$border-radius: 0.25rem !default;
+$border-color: #e4e8ea !default;
+$border-radius: 4px !default;
+$border-radius-big: 16px !default;
 $border-radius-lg: 0.3rem !default;
-$border-radius-sm: 0.2rem !default;
+$border-radius-sm: 1rem !default;
 $border-radius-xs: 0.125rem !default;
 $border-radius-circle: 50% !default;
-$border-radius-round: 50px !default;
-$border-width: 1px !default;
+$border-radius-round: 3.125rem !default;
+$border-width: 0.0625rem !default;
 
 // Buttons
 //
@@ -235,7 +230,7 @@ $btn-danger-border: $btn-danger-bg !default;
 $btn-link-disabled-color: $gray-lighter !default;
 $btn-disabled-color: $gray-lighter !default;
 
-$btn-size-sm: 2rem !default;
+$btn-size-sm: 2.4rem !default;
 $btn-size-lg: 3rem !default;
 
 $btn-padding-x-sm: 1rem !default;
@@ -276,7 +271,7 @@ $table-selected: rgba($brand-primary, 0.1) !default;
 $table-has-action-hover-bg: darken(#f2f2f2, 2%) !default;
 $table-column-sort-bg: $table-hover !default;
 $table-border: $border-color !default;
-$table-border-radius: 4px !default;
+$table-border-radius: 0.25rem !default;
 $table-column-sorter-size: 0.9375rem;
 $table-row-expand-icon-size: 1.0625rem !default;
 
@@ -466,22 +461,6 @@ $list-item-hover: $select-item-hover !default;
 $list-item-title-color: $gray-dark !default;
 $list-item-title-hover: $brand-primary !default;
 
-// Timeline
-//
-//
-$timeline-theme-color: $brand-primary !default;
-$timeline-gutter: 1.25rem !default;
-$timeline-line-color: #ececec !default;
-$timeline-dot-size: 0.625rem !default;
-$timeline-dot-bg: $white !default;
-
-// Date Picker
-//
-// Date Picker config
-$date-picker-height: $select-height !default;
-$date-picker-height-sm: $select-height-sm !default;
-$date-picker-height-lg: $select-height-lg !default;
-
 // Calendar
 //
 // Define Calendar Spacing
@@ -503,32 +482,11 @@ $picker-calendar-mini-cell-size: 1.875rem !default;
 //
 // Define Slider Properties
 $slider-height: 0.75rem !default;
-$slider-gutter: 0.9375rem 0.3125rem !default;
-$slider-rail-bg: $gray-lighter !default;
-$slider-rail-height: 0.3125rem !default;
-$slider-rail-radius: $border-radius-sm !default;
-$slider-track-height: 0.3125rem - 0.0625rem !default;
-$slider-theme-color: $brand-primary !default;
-$slider-ticker-size: 1.125rem !default;
-$slider-dot-size: 0.5rem !default;
-$slider-ticker-top-adjust: -0.4375rem !default;
-$slider-ticker-left-adjust: -0.4375rem !default;
-$slider-hover-opacity: 0.8 !default;
 
 // Dropdowns
 //
 // Dropdown menu container and contents.
 $dropdown-bg: $white !default;
-$dropdown-bg-hover: $select-item-hover !default;
-$dropdown-border-color: $border-color !default;
-$dropdown-item-text: $gray !default;
-$dropdown-item-text-hover: $gray-dark !default;
-$dropdown-padding-y: 0.5rem !default;
-$dropdown-padding-x: 1.25rem !default;
-$dropdown-margin: 0.625rem !default;
-$dropdown-min-width: 10rem !default;
-$dropdown-max-height: 15.625rem !default;
-$dropdown-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !default;
 
 // Menu
 //
@@ -540,60 +498,32 @@ $menu-dark-bg-sub: #181f29 !default;
 $menu-dark-text: #99abb4 !default;
 
 //Pagination
-$pagination-theme-color: $brand-primary !default;
 $pagination-size: 2rem !default;
-$pagination-size-sm: 1.5rem !default;
 
 // Collapse
 //
 //
 $collapse-border: $border-color !default;
-$collapse-bg: #fafafa !default;
-$collapse-header-spacing: 0.75rem 2.5rem 0.75rem 2.5rem !default;
-$collapse-header-color: $gray-dark !default;
-$collapse-content-spacing: 1rem !default;
 
 // Tabs
 //
 //
 $tabs-theme-color: $brand-primary !default;
-$tabs-border: $border-color !default;
-$tabs-gap: 1.25rem !default;
-$tabs-arrow-color: $body-color !default;
-$tabs-arrow-color-hover: $gray-dark !default;
-$tabs-arrow-width: 2rem !default;
-$tabs-toggler-padding-x: 1.25rem !default;
-$tabs-toggler-padding-y: 0.75rem !default;
-$tabs-toggler-sm: 0.8125rem !default;
-$tabs-toggler-lg: 1rem !default;
-$tabs-toggler-color: $gray-light !default;
-$tabs-card-height: 45px !default;
-$tabs-card-toggler-bg: $gray-lightest !default;
 
 // Tag
 //
 //
 $tag-theme-color: $brand-primary !default;
-$tag-bg: $white !default;
-$tag-height: 1.7rem !default;
-$tag-line-height: 2.1 !default;
 
 // Popover & Tooltips
 //
 //
 $popover-placement-gutter: 0.625rem !default;
-$tooltip-placement-gutter: 0.5rem !default;
-$tooltip-bg: #404040 !default;
 
 // Modal
 //
 // Padding applied to the modal body
 $modal-content-bg: $white !default;
-$modal-content-shadow: 0 4px 12px rgba($black, 0.15) !default;
-$modal-header-padding: 1rem 1.5rem !default;
-$modal-border-radius: $border-radius !default;
-$modal-body-padding: 1.5rem !default;
-$modal-footer-padding: 0.625rem 1rem !default;
 
 // Notification
 //
@@ -604,12 +534,6 @@ $notification-width: 385px !default;
 //
 // Define avatar size & default background
 $avatar-bg: $gray-lightest !default;
-$avatar-size: 2.5rem !default;
-$avatar-size-sm: 1.5rem !default;
-$avatar-size-lg: 3rem !default;
-$avatar-icon: 1rem !default;
-$avatar-icon-sm: 0.875rem !default;
-$avatar-icon-lg: 1.5rem !default;
 
 // Loading
 //
@@ -620,18 +544,11 @@ $loading-color: $brand-primary !default;
 //
 // Define Badge size & colors
 $badge-count-bg: #f5222d !default;
-$badge-count-height: 1.25rem !default;
-$badge-count-font-size: $font-size-base !default;
-$badge-dot-size: 0.4375rem !default;
-$badge-dot-processing-bg: $brand-info !default;
 
 // Steps
 //
 // Define Steps theme colors
 $step-theme-colors: $brand-primary !default;
-$step-icon-size: 2rem !default;
-$step-icon-size-sm: 1.5rem !default;
-$step-line-width: 1px !default;
 
 // Z-index master list
 //

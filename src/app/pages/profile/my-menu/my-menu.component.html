@@ -1,0 +1,90 @@
+<div class="title">
+  <h1>Настроить пункты избранного</h1>
+</div>
+
+<div class="my-menu">
+  <p>Добавляйте в панель быстрого доступа наиболее удобные для вас пункты меню. Перетащите из левой колонки в правую чтобы они отображались в избранном в шапке</p>
+
+    <form nz-form [formGroup]="myMenuForm" nzLayout="vertical" class="settings-form m-t-35" (ngSubmit)="onSubmit()">
+      <div class="filter">
+        <nz-form-item>
+          <nz-form-control>
+            <nz-input-group [nzSuffix]="suffixIconSearch">
+              <input type="email" nz-input formControlName="login" placeholder="Поиск по общему меню" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <div class="favorite-title">
+          <span class="icon" nz-icon nzType="ss:star"></span>
+          <span class="text">Выбранные пункты Избранного</span>
+        </div>
+
+      </div>
+      <div class="select">
+        <div class="groups from">
+          <div class="category">
+            <div class="title">
+              <span>ТОРГОВЛЯ</span>
+              <span nz-icon nzType="ss:arrowBottom"></span>
+            </div>
+            <div class="items"></div>
+          </div>
+          <div class="category">
+            <div class="title">
+              <span>Ассортимент РИМ</span>
+              <span nz-icon nzType="ss:arrowBottom"></span>
+            </div>
+            <div class="items"></div>
+          </div>
+          <div class="category">
+            <div class="title">
+              <span>Планирование</span>
+              <span nz-icon nzType="ss:arrowBottom"></span>
+            </div>
+            <div class="items"></div>
+          </div>
+          <div class="item">
+            <span>Журнал контрактов покупателей</span>
+            <span nz-icon nzType="ss:arrowRightH"></span>
+          </div>
+          <div class="item">
+            <span>Регламент планирования продаж</span>
+            <span nz-icon nzType="ss:arrowRightH"></span>
+          </div>
+          <div class="item">
+            <span>Лимиты планирования продаж</span>
+            <span nz-icon nzType="ss:arrowRightH"></span>
+          </div>
+        </div>
+        <div class="groups to">
+          <div class="item">
+            <span>Журнал контрактов покупателей</span>
+            <span nz-icon nzType="ss:closeFill"></span>
+          </div>
+          <div class="item">
+            <span>Регламент планирования продаж</span>
+            <span nz-icon nzType="ss:closeFill"></span>
+          </div>
+          <div class="item">
+            <span>Лимиты планирования продаж</span>
+            <span nz-icon nzType="ss:closeFill"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center m-b-30 m-t-45">
+        <button nz-button class="my-menu-button" [nzType]="'primary'">Сохранить изменения</button>
+      </div>
+    </form>
+
+    <ng-template #suffixIconSearch>
+      <span class="search" nz-icon nzType="ss:search"></span>
+    </ng-template>
+
+    <ng-template #prefixUser>
+      <i class="star" nz-icon nzType="ss:star"></i>
+    </ng-template>
+</div>
+
+

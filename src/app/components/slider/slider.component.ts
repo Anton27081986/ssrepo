@@ -1,5 +1,7 @@
-import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
+import {ApiService} from '@app/shared/services/api/api.service';
+import {map, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-slider',
@@ -7,14 +9,15 @@ import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
     styleUrls: ['./slider.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SliderComponent {
-    array = [
-        'assets/images/slider/1.png',
-        'assets/images/slider/2.png',
-        'assets/images/slider/3.png',
-    ];
-
+export class SliderComponent implements OnInit {
     @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
+    public banners!: Observable<any>;
+
+    constructor(private readonly apiService: ApiService) {}
+
+    ngOnInit(): any {
+        this.banners = this.apiService.getBanners().pipe(map(({banners}) => banners));
+    }
 
     next() {
         // @ts-ignore
