@@ -1,0 +1,6 @@
+dist
+.vscode
+.angular
+node_modules
+
+*.html

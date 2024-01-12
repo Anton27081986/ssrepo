@@ -1,0 +1,111 @@
+<div class="title">
+  <h1>Основная информация</h1>
+</div>
+
+<div class="settings">
+  <div class="photo">
+      <div class="personal">
+        <div class="img">
+          <ng-container *ngIf="profile | async as url">
+            <img src="{{ url.avatarUrl }}" alt="user" />
+          </ng-container>
+
+          <!--   <img src="{{ profileData?.avatarUr }}" alt="user" />-->
+<!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
+
+<!--            <ng-container *ngIf="!profileData?.avatarUr">-->
+<!--              <img src="assets/images/profile/user-popup.png" alt="user" />-->
+<!--            </ng-container>-->
+
+<!--            <ng-container *ngIf="profileData?.avatarUr">-->
+<!--              <img src="{{ profileData?.avatarUr }}" alt="user" />-->
+<!--            </ng-container>-->
+
+<!--          <ng-container *ngIf="!profileData!.avatarUrl; else image">-->
+<!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
+<!--          </ng-container>-->
+
+<!--          <ng-template #image>-->
+<!--            <img src="{{ profileData!.avatarUrl }}" alt="user" />-->
+<!--          </ng-template>-->
+
+          </div>
+          <div class="m-t-8">
+            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>
+          </div>
+      </div>
+  </div>
+  <div class="feilds">
+    <form nz-form [formGroup]="settingsForm" nzLayout="vertical" class="settings-form m-t-20" (ngSubmit)="onSubmit()">
+        <nz-form-item>
+          <nz-form-label nzFor="userName">Имя</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="text" nz-input placeholder="Имя" value="{{ profileData?.firstName }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="userName">Фамилия</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="text" nz-input placeholder="Фамилия" value="{{ profileData?.lastName }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      <nz-form-item>
+          <nz-form-label nzFor="userName">Отчество</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="email" nz-input placeholder="Отчество" value="{{ profileData?.surName }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="userName">Дата рождения</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="email" nz-input placeholder="Дата рождения" value="{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzFor="userName">Подразделение</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="email" nz-input placeholder="Подразделение" value="{{ profileData?.department }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      <nz-form-item>
+          <nz-form-label nzFor="userName">Должность</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="email" nz-input placeholder="Должность" value="{{ profileData?.position }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      <nz-form-item>
+          <nz-form-label nzFor="userName">E-mail</nz-form-label>
+          <nz-form-control>
+            <nz-input-group [nzPrefix]="prefixUser">
+              <input type="email" nz-input placeholder="E-mail" value="{{ profileData?.email }}" [disabled]="true" />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="userName">Телефон</nz-form-label>
+        <nz-form-control>
+          <nz-input-group [nzPrefix]="prefixUser">
+            <input type="email" nz-input placeholder="Телефон" value="{{ profileData?.phone }}" [disabled]="true" />
+          </nz-input-group>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+
+  <ng-template #prefixUser>
+    <i nz-icon nzType="user"></i>
+  </ng-template>
+
+</div>

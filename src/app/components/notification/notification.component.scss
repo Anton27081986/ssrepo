@@ -1,0 +1,36 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.remind {
+    position: relative;
+}
+
+.remind-dot {
+    position: absolute;
+    border-radius: 50%;
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    background: #4770ff !important;
+    top: -7px;
+    right: -5px;
+
+    span {
+        position: absolute;
+        top: -23px;
+        right: 5px;
+        color: #ffffff;
+        font-size: 12px;
+        font-family: 'Inter', serif;
+    }
+}
+
+::ng-deep {
+    .ant-dropdown-menu {
+        border-radius: $border-radius !important;
+    }
+
+    a.ant-btn.ant-btn-sm {
+        padding-top: 0.65rem !important;
+    }
+}

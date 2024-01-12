@@ -1,0 +1,482 @@
+@import (multiple) '../../../node_modules/ng-zorro-antd/src/style/themes/dark';
+@import './base';
+@layout-sider-background: @component-background;
+@layout-header-background: @component-background;
+
+body {
+    p {
+        color: #ffffff !important;
+    }
+
+    color: #ffffff;
+
+    .wrapper {
+        background-color: #1b2123;
+    }
+
+    .open-all-table {
+        .ant-input {
+            background-color: #1b2123 !important;
+        }
+    }
+
+    .profile-popup {
+        background-color: #1b2123;
+        border: 0.5px solid #394245;
+
+        .manager .button-icon-left {
+            background-color: #4770ff;
+        }
+
+        .card {
+            background-color: #1b2123 !important;
+            border: unset !important;
+        }
+
+        .item {
+            background-color: #1b2123 !important;
+        }
+    }
+
+    .select {
+        .groups {
+            background-color: #202629 !important;
+            border: 1px solid #394245 !important;
+        }
+    }
+
+    .title {
+        color: #ffffff !important;
+
+        h1,
+        .h1 {
+            color: #ffffff !important;
+        }
+    }
+
+    .filter {
+        .favorite-title {
+            background-color: #202629 !important;
+            border: 1px solid #394245 !important;
+        }
+    }
+
+    // Убрать !important
+    .ant-layout-header {
+        background-color: #202629 !important;
+
+        .nav-left {
+            .menu {
+                background-color: #202629 !important;
+
+                li {
+                    color: #ffffff;
+                    &:hover {
+                        background-color: #31393d;
+                    }
+                }
+            }
+        }
+    }
+
+    // popup menu
+    .ant-menu-submenu-popup > .ant-menu {
+        background-color: #20282c;
+
+        .ant-menu-item {
+            &:hover {
+                background-color: unset;
+            }
+        }
+    }
+
+    .ant-menu-item {
+        color: #ffffff !important;
+    }
+
+    .ant-layout {
+        background-color: #0e0f10 !important;
+    }
+
+    .ant-layout-content {
+        .content-container {
+            background: #0e0f10;
+        }
+    }
+
+    .ant-select {
+        background: #202629;
+    }
+
+    app-footer {
+        background-color: #0e0f10 !important;
+    }
+
+    .ant-layout-footer {
+        background-color: #202629 !important;
+        color: #ffffff !important;
+    }
+
+    // Убрать общее применение
+    svg {
+        fill: #31393d !important;
+
+        path {
+            stroke: #ffffff !important;
+        }
+    }
+
+    .header,
+    .footer {
+        .logo {
+            svg {
+                path {
+                    // fill: unset;
+                    stroke: unset !important;
+                    // fill-opacity: 1;
+                }
+            }
+        }
+
+        .burger,
+        .mobile-burger {
+            svg {
+                stroke: #f4f5f6;
+                fill: #f4f5f6;
+
+                path {
+                    fill: #f4f5f6;
+                    stroke: #f4f5f6;
+                }
+
+                rect {
+                    fill: #f4f5f6;
+                    stroke: #f4f5f6;
+                }
+            }
+        }
+    }
+
+    .header {
+        .search-header {
+            svg {
+                stroke: #ffffff;
+            }
+        }
+    }
+
+    .icon-bg {
+        background-color: #31393d !important;
+        border: 1px #313131 solid !important;
+    }
+
+    .profile {
+        background-color: #31393d !important;
+        border: 1px #313131 solid !important;
+        color: #ffffff;
+    }
+
+    form {
+        // Background search
+        .ant-input-affix-wrapper {
+            background-color: #202629 !important;
+            color: #fff;
+        }
+        // Background search
+        .ant-input.ant-input-stepperless {
+            background-color: #202629 !important;
+        }
+    }
+
+    .icon-bg.burger {
+        svg {
+            rect {
+                fill: #ffffff;
+            }
+        }
+    }
+
+    .search-icon {
+        g {
+            opacity: 0.7;
+            rect {
+                fill: #ffffff;
+            }
+        }
+    }
+
+    .settings {
+        .content {
+            background-color: #1b2023 !important;
+        }
+        ::ng-deep .ant-input[disabled] {
+            color: #ffffff !important;
+        }
+
+        .ant-input[disabled] {
+            color: #ffffff !important;
+        }
+    }
+
+    .ant-input[disabled] {
+        color: #ffffff !important;
+    }
+
+    .content {
+        background-color: #0e0f10 !important;
+    }
+
+    .group {
+        background-color: #202629 !important;
+    }
+
+    .item {
+        background-color: #202629 !important;
+    }
+
+    .ant-table-thead > tr > th {
+        background: #24292d !important;
+    }
+
+    .ant-table-thead > tr > td {
+        background: #1b2123 !important;
+        color: #ffffff !important;
+    }
+
+    // Таблицы
+    .ant-table-tbody > tr > td {
+        color: #ffffff !important;
+    }
+
+    .ant-pagination-item a {
+        color: #000000 !important;
+    }
+
+    .card {
+        background-color: #31393d !important;
+        border: 1px solid #394245 !important;
+    }
+
+    // Скажи спсибо
+    .icons {
+        .anticon svg {
+            path {
+                stroke: none !important;
+            }
+        }
+    }
+}
+
+::ng-deep .ant-table-tbody > tr > td {
+    background: #1b2123 !important;
+    background-color: #1b2123 !important;
+    color: #ffffff !important;
+}
+
+// Главное меню
+::ng-deep .ant-menu-submenu-placement-bottom {
+    //top: -4px!important;
+    //position: relative;
+}
+
+.ant-menu-submenu-inline .ant-menu-submenu-arrow::after {
+    color: #ffffff;
+}
+.ant-menu-submenu-inline .ant-menu-submenu-arrow::before {
+    color: #ffffff;
+}
+
+.ant-menu-submenu .menu-item-custom {
+    top: 4px !important;
+    border-right: 20px solid #20282c !important;
+    scrollbar-color: #20282c !important;
+}
+
+.menu-item-custom::-webkit-scrollbar-track {
+    background-color: #20282c !important;
+}
+
+::ng-deep .ant-menu-submenu:after {
+    content: url('data:image/svg+xml,<svg width="46" height="29" viewBox="0 0 46 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.7329 1.61585C21.9292 0.235568 24.0708 0.235569 25.2671 1.61585L44.6972 24.0352C46.3809 25.9779 45.0009 29 42.4301 29H3.56989C0.999115 29 -0.380858 25.9779 1.30282 24.0352L20.7329 1.61585Z" fill="%23202629"/></svg>') !important;
+}
+
+:host ::ng-deep .ant-menu-light .ant-menu-submenu-title {
+    color: #ffffff;
+}
+
+.menu-item-custom::-webkit-scrollbar-track {
+    background-color: #202629;
+}
+
+.menu-item-custom {
+    scrollbar-color: #ffffff;
+    scrollbar-width: thin;
+}
+
+.menu-item-custom::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
+}
+
+/** Мобильное меню */
+.ant-menu .ng-star-inserted {
+    color: #ffffff;
+}
+
+.mobile-menu .ant-menu.ant-menu-root {
+    // background-color: #31393d !important;
+    background-color: #0e0f10 !important;
+}
+
+.mobile-menu .ant-menu-submenu .ant-menu-submenu-title .without-url {
+    color: #ffffff !important;
+}
+
+.mobile-menu .ant-tabs-tab + .ant-tabs-tab,
+.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
+    border: 1px #394245 solid !important;
+    background-color: #202629 !important;
+}
+
+.ant-tabs-tab {
+    border: 1px #394245 solid !important;
+    background-color: #202629 !important;
+}
+
+.mobile-menu .ant-menu-submenu.ant-menu-submenu-inline {
+    // color: #394245!important;
+    border-bottom: 1px #394245 solid !important;
+}
+
+.mobile-menu .ant-tabs-content-holder {
+    border-radius: 0 !important;
+}
+
+.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
+    // border: 1px!important;
+}
+
+.mobile-menu .ant-menu-submenu.without-url-li {
+    border-bottom: unset !important;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    background-color: #202629 !important;
+    color: #ffffff !important;
+}
+
+.ant-tabs-tab.ng-star-inserted {
+    // color: #22223a;
+    padding: 10px;
+}
+
+.ant-tabs-tab {
+    border: 2px #e4e8ea solid;
+}
+
+.ant-menu-submenu > .ant-menu {
+    border-radius: 30px;
+}
+
+.ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
+    padding: 36px;
+}
+
+.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title,
+.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title .without-url {
+    color: #ffffff;
+}
+
+.ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
+    border: 0 solid #394245;
+    border-top: 16px solid #202629;
+    border-bottom: 16px solid #202629;
+    outline: 0.5px solid #394245;
+}
+
+.mobile-menu .ant-menu-submenu .ant-menu-submenu-title {
+    padding-left: 0 !important;
+}
+
+// Аукционные продажи
+body {
+    .auction-sales .table .ant-table-cell a {
+        color: #ffffff !important;
+    }
+}
+
+.content .card-list .card .icon path {
+    stroke: #4770ff !important;
+}
+
+.content .card-list .card {
+    .message {
+        top: 4px !important;
+        border-right: 20px solid #31393d !important;
+        scrollbar-color: #c7d0d2 !important;
+        width: 386px !important;
+    }
+
+    .message::-webkit-scrollbar-track {
+        background-color: #31393d !important;
+    }
+
+    .message::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
+    }
+}
+
+.currency-item .name,
+.currency-item .value,
+.rating-item {
+    // color: #000000!important;
+    background-color: #1b2123 !important;
+}
+
+.ant-modal-body {
+    background: #31393d !important;
+
+    .openout-modal {
+        .card {
+            border: 1px solid #31393d !important;
+        }
+        .contacts .item {
+            background: #31393d !important;
+        }
+    }
+
+    .comments-modal {
+        .card {
+            border: 1px solid #31393d !important;
+
+            .icon path {
+                stroke: #4770ff !important;
+                font-size: 23px;
+            }
+
+            .date {
+                span {
+                    color: #ffffff !important;
+                }
+            }
+
+            .message {
+                top: 4px !important;
+                border-right: 20px solid #31393d !important;
+                scrollbar-color: #c7d0d2 !important;
+                width: 386px !important;
+            }
+
+            .message::-webkit-scrollbar-track {
+                background-color: #31393d !important;
+            }
+
+            .message::-webkit-scrollbar-thumb {
+                box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
+            }
+        }
+
+        .contacts .item {
+            background: #31393d !important;
+        }
+    }
+}
