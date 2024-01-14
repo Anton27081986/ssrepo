@@ -98,4 +98,20 @@ export class ApiService {
     public getUserById(id: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/${id}`);
     }
+
+    // Добавить like
+    setLike(objectId: number, type?: number): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
+            objectId,
+            type,
+        });
+    }
+
+    // Удалить like
+    deleteLike(objectId: number, type?: number): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
+            objectId,
+            type,
+        });
+    }
 }

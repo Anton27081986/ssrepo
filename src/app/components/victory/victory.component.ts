@@ -15,15 +15,11 @@ import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.co
 })
 export class VictoryComponent implements OnInit {
     peoplelikesOpen = false;
-    isVisibleAdd = false;
     isVisibleComments = false;
     isVisibleOpenOut = false;
     loginForm!: FormGroup;
-    loading = false;
 
     checked = true;
-
-    title: any;
 
     winsList!: Observable<any>;
 
@@ -33,6 +29,9 @@ export class VictoryComponent implements OnInit {
     pageIndex = 1;
 
     searchPanelVisible = false;
+    // isClickLike = false;
+
+    isVisibleAdd = false; // Переделать
 
     constructor(
         private readonly apiService: ApiService,
@@ -57,9 +56,6 @@ export class VictoryComponent implements OnInit {
         this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
     }
 
-    submitted = false;
-    isConfirmLoading = false;
-
     ngOnInit() {
         this.winsList = this.apiService.getWins().pipe(map(({items}) => items));
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
@@ -74,30 +70,6 @@ export class VictoryComponent implements OnInit {
             ],
             password: ['', Validators.required],
         });
-    }
-
-    onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
-    }
-
-    // Модальное окно Добавить победы
-    showModalAdd(): void {
-        this.isVisibleAdd = true;
-    }
-
-    handleOk(): void {
-        this.isVisibleAdd = false;
-    }
-
-    handleCancel(): void {
-        this.isVisibleAdd = false;
     }
 
     // Модальное окно раскрытой карточки
@@ -129,6 +101,39 @@ export class VictoryComponent implements OnInit {
 
     handleOkComments(): void {
         this.isVisibleComments = false;
+    }
+
+    log(value: object[]): void {
+        console.log(value);
+    }
+
+    setLike(item: any, objectId: number, type = 1) {
+        //  && !this.isClickLike
+        if (!item.isUserLiked) {
+            console.log('objectId', objectId);
+            this.apiService.setLike(objectId, type).subscribe({
+                next: (data: any) => {
+                    console.log('data', data);
+                    // this.isClickLike = true;
+                },
+                error: (error: unknown) => console.log(error),
+            });
+        }
+    }
+
+    onSubmit() {}
+
+    // Модальное окно Добавить победы
+    showModalAdd(): void {
+        this.isVisibleAdd = true;
+    }
+
+    handleOk(): void {
+        this.isVisibleAdd = false;
+    }
+
+    handleCancel(): void {
+        this.isVisibleAdd = false;
     }
 
     search() {}
