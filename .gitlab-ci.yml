@@ -33,36 +33,47 @@ build:
     script:
         - docker build -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile
         - docker push $IAMGE_NAME
+        
+.deploy:
+  stage: deploy
+  image: dtzar/helm-kubectl:3.12.3
+  needs:
+  - build
+  tags:
+    - docker
+  variables:
+    PROJECT: $CI_PROJECT_NAME
+    NAMESAPCE: erp-dev
+    KUBECONFIG_PATH: ""
+    VALUES_FILE: develop
+  script:
+    - |
+      helm --kubeconfig $KUBECONFIG_PATH upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-develop.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
 
-deploy:dev:
-    stage: deploy
-    image: dtzar/helm-kubectl:3.12.3
-    needs:
-        - build
-    only:
-        - dev
-        - feature/ci_cd
-    tags:
-        - docker
-    variables:
-        PROJECT: $CI_PROJECT_NAME
-        NAMESAPCE: erp-dev
-    script:
-        - |
-            helm --kubeconfig $DEV_KUBECONFIG upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-develop.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
+deploy:develop:
+  extends: .deploy
+  only:
+  - dev
+  variables:
+    NAMESAPCE: erp-dev
+    KUBECONFIG_PATH: $DEV_KUBECONFIG
+    VALUES_FILE: develop
 
 deploy:test:
-    stage: deploy
-    image: dtzar/helm-kubectl:3.12.3
-    needs:
-        - build
-    only:
-        - test
-    tags:
-        - docker
-    variables:
-        PROJECT: $CI_PROJECT_NAME
-        NAMESAPCE: erp-test
-    script:
-        - |
-            helm --kubeconfig $DEV_KUBECONFIG upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-test.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
+  extends: .deploy
+  only:
+  - test
+  variables:
+    NAMESAPCE: erp-test
+    KUBECONFIG_PATH: $DEV_KUBECONFIG
+    VALUES_FILE: test
+
+deploy:production:
+  extends: .deploy
+  when: manual
+  only:
+  - main
+  variables:
+    NAMESAPCE: erp-prod
+    KUBECONFIG_PATH: $PROD_KUBECONFIG
+    VALUES_FILE: production

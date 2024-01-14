@@ -1,0 +1,5 @@
+env: production
+
+ingress:
+    enabled: true
+    host: erp.ssnab.ru
