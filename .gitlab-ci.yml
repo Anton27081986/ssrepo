@@ -48,7 +48,7 @@ build:
     VALUES_FILE: develop
   script:
     - |
-      helm --kubeconfig $KUBECONFIG_PATH upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-develop.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
+      helm --kubeconfig $KUBECONFIG_PATH upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-$VALUES_FILE.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
 
 deploy:develop:
   extends: .deploy
