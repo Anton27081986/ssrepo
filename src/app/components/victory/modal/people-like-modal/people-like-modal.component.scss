@@ -1,0 +1,45 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+.modal-people-likes {
+    display: none;
+    position: absolute;
+    bottom: 39px;
+    padding: 0 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 4px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3.5px);
+
+    .title {
+        margin-top: 4px;
+        color: $white;
+        font-size: 10px;
+        font-style: normal;
+    }
+
+    .list-item {
+        position: relative;
+        z-index: 1;
+        padding-bottom: 9px;
+
+        .item {
+            position: relative;
+            width: 28px;
+            height: 28px;
+            background-color: #886cff;
+            border-radius: 20px;
+            border: 1px solid $border-radius;
+            overflow-y: hidden;
+            z-index: 2;
+
+            img {
+                width: 28px;
+            }
+        }
+    }
+}

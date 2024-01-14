@@ -1,5 +1,4 @@
-<nz-modal class="add-modal" [(nzVisible)]="isVisibleAdd" nzTitle="Делитесь вашими победами, ведь успех заразителен!" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-  <ng-container *nzModalContent>
+<div class="add-modal">
     <div>
       <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
 
@@ -58,7 +57,6 @@
         <i nz-icon nzType="user"></i>
       </ng-template>
     </div>
-  </ng-container>
   <div *nzModalFooter>
     <!--            <button nz-button nzType="default" (click)="handleCancel()">Custom Callback</button>-->
     <div class="send d-flex justify-content-center">
@@ -67,4 +65,4 @@
       </div>
     </div>
   </div>
-</nz-modal>
+</div>

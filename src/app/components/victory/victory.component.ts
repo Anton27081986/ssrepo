@@ -6,6 +6,9 @@ import {ApiService} from '@app/shared/services/api/api.service';
 import {Observable, map} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {AddVictoryModalComponent} from "@app/components/victory/modal/add-victory-modal/add-victory-modal.component";
+import {CommentsModalComponent} from "@app/components/victory/modal/comments-modal/comments-modal.component";
+import {PeopleLikeModalComponent} from "@app/components/victory/modal/people-like-modal/people-like-modal.component";
 
 @Component({
     selector: 'app-victory',
@@ -37,7 +40,7 @@ export class VictoryComponent implements OnInit {
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
-        public modalInfoUser: NzModalService,
+        public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
@@ -74,7 +77,7 @@ export class VictoryComponent implements OnInit {
 
     // Модальное окно раскрытой карточки
     showModalOpenOut(item: any): void {
-        this.modalInfoUser
+        this.modalCreate
             .create({
                 nzClosable: false,
                 nzFooter: null,
@@ -90,9 +93,47 @@ export class VictoryComponent implements OnInit {
             .afterClose.subscribe();
     }
 
+    // Модальное окно добавления победы
+    showModaAddWin(): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Делитесь вашими победами, ведь успех заразителен!',
+                nzNoAnimation: false,
+                nzWidth: '560px',
+                nzContent: AddVictoryModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+            })
+            .afterClose.subscribe();
+    }
+
     // Модальное окно комментариев
     showModalComments(): void {
-        this.isVisibleComments = true;
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Графова Н.В. Победа № 35423',
+                nzNoAnimation: false,
+                nzWidth: '560px',
+                nzContent: CommentsModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+            })
+            .afterClose.subscribe();
+    }
+
+    // Модальное окно тех кто лайкнул
+    showPeopleLikeModel(): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzNoAnimation: false,
+                nzContent: PeopleLikeModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+            })
+            .afterClose.subscribe();
     }
 
     handleCancelComments(): void {
