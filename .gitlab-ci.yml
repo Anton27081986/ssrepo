@@ -38,8 +38,6 @@ variables:
 .deploy:
   stage: deploy
   image: dtzar/helm-kubectl:3.12.3
-  needs:
-    - build
   tags:
     - docker
   variables:
@@ -76,6 +74,8 @@ build:prod:
     PROJECT_ENV: prod
 
 deploy:develop:
+  needs:
+    - build:development
   extends: .deploy
   only:
     - dev
@@ -85,6 +85,8 @@ deploy:develop:
     VALUES_FILE: develop
 
 deploy:test:
+  needs:
+    - build:staging
   extends: .deploy
   only:
     - test
@@ -94,6 +96,8 @@ deploy:test:
     VALUES_FILE: test
 
 deploy:production:
+  needs:
+    - build:prod
   extends: .deploy
   when: manual
   only:
