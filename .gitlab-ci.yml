@@ -32,7 +32,7 @@ variables:
   after_script:
     - docker logout $CI_REGISTRY
   script:
-    - docker build ----build-arg PROJECT_ENV=$PROJECT_ENV -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile
+    - docker build --build-arg PROJECT_ENV=$PROJECT_ENV -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile
     - docker push $IAMGE_NAME
 
 .deploy:
