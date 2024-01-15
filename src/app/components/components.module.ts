@@ -42,6 +42,7 @@ import {AddVictoryModalComponent} from './victory/modal/add-victory-modal/add-vi
 import {CommentsModalComponent} from './victory/modal/comments-modal/comments-modal.component';
 import {PeopleLikeModalComponent} from './victory/modal/people-like-modal/people-like-modal.component';
 import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory.component';
+import {TooltipDirective} from './victory/tooltip.directive';
 
 @NgModule({
     declarations: [
@@ -92,6 +93,7 @@ import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory
         NzCheckboxModule,
         NzCarouselModule,
         NzCardModule,
+        TooltipDirective,
     ],
     exports: [
         SearchComponent,

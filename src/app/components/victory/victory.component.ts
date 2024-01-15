@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    HostListener,
+    OnInit,
+    ViewContainerRef,
+} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -6,6 +13,9 @@ import {ApiService} from '@app/shared/services/api/api.service';
 import {Observable, map} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
+import {CommentsModalComponent} from '@app/components/victory/modal/comments-modal/comments-modal.component';
+import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-like-modal/people-like-modal.component';
 
 @Component({
     selector: 'app-victory',
@@ -14,18 +24,23 @@ import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.co
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class VictoryComponent implements OnInit {
+    @HostListener('mouseover', ['$event']) onMouseHover() {
+        // console.log();
+    }
+
+    @HostListener('mouseleave') hideTooltip() {
+        // console.log();
+    }
+
     peoplelikesOpen = false;
-    isVisibleAdd = false;
     isVisibleComments = false;
     isVisibleOpenOut = false;
     loginForm!: FormGroup;
-    loading = false;
 
     checked = true;
 
-    title: any;
-
     winsList!: Observable<any>;
+    winsUrl!: Observable<any>;
 
     winsGroupsList!: Observable<any>;
 
@@ -33,13 +48,17 @@ export class VictoryComponent implements OnInit {
     pageIndex = 1;
 
     searchPanelVisible = false;
+    // isClickLike = false;
+
+    isVisibleAdd = false; // Переделать
 
     constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
-        public modalInfoUser: NzModalService,
+        public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
+        private readonly _ef: ElementRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -57,11 +76,9 @@ export class VictoryComponent implements OnInit {
         this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
     }
 
-    submitted = false;
-    isConfirmLoading = false;
-
     ngOnInit() {
         this.winsList = this.apiService.getWins().pipe(map(({items}) => items));
+        this.winsUrl = this.apiService.getWins();
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
 
         this.loginForm = this.formBuilder.group({
@@ -76,33 +93,9 @@ export class VictoryComponent implements OnInit {
         });
     }
 
-    onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
-    }
-
-    // Модальное окно Добавить победы
-    showModalAdd(): void {
-        this.isVisibleAdd = true;
-    }
-
-    handleOk(): void {
-        this.isVisibleAdd = false;
-    }
-
-    handleCancel(): void {
-        this.isVisibleAdd = false;
-    }
-
     // Модальное окно раскрытой карточки
     showModalOpenOut(item: any): void {
-        this.modalInfoUser
+        this.modalCreate
             .create({
                 nzClosable: false,
                 nzFooter: null,
@@ -118,18 +111,71 @@ export class VictoryComponent implements OnInit {
             .afterClose.subscribe();
     }
 
+    // Модальное окно добавления победы
+    showModaAddWin(): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Делитесь вашими победами, ведь успех заразителен!',
+                nzNoAnimation: false,
+                nzWidth: '560px',
+                nzContent: AddVictoryModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+            })
+            .afterClose.subscribe();
+    }
+
     // Модальное окно комментариев
-    showModalComments(): void {
-        this.isVisibleComments = true;
+    showModalComments(item: any): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: `${item.user.name} Победа № ${item.user.id}`,
+                nzNoAnimation: false,
+                nzWidth: '560px',
+                nzContent: CommentsModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                },
+            })
+            .afterClose.subscribe();
+    }
+
+    // Модальное окно тех кто лайкнул
+    showPeopleLikeModel(): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzNoAnimation: false,
+                nzContent: PeopleLikeModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+            })
+            .afterClose.subscribe();
     }
 
     handleCancelComments(): void {
         this.isVisibleComments = false;
     }
 
-    handleOkComments(): void {
-        this.isVisibleComments = false;
+    setLike(item: any, objectId: number, type = 1) {
+        //  && !this.isClickLike
+        if (!item.isUserLiked) {
+            console.log('objectId', objectId);
+            this.apiService.setLike(objectId, type).subscribe({
+                next: () => {
+                    // console.log('data', data);
+                    // this.isClickLike = true;
+                },
+                error: (error: unknown) => console.log(error),
+            });
+        }
     }
+
+    onSubmit() {}
 
     search() {}
 }
