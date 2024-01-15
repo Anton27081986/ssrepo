@@ -6,15 +6,18 @@
           <div class="card list">
             <div class="personal">
               <div class="img">
-                <img src="assets/images/profile/user-popup.png" alt="user" />
+                <img src="{{ nzModalData?.data?.user?.avatarUrl }}" alt="user" />
               </div>
 
               <div class="title">
                 <div class="fio">
-                  <span>Гришин Пантелей Серапионович</span>
+
+                  <span>{{ nzModalData?.data?.user?.lastName }} {{ nzModalData?.data?.user?.firstName }} {{ nzModalData?.data?.user?.surName }}</span>
+
                 </div>
                 <div class="job">
-                  <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                  <div>{{ nzModalData?.data?.user?.position }}</div>
+                  <div>{{ nzModalData?.data?.user?.department }}</div>
                 </div>
               </div>
             </div>
@@ -36,23 +39,21 @@
 
                 <div class="like" (mouseenter)="peoplelikesOpen=!peoplelikesOpen;" (mouseleave)="peoplelikesOpen=!peoplelikesOpen;">
                   <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                  <span class="count">12</span>
+                  <span class="count">{{ nzModalData?.data?.likesCount }}</span>
                 </div>
                 <div class="comment">
                   <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                  <span class="count">5</span>
-                </div>
-                <div class="medal">
-                  <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
+                  <span class="count">{{ nzModalData?.data?.commentsCount }}</span>
                 </div>
               </div>
               <div class="date">
                 <span>Дата: </span>
-                <span> 20.11.23 11:35</span>
+                <span>{{ nzModalData?.data?.createdDate | date: 'dd.MM.yyyy' }}</span>
               </div>
             </div>
 
-            <div class="comments">
+
+            <div class="comments" *ngIf="commentVisible">
               <div class="title">Комментарии:</div>
               <div class="card list">
                 <div class="personal">
@@ -134,7 +135,7 @@
                 <span class="field-tile">Оставить комментарий:</span>
                 <div class="textarea">
                   <textarea nz-input placeholder="Поделитесь своим мнением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
-                  <div class="icon-bg attach">
+                  <div class="icon-bg attach" *ngIf="attachVisible">
                     <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
                   </div>
                 </div>

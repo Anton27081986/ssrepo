@@ -70,6 +70,10 @@ body {
     }
 
     // Пагинация
+    .ant-list-pagination {
+        display: flex;
+    }
+
     .ant-pagination-item:hover a {
         color: $blue;
     }

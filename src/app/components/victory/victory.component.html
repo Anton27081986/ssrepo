@@ -1,8 +1,10 @@
 <div class="victory">
   <div class="header">
     <div>
-      <div class="title">
-        <h1>Победы</h1>
+      <div class="title" *ngIf="winsUrl | async as url">
+        <a href="{{ url.linkToActivity }}" target="_blank">
+          <h1>Победы</h1>
+        </a>
       </div>
     </div>
     <div class="open-all-table">
@@ -64,7 +66,6 @@
                       <img src="{{ item.user.avatarUrl }}" alt="user" />
                     </div>
 
-
                     <span class="people-icon icon" nz-icon [nzType]="'ss:twoPeople'" *ngIf="item?.groupWinUsers"></span>
 
                     <div class="title">
@@ -99,13 +100,24 @@
 
                       <!-- (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"
                                         (mouseenter)="peoplelikesOpen=!peoplelikesOpen;"-->
+                      <div appTooltip class="modal-people-likes">
+                        <span class="title">Нравится:</span>
+                        <nz-avatar-group class="list-item">
+                          <nz-avatar class="item" nzIcon="user" nzSrc="assets/images/profile/user-popup.png"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Яна"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nz-tooltip nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
+                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
+                        </nz-avatar-group>
+                      </div>
 
                       <div class="like">
                         <span class="like-icon icon" nz-icon [nzType]="'ss:like'" (click)="setLike(item, item?.id)"></span>
-                        <span class="count" (click)="showPeopleLikeModel()">{{ item.likesCount }}</span>
+                        <span class="count">{{ item.likesCount }}</span>
                       </div>
 
-                      <div class="comment" (click)="showModalComments()">
+                      <div class="comment" (click)="showModalComments(item)">
                         <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
                         <span class="count">{{ item.commentsCount }}</span>
                       </div>
