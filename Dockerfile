@@ -4,7 +4,8 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm run build --configuration=development
+ARG PROJECT_ENV=development
+RUN npm run build --configuration=$PROJECT_ENV
 
 #STAGE 2
 FROM nginx:1.17.1-alpine
