@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit {
         // this.favoritemenu = this.apiService.getFavoriteMenu().pipe(map(({menu}) => menu));
 
         this.profile = this.userService.getProfile();
+        // this.profile = this.userService.getProfile().pipe(map(console.log));
     }
 
     protected readonly AppRoutes = AppRoutes;

@@ -34,6 +34,7 @@ export class BirthdayComponent {
 
     ngOnInit(): any {
         this.birthdayList = this.apiService.getBirthday().pipe(map(({days}) => days));
+        // this.birthdayList = this.apiService.getBirthday().pipe(map(console.log));
     }
 
     onChange(result: Date): void {

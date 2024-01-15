@@ -41,6 +41,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+#CI CD
+/.helm
 
 #Other
 /.lh
