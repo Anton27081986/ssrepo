@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    HostListener,
+    OnInit,
+    ViewContainerRef,
+} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -6,9 +13,9 @@ import {ApiService} from '@app/shared/services/api/api.service';
 import {Observable, map} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
-import {AddVictoryModalComponent} from "@app/components/victory/modal/add-victory-modal/add-victory-modal.component";
-import {CommentsModalComponent} from "@app/components/victory/modal/comments-modal/comments-modal.component";
-import {PeopleLikeModalComponent} from "@app/components/victory/modal/people-like-modal/people-like-modal.component";
+import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
+import {CommentsModalComponent} from '@app/components/victory/modal/comments-modal/comments-modal.component';
+import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-like-modal/people-like-modal.component';
 
 @Component({
     selector: 'app-victory',
@@ -17,6 +24,14 @@ import {PeopleLikeModalComponent} from "@app/components/victory/modal/people-lik
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class VictoryComponent implements OnInit {
+    @HostListener('mouseover', ['$event']) onMouseHover() {
+        // console.log();
+    }
+
+    @HostListener('mouseleave') hideTooltip() {
+        // console.log();
+    }
+
     peoplelikesOpen = false;
     isVisibleComments = false;
     isVisibleOpenOut = false;
@@ -25,6 +40,7 @@ export class VictoryComponent implements OnInit {
     checked = true;
 
     winsList!: Observable<any>;
+    winsUrl!: Observable<any>;
 
     winsGroupsList!: Observable<any>;
 
@@ -42,6 +58,7 @@ export class VictoryComponent implements OnInit {
         private readonly iconService: NzIconService,
         public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
+        private readonly _ef: ElementRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -61,6 +78,7 @@ export class VictoryComponent implements OnInit {
 
     ngOnInit() {
         this.winsList = this.apiService.getWins().pipe(map(({items}) => items));
+        this.winsUrl = this.apiService.getWins();
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
 
         this.loginForm = this.formBuilder.group({
@@ -109,16 +127,19 @@ export class VictoryComponent implements OnInit {
     }
 
     // Модальное окно комментариев
-    showModalComments(): void {
+    showModalComments(item: any): void {
         this.modalCreate
             .create({
                 nzClosable: false,
                 nzFooter: null,
-                nzTitle: 'Графова Н.В. Победа № 35423',
+                nzTitle: `${item.user.name} Победа № ${item.user.id}`,
                 nzNoAnimation: false,
                 nzWidth: '560px',
                 nzContent: CommentsModalComponent,
                 nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                },
             })
             .afterClose.subscribe();
     }
@@ -140,21 +161,13 @@ export class VictoryComponent implements OnInit {
         this.isVisibleComments = false;
     }
 
-    handleOkComments(): void {
-        this.isVisibleComments = false;
-    }
-
-    log(value: object[]): void {
-        console.log(value);
-    }
-
     setLike(item: any, objectId: number, type = 1) {
         //  && !this.isClickLike
         if (!item.isUserLiked) {
             console.log('objectId', objectId);
             this.apiService.setLike(objectId, type).subscribe({
-                next: (data: any) => {
-                    console.log('data', data);
+                next: () => {
+                    // console.log('data', data);
                     // this.isClickLike = true;
                 },
                 error: (error: unknown) => console.log(error),
@@ -163,19 +176,6 @@ export class VictoryComponent implements OnInit {
     }
 
     onSubmit() {}
-
-    // Модальное окно Добавить победы
-    showModalAdd(): void {
-        this.isVisibleAdd = true;
-    }
-
-    handleOk(): void {
-        this.isVisibleAdd = false;
-    }
-
-    handleCancel(): void {
-        this.isVisibleAdd = false;
-    }
 
     search() {}
 }
