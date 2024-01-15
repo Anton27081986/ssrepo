@@ -52,6 +52,7 @@ variables:
       helm --kubeconfig $KUBECONFIG_PATH upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-$VALUES_FILE.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
 
 build:development:
+  stage: build
   extends: .build
   only:
     - dev
@@ -59,6 +60,7 @@ build:development:
     PROJECT_ENV: development
 
 build:staging:
+  stage: build
   extends: .build
   only:
     - test
@@ -66,6 +68,7 @@ build:staging:
     PROJECT_ENV: staging
 
 build:prod:
+  stage: build
   extends: .build
   only:
     - main
