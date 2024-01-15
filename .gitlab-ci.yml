@@ -6,39 +6,38 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
-    # - test
-    - build
-    - deploy
+  # - test
+  - build
+  - deploy
 
 variables:
-    BASE_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-    IAMGE_NAME: $BASE_IMAGE_NAME:$CI_PIPELINE_ID
+  BASE_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  IAMGE_NAME: $BASE_IMAGE_NAME:$CI_PIPELINE_ID
 
 # sast:
 #     stage: test
 # include:
 #     - template: Security/SAST.gitlab-ci.yml
 
-build:
-    stage: build
-    variables:
-        DOCKERFILE_PATH: ./
-        DOCKER_CONTEXT: ./
-    tags:
-        - docker
-    before_script:
-        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    after_script:
-        - docker logout $CI_REGISTRY
-    script:
-        - docker build -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile
-        - docker push $IAMGE_NAME
-        
+.build:
+  stage: build
+  variables:
+    DOCKERFILE_PATH: ./
+    DOCKER_CONTEXT: ./
+    PROJECT_ENV: development
+  tags:
+    - docker
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  after_script:
+    - docker logout $CI_REGISTRY
+  script:
+    - docker build --build-arg PROJECT_ENV=$PROJECT_ENV -t $IAMGE_NAME $DOCKER_CONTEXT -f $DOCKERFILE_PATH/Dockerfile
+    - docker push $IAMGE_NAME
+
 .deploy:
   stage: deploy
   image: dtzar/helm-kubectl:3.12.3
-  needs:
-  - build
   tags:
     - docker
   variables:
@@ -50,29 +49,59 @@ build:
     - |
       helm --kubeconfig $KUBECONFIG_PATH upgrade -i --create-namespace -n $NAMESAPCE $PROJECT .helm -f .helm/values-$VALUES_FILE.yaml --set image.tag=$CI_PIPELINE_ID --set image.repository=$BASE_IMAGE_NAME
 
+build:development:
+  stage: build
+  extends: .build
+  only:
+    - dev
+  variables:
+    PROJECT_ENV: development
+
+build:staging:
+  stage: build
+  extends: .build
+  only:
+    - test
+  variables:
+    PROJECT_ENV: staging
+
+build:prod:
+  stage: build
+  extends: .build
+  only:
+    - main
+  variables:
+    PROJECT_ENV: prod
+
 deploy:develop:
+  needs:
+    - build:development
   extends: .deploy
   only:
-  - dev
+    - dev
   variables:
     NAMESAPCE: erp-dev
     KUBECONFIG_PATH: $DEV_KUBECONFIG
     VALUES_FILE: develop
 
 deploy:test:
+  needs:
+    - build:staging
   extends: .deploy
   only:
-  - test
+    - test
   variables:
     NAMESAPCE: erp-test
     KUBECONFIG_PATH: $DEV_KUBECONFIG
     VALUES_FILE: test
 
 deploy:production:
+  needs:
+    - build:prod
   extends: .deploy
   when: manual
   only:
-  - main
+    - main
   variables:
     NAMESAPCE: erp-prod
     KUBECONFIG_PATH: $PROD_KUBECONFIG
