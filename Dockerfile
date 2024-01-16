@@ -5,7 +5,8 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 ARG PROJECT_ENV=development
-RUN npm run build --configuration=$PROJECT_ENV
+RUN npm run build:$PROJECT_ENV
+
 
 #STAGE 2
 FROM nginx:1.17.1-alpine
