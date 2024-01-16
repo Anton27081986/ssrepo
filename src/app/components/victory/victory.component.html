@@ -112,7 +112,7 @@
                         </nz-avatar-group>
                       </div>
 
-                      <div class="like">
+                      <div class="like" [ngClass]="item.isUserLiked ? 'liked': ''">
                         <span class="like-icon icon" nz-icon [nzType]="'ss:like'" (click)="setLike(item, item?.id)"></span>
                         <span class="count">{{ item.likesCount }}</span>
                       </div>

@@ -6,18 +6,32 @@
           <div class="card list">
             <div class="personal">
               <div class="img">
-                <img src="{{ nzModalData?.data?.user?.avatarUrl }}" alt="user" />
+                <ng-container *ngIf="nzModalData?.data?.user">
+                  <img src="{{ nzModalData?.data?.user?.avatarUrl }}" alt="user" />
+                </ng-container>
+                <ng-container *ngIf="nzModalData?.data?.fromUser">
+                  <img src="{{ nzModalData?.data?.fromUser?.avatarUrl }}" alt="user" />
+                </ng-container>
               </div>
 
               <div class="title">
                 <div class="fio">
-
-                  <span>{{ nzModalData?.data?.user?.lastName }} {{ nzModalData?.data?.user?.firstName }} {{ nzModalData?.data?.user?.surName }}</span>
-
+                  <ng-container *ngIf="nzModalData?.data?.user">
+                    <span>{{ nzModalData?.data?.user?.lastName }} {{ nzModalData?.data?.user?.firstName }} {{ nzModalData?.data?.user?.surName }}</span>
+                  </ng-container>
+                  <ng-container *ngIf="nzModalData?.data?.fromUser">
+                    <span>{{ nzModalData?.data?.fromUser?.lastName }} {{ nzModalData?.data?.fromUser?.firstName }} {{ nzModalData?.data?.fromUser?.surName }}</span>
+                  </ng-container>
                 </div>
                 <div class="job">
-                  <div>{{ nzModalData?.data?.user?.position }}</div>
-                  <div>{{ nzModalData?.data?.user?.department }}</div>
+                  <ng-container *ngIf="nzModalData?.data?.user">
+                    <div>{{ nzModalData?.data?.user?.position }}</div>
+                    <div>{{ nzModalData?.data?.user?.department }}</div>
+                  </ng-container>
+                  <ng-container *ngIf="nzModalData?.data?.fromUser">
+                    <div>{{ nzModalData?.data?.fromUser?.position }}</div>
+                    <div>{{ nzModalData?.data?.fromUser?.department }}</div>
+                  </ng-container>
                 </div>
               </div>
             </div>
@@ -32,7 +46,7 @@
                   <span class="title">Нравится:</span>
                   <div class="list-item">
                     <div class="item">
-                      <img src="assets/images/profile/user-popup.png" alt="user" />
+                      <img src="../../../../assets/images/profile/user-popup.png" alt="user" />
                     </div>
                   </div>
                 </div>
@@ -58,7 +72,7 @@
               <div class="card list">
                 <div class="personal">
                   <div class="img">
-                    <img src="assets/images/profile/user-popup.png" alt="user" />
+                    <img src="../../../../assets/images/profile/user-popup.png" alt="user" />
                   </div>
 
                   <div class="title">
@@ -82,7 +96,7 @@
               <div class="card list">
                 <div class="personal">
                   <div class="img">
-                    <img src="assets/images/profile/user-popup.png" alt="user" />
+                    <img src="../../../../assets/images/profile/user-popup.png" alt="user" />
                   </div>
 
                   <div class="title">
@@ -106,7 +120,7 @@
               <div class="card list">
                 <div class="personal">
                   <div class="img">
-                    <img src="assets/images/profile/user-popup.png" alt="user" />
+                    <img src="../../../../assets/images/profile/user-popup.png" alt="user" />
                   </div>
 
                   <div class="title">

@@ -114,4 +114,35 @@ export class ApiService {
             type,
         });
     }
+
+    // Рейтинги
+    // Список типов рейтингов
+    getRankTypes(weekId: number): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/types`, {
+            params: new HttpParams().set('weekId', weekId),
+        });
+    }
+
+    // Список последних 5 недель
+    getRankWeeks(): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/weeks`);
+    }
+
+    // Cписок пользователей в выбранном рейтинге
+    getRank(
+        weekId: number,
+        UserId: number,
+        RankTypeId: number,
+        Limit: number,
+        Offset: number,
+    ): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank`, {
+            params: new HttpParams()
+                .set('weekId', weekId)
+                .set('UserId', UserId)
+                .set('RankTypeId', RankTypeId)
+                .set('Limit', Limit)
+                .set('Offset', Offset),
+        });
+    }
 }

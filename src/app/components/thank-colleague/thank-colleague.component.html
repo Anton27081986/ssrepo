@@ -120,7 +120,7 @@
                           <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
                           <span class="count">{{ item.likesCount }}</span>
                         </div>
-                        <div class="comment">
+                        <div class="comment" (click)="showModalComments(item);">
                           <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
                           <span class="count">{{ item.commentsCount }}</span>
                         </div>

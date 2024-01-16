@@ -20,7 +20,7 @@ ingress:
         nginx.ingress.kubernetes.io/cors-allow-headers: >-
             *
         nginx.ingress.kubernetes.io/enable-cors: 'true'
-        nginx.ingress.kubernetes.io/cors-allow-origin: "https://erp-dev.ssnab.it"
+        nginx.ingress.kubernetes.io/cors-allow-origin: 'https://erp-dev.ssnab.it'
     path: /
 environment: ''
 

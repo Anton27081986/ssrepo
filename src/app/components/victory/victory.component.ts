@@ -14,7 +14,7 @@ import {Observable, map} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
-import {CommentsModalComponent} from '@app/components/victory/modal/comments-modal/comments-modal.component';
+import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-like-modal/people-like-modal.component';
 
 @Component({
@@ -24,7 +24,7 @@ import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-lik
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class VictoryComponent implements OnInit {
-    @HostListener('mouseover', ['$event']) onMouseHover() {
+    @HostListener('mouseover', ['$event.target']) onMouseHover() {
         // console.log();
     }
 
@@ -128,6 +128,8 @@ export class VictoryComponent implements OnInit {
 
     // Модальное окно комментариев
     showModalComments(item: any): void {
+        console.log('Победы комент', item);
+
         this.modalCreate
             .create({
                 nzClosable: false,

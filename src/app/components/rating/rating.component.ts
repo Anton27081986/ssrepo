@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
+import {ApiService} from '@app/shared/services/api/api.service';
+import {map, Observable} from 'rxjs';
 
 @Component({
     selector: 'app-rating',
@@ -9,13 +11,18 @@ import {AppIcons} from '@app/common/icons';
     styleUrls: ['./rating.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RatingComponent {
+export class RatingComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
     checked = true;
     title: any;
 
+    protected rankTypes!: Observable<any>;
+    protected rankWeeks!: Observable<any>;
+    protected ranks!: Observable<any>;
+
     constructor(
+        private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
     ) {
@@ -37,9 +44,13 @@ export class RatingComponent {
 
     submitted = false;
     isConfirmLoading = false;
-    selectedValue = null;
+    selectedNumberValue = null;
 
     ngOnInit() {
+        this.rankTypes = this.apiService.getRankTypes(202349).pipe(map(({items}) => items));
+        this.rankWeeks = this.apiService.getRankWeeks().pipe(map(({items}) => items));
+        this.ranks = this.apiService.getRank(202349, 1, 2, 10, 0).pipe(map(({items}) => items));
+
         this.loginForm = this.formBuilder.group({
             login: [
                 '',
@@ -50,6 +61,8 @@ export class RatingComponent {
             ],
             password: ['', Validators.required],
         });
+
+        console.log('selectedNumberValue', this.selectedNumberValue);
     }
 
     onSubmit() {

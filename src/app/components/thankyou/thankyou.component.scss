@@ -177,7 +177,12 @@
                         }
                     }
                 }
+
+                &:active {
+                    border: 1px $blue solid;
+                }
             }
+
             .card:last-child {
                 // margin-left: 28px;
             }
@@ -233,34 +238,6 @@
 
             .button {
                 margin-top: 10px;
-            }
-
-            .top-panel {
-                margin-top: 32px;
-                justify-content: space-between;
-                display: none;
-
-                .total-week {
-                    span {
-                        font-size: 15.8px;
-                    }
-                }
-
-                .total-time {
-                    span {
-                        font-size: 15.8px;
-                    }
-                }
-
-                .button {
-                    margin-top: 14px;
-                    margin-left: 0;
-
-                    width: 100%;
-                }
-            }
-            .top-panel-mobile {
-                display: flex;
             }
         }
 

@@ -1,7 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
+import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
+import {NzModalService} from 'ng-zorro-antd/modal';
 // import {NzModalRef} from "ng-zorro-antd/modal";
 
 @Component({
@@ -26,6 +28,8 @@ export class ThankColleagueComponent implements OnInit {
     constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
+        public modalCreate: NzModalService,
+        private readonly viewContainerRef: ViewContainerRef,
     ) {}
 
     ngOnInit() {
@@ -55,6 +59,26 @@ export class ThankColleagueComponent implements OnInit {
 
     handleCancel(): void {
         this.isVisible = false;
+    }
+
+    // Модальное окно комментариев
+    showModalComments(item: any): void {
+        console.log('спасибо коллеге', item);
+
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Спасибо коллеге',
+                nzNoAnimation: false,
+                nzWidth: '560px',
+                nzContent: CommentsModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                },
+            })
+            .afterClose.subscribe();
     }
 
     onSubmit() {

@@ -9,30 +9,10 @@
           <ng-container *ngIf="profile | async as url">
             <img src="{{ url.avatarUrl }}" alt="user" />
           </ng-container>
-
-          <!--   <img src="{{ profileData?.avatarUr }}" alt="user" />-->
-<!--          <img src="{{ profileData?.avatarUrl }}" alt="user" />-->
-
-<!--            <ng-container *ngIf="!profileData?.avatarUr">-->
-<!--              <img src="assets/images/profile/user-popup.png" alt="user" />-->
-<!--            </ng-container>-->
-
-<!--            <ng-container *ngIf="profileData?.avatarUr">-->
-<!--              <img src="{{ profileData?.avatarUr }}" alt="user" />-->
-<!--            </ng-container>-->
-
-<!--          <ng-container *ngIf="!profileData!.avatarUrl; else image">-->
-<!--            <img src="assets/images/profile/user-popup.png" alt="user" />-->
-<!--          </ng-container>-->
-
-<!--          <ng-template #image>-->
-<!--            <img src="{{ profileData!.avatarUrl }}" alt="user" />-->
-<!--          </ng-template>-->
-
           </div>
-          <div class="m-t-8">
-            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>
-          </div>
+<!--          <div class="m-t-8">-->
+<!--            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>-->
+<!--          </div>-->
       </div>
   </div>
   <div class="feilds">

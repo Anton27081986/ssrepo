@@ -277,6 +277,20 @@
                     }
                 }
 
+                .like.liked {
+                    background: $blue;
+
+                    .count {
+                        color: $white;
+                    }
+
+                    .icon {
+                        ::ng-deep path {
+                            stroke: $white;
+                        }
+                    }
+                }
+
                 .comment,
                 .medal,
                 .openOut {

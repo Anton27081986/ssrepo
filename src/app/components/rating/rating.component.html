@@ -33,9 +33,8 @@
         <!--    </div>-->
       </div>
       <div class="select-group">
-        <nz-select ngModel="lucy" nzPlaceHolder="Выберите номер" [(ngModel)]="selectedValue" [ngModelOptions]="{ standalone: true }">
-          <nz-option nzValue="jack" nzLabel="49 (27.11.23-03.12.23)"></nz-option>
-          <nz-option nzValue="lucy" nzLabel="50 (27.11.23-03.12.23)"></nz-option>
+        <nz-select nzPlaceHolder="Выберите номер" [(ngModel)]="selectedNumberValue" [ngModelOptions]="{ standalone: true }">
+          <nz-option  nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of rankWeeks | async "></nz-option>
         </nz-select>
       </div>
     </div>
@@ -43,13 +42,9 @@
 
   <div class="content">
     <div class="rating-list">
-      <div class="rating-item">
-        <span>СЗЛ</span>
+      <div class="rating-item" *ngFor="let type of rankTypes | async">
+        <span>{{ type?.shortName }}</span>
         <span>5,3 / 4</span>
-      </div>
-      <div class="rating-item">
-        <span>ФМА</span>
-        <span> 5,0 / 4</span>
       </div>
     </div>
 
@@ -59,27 +54,32 @@
 
     <div class="card-list">
 
-      <div class="card">
+      <div class="card" *ngFor="let rank of ranks | async">
         <div>
           <div class="personal">
             <div class="img">
-              <img src="assets/images/profile/user-popup.png" alt="user" />
+              <img src="{{ rank.user.avatarUrl }}" alt="user" />
             </div>
 
-            <span class="medal-icon icon" nz-icon [nzType]="'ss:medalGold'"></span>
+            <ng-container [ngSwitch]="rank?.place">
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+              <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>
+            </ng-container>
 
             <div class="title">
               <div class="fio">
-                <span>Гришин Пантелей Серапионович</span>
+                <span>{{ rank?.user?.name }}</span>
               </div>
               <div class="job">
-                <span>Руководитель Отдела продаж Союзснаб-Ташкент</span>
+                <div>{{ rank?.user.position }}</div>
+                <div>{{ rank?.user.department }}</div>
               </div>
             </div>
           </div>
           <div class="icons">
-            <span class="count count-top">4,4</span>
-            <span class="count count-bottom">4,4</span>
+            <span class="count count-top">{{ rank?.avgWeekRate }}</span>
+            <span class="count count-bottom">{{ rank?.avgQuarterRate }}</span>
           </div>
         </div>
 

@@ -39,7 +39,7 @@ import {AdressBookComponent} from './adress-book/adress-book.component';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from './victory/modal/add-victory-modal/add-victory-modal.component';
-import {CommentsModalComponent} from './victory/modal/comments-modal/comments-modal.component';
+import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 import {PeopleLikeModalComponent} from './victory/modal/people-like-modal/people-like-modal.component';
 import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory.component';
 import {TooltipDirective} from './victory/tooltip.directive';
