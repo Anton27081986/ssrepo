@@ -34,7 +34,7 @@
       </div>
       <div class="select-group">
         <nz-select nzPlaceHolder="Выберите номер" [(ngModel)]="selectedNumberValue" [ngModelOptions]="{ standalone: true }">
-          <nz-option  nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of rankWeeks | async "></nz-option>
+          <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of rankWeeks | async "></nz-option>
         </nz-select>
       </div>
     </div>

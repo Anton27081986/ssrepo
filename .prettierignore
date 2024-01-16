@@ -2,5 +2,6 @@ dist
 .vscode
 .angular
 node_modules
+.helm
 
 *.html
