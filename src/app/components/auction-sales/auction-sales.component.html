@@ -20,11 +20,14 @@
   <div class="content">
     <div class="table">
       <nz-table #basicTable
-                [nzData]="auctions | async"
+                [nzData]="listAuction.items"
                 [nzFrontPagination]="false"
-                [nzTotal]="30"
-                [nzPageIndex]="1"
-                [nzPageSize]="6">
+                [nzTotal]="total"
+                [nzPageSize]="pageSize"
+                [nzPageIndex]="pageIndex"
+                (nzQueryParams)="onQueryParamsChange($event)"
+      >
+
         <thead>
         <tr>
           <th>ТП</th>

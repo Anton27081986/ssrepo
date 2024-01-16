@@ -43,8 +43,10 @@ export class ApiService {
     }
 
     // Sale
-    public getAuctions(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/sales/widget`);
+    public getAuctions(Offset: number, Limit: number): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/sales/widget`, {
+            params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
+        });
     }
 
     // Birthday
