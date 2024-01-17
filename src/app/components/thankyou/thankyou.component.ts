@@ -3,7 +3,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {formatDate} from "@angular/common";
+import {formatDate} from '@angular/common';
 
 @Component({
     selector: 'app-thankyou',
@@ -37,7 +37,9 @@ export class ThankyouComponent implements OnInit {
     }
 
     onChange(result: Date): void {
-        this.thankyouList = this.apiService.getPartnerThanks(formatDate(result, 'dd.MM.yyyy', 'ru-RU'));
-        console.log('onChange: ', formatDate(result,'dd.MM.yyyy', 'ru-RU'));
+        this.thankyouList = this.apiService.getPartnerThanks(
+            formatDate(result, 'dd.MM.yyyy', 'ru-RU'),
+        );
+        console.log('onChange: ', formatDate(result, 'dd.MM.yyyy', 'ru-RU'));
     }
 }
