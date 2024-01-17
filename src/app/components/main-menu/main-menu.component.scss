@@ -32,13 +32,17 @@
 .ant-menu-item:hover,
 .ant-menu-submenu:hover {
     background-color: #ffffff;
+    color: $blue !important;
     border-radius: 10px;
 }
 
 .ant-menu-item:active,
 .ant-menu-submenu:active {
-    // background-color: #f4f5f6;
     border-radius: 10px;
+}
+
+::ng-deep .ant-menu-light .ant-menu-submenu-title:hover {
+    color: $blue !important;
 }
 
 ::ng-deep .ant-menu-submenu-popup > .ant-menu .ant-menu-item:hover {
@@ -63,9 +67,9 @@
         color: $black;
     }
 
-    .ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
-        // color: $black;
-    }
+    //.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-item:hover {
+    //    color: $blue!important;
+    //}
 }
 
 .menu {
@@ -80,8 +84,17 @@
 
         .ant-menu-item-selected {
             border-radius: 10px !important;
+
+            span {
+                color: #52c41a !important;
+            }
         }
     }
+}
+
+.ant-menu-horizontal:not(.ant-menu-dark) > .ant-menu-submenu-open {
+    //font-weight: bold;
+    //color: #52c41a!important;
 }
 
 ::ng-deep .ant-menu-submenu .menu-item-custom {

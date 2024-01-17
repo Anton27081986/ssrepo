@@ -55,13 +55,10 @@ export class ApiService {
     }
 
     // Спасибо партнеру
-    public getPartnerThanks(): Observable<any> {
-        return this.http.get<any[]>(
-            `${environment.apiUrl}/api/awards/partnerThanks?date=04.12.2023`,
-            {
-                // params: new HttpParams().set('date', '04.12.2023'),
-            },
-        );
+    public getPartnerThanks(date: any): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/partnerThanks?date=${date}`, {
+            // params: new HttpParams().set('date', '04.12.2023'),
+        });
     }
 
     // Спасибо коллеге

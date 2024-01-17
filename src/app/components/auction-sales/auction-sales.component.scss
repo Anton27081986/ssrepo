@@ -50,8 +50,12 @@
                 margin-right: 10px;
             }
 
+            .ant-pagination-item-active {
+                background-color: $blue;
+            }
+
             .ant-pagination-item-active a {
-                color: $black;
+                color: $white;
             }
 
             .ant-table-pagination.ant-pagination {

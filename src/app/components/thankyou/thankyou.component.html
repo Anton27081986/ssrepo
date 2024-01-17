@@ -1,4 +1,4 @@
-<div class="thankyou" *ngIf="thankyouList | async as thankyou">
+<div class="thankyou">
   <div class="header">
     <div>
       <div class="title">
@@ -8,7 +8,7 @@
         <h2>Топ-9 самых клиентоориентированных сотрудников</h2>
       </div>
     </div>
-    <div class="open-all-table">
+    <div class="open-all-table" *ngIf="thankyouList | async as thankyou">
       <div class="calendar">
         <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
         <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
@@ -41,7 +41,7 @@
 
   <div class="content">
     <div class="card-list">
-      <ng-container>
+      <ng-container *ngIf="thankyouList | async as thankyou">
         <div class="card" *ngFor="let thank of thankyou.items;">
           <div class="personal">
             <div class="img">

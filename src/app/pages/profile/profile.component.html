@@ -12,7 +12,7 @@
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
 <!--      [routerLink]="'manager-profiles'"-->
-      <div class="item">
+      <div class="item" *ngIf="hide">
         <span class="icon left-icon" nz-icon [nzType]="'ss:profile'"></span>
         <span class="title">Управление другими профилями</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
@@ -25,13 +25,13 @@
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
 <!--      [routerLink]="'order-widgets'"-->
-      <div class="item">
+      <div class="item" *ngIf="hide">
         <span class="icon left-icon" nz-icon [nzType]="'ss:sort'"></span>
         <span class="title">Упорядочить виджеты</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
 <!--      [routerLink]="'notifications'"-->
-      <div class="item">
+      <div class="item" *ngIf="hide">
         <span class="icon left-icon icon-remind" nz-icon [nzType]="'ss:iconRemind'"></span>
         <span class="title">Уведомления</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
