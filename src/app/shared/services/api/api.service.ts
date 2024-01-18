@@ -116,7 +116,7 @@ export class ApiService {
 
     // Рейтинги
     // Список типов рейтингов
-    getRankTypes(weekId: number): Observable<any> {
+    getRankTypes(weekId: any): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/types`, {
             params: new HttpParams().set('weekId', weekId),
         });

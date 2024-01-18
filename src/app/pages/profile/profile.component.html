@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="group">
-      <div class="item" [routerLink]="'my-menu'">
+      <div class="item" [routerLink]="'my-menu'" *ngIf="hide">
         <span class="icon left-icon" nz-icon [nzType]="'ss:star'"></span>
         <span class="title">Настроить пункты моего меню</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>

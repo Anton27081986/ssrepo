@@ -24,6 +24,8 @@ import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-lik
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class VictoryComponent implements OnInit {
+    // @ViewChild()
+
     @HostListener('mouseover', ['$event.target']) onMouseHover() {
         // console.log();
     }
@@ -95,6 +97,8 @@ export class VictoryComponent implements OnInit {
 
     // Модальное окно раскрытой карточки
     showModalOpenOut(item: any): void {
+        console.log('Партнер инфо', item);
+
         this.modalCreate
             .create({
                 nzClosable: false,

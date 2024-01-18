@@ -3,8 +3,8 @@
     <div>
       <div class="title">
         <h1>рейтинг сотрудников</h1>
-        <div class="rating-item">
-          <span>4,2 / 1987</span>
+        <div class="rating-item" *ngIf="rankTypes | async as rankTotal">
+          <span> {{ rankTotal?.averageAll }} / {{ rankTotal?.membersTotal }}</span>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
             <nz-form-item>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Поиск по ФИО" [(ngModel)]="title" (input)="search()" />
+                  <input type="text" nz-input formControlName="search" [placeholder]="currentUserName" [(ngModel)]="title" (input)="search($event)" />
                 </nz-input-group>
               </nz-form-control>
               <ng-template #prefixSearch>
@@ -24,17 +24,31 @@
             </nz-form-item>
           </form>
         </span>
-        <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
-        <!--        <app-result-item-->
-        <!--            *ngFor="let book of books"-->
-        <!--            [book]="book"-->
-        <!--            [title]="title"-->
-        <!--        ></app-result-item>-->
-        <!--    </div>-->
+
+        <ng-container *ngIf="showWindowResult">
+          <ng-container *ngIf="searchResult! | async as users" #result>
+            <div class="result">
+              <!--
+                      <span class="close-icon icon" nz-icon [nzType]="'ss:closeLight'" (click)="onClick($event)"></span>
+              -->
+              <app-result-item
+                *ngFor="let user of users"
+                [user]="user"
+                [title]="title"
+              ></app-result-item>
+            </div>
+          </ng-container>
+        </ng-container>
+
       </div>
       <div class="select-group">
-        <nz-select nzPlaceHolder="Выберите номер" [(ngModel)]="selectedNumberValue" [ngModelOptions]="{ standalone: true }">
-          <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of rankWeeks | async "></nz-option>
+        <nz-select
+          nzPlaceHolder="Выберите неделю"
+          [(ngModel)]="weekId"
+          (ngModelChange)="selectWeek($event)"
+          [ngModelOptions]="{ standalone: true }
+        ">
+          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of rankWeeks | async "></nz-option>
         </nz-select>
       </div>
     </div>
@@ -42,15 +56,17 @@
 
   <div class="content">
     <div class="rating-list">
-      <div class="rating-item" *ngFor="let type of rankTypes | async">
-        <span>{{ type?.shortName }}</span>
-        <span>5,3 / 4</span>
-      </div>
+      <ng-container *ngIf="rankTypes | async as ranks">
+        <div class="rating-item" *ngFor="let type of ranks.items">
+          <span>{{ type?.shortName }}</span>
+          <span>{{ type?.rate }} / {{ type?.membersCount }}</span>
+        </div>
+      </ng-container>
     </div>
 
-    <div class="title-card">
+<!--    <div class="title-card">
       Отдел продаж:
-    </div>
+    </div>-->
 
     <div class="card-list">
 

@@ -10,7 +10,7 @@
     </div>
     <div class="open-all-table" *ngIf="thankyouList | async as thankyou">
       <div class="calendar">
-        <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+        <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
         <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
         <ng-template #sufixCalendar>
           <i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
@@ -42,31 +42,33 @@
   <div class="content">
     <div class="card-list">
       <ng-container *ngIf="thankyouList | async as thankyou">
-        <div class="card" *ngFor="let thank of thankyou.items;">
-          <div class="personal">
-            <div class="img">
-              <img src="{{ thank?.avatarUrl }}" alt="user" />
+        <ng-container *ngFor="let thank of thankyou.items;">
+          <div class="card" (click)="showModalOpenOut(thankyou)">
+            <div class="personal">
+              <div class="img">
+                <img src="{{ thank?.avatarUrl }}" alt="user" />
+              </div>
+              <div class="title">
+                <div class="fio">
+                  <span>{{ thank?.lastName }} {{ thank?.firstName }} {{ thank?.surName }}</span>
+                </div>
+                <div class="job">
+                  <div>{{ thank?.department }}</div>
+                </div>
+              </div>
             </div>
-            <div class="title">
-              <div class="fio">
-                <span>{{ thank?.lastName }} {{ thank?.firstName }} {{ thank?.surName }}</span>
-              </div>
-              <div class="job">
-                <div>{{ thank?.department }}</div>
-              </div>
+            <div class="icons">
+
+              <ng-container [ngSwitch]="thank?.place">
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
+              </ng-container>
+
+              <span class="count">{{ thank?.thanksCount }}</span>
             </div>
           </div>
-          <div class="icons">
-
-            <ng-container [ngSwitch]="thank?.place">
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
-            </ng-container>
-
-            <span class="count">{{ thank?.thanksCount }}</span>
-          </div>
-        </div>
+        </ng-container>
       </ng-container>
 
     </div>

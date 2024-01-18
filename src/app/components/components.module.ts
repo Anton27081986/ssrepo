@@ -43,6 +43,8 @@ import {CommentsModalComponent} from '@app/components/modal/comments-modal/comme
 import {PeopleLikeModalComponent} from './victory/modal/people-like-modal/people-like-modal.component';
 import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory.component';
 import {TooltipDirective} from './victory/tooltip.directive';
+import {ModalInfoUserComponent} from './modal/modal-info-user/modal-info-user.component';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 
 @NgModule({
     declarations: [
@@ -65,6 +67,7 @@ import {TooltipDirective} from './victory/tooltip.directive';
         CommentsModalComponent,
         PeopleLikeModalComponent,
         PartyVictoryComponent,
+        ModalInfoUserComponent,
     ],
     imports: [
         CommonModule,
@@ -94,6 +97,7 @@ import {TooltipDirective} from './victory/tooltip.directive';
         NzCarouselModule,
         NzCardModule,
         TooltipDirective,
+        NzToolTipModule,
     ],
     exports: [
         SearchComponent,

@@ -1,9 +1,11 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {formatDate} from '@angular/common';
+import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-thankyou',
@@ -19,6 +21,8 @@ export class ThankyouComponent implements OnInit {
     constructor(
         private readonly iconService: NzIconService,
         private readonly apiService: ApiService,
+        public modalCreate: NzModalService,
+        private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -31,15 +35,34 @@ export class ThankyouComponent implements OnInit {
     }
 
     ngOnInit(): any {
-        // this.dateToday = new Date();
-        this.dateToday = '07.12.2023';
+        this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
         this.thankyouList = this.apiService.getPartnerThanks(this.dateToday);
+    }
+
+    // Модальное окно раскрытой карточки
+    showModalOpenOut(item: any): void {
+        console.log('Партнер инфо', item);
+
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Информация о пользователе',
+                nzNoAnimation: false,
+                nzWidth: '365px',
+                nzContent: ModalInfoComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                },
+            })
+            .afterClose.subscribe();
     }
 
     onChange(result: Date): void {
         this.thankyouList = this.apiService.getPartnerThanks(
-            formatDate(result, 'dd.MM.yyyy', 'ru-RU'),
+            formatDate(result, 'yyyy-MM-dd', 'ru-RU'),
         );
-        console.log('onChange: ', formatDate(result, 'dd.MM.yyyy', 'ru-RU'));
+        console.log('onChange: ', formatDate(result, 'yyyy-MM-dd', 'ru-RU'));
     }
 }

@@ -27,14 +27,6 @@ export class SearchComponent {
         this.searchInput = this.formBuilder.group({
             search: [''],
         });
-
-        // debounceTime(100)
-        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
-            this.searchResult = this.apiService.getUsersByFIO(nextValue).pipe(
-                debounceTime(300),
-                map(({items}) => items),
-            );
-        });
     }
 
     // convenience getter for easy access to form fields
@@ -55,7 +47,12 @@ export class SearchComponent {
         $event.stopPropagation();
         this.showWindowResult = true;
         this.modelChanged.next($event.target.value);
-    }
 
-    onSubmit() {}
+        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
+            this.searchResult = this.apiService.getUsersByFIO(nextValue).pipe(
+                debounceTime(300),
+                map(({items}) => items),
+            );
+        });
+    }
 }

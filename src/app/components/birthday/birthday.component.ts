@@ -34,6 +34,9 @@ export class BirthdayComponent {
 
     ngOnInit(): any {
         this.birthdayList = this.apiService.getBirthday().pipe(map(({days}) => days));
+
+        // this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
+        // this.thankyouList = this.apiService.getPartnerThanks(this.dateToday);
     }
 
     onChange(result: Date): void {

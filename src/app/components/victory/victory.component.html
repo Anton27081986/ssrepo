@@ -76,6 +76,9 @@
                         <div>{{ item?.user.position }}</div>
                         <div>{{ item?.user.department }}</div>
                       </div>
+<!--                      <div class="more">-->
+<!--                        <a href="{{ item?.detailUrl }}" target="_blank">Подробнее</a>-->
+<!--                      </div>-->
                     </div>
                   </div>
                   <div class="icons">
@@ -100,7 +103,7 @@
 
                       <!-- (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"
                                         (mouseenter)="peoplelikesOpen=!peoplelikesOpen;"-->
-                      <div appTooltip class="modal-people-likes">
+                      <div class="modal-people-likes">
                         <span class="title">Нравится:</span>
                         <nz-avatar-group class="list-item">
                           <nz-avatar class="item" nzIcon="user" nzSrc="assets/images/profile/user-popup.png"></nz-avatar>
@@ -114,7 +117,7 @@
 
                       <div class="like" [ngClass]="item.isUserLiked ? 'liked': ''">
                         <span class="like-icon icon" nz-icon [nzType]="'ss:like'" (click)="setLike(item, item?.id)"></span>
-                        <span class="count">{{ item.likesCount }}</span>
+                        <span class="count" appTooltip>{{ item.likesCount }}</span>
                       </div>
 
                       <div class="comment" (click)="showModalComments(item)">

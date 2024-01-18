@@ -1,9 +1,17 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    HostListener,
+    OnDestroy,
+    OnInit,
+} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {map, Observable} from 'rxjs';
+import {debounceTime, map, Observable, Subject, take, takeUntil, tap} from 'rxjs';
+import {UserService} from '@auth/services/user.service';
 
 @Component({
     selector: 'app-rating',
@@ -11,11 +19,23 @@ import {map, Observable} from 'rxjs';
     styleUrls: ['./rating.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RatingComponent implements OnInit {
+export class RatingComponent implements OnInit, OnDestroy {
+    destroy$: Subject<boolean> = new Subject<boolean>();
+
     loginForm!: FormGroup;
     loading = false;
     checked = true;
     title: any;
+    submitted = false;
+    isConfirmLoading = false;
+    weekId: any;
+    rankTypeId: any;
+    currentUserId: any;
+    currentUserName: any;
+
+    showWindowResult = false;
+    public searchResult!: Observable<any>;
+    private readonly modelChanged: Subject<string> = new Subject<string>();
 
     protected rankTypes!: Observable<any>;
     protected rankWeeks!: Observable<any>;
@@ -23,8 +43,10 @@ export class RatingComponent implements OnInit {
 
     constructor(
         private readonly apiService: ApiService,
+        private readonly userService: UserService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
+        private readonly resultSearch: ElementRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -42,27 +64,60 @@ export class RatingComponent implements OnInit {
         this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
     }
 
-    submitted = false;
-    isConfirmLoading = false;
-    selectedNumberValue = null;
-
     ngOnInit() {
-        this.rankTypes = this.apiService.getRankTypes(202349).pipe(map(({items}) => items));
+        this.listUserSelectRank();
+
+        // Получение последних 5 недель
         this.rankWeeks = this.apiService.getRankWeeks().pipe(map(({items}) => items));
-        this.ranks = this.apiService.getRank(202349, 1, 2, 10, 0).pipe(map(({items}) => items));
 
         this.loginForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
+            login: [],
         });
+    }
 
-        console.log('selectedNumberValue', this.selectedNumberValue);
+    listUserSelectRank(weekId?: any) {
+        // переписать nest
+        this.apiService
+            .getRankWeeks()
+            .pipe(
+                map(({items}) => items),
+                take(1),
+            )
+            .subscribe(value => {
+                if (weekId) {
+                    console.log('weekId указан');
+                    this.weekId = weekId;
+                    this.rankTypes = this.apiService.getRankTypes(weekId);
+                } else {
+                    console.log('weekId не указан');
+                    this.weekId = value[0].id;
+                    this.rankTypes = this.apiService.getRankTypes(this.weekId);
+                }
+
+                this.apiService
+                    .getRankTypes(this.weekId)
+                    .pipe(take(1))
+                    .subscribe(value => {
+                        this.rankTypeId = value.rankTypeId;
+
+                        this.userService
+                            .getProfile()
+                            .pipe(takeUntil(this.destroy$))
+                            .subscribe(value => {
+                                this.currentUserId = value.id;
+                                this.currentUserName = value.name;
+
+                                console.log('weekId', this.weekId);
+                                console.log('userId', this.currentUserName);
+                                console.log('rankTypeId', this.rankTypeId);
+
+                                // Получить участников пользователя
+                                this.ranks = this.apiService
+                                    .getRank(this.weekId, this.currentUserId, this.rankTypeId, 6, 0)
+                                    .pipe(map(({items}) => items));
+                            });
+                    });
+            });
     }
 
     onSubmit() {
@@ -76,5 +131,48 @@ export class RatingComponent implements OnInit {
         this.loading = true;
     }
 
-    search() {}
+    @HostListener('document:click', ['$event'])
+    onClick(event: Event) {
+        console.log('event HostListener', event);
+
+        console.log('showWindowResult', this.showWindowResult);
+
+        if (this.showWindowResult) {
+            if (!this.resultSearch.nativeElement.contains(event.target)) {
+                this.showWindowResult = false;
+                console.log('showWindowResult false set');
+            }
+        }
+    }
+
+    search($event: any) {
+        $event.stopPropagation();
+        this.showWindowResult = true;
+        this.modelChanged.next($event.target.value);
+
+        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
+            console.log('метод search modelChanged', nextValue);
+
+            if (nextValue.length > 3) {
+                this.searchResult = this.apiService.getUsersByFIO(nextValue).pipe(
+                    debounceTime(300),
+                    map(({items}) => items),
+                    tap(data => console.log('метод search searchResult', data)),
+                );
+            }
+        });
+    }
+
+    selectWeek(value: {id: string; name: string}): void {
+        console.log('selectWeek', value);
+        this.rankTypes = this.apiService.getRankTypes(value);
+
+        this.listUserSelectRank(value);
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next(true);
+        // this.destroy$.unsubscribe();
+        this.modelChanged.complete();
+    }
 }
