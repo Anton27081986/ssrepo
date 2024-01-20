@@ -9,6 +9,7 @@
         </div>
         <div class="call" *ngIf="user?.viewerIsIpPhone">
           <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+          <span class="inner-phone">{{ user?.phoneLocal }}</span>
         </div>
       </div>
     </div>

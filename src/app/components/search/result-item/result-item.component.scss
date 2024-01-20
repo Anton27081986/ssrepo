@@ -31,9 +31,16 @@
 
                 .call {
                     ::ng-deep svg {
+                        font-size: 14px;
                         path {
-                            stroke: $blue;
+                            stroke: #50d155;
                         }
+                    }
+
+                    .inner-phone {
+                        padding-left: 4px;
+                        font-size: 12px;
+                        color: #50d155;
                     }
                 }
             }
