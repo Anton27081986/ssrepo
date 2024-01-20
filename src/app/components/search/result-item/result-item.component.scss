@@ -6,19 +6,28 @@
 
     .content {
         display: flex;
-        width: 400px;
+        width: 100%;
         overflow: hidden;
         margin: 4px 0;
 
         .text {
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            .name {
+            // flex-direction: column;
+
+            .title {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
                 font-size: 15px;
                 font-weight: bold;
                 padding-left: 3px;
-                color: #22223a;
+                color: $black;
                 line-height: 24px;
+
+                span {
+                    color: $black;
+                }
             }
         }
     }

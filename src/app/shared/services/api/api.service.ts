@@ -93,6 +93,13 @@ export class ApiService {
         });
     }
 
+    // Общий поиск
+    public search(title: string): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/search`, {
+            params: new HttpParams().set('q', title),
+        });
+    }
+
     // Получение пользователя по id
     public getUserById(id: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/${id}`);

@@ -1,11 +1,15 @@
 <div class="result-item">
   <div class="content">
-<!--    <div class="image">
-      <img src="assets/images/profile/user-popup.png" alt="{{user?.name}}">
-    </div>-->
     <div class="text">
-      <div class="name">
-        <span>{{user?.name}}</span>
+      <div class="title">
+        <div>
+          <a href="{{user?.linkToDetail}}" target="_blank">
+            <span>{{user?.title}}</span>
+          </a>
+        </div>
+        <div class="called" *ngIf="user?.viewerIsIpPhone">
+          <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
+        </div>
       </div>
     </div>
   </div>

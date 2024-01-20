@@ -1,6 +1,5 @@
-import {ChangeDetectionStrategy, Component, ElementRef, HostListener} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {debounceTime, map, Observable, Subject} from 'rxjs';
+import {ChangeDetectionStrategy, Component, HostListener, OnInit} from '@angular/core';
+import {map, Observable, Subject} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
@@ -9,33 +8,29 @@ import {ApiService} from '@app/shared/services/api/api.service';
     styleUrls: ['./search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit {
     title: any;
-    searchInput!: FormGroup;
     public searchResult!: Observable<any>;
 
     showWindowResult = false;
     private readonly modelChanged: Subject<string> = new Subject<string>();
+    private readonly resultSearch: any;
 
-    constructor(
-        private readonly apiService: ApiService,
-        private readonly formBuilder: FormBuilder,
-        private readonly resultSearch: ElementRef,
-    ) {}
+    constructor(private readonly apiService: ApiService) {}
 
     ngOnInit() {
-        this.searchInput = this.formBuilder.group({
-            search: [''],
+        this.modelChanged.pipe().subscribe(nextValue => {
+            if (nextValue.length >= 3) {
+                this.searchResult = this.apiService.search(nextValue).pipe(map(({items}) => items));
+            }
         });
     }
 
-    // convenience getter for easy access to form fields
-    get query() {
-        return this.searchInput.controls;
-    }
-
     @HostListener('document:click', ['$event'])
+    // Подправить
     onClick(event: Event) {
+        this.showWindowResult = false;
+
         if (this.showWindowResult) {
             if (!this.resultSearch.nativeElement.contains(event.target)) {
                 this.showWindowResult = false;
@@ -44,15 +39,7 @@ export class SearchComponent {
     }
 
     search($event: any) {
-        $event.stopPropagation();
         this.showWindowResult = true;
         this.modelChanged.next($event.target.value);
-
-        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
-            this.searchResult = this.apiService.getUsersByFIO(nextValue).pipe(
-                debounceTime(300),
-                map(({items}) => items),
-            );
-        });
     }
 }

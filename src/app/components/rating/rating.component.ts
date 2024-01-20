@@ -103,9 +103,6 @@ export class RatingComponent implements OnInit, OnDestroy {
                     });
 
                     this.selectedValue = value.id;
-
-                    console.log('listOfOption', this.listOfOption);
-                    console.log('this.selectedValue', this.selectedValue);
                 }),
             )
             .subscribe();

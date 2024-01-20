@@ -1,9 +1,9 @@
 <div class="search">
-    <form nz-form [formGroup]="searchInput" class="search-form">
+    <form class="search-form">
       <nz-form-item>
         <nz-form-control>
           <nz-input-group [nzSuffix]="prefixSearch">
-            <input type="text" nz-input formControlName="search" placeholder="Введите запрос" (input)="search($event)" />
+            <input type="text" nz-input placeholder="Введите запрос" (input)="search($event)" />
           </nz-input-group>
         </nz-form-control>
         <ng-template #prefixSearch>
@@ -15,9 +15,6 @@
   <ng-container *ngIf="showWindowResult">
     <ng-container *ngIf="searchResult! | async as users" #result>
       <div class="result">
-<!--
-        <span class="close-icon icon" nz-icon [nzType]="'ss:closeLight'" (click)="onClick($event)"></span>
--->
         <app-result-item
           *ngFor="let user of users"
           [user]="user"
