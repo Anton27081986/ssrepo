@@ -1,8 +1,23 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewContainerRef,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnDestroy,
+    OnInit,
+    ViewContainerRef,
+} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {debounceTime, distinctUntilChanged, map, Observable, Subject, switchMap, tap, zip,} from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    Observable,
+    Subject,
+    switchMap,
+    tap,
+    zip,
+} from 'rxjs';
 import {UserService} from '@auth/services/user.service';
 import isEqual from 'lodash/isEqual';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
