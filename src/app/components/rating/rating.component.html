@@ -44,7 +44,7 @@
       <ng-container *ngIf="rankTypes">
         <ng-container *ngFor="let type of rankTypes?.items;">
           <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
-               (click)="clickByTypeRank(type.id, $event)">
+               (click)="clickByTypeRank(type.id, type?.membersCount,  $event)">
             <span>{{ type?.shortName }}</span>
             <span>
               <ng-container *ngIf="type?.rate >= rateValue.great">
@@ -75,10 +75,10 @@
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
               <!--              <nz-card [nzTitle]="item.name">-->
-              <div class="card" (click)="showModalOpenOut(rank?.user?.id)">
+              <div class="card">
                 <div>
                   <div class="personal">
-                    <div class="img">
+                    <div class="img" (click)="showModalOpenOut(rank?.user?.id)">
                       <img src="{{ rank?.user?.avatarUrl }}" alt="user" />
                     </div>
 

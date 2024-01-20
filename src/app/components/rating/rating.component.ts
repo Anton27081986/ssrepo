@@ -1,23 +1,8 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    OnDestroy,
-    OnInit,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewContainerRef,} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    map,
-    Observable,
-    Subject,
-    switchMap,
-    tap,
-    zip,
-} from 'rxjs';
+import {debounceTime, distinctUntilChanged, map, Observable, Subject, switchMap, tap, zip,} from 'rxjs';
 import {UserService} from '@auth/services/user.service';
 import isEqual from 'lodash/isEqual';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
@@ -115,19 +100,22 @@ export class RatingComponent implements OnInit, OnDestroy {
         this.rankWeeks = this._apiService.getRankWeeks().pipe(map(({items}) => items));
 
         // Подписка на изменения input поиска
-        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
-            if (nextValue.length > 2) {
-                this._apiService
-                    .getUsersByFIO(nextValue)
-                    .pipe(
-                        map(({items}) => items),
-                        tap(data => {
-                            this.listOfOption = data;
-                        }),
-                    )
-                    .subscribe();
-            }
-        });
+        zip(this.modelChanged)
+            .pipe(
+                debounceTime(1000),
+                tap(value => {
+                    this._apiService
+                        .getUsersByFIO(value[0])
+                        .pipe(
+                            map(({items}) => items),
+                            tap(data => {
+                                this.listOfOption = data;
+                            }),
+                        )
+                        .subscribe();
+                }),
+            )
+            .subscribe();
     }
 
     // api rank/type
@@ -172,7 +160,7 @@ export class RatingComponent implements OnInit, OnDestroy {
             )
             .subscribe(value => {
                 this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
-                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 6, 0);
+                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0);
             });
     }
 
@@ -193,7 +181,7 @@ export class RatingComponent implements OnInit, OnDestroy {
             )
             .subscribe(value => {
                 this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
-                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 6, 0);
+                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0);
             });
     }
 
@@ -201,12 +189,12 @@ export class RatingComponent implements OnInit, OnDestroy {
         this.rankTypes = this._apiService.getRankTypes(weekId, this.currentUserId);
     }
 
-    clickByTypeRank(id: any, $event: MouseEvent) {
+    clickByTypeRank(id: any, limit: number, $event: MouseEvent) {
         $event.stopPropagation();
         this.rankTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
 
         // Вывводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
-        this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 10, 0);
+        this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, limit, 0);
     }
 
     search($event: any) {
@@ -215,7 +203,6 @@ export class RatingComponent implements OnInit, OnDestroy {
 
     // При выборе клика
     onUserChange() {
-        console.log('this.selectedValue', this.selectedValue);
         this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
         this.getPartyByWeekAndRankTypeSearch(this.selectedValue, this.weekId);
     }

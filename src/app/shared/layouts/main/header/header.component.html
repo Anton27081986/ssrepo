@@ -41,7 +41,7 @@
               <div class="icon-bg">
 
                 <ng-container *ngIf="profile | async as url; else image">
-                  <img src="{{ url.avatarUrl }}" alt="user" />
+                  <img src="{{ url?.avatarUrl }}" alt="user" />
                 </ng-container>
 
                 <ng-template #image>

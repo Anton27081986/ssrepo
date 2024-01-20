@@ -62,8 +62,8 @@
               <div class="card">
                 <div>
                   <div class="personal">
-                    <div class="img">
-                      <img src="{{ item.user.avatarUrl }}" alt="user" />
+                    <div class="img" (click)="showModalOpenOut(item?.user?.id)">
+                      <img src="{{ item.user?.avatarUrl }}" alt="user" />
                     </div>
 
                     <span class="people-icon icon" nz-icon [nzType]="'ss:twoPeople'" *ngIf="item?.groupWinUsers"></span>

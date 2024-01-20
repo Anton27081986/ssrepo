@@ -177,10 +177,10 @@
                         }
                     }
                 }
+            }
 
-                &:active {
-                    border: 1px $blue solid;
-                }
+            .card .active {
+                border: 1px $blue solid;
             }
 
             .card:last-child {

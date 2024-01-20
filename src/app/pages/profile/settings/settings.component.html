@@ -7,7 +7,7 @@
       <div class="personal">
         <div class="img">
           <ng-container *ngIf="profile | async as url">
-            <img src="{{ url.avatarUrl }}" alt="user" />
+            <img src="{{ url?.avatarUrl }}" alt="user" />
           </ng-container>
           </div>
 <!--          <div class="m-t-8">-->

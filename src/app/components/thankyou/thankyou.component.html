@@ -43,9 +43,9 @@
     <div class="card-list">
       <ng-container *ngIf="thankyouList | async as thankyou">
         <ng-container *ngFor="let thank of thankyou.items;">
-          <div class="card" (click)="showModalOpenOut(thank?.id)">
+          <div class="card">
             <div class="personal">
-              <div class="img">
+              <div class="img" (click)="showModalOpenOut(thank?.id)">
                 <img src="{{ thank?.avatarUrl }}" alt="user" />
               </div>
               <div class="title">

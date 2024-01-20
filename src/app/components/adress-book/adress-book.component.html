@@ -45,7 +45,7 @@
       <div class="card" *ngFor="let item of addressBook.items;">
         <div>
           <div class="personal">
-            <div class="img">
+            <div class="img" (click)="showModalOpenOut(item?.id)">
               <img src="{{ item?.avatarUrl }}" alt="user" />
             </div>
 

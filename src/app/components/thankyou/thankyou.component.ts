@@ -17,6 +17,7 @@ export class ThankyouComponent implements OnInit {
     public thankyouList!: Observable<any>;
     date: any;
     dateToday: any;
+    private yesterday: any;
 
     constructor(
         private readonly iconService: NzIconService,
@@ -35,7 +36,8 @@ export class ThankyouComponent implements OnInit {
     }
 
     ngOnInit(): any {
-        this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
+        this.yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+        this.dateToday = formatDate(this.yesterday, 'yyyy-MM-dd', 'ru-RU');
         this.thankyouList = this.apiService.getPartnerThanks(this.dateToday);
     }
 
