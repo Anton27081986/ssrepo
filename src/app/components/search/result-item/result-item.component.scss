@@ -30,11 +30,19 @@
                 }
 
                 .call {
+                    position: relative;
+
                     ::ng-deep svg {
                         font-size: 14px;
                         path {
                             stroke: #50d155;
                         }
+                    }
+
+                    .phone-icon {
+                        position: absolute;
+                        top: 7px;
+                        left: -13px;
                     }
 
                     .inner-phone {
