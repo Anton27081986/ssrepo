@@ -28,6 +28,14 @@
                 span {
                     color: $black;
                 }
+
+                .call {
+                    ::ng-deep svg {
+                        path {
+                            stroke: $blue;
+                        }
+                    }
+                }
             }
         }
     }

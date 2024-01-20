@@ -4,10 +4,10 @@
       <div class="title">
         <div>
           <a href="{{user?.linkToDetail}}" target="_blank">
-            <span>{{user?.title}}</span>
+            <span [innerHTML]="user?.title">{{user?.title}}</span>
           </a>
         </div>
-        <div class="called" *ngIf="user?.viewerIsIpPhone">
+        <div class="call" *ngIf="user?.viewerIsIpPhone">
           <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
         </div>
       </div>
