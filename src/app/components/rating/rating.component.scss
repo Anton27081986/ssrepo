@@ -109,6 +109,18 @@
             .rating-item.active {
                 color: #ffffff;
                 background-color: $blue;
+
+                .great {
+                    color: #ffffff;
+                }
+
+                .good {
+                    color: #ffffff;
+                }
+
+                .bad {
+                    color: #ffffff;
+                }
             }
 
             .rating-item {
@@ -130,6 +142,18 @@
                 span {
                     font-size: 14px;
                     font-weight: 700;
+                }
+
+                .great {
+                    color: $blue;
+                }
+
+                .good {
+                    color: #67778e;
+                }
+
+                .bad {
+                    color: #ce6f6d;
                 }
             }
         }

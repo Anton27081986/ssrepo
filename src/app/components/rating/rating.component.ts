@@ -62,6 +62,13 @@ export class RatingComponent implements OnInit, OnDestroy {
 
     nzFilterOption = (): boolean => true;
 
+    rateValue = {
+        great: 4.5,
+        good1: 4.4,
+        good2: 4.0,
+        bad: 3.9,
+    };
+
     constructor(
         private readonly _apiService: ApiService,
         private readonly _userService: UserService,

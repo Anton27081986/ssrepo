@@ -42,11 +42,26 @@
   <div class="content">
     <div class="rating-list">
       <ng-container *ngIf="rankTypes">
-        <ng-container *ngFor="let type of rankTypes?.items; trackBy: trackByFn">
+        <ng-container *ngFor="let type of rankTypes?.items;">
           <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
                (click)="clickByTypeRank(type.id, $event)">
             <span>{{ type?.shortName }}</span>
-            <span>{{ type?.rate }} / {{ type?.membersCount }}</span>
+            <span>
+              <ng-container *ngIf="type?.rate >= rateValue.great">
+                <span class="color-rate great">{{ type?.rate }}</span>
+                / <span>{{ type?.membersCount }}</span>
+              </ng-container>
+
+              <ng-container *ngIf="(type?.rate <= rateValue.good1 && type?.rate >= rateValue.good2)">
+                <span class="color-rate good">{{ type?.rate }}</span>
+                / <span>{{ type?.membersCount }}</span>
+              </ng-container>
+
+              <ng-container *ngIf="type?.rate <= rateValue.bad">
+                <span class="color-rate bad">{{ type?.rate }}</span>
+                / <span>{{ type?.membersCount }}</span>
+              </ng-container>
+            </span>
           </div>
         </ng-container>
       </ng-container>
@@ -78,14 +93,14 @@
                         <span>{{ rank?.user?.name }}</span>
                       </div>
                       <div class="job">
-                        <div>{{ rank?.user.position }}</div>
+                        <div *ngIf="false">{{ rank?.user.position }}</div>
                         <div>{{ rank?.user.department }}</div>
                       </div>
                     </div>
                   </div>
                   <div class="icons">
                     <span class="count count-top">{{ rank?.avgWeekRate }}</span>
-                    <span class="count count-bottom">{{ rank?.avgQuarterRate }}</span>
+                    <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
                   </div>
                 </div>
 
