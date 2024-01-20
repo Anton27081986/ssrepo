@@ -1,46 +1,31 @@
-<div class="rating">
+<div class="rating" *ngIf="rankTypes | async as rankTypes">
   <div class="header">
     <div>
       <div class="title">
         <h1>рейтинг сотрудников</h1>
-        <div class="rating-item" *ngIf="rankTypes | async as rankTotal">
-          <span> {{ rankTotal?.averageAll }} / {{ rankTotal?.membersTotal }}</span>
+        <div class="rating-item">
+          <span> {{ rankTypes?.averageAll }} / {{ rankTypes?.membersTotal }}</span>
         </div>
       </div>
     </div>
     <div class="open-all-table">
       <div class="search">
-        <span class="">
-          <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
-            <nz-form-item>
-              <nz-form-control>
-                <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" [placeholder]="currentUserName" [(ngModel)]="title" (input)="search($event)" />
-                </nz-input-group>
-              </nz-form-control>
-              <ng-template #prefixSearch>
-                <i nz-icon nzType="search" class="search-icon-suffix"></i>
-              </ng-template>
-            </nz-form-item>
-          </form>
+        <span>
+             <nz-select
+               nzShowSearch
+               nzServerSearch
+               nzPlaceHolder="Участник"
+               [(ngModel)]="selectedValue"
+               [nzShowArrow]="true"
+               [nzFilterOption]="nzFilterOption"
+               (ngModelChange)="onUserChange()"
+               (nzOnSearch)="search($event)"
+             >
+         <nz-option *ngFor="let user of listOfOption" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+       </nz-select>
         </span>
-
-        <ng-container *ngIf="showWindowResult">
-          <ng-container *ngIf="searchResult! | async as users" #result>
-            <div class="result">
-              <!--
-                      <span class="close-icon icon" nz-icon [nzType]="'ss:closeLight'" (click)="onClick($event)"></span>
-              -->
-              <app-result-item
-                *ngFor="let user of users"
-                [user]="user"
-                [title]="title"
-              ></app-result-item>
-            </div>
-          </ng-container>
-        </ng-container>
-
       </div>
+
       <div class="select-group">
         <nz-select
           nzPlaceHolder="Выберите неделю"
@@ -48,7 +33,7 @@
           (ngModelChange)="selectWeek($event)"
           [ngModelOptions]="{ standalone: true }
         ">
-          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of rankWeeks | async "></nz-option>
+          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of rankWeeks | async"></nz-option>
         </nz-select>
       </div>
     </div>
@@ -56,54 +41,71 @@
 
   <div class="content">
     <div class="rating-list">
-      <ng-container *ngIf="rankTypes | async as ranks">
-        <div class="rating-item" *ngFor="let type of ranks.items">
-          <span>{{ type?.shortName }}</span>
-          <span>{{ type?.rate }} / {{ type?.membersCount }}</span>
-        </div>
+      <ng-container *ngIf="rankTypes">
+        <ng-container *ngFor="let type of rankTypes?.items; trackBy: trackByFn">
+          <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
+               (click)="clickByTypeRank(type.id, $event)">
+            <span>{{ type?.shortName }}</span>
+            <span>{{ type?.rate }} / {{ type?.membersCount }}</span>
+          </div>
+        </ng-container>
       </ng-container>
     </div>
 
-<!--    <div class="title-card">
-      Отдел продаж:
-    </div>-->
+    <ng-container *ngIf="(ranks | async)?.items as wins">
+      <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize"
+               [nzRenderItem]="item" [nzPagination]="pagination">
 
-    <div class="card-list">
+        <ng-template #item let-rank>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
+              <!--              <nz-card [nzTitle]="item.name">-->
+              <div class="card">
+                <div>
+                  <div class="personal">
+                    <div class="img">
+                      <img src="{{ rank.user.avatarUrl }}" alt="user" />
+                    </div>
 
-      <div class="card" *ngFor="let rank of ranks | async">
-        <div>
-          <div class="personal">
-            <div class="img">
-              <img src="{{ rank.user.avatarUrl }}" alt="user" />
-            </div>
+                    <ng-container [ngSwitch]="rank?.place">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>
+                    </ng-container>
 
-            <ng-container [ngSwitch]="rank?.place">
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-              <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>
-            </ng-container>
+                    <div class="title">
+                      <div class="fio">
+                        <span>{{ rank?.user?.name }}</span>
+                      </div>
+                      <div class="job">
+                        <div>{{ rank?.user.position }}</div>
+                        <div>{{ rank?.user.department }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icons">
+                    <span class="count count-top">{{ rank?.avgWeekRate }}</span>
+                    <span class="count count-bottom">{{ rank?.avgQuarterRate }}</span>
+                  </div>
+                </div>
 
-            <div class="title">
-              <div class="fio">
-                <span>{{ rank?.user?.name }}</span>
               </div>
-              <div class="job">
-                <div>{{ rank?.user.position }}</div>
-                <div>{{ rank?.user.department }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="count count-top">{{ rank?.avgWeekRate }}</span>
-            <span class="count count-bottom">{{ rank?.avgQuarterRate }}</span>
-          </div>
-        </div>
+              <!--              </nz-card>-->
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
 
-      </div>
+        <ng-template #pagination>
+          <nz-pagination [nzPageIndex]="pageIndex"
+                         [nzPageSize]="pageSize"
+                         [nzTotal]="wins.length"
+                         (nzPageIndexChange)="pageIndex = $event"
+                         (nzPageSizeChange)="pageSize = $event">
 
-    </div>
-    <div class="bottom-panel">
-      <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
-    </div>
+          </nz-pagination>
+        </ng-template>
+      </nz-list>
+    </ng-container>
+
   </div>
 </div>

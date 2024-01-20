@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 import {environment} from '@environments/environment.development';
@@ -116,9 +116,9 @@ export class ApiService {
 
     // Рейтинги
     // Список типов рейтингов
-    getRankTypes(weekId: any): Observable<any> {
+    getRankTypes(weekId: any, userId: any): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/types`, {
-            params: new HttpParams().set('weekId', weekId),
+            params: new HttpParams().set('weekId', weekId).set('userId', userId),
         });
     }
 
@@ -128,20 +128,17 @@ export class ApiService {
     }
 
     // Cписок пользователей в выбранном рейтинге
-    getRank(
-        weekId: number,
-        UserId: number,
-        RankTypeId: number,
-        Limit: number,
-        Offset: number,
-    ): Observable<any> {
+    getRank(weekId: number, RankTypeId: number, Limit: number, Offset: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank`, {
             params: new HttpParams()
                 .set('weekId', weekId)
-                .set('UserId', UserId)
                 .set('RankTypeId', RankTypeId)
                 .set('Limit', Limit)
                 .set('Offset', Offset),
         });
+    }
+
+    private formatErrors(error: any) {
+        return throwError(error.error);
     }
 }

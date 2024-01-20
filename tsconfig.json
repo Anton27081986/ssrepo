@@ -16,6 +16,7 @@
         "experimentalDecorators": true,
         "moduleResolution": "node",
         "importHelpers": true,
+        "allowSyntheticDefaultImports": true,
         "target": "ES2022",
         "paths": {
             "ssnab-ui": ["dist/ssnab-ui"],

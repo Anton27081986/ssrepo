@@ -1,52 +1,72 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
-    ElementRef,
-    HostListener,
     OnDestroy,
     OnInit,
 } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {debounceTime, map, Observable, Subject, take, takeUntil, tap} from 'rxjs';
+import {
+    debounceTime,
+    distinctUntilChanged,
+    map,
+    Observable,
+    Subject,
+    switchMap,
+    tap,
+    zip,
+} from 'rxjs';
 import {UserService} from '@auth/services/user.service';
+import isEqual from 'lodash/isEqual';
 
 @Component({
     selector: 'app-rating',
     templateUrl: './rating.component.html',
     styleUrls: ['./rating.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
 })
 export class RatingComponent implements OnInit, OnDestroy {
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    loginForm!: FormGroup;
     loading = false;
-    checked = true;
     title: any;
     submitted = false;
-    isConfirmLoading = false;
     weekId: any;
-    rankTypeId: any;
-    currentUserId: any;
+    public rankTypeId: any;
+    private currentUserId: any;
     currentUserName: any;
+    placeholder = 'Сотрудник';
 
-    showWindowResult = false;
-    public searchResult!: Observable<any>;
     private readonly modelChanged: Subject<string> = new Subject<string>();
 
-    protected rankTypes!: Observable<any>;
+    protected rankTypes = new Observable<any>().pipe(
+        distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
+    );
+
     protected rankWeeks!: Observable<any>;
     protected ranks!: Observable<any>;
+    public currentUser!: Observable<any>;
+
+    protected getProfile$ = this._userService.getProfile();
+    protected getRankWeeks$ = this._apiService.getRankWeeks();
+
+    pageSize = 6;
+    pageIndex = 1;
+
+    // Переменные для поиска
+    // selectedValue = null;
+    selectedValue = 9593046;
+    listOfOption: Array<{name: string; id: string}> = [];
+
+    nzFilterOption = (): boolean => true;
 
     constructor(
-        private readonly apiService: ApiService,
-        private readonly userService: UserService,
-        private readonly formBuilder: FormBuilder,
+        private readonly _apiService: ApiService,
+        private readonly _userService: UserService,
         private readonly iconService: NzIconService,
-        private readonly resultSearch: ElementRef,
+        private readonly changeDetection: ChangeDetectorRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -65,109 +85,138 @@ export class RatingComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.listUserSelectRank();
+        // Получение пользователя для поиска
+        this._userService
+            .getProfile()
+            .pipe(
+                tap(value => {
+                    this.listOfOption.push({
+                        id: value.id,
+                        name: value.name,
+                    });
+
+                    this.selectedValue = value.id;
+
+                    console.log('listOfOption', this.listOfOption);
+                    console.log('this.selectedValue', this.selectedValue);
+                }),
+            )
+            .subscribe();
+
+        this.getRankTypesByWeekAndUserInit(); // Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
+        this.getPartyByWeekAndRankTypeInit();
 
         // Получение последних 5 недель
-        this.rankWeeks = this.apiService.getRankWeeks().pipe(map(({items}) => items));
+        this.rankWeeks = this._apiService.getRankWeeks().pipe(map(({items}) => items));
 
-        this.loginForm = this.formBuilder.group({
-            login: [],
+        // Подписка на изменения input поиска
+        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
+            if (nextValue.length > 2) {
+                this._apiService
+                    .getUsersByFIO(nextValue)
+                    .pipe(
+                        map(({items}) => items),
+                        tap(data => {
+                            this.listOfOption = data;
+                        }),
+                    )
+                    .subscribe();
+            }
         });
     }
 
-    listUserSelectRank(weekId?: any) {
-        // переписать nest
-        this.apiService
-            .getRankWeeks()
+    // api rank/type
+    // Первоначальная загрузка
+    // Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
+    getRankTypesByWeekAndUserInit() {
+        zip(this.getProfile$, this.getRankWeeks$)
             .pipe(
-                map(({items}) => items),
-                take(1),
+                map(([user, week]) => {
+                    return {
+                        ...user,
+                        week: {...week.items[0]},
+                    };
+                }),
             )
             .subscribe(value => {
-                if (weekId) {
-                    console.log('weekId указан');
-                    this.weekId = weekId;
-                    this.rankTypes = this.apiService.getRankTypes(weekId);
-                } else {
-                    console.log('weekId не указан');
-                    this.weekId = value[0].id;
-                    this.rankTypes = this.apiService.getRankTypes(this.weekId);
-                }
+                this.currentUserId = value.id; // id пользователя используем глобально
+                this.currentUserName = value.name; // id пользователя используем глобально
+                this.weekId = value.week.id; // id недели используем глобально
 
-                this.apiService
-                    .getRankTypes(this.weekId)
-                    .pipe(take(1))
-                    .subscribe(value => {
-                        this.rankTypeId = value.rankTypeId;
-
-                        this.userService
-                            .getProfile()
-                            .pipe(takeUntil(this.destroy$))
-                            .subscribe(value => {
-                                this.currentUserId = value.id;
-                                this.currentUserName = value.name;
-
-                                console.log('weekId', this.weekId);
-                                console.log('userId', this.currentUserName);
-                                console.log('rankTypeId', this.rankTypeId);
-
-                                // Получить участников пользователя
-                                this.ranks = this.apiService
-                                    .getRank(this.weekId, this.currentUserId, this.rankTypeId, 6, 0)
-                                    .pipe(map(({items}) => items));
-                            });
-                    });
+                // Выводим типы за первую неделю
+                this.rankTypes = this._apiService.getRankTypes(value.week.id, value.id);
             });
     }
 
-    onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
+    // api rank
+    // Получение участников при инициализации
+    // Получаем текущий id пользователя подсвечиваем нужный тип
+    // Нужный тип получаем из rankTypeId api rank/types
+    getPartyByWeekAndRankTypeInit() {
+        zip(this.getProfile$, this.getRankWeeks$)
+            .pipe(
+                map(([user, week]) => {
+                    return {
+                        ...user,
+                        week: {...week.items[0]},
+                    };
+                }),
+                switchMap(() => {
+                    return this._apiService.getRankTypes(this.weekId, this.currentUserId);
+                }),
+            )
+            .subscribe(value => {
+                this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
+                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 6, 0);
+            });
     }
 
-    @HostListener('document:click', ['$event'])
-    onClick(event: Event) {
-        console.log('event HostListener', event);
+    // api rank
+    // Ипользуем при поиске
+    getPartyByWeekAndRankTypeSearch(userId?: any, weekId?: any) {
+        // Переделать
+        zip(this.getProfile$)
+            .pipe(
+                map(() => {
+                    return {
+                        user: {userId},
+                    };
+                }),
+                switchMap(() => {
+                    return this._apiService.getRankTypes(weekId, userId);
+                }),
+            )
+            .subscribe(value => {
+                this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
+                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 6, 0);
+            });
+    }
 
-        console.log('showWindowResult', this.showWindowResult);
+    selectWeek(weekId: any): void {
+        this.rankTypes = this._apiService.getRankTypes(weekId, this.currentUserId);
+    }
 
-        if (this.showWindowResult) {
-            if (!this.resultSearch.nativeElement.contains(event.target)) {
-                this.showWindowResult = false;
-                console.log('showWindowResult false set');
-            }
-        }
+    clickByTypeRank(id: any, $event: MouseEvent) {
+        $event.stopPropagation();
+        this.rankTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
+
+        // Вывводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
+        this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 10, 0);
+    }
+
+    trackByFn(index: any, item: any) {
+        return item.id; // unique id corresponding to the item
     }
 
     search($event: any) {
-        $event.stopPropagation();
-        this.showWindowResult = true;
-        this.modelChanged.next($event.target.value);
-
-        this.modelChanged.pipe(debounceTime(300)).subscribe(nextValue => {
-            console.log('метод search modelChanged', nextValue);
-
-            if (nextValue.length > 3) {
-                this.searchResult = this.apiService.getUsersByFIO(nextValue).pipe(
-                    debounceTime(300),
-                    map(({items}) => items),
-                    tap(data => console.log('метод search searchResult', data)),
-                );
-            }
-        });
+        this.modelChanged.next($event);
     }
 
-    selectWeek(value: {id: string; name: string}): void {
-        console.log('selectWeek', value);
-        this.rankTypes = this.apiService.getRankTypes(value);
-
-        this.listUserSelectRank(value);
+    // При выборе клика
+    onUserChange() {
+        console.log('this.selectedValue', this.selectedValue);
+        this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
+        this.getPartyByWeekAndRankTypeSearch(this.selectedValue, this.weekId);
     }
 
     ngOnDestroy() {

@@ -149,6 +149,10 @@
                         font-weight: 500;
                         margin-top: 8px;
                         height: 64px;
+
+                        div:last-child {
+                            margin-top: 4px;
+                        }
                     }
 
                     .more {

@@ -3,7 +3,7 @@
       <nz-form-item>
         <nz-form-control>
           <nz-input-group [nzSuffix]="prefixSearch">
-            <input type="text" nz-input formControlName="search" placeholder="Введите запрос" [(ngModel)]="title" (input)="search($event)" />
+            <input type="text" nz-input formControlName="search" placeholder="Введите запрос" (input)="search($event)" />
           </nz-input-group>
         </nz-form-control>
         <ng-template #prefixSearch>

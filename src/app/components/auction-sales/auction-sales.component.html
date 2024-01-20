@@ -39,7 +39,7 @@
         <tbody>
         <tr *ngFor="let data of basicTable.data">
           <td>
-            <a href="{{ data.detailUrl }}" target="_blank" nz-tooltip nzTooltipTitle="data.tovName">{{ data.tovName | slice:0:67 }} {{ data.tovName.length > 67? '...' : '' }}</a>
+            <a href="{{ data.detailUrl }}" target="_blank" nz-tooltip nzTooltipTitle="{{ data.tovName }}">{{ data.tovName | slice:0:67 }} {{ data.tovName.length > 67? '...' : '' }}</a>
           </td>
           <td>{{ data.source }}</td>
           <td>
