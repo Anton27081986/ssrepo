@@ -41,8 +41,6 @@ export class ThankyouComponent implements OnInit {
 
     // Модальное окно раскрытой карточки
     showModalOpenOut(item: any): void {
-        console.log('Партнер инфо', item);
-
         this.modalCreate
             .create({
                 nzClosable: false,

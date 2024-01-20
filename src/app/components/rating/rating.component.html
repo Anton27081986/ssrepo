@@ -75,11 +75,11 @@
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
               <!--              <nz-card [nzTitle]="item.name">-->
-              <div class="card">
+              <div class="card" (click)="showModalOpenOut(rank?.user?.id)">
                 <div>
                   <div class="personal">
                     <div class="img">
-                      <img src="{{ rank.user.avatarUrl }}" alt="user" />
+                      <img src="{{ rank?.user?.avatarUrl }}" alt="user" />
                     </div>
 
                     <ng-container [ngSwitch]="rank?.place">

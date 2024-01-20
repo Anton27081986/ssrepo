@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
+    ViewContainerRef,
 } from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
@@ -20,6 +20,8 @@ import {
 } from 'rxjs';
 import {UserService} from '@auth/services/user.service';
 import isEqual from 'lodash/isEqual';
+import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-rating',
@@ -47,7 +49,6 @@ export class RatingComponent implements OnInit, OnDestroy {
 
     protected rankWeeks!: Observable<any>;
     protected ranks!: Observable<any>;
-    public currentUser!: Observable<any>;
 
     protected getProfile$ = this._userService.getProfile();
     protected getRankWeeks$ = this._apiService.getRankWeeks();
@@ -56,8 +57,7 @@ export class RatingComponent implements OnInit, OnDestroy {
     pageIndex = 1;
 
     // Переменные для поиска
-    // selectedValue = null;
-    selectedValue = 9593046;
+    selectedValue = null;
     listOfOption: Array<{name: string; id: string}> = [];
 
     nzFilterOption = (): boolean => true;
@@ -73,7 +73,8 @@ export class RatingComponent implements OnInit, OnDestroy {
         private readonly _apiService: ApiService,
         private readonly _userService: UserService,
         private readonly iconService: NzIconService,
-        private readonly changeDetection: ChangeDetectorRef,
+        public modalCreate: NzModalService,
+        private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -208,10 +209,6 @@ export class RatingComponent implements OnInit, OnDestroy {
         this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 10, 0);
     }
 
-    trackByFn(index: any, item: any) {
-        return item.id; // unique id corresponding to the item
-    }
-
     search($event: any) {
         this.modelChanged.next($event);
     }
@@ -221,6 +218,24 @@ export class RatingComponent implements OnInit, OnDestroy {
         console.log('this.selectedValue', this.selectedValue);
         this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
         this.getPartyByWeekAndRankTypeSearch(this.selectedValue, this.weekId);
+    }
+
+    // Модальное окно раскрытой карточки
+    showModalOpenOut(id: any): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Информация о пользователе',
+                nzNoAnimation: false,
+                nzWidth: '365px',
+                nzContent: ModalInfoComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: id,
+                },
+            })
+            .afterClose.subscribe();
     }
 
     ngOnDestroy() {

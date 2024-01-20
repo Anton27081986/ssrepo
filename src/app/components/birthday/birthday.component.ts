@@ -1,9 +1,11 @@
-import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
 import {map, Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 
 @Component({
     selector: 'app-birthday',
@@ -20,6 +22,8 @@ export class BirthdayComponent {
     constructor(
         private readonly iconService: NzIconService,
         private readonly apiService: ApiService,
+        public modalCreate: NzModalService,
+        private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -51,5 +55,22 @@ export class BirthdayComponent {
     prev() {
         // @ts-ignore
         this.myCarousel.pre();
+    }
+
+    showModalOpenOut(item: any): void {
+        this.modalCreate
+            .create({
+                nzClosable: false,
+                nzFooter: null,
+                nzTitle: 'Информация о пользователе',
+                nzNoAnimation: false,
+                nzWidth: '365px',
+                nzContent: ModalInfoComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                },
+            })
+            .afterClose.subscribe();
     }
 }

@@ -10,7 +10,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {Observable, map} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
@@ -96,9 +96,7 @@ export class VictoryComponent implements OnInit {
     }
 
     // Модальное окно раскрытой карточки
-    showModalOpenOut(item: any): void {
-        console.log('Партнер инфо', item);
-
+    showModalOpenOut(id: any): void {
         this.modalCreate
             .create({
                 nzClosable: false,
@@ -109,7 +107,7 @@ export class VictoryComponent implements OnInit {
                 nzContent: ModalInfoComponent,
                 nzViewContainerRef: this.viewContainerRef,
                 nzData: {
-                    data: item,
+                    data: id,
                 },
             })
             .afterClose.subscribe();

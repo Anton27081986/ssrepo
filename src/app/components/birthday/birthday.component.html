@@ -37,7 +37,7 @@
 
               <div class="content">
                 <div class="card-list">
-                  <div class="card" *ngFor="let item of date.items;">
+                  <div class="card" *ngFor="let item of date.items;" (click)="showModalOpenOut(item?.id)">
                     <div class="personal">
                       <div class="img">
                         <img src="{{ item.avatarUrl }}" alt="" />

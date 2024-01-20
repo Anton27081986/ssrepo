@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="contacts">
-          <div class="item">
+          <div class="item" *ngIf="userInfo?.phoneLocal">
             <div>
               <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
               <span class="title">Внутренний телефон:</span>
@@ -34,7 +34,7 @@
               <span class="description">{{ userInfo?.phoneLocal }}</span>
             </div>
           </div>
-          <div class="item">
+          <div class="item" *ngIf="userInfo?.skype">
             <div>
               <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
               <span class="title">Skype:</span>
@@ -43,7 +43,7 @@
               <span class="description">{{ userInfo?.skype }}</span>
             </div>
           </div>
-          <div class="item">
+          <div class="item" *ngIf="userInfo?.phone">
             <div>
               <span class="icon" nz-icon [nzType]="'ss:phone'"></span>
               <span class="title">Телефон:</span>
@@ -52,7 +52,7 @@
               <span class="description">{{ userInfo?.phone }}</span>
             </div>
           </div>
-          <div class="item">
+          <div class="item" *ngIf="userInfo?.email">
             <div>
               <span class="icon" nz-icon [nzType]="'ss:mail'"></span>
               <span class="title">Email:</span>

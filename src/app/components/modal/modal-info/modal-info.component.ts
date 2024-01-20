@@ -19,8 +19,7 @@ export class ModalInfoComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        // console.log('nzModalData', this.nzModalData.data);
-        this.userData = this.apiService.getUserById(this.nzModalData.data.user.id);
+        this.userData = this.apiService.getUserById(this.nzModalData.data);
     }
 
     closeModal(): void {
