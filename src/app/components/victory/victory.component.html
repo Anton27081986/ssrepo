@@ -76,9 +76,9 @@
                         <div>{{ item?.user.position }}</div>
                         <div>{{ item?.user.department }}</div>
                       </div>
-<!--                      <div class="more">-->
-<!--                        <a href="{{ item?.detailUrl }}" target="_blank">Подробнее</a>-->
-<!--                      </div>-->
+<!--                      <div class="more">
+                        <a href="{{ item?.detailUrl }}" target="_blank">Подробнее</a>
+                      </div>-->
                     </div>
                   </div>
                   <div class="icons">
@@ -128,8 +128,10 @@
                         <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
                       </div>
                     </div>
-                    <div class="openOut" (click)="showModalOpenOut(item?.user?.id)">
-                      <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
+                    <div class="openOut">
+                      <a href="{{ item?.detailUrl }}" target="_blank">
+                        <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
+                      </a>
                     </div>
                   </div>
                 </div>
