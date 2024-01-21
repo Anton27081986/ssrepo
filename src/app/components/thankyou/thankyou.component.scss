@@ -65,24 +65,19 @@
             ::ng-deep .anticon {
                 font-size: 21px;
                 margin-right: 7px;
-
-                path {
-                    //stroke: #4770FF!important;
-                    //fill: #4770FF!important;
-                }
             }
         }
         .top-panel-mobile {
             display: none;
         }
+
+        .ant-btn {
+            height: 52px;
+        }
     }
 
     .content {
         .card-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-
             .card {
                 position: relative;
                 width: 408px;
@@ -92,8 +87,6 @@
                 background-color: $white;
                 padding: 20px;
                 margin-top: 30px;
-
-                // flex: 1 0 200px;
 
                 .personal {
                     position: relative;

@@ -8,16 +8,7 @@ import {
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {
-    debounceTime,
-    distinctUntilChanged,
-    map,
-    Observable,
-    Subject,
-    switchMap,
-    tap,
-    zip,
-} from 'rxjs';
+import {distinctUntilChanged, map, Observable, Subject, switchMap, tap, zip} from 'rxjs';
 import {UserService} from '@auth/services/user.service';
 import isEqual from 'lodash/isEqual';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
@@ -117,17 +108,19 @@ export class RatingComponent implements OnInit, OnDestroy {
         // Подписка на изменения input поиска
         zip(this.modelChanged)
             .pipe(
-                debounceTime(1000),
+                // debounceTime(300),
                 tap(value => {
-                    this._apiService
-                        .getUsersByFIO(value[0])
-                        .pipe(
-                            map(({items}) => items),
-                            tap(data => {
-                                this.listOfOption = data;
-                            }),
-                        )
-                        .subscribe();
+                    if (value[0].length >= 3) {
+                        this._apiService
+                            .getUsersByFIO(value[0])
+                            .pipe(
+                                map(({items}) => items),
+                                tap(data => {
+                                    this.listOfOption = data;
+                                }),
+                            )
+                            .subscribe();
+                    }
                 }),
             )
             .subscribe();

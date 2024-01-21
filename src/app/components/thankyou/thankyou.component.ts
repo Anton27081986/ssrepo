@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {formatDate} from '@angular/common';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
@@ -18,6 +18,9 @@ export class ThankyouComponent implements OnInit {
     date: any;
     dateToday: any;
     private yesterday: any;
+
+    pageSize = 6;
+    pageIndex = 1;
 
     constructor(
         private readonly iconService: NzIconService,
@@ -38,7 +41,9 @@ export class ThankyouComponent implements OnInit {
     ngOnInit(): any {
         this.yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         this.dateToday = formatDate(this.yesterday, 'yyyy-MM-dd', 'ru-RU');
-        this.thankyouList = this.apiService.getPartnerThanks(this.dateToday);
+        this.thankyouList = this.apiService
+            .getPartnerThanks(this.dateToday)
+            .pipe(map(({items}) => items.slice(0, 6)));
     }
 
     // Модальное окно раскрытой карточки
@@ -60,9 +65,8 @@ export class ThankyouComponent implements OnInit {
     }
 
     onChange(result: Date): void {
-        this.thankyouList = this.apiService.getPartnerThanks(
-            formatDate(result, 'yyyy-MM-dd', 'ru-RU'),
-        );
-        console.log('onChange: ', formatDate(result, 'yyyy-MM-dd', 'ru-RU'));
+        this.thankyouList = this.apiService
+            .getPartnerThanks(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
+            .pipe(map(({items}) => items.slice(0, 6)));
     }
 }
