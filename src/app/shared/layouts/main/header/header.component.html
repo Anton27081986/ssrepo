@@ -24,12 +24,12 @@
             <div class="search-header">
               <app-search *ngIf="statusInputSearch"></app-search>
 
-              <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''">
-                <span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearch($event)"></span>
+              <div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
+                <span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline"></span>
               </div>
 
-              <div class="icon-bg search-mobile">
-                <span nz-icon [nzType]="statusInputSearchMobile ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline" (click)="openSearchMobile($event)"></span>
+              <div class="icon-bg search-mobile" (click)="openSearchMobile($event)">
+                <span nz-icon [nzType]="statusInputSearchMobile ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline"></span>
               </div>
             </div>
 

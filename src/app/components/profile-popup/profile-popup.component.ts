@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {UserService} from '@auth/services/user.service';
 import {AuthenticationService} from '@auth/services/authentication.service';
 import {map, Observable} from 'rxjs';
+import {environment} from '@environments/environment';
 
 @Component({
     selector: 'app-profile-popup',
@@ -12,11 +13,10 @@ import {map, Observable} from 'rxjs';
     styleUrls: ['./profile-popup.component.scss'],
     changeDetection: ChangeDetectionStrategy.Default,
 })
-export class ProfilePopupComponent {
+export class ProfilePopupComponent implements OnInit {
     public statusAccordion = false;
-    public accounts!: any;
+    public accountsFriends!: Observable<any>;
     public profileData!: any;
-
     public profile!: Observable<any>;
 
     constructor(
@@ -44,10 +44,18 @@ export class ProfilePopupComponent {
             });
 
         this.profile = this.userService.getProfile();
-        this.accounts = this.apiService.getAccounts().pipe(map(({accounts}) => accounts));
+        this.accountsFriends = this.apiService.getAccounts().pipe(map(({items}) => items));
     }
 
     logout(): void {
         this.authenticationService.logout();
+    }
+
+    enterUnderFriendlyAccount(id: any) {
+        this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
+
+        setTimeout(function () {
+            window.location.reload();
+        }, 30);
     }
 }

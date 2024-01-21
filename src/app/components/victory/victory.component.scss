@@ -84,6 +84,63 @@
                     position: relative;
                     display: flex;
 
+                    .users-win-groups {
+                        position: relative;
+
+                        .people-icon {
+                            position: absolute;
+                            top: -5px;
+                            left: -99px;
+                            background-color: $blue;
+                            height: 28px;
+                            width: 28px;
+                            border-radius: 20px;
+                            text-align: center;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            padding-right: 1px;
+                            font-weight: 500;
+                            z-index: 10;
+
+                            ::ng-deep svg {
+                                font-size: 30px !important;
+
+                                path {
+                                    stroke: $white !important;
+                                }
+                            }
+                        }
+
+                        .modal-users-win-groups {
+                            display: none;
+                            opacity: 0;
+
+                            .users-win {
+                                display: flex;
+                                flex-wrap: wrap;
+                                width: 300px;
+                                position: absolute;
+                                top: -6px;
+                                left: -64px;
+                                background-color: #d9e1ff;
+                                border-radius: 8px;
+                                border: 1px solid #b4c4ff;
+                                padding: 4px 16px 4px 16px;
+
+                                .user-win {
+                                    padding-left: 8px;
+                                    color: $blue;
+                                }
+                            }
+                        }
+
+                        .modal-users-win-groups.show {
+                            opacity: 1;
+                            display: block;
+                        }
+                    }
+
                     .img {
                         border-radius: 14px;
                         overflow: hidden;
@@ -93,31 +150,6 @@
 
                         img {
                             width: 90px;
-                        }
-                    }
-
-                    .people-icon {
-                        position: absolute;
-                        top: -5px;
-                        left: -9px;
-                        background-color: $blue;
-                        height: 28px;
-                        width: 28px;
-                        border-radius: 20px;
-                        text-align: center;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding-right: 1px;
-                        font-weight: 500;
-                        z-index: 10;
-
-                        ::ng-deep svg {
-                            font-size: 30px !important;
-
-                            path {
-                                stroke: $white !important;
-                            }
                         }
                     }
 
@@ -213,9 +245,11 @@
                         position: relative;
 
                         .modal-people-likes {
+                            opacity: 0;
                             display: none;
                             position: absolute;
                             bottom: 39px;
+                            left: 0;
                             padding: 0 8px;
                             flex-direction: column;
                             justify-content: center;
@@ -231,6 +265,7 @@
                                 color: $white;
                                 font-size: 10px;
                                 font-style: normal;
+                                display: block;
                             }
 
                             .list-item {
@@ -255,8 +290,9 @@
                             }
                         }
 
-                        .modal-people-likes.active {
-                            display: flex !important;
+                        .modal-people-likes.show {
+                            opacity: 1;
+                            display: block;
                         }
                     }
                 }

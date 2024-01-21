@@ -55,6 +55,30 @@ export class AuthenticationService {
             );
     }
 
+    enterUnderFriendlyAccount(userId: number, returnUrl: string) {
+        return this.http
+            .post<any>(
+                `${environment.apiUrl}/api/auth/changeUser`,
+                {userId, returnUrl},
+                {
+                    headers: this.headers,
+                    observe: 'body',
+                    params: this.params,
+                    responseType: 'json',
+                    reportProgress: true,
+                },
+            )
+            .pipe(
+                map(user => {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    localStorage.setItem('user', JSON.stringify(user));
+                    this.userSubject.next(user);
+
+                    return user;
+                }),
+            );
+    }
+
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('user');

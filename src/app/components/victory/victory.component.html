@@ -66,7 +66,17 @@
                       <img src="{{ item.user?.avatarUrl }}" alt="user" />
                     </div>
 
-                    <span class="people-icon icon" nz-icon [nzType]="'ss:twoPeople'" *ngIf="item?.groupWinUsers"></span>
+                      <div class="users-win-groups" appTooltip *ngIf="item?.groupWinUsers">
+                        <span class="people-icon icon" nz-icon [nzType]="'ss:twoPeople'"></span>
+
+                        <div class="modal-users-win-groups">
+                          <div class="users-win">
+                            <div class="user-win" *ngFor="let groupWinUser of item?.groupWinUsers">
+                              <span>{{ groupWinUser?.name }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                     <div class="title">
                       <div class="fio">
@@ -101,23 +111,30 @@
                   <div class="info">
                     <div class="left-group">
 
-                      <!-- (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"
-                                        (mouseenter)="peoplelikesOpen=!peoplelikesOpen;"-->
-                      <div class="modal-people-likes">
-                        <span class="title">Нравится:</span>
-                        <nz-avatar-group class="list-item">
-                          <nz-avatar class="item" nzIcon="user" nzSrc="assets/images/profile/user-popup.png"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Яна"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nz-tooltip nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                        </nz-avatar-group>
-                      </div>
+<!--                      appTooltip (click)="setLike(item, item?.id)"-->
+<!--                      (mouseenter)="getListLikedUsers(item?.id)"-->
 
-                      <div class="like" [ngClass]="item.isUserLiked ? 'liked': ''">
-                        <span class="like-icon icon" nz-icon [nzType]="'ss:like'" (click)="setLike(item, item?.id)"></span>
-                        <span class="count" appTooltip>{{ item.likesCount }}</span>
+                      <div class="like"
+                           [ngClass]="item.isUserLiked ? 'liked': ''"
+                           appPeopleLiked
+                           (click)="setLike(item, item?.id)">
+                        <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
+                        <span class="count">{{ item.likesCount }}</span>
+
+                        <!-- Получить пользователей которые лайкнули -->
+                        <div class="modal-people-likes">
+                          <span class="title">Нравится:</span>
+                          <nz-avatar-group class="list-item">
+<!--                            <nz-avatar *ngFor="let likedUser of likedUsers"
+                                       class="item"
+                                       nzIcon="user"
+                                       nzSrc="{{ likedUser?.avatarUrl }}"
+                                       nz-tooltip
+                                       nzTooltipTitle="{{ likedUser?.name }}"
+                            ></nz-avatar>-->
+                          </nz-avatar-group>
+                        </div>
+
                       </div>
 
                       <div class="comment" (click)="showModalComments(item)">

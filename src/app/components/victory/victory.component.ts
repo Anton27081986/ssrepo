@@ -2,8 +2,8 @@ import {
     ChangeDetectionStrategy,
     Component,
     ElementRef,
-    HostListener,
     OnInit,
+    ViewChild,
     ViewContainerRef,
 } from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
@@ -24,25 +24,14 @@ import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-lik
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class VictoryComponent implements OnInit {
-    // @ViewChild()
+    @ViewChild('liked') likedPeople!: ElementRef;
 
-    @HostListener('mouseover', ['$event.target']) onMouseHover() {
-        // console.log();
-    }
-
-    @HostListener('mouseleave') hideTooltip() {
-        // console.log();
-    }
-
-    peoplelikesOpen = false;
     isVisibleComments = false;
-    isVisibleOpenOut = false;
     loginForm!: FormGroup;
-
-    checked = true;
 
     winsList!: Observable<any>;
     winsUrl!: Observable<any>;
+    listLikedUsers!: Observable<any>;
 
     winsGroupsList!: Observable<any>;
 
@@ -52,15 +41,12 @@ export class VictoryComponent implements OnInit {
     searchPanelVisible = false;
     // isClickLike = false;
 
-    isVisibleAdd = false; // Переделать
-
     constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
         public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
-        private readonly _ef: ElementRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -80,6 +66,8 @@ export class VictoryComponent implements OnInit {
 
     ngOnInit() {
         this.winsList = this.apiService.getWins().pipe(map(({items}) => items));
+        // this.listLikedUsers = this.apiService.getListLikedUsers(id, 1)
+
         this.winsUrl = this.apiService.getWins();
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
 
@@ -166,9 +154,11 @@ export class VictoryComponent implements OnInit {
     }
 
     setLike(item: any, objectId: number, type = 1) {
+        console.log('setLike objectId', objectId);
+
         //  && !this.isClickLike
         if (!item.isUserLiked) {
-            console.log('objectId', objectId);
+            console.log('setLike objectId', objectId);
             this.apiService.setLike(objectId, type).subscribe({
                 next: () => {
                     // console.log('data', data);

@@ -45,6 +45,7 @@ import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory
 import {TooltipDirective} from './victory/tooltip.directive';
 import {ModalInfoUserComponent} from './modal/modal-info-user/modal-info-user.component';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import {PeopleLikedDirective} from '@app/components/victory/people-liked.directive';
 
 @NgModule({
     declarations: [
@@ -98,6 +99,7 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
         NzCardModule,
         TooltipDirective,
         NzToolTipModule,
+        PeopleLikedDirective,
     ],
     exports: [
         SearchComponent,

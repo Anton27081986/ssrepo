@@ -113,6 +113,12 @@ export class ApiService {
         });
     }
 
+    getListLikedUsers(id: number, type: number): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/likes/${id}`, {
+            params: new HttpParams().set('Type', type),
+        });
+    }
+
     // Удалить like
     deleteLike(objectId: number, type?: number): Observable<any> {
         return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
