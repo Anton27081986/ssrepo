@@ -19,6 +19,12 @@
             margin-top: 20px;
             background-color: $white;
 
+            .item.active-link {
+                span {
+                    color: $blue;
+                }
+            }
+
             .item {
                 position: relative;
                 display: flex;
