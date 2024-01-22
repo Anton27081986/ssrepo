@@ -56,6 +56,6 @@ export class ProfilePopupComponent implements OnInit {
 
         setTimeout(function () {
             window.location.reload();
-        }, 50);
+        }, 200);
     }
 }

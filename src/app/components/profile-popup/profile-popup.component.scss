@@ -108,7 +108,7 @@
             }
         }
 
-        .card-list {
+        .card-list, .logged-user {
             margin-top: 14px;
 
             .accordion {
@@ -175,6 +175,10 @@
                     }
                 }
             }
+        }
+
+        .logged-user {
+            margin-top: 0!important;
         }
     }
 }

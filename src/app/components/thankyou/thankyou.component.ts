@@ -47,9 +47,7 @@ export class ThankyouComponent implements OnInit {
 
         this.thankyouList = this.apiService
             .getPartnerThanks(this.dateToday)
-            .pipe(
-                map(({items}) => items.slice(0, 6))
-            );
+            .pipe(map(({items}) => items.slice(0, 6)));
     }
 
     // Модальное окно раскрытой карточки
@@ -73,8 +71,6 @@ export class ThankyouComponent implements OnInit {
     onChange(result: Date): void {
         this.thankyouList = this.apiService
             .getPartnerThanks(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-            .pipe(
-                map(({items}) => items.slice(0, 6)),
-            );
+            .pipe(map(({items}) => items.slice(0, 6)));
     }
 }

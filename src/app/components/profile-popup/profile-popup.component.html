@@ -13,7 +13,7 @@
           </div>
           <div class="title">
             <div class="fio">
-              <span>{{ url!.name }} </span>
+              <span>{{ url!.name }}</span>
             </div>
             <div class="job">
               <div>
@@ -55,7 +55,38 @@
       </div>
     </ng-container>
 
+
+    <ng-container *ngIf="profile | async as data">
+      <ng-container *ngIf="data?.loggedUser as loggedUser">
+      <hr />
+        <div class="card-list">
+        <div class="accordion">
+            <div class="card logged-user">
+              <div class="personal">
+                <div class="img">
+                  <img src="{{ loggedUser?.avatarUrl }}" alt="users" />
+                </div>
+                <div class="title">
+                  <div class="fio">
+                    <span>{{ loggedUser?.lastName }} {{ loggedUser?.firstName }} {{ loggedUser?.surName }}</span>
+                  </div>
+                  <div class="job">
+                    <div>
+                      <div>{{ loggedUser?.position }}</div>
+                      <div>{{ loggedUser?.department }}</div>
+                    </div>
+                  </div>
+                </div>
+                <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(loggedUser?.id)"></span>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      </ng-container>
+    </ng-container>
     <hr />
+
     <div class="manager">
       <div nz-menu-item [routerLink]="'profile/settings'" class="button-icon-left">
         <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
@@ -71,7 +102,7 @@
 
     <ng-container *ngIf="accountsFriends | async as accounts">
       <div class="card-list">
-      <div class="accordion" (click)="statusAccordion=!statusAccordion;">
+        <div class="accordion" (click)="statusAccordion=!statusAccordion;">
         <span class="title">Связь с другими сотрудниками</span>
         <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
       </div>
