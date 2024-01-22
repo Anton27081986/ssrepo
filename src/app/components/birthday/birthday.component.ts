@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef,} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
@@ -46,14 +40,18 @@ export class BirthdayComponent implements OnInit {
 
     ngOnInit(): any {
         this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
-        this.birthdayList = this.apiService.getBirthday(this.dateToday).pipe(map(({days}) => days));
+        this.birthdayList = this.apiService.getBirthday(this.dateToday)
+            .pipe(map(({days}) => days.slice(2,-2)));
     }
 
     onChange(result: Date): void {
         console.log('onChange: ', result);
         this.birthdayList = this.apiService
             .getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-            .pipe(map(({days}) => days));
+            .pipe(
+                map(({days}) => days.slice(2,-2)),
+                // tap(value => console.log('value', value))
+            );
     }
 
     showModalOpenOut(item: any): void {
