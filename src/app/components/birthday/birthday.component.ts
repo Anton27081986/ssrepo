@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewChild, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
@@ -6,6 +6,7 @@ import {map, Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {formatDate} from "@angular/common";
 
 @Component({
     selector: 'app-birthday',
@@ -13,11 +14,12 @@ import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.co
     styleUrls: ['./birthday.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BirthdayComponent {
+export class BirthdayComponent implements OnInit {
     @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
     public birthdayList!: Observable<any>;
 
     date = null;
+    protected dateToday!: string;
 
     constructor(
         private readonly iconService: NzIconService,
@@ -37,24 +39,17 @@ export class BirthdayComponent {
     }
 
     ngOnInit(): any {
-        this.birthdayList = this.apiService.getBirthday().pipe(map(({days}) => days));
-
-        // this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
-        // this.thankyouList = this.apiService.getPartnerThanks(this.dateToday);
+        this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
+        this.birthdayList = this.apiService
+            .getBirthday(this.dateToday)
+            .pipe(map(({days}) => days))
     }
 
     onChange(result: Date): void {
         console.log('onChange: ', result);
-    }
-
-    next() {
-        // @ts-ignore
-        this.myCarousel.next();
-    }
-
-    prev() {
-        // @ts-ignore
-        this.myCarousel.pre();
+        this.birthdayList = this.apiService
+            .getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
+            .pipe(map(({days}) => days));
     }
 
     showModalOpenOut(item: any): void {

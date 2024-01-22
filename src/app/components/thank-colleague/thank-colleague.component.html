@@ -15,25 +15,33 @@
         <nz-modal [(nzVisible)]="isVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
           <ng-container *nzModalContent>
             <div>
-              <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
+              <form nz-form [formGroup]="thankColleague" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
                 <nz-form-item>
                   <nz-form-control>
-                    <nz-select ngModel="lucy" nzPlaceHolder="Кому:">
-                      <nz-option nzValue="jack" nzLabel="Гришин Пантелей Серапионович"></nz-option>
-                      <nz-option nzValue="lucy" nzLabel="Гришин Пантелей Серапионович"></nz-option>
+                    <nz-select
+                      formControlName="name"
+                      nzShowSearch
+                      nzServerSearch
+                      nzPlaceHolder="Кому:"
+                      [nzShowArrow]="true"
+                      [nzFilterOption]="nzFilterOption"
+                      (nzOnSearch)="search($event)"
+                    >
+                      <nz-option *ngFor="let user of listOfOption" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
                     </nz-select>
                   </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
                   <span class="field-tile">Описание:</span>
                   <div>
-                    <textarea nz-input placeholder="Не забывайте благодарить коллег!" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+                    <textarea formControlName="comment" nz-input placeholder="Не забывайте благодарить коллег!" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
                   </div>
                 </nz-form-item>
+                <ng-template #prefixUser>
+                  <i nz-icon nzType="user"></i>
+                </ng-template>
               </form>
-              <ng-template #prefixUser>
-                <i nz-icon nzType="user"></i>
-              </ng-template>
+
             </div>
           </ng-container>
           <div *nzModalFooter>

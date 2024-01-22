@@ -22,7 +22,8 @@
 
   <div class="tabs">
     <div class="calendar">
-      <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+      <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+
       <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
       <ng-template #sufixCalendar>
         <i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
@@ -44,10 +45,11 @@
                       </div>
                       <div class="title">
                         <div class="fio">
-                          <span>{{ item.name }}</span>
+                          <span>{{ item?.name }}</span>
                         </div>
                         <div class="job">
-                          <div>{{ item.position }}</div>
+                          <div>{{ item?.position }}</div>
+                          <div>{{ item?.birthDate | date }}</div>
                         </div>
                       </div>
                     </div>

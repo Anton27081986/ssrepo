@@ -1,10 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {map, Observable} from 'rxjs';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
-// import {NzModalRef} from "ng-zorro-antd/modal";
 
 @Component({
     selector: 'app-thank-colleague',
@@ -15,7 +14,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 export class ThankColleagueComponent implements OnInit {
     date: any;
     isVisible = false;
-    loginForm!: FormGroup;
+    thankColleague!: FormGroup;
     loading = false;
     submitted = false;
     isConfirmLoading = false;
@@ -25,6 +24,14 @@ export class ThankColleagueComponent implements OnInit {
     pageSize = 6;
     pageIndex = 1;
 
+    private readonly modelChanged: Subject<string> = new Subject<string>();
+
+    // Переменные для поиска
+    selectedValue = null;
+    listOfOption: Array<{name: string; id: string}> = [];
+
+    nzFilterOption = (): boolean => true;
+
     constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
@@ -33,19 +40,32 @@ export class ThankColleagueComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        zip(this.modelChanged)
+            .pipe(
+                // debounceTime(300),
+                tap(value => {
+                    if (value[0].length >= 3) {
+                        this.apiService
+                            .getUsersByFIO(value[0])
+                            .pipe(
+                                map(({items}) => items),
+                                tap(data => {
+                                    this.listOfOption = data;
+                                }),
+                            )
+                            .subscribe();
+                    }
+                }),
+            )
+            .subscribe();
+
         this.thankColleagueList = this.apiService
             .getThanksColleague()
             .pipe(map(({items}) => items));
 
-        this.loginForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
+        this.thankColleague = this.formBuilder.group({
+            name: [''],
+            comment: [''],
         });
     }
 
@@ -54,12 +74,20 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     handleOk(): void {
+        console.log('onSubmit')
         this.isVisible = false;
     }
 
     handleCancel(): void {
         this.isVisible = false;
     }
+
+    search($event: any) {
+        this.modelChanged.next($event);
+    }
+
+    // При выборе клика
+    onUserChange() {}
 
     // Модальное окно комментариев
     showModalComments(item: any): void {
@@ -82,10 +110,12 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     onSubmit() {
+        console.log('onSubmit', this.thankColleague)
+
         this.submitted = true;
 
         // stop here if form is invalid
-        if (this.loginForm.invalid) {
+        if (this.thankColleague.invalid) {
             return;
         }
 

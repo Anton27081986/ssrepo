@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewContainerRef,} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -27,7 +20,7 @@ export class VictoryComponent implements OnInit {
     @ViewChild('liked') likedPeople!: ElementRef;
 
     isVisibleComments = false;
-    loginForm!: FormGroup;
+    victoryForm!: FormGroup;
 
     winsList!: Observable<any>;
     winsUrl!: Observable<any>;
@@ -71,8 +64,8 @@ export class VictoryComponent implements OnInit {
         this.winsUrl = this.apiService.getWins();
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
 
-        this.loginForm = this.formBuilder.group({
-            login: [
+        this.victoryForm = this.formBuilder.group({
+            search: [
                 '',
                 [
                     Validators.required,

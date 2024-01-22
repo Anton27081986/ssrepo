@@ -50,8 +50,11 @@ export class ApiService {
     }
 
     // Birthday
-    public getBirthday(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/birthdays`);
+    public getBirthday(date: string): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/birthdays`, {
+            params: new HttpParams()
+                .set('date', date)
+        });
     }
 
     // Спасибо партнеру
@@ -131,7 +134,9 @@ export class ApiService {
     // Список типов рейтингов
     getRankTypes(weekId: any, userId: any): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/types`, {
-            params: new HttpParams().set('weekId', weekId).set('userId', userId),
+            params: new HttpParams()
+                .set('weekId', weekId)
+                .set('userId', userId),
         });
     }
 

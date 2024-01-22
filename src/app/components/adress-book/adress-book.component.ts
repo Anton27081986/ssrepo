@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewContainerRef} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
@@ -13,7 +13,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
     styleUrls: ['./adress-book.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdressBookComponent {
+export class AdressBookComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
     checked = true;
@@ -52,7 +52,7 @@ export class AdressBookComponent {
         this.addressBooks = this.apiService.getAddressBooks().pipe();
 
         this.loginForm = this.formBuilder.group({
-            login: [
+            search: [
                 '',
                 [
                     Validators.required,
