@@ -88,10 +88,15 @@
     <hr />
 
     <div class="manager">
-      <div nz-menu-item [routerLink]="'profile/settings'" class="button-icon-left">
-        <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
-        <span class="title">Настройки профиля</span>
-      </div>
+      <ng-container *ngIf="profile | async as data">
+        <ng-container *ngIf="!data?.loggedUser">
+          <div nz-menu-item [routerLink]="'profile/settings'" class="button-icon-left">
+            <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
+            <span class="title">Настройки профиля</span>
+          </div>
+        </ng-container>
+      </ng-container>
+
       <div class="button-icon-left" (click)="logout()">
         <span class="icon exit-icon" nz-icon [nzType]="'ss:exit'"></span>
         <span class="title">Выйти</span>
