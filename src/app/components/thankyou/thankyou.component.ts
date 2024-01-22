@@ -21,6 +21,7 @@ export class ThankyouComponent implements OnInit {
 
     pageSize = 6;
     pageIndex = 1;
+    protected thankyouUrl!: Observable<any>;
 
     constructor(
         private readonly iconService: NzIconService,
@@ -41,9 +42,14 @@ export class ThankyouComponent implements OnInit {
     ngOnInit(): any {
         this.yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         this.dateToday = formatDate(this.yesterday, 'yyyy-MM-dd', 'ru-RU');
+
+        this.thankyouUrl = this.apiService.getPartnerThanks(this.dateToday);
+
         this.thankyouList = this.apiService
             .getPartnerThanks(this.dateToday)
-            .pipe(map(({items}) => items.slice(0, 6)));
+            .pipe(
+                map(({items}) => items.slice(0, 6))
+            );
     }
 
     // Модальное окно раскрытой карточки
@@ -67,6 +73,8 @@ export class ThankyouComponent implements OnInit {
     onChange(result: Date): void {
         this.thankyouList = this.apiService
             .getPartnerThanks(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-            .pipe(map(({items}) => items.slice(0, 6)));
+            .pipe(
+                map(({items}) => items.slice(0, 6)),
+            );
     }
 }
