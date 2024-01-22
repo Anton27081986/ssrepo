@@ -74,7 +74,7 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     handleOk(): void {
-        console.log('onSubmit')
+        console.log('onSubmit');
         this.isVisible = false;
     }
 
@@ -110,7 +110,7 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log('onSubmit', this.thankColleague)
+        console.log('onSubmit', this.thankColleague);
 
         this.submitted = true;
 

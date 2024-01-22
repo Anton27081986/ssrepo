@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewContainerRef,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';

@@ -1,4 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
@@ -6,7 +12,7 @@ import {map, Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
-import {formatDate} from "@angular/common";
+import {formatDate} from '@angular/common';
 
 @Component({
     selector: 'app-birthday',
@@ -40,9 +46,7 @@ export class BirthdayComponent implements OnInit {
 
     ngOnInit(): any {
         this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
-        this.birthdayList = this.apiService
-            .getBirthday(this.dateToday)
-            .pipe(map(({days}) => days))
+        this.birthdayList = this.apiService.getBirthday(this.dateToday).pipe(map(({days}) => days));
     }
 
     onChange(result: Date): void {
