@@ -2,6 +2,33 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 :host {
+    .gold-like {
+        margin-bottom: 2px;
+        ::ng-deep path {
+            fill: #ffe18a !important;
+            stroke: #ffb800 !important;
+            fill-opacity: 1;
+        }
+    }
+
+    .silver-like {
+        margin-bottom: 2px;
+        ::ng-deep path {
+            fill: #a9a9a9 !important;
+            stroke: #748494 !important;
+            fill-opacity: 1;
+        }
+    }
+
+    .bronze-like {
+        margin-bottom: 2px;
+        ::ng-deep path {
+            fill: #d8a36f !important;
+            stroke: #94724a !important;
+            fill-opacity: 1;
+        }
+    }
+
     .modal-people-likes {
         opacity: 0;
         display: none;
@@ -73,29 +100,6 @@
             align-items: flex-start;
             padding: 4px 0 4px 0;
 
-            .gold-like {
-                margin-bottom: 2px;
-                ::ng-deep path {
-                    fill: #fff6c5 !important;
-                    stroke: #ffb800 !important;
-                }
-            }
-
-            .silver-like {
-                margin-bottom: 2px;
-                ::ng-deep path {
-                    fill: #a9a9a9 !important;
-                    stroke: #748494 !important;
-                }
-            }
-
-            .bronze-like {
-                ::ng-deep path {
-                    fill: #ce8d5d !important;
-                    stroke: #94724a !important;
-                }
-            }
-
             .like-icon:last-child {
                 padding-bottom: 0;
             }
@@ -136,23 +140,19 @@
     .count {
         padding-right: 6px;
     }
-}
 
-.like.liked {
-    // background: $blue;
-    .icon {
-        ::ng-deep path {
-            stroke: #4770ff;
-            fill: #afc0ff;
-            fill-opacity: 1;
+    .like.liked {
+        // background: $blue;
+        .icon {
+            ::ng-deep path {
+                stroke: #4770ff;
+                fill: #afc0ff;
+                fill-opacity: 0;
+            }
         }
-    }
 
-    .count {
-        padding-right: 6px;
-    }
-
-    .count {
-        // color: $white;
+        .count {
+            padding-right: 6px;
+        }
     }
 }

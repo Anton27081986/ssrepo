@@ -2,6 +2,84 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 :host {
+    .icon {
+        font-size: 20px;
+
+        ::ng-deep path {
+            stroke: $blue;
+        }
+    }
+
+    .like {
+        .gold-like {
+            margin-bottom: 2px;
+            ::ng-deep path {
+                fill: #ffe18a !important;
+                stroke: #ffb800 !important;
+            }
+        }
+
+        .silver-like {
+            margin-bottom: 2px;
+            ::ng-deep path {
+                fill: #a9a9a9 !important;
+                stroke: #748494 !important;
+            }
+        }
+
+        .bronze-like {
+            ::ng-deep path {
+                fill: #d8a36f !important;
+                stroke: #94724a !important;
+            }
+        }
+
+        background-color: $gray-light;
+        color: $blue;
+        font-size: 12px;
+        width: 50px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding-left: 1px;
+        cursor: pointer;
+
+        .like-icon {
+            padding-left: 1px;
+        }
+
+        .count {
+            padding-right: 6px;
+        }
+    }
+
+    .like.liked {
+        // background: $blue;
+        .icon {
+            ::ng-deep path {
+                stroke: #4770ff;
+                fill: #afc0ff;
+                fill-opacity: 1;
+            }
+        }
+
+        .count {
+            padding-right: 6px;
+        }
+
+        .count {
+            // color: $white;
+        }
+
+        //.icon {
+        //    ::ng-deep path {
+        //        stroke: $white;
+        //    }
+        //}
+    }
+
     .modal-people-likes {
         opacity: 0;
         display: none;
@@ -76,7 +154,7 @@
             .gold-like {
                 margin-bottom: 2px;
                 ::ng-deep path {
-                    fill: #fff6c5 !important;
+                    fill: #ffe18a !important;
                     stroke: #ffb800 !important;
                 }
             }
@@ -91,7 +169,7 @@
 
             .bronze-like {
                 ::ng-deep path {
-                    fill: #ce8d5d !important;
+                    fill: #d8a36f !important;
                     stroke: #94724a !important;
                 }
             }
@@ -106,59 +184,4 @@
         opacity: 1;
         display: block;
     }
-}
-
-.icon {
-    font-size: 20px;
-
-    ::ng-deep path {
-        stroke: $blue;
-    }
-}
-
-.like {
-    background-color: $gray-light;
-    color: $blue;
-    font-size: 12px;
-    width: 50px;
-    height: 32px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding-left: 1px;
-    cursor: pointer;
-
-    .like-icon {
-        padding-left: 1px;
-    }
-
-    .count {
-        padding-right: 6px;
-    }
-}
-
-.like.liked {
-    // background: $blue;
-    .icon {
-        ::ng-deep path {
-            stroke: #4770ff;
-            fill: #afc0ff;
-            fill-opacity: 1;
-        }
-    }
-
-    .count {
-        padding-right: 6px;
-    }
-
-    .count {
-        // color: $white;
-    }
-
-    //.icon {
-    //    ::ng-deep path {
-    //        stroke: $white;
-    //    }
-    //}
 }

@@ -117,23 +117,11 @@ export class ApiService {
     }
 
     // Удалить like
-    deleteLike(objectId: any, type: any, awardId?: any): Observable<any> {
+    deleteLike(objectId: any, type: any): Observable<any> {
         return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
-            params: new HttpParams()
-                .set('objectId', objectId)
-                .set('type', type)
-                .set('awardId', awardId),
+            params: new HttpParams().set('objectId', objectId).set('type', type),
         });
     }
-
-    // Удалить like
-    /*    deleteLike(objectId: any, type?: any, awardId?: any): Observable<any> {
-        return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
-            objectId,
-            type,
-            awardId
-        });
-    } */
 
     getListLikedUsers(id: number, type: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/likes/${id}`, {

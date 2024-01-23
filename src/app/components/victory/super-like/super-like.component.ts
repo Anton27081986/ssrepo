@@ -12,7 +12,8 @@ export class SuperLikeComponent implements AfterViewInit {
     @Input() likesCountProps!: number;
     @Input() objectIdProps!: number;
     @Input() typeObject!: number;
-    @Input() awardId!: number;
+    @Input() award: any;
+    @Input() isExtendedMode: any;
 
     isUserLiked!: boolean;
     likesCount!: number;
@@ -23,14 +24,17 @@ export class SuperLikeComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         this.likesCount = this.likesCountProps;
-        this.isUserLiked = this.isUserLikedProps; // Используется в шаблоне ипользуется
+        this.isUserLiked = this.isUserLikedProps;
         this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
+
+        // this.awardChange = ;
     }
 
     setSuperLike(item: any, objectId: number, type: number, award?: number) {
         if (!this.isClickLike) {
             this.apiService.setLike(objectId, type, award).subscribe({
                 next: () => {
+                    this.award = award;
                     this.likesCount += 1;
                     this.isClickLike = true; // true Если тут то лайк долго ставится
                 },
@@ -39,8 +43,9 @@ export class SuperLikeComponent implements AfterViewInit {
         }
 
         if (this.isClickLike) {
-            this.apiService.deleteLike(objectId, type, award).subscribe({
+            this.apiService.deleteLike(objectId, type).subscribe({
                 next: () => {
+                    this.award = award;
                     this.likesCount -= 1;
                     this.isClickLike = false;
                 },

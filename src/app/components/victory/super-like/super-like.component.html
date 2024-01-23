@@ -2,20 +2,24 @@
      [ngClass]="isUserLiked ? 'liked': ''"
      appSuperLike
 >
-  <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
+  <ng-container [ngSwitch]="award">
+    <span class="like-icon icon gold-like" nz-icon [nzType]="'ss:goldLike'" *ngSwitchCase="1"></span>
+    <span class="like-icon icon silver-like" nz-icon [nzType]="'ss:silverLike'" *ngSwitchCase="2"></span>
+    <span class="like-icon icon bronze-like" nz-icon [nzType]="'ss:bronzeLike'" *ngSwitchCase="3"></span>
+      <span class="like-icon icon" nz-icon [nzType]="'ss:like'" *ngSwitchCase="null"></span>
+  </ng-container>
   <span class="count">{{ likesCount }}</span>
-
   <!-- Получить пользователей которые лайкнули -->
   <div class="modal-people-likes">
     <span class="title">Нравится:</span>
     <nz-avatar-group class="list-item">
-      <!--                            <nz-avatar *ngFor="let likedUser of likedUsers"
-                                             class="item"
-                                             nzIcon="user"
-                                             nzSrc="{{ likedUser?.avatarUrl }}"
-                                             nz-tooltip
-                                             nzTooltipTitle="{{ likedUser?.name }}"
-                                  ></nz-avatar>-->
+      <!--  <nz-avatar *ngFor="let likedUser of likedUsers"
+             class="item"
+             nzIcon="user"
+             nzSrc="{{ likedUser?.avatarUrl }}"
+             nz-tooltip
+             nzTooltipTitle="{{ likedUser?.name }}"
+      ></nz-avatar>-->
     </nz-avatar-group>
   </div>
 
@@ -27,5 +31,4 @@
       <span class="like-icon icon bronze-like" nz-icon [nzType]="'ss:bronzeLike'" (click)="setSuperLike(isUserLiked, objectIdProps, 1, 3)"></span>
     </div>
   </div>
-
 </div>

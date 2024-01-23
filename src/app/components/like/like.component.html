@@ -1,10 +1,14 @@
-<!--appPeopleLiked-->
-<!--     isUserLiked -->
-
 <div class="like"
      [ngClass]="isClickLike ? 'liked': ''"
      (click)="setLike(isUserLiked, objectIdProps)">
-  <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
+
+  <ng-container [ngSwitch]="award">
+    <span class="like-icon icon gold-like" nz-icon [nzType]="'ss:goldLike'" *ngSwitchCase="1"></span>
+    <span class="like-icon icon silver-like" nz-icon [nzType]="'ss:silverLike'" *ngSwitchCase="2"></span>
+    <span class="like-icon icon bronze-like" nz-icon [nzType]="'ss:bronzeLike'" *ngSwitchCase="3"></span>
+    <span class="like-icon icon" nz-icon [nzType]="'ss:like'" *ngSwitchCase="null"></span>
+  </ng-container>
+
   <span class="count">{{ likesCount }}</span>
 
   <!-- Получить пользователей которые лайкнули -->

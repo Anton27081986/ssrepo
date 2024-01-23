@@ -3,7 +3,7 @@
     <div>
       <div class="title" *ngIf="winsUrl | async as url">
         <a href="{{ url.linkToActivity }}" target="_blank">
-          <h1>Победы1</h1>
+          <h1>Победы</h1>
         </a>
       </div>
     </div>
@@ -25,16 +25,9 @@
             </nz-form-item>
           </form>
         </span>
-          <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
-          <!--        <app-result-item-->
-          <!--            *ngFor="let book of books"-->
-          <!--            [book]="book"-->
-          <!--            [title]="title"-->
-          <!--        ></app-result-item>-->
-          <!--    </div>-->
+
         </div>
         <div class="select-group">
-          <!--        [(ngModel)]="selectedValue"  -->
           <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
             <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
           </nz-select>
@@ -57,7 +50,6 @@
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
               <!--              <nz-card [nzTitle]="item.name">-->
-
               <div class="card">
                 <div>
                   <div class="personal">
@@ -85,18 +77,15 @@
                         <div>{{ item?.user.position }}</div>
                         <div>{{ item?.user.department }}</div>
                       </div>
-<!--                      <div class="more">
-                        <a href="{{ item?.detailUrl }}" target="_blank">Подробнее</a>
-                      </div>-->
                     </div>
                   </div>
-                  <div class="icons">
-                    <ng-container [ngSwitch]="item?.award">
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
-                    </ng-container>
-                  </div>
+<!--                  <div class="icons">-->
+<!--                    <ng-container [ngSwitch]="item?.award">-->
+<!--                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>-->
+<!--                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>-->
+<!--                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>-->
+<!--                    </ng-container>-->
+<!--                  </div>-->
 
                   <div class="date">
                     <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
@@ -111,13 +100,16 @@
                     <div class="left-group">
 
                         <!-- Постановка super лайка -->
+                        <!-- Проверяем поставил ли ЧДЛ супер лайк-->
+
                         <ng-container *ngIf="getExtendedMode; else userlike">
                           <app-super-like
                             [isUserLikedProps]="item.isUserLiked"
                             [likesCountProps]="item.likesCount"
                             [objectIdProps]="item.id"
                             [typeObject]="1"
-                            [awardId]="1"
+                            [award]="item.award"
+                            [isExtendedMode]="(winsList | async)?.isExtendedMode"
                           ></app-super-like>
                         </ng-container>
 
@@ -129,6 +121,8 @@
                             [likesCountProps]="item.likesCount"
                             [objectIdProps]="item.id"
                             [typeObject]="1"
+                            [award]="item.award"
+                            [isExtendedMode]="(winsList | async)?.isExtendedMode"
                           ></app-like>
 
                         </ng-template>
