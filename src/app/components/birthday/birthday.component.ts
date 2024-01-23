@@ -50,13 +50,9 @@ export class BirthdayComponent implements OnInit {
     }
 
     onChange(result: Date): void {
-        console.log('onChange: ', result);
         this.birthdayList = this.apiService
             .getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-            .pipe(
-                map(({days}) => days),
-                // tap(value => console.log('value', value))
-            );
+            .pipe(map(({days}) => days));
     }
 
     showModalOpenOut(item: any): void {

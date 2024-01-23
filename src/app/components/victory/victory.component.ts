@@ -125,8 +125,6 @@ export class VictoryComponent implements OnInit {
 
     // Модальное окно комментариев
     showModalComments(item: any): void {
-        console.log('Победы комент', item);
-
         this.modalCreate
             .create({
                 nzClosable: false,

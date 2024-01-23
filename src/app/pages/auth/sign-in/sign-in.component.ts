@@ -47,14 +47,9 @@ export class SignInComponent implements OnInit {
         return this.loginForm.controls;
     }
 
-    createMessage(type: string): void {
-        this.message.create(type, `This is a message of ${type}`);
-    }
-
     onSubmit() {
         this.submitted = true;
 
-        // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
         }
@@ -64,16 +59,10 @@ export class SignInComponent implements OnInit {
             .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
             .pipe(first())
             .subscribe(
-                (data: any) => {
-                    // get return url from query parameters or default to home page
-
+                () => {
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
                     this.router.navigateByUrl(returnUrl);
-
-                    if (data) {
-                        // console.log('data', data);
-                    }
                 },
                 (err: unknown) => {
                     this.loading = false;

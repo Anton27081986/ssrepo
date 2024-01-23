@@ -74,7 +74,6 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     handleOk(): void {
-        console.log('onSubmit');
         this.isVisible = false;
     }
 
@@ -91,8 +90,6 @@ export class ThankColleagueComponent implements OnInit {
 
     // Модальное окно комментариев
     showModalComments(item: any): void {
-        console.log('спасибо коллеге', item);
-
         this.modalCreate
             .create({
                 nzClosable: false,
@@ -110,8 +107,6 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log('onSubmit', this.thankColleague);
-
         this.submitted = true;
 
         // stop here if form is invalid
