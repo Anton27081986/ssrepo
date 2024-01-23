@@ -26,11 +26,11 @@ export class SuperLikeComponent implements AfterViewInit {
         this.likesCount = this.likesCountProps;
         this.isUserLiked = this.isUserLikedProps;
         this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
-
-        // this.awardChange = ;
     }
 
-    setSuperLike(item: any, objectId: number, type: number, award?: number) {
+    setSuperLike($event: MouseEvent, item: any, objectId: number, type: number, award?: number) {
+        $event.stopPropagation();
+
         if (!this.isClickLike) {
             this.apiService.setLike(objectId, type, award).subscribe({
                 next: () => {
@@ -45,7 +45,7 @@ export class SuperLikeComponent implements AfterViewInit {
         if (this.isClickLike) {
             this.apiService.deleteLike(objectId, type).subscribe({
                 next: () => {
-                    this.award = award;
+                    this.award = null;
                     this.likesCount -= 1;
                     this.isClickLike = false;
                 },
