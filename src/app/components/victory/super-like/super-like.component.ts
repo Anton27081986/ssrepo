@@ -28,7 +28,7 @@ export class SuperLikeComponent implements AfterViewInit {
         this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
     }
 
-    setSuperLike($event: MouseEvent, item: any, objectId: number, type: number, award?: number) {
+    setSuperLike($event: Event, item: any, objectId: number, type: number, award?: number) {
         $event.stopPropagation();
 
         if (!this.isClickLike) {
