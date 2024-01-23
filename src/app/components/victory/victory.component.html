@@ -113,9 +113,11 @@
                         <!-- Постановка super лайка -->
                         <ng-container *ngIf="getExtendedMode; else userlike">
                           <app-super-like
-                            [isUserLiked]="item.isUserLiked"
-                            [likesCount]="item.likesCount"
-                            [objectId]="item.id"
+                            [isUserLikedProps]="item.isUserLiked"
+                            [likesCountProps]="item.likesCount"
+                            [objectIdProps]="item.id"
+                            [typeObject]="1"
+                            [awardId]="1"
                           ></app-super-like>
                         </ng-container>
 
@@ -123,10 +125,10 @@
                         <ng-template #userlike>
 
                           <app-like
-                            [isUserLiked]="item.isUserLiked"
-                            [likesCount]="item.likesCount"
+                            [isUserLikedProps]="item.isUserLiked"
+                            [likesCountProps]="item.likesCount"
+                            [objectIdProps]="item.id"
                             [typeObject]="1"
-                            [objectId]="item.id"
                           ></app-like>
 
                         </ng-template>

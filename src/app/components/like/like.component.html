@@ -1,6 +1,8 @@
+<!--appPeopleLiked-->
+<!--     isUserLiked -->
+
 <div class="like"
      [ngClass]="isClickLike ? 'liked': ''"
-     appPeopleLiked
      (click)="setLike(isUserLiked, objectIdProps)">
   <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
   <span class="count">{{ likesCount }}</span>

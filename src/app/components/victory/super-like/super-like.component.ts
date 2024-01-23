@@ -8,9 +8,11 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuperLikeComponent implements OnInit {
-    @Input('isUserLiked') isUserLikedProps!: boolean;
-    @Input('likesCount') likesCountProps!: number;
-    @Input('objectId') objectIdProps!: number;
+    @Input() isUserLikedProps!: boolean;
+    @Input() likesCountProps!: number;
+    @Input() objectIdProps!: number;
+    @Input() typeObject!: number;
+    @Input() awardId!: number;
 
     isUserLiked!: boolean;
     likesCount!: number;
