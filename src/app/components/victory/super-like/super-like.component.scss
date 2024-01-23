@@ -132,18 +132,27 @@
     .like-icon {
         padding-left: 1px;
     }
+
+    .count {
+        padding-right: 6px;
+    }
 }
 
 .like.liked {
-    background: $blue;
-
-    .count {
-        color: $white;
-    }
-
+    // background: $blue;
     .icon {
         ::ng-deep path {
-            stroke: $white;
+            stroke: #4770ff;
+            fill: #afc0ff;
+            fill-opacity: 1;
         }
+    }
+
+    .count {
+        padding-right: 6px;
+    }
+
+    .count {
+        // color: $white;
     }
 }
