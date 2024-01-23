@@ -40,12 +40,14 @@ import {NzCardModule} from 'ng-zorro-antd/card';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from './victory/modal/add-victory-modal/add-victory-modal.component';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
-import {PeopleLikeModalComponent} from './victory/modal/people-like-modal/people-like-modal.component';
 import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory.component';
 import {TooltipDirective} from './victory/tooltip.directive';
 import {ModalInfoUserComponent} from './modal/modal-info-user/modal-info-user.component';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {PeopleLikedDirective} from '@app/components/victory/people-liked.directive';
+import {SuperLikeDirective} from '@app/components/victory/super-like.directive';
+import {LikeComponent} from './like/like.component';
+import {SuperLikeComponent} from './victory/super-like/super-like.component';
 
 @NgModule({
     declarations: [
@@ -66,9 +68,10 @@ import {PeopleLikedDirective} from '@app/components/victory/people-liked.directi
         ModalInfoComponent,
         AddVictoryModalComponent,
         CommentsModalComponent,
-        PeopleLikeModalComponent,
         PartyVictoryComponent,
         ModalInfoUserComponent,
+        LikeComponent,
+        SuperLikeComponent,
     ],
     imports: [
         CommonModule,
@@ -100,6 +103,7 @@ import {PeopleLikedDirective} from '@app/components/victory/people-liked.directi
         TooltipDirective,
         NzToolTipModule,
         PeopleLikedDirective,
+        SuperLikeDirective,
     ],
     exports: [
         SearchComponent,

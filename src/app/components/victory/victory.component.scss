@@ -243,57 +243,6 @@
                     .left-group {
                         display: flex;
                         position: relative;
-
-                        .modal-people-likes {
-                            opacity: 0;
-                            display: none;
-                            position: absolute;
-                            bottom: 39px;
-                            left: 0;
-                            padding: 0 8px;
-                            flex-direction: column;
-                            justify-content: center;
-                            align-items: flex-start;
-                            gap: 4px;
-                            border-radius: 8px;
-                            border: 1px solid rgba(0, 0, 0, 0.2);
-                            background: rgba(0, 0, 0, 0.6);
-                            backdrop-filter: blur(3.5px);
-
-                            .title {
-                                margin-top: 4px;
-                                color: $white;
-                                font-size: 10px;
-                                font-style: normal;
-                                display: block;
-                            }
-
-                            .list-item {
-                                position: relative;
-                                z-index: 1;
-                                padding-bottom: 9px;
-
-                                .item {
-                                    position: relative;
-                                    width: 28px;
-                                    height: 28px;
-                                    background-color: #886cff;
-                                    border-radius: 20px;
-                                    border: 1px solid $border-radius;
-                                    overflow-y: hidden;
-                                    z-index: 2;
-
-                                    img {
-                                        width: 28px;
-                                    }
-                                }
-                            }
-                        }
-
-                        .modal-people-likes.show {
-                            opacity: 1;
-                            display: block;
-                        }
                     }
                 }
 
@@ -302,38 +251,6 @@
 
                     ::ng-deep path {
                         stroke: $blue;
-                    }
-                }
-
-                .like {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 50px;
-                    height: 32px;
-                    border-radius: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    padding-left: 1px;
-                    cursor: pointer;
-
-                    .like-icon {
-                        padding-left: 1px;
-                    }
-                }
-
-                .like.liked {
-                    background: $blue;
-
-                    .count {
-                        color: $white;
-                    }
-
-                    .icon {
-                        ::ng-deep path {
-                            stroke: $white;
-                        }
                     }
                 }
 

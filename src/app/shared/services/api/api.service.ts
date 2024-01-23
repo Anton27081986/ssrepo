@@ -108,24 +108,36 @@ export class ApiService {
     }
 
     // Добавить like
-    setLike(objectId: number, type?: number): Observable<any> {
+    setLike(objectId: number, type?: number, awardId?: number): Observable<any> {
         return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
             objectId,
             type,
-        });
-    }
-
-    getListLikedUsers(id: number, type: number): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/likes/${id}`, {
-            params: new HttpParams().set('Type', type),
+            awardId,
         });
     }
 
     // Удалить like
-    deleteLike(objectId: number, type?: number): Observable<any> {
-        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
+    deleteLike(objectId: any, type: any, awardId?: any): Observable<any> {
+        return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
+            params: new HttpParams()
+                .set('objectId', objectId)
+                .set('type', type)
+                .set('awardId', awardId),
+        });
+    }
+
+    // Удалить like
+    /*    deleteLike(objectId: any, type?: any, awardId?: any): Observable<any> {
+        return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
             objectId,
             type,
+            awardId
+        });
+    } */
+
+    getListLikedUsers(id: number, type: number): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/likes/${id}`, {
+            params: new HttpParams().set('Type', type),
         });
     }
 

@@ -18,7 +18,6 @@ export class PeopleLikedDirective implements AfterViewInit {
 
     // mouseenter
     @HostListener('mouseenter') onMouseEnter() {
-        console.log('this.queryModalPeopleLikes', this.queryModalPeopleLikes);
         this.renderer.addClass(this.queryModalPeopleLikes, 'show');
     }
 

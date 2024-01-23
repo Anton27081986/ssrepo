@@ -124,10 +124,16 @@
                     </div>
                     <div class="info">
                       <div class="left-group">
-                        <div class="like">
-                          <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>
-                          <span class="count">{{ item.likesCount }}</span>
-                        </div>
+                        <app-like
+                          [isUserLiked]="item.isUserLiked"
+                          [likesCount]="item.likesCount"
+                          [typeObject]="0"
+                          [objectId]="item.id"
+                        ></app-like>
+<!--                        <div class="like">-->
+<!--                          <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>-->
+<!--                          <span class="count">{{ item.likesCount }}</span>-->
+<!--                        </div>-->
                         <div class="comment" (click)="showModalComments(item);">
                           <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
                           <span class="count">{{ item.commentsCount }}</span>

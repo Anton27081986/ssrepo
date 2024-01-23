@@ -15,7 +15,6 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
-import {PeopleLikeModalComponent} from '@app/components/victory/modal/people-like-modal/people-like-modal.component';
 
 @Component({
     selector: 'app-victory',
@@ -39,7 +38,7 @@ export class VictoryComponent implements OnInit {
     pageIndex = 1;
 
     searchPanelVisible = false;
-    // isClickLike = false;
+    public getExtendedMode!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -61,11 +60,19 @@ export class VictoryComponent implements OnInit {
         this.iconService.addIconLiteral('ss:onePeople', AppIcons.onePeople);
         this.iconService.addIconLiteral('ss:twoPeople', AppIcons.twoPeople);
         this.iconService.addIconLiteral('ss:iconClose', AppIcons.iconClose);
-        this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
+        this.iconService.addIconLiteral('ss:goldLike', AppIcons.goldLike);
+        this.iconService.addIconLiteral('ss:silverLike', AppIcons.silverLike);
+        this.iconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
     }
 
     ngOnInit() {
-        this.winsList = this.apiService.getWins().pipe(map(({items}) => items));
+        this.winsList = this.apiService.getWins();
+        this.apiService
+            .getWins()
+            .pipe(map(({isExtendedMode}) => isExtendedMode))
+            .subscribe(value => {
+                this.getExtendedMode = value;
+            });
         // this.listLikedUsers = this.apiService.getListLikedUsers(id, 1)
 
         this.winsUrl = this.apiService.getWins();
@@ -134,39 +141,6 @@ export class VictoryComponent implements OnInit {
                 },
             })
             .afterClose.subscribe();
-    }
-
-    // Модальное окно тех кто лайкнул
-    showPeopleLikeModel(): void {
-        this.modalCreate
-            .create({
-                nzClosable: false,
-                nzFooter: null,
-                nzNoAnimation: false,
-                nzContent: PeopleLikeModalComponent,
-                nzViewContainerRef: this.viewContainerRef,
-            })
-            .afterClose.subscribe();
-    }
-
-    handleCancelComments(): void {
-        this.isVisibleComments = false;
-    }
-
-    setLike(item: any, objectId: number, type = 1) {
-        console.log('setLike objectId', objectId);
-
-        //  && !this.isClickLike
-        if (!item.isUserLiked) {
-            console.log('setLike objectId', objectId);
-            this.apiService.setLike(objectId, type).subscribe({
-                next: () => {
-                    // console.log('data', data);
-                    // this.isClickLike = true;
-                },
-                error: (error: unknown) => console.log(error),
-            });
-        }
     }
 
     onSubmit() {}

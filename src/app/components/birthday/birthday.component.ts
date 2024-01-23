@@ -46,9 +46,7 @@ export class BirthdayComponent implements OnInit {
 
     ngOnInit(): any {
         this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
-        this.birthdayList = this.apiService
-            .getBirthday(this.dateToday)
-            .pipe(map(({days}) => days.slice(2, -2)));
+        this.birthdayList = this.apiService.getBirthday(this.dateToday).pipe(map(({days}) => days));
     }
 
     onChange(result: Date): void {
@@ -56,7 +54,7 @@ export class BirthdayComponent implements OnInit {
         this.birthdayList = this.apiService
             .getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
             .pipe(
-                map(({days}) => days.slice(2, -2)),
+                map(({days}) => days),
                 // tap(value => console.log('value', value))
             );
     }

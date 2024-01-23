@@ -22,6 +22,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AppInitializerProvider} from './app-initializer.service';
 import {ComponentsModule} from '@app/components/components.module';
+import {StoreModule} from '@ngrx/store';
 
 registerLocaleData(ru);
 
@@ -41,6 +42,7 @@ registerLocaleData(ru);
         NzButtonModule,
         NzIconModule,
         ComponentsModule,
+        StoreModule.forRoot({}, {}),
     ],
     providers: [
         AppInitializerProvider,
