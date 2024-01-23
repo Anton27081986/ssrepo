@@ -20,7 +20,10 @@ export class LikeComponent implements AfterViewInit {
 
     public isClickLike!: boolean; // Начальное состояние клика
 
-    constructor(private readonly apiService: ApiService) {}
+    constructor(
+        private readonly apiService: ApiService,
+        // private readonly ngZone: NgZone,
+    ) {}
 
     ngAfterViewInit(): void {
         this.likesCount = this.likesCountProps;
@@ -29,6 +32,10 @@ export class LikeComponent implements AfterViewInit {
     }
 
     setLike(isUserLiked: any, objectId: number, type = this.typeObject) {
+        // this.ngZone.onStable.subscribe(() => {
+        //     console.log('zone stableed');
+        // });
+
         if (!this.isClickLike) {
             this.apiService.setLike(objectId, type).subscribe({
                 next: () => {

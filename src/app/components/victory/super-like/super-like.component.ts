@@ -28,8 +28,8 @@ export class SuperLikeComponent implements AfterViewInit {
         this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
     }
 
-    setSuperLike($event: Event, item: any, objectId: number, type: number, award?: number) {
-        $event.stopPropagation();
+    setSuperLike(item: any, objectId: number, type: number, award?: number) {
+        // $event.stopPropagation();
 
         if (!this.isClickLike) {
             this.apiService.setLike(objectId, type, award).subscribe({
