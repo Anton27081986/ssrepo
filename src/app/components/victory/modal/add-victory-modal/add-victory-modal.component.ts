@@ -22,7 +22,7 @@ export class AddVictoryModalComponent implements OnInit {
         {label: 'Совместная победа', value: 'Совместная победа', disabled: true, checked: true},
     ];
 
-    partyWinSelectedTags: Array<{name: string; id: string}> = ([{id: '0', name: 'Шубникова А.К.'}]);
+    partyWinSelectedTags: Array<{name: string; id: string}> = [{id: '0', name: 'Шубникова А.К.'}];
 
     tprSelectedTags: Array<{name: string; id: string}> = [{id: '0', name: 'Микро'}];
 
