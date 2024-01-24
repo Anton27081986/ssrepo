@@ -8,32 +8,6 @@
       </div>
     </div>
     <div class="open-all-table">
-
-      <ng-container *ngIf="searchPanelVisible">
-        <div class="search">
-        <span class="">
-          <form nz-form [formGroup]="victoryForm" class="search-form" (ngSubmit)="onSubmit()">
-            <nz-form-item>
-              <nz-form-control>
-                <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Введите запрос" (input)="search()" />
-                </nz-input-group>
-              </nz-form-control>
-              <ng-template #prefixSearch>
-                <i nz-icon nzType="search" class="search-icon-suffix"></i>
-              </ng-template>
-            </nz-form-item>
-          </form>
-        </span>
-
-        </div>
-        <div class="select-group">
-          <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
-            <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
-          </nz-select>
-        </div>
-      </ng-container>
-
       <div class="button" (click)="showModaAddWin()">
         <button nz-button class="button" [nzType]="'primary'">
           Добавить победу
@@ -43,7 +17,7 @@
   </div>
 
   <div class="content">
-    <ng-container *ngIf="(winsList | async)?.items as wins">
+    <ng-container *ngIf="(winsList | async)?.items as wins; else loader">
       <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
 
         <ng-template #item let-item>
@@ -147,18 +121,33 @@
           </nz-list-item>
         </ng-template>
 
-        <ng-template #pagination>
-          <nz-pagination [nzPageIndex]="pageIndex"
-                         [nzPageSize]="pageSize"
-                         [nzTotal]="wins.length"
-                         (nzPageIndexChange)="pageIndex = $event"
-                         (nzPageSizeChange)="pageSize = $event">
+        <!--        (nzPageIndexChange)="pageIndex = $event"-->
+        <!--        (nzPageSizeChange)="pageSize = $event"-->
 
-          </nz-pagination>
-        </ng-template>
+<!--        (this.winsList | async)?.total-->
+
+
       </nz-list>
 
+      <ng-template #pagination>
+        <nz-pagination
+          [nzTotal]="100"
+          [nzPageIndex]="pageIndex"
+          [nzPageSize]="pageSize"
+          (nzPageIndexChange)="nzPageIndexChange($event)"
+          (nzPageSizeChange)="pageSize = $event"
+          [nzResponsive]="true"
+          [nzHideOnSinglePage]="true"
+        >
+        </nz-pagination>
+      </ng-template>
+
     </ng-container>
+    <ng-template #loader>
+      <div class="spin">
+        <nz-spin nzSimple></nz-spin>
+      </div>
+    </ng-template>
   </div>
 </div>
 

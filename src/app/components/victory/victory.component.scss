@@ -14,13 +14,12 @@
         }
 
         .open-all-table {
+            display: flex;
+
             .ant-input-affix-wrapper,
             .ant-input.ant-input-stepperless {
                 background-color: #ffffff !important;
             }
-
-            display: flex;
-            // align-items: center;
 
             ::ng-deep .anticon {
                 fill-opacity: 1;
@@ -41,7 +40,6 @@
                         height: 52px !important;
                         padding: 9px 0 0 26px !important;
                         font-size: 16px;
-                        // opacity: 0.6;
                     }
                 }
             }
@@ -61,11 +59,12 @@
     }
 
     .content {
+        margin-top: 37px;
         .card-list {
             ::ng-deep .ant-list-items {
                 display: flex;
                 flex-wrap: wrap;
-                justify-content: space-between;
+                gap: 28px;
             }
 
             .card {
@@ -76,9 +75,6 @@
                 border: 1px solid $border-color;
                 background-color: $white;
                 padding: 15px 20px 20px 20px;
-                margin-top: 37px;
-
-                // flex: 1 0 200px;
 
                 .personal {
                     position: relative;
@@ -277,13 +273,6 @@
                     }
                 }
             }
-            .card:last-child {
-                // margin-left: 28px;
-            }
-        }
-        .card-list:after {
-            //content: '';
-            //flex: auto;
         }
 
         .bottom-panel {
@@ -304,7 +293,6 @@
     .message::-webkit-scrollbar-track {
         background-color: $gray;
         border-radius: 60px;
-        // margin: 24px;
         height: 48px;
     }
 
@@ -402,7 +390,6 @@
 }
 
 // Модальные окна
-
 ::ng-deep {
     .openout-modal {
         .card {
@@ -411,8 +398,6 @@
     }
 
     .comments-modal {
-        // padding-bottom: 20px;
-
         .card.list {
             padding: 0;
             margin-top: 0;
@@ -603,11 +588,6 @@
 
     ::ng-deep {
         .ant-modal {
-            // width: 558px !important;
-
-            .ant-modal-header {
-            }
-
             .ant-modal-body {
                 .ant-checkbox-wrapper + .ant-checkbox-wrapper {
                     margin-left: 0 !important;

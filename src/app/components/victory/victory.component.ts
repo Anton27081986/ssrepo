@@ -1,16 +1,9 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewContainerRef,} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
@@ -31,11 +24,13 @@ export class VictoryComponent implements OnInit {
     winsList!: Observable<any>;
     winsUrl!: Observable<any>;
     listLikedUsers!: Observable<any>;
+    total!: Observable<any>;
 
     winsGroupsList!: Observable<any>;
 
     pageSize = 6;
     pageIndex = 1;
+    offset = 0;
 
     searchPanelVisible = false;
     public getExtendedMode!: Observable<any>;
@@ -66,16 +61,22 @@ export class VictoryComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.winsList = this.apiService.getWins();
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset);
+        // this.total = this.apiService.getWins(this.pageSize, this.offset).pipe(
+        //     map(({total}) => total),
+        //     tap((value) => console.log('value', value))
+        // );
+
         this.apiService
-            .getWins()
+            .getWins(this.pageSize, this.offset)
             .pipe(map(({isExtendedMode}) => isExtendedMode))
             .subscribe(value => {
                 this.getExtendedMode = value;
             });
         // this.listLikedUsers = this.apiService.getListLikedUsers(id, 1)
 
-        this.winsUrl = this.apiService.getWins();
+        this.winsUrl = this.apiService.getWins(this.pageSize, this.offset);
+
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
 
         this.victoryForm = this.formBuilder.group({
@@ -145,4 +146,27 @@ export class VictoryComponent implements OnInit {
     onSubmit() {}
 
     search() {}
+
+    nzPageIndexChange($event: number) {
+        console.log('this.page IndexpageIndex ', this.pageIndex);
+        console.log('this.pageIndex $event', $event);
+
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe(
+            tap(_=> {
+                this.offset = $event;
+                this.pageIndex = $event;
+            })
+        )
+
+        console.log('this.pageIndex после нажатия', this.pageIndex);
+
+        // this.apiService.getWins(this.pageSize, $event)
+        //     .subscribe();
+    }
+
+    // nzPageSizeChange($event: number) {
+    //
+    //     // this.pageSize = $event
+    //     console.log('nzPageSizeChange')
+    // }
 }
