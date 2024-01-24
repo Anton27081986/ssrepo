@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
 import {first} from 'rxjs';
-import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-sign-in',
@@ -26,7 +25,6 @@ export class SignInComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly authenticationService: AuthenticationService,
-        private readonly message: NzMessageService,
     ) {}
 
     ngOnInit() {
@@ -64,8 +62,6 @@ export class SignInComponent implements OnInit {
                     console.log('HTTP Error', err);
                     this.error = err;
                     this.errorState = true;
-                    // this.stateDescription = err.message; // настроить текст ошибки
-                    // this.createMessage('error'); // всплывающее окно с ошибкой
                 },
                 () => console.log('HTTP request completed.'),
             );
