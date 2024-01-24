@@ -1,7 +1,6 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {NZ_MODAL_DATA, NzModalRef} from 'ng-zorro-antd/modal';
-import {Observable} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
@@ -10,19 +9,15 @@ import {ApiService} from '@app/shared/services/api/api.service';
     styleUrls: ['./comments-modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentsModalComponent {
+export class CommentsModalComponent implements OnInit {
     readonly nzModalData: any = inject(NZ_MODAL_DATA);
-    userData!: Observable<any>;
 
-    loginForm!: FormGroup;
+    addComment!: FormGroup;
     submitted = false;
     loading = false;
     isConfirmLoading = false;
 
-    peoplelikesOpen = false;
-    // attachIsVisible = false;
     commentVisible = false;
-    attachVisible = false;
 
     constructor(
         private readonly apiService: ApiService,
@@ -31,27 +26,13 @@ export class CommentsModalComponent {
     ) {}
 
     ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
+        this.addComment = this.formBuilder.group({
+            comment: '',
         });
     }
 
-    onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
+    handleOk(): void {
+        console.log('nzModalData');
     }
 
     search() {}

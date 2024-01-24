@@ -124,7 +124,7 @@ export class VictoryComponent implements OnInit {
     }
 
     // Модальное окно комментариев
-    showModalComments(item: any): void {
+    showModalComments(item: any, type: number): void {
         this.modalCreate
             .create({
                 nzClosable: false,
@@ -136,6 +136,7 @@ export class VictoryComponent implements OnInit {
                 nzViewContainerRef: this.viewContainerRef,
                 nzData: {
                     data: item,
+                    type,
                 },
             })
             .afterClose.subscribe();

@@ -1,6 +1,18 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
 .add-modal {
     .join-win {
         pointer-events: none;
+        color: $black;
+        margin-top: 8px;
+    }
+
+    .tag-selected-name {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
     }
 }
 

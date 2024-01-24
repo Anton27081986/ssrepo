@@ -23,7 +23,7 @@ export class AuctionSalesComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly apiService: ApiService,
     ) {
-        this.route.queryParams.subscribe(value => console.log('route', value));
+        this.route.queryParams.subscribe();
     }
 
     loadDataFromServer(pageIndex: number, pageSize: number): void {

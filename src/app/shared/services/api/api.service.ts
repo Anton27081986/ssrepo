@@ -88,6 +88,22 @@ export class ApiService {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins`);
     }
 
+    // Добавить победу
+    public addWins(text: string, userIds: any, productIds: any): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/wins`, {
+            text,
+            userIds,
+            productIds,
+        });
+    }
+
+    // Поиск продукта по названию
+    public searchProductByName(q: string): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/products`, {
+            params: new HttpParams().set('q', q),
+        });
+    }
+
     // Поиск пользователей по ФИО
     public getUsersByFIO(title: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/search`, {
