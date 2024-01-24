@@ -38,6 +38,6 @@ export class CommentsModalComponent implements OnInit {
         const awardId = this.nzModalData.data.award;
         const note = this.addComment.get('comment')?.value;
 
-        this._apiService.addCommets(objectId, type, awardId, note).subscribe()
+        this._apiService.addCommets(objectId, type, awardId, note).subscribe();
     }
 }

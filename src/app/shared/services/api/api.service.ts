@@ -109,7 +109,7 @@ export class ApiService {
             objectId,
             type,
             awardId,
-            note
+            note,
         });
     }
 
@@ -188,8 +188,7 @@ export class ApiService {
     // Получение комментария по id
     public getCommentId(id: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
-            params: new HttpParams()
-                .set('id', id)
+            params: new HttpParams().set('id', id),
         });
     }
 }
