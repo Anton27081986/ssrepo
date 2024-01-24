@@ -1,4 +1,11 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, ViewContainerRef,} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    OnInit,
+    ViewChild,
+    ViewContainerRef,
+} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -152,11 +159,11 @@ export class VictoryComponent implements OnInit {
         console.log('this.pageIndex $event', $event);
 
         this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe(
-            tap(_=> {
+            tap(_ => {
                 this.offset = $event;
                 this.pageIndex = $event;
-            })
-        )
+            }),
+        );
 
         console.log('this.pageIndex после нажатия', this.pageIndex);
 
