@@ -84,8 +84,14 @@ export class ApiService {
     }
 
     // Wins список побед по группам
-    public getWins(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins`);
+    public getWins(Limit: number, Offset: number): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins`, {
+            params: new HttpParams()
+                // .set('GroupId', GroupId)
+                // .set('Query', Query)
+                .set('Offset', Offset)
+                .set('Limit', Limit),
+        });
     }
 
     // Добавить победу
@@ -94,6 +100,16 @@ export class ApiService {
             text,
             userIds,
             productIds,
+        });
+    }
+
+    // Добавить победу
+    public addCommets(objectId: string, type: any, awardId: any, note: any): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments`, {
+            objectId,
+            type,
+            awardId,
+            note
         });
     }
 
@@ -166,6 +182,14 @@ export class ApiService {
                 .set('RankTypeId', RankTypeId)
                 .set('Limit', Limit)
                 .set('Offset', Offset),
+        });
+    }
+
+    // Получение комментария по id
+    public getCommentId(id: string): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
+            params: new HttpParams()
+                .set('id', id)
         });
     }
 }

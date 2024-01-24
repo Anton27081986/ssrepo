@@ -48,7 +48,10 @@ import {PeopleLikedDirective} from '@app/components/victory/people-liked.directi
 import {SuperLikeDirective} from '@app/components/victory/super-like.directive';
 import {LikeComponent} from './like/like.component';
 import {SuperLikeComponent} from './victory/super-like/super-like.component';
-import {BackendErrorMessagesComponent} from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
+import {
+    BackendErrorMessagesComponent
+} from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
+import {NzSpinModule} from "ng-zorro-antd/spin";
 
 @NgModule({
     declarations: [
@@ -106,6 +109,7 @@ import {BackendErrorMessagesComponent} from '@app/shared/modules/backend-error-m
         NzToolTipModule,
         PeopleLikedDirective,
         SuperLikeDirective,
+        NzSpinModule,
     ],
     exports: [
         SearchComponent,

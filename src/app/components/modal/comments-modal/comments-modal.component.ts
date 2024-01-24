@@ -14,26 +14,30 @@ export class CommentsModalComponent implements OnInit {
 
     addComment!: FormGroup;
     submitted = false;
-    loading = false;
     isConfirmLoading = false;
 
     commentVisible = false;
 
     constructor(
-        private readonly apiService: ApiService,
+        private readonly _apiService: ApiService,
         private readonly modal: NzModalRef,
         private readonly formBuilder: FormBuilder,
     ) {}
 
     ngOnInit() {
+        console.log('nzModalData', this.nzModalData);
+
         this.addComment = this.formBuilder.group({
             comment: '',
         });
     }
 
     handleOk(): void {
-        console.log('nzModalData');
-    }
+        const objectId = this.nzModalData.data.id;
+        const type = this.nzModalData.type;
+        const awardId = this.nzModalData.data.award;
+        const note = this.addComment.get('comment')?.value;
 
-    search() {}
+        this._apiService.addCommets(objectId, type, awardId, note).subscribe()
+    }
 }
