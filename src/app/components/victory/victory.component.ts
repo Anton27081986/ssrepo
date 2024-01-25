@@ -133,19 +133,18 @@ export class VictoryComponent implements OnInit, DoCheck {
     }
 
     // Модальное окно комментариев
-    showModalComments(item: any, type: number): void {
+    showModalComments(data: any, type: number): void {
         this.modalCreate
             .create({
                 nzClosable: true,
                 nzFooter: null,
-                nzTitle: `Победа № ${item.user.id}`,
+                nzTitle: `Победа № ${data.user.id}`,
                 nzNoAnimation: false,
                 nzWidth: '560px',
                 nzContent: CommentsModalComponent,
                 nzViewContainerRef: this.viewContainerRef,
                 nzData: {
-                    data: item,
-                    type,
+                    data, type,
                 },
             })
             .afterClose.subscribe();
