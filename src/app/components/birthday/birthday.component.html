@@ -22,7 +22,7 @@
 
   <div class="tabs">
     <div class="calendar">
-      <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+      <nz-date-picker [nzAllowClear]="false" [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
 
       <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
       <ng-template #sufixCalendar>

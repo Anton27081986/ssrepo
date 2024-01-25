@@ -144,7 +144,8 @@ export class VictoryComponent implements OnInit, DoCheck {
                 nzContent: CommentsModalComponent,
                 nzViewContainerRef: this.viewContainerRef,
                 nzData: {
-                    data, type,
+                    data,
+                    type,
                 },
             })
             .afterClose.subscribe();
