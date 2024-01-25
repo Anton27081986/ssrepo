@@ -125,13 +125,36 @@
                     </div>
                     <div class="info">
                       <div class="left-group">
-                        <app-like
-                          [isUserLikedProps]="item.isUserLiked"
-                          [likesCountProps]="item.likesCount"
-                          [objectIdProps]="item.id"
-                          [typeObject]="0"
-                        ></app-like>
-                        <div class="comment" (click)="showCommentsModal(item);">
+
+                        <!-- Постановка super лайка -->
+                        <!-- Проверяем поставил ли ЧДЛ супер лайк-->
+
+                        <ng-container *ngIf="getExtendedMode; else userlike">
+                          <app-super-like
+                            [isUserLikedProps]="item.isUserLiked"
+                            [likesCountProps]="item.likesCount"
+                            [objectIdProps]="item.id"
+                            [typeObject]="0"
+                            [award]="item.award"
+                            [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
+                          ></app-super-like>
+                        </ng-container>
+
+                        <!-- Постановка обычного лайка -->
+                        <ng-template #userlike>
+
+                          <app-like
+                            [isUserLikedProps]="item.isUserLiked"
+                            [likesCountProps]="item.likesCount"
+                            [objectIdProps]="item.id"
+                            [typeObject]="0"
+                            [award]="item.award"
+                            [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
+                          ></app-like>
+
+                        </ng-template>
+
+                        <div class="comment" (click)="showModalComments(item,0);">
                           <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
                           <span class="count">{{ item.commentsCount }}</span>
                         </div>

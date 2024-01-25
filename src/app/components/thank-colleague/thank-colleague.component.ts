@@ -29,7 +29,9 @@ export class ThankColleagueComponent implements OnInit {
     public thankColleagueList!: Observable<any>;
     public pageSize = 6;
     public pageIndex = 1;
+    public offset = 0;
     public currentUserId: any;
+    public getExtendedMode!: Observable<any>;
 
     private readonly modelChanged: Subject<string> = new Subject<string>();
 
@@ -77,6 +79,13 @@ export class ThankColleagueComponent implements OnInit {
 
         this.loadAllThanksForColleagues();
 
+        this.apiService
+            .getWins(this.pageSize, this.offset)
+            .pipe(map(({isExtendedMode}) => isExtendedMode))
+            .subscribe(value => {
+                this.getExtendedMode = value;
+            });
+
         this.thankColleagueForm = this.formBuilder.group({
             name: [''],
             comment: [''],
@@ -118,20 +127,20 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     // Модальное окно комментариев
-    public showCommentsModal(item: any): void {
-        // eslint-disable-next-line no-debugger
+    public showModalComments(item: any, type: number): void {
         debugger;
         this.modalCreateService
             .create({
-                nzClosable: false,
+                nzClosable: true,
                 nzFooter: null,
-                nzTitle: 'Спасибо коллеге',
+                nzTitle: `Благодарность № ${item.id}`,
                 nzNoAnimation: false,
                 nzWidth: '560px',
                 nzContent: CommentsModalComponent,
                 nzViewContainerRef: this.viewContainerRef,
                 nzData: {
                     data: item,
+                    type,
                 },
             })
             .afterClose.subscribe();
