@@ -107,7 +107,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="delete" (click)="deleteThanksForColleague(item);">
+                      <div class="delete" (click)="deleteThanksForColleague(item);" *ngIf="currentUserId === item?.fromUser?.id">
                         <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
                       </div>
                     </div>

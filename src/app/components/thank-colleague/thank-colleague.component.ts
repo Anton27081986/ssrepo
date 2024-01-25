@@ -70,7 +70,10 @@ export class ThankColleagueComponent implements OnInit {
             )
             .subscribe();
 
-        console.log(this.currentUserId);
+        this.apiService.getProfile().subscribe(profile => {
+            this.currentUserId = profile.id;
+            console.log(this.currentUserId);
+        });
 
         this.loadAllThanksForColleagues();
 
