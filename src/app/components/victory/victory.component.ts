@@ -77,9 +77,7 @@ export class VictoryComponent implements OnInit, OnChanges {
 
         this.apiService
             .getWins(this.pageSize, this.offset)
-            .pipe(
-                map(({isExtendedMode}) => isExtendedMode),
-            )
+            .pipe(map(({isExtendedMode}) => isExtendedMode))
             .subscribe(value => {
                 this.getExtendedMode = value;
             });
