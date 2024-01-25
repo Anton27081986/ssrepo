@@ -42,7 +42,7 @@
           <div class="card list" *ngFor="let comment of comments">
 
             <span class="close-icon icon remove" nz-icon nzType="ss:close" nzTheme="outline"
-            (click)="removeComment(comment?.id)"
+            (click)="removeComment($event, comment?.id)"
             ></span>
 
             <div class="personal">

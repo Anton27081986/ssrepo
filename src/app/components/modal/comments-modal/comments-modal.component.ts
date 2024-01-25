@@ -28,12 +28,14 @@ export class CommentsModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.commentList = this._apiService.getComment(
-            this.nzModalData.data.id,
-            this.nzModalData.type,
-            0,
-            6,
-        );
+        // this.commentList = this._apiService.getComment(
+        //     this.nzModalData.data.id,
+        //     this.nzModalData.type,
+        //     0,
+        //     6,
+        // );
+
+        this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
 
         this.addComment = this.formBuilder.group({
             comment: [
@@ -41,8 +43,6 @@ export class CommentsModalComponent implements OnInit {
                 [Validators.required, Validators.nullValidator, Validators.maxLength(400)],
             ],
         });
-
-        this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
     }
 
     getCommentList(id: number, type: number) {
@@ -71,6 +71,7 @@ export class CommentsModalComponent implements OnInit {
             )
             .subscribe();
 
+        // Обновить комментарии переделать
         this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
 
         // Валидация
@@ -91,18 +92,21 @@ export class CommentsModalComponent implements OnInit {
         // this.addComment.get('comment')?.value
     }
 
-    removeComment(id: number) {
+    removeComment($event: any, id: number) {
+        $event.stopPropagation();
+
         this._apiService
             .removeCommentById(id)
             .pipe(
                 tap(_ => {
-                    console.log('Объект удален');
+                    this.commentList = this.getCommentList(
+                        this.nzModalData.data.id,
+                        this.nzModalData.type,
+                    )
+                    console.log('Комментарий добавлен');
                     this.chDRef.markForCheck();
-                    // this.chDRef.detectChanges();
-                }),
+                })
             )
             .subscribe();
-
-        this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
     }
 }

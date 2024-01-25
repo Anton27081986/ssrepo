@@ -1,4 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+} from '@angular/core';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
@@ -20,7 +26,10 @@ export class SuperLikeComponent implements AfterViewInit {
 
     public isClickLike!: boolean; // Начальное состояние клика
 
-    constructor(private readonly apiService: ApiService) {}
+    constructor(
+        private readonly apiService: ApiService,
+        private readonly chDRef: ChangeDetectorRef,
+    ) {}
 
     ngAfterViewInit(): void {
         this.likesCount = this.likesCountProps;
@@ -28,8 +37,8 @@ export class SuperLikeComponent implements AfterViewInit {
         this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
     }
 
-    setSuperLike(item: any, objectId: number, type: number, award?: number) {
-        // $event.stopPropagation();
+    setSuperLike($event: any, item: any, objectId: number, type: number, award?: number) {
+        $event.stopPropagation();
 
         if (!this.isClickLike) {
             this.apiService.setLike(objectId, type, award).subscribe({
@@ -37,6 +46,7 @@ export class SuperLikeComponent implements AfterViewInit {
                     this.award = award;
                     this.likesCount += 1;
                     this.isClickLike = true; // true Если тут то лайк долго ставится
+                    this.chDRef.markForCheck();
                 },
                 error: (error: unknown) => console.log(error),
             });
@@ -48,6 +58,7 @@ export class SuperLikeComponent implements AfterViewInit {
                     this.award = null;
                     this.likesCount -= 1;
                     this.isClickLike = false;
+                    this.chDRef.markForCheck();
                 },
                 error: (error: unknown) => console.log(error),
             });

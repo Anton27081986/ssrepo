@@ -59,7 +59,7 @@ export class SignInComponent implements OnInit {
                 },
                 (err: unknown) => {
                     this.loading = false;
-                    console.log('HTTP Error', err);
+                    console.log('HTTP Error', err); // Вынести в обработчик ошибок
                     this.error = err;
                     this.errorState = true;
                 },
