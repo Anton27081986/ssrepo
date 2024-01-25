@@ -128,6 +128,7 @@ export class ThankColleagueComponent implements OnInit {
 
     // Модальное окно комментариев
     public showModalComments(item: any, type: number): void {
+        // eslint-disable-next-line no-debugger
         debugger;
         this.modalCreateService
             .create({
