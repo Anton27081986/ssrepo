@@ -152,10 +152,10 @@ export class VictoryComponent implements OnInit, DoCheck {
     }
 
     nzPageIndexChange($event: number) {
-        if($event === 1) {
+        if ($event === 1) {
             this.offset = 0;
         } else {
-            this.offset = (this.pageSize * $event) - this.pageSize;
+            this.offset = this.pageSize * $event - this.pageSize;
         }
 
         this.pageIndex = $event; // Установка текущего индекса

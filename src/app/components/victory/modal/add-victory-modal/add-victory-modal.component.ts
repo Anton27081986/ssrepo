@@ -21,7 +21,7 @@ export class AddVictoryModalComponent implements OnInit {
         {label: 'Совместная победа', value: 'Совместная победа', disabled: true, checked: true},
     ];
 
-    public joinWinLabel = false
+    public joinWinLabel = false;
 
     partyWinSelectedTags: Array<{name: string; id: number}> = [];
 
@@ -157,7 +157,7 @@ export class AddVictoryModalComponent implements OnInit {
                         name: user.name,
                     }); // добавление тега
 
-                    if(this.partyWinSelectedTags.length === 2) {
+                    if (this.partyWinSelectedTags.length === 2) {
                         this.joinWinLabel = true;
                     }
 
@@ -190,7 +190,7 @@ export class AddVictoryModalComponent implements OnInit {
     deleteTagUser(i: number) {
         this.partyWinSelectedTags.splice(i, 1);
 
-        if(this.partyWinSelectedTags.length < 2) {
+        if (this.partyWinSelectedTags.length < 2) {
             this.joinWinLabel = false;
         }
 
