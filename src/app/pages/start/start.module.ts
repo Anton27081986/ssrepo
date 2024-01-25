@@ -9,7 +9,6 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {StartComponent} from './start.component';
 
-
 @NgModule({
     declarations: [StartComponent, SliderComponent],
     imports: [
