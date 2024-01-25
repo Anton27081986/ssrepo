@@ -76,7 +76,7 @@ export class VictoryComponent implements OnInit, DoCheck {
         this.winsList = this.apiService.getWins(this.pageSize, this.offset);
         this.localData = this.winsList;
 
-        // TODO Опитимизировать два запросы
+        // Опитимизировать два запросы
         this.apiService
             .getWins(this.pageSize, this.offset)
             .pipe(map(({isExtendedMode}) => isExtendedMode))
