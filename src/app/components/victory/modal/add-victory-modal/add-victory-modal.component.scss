@@ -13,6 +13,15 @@
         flex-wrap: wrap;
         justify-content: flex-start;
         gap: 8px;
+
+        .close-tag {
+            cursor: pointer;
+        }
+    }
+
+    // Поправить стили footers в формах
+    .footer-form {
+        margin-top: 20px !important;
     }
 }
 

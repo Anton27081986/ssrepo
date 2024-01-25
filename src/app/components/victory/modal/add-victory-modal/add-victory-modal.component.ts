@@ -1,8 +1,7 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {UserService} from '@auth/services/user.service';
 
 @Component({
     selector: 'app-add-victory-modal',
@@ -22,9 +21,11 @@ export class AddVictoryModalComponent implements OnInit {
         {label: 'Совместная победа', value: 'Совместная победа', disabled: true, checked: true},
     ];
 
-    partyWinSelectedTags: Array<{name: string; id: string}> = [{id: '0', name: 'Шубникова А.К.'}];
+    public joinWinLabel = false;
 
-    tprSelectedTags: Array<{name: string; id: string}> = [{id: '0', name: 'Микро'}];
+    partyWinSelectedTags: Array<{name: string; id: number}> = [];
+
+    tprSelectedTags: Array<{name: string; id: number}> = [];
 
     public userWinArray: string[] = [];
     public tprWinArray: string[] = [];
@@ -42,15 +43,15 @@ export class AddVictoryModalComponent implements OnInit {
 
     constructor(
         private readonly _apiService: ApiService,
-        private readonly _userService: UserService,
         private readonly formBuilder: FormBuilder,
+        private readonly chDRef: ChangeDetectorRef,
     ) {}
 
     ngOnInit() {
         this.addVictory = this.formBuilder.group({
-            comment: [],
-            colleague: [],
-            tpr: [],
+            comment: ['', [Validators.required]],
+            colleague: [''],
+            tpr: [''],
         });
 
         this.addVictory.valueChanges.subscribe(_ => {
@@ -62,7 +63,7 @@ export class AddVictoryModalComponent implements OnInit {
             .pipe(
                 // debounceTime(300),
                 tap(value => {
-                    if (value[0].length > 2) {
+                    if (value[0].length > 1) {
                         this._apiService
                             .getUsersByFIO(value[0])
                             .pipe(
@@ -82,7 +83,7 @@ export class AddVictoryModalComponent implements OnInit {
             .pipe(
                 // debounceTime(300),
                 tap(value => {
-                    if (value[0].length > 2) {
+                    if (value[0].length > 1) {
                         this._apiService
                             .searchProductByName(value[0])
                             .pipe(
@@ -98,19 +99,36 @@ export class AddVictoryModalComponent implements OnInit {
             .subscribe();
     }
 
-    // Модальное окно Добавить победы
-    showModalAdd(): void {
-        this.isVisibleAdd = true;
-    }
-
     handleOk(): void {
         this.isVisibleAdd = false;
 
         const comment = this.addVictory.get('comment')?.value;
-        const userList = this.userWinArray;
-        const tprList = this.tprWinArray;
+        const userList = this.partyWinSelectedTags.map(item => item.id);
+        const tprList = this.tprSelectedTags.map(item => item.id);
 
-        this._apiService.addWins(comment, userList, tprList).pipe().subscribe();
+        this._apiService
+            .addWins(comment, userList, tprList)
+            .pipe(
+                tap(_ => {
+                    this.partyWinSelectedTags = [];
+                    this.tprSelectedTags = [];
+                }),
+            )
+            .subscribe();
+
+        // Валидация
+        if (this.addVictory.valid) {
+            console.log('submit', this.addVictory.value);
+        } else {
+            console.log('submit invalid', this.addVictory.value);
+
+            Object.values(this.addVictory.controls).forEach(control => {
+                if (control.invalid) {
+                    control.markAsDirty();
+                    control.updateValueAndValidity({onlySelf: true});
+                }
+            });
+        }
     }
 
     handleCancel(): void {
@@ -125,33 +143,61 @@ export class AddVictoryModalComponent implements OnInit {
         this.modelChangedTpr.next($event);
     }
 
-    // При выборе клика
+    // При выборе клика по пользователю
     onUserChange() {
+        console.log('onUserChange');
+
         this.userWinArray.push(this.selectedUser); // Выбранные пользователи
+        this._apiService
+            .getUserById(this.selectedUser)
+            .pipe(
+                tap(user => {
+                    this.partyWinSelectedTags.push({
+                        id: user.id,
+                        name: user.name,
+                    }); // добавление тега
 
-        this.partyWinSelectedTags.push({
-            id: '1',
-            name: this.selectedUser,
-        }); // добавление тега
+                    if (this.partyWinSelectedTags.length === 2) {
+                        this.joinWinLabel = true;
+                    }
+
+                    this.chDRef.markForCheck();
+                }),
+            )
+            .subscribe();
     }
 
-    // При выборе клика
+    // При выборе клика по продукту
     onTprChange() {
+        console.log('onTprChange');
+
         this.tprWinArray.push(this.selectedTpr);
+        this._apiService
+            .getProductById(Number(this.selectedTpr))
+            .pipe(
+                tap(user => {
+                    this.tprSelectedTags.push({
+                        id: user.id,
+                        name: user.name,
+                    }); // добавление тега
 
-        this.tprSelectedTags.push({
-            id: '1',
-            name: this.selectedTpr,
-        }); // добавление тега
+                    this.chDRef.markForCheck();
+                }),
+            )
+            .subscribe();
     }
 
-    deleteTagUser($event: any, tagsArray: object) {
-        console.log('deleteTagUser $', $event.target.value);
-        console.log('tagsArray $', tagsArray);
+    deleteTagUser(i: number) {
+        this.partyWinSelectedTags.splice(i, 1);
+
+        if (this.partyWinSelectedTags.length < 2) {
+            this.joinWinLabel = false;
+        }
+
+        this.chDRef.markForCheck();
     }
 
-    deleteTagTpr($event: any, tagsArray: object) {
-        console.log('deleteTagTpr $', $event.target.value);
-        console.log('tagsArray $', tagsArray);
+    deleteTagTpr(i: number) {
+        this.tprSelectedTags.splice(i, 1);
     }
 }

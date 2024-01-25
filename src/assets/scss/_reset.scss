@@ -117,6 +117,10 @@ body {
         min-width: 44px;
         height: 44px;
     }
+
+    .ant-pagination-item:last-child {
+        width: auto;
+    }
 }
 
 .anticon {

@@ -1,6 +1,8 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
+    DoCheck,
     ElementRef,
     OnInit,
     ViewChild,
@@ -20,25 +22,22 @@ import {CommentsModalComponent} from '@app/components/modal/comments-modal/comme
     selector: 'app-victory',
     templateUrl: './victory.component.html',
     styleUrls: ['./victory.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VictoryComponent implements OnInit {
+export class VictoryComponent implements OnInit, DoCheck {
     @ViewChild('liked') likedPeople!: ElementRef;
 
-    isVisibleComments = false;
-    victoryForm!: FormGroup;
+    private localData: any;
+    public total!: number;
+    public pageSize = 6;
+    public pageIndex = 1;
+    public offset = 0;
+    public getExtendedMode!: Observable<any>;
 
+    victoryForm!: FormGroup;
     winsList!: Observable<any>;
     winsUrl!: Observable<any>;
-    listLikedUsers!: Observable<any>;
-
     winsGroupsList!: Observable<any>;
-
-    pageSize = 6;
-    pageIndex = 1;
-
-    searchPanelVisible = false;
-    public getExtendedMode!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -46,6 +45,7 @@ export class VictoryComponent implements OnInit {
         private readonly iconService: NzIconService,
         public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
+        private readonly chDRef: ChangeDetectorRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -65,27 +65,36 @@ export class VictoryComponent implements OnInit {
         this.iconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
     }
 
+    ngDoCheck() {
+        if (this.localData.name !== this.winsList) {
+            // console.log('Разные данне')
+            // this.chDRef.markForCheck();
+        }
+    }
+
     ngOnInit() {
-        this.winsList = this.apiService.getWins();
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset);
+        this.localData = this.winsList;
+
+        // Опитимизировать два запросы
         this.apiService
-            .getWins()
+            .getWins(this.pageSize, this.offset)
             .pipe(map(({isExtendedMode}) => isExtendedMode))
             .subscribe(value => {
                 this.getExtendedMode = value;
             });
-        // this.listLikedUsers = this.apiService.getListLikedUsers(id, 1)
 
-        this.winsUrl = this.apiService.getWins();
+        this.apiService
+            .getWins(this.pageSize, this.offset)
+            .pipe(map(({isExtendedMode}) => isExtendedMode))
+            .subscribe(value => {
+                this.total = value;
+            });
+
+        this.winsUrl = this.apiService.getWins(this.pageSize, this.offset);
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
-
         this.victoryForm = this.formBuilder.group({
-            search: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
+            search: ['', [Validators.required]],
             password: ['', Validators.required],
         });
     }
@@ -94,7 +103,7 @@ export class VictoryComponent implements OnInit {
     showModalOpenOut(id: any): void {
         this.modalCreate
             .create({
-                nzClosable: false,
+                nzClosable: true,
                 nzFooter: null,
                 nzTitle: 'Информация о пользователе',
                 nzNoAnimation: false,
@@ -112,7 +121,7 @@ export class VictoryComponent implements OnInit {
     showModaAddWin(): void {
         this.modalCreate
             .create({
-                nzClosable: false,
+                nzClosable: true,
                 nzFooter: null,
                 nzTitle: 'Делитесь вашими победами, ведь успех заразителен!',
                 nzNoAnimation: false,
@@ -127,9 +136,9 @@ export class VictoryComponent implements OnInit {
     showModalComments(item: any, type: number): void {
         this.modalCreate
             .create({
-                nzClosable: false,
+                nzClosable: true,
                 nzFooter: null,
-                nzTitle: `${item.user.name} Победа № ${item.user.id}`,
+                nzTitle: `Победа № ${item.user.id}`,
                 nzNoAnimation: false,
                 nzWidth: '560px',
                 nzContent: CommentsModalComponent,
@@ -142,7 +151,21 @@ export class VictoryComponent implements OnInit {
             .afterClose.subscribe();
     }
 
-    onSubmit() {}
+    nzPageIndexChange($event: number) {
+        if ($event === 1) {
+            this.offset = 0;
+        } else {
+            this.offset = this.pageSize * $event - this.pageSize;
+        }
 
-    search() {}
+        this.pageIndex = $event; // Установка текущего индекса
+
+        // Обновляем данные
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
+        this.chDRef.markForCheck();
+    }
+
+    trackBy(_index: number, item: any) {
+        return item.id;
+    }
 }
