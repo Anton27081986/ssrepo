@@ -1,3 +1,22 @@
 .comments-modal {
     padding-bottom: 0;
+
+    .card.list .remove {
+        cursor: pointer !important;
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 1;
+
+        ::ng-deep svg {
+            cursor: pointer;
+            font-size: 10px;
+            fill-opacity: 1;
+
+            path {
+                // fill-opacity: 1;
+            }
+        }
+    }
 }

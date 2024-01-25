@@ -36,7 +36,7 @@
 
                         <div class="modal-users-win-groups">
                           <div class="users-win">
-                            <div class="user-win" *ngFor="let groupWinUser of item?.groupWinUsers">
+                            <div class="user-win" *ngFor="let groupWinUser of item?.groupWinUsers; trackBy: trackBy">
                               <span>{{ groupWinUser?.name }}</span>
                             </div>
                           </div>
@@ -126,21 +126,18 @@
 
 <!--        (this.winsList | async)?.total-->
 
-
+        <ng-template #pagination>
+          <nz-pagination
+            [nzTotal]="100"
+            [nzPageIndex]="pageIndex"
+            [nzPageSize]="pageSize"
+            (nzPageIndexChange)="nzPageIndexChange($event)"
+            (nzPageSizeChange)="pageSize = $event"
+            [nzResponsive]="true"
+          >
+          </nz-pagination>
+        </ng-template>
       </nz-list>
-
-      <ng-template #pagination>
-        <nz-pagination
-          [nzTotal]="100"
-          [nzPageIndex]="pageIndex"
-          [nzPageSize]="pageSize"
-          (nzPageIndexChange)="nzPageIndexChange($event)"
-          (nzPageSizeChange)="pageSize = $event"
-          [nzResponsive]="true"
-          [nzHideOnSinglePage]="true"
-        >
-        </nz-pagination>
-      </ng-template>
 
     </ng-container>
     <ng-template #loader>

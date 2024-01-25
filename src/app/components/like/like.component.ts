@@ -1,11 +1,17 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+} from '@angular/core';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
     selector: 'app-like',
     templateUrl: './like.component.html',
     styleUrls: ['./like.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LikeComponent implements AfterViewInit {
     @Input() isUserLikedProps!: boolean;
@@ -22,6 +28,7 @@ export class LikeComponent implements AfterViewInit {
 
     constructor(
         private readonly apiService: ApiService,
+        private readonly chDRef: ChangeDetectorRef,
         // private readonly ngZone: NgZone,
     ) {}
 
@@ -40,7 +47,8 @@ export class LikeComponent implements AfterViewInit {
             this.apiService.setLike(objectId, type).subscribe({
                 next: () => {
                     this.likesCount += 1;
-                    this.isClickLike = true; // true Если тут то лайк долго ставится
+                    this.isClickLike = true;
+                    this.chDRef.markForCheck();
                 },
                 error: (error: unknown) => console.log(error),
             });
@@ -51,6 +59,7 @@ export class LikeComponent implements AfterViewInit {
                 next: () => {
                     this.likesCount -= 1;
                     this.isClickLike = false;
+                    this.chDRef.markForCheck();
                 },
                 error: (error: unknown) => console.log(error),
             });

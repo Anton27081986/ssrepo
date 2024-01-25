@@ -32,69 +32,65 @@ export class ApiService {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/friends`);
     }
 
-    // Получить прочие настройки пользователя
+    /** Получить прочие настройки пользователя */
     public getSettings(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings`);
     }
 
-    // Theme
+    /** Theme */
     public getTheme(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/theme`);
     }
 
-    // Sale
+    /** Sale */
     public getAuctions(Offset: number, Limit: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/sales/widget`, {
             params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
         });
     }
 
-    // Birthday
+    /** Birthday */
     public getBirthday(date: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/birthdays`, {
             params: new HttpParams().set('date', date),
         });
     }
 
-    // Спасибо партнеру
+    /** Спасибо партнеру */
     public getPartnerThanks(date: any): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/partnerThanks?date=${date}`, {
             // params: new HttpParams().set('date', '04.12.2023'),
         });
     }
 
-    // Спасибо коллеге
+    /** Спасибо коллеге */
     public getThanksColleague(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/thanks`);
     }
 
-    // Адресная книга
+    /** Адресная книга */
     public getAddressBooks(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/AddressBook`);
     }
 
-    // Валюты
+    /** Валюты */
     public getCurrency(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/Currency`);
     }
 
-    // Wins список групп
+    /** Wins список групп */
     public getWinsGroups(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/groups`);
     }
 
-    // Wins список побед по группам
+    /** Wins список побед без групп */
     public getWins(Limit: number, Offset: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins`, {
-            params: new HttpParams()
-                // .set('GroupId', GroupId)
-                // .set('Query', Query)
-                .set('Offset', Offset)
-                .set('Limit', Limit),
+            params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
         });
     }
 
-    // Добавить победу
+    /** Добавить победу */
     public addWins(text: string, userIds: any, productIds: any): Observable<any> {
         return this.http.post<any[]>(`${environment.apiUrl}/api/awards/wins`, {
             text,
@@ -103,7 +99,7 @@ export class ApiService {
         });
     }
 
-    // Добавить победу
+    /** Добавить комментарий */
     public addCommets(objectId: string, type: any, awardId: any, note: any): Observable<any> {
         return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments`, {
             objectId,
@@ -113,33 +109,50 @@ export class ApiService {
         });
     }
 
-    // Поиск продукта по названию
+    /** Получить комментарий по objectId */
+    public getComment(
+        objectId: number,
+        Type: number,
+        Offset?: number,
+        Limit?: number,
+    ): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/comments/${objectId}`, {
+            params: new HttpParams().set('Type', Type).set('Offset', Offset!).set('Limit', Limit!),
+        });
+    }
+
+    /** Поиск продукта по названию */
     public searchProductByName(q: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/products`, {
             params: new HttpParams().set('q', q),
         });
     }
 
-    // Поиск пользователей по ФИО
+    /** Поиск пользователей по ФИО */
     public getUsersByFIO(title: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/search`, {
             params: new HttpParams().set('q', title),
         });
     }
 
-    // Общий поиск
+    /** Общий поиск */
     public search(title: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/search`, {
             params: new HttpParams().set('q', title),
         });
     }
 
-    // Получение пользователя по id
+    /** Получение пользователя по id */
     public getUserById(id: string): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/${id}`);
     }
 
-    // Добавить like
+    /** Получение продукта по id */
+    public getProductById(id: number): Observable<any> {
+        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/products/${id}`);
+    }
+
+    /** Добавить like */
     setLike(objectId: number, type?: number, awardId?: number): Observable<any> {
         return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
             objectId,
@@ -148,7 +161,7 @@ export class ApiService {
         });
     }
 
-    // Удалить like
+    /** Удалить like */
     deleteLike(objectId: any, type: any): Observable<any> {
         return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
             params: new HttpParams().set('objectId', objectId).set('type', type),
@@ -161,20 +174,20 @@ export class ApiService {
         });
     }
 
-    // Рейтинги
-    // Список типов рейтингов
+    /** Рейтинги
+    /** Список типов рейтингов */
     getRankTypes(weekId: any, userId: any): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/types`, {
             params: new HttpParams().set('weekId', weekId).set('userId', userId),
         });
     }
 
-    // Список последних 5 недель
+    /** Список последних 5 недель */
     getRankWeeks(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/weeks`);
     }
 
-    // Cписок пользователей в выбранном рейтинге
+    /** Cписок пользователей в выбранном рейтинге */
     getRank(weekId: number, RankTypeId: number, Limit: number, Offset: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank`, {
             params: new HttpParams()
@@ -185,9 +198,16 @@ export class ApiService {
         });
     }
 
-    // Получение комментария по id
-    public getCommentId(id: string): Observable<any> {
+    /** Получение комментария по id */
+    public getCommentId(id: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
+            params: new HttpParams().set('id', id),
+        });
+    }
+
+    /** Удаление комментария по id */
+    public removeCommentById(id: number): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
             params: new HttpParams().set('id', id),
         });
     }
