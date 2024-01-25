@@ -211,4 +211,9 @@ export class ApiService {
             params: new HttpParams().set('id', id),
         });
     }
+
+    /** Получить профиль текущего пользователя */
+    getProfile() {
+        return this.http.get<any>(`${environment.apiUrl}/api/auth/Profile`);
+    }
 }
