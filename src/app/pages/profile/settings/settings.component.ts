@@ -12,8 +12,8 @@ import {Observable} from 'rxjs';
 export class SettingsComponent implements OnInit {
     settingsForm!: FormGroup;
     value?: any;
-    public profileData!: any;
-    public profile!: Observable<any>;
+    profileData!: any;
+    profile!: Observable<any>;
 
     constructor(
         private readonly formBuilder: FormBuilder,
@@ -42,6 +42,4 @@ export class SettingsComponent implements OnInit {
 
         this.profile = this.userService.getProfile();
     }
-
-    onSubmit() {}
 }

@@ -15,20 +15,17 @@ export class AddVictoryModalComponent implements OnInit {
     submitted = false;
     loading = false;
     isConfirmLoading = false;
-    title: any;
+    title!: string;
 
     joinWin = [
         {label: 'Совместная победа', value: 'Совместная победа', disabled: true, checked: true},
     ];
 
-    public joinWinLabel = false;
-
+    joinWinLabel = false;
     partyWinSelectedTags: Array<{name: string; id: number}> = [];
-
     tprSelectedTags: Array<{name: string; id: number}> = [];
-
-    public userWinArray: string[] = [];
-    public tprWinArray: string[] = [];
+    userWinArray: string[] = [];
+    tprWinArray: string[] = [];
 
     backendErrors$!: Observable<any>;
 
@@ -118,10 +115,9 @@ export class AddVictoryModalComponent implements OnInit {
 
         // Валидация
         if (this.addVictory.valid) {
-            console.log('submit', this.addVictory.value);
+            // console.log('submit', this.addVictory.value);
         } else {
-            console.log('submit invalid', this.addVictory.value);
-
+            // console.log('submit invalid', this.addVictory.value);
             Object.values(this.addVictory.controls).forEach(control => {
                 if (control.invalid) {
                     control.markAsDirty();
@@ -145,8 +141,6 @@ export class AddVictoryModalComponent implements OnInit {
 
     // При выборе клика по пользователю
     onUserChange() {
-        console.log('onUserChange');
-
         this.userWinArray.push(this.selectedUser); // Выбранные пользователи
         this._apiService
             .getUserById(this.selectedUser)
@@ -169,8 +163,6 @@ export class AddVictoryModalComponent implements OnInit {
 
     // При выборе клика по продукту
     onTprChange() {
-        console.log('onTprChange');
-
         this.tprWinArray.push(this.selectedTpr);
         this._apiService
             .getProductById(Number(this.selectedTpr))

@@ -19,7 +19,7 @@ export class SuperLikeComponent implements AfterViewInit {
     @Input() objectIdProps!: number;
     @Input() typeObject!: number;
     @Input() award: any;
-    @Input() isExtendedMode: any;
+    @Input() isExtendedMode!: boolean;
 
     isUserLiked!: boolean;
     likesCount!: number;
@@ -48,7 +48,6 @@ export class SuperLikeComponent implements AfterViewInit {
                     this.isClickLike = true; // true Если тут то лайк долго ставится
                     this.chDRef.markForCheck();
                 },
-                error: (error: unknown) => console.log(error),
             });
         }
 
@@ -60,7 +59,6 @@ export class SuperLikeComponent implements AfterViewInit {
                     this.isClickLike = false;
                     this.chDRef.markForCheck();
                 },
-                error: (error: unknown) => console.log(error),
             });
         }
     }

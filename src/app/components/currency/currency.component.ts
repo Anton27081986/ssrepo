@@ -14,9 +14,8 @@ import {ApiService} from '@app/shared/services/api/api.service';
 export class CurrencyComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
-    checked = true;
-    title: any;
-    public currencyList!: Observable<any>;
+    title!: string;
+    currencyList!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -68,6 +67,4 @@ export class CurrencyComponent implements OnInit {
 
         this.loading = true;
     }
-
-    search() {}
 }

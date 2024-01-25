@@ -39,6 +39,4 @@ export class ResetPasswordComponent implements OnInit {
             passwordRepeat: ['', Validators.required],
         });
     }
-
-    onSubmit() {}
 }

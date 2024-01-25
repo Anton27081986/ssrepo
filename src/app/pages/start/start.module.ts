@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 
-import {StartRoutingModule} from './start-routing.module';
 import {StartComponent} from './start.component';
+import {StartRoutingModule} from './start-routing.module';
 import {MainModule} from '@app/shared/layouts/main/main.module';
 import {SliderComponent} from '@app/components/slider/slider.component';
 import {NzGridModule} from 'ng-zorro-antd/grid';

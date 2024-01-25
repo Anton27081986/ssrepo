@@ -14,10 +14,10 @@ import {environment} from '@environments/environment';
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ProfilePopupComponent implements OnInit {
-    public statusAccordion = false;
-    public accountsFriends!: Observable<any>;
-    public profileData!: any;
-    public profile!: Observable<any>;
+    statusAccordion = false;
+    accountsFriends!: Observable<any>;
+    profileData!: any;
+    profile!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -51,7 +51,7 @@ export class ProfilePopupComponent implements OnInit {
         this.authenticationService.logout();
     }
 
-    enterUnderFriendlyAccount(id: any) {
+    enterUnderFriendlyAccount(id: number) {
         this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
 
         setTimeout(function () {

@@ -1,4 +1,5 @@
 import {NgModule} from '@angular/core';
+import {NzSpinModule} from 'ng-zorro-antd/spin';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import {SearchComponent} from './search/search.component';
 import {ResultItemComponent} from './search/result-item/result-item.component';
@@ -48,8 +49,10 @@ import {PeopleLikedDirective} from '@app/components/victory/people-liked.directi
 import {SuperLikeDirective} from '@app/components/victory/super-like.directive';
 import {LikeComponent} from './like/like.component';
 import {SuperLikeComponent} from './victory/super-like/super-like.component';
-import {BackendErrorMessagesComponent} from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
-import {NzSpinModule} from 'ng-zorro-antd/spin';
+import {
+    BackendErrorMessagesComponent
+} from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
+import {LoaderComponent} from "@app/shared/modules/loader/loader.component";
 
 @NgModule({
     declarations: [
@@ -75,6 +78,8 @@ import {NzSpinModule} from 'ng-zorro-antd/spin';
         LikeComponent,
         SuperLikeComponent,
         BackendErrorMessagesComponent,
+        LoaderComponent,
+        LoaderComponent,
     ],
     imports: [
         CommonModule,

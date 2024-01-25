@@ -19,7 +19,7 @@ export class ThankColleagueComponent implements OnInit {
     submitted = false;
     isConfirmLoading = false;
 
-    public thankColleagueList!: Observable<any>;
+    thankColleagueList!: Observable<any>;
 
     pageSize = 6;
     pageIndex = 1;

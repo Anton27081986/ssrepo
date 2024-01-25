@@ -287,6 +287,7 @@ module.exports = {
                 ],
                 'no-shadow': 'off',
                 '@typescript-eslint/no-shadow': ['warn'],
+                '@typescript-eslint/no-explicit-any': 'off',
             },
         },
         {

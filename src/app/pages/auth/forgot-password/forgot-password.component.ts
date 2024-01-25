@@ -45,6 +45,4 @@ export class ForgotPasswordComponent implements OnInit {
     get f() {
         return this.loginForm.controls;
     }
-
-    onSubmit() {}
 }

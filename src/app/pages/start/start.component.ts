@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {IUser} from '@auth/models/user';
 import {AuthenticationService} from '@auth/services/authentication.service';
 import {first} from 'rxjs';
@@ -11,7 +11,7 @@ import {ThemeService} from '@app/shared/theme/theme.service';
     styleUrls: ['./start.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent {
+export class StartComponent implements OnInit {
     loading = false;
     user: IUser;
     userFromApi?: IUser;

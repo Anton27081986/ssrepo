@@ -26,9 +26,9 @@ export class RatingComponent implements OnInit, OnDestroy {
     loading = false;
     title: any;
     submitted = false;
-    weekId: any;
-    public rankTypeId: any;
-    private currentUserId: any;
+    weekId!: number;
+    public rankTypeId!: number;
+    private currentUserId!: number;
     currentUserName: any;
     placeholder = 'Сотрудник';
 
@@ -193,11 +193,11 @@ export class RatingComponent implements OnInit, OnDestroy {
             });
     }
 
-    selectWeek(weekId: any): void {
+    selectWeek(weekId: number): void {
         this.rankTypes = this._apiService.getRankTypes(weekId, this.currentUserId);
     }
 
-    clickByTypeRank(id: any, limit: number, $event: MouseEvent) {
+    clickByTypeRank(id: number, limit: number, $event: MouseEvent) {
         $event.stopPropagation();
         this.rankTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
 
@@ -216,7 +216,7 @@ export class RatingComponent implements OnInit, OnDestroy {
     }
 
     // Модальное окно раскрытой карточки
-    showModalOpenOut(id: any): void {
+    showModalOpenOut(id: number): void {
         this.modalCreate
             .create({
                 nzClosable: false,

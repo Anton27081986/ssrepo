@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 
@@ -8,7 +8,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
     styleUrls: ['./recovery-password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecoveryPasswordComponent {
+export class RecoveryPasswordComponent implements OnInit {
     recoveryForm!: FormGroup;
     password: any;
 
@@ -17,7 +17,6 @@ export class RecoveryPasswordComponent {
     error: unknown = '';
 
     passwordVisible = false;
-    passwordVisibleRepeat = false;
 
     constructor(
         private readonly iconService: NzIconService,
@@ -33,6 +32,4 @@ export class RecoveryPasswordComponent {
     get f() {
         return this.recoveryForm.controls;
     }
-
-    onSubmit() {}
 }

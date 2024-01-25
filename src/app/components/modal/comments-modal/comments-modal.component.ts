@@ -11,7 +11,7 @@ import {Observable, tap} from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsModalComponent implements OnInit {
-    public nzModalData: any = inject(NZ_MODAL_DATA);
+    nzModalData: any = inject(NZ_MODAL_DATA);
 
     protected addComment!: FormGroup;
     protected submitted = false;
@@ -49,7 +49,6 @@ export class CommentsModalComponent implements OnInit {
         // Поправить CD
         return this._apiService.getComment(id, type, 0, 6).pipe(
             tap(_ => {
-                console.log('Комментарий получен');
                 this.chDRef.markForCheck();
             }),
         );
@@ -65,7 +64,6 @@ export class CommentsModalComponent implements OnInit {
             .addCommets(objectId, type, awardId, note)
             .pipe(
                 tap(_ => {
-                    console.log('Комментарий добавлен');
                     this.chDRef.markForCheck();
                 }),
             )
@@ -76,10 +74,8 @@ export class CommentsModalComponent implements OnInit {
 
         // Валидация
         if (this.addComment.valid) {
-            console.log('submit', this.addComment.value);
+            // console.log('valid')
         } else {
-            console.log('submit invalid', this.addComment.value);
-
             Object.values(this.addComment.controls).forEach(control => {
                 if (control.invalid) {
                     control.markAsDirty();
@@ -89,7 +85,6 @@ export class CommentsModalComponent implements OnInit {
         }
 
         // Сборосить форму
-        // this.addComment.get('comment')?.value
     }
 
     removeComment($event: any, id: number) {
@@ -103,7 +98,6 @@ export class CommentsModalComponent implements OnInit {
                         this.nzModalData.data.id,
                         this.nzModalData.type,
                     );
-                    console.log('Комментарий добавлен');
                     this.chDRef.markForCheck();
                 }),
             )

@@ -28,11 +28,11 @@ export class VictoryComponent implements OnInit, DoCheck {
     @ViewChild('liked') likedPeople!: ElementRef;
 
     private localData: any;
-    public total!: number;
-    public pageSize = 6;
-    public pageIndex = 1;
-    public offset = 0;
-    public getExtendedMode!: Observable<any>;
+    total!: number;
+    pageSize = 6;
+    pageIndex = 1;
+    offset = 0;
+    getExtendedMode!: Observable<any>;
 
     victoryForm!: FormGroup;
     winsList!: Observable<any>;
@@ -100,7 +100,7 @@ export class VictoryComponent implements OnInit, DoCheck {
     }
 
     // Модальное окно раскрытой карточки
-    showModalOpenOut(id: any): void {
+    showModalOpenOut(id: number): void {
         this.modalCreate
             .create({
                 nzClosable: true,
