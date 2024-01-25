@@ -1,10 +1,10 @@
-import {IUser} from '@app/shared/services/models/user';
+import {IUserProfile} from '@app/shared/services/models/user-profile';
 
 export interface IThanksColleagueItem {
     /** Айди */
     id?: number;
-    fromUser?: IUser;
-    toUser?: IUser;
+    fromUser?: IUserProfile;
+    toUser?: IUserProfile;
     /** Текст */
     text?: string | undefined;
     /** Дата создания */

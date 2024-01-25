@@ -12,6 +12,7 @@
           Поблагодарить коллегу
         </button>
 
+
         <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
           <ng-container *nzModalContent>
             <div>
@@ -62,50 +63,53 @@
 
   <div class="content">
     <ng-container *ngIf="thankColleagueList | async as thankyou">
-
-      <nz-list class="card-list" [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
+      <nz-list class="card-list"
+               [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize"
+               [nzRenderItem]="item"
+               [nzPagination]="pagination">
 
       <ng-template #item let-item>
             <nz-list-item [nzContent]="nzContent">
               <ng-template #nzContent>
-                <!--              <nz-card [nzTitle]="item.name">-->
-
                 <div class="card">
                   <div>
                     <div class="personals">
-
-                      <div class="images">
-                        <div class="img img-from">
-                          <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
+                      <div>
+                        <div class="images">
+                          <div class="img img-from">
+                            <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
+                          </div>
+                          <div class="img img-to">
+                            <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
+                          </div>
                         </div>
-                        <div class="img img-to">
-                          <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
-                        </div>
-                      </div>
 
-                      <div class="from-to">
-                        <div class="from">
-                          <div class="personal">
-                            <div class="title">
-                              <span class="sub-title">От кого:</span>
-                              <div class="fio">
-                                <span>{{ item?.fromUser?.name }}</span>
+                        <div class="from-to">
+                          <div class="from">
+                            <div class="personal">
+                              <div class="title">
+                                <span class="sub-title">От кого:</span>
+                                <div class="fio">
+                                  <span>{{ item?.fromUser?.name }}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="to">
+                            <div class="personal">
+                              <div class="title">
+                                <span class="sub-title">Кому:</span>
+                                <div class="fio">
+                                  <span>{{ item?.toUser?.name }}</span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div class="to">
-                          <div class="personal">
-                            <div class="title">
-                              <span class="sub-title">Кому:</span>
-                              <div class="fio">
-                                <span>{{ item?.toUser?.name }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
-
+                      <div class="delete" (click)="deleteThanksForColleague(item);">
+                        <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
+                      </div>
                     </div>
                     <div class="icons">
                       <ng-container [ngSwitch]="item?.award">

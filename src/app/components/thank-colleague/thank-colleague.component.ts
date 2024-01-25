@@ -1,9 +1,17 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewContainerRef,
+} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {NzIconService} from 'ng-zorro-antd/icon';
+import {AppIcons} from '@app/common/icons';
 
 @Component({
     selector: 'app-thank-colleague',
@@ -21,6 +29,7 @@ export class ThankColleagueComponent implements OnInit {
     public thankColleagueList!: Observable<any>;
     public pageSize = 6;
     public pageIndex = 1;
+    public currentUserId: any;
 
     private readonly modelChanged: Subject<string> = new Subject<string>();
 
@@ -35,7 +44,11 @@ export class ThankColleagueComponent implements OnInit {
         private readonly formBuilder: FormBuilder,
         public modalCreateService: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
-    ) {}
+        private readonly cdr: ChangeDetectorRef,
+        private readonly iconService: NzIconService,
+    ) {
+        this.iconService.addIconLiteral('ss:delete', AppIcons.delete);
+    }
 
     public ngOnInit() {
         zip(this.modelChanged)
@@ -56,6 +69,8 @@ export class ThankColleagueComponent implements OnInit {
                 }),
             )
             .subscribe();
+
+        console.log(this.currentUserId);
 
         this.loadAllThanksForColleagues();
 
@@ -85,16 +100,17 @@ export class ThankColleagueComponent implements OnInit {
         this.loading = true;
     }
 
-    public deleteThanksForColleague(thanksId: number): void {
+    public deleteThanksForColleague(thanks: any): void {
         // eslint-disable-next-line no-debugger
         debugger;
-        console.log(thanksId);
-        this.apiService.deleteThanksColleague(thanksId).subscribe({
+        console.log(thanks.id);
+        this.apiService.deleteThanksColleague(thanks.id).subscribe({
             next: response => {
-                console.log('Спасибо добавлен', response);
+                console.log('Спасибо удалён', response);
                 this.loadAllThanksForColleagues();
+                this.cdr.detectChanges();
             },
-            error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
+            error: (error: unknown) => console.error('Ошибка при удалении спасибо', error),
         });
     }
 
@@ -132,7 +148,10 @@ export class ThankColleagueComponent implements OnInit {
             const note = this.thankColleagueForm.value.comment;
 
             this.apiService.addThanksColleague(toUserId, note).subscribe({
-                next: response => console.log('Спасибо добавлен', response),
+                next: response => {
+                    console.log('Спасибо добавлен', response);
+                    this.loadAllThanksForColleagues();
+                },
                 error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
             });
         } else {
