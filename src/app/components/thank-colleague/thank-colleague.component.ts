@@ -12,34 +12,32 @@ import {NzModalService} from 'ng-zorro-antd/modal';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThankColleagueComponent implements OnInit {
-    date: any;
-    isVisible = false;
-    thankColleague!: FormGroup;
-    loading = false;
-    submitted = false;
-    isConfirmLoading = false;
-
+    public date: any;
+    public isModalVisible = false;
+    public thankColleagueForm!: FormGroup;
+    public loading = false;
+    public submitted = false;
+    public isConfirmLoading = false;
     public thankColleagueList!: Observable<any>;
-
-    pageSize = 6;
-    pageIndex = 1;
+    public pageSize = 6;
+    public pageIndex = 1;
 
     private readonly modelChanged: Subject<string> = new Subject<string>();
 
     // Переменные для поиска
-    selectedValue = null;
-    listOfOption: Array<{name: string; id: string}> = [];
+    public selectedValue = null;
+    public listOfOption: Array<{name: string; id: string}> = [];
 
-    nzFilterOption = (): boolean => true;
+    public nzFilterOption = (): boolean => true;
 
-    constructor(
+    public constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
-        public modalCreate: NzModalService,
+        public modalCreateService: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
     ) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         zip(this.modelChanged)
             .pipe(
                 // debounceTime(300),
@@ -59,38 +57,52 @@ export class ThankColleagueComponent implements OnInit {
             )
             .subscribe();
 
-        this.thankColleagueList = this.apiService
-            .getThanksColleague()
-            .pipe(map(({items}) => items));
+        this.loadAllThanksForColleagues();
 
-        this.thankColleague = this.formBuilder.group({
+        this.thankColleagueForm = this.formBuilder.group({
             name: [''],
             comment: [''],
         });
     }
 
-    showModal(): void {
-        this.isVisible = true;
+    public loadAllThanksForColleagues() {
+        this.thankColleagueList = this.apiService
+            .getThanksColleagueList()
+            .pipe(map(({items}) => items));
     }
 
-    handleOk(): void {
-        this.isVisible = false;
+    // TODO: перенести валидацию
+    public createThanksForColleague() {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        console.log(this.thankColleagueForm);
+        this.submitted = true;
+
+        if (this.thankColleagueForm.invalid) {
+            return;
+        }
+
+        this.loading = true;
     }
 
-    handleCancel(): void {
-        this.isVisible = false;
+    public deleteThanksForColleague(thanksId: number): void {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        console.log(thanksId);
+        this.apiService.deleteThanksColleague(thanksId).subscribe({
+            next: response => {
+                console.log('Спасибо добавлен', response);
+                this.loadAllThanksForColleagues();
+            },
+            error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
+        });
     }
-
-    search($event: any) {
-        this.modelChanged.next($event);
-    }
-
-    // При выборе клика
-    onUserChange() {}
 
     // Модальное окно комментариев
-    showModalComments(item: any): void {
-        this.modalCreate
+    public showCommentsModal(item: any): void {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        this.modalCreateService
             .create({
                 nzClosable: false,
                 nzFooter: null,
@@ -106,18 +118,35 @@ export class ThankColleagueComponent implements OnInit {
             .afterClose.subscribe();
     }
 
-    onSubmit() {
-        this.submitted = true;
-
-        // stop here if form is invalid
-        if (this.thankColleague.invalid) {
-            return;
-        }
-
-        this.loading = true;
+    public showModal(): void {
+        this.isModalVisible = true;
     }
 
-    // destroyModal(): void {
-    //     this.modal.destroy();
-    // }
+    public handleOk(): void {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        console.log(this.thankColleagueForm);
+
+        if (this.thankColleagueForm.valid) {
+            const toUserId = this.thankColleagueForm.value.name;
+            const note = this.thankColleagueForm.value.comment;
+
+            this.apiService.addThanksColleague(toUserId, note).subscribe({
+                next: response => console.log('Спасибо добавлен', response),
+                error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
+            });
+        } else {
+            console.log('');
+        }
+
+        this.isModalVisible = false;
+    }
+
+    public handleCancel(): void {
+        this.isModalVisible = false;
+    }
+
+    public search($event: any) {
+        this.modelChanged.next($event);
+    }
 }

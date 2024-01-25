@@ -14,7 +14,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThankyouComponent implements OnInit {
-    public thankyouList!: Observable<any>;
+    thankyouList!: Observable<any>;
     date: any;
     dateToday: any;
     private yesterday: any;

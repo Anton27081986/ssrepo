@@ -12,10 +12,10 @@
           Поблагодарить коллегу
         </button>
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
           <ng-container *nzModalContent>
             <div>
-              <form nz-form [formGroup]="thankColleague" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
+              <form nz-form [formGroup]="thankColleagueForm" nzLayout="vertical" class="form" (ngSubmit)="createThanksForColleague()">
                 <nz-form-item>
                   <nz-form-control>
                     <nz-select
@@ -34,7 +34,9 @@
                 <nz-form-item>
                   <span class="field-tile">Описание:</span>
                   <div>
-                    <textarea formControlName="comment" nz-input placeholder="Не забывайте благодарить коллег!" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+                    <textarea formControlName="comment" nz-input
+                              placeholder="Не забывайте благодарить коллег!"
+                              [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
                   </div>
                 </nz-form-item>
                 <ng-template #prefixUser>
@@ -60,11 +62,6 @@
 
   <div class="content">
     <ng-container *ngIf="thankColleagueList | async as thankyou">
-
-<!--      <ng-container *ngFor="let item of thankyou.items;">
-<ng-container *ngFor="let item of thankyou.items;"> -->
-
-<!--      <div>{{ thankyou | json }}</div>-->
 
       <nz-list class="card-list" [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
 
@@ -130,11 +127,7 @@
                           [objectIdProps]="item.id"
                           [typeObject]="0"
                         ></app-like>
-<!--                        <div class="like">-->
-<!--                          <span class="like-icon icon" nz-icon [nzType]="'ss:like'"></span>-->
-<!--                          <span class="count">{{ item.likesCount }}</span>-->
-<!--                        </div>-->
-                        <div class="comment" (click)="showModalComments(item);">
+                        <div class="comment" (click)="showCommentsModal(item);">
                           <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
                           <span class="count">{{ item.commentsCount }}</span>
                         </div>

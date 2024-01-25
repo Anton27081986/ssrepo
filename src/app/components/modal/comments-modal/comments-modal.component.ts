@@ -12,10 +12,10 @@ import {ApiService} from '@app/shared/services/api/api.service';
 export class CommentsModalComponent implements OnInit {
     readonly nzModalData: any = inject(NZ_MODAL_DATA);
 
-    addComment!: FormGroup;
-    submitted = false;
-    loading = false;
-    isConfirmLoading = false;
+    public addComment!: FormGroup;
+    public submitted = false;
+    public loading = false;
+    public isConfirmLoading = false;
 
     commentVisible = false;
 
