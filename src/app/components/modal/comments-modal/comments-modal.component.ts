@@ -102,10 +102,10 @@ export class CommentsModalComponent implements OnInit {
                     this.commentList = this.getCommentList(
                         this.nzModalData.data.id,
                         this.nzModalData.type,
-                    )
+                    );
                     console.log('Комментарий добавлен');
                     this.chDRef.markForCheck();
-                })
+                }),
             )
             .subscribe();
     }

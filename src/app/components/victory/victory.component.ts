@@ -2,8 +2,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    DoCheck,
     ElementRef,
-    OnChanges,
     OnInit,
     ViewChild,
     ViewContainerRef,
@@ -12,7 +12,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {map, Observable, tap} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
@@ -24,21 +24,20 @@ import {CommentsModalComponent} from '@app/components/modal/comments-modal/comme
     styleUrls: ['./victory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VictoryComponent implements OnInit, OnChanges {
+export class VictoryComponent implements OnInit, DoCheck {
     @ViewChild('liked') likedPeople!: ElementRef;
 
-    victoryForm!: FormGroup;
+    private localData: any;
+    public total!: number;
+    public pageSize = 6;
+    public pageIndex = 1;
+    public offset = 0;
+    public getExtendedMode!: Observable<any>;
 
+    victoryForm!: FormGroup;
     winsList!: Observable<any>;
     winsUrl!: Observable<any>;
-
     winsGroupsList!: Observable<any>;
-
-    pageSize = 6;
-    pageIndex = 1;
-    offset = 7;
-
-    public getExtendedMode!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -66,15 +65,18 @@ export class VictoryComponent implements OnInit, OnChanges {
         this.iconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
     }
 
-    ngOnChanges() {
-        console.log('OnChanges');
+    ngDoCheck() {
+        if (this.localData.name !== this.winsList) {
+            // console.log('Разные данне')
+            // this.chDRef.markForCheck();
+        }
     }
 
     ngOnInit() {
-        console.log('ngOnInit');
-
         this.winsList = this.apiService.getWins(this.pageSize, this.offset);
+        this.localData = this.winsList;
 
+        // TODO Опитимизировать два запросы
         this.apiService
             .getWins(this.pageSize, this.offset)
             .pipe(map(({isExtendedMode}) => isExtendedMode))
@@ -82,10 +84,15 @@ export class VictoryComponent implements OnInit, OnChanges {
                 this.getExtendedMode = value;
             });
 
+        this.apiService
+            .getWins(this.pageSize, this.offset)
+            .pipe(map(({isExtendedMode}) => isExtendedMode))
+            .subscribe(value => {
+                this.total = value;
+            });
+
         this.winsUrl = this.apiService.getWins(this.pageSize, this.offset);
-
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
-
         this.victoryForm = this.formBuilder.group({
             search: ['', [Validators.required]],
             password: ['', Validators.required],
@@ -145,27 +152,18 @@ export class VictoryComponent implements OnInit, OnChanges {
     }
 
     nzPageIndexChange($event: number) {
-        console.log('this.page IndexpageIndex ', this.pageIndex);
-        console.log('this.pageIndex $event', $event);
+        if($event === 1) {
+            this.offset = 0;
+        } else {
+            this.offset = (this.pageSize * $event) - this.pageSize;
+        }
 
-        // !!! Убрать item проверить данные
-        this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe(
-            tap(_ => {
-                console.log('change page');
-                this.offset = $event;
-                this.pageIndex = $event; // Смена страницы но не отображаются данные
-                this.chDRef.markForCheck();
-            }),
-        );
+        this.pageIndex = $event; // Установка текущего индекса
 
-        console.log('this.pageIndex после нажатия', this.pageIndex);
+        // Обновляем данные
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
+        this.chDRef.markForCheck();
     }
-
-    // nzPageSizeChange($event: number) {
-    //
-    //     // this.pageSize = $event
-    //     console.log('nzPageSizeChange')
-    // }
 
     trackBy(_index: number, item: any) {
         return item.id;

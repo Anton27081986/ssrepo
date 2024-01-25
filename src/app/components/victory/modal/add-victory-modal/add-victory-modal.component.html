@@ -13,7 +13,7 @@
           </div>
         </div>
 
-        <div class="checkbox-group">
+        <div class="checkbox-group" *ngIf="joinWinLabel">
           <label nz-checkbox [(ngModel)]="joinWin" [ngModelOptions]="{ standalone: true }" class="join-win">Совместная победа</label>
         </div>
         </nz-form-control>

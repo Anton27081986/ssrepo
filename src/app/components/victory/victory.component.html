@@ -17,8 +17,9 @@
   </div>
 
   <div class="content">
+<!--    | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize -->
     <ng-container *ngIf="(winsList | async)?.items as wins; else loader">
-      <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
+      <nz-list class="card-list" [nzDataSource]="wins" [nzRenderItem]="item" [nzPagination]="pagination">
 
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
@@ -129,7 +130,7 @@
 
         <ng-template #pagination>
           <nz-pagination
-            [nzTotal]="100"
+            [nzTotal]="1000"
             [nzPageIndex]="pageIndex"
             [nzPageSize]="pageSize"
             (nzPageIndexChange)="nzPageIndexChange($event)"
