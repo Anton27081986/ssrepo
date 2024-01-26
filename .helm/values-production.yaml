@@ -3,3 +3,5 @@ env: production
 ingress:
     enabled: true
     host: erp.ssnab.ru
+    annotations:
+        nginx.ingress.kubernetes.io/cors-allow-origin: 'https://erp.ssnab.ru'
