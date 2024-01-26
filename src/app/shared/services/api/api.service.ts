@@ -10,6 +10,8 @@ import {environment} from '@environments/environment.development';
 export class ApiService {
     constructor(private readonly http: HttpClient) {
         console.log('apiUrl api service', environment.apiUrl);
+        console.log('nameEnv api service', environment.name);
+        console.log('production api service', environment.production);
     }
 
     public getMenuListJson(): Observable<any> {
