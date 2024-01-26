@@ -10,11 +10,11 @@ export class AuthenticationService {
     private readonly userSubject: BehaviorSubject<IUser>;
     user: Observable<IUser | null>;
 
-    public headers = new HttpHeaders()
+    headers = new HttpHeaders()
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json');
 
-    public params = new HttpParams({fromString: `ReturnUrl=${environment.apiUrl}`}).set(
+    params = new HttpParams({fromString: `ReturnUrl=${environment.apiUrl}`}).set(
         'ReturnUrl',
         environment.apiUrl,
     );

@@ -9,8 +9,8 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
-    title: any;
-    public searchResult!: Observable<any>;
+    title!: string;
+    searchResult!: Observable<any>;
 
     showWindowResult = false;
     private readonly modelChanged: Subject<string> = new Subject<string>();

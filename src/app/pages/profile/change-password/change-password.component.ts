@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
@@ -9,7 +9,7 @@ import {AppIcons} from '@app/common/icons';
     styleUrls: ['./change-password.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChangePasswordComponent {
+export class ChangePasswordComponent implements OnInit {
     myPasswordForm!: FormGroup;
     password: any;
 
@@ -41,6 +41,4 @@ export class ChangePasswordComponent {
     get f() {
         return this.myPasswordForm.controls;
     }
-
-    onSubmit() {}
 }

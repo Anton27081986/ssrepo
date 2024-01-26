@@ -11,13 +11,11 @@ import {NzTableQueryParams} from 'ng-zorro-antd/table';
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class AuctionSalesComponent implements OnInit {
-    public auctions!: Observable<any>;
-    public auctionAll!: Observable<any>;
-    // public pageIndex= 0;
+    auctionAll!: Observable<any>;
     pageIndex = 1;
     pageSize = 6;
-    public total = 1;
-    public listAuction: any;
+    total = 1;
+    listAuction: any;
 
     constructor(
         private readonly route: ActivatedRoute,

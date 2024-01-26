@@ -4,10 +4,6 @@
 .victory {
     margin-top: 60px;
 
-    .test-id {
-        display: none;
-    }
-
     .header {
         display: flex;
         justify-content: space-between;
@@ -63,227 +59,17 @@
     }
 
     .content {
+        position: relative;
         margin-top: 37px;
+        min-height: 682px;
+        height: 682px;
+
         .card-list {
             ::ng-deep .ant-list-items {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 28px;
             }
-
-            .card {
-                position: relative;
-                width: 408px;
-                height: auto;
-                border-radius: 16px;
-                border: 1px solid $border-color;
-                background-color: $white;
-                padding: 15px 20px 20px 20px;
-
-                .personal {
-                    position: relative;
-                    display: flex;
-
-                    .users-win-groups {
-                        position: relative;
-
-                        .people-icon {
-                            position: absolute;
-                            top: -5px;
-                            left: -99px;
-                            background-color: $blue;
-                            height: 28px;
-                            width: 28px;
-                            border-radius: 20px;
-                            text-align: center;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            padding-right: 1px;
-                            font-weight: 500;
-                            z-index: 10;
-
-                            ::ng-deep svg {
-                                font-size: 30px !important;
-
-                                path {
-                                    stroke: $white !important;
-                                }
-                            }
-                        }
-
-                        .modal-users-win-groups {
-                            display: none;
-                            opacity: 0;
-
-                            .users-win {
-                                display: flex;
-                                flex-wrap: wrap;
-                                width: 300px;
-                                position: absolute;
-                                top: -6px;
-                                left: -64px;
-                                background-color: #d9e1ff;
-                                border-radius: 8px;
-                                border: 1px solid #b4c4ff;
-                                padding: 4px 16px 4px 16px;
-
-                                .user-win {
-                                    padding-left: 8px;
-                                    color: $blue;
-                                }
-                            }
-                        }
-
-                        .modal-users-win-groups.show {
-                            opacity: 1;
-                            display: block;
-                        }
-                    }
-
-                    .img {
-                        border-radius: 14px;
-                        overflow: hidden;
-                        flex: none;
-                        width: 90px;
-                        height: 90px;
-
-                        img {
-                            width: 90px;
-                        }
-                    }
-
-                    .enter-icon {
-                        position: absolute;
-                        right: 17px;
-                        bottom: 0;
-                        font-size: 17px;
-                        fill-opacity: 0;
-                        cursor: pointer;
-                    }
-
-                    .title {
-                        margin-left: 19px;
-                    }
-
-                    .fio {
-                        font-size: 17.6px;
-                        font-weight: bold;
-                        line-height: 20px;
-                        margin-top: 7px;
-                        max-width: 238px;
-                    }
-
-                    .job {
-                        max-width: 186px;
-                        font-size: 11.8px;
-                        line-height: 14px;
-                        font-weight: 500;
-                        margin-top: 8px;
-                        height: 64px;
-
-                        div:last-child {
-                            margin-top: 4px;
-                        }
-                    }
-
-                    .more {
-                        margin-top: 4px;
-                        margin-bottom: 4px;
-                    }
-                }
-
-                .icons {
-                    .medal-icon {
-                        position: absolute;
-                        right: 16px;
-                        top: 20px;
-                    }
-
-                    ::ng-deep .anticon {
-                        fill-opacity: 1;
-                        font-size: 34px;
-                    }
-                }
-
-                .date {
-                    display: flex;
-                    justify-content: flex-end;
-                    font-weight: 600;
-
-                    span {
-                        color: #a7a7b0;
-                        font-size: 9px;
-                    }
-                }
-
-                .message {
-                    width: 377px;
-                    overflow-y: auto;
-
-                    .text {
-                        font-size: 11.8px;
-                        font-style: normal;
-                        font-weight: 500;
-                        margin-top: 14px;
-                        line-height: 16.7px;
-                        height: 104px;
-                    }
-                }
-
-                .info {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-top: 6px;
-
-                    .count {
-                        padding-right: 6px;
-                    }
-
-                    .left-group {
-                        display: flex;
-                        position: relative;
-                    }
-                }
-
-                .icon {
-                    font-size: 20px;
-
-                    ::ng-deep path {
-                        stroke: $blue;
-                    }
-                }
-
-                .comment,
-                .medal,
-                .openOut {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 50px;
-                    height: 32px;
-                    border-radius: 8px;
-                    margin-left: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    cursor: pointer;
-                }
-
-                .openOut {
-                    width: 30px;
-                    ::ng-deep svg {
-                        font-size: 33px;
-                    }
-                }
-            }
-        }
-
-        .bottom-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 27px;
         }
     }
 }
@@ -309,39 +95,6 @@
         box-sizing: border-box;
         scrollbar-width: thin;
         scrollbar-color: $gray-light;
-    }
-
-    .item-tag {
-        display: inline-flex;
-        padding: 0 16px;
-        align-items: center;
-        border-radius: 8px;
-        border: 1px solid #b4c4ff;
-        background: #cbd7ff;
-        height: 28px;
-
-        span {
-            color: #4770ff;
-            font-size: 10px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            letter-spacing: -0.1px;
-        }
-
-        .close-icon {
-            margin-left: 8px;
-        }
-
-        ::ng-deep svg {
-            font-size: 8px !important;
-            fill-opacity: 1;
-
-            rect {
-                fill: #4770ff;
-                stroke: #4770ff;
-            }
-        }
     }
 }
 

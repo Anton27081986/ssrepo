@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
-import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
-import {MainComponent} from './shared/layouts/main/main.component';
+import {NoPreloading, RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '@auth/auth.guard';
+import {MainComponent} from './shared/layouts/main/main.component';
+import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
 
 const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: ''},
@@ -43,7 +43,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [
+        RouterModule.forRoot(routes, {
+            preloadingStrategy: NoPreloading,
+        }),
+    ],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}

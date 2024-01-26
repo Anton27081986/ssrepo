@@ -12,7 +12,7 @@ import {ApiService} from '@app/shared/services/api/api.service';
 })
 export class FooterComponent implements OnInit {
     protected readonly AppRoutes = AppRoutes;
-    public listIcon!: any;
+    listIcon!: any;
 
     constructor(
         private readonly apiService: ApiService,

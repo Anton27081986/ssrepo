@@ -12,12 +12,12 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
-import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
     selector: 'app-victory',
     templateUrl: './victory.component.html',
@@ -28,11 +28,11 @@ export class VictoryComponent implements OnInit, DoCheck {
     @ViewChild('liked') likedPeople!: ElementRef;
 
     private localData: any;
-    public total!: number;
-    public pageSize = 6;
-    public pageIndex = 1;
-    public offset = 0;
-    public getExtendedMode!: Observable<any>;
+    total!: number;
+    pageSize = 6;
+    pageIndex = 1;
+    offset = 0;
+    getExtendedMode!: Observable<any>;
 
     victoryForm!: FormGroup;
     winsList!: Observable<any>;
@@ -67,7 +67,7 @@ export class VictoryComponent implements OnInit, DoCheck {
 
     ngDoCheck() {
         if (this.localData.name !== this.winsList) {
-            // console.log('Разные данне')
+            // console.log('Разные')
             // this.chDRef.markForCheck();
         }
     }
@@ -86,10 +86,14 @@ export class VictoryComponent implements OnInit, DoCheck {
 
         this.apiService
             .getWins(this.pageSize, this.offset)
-            .pipe(map(({isExtendedMode}) => isExtendedMode))
-            .subscribe(value => {
-                this.total = value;
-            });
+            .pipe(
+                untilDestroyed(this),
+                map(({total}) => total),
+                tap(value => {
+                    this.total = value;
+                }),
+            )
+            .subscribe();
 
         this.winsUrl = this.apiService.getWins(this.pageSize, this.offset);
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
@@ -97,24 +101,6 @@ export class VictoryComponent implements OnInit, DoCheck {
             search: ['', [Validators.required]],
             password: ['', Validators.required],
         });
-    }
-
-    // Модальное окно раскрытой карточки
-    showModalOpenOut(id: any): void {
-        this.modalCreate
-            .create({
-                nzClosable: true,
-                nzFooter: null,
-                nzTitle: 'Информация о пользователе',
-                nzNoAnimation: false,
-                nzWidth: '365px',
-                nzContent: ModalInfoComponent,
-                nzViewContainerRef: this.viewContainerRef,
-                nzData: {
-                    data: id,
-                },
-            })
-            .afterClose.subscribe();
     }
 
     // Модальное окно добавления победы
@@ -132,25 +118,6 @@ export class VictoryComponent implements OnInit, DoCheck {
             .afterClose.subscribe();
     }
 
-    // Модальное окно комментариев
-    showModalComments(item: any, type: number): void {
-        this.modalCreate
-            .create({
-                nzClosable: true,
-                nzFooter: null,
-                nzTitle: `Победа № ${item.user.id}`,
-                nzNoAnimation: false,
-                nzWidth: '560px',
-                nzContent: CommentsModalComponent,
-                nzViewContainerRef: this.viewContainerRef,
-                nzData: {
-                    data: item,
-                    type,
-                },
-            })
-            .afterClose.subscribe();
-    }
-
     nzPageIndexChange($event: number) {
         if ($event === 1) {
             this.offset = 0;
@@ -160,12 +127,7 @@ export class VictoryComponent implements OnInit, DoCheck {
 
         this.pageIndex = $event; // Установка текущего индекса
 
-        // Обновляем данные
         this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
         this.chDRef.markForCheck();
-    }
-
-    trackBy(_index: number, item: any) {
-        return item.id;
     }
 }

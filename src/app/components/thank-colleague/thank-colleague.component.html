@@ -172,13 +172,15 @@
           </ng-template>
 
         <ng-template #pagination>
-          <nz-pagination [nzPageIndex]="pageIndex"
-                         [nzPageSize]="pageSize"
-                         [nzTotal]="thankyou.length"
-                         (nzPageIndexChange)="pageIndex = $event"
-                         (nzPageSizeChange)="pageSize = $event">
-
-          </nz-pagination>
+          <div class="pagination">
+            <nz-pagination
+              [nzPageIndex]="pageIndex"
+               [nzPageSize]="pageSize"
+               [nzTotal]="thankyou.length"
+               (nzPageIndexChange)="pageIndex = $event"
+               (nzPageSizeChange)="pageSize = $event">
+            </nz-pagination>
+          </div>
         </ng-template>
       </nz-list>
 <!--      </ng-container>-->

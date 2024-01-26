@@ -19,7 +19,7 @@ export class LikeComponent implements AfterViewInit {
     @Input() objectIdProps!: number;
     @Input() typeObject!: number;
     @Input() award: any;
-    @Input() isExtendedMode: any;
+    @Input() isExtendedMode!: boolean;
 
     isUserLiked!: boolean;
     likesCount!: number;
@@ -38,7 +38,7 @@ export class LikeComponent implements AfterViewInit {
         this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
     }
 
-    setLike(isUserLiked: any, objectId: number, type = this.typeObject) {
+    setLike(isUserLiked: boolean, objectId: number, type = this.typeObject) {
         // this.ngZone.onStable.subscribe(() => {
         //     console.log('zone stableed');
         // });
@@ -61,7 +61,6 @@ export class LikeComponent implements AfterViewInit {
                     this.isClickLike = false;
                     this.chDRef.markForCheck();
                 },
-                error: (error: unknown) => console.log(error),
             });
         }
     }

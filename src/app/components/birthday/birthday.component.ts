@@ -22,7 +22,7 @@ import {formatDate} from '@angular/common';
 })
 export class BirthdayComponent implements OnInit {
     @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
-    public birthdayList!: Observable<any>;
+    birthdayList!: Observable<any>;
 
     date = null;
     protected dateToday!: string;

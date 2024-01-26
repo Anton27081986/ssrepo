@@ -14,17 +14,13 @@ import {Observable} from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
     // @ts-ignore
-    public statusInputSearch = false;
-    public statusInputSearchMobile = true;
-    public statusBurger = false;
-    public listMenu!: any; // IMainMenu[]
+    statusInputSearch = false;
+    statusInputSearchMobile = true;
+    statusBurger = false;
+    listMenu!: any; // IMainMenu[]
 
-    public profileData!: any;
-    public profile!: Observable<any>;
-    // public favoritemenu!: Observable<any>;
-    public favoritemenu!: any; // IMainMenu[]
-
-    typeIcon!: 'ss:search';
+    profile!: Observable<any>;
+    favoritemenu!: any; // IMainMenu[]
 
     constructor(
         private readonly apiService: ApiService,

@@ -16,9 +16,8 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 export class AdressBookComponent implements OnInit {
     loginForm!: FormGroup;
     loading = false;
-    checked = true;
     title: any;
-    public addressBooks!: Observable<any>;
+    addressBooks!: Observable<any>;
 
     constructor(
         private readonly apiService: ApiService,
@@ -84,13 +83,10 @@ export class AdressBookComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
 
-        // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
         }
 
         this.loading = true;
     }
-
-    search() {}
 }

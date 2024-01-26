@@ -1,0 +1,70 @@
+.pagination {
+    margin-top: 27px;
+    display: flex;
+
+    svg {
+        cursor: pointer;
+        font-size: 10px;
+
+        path {
+            fill-opacity: 1;
+        }
+    }
+
+    // Пагинация
+    .ant-list-pagination {
+        display: flex;
+    }
+
+    .ant-pagination-item:hover a {
+        color: $blue;
+    }
+
+    .ant-pagination ul,
+    .ant-pagination ol {
+        margin-left: 0;
+    }
+
+    .ant-table-pagination.ant-pagination {
+        margin: 21px 0 !important;
+    }
+
+    .ant-pagination-prev,
+    .ant-pagination-next {
+        display: none;
+    }
+
+    .ant-pagination-item-active,
+    .ant-pagination-item {
+        font-size: 16px;
+        line-height: 39px;
+        font-weight: 600;
+        background: #fff;
+        border-color: $border-color;
+        border-radius: 10px;
+        height: 40px;
+        width: 40px;
+        margin-right: 8px;
+    }
+
+    .ant-pagination-item-active a {
+        color: $blue;
+    }
+
+    .ant-table-pagination.ant-pagination {
+        margin: 21px 0 !important;
+    }
+
+    .ant-pagination.mini .ant-pagination-item {
+        min-width: 44px;
+        height: 44px;
+    }
+
+    .ant-pagination-item:last-child {
+        width: auto;
+    }
+
+    .ant-pagination-item:nth-last-child(-n + 2) {
+        display: none;
+    }
+}

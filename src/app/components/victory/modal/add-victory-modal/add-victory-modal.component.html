@@ -68,8 +68,9 @@
 <!--      </div>-->
 
       <div class="tag-selected-name" *ngIf="tprSelectedTags">
-        <div class="item-tag" *ngFor="let tpr of tprSelectedTags; index as i">
-          <span>{{ tpr?.name }}</span>
+        <div class="item-tag item-tag-selected" *ngFor="let tpr of tprSelectedTags; index as i">
+<!--          <span>{{ tpr?.name | maxLengthText:70 }}</span>-->
+          <a nzTooltipTitle="{{ tpr?.name }}" nz-tooltip>{{ tpr?.name | maxLengthText:20 }}</a>
           <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagTpr(i)"></span>
         </div>
       </div>

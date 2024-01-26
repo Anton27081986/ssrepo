@@ -44,7 +44,7 @@
                     }
                     .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
                         height: 52px !important;
-                        padding: 9px 0 0px 26px !important;
+                        padding: 9px 0 0 26px !important;
                         font-size: 16px;
                         opacity: 0.6;
                     }
@@ -240,7 +240,7 @@
                             fill-opacity: 1;
 
                             path {
-                                stroke: unset;
+                                stroke: none;
                             }
                         }
                     }
@@ -488,39 +488,6 @@
         box-sizing: border-box;
         scrollbar-width: thin;
         scrollbar-color: $gray-light;
-    }
-
-    .item-tag {
-        display: inline-flex;
-        padding: 0 16px;
-        align-items: center;
-        border-radius: 8px;
-        border: 1px solid #b4c4ff;
-        background: #cbd7ff;
-        height: 28px;
-
-        span {
-            color: #4770ff;
-            font-size: 10px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            letter-spacing: -0.1px;
-        }
-
-        .close-icon {
-            margin-left: 8px;
-        }
-
-        ::ng-deep svg {
-            font-size: 8px !important;
-            fill-opacity: 1;
-
-            rect {
-                fill: #4770ff;
-                stroke: #4770ff;
-            }
-        }
     }
 }
 

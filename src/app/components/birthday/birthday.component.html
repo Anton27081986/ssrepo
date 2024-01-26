@@ -9,12 +9,14 @@
       </div>
     </div>
     <div class="open-all-table">
-      <div class="button">
+      <a href="https://cisp.ssnab.ru/Personal/Mols/Reminder" target="_blank" rel="noreferrer">
+        <div class="button">
         <button nz-button class="button" [nzType]="'primary'">
           <span class="like-icon" nz-icon [nzType]="'ss:blocknote'"></span>
           Добавить напоминание
         </button>
       </div>
+      </a>
     </div>
   </div>
 
@@ -22,7 +24,7 @@
 
   <div class="tabs">
     <div class="calendar">
-      <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+      <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" [nzAllowClear]="false" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
 
       <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
       <ng-template #sufixCalendar>

@@ -11,7 +11,7 @@ import {map, Observable} from 'rxjs';
 })
 export class SliderComponent implements OnInit {
     @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
-    public banners!: Observable<any>;
+    banners!: Observable<any>;
 
     constructor(private readonly apiService: ApiService) {}
 

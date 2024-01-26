@@ -1,10 +1,10 @@
-<div class="rating" *ngIf="rankTypes | async as rankTypes">
+<div class="rating">
   <div class="header">
     <div>
       <div class="title">
         <h1>рейтинг сотрудников</h1>
         <div class="rating-item">
-          <span> {{ rankTypes?.averageAll }} / {{ rankTypes?.membersTotal }}</span>
+          <span> {{ (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
         </div>
       </div>
     </div>
@@ -28,6 +28,7 @@
 
       <div class="select-group">
         <nz-select
+          nzAllowClear="false"
           nzPlaceHolder="Выберите неделю"
           [(ngModel)]="weekId"
           (ngModelChange)="selectWeek($event)"
@@ -39,7 +40,7 @@
     </div>
   </div>
 
-  <div class="content">
+  <div class="content" *ngIf="rankTypes | async as rankTypes">
     <div class="rating-list">
       <ng-container *ngIf="rankTypes">
         <ng-container *ngFor="let type of rankTypes?.items;">
@@ -111,13 +112,15 @@
         </ng-template>
 
         <ng-template #pagination>
-          <nz-pagination [nzPageIndex]="pageIndex"
-                         [nzPageSize]="pageSize"
-                         [nzTotal]="wins.length"
-                         (nzPageIndexChange)="pageIndex = $event"
-                         (nzPageSizeChange)="pageSize = $event">
+          <div class="pagination">
+            <nz-pagination [nzPageIndex]="pageIndex"
+                           [nzPageSize]="pageSize"
+                           [nzTotal]="wins.length"
+                           (nzPageIndexChange)="pageIndex = $event"
+                           (nzPageSizeChange)="pageSize = $event">
 
-          </nz-pagination>
+            </nz-pagination>
+          </div>
         </ng-template>
       </nz-list>
     </ng-container>

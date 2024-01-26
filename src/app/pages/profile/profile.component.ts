@@ -10,7 +10,7 @@ import {AppIcons} from '@app/common/icons';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileComponent {
-    public switchValue = false;
+    switchValue = false;
     hide = false;
 
     private readonly iconMoon =

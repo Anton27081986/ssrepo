@@ -19,7 +19,7 @@
             <nz-form-item>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Поиск по сотрудникам" [(ngModel)]="title" (input)="search()" />
+                  <input type="text" nz-input formControlName="search" placeholder="Поиск по сотрудникам" [(ngModel)]="title" />
                 </nz-input-group>
               </nz-form-control>
               <ng-template #prefixSearch>
@@ -79,7 +79,7 @@
       </div>
 
     </div>
-    <div class="bottom-panel">
+    <div class="pagination">
       <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
     </div>
   </div>
