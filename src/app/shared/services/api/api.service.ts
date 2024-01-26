@@ -215,4 +215,12 @@ export class ApiService {
     getProfile() {
         return this.http.get<any>(`${environment.apiUrl}/api/auth/Profile`);
     }
+
+    public callByIpPhone(linkToCall: string): Observable<any> {
+        return this.http.get<any>(linkToCall);
+    }
+
+    public resetCallByIpPhone(): Observable<any> {
+        return this.http.get<any>(`https://ssnab.it/personal/mols/endCall`);
+    }
 }
