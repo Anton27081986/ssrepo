@@ -49,12 +49,10 @@ import {PeopleLikedDirective} from '@app/components/victory/people-liked.directi
 import {SuperLikeDirective} from '@app/components/victory/super-like.directive';
 import {LikeComponent} from './like/like.component';
 import {SuperLikeComponent} from './victory/super-like/super-like.component';
-import {
-    BackendErrorMessagesComponent
-} from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
+import {BackendErrorMessagesComponent} from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
 import {PaginationComponent} from '@app/shared/components/pagination/pagination.component';
 import {LoaderComponent} from '@app/shared/components/loader/loader.component';
-import {CardVictoryComponent} from "@app/components/victory/card-victory/card-victory.component";
+import {CardVictoryComponent} from '@app/components/victory/card-victory/card-victory.component';
 
 @NgModule({
     declarations: [

@@ -64,7 +64,7 @@
         width: auto;
     }
 
-    .ant-pagination-item:nth-last-child(-n+2){
+    .ant-pagination-item:nth-last-child(-n + 2) {
         display: none;
     }
 }

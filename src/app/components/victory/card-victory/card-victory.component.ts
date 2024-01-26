@@ -1,20 +1,26 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewContainerRef} from '@angular/core';
-import {ApiService} from "@app/shared/services/api/api.service";
-import {FormBuilder} from "@angular/forms";
-import {NzIconService} from "ng-zorro-antd/icon";
-import {NzModalService} from "ng-zorro-antd/modal";
-import {ModalInfoComponent} from "@app/components/modal/modal-info/modal-info.component";
-import {CommentsModalComponent} from "@app/components/modal/comments-modal/comments-modal.component";
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+    ViewContainerRef,
+} from '@angular/core';
+import {ApiService} from '@app/shared/services/api/api.service';
+import {FormBuilder} from '@angular/forms';
+import {NzIconService} from 'ng-zorro-antd/icon';
+import {NzModalService} from 'ng-zorro-antd/modal';
+import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
+import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 
 @Component({
-  selector: 'app-card-victory',
-  templateUrl: './card-victory.component.html',
-  styleUrls: ['./card-victory.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-card-victory',
+    templateUrl: './card-victory.component.html',
+    styleUrls: ['./card-victory.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardVictoryComponent {
-    @Input() item!:any
-    @Input() extendedMode!:any
+    @Input() item!: any;
+    @Input() extendedMode!: any;
 
     constructor(
         private readonly apiService: ApiService,
@@ -24,7 +30,6 @@ export class CardVictoryComponent {
         private readonly viewContainerRef: ViewContainerRef,
         private readonly chDRef: ChangeDetectorRef,
     ) {}
-
 
     // Модальное окно раскрытой карточки
     showModalOpenOut(id: number): void {
