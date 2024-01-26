@@ -22,6 +22,7 @@ export class AppComponent {
     ) {
         this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
         console.log('nameEnv', environment.name);
+        console.log('apiUrl app', environment.apiUrl);
     }
 
     get isAdmin() {
