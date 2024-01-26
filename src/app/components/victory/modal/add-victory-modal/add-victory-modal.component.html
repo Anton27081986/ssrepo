@@ -33,7 +33,7 @@
         </nz-form-control>
       </nz-form-item>
 
-      <div *ngIf="partyWinSelectedTags">
+      <div *ngIf="partyWinSelectedTags.length>1">
         <div class="tag-selected-name">
           <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
             <div class="item-tag">
