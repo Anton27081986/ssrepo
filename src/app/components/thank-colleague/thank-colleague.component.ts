@@ -5,7 +5,7 @@ import {
     OnInit,
     ViewContainerRef,
 } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
@@ -87,9 +87,17 @@ export class ThankColleagueComponent implements OnInit {
             });
 
         this.thankColleagueForm = this.formBuilder.group({
-            name: [''],
-            comment: [''],
+            name: ['', [Validators.required]],
+            comment: ['', [Validators.required]],
         });
+    }
+
+    public get name() {
+        return this.thankColleagueForm.get('name');
+    }
+
+    public get comment() {
+        return this.thankColleagueForm.get('comment');
     }
 
     public loadAllThanksForColleagues() {
@@ -144,7 +152,9 @@ export class ThankColleagueComponent implements OnInit {
                     type,
                 },
             })
-            .afterClose.subscribe();
+            .afterClose.subscribe(() => {
+                this.loadAllThanksForColleagues();
+            });
     }
 
     public showModal(): void {
