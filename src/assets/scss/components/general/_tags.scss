@@ -8,7 +8,8 @@
     height: 28px;
     overflow: hidden;
 
-    span, button {
+    span,
+    button {
         color: #4770ff;
         font-size: 10px;
         font-style: normal;
@@ -21,7 +22,7 @@
         margin-left: 8px;
     }
 
-   svg {
+    svg {
         font-size: 8px !important;
         fill-opacity: 1;
 
@@ -29,5 +30,5 @@
             fill: #4770ff;
             stroke: #4770ff;
         }
-   }
+    }
 }
