@@ -37,7 +37,6 @@
                     background-color: #f4f5f6;
                     cursor: pointer;
 
-
                     ::ng-deep svg {
                         font-size: 14px;
                         path {
@@ -52,7 +51,6 @@
                 }
 
                 .is-calling {
-
                     ::ng-deep svg {
                         font-size: 14px;
                         path {
@@ -61,7 +59,7 @@
                     }
 
                     .inner-phone {
-                        color:red !important;
+                        color: red !important;
                     }
                 }
             }
