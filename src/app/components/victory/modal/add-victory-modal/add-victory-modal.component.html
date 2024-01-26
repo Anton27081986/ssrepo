@@ -22,8 +22,9 @@
             nzServerSearch
             nzPlaceHolder="Выберите ваших коллег из списка или введите фамилию"
             [(ngModel)]="selectedUser"
-            (ngModelChange)="onUserChange()"
+            [nzAllowClear]="true"
             [nzShowArrow]="true"
+            (ngModelChange)="onUserChange()"
             (nzOnSearch)="searchUsers($event)"
             [ngModelOptions]="{ standalone: true }"
           >
@@ -32,16 +33,18 @@
         </nz-form-control>
       </nz-form-item>
 
-      <div class="tag-selected-name" *ngIf="partyWinSelectedTags">
-        <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
-          <div class="item-tag">
-            <span>{{ party?.name }}</span>
-            <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagUser(i)"></span>
-          </div>
-        </ng-container>
+      <div *ngIf="partyWinSelectedTags">
+        <div class="tag-selected-name">
+          <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
+            <div class="item-tag">
+              <span>{{ party?.name }}</span>
+              <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagUser(i)"></span>
+            </div>
+          </ng-container>
+        </div>
       </div>
 
-      <nz-form-item>
+      <nz-form-item class="form-item-tpr">
         <nz-form-label class="field-tile" [nzSpan]="6">ТПР:</nz-form-label>
         <nz-form-control>
           <nz-select
@@ -49,8 +52,9 @@
             nzServerSearch
             nzPlaceHolder="Укажите ТПР"
             [(ngModel)]="selectedTpr"
-            (ngModelChange)="onTprChange()"
+            [nzAllowClear]="true"
             [nzShowArrow]="true"
+            (ngModelChange)="onTprChange()"
             (nzOnSearch)="searchTpr($event)"
             [ngModelOptions]="{ standalone: true }"
           >
