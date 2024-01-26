@@ -12,6 +12,10 @@
             display: flex;
             align-items: center;
         }
+
+        h1 a {
+            color: $black !important;
+        }
     }
 
     .table {

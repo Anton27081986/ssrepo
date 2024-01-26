@@ -1,5 +1,6 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     OnDestroy,
     OnInit,
@@ -66,6 +67,7 @@ export class RatingComponent implements OnInit, OnDestroy {
         private readonly iconService: NzIconService,
         public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
+        private readonly chDRef: ChangeDetectorRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -188,8 +190,16 @@ export class RatingComponent implements OnInit, OnDestroy {
                 }),
             )
             .subscribe(value => {
-                this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
-                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0);
+                this.rankTypeId = value.rankTypeId;
+
+                // TODO Обновить участников
+                // TODO Настроить нагинацию
+                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0).pipe(
+                    tap(_ => {
+                        console.log('Получение-обновление участников');
+                        this.chDRef.markForCheck();
+                    }),
+                );
             });
     }
 

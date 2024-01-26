@@ -17,9 +17,8 @@
   </div>
 
   <div class="content">
-    <!--    | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize -->
     <ng-container *ngIf="(winsList | async)?.items as wins; else loader">
-      <nz-list class="card-list" [nzDataSource]="wins" [nzRenderItem]="item" [nzPagination]="pagination">
+      <nz-list class="card-list" [nzDataSource]="wins" [nzRenderItem]="item">
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
@@ -100,23 +99,24 @@
             </ng-template>
           </nz-list-item>
         </ng-template>
-
-        <ng-template #pagination>
-          <nz-pagination
-            [nzTotal]="1000"
-            [nzPageIndex]="pageIndex"
-            [nzPageSize]="pageSize"
-            (nzPageIndexChange)="nzPageIndexChange($event)"
-            (nzPageSizeChange)="pageSize = $event"
-            [nzResponsive]="true"
-          >
-          </nz-pagination>
-        </ng-template>
       </nz-list>
     </ng-container>
     <ng-template #loader>
       <app-loader></app-loader>
     </ng-template>
   </div>
+
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
+  </div>
+
 </div>
 

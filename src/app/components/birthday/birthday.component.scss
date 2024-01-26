@@ -11,6 +11,9 @@
 
         h1 {
             text-transform: uppercase;
+            a {
+                color: $black !important;
+            }
         }
 
         .open-all-table {

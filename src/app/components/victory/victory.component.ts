@@ -12,12 +12,14 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
     selector: 'app-victory',
     templateUrl: './victory.component.html',
@@ -67,7 +69,7 @@ export class VictoryComponent implements OnInit, DoCheck {
 
     ngDoCheck() {
         if (this.localData.name !== this.winsList) {
-            // console.log('Разные данне')
+            // console.log('Разные')
             // this.chDRef.markForCheck();
         }
     }
@@ -86,10 +88,14 @@ export class VictoryComponent implements OnInit, DoCheck {
 
         this.apiService
             .getWins(this.pageSize, this.offset)
-            .pipe(map(({isExtendedMode}) => isExtendedMode))
-            .subscribe(value => {
-                this.total = value;
-            });
+            .pipe(
+                untilDestroyed(this),
+                map(({total}) => total),
+                tap(value => {
+                    this.total = value;
+                }),
+            )
+            .subscribe();
 
         this.winsUrl = this.apiService.getWins(this.pageSize, this.offset);
         this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({items}) => items));
@@ -160,7 +166,6 @@ export class VictoryComponent implements OnInit, DoCheck {
 
         this.pageIndex = $event; // Установка текущего индекса
 
-        // Обновляем данные
         this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
         this.chDRef.markForCheck();
     }

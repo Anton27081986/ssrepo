@@ -63,7 +63,11 @@
     }
 
     .content {
+        position: relative;
         margin-top: 37px;
+        min-height: 682px;
+        height: 682px;
+
         .card-list {
             ::ng-deep .ant-list-items {
                 display: flex;
