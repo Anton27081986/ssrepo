@@ -28,6 +28,13 @@ export class CommentsModalComponent implements OnInit {
     }
 
     ngOnInit() {
+        // this.commentList = this._apiService.getComment(
+        //     this.nzModalData.data.id,
+        //     this.nzModalData.type,
+        //     0,
+        //     6,
+        // );
+
         this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
 
         this.addComment = this.formBuilder.group({

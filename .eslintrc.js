@@ -160,7 +160,7 @@ module.exports = {
                 '@typescript-eslint/prefer-readonly': ['error'],
                 '@typescript-eslint/explicit-member-accessibility': [
                     'warn',
-                    {accessibility: 'explicit'},
+                    {accessibility: 'no-public'},
                 ],
                 'no-unused-vars': 'off',
                 '@typescript-eslint/no-unused-vars': ['error', {argsIgnorePattern: '^_'}],

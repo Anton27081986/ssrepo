@@ -42,7 +42,6 @@
                 .personals {
                     position: relative;
                     display: flex;
-                    justify-content: space-between;
 
                     .images {
                         position: relative;
@@ -203,28 +202,6 @@
                     justify-content: space-around;
                     cursor: pointer;
                 }
-                .delete {
-                    background-color: $gray-light;
-                    color: $blue;
-                    font-size: 12px;
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 8px;
-                    margin-left: 8px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-around;
-                    cursor: pointer;
-
-                    ::ng-deep svg {
-                        fill-opacity: 1;
-
-                        path {
-                            stroke: none;
-                        }
-                    }
-                }
-
                 .date {
                     display: flex;
                     align-items: center;
@@ -323,9 +300,6 @@
                     .personals {
                         .message {
                             width: 100% !important;
-                        }
-
-                        .delete-icon {
                         }
                     }
 

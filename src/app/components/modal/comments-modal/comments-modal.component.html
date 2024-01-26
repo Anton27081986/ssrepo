@@ -11,9 +11,8 @@
           </ng-container>
         </div>
 
-        <div class="title" *ngIf="this.nzModalData?.type === 1">
+        <div class="title">
           <div class="fio">
-            {{nzModalData?.data?.type}}
             <ng-container *ngIf="nzModalData?.data?.user">
               <span>{{ nzModalData?.data?.user?.lastName }} {{ nzModalData?.data?.user?.firstName }} {{ nzModalData?.data?.user?.surName }}</span>
             </ng-container>
@@ -33,43 +32,6 @@
           </div>
         </div>
       </div>
-
-      <div class="title personals" *ngIf="this.nzModalData?.type === 0">
-
-          <div class="images">
-            <div class="img img-from">
-              <img src="{{ nzModalData?.data?.fromUser?.avatarUrl }}" alt="user" />
-            </div>
-            <div class="img img-to">
-              <img src="{{ nzModalData?.data?.toUser?.avatarUrl }}" alt="user" />
-            </div>
-          </div>
-
-          <div class="from-to">
-            <div class="from">
-              <div class="personal">
-                <div class="title">
-                  <span class="sub-title">От кого:</span>
-                  <div class="fio">
-                    <span>{{ nzModalData?.data?.fromUser?.name }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="to">
-              <div class="personal">
-                <div class="title">
-                  <span class="sub-title">Кому:</span>
-                  <div class="fio">
-                    <span>{{ nzModalData?.data?.toUser?.name }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-      </div>
-
       <div class="icons">
         <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
       </div>
