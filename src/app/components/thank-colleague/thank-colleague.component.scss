@@ -43,6 +43,10 @@
                     position: relative;
                     display: flex;
 
+                    .info {
+                        display: flex;
+                    }
+
                     .images {
                         position: relative;
                         width: 80px;
