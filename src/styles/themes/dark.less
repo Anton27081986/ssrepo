@@ -48,6 +48,10 @@ body {
     .title {
         color: #ffffff !important;
 
+        a {
+            color: #ffffff !important;
+        }
+
         h1,
         .h1 {
             color: #ffffff !important;
@@ -479,4 +483,45 @@ body {
             background: #31393d !important;
         }
     }
+
+
 }
+
+
+//  Пгинация
+
+// Аукционы
+.auction-sales .table .ant-pagination-item {
+    background-color: #31393d!important;
+    border: 0 solid #394245;
+}
+
+.auction-sales .table .ant-pagination-item-active{
+    background-color: #202629!important;
+}
+
+.ant-pagination-item-active {
+    background-color: #31393D!important;
+}
+
+body {
+    // .ant-pagination-item-active, .pagination .ant-pagination-item {
+    .ant-pagination-item-active, .pagination .ant-pagination-item {
+        background: #202629;
+        border: 0 solid #394245;
+
+        a {
+            color: #ffffff!important;
+        }
+    }
+
+    ::ng-deep .ant-pagination-item {
+        background-color: #31393d!important;
+    }
+
+    //::ng-deep .ant-pagination-item-active {
+    //    background-color: #31393D!important;
+    //}
+}
+
+

@@ -14,9 +14,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {map, Observable, tap} from 'rxjs';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
-import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
 @UntilDestroy()
@@ -105,24 +103,6 @@ export class VictoryComponent implements OnInit, DoCheck {
         });
     }
 
-    // Модальное окно раскрытой карточки
-    showModalOpenOut(id: number): void {
-        this.modalCreate
-            .create({
-                nzClosable: true,
-                nzFooter: null,
-                nzTitle: 'Информация о пользователе',
-                nzNoAnimation: false,
-                nzWidth: '365px',
-                nzContent: ModalInfoComponent,
-                nzViewContainerRef: this.viewContainerRef,
-                nzData: {
-                    data: id,
-                },
-            })
-            .afterClose.subscribe();
-    }
-
     // Модальное окно добавления победы
     showModaAddWin(): void {
         this.modalCreate
@@ -138,25 +118,6 @@ export class VictoryComponent implements OnInit, DoCheck {
             .afterClose.subscribe();
     }
 
-    // Модальное окно комментариев
-    showModalComments(data: any, type: number): void {
-        this.modalCreate
-            .create({
-                nzClosable: true,
-                nzFooter: null,
-                nzTitle: `Победа № ${data.user.id}`,
-                nzNoAnimation: false,
-                nzWidth: '560px',
-                nzContent: CommentsModalComponent,
-                nzViewContainerRef: this.viewContainerRef,
-                nzData: {
-                    data,
-                    type,
-                },
-            })
-            .afterClose.subscribe();
-    }
-
     nzPageIndexChange($event: number) {
         if ($event === 1) {
             this.offset = 0;
@@ -168,9 +129,5 @@ export class VictoryComponent implements OnInit, DoCheck {
 
         this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
         this.chDRef.markForCheck();
-    }
-
-    trackBy(_index: number, item: any) {
-        return item.id;
     }
 }

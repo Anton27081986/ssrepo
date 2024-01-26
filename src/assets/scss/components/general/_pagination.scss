@@ -64,15 +64,7 @@
         width: auto;
     }
 
-    .ant-pagination-item[ng-reflect-index|='3244'] {
+    .ant-pagination-item:nth-last-child(-n+2){
         display: none;
-    }
-
-    .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis {
-        // color: #886cff;
-    }
-
-    .ant-pagination-jump-next .ant-pagination-item-container .ant-pagination-item-ellipsis:hover {
-        color: #50d155;
     }
 }

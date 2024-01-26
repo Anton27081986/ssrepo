@@ -85,6 +85,7 @@ export class CommentsModalComponent implements OnInit {
         }
 
         // Сборосить форму
+        this.addComment.reset();
     }
 
     removeComment($event: any, id: number) {
