@@ -67,13 +67,25 @@ export class ApiService {
         });
     }
 
-    /** Спасибо коллеге */
-    getThanksColleague(): Observable<any> {
+    // Спасибо коллеге
+    public getThanksColleagueList(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/thanks`);
     }
 
-    /** Адресная книга */
-    getAddressBooks(): Observable<any> {
+    public addThanksColleague(userId: number, note: string): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/thanks`, {
+            userId,
+            note,
+        });
+    }
+
+    // Удалить спасибо коллеге по id
+    public deleteThanksColleague(id: number): Observable<any> {
+        return this.http.delete(`${environment.apiUrl}/api/awards/thanks/${id}`);
+    }
+
+    // Адресная книга
+    public getAddressBooks(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/auth/AddressBook`);
     }
 

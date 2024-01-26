@@ -53,6 +53,7 @@ import {BackendErrorMessagesComponent} from '@app/shared/modules/backend-error-m
 import {PaginationComponent} from '@app/shared/components/pagination/pagination.component';
 import {LoaderComponent} from '@app/shared/components/loader/loader.component';
 import {CardVictoryComponent} from '@app/components/victory/card-victory/card-victory.component';
+import {NzTypographyModule} from 'ng-zorro-antd/typography';
 
 @NgModule({
     declarations: [
@@ -116,6 +117,7 @@ import {CardVictoryComponent} from '@app/components/victory/card-victory/card-vi
         PeopleLikedDirective,
         SuperLikeDirective,
         NzSpinModule,
+        NzTypographyModule,
     ],
     exports: [
         SearchComponent,

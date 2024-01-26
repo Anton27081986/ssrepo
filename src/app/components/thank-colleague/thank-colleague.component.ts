@@ -1,9 +1,17 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    OnInit,
+    ViewContainerRef,
+} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
+import {NzIconService} from 'ng-zorro-antd/icon';
+import {AppIcons} from '@app/common/icons';
 
 @Component({
     selector: 'app-thank-colleague',
@@ -12,34 +20,39 @@ import {NzModalService} from 'ng-zorro-antd/modal';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThankColleagueComponent implements OnInit {
-    date: any;
-    isVisible = false;
-    thankColleague!: FormGroup;
-    loading = false;
-    submitted = false;
-    isConfirmLoading = false;
-
-    thankColleagueList!: Observable<any>;
-
-    pageSize = 6;
-    pageIndex = 1;
+    public date: any;
+    public isModalVisible = false;
+    public thankColleagueForm!: FormGroup;
+    public loading = false;
+    public submitted = false;
+    public isConfirmLoading = false;
+    public thankColleagueList!: Observable<any>;
+    public pageSize = 6;
+    public pageIndex = 1;
+    public offset = 0;
+    public currentUserId: any;
+    public getExtendedMode!: Observable<any>;
 
     private readonly modelChanged: Subject<string> = new Subject<string>();
 
     // Переменные для поиска
-    selectedValue = null;
-    listOfOption: Array<{name: string; id: string}> = [];
+    public selectedValue = null;
+    public listOfOption: Array<{name: string; id: string}> = [];
 
-    nzFilterOption = (): boolean => true;
+    public nzFilterOption = (): boolean => true;
 
-    constructor(
+    public constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
-        public modalCreate: NzModalService,
+        public modalCreateService: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
-    ) {}
+        private readonly cdr: ChangeDetectorRef,
+        private readonly iconService: NzIconService,
+    ) {
+        this.iconService.addIconLiteral('ss:delete', AppIcons.delete);
+    }
 
-    ngOnInit() {
+    public ngOnInit() {
         zip(this.modelChanged)
             .pipe(
                 // debounceTime(300),
@@ -59,65 +72,123 @@ export class ThankColleagueComponent implements OnInit {
             )
             .subscribe();
 
-        this.thankColleagueList = this.apiService
-            .getThanksColleague()
-            .pipe(map(({items}) => items));
+        this.apiService.getProfile().subscribe(profile => {
+            this.currentUserId = profile.id;
+            console.log(this.currentUserId);
+        });
 
-        this.thankColleague = this.formBuilder.group({
-            name: [''],
-            comment: [''],
+        this.loadAllThanksForColleagues();
+
+        this.apiService
+            .getWins(this.pageSize, this.offset)
+            .pipe(map(({isExtendedMode}) => isExtendedMode))
+            .subscribe(value => {
+                this.getExtendedMode = value;
+            });
+
+        this.thankColleagueForm = this.formBuilder.group({
+            name: ['', [Validators.required]],
+            comment: ['', [Validators.required]],
         });
     }
 
-    showModal(): void {
-        this.isVisible = true;
+    public get name() {
+        return this.thankColleagueForm.get('name');
     }
 
-    handleOk(): void {
-        this.isVisible = false;
+    public get comment() {
+        return this.thankColleagueForm.get('comment');
     }
 
-    handleCancel(): void {
-        this.isVisible = false;
+    public loadAllThanksForColleagues() {
+        this.thankColleagueList = this.apiService
+            .getThanksColleagueList()
+            .pipe(map(({items}) => items));
     }
 
-    search($event: any) {
-        this.modelChanged.next($event);
-    }
-
-    // При выборе клика
-    onUserChange() {}
-
-    // Модальное окно комментариев
-    showModalComments(item: any): void {
-        this.modalCreate
-            .create({
-                nzClosable: false,
-                nzFooter: null,
-                nzTitle: 'Спасибо коллеге',
-                nzNoAnimation: false,
-                nzWidth: '560px',
-                nzContent: CommentsModalComponent,
-                nzViewContainerRef: this.viewContainerRef,
-                nzData: {
-                    data: item,
-                },
-            })
-            .afterClose.subscribe();
-    }
-
-    onSubmit() {
+    // TODO: перенести валидацию
+    public createThanksForColleague() {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        console.log(this.thankColleagueForm);
         this.submitted = true;
 
-        // stop here if form is invalid
-        if (this.thankColleague.invalid) {
+        if (this.thankColleagueForm.invalid) {
             return;
         }
 
         this.loading = true;
     }
 
-    // destroyModal(): void {
-    //     this.modal.destroy();
-    // }
+    public deleteThanksForColleague(thanks: any): void {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        console.log(thanks.id);
+        this.apiService.deleteThanksColleague(thanks.id).subscribe({
+            next: response => {
+                console.log('Спасибо удалён', response);
+                this.loadAllThanksForColleagues();
+                this.cdr.detectChanges();
+            },
+            error: (error: unknown) => console.error('Ошибка при удалении спасибо', error),
+        });
+    }
+
+    // Модальное окно комментариев
+    public showModalComments(item: any, type: number): void {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        this.modalCreateService
+            .create({
+                nzClosable: true,
+                nzFooter: null,
+                nzTitle: `Благодарность № ${item.id}`,
+                nzNoAnimation: false,
+                nzWidth: '560px',
+                nzContent: CommentsModalComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: item,
+                    type,
+                },
+            })
+            .afterClose.subscribe(() => {
+                this.loadAllThanksForColleagues();
+            });
+    }
+
+    public showModal(): void {
+        this.isModalVisible = true;
+    }
+
+    public handleOk(): void {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        console.log(this.thankColleagueForm);
+
+        if (this.thankColleagueForm.valid) {
+            const toUserId = this.thankColleagueForm.value.name;
+            const note = this.thankColleagueForm.value.comment;
+
+            this.apiService.addThanksColleague(toUserId, note).subscribe({
+                next: response => {
+                    console.log('Спасибо добавлен', response);
+                    this.loadAllThanksForColleagues();
+                },
+                error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
+            });
+        } else {
+            console.log('');
+        }
+
+        this.isModalVisible = false;
+    }
+
+    public handleCancel(): void {
+        this.isModalVisible = false;
+    }
+
+    public search($event: any) {
+        this.modelChanged.next($event);
+    }
 }
