@@ -8,7 +8,11 @@ import {environment} from '@environments/environment.development';
     providedIn: 'root',
 })
 export class ApiService {
-    public constructor(private readonly http: HttpClient) {}
+    constructor(private readonly http: HttpClient) {
+        console.log('apiUrl api service', environment.apiUrl);
+        console.log('nameEnv api service', environment.name);
+        console.log('production api service', environment.production);
+    }
 
     getMenuListJson(): Observable<any> {
         return this.http.get<IMainMenu[]>(`${environment.apiUrl}/api/company/menu`, {

@@ -10,6 +10,9 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddVictoryModalComponent implements OnInit {
+    private readonly modelChangedColleague: Subject<string> = new Subject<string>();
+    private readonly modelChangedTpr: Subject<string> = new Subject<string>();
+
     isVisibleAdd = true;
     addVictory!: FormGroup;
     submitted = false;
@@ -17,21 +20,11 @@ export class AddVictoryModalComponent implements OnInit {
     isConfirmLoading = false;
     title!: string;
 
-    joinWin = [
-        {label: 'Совместная победа', value: 'Совместная победа', disabled: true, checked: true},
-    ];
-
-    joinWinLabel = false;
     partyWinSelectedTags: Array<{name: string; id: number}> = [];
     tprSelectedTags: Array<{name: string; id: number}> = [];
     userWinArray: string[] = [];
     tprWinArray: string[] = [];
-
     backendErrors$!: Observable<any>;
-
-    private readonly modelChangedColleague: Subject<string> = new Subject<string>();
-    private readonly modelChangedTpr: Subject<string> = new Subject<string>();
-
     selectedUser!: string;
     selectedTpr!: string;
 
@@ -151,10 +144,6 @@ export class AddVictoryModalComponent implements OnInit {
                         name: user.name,
                     }); // добавление тега
 
-                    if (this.partyWinSelectedTags.length === 2) {
-                        this.joinWinLabel = true;
-                    }
-
                     this.chDRef.markForCheck();
                 }),
             )
@@ -181,11 +170,6 @@ export class AddVictoryModalComponent implements OnInit {
 
     deleteTagUser(i: number) {
         this.partyWinSelectedTags.splice(i, 1);
-
-        if (this.partyWinSelectedTags.length < 2) {
-            this.joinWinLabel = false;
-        }
-
         this.chDRef.markForCheck();
     }
 

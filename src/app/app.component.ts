@@ -21,6 +21,9 @@ export class AppComponent {
         private readonly authenticationService: AuthenticationService,
     ) {
         this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
+        console.log('apiUrl api service', environment.apiUrl);
+        console.log('nameEnv api service', environment.name);
+        console.log('production api service', environment.production);
     }
 
     get isAdmin() {

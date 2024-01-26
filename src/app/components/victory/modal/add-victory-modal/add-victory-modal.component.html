@@ -3,37 +3,32 @@
     <form nz-form [formGroup]="addVictory" nzLayout="vertical" class="form">
 
       <nz-form-item>
-        <!--      nzErrorTip="Введите достижение"-->
-        <nz-form-control>
-        <span class="field-tile">Описание:</span>
-        <div class="textarea">
-          <textarea nz-input formControlName="comment" placeholder="Поделитесь своим достижением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
-          <div class="icon-bg attach" *ngIf="false">
-            <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
+        <nz-form-control nzWarningTip="Введите достижение">
+          <nz-form-label class="field-tile" [nzSpan]="6">Описание:</nz-form-label>
+          <div class="textarea m-b-18">
+            <textarea nz-input formControlName="comment" placeholder="Поделитесь своим достижением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
+            <div class="icon-bg attach" *ngIf="false">
+              <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
+            </div>
           </div>
-        </div>
-
-        <div class="checkbox-group" *ngIf="joinWinLabel">
-          <label nz-checkbox [(ngModel)]="joinWin" [ngModelOptions]="{ standalone: true }" class="join-win">Совместная победа</label>
-        </div>
         </nz-form-control>
       </nz-form-item>
 
-      <nz-form-item>
+      <nz-form-item class="m-t-2">
+        <nz-form-label class="field-tile" [nzSpan]="8">Совместная победа:</nz-form-label>
         <nz-form-control>
-
-        <nz-select
-          nzShowSearch
-          nzServerSearch
-          nzPlaceHolder="Выберите ваших коллег из списка или введите фамилию"
-          [(ngModel)]="selectedUser"
-          (ngModelChange)="onUserChange()"
-          [nzShowArrow]="true"
-          (nzOnSearch)="searchUsers($event)"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <nz-option *ngFor="let user of listColleague" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
-        </nz-select>
+          <nz-select
+            nzShowSearch
+            nzServerSearch
+            nzPlaceHolder="Выберите ваших коллег из списка или введите фамилию"
+            [(ngModel)]="selectedUser"
+            (ngModelChange)="onUserChange()"
+            [nzShowArrow]="true"
+            (nzOnSearch)="searchUsers($event)"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <nz-option *ngFor="let user of listColleague" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
 
@@ -47,29 +42,24 @@
       </div>
 
       <nz-form-item>
+        <nz-form-label class="field-tile" [nzSpan]="6">ТПР:</nz-form-label>
         <nz-form-control>
-        <nz-select
-          nzShowSearch
-          nzServerSearch
-          nzPlaceHolder="Укажите ТПР"
-          [(ngModel)]="selectedTpr"
-          (ngModelChange)="onTprChange()"
-          [nzShowArrow]="true"
-          (nzOnSearch)="searchTpr($event)"
-          [ngModelOptions]="{ standalone: true }"
-        >
-          <nz-option *ngFor="let user of listTPR" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
-        </nz-select>
+          <nz-select
+            nzShowSearch
+            nzServerSearch
+            nzPlaceHolder="Укажите ТПР"
+            [(ngModel)]="selectedTpr"
+            (ngModelChange)="onTprChange()"
+            [nzShowArrow]="true"
+            (nzOnSearch)="searchTpr($event)"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <nz-option *ngFor="let user of listTPR" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+          </nz-select>
         </nz-form-control>
       </nz-form-item>
-
-<!--      <div *ngIf="errorState" class="error-message">-->
-<!--        <span>Неверный логин или пароль</span>-->
-<!--      </div>-->
-
       <div class="tag-selected-name" *ngIf="tprSelectedTags">
         <div class="item-tag item-tag-selected" *ngFor="let tpr of tprSelectedTags; index as i">
-<!--          <span>{{ tpr?.name | maxLengthText:70 }}</span>-->
           <a nzTooltipTitle="{{ tpr?.name }}" nz-tooltip>{{ tpr?.name | maxLengthText:20 }}</a>
           <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagTpr(i)"></span>
         </div>
@@ -91,5 +81,4 @@
       </div>
     </div>
   </div>
-
 </div>
