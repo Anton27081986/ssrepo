@@ -266,7 +266,8 @@
 
         .comments {
             margin-top: 19px;
-            height: 300px;
+            height: auto;
+            max-height: 200px;
             overflow: auto;
 
             .title {
