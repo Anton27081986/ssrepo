@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnInit,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
@@ -108,8 +102,6 @@ export class ThankColleagueComponent implements OnInit {
 
     // TODO: перенести валидацию
     public createThanksForColleague() {
-        // eslint-disable-next-line no-debugger
-        debugger;
         console.log(this.thankColleagueForm);
         this.submitted = true;
 
@@ -134,8 +126,6 @@ export class ThankColleagueComponent implements OnInit {
 
     // Модальное окно комментариев
     public showModalComments(item: any, type: number): void {
-        // eslint-disable-next-line no-debugger
-        debugger;
         this.modalCreateService
             .create({
                 nzClosable: true,
@@ -160,8 +150,6 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     public handleOk(): void {
-        // eslint-disable-next-line no-debugger
-        debugger;
         console.log(this.thankColleagueForm);
 
         if (this.thankColleagueForm.valid) {
