@@ -22,7 +22,7 @@
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
             <app-card-victory
-              (DeleteWin)="updateWinList(item)"
+              (DeleteWin)="updateWinList()"
               [item]="item"
               [extendedMode]="getExtendedMode"
             ></app-card-victory>
