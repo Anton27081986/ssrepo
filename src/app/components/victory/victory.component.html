@@ -21,7 +21,11 @@
       <nz-list class="card-list" [nzDataSource]="wins" [nzRenderItem]="item">
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
-            <app-card-victory [item]="item" [extendedMode]="getExtendedMode"></app-card-victory>
+            <app-card-victory
+              (DeleteWin)="updateWinList(item)"
+              [item]="item"
+              [extendedMode]="getExtendedMode"
+            ></app-card-victory>
             <ng-template #nzContent>
             </ng-template>
           </nz-list-item>

@@ -63,6 +63,7 @@ export class VictoryComponent implements OnInit, DoCheck {
         this.iconService.addIconLiteral('ss:goldLike', AppIcons.goldLike);
         this.iconService.addIconLiteral('ss:silverLike', AppIcons.silverLike);
         this.iconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
+        this.iconService.addIconLiteral('ss:delete', AppIcons.delete);
     }
 
     ngDoCheck() {
@@ -129,5 +130,13 @@ export class VictoryComponent implements OnInit, DoCheck {
 
         this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
         this.chDRef.markForCheck();
+    }
+
+    updateWinList() {
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe(
+            tap(_ => {
+                this.chDRef.markForCheck();
+            }),
+        );
     }
 }

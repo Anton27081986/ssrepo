@@ -4,7 +4,7 @@ body {
         font-size: 14px;
         line-height: 44px !important;
         border-radius: 16px !important;
-        padding: 6px 0 6px 20px !important;
+        padding: 6px 0 6px 10px !important;
 
         // background-color: #ffffff;
 
@@ -20,5 +20,9 @@ body {
         .anticon {
             fill-opacity: 1 !important;
         }
+    }
+
+    .ant-select-single .ant-select-selector .ant-select-selection-search {
+        top: -1px;
     }
 }
