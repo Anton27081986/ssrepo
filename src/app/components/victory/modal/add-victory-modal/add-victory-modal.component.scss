@@ -28,12 +28,16 @@
     .footer-form {
         margin-top: 20px !important;
     }
+
+    .win-together {
+        font-weight: 500;
+    }
 }
 
 .join-win {
     pointer-events: none;
 }
 
-::ng-deep .ant-select-item-empty {
-    display: none !important;
-}
+//::ng-deep .ant-select-item-empty {
+//    display: none !important;
+//}

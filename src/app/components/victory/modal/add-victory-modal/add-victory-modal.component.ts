@@ -2,13 +2,16 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    ElementRef,
+    EventEmitter,
     OnInit,
-    Renderer2,
+    Output,
+    ViewChild,
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
+import {NzSelectComponent} from "ng-zorro-antd/select";
+import {NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
     selector: 'app-add-victory-modal',
@@ -17,14 +20,15 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddVictoryModalComponent implements OnInit {
+    @ViewChild(NzSelectComponent, { static: true }) selectNode!: NzSelectComponent;
+    @Output() CloseWinModal = new EventEmitter<string>();
+
     private readonly modelChangedColleague: Subject<string> = new Subject<string>();
     private readonly modelChangedTpr: Subject<string> = new Subject<string>();
 
     public textPlaceHolder = 'Выберите ваших коллег из списка или введите фамилию';
-    public inputValue: any = 'Alex';
     public isSended = true;
-    public isVisibleAdd = true;
-    public addVictory!: FormGroup;
+    public addVictoryForm!: FormGroup;
     public submitted = false;
     public loading = false;
     public isConfirmLoading = false;
@@ -45,14 +49,16 @@ export class AddVictoryModalComponent implements OnInit {
     constructor(
         private readonly _apiService: ApiService,
         private readonly formBuilder: FormBuilder,
-        private readonly chDRef: ChangeDetectorRef,
-        private readonly renderer: Renderer2,
-        private readonly el: ElementRef,
+        private readonly cd: ChangeDetectorRef,
+        private readonly modal: NzModalService
     ) {}
 
     ngOnInit() {
-        this.addVictory = this.formBuilder.group({
-            comment: ['', [Validators.required, Validators.maxLength(10)]],
+        this.addVictoryForm = this.formBuilder.group({
+            comment: ['', [
+                Validators.required,
+                Validators.maxLength(3000)]
+            ],
         });
 
         // Подписка на изменения input поиска коллег
@@ -94,19 +100,19 @@ export class AddVictoryModalComponent implements OnInit {
                 }),
             )
             .subscribe();
+
+        this.CloseWinModal.emit();
     }
 
-    get _comment() {
-        return this.addVictory.get('comment')?.value;
+    get comment() {
+        return this.addVictoryForm.get('comment');
     }
 
     handleOk($event: any): void {
         $event.stopPropagation();
-
-        console.log('this.isSended начало', this.isSended);
         this.isSended = false;
 
-        const comment = this._comment;
+        const comment = this.comment?.value;
         const userList = this.partyWinSelectedTags.map(item => item.id);
         const tprList = this.tprSelectedTags.map(item => item.id);
 
@@ -121,9 +127,7 @@ export class AddVictoryModalComponent implements OnInit {
                 }),
             )
             .subscribe(
-                () => {
-                    console.log('this.isSended', this.isSended);
-                },
+                () => {},
                 () => {
                     this.errorComment = true;
                 },
@@ -140,8 +144,6 @@ export class AddVictoryModalComponent implements OnInit {
 
     // При выборе клика по пользователю
     onUserChange() {
-        console.log('onUserChange', this.selectedUser);
-
         this.userWinArray.push(this.selectedUser); // Выбранные пользователи
         this._apiService
             .getUserById(this.selectedUser)
@@ -151,14 +153,14 @@ export class AddVictoryModalComponent implements OnInit {
                         id: user.id,
                         name: user.name,
                     }); // добавление тега
-
-                    this.chDRef.markForCheck();
+                    this.cd.markForCheck();
                 }),
             )
             .subscribe();
     }
 
     // При выборе клика по продукту
+    isModalVisible = true;
     onTprChange() {
         this.tprWinArray.push(this.selectedTpr);
         this._apiService
@@ -170,7 +172,7 @@ export class AddVictoryModalComponent implements OnInit {
                         name: user.name,
                     }); // добавление тега
 
-                    this.chDRef.markForCheck();
+                    this.cd.markForCheck();
                 }),
             )
             .subscribe();
@@ -178,19 +180,10 @@ export class AddVictoryModalComponent implements OnInit {
 
     deleteTagUser(i: number) {
         this.partyWinSelectedTags.splice(i, 1);
-        this.chDRef.markForCheck();
+        this.cd.markForCheck();
     }
 
     deleteTagTpr(i: number) {
         this.tprSelectedTags.splice(i, 1);
-    }
-
-    onOption() {
-        console.log('Клик по option');
-    }
-
-    clickSelect() {
-        // this.overlay = this.el.nativeElement.querySelector('.cdk-overlay-container');
-        // this.renderer.addClass(this.overlay, 'hide');
     }
 }
