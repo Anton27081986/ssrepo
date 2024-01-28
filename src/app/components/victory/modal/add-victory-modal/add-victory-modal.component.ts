@@ -10,8 +10,8 @@ import {
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
-import {NzSelectComponent} from "ng-zorro-antd/select";
-import {NzModalService} from "ng-zorro-antd/modal";
+import {NzSelectComponent} from 'ng-zorro-antd/select';
+import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-add-victory-modal',
@@ -20,7 +20,7 @@ import {NzModalService} from "ng-zorro-antd/modal";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddVictoryModalComponent implements OnInit {
-    @ViewChild(NzSelectComponent, { static: true }) selectNode!: NzSelectComponent;
+    @ViewChild(NzSelectComponent, {static: true}) selectNode!: NzSelectComponent;
     @Output() CloseWinModal = new EventEmitter<string>();
 
     private readonly modelChangedColleague: Subject<string> = new Subject<string>();
@@ -50,15 +50,12 @@ export class AddVictoryModalComponent implements OnInit {
         private readonly _apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly cd: ChangeDetectorRef,
-        private readonly modal: NzModalService
+        private readonly modal: NzModalService,
     ) {}
 
     ngOnInit() {
         this.addVictoryForm = this.formBuilder.group({
-            comment: ['', [
-                Validators.required,
-                Validators.maxLength(3000)]
-            ],
+            comment: ['', [Validators.required, Validators.maxLength(3000)]],
         });
 
         // Подписка на изменения input поиска коллег

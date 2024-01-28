@@ -14,7 +14,7 @@ import {ApiService} from '@app/shared/services/api/api.service';
 import {map, Observable, tap} from 'rxjs';
 import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
-import {AddVictoryModalComponent} from "@app/components/victory/modal/add-victory-modal/add-victory-modal.component";
+import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
 
 @UntilDestroy()
 @Component({
