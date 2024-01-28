@@ -1,7 +1,16 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {map, Observable, Subject, tap, zip} from 'rxjs';
+import {map, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
+import {NzSelectComponent} from 'ng-zorro-antd/select';
 
 @Component({
     selector: 'app-add-victory-modal',
@@ -10,42 +19,41 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddVictoryModalComponent implements OnInit {
+    @ViewChild(NzSelectComponent, {static: true}) selectNode!: NzSelectComponent;
+    @Output() CloseWinModal = new EventEmitter<string>();
+
     private readonly modelChangedColleague: Subject<string> = new Subject<string>();
     private readonly modelChangedTpr: Subject<string> = new Subject<string>();
 
-    isVisibleAdd = true;
-    addVictory!: FormGroup;
-    submitted = false;
-    loading = false;
-    isConfirmLoading = false;
-    title!: string;
+    public textPlaceHolder = 'Выберите ваших коллег из списка или введите фамилию';
+    public isSended = true;
+    public addVictoryForm!: FormGroup;
+    public submitted = false;
+    public loading = false;
+    public isConfirmLoading = false;
+    public title!: string;
 
-    partyWinSelectedTags: Array<{name: string; id: number}> = [];
-    tprSelectedTags: Array<{name: string; id: number}> = [];
-    userWinArray: string[] = [];
-    tprWinArray: string[] = [];
-    backendErrors$!: Observable<any>;
-    selectedUser!: string;
-    selectedTpr!: string;
+    public errorComment = false;
 
-    listColleague: Array<{name: string; id: string}> = [];
-    listTPR: Array<{name: string; id: string}> = [];
+    public partyWinSelectedTags: Array<{name: string; id: number}> = [];
+    public tprSelectedTags: Array<{name: string; id: number}> = [];
+    public userWinArray: string[] = [];
+    public tprWinArray: string[] = [];
+    public selectedUser!: string;
+    public selectedTpr!: string;
+
+    public listColleague: Array<{name: string; id: string}> = [];
+    public listTPR: Array<{name: string; id: string}> = [];
 
     constructor(
         private readonly _apiService: ApiService,
         private readonly formBuilder: FormBuilder,
-        private readonly chDRef: ChangeDetectorRef,
+        private readonly cd: ChangeDetectorRef,
     ) {}
 
     ngOnInit() {
-        this.addVictory = this.formBuilder.group({
-            comment: ['', [Validators.required]],
-            colleague: [''],
-            tpr: [''],
-        });
-
-        this.addVictory.valueChanges.subscribe(_ => {
-            // console.log('addVictory', v);
+        this.addVictoryForm = this.formBuilder.group({
+            comment: ['', [Validators.required, Validators.maxLength(3000)]],
         });
 
         // Подписка на изменения input поиска коллег
@@ -87,12 +95,19 @@ export class AddVictoryModalComponent implements OnInit {
                 }),
             )
             .subscribe();
+
+        this.CloseWinModal.emit();
     }
 
-    handleOk(): void {
-        this.isVisibleAdd = false;
+    get comment() {
+        return this.addVictoryForm.get('comment');
+    }
 
-        const comment = this.addVictory.get('comment')?.value;
+    handleOk($event: any): void {
+        $event.stopPropagation();
+        this.isSended = false;
+
+        const comment = this.comment?.value;
         const userList = this.partyWinSelectedTags.map(item => item.id);
         const tprList = this.tprSelectedTags.map(item => item.id);
 
@@ -102,26 +117,16 @@ export class AddVictoryModalComponent implements OnInit {
                 tap(_ => {
                     this.partyWinSelectedTags = [];
                     this.tprSelectedTags = [];
+
+                    this.isSended = false;
                 }),
             )
-            .subscribe();
-
-        // Валидация
-        if (this.addVictory.valid) {
-            // console.log('submit', this.addVictory.value);
-        } else {
-            // console.log('submit invalid', this.addVictory.value);
-            Object.values(this.addVictory.controls).forEach(control => {
-                if (control.invalid) {
-                    control.markAsDirty();
-                    control.updateValueAndValidity({onlySelf: true});
-                }
-            });
-        }
-    }
-
-    handleCancel(): void {
-        this.isVisibleAdd = false;
+            .subscribe(
+                () => {},
+                () => {
+                    this.errorComment = true;
+                },
+            );
     }
 
     searchUsers($event: any) {
@@ -143,14 +148,14 @@ export class AddVictoryModalComponent implements OnInit {
                         id: user.id,
                         name: user.name,
                     }); // добавление тега
-
-                    this.chDRef.markForCheck();
+                    this.cd.markForCheck();
                 }),
             )
             .subscribe();
     }
 
     // При выборе клика по продукту
+    isModalVisible = true;
     onTprChange() {
         this.tprWinArray.push(this.selectedTpr);
         this._apiService
@@ -162,7 +167,7 @@ export class AddVictoryModalComponent implements OnInit {
                         name: user.name,
                     }); // добавление тега
 
-                    this.chDRef.markForCheck();
+                    this.cd.markForCheck();
                 }),
             )
             .subscribe();
@@ -170,7 +175,7 @@ export class AddVictoryModalComponent implements OnInit {
 
     deleteTagUser(i: number) {
         this.partyWinSelectedTags.splice(i, 1);
-        this.chDRef.markForCheck();
+        this.cd.markForCheck();
     }
 
     deleteTagTpr(i: number) {

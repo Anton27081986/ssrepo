@@ -1,9 +1,9 @@
 <div class="add-modal">
-  <div>
-    <form nz-form [formGroup]="addVictory" nzLayout="vertical" class="form">
+  <div *ngIf="isSended; else message">
+    <form nz-form [formGroup]="addVictoryForm" nzLayout="vertical" class="form">
 
       <nz-form-item>
-        <nz-form-control nzWarningTip="Введите достижение">
+        <nz-form-control>
           <nz-form-label class="field-tile" [nzSpan]="6">Описание:</nz-form-label>
           <div class="textarea m-b-18">
             <textarea nz-input formControlName="comment" placeholder="Поделитесь своим достижением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
@@ -11,19 +11,30 @@
               <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
             </div>
           </div>
+          <div *ngIf="!comment?.valid && (comment?.dirty || comment?.touched)">
+            <div [hidden]="!comment?.invalid" nz-typography nzType="danger">
+              Введите текст достижения
+            </div>
+          </div>
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item class="m-t-2">
-        <nz-form-label class="field-tile" [nzSpan]="8">Совместная победа:</nz-form-label>
+        <div *ngIf="this.partyWinSelectedTags.length>0" class="win-together">Совместная победа</div>
+        <nz-form-label class="field-tile win" [nzSpan]="8">Выбора сотрудников:</nz-form-label>
         <nz-form-control>
+<!--          [nzAutoClearSearchValue]="true"-->
+<!--          [nzCustomTemplate]="selectUserTmpl"-->
+
           <nz-select
-            nzShowSearch
+            [nzShowSearch]="true"
             nzServerSearch
-            nzPlaceHolder="Выберите ваших коллег из списка или введите фамилию"
+            [nzPlaceHolder]="textPlaceHolder"
             [(ngModel)]="selectedUser"
+            [nzAllowClear]="true"
+            [nzShowArrow]="false"
+            [nzCustomTemplate]="selectUserTmpl"
             (ngModelChange)="onUserChange()"
-            [nzShowArrow]="true"
             (nzOnSearch)="searchUsers($event)"
             [ngModelOptions]="{ standalone: true }"
           >
@@ -32,16 +43,21 @@
         </nz-form-control>
       </nz-form-item>
 
-      <div class="tag-selected-name" *ngIf="partyWinSelectedTags">
-        <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
-          <div class="item-tag">
-            <span>{{ party?.name }}</span>
-            <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagUser(i)"></span>
-          </div>
-        </ng-container>
+      <ng-template #notFoundUserTmpl></ng-template>
+      <ng-template #selectUserTmpl></ng-template>
+
+      <div *ngIf="partyWinSelectedTags.length>0">
+        <div class="tag-selected-name">
+          <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
+            <div class="item-tag">
+              <span>{{ party?.name }}</span>
+              <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagUser(i)"></span>
+            </div>
+          </ng-container>
+        </div>
       </div>
 
-      <nz-form-item>
+      <nz-form-item class="form-item-tpr">
         <nz-form-label class="field-tile" [nzSpan]="6">ТПР:</nz-form-label>
         <nz-form-control>
           <nz-select
@@ -49,16 +65,23 @@
             nzServerSearch
             nzPlaceHolder="Укажите ТПР"
             [(ngModel)]="selectedTpr"
+            [nzAllowClear]="true"
+            [nzShowArrow]="false"
+            [nzCustomTemplate]="selectTPRTmpl"
             (ngModelChange)="onTprChange()"
-            [nzShowArrow]="true"
             (nzOnSearch)="searchTpr($event)"
             [ngModelOptions]="{ standalone: true }"
           >
-            <nz-option *ngFor="let user of listTPR" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+            <ng-container *ngIf="listTPR.length>0">
+              <nz-option *ngFor="let user of listTPR" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+            </ng-container>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
-      <div class="tag-selected-name" *ngIf="tprSelectedTags">
+
+      <ng-template #selectTPRTmpl></ng-template>
+
+      <div class="tag-selected-name" *ngIf="tprSelectedTags.length>0">
         <div class="item-tag item-tag-selected" *ngFor="let tpr of tprSelectedTags; index as i">
           <a nzTooltipTitle="{{ tpr?.name }}" nz-tooltip>{{ tpr?.name | maxLengthText:20 }}</a>
           <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagTpr(i)"></span>
@@ -69,16 +92,28 @@
     <ng-template #prefixUser>
       <i nz-icon nzType="user"></i>
     </ng-template>
-  </div>
 
-  <div class="footer-form">
-    <div *nzModalFooter>
-      <button nz-button nzType="default" (click)="handleCancel()" *ngIf="false">Отменить</button>
-      <div class="send d-flex justify-content-center">
-        <div class="">
-          <button nz-button nzType="primary" class="login-form-button" (click)="handleOk()" [nzLoading]="isConfirmLoading">Добавить победу</button>
+    <div class="footer-form">
+      <div *nzModalFooter>
+        <div class="send d-flex justify-content-center">
+          <div class="">
+            <button nz-button nzType="primary" class="login-form-button"
+                    (click)="handleOk($event)"
+                    [nzLoading]="isConfirmLoading"
+                    [ngStyle]="!addVictoryForm.valid ? {'color': 'darkgray'}: {}"
+                    [disabled]="!addVictoryForm.valid"
+            >Добавить победу</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+  <ng-template #message>
+    <div class="message-after-sended">
+      <div>Победа успешно создана!</div>
+    </div>
+  </ng-template>
+
+
 </div>

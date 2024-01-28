@@ -1,7 +1,7 @@
 <form nz-form [formGroup]="addComment" nzLayout="vertical" class="form">
   <div class="comments-modal">
     <div class="card list">
-      <div class="personal">
+      <div class="personal" *ngIf="this.nzModalData?.type === 1">
         <div class="img">
           <ng-container *ngIf="nzModalData?.data?.user">
             <img src="{{ nzModalData?.data?.user?.avatarUrl }}" alt="user" />
@@ -11,8 +11,9 @@
           </ng-container>
         </div>
 
-        <div class="title">
+        <div class="title" *ngIf="this.nzModalData?.type === 1">
           <div class="fio">
+            {{nzModalData?.data?.type}}
             <ng-container *ngIf="nzModalData?.data?.user">
               <span>{{ nzModalData?.data?.user?.lastName }} {{ nzModalData?.data?.user?.firstName }} {{ nzModalData?.data?.user?.surName }}</span>
             </ng-container>
@@ -32,6 +33,43 @@
           </div>
         </div>
       </div>
+
+      <div class="title personals" style="display: flex" *ngIf="this.nzModalData?.type === 0">
+
+          <div class="images">
+            <div class="img img-from">
+              <img src="{{ nzModalData?.data?.fromUser?.avatarUrl }}" alt="user" />
+            </div>
+            <div class="img img-to">
+              <img src="{{ nzModalData?.data?.toUser?.avatarUrl }}" alt="user" />
+            </div>
+          </div>
+
+          <div class="from-to">
+            <div class="from">
+              <div class="personal">
+                <div class="title">
+                  <span class="sub-title">От кого:</span>
+                  <div class="fio">
+                    <span>{{ nzModalData?.data?.fromUser?.name }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="to">
+              <div class="personal">
+                <div class="title">
+                  <span class="sub-title">Кому:</span>
+                  <div class="fio">
+                    <span>{{ nzModalData?.data?.toUser?.name }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+
       <div class="icons">
         <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'"></span>
       </div>
@@ -41,9 +79,11 @@
           <div class="title">Комментарии:</div>
           <div class="card list" *ngFor="let comment of comments">
 
-            <span class="close-icon icon remove" nz-icon nzType="ss:close" nzTheme="outline"
-            (click)="removeComment($event, comment?.id)"
-            ></span>
+            <div class="delete-comment" *ngIf="currentUserId === comment?.user?.id">
+              <span class="close-icon icon remove" nz-icon nzType="ss:close" nzTheme="outline"
+                    (click)="removeComment($event, comment?.id)"
+              ></span>
+            </div>
 
             <div class="personal">
               <div class="img">
@@ -81,6 +121,11 @@
                 <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
               </div>
             </div>
+            <div *ngIf="!comment?.valid && (comment?.dirty || comment?.touched)">
+              <div [hidden]="!comment?.invalid" nz-typography nzType="danger">
+                Введите текст благодарности
+              </div>
+            </div>
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -89,7 +134,12 @@
   <div *nzModalFooter>
     <div class="send d-flex justify-content-center">
       <div class="">
-        <button nz-button nzType="primary" class="login-form-button" (click)="handleOk()" [nzLoading]="isConfirmLoading">Отправить</button>
+        <button nz-button nzType="primary" class="login-form-button"
+                (click)="handleOk()"
+                [nzLoading]="isConfirmLoading"
+                [ngStyle]="!addComment?.valid ? {'color': 'darkgray'}: {}"
+                [disabled]="!addComment?.valid">
+          Отправить</button>
       </div>
     </div>
   </div>

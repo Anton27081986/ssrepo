@@ -17,6 +17,7 @@ export class CommentsModalComponent implements OnInit {
     protected submitted = false;
     protected isConfirmLoading = false;
     protected commentList!: Observable<any>;
+    public currentUserId: any;
 
     constructor(
         private readonly _apiService: ApiService,
@@ -28,26 +29,28 @@ export class CommentsModalComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.commentList = this._apiService.getComment(
-        //     this.nzModalData.data.id,
-        //     this.nzModalData.type,
-        //     0,
-        //     6,
-        // );
+        this._apiService.getProfile().subscribe(profile => {
+            this.currentUserId = profile.id;
+            console.log('this.currentUserId)', this.currentUserId);
+        });
 
         this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
 
         this.addComment = this.formBuilder.group({
             comment: [
                 null,
-                [Validators.required, Validators.nullValidator, Validators.maxLength(400)],
+                [Validators.required, Validators.minLength(2), Validators.maxLength(3000)],
             ],
         });
     }
 
+    public get comment() {
+        return this.addComment.get('comment');
+    }
+
     getCommentList(id: number, type: number) {
-        // Поправить CD
-        return this._apiService.getComment(id, type, 0, 6).pipe(
+        // TODO сделать прокрутку с пагинацией
+        return this._apiService.getComment(id, type, 0, 30).pipe(
             tap(_ => {
                 this.chDRef.markForCheck();
             }),

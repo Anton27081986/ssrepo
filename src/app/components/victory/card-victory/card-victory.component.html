@@ -1,4 +1,8 @@
 <div class="card">
+  <div class="delete" (click)="onDeleteWin(item?.id);" *ngIf="item?.user?.id == 9593868">
+    <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
+  </div>
+
   <div>
     <div class="personal">
       <div class="img" (click)="showModalOpenOut(item?.user?.id)">
@@ -28,7 +32,7 @@
       </div>
     </div>
     <div class="date">
-      <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
+      <span>{{ item?.createdDate | date: 'dd.MM.yyyy hh:mm' }}</span>
     </div>
 
     <div class="message">

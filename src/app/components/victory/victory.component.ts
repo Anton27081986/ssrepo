@@ -2,7 +2,6 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    DoCheck,
     ElementRef,
     OnInit,
     ViewChild,
@@ -13,9 +12,9 @@ import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {map, Observable, tap} from 'rxjs';
-import {NzModalService} from 'ng-zorro-antd/modal';
-import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
+import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
 import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {AddVictoryModalComponent} from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +23,7 @@ import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
     styleUrls: ['./victory.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VictoryComponent implements OnInit, DoCheck {
+export class VictoryComponent implements OnInit {
     @ViewChild('liked') likedPeople!: ElementRef;
 
     private localData: any;
@@ -45,7 +44,7 @@ export class VictoryComponent implements OnInit, DoCheck {
         private readonly iconService: NzIconService,
         public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
-        private readonly chDRef: ChangeDetectorRef,
+        private readonly cd: ChangeDetectorRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -63,17 +62,15 @@ export class VictoryComponent implements OnInit, DoCheck {
         this.iconService.addIconLiteral('ss:goldLike', AppIcons.goldLike);
         this.iconService.addIconLiteral('ss:silverLike', AppIcons.silverLike);
         this.iconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
+        this.iconService.addIconLiteral('ss:delete', AppIcons.delete);
     }
 
-    ngDoCheck() {
-        if (this.localData.name !== this.winsList) {
-            // console.log('Разные')
-            // this.chDRef.markForCheck();
-        }
+    getWinList() {
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset);
     }
 
     ngOnInit() {
-        this.winsList = this.apiService.getWins(this.pageSize, this.offset);
+        this.getWinList();
         this.localData = this.winsList;
 
         // Опитимизировать два запросы
@@ -104,7 +101,9 @@ export class VictoryComponent implements OnInit, DoCheck {
     }
 
     // Модальное окно добавления победы
-    showModaAddWin(): void {
+    showModaAddWin($event: any): void {
+        $event.stopPropagation();
+
         this.modalCreate
             .create({
                 nzClosable: true,
@@ -115,7 +114,18 @@ export class VictoryComponent implements OnInit, DoCheck {
                 nzContent: AddVictoryModalComponent,
                 nzViewContainerRef: this.viewContainerRef,
             })
-            .afterClose.subscribe();
+            .afterClose.subscribe(_ => {
+                this.updateWinList();
+                this.cd.markForCheck();
+            });
+    }
+
+    destroyModaAddWin(modelRef: NzModalRef): void {
+        // this.tplModalButtonLoading = true;
+        setTimeout(() => {
+            // this.tplModalButtonLoading = false;
+            modelRef.destroy();
+        }, 1000);
     }
 
     nzPageIndexChange($event: number) {
@@ -128,6 +138,14 @@ export class VictoryComponent implements OnInit, DoCheck {
         this.pageIndex = $event; // Установка текущего индекса
 
         this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe();
-        this.chDRef.markForCheck();
+        this.cd.markForCheck();
+    }
+
+    updateWinList() {
+        this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe(
+            tap(_ => {
+                this.cd.markForCheck();
+            }),
+        );
     }
 }

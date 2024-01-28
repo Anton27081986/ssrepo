@@ -31,7 +31,7 @@
     }
 
     .field-tile {
-        font-weight: 600;
+        font-weight: 500;
     }
 
     .ant-modal-body {
@@ -45,6 +45,17 @@
     .ant-modal-footer {
         border-top: unset;
         padding: 6px 6px 21px 9px;
+    }
+
+    .error-message {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        margin-top: 0;
+
+        span {
+            color: #ee1c25;
+        }
     }
 }
 
@@ -163,7 +174,7 @@
         background-color: white !important;
         padding-left: 14px !important;
         min-height: 80px;
-        font-size: 11.2px !important;
+        font-size: 14px !important;
         padding-top: 8px;
     }
 
@@ -255,6 +266,9 @@
 
         .comments {
             margin-top: 19px;
+            height: auto;
+            max-height: 200px;
+            overflow: auto;
 
             .title {
                 font-size: 18px;
