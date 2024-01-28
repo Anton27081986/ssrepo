@@ -7,19 +7,21 @@
     </div>
     <div class="open-all-table">
       <div class="button">
+<!--        Кнопка избранного-->
         <button nz-button class="button" [nzType]="'primary'">
-          <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'">
+          <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'" >
             <span class="favorite-text">Избранные контакты </span>
           </span>
         </button>
       </div>
+<!--      Поиск по сотрудникам-->
       <div class="search">
         <span class="">
-          <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
+          <form nz-form [formGroup]="searchForm" class="search-form">
             <nz-form-item>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Поиск по сотрудникам" [(ngModel)]="title" />
+                  <input type="text" nz-input formControlName="search" placeholder="Поиск по сотрудникам" />
                 </nz-input-group>
               </nz-form-control>
               <ng-template #prefixSearch>
@@ -28,20 +30,13 @@
             </nz-form-item>
           </form>
         </span>
-        <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
-        <!--        <app-result-item-->
-        <!--            *ngFor="let book of books"-->
-        <!--            [book]="book"-->
-        <!--            [title]="title"-->
-        <!--        ></app-result-item>-->
-        <!--    </div>-->
       </div>
     </div>
   </div>
 
   <div class="content">
+<!--    Результаты поиска или избранное-->
     <div class="card-list" *ngIf="addressBooks | async as addressBook">
-
       <div class="card" *ngFor="let item of addressBook.items;">
         <div>
           <div class="personal">
@@ -60,7 +55,6 @@
             </div>
           </div>
           <div class="icons">
-<!--             class="favorite-icon fill" - заполнененое избраное-->
             <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
           </div>
 

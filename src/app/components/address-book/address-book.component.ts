@@ -8,22 +8,23 @@ import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.co
 import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
-    selector: 'app-adress-book',
-    templateUrl: './adress-book.component.html',
-    styleUrls: ['./adress-book.component.scss'],
+    selector: 'app-address-book',
+    templateUrl: './address-book.component.html',
+    styleUrls: ['./address-book.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdressBookComponent implements OnInit {
-    loginForm!: FormGroup;
-    loading = false;
-    title: any;
-    addressBooks!: Observable<any>;
+export class AddressBookComponent implements OnInit {
+    public isFavoriteMode: boolean = true;
+    public searchForm!: FormGroup;
+    public loading: boolean = false;
+    public title: string = '';
+    public addressBooks!: Observable<any>;
 
-    constructor(
+    public constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
-        public modalCreate: NzModalService,
+        public modalCreateService: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
@@ -44,27 +45,17 @@ export class AdressBookComponent implements OnInit {
         this.iconService.addIconLiteral('ss:call', AppIcons.call);
     }
 
-    submitted = false;
-    isConfirmLoading = false;
-
-    ngOnInit() {
+    public ngOnInit() {
         this.addressBooks = this.apiService.getAddressBooks().pipe();
 
-        this.loginForm = this.formBuilder.group({
-            search: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
+        this.searchForm = this.formBuilder.group({
+            search: ['', Validators.required],
         });
     }
 
     // Модальное окно раскрытой карточки
-    showModalOpenOut(item: any): void {
-        this.modalCreate
+    public showModalOpenOut(item: any): void {
+        this.modalCreateService
             .create({
                 nzClosable: false,
                 nzFooter: null,
@@ -78,15 +69,5 @@ export class AdressBookComponent implements OnInit {
                 },
             })
             .afterClose.subscribe();
-    }
-
-    onSubmit() {
-        this.submitted = true;
-
-        if (this.loginForm.invalid) {
-            return;
-        }
-
-        this.loading = true;
     }
 }

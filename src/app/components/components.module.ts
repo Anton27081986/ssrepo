@@ -36,7 +36,7 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {CurrencyComponent} from './currency/currency.component';
-import {AdressBookComponent} from './adress-book/adress-book.component';
+import {AddressBookComponent} from '@app/components/address-book/address-book.component';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from './victory/modal/add-victory-modal/add-victory-modal.component';
@@ -69,7 +69,7 @@ import {CardVictoryComponent} from '@app/components/victory/card-victory/card-vi
         BirthdayComponent,
         RatingComponent,
         CurrencyComponent,
-        AdressBookComponent,
+        AddressBookComponent,
         ModalInfoComponent,
         AddVictoryModalComponent,
         CommentsModalComponent,
@@ -130,7 +130,7 @@ import {CardVictoryComponent} from '@app/components/victory/card-victory/card-vi
         VictoryComponent,
         RatingComponent,
         CurrencyComponent,
-        AdressBookComponent,
+        AddressBookComponent,
     ],
 })
 export class ComponentsModule {}
