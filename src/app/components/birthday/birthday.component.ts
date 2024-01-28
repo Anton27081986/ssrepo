@@ -1,5 +1,6 @@
 import {
     ChangeDetectionStrategy,
+    ChangeDetectorRef,
     Component,
     OnInit,
     ViewChild,
@@ -8,11 +9,12 @@ import {
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
 import {AppIcons} from '@app/common/icons';
-import {map, Observable} from 'rxjs';
+import {map} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {formatDate} from '@angular/common';
+import {IBirthday} from '@app/components/birthday/models/birthday';
 
 @Component({
     selector: 'app-birthday',
@@ -22,9 +24,10 @@ import {formatDate} from '@angular/common';
 })
 export class BirthdayComponent implements OnInit {
     @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
-    birthdayList!: Observable<any>;
 
     date = null;
+    birthdays: IBirthday[] = [];
+    selectedTabIndex = 1;
     protected dateToday!: string;
 
     constructor(
@@ -32,7 +35,9 @@ export class BirthdayComponent implements OnInit {
         private readonly apiService: ApiService,
         public modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
+        private readonly ref: ChangeDetectorRef,
     ) {
+        // TODO: move to icon registration service
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
         this.iconService.addIconLiteral('ss:medalGold', AppIcons.medalGold);
@@ -46,13 +51,29 @@ export class BirthdayComponent implements OnInit {
 
     ngOnInit(): any {
         this.dateToday = formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU');
-        this.birthdayList = this.apiService.getBirthday(this.dateToday).pipe(map(({days}) => days));
+        // TODO : make unsubscribe
+        this.apiService
+            .getBirthday(this.dateToday)
+            .pipe(map(({days}) => days))
+            .subscribe(result => {
+                this.birthdays = result;
+                this.selectTabByDay(new Date().toLocaleDateString());
+                this.ref.markForCheck();
+            });
     }
 
     onChange(result: Date): void {
-        this.birthdayList = this.apiService
+        const selectedDate = result.toLocaleDateString();
+
+        // TODO : make unsubscribe
+        this.apiService
             .getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-            .pipe(map(({days}) => days));
+            .pipe(map(({days}) => days))
+            .subscribe(birthdays => {
+                this.birthdays = birthdays;
+                this.selectTabByDay(selectedDate);
+                this.ref.markForCheck();
+            });
     }
 
     showModalOpenOut(item: any): void {
@@ -70,5 +91,9 @@ export class BirthdayComponent implements OnInit {
                 },
             })
             .afterClose.subscribe();
+    }
+
+    selectTabByDay(date: string) {
+        this.selectedTabIndex = this.birthdays.findIndex(x => x.name === date);
     }
 }
