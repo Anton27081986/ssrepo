@@ -11,7 +11,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {NzSelectComponent} from 'ng-zorro-antd/select';
-import {NzModalService} from 'ng-zorro-antd/modal';
 
 @Component({
     selector: 'app-add-victory-modal',
@@ -50,7 +49,6 @@ export class AddVictoryModalComponent implements OnInit {
         private readonly _apiService: ApiService,
         private readonly formBuilder: FormBuilder,
         private readonly cd: ChangeDetectorRef,
-        private readonly modal: NzModalService,
     ) {}
 
     ngOnInit() {
