@@ -39,11 +39,7 @@ export class CommentsModalComponent implements OnInit {
         this.addComment = this.formBuilder.group({
             comment: [
                 null,
-                [
-                    Validators.required,
-                    Validators.minLength(2),
-                    Validators.maxLength(3000)
-                ],
+                [Validators.required, Validators.minLength(2), Validators.maxLength(3000)],
             ],
         });
     }
