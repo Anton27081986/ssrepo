@@ -12,7 +12,7 @@
           Поблагодарить коллегу
         </button>
 
-<!--        модальное окно-->
+        <!--        модальное окно-->
         <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
           <ng-container *nzModalContent>
             <div>
@@ -28,10 +28,10 @@
                       [nzShowArrow]="true"
                       [nzFilterOption]="nzFilterOption"
                       (nzOnSearch)="search($event)">
-                        <nz-option *ngFor="let user of listOfOption"
-                                   [nzLabel]="user.name"
-                                   [nzValue]="user.id">
-                        </nz-option>
+                      <nz-option *ngFor="let user of listOfOption"
+                                 [nzLabel]="user.name"
+                                 [nzValue]="user.id">
+                      </nz-option>
                     </nz-select>
                   </nz-form-control>
                   <div
@@ -90,124 +90,125 @@
                [nzRenderItem]="item"
                [nzPagination]="pagination">
 
-      <ng-template #item let-item>
-            <nz-list-item [nzContent]="nzContent">
-              <ng-template #nzContent>
-                <div class="card">
-                  <div>
-                    <div class="personals">
-                      <div class="info">
-                        <div class="images">
-                          <div class="img img-from">
-                            <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
-                          </div>
-                          <div class="img img-to">
-                            <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
-                          </div>
-                        </div>
-
-                        <div class="from-to">
-                          <div class="from">
-                            <div class="personal">
-                              <div class="title">
-                                <span class="sub-title">От кого:</span>
-                                <div class="fio">
-                                  <span>{{ item?.fromUser?.name }}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="to">
-                            <div class="personal">
-                              <div class="title">
-                                <span class="sub-title">Кому:</span>
-                                <div class="fio">
-                                  <span>{{ item?.toUser?.name }}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="delete" (click)="deleteThanksForColleague(item);" *ngIf="currentUserId === item?.fromUser?.id">
-                        <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
-                      </div>
-                    </div>
-                    <div class="icons">
-                      <ng-container [ngSwitch]="item?.award">
-                        <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-                        <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-                        <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
-                      </ng-container>
-                    </div>
-                    <div class="message">
-                      <div class="text">
-                        {{ item.text }}
-                      </div>
-                    </div>
+        <ng-template #item let-item>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
+              <div class="card">
+                <div>
+                  <div class="personals">
                     <div class="info">
-                      <div class="left-group">
-
-                        <!-- Постановка super лайка -->
-                        <!-- Проверяем поставил ли ЧДЛ супер лайк-->
-
-                        <ng-container *ngIf="getExtendedMode; else userlike">
-                          <app-super-like
-                            [isUserLikedProps]="item.isUserLiked"
-                            [likesCountProps]="item.likesCount"
-                            [objectIdProps]="item.id"
-                            [typeObject]="0"
-                            [award]="item.award"
-                            [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
-                          ></app-super-like>
-                        </ng-container>
-
-                        <!-- Постановка обычного лайка -->
-                        <ng-template #userlike>
-
-                          <app-like
-                            [isUserLikedProps]="item.isUserLiked"
-                            [likesCountProps]="item.likesCount"
-                            [objectIdProps]="item.id"
-                            [typeObject]="0"
-                            [award]="item.award"
-                            [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
-                          ></app-like>
-
-                        </ng-template>
-
-                        <div class="comment" (click)="showModalComments(item,0);">
-                          <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                          <span class="count">{{ item.commentsCount }}</span>
+                      <div class="images">
+                        <div class="img img-from">
+                          <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
+                        </div>
+                        <div class="img img-to">
+                          <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
                         </div>
                       </div>
-                      <div class="date">
-                        <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
+
+                      <div class="from-to">
+                        <div class="from">
+                          <div class="personal">
+                            <div class="title">
+                              <span class="sub-title">От кого:</span>
+                              <div class="fio">
+                                <span>{{ item?.fromUser?.name }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="to">
+                          <div class="personal">
+                            <div class="title">
+                              <span class="sub-title">Кому:</span>
+                              <div class="fio">
+                                <span>{{ item?.toUser?.name }}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
+                    </div>
+                    <div class="delete" (click)="deleteThanksForColleague(item);" *ngIf="currentUserId === item?.fromUser?.id">
+                      <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
+                    </div>
+                  </div>
+                  <div class="icons">
+                    <ng-container [ngSwitch]="item?.award">
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
+                    </ng-container>
+                  </div>
+                  <div class="message">
+                    <div class="text">
+                      {{ item.text }}
+                    </div>
+                  </div>
+                  <div class="info">
+                    <div class="left-group">
+
+                      <!-- Постановка super лайка -->
+                      <!-- Проверяем поставил ли ЧДЛ супер лайк-->
+
+                      <ng-container *ngIf="getExtendedMode; else userlike">
+                        <app-super-like
+                          [isUserLikedProps]="item.isUserLiked"
+                          [likesCountProps]="item.likesCount"
+                          [objectIdProps]="item.id"
+                          [typeObject]="0"
+                          [award]="item.award"
+                          [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
+                        ></app-super-like>
+                      </ng-container>
+
+                      <!-- Постановка обычного лайка -->
+                      <ng-template #userlike>
+
+                        <app-like
+                          [isUserLikedProps]="item.isUserLiked"
+                          [likesCountProps]="item.likesCount"
+                          [objectIdProps]="item.id"
+                          [typeObject]="0"
+                          [award]="item.award"
+                          [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
+                        ></app-like>
+
+                      </ng-template>
+
+                      <div class="comment" (click)="showModalComments(item,0);">
+                        <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+                        <span class="count">{{ item.commentsCount }}</span>
+                      </div>
+                    </div>
+                    <div class="date">
+                      <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <!--              </nz-card>-->
-              </ng-template>
-            </nz-list-item>
-          </ng-template>
+              <!--              </nz-card>-->
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
 
         <ng-template #pagination>
           <div class="pagination">
             <nz-pagination
               [nzPageIndex]="pageIndex"
-               [nzPageSize]="pageSize"
-               [nzTotal]="thankyou.length"
-               (nzPageIndexChange)="pageIndex = $event"
-               (nzPageSizeChange)="pageSize = $event">
+              [nzPageSize]="pageSize"
+              [nzTotal]="thankyou.length"
+              (nzPageIndexChange)="pageIndex = $event"
+              (nzPageSizeChange)="pageSize = $event">
             </nz-pagination>
           </div>
         </ng-template>
       </nz-list>
-<!--      </ng-container>-->
+      <!--      </ng-container>-->
 
 
     </ng-container>
   </div>
 </div>
+
