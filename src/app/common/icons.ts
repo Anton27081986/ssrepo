@@ -381,4 +381,10 @@ export class AppIcons {
         '</linearGradient>\n' +
         '</defs>\n' +
         '</svg>';
+
+    static delete =
+        '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<rect width="1.8856" height="15.0848" rx="0.942799" transform="matrix(0.707103 0.707111 -0.707103 0.707111 10.666 0)" fill="#22223A"/>' +
+        '<rect width="1.8856" height="15.0848" rx="0.942799" transform="matrix(-0.707103 0.707111 -0.707103 -0.707111 12 10.6667)" fill="#22223A"/>' +
+        '</svg>';
 }

@@ -230,4 +230,29 @@
             font-size: 33px;
         }
     }
+
+    .delete {
+        position: absolute;
+        right: 16px;
+        z-index: 1;
+        background-color: $gray-light;
+        color: $blue;
+        font-size: 12px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        cursor: pointer;
+
+        ::ng-deep svg {
+            fill-opacity: 1;
+
+            path {
+                stroke: none;
+            }
+        }
+    }
 }

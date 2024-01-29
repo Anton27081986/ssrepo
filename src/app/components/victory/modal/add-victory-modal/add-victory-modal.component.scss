@@ -2,6 +2,10 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 .add-modal {
+    .form-item-tpr {
+        margin-top: 0;
+    }
+
     .join-win {
         pointer-events: none;
         color: $black;
@@ -13,6 +17,7 @@
         flex-wrap: wrap;
         justify-content: flex-start;
         gap: 8px;
+        margin-bottom: 12px;
 
         .close-tag {
             cursor: pointer;
@@ -23,8 +28,16 @@
     .footer-form {
         margin-top: 20px !important;
     }
+
+    .win-together {
+        font-weight: 500;
+    }
 }
 
 .join-win {
     pointer-events: none;
 }
+
+//::ng-deep .ant-select-item-empty {
+//    display: none !important;
+//}

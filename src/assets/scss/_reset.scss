@@ -5,6 +5,12 @@ body {
     background-color: $gray;
     color: $body-color;
 
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
     a {
         color: $link-color;
     }

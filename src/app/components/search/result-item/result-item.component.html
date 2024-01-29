@@ -7,7 +7,10 @@
             <span [innerHTML]="user?.title">{{user?.title}}</span>
           </a>
         </div>
-        <div class="call" *ngIf="user?.viewerIsIpPhone">
+        <div class="call"
+             *ngIf="user?.viewerIsIpPhone && user?.phoneLocal"
+             [ngClass]="user?.isCalling? 'is-calling': '' "
+             (click)="toggleCallForUser();">
           <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
           <span class="inner-phone">{{ user?.phoneLocal }}</span>
         </div>

@@ -36,12 +36,11 @@ import {NzSelectModule} from 'ng-zorro-antd/select';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {CurrencyComponent} from './currency/currency.component';
-import {AdressBookComponent} from './adress-book/adress-book.component';
+import {AddressBookComponent} from '@app/components/address-book/address-book.component';
 import {NzCardModule} from 'ng-zorro-antd/card';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {AddVictoryModalComponent} from './victory/modal/add-victory-modal/add-victory-modal.component';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
-import {PartyVictoryComponent} from './victory/modal/party-victory/party-victory.component';
 import {TooltipDirective} from './victory/tooltip.directive';
 import {ModalInfoUserComponent} from './modal/modal-info-user/modal-info-user.component';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
@@ -53,6 +52,8 @@ import {BackendErrorMessagesComponent} from '@app/shared/modules/backend-error-m
 import {PaginationComponent} from '@app/shared/components/pagination/pagination.component';
 import {LoaderComponent} from '@app/shared/components/loader/loader.component';
 import {CardVictoryComponent} from '@app/components/victory/card-victory/card-victory.component';
+import {NzTypographyModule} from 'ng-zorro-antd/typography';
+import {DateTimePipe} from '@app/shared/pipe/date-time.pipe';
 
 @NgModule({
     declarations: [
@@ -69,11 +70,10 @@ import {CardVictoryComponent} from '@app/components/victory/card-victory/card-vi
         BirthdayComponent,
         RatingComponent,
         CurrencyComponent,
-        AdressBookComponent,
+        AddressBookComponent,
         ModalInfoComponent,
         AddVictoryModalComponent,
         CommentsModalComponent,
-        PartyVictoryComponent,
         ModalInfoUserComponent,
         LikeComponent,
         SuperLikeComponent,
@@ -116,6 +116,8 @@ import {CardVictoryComponent} from '@app/components/victory/card-victory/card-vi
         PeopleLikedDirective,
         SuperLikeDirective,
         NzSpinModule,
+        NzTypographyModule,
+        DateTimePipe,
     ],
     exports: [
         SearchComponent,
@@ -130,7 +132,7 @@ import {CardVictoryComponent} from '@app/components/victory/card-victory/card-vi
         VictoryComponent,
         RatingComponent,
         CurrencyComponent,
-        AdressBookComponent,
+        AddressBookComponent,
     ],
 })
 export class ComponentsModule {}

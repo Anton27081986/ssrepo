@@ -10,7 +10,7 @@ export class TooltipDirective implements AfterViewInit {
 
     constructor(
         private readonly renderer: Renderer2,
-        private readonly el: ElementRef, // доступ к окну для отображения
+        private readonly el: ElementRef,
     ) {}
 
     ngAfterViewInit() {

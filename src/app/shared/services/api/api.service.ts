@@ -3,6 +3,8 @@ import {Observable} from 'rxjs';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 import {environment} from '@environments/environment.development';
+import {IResponse} from '@app/components/address-book/models/response';
+import {IAddressBookUser} from '@app/components/address-book/models/address-book-user';
 
 @Injectable({
     providedIn: 'root',
@@ -68,13 +70,35 @@ export class ApiService {
     }
 
     /** Спасибо коллеге */
-    getThanksColleague(): Observable<any> {
+    public getThanksColleagueList(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/awards/thanks`);
     }
 
+    public addThanksColleague(userId: number, note: string): Observable<any> {
+        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/thanks`, {
+            userId,
+            note,
+        });
+    }
+
+    // Удалить спасибо коллеге по id
+    public deleteThanksColleague(id: number): Observable<any> {
+        return this.http.delete(`${environment.apiUrl}/api/awards/thanks/${id}`);
+    }
+
     /** Адресная книга */
-    getAddressBooks(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/AddressBook`);
+    public getAddressBookUsers(): Observable<IResponse<IAddressBookUser>> {
+        return this.http.get<IResponse<IAddressBookUser>>(
+            `${environment.apiUrl}/api/auth/AddressBook`,
+        );
+    }
+
+    public addToAddressBook(userId: number): Observable<any> {
+        return this.http.post(`${environment.apiUrl}/api/auth/AddressBook/${userId}`, {userId});
+    }
+
+    public deleteFromAddressBook(userId: number): Observable<any> {
+        return this.http.delete(`${environment.apiUrl}/api/auth/AddressBook/${userId}`);
     }
 
     /** Валюты */
@@ -128,8 +152,8 @@ export class ApiService {
     }
 
     /** Поиск пользователей по ФИО */
-    getUsersByFIO(title: string): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/search`, {
+    public getUsersByFIO(title: string): Observable<any> {
+        return this.http.get<any>(`${environment.apiUrl}/api/auth/users/search`, {
             params: new HttpParams().set('q', title),
         });
     }
@@ -214,5 +238,13 @@ export class ApiService {
     /** Получить профиль текущего пользователя */
     getProfile() {
         return this.http.get<any>(`${environment.apiUrl}/api/auth/Profile`);
+    }
+
+    public callByIpPhone(linkToCall: string): Observable<any> {
+        return this.http.get<any>(linkToCall);
+    }
+
+    public resetCallByIpPhone(): Observable<any> {
+        return this.http.get<any>(`https://ssnab.it/personal/mols/endCall`);
     }
 }

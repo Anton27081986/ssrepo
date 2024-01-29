@@ -24,7 +24,12 @@
 
   <div class="tabs">
     <div class="calendar">
-      <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" [nzAllowClear]="false" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+      <nz-date-picker [nzPlaceHolder]="dateToday"
+                      [(ngModel)]="dateToday"
+                      [nzAllowClear]="false"
+                      (ngModelChange)="onChange($event)"
+                      nzFormat="dd.MM.yyyy"
+                      [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
 
       <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
       <ng-template #sufixCalendar>
@@ -32,15 +37,17 @@
       </ng-template>
     </div>
 
-      <nz-tabset [nzTabPosition]="'top'" [nzType]="'line'">
-        <ng-container *ngIf="birthdayList | async as birthday">
+      <nz-tabset
+        [(nzSelectedIndex)]="selectedTabIndex"
+        [nzTabPosition]="'top'"
+        [nzType]="'line'">
 
-          <ng-container *ngFor="let date of birthday;">
-            <nz-tab nzTitle="{{ date.name }}">
+            <nz-tab *ngFor="let day of birthdays;"
+                    nzTitle="{{ day.name }}">
 
               <div class="content">
                 <div class="card-list">
-                  <div class="card" *ngFor="let item of date.items;">
+                  <div class="card" *ngFor="let item of day?.items;">
                     <div class="personal">
                       <div class="img" (click)="showModalOpenOut(item?.id)">
                         <img src="{{ item?.avatarUrl }}" alt="" />
@@ -59,9 +66,7 @@
               </div>
 
             </nz-tab>
-          </ng-container>
 
-        </ng-container>
       </nz-tabset>
 
   </div>

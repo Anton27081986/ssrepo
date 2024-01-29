@@ -12,6 +12,10 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {ResetPasswordComponent} from '@auth/reset-password/reset-password.component';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {AuthRoutingModule} from './auth-routing.module';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from '@auth/store/reducers';
+import {EffectsModule} from '@ngrx/effects';
+import {GetCurrentUserEffect} from '@auth/store/effects/get-current-user.effect';
 
 @NgModule({
     declarations: [SignInComponent, ForgotPasswordComponent, ResetPasswordComponent],
@@ -26,6 +30,8 @@ import {AuthRoutingModule} from './auth-routing.module';
         NzButtonModule,
         NzIconModule,
         NzToolTipModule,
+        StoreModule.forFeature('auth', reducers),
+        EffectsModule.forFeature([GetCurrentUserEffect]),
     ],
 })
 export class AuthModule {}
