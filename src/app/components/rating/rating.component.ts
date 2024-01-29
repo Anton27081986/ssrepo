@@ -32,13 +32,13 @@ export class RatingComponent implements OnInit, OnDestroy {
     protected getProfile$ = this._userService.getProfile();
     protected getRankWeeks$ = this._apiService.getRankWeeks();
     private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+    private currentUserId!: number;
 
     public loading = false;
     public title: any;
     public submitted = false;
     public weekId!: number;
     public rankTypeId!: number;
-    private currentUserId!: number;
     public pageSize = 6;
     public pageIndex = 1;
     public selectedValue = null;
@@ -57,7 +57,7 @@ export class RatingComponent implements OnInit, OnDestroy {
         private readonly iconService: NzIconService,
         private readonly modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
-        private readonly chDRef: ChangeDetectorRef,
+        private readonly cd: ChangeDetectorRef,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -171,12 +171,10 @@ export class RatingComponent implements OnInit, OnDestroy {
             .subscribe(value => {
                 this.rankTypeId = value.rankTypeId;
 
-                // TODO Обновить участников
                 // TODO Настроить нагинацию
                 this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0).pipe(
-                    tap(value => {
-                        console.log('Получение-обновление участников', value);
-                        this.chDRef.markForCheck();
+                    tap(_ => {
+                        this.cd.markForCheck();
                     }),
                 );
             });
