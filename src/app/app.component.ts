@@ -22,9 +22,6 @@ export class AppComponent implements OnInit {
         private readonly store: Store,
     ) {
         this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
-        console.log('apiUrl api service', environment.apiUrl);
-        console.log('nameEnv api service', environment.name);
-        console.log('production api service', environment.production);
     }
 
     ngOnInit(): void {

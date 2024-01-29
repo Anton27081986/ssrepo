@@ -33,7 +33,6 @@ export class CommentsModalComponent implements OnInit {
     ngOnInit() {
         this._apiService.getProfile().subscribe(profile => {
             this.currentUserId = profile.id;
-            console.log('this.currentUserId)', this.currentUserId);
         });
 
         this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);

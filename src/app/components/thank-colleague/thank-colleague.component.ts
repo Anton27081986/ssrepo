@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnInit,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
@@ -74,7 +68,6 @@ export class ThankColleagueComponent implements OnInit {
 
         this.apiService.getProfile().subscribe(profile => {
             this.currentUserId = profile.id;
-            console.log(this.currentUserId);
         });
 
         this.loadAllThanksForColleagues();
@@ -156,15 +149,12 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     public handleOk(): void {
-        console.log(this.thankColleagueForm);
-
         if (this.thankColleagueForm.valid) {
             const toUserId = this.thankColleagueForm.value.name;
             const note = this.thankColleagueForm.value.comment;
 
             this.apiService.addThanksColleague(toUserId, note).subscribe({
-                next: response => {
-                    console.log('Спасибо добавлен', response);
+                next: _ => {
                     this.loadAllThanksForColleagues();
                 },
                 error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
