@@ -22,39 +22,29 @@ import {NzModalService} from 'ng-zorro-antd/modal';
     changeDetection: ChangeDetectionStrategy.Default,
 })
 export class RatingComponent implements OnInit, OnDestroy {
-    destroy$: Subject<boolean> = new Subject<boolean>();
-
-    loading = false;
-    title: any;
-    submitted = false;
-    weekId!: number;
-    public rankTypeId!: number;
-    private currentUserId!: number;
-    currentUserName: any;
-    placeholder = 'Сотрудник';
-
     private readonly modelChanged: Subject<string> = new Subject<string>();
-
     protected rankTypes = new Observable<any>().pipe(
         distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
     );
 
     protected rankWeeks!: Observable<any>;
     protected ranks!: Observable<any>;
-
     protected getProfile$ = this._userService.getProfile();
     protected getRankWeeks$ = this._apiService.getRankWeeks();
+    private readonly destroy$: Subject<boolean> = new Subject<boolean>();
 
-    pageSize = 6;
-    pageIndex = 1;
-
-    // Переменные для поиска
-    selectedValue = null;
-    listOfOption: Array<{name: string; id: string}> = [];
-
-    nzFilterOption = (): boolean => true;
-
-    rateValue = {
+    public loading = false;
+    public title: any;
+    public submitted = false;
+    public weekId!: number;
+    public rankTypeId!: number;
+    private currentUserId!: number;
+    public pageSize = 6;
+    public pageIndex = 1;
+    public selectedValue = null;
+    public listOfOption: Array<{name: string; id: string}> = [];
+    public nzFilterOption = (): boolean => true;
+    public rateValue = {
         great: 4.5,
         good1: 4.4,
         good2: 4.0,
@@ -65,7 +55,7 @@ export class RatingComponent implements OnInit, OnDestroy {
         private readonly _apiService: ApiService,
         private readonly _userService: UserService,
         private readonly iconService: NzIconService,
-        public modalCreate: NzModalService,
+        private readonly modalCreate: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
         private readonly chDRef: ChangeDetectorRef,
     ) {
@@ -102,15 +92,13 @@ export class RatingComponent implements OnInit, OnDestroy {
             .subscribe();
 
         this.getRankTypesByWeekAndUserInit(); // Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
-        this.getPartyByWeekAndRankTypeInit();
+        this.getPartyByWeekAndRankTypeInit(); // Получам и устанавливаем участников
 
         // Получение последних 5 недель
         this.rankWeeks = this._apiService.getRankWeeks().pipe(map(({items}) => items));
 
-        // Подписка на изменения input поиска
         zip(this.modelChanged)
             .pipe(
-                // debounceTime(300),
                 tap(value => {
                     if (value[0].length >= 3) {
                         this._apiService
@@ -128,8 +116,6 @@ export class RatingComponent implements OnInit, OnDestroy {
             .subscribe();
     }
 
-    // api rank/type
-    // Первоначальная загрузка
     // Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
     getRankTypesByWeekAndUserInit() {
         zip(this.getProfile$, this.getRankWeeks$)
@@ -142,19 +128,14 @@ export class RatingComponent implements OnInit, OnDestroy {
                 }),
             )
             .subscribe(value => {
-                this.currentUserId = value.id; // id пользователя используем глобально
-                this.currentUserName = value.name; // id пользователя используем глобально
-                this.weekId = value.week.id; // id недели используем глобально
+                this.currentUserId = value.id; // id пользователя
+                this.weekId = value.week.id; // id недели
 
                 // Выводим типы за первую неделю
                 this.rankTypes = this._apiService.getRankTypes(value.week.id, value.id);
             });
     }
 
-    // api rank
-    // Получение участников при инициализации
-    // Получаем текущий id пользователя подсвечиваем нужный тип
-    // Нужный тип получаем из rankTypeId api rank/types
     getPartyByWeekAndRankTypeInit() {
         zip(this.getProfile$, this.getRankWeeks$)
             .pipe(
@@ -174,8 +155,6 @@ export class RatingComponent implements OnInit, OnDestroy {
             });
     }
 
-    // api rank
-    // Ипользуем при поиске
     getPartyByWeekAndRankTypeSearch(userId?: any, weekId?: any) {
         // Переделать
         zip(this.getProfile$)
@@ -195,15 +174,20 @@ export class RatingComponent implements OnInit, OnDestroy {
                 // TODO Обновить участников
                 // TODO Настроить нагинацию
                 this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0).pipe(
-                    tap(_ => {
-                        console.log('Получение-обновление участников');
+                    tap(value => {
+                        console.log('Получение-обновление участников', value);
                         this.chDRef.markForCheck();
                     }),
                 );
             });
     }
 
+    getPartyByWeekAndRankTypeChangeWeek(weekId: number) {
+        this.ranks = this._apiService.getRank(weekId, this.rankTypeId, 100, 0);
+    }
+
     selectWeek(weekId: number): void {
+        this.getPartyByWeekAndRankTypeChangeWeek(weekId);
         this.rankTypes = this._apiService.getRankTypes(weekId, this.currentUserId);
     }
 
@@ -211,7 +195,7 @@ export class RatingComponent implements OnInit, OnDestroy {
         $event.stopPropagation();
         this.rankTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
 
-        // Вывводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
+        // Выводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
         this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, limit, 0);
     }
 
@@ -219,7 +203,7 @@ export class RatingComponent implements OnInit, OnDestroy {
         this.modelChanged.next($event);
     }
 
-    // При выборе клика
+    // При выборе пользователя
     onUserChange() {
         this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
         this.getPartyByWeekAndRankTypeSearch(this.selectedValue, this.weekId);
@@ -245,7 +229,6 @@ export class RatingComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.destroy$.next(true);
-        // this.destroy$.unsubscribe();
         this.modelChanged.complete();
     }
 }
