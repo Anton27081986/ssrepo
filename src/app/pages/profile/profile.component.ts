@@ -35,12 +35,10 @@ export class ProfileComponent {
     }
 
     toggleTheme(): void {
-
         this.profileService
             .getTheme()
             .pipe()
             .subscribe(value => console.log('them', value));
         this.themeService.toggleTheme().then();
-
     }
 }

@@ -17,7 +17,7 @@ export class ProfileService {
     /** Установка темы */
     postTheme(): Observable<any> {
         return this.http.put<any[]>(`${environment.apiUrl}/api/company/settigs`, {
-            "isDarkTheme": true
+            isDarkTheme: true,
         });
     }
 }
