@@ -35,7 +35,7 @@ export class StartComponent implements OnInit {
                 this.userFromApi = user;
             });
 
-        this.toggleTheme()
+        this.toggleTheme();
     }
 
     toggleTheme(): void {

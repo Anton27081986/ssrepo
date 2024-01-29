@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {ThemeService} from '@app/shared/theme/theme.service';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
-import {ProfileService} from "@app/pages/profile/profile.service";
+import {ProfileService} from '@app/pages/profile/profile.service';
 
 @Component({
     selector: 'app-profile',
@@ -35,7 +35,10 @@ export class ProfileComponent {
     }
 
     toggleTheme(): void {
-        this.profileService.getTheme().pipe().subscribe(value => console.log('them', value));
+        this.profileService
+            .getTheme()
+            .pipe()
+            .subscribe(value => console.log('them', value));
         this.themeService.toggleTheme().then();
     }
 }
