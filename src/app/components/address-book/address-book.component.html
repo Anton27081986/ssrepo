@@ -1,0 +1,129 @@
+<div class="address-book">
+  <div class="header">
+    <div>
+      <div class="title">
+        <h1>Адресная книга</h1>
+      </div>
+    </div>
+    <div class="open-all-table">
+      <div class="button">
+<!--        Кнопка избранного-->
+        <button class="button"
+                nz-button
+                [nzType]="isFavoriteMode? 'primary': 'default'"
+                (click)="toggleMode()">
+          <span class="favorite-icon"
+                [ngClass]="!isFavoriteMode ? 'not-favorite-mode':''"
+                nz-icon [nzType]="'ss:favorite'">
+            <span class="favorite-text">Избранные контакты </span>
+          </span>
+        </button>
+      </div>
+<!--      Поиск по сотрудникам-->
+      <div class="search">
+        <span class="">
+          <form nz-form [formGroup]="searchForm" class="search-form">
+            <nz-form-item>
+              <nz-form-control>
+                <nz-input-group [nzSuffix]="prefixSearch">
+                  <input type="text"
+                         nz-input
+                         formControlName="search"
+                         placeholder="Поиск по сотрудникам"
+                         (keyup.enter)="loadSearchUsers()" />
+                </nz-input-group>
+              </nz-form-control>
+              <ng-template #prefixSearch>
+                <i nz-icon nzType="search" (click)="loadSearchUsers()"></i>
+                <i nz-icon nzType="close-circle" (click)="clearSearch()"></i>
+              </ng-template>
+            </nz-form-item>
+          </form>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+<!--    Результаты поиска или избранное-->
+    <div class="card-list" *ngIf="isFavoriteMode">
+      <div class="card" *ngFor="let item of addresses">
+        <div>
+          <div class="personal">
+            <div class="img" (click)="showModalOpenOut(item?.id)"
+            style="cursor: pointer;">
+              <img src="{{ item?.avatarUrl }}" alt="user" />
+            </div>
+
+            <div class="title">
+              <div class="fio">
+                <span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
+              </div>
+              <div class="job">
+                <div>{{ item?.position }}</div>
+                <div>{{ item?.department }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="icons">
+            <span class="favorite-icon"
+                  (click)="deleteFromFavorite(item)"
+                  nz-icon [nzType]="'ss:favorite'">
+            </span>
+          </div>
+
+          <div class="contacts">
+            <div class="call">
+              <span>{{ item?.phoneLocal }}</span>
+              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
+            </div>
+            <div class="mail">
+              <span>{{item?.email}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="card-list" *ngIf="!isFavoriteMode">
+      <div class="card" *ngFor="let item of searchedUsers">
+        <div>
+          <div class="personal">
+            <div class="img" (click)="showModalOpenOut(item?.id)"
+                 style="cursor: pointer;">
+              <img src="{{ item?.avatarUrl }}" alt="user" />
+            </div>
+
+            <div class="title">
+              <div class="fio">
+                <span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
+              </div>
+              <div class="job">
+                <div>{{ item?.city }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="icons">
+            <span class="favorite-icon not-favorite"
+                  (click)="addToFavorite(item, $event)"
+                  nz-icon
+                  [nzType]="'ss:favorite'">
+            </span>
+          </div>
+
+          <div class="contacts">
+            <div class="mail">
+              <span>{{item?.email}}</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <div class="pagination">
+      <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
+    </div>
+  </div>
+</div>
