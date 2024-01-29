@@ -65,17 +65,11 @@ export class CommentsModalComponent implements OnInit {
         const awardId = this.nzModalData.data.award;
         const note = this.addComment.get('comment')?.value;
 
-        this._apiService
-            .addCommets(objectId, type, awardId, note)
-            .subscribe(_ => {
-
-                // Обновить комментарии переделать
-                this.commentList = this.getCommentList(
-                    this.nzModalData.data.id,
-                    this.nzModalData.type,
-                );
-                this.chDRef.detectChanges();
-            });
+        this._apiService.addCommets(objectId, type, awardId, note).subscribe(_ => {
+            // Обновить комментарии переделать
+            this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
+            this.chDRef.detectChanges();
+        });
 
         // Валидация
         if (this.addComment.valid) {
