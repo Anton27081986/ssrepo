@@ -363,7 +363,7 @@
     .message {
         border-right: 10px solid #ffffff !important;
         box-sizing: border-box;
-        scrollbar-width: thin;
+        scrollbar-width: auto;
         scrollbar-color: $gray-light;
     }
 }

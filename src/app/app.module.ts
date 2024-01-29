@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 // eslint-disable-next-line camelcase
@@ -23,6 +23,9 @@ import {AppComponent} from './app.component';
 import {AppInitializerProvider} from './app-initializer.service';
 import {ComponentsModule} from '@app/components/components.module';
 import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {EffectsModule} from '@ngrx/effects';
 
 registerLocaleData(ru);
 
@@ -43,6 +46,9 @@ registerLocaleData(ru);
         NzIconModule,
         ComponentsModule,
         StoreModule.forRoot({}, {}),
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
+        StoreRouterConnectingModule.forRoot(),
+        EffectsModule.forRoot([]),
     ],
     providers: [
         AppInitializerProvider,

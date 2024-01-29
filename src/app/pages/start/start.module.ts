@@ -8,6 +8,7 @@ import {SliderComponent} from '@app/components/slider/slider.component';
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzCarouselModule} from 'ng-zorro-antd/carousel';
 import {StartComponent} from './start.component';
+import {VictoryService} from '@app/components/victory/victory.service';
 
 @NgModule({
     declarations: [StartComponent, SliderComponent],
@@ -20,5 +21,6 @@ import {StartComponent} from './start.component';
         NgOptimizedImage,
         ComponentsModule,
     ],
+    providers: [{provide: VictoryService}],
 })
 export class StartModule {}

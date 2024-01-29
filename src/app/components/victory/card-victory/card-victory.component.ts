@@ -2,15 +2,17 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
+    EventEmitter,
     Input,
+    Output,
     ViewContainerRef,
 } from '@angular/core';
-import {ApiService} from '@app/shared/services/api/api.service';
 import {FormBuilder} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {CommentsModalComponent} from '@app/components/modal/comments-modal/comments-modal.component';
+import {VictoryService} from '@app/components/victory/victory.service';
 
 @Component({
     selector: 'app-card-victory',
@@ -21,9 +23,10 @@ import {CommentsModalComponent} from '@app/components/modal/comments-modal/comme
 export class CardVictoryComponent {
     @Input() item!: any;
     @Input() extendedMode!: any;
+    @Output() DeleteWin = new EventEmitter<string>();
 
     constructor(
-        private readonly apiService: ApiService,
+        private readonly victoryService: VictoryService,
         private readonly formBuilder: FormBuilder,
         private readonly iconService: NzIconService,
         public modalCreate: NzModalService,
@@ -70,5 +73,11 @@ export class CardVictoryComponent {
 
     trackBy(_index: number, item: any) {
         return item.id;
+    }
+
+    onDeleteWin(item: any) {
+        this.victoryService.removeVictoryById(item).subscribe(_ => {
+            this.DeleteWin.emit(item);
+        });
     }
 }

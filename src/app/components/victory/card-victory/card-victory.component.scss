@@ -14,6 +14,10 @@
         position: relative;
         display: flex;
 
+        .win-together {
+            font-weight: 500;
+        }
+
         .users-win-groups {
             position: relative;
 
@@ -205,5 +209,52 @@
         ::ng-deep svg {
             font-size: 33px;
         }
+    }
+
+    .delete {
+        position: absolute;
+        right: 16px;
+        z-index: 1;
+        background-color: $gray-light;
+        color: $blue;
+        font-size: 12px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        cursor: pointer;
+
+        ::ng-deep svg {
+            fill-opacity: 1;
+
+            path {
+                stroke: none;
+            }
+        }
+    }
+
+    .message::-webkit-scrollbar {
+        width: 4px;
+        height: 48px;
+    }
+
+    .message::-webkit-scrollbar-track {
+        background-color: $gray;
+        border-radius: 60px;
+        height: 48px;
+    }
+
+    .message::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .message {
+        border-right: 10px solid #ffffff !important;
+        box-sizing: border-box;
+        scrollbar-width: auto;
+        scrollbar-color: $gray-light;
     }
 }

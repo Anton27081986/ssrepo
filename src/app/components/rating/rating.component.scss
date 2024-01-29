@@ -467,7 +467,7 @@
     .message {
         border-right: 10px solid #ffffff !important;
         box-sizing: border-box;
-        scrollbar-width: thin;
+        scrollbar-width: auto;
         scrollbar-color: $gray-light;
     }
 }
@@ -631,14 +631,6 @@
 
         textarea.ant-input.ant-input-stepperless {
             min-height: 80px;
-        }
-
-        textarea.ant-input.ant-input-stepperless {
-            background-color: white !important;
-            padding-left: 14px !important;
-            min-height: 80px;
-            font-size: 11.2px !important;
-            padding-top: 8px;
         }
 
         .textarea {
