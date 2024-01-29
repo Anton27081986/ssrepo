@@ -8,8 +8,13 @@
     <div class="open-all-table">
       <div class="button">
 <!--        Кнопка избранного-->
-        <button nz-button class="button" [nzType]="'primary'">
-          <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'">
+        <button class="button"
+                nz-button
+                [nzType]="isFavoriteMode? 'primary': 'default'"
+                (click)="toggleMode()">
+          <span class="favorite-icon"
+                [ngClass]="!isFavoriteMode ? 'not-favorite-mode':''"
+                nz-icon [nzType]="'ss:favorite'">
             <span class="favorite-text">Избранные контакты </span>
           </span>
         </button>
@@ -21,11 +26,16 @@
             <nz-form-item>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Поиск по сотрудникам" />
+                  <input type="text"
+                         nz-input
+                         formControlName="search"
+                         placeholder="Поиск по сотрудникам"
+                         (keyup.enter)="loadSearchUsers()" />
                 </nz-input-group>
               </nz-form-control>
               <ng-template #prefixSearch>
-                <i nz-icon nzType="search" class="search-icon-suffix"></i>
+                <i nz-icon nzType="search" (click)="loadSearchUsers()"></i>
+                <i nz-icon nzType="close-circle" (click)="clearSearch()"></i>
               </ng-template>
             </nz-form-item>
           </form>
@@ -36,11 +46,12 @@
 
   <div class="content">
 <!--    Результаты поиска или избранное-->
-    <div class="card-list" *ngIf="addressBooks | async as addressBook">
-      <div class="card" *ngFor="let item of addressBook.items;">
+    <div class="card-list">
+      <div class="card" *ngFor="let item of addresses">
         <div>
           <div class="personal">
-            <div class="img" (click)="showModalOpenOut(item?.id)">
+            <div class="img" (click)="showModalOpenOut(item?.id)"
+            style="cursor: pointer;">
               <img src="{{ item?.avatarUrl }}" alt="user" />
             </div>
 
@@ -55,7 +66,10 @@
             </div>
           </div>
           <div class="icons">
-            <span class="favorite-icon" nz-icon [nzType]="'ss:favorite'"></span>
+            <span class="favorite-icon"
+                  (click)="deleteFromFavorite(item)"
+                  nz-icon [nzType]="'ss:favorite'">
+            </span>
           </div>
 
           <div class="contacts">
@@ -64,8 +78,7 @@
               <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
             </div>
             <div class="mail">
-              <span>GRISHIN.PG</span>
-              <span>@SSNAB.RU</span>
+              <span>{{item?.email}}</span>
             </div>
           </div>
 

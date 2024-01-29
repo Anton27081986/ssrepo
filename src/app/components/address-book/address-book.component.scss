@@ -31,6 +31,18 @@
                 .favorite-text {
                     display: none;
                 }
+
+                ::ng-deep .not-favorite-mode {
+                    font-size: 20px !important;
+                    ::ng-deep svg {
+                        path {
+                            fill-opacity: 0;
+                            background-color: white;
+                            stroke: blue;
+                            stroke-linecap: round;
+                        }
+                    }
+                }
             }
 
             .select-group {
@@ -164,10 +176,11 @@
 
                     ::ng-deep .anticon {
                         font-size: 20px !important;
+                        cursor: pointer;
 
                         path {
                             fill-opacity: 0;
-                            stroke: $blue;
+                            stroke: blue;
                         }
                     }
 
@@ -175,6 +188,15 @@
                         path {
                             fill-opacity: 1;
                             fill: $blue;
+                        }
+                    }
+
+                    ::ng-deep .not-favorite {
+                        font-size: 20px !important;
+
+                        path {
+                            fill-opacity: 0;
+                            stroke: #d9d9d9;
                         }
                     }
                 }
@@ -302,6 +324,7 @@
                 padding-left: 13px;
                 font-size: 12px;
                 color: $blue;
+                text-transform: uppercase;
 
                 span:nth-child(1) {
                     font-weight: 600;
