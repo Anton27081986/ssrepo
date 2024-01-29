@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-ARG PROJECT_ENV=development
+ARG PROJECT_ENV=prod
 RUN npm run build:$PROJECT_ENV
 
 
