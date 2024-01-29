@@ -1,9 +1,9 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://erp-dev.ssnab.ru',
+    apiUrl: 'https://erp.ssnab.ru',
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
-    applicationTitle: 'DEV ERP SSNAB',
+    applicationTitle: 'ERP SSNAB',
     tabTitle: '',
     name: 'dev',
 };
