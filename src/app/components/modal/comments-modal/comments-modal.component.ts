@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NZ_MODAL_DATA, NzModalRef} from 'ng-zorro-antd/modal';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {Observable, tap} from 'rxjs';
+import {VictoryService} from '@app/components/victory/victory.service';
 
 @Component({
     selector: 'app-comments-modal',
@@ -21,6 +22,7 @@ export class CommentsModalComponent implements OnInit {
 
     constructor(
         private readonly _apiService: ApiService,
+        private readonly _victoryService: VictoryService,
         private readonly modal: NzModalRef,
         private readonly formBuilder: FormBuilder,
         private readonly chDRef: ChangeDetectorRef,
@@ -63,17 +65,11 @@ export class CommentsModalComponent implements OnInit {
         const awardId = this.nzModalData.data.award;
         const note = this.addComment.get('comment')?.value;
 
-        this._apiService
-            .addCommets(objectId, type, awardId, note)
-            .pipe(
-                tap(_ => {
-                    this.chDRef.markForCheck();
-                }),
-            )
-            .subscribe();
-
-        // Обновить комментарии переделать
-        this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
+        this._apiService.addCommets(objectId, type, awardId, note).subscribe(_ => {
+            // Обновить комментарии переделать
+            this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
+            this.chDRef.detectChanges();
+        });
 
         // Валидация
         if (this.addComment.valid) {
@@ -89,6 +85,8 @@ export class CommentsModalComponent implements OnInit {
 
         // Сборосить форму
         this.addComment.reset();
+
+        this._victoryService.updateWinList(Math.random());
     }
 
     removeComment($event: any, id: number) {

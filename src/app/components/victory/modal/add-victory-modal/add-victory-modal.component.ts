@@ -2,9 +2,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    EventEmitter,
     OnInit,
-    Output,
     ViewChild,
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -20,7 +18,6 @@ import {NzSelectComponent} from 'ng-zorro-antd/select';
 })
 export class AddVictoryModalComponent implements OnInit {
     @ViewChild(NzSelectComponent, {static: true}) selectNode!: NzSelectComponent;
-    @Output() CloseWinModal = new EventEmitter<string>();
 
     private readonly modelChangedColleague: Subject<string> = new Subject<string>();
     private readonly modelChangedTpr: Subject<string> = new Subject<string>();
@@ -95,8 +92,6 @@ export class AddVictoryModalComponent implements OnInit {
                 }),
             )
             .subscribe();
-
-        this.CloseWinModal.emit();
     }
 
     get comment() {
