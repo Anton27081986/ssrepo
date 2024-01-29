@@ -3,6 +3,7 @@ import {
     ChangeDetectorRef,
     Component,
     OnInit,
+    Renderer2,
     ViewContainerRef,
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -12,6 +13,8 @@ import {ApiService} from '@app/shared/services/api/api.service';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {IAddressBookUser} from '@app/components/address-book/models/address-book-user';
+import {IAddressBookSearchUser} from '@app/components/address-book/models/address-book-search-user';
+import {NzMessageService} from 'ng-zorro-antd/message';
 
 @Component({
     selector: 'app-address-book',
@@ -24,8 +27,7 @@ export class AddressBookComponent implements OnInit {
     public searchForm!: FormGroup;
     public loading: boolean = false;
     public addresses: IAddressBookUser[] = [];
-    public searchTerm: string = '';
-
+    public searchedUsers: IAddressBookSearchUser[] = [];
     public constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
@@ -33,6 +35,8 @@ export class AddressBookComponent implements OnInit {
         public modalCreateService: NzModalService,
         private readonly viewContainerRef: ViewContainerRef,
         private readonly ref: ChangeDetectorRef,
+        private readonly renderer: Renderer2,
+        private readonly notificationService: NzMessageService,
     ) {
         this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
         this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
@@ -71,16 +75,18 @@ export class AddressBookComponent implements OnInit {
     }
 
     public loadSearchUsers() {
-        let searchTerm = this.searchForm.get('search')?.value;
-
-        console.log(searchTerm);
+        this.isFavoriteMode = false;
+        const searchTerm = this.searchForm.get('search')?.value;
 
         if (!searchTerm) {
-            searchTerm = '';
+            this.searchedUsers = [];
+
+            return;
         }
 
         this.apiService.getUsersByFIO(searchTerm).subscribe(response => {
-            console.log(response);
+            this.searchedUsers = response.items;
+            this.ref.markForCheck();
         });
     }
 
@@ -93,10 +99,15 @@ export class AddressBookComponent implements OnInit {
     }
 
     public deleteFromFavorite(user: IAddressBookUser) {
-        console.log(user);
         this.apiService.deleteFromAddressBook(user.id).subscribe(() => {
-            console.log('пользователь удалён из адресной книги');
             this.loadFavoriteUsers();
+        });
+    }
+
+    public addToFavorite(user: IAddressBookSearchUser, event: any) {
+        this.apiService.addToAddressBook(user.id).subscribe(() => {
+            event.target.style.stroke = 'blue';
+            this.notificationService.info('Пользователь добавлен в адресную книгу');
         });
     }
 
@@ -119,13 +130,14 @@ export class AddressBookComponent implements OnInit {
     }
 
     public toggleMode() {
-        console.log('toggle');
+        this.addresses = [];
+        this.searchedUsers = [];
         this.isFavoriteMode = !this.isFavoriteMode;
 
         if (this.isFavoriteMode) {
+            this.clearSearch();
             this.loadFavoriteUsers();
         } else {
-            // this.loadSearchUsers();
             console.log('Грузим поиск');
         }
     }
