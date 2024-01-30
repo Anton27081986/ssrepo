@@ -6,7 +6,12 @@ import {IUser} from '@auth/models/user';
 import {Role} from '@auth/models/role';
 import {Store} from '@ngrx/store';
 import {getCurrentUserAction} from '@auth/store/actions/get-current-user.action';
+import {tap} from 'rxjs';
+import {ProfileService} from '@app/pages/profile/profile.service';
+import {ThemeService} from '@app/shared/theme/theme.service';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -18,17 +23,44 @@ export class AppComponent implements OnInit {
 
     constructor(
         private readonly titleService: Title,
+        private readonly profileService: ProfileService,
+        private readonly themeService: ThemeService,
         private readonly authenticationService: AuthenticationService,
         private readonly store: Store,
     ) {
         this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
-        console.log('apiUrl api service', environment.apiUrl);
-        console.log('nameEnv api service', environment.name);
-        console.log('production api service', environment.production);
     }
 
     ngOnInit(): void {
         this.store.dispatch(getCurrentUserAction());
+
+        this.profileService.isDarkTheme$
+            .pipe(
+                untilDestroyed(this),
+                tap(switchValue => {
+                    if (switchValue) {
+                        this.profileService.updateTheme(true).subscribe(_ => {
+                            this.themeService.toggleTheme().then();
+                        });
+                    } else {
+                        this.profileService.updateTheme(false).subscribe(_ => {
+                            this.themeService.toggleTheme().then();
+                        });
+                    }
+                }),
+            )
+            .subscribe();
+
+        this.profileService
+            .getTheme()
+            .pipe(
+                tap(value => {
+                    if (value.isDarkTheme) {
+                        this.themeService.toggleTheme().then();
+                    }
+                }),
+            )
+            .subscribe();
     }
 
     get isAdmin() {

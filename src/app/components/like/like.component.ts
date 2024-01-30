@@ -39,10 +39,6 @@ export class LikeComponent implements AfterViewInit {
     }
 
     setLike(isUserLiked: boolean, objectId: number, type = this.typeObject) {
-        // this.ngZone.onStable.subscribe(() => {
-        //     console.log('zone stableed');
-        // });
-
         if (!this.isClickLike) {
             this.apiService.setLike(objectId, type).subscribe({
                 next: () => {

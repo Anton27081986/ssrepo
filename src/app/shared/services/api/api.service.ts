@@ -10,11 +10,7 @@ import {IAddressBookUser} from '@app/components/address-book/models/address-book
     providedIn: 'root',
 })
 export class ApiService {
-    constructor(private readonly http: HttpClient) {
-        console.log('apiUrl api service', environment.apiUrl);
-        console.log('nameEnv api service', environment.name);
-        console.log('production api service', environment.production);
-    }
+    constructor(private readonly http: HttpClient) {}
 
     getMenuListJson(): Observable<any> {
         return this.http.get<IMainMenu[]>(`${environment.apiUrl}/api/company/menu`, {
@@ -41,11 +37,6 @@ export class ApiService {
     /** Получить прочие настройки пользователя */
     getSettings(): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings`);
-    }
-
-    /** Theme */
-    getTheme(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/company/theme`);
     }
 
     /** Sale */

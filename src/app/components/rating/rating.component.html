@@ -75,38 +75,84 @@
         <ng-template #item let-rank>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
-              <!--              <nz-card [nzTitle]="item.name">-->
-              <div class="card">
-                <div>
-                  <div class="personal">
-                    <div class="img" (click)="showModalOpenOut(rank?.user?.id)">
-                      <img src="{{ rank?.user?.avatarUrl }}" alt="user" />
+
+              <ng-container [ngSwitch]="rank?.type">
+                <div class="card user" *ngSwitchCase="0">
+                  <div>
+                    <div class="personal">
+                      <div class="img" (click)="showModalOpenOut(rank?.user?.id)">
+                        <img src="{{ rank?.user?.avatarUrl }}" alt="user" />
+                      </div>
+
+                      <ng-container [ngSwitch]="rank?.place">
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>
+                      </ng-container>
+
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.user?.name }}</span>
+                        </div>
+                        <div class="job">
+                          <div *ngIf="false">{{ rank?.user.position }}</div>
+                          <div>{{ rank?.user.department }}</div>
+                        </div>
+                      </div>
                     </div>
-
-                    <ng-container [ngSwitch]="rank?.place">
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>
-                    </ng-container>
-
-                    <div class="title">
-                      <div class="fio">
-                        <span>{{ rank?.user?.name }}</span>
-                      </div>
-                      <div class="job">
-                        <div *ngIf="false">{{ rank?.user.position }}</div>
-                        <div>{{ rank?.user.department }}</div>
-                      </div>
+                    <div class="icons">
+                      <span class="count count-top">{{ rank?.avgWeekRate }}</span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
                     </div>
                   </div>
-                  <div class="icons">
-                    <span class="count count-top">{{ rank?.avgWeekRate }}</span>
-                    <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+
+                </div>
+                <div class="card project" *ngSwitchCase="1">
+                  <div>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="{{ rank?.project?.avatarUrl }}" alt="project" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.project?.name }}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <div class="card distributor" *ngSwitchCase="2">
+                  <div>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="{{ rank?.distributor?.avatarUrl }}" alt="project" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.distributor?.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card team" *ngSwitchCase="3">
+                  <div>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="{{ rank?.team?.avatarUrl }}" alt="project" />
+                      </div>
+                      <div class="members" *ngFor="let member of rank?.members">
+                        <div class="title">
+                          <div class="fio">
+                            <span>{{ member?.name }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
 
-              </div>
-              <!--              </nz-card>-->
             </ng-template>
           </nz-list-item>
         </ng-template>
