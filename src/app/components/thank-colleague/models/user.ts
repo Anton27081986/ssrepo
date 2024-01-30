@@ -1,4 +1,4 @@
-export interface IUserProfile {
+export interface IUser {
     /** Айди пользователя */
     id?: number;
     /** Ссылка на аватарку пользователя */

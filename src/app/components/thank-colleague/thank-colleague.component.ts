@@ -12,6 +12,7 @@ import {CommentsModalComponent} from '@app/components/modal/comments-modal/comme
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
+import {ICreateThanksColleagueRequest} from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 
 @Component({
     selector: 'app-thank-colleague',
@@ -146,6 +147,7 @@ export class ThankColleagueComponent implements OnInit {
                 },
             })
             .afterClose.subscribe(() => {
+                console.log('reload');
                 this.loadAllThanksForColleagues();
             });
     }
@@ -158,13 +160,18 @@ export class ThankColleagueComponent implements OnInit {
         if (this.thankColleagueForm.valid) {
             const toUserId = this.thankColleagueForm.value.name;
             const note = this.thankColleagueForm.value.comment;
+            const createThanksRequest: ICreateThanksColleagueRequest = {
+                userId: toUserId,
+                note,
+            };
 
-            this.apiService.addThanksColleague(toUserId, note).subscribe({
+            this.apiService.addThanksColleague(createThanksRequest).subscribe({
                 next: _ => {
                     this.loadAllThanksForColleagues();
                 },
                 error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
             });
+            this.thankColleagueForm.reset();
         } else {
             console.log('');
         }
@@ -173,6 +180,7 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     public handleCancel(): void {
+        this.thankColleagueForm.reset();
         this.isModalVisible = false;
     }
 
