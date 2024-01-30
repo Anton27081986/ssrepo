@@ -76,10 +76,7 @@
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
 
-<!--              {{ rank?.type | json }}-->
-
               <ng-container [ngSwitch]="rank?.type">
-<!--                mol-->
                 <div class="card user" *ngSwitchCase="0">
                   <div>
                     <div class="personal">
@@ -110,8 +107,6 @@
                   </div>
 
                 </div>
-
-<!--                project-->
                 <div class="card project" *ngSwitchCase="1">
                   <div>
                     <div class="personal">
@@ -126,8 +121,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!--                distributor-->
                 <div class="card distributor" *ngSwitchCase="2">
                   <div>
                     <div class="personal">
@@ -142,8 +135,6 @@
                     </div>
                   </div>
                 </div>
-
-                <!--                team-->
                 <div class="card team" *ngSwitchCase="3">
                   <div>
                     <div class="personal">
@@ -160,10 +151,8 @@
                     </div>
                   </div>
                 </div>
-
               </ng-container>
-
-
+              
             </ng-template>
           </nz-list-item>
         </ng-template>
