@@ -36,7 +36,6 @@ export class AppComponent implements OnInit {
         console.log('environment.apiUrl', environment.apiUrl);
         console.log('environment.tabTitle', environment.tabTitle);
         console.log('environment.applicationTitle', environment.applicationTitle);
-        console.log('environment.tabTitle', environment.tabTitle);
 
         this.store.dispatch(getCurrentUserAction());
 
