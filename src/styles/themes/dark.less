@@ -1,6 +1,10 @@
 @import (multiple) '../../../node_modules/ng-zorro-antd/src/style/themes/dark';
 @import './base';
 @import './components/card';
+@import './components/tabs';
+@import 'components/select';
+@import 'components/modal';
+@import 'components/form';
 
 @layout-sider-background: @component-background;
 @layout-header-background: @component-background;
@@ -110,10 +114,6 @@ body {
         }
     }
 
-    .ant-select {
-        background: #202629;
-    }
-
     app-footer {
         background-color: #0e0f10 !important;
     }
@@ -181,19 +181,6 @@ body {
         border: 1px #313131 solid !important;
         color: #ffffff;
     }
-
-    form {
-        // Background search
-        .ant-input-affix-wrapper {
-            background-color: #202629 !important;
-            color: #fff;
-        }
-        // Background search
-        .ant-input.ant-input-stepperless {
-            background-color: #202629 !important;
-        }
-    }
-
     .icon-bg.burger {
         svg {
             rect {
@@ -365,20 +352,6 @@ body {
     border-bottom: unset !important;
 }
 
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    background-color: #202629 !important;
-    color: #ffffff !important;
-}
-
-.ant-tabs-tab.ng-star-inserted {
-    // color: #22223a;
-    padding: 10px;
-}
-
-.ant-tabs-tab {
-    border: 2px #e4e8ea solid;
-}
-
 .ant-menu-submenu > .ant-menu {
     border-radius: 30px;
 }
@@ -414,21 +387,7 @@ body {
     stroke: #4770ff !important;
 }
 
-.content .card-list .card {
-    .message {
-        top: 4px !important;
-        border-right: 20px solid #31393d !important;
-        scrollbar-color: #c7d0d2 !important;
-        width: 386px !important;
-    }
-
-    .message::-webkit-scrollbar-track {
-        background-color: #31393d !important;
-    }
-
-    .message::-webkit-scrollbar-thumb {
-        box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
-    }
+.content .card-list {
 }
 
 .currency-item .name,

@@ -34,11 +34,5 @@ export class StartComponent implements OnInit {
                 this.loading = false;
                 this.userFromApi = user;
             });
-
-        this.toggleTheme();
-    }
-
-    toggleTheme(): void {
-        this.themeService.toggleTheme().then();
     }
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {environment} from '@environments/environment.development';
 import {HttpClient} from '@angular/common/http';
 
@@ -7,6 +7,8 @@ import {HttpClient} from '@angular/common/http';
     providedIn: 'root',
 })
 export class ProfileService {
+    public isDarkTheme$ = new Subject<number>();
+
     constructor(private readonly http: HttpClient) {}
 
     /** Получение темы */
@@ -15,9 +17,13 @@ export class ProfileService {
     }
 
     /** Установка темы */
-    postTheme(): Observable<any> {
-        return this.http.put<any[]>(`${environment.apiUrl}/api/company/settigs`, {
-            isDarkTheme: true,
+    updateTheme(value: boolean): Observable<any> {
+        return this.http.put<any[]>(`${environment.apiUrl}/api/company/settings`, {
+            isDarkTheme: value,
         });
+    }
+
+    public changeTheme(value: number) {
+        this.isDarkTheme$.next(value);
     }
 }
