@@ -149,6 +149,7 @@ export class ThankColleagueComponent implements OnInit {
             .afterClose.subscribe(() => {
                 console.log('reload');
                 this.loadAllThanksForColleagues();
+                this.cdr.detectChanges();
             });
     }
 
