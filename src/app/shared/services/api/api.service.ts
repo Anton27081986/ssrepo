@@ -39,11 +39,6 @@ export class ApiService {
         return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings`);
     }
 
-    /** Theme */
-    getTheme(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/company/theme`);
-    }
-
     /** Sale */
     getAuctions(Offset: number, Limit: number): Observable<any> {
         return this.http.get<any[]>(`${environment.apiUrl}/api/sales/widget`, {

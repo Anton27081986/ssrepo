@@ -1,17 +1,20 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {ThemeService} from '@app/shared/theme/theme.service';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
+import {ProfileService} from '@app/pages/profile/profile.service';
+import {tap} from 'rxjs';
+import {UntilDestroy} from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
     styleUrls: ['./profile.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent {
-    switchValue = false;
-    hide = false;
+export class ProfileComponent implements OnInit {
+    public switchValue!: boolean;
 
     private readonly iconMoon =
         '<svg width="19" height="20" viewBox="0 0 19 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
@@ -19,6 +22,7 @@ export class ProfileComponent {
         '</svg>';
 
     constructor(
+        private readonly profileService: ProfileService,
         private readonly themeService: ThemeService,
         private readonly iconService: NzIconService,
     ) {
@@ -32,7 +36,22 @@ export class ProfileComponent {
         this.iconService.addIconLiteral('ss:theme', AppIcons.theme);
     }
 
+    ngOnInit(): void {
+        this.profileService
+            .getTheme()
+            .pipe(
+                tap(value => {
+                    this.switchValue = value.isDarkTheme;
+                }),
+            )
+            .subscribe();
+    }
+
     toggleTheme(): void {
-        this.themeService.toggleTheme().then();
+        if (this.switchValue) {
+            this.profileService.changeTheme(1);
+        } else {
+            this.profileService.changeTheme(0);
+        }
     }
 }
