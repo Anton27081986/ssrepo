@@ -5,5 +5,4 @@ export const environment = {
     defaultLocale: 'ru',
     applicationTitle: 'ERP SSNAB',
     tabTitle: '',
-    name: 'prod',
 };

@@ -3,7 +3,6 @@ export const environment = {
     apiUrl: 'https://erp-dev.ssnab.it',
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
-    applicationTitle: 'STAGING ERP SSNAB',
-    tabTitle: '',
-    name: 'staging',
+    applicationTitle: 'ERP SSNAB',
+    tabTitle: 'STAGING',
 };
