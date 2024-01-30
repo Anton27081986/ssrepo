@@ -32,11 +32,11 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('environment.production', environment.production)
-        console.log('environment.apiUrl', environment.apiUrl)
-        console.log('environment.tabTitle', environment.tabTitle)
-        console.log('environment.applicationTitle', environment.applicationTitle)
-        console.log('environment.tabTitle', environment.tabTitle)
+        console.log('environment.production', environment.production);
+        console.log('environment.apiUrl', environment.apiUrl);
+        console.log('environment.tabTitle', environment.tabTitle);
+        console.log('environment.applicationTitle', environment.applicationTitle);
+        console.log('environment.tabTitle', environment.tabTitle);
 
         this.store.dispatch(getCurrentUserAction());
 
