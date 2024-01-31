@@ -85,4 +85,24 @@ export class AuthenticationService {
         this.userSubject.next(null as unknown as IUser);
         this.router.navigate(['/auth/sign-in']);
     }
+
+    authImages() {
+        return this.http.get<any[]>(`https://ssnab.it/login/TmpCheck`);
+    }
+
+    // authImages() {
+    //     return this.http.get<any[]>(`https://ssnab.it/login/TmpCheck`, {
+    //         return this.http
+    //             .post<any>(
+    //                 `${environment.apiUrl}/api/auth/changeUser`,
+    //                 {
+    //                     headers: this.headers,
+    //                     observe: 'body',
+    //                     params: this.params,
+    //                     responseType: 'json',
+    //                     reportProgress: true,
+    //                 },
+    //             )
+    //     });
+    // }
 }
