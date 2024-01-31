@@ -211,11 +211,11 @@
                         overflow: hidden;
                         flex: none;
                         z-index: 0;
+                        width: 90px;
+                        height: 90px;
 
                         img {
                             width: 90px;
-                            height: 90px;
-                            object-fit: cover;
                         }
                     }
 
@@ -676,10 +676,13 @@
                     }
                 }
 
-                .img img {
+                .img {
                     width: 56px;
                     height: 56px;
-                    object-fit: fill;
+
+                    img {
+                        width: 56px;
+                    }
                 }
             }
             .info {
@@ -733,10 +736,14 @@
                 .personal {
                     margin-top: 14px;
 
-                    .img img {
+                    .img {
                         width: 32px;
                         height: 32px;
                         border-radius: 26px;
+
+                        img {
+                            width: 32px;
+                        }
                     }
                 }
 

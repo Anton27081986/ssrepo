@@ -85,4 +85,23 @@ export class AuthenticationService {
         this.userSubject.next(null as unknown as IUser);
         this.router.navigate(['/auth/sign-in']);
     }
+
+    authImages() {
+        return this.http
+            .post<any>(
+                `https://ssnab.it/login/TmpCheck`,
+                {},
+                {
+                    headers: this.headers,
+                    observe: 'body',
+                    responseType: 'json',
+                    reportProgress: true,
+                },
+            )
+            .pipe(
+                map(user => {
+                    console.log('user image', user);
+                }),
+            );
+    }
 }

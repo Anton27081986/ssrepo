@@ -5,6 +5,8 @@ import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 import {environment} from '@environments/environment.development';
 import {IResponse} from '@app/components/address-book/models/response';
 import {IAddressBookUser} from '@app/components/address-book/models/address-book-user';
+import {IThanksColleagueItem} from '@app/components/thank-colleague/models/thanks-colleague-item';
+import {ICreateThanksColleagueRequest} from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 
 @Injectable({
     providedIn: 'root',
@@ -61,15 +63,17 @@ export class ApiService {
     }
 
     /** Спасибо коллеге */
-    public getThanksColleagueList(): Observable<any> {
-        return this.http.get<any[]>(`${environment.apiUrl}/api/awards/thanks`);
+    public getThanksColleagueList(): Observable<IResponse<IThanksColleagueItem>> {
+        return this.http.get<IResponse<IThanksColleagueItem>>(
+            `${environment.apiUrl}/api/awards/thanks`,
+        );
     }
 
-    public addThanksColleague(userId: number, note: string): Observable<any> {
-        return this.http.post<any[]>(`${environment.apiUrl}/api/awards/thanks`, {
-            userId,
-            note,
-        });
+    public addThanksColleague(createThanksRequest: ICreateThanksColleagueRequest): Observable<any> {
+        return this.http.post<any[]>(
+            `${environment.apiUrl}/api/awards/thanks`,
+            createThanksRequest,
+        );
     }
 
     // Удалить спасибо коллеге по id
