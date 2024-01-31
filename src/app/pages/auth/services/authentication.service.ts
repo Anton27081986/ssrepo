@@ -86,23 +86,30 @@ export class AuthenticationService {
         this.router.navigate(['/auth/sign-in']);
     }
 
-    authImages() {
-        return this.http.get<any[]>(`https://ssnab.it/login/TmpCheck`);
-    }
-
     // authImages() {
     //     return this.http.get<any[]>(`https://ssnab.it/login/TmpCheck`, {
-    //         return this.http
-    //             .post<any>(
-    //                 `${environment.apiUrl}/api/auth/changeUser`,
-    //                 {
-    //                     headers: this.headers,
-    //                     observe: 'body',
-    //                     params: this.params,
-    //                     responseType: 'json',
-    //                     reportProgress: true,
-    //                 },
-    //             )
+    //
     //     });
     // }
+
+    authImages() {
+        return this.http
+            .post<any>(
+                `https://ssnab.it/login/TmpCheck`,
+                {},
+                {
+                    headers: this.headers,
+                    observe: 'body',
+                    params: this.params,
+                    responseType: 'json',
+                    reportProgress: true,
+                },
+            )
+            .pipe(
+                map(user => {
+                    console.log('user image', user);
+                }),
+            );
+    }
+
 }
