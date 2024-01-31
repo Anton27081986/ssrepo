@@ -2,8 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {first, of, tap} from 'rxjs';
-import {catchError, switchMap} from 'rxjs/operators';
+import {first} from 'rxjs';
 
 @Component({
     selector: 'app-sign-in',
@@ -52,14 +51,6 @@ export class SignInComponent implements OnInit {
             .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
             .pipe(
                 first(),
-                switchMap(_ => {
-                    return this.authenticationService.authImages().pipe(
-                        tap(_ => console.log('authImages Ok')),
-                        catchError((_: unknown) => {
-                            return of(0);
-                        }),
-                    );
-                }),
             )
             .subscribe(
                 _ => {
@@ -71,7 +62,6 @@ export class SignInComponent implements OnInit {
                 },
                 (err: unknown) => {
                     this.loading = false;
-                    console.log('HTTP Error', err);
                     this.error = err;
                     this.errorState = true;
                 },
