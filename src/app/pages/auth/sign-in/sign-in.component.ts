@@ -2,7 +2,8 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {first} from 'rxjs';
+import {first, of, tap} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-sign-in',
@@ -32,11 +33,10 @@ export class SignInComponent implements OnInit {
             login: [
                 '',
                 [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+                    Validators.required, // Добавить проверки
                 ],
             ],
-            password: ['', Validators.required],
+            password: ['', Validators.required], // Добавить проверки
         });
     }
 
@@ -52,19 +52,22 @@ export class SignInComponent implements OnInit {
             .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
             .pipe(
                 first(),
-                // switchMap(value => {
-                //     return this.authenticationService.authImages()
-                // })
+                switchMap(_ => {
+                    return this.authenticationService.authImages().pipe(
+                        tap(_ => console.log('authImages Ok')),
+                        catchError((_: unknown) => {
+                            return of(0);
+                        }),
+                    );
+                }),
             )
             .subscribe(
-                value => {
-                    console.log('value authImages', value);
-
+                _ => {
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
                     setTimeout(() => {
                         this.router.navigateByUrl(returnUrl);
-                    }, 10);
+                    }, 0);
                 },
                 (err: unknown) => {
                     this.loading = false;
@@ -74,10 +77,5 @@ export class SignInComponent implements OnInit {
                 },
                 () => console.log('HTTP request completed.'),
             );
-
-        // Получение картинок переделать
-        setTimeout(() => {
-            this.authenticationService.authImages().subscribe();
-        }, 2000);
     }
 }
