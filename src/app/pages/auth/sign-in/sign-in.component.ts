@@ -57,7 +57,7 @@ export class SignInComponent implements OnInit {
                 // })
             )
             .subscribe(
-                (value)  => {
+                value => {
                     console.log('value authImages', value);
 
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -73,12 +73,13 @@ export class SignInComponent implements OnInit {
                 () => console.log('HTTP request completed.'),
             );
 
-            this.authenticationService.authImages()
-                .pipe(
-                    tap(value => {
-                       console.log('authImages', value)
-                    })
-                )
-                .subscribe()
+        this.authenticationService
+            .authImages()
+            .pipe(
+                tap(value => {
+                    console.log('authImages', value);
+                }),
+            )
+            .subscribe();
     }
 }
