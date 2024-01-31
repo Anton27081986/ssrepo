@@ -115,7 +115,7 @@ export class AddressBookComponent implements OnInit {
     public showModalOpenOut(item: any): void {
         this.modalCreateService
             .create({
-                nzClosable: false,
+                nzClosable: true,
                 nzFooter: null,
                 nzTitle: 'Информация о пользователе',
                 nzNoAnimation: false,
