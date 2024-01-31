@@ -141,11 +141,9 @@
                       <div class="img">
                         <img src="{{ rank?.team?.avatarUrl }}" alt="project" />
                       </div>
-                      <div class="members" *ngFor="let member of rank?.members">
-                        <div class="title">
-                          <div class="fio">
-                            <span>{{ member?.name }}</span>
-                          </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.team?.name }}</span>
                         </div>
                       </div>
                     </div>
