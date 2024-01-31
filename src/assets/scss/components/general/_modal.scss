@@ -228,10 +228,13 @@
                 }
             }
 
-            .img img {
+            .img {
                 width: 56px;
                 height: 56px;
-                object-fit: fill;
+
+                img {
+                    width: 56px;
+                }
             }
         }
         .info {
@@ -288,10 +291,14 @@
             .personal {
                 margin-top: 14px;
 
-                .img img {
+                .img {
                     width: 32px;
                     height: 32px;
-                    border-radius: 26px;
+
+                    img {
+                        border-radius: 26px;
+                        width: 32px;
+                    }
                 }
             }
 
