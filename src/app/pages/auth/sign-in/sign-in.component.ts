@@ -78,6 +78,6 @@ export class SignInComponent implements OnInit {
         // Получение картинок переделать
         setTimeout(() => {
             this.authenticationService.authImages().subscribe();
-        }, 1000);
+        }, 2000);
     }
 }
