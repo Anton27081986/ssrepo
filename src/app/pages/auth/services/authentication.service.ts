@@ -86,12 +86,6 @@ export class AuthenticationService {
         this.router.navigate(['/auth/sign-in']);
     }
 
-    // authImages() {
-    //     return this.http.get<any[]>(`https://ssnab.it/login/TmpCheck`, {
-    //
-    //     });
-    // }
-
     authImages() {
         return this.http
             .post<any>(
@@ -100,7 +94,6 @@ export class AuthenticationService {
                 {
                     headers: this.headers,
                     observe: 'body',
-                    params: this.params,
                     responseType: 'json',
                     reportProgress: true,
                 },
@@ -111,5 +104,4 @@ export class AuthenticationService {
                 }),
             );
     }
-
 }

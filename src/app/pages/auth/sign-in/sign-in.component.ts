@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {first, tap} from 'rxjs';
+import {first} from 'rxjs';
 
 @Component({
     selector: 'app-sign-in',
@@ -62,7 +62,9 @@ export class SignInComponent implements OnInit {
 
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
-                    this.router.navigateByUrl(returnUrl);
+                    setTimeout(() => {
+                        this.router.navigateByUrl(returnUrl);
+                    }, 10);
                 },
                 (err: unknown) => {
                     this.loading = false;
@@ -73,13 +75,9 @@ export class SignInComponent implements OnInit {
                 () => console.log('HTTP request completed.'),
             );
 
-        this.authenticationService
-            .authImages()
-            .pipe(
-                tap(value => {
-                    console.log('authImages', value);
-                }),
-            )
-            .subscribe();
+        // Получение картинок переделать
+        setTimeout(() => {
+            this.authenticationService.authImages().subscribe();
+        }, 1000);
     }
 }

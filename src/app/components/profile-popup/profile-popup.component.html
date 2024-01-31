@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="contacts">
-          <div class="item">
+          <div class="item" *ngIf="url?.phone">
             <div>
               <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
               <span class="title">Tелефон:</span>
@@ -33,7 +33,7 @@
               <span class="description">{{ url?.phone }}</span>
             </div>
           </div>
-          <div class="item">
+          <div class="item" *ngIf="url?.phoneLocal">
             <div>
               <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
               <span class="title">Внутренний телефон:</span>
@@ -42,7 +42,7 @@
               <span class="description">{{ url?.phoneLocal }}</span>
             </div>
           </div>
-          <div class="item">
+          <div class="item" *ngIf="url?.email">
             <div>
               <span class="icon" nz-icon [nzType]="'ss:mail'"></span>
               <span class="title">Email:</span>
@@ -106,7 +106,7 @@
     <hr />
 
     <ng-container *ngIf="accountsFriends | async as accounts">
-      <div class="card-list">
+      <div class="card-list" *ngIf="accounts.length>0">
         <div class="accordion" (click)="statusAccordion=!statusAccordion;">
         <span class="title">Связь с другими сотрудниками</span>
         <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
