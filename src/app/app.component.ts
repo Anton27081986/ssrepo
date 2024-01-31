@@ -6,10 +6,9 @@ import {IUser} from '@auth/models/user';
 import {Role} from '@auth/models/role';
 import {Store} from '@ngrx/store';
 import {getCurrentUserAction} from '@auth/store/actions/get-current-user.action';
-import {tap} from 'rxjs';
 import {ProfileService} from '@app/pages/profile/profile.service';
 import {ThemeService} from '@app/shared/theme/theme.service';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {UntilDestroy} from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -34,33 +33,33 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.store.dispatch(getCurrentUserAction());
 
-        this.profileService.isDarkTheme$
-            .pipe(
-                untilDestroyed(this),
-                tap(switchValue => {
-                    if (switchValue) {
-                        this.profileService.updateTheme(true).subscribe(_ => {
-                            this.themeService.toggleTheme().then();
-                        });
-                    } else {
-                        this.profileService.updateTheme(false).subscribe(_ => {
-                            this.themeService.toggleTheme().then();
-                        });
-                    }
-                }),
-            )
-            .subscribe();
+        // this.profileService.isDarkTheme$
+        //     .pipe(
+        //         untilDestroyed(this),
+        //         tap(switchValue => {
+        //             if (switchValue) {
+        //                 this.profileService.updateTheme(true).subscribe(_ => {
+        //                     this.themeService.toggleTheme().then();
+        //                 });
+        //             } else {
+        //                 this.profileService.updateTheme(false).subscribe(_ => {
+        //                     this.themeService.toggleTheme().then();
+        //                 });
+        //             }
+        //         }),
+        //     )
+        //     .subscribe();
 
-        this.profileService
-            .getTheme()
-            .pipe(
-                tap(value => {
-                    if (value.isDarkTheme) {
-                        this.themeService.toggleTheme().then();
-                    }
-                }),
-            )
-            .subscribe();
+        // this.profileService
+        //     .getTheme()
+        //     .pipe(
+        //         tap(value => {
+        //             if (value.isDarkTheme) {
+        //                 this.themeService.toggleTheme().then();
+        //             }
+        //         }),
+        //     )
+        //     .subscribe();
     }
 
     get isAdmin() {

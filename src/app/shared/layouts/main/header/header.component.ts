@@ -14,13 +14,12 @@ import {Observable} from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
     // @ts-ignore
-    statusInputSearch = false;
-    statusInputSearchMobile = true;
-    statusBurger = false;
-    listMenu!: any; // IMainMenu[]
-
-    profile!: Observable<any>;
-    favoritemenu!: any; // IMainMenu[]
+    public statusInputSearch = false;
+    public statusInputSearchMobile = true;
+    public statusBurger = false;
+    public listMenu!: any; // IMainMenu[]
+    public profile!: Observable<any>;
+    public favoritemenu!: any; // IMainMenu[]
 
     constructor(
         private readonly apiService: ApiService,

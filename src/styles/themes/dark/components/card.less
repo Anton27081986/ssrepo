@@ -1,10 +1,15 @@
 .card {
+    background-color: @main-bg-color !important;
+    border: 1px solid @border-color !important;
+
     .left-group {
         .like {
-            background-color: @main-bg-color !important;
+            background-color: @bg-color !important;
+            border-color: @border-color;
         }
         .comment {
-            background-color: @main-bg-color !important;
+            background-color: @bg-color !important;
+            border-color: @border-color;
         }
     }
 
@@ -14,8 +19,8 @@
 
     .message {
         top: 4px !important;
-        border-right: 20px solid @bg-color !important;
-        scrollbar-color: #c7d0d2 !important;
+        border-right: 20px solid @main-bg-color !important;
+        scrollbar-color: @scrollbar-color !important;
         width: 386px !important;
     }
 
@@ -33,5 +38,23 @@
 
     svg path {
         stroke: none !important;
+    }
+}
+
+.content .card-list .card .icon path {
+    stroke: @base-element-color !important;
+}
+
+.openout-modal .card {
+    border: none !important;
+
+    .item {
+        background-color: @main-bg-color;
+    }
+}
+
+.profile-popup {
+    .card {
+        border: none !important;
     }
 }

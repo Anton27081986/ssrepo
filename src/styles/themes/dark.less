@@ -37,13 +37,8 @@ body {
             background-color: @base-element-color;
         }
 
-        .card {
-            background-color: #1b2123 !important;
-            border: unset !important;
-        }
-
         .item {
-            background-color: #1b2123 !important;
+            background-color: @main-bg-color !important;
         }
     }
 
@@ -246,11 +241,6 @@ body {
         color: #000000 !important;
     }
 
-    .card {
-        background-color: @bg-color !important;
-        border: 1px solid @border-color !important;
-    }
-
     // Скажи спсибо
     .icons {
         .anticon svg {
@@ -384,13 +374,6 @@ body {
     }
 }
 
-.content .card-list .card .icon path {
-    stroke: @base-element-color !important;
-}
-
-.content .card-list {
-}
-
 .currency-item .name,
 .currency-item .value,
 .rating-item {
@@ -399,12 +382,6 @@ body {
 
 .ant-modal-body {
     background: @bg-color !important;
-
-    .openout-modal {
-        .contacts .item {
-            background: @bg-color !important;
-        }
-    }
 }
 
 // Пагинация
