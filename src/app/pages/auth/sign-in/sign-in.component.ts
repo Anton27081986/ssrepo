@@ -49,9 +49,7 @@ export class SignInComponent implements OnInit {
         this.loading = true;
         this.authenticationService
             .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
-            .pipe(
-                first(),
-            )
+            .pipe(first())
             .subscribe(
                 _ => {
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
