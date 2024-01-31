@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {first, tap, throwError} from 'rxjs';
+import {first, of, tap} from 'rxjs';
 import {catchError, switchMap} from 'rxjs/operators';
 
 @Component({
@@ -54,20 +54,15 @@ export class SignInComponent implements OnInit {
                 first(),
                 switchMap(_ => {
                     return this.authenticationService.authImages().pipe(
-                        tap({
-                            error: (err: unknown) => console.log('server error:', err),
-                        }),
-                        catchError((err: unknown) => {
-                            // @ts-ignore
-                            return throwError(() => err.error.message);
+                        tap(_ => console.log('authImages Ok')),
+                        catchError((_: unknown) => {
+                            return of(0);
                         }),
                     );
                 }),
             )
             .subscribe(
-                value => {
-                    console.log('authImages', value);
-
+                _ => {
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
 
                     setTimeout(() => {
