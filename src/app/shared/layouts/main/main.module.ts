@@ -20,9 +20,16 @@ import {FooterComponent} from '@app/shared/layouts/main/footer/footer.component'
 import {HeaderComponent} from '@app/shared/layouts/main/header/header.component';
 import {PagesModule} from '@app/pages/pages.module';
 import {ComponentsModule} from '@app/components/components.module';
+import {FlyMenuDirective} from './header/fly-menu.directive';
 
 @NgModule({
-    declarations: [MainComponent, HeaderComponent, FooterComponent, HeaderComponent],
+    declarations: [
+        MainComponent,
+        HeaderComponent,
+        FooterComponent,
+        HeaderComponent,
+        FlyMenuDirective,
+    ],
     imports: [
         CommonModule,
         NzIconModule,
