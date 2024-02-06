@@ -84,12 +84,11 @@
   </div>
 
   <div class="content">
-    <ng-container *ngIf="thankColleagueList | async as thankyou">
+    <ng-container *ngIf="(thankColleagueList | async) as thankyou; else loader">
       <nz-list class="card-list"
-               [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize"
+               [nzDataSource]="thankyou"
                [nzRenderItem]="item"
-               [nzPagination]="pagination">
-
+      >
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
@@ -180,28 +179,27 @@
                   </div>
                 </div>
               </div>
-
-              <!--              </nz-card>-->
             </ng-template>
           </nz-list-item>
         </ng-template>
-
-        <ng-template #pagination>
-          <div class="pagination">
-            <nz-pagination
-              [nzPageIndex]="pageIndex"
-              [nzPageSize]="pageSize"
-              [nzTotal]="thankyou.length"
-              (nzPageIndexChange)="pageIndex = $event"
-              (nzPageSizeChange)="pageSize = $event">
-            </nz-pagination>
-          </div>
-        </ng-template>
       </nz-list>
       <!--      </ng-container>-->
-
-
     </ng-container>
+    <ng-template #loader>
+      <app-loader></app-loader>
+    </ng-template>
+  </div>
+
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
   </div>
 </div>
 

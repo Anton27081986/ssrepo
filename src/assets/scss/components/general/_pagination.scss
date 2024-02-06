@@ -16,8 +16,17 @@
         display: flex;
     }
 
+    .ant-pagination-item:hover {
+        border-color: $border-color!important;
+    }
+
     .ant-pagination-item:hover a {
         color: $blue;
+        border-radius: $border-radius!important;
+    }
+
+    .ant-pagination-item-active:hover a {
+        color: $white;
     }
 
     .ant-pagination ul,
@@ -34,12 +43,27 @@
         display: none;
     }
 
-    .ant-pagination-item-active,
     .ant-pagination-item {
         font-size: 16px;
         line-height: 39px;
         font-weight: 600;
-        background: #fff;
+        background: $white;
+        border-color: $border-color;
+        border-radius: 10px;
+        height: 40px;
+        width: 40px;
+        margin-right: 8px;
+    }
+
+    .ant-pagination-item a {
+        color: $black;
+    }
+
+    .ant-pagination-item-active {
+        font-size: 16px;
+        line-height: 39px;
+        font-weight: 600;
+        background: $blue;
         border-color: $border-color;
         border-radius: 10px;
         height: 40px;
@@ -48,7 +72,7 @@
     }
 
     .ant-pagination-item-active a {
-        color: $blue;
+        color: $white;
     }
 
     .ant-table-pagination.ant-pagination {
