@@ -37,10 +37,10 @@ export class ThankColleagueComponent implements OnInit {
     private readonly modelChanged: Subject<string> = new Subject<string>();
 
     // Переменные для поиска
-    public selectedValue = null;
     public listOfOption: Array<{name: string; id: string}> = [];
 
     public nzFilterOption = (): boolean => true;
+    public total!: number;
 
     public constructor(
         private readonly apiService: ApiService,
@@ -77,7 +77,7 @@ export class ThankColleagueComponent implements OnInit {
             this.currentUserId = profile.id;
         });
 
-        this.loadAllThanksForColleagues();
+        this.loadAllThanksForColleagues(this.pageSize, this.offset);
 
         this.apiService
             .getWins(this.pageSize, this.offset)
@@ -100,15 +100,18 @@ export class ThankColleagueComponent implements OnInit {
         return this.thankColleagueForm.get('comment');
     }
 
-    public loadAllThanksForColleagues() {
-        this.thankColleagueList = this.apiService
-            .getThanksColleagueList()
-            .pipe(map(({items}) => items));
+    public loadAllThanksForColleagues(pageSize: number, offset: number) {
+        // eslint-disable-next-line no-return-assign
+        this.thankColleagueList = this.apiService.getThanksColleagueList(pageSize, offset).pipe(
+            tap(value => {
+                this.total = value.total;
+            }),
+            map(({items}) => items),
+        );
     }
 
     // TODO: перенести валидацию
     public createThanksForColleague() {
-        console.log(this.thankColleagueForm);
         this.submitted = true;
 
         if (this.thankColleagueForm.invalid) {
@@ -119,11 +122,9 @@ export class ThankColleagueComponent implements OnInit {
     }
 
     public deleteThanksForColleague(thanks: any): void {
-        console.log(thanks.id);
         this.apiService.deleteThanksColleague(thanks.id).subscribe({
-            next: response => {
-                console.log('Спасибо удалён', response);
-                this.loadAllThanksForColleagues();
+            next: () => {
+                this.loadAllThanksForColleagues(this.pageSize, this.offset);
                 this.cdr.detectChanges();
             },
             error: (error: unknown) => console.error('Ошибка при удалении спасибо', error),
@@ -147,8 +148,7 @@ export class ThankColleagueComponent implements OnInit {
                 },
             })
             .afterClose.subscribe(() => {
-                console.log('reload');
-                this.loadAllThanksForColleagues();
+                this.loadAllThanksForColleagues(this.pageSize, this.offset);
                 this.cdr.detectChanges();
             });
     }
@@ -168,13 +168,11 @@ export class ThankColleagueComponent implements OnInit {
 
             this.apiService.addThanksColleague(createThanksRequest).subscribe({
                 next: _ => {
-                    this.loadAllThanksForColleagues();
+                    this.loadAllThanksForColleagues(this.pageSize, this.offset);
                 },
                 error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
             });
             this.thankColleagueForm.reset();
-        } else {
-            console.log('');
         }
 
         this.isModalVisible = false;
@@ -187,5 +185,17 @@ export class ThankColleagueComponent implements OnInit {
 
     public search($event: any) {
         this.modelChanged.next($event);
+    }
+
+    public nzPageIndexChange($event: number) {
+        if ($event === 1) {
+            this.offset = 0;
+        } else {
+            this.offset = this.pageSize * $event - this.pageSize;
+        }
+
+        this.pageIndex = $event; // Установка текущего индекса
+
+        this.loadAllThanksForColleagues(this.pageSize, this.offset);
     }
 }

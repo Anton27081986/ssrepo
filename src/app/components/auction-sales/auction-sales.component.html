@@ -18,18 +18,12 @@
       </div>
     </div>
   </div>
-
   <div class="content">
     <div class="table">
       <nz-table #basicTable
-                [nzData]="listAuction?.items"
-                [nzFrontPagination]="false"
-                [nzTotal]="total"
-                [nzPageSize]="pageSize"
-                [nzPageIndex]="pageIndex"
-                (nzQueryParams)="onQueryParamsChange($event)"
+                [nzData]="(listAuction | async)?.items"
+                [nzShowPagination]="false"
       >
-
         <thead>
         <tr>
           <th>ТП</th>
@@ -41,7 +35,7 @@
         <tbody>
         <tr *ngFor="let data of basicTable.data">
           <td>
-            <a href="{{ data.detailUrl }}" target="_blank" nz-tooltip nzTooltipTitle="{{ data.tovName }}">{{ data.tovName | slice:0:67 }} {{ data.tovName.length > 67? '...' : '' }}</a>
+            <a href="{{ data.detailUrl }}" target="_blank" nz-tooltip nzTooltipTitle="{{ data.tovName }}">{{ data.tovName | slice:0:80 }} {{ data.tovName.length > 67? '...' : '' }}</a>
           </td>
           <td>{{ data.source }}</td>
           <td>
@@ -54,7 +48,6 @@
         </tr>
         </tbody>
       </nz-table>
-
       <div class="open-all-table bottom">
         <div>
           <a href="https://ssnab.it/Sales/PlanMolsTovs/Proficits">
@@ -63,6 +56,16 @@
         </div>
       </div>
     </div>
-
+  </div>
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
   </div>
 </div>
