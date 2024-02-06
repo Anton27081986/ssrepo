@@ -3,6 +3,8 @@
 
 .auction-sales {
     margin-top: 60px;
+    min-height: 649px;
+    height: auto;
 
     .header {
         display: flex;
@@ -34,6 +36,9 @@
             .ant-table {
                 border-radius: 16px;
                 overflow: hidden;
+
+                min-height: 394px;
+                height: auto;
             }
 
             .ant-pagination-prev,

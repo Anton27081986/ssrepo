@@ -18,18 +18,12 @@
       </div>
     </div>
   </div>
-
   <div class="content">
     <div class="table">
       <nz-table #basicTable
-                [nzData]="listAuction?.items"
-                [nzFrontPagination]="false"
-                [nzTotal]="total"
-                [nzPageSize]="pageSize"
-                [nzPageIndex]="pageIndex"
-                (nzQueryParams)="onQueryParamsChange($event)"
+                [nzData]="(listAuction | async)?.items"
+                [nzShowPagination]="false"
       >
-
         <thead>
         <tr>
           <th>ТП</th>
@@ -54,7 +48,6 @@
         </tr>
         </tbody>
       </nz-table>
-
       <div class="open-all-table bottom">
         <div>
           <a href="https://ssnab.it/Sales/PlanMolsTovs/Proficits">
@@ -63,6 +56,16 @@
         </div>
       </div>
     </div>
-
+  </div>
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
   </div>
 </div>

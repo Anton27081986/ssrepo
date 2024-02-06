@@ -1,43 +1,58 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {Observable} from 'rxjs';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Observable, tap} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
 import {ActivatedRoute} from '@angular/router';
-import {NzTableQueryParams} from 'ng-zorro-antd/table';
 
 @Component({
     selector: 'app-auction-sales',
     templateUrl: './auction-sales.component.html',
     styleUrls: ['./auction-sales.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuctionSalesComponent implements OnInit {
-    auctionAll!: Observable<any>;
-    pageIndex = 1;
-    pageSize = 6;
-    total = 1;
-    listAuction: any;
+    public auctionAll!: Observable<any>;
+    public pageIndex = 1;
+    public pageSize = 6;
+    public total!: number;
+    public listAuction!: Observable<any>;
+    public offset = 0;
 
-    constructor(
+    public constructor(
         private readonly route: ActivatedRoute,
         private readonly apiService: ApiService,
+        private readonly cd: ChangeDetectorRef,
     ) {
         this.route.queryParams.subscribe();
     }
 
-    loadDataFromServer(pageIndex: number, pageSize: number): void {
-        this.apiService.getAuctions(pageIndex, pageSize).subscribe(data => {
-            this.total = 33; // mock the total data here
-            this.listAuction = data;
-        });
+    public ngOnInit(): any {
+        this.loadDataFromServer(this.pageSize, this.offset);
     }
 
-    onQueryParamsChange(params: NzTableQueryParams): void {
-        const {pageSize, pageIndex} = params;
-
-        this.loadDataFromServer(pageIndex, pageSize);
+    // Не верные параметры
+    public loadDataFromServer(pageSize: number, offset: number): void {
+        this.listAuction = this.apiService.getAuctions(pageSize, offset).pipe(
+            tap(value => {
+                this.total = value.total + this.pageSize; // TODO Поправить, в пагинации нужен еще один сдвиг в конце
+            }),
+        );
     }
 
-    ngOnInit(): any {
-        this.loadDataFromServer(this.pageIndex, this.pageSize);
+    public nzPageIndexChange($event: number) {
+        if ($event === 1) {
+            this.offset = 0;
+        } else {
+            this.offset = this.pageSize * $event - this.pageSize;
+        }
+
+        this.offset = this.pageSize * $event - this.pageSize;
+
+        this.pageIndex = $event; // Установка текущего индекса
+
+        this.updateAuctionList(this.pageSize, this.offset);
+    }
+
+    public updateAuctionList(pageSize: number, offset: number): void {
+        this.listAuction = this.apiService.getAuctions(pageSize, offset);
     }
 }
