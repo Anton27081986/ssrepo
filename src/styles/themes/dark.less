@@ -71,6 +71,7 @@ body {
 
     // Убрать !important
     .ant-layout-header {
+        border-bottom: 1px solid @border-color;
         background-color: @main-bg-color !important;
 
         .nav-left {
@@ -80,10 +81,20 @@ body {
                 li {
                     color: @text-color;
                     &:hover {
-                        background-color: @bg-color;
+                        background-color: unset;
+
+                        span {
+                            color: @base-element-color!important;
+                        }
                     }
                 }
             }
+        }
+    }
+
+    .ant-menu-submenu-open {
+        span {
+            color: @base-element-color!important;
         }
     }
 
@@ -252,17 +263,11 @@ body {
 }
 
 ::ng-deep .ant-table-tbody > tr > td {
-    background: #1b2123 !important;
     background-color: #1b2123 !important;
     color: @text-color !important;
 }
 
 // Главное меню
-::ng-deep .ant-menu-submenu-placement-bottom {
-    //top: -4px!important;
-    //position: relative;
-}
-
 .ant-menu-submenu-inline .ant-menu-submenu-arrow::after {
     color: @text-color;
 }
@@ -271,7 +276,7 @@ body {
 }
 
 .ant-menu-submenu .menu-item-custom {
-    top: 4px !important;
+    top: 22px !important;
     border-right: 20px solid @main-bg-color !important;
     scrollbar-color: @scrollbar-color !important;
 }
@@ -288,8 +293,16 @@ body {
     color: @text-color;
 }
 
+body .ant-menu-submenu-popup > .ant-menu {
+    background-color: @main-bg-color;
+}
+
 .menu-item-custom::-webkit-scrollbar-track {
     background-color: @main-bg-color;
+}
+
+.ant-menu-submenu-open {
+    color: @base-element-color!important;
 }
 
 .menu-item-custom {
@@ -307,7 +320,6 @@ body {
 }
 
 .mobile-menu .ant-menu.ant-menu-root {
-    // background-color: @bg-color !important;
     background-color: #0e0f10 !important;
 }
 
@@ -327,16 +339,11 @@ body {
 }
 
 .mobile-menu .ant-menu-submenu.ant-menu-submenu-inline {
-    // color: #394245!important;
     border-bottom: 1px @border-color solid !important;
 }
 
 .mobile-menu .ant-tabs-content-holder {
     border-radius: 0 !important;
-}
-
-.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
-    // border: 1px!important;
 }
 
 .mobile-menu .ant-menu-submenu.without-url-li {
@@ -347,10 +354,6 @@ body {
     border-radius: 30px;
 }
 
-.ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
-    padding: 36px;
-}
-
 .ant-menu-submenu .menu-item-custom .ant-menu-item-group-title,
 .ant-menu-submenu .menu-item-custom .ant-menu-item-group-title .without-url {
     color: @text-color;
@@ -358,8 +361,8 @@ body {
 
 .ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
     border: 0 solid @border-color;
-    border-top: 16px solid @main-bg-color;
-    border-bottom: 16px solid @main-bg-color;
+    border-top: 21px solid @main-bg-color;
+    border-bottom: 21px solid @main-bg-color;
     outline: 0.5px solid @border-color;
 }
 
