@@ -60,7 +60,7 @@ export class AddressBookComponent implements OnInit {
         this.loadFavoriteUsers();
 
         this.searchForm = this.formBuilder.group({
-            search: ['', Validators.required],
+            search: ['', Validators.minLength(2)],
         });
     }
 
