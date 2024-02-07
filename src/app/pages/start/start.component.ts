@@ -32,7 +32,8 @@ export class StartComponent implements OnInit {
             .pipe(first())
             .subscribe(user => {
                 this.loading = false;
-                this.userFromApi = user;
+                // TODO: set user from api
+                //this.userFromApi = user;
             });
     }
 }

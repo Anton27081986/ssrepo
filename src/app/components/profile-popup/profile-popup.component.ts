@@ -6,20 +6,21 @@ import {UserService} from '@auth/services/user.service';
 import {AuthenticationService} from '@auth/services/authentication.service';
 import {map, Observable} from 'rxjs';
 import {environment} from '@environments/environment';
+import {IUserProfile} from '@app/components/profile-popup/models/user-profile';
 
 @Component({
     selector: 'app-profile-popup',
     templateUrl: './profile-popup.component.html',
     styleUrls: ['./profile-popup.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfilePopupComponent implements OnInit {
-    statusAccordion = false;
-    accountsFriends!: Observable<any>;
-    profileData!: any;
-    profile!: Observable<any>;
+    public statusAccordion: boolean = false;
+    public accountsFriends!: Observable<any>;
+    public profileData!: IUserProfile[];
+    public profile!: Observable<IUserProfile>;
 
-    constructor(
+    public constructor(
         private readonly apiService: ApiService,
         private readonly userService: UserService,
         private readonly iconService: NzIconService,
@@ -35,7 +36,7 @@ export class ProfilePopupComponent implements OnInit {
         this.iconService.addIconLiteral('ss:enter', AppIcons.enter);
     }
 
-    ngOnInit(): any {
+    public ngOnInit(): any {
         this.userService
             .getProfile()
             .pipe()
@@ -47,11 +48,11 @@ export class ProfilePopupComponent implements OnInit {
         this.accountsFriends = this.apiService.getAccounts().pipe(map(({items}) => items));
     }
 
-    logout(): void {
+    public logout(): void {
         this.authenticationService.logout();
     }
 
-    enterUnderFriendlyAccount(id: number) {
+    public enterUnderFriendlyAccount(id: number) {
         this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
 
         setTimeout(function () {

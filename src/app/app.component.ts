@@ -5,7 +5,6 @@ import {AuthenticationService} from '@auth/services/authentication.service';
 import {IUser} from '@auth/models/user';
 import {Role} from '@auth/models/role';
 import {Store} from '@ngrx/store';
-import {getCurrentUserAction} from '@auth/store/actions/get-current-user.action';
 import {ProfileService} from '@app/pages/profile/profile.service';
 import {ThemeService} from '@app/shared/theme/theme.service';
 import {UntilDestroy} from '@ngneat/until-destroy';
@@ -16,7 +15,7 @@ import {UntilDestroy} from '@ngneat/until-destroy';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
     title!: string;
     user?: IUser | null;
 
@@ -30,37 +29,6 @@ export class AppComponent implements OnInit {
         this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
     }
 
-    ngOnInit(): void {
-        this.store.dispatch(getCurrentUserAction());
-
-        // this.profileService.isDarkTheme$
-        //     .pipe(
-        //         untilDestroyed(this),
-        //         tap(switchValue => {
-        //             if (switchValue) {
-        //                 this.profileService.updateTheme(true).subscribe(_ => {
-        //                     this.themeService.toggleTheme().then();
-        //                 });
-        //             } else {
-        //                 this.profileService.updateTheme(false).subscribe(_ => {
-        //                     this.themeService.toggleTheme().then();
-        //                 });
-        //             }
-        //         }),
-        //     )
-        //     .subscribe();
-
-        // this.profileService
-        //     .getTheme()
-        //     .pipe(
-        //         tap(value => {
-        //             if (value.isDarkTheme) {
-        //                 this.themeService.toggleTheme().then();
-        //             }
-        //         }),
-        //     )
-        //     .subscribe();
-    }
 
     get isAdmin() {
         return this.user?.role === Role.Admin;
