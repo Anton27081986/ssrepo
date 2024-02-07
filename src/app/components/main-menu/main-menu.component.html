@@ -1,14 +1,10 @@
 <ul nz-menu nzMode="horizontal" class="menu">
-
-  {{ menu[1].items?.length | json }}
-
-  <ng-container *ngIf="menu[0].items?.length">
-    <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzOpen]="false">
+   <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzOpen]="false">
       <ul>
         <ng-container *ngFor="let subcategory of item.items; index as i">
           <li nz-menu-group [nzTitle]="titleTpl" [class]="subcategory.link ? 'url': 'no-url'">
             <ul>
-              <li *ngFor="let subitem of subcategory.items" nz-menu-item>
+              <li *ngFor="let subitem of subcategory.items" nz-menu-item [ngClass]="subitem.name.length > 50 ? 'long-text': ''">
                 <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
               </li>
             </ul>
@@ -29,6 +25,5 @@
         </ng-container>
       </ul>
     </li>
-  </ng-container>
 </ul>
 
