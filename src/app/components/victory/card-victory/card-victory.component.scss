@@ -4,7 +4,7 @@
 .card {
     position: relative;
     width: 408px;
-    height: auto;
+    height: 327px;
     border-radius: 16px;
     border: 1px solid $border-color;
     background-color: $white;
@@ -161,22 +161,33 @@
             font-weight: 500;
             margin-top: 14px;
             line-height: 16.7px;
-            height: 104px;
+            height: 86px;
         }
     }
 
     .info {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 6px;
+        position: absolute;
+        bottom: 0;
+        margin-bottom: 17px;
+        width: 91%;
 
-        .count {
-            padding-right: 6px;
-        }
-
-        .left-group {
+        .bottom-panel {
             display: flex;
-            position: relative;
+            justify-content: space-between;
+            margin-top: 6px;
+
+            .count {
+                padding-right: 6px;
+            }
+
+            .left-group {
+                display: flex;
+                position: relative;
+            }
+
+            .openOut {
+
+            }
         }
     }
 
