@@ -1,11 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    ElementRef,
-    OnInit,
-    ViewChild,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -311,9 +304,5 @@ export class VictoryComponent implements OnInit {
 
     deleteTagTpr(i: number) {
         this.tprSelectedTags.splice(i, 1);
-    }
-
-    addNewWin() {
-        console.log('addNewWin');
     }
 }
