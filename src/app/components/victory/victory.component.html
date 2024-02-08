@@ -51,7 +51,7 @@
 
   <div class="add-modal">
     <!--Форма добавления победы -->
-    <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Добавить победу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
       <ng-container *nzModalContent>
         <div>
           <form nz-form [formGroup]="addVictoryForm" nzLayout="vertical" class="form" (ngSubmit)="addNewWin()">
@@ -74,8 +74,8 @@
             </nz-form-item>
 
             <nz-form-item class="m-t-2">
-              <div *ngIf="this.partyWinSelectedTags.length>0" class="win-together">Совместная победа</div>
-              <nz-form-label class="field-tile win" [nzSpan]="8">Выбора сотрудников:</nz-form-label>
+<!--              <div class="win-together">Совместная победа</div>-->
+              <nz-form-label class="field-tile win" [nzSpan]="8">Совместная победа:</nz-form-label>
               <nz-form-control>
 
                 <nz-select
