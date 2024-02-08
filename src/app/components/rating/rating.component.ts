@@ -22,6 +22,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 	changeDetection: ChangeDetectionStrategy.Default,
 })
 export class RatingComponent implements OnInit, OnDestroy {
+
 	private readonly modelChanged: Subject<string> = new Subject<string>();
 	protected rankTypes = new Observable<any>().pipe(
 		distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
@@ -33,7 +34,6 @@ export class RatingComponent implements OnInit, OnDestroy {
 	protected getRankWeeks$ = this._apiService.getRankWeeks();
 	private readonly destroy$: Subject<boolean> = new Subject<boolean>();
 	private currentUserId!: number;
-
 	public loading = false;
 	public title: any;
 	public submitted = false;
