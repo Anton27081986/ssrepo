@@ -1,4 +1,4 @@
-import {isDevMode, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 // eslint-disable-next-line camelcase
@@ -16,16 +16,12 @@ import {NzButtonModule} from 'ng-zorro-antd/button';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {JwtInterceptor} from '@app/helpers/jwt.interceptor';
 import {ErrorInterceptor} from '@app/core/error.interceptor';
+import {ComponentsModule} from '@app/components/components.module';
 import {LayoutsModule} from './shared/layouts/layouts.module';
 import {WrapperComponent} from './shared/layouts/wrapper/wrapper.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {AppInitializerProvider} from './app-initializer.service';
-import {ComponentsModule} from '@app/components/components.module';
-import {StoreModule} from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {StoreRouterConnectingModule} from '@ngrx/router-store';
-import {EffectsModule} from '@ngrx/effects';
 
 registerLocaleData(ru);
 
@@ -45,10 +41,6 @@ registerLocaleData(ru);
         NzButtonModule,
         NzIconModule,
         ComponentsModule,
-        StoreModule.forRoot({}, {}),
-        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
-        StoreRouterConnectingModule.forRoot(),
-        EffectsModule.forRoot([]),
     ],
     providers: [
         AppInitializerProvider,
