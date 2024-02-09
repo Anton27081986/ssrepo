@@ -68,10 +68,8 @@
       </ng-container>
     </div>
 
-    <ng-container *ngIf="(ranks | async)?.items as wins">
-      <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize"
-               [nzRenderItem]="item" [nzPagination]="pagination">
-
+    <ng-container *ngIf="(ranks | async)?.items as rating">
+      <nz-list class="card-list" [nzDataSource]="rating" [nzRenderItem]="item">
         <ng-template #item let-rank>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
@@ -182,19 +180,20 @@
           </nz-list-item>
         </ng-template>
 
-        <ng-template #pagination>
-          <div class="pagination">
-            <nz-pagination [nzPageIndex]="pageIndex"
-                           [nzPageSize]="pageSize"
-                           [nzTotal]="wins.length"
-                           (nzPageIndexChange)="pageIndex = $event"
-                           (nzPageSizeChange)="pageSize = $event">
-
-            </nz-pagination>
-          </div>
-        </ng-template>
       </nz-list>
     </ng-container>
 
+  </div>
+
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total+pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
   </div>
 </div>
