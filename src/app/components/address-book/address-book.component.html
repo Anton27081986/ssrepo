@@ -122,8 +122,18 @@
         </div>
       </div>
     </div>
+
     <div class="pagination">
-      <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>
+      <nz-pagination
+        [nzTotal]="total"
+        [nzPageIndex]="pageIndex"
+        [nzPageSize]="pageSize"
+        (nzPageIndexChange)="nzPageIndexChange($event)"
+        (nzPageSizeChange)="pageSize = $event"
+        [nzResponsive]="true"
+      >
+      </nz-pagination>
     </div>
+
   </div>
 </div>

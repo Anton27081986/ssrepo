@@ -15,6 +15,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {IAddressBookUser} from '@app/components/address-book/models/address-book-user';
 import {IAddressBookSearchUser} from '@app/components/address-book/models/address-book-search-user';
 import {NzMessageService} from 'ng-zorro-antd/message';
+import {tap} from "rxjs";
 
 @Component({
     selector: 'app-address-book',
@@ -28,6 +29,11 @@ export class AddressBookComponent implements OnInit {
     public loading: boolean = false;
     public addresses: IAddressBookUser[] = [];
     public searchedUsers: IAddressBookSearchUser[] = [];
+    public total!: number;
+    public pageSize = 6;
+    public pageIndex = 1;
+    public offset = 0;
+
     public constructor(
         private readonly apiService: ApiService,
         private readonly formBuilder: FormBuilder,
@@ -66,8 +72,12 @@ export class AddressBookComponent implements OnInit {
 
     public loadFavoriteUsers() {
         this.apiService
-            .getAddressBookUsers()
-            .pipe()
+            .getAddressBookUsers(this.offset, this.pageSize)
+            .pipe(
+                tap(value => {
+                    this.total = value.total + this.pageSize;
+                }),
+            )
             .subscribe(addresses => {
                 this.addresses = addresses.items;
                 this.ref.markForCheck();
@@ -127,6 +137,18 @@ export class AddressBookComponent implements OnInit {
                 },
             })
             .afterClose.subscribe();
+    }
+
+    nzPageIndexChange($event: number) {
+        if ($event === 1) {
+            this.offset = 0;
+        } else {
+            this.offset = this.pageSize * $event - this.pageSize;
+        }
+
+        this.pageIndex = $event; // Установка текущего индекса
+
+        this.loadFavoriteUsers();
     }
 
     public toggleMode() {
