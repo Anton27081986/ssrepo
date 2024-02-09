@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit {
 
     toggleTheme(): void {
         this.themeService.toggleTheme().then();
-        
+
         if (this.switchValue) {
             this.profileService.changeTheme(1);
         } else {
