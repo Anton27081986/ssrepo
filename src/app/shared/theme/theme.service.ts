@@ -65,4 +65,16 @@ export class ThemeService {
 
         return this.loadTheme(false);
     }
+
+    setDefaultTheme(): Promise<Event> {
+        this.currentTheme = ThemeType.default;
+
+        return this.loadTheme(false);
+    }
+
+    setDarkTheme(): Promise<Event> {
+        this.currentTheme = ThemeType.dark;
+
+        return this.loadTheme(false);
+    }
 }
