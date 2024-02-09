@@ -1,6 +1,5 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
-@use 'src/assets/scss/_app.scss' as *;
 
 .settings {
     ::ng-deep .ant-form-vertical .ant-form-item-label > label {
@@ -28,17 +27,29 @@
         }
     }
     .feilds {
-        height: 600px;
-        margin-left: 43px;
+        width: 100%;
+        height: auto;
+        margin-left: 46px;
+        margin-top: 23px;
 
-        ::ng-deep .ant-form-vertical .ant-form-item {
-            width: 300px;
-        }
+        .group {
+            margin-bottom: 23.5px;
 
-        form {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            .field {
+                margin-bottom: 15px;
+                padding-left: 16px;
+                padding-right: 16px;
+
+                .label {
+                    font-size: 12px;
+                }
+                .text {
+                    font-size: 14px;
+                    font-weight: bold;
+                    border-bottom: 1px solid $border-color;
+                    padding: 9px 0 6px 0;
+                }
+            }
         }
     }
 }
