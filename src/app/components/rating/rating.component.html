@@ -4,7 +4,7 @@
       <div class="title">
         <h1>рейтинги</h1>
         <div class="rating-item">
-          <span> {{ (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
+          <span> {{ (rankTypes | async)?.averageAll === null? '-': (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
         </div>
       </div>
     </div>
@@ -101,7 +101,9 @@
                       </div>
                     </div>
                     <div class="icons">
-                      <span class="count count-top">{{ rank?.avgWeekRate }}</span>
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
                       <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
                     </div>
                   </div>
@@ -120,6 +122,13 @@
                       </div>
                     </div>
                   </div>
+                  <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                    <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                  </div>
+
                 </div>
                 <div class="card distributor" *ngSwitchCase="2">
                   <div>
@@ -134,6 +143,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="icons">
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="card team" *ngSwitchCase="3">
                   <div>
@@ -148,6 +166,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="icons">
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
+
                 </div>
               </ng-container>
 
