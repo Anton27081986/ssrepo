@@ -10,78 +10,60 @@
             <img src="{{ url?.avatarUrl }}" alt="user" />
           </ng-container>
           </div>
-<!--          <div class="m-t-8">-->
-<!--            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>-->
-<!--          </div>-->
+          <div class="m-t-8">
+            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>
+          </div>
       </div>
   </div>
   <div class="feilds">
-    <form nz-form [formGroup]="settingsForm" nzLayout="vertical" class="settings-form m-t-20">
-        <nz-form-item>
-          <nz-form-label nzFor="userName">Имя</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="text" nz-input placeholder="Имя" value="{{ profileData?.firstName }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="userName">Фамилия</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="text" nz-input placeholder="Фамилия" value="{{ profileData?.lastName }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      <nz-form-item>
-          <nz-form-label nzFor="userName">Отчество</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input placeholder="Отчество" value="{{ profileData?.surName }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="userName">Дата рождения</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input placeholder="Дата рождения" value="{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="userName">Подразделение</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input placeholder="Подразделение" value="{{ profileData?.department }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      <nz-form-item>
-          <nz-form-label nzFor="userName">Должность</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input placeholder="Должность" value="{{ profileData?.position }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      <nz-form-item>
-          <nz-form-label nzFor="userName">E-mail</nz-form-label>
-          <nz-form-control>
-            <nz-input-group [nzPrefix]="prefixUser">
-              <input type="email" nz-input placeholder="E-mail" value="{{ profileData?.email }}" [disabled]="true" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="userName">Телефон</nz-form-label>
-        <nz-form-control>
-          <nz-input-group [nzPrefix]="prefixUser">
-            <input type="email" nz-input placeholder="Телефон" value="{{ profileData?.phone }}" [disabled]="true" />
-          </nz-input-group>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
+    <div class="group row">
+      <div class="field col-12" *ngIf="profileData?.firstName">
+        <div class="label">Имя пользователя</div>
+        <div class="text">{{ profileData?.firstName }} {{ profileData?.lastName }} {{ profileData?.surName }}</div>
+      </div>
+      <div class="field col-6" *ngIf="profileData?.id">
+        <div class="label">Код</div>
+        <div class="text">{{ profileData?.id }}</div>
+      </div>
+      <div class="field col-6" *ngIf="profileData?.birthDate">
+        <div class="label">Дата рождения</div>
+        <div class="text">{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}</div>
+      </div>
+    </div>
+
+    <div class="group row">
+        <div class="field col-12" *ngIf="profileData?.position">
+          <div class="label">Должность</div>
+          <div class="text">{{ profileData?.position }}</div>
+        </div>
+        <div class="field col-12" *ngIf="profileData?.department">
+          <div class="label">Подразделение</div>
+          <div class="text">{{ profileData?.department }}</div>
+        </div>
+        <div class="field col-6" *ngIf="false">
+          <div class="label">Корпус/комната</div>
+          <div class="text"></div>
+        </div>
+      </div>
+
+    <div class="group row">
+          <div class="field col-6" *ngIf="profileData?.email">
+            <div class="label">Логин</div>
+            <div class="text">{{ profileData?.email }}</div>
+          </div>
+          <div class="field col-6" *ngIf="profileData?.phoneLocal">
+            <div class="label">Внутренний телефон</div>
+            <div class="text">{{ profileData?.phoneLocal }}</div>
+          </div>
+          <div class="field col-6" *ngIf="profileData?.email">
+            <div class="label">E-mail</div>
+            <div class="text">{{ profileData?.email }}</div>
+          </div>
+          <div class="field col-6" *ngIf="profileData?.phone">
+            <div class="label">Телефон</div>
+            <div class="text">{{ profileData?.phone }}</div>
+          </div>
+        </div>
   </div>
 
   <ng-template #prefixUser>
