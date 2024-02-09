@@ -4,7 +4,7 @@
       <div class="title">
         <h1>рейтинги</h1>
         <div class="rating-item">
-          <span> {{ (rankTypes | async)?.averageAll === null? '-': (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
+          <span> {{ (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
         </div>
       </div>
     </div>
@@ -49,17 +49,17 @@
             <span>{{ type?.shortName }}</span>
             <span>
               <ng-container *ngIf="type?.rate >= rateValue.great">
-                <span class="color-rate great">{{ type?.rate }}</span>
+                <span class="color-rate great">{{ type?.rate === null? '-': type?.rate }}</span>
                 / <span>{{ type?.membersCount }}</span>
               </ng-container>
 
               <ng-container *ngIf="(type?.rate <= rateValue.good1 && type?.rate >= rateValue.good2)">
-                <span class="color-rate good">{{ type?.rate }}</span>
+                <span class="color-rate good">{{ type?.rate === null? '-': type?.rate }}</span>
                 / <span>{{ type?.membersCount }}</span>
               </ng-container>
 
               <ng-container *ngIf="type?.rate <= rateValue.bad">
-                <span class="color-rate bad">{{ type?.rate }}</span>
+                <span class="color-rate bad">{{ type?.rate === null ? '-': type?.rate }}</span>
                 / <span>{{ type?.membersCount }}</span>
               </ng-container>
             </span>
