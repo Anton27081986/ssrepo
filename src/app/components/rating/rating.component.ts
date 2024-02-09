@@ -187,13 +187,15 @@ export class RatingComponent implements OnInit, OnDestroy {
                 this.rankTypeId = value.rankTypeId;
 
                 // TODO Настроить нагинацию
-                this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, limit, Offset).pipe(
-                    tap(value => {
-                        this.pageIndex = 1;
-                        this.total = value.total;
-                        this.cd.markForCheck();
-                    }),
-                );
+                this.ranks = this._apiService
+                    .getRank(this.weekId, this.rankTypeId, limit, Offset)
+                    .pipe(
+                        tap(value => {
+                            this.pageIndex = 1;
+                            this.total = value.total;
+                            this.cd.markForCheck();
+                        }),
+                    );
             });
     }
 
