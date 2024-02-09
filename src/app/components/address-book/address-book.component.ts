@@ -15,7 +15,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {IAddressBookUser} from '@app/components/address-book/models/address-book-user';
 import {IAddressBookSearchUser} from '@app/components/address-book/models/address-book-search-user';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {tap} from "rxjs";
+import {tap} from 'rxjs';
 
 @Component({
     selector: 'app-address-book',

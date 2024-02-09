@@ -88,11 +88,15 @@ export class ApiService {
     }
 
     /** Адресная книга */
-    public getAddressBookUsers(Offset: number, Limit: number): Observable<IResponse<IAddressBookUser>> {
+    public getAddressBookUsers(
+        Offset: number,
+        Limit: number,
+    ): Observable<IResponse<IAddressBookUser>> {
         return this.http.get<IResponse<IAddressBookUser>>(
-            `${environment.apiUrl}/api/auth/AddressBook`, {
+            `${environment.apiUrl}/api/auth/AddressBook`,
+            {
                 params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
-            }
+            },
         );
     }
 
