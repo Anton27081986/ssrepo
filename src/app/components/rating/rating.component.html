@@ -46,7 +46,11 @@
         <ng-container *ngFor="let type of rankTypes?.items;">
           <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
                (click)="clickByTypeRank(type.id, type?.membersCount,  $event)">
-            <span>{{ type?.shortName }}</span>
+            <span
+              nzTooltipTitle="{{ type?.name }}"
+              nz-tooltip
+            >
+              {{ type?.shortName }}</span>
             <span>
               <ng-container *ngIf="type?.rate >= rateValue.great">
                 <span class="color-rate great">{{ type?.rate === null? '-': type?.rate }}</span>
