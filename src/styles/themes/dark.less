@@ -8,7 +8,8 @@
 @import 'dark/components/form';
 @import 'dark/components/search-header';
 @import 'dark/components/rating';
-@import 'dark/components/address-book.less';
+@import 'dark/components/address-book';
+@import 'dark/components/header';
 
 @layout-sider-background: @component-background;
 @layout-header-background: @component-background;
@@ -133,15 +134,6 @@ body {
         color: @text-color !important;
     }
 
-    // Убрать общее применение
-    svg {
-        fill: @bg-color !important;
-
-        path {
-            stroke: @text-color !important;
-        }
-    }
-
     .header,
     .footer {
         .logo {
@@ -253,11 +245,10 @@ body {
         color: #000000 !important;
     }
 
-    // Скажи спсибо
     .icons {
         .anticon svg {
             path {
-                stroke: none !important;
+                stroke: none;
             }
         }
     }
@@ -407,7 +398,7 @@ body {
     .ant-pagination-item-active,
     .pagination .ant-pagination-item {
         background: @main-bg-color;
-        border: 0 solid @border-color;
+        border: 1px solid @border-color;
 
         a {
             color: @text-color !important;
