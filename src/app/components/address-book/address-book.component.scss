@@ -83,6 +83,9 @@
     }
 
     .content {
+        min-height: 220px;
+        height: 220px;
+
         .card-list {
             display: flex;
             flex-wrap: wrap;
