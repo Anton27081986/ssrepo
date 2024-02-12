@@ -2,10 +2,13 @@
 @use '../../../../assets/scss/variables' as *;
 
 .openout-modal {
+    .card-detail {
+        display: flex;
+        justify-content: flex-end;
+    }
+
     ::ng-deep {
         .ant-modal {
-            // width: 558px !important;
-
             .ant-modal-header {
                 padding: 15px 8px;
             }
