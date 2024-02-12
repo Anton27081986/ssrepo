@@ -7,6 +7,7 @@ import { IResponse } from '@app/core/utils/response';
 import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 @Injectable({
 	providedIn: 'root',
@@ -87,18 +88,18 @@ export class ApiService {
 		return this.http.delete(`${environment.apiUrl}/api/awards/thanks/${id}`);
 	}
 
-    /** Адресная книга */
-    public getAddressBookUsers(
-        Offset: number,
-        Limit: number,
-    ): Observable<IResponse<IAddressBookUser>> {
-        return this.http.get<IResponse<IAddressBookUser>>(
-            `${environment.apiUrl}/api/auth/AddressBook`,
-            {
-                params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
-            },
-        );
-    }
+	/** Адресная книга */
+	public getAddressBookUsers(
+		Offset: number,
+		Limit: number,
+	): Observable<IResponse<IAddressBookUser>> {
+		return this.http.get<IResponse<IAddressBookUser>>(
+			`${environment.apiUrl}/api/auth/AddressBook`,
+			{
+				params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
+			},
+		);
+	}
 
 	public addToAddressBook(userId: number): Observable<any> {
 		return this.http.post(`${environment.apiUrl}/api/auth/AddressBook/${userId}`, { userId });
@@ -258,8 +259,8 @@ export class ApiService {
 	}
 
 	/** Получить профиль текущего пользователя */
-	public getProfile() {
-		return this.http.get<any>(`${environment.apiUrl}/api/auth/Profile`);
+	public getProfile(): Observable<IUserProfile> {
+		return this.http.get<IUserProfile>(`${environment.apiUrl}/api/auth/Profile`);
 	}
 
 	public callByIpPhone(linkToCall: string): Observable<any> {

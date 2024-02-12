@@ -7,31 +7,31 @@ import { environment } from '@environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-	private readonly userSubject: BehaviorSubject<IUser>;
-	user: Observable<IUser | null>;
+	private readonly userSubject: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(
+		JSON.parse(localStorage.getItem('user')!),
+	);
 
-	headers = new HttpHeaders()
+	public user: Observable<IUser | null> = this.userSubject.asObservable();
+
+	private readonly headers = new HttpHeaders()
 		.set('Accept', 'application/json')
 		.set('Content-Type', 'application/json');
 
-	params = new HttpParams({ fromString: `ReturnUrl=${environment.apiUrl}` }).set(
+	private readonly params = new HttpParams({ fromString: `ReturnUrl=${environment.apiUrl}` }).set(
 		'ReturnUrl',
 		environment.apiUrl,
 	);
 
-	constructor(
+	public constructor(
 		private readonly router: Router,
 		private readonly http: HttpClient,
-	) {
-		this.userSubject = new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('user')!));
-		this.user = this.userSubject.asObservable();
-	}
+	) {}
 
-	get userValue(): IUser {
+	public get userValue(): IUser {
 		return this.userSubject.value;
 	}
 
-	login(username: string, password: string) {
+	public login(username: string, password: string) {
 		return this.http
 			.post<any>(
 				`${environment.apiUrl}/api/auth/login`,
@@ -55,7 +55,7 @@ export class AuthenticationService {
 			);
 	}
 
-	enterUnderFriendlyAccount(userId: number, returnUrl: string) {
+	public enterUnderFriendlyAccount(userId: number, returnUrl: string) {
 		return this.http
 			.post<any>(
 				`${environment.apiUrl}/api/auth/changeUser`,
@@ -79,14 +79,15 @@ export class AuthenticationService {
 			);
 	}
 
-	logout() {
+	public logout() {
 		// remove user from local storage to log user out
 		localStorage.removeItem('user');
 		this.userSubject.next(null as unknown as IUser);
 		this.router.navigate(['/auth/sign-in']);
+		// TODO: need clear cookies
 	}
 
-	authImages() {
+	public authImages() {
 		return this.http
 			.post<any>(
 				`https://ssnab.it/login/TmpCheck`,

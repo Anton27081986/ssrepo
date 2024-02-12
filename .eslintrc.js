@@ -141,6 +141,7 @@ module.exports = {
 				'no-console': ['warn', { allow: ['info', 'assert', 'warn', 'error'] }],
 				'no-implicit-coercion': ['error', { allow: ['!!'] }],
 				'no-return-assign': ['error', 'always'],
+				'no-multiple-empty-lines': ['error', { max: 2 }],
 				'no-useless-rename': [
 					'error',
 					{

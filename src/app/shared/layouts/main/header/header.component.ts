@@ -1,83 +1,58 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {AppRoutes} from '@app/common/routes';
-import {NzIconService} from 'ng-zorro-antd/icon';
-import {ApiService} from '@app/core/services/api.service';
-import {AppIcons} from '@app/common/icons';
-import {UserStateService} from '@app/core/states/user-state.service';
-import {Observable} from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AppRoutes } from '@app/common/routes';
+import { ApiService } from '@app/core/services/api.service';
+import { UserStateService } from '@app/core/states/user-state.service';
+import { Observable } from 'rxjs';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-header',
+	templateUrl: './header.component.html',
+	styleUrls: ['./header.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-    // @ts-ignore
-    public statusInputSearch = false;
-    public statusInputSearchMobile = true;
-    public statusBurger = false;
-    public listMenu!: any; // IMainMenu[]
-    public profile!: Observable<any>;
-    public favoritemenu!: any; // IMainMenu[]
+	public statusInputSearch = false;
+	public statusInputSearchMobile = true;
+	public statusBurger = false;
+	public listMenu!: any; // IMainMenu[]
+	public profile!: Observable<any>;
+	public favoritemenu!: any; // IMainMenu[]
+	public userProfile$?: Observable<IUserProfile | null>;
 
-    constructor(
-        private readonly apiService: ApiService,
-        private readonly iconService: NzIconService,
-        private readonly userService: UserStateService,
-    ) {
-        this.iconService.addIconLiteral('ss:search', AppIcons.iconSearch);
-        this.iconService.addIconLiteral('ss:remind', AppIcons.iconRemind);
-        this.iconService.addIconLiteral('ss:burger', AppIcons.iconBurger);
-        this.iconService.addIconLiteral('ss:moon', AppIcons.iconMoon);
-        this.iconService.addIconLiteral('ss:sun', AppIcons.iconSun);
-        this.iconService.addIconLiteral('ss:logo', AppIcons.iconLogoHeader);
-        this.iconService.addIconLiteral('ss:logofooter', AppIcons.iconLogoFooter);
-        this.iconService.addIconLiteral('ss:close', AppIcons.iconClose);
-        this.iconService.addIconLiteral('ss:closeLight', AppIcons.iconCloseLight);
+	protected readonly AppRoutes = AppRoutes;
+	public constructor(
+		private readonly apiService: ApiService,
+		private readonly userStateService: UserStateService,
+	) {}
 
-        this.iconService.addIconLiteral('ss:phone', AppIcons.phone);
-        this.iconService.addIconLiteral('ss:mail', AppIcons.mail);
-    }
+	public ngOnInit(): any {
+		this.apiService.getFavoriteMenu().subscribe(item => {
+			this.favoritemenu = item.menu;
+		});
 
-    ngOnInit(): any {
-        this.apiService.getFavoriteMenu().subscribe(item => {
-            this.favoritemenu = item.menu;
-        });
+		this.apiService.getMenuListJson().subscribe(item => {
+			this.listMenu = item.menu;
+			this.listMenu.unshift({ link: '', name: 'Избранное', items: this.favoritemenu });
+		});
 
-        this.apiService.getMenuListJson().subscribe(item => {
-            this.listMenu = item.menu;
-            this.listMenu.unshift({link: '', name: 'Избранное', items: this.favoritemenu});
-        });
+		// this.profile = this.userService.loadUserProfile();
 
-        // this.favoritemenu = this.apiService.getFavoriteMenu().pipe(map(({menu}) => menu));
+		this.userProfile$ = this.userStateService.userProfile$;
+	}
 
-        this.profile = this.userService.getProfile();
-    }
+	public openSearch(event: Event) {
+		event.stopPropagation();
+		this.statusInputSearch = !this.statusInputSearch;
+	}
 
-    protected readonly AppRoutes = AppRoutes;
+	public openSearchMobile(event: Event) {
+		event.stopPropagation();
+		this.statusInputSearchMobile = !this.statusInputSearchMobile;
+	}
 
-    notificationList = [
-        {
-            title: 'You received a new message',
-            time: '8 min',
-            icon: 'mail',
-            color: 'ant-avatar',
-        },
-    ];
-
-    openSearch(event: Event) {
-        event.stopPropagation();
-        this.statusInputSearch = !this.statusInputSearch;
-    }
-
-    openSearchMobile(event: Event) {
-        event.stopPropagation();
-        this.statusInputSearchMobile = !this.statusInputSearchMobile;
-    }
-
-    menuToggle(event: Event) {
-        event.stopPropagation();
-        this.statusBurger = !this.statusBurger;
-    }
+	public menuToggle(event: Event) {
+		event.stopPropagation();
+		this.statusBurger = !this.statusBurger;
+	}
 }

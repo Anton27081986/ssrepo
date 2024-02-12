@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { ApiService } from '@app/core/services/api.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class UserStateService {
+	private readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
+	public userProfile$ = this.userProfileSubject.asObservable();
 
+	public constructor(private readonly apiService: ApiService) {}
 
-
-	public constructor(private readonly http: HttpClient) {}
-
-	public getProfile(): Observable<IUserProfile> {
-		return this.http.get<IUserProfile>(`${environment.apiUrl}/api/auth/Profile`);
+	public loadUserProfile(): Observable<IUserProfile> {
+		return this.apiService.getProfile().pipe(
+			tap(profile => {
+				this.userProfileSubject.next(profile);
+			}),
+		);
 	}
 }

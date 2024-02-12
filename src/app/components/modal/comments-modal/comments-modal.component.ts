@@ -10,6 +10,7 @@ import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { ApiService } from '@app/core/services/api.service';
 import { Observable, tap } from 'rxjs';
 import { VictoryService } from '@app/components/victory/victory.service';
+import { UserStateService } from '@app/core/states/user-state.service';
 
 @Component({
 	selector: 'app-comments-modal',
@@ -18,13 +19,13 @@ import { VictoryService } from '@app/components/victory/victory.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsModalComponent implements OnInit {
-	nzModalData: any = inject(NZ_MODAL_DATA);
+	public nzModalData: any = inject(NZ_MODAL_DATA);
 
 	protected addComment!: FormGroup;
 	protected submitted = false;
 	protected isConfirmLoading = false;
 	protected commentList!: Observable<any>;
-	public currentUserId: any;
+	public currentUserId?: number;
 
 	public constructor(
 		private readonly _apiService: ApiService,
@@ -32,13 +33,12 @@ export class CommentsModalComponent implements OnInit {
 		private readonly modal: NzModalRef,
 		private readonly formBuilder: FormBuilder,
 		private readonly chDRef: ChangeDetectorRef,
-	) {
-		// this.chDRef.detach();
-	}
+		private readonly userStateService: UserStateService,
+	) {}
 
-	ngOnInit() {
-		this._apiService.getProfile().subscribe(profile => {
-			this.currentUserId = profile.id;
+	public ngOnInit() {
+		this.userStateService.userProfile$.subscribe(userProfile => {
+			this.currentUserId = userProfile?.id;
 		});
 
 		this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
