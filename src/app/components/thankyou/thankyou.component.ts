@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewContainerRef} from '@ang
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {map, Observable} from 'rxjs';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 import {formatDate} from '@angular/common';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {NzModalService} from 'ng-zorro-antd/modal';

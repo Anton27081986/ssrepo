@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '@auth/services/user.service';
+import {UserStateService} from '@app/core/states/user-state.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -17,7 +17,7 @@ export class SettingsComponent implements OnInit {
 
     constructor(
         private readonly formBuilder: FormBuilder,
-        private readonly userService: UserService,
+        private readonly userService: UserStateService,
     ) {}
 
     ngOnInit() {

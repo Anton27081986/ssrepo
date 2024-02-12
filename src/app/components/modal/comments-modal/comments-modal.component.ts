@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
-import { ApiService } from '@app/shared/services/api/api.service';
+import { ApiService } from '@app/core/services/api.service';
 import { Observable, tap } from 'rxjs';
 import { VictoryService } from '@app/components/victory/victory.service';
 

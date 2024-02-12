@@ -14,9 +14,10 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { JwtInterceptor } from '@app/helpers/jwt.interceptor';
-import { ErrorInterceptor } from '@app/core/error.interceptor';
+import { JwtInterceptor } from '@app/core/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
 import { ComponentsModule } from '@app/components/components.module';
+import { CoreModule } from '@app/core/core.module';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -41,6 +42,7 @@ registerLocaleData(ru);
 		NzButtonModule,
 		NzIconModule,
 		ComponentsModule,
+		CoreModule,
 	],
 	providers: [
 		AppInitializerProvider,

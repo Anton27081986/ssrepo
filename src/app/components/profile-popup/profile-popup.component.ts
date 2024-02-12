@@ -1,12 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
-import {UserService} from '@auth/services/user.service';
-import {AuthenticationService} from '@auth/services/authentication.service';
+import {UserStateService} from '@app/core/states/user-state.service';
+import {AuthenticationService} from '@app/core/states/authentication.service';
 import {map, Observable} from 'rxjs';
 import {environment} from '@environments/environment';
-import {IUserProfile} from '@app/components/profile-popup/models/user-profile';
+import {IUserProfile} from '@app/core/models/user-profile';
 
 @Component({
     selector: 'app-profile-popup',
@@ -22,7 +22,7 @@ export class ProfilePopupComponent implements OnInit {
 
     public constructor(
         private readonly apiService: ApiService,
-        private readonly userService: UserService,
+        private readonly userService: UserStateService,
         private readonly iconService: NzIconService,
         private readonly authenticationService: AuthenticationService,
     ) {

@@ -1,9 +1,9 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AppRoutes} from '@app/common/routes';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 import {AppIcons} from '@app/common/icons';
-import {UserService} from '@auth/services/user.service';
+import {UserStateService} from '@app/core/states/user-state.service';
 import {Observable} from 'rxjs';
 
 @Component({
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
     constructor(
         private readonly apiService: ApiService,
         private readonly iconService: NzIconService,
-        private readonly userService: UserService,
+        private readonly userService: UserStateService,
     ) {
         this.iconService.addIconLiteral('ss:search', AppIcons.iconSearch);
         this.iconService.addIconLiteral('ss:remind', AppIcons.iconRemind);

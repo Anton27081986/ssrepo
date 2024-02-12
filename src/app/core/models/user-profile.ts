@@ -1,4 +1,4 @@
-import { IFriendAccountDto } from '@app/components/profile-popup/models/friend-account-dto';
+import { IFriendAccountDto } from '@app/core/models/friend-account-dto';
 
 export interface IUserProfile {
 	id: number;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@auth/auth.guard';
+import { AuthGuard } from '@app/core/guards/auth.guard';
 import { MainComponent } from './shared/layouts/main/main.component';
 import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
 

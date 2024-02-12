@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from '@auth/services/authentication.service';
+import {AuthenticationService} from '@app/core/states/authentication.service';
 
 @Component({
     selector: 'app-reset-password',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthenticationService } from '@auth/services/authentication.service';
+import { AuthenticationService } from '@app/core/states/authentication.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -14,7 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
 				if ([401, 403].includes(err.status) && this.authenticationService.userValue) {
-					// auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+					// auto logout if 401 Unauthorized or 403 Forbidden response returned from services
 					this.authenticationService.logout();
 				}
 

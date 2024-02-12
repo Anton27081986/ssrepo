@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IMainMenu } from '@app/components/main-menu/main-menu.interface';
 import { environment } from '@environments/environment.development';
-import { IResponse } from '@app/components/address-book/models/response';
-import { IAddressBookUser } from '@app/components/address-book/models/address-book-user';
+import { IResponse } from '@app/core/utils/response';
+import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 

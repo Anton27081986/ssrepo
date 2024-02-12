@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {IUser} from '@auth/models/user';
-import {AuthenticationService} from '@auth/services/authentication.service';
+import {AuthenticationService} from '@app/core/states/authentication.service';
 import {first} from 'rxjs';
-import {UserService} from '@auth/services/user.service';
+import {UserStateService} from '@app/core/states/user-state.service';
 import {ThemeService} from '@app/shared/theme/theme.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class StartComponent implements OnInit {
 
     constructor(
         private readonly themeService: ThemeService,
-        private readonly userService: UserService,
+        private readonly userService: UserStateService,
         private readonly authenticationService: AuthenticationService,
     ) {
         this.user = <IUser>this.authenticationService.userValue;
@@ -32,7 +32,7 @@ export class StartComponent implements OnInit {
             .pipe(first())
             .subscribe(user => {
                 this.loading = false;
-                // TODO: set user from api
+                // TODO: set user from services
                 //this.userFromApi = user;
             });
     }
