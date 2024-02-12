@@ -1,8 +1,22 @@
-.address-book .content .contacts .call span:nth-child(2) path {
-    stroke: #ffffff !important;
-}
+.address-book .content {
+    .contacts .call span:nth-child(2) path {
+        stroke: #ffffff !important;
+    }
 
-.address-book .content .card {
-    background-color: unset !important;
-    border: unset !important;
+    .card {
+        background-color: unset !important;
+        border: unset !important;
+    }
+
+    .card-list .card .icons .not-favorite path {
+        fill-opacity: 0;
+        stroke: #d9d9d9;
+        stroke-width: 2;
+    }
+
+    .card-list .card .icons .anticon path {
+        fill-opacity: 0;
+        stroke: #4770ff;
+        stroke-width: 2;
+    }
 }

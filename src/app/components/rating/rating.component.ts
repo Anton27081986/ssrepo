@@ -28,28 +28,24 @@ export class RatingComponent implements OnInit, OnDestroy {
 		distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
 	);
 
-	protected rankWeeks!: Observable<any>;
-	protected ranks!: Observable<any>;
-	protected getProfile$ = this._userService.getProfile();
-	protected getRankWeeks$ = this._apiService.getRankWeeks();
-	private readonly destroy$: Subject<boolean> = new Subject<boolean>();
-	private currentUserId!: number;
-	public loading = false;
-	public title: any;
-	public submitted = false;
-	public weekId!: number;
-	public rankTypeId!: number;
-	public pageSize = 6;
-	public pageIndex = 1;
-	public selectedValue?: number = undefined;
-	public listOfOption: Array<{ name: string; id: string }> = [];
-	public nzFilterOption = (): boolean => true;
-	public rateValue = {
-		great: 4.5,
-		good1: 4.4,
-		good2: 4.0,
-		bad: 3.9,
-	};
+    public loading = false;
+    public title: any;
+    public submitted = false;
+    public weekId!: number;
+    public rankTypeId!: number;
+    public total!: number;
+    public pageSize = 6;
+    public pageIndex = 1;
+    public offset = 0;
+    public selectedValue = null;
+    public listOfOption: Array<{name: string; id: string}> = [];
+    public nzFilterOption = (): boolean => true;
+    public rateValue = {
+        great: 4.5,
+        good1: 4.4,
+        good2: 4.0,
+        bad: 3.9,
+    };
 
 	public constructor(
 		private readonly _apiService: ApiService,
@@ -136,53 +132,76 @@ export class RatingComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	public getPartyByWeekAndRankTypeInit() {
-		zip(this.getProfile$, this.getRankWeeks$)
-			.pipe(
-				map(([user, week]) => {
-					return {
-						...user,
-						week: { ...week.items[0] },
-					};
-				}),
-				switchMap(() => {
-					return this._apiService.getRankTypes(this.weekId, this.currentUserId);
-				}),
-			)
-			.subscribe(value => {
-				this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
-				this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0);
-			});
-	}
+    getPartyByWeekAndRankTypeInit() {
+        zip(this.getProfile$, this.getRankWeeks$)
+            .pipe(
+                map(([user, week]) => {
+                    return {
+                        ...user,
+                        week: {...week.items[0]},
+                    };
+                }),
+                switchMap(() => {
+                    return this._apiService.getRankTypes(this.weekId, this.currentUserId);
+                }),
+            )
+            .subscribe(value => {
+                this.rankTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
+                this.ranks = this._apiService
+                    .getRank(this.weekId, this.rankTypeId, this.pageSize, 0)
+                    .pipe(
+                        tap(value => {
+                            this.pageIndex = 1;
+                            this.total = value.total;
+                            this.cd.markForCheck();
+                        }),
+                    );
+            });
+    }
 
-	public getPartyByWeekAndRankTypeSearch(userId?: any, weekId?: any) {
-		// Переделать
-		zip(this.getProfile$)
-			.pipe(
-				map(() => {
-					return {
-						user: { userId },
-					};
-				}),
-				switchMap(() => {
-					return this._apiService.getRankTypes(weekId, userId);
-				}),
-			)
-			.subscribe(value => {
-				this.rankTypeId = value.rankTypeId;
+    getPartyByWeekAndRankTypeSearch(
+        userId: number | null,
+        weekId: number,
+        limit: number,
+        Offset: number = 0,
+    ) {
+        // Переделать
+        zip(this.getProfile$)
+            .pipe(
+                map(() => {
+                    return {
+                        user: {userId},
+                    };
+                }),
+                switchMap(() => {
+                    return this._apiService.getRankTypes(weekId, userId);
+                }),
+            )
+            .subscribe(value => {
+                this.rankTypeId = value.rankTypeId;
 
-				// TODO Настроить нагинацию
-				this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, 100, 0).pipe(
-					tap(_ => {
-						this.cd.markForCheck();
-					}),
-				);
-			});
-	}
+                // TODO Настроить нагинацию
+                this.ranks = this._apiService
+                    .getRank(this.weekId, this.rankTypeId, limit, Offset)
+                    .pipe(
+                        tap(value => {
+                            this.pageIndex = 1;
+                            this.total = value.total;
+                            this.cd.markForCheck();
+                        }),
+                    );
+            });
+    }
 
-	public getPartyByWeekAndRankTypeChangeWeek(weekId: number) {
-		this.ranks = this._apiService.getRank(weekId, this.rankTypeId, 100, 0);
-	}
+    getPartyByWeekAndRankTypeChangeWeek(weekId: number) {
+        this.ranks = this._apiService.getRank(weekId, this.rankTypeId, this.pageSize, 0).pipe(
+            tap(value => {
+                this.pageIndex = 1;
+                this.total = value.total;
+                this.cd.markForCheck();
+            }),
+        );
+    }
 
 	public selectWeek(weekId: number): void {
 		this.getPartyByWeekAndRankTypeChangeWeek(weekId);
@@ -193,19 +212,30 @@ export class RatingComponent implements OnInit, OnDestroy {
 		$event.stopPropagation();
 		this.rankTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
 
-		// Выводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
-		this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, limit, 0);
-	}
+        // Выводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
+        this.ranks = this._apiService.getRank(this.weekId, this.rankTypeId, this.pageSize, 0).pipe(
+            tap(value => {
+                this.pageIndex = 1;
+                this.total = value.total;
+                this.cd.markForCheck();
+            }),
+        );
+    }
 
 	public search($event: any) {
 		this.modelChanged.next($event);
 	}
 
-	// При выборе пользователя
-	public onUserChange() {
-		this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
-		this.getPartyByWeekAndRankTypeSearch(this.selectedValue, this.weekId);
-	}
+    // При выборе пользователя
+    onUserChange() {
+        this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
+        this.getPartyByWeekAndRankTypeSearch(
+            this.selectedValue,
+            this.weekId,
+            this.pageSize,
+            this.offset,
+        );
+    }
 
 	// Модальное окно раскрытой карточки
 	public showModalOpenOut(id: number): void {
@@ -225,8 +255,28 @@ export class RatingComponent implements OnInit, OnDestroy {
 			.afterClose.subscribe();
 	}
 
-	public ngOnDestroy() {
-		this.destroy$.next(true);
-		this.modelChanged.complete();
-	}
+    nzPageIndexChange($event: number) {
+        if ($event === 1) {
+            this.offset = 0;
+        } else {
+            this.offset = this.pageSize * $event - this.pageSize;
+        }
+
+        this.pageIndex = $event; // Установка текущего индекса
+        // this.getPartyByWeekAndRankTypeSearch(this.selectedValue, this.weekId, this.pageSize, this.offset);
+
+        this.ranks = this._apiService
+            .getRank(this.weekId, this.rankTypeId, this.pageSize, this.offset)
+            .pipe(
+                tap(value => {
+                    this.total = value.total;
+                    this.cd.markForCheck();
+                }),
+            );
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next(true);
+        this.modelChanged.complete();
+    }
 }

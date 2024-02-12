@@ -1,8 +1,10 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {UntilDestroy} from '@ngneat/until-destroy';
 import {ThemeService} from '@app/shared/theme/theme.service';
+import {tap} from 'rxjs';
+import {ProfileService} from '@app/pages/profile/profile.service';
 
 @UntilDestroy()
 @Component({
@@ -11,7 +13,7 @@ import {ThemeService} from '@app/shared/theme/theme.service';
     styleUrls: ['./profile.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
     public switchValue!: boolean;
 
     private readonly iconMoon =
@@ -20,7 +22,7 @@ export class ProfileComponent {
         '</svg>';
 
     constructor(
-        // private readonly profileService: ProfileService,
+        private readonly profileService: ProfileService,
         private readonly themeService: ThemeService,
         private readonly iconService: NzIconService,
     ) {
@@ -34,23 +36,24 @@ export class ProfileComponent {
         this.iconService.addIconLiteral('ss:theme', AppIcons.theme);
     }
 
-    // ngOnInit(): void {
-    //     this.profileService
-    //         .getTheme()
-    //         .pipe(
-    //             tap(value => {
-    //                 this.switchValue = value.isDarkTheme;
-    //             }),
-    //         )
-    //         .subscribe();
-    // }
+    ngOnInit(): void {
+        this.profileService
+            .getTheme()
+            .pipe(
+                tap(value => {
+                    this.switchValue = value.isDarkTheme;
+                }),
+            )
+            .subscribe();
+    }
 
     toggleTheme(): void {
         this.themeService.toggleTheme().then();
-        // if (this.switchValue) {
-        //     this.profileService.changeTheme(1);
-        // } else {
-        //     this.profileService.changeTheme(0);
-        // }
+
+        if (this.switchValue) {
+            this.profileService.changeTheme(1);
+        } else {
+            this.profileService.changeTheme(0);
+        }
     }
 }
