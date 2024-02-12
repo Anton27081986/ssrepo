@@ -54,7 +54,7 @@ export class ThankyouComponent implements OnInit {
     showModalOpenOut(item: any): void {
         this.modalCreate
             .create({
-                nzClosable: false,
+                nzClosable: true,
                 nzFooter: null,
                 nzTitle: 'Информация о пользователе',
                 nzNoAnimation: false,
