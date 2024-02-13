@@ -10,6 +10,7 @@ import {ApiService} from '@app/shared/services/api/api.service';
 })
 export class SearchComponent implements OnInit {
     title!: string;
+    public urlSearchResult: string = 'https://cisp.ssnab.ru/Search/Result?q=';
     searchResult!: Observable<any>;
 
     showWindowResult = false;
@@ -41,5 +42,9 @@ export class SearchComponent implements OnInit {
     search($event: any) {
         this.showWindowResult = true;
         this.modelChanged.next($event.target.value);
+    }
+
+    goSearchResult($event: any) {
+        window.open(`${this.urlSearchResult + $event.target.value}`, '_blank');
     }
 }
