@@ -32,7 +32,7 @@ export class ThankColleagueComponent implements OnInit {
     public pageIndex = 1;
     public offset = 0;
     public currentUserId: any;
-    public getExtendedMode!: Observable<any>;
+    public getExtendedMode!: boolean;
 
     private readonly modelChanged: Subject<string> = new Subject<string>();
 

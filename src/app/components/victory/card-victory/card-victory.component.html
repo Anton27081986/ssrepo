@@ -50,7 +50,6 @@
               [objectIdProps]="item.id"
               [typeObject]="1"
               [award]="item.award"
-              [isExtendedMode]="extendedMode"
             ></app-super-like>
           </ng-container>
           <ng-template #userlike>
@@ -60,7 +59,6 @@
               [objectIdProps]="item.id"
               [typeObject]="1"
               [award]="item.award"
-              [isExtendedMode]="extendedMode"
             ></app-like>
           </ng-template>
           <div class="comment" (click)="showModalComments(item, 1)">
