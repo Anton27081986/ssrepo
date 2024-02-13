@@ -142,7 +142,6 @@
 
                       <!-- Постановка super лайка -->
                       <!-- Проверяем поставил ли ЧДЛ супер лайк-->
-
                       <ng-container *ngIf="getExtendedMode; else userlike">
                         <app-super-like
                           [isUserLikedProps]="item.isUserLiked"
@@ -150,7 +149,6 @@
                           [objectIdProps]="item.id"
                           [typeObject]="0"
                           [award]="item.award"
-                          [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
                         ></app-super-like>
                       </ng-container>
 
@@ -163,7 +161,6 @@
                           [objectIdProps]="item.id"
                           [typeObject]="0"
                           [award]="item.award"
-                          [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
                         ></app-like>
 
                       </ng-template>

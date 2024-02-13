@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnInit,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
@@ -32,7 +26,7 @@ export class ThankColleagueComponent implements OnInit {
     public pageIndex = 1;
     public offset = 0;
     public currentUserId: any;
-    public getExtendedMode!: Observable<any>;
+    public getExtendedMode!: boolean;
 
     private readonly modelChanged: Subject<string> = new Subject<string>();
 

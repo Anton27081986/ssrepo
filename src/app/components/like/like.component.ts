@@ -1,10 +1,4 @@
-import {
-    AfterViewInit,
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    Input,
-} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input,} from '@angular/core';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
@@ -19,7 +13,6 @@ export class LikeComponent implements AfterViewInit {
     @Input() objectIdProps!: number;
     @Input() typeObject!: number;
     @Input() award: any;
-    @Input() isExtendedMode!: boolean;
 
     isUserLiked!: boolean;
     likesCount!: number;
