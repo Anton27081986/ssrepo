@@ -1,4 +1,10 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Input,} from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Input,
+} from '@angular/core';
 import {ApiService} from '@app/shared/services/api/api.service';
 
 @Component({
