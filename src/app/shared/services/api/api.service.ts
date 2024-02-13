@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {IMainMenu} from '@app/components/main-menu/main-menu.interface';
 import {environment} from '@environments/environment.development';
 import {IResponse} from '@app/components/address-book/models/response';
@@ -263,10 +263,27 @@ export class ApiService {
     }
 
     public callByIpPhone(linkToCall: string): Observable<any> {
-        return this.http.get<any>(linkToCall);
+        console.log(linkToCall);
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }),
+            withCredentials: true,
+        };
+
+        return this.http.post<any>(linkToCall, {}, httpOptions);
     }
 
     public resetCallByIpPhone(): Observable<any> {
-        return this.http.get<any>(`https://ssnab.it/personal/mols/endCall`);
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            }),
+            withCredentials: true,
+        };
+
+        return this.http.post<any>(`https://ssnab.it/personal/mols/endCall`, {}, httpOptions);
     }
 }
