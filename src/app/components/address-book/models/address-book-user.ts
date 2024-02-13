@@ -10,5 +10,6 @@ export interface IAddressBookUser {
     position?: string;
     phone?: string;
     phoneLocal?: string;
+    isIntranet?: string;
     linkToCall?: string;
 }
