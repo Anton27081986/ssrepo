@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from '@app/common/icons';
+import {AppIcons} from '@app/core/icons';
 import {ApiService} from '@app/core/services/api.service';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {NzModalService} from 'ng-zorro-antd/modal';

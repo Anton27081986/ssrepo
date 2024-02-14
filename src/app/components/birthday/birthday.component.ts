@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
-import {AppIcons} from '@app/common/icons';
+import {AppIcons} from '@app/core/icons';
 import {map} from 'rxjs';
 import {ApiService} from '@app/core/services/api.service';
 import {NzModalService} from 'ng-zorro-antd/modal';

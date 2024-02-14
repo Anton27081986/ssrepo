@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { AppIcons } from '@app/common/icons';
+import { AppIcons } from '@app/core/icons';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class IconsService {
-	public constructor(private readonly nzIconService: NzIconService) {
+	public constructor(private readonly nzIconService: NzIconService) {}
+
+	public registerIcons() {
+		debugger;
 		this.nzIconService.addIconLiteral('ss:exit', AppIcons.exit);
 		this.nzIconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
 		this.nzIconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);

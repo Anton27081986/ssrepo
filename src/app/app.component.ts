@@ -6,6 +6,7 @@ import { IUser } from '@auth/models/user';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
+import {IconsService} from "@app/core/services/icons.service";
 
 @UntilDestroy()
 @Component({
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
 		private readonly titleService: Title,
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
+		private readonly iconsService: IconsService,
 	) {
 		this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
 	}

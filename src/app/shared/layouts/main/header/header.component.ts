@@ -4,6 +4,7 @@ import { ApiService } from '@app/core/services/api.service';
 import { UserStateService } from '@app/core/states/user-state.service';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { CallPhoneService } from '@app/core/services/call-phone.service';
 
 @Component({
 	selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
 	public constructor(
 		private readonly apiService: ApiService,
 		private readonly userStateService: UserStateService,
+		private readonly callPhoneService: CallPhoneService,
 	) {}
 
 	public ngOnInit(): any {
@@ -54,5 +56,10 @@ export class HeaderComponent implements OnInit {
 	public menuToggle(event: Event) {
 		event.stopPropagation();
 		this.statusBurger = !this.statusBurger;
+	}
+
+	public testCall() {
+		debugger;
+		this.callPhoneService.toggleCallForUser('test');
 	}
 }

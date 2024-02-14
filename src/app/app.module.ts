@@ -18,7 +18,6 @@ import { JwtInterceptor } from '@app/core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
 import { ComponentsModule } from '@app/components/components.module';
 import { CoreModule } from '@app/core/core.module';
-import { IconsService } from '@app/core/services/icons.service';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -47,7 +46,6 @@ registerLocaleData(ru);
 	],
 	providers: [
 		AppInitializerProvider,
-		IconsService,
 		// eslint-disable-next-line camelcase
 		{ provide: NZ_I18N, useValue: ru_RU },
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -11,7 +11,7 @@ import { ApiService } from '@app/core/services/api.service';
 import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { AppIcons } from '@app/common/icons';
+import { AppIcons } from '@app/core/icons';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 
 @Component({

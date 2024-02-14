@@ -7,7 +7,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from '@app/common/icons';
+import {AppIcons} from '@app/core/icons';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ApiService} from '@app/core/services/api.service';
 import {map, Observable, Subject, tap, zip} from 'rxjs';

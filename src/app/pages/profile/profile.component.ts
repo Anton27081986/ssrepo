@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from '@app/common/icons';
+import {AppIcons} from '@app/core/icons';
 import {UntilDestroy} from '@ngneat/until-destroy';
 import {ThemeService} from '@app/shared/theme/theme.service';
 import {tap} from 'rxjs';
