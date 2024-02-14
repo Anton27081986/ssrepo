@@ -9,7 +9,6 @@ import {ApiService} from '@app/shared/services/api/api.service';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
-    title!: string;
     public urlSearchResult: string = 'https://cisp.ssnab.ru/Search/Result?q=';
     searchResult!: Observable<any>;
 
