@@ -10,11 +10,10 @@ import {ApiService} from '@app/shared/services/api/api.service';
 })
 export class SearchComponent implements OnInit {
     public urlSearchResult: string = 'https://cisp.ssnab.ru/Search/Result?q=';
-    searchResult!: Observable<any>;
+    searchResult!: Observable<string>;
 
     showWindowResult = false;
     private readonly modelChanged: Subject<string> = new Subject<string>();
-    private readonly resultSearch: any;
 
     constructor(private readonly apiService: ApiService) {}
 
@@ -23,19 +22,16 @@ export class SearchComponent implements OnInit {
             if (nextValue.length >= 3) {
                 this.searchResult = this.apiService.search(nextValue).pipe(map(({items}) => items));
             }
+
+            if (nextValue.length === 0) {
+                this.searchResult = new Subject<string>();
+            }
         });
     }
 
     @HostListener('document:click', ['$event'])
-    // Подправить
-    onClick(event: Event) {
+    onClick() {
         this.showWindowResult = false;
-
-        if (this.showWindowResult) {
-            if (!this.resultSearch.nativeElement.contains(event.target)) {
-                this.showWindowResult = false;
-            }
-        }
     }
 
     search($event: any) {
