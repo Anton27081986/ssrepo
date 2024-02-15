@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IUser } from '@auth/models/user';
 import { environment } from '@environments/environment';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -25,6 +26,7 @@ export class AuthenticationService {
 	public constructor(
 		private readonly router: Router,
 		private readonly http: HttpClient,
+		private readonly localStorageService: LocalStorageService,
 	) {}
 
 	public get userValue(): IUser {
@@ -83,6 +85,7 @@ export class AuthenticationService {
 		// remove user from local storage to log user out
 		localStorage.removeItem('user');
 		this.userSubject.next(null as unknown as IUser);
+		this.localStorageService.clear();
 		this.router.navigate(['/auth/sign-in']);
 		// TODO: need clear cookies
 	}
