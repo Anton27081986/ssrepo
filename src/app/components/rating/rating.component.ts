@@ -7,13 +7,15 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { AppIcons } from '@app/common/icons';
-import { ApiService } from '@app/shared/services/services/services.service';
+
 import { distinctUntilChanged, map, Observable, Subject, switchMap, tap, zip } from 'rxjs';
-import { UserService } from '@auth/services/user.service';
+
 import isEqual from 'lodash/isEqual';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { ApiService } from '@app/core/services/api.service';
+import { AppIcons } from '@app/core/icons';
+import { UserStateService } from '@app/core/states/user-state.service';
 
 @Component({
 	selector: 'app-rating',
@@ -26,6 +28,13 @@ export class RatingComponent implements OnInit, OnDestroy {
 	protected rankTypes = new Observable<any>().pipe(
 		distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
 	);
+
+	protected rankWeeks!: Observable<any>;
+	protected ranks!: Observable<any>;
+	protected getProfile$ = this._apiService.getProfile();
+	protected getRankWeeks$ = this._apiService.getRankWeeks();
+	private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+	private currentUserId!: number;
 
 	public loading = false;
 	public title: any;
@@ -46,13 +55,9 @@ export class RatingComponent implements OnInit, OnDestroy {
 		bad: 3.9,
 	};
 
-	public ranks: Observable<any>;
-	public getProfile$: Observable<any>;
-	public currentUserId: any;
-
-	public constructor(
+	constructor(
 		private readonly _apiService: ApiService,
-		private readonly _userService: UserService,
+		private readonly _userService: UserStateService,
 		private readonly iconService: NzIconService,
 		private readonly modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
@@ -74,15 +79,15 @@ export class RatingComponent implements OnInit, OnDestroy {
 		this.iconService.addIconLiteral('ss:attach', AppIcons.attach);
 	}
 
-	public ngOnInit() {
+	ngOnInit() {
 		// Получение пользователя для поиска
-		this._userService
+		this._apiService
 			.getProfile()
 			.pipe(
 				tap(value => {
 					this.listOfOption.push({
 						id: value.id.toString(),
-						name: value.name || '',
+						name: value.name!,
 					});
 
 					this.selectedValue = value.id;
@@ -116,7 +121,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	}
 
 	// Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
-	public getRankTypesByWeekAndUserInit() {
+	getRankTypesByWeekAndUserInit() {
 		zip(this.getProfile$, this.getRankWeeks$)
 			.pipe(
 				map(([user, week]) => {
@@ -206,12 +211,12 @@ export class RatingComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	public selectWeek(weekId: number): void {
+	selectWeek(weekId: number): void {
 		this.getPartyByWeekAndRankTypeChangeWeek(weekId);
 		this.rankTypes = this._apiService.getRankTypes(weekId, this.currentUserId);
 	}
 
-	public clickByTypeRank(id: number, limit: number, $event: MouseEvent) {
+	clickByTypeRank(id: number, limit: number, $event: MouseEvent) {
 		$event.stopPropagation();
 		this.rankTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
 
@@ -225,7 +230,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	public search($event: any) {
+	search($event: any) {
 		this.modelChanged.next($event);
 	}
 
@@ -233,7 +238,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	onUserChange() {
 		this.rankTypes = this._apiService.getRankTypes(this.weekId, this.selectedValue);
 		this.getPartyByWeekAndRankTypeSearch(
-			this.selectedValue,
+			this.selectedValue!,
 			this.weekId,
 			this.pageSize,
 			this.offset,
@@ -241,7 +246,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	}
 
 	// Модальное окно раскрытой карточки
-	public showModalOpenOut(id: number): void {
+	showModalOpenOut(id: number): void {
 		this.modalCreate
 			.create({
 				nzClosable: false,
@@ -279,7 +284,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		// this.destroy$.next(true);
+		this.destroy$.next(true);
 		this.modelChanged.complete();
 	}
 }
