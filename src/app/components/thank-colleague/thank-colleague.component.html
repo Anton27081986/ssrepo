@@ -97,10 +97,10 @@
                   <div class="personals">
                     <div class="info">
                       <div class="images">
-                        <div class="img img-from">
+                        <div class="img img-from" (click)="showModalOpenOut(item?.fromUser?.id)">
                           <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
                         </div>
-                        <div class="img img-to">
+                        <div class="img img-to" (click)="showModalOpenOut(item.toUser?.id)">
                           <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
                         </div>
                       </div>

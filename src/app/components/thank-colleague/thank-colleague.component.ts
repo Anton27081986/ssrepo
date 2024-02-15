@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    ChangeDetectorRef,
-    Component,
-    OnInit,
-    ViewContainerRef,
-} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef,} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Observable, Subject, tap, zip} from 'rxjs';
 import {ApiService} from '@app/shared/services/api/api.service';
@@ -13,6 +7,7 @@ import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzIconService} from 'ng-zorro-antd/icon';
 import {AppIcons} from '@app/common/icons';
 import {ICreateThanksColleagueRequest} from '@app/components/thank-colleague/models/create-thanks-colleague-request';
+import {ModalInfoComponent} from "@app/components/modal/modal-info/modal-info.component";
 
 @Component({
     selector: 'app-thank-colleague',
@@ -129,6 +124,24 @@ export class ThankColleagueComponent implements OnInit {
             },
             error: (error: unknown) => console.error('Ошибка при удалении спасибо', error),
         });
+    }
+
+    // Модальное окно раскрытой карточки
+    showModalOpenOut(id: number): void {
+        this.modalCreateService
+            .create({
+                nzClosable: true,
+                nzFooter: null,
+                nzTitle: 'Информация о пользователе',
+                nzNoAnimation: false,
+                nzWidth: '365px',
+                nzContent: ModalInfoComponent,
+                nzViewContainerRef: this.viewContainerRef,
+                nzData: {
+                    data: id,
+                },
+            })
+            .afterClose.subscribe();
     }
 
     // Модальное окно комментариев
