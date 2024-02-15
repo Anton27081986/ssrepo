@@ -26,7 +26,12 @@
             }
 
             .button {
-                margin-left: 10px;
+                margin-left: 6px;
+
+                .ant-btn {
+                    width: 3.2rem;
+                    height: 3.2rem;
+                }
 
                 .favorite-text {
                     display: none;
@@ -38,7 +43,7 @@
                         path {
                             fill-opacity: 0;
                             background-color: white;
-                            stroke: blue;
+                            stroke: $blue;
                             stroke-linecap: round;
                         }
                     }
@@ -78,22 +83,23 @@
     }
 
     .content {
+        min-height: 220px;
+        height: 220px;
+
         .card-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 0 40px;
+            gap: 18px 94px;
+            margin-top: 24px;
 
             .card {
                 position: relative;
-                width: 400px;
+                width: 364px;
                 height: auto;
                 border-radius: 16px;
-                border: 1px solid #e4e8ea;
-                background-color: #fff;
-                padding: 20px 20px 20px 20px;
-                margin-top: 20px;
-
-                // flex: 1 0 200px;
+                //border: 1px solid #e4e8ea;
+                //background-color: #fff;
+                padding: 0;
 
                 .personal {
                     position: relative;
@@ -102,6 +108,7 @@
                     .img {
                         position: relative;
                         border-radius: 14px;
+                        border: 1px solid $border-color;
                         overflow: hidden;
                         flex: none;
                         z-index: 0;
@@ -148,39 +155,68 @@
                     }
 
                     .title {
-                        margin-left: 18px;
+                        margin-left: 20px;
+                        // margin-left: 0;
                     }
 
                     .fio {
                         font-size: 13.6px;
                         font-weight: bold;
                         line-height: 20px;
-                        margin-top: 7px;
+                        margin-top: 0;
+                        width: 264px;
                     }
 
                     .job {
-                        max-width: 186px;
+                        max-width: 280px;
                         font-size: 11.8px;
                         line-height: 14px;
                         font-weight: 500;
-                        margin-top: 2px;
+                        margin-top: 6px;
+                        height: 30px;
+                        overflow: auto;
+                    }
+
+                    .job::-webkit-scrollbar {
+                        width: 4px;
+                        height: 48px;
+                    }
+
+                    ::ng-deep {
+                        .job::-webkit-scrollbar-track {
+                            background-color: $gray;
+                            border-radius: 60px;
+                            height: 48px;
+                        }
+
+                        .job::-webkit-scrollbar-thumb {
+                            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+                        }
+
+                        .job {
+                            border-right: 0 solid $gray-light !important;
+                            box-sizing: border-box;
+                            scrollbar-width: auto;
+                            scrollbar-color: $gray-light;
+                        }
                     }
                 }
 
                 .icons {
                     .favorite-icon {
                         position: absolute;
-                        right: 16px;
-                        top: 20px;
+                        right: 0;
+                        top: 0;
                     }
 
                     ::ng-deep .anticon {
-                        font-size: 20px !important;
+                        font-size: 17px !important;
                         cursor: pointer;
 
                         path {
                             fill-opacity: 0;
-                            stroke: blue;
+                            stroke: $blue;
+                            stroke-width: 2;
                         }
                     }
 
@@ -197,6 +233,7 @@
                         path {
                             fill-opacity: 0;
                             stroke: #d9d9d9;
+                            stroke-width: 2;
                         }
                     }
                 }
@@ -293,6 +330,7 @@
 
                     ::ng-deep path {
                         stroke: $blue;
+                        stroke-width: 2;
                     }
                 }
             }
@@ -300,7 +338,8 @@
 
         .contacts {
             display: flex;
-            margin-top: 8px;
+            justify-content: flex-end;
+            margin-top: 0;
 
             .call {
                 color: $white;
@@ -341,30 +380,11 @@
             justify-content: space-between;
             margin-top: 27px;
         }
-    }
-}
 
-::ng-deep {
-    .message::-webkit-scrollbar {
-        width: 4px;
-        height: 48px;
-    }
-
-    .message::-webkit-scrollbar-track {
-        background-color: $gray;
-        border-radius: 60px;
-        height: 48px;
-    }
-
-    .message::-webkit-scrollbar-thumb {
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    .message {
-        border-right: 10px solid #ffffff !important;
-        box-sizing: border-box;
-        scrollbar-width: auto;
-        scrollbar-color: $gray-light;
+        .line {
+            border-bottom: 1px solid #c6ced7;
+            width: 100%;
+        }
     }
 }
 

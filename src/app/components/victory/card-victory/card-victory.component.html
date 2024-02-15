@@ -41,36 +41,36 @@
       </div>
     </div>
     <div class="info">
-      <div class="left-group">
-        <ng-container *ngIf="extendedMode; else userlike">
-          <app-super-like
-            [isUserLikedProps]="item.isUserLiked"
-            [likesCountProps]="item.likesCount"
-            [objectIdProps]="item.id"
-            [typeObject]="1"
-            [award]="item.award"
-            [isExtendedMode]="extendedMode"
-          ></app-super-like>
-        </ng-container>
-        <ng-template #userlike>
-          <app-like
-            [isUserLikedProps]="item.isUserLiked"
-            [likesCountProps]="item.likesCount"
-            [objectIdProps]="item.id"
-            [typeObject]="1"
-            [award]="item.award"
-            [isExtendedMode]="extendedMode"
-          ></app-like>
-        </ng-template>
-        <div class="comment" (click)="showModalComments(item, 1)">
-          <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-          <span class="count">{{ item.commentsCount }}</span>
+      <div class="bottom-panel">
+        <div class="left-group">
+          <ng-container *ngIf="extendedMode; else userlike">
+            <app-super-like
+              [isUserLikedProps]="item.isUserLiked"
+              [likesCountProps]="item.likesCount"
+              [objectIdProps]="item.id"
+              [typeObject]="1"
+              [award]="item.award"
+            ></app-super-like>
+          </ng-container>
+          <ng-template #userlike>
+            <app-like
+              [isUserLikedProps]="item.isUserLiked"
+              [likesCountProps]="item.likesCount"
+              [objectIdProps]="item.id"
+              [typeObject]="1"
+              [award]="item.award"
+            ></app-like>
+          </ng-template>
+          <div class="comment" (click)="showModalComments(item, 1)">
+            <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+            <span class="count">{{ item.commentsCount }}</span>
+          </div>
         </div>
-      </div>
-      <div class="openOut">
-        <a href="{{ item?.detailUrl }}" target="_blank">
-          <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
-        </a>
+        <div class="openOut">
+          <a href="{{ item?.detailUrl }}" target="_blank">
+            <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
+          </a>
+        </div>
       </div>
     </div>
   </div>

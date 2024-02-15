@@ -3,7 +3,7 @@
       <nz-form-item>
         <nz-form-control>
           <nz-input-group [nzSuffix]="prefixSearch">
-            <input type="text" nz-input placeholder="Введите запрос" (input)="search($event)" />
+            <input type="text" nz-input placeholder="Введите запрос" (input)="search($event)" (keyup.enter)="goSearchResult($event)" />
           </nz-input-group>
         </nz-form-control>
         <ng-template #prefixSearch>
@@ -13,12 +13,11 @@
     </form>
 
   <ng-container *ngIf="showWindowResult">
-    <ng-container *ngIf="searchResult! | async as users" #result>
+    <ng-container *ngIf="searchResult! | async as users">
       <div class="result">
         <app-result-item
           *ngFor="let user of users"
           [user]="user"
-          [title]="title"
         ></app-result-item>
       </div>
     </ng-container>

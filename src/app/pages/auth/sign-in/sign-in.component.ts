@@ -2,7 +2,10 @@ import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '@auth/services/authentication.service';
-import {first} from 'rxjs';
+import {first, of, tap} from 'rxjs';
+import {catchError, switchMap} from 'rxjs/operators';
+import {ProfileService} from '@app/pages/profile/profile.service';
+import {ThemeService} from '@app/shared/theme/theme.service';
 
 @Component({
     selector: 'app-sign-in',
@@ -25,6 +28,8 @@ export class SignInComponent implements OnInit {
         private readonly route: ActivatedRoute,
         private readonly router: Router,
         private readonly authenticationService: AuthenticationService,
+        private readonly profileService: ProfileService,
+        private readonly themeService: ThemeService,
     ) {}
 
     ngOnInit() {
@@ -49,7 +54,29 @@ export class SignInComponent implements OnInit {
         this.loading = true;
         this.authenticationService
             .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
-            .pipe(first())
+            .pipe(
+                first(),
+                switchMap(_ => {
+                    return this.authenticationService.authImages().pipe(
+                        tap(_ => console.log('authImages Ok')),
+                        catchError((_: unknown) => {
+                            return of(0);
+                        }),
+                    );
+                }),
+                switchMap(_ => {
+                    return this.profileService.getTheme().pipe(
+                        tap(value => {
+                            if (value.isDarkTheme) {
+                                this.themeService.setDarkTheme().then();
+                            }
+                        }),
+                        catchError((_: unknown) => {
+                            return of(0);
+                        }),
+                    );
+                }),
+            )
             .subscribe(
                 _ => {
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -60,6 +87,7 @@ export class SignInComponent implements OnInit {
                 },
                 (err: unknown) => {
                     this.loading = false;
+                    console.log('HTTP Error', err);
                     this.error = err;
                     this.errorState = true;
                 },

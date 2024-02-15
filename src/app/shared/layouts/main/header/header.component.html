@@ -1,5 +1,5 @@
-<!--<div class="fly-header"></div>-->
-<nz-header [ngClass]="statusInputSearchMobile ? 'mobile' : ''">
+<div appFlyMenu>
+  <nz-header [ngClass]="statusInputSearchMobile ? 'mobile' : ''">
     <nz-content>
       <div class="header">
         <div class="icon-bg mobile-burger" (click)="menuToggle($event)">
@@ -65,12 +65,16 @@
     </nz-content>
   </nz-header>
 
-<nz-content>
-  <app-mobile-menu [menu]="listMenu" [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
-</nz-content>
-
-<div class="back">
   <nz-content>
-  <a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>
+    <app-mobile-menu [menu]="listMenu" [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
   </nz-content>
+
+  <div class="back">
+    <nz-content>
+      <a href="https://ssnab.it/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>
+    </nz-content>
+  </div>
 </div>
+
+
+

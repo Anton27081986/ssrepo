@@ -42,7 +42,7 @@
   <div class="content">
     <div class="card-list">
       <ng-container *ngIf="(thankyouList | async) as thankyou;  else loader;">
-        <nz-list class="card-list" [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item">
+        <nz-list class="card-list" [nzDataSource]="thankyou" [nzRenderItem]="item">
           <ng-template #item let-thank>
             <nz-list-item [nzContent]="nzContent">
               <ng-template #nzContent>

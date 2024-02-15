@@ -6,6 +6,7 @@ export interface IAddressBookSearchUser {
     firstName?: string;
     surName?: string;
     email?: string;
+    phoneLocal?: string;
     city?: string;
     branchType?: string;
 }

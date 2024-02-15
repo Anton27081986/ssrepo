@@ -49,8 +49,6 @@
 
         .open-all-table {
             display: flex;
-            // align-items: center;
-
             ::ng-deep .anticon {
                 fill-opacity: 1;
             }
@@ -99,10 +97,12 @@
     }
 
     .content {
+        min-height: 1106px;
+        height: 1106px;
+
         .rating-list {
             display: flex;
             flex-wrap: wrap;
-            // justify-content: space-between;
             gap: 10px;
             margin-top: 30px;
 
@@ -165,6 +165,9 @@
         }
 
         .card-list {
+            min-height: 310px;
+            height: 310px;
+
             ::ng-deep .ant-list-items {
                 display: flex;
                 flex-wrap: wrap;

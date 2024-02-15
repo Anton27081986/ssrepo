@@ -84,12 +84,11 @@
   </div>
 
   <div class="content">
-    <ng-container *ngIf="thankColleagueList | async as thankyou">
+    <ng-container *ngIf="(thankColleagueList | async) as thankyou; else loader">
       <nz-list class="card-list"
-               [nzDataSource]="thankyou | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize"
+               [nzDataSource]="thankyou"
                [nzRenderItem]="item"
-               [nzPagination]="pagination">
-
+      >
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
@@ -98,10 +97,10 @@
                   <div class="personals">
                     <div class="info">
                       <div class="images">
-                        <div class="img img-from">
+                        <div class="img img-from" (click)="showModalOpenOut(item?.fromUser?.id)">
                           <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
                         </div>
-                        <div class="img img-to">
+                        <div class="img img-to" (click)="showModalOpenOut(item.toUser?.id)">
                           <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
                         </div>
                       </div>
@@ -143,7 +142,6 @@
 
                       <!-- Постановка super лайка -->
                       <!-- Проверяем поставил ли ЧДЛ супер лайк-->
-
                       <ng-container *ngIf="getExtendedMode; else userlike">
                         <app-super-like
                           [isUserLikedProps]="item.isUserLiked"
@@ -151,7 +149,6 @@
                           [objectIdProps]="item.id"
                           [typeObject]="0"
                           [award]="item.award"
-                          [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
                         ></app-super-like>
                       </ng-container>
 
@@ -164,7 +161,6 @@
                           [objectIdProps]="item.id"
                           [typeObject]="0"
                           [award]="item.award"
-                          [isExtendedMode]="(thankColleagueList | async)?.isExtendedMode"
                         ></app-like>
 
                       </ng-template>
@@ -180,28 +176,27 @@
                   </div>
                 </div>
               </div>
-
-              <!--              </nz-card>-->
             </ng-template>
           </nz-list-item>
         </ng-template>
-
-        <ng-template #pagination>
-          <div class="pagination">
-            <nz-pagination
-              [nzPageIndex]="pageIndex"
-              [nzPageSize]="pageSize"
-              [nzTotal]="thankyou.length"
-              (nzPageIndexChange)="pageIndex = $event"
-              (nzPageSizeChange)="pageSize = $event">
-            </nz-pagination>
-          </div>
-        </ng-template>
       </nz-list>
       <!--      </ng-container>-->
-
-
     </ng-container>
+    <ng-template #loader>
+      <app-loader></app-loader>
+    </ng-template>
+  </div>
+
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
   </div>
 </div>
 

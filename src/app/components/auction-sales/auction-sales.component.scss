@@ -3,6 +3,8 @@
 
 .auction-sales {
     margin-top: 60px;
+    min-height: 649px;
+    height: auto;
 
     .header {
         display: flex;
@@ -19,51 +21,15 @@
     }
 
     .table {
-        margin-top: 20px;
+        border-radius: 16px;
+        margin-top: 18px;
 
         ::ng-deep {
-            .ant-table-pagination-right {
-                justify-content: flex-start;
-            }
-
-            .ant-pagination ul,
-            .ant-pagination ol {
-                margin-left: 2px;
-            }
-
             .ant-table {
                 border-radius: 16px;
-                overflow: hidden;
-            }
-
-            .ant-pagination-prev,
-            .ant-pagination-next {
-                display: none;
-            }
-
-            .ant-pagination-item-active,
-            .ant-pagination-item {
-                font-size: 16px;
-                line-height: 39px;
-                font-weight: 600;
-                background: #fff;
-                border-color: $border-color;
-                border-radius: 10px;
-                height: 44px;
-                width: 44px;
-                margin-right: 10px;
-            }
-
-            .ant-pagination-item-active {
-                background-color: $blue;
-            }
-
-            .ant-pagination-item-active a {
-                color: $white;
-            }
-
-            .ant-table-pagination.ant-pagination {
-                margin: 21px 0 !important;
+                overflow: hidden; // Поправить бордеры
+                min-height: 394px;
+                height: auto;
             }
 
             .ant-table-thead > tr > th {
@@ -75,13 +41,20 @@
                 font-weight: bold;
             }
 
-            .ant-pagination.mini .ant-pagination-item {
-                min-width: 44px;
-                height: 44px;
+            .ant-table-thead > tr > th:nth-child(1) {
+                width: 725px;
             }
 
-            .ant-table-thead > tr > th:nth-child(1) {
-                width: 720px;
+            .ant-table-thead > tr > th:nth-child(2) {
+                width: 150px;
+            }
+
+            .ant-table-thead > tr > th:nth-child(3) {
+                width: 120px;
+            }
+
+            .ant-table-thead > tr > th:nth-child(4) {
+                width: 120px;
             }
             .ant-table-tbody > tr.ant-table-row:hover > td,
             .ant-table-tbody > tr > td.ant-table-cell-row-hover {
@@ -99,6 +72,19 @@
                 color: $black;
                 font-weight: 600;
                 text-align: center;
+            }
+
+            .ant-table-tbody > tr > td:nth-child(1) {
+                font-size: 16px;
+                color: $black;
+                font-weight: 600;
+                opacity: 0.7;
+                text-align: center;
+            }
+
+            .ant-table-tbody > tr > td:nth-child(1):hover {
+                font-weight: 600;
+                opacity: 1;
             }
 
             .ant-table-tbody > tr > td:nth-child(1) {

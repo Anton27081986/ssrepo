@@ -46,20 +46,24 @@
         <ng-container *ngFor="let type of rankTypes?.items;">
           <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
                (click)="clickByTypeRank(type.id, type?.membersCount,  $event)">
-            <span>{{ type?.shortName }}</span>
+            <span
+              nzTooltipTitle="{{ type?.name }}"
+              nz-tooltip
+            >
+              {{ type?.shortName }}</span>
             <span>
               <ng-container *ngIf="type?.rate >= rateValue.great">
-                <span class="color-rate great">{{ type?.rate }}</span>
+                <span class="color-rate great">{{ type?.rate === null? '-': type?.rate }}</span>
                 / <span>{{ type?.membersCount }}</span>
               </ng-container>
 
               <ng-container *ngIf="(type?.rate <= rateValue.good1 && type?.rate >= rateValue.good2)">
-                <span class="color-rate good">{{ type?.rate }}</span>
+                <span class="color-rate good">{{ type?.rate === null? '-': type?.rate }}</span>
                 / <span>{{ type?.membersCount }}</span>
               </ng-container>
 
               <ng-container *ngIf="type?.rate <= rateValue.bad">
-                <span class="color-rate bad">{{ type?.rate }}</span>
+                <span class="color-rate bad">{{ type?.rate === null ? '-': type?.rate }}</span>
                 / <span>{{ type?.membersCount }}</span>
               </ng-container>
             </span>
@@ -68,10 +72,8 @@
       </ng-container>
     </div>
 
-    <ng-container *ngIf="(ranks | async)?.items as wins">
-      <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize"
-               [nzRenderItem]="item" [nzPagination]="pagination">
-
+    <ng-container *ngIf="(ranks | async)?.items as rating">
+      <nz-list class="card-list" [nzDataSource]="rating" [nzRenderItem]="item">
         <ng-template #item let-rank>
           <nz-list-item [nzContent]="nzContent">
             <ng-template #nzContent>
@@ -101,7 +103,9 @@
                       </div>
                     </div>
                     <div class="icons">
-                      <span class="count count-top">{{ rank?.avgWeekRate }}</span>
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
                       <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
                     </div>
                   </div>
@@ -120,6 +124,13 @@
                       </div>
                     </div>
                   </div>
+                  <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                    <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                  </div>
+
                 </div>
                 <div class="card distributor" *ngSwitchCase="2">
                   <div>
@@ -134,6 +145,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="icons">
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
+
                 </div>
                 <div class="card team" *ngSwitchCase="3">
                   <div>
@@ -148,6 +168,15 @@
                       </div>
                     </div>
                   </div>
+                  <div class="icons">
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
+
                 </div>
               </ng-container>
 
@@ -155,19 +184,20 @@
           </nz-list-item>
         </ng-template>
 
-        <ng-template #pagination>
-          <div class="pagination">
-            <nz-pagination [nzPageIndex]="pageIndex"
-                           [nzPageSize]="pageSize"
-                           [nzTotal]="wins.length"
-                           (nzPageIndexChange)="pageIndex = $event"
-                           (nzPageSizeChange)="pageSize = $event">
-
-            </nz-pagination>
-          </div>
-        </ng-template>
       </nz-list>
     </ng-container>
 
+  </div>
+
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total+pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
   </div>
 </div>

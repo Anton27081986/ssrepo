@@ -49,6 +49,11 @@ export class ProfilePopupComponent implements OnInit {
 
     logout(): void {
         this.authenticationService.logout();
+
+        // Чтобы корректно работала темная тема, если не авторизован
+        setTimeout(function () {
+            window.location.reload();
+        }, 0);
     }
 
     enterUnderFriendlyAccount(id: number) {
