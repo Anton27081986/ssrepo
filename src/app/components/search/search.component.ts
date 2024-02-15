@@ -10,7 +10,8 @@ import { ApiService } from '@app/core/services/api.service';
 })
 export class SearchComponent implements OnInit {
 	public title!: string;
-	public searchResult!: Observable<any>;
+	public searchResult!: Observable<string>;
+	public urlSearchResult: string = 'https://cisp.ssnab.ru/Search/Result?q=';
 
 	public showWindowResult = false;
 	private readonly modelChanged: Subject<string> = new Subject<string>();
@@ -24,6 +25,10 @@ export class SearchComponent implements OnInit {
 				this.searchResult = this.apiService
 					.search(nextValue)
 					.pipe(map(({ items }) => items));
+			}
+
+			if (nextValue.length === 0) {
+				this.searchResult = new Subject<string>();
 			}
 		});
 	}
@@ -43,5 +48,9 @@ export class SearchComponent implements OnInit {
 	public search($event: any) {
 		this.showWindowResult = true;
 		this.modelChanged.next($event.target.value);
+	}
+
+	public goSearchResult($event: any) {
+		window.open(`${this.urlSearchResult + $event.target.value}`, '_blank');
 	}
 }

@@ -30,6 +30,10 @@ export class ProfilePopupComponent implements OnInit {
 
 	public logout(): void {
 		this.authenticationService.logout();
+		// Чтобы корректно работала темная тема, если не авторизован
+		setTimeout(function () {
+			window.location.reload();
+		}, 0);
 	}
 
 	public enterUnderFriendlyAccount(id: number) {
@@ -38,5 +42,7 @@ export class ProfilePopupComponent implements OnInit {
 		setTimeout(function () {
 			window.location.reload();
 		}, 200);
+
+		this.accountsFriends = this.apiService.getAccounts().pipe(map(({ items }) => items));
 	}
 }

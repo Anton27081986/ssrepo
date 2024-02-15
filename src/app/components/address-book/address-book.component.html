@@ -74,7 +74,7 @@
             </div>
 
             <div class="contacts">
-              <div class="call" *ngIf="item?.phoneLocal">
+              <div class="call" *ngIf="item?.phoneLocal && item?.isIntranet">
                 <span>{{ item?.phoneLocal }}</span>
                 <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
               </div>

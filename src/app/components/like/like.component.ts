@@ -19,7 +19,6 @@ export class LikeComponent implements AfterViewInit {
     @Input() objectIdProps!: number;
     @Input() typeObject!: number;
     @Input() award: any;
-    @Input() isExtendedMode!: boolean;
 
     isUserLiked!: boolean;
     likesCount!: number;

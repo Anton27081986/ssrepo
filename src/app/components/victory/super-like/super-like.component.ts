@@ -19,7 +19,6 @@ export class SuperLikeComponent implements AfterViewInit {
     @Input() objectIdProps!: number;
     @Input() typeObject!: number;
     @Input() award: any;
-    @Input() isExtendedMode!: boolean;
 
     isUserLiked!: boolean;
     likesCount!: number;
@@ -54,7 +53,7 @@ export class SuperLikeComponent implements AfterViewInit {
         if (this.isClickLike) {
             this.apiService.deleteLike(objectId, type).subscribe({
                 next: () => {
-                    this.award = null;
+                    this.award = 0;
                     this.likesCount -= 1;
                     this.isClickLike = false;
                     this.chDRef.markForCheck();

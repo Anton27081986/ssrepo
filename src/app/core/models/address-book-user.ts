@@ -11,4 +11,5 @@ export interface IAddressBookUser {
 	phone?: string;
 	phoneLocal?: string;
 	linkToCall?: string;
+	isIntranet?: boolean;
 }

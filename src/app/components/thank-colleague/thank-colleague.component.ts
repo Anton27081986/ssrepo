@@ -11,8 +11,9 @@ import { ApiService } from '@app/core/services/api.service';
 import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzIconService } from 'ng-zorro-antd/icon';
-import { AppIcons } from '@app/core/icons';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
+import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
+import { AppIcons } from "@app/core/icons";
 
 @Component({
 	selector: 'app-thank-colleague',
@@ -32,7 +33,7 @@ export class ThankColleagueComponent implements OnInit {
 	public pageIndex = 1;
 	public offset = 0;
 	public currentUserId: any;
-	public getExtendedMode!: Observable<any>;
+	public getExtendedMode!: boolean;
 
 	private readonly modelChanged: Subject<string> = new Subject<string>();
 
@@ -151,6 +152,24 @@ export class ThankColleagueComponent implements OnInit {
 				this.loadAllThanksForColleagues(this.pageSize, this.offset);
 				this.cdr.detectChanges();
 			});
+	}
+
+	// Модальное окно раскрытой карточки
+	showModalOpenOut(id: number): void {
+		this.modalCreateService
+			.create({
+				nzClosable: true,
+				nzFooter: null,
+				nzTitle: 'Информация о пользователе',
+				nzNoAnimation: false,
+				nzWidth: '365px',
+				nzContent: ModalInfoComponent,
+				nzViewContainerRef: this.viewContainerRef,
+				nzData: {
+					data: id,
+				},
+			})
+			.afterClose.subscribe();
 	}
 
 	public showModal(): void {
