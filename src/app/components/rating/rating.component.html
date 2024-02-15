@@ -1,203 +1,203 @@
-<!--<div class="rating">-->
-<!--  <div class="header">-->
-<!--    <div>-->
-<!--      <div class="title">-->
-<!--        <h1>рейтинги</h1>-->
-<!--        <div class="rating-item">-->
-<!--          <span> {{ (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="open-all-table">-->
-<!--      <div class="search">-->
-<!--        <span>-->
-<!--             <nz-select-->
-<!--               nzShowSearch-->
-<!--               nzServerSearch-->
-<!--               nzPlaceHolder="Участник"-->
-<!--               [(ngModel)]="selectedValue"-->
-<!--               [nzShowArrow]="true"-->
-<!--               [nzFilterOption]="nzFilterOption"-->
-<!--               (ngModelChange)="onUserChange()"-->
-<!--               (nzOnSearch)="search($event)"-->
-<!--             >-->
-<!--         <nz-option *ngFor="let user of listOfOption" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>-->
-<!--       </nz-select>-->
-<!--        </span>-->
-<!--      </div>-->
+<div class="rating">
+  <div class="header">
+    <div>
+      <div class="title">
+        <h1>рейтинги</h1>
+        <div class="rating-item">
+          <span> {{ (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="open-all-table">
+      <div class="search">
+        <span>
+             <nz-select
+               nzShowSearch
+               nzServerSearch
+               nzPlaceHolder="Участник"
+               [(ngModel)]="selectedValue"
+               [nzShowArrow]="true"
+               [nzFilterOption]="nzFilterOption"
+               (ngModelChange)="onUserChange()"
+               (nzOnSearch)="search($event)"
+             >
+         <nz-option *ngFor="let user of listOfOption" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+       </nz-select>
+        </span>
+      </div>
 
-<!--      <div class="select-group">-->
-<!--        <nz-select-->
-<!--          nzAllowClear="false"-->
-<!--          nzPlaceHolder="Выберите неделю"-->
-<!--          [(ngModel)]="weekId"-->
-<!--          (ngModelChange)="selectWeek($event)"-->
-<!--          [ngModelOptions]="{ standalone: true }-->
-<!--        ">-->
-<!--          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of rankWeeks | async"></nz-option>-->
-<!--        </nz-select>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
+      <div class="select-group">
+        <nz-select
+          nzAllowClear="false"
+          nzPlaceHolder="Выберите неделю"
+          [(ngModel)]="weekId"
+          (ngModelChange)="selectWeek($event)"
+          [ngModelOptions]="{ standalone: true }
+        ">
+          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of rankWeeks | async"></nz-option>
+        </nz-select>
+      </div>
+    </div>
+  </div>
 
-<!--  <div class="content" *ngIf="rankTypes | async as rankTypes">-->
-<!--    <div class="rating-list">-->
-<!--      <ng-container *ngIf="rankTypes">-->
-<!--        <ng-container *ngFor="let type of rankTypes?.items;">-->
-<!--          <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"-->
-<!--               (click)="clickByTypeRank(type.id, type?.membersCount,  $event)">-->
-<!--            <span-->
-<!--              nzTooltipTitle="{{ type?.name }}"-->
-<!--              nz-tooltip-->
-<!--            >-->
-<!--              {{ type?.shortName }}</span>-->
-<!--            <span>-->
-<!--              <ng-container *ngIf="type?.rate >= rateValue.great">-->
-<!--                <span class="color-rate great">{{ type?.rate === null? '-': type?.rate }}</span>-->
-<!--                / <span>{{ type?.membersCount }}</span>-->
-<!--              </ng-container>-->
+  <div class="content" *ngIf="rankTypes | async as rankTypes">
+    <div class="rating-list">
+      <ng-container *ngIf="rankTypes">
+        <ng-container *ngFor="let type of rankTypes?.items;">
+          <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
+               (click)="clickByTypeRank(type.id, type?.membersCount,  $event)">
+            <span
+              nzTooltipTitle="{{ type?.name }}"
+              nz-tooltip
+            >
+              {{ type?.shortName }}</span>
+            <span>
+              <ng-container *ngIf="type?.rate >= rateValue.great">
+                <span class="color-rate great">{{ type?.rate === null? '-': type?.rate }}</span>
+                / <span>{{ type?.membersCount }}</span>
+              </ng-container>
 
-<!--              <ng-container *ngIf="(type?.rate <= rateValue.good1 && type?.rate >= rateValue.good2)">-->
-<!--                <span class="color-rate good">{{ type?.rate === null? '-': type?.rate }}</span>-->
-<!--                / <span>{{ type?.membersCount }}</span>-->
-<!--              </ng-container>-->
+              <ng-container *ngIf="(type?.rate <= rateValue.good1 && type?.rate >= rateValue.good2)">
+                <span class="color-rate good">{{ type?.rate === null? '-': type?.rate }}</span>
+                / <span>{{ type?.membersCount }}</span>
+              </ng-container>
 
-<!--              <ng-container *ngIf="type?.rate <= rateValue.bad">-->
-<!--                <span class="color-rate bad">{{ type?.rate === null ? '-': type?.rate }}</span>-->
-<!--                / <span>{{ type?.membersCount }}</span>-->
-<!--              </ng-container>-->
-<!--            </span>-->
-<!--          </div>-->
-<!--        </ng-container>-->
-<!--      </ng-container>-->
-<!--    </div>-->
+              <ng-container *ngIf="type?.rate <= rateValue.bad">
+                <span class="color-rate bad">{{ type?.rate === null ? '-': type?.rate }}</span>
+                / <span>{{ type?.membersCount }}</span>
+              </ng-container>
+            </span>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
 
-<!--    <ng-container *ngIf="(ranks | async)?.items as rating">-->
-<!--      <nz-list class="card-list" [nzDataSource]="rating" [nzRenderItem]="item">-->
-<!--        <ng-template #item let-rank>-->
-<!--          <nz-list-item [nzContent]="nzContent">-->
-<!--            <ng-template #nzContent>-->
+    <ng-container *ngIf="(ranks | async)?.items as rating">
+      <nz-list class="card-list" [nzDataSource]="rating" [nzRenderItem]="item">
+        <ng-template #item let-rank>
+          <nz-list-item [nzContent]="nzContent">
+            <ng-template #nzContent>
 
-<!--              <ng-container [ngSwitch]="rank?.type">-->
-<!--                <div class="card user" *ngSwitchCase="0">-->
-<!--                  <div>-->
-<!--                    <div class="personal">-->
-<!--                      <div class="img" (click)="showModalOpenOut(rank?.user?.id)">-->
-<!--                        <img src="{{ rank?.user?.avatarUrl }}" alt="user" />-->
-<!--                      </div>-->
+              <ng-container [ngSwitch]="rank?.type">
+                <div class="card user" *ngSwitchCase="0">
+                  <div>
+                    <div class="personal">
+                      <div class="img" (click)="showModalOpenOut(rank?.user?.id)">
+                        <img src="{{ rank?.user?.avatarUrl }}" alt="user" />
+                      </div>
 
-<!--                      <ng-container [ngSwitch]="rank?.place">-->
-<!--                        <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>-->
-<!--                        <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>-->
-<!--                        <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>-->
-<!--                      </ng-container>-->
+                      <ng-container [ngSwitch]="rank?.place">
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
+                        <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="6"></span>
+                      </ng-container>
 
-<!--                      <div class="title">-->
-<!--                        <div class="fio">-->
-<!--                          <span>{{ rank?.user?.name }}</span>-->
-<!--                        </div>-->
-<!--                        <div class="job">-->
-<!--                          <div *ngIf="false">{{ rank?.user.position }}</div>-->
-<!--                          <div>{{ rank?.user.department }}</div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <div class="icons">-->
-<!--                      <span class="count count-top">-->
-<!--                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}-->
-<!--                    </span>-->
-<!--                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>-->
-<!--                    </div>-->
-<!--                  </div>-->
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.user?.name }}</span>
+                        </div>
+                        <div class="job">
+                          <div *ngIf="false">{{ rank?.user.position }}</div>
+                          <div>{{ rank?.user.department }}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
 
-<!--                </div>-->
-<!--                <div class="card project" *ngSwitchCase="1">-->
-<!--                  <div>-->
-<!--                    <div class="personal">-->
-<!--                      <div class="img">-->
-<!--                        <img src="{{ rank?.project?.avatarUrl }}" alt="project" />-->
-<!--                      </div>-->
-<!--                      <div class="title">-->
-<!--                        <div class="fio">-->
-<!--                          <span>{{ rank?.project?.name }}</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="icons">-->
-<!--                      <span class="count count-top">-->
-<!--                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}-->
-<!--                    </span>-->
-<!--                    <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>-->
-<!--                  </div>-->
+                </div>
+                <div class="card project" *ngSwitchCase="1">
+                  <div>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="{{ rank?.project?.avatarUrl }}" alt="project" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.project?.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                    <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                  </div>
 
-<!--                </div>-->
-<!--                <div class="card distributor" *ngSwitchCase="2">-->
-<!--                  <div>-->
-<!--                    <div class="personal">-->
-<!--                      <div class="img">-->
-<!--                        <img src="{{ rank?.distributor?.avatarUrl }}" alt="project" />-->
-<!--                      </div>-->
-<!--                      <div class="title">-->
-<!--                        <div class="fio">-->
-<!--                          <span>{{ rank?.distributor?.name }}</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="icons">-->
-<!--                    <div class="icons">-->
-<!--                      <span class="count count-top">-->
-<!--                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}-->
-<!--                    </span>-->
-<!--                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>-->
-<!--                    </div>-->
-<!--                  </div>-->
+                </div>
+                <div class="card distributor" *ngSwitchCase="2">
+                  <div>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="{{ rank?.distributor?.avatarUrl }}" alt="project" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.distributor?.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icons">
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
 
-<!--                </div>-->
-<!--                <div class="card team" *ngSwitchCase="3">-->
-<!--                  <div>-->
-<!--                    <div class="personal">-->
-<!--                      <div class="img">-->
-<!--                        <img src="{{ rank?.team?.avatarUrl }}" alt="project" />-->
-<!--                      </div>-->
-<!--                      <div class="title">-->
-<!--                        <div class="fio">-->
-<!--                          <span>{{ rank?.team?.name }}</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="icons">-->
-<!--                    <div class="icons">-->
-<!--                      <span class="count count-top">-->
-<!--                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}-->
-<!--                    </span>-->
-<!--                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>-->
-<!--                    </div>-->
-<!--                  </div>-->
+                </div>
+                <div class="card team" *ngSwitchCase="3">
+                  <div>
+                    <div class="personal">
+                      <div class="img">
+                        <img src="{{ rank?.team?.avatarUrl }}" alt="project" />
+                      </div>
+                      <div class="title">
+                        <div class="fio">
+                          <span>{{ rank?.team?.name }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="icons">
+                    <div class="icons">
+                      <span class="count count-top">
+                      {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
+                    </span>
+                      <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
+                    </div>
+                  </div>
 
-<!--                </div>-->
-<!--              </ng-container>-->
+                </div>
+              </ng-container>
 
-<!--            </ng-template>-->
-<!--          </nz-list-item>-->
-<!--        </ng-template>-->
+            </ng-template>
+          </nz-list-item>
+        </ng-template>
 
-<!--      </nz-list>-->
-<!--    </ng-container>-->
+      </nz-list>
+    </ng-container>
 
-<!--  </div>-->
+  </div>
 
-<!--  <div class="pagination">-->
-<!--    <nz-pagination-->
-<!--      [nzTotal]="total+pageSize"-->
-<!--      [nzPageIndex]="pageIndex"-->
-<!--      [nzPageSize]="pageSize"-->
-<!--      (nzPageIndexChange)="nzPageIndexChange($event)"-->
-<!--      (nzPageSizeChange)="pageSize = $event"-->
-<!--      [nzResponsive]="true"-->
-<!--    >-->
-<!--    </nz-pagination>-->
-<!--  </div>-->
-<!--</div>-->
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total+pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
+  </div>
+</div>

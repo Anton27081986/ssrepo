@@ -36,6 +36,7 @@ import { LoaderComponent } from '@app/shared/components/loader/loader.component'
 import { CardVictoryComponent } from '@app/components/victory/card-victory/card-victory.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
+import { RatingComponent } from '@app/components/rating/rating.component';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -67,7 +68,7 @@ import { SearchComponent } from './search/search.component';
 		ThankColleagueComponent,
 		VictoryComponent,
 		BirthdayComponent,
-		// RatingComponent,
+		RatingComponent,
 		CurrencyComponent,
 		AddressBookComponent,
 		ModalInfoComponent,
@@ -129,7 +130,7 @@ import { SearchComponent } from './search/search.component';
 		ThankColleagueComponent,
 		BirthdayComponent,
 		VictoryComponent,
-		// RatingComponent,
+		RatingComponent,
 		CurrencyComponent,
 		AddressBookComponent,
 	],

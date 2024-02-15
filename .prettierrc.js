@@ -35,4 +35,5 @@ module.exports = {
             options: {parser: 'angular'},
         },
     ],
+	endOfLine: "auto"
 };
