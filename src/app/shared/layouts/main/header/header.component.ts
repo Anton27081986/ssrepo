@@ -38,8 +38,6 @@ export class HeaderComponent implements OnInit {
 			this.listMenu.unshift({ link: '', name: 'Избранное', items: this.favoritemenu });
 		});
 
-		// this.profile = this.userService.loadUserProfile();
-
 		this.userProfile$ = this.userStateService.userProfile$;
 	}
 

@@ -6,10 +6,11 @@ import { AppIcons } from '@app/core/icons';
 	providedIn: 'root',
 })
 export class IconsService {
-	public constructor(private readonly nzIconService: NzIconService) {}
+	public constructor(private readonly nzIconService: NzIconService) {
+		this.registerIcons();
+	}
 
 	public registerIcons() {
-		debugger;
 		this.nzIconService.addIconLiteral('ss:exit', AppIcons.exit);
 		this.nzIconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
 		this.nzIconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
