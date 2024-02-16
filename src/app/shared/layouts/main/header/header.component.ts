@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AppRoutes } from '@app/common/routes';
-import { ApiService } from '@app/core/services/api.service';
-import { UserStateService } from '@app/core/states/user-state.service';
-import { Observable } from 'rxjs';
-import { IUserProfile } from '@app/core/models/user-profile';
-import { CallPhoneService } from '@app/core/services/call-phone.service';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {AppRoutes} from '@app/common/routes';
+import {ApiService} from '@app/core/services/api.service';
+import {UserStateService} from '@app/core/states/user-state.service';
+import {Observable} from 'rxjs';
+import {IUserProfile} from '@app/core/models/user-profile';
+import {CallPhoneService} from '@app/core/services/call-phone.service';
+import {environment} from "@environments/environment";
 
 @Component({
 	selector: 'app-header',
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit {
 	public profile!: Observable<any>;
 	public favoritemenu!: any; // IMainMenu[]
 	public userProfile$?: Observable<IUserProfile | null>;
+	public backUrl: boolean = environment.production;
 
 	protected readonly AppRoutes = AppRoutes;
 	public constructor(
