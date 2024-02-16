@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {map, Subject, tap, zip} from 'rxjs';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 import {NzSelectComponent} from 'ng-zorro-antd/select';
 
 @Component({

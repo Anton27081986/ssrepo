@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, of, tap} from 'rxjs';
 import {IThanksColleagueItem} from '@app/components/thank-colleague/models/thanks-colleague-item';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 import {ICreateThanksColleagueRequest} from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import {catchError} from 'rxjs/operators';
-import {IResponse} from '@app/components/address-book/models/response';
+import {IResponse} from '@app/core/utils/response';
 
 @Injectable({
     providedIn: 'root',

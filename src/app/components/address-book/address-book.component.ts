@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from '@app/common/icons';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {AppIcons} from '@app/core/icons';
+import {ApiService} from '@app/core/services/api.service';
 import {ModalInfoComponent} from '@app/components/modal/modal-info/modal-info.component';
 import {NzModalService} from 'ng-zorro-antd/modal';
-import {IAddressBookUser} from '@app/components/address-book/models/address-book-user';
-import {IAddressBookSearchUser} from '@app/components/address-book/models/address-book-search-user';
+import {IAddressBookUser} from '@app/core/models/address-book-user';
+import {IAddressBookSearchUser} from '@app/core/models/address-book-search-user';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {tap} from 'rxjs';
 

@@ -5,7 +5,7 @@ import {
     Component,
     Input,
 } from '@angular/core';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 
 @Component({
     selector: 'app-like',

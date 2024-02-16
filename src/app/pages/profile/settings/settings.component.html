@@ -2,12 +2,12 @@
   <h1>Основная информация</h1>
 </div>
 
-<div class="settings">
+<div class="settings" *ngIf = "userProfile$ | async as profileData">
   <div class="photo">
       <div class="personal">
         <div class="img">
-          <ng-container *ngIf="profile | async as url">
-            <img src="{{ url?.avatarUrl }}" alt="user" />
+          <ng-container>
+            <img src="{{ profileData?.avatarUrl }}" alt="user" />
           </ng-container>
           </div>
           <div class="m-t-8">
