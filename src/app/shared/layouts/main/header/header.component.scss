@@ -285,6 +285,19 @@ app-search.mobile {
     justify-content: center;
     align-items: center;
     margin-top: 8px;
+
+    a {
+        background-color: white;
+        padding: 4px 0 4px 16px;
+        display: flex;
+        width: 262px;
+        border-radius: 8px;
+        border: 1px solid $border-color;
+
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 }
 
 // Small devices (landscape phones, 576px and up)
