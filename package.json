@@ -13,8 +13,7 @@
         "prettier:fix:all": "prettier --write .",
         "prettier:fix": "prettier --write",
         "lint": "ng lint",
-        "commitlint": "commitlint --from=HEAD~1",
-        "prepare": "husky install"
+        "commitlint": "commitlint --from=HEAD~1"
     },
     "private": true,
     "dependencies": {
@@ -32,7 +31,6 @@
         "@ngneat/until-destroy": "^10.0.0",
         "@ngrx/effects": "^16.1.0",
         "@ngrx/router-store": "^16.1.0",
-        "@ngrx/store": "^16.1.0",
         "@ngrx/store-devtools": "^16.1.0",
         "angular-moment": "^1.3.0",
         "jwt-decode": "^3.1.2",
@@ -73,7 +71,6 @@
         "eslint-plugin-prettier": "^5.0.0",
         "eslint-plugin-rxjs": "^5.0.3",
         "eslint-plugin-unicorn": "^48.0.1",
-        "husky": "^8.0.3",
         "jasmine-core": "~4.6.0",
         "karma": "~6.4.0",
         "karma-chrome-launcher": "~3.2.0",

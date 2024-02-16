@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
 import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {ApiService} from '@app/core/services/api.service';
 import {map, Observable} from 'rxjs';
 
 @Component({

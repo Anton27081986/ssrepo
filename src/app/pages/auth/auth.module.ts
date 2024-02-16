@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-
 import {SignInComponent} from '@auth/sign-in/sign-in.component';
 import {ForgotPasswordComponent} from '@auth/forgot-password/forgot-password.component';
 import {NzCardModule} from 'ng-zorro-antd/card';
@@ -12,10 +11,6 @@ import {NzIconModule} from 'ng-zorro-antd/icon';
 import {ResetPasswordComponent} from '@auth/reset-password/reset-password.component';
 import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import {AuthRoutingModule} from './auth-routing.module';
-import {StoreModule} from '@ngrx/store';
-import {reducers} from '@auth/store/reducers';
-import {EffectsModule} from '@ngrx/effects';
-import {GetCurrentUserEffect} from '@auth/store/effects/get-current-user.effect';
 
 @NgModule({
     declarations: [SignInComponent, ForgotPasswordComponent, ResetPasswordComponent],
@@ -29,9 +24,7 @@ import {GetCurrentUserEffect} from '@auth/store/effects/get-current-user.effect'
         ReactiveFormsModule,
         NzButtonModule,
         NzIconModule,
-        NzToolTipModule,
-        StoreModule.forFeature('auth', reducers),
-        EffectsModule.forFeature([GetCurrentUserEffect]),
+        NzToolTipModule
     ],
 })
 export class AuthModule {}

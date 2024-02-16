@@ -4,11 +4,11 @@
 module.exports = {
     printWidth: 100,
     tabWidth: 4,
-    useTabs: false,
+    useTabs: true,
     semi: true,
     singleQuote: true,
     trailingComma: 'all',
-    bracketSpacing: false,
+    bracketSpacing: true,
     arrowParens: 'avoid',
     htmlWhitespaceSensitivity: 'ignore',
     plugins: [require.resolve('prettier-plugin-organize-attributes')],
@@ -35,4 +35,5 @@ module.exports = {
             options: {parser: 'angular'},
         },
     ],
+	endOfLine: "auto"
 };

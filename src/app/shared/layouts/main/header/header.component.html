@@ -40,11 +40,11 @@
             <div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
               <div class="icon-bg">
 
-                <ng-container *ngIf="profile | async as url; else image">
-                  <img src="{{ url?.avatarUrl }}" alt="user" />
-                </ng-container>
+	              <ng-container *ngIf="(userProfile$ | async) as userProfile; else noImagePlaceholder">
+		              <img src="{{ userProfile?.avatarUrl }}" alt="user" />
+	              </ng-container>
 
-                <ng-template #image>
+                <ng-template #noImagePlaceholder>
                   <img src="assets/images/noimage.jpg" alt="user1" />
                 </ng-template>
 
@@ -68,15 +68,16 @@
   <nz-content>
     <app-mobile-menu [menu]="listMenu" [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
   </nz-content>
-
-  <div class="back">
-
-    <nz-content>
-      <a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>
-    </nz-content>
-
-  </div>
 </div>
 
+<div class="back">
+	<nz-content *ngIf="backUrl; else devUrl">
+		<a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>
+	</nz-content>
 
-
+	<ng-template #devUrl>
+		<nz-content>
+			<a href="https://ssnab.it/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>
+		</nz-content>
+	</ng-template>
+</div>
