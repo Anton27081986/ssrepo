@@ -24,8 +24,7 @@
 
   <div class="tabs">
     <div class="calendar">
-      <nz-date-picker [nzPlaceHolder]="dateToday"
-                      [(ngModel)]="dateToday"
+      <nz-date-picker [(ngModel)]="date"
                       [nzAllowClear]="false"
                       (ngModelChange)="onChange($event)"
                       nzFormat="dd.MM.yyyy"
@@ -43,7 +42,7 @@
         [nzType]="'line'">
 
             <nz-tab *ngFor="let day of birthdays;"
-                    nzTitle="{{ day.name }}">
+                    nzTitle="{{ day.name }}" (nzClick)="onTabClick(day.name)">
 
               <div class="content">
                 <div class="card-list">
