@@ -6,9 +6,7 @@ import {
 	ViewChild,
 	ViewContainerRef,
 } from '@angular/core';
-import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
-import { AppIcons } from '@app/core/icons';
 import { map } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
@@ -25,34 +23,22 @@ import { IBirthday } from '@app/core/models/birthday';
 export class BirthdayComponent implements OnInit {
 	@ViewChild(NzCarouselComponent, { static: false }) myCarousel: NzCarouselComponent | undefined;
 
-	date = new Date();
-	birthdays: IBirthday[] = [];
-	selectedTabIndex = 1;
+	protected date = new Date();
+	protected birthdays: IBirthday[] = [];
+	protected selectedTabIndex = 1;
 
 	constructor(
-		private readonly iconService: NzIconService,
 		private readonly apiService: ApiService,
 		public modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly ref: ChangeDetectorRef,
-	) {
-		// TODO: move to icon registration service
-		this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
-		this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
-		this.iconService.addIconLiteral('ss:medalGold', AppIcons.medalGold);
-		this.iconService.addIconLiteral('ss:medalSilver', AppIcons.medalSilver);
-		this.iconService.addIconLiteral('ss:medalBronze', AppIcons.medalBronze);
-		this.iconService.addIconLiteral('ss:like', AppIcons.like);
-		this.iconService.addIconLiteral('ss:comment', AppIcons.comment);
-		this.iconService.addIconLiteral('ss:plus', AppIcons.plus);
-		this.iconService.addIconLiteral('ss:blocknote', AppIcons.blocknote);
-	}
+	) {}
 
-	ngOnInit(): any {
+	public ngOnInit(): any {
 		this.onChange(this.date);
 	}
 
-	onChange(result: Date): void {
+	public onChange(result: Date): void {
 		this.date = result;
 
 		// TODO : make unsubscribe
@@ -66,7 +52,7 @@ export class BirthdayComponent implements OnInit {
 			});
 	}
 
-	showModalOpenOut(item: any): void {
+	public showModalOpenOut(item: any): void {
 		this.modalCreate
 			.create({
 				nzClosable: true,
@@ -83,11 +69,11 @@ export class BirthdayComponent implements OnInit {
 			.afterClose.subscribe();
 	}
 
-	selectTabByDay(date: string) {
+	public selectTabByDay(date: string) {
 		this.selectedTabIndex = this.birthdays.findIndex(x => x.name === date);
 	}
 
-	onTabClick(date: string) {
+	public onTabClick(date: string) {
 		const dateFormat = date.split('.');
 
 		this.date = new Date([dateFormat[1], dateFormat[0], dateFormat[2]].join('/'));
