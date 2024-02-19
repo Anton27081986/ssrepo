@@ -289,10 +289,26 @@
 
                     .count-bottom {
                         right: 18px;
-                        bottom: 18px;
+                        top: 48px;
                         background-color: #f4f5f6;
                         color: #67778e;
                     }
+
+					.chat {
+						right: 18px;
+						bottom: 18px;
+						background-color: #f4f5f6;
+						color: #f4f5f6;
+						cursor: pointer;
+					}
+
+					.comment-icon {
+						font-size: 20px;
+
+						::ng-deep path {
+							stroke: $blue;
+						}
+					}
 
                     ::ng-deep .anticon {
                         fill-opacity: 1;
