@@ -1,0 +1,71 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+:host {
+	background-color: #0e0f10;
+}
+
+.transport {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+
+		h1 {
+			text-transform: uppercase;
+			a {
+				color: $black !important;
+			}
+		}
+	}
+
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+
+		.bus-list {
+			display: flex;
+			flex-direction: column;
+			gap: 28px;
+
+			.bus {
+				display: flex;
+				justify-content: space-between;
+
+				.direction {
+					max-width: 550px;
+					display: flex;
+					gap: 8px;
+
+					.station {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						width: 244px;
+						height: 36px;
+						border-radius: 10px;
+						border: 1px solid #A4B8FF;
+						background-color: #CBD7FF;
+					}
+
+					.direction-icon {
+						svg { width: 28px !important; }
+					}
+				}
+
+			}
+
+		}
+	}
+}
+
+// Small devices (landscape phones, 576px and up)
+@media screen and (max-width: 545px) {
+    .transport {
+        margin-top: 30px;
+    }
+}

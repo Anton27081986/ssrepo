@@ -28,5 +28,6 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:closeLight', AppIcons.iconCloseLight);
 		this.nzIconService.addIconLiteral('ss:phone', AppIcons.phone);
 		this.nzIconService.addIconLiteral('ss:mail', AppIcons.mail);
+		this.nzIconService.addIconLiteral('ss:direction', AppIcons.direction);
 	}
 }

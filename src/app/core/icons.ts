@@ -387,4 +387,13 @@ export class AppIcons {
 		'<rect width="1.8856" height="15.0848" rx="0.942799" transform="matrix(0.707103 0.707111 -0.707103 0.707111 10.666 0)" fill="#22223A"/>' +
 		'<rect width="1.8856" height="15.0848" rx="0.942799" transform="matrix(-0.707103 0.707111 -0.707103 -0.707111 12 10.6667)" fill="#22223A"/>' +
 		'</svg>';
+
+	public static direction =
+		'<svg width="48" height="14" viewBox="0 0 48 14" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M11 7H39.1816" stroke="#4770FF" stroke-width="1.5"/>' +
+		'<circle cx="7" cy="7" r="2" fill="#4770FF"/>' +
+		'<circle cx="7" cy="7" r="4" stroke="#4770FF" stroke-width="1.5"/>' +
+		'<circle cx="7" cy="7" r="5.25" stroke="#4770FF" stroke-opacity="0.3" stroke-width="2.5"/>' +
+		'<circle cx="43.1816" cy="7" r="4" stroke="#4770FF" stroke-width="1.5"/>' +
+		'</svg>';
 }
