@@ -20,7 +20,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 11;
+        z-index: 1001;
     }
 
     .header {
@@ -287,12 +287,7 @@ app-search.mobile {
     margin-top: 8px;
 
     a {
-        background-color: white;
-        padding: 4px 0 4px 16px;
-        display: flex;
-        width: 262px;
-        border-radius: 8px;
-        border: 1px solid $border-color;
+		color: $blue;
 
         &:hover {
             opacity: 0.7;
