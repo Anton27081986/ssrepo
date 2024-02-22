@@ -12,7 +12,7 @@ export class AuthenticationService {
 		JSON.parse(localStorage.getItem('user')!),
 	);
 
-	public user: Observable<IUser | null> = this.userSubject.asObservable();
+	public user$: Observable<IUser | null> = this.userSubject.asObservable();
 
 	private readonly headers = new HttpHeaders()
 		.set('Accept', 'application/json')
@@ -74,6 +74,7 @@ export class AuthenticationService {
 				map(user => {
 					// store user details and jwt token in local storage to keep user logged in between page refreshes
 					localStorage.setItem('user', JSON.stringify(user));
+
 					this.userSubject.next(user);
 
 					return user;

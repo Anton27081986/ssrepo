@@ -31,7 +31,6 @@ export class SignInComponent implements OnInit {
 		private readonly authenticationService: AuthenticationService,
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
-		private readonly userStateService: UserStateService,
 	) {}
 
 	public ngOnInit() {
@@ -58,14 +57,6 @@ export class SignInComponent implements OnInit {
 			.login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
 			.pipe(
 				first(),
-				switchMap(_ => {
-					return this.userStateService.loadUserProfile().pipe(
-						tap(() => console.log('user profile loaded')),
-						catchError(() => {
-							return of(0);
-						}),
-					);
-				}),
 				switchMap(_ => {
 					return this.authenticationService.authImages().pipe(
 						tap(_ => console.log('authImages Ok')),

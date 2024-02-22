@@ -37,6 +37,7 @@ export class ProfilePopupComponent implements OnInit {
 	}
 
 	public enterUnderFriendlyAccount(id: number) {
+		this.userStateService.resetProfile();
 		this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
 
 		setTimeout(function () {
