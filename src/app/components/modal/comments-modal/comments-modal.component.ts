@@ -10,7 +10,7 @@ import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { ApiService } from '@app/core/services/api.service';
 import { Observable, tap } from 'rxjs';
 import { VictoryService } from '@app/components/victory/victory.service';
-import { UserStateService } from '@app/core/states/user-state.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 @Component({
 	selector: 'app-comments-modal',
@@ -33,7 +33,7 @@ export class CommentsModalComponent implements OnInit {
 		private readonly modal: NzModalRef,
 		private readonly formBuilder: FormBuilder,
 		private readonly chDRef: ChangeDetectorRef,
-		private readonly userStateService: UserStateService,
+		private readonly userStateService: UserProfileStoreService,
 	) {}
 
 	public ngOnInit() {

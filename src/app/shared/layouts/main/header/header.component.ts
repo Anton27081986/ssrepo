@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {AppRoutes} from '@app/common/routes';
 import {ApiService} from '@app/core/services/api.service';
-import {UserStateService} from '@app/core/states/user-state.service';
+import {UserProfileStoreService} from '@app/core/states/user-profile-store.service';
 import {Observable} from 'rxjs';
 import {IUserProfile} from '@app/core/models/user-profile';
 import {CallPhoneService} from '@app/core/services/call-phone.service';
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
 	protected readonly AppRoutes = AppRoutes;
 	public constructor(
 		private readonly apiService: ApiService,
-		private readonly userStateService: UserStateService,
+		private readonly userStateService: UserProfileStoreService,
 		private readonly callPhoneService: CallPhoneService,
 	) {}
 

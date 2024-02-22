@@ -6,7 +6,7 @@ import { first, of, tap } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
-import { UserStateService } from '@app/core/states/user-state.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 @Component({
 	selector: 'app-sign-in',

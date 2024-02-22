@@ -1,46 +1,54 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { IUserProfile } from '@app/core/models/user-profile';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, filter, Observable, Subscription, tap } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
 import { AuthenticationService } from '@app/core/states/authentication.service';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class UserStateService {
+export class UserProfileStoreService implements OnDestroy {
 	private readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
 	public userProfile$ = this.userProfileSubject.asObservable();
-
-	// MOVE TO KEY DICTIONARY
 	private readonly userProfileKey: string = 'userProfile';
+	private readonly subscription: Subscription = new Subscription();
 
 	public constructor(
 		private readonly apiService: ApiService,
 		private readonly localStorageService: LocalStorageService,
 		private readonly authenticationService: AuthenticationService,
 	) {
-		this.authenticationService.user$
-			.pipe(
-				tap(user => {
-					if (user) {
-						const userProfile = this.localStorageService.getItem<IUserProfile>(
-							this.userProfileKey,
-						);
+		this.init();
+	}
 
-						if (userProfile) {
-							this.userProfileSubject.next(userProfile);
-						} else {
-							this.loadUserProfile().subscribe();
-						}
+	private init(): void {
+		const sub = this.authenticationService.user$
+			.pipe(
+				filter(user => !!user),
+				switchMap(() => {
+					const userProfile = this.localStorageService.getItem<IUserProfile>(
+						this.userProfileKey,
+					);
+
+					if (userProfile) {
+						this.userProfileSubject.next(userProfile);
+
+						return [];
 					}
+
+					return this.loadUserProfile();
 				}),
 			)
 			.subscribe();
+
+		this.subscription.add(sub);
 	}
 
 	public resetProfile() {
 		this.localStorageService.removeItem(this.userProfileKey);
+		this.userProfileSubject.next(null);
 	}
 
 	public loadUserProfile(): Observable<IUserProfile> {
@@ -50,5 +58,9 @@ export class UserStateService {
 				this.userProfileSubject.next(profile);
 			}),
 		);
+	}
+
+	public ngOnDestroy() {
+		this.subscription.unsubscribe();
 	}
 }
