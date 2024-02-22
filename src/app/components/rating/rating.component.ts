@@ -15,7 +15,7 @@ import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ApiService } from '@app/core/services/api.service';
 import { AppIcons } from '@app/core/icons';
-import { UserStateService } from '@app/core/states/user-state.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 @Component({
 	selector: 'app-rating',
@@ -57,7 +57,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private readonly _apiService: ApiService,
-		private readonly _userService: UserStateService,
+		private readonly _userService: UserProfileStoreService,
 		private readonly iconService: NzIconService,
 		private readonly modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,

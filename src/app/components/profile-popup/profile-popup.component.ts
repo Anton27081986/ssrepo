@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ApiService } from '@app/core/services/api.service';
-import { UserStateService } from '@app/core/states/user-state.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { AuthenticationService } from '@app/core/states/authentication.service';
 import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
@@ -19,7 +19,7 @@ export class ProfilePopupComponent implements OnInit {
 
 	public constructor(
 		private readonly apiService: ApiService,
-		private readonly userStateService: UserStateService,
+		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
 	) {}
 
@@ -37,6 +37,7 @@ export class ProfilePopupComponent implements OnInit {
 	}
 
 	public enterUnderFriendlyAccount(id: number) {
+		this.userStateService.resetProfile();
 		this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
 
 		setTimeout(function () {
