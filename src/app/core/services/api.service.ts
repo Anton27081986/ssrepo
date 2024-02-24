@@ -217,19 +217,19 @@ export class ApiService {
 
 	/** Рейтинги
      /** Список типов рейтингов */
-	public getRankTypes(weekId: any, userId: any): Observable<any> {
+	public getRatingTypes(weekId: any, userId: any): Observable<any> {
 		return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/types`, {
 			params: new HttpParams().set('weekId', weekId).set('userId', userId),
 		});
 	}
 
 	/** Список последних 5 недель */
-	public getRankWeeks(): Observable<any> {
+	public getLastFiveRatingWeeks(): Observable<any> {
 		return this.http.get<any[]>(`${environment.apiUrl}/api/awards/rank/weeks`);
 	}
 
 	/** Cписок пользователей в выбранном рейтинге */
-	public getRank(
+	public getRatings(
 		weekId: number,
 		RankTypeId: number,
 		Limit: number,
