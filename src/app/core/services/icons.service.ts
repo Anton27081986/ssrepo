@@ -35,5 +35,11 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:comment', AppIcons.comment);
 		this.nzIconService.addIconLiteral('ss:plus', AppIcons.plus);
 		this.nzIconService.addIconLiteral('ss:blocknote', AppIcons.blocknote);
+		this.nzIconService.addIconLiteral('ss:medal', AppIcons.medal);
+		this.nzIconService.addIconLiteral('ss:openOut', AppIcons.openOut);
+		this.nzIconService.addIconLiteral('ss:onePeople', AppIcons.onePeople);
+		this.nzIconService.addIconLiteral('ss:twoPeople', AppIcons.twoPeople);
+		this.nzIconService.addIconLiteral('ss:iconClose', AppIcons.iconClose);
+		this.nzIconService.addIconLiteral('ss:attach', AppIcons.attach);
 	}
 }
