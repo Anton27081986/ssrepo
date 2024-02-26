@@ -1,25 +1,29 @@
-<div class="transport">
+<div *ngIf="transport" class="transport">
 	<div class="header">
-		<div class="title">
-			<h1>Расписание</h1>
-			<h2>Корпоративный транспорт «СОЮЗСНАБ»</h2>
-		</div>
-		<div class="controls">
-			<button nz-button class="button" [nzType]="'primary'">Создать уведомление</button>
-		</div>
+		<h1>Корпоративный транспорт</h1>
+		<button *ngIf="transport?.canAddNotification" nz-button class="button" [nzType]="'primary'" (click)="showModalNotice()">Создать уведомление</button>
 	</div>
+
 	<div class="content">
-		<div class="notification">В период с 17.02.2014, 15:00 до 19:02.2024, 09:00 транспорт будед ходить с измененным интервалом в два часа.</div>
+		<app-notice *ngIf="transport?.transportNotify"
+								isLabeled="false"
+								type="warning"
+								title="Изменение в расписании корпоративного транспорта"
+								text="{{ 'В период с ' + (transport?.transportNotify?.dFrom | date: 'dd.MM.yyyy, hh:mm') + ' до ' + (transport?.transportNotify?.dTo | date: 'dd.MM.yyyy, hh:mm')   + ' ' + transport?.transportNotify?.note }}">
+		</app-notice>
 		<div class="bus-list">
-			<div class="bus">
+			<div *ngFor="let bus of transport?.transportList" class="bus">
 				<div class="direction">
-					<p class="station">Москва (м. Щукинская)</p>
+					<p class="station">{{ bus.startRoute }}</p>
 					<span class="direction-icon" nz-icon [nzType]="'ss:direction'"></span>
-					<p class="station">Красногорск (СОЮЗСНАБ)</p>
+					<p class="station">{{  bus.endRoute }}</p>
 				</div>
-				<div class="schedule"></div>
+				<div class="schedule">
+					<div *ngFor="let time of bus?.departureTime" class="item gone" [ngClass]="{'gone': isPast(time), 'next': !isPast(time)}">
+						<span class="bus-icon" nz-icon [nzType]="'ss:bus'"></span> {{ time }}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
 </div>

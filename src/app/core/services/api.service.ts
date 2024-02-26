@@ -8,6 +8,7 @@ import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import { IUserProfile } from '@app/core/models/user-profile';
+import {ITransport} from "@app/core/models/transport";
 
 @Injectable({
 	providedIn: 'root',
@@ -269,5 +270,19 @@ export class ApiService {
 
 	public resetCallByIpPhone(): Observable<any> {
 		return this.http.get<any>(`https://ssnab.it/personal/mols/endCall`);
+	}
+
+	/** Получить расписание транспорта */
+	public getTransport(): Observable<ITransport> {
+		return this.http.get<ITransport>(`${environment.apiUrl}/api/company/transport`);
+	}
+
+	/** Добавить уведомление в расписание транспорта */
+	public sendTransportNote(dFrom: string | undefined, dTo: string | undefined, note: string | undefined): Observable<any> {
+		return this.http.post<any>(`${environment.apiUrl}/api/company/transport`, {
+			dFrom,
+			dTo,
+			note,
+		});
 	}
 }

@@ -29,5 +29,11 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:phone', AppIcons.phone);
 		this.nzIconService.addIconLiteral('ss:mail', AppIcons.mail);
 		this.nzIconService.addIconLiteral('ss:direction', AppIcons.direction);
+		this.nzIconService.addIconLiteral('ss:bus', AppIcons.bus);
+		this.nzIconService.addIconLiteral('ss:ok', AppIcons.ok);
+		this.nzIconService.addIconLiteral('ss:warning', AppIcons.warning);
+		this.nzIconService.addIconLiteral('ss:error', AppIcons.error);
+		this.nzIconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
+		this.nzIconService.addIconLiteral('ss:calendar', AppIcons.calendar);
 	}
 }

@@ -396,4 +396,44 @@ export class AppIcons {
 		'<circle cx="7" cy="7" r="5.25" stroke="#4770FF" stroke-opacity="0.3" stroke-width="2.5"/>' +
 		'<circle cx="43.1816" cy="7" r="4" stroke="#4770FF" stroke-width="1.5"/>' +
 		'</svg>';
+
+	public static bus =
+		'<svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M4.69335 12.8424H4.69956" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M12.2949 12.8424H12.3011" stroke=currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<rect x="1.64648" y="1.49585" width="13.707" height="14.3983" rx="3.25" stroke="currentColor" stroke-width="1.5"/>' +
+		'<line x1="1.58789" y1="9.6731" x2="16.1037" y2="9.6731" stroke="currentColor" stroke-width="1.5"/>' +
+		'<line x1="1.58789" y1="4.83447" x2="16.1037" y2="4.83447" stroke="currentColor" stroke-width="1.5"/>' +
+		'<line x1="8.44141" y1="9.73193" x2="8.44141" y2="4.8938" stroke="currentColor" stroke-width="1.5"/>' +
+		'<line x1="13.1689" y1="17.1518" x2="12.3982" y2="16.2151" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+		'<line x1="0.75" y1="-0.75" x2="1.96298" y2="-0.75" transform="matrix(0.635373 -0.772205 -0.772205 -0.635373 2.77344 17.2544)" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+		'</svg>';
+
+	public static ok =
+		'<svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M14 19.2783V14.0283" stroke="#50D155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M14 10.8284V10.7284" stroke="#50D155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M23.0851 11.08V17.92C23.0851 19.04 22.4851 20.08 21.5151 20.65L15.5751 24.08C14.6051 24.64 13.405 24.64 12.425 24.08L6.48505 20.65C5.51505 20.09 4.91504 19.05 4.91504 17.92V11.08C4.91504 9.96003 5.51505 8.91999 6.48505 8.34999L12.425 4.92C13.395 4.36 14.5951 4.36 15.5751 4.92L21.5151 8.34999C22.4851 8.91999 23.0851 9.95003 23.0851 11.08Z" stroke="#50D155" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static warning =
+		'<svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M14 10.25V15.5" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M23.08 11.08V17.92C23.08 19.04 22.4799 20.08 21.5099 20.65L15.5699 24.08C14.5999 24.64 13.3999 24.64 12.4199 24.08L6.47992 20.65C5.50992 20.09 4.90991 19.05 4.90991 17.92V11.08C4.90991 9.96003 5.50992 8.91999 6.47992 8.34999L12.4199 4.92C13.3899 4.36 14.5899 4.36 15.5699 4.92L21.5099 8.34999C22.4799 8.91999 23.08 9.95003 23.08 11.08Z" stroke="#FF9900" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M14 18.7V18.7999" stroke="#FF9900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static error =
+		'<svg width="28" height="29" viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<g clip-path="url(#clip0_3189_8751)">' +
+		'<path d="M14 10.7283V15.9783" stroke="#EE1C25" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M14 19.1782V19.2782" stroke="#EE1C25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M12.9175 5.875C13.3986 5.04167 14.6014 5.04167 15.0825 5.875L23.7428 20.875C24.2239 21.7083 23.6225 22.75 22.6603 22.75H5.33975C4.3775 22.75 3.77609 21.7083 4.25721 20.875L12.9175 5.875Z" stroke="#EE1C25" stroke-width="1.5"/>' +
+		'</g>' +
+		'<defs>' +
+		'<clipPath id="clip0_3189_8751">' +
+		'<rect width="28" height="28" fill="white" transform="translate(0 0.5)"/>' +
+		'</clipPath>' +
+		'</defs>' +
+		'</svg>';
 }

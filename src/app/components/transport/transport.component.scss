@@ -16,9 +16,6 @@
 
 		h1 {
 			text-transform: uppercase;
-			a {
-				color: $black !important;
-			}
 		}
 	}
 
@@ -35,6 +32,7 @@
 			.bus {
 				display: flex;
 				justify-content: space-between;
+				gap: 16px;
 
 				.direction {
 					max-width: 550px;
@@ -50,10 +48,43 @@
 						border-radius: 10px;
 						border: 1px solid #A4B8FF;
 						background-color: #CBD7FF;
+						margin-bottom: 0;
+						color: #4770FF !important;
 					}
 
 					.direction-icon {
-						svg { width: 28px !important; }
+						font-size: 36px;
+					}
+				}
+
+				.schedule {
+					display: flex;
+					gap: 16px;
+					flex-wrap: wrap;
+
+					.item {
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						width: 100px;
+						height: 36px;
+						border-radius: 10px;
+						background-color: $white;
+					}
+
+					.gone {
+						color: #A9AFB3;
+						border: 1px solid $border-color;
+					}
+
+					.next {
+						border: 1px solid $border-color;
+					}
+
+					.next:not(.next ~ .next) {
+						color: #2D8418 !important;
+						border: 1px solid #91D386 !important;
+						background-color: #D5EDCA !important;
 					}
 				}
 
