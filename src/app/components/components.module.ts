@@ -54,6 +54,11 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ResultItemComponent } from './search/result-item/result-item.component';
 import { SearchComponent } from './search/search.component';
+import { TransportComponent } from '@app/components/transport/transport.component';
+import {NoticeComponent} from "@app/components/notice/notice.component";
+import {
+	ModalTransportNoticeComponent
+} from "@app/components/modal/modal-transport-notice/modal-transport-notice.component";
 
 @NgModule({
 	declarations: [
@@ -83,6 +88,9 @@ import { SearchComponent } from './search/search.component';
 		PaginationComponent,
 		LoaderComponent,
 		CardVictoryComponent,
+		TransportComponent,
+		NoticeComponent,
+		ModalTransportNoticeComponent,
 	],
 	imports: [
 		CommonModule,
@@ -133,6 +141,7 @@ import { SearchComponent } from './search/search.component';
 		RatingComponent,
 		CurrencyComponent,
 		AddressBookComponent,
+		TransportComponent,
 	],
 })
 export class ComponentsModule {}

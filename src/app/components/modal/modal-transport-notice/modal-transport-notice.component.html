@@ -1,0 +1,57 @@
+<div class="openout-modal">
+	<form class="card" [formGroup]="noteForm" (ngSubmit)="saveAndCloseModal()">
+		<div class="dates">
+			<nz-form-item>
+				<nz-form-label [nzSm]="8">Действительно от</nz-form-label>
+				<nz-form-control [nzSm]="16">
+					<div class="calendar">
+							<nz-date-picker formControlName="dFrom"
+															[nzPlaceHolder]="formatDate(Date.now(), 'dd.MM.yyyy hh:mm', 'ru-RU')"
+															[nzShowTime]="true"
+															[nzAllowClear]="false"
+															[nzDisabledDate]="disabledDate"
+															nzFormat="dd.MM.yyyy hh:mm"
+															[nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+
+							<span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
+							<ng-template #sufixCalendar>
+								<i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
+							</ng-template>
+					</div>
+				</nz-form-control>
+			</nz-form-item>
+			<nz-form-item>
+				<nz-form-label [nzSm]="8">До включительно</nz-form-label>
+				<nz-form-control [nzSm]="16">
+					<div class="calendar">
+						<nz-date-picker formControlName="dTo"
+														[nzPlaceHolder]="formatDate(Date.now(), 'dd.MM.yyyy hh:mm', 'ru-RU')"
+														[nzShowTime]="true"
+														[nzAllowClear]="false"
+														[nzDisabledDate]="disabledBeforeFrom"
+														nzFormat="dd.MM.yyyy hh:mm"
+														[nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+
+						<span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
+						<ng-template #sufixCalendar>
+							<i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
+						</ng-template>
+					</div>
+				</nz-form-control>
+			</nz-form-item>
+		</div>
+		<nz-form-item>
+			<nz-form-label [nzSm]="7">Текст уведомления</nz-form-label>
+			<nz-form-control>
+				<nz-textarea-count>
+					<textarea formControlName="note" nz-input rows="2" placeholder=""></textarea>
+				</nz-textarea-count>
+			</nz-form-control>
+		</nz-form-item>
+		<nz-form-item>
+			<nz-form-control [nzOffset]="8" [nzSpan]="12">
+				<button nz-button nzType="primary" [disabled]="!noteForm.valid">Опубликовать</button>
+			</nz-form-control>
+		</nz-form-item>
+	</form>
+</div>
