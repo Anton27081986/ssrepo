@@ -13,7 +13,6 @@ export class IconsService {
 	public registerIcons() {
 		this.nzIconService.addIconLiteral('ss:exit', AppIcons.exit);
 		this.nzIconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
-		this.nzIconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
 		this.nzIconService.addIconLiteral('ss:settings', AppIcons.settings);
 		this.nzIconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
 		this.nzIconService.addIconLiteral('ss:enter', AppIcons.enter);
@@ -33,7 +32,13 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:ok', AppIcons.ok);
 		this.nzIconService.addIconLiteral('ss:warning', AppIcons.warning);
 		this.nzIconService.addIconLiteral('ss:error', AppIcons.error);
-		this.nzIconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
 		this.nzIconService.addIconLiteral('ss:calendar', AppIcons.calendar);
+		this.nzIconService.addIconLiteral('ss:medalGold', AppIcons.medalGold);
+		this.nzIconService.addIconLiteral('ss:medalSilver', AppIcons.medalSilver);
+		this.nzIconService.addIconLiteral('ss:medalBronze', AppIcons.medalBronze);
+		this.nzIconService.addIconLiteral('ss:like', AppIcons.like);
+		this.nzIconService.addIconLiteral('ss:comment', AppIcons.comment);
+		this.nzIconService.addIconLiteral('ss:plus', AppIcons.plus);
+		this.nzIconService.addIconLiteral('ss:blocknote', AppIcons.blocknote);
 	}
 }

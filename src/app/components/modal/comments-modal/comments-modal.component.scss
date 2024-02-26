@@ -48,5 +48,18 @@
         box-sizing: border-box;
         scrollbar-width: auto;
         scrollbar-color: $gray-light;
+
+		.personal {
+
+			.img {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				img {
+					max-height: 32px;
+				}
+			}
+		}
     }
 }
