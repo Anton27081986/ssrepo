@@ -6,15 +6,18 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map, Observable, Subject, tap, zip } from 'rxjs';
+import { filter, map, Observable, Subject, tap, zip } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
-import { AppIcons } from "@app/core/icons";
+import { AppIcons } from '@app/core/icons';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-thank-colleague',
 	templateUrl: './thank-colleague.component.html',
@@ -42,6 +45,7 @@ export class ThankColleagueComponent implements OnInit {
 
 	public nzFilterOption = (): boolean => true;
 	public total!: number;
+	private readonly destroy$ = new Subject<void>();
 
 	public constructor(
 		private readonly apiService: ApiService,
@@ -50,6 +54,7 @@ export class ThankColleagueComponent implements OnInit {
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly iconService: NzIconService,
+		private readonly userProfileStore: UserProfileStoreService,
 	) {
 		this.iconService.addIconLiteral('ss:delete', AppIcons.delete);
 	}
@@ -74,9 +79,13 @@ export class ThankColleagueComponent implements OnInit {
 			)
 			.subscribe();
 
-		this.apiService.getProfile().subscribe(profile => {
-			this.currentUserId = profile.id;
-		});
+		this.userProfileStore.userProfile$
+			.pipe(filter(profile => profile !== null))
+			.subscribe(profile => {
+				if (profile) {
+					this.currentUserId = profile.id;
+				}
+			});
 
 		this.loadAllThanksForColleagues(this.pageSize, this.offset);
 
@@ -155,7 +164,7 @@ export class ThankColleagueComponent implements OnInit {
 	}
 
 	// Модальное окно раскрытой карточки
-	showModalOpenOut(id: number): void {
+	public showModalOpenOut(id: number): void {
 		this.modalCreateService
 			.create({
 				nzClosable: true,
@@ -217,4 +226,9 @@ export class ThankColleagueComponent implements OnInit {
 
 		this.loadAllThanksForColleagues(this.pageSize, this.offset);
 	}
+
+	// public ngOnDestroy(): void {
+	// 	this.destroy$.next();
+	// 	this.destroy$.complete();
+	// }
 }

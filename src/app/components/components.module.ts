@@ -37,6 +37,9 @@ import { CardVictoryComponent } from '@app/components/victory/card-victory/card-
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
+import { TransportComponent } from '@app/components/transport/transport.component';
+import { NoticeComponent } from '@app/components/notice/notice.component';
+import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -54,11 +57,6 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ResultItemComponent } from './search/result-item/result-item.component';
 import { SearchComponent } from './search/search.component';
-import { TransportComponent } from '@app/components/transport/transport.component';
-import {NoticeComponent} from "@app/components/notice/notice.component";
-import {
-	ModalTransportNoticeComponent
-} from "@app/components/modal/modal-transport-notice/modal-transport-notice.component";
 
 @NgModule({
 	declarations: [
