@@ -53,5 +53,10 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:triangleTop', AppIcons.triangleTop);
 		this.nzIconService.addIconLiteral('ss:favorite', AppIcons.favorite);
 		this.nzIconService.addIconLiteral('ss:call', AppIcons.call);
+		this.nzIconService.addIconLiteral('ss:password', AppIcons.password);
+		this.nzIconService.addIconLiteral('ss:profile', AppIcons.profile);
+		this.nzIconService.addIconLiteral('ss:star', AppIcons.star);
+		this.nzIconService.addIconLiteral('ss:sort', AppIcons.sort);
+		this.nzIconService.addIconLiteral('ss:theme', AppIcons.theme);
 	}
 }

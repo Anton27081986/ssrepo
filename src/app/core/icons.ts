@@ -436,4 +436,6 @@ export class AppIcons {
 		'</clipPath>' +
 		'</defs>' +
 		'</svg>';
+
+
 }
