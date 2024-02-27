@@ -1,0 +1,54 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
+
+.openout-modal {
+
+	.card {
+		position: relative;
+		padding: 20px 0;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+
+		.ant-form-item {
+			display: flex;
+			flex-direction: column;
+			margin: 0;
+		}
+
+		.ant-form-item-label {
+			overflow: visible;
+		}
+
+		.dates {
+			display: flex;
+
+			.calendar .ant-picker {
+				width: 250px !important;
+			}
+		}
+	}
+
+    .card-detail {
+        display: flex;
+        justify-content: flex-end;
+
+        a {
+            color: $blue;
+
+            &:hover {
+                opacity: 0.6;
+            }
+        }
+    }
+
+    ::ng-deep {
+        .ant-modal {
+            .ant-modal-header {
+                padding: 15px 8px;
+            }
+
+
+        }
+    }
+}

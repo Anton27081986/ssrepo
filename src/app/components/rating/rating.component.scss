@@ -297,16 +297,30 @@
 					.chat {
 						right: 18px;
 						bottom: 18px;
-						background-color: #f4f5f6;
+						background-color: inherit;
 						color: #f4f5f6;
 						cursor: pointer;
+						display: flex;
+						gap: 4px;
+
+						.comment-icon {
+							font-size: 20px;
+
+							::ng-deep path {
+								stroke: $blue;
+							}
+						}
+
+						.messages-number {
+							font-size: 14px;
+							font-weight: 700;
+							color: $blue;
+						}
 					}
 
-					.comment-icon {
-						font-size: 20px;
-
-						::ng-deep path {
-							stroke: $blue;
+					.chat:hover {
+						.messages-number {
+							text-decoration: underline;
 						}
 					}
 

@@ -1,0 +1,7 @@
+<div class="notice {{ type }}">
+	<span *ngIf="isLabeled" class="icon" nz-icon [nzType]="'ss:' + type "></span>
+	<div class="message">
+		<p *ngIf="title" class="title">{{ title }}</p>
+		<p *ngIf="text" class="text">{{ text }}</p>
+	</div>
+</div>
