@@ -18,12 +18,12 @@ import { catchError, switchMap } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
-	selector: 'app-thank-colleague',
-	templateUrl: './thank-colleague.component.html',
-	styleUrls: ['./thank-colleague.component.scss'],
+	selector: 'app-thanks-colleague',
+	templateUrl: './thanks-colleague.component.html',
+	styleUrls: ['./thanks-colleague.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThankColleagueComponent implements OnInit {
+export class ThanksColleagueComponent implements OnInit {
 	public date: any;
 	public isModalVisible = false;
 	public thankColleagueForm!: FormGroup;

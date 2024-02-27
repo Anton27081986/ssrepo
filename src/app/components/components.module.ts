@@ -48,8 +48,8 @@ import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-
 import { CurrencyComponent } from './currency/currency.component';
 import { BirthdayComponent } from './birthday/birthday.component';
 import { VictoryComponent } from './victory/victory.component';
-import { ThankColleagueComponent } from './thank-colleague/thank-colleague.component';
-import { ThankyouComponent } from './thankyou/thankyou.component';
+import { ThanksColleagueComponent } from './thank-colleague/thanks-colleague.component';
+import { ThanksPartnerComponent } from '@app/components/thank-partner/thanks-partner.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
@@ -67,8 +67,8 @@ import { SearchComponent } from './search/search.component';
 		ProfilePopupComponent,
 		AuctionSalesComponent,
 		NotificationComponent,
-		ThankyouComponent,
-		ThankColleagueComponent,
+		ThanksPartnerComponent,
+		ThanksColleagueComponent,
 		VictoryComponent,
 		BirthdayComponent,
 		RatingComponent,
@@ -132,8 +132,8 @@ import { SearchComponent } from './search/search.component';
 		ProfilePopupComponent,
 		AuctionSalesComponent,
 		NotificationComponent,
-		ThankyouComponent,
-		ThankColleagueComponent,
+		ThanksPartnerComponent,
+		ThanksColleagueComponent,
 		BirthdayComponent,
 		VictoryComponent,
 		RatingComponent,
