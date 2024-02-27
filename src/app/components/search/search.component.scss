@@ -61,7 +61,6 @@
 
     ::ng-deep {
         .anticon.search-icon-suffix {
-            // font-size: 24px;
 
             svg {
                 fill: #a1a2ab;
@@ -70,15 +69,26 @@
 
         .ant-input-affix-wrapper,
         .ant-input.ant-input-stepperless {
-            background-color: #f4f5f6;
+            background-color: $gray-light;
         }
     }
 }
 
-// Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 545px) {
     .search {
         margin-top: 30px;
         position: relative;
     }
+}
+
+@media screen and (max-width: 800px) {
+	:host {
+		width: 400px;
+	}
+}
+
+@media screen and (max-width: 690px) {
+	:host {
+		width: 300px;
+	}
 }

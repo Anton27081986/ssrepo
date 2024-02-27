@@ -12,6 +12,7 @@
     color: #fff;
     overflow: hidden;
     border-radius: 30px;
+	background-color: #698aff;
 }
 
 h3 {
@@ -22,9 +23,9 @@ h3 {
 
 .slider {
     position: relative;
-    margin-top: 31px;
+	margin: 31px auto 0 auto;
     max-width: 100%;
-    width: 1280px;
+	width: 1280px;
     height: 400px;
 
     .arrow {
@@ -55,10 +56,6 @@ h3 {
         height: 400px;
     }
 
-    .ant-carousel .slick-dots li {
-        // width: 10px!important; // убрать расстояние при анимации
-    }
-
     .ant-carousel .slick-dots li button {
         height: 10px !important;
         width: 10px !important;
@@ -66,44 +63,56 @@ h3 {
     }
 }
 
-// Medium devices (tablets, 414px and up)
-@media screen and (min-width: 414px) and (max-width: 519px) {
+@media screen and (min-width: 430px) and (max-width: 519px) {
     .slider {
-        width: 396px;
+        width: 430px;
     }
 }
 
-// Medium devices (tablets, 414px and up)
-@media screen and (max-width: 413px) {
-    .slider {
-        width: 396px;
-    }
-}
-
-// Medium devices (tablets, 414px and up)
 @media screen and (min-width: 520px) and (max-width: 639px) {
     .slider {
-        width: 700px;
+        width: 520px;
     }
 }
 
-// Medium devices (tablets, 640px and up)
 @media screen and (min-width: 640px) and (max-width: 767px) {
     .slider {
-        width: 620px;
+        width: 640px;
     }
 }
 
-// Medium devices (tablets, 768px and up)
 @media screen and (min-width: 768px) and (max-width: 799px) {
     .slider {
-        width: 748px;
+        width: 768px;
     }
 }
 
-// Medium devices (tablets, 800px and up)
 @media screen and (min-width: 800px) and (max-width: 1199px) {
     .slider {
-        width: 780px;
+        width: 900px;
     }
+}
+
+@media screen and (min-width: 1199px) and (max-width: 1331px) {
+	.slider {
+		width: 1199px;
+	}
+}
+
+@media screen and (max-width: 639px) {
+	.arrow {
+		display: none!important;
+	}
+}
+
+@media screen and (max-width: 430px) {
+	.slider {
+		width: 300px;
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.slider {
+		width: 390px;
+	}
 }

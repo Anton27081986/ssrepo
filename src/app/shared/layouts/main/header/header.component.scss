@@ -11,6 +11,7 @@
         background: $white;
         border-bottom-left-radius: 30px;
         border-bottom-right-radius: 30px;
+		padding: 0;
     }
 
     .fly-header {
@@ -29,7 +30,7 @@
 
         .nav-wrap {
             svg {
-                fill: #f4f5f6;
+                fill: $gray-light;
                 fill-opacity: 1;
 
                 path {
@@ -109,7 +110,7 @@ app-mobile-menu {
     align-items: center;
     height: 44px;
     border-radius: 18px;
-    background: #f4f5f6;
+    background: $gray-light;
     border: 1px #e4e8ea solid;
     font-family: Inter, serif;
     font-size: 16px;
@@ -153,10 +154,6 @@ app-mobile-menu {
     display: none;
 }
 
-[nz-menu] {
-    // line-height: 84px;
-}
-
 app-search.mobile {
     opacity: 0;
     z-index: -1;
@@ -166,14 +163,9 @@ app-search.mobile {
     display: none;
 }
 
-// Small devices (landscape phones, 576px and up)
 @media screen and (min-width: 1325px) {
     .open {
         display: none;
-    }
-
-    .ant-layout-header app-mobile-menu {
-        // display: none;
     }
 
     .nav-wrap {
@@ -295,9 +287,8 @@ app-search.mobile {
     }
 }
 
-// Small devices (landscape phones, 576px and up)
-@media screen and (max-width: 415px) {
-    .ant-layout-header {
-        // padding: 0 26px;
-    }
+@media screen and (max-width: 1200px) {
+	.back {
+		margin-left: 50px;
+	}
 }

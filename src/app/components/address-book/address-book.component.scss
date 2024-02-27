@@ -97,8 +97,6 @@
                 width: 364px;
                 height: auto;
                 border-radius: 16px;
-                //border: 1px solid #e4e8ea;
-                //background-color: #fff;
                 padding: 0;
 
                 .personal {
@@ -156,7 +154,6 @@
 
                     .title {
                         margin-left: 20px;
-                        // margin-left: 0;
                     }
 
                     .fio {
@@ -388,21 +385,82 @@
     }
 }
 
+@media screen and (max-width: 1309px) {
+	.address-book {
+		.content {
+			min-height: auto;
+			height: auto;
+
+			.line {
+				display: none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.address-book {
+		.content {
+			.card-list .card {
+				width: 413px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.address-book {
+		.header {
+			justify-content: center;
+
+			.open-all-table {
+				width: 100%;
+				justify-content: center;
+				align-items: center;
+
+				.search {
+					margin-left: 0;
+					margin-top: 10px;
+
+					.ant-input-affix-wrapper {
+						min-height: 52px;
+						height: 52px;
+						width: 100%;
+					}
+				}
+			}
+		}
+
+		.content {
+			.card-list .card {
+				width: 293px;
+
+				.fio {
+					width: auto!important;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.address-book {
+		.content {
+			.card-list .card {
+				width: 100%;
+			}
+		}
+	}
+}
+
 @media screen and (max-width: 414px) {
     .address-book {
-        margin: 80px 20px 0 20px;
+		margin-top: 80px;
 
         .header {
-            justify-content: center;
-            flex-direction: column;
-            align-items: center;
-
             .open-all-table {
+				margin-top: 20px;
                 width: 100%;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                margin-top: 18px;
 
                 .search {
                     margin-left: 0;
@@ -426,13 +484,8 @@
 
                 .button {
                     width: 100%;
-                    margin-left: 0;
-                    margin-top: 6px;
-
-                    .favorite-text {
-                        display: block;
-                        padding-right: 19px;
-                    }
+                    margin-left: 6px;
+					flex-shrink: 5;
                 }
             }
 
@@ -457,10 +510,13 @@
             .card-list {
                 justify-content: center;
 
-                .card {
+				.card {
                     width: 100%;
-                    margin-top: 20px;
                     padding: 12px;
+
+					.personal .fio {
+						width: auto;
+					}
 
                     .icons {
                         .medal-icon {

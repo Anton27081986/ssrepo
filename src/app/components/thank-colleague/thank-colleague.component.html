@@ -1,202 +1,204 @@
 <div class="thank-colleague">
-  <div class="header">
-    <div>
-      <div class="title">
-        <h1>спасибо коллеге</h1>
-      </div>
-    </div>
-    <div class="open-all-table">
-      <div class="button">
-        <button nz-button class="button" [nzType]="'primary'" (click)="showModal()">
-          <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
-          Поблагодарить коллегу
-        </button>
+	<div class="container">
+		<div class="header">
+			<div>
+				<div class="title">
+					<h1>спасибо коллеге</h1>
+				</div>
+			</div>
+			<div class="open-all-table">
+				<div class="button">
+					<button nz-button class="button" [nzType]="'primary'" (click)="showModal()">
+						<span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
+						Поблагодарить коллегу
+					</button>
 
-        <!--        модальное окно-->
-        <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
-          <ng-container *nzModalContent>
-            <div>
-              <form nz-form [formGroup]="thankColleagueForm" nzLayout="vertical" class="form" (ngSubmit)="createThanksForColleague()">
-                <nz-form-item>
-                  <span class="field-tile">Коллега</span>
-                  <nz-form-control>
-                    <nz-select
-                      formControlName="name"
-                      nzShowSearch
-                      nzServerSearch
-                      nzPlaceHolder="Кому:"
-                      [nzShowArrow]="true"
-                      [nzFilterOption]="nzFilterOption"
-                      (nzOnSearch)="search($event)">
-                      <nz-option *ngFor="let user of listOfOption"
-                                 [nzLabel]="user.name"
-                                 [nzValue]="user.id">
-                      </nz-option>
-                    </nz-select>
-                  </nz-form-control>
-                  <div
-                    *ngIf="!name?.valid && (name?.dirty ||name?.touched)">
-                    <div [hidden]="!name?.invalid" nz-typography nzType="danger">
-                      Введите имя
-                    </div>
-                  </div>
-                </nz-form-item>
-                <nz-form-item>
-                  <span class="field-tile">Текст благодарности</span>
-                  <div>
+					<!--        модальное окно-->
+					<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+						<ng-container *nzModalContent>
+							<div>
+								<form nz-form [formGroup]="thankColleagueForm" nzLayout="vertical" class="form" (ngSubmit)="createThanksForColleague()">
+									<nz-form-item>
+										<span class="field-tile">Коллега</span>
+										<nz-form-control>
+											<nz-select
+												formControlName="name"
+												nzShowSearch
+												nzServerSearch
+												nzPlaceHolder="Кому:"
+												[nzShowArrow]="true"
+												[nzFilterOption]="nzFilterOption"
+												(nzOnSearch)="search($event)">
+												<nz-option *ngFor="let user of listOfOption"
+																	 [nzLabel]="user.name"
+																	 [nzValue]="user.id">
+												</nz-option>
+											</nz-select>
+										</nz-form-control>
+										<div
+											*ngIf="!name?.valid && (name?.dirty ||name?.touched)">
+											<div [hidden]="!name?.invalid" nz-typography nzType="danger">
+												Введите имя
+											</div>
+										</div>
+									</nz-form-item>
+									<nz-form-item>
+										<span class="field-tile">Текст благодарности</span>
+										<div>
                     <textarea formControlName="comment" nz-input
-                              placeholder="Не забывайте благодарить коллег!"
-                              [nzAutosize]="{ minRows: 3, maxRows: 5 }"
-                              maxlength="1000">
+															placeholder="Не забывайте благодарить коллег!"
+															[nzAutosize]="{ minRows: 3, maxRows: 5 }"
+															maxlength="1000">
                     </textarea>
-                  </div>
-                  <div *ngIf="!comment?.valid && (comment?.dirty ||comment?.touched)">
-                    <div [hidden]="!comment?.invalid" nz-typography nzType="danger">
-                      Введите текст благодарности
-                    </div>
-                  </div>
-                </nz-form-item>
-                <ng-template #prefixUser>
-                  <i nz-icon nzType="user"></i>
-                </ng-template>
-              </form>
+										</div>
+										<div *ngIf="!comment?.valid && (comment?.dirty ||comment?.touched)">
+											<div [hidden]="!comment?.invalid" nz-typography nzType="danger">
+												Введите текст благодарности
+											</div>
+										</div>
+									</nz-form-item>
+									<ng-template #prefixUser>
+										<i nz-icon nzType="user"></i>
+									</ng-template>
+								</form>
 
-            </div>
-          </ng-container>
-          <div *nzModalFooter>
-            <div class="send d-flex justify-content-center">
-              <div class="">
-                <button nz-button nzType="primary"
-                        class="login-form-button"
-                        (click)="handleOk()"
-                        [nzLoading]="isConfirmLoading"
-                        [ngStyle]="!thankColleagueForm.valid ? {'color': 'darkgray'}: {}"
-                        [disabled]="!thankColleagueForm.valid">
-                  Сказать спасибо
-                </button>
-              </div>
-            </div>
-          </div>
-        </nz-modal>
+							</div>
+						</ng-container>
+						<div *nzModalFooter>
+							<div class="send d-flex justify-content-center">
+								<div class="">
+									<button nz-button nzType="primary"
+													class="login-form-button"
+													(click)="handleOk()"
+													[nzLoading]="isConfirmLoading"
+													[ngStyle]="!thankColleagueForm.valid ? {'color': 'darkgray'}: {}"
+													[disabled]="!thankColleagueForm.valid">
+										Сказать спасибо
+									</button>
+								</div>
+							</div>
+						</div>
+					</nz-modal>
 
-      </div>
-    </div>
-  </div>
+				</div>
+			</div>
+		</div>
 
-  <div class="content">
-    <ng-container *ngIf="(thankColleagueList | async) as thankyou; else loader">
-      <nz-list class="card-list"
-               [nzDataSource]="thankyou"
-               [nzRenderItem]="item"
-      >
-        <ng-template #item let-item>
-          <nz-list-item [nzContent]="nzContent">
-            <ng-template #nzContent>
-              <div class="card">
-                <div>
-                  <div class="personals">
-                    <div class="info">
-                      <div class="images">
-                        <div class="img img-from" (click)="showModalOpenOut(item?.fromUser?.id)">
-                          <img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
-                        </div>
-                        <div class="img img-to" (click)="showModalOpenOut(item.toUser?.id)">
-                          <img src="{{ item.toUser?.avatarUrl }}" alt="user" />
-                        </div>
-                      </div>
+		<div class="content">
+			<ng-container *ngIf="(thankColleagueList | async) as thankyou; else loader">
+				<nz-list class="card-list"
+								 [nzDataSource]="thankyou"
+								 [nzRenderItem]="item"
+				>
+					<ng-template #item let-item>
+						<nz-list-item [nzContent]="nzContent">
+							<ng-template #nzContent>
+								<div class="card">
+									<div>
+										<div class="personals">
+											<div class="info">
+												<div class="images">
+													<div class="img img-from" (click)="showModalOpenOut(item?.fromUser?.id)">
+														<img src="{{ item?.fromUser?.avatarUrl }}" alt="user" />
+													</div>
+													<div class="img img-to" (click)="showModalOpenOut(item.toUser?.id)">
+														<img src="{{ item.toUser?.avatarUrl }}" alt="user" />
+													</div>
+												</div>
 
-                      <div class="from-to">
-                        <div class="from">
-                          <div class="personal">
-                            <div class="title">
-                              <span class="sub-title">От кого:</span>
-                              <div class="fio">
-                                <span>{{ item?.fromUser?.name }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="to">
-                          <div class="personal">
-                            <div class="title">
-                              <span class="sub-title">Кому:</span>
-                              <div class="fio">
-                                <span>{{ item?.toUser?.name }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="delete" (click)="deleteThanksForColleague(item);" *ngIf="currentUserId === item?.fromUser?.id">
-                      <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
-                    </div>
-                  </div>
-                  <div class="message">
-                    <div class="text">
-                      {{ item.text }}
-                    </div>
-                  </div>
-                  <div class="info">
-                    <div class="left-group">
+												<div class="from-to">
+													<div class="from">
+														<div class="personal">
+															<div class="title">
+																<span class="sub-title">От кого:</span>
+																<div class="fio">
+																	<span>{{ item?.fromUser?.name }}</span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="to">
+														<div class="personal">
+															<div class="title">
+																<span class="sub-title">Кому:</span>
+																<div class="fio">
+																	<span>{{ item?.toUser?.name }}</span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="delete" (click)="deleteThanksForColleague(item);" *ngIf="currentUserId === item?.fromUser?.id">
+												<span class="icon" nz-icon [nzType]="'ss:delete'"></span>
+											</div>
+										</div>
+										<div class="message">
+											<div class="text">
+												{{ item.text }}
+											</div>
+										</div>
+										<div class="info">
+											<div class="left-group">
 
-                      <!-- Постановка super лайка -->
-                      <!-- Проверяем поставил ли ЧДЛ супер лайк-->
-                      <ng-container *ngIf="getExtendedMode; else userlike">
-                        <app-super-like
-                          [isUserLikedProps]="item.isUserLiked"
-                          [likesCountProps]="item.likesCount"
-                          [objectIdProps]="item.id"
-                          [typeObject]="0"
-                          [award]="item.award"
-                        ></app-super-like>
-                      </ng-container>
+												<!-- Постановка super лайка -->
+												<!-- Проверяем поставил ли ЧДЛ супер лайк-->
+												<ng-container *ngIf="getExtendedMode; else userlike">
+													<app-super-like
+														[isUserLikedProps]="item.isUserLiked"
+														[likesCountProps]="item.likesCount"
+														[objectIdProps]="item.id"
+														[typeObject]="0"
+														[award]="item.award"
+													></app-super-like>
+												</ng-container>
 
-                      <!-- Постановка обычного лайка -->
-                      <ng-template #userlike>
+												<!-- Постановка обычного лайка -->
+												<ng-template #userlike>
 
-                        <app-like
-                          [isUserLikedProps]="item.isUserLiked"
-                          [likesCountProps]="item.likesCount"
-                          [objectIdProps]="item.id"
-                          [typeObject]="0"
-                          [award]="item.award"
-                        ></app-like>
+													<app-like
+														[isUserLikedProps]="item.isUserLiked"
+														[likesCountProps]="item.likesCount"
+														[objectIdProps]="item.id"
+														[typeObject]="0"
+														[award]="item.award"
+													></app-like>
 
-                      </ng-template>
+												</ng-template>
 
-                      <div class="comment" (click)="showModalComments(item,0);">
-                        <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                        <span class="count">{{ item.commentsCount }}</span>
-                      </div>
-                    </div>
-                    <div class="date">
-                      <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </nz-list-item>
-        </ng-template>
-      </nz-list>
-      <!--      </ng-container>-->
-    </ng-container>
-    <ng-template #loader>
-      <app-loader></app-loader>
-    </ng-template>
-  </div>
+												<div class="comment" (click)="showModalComments(item,0);">
+													<span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+													<span class="count">{{ item.commentsCount }}</span>
+												</div>
+											</div>
+											<div class="date">
+												<span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</ng-template>
+						</nz-list-item>
+					</ng-template>
+				</nz-list>
+				<!--      </ng-container>-->
+			</ng-container>
+			<ng-template #loader>
+				<app-loader></app-loader>
+			</ng-template>
+		</div>
 
-  <div class="pagination">
-    <nz-pagination
-      [nzTotal]="total"
-      [nzPageIndex]="pageIndex"
-      [nzPageSize]="pageSize"
-      (nzPageIndexChange)="nzPageIndexChange($event)"
-      (nzPageSizeChange)="pageSize = $event"
-      [nzResponsive]="true"
-    >
-    </nz-pagination>
-  </div>
+		<div class="pagination">
+			<nz-pagination
+				[nzTotal]="total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true"
+			>
+			</nz-pagination>
+		</div>
+	</div>
 </div>
 

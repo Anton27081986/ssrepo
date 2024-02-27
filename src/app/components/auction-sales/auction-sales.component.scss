@@ -96,11 +96,15 @@
             }
         }
     }
+
+	.pagination {
+		margin-top: 20px;
+	}
 }
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 760px) {
     .auction-sales {
-        margin: 80px 20px 0 20px;
+        margin-top: 80px;
 
         .header {
             .open-all-table {
@@ -123,7 +127,7 @@
 
             .open-all-table.bottom {
                 display: block;
-                margin-top: 1px;
+                margin-top: 20px;
 
                 .ant-btn {
                     width: 100%;
@@ -177,14 +181,16 @@
             padding-top: 10px;
         }
 
-        .ant-table-tbody > tr > td:last-child {
-            // border-bottom: 1px solid $border-color;
-        }
-
         .ant-table-tbody > tr > td {
             padding-left: 0;
             padding-right: 0;
             padding-bottom: 16px !important;
         }
     }
+}
+
+@media screen and (max-width: 1326px) {
+	.auction-sales {
+		margin-top: 60px;
+	}
 }

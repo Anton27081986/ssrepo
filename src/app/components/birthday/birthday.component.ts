@@ -6,13 +6,14 @@ import {
 	ViewChild,
 	ViewContainerRef,
 } from '@angular/core';
-import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
 import { map } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { formatDate } from '@angular/common';
 import { IBirthday } from '@app/core/models/birthday';
+import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
 
 @Component({
 	selector: 'app-birthday',
@@ -26,16 +27,48 @@ export class BirthdayComponent implements OnInit {
 	protected date = new Date();
 	protected birthdays: IBirthday[] = [];
 	protected selectedTabIndex = 1;
+	public customOptions!: OwlOptions;
+	private readonly activeSlides!: SlidesOutputData;
 
 	constructor(
 		private readonly apiService: ApiService,
 		public modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
-		private readonly ref: ChangeDetectorRef,
+		private readonly cd: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit(): any {
 		this.onChange(this.date);
+
+		this.customOptions = {
+			loop: true,
+			mouseDrag: false,
+			touchDrag: false,
+			pullDrag: false,
+			navSpeed: 700,
+			dots: false,
+			items: 4,
+			navText: ['', ''],
+			autoWidth: true,
+			lazyLoad: true,
+			responsive: {
+				0: {
+					items: 1,
+				},
+				400: {
+					items: 1,
+				},
+				740: {
+					items: 3,
+				},
+				940: {
+					items: 4,
+				},
+			},
+			nav: true,
+		};
+
+		this.changeOptions();
 	}
 
 	public onChange(result: Date): void {
@@ -48,7 +81,7 @@ export class BirthdayComponent implements OnInit {
 			.subscribe(birthdays => {
 				this.birthdays = birthdays;
 				this.selectTabByDay(this.date.toLocaleDateString());
-				this.ref.markForCheck();
+				this.cd.markForCheck();
 			});
 	}
 
@@ -77,5 +110,9 @@ export class BirthdayComponent implements OnInit {
 		const dateFormat = date.split('.');
 
 		this.date = new Date([dateFormat[1], dateFormat[0], dateFormat[2]].join('/'));
+	}
+
+	public changeOptions() {
+		this.customOptions.responsive = {};
 	}
 }

@@ -13,10 +13,6 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-
-            h1 {
-                // margin-bottom: 0 !important;
-            }
         }
 
         h1 {
@@ -198,8 +194,6 @@
                 background-color: $white;
                 padding: 15px 20px 20px 20px;
                 margin-top: 28px;
-
-                // flex: 1 0 200px;
 
                 .personal {
                     position: relative;
@@ -543,8 +537,6 @@
 
 ::ng-deep {
     .ant-modal {
-        // width: 558px !important;
-
         .ant-modal-header {
             padding: 15px 8px;
         }
@@ -879,8 +871,6 @@
 
     ::ng-deep {
         .ant-modal {
-            // width: 558px !important;
-
             .ant-modal-header {
             }
 

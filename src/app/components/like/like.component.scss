@@ -57,7 +57,6 @@
     }
 
     .like.liked {
-        // background: $blue;
         .icon {
             ::ng-deep path {
                 stroke: #4770ff;
@@ -69,16 +68,6 @@
         .count {
             padding-right: 6px;
         }
-
-        .count {
-            // color: $white;
-        }
-
-        //.icon {
-        //    ::ng-deep path {
-        //        stroke: $white;
-        //    }
-        //}
     }
 
     .modal-people-likes {
@@ -143,7 +132,7 @@
         gap: 4px;
         border-radius: 8px;
         border: 1px dashed #9747ff;
-        background: #f4f5f6;
+        background: $gray-light;
 
         .app-super-like {
             display: flex;
