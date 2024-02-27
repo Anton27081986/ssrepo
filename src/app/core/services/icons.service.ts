@@ -58,5 +58,8 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:star', AppIcons.star);
 		this.nzIconService.addIconLiteral('ss:sort', AppIcons.sort);
 		this.nzIconService.addIconLiteral('ss:theme', AppIcons.theme);
+		this.nzIconService.addIconLiteral('ss:closeFill', AppIcons.closeFill);
+		this.nzIconService.addIconLiteral('ss:arrowRightH', AppIcons.arrowRightH);
+
 	}
 }
