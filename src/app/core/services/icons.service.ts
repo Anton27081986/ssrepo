@@ -44,7 +44,14 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:openOut', AppIcons.openOut);
 		this.nzIconService.addIconLiteral('ss:onePeople', AppIcons.onePeople);
 		this.nzIconService.addIconLiteral('ss:twoPeople', AppIcons.twoPeople);
-		this.nzIconService.addIconLiteral('ss:iconClose', AppIcons.iconClose);
 		this.nzIconService.addIconLiteral('ss:attach', AppIcons.attach);
+		this.nzIconService.addIconLiteral('ss:goldLike', AppIcons.goldLike);
+		this.nzIconService.addIconLiteral('ss:silverLike', AppIcons.silverLike);
+		this.nzIconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
+		this.nzIconService.addIconLiteral('ss:delete', AppIcons.delete);
+		this.nzIconService.addIconLiteral('ss:triangleBottom', AppIcons.triangleBottom);
+		this.nzIconService.addIconLiteral('ss:triangleTop', AppIcons.triangleTop);
+		this.nzIconService.addIconLiteral('ss:favorite', AppIcons.favorite);
+		this.nzIconService.addIconLiteral('ss:call', AppIcons.call);
 	}
 }
