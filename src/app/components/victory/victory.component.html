@@ -102,7 +102,7 @@
                 <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
                   <div class="item-tag">
                     <span>{{ party?.name }}</span>
-                    <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagUser(i)"></span>
+                    <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:close'" (click)="deleteTagUser(i)"></span>
                   </div>
                 </ng-container>
               </div>
@@ -135,7 +135,7 @@
             <div class="tag-selected-name" *ngIf="tprSelectedTags.length>0">
               <div class="item-tag item-tag-selected" *ngFor="let tpr of tprSelectedTags; index as i">
                 <a nzTooltipTitle="{{ tpr?.name }}" nz-tooltip>{{ tpr?.name | maxLengthText:20 }}</a>
-                <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:iconClose'" (click)="deleteTagTpr(i)"></span>
+                <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:close'" (click)="deleteTagTpr(i)"></span>
               </div>
             </div>
 
