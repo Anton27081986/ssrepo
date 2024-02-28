@@ -6,136 +6,141 @@
 }
 
 .transport {
-	padding-top: 60px;
-	display: flex;
-	flex-direction: column;
-	gap: 40px;
-
-	.header {
-		display: flex;
-		justify-content: space-between;
-
-		h1 {
-			text-transform: uppercase;
-		}
-	}
-
-	.content {
+	.container {
+		padding-top: 60px;
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
+		gap: 40px;
 
-		.bus-list {
+		.header {
+			display: flex;
+			justify-content: space-between;
+
+			h1 {
+				text-transform: uppercase;
+			}
+		}
+
+		.content {
 			display: flex;
 			flex-direction: column;
-			gap: 28px;
+			gap: 20px;
 
-			.bus {
+			.bus-list {
 				display: flex;
-				justify-content: space-between;
-				gap: 16px;
+				flex-direction: column;
+				gap: 28px;
 
-				.direction {
-					max-width: 550px;
+				.bus {
 					display: flex;
-					gap: 8px;
-
-					.station {
-						width: 244px;
-					}
-
-					.direction-icon {
-						font-size: 36px;
-					}
-				}
-
-				.schedule {
-					display: flex;
+					justify-content: space-between;
 					gap: 16px;
-					flex-wrap: wrap;
 
-					.item {
+					.direction {
+						max-width: 550px;
 						display: flex;
-						align-items: center;
-						justify-content: center;
-						width: 100px;
-						height: 36px;
-						border-radius: 10px;
-						background-color: $white;
+						gap: 8px;
+
+						.station {
+							width: 244px;
+						}
+
+						.direction-icon {
+							font-size: 36px;
+						}
 					}
 
-					.gone {
-						color: #A9AFB3;
-						border: 1px solid $border-color;
+					.schedule {
+						display: flex;
+						gap: 16px;
+						flex-wrap: wrap;
+
+						.item {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							width: 100px;
+							height: 36px;
+							border-radius: 10px;
+							background-color: $white;
+						}
+
+						.gone {
+							color: #A9AFB3;
+							border: 1px solid $border-color;
+						}
+
+						.next {
+							border: 1px solid $border-color;
+						}
+
+						.next:not(.next ~ .next) {
+							color: #2D8418 !important;
+							border: 1px solid #91D386 !important;
+							background-color: #D5EDCA !important;
+						}
 					}
 
-					.next {
-						border: 1px solid $border-color;
-					}
-
-					.next:not(.next ~ .next) {
-						color: #2D8418 !important;
-						border: 1px solid #91D386 !important;
-						background-color: #D5EDCA !important;
-					}
 				}
 
 			}
-
 		}
 	}
 }
 
 // Small devices (landscape phones, 576px and up)
-@media screen and (max-width: 545px) {
+@media screen and (max-width: 768px) {
 
     .transport {
-		padding: 0 20px;
+		.container {
+			gap: 20px;
 
-		.header {
-			justify-content: center;
+			.header {
+				justify-content: center;
+				text-align: center;
 
-			ss-button {
-				display: none;
+				ss-button {
+					display: none;
+				}
 			}
-		}
 
-		.content {
+			.content {
 
-			.bus-list {
+				.bus-list {
 
-				.bus {
-					flex-direction: column;
-
-					.direction {
+					.bus {
 						flex-direction: column;
-						position: relative;
-						padding-left: 19px;
-						overflow: visible;
 
-						.station {
-							width: 100%;
+						.direction {
+							flex-direction: column;
+							position: relative;
+							padding-left: 19px;
+							overflow: visible;
 
-							::ng-deep p {
-								justify-content: flex-start !important;
-								padding: 0 16px;
+							.station {
+								width: 100%;
+
+								::ng-deep p {
+									justify-content: flex-start !important;
+									padding: 0 16px;
+								}
+							}
+
+							.direction-icon {
+								position: absolute;
+								left: -14px;
+								top: 14px;
+								transform: rotate(90deg);
+								font-size: 48px;
 							}
 						}
 
-						.direction-icon {
-							position: absolute;
-							left: -14px;
-							top: 14px;
-							transform: rotate(90deg);
-							font-size: 48px;
-						}
-					}
+						.schedule {
+							width: 100%;
 
-					.schedule {
-						width: 100%;
-
-						.item {
-							width: 120px;
+							.item {
+								width: 120px;
+							}
 						}
 					}
 				}
