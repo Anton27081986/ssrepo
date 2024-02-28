@@ -1,26 +1,28 @@
 <div *ngIf="transport" class="transport">
-	<div class="header">
-		<ss-title-main>Корпоративный транспорт</ss-title-main>
-		<ss-button (click)="showModalNotice()">Создать уведомление</ss-button>
-	</div>
+	<div class="container">
+		<div class="header">
+			<ss-title-main>Корпоративный транспорт</ss-title-main>
+			<ss-button (click)="showModalNotice()">Создать уведомление</ss-button>
+		</div>
 
-	<div class="content">
-		<app-notice *ngIf="transport?.transportNotify"
-								isLabeled="false"
-								type="warning"
-								title="Изменение в расписании корпоративного транспорта"
-								text="{{ 'В период с ' + (transport.transportNotify.dFrom | date: 'dd.MM.yyyy, hh:mm') + ' до ' + (transport.transportNotify.dTo | date: 'dd.MM.yyyy, hh:mm')   + ' ' + transport.transportNotify.note }}">
-		</app-notice>
-		<div class="bus-list">
-			<div *ngFor="let bus of transport?.transportList" class="bus">
-				<div class="direction">
-					<ss-tag class="station">{{ bus.startRoute }}</ss-tag>
-					<span class="direction-icon" nz-icon [nzType]="'ss:direction'"></span>
-					<ss-tag class="station">{{  bus.endRoute }}</ss-tag>
-				</div>
-				<div class="schedule">
-					<div *ngFor="let time of bus?.departureTime" class="item gone" [ngClass]="{'gone': isPast(time), 'next': !isPast(time)}">
-						<span class="bus-icon" nz-icon [nzType]="'ss:bus'"></span> {{ time }}
+		<div class="content">
+			<app-notice *ngIf="transport?.transportNotify"
+									isLabeled="false"
+									type="warning"
+									title="Изменение в расписании корпоративного транспорта"
+									text="{{ 'В период с ' + (transport.transportNotify.dFrom | date: 'dd.MM.yyyy, hh:mm') + ' до ' + (transport.transportNotify.dTo | date: 'dd.MM.yyyy, hh:mm')   + ' ' + transport.transportNotify.note }}">
+			</app-notice>
+			<div class="bus-list">
+				<div *ngFor="let bus of transport?.transportList" class="bus">
+					<div class="direction">
+						<ss-tag class="station">{{ bus.startRoute }}</ss-tag>
+						<span class="direction-icon" nz-icon [nzType]="'ss:direction'"></span>
+						<ss-tag class="station">{{  bus.endRoute }}</ss-tag>
+					</div>
+					<div class="schedule">
+						<div *ngFor="let time of bus?.departureTime" class="item gone" [ngClass]="{'gone': isPast(time), 'next': !isPast(time)}">
+							<span class="bus-icon" nz-icon [nzType]="'ss:bus'"></span> {{ time }}
+						</div>
 					</div>
 				</div>
 			</div>
