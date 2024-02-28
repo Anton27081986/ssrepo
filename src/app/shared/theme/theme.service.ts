@@ -1,80 +1,80 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 enum ThemeType {
-    dark = 'dark',
-    default = 'default',
+	dark = 'dark',
+	default = 'default',
 }
 
 @Injectable({
-    providedIn: 'root',
+	providedIn: 'root',
 })
 export class ThemeService {
-    currentTheme = ThemeType.default;
+	currentTheme = ThemeType.default;
 
-    private reverseTheme(theme: string): ThemeType {
-        return theme === ThemeType.dark ? ThemeType.default : ThemeType.dark;
-    }
+	private reverseTheme(theme: string): ThemeType {
+		return theme === ThemeType.dark ? ThemeType.default : ThemeType.dark;
+	}
 
-    private removeUnusedTheme(theme: ThemeType): void {
-        document.documentElement.classList.remove(theme);
-        const removedThemeStyle = document.getElementById(theme);
+	private removeUnusedTheme(theme: ThemeType): void {
+		document.documentElement.classList.remove(theme);
+		const removedThemeStyle = document.getElementById(theme);
 
-        if (removedThemeStyle) {
-            document.head.removeChild(removedThemeStyle);
-        }
-    }
+		if (removedThemeStyle) {
+			document.head.removeChild(removedThemeStyle);
+		}
+	}
 
-    private loadCss(href: string, id: string): Promise<Event> {
-        return new Promise((resolve, reject) => {
-            const style = document.createElement('link');
+	private loadCss(href: string, id: string): Promise<Event> {
+		return new Promise((resolve, reject) => {
+			const style = document.createElement('link');
 
-            style.rel = 'stylesheet';
-            style.href = href;
-            style.id = id;
-            style.onload = resolve;
-            style.onerror = reject;
-            document.head.append(style);
-        });
-    }
+			style.rel = 'stylesheet';
+			style.href = href;
+			style.id = id;
+			style.onload = resolve;
+			style.onerror = reject;
+			document.head.append(style);
+		});
+	}
 
-    loadTheme(firstLoad = true): Promise<Event> {
-        const theme = this.currentTheme;
+	loadTheme(firstLoad = true): Promise<Event> {
+		const theme = this.currentTheme;
 
-        if (firstLoad) {
-            document.documentElement.classList.add(theme);
-        }
+		if (firstLoad) {
+			document.documentElement.classList.add(theme);
+		}
 
-        return new Promise<Event>((resolve, reject) => {
-            this.loadCss(`${theme}.css`, theme).then(
-                e => {
-                    if (!firstLoad) {
-                        document.documentElement.classList.add(theme);
-                    }
+		return new Promise<Event>((resolve, reject) => {
+			this.loadCss(`${theme}.css`, theme).then(
+				e => {
+					if (!firstLoad) {
+						document.documentElement.classList.add(theme);
+					}
 
-                    this.removeUnusedTheme(this.reverseTheme(theme));
-                    resolve(e);
-                },
+					this.removeUnusedTheme(this.reverseTheme(theme));
+					resolve(e);
+				},
 
-                e => reject(e),
-            );
-        });
-    }
+				e => reject(e),
+			);
+		});
+	}
 
-    toggleTheme(): Promise<Event> {
-        this.currentTheme = this.reverseTheme(this.currentTheme);
+	toggleTheme(): Promise<Event> {
+		this.currentTheme = this.reverseTheme(this.currentTheme);
 
-        return this.loadTheme(false);
-    }
+		return this.loadTheme(false);
+	}
 
-    setDefaultTheme(): Promise<Event> {
-        this.currentTheme = ThemeType.default;
+	setDefaultTheme(): Promise<Event> {
+		this.currentTheme = ThemeType.default;
 
-        return this.loadTheme(false);
-    }
+		return this.loadTheme(false);
+	}
 
-    setDarkTheme(): Promise<Event> {
-        this.currentTheme = ThemeType.dark;
+	setDarkTheme(): Promise<Event> {
+		this.currentTheme = ThemeType.dark;
 
-        return this.loadTheme(false);
-    }
+		return this.loadTheme(false);
+	}
 }

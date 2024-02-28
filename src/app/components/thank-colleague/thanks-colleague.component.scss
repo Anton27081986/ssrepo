@@ -243,15 +243,7 @@
                     }
                 }
             }
-            .card:last-child {
-                // margin-left: 28px;
-            }
         }
-        .card-list:after {
-            //content: '';
-            //flex: auto;
-        }
-
         .bottom-panel {
             display: flex;
             flex-wrap: wrap;
@@ -270,7 +262,6 @@
     .message::-webkit-scrollbar-track {
         background-color: $gray;
         border-radius: 60px;
-        // margin: 24px;
         height: 48px;
     }
 
@@ -286,9 +277,97 @@
     }
 }
 
+@media screen and (max-width: 992px) {
+	.thank-colleague {
+		.content {
+			.card-list {
+				justify-content: center;
+
+				.card {
+					width: 446px;
+
+					.message {
+						width: auto;
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.thank-colleague {
+		.header {
+			.title h1 {
+				text-align: center;
+				margin-bottom: 0.3rem !important;
+				line-height: 34px;
+				margin-top: 4px;
+			}
+
+			.subtitle {
+				margin-top: 12px;
+
+				h2 {
+					text-align: center;
+					line-height: 19px !important;
+				}
+			}
+
+			.button {
+				width: 100%;
+			}
+		}
+		.content {
+			.card-list {
+				justify-content: center;
+
+				nz-list-item {
+
+					.card {
+						width: 326px;
+
+						.message {
+							width: auto;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 576px) {
+	.thank-colleague {
+		.header {
+			justify-content: center;
+		}
+
+		.open-all-table {
+			margin-top: 20px;
+		}
+
+		.content {
+			margin-top: 20px;
+
+			nz-list-item {
+				flex: 0 0 100%;
+
+				.card {
+					width: 100% !important;
+
+					.message {
+						width: unset;
+					}
+				}
+			}
+		}
+	}
+}
+
 @media screen and (max-width: 414px) {
     .thank-colleague {
-        margin: 80px 20px 0 20px;
+        margin-top: 80px;
 
         .header {
             justify-content: center;
@@ -323,10 +402,12 @@
             .card-list {
                 justify-content: center;
 
+				::ng-deep .ant-list-items {
+					gap: 20px;
+				}
+
                 .card {
                     width: 100%;
-                    margin-top: 20px;
-                    padding: 12px;
 
                     .personals {
                         .message {

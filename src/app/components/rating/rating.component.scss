@@ -69,7 +69,6 @@
                         height: 52px !important;
                         padding: 9px 0 0 26px !important;
                         font-size: 16px;
-                        // opacity: 0.6;
                     }
                 }
             }
@@ -184,8 +183,6 @@
                 padding: 15px 20px 20px 20px;
                 margin-top: 28px;
 
-                // flex: 1 0 200px;
-
                 .personal {
                     position: relative;
                     display: flex;
@@ -290,7 +287,7 @@
                     .count-bottom {
                         right: 18px;
                         top: 48px;
-                        background-color: #f4f5f6;
+                        background-color: $gray-light;
                         color: #67778e;
                     }
 
@@ -298,7 +295,7 @@
 						right: 18px;
 						bottom: 18px;
 						background-color: inherit;
-						color: #f4f5f6;
+						color: $gray-light;;
 						cursor: pointer;
 						display: flex;
 						gap: 4px;
@@ -467,15 +464,6 @@
                     }
                 }
             }
-
-            .card:last-child {
-                // margin-left: 28px;
-            }
-        }
-
-        .card-list:after {
-            //content: '';
-            //flex: auto;
         }
     }
 }
@@ -489,7 +477,6 @@
     .message::-webkit-scrollbar-track {
         background-color: $gray;
         border-radius: 60px;
-        // margin: 24px;
         height: 48px;
     }
 
@@ -557,8 +544,6 @@
 
 ::ng-deep {
     .ant-modal {
-        // width: 558px !important;
-
         .ant-modal-header {
             padding: 15px 8px;
         }
@@ -816,9 +801,127 @@
     }
 }
 
-@media screen and (max-width: 414px) {
+
+@media screen and (max-width: 1309px) {
+	.rating {
+		.content {
+			min-height: auto;
+			height: auto;
+
+			.rating-list {
+				max-height: 300px;
+				height: 300px;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+				margin-top: 30px;
+				overflow: auto;
+
+				.rating-item.active {
+					color: #ffffff;
+					background-color: $blue;
+
+					.great {
+						color: #ffffff;
+					}
+
+					.good {
+						color: #ffffff;
+					}
+
+					.bad {
+						color: #ffffff;
+					}
+				}
+
+				.rating-item {
+					display: flex;
+					justify-content: center;
+					gap: 7px;
+					width: 149px;
+					height: 52px;
+					padding: 10px 20px;
+					align-items: center;
+					flex-shrink: 0;
+					cursor: pointer;
+
+					border-radius: 16px;
+					border: 1px solid #e4e8ea;
+
+					background: $white;
+
+					span {
+						font-size: 14px;
+						font-weight: 700;
+					}
+
+					.great {
+						color: $blue;
+					}
+
+					.good {
+						color: #67778e;
+					}
+
+					.bad {
+						color: #ce6f6d;
+					}
+				}
+			}
+
+			.rating-list::-webkit-scrollbar {
+				width: 4px;
+				height: 48px;
+			}
+
+			.rating-list::-webkit-scrollbar-track {
+				background-color: #e4e8ea;
+				border-radius: 60px;
+				height: 48px;
+			}
+
+			.rating-list::-webkit-scrollbar-thumb {
+				box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+			}
+
+			.rating-list {
+				border-right: 10px solid $gray-light;
+				box-sizing: border-box;
+				scrollbar-width: auto;
+				scrollbar-color: $gray $gray;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.rating {
+		.rating-list {
+			.rating-item {
+				width: 141px!important;
+			}
+		}
+
+		.open-all-table {
+			margin-top: 20px;
+		}
+
+		.content {
+			.card-list {
+				min-height: auto;
+				height: auto;
+
+				.card {
+					width: 446px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
     .rating {
-        margin: 80px 20px 0 20px;
+        margin-top: 80px;
 
         .title {
             flex-direction: column;
@@ -849,11 +952,16 @@
                 .search {
                     margin-top: 0;
                     width: 100%;
+
+					.ant-select {
+						width: 100%;
+					}
                 }
 
                 .select-group {
                     width: 100%;
                     margin-left: 0;
+					margin-top: 10px;
 
                     .ant-select {
                         width: 100%;
@@ -864,9 +972,6 @@
                     width: 100%;
                     margin-left: 0;
                     margin-top: 6px;
-
-                    button {
-                    }
                 }
             }
 
@@ -888,11 +993,18 @@
         }
 
         .content {
+			.rating-list {
+				margin-top: 20px;
+			}
+
             .card-list {
+				min-height: auto;
+				height: auto;
+
                 justify-content: center;
 
                 .card {
-                    width: 100%;
+                    width: 326px;
                     margin-top: 20px;
                     padding: 12px;
 
@@ -914,8 +1026,6 @@
 
     ::ng-deep {
         .ant-modal {
-            // width: 558px !important;
-
             .ant-modal-header {
             }
 
@@ -926,4 +1036,29 @@
             }
         }
     }
+}
+
+@media screen and (max-width: 576px) {
+	.rating {
+		.ant-list-split .ant-list-item {
+		width: 100%;
+	}
+
+		nz-list-item {
+			flex: 0 0 100%;
+
+			.card {
+				width: 100% !important;
+				margin-top: 20px;
+				padding: 12px;
+
+				.icons {
+					.medal-icon {
+						right: 12px;
+						top: 11px;
+					}
+				}
+			}
+		}
+	}
 }

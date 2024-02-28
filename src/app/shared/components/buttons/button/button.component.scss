@@ -1,0 +1,33 @@
+:host {
+	display: flex;
+	align-items: center;
+}
+
+button {
+	display: flex;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid #698AFF;
+	height: 52px;
+	padding: 10px 24px;
+	border-radius: 16px;
+	background-color: #4770FF;
+	color: white;
+	font-family: 'Inter', serif;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 19px;
+	cursor: pointer;
+	-webkit-transition: background-color 200ms linear;
+	-ms-transition: background-color 200ms linear;
+	transition: background-color 200ms linear;
+}
+
+button:hover {
+	background-color: #375EEA;
+}
+
+button:active {
+	background-color: #2A53E3;
+}
