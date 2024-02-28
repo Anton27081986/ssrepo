@@ -6,22 +6,24 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map, Observable, Subject, tap, zip } from 'rxjs';
+import { debounceTime, filter, map, Observable, Subject, tap } from 'rxjs';
 import { ApiService } from '@app/core/services/api.service';
 import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { NzIconService } from 'ng-zorro-antd/icon';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
-import { AppIcons } from "@app/core/icons";
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { catchError, switchMap } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
-	selector: 'app-thank-colleague',
-	templateUrl: './thank-colleague.component.html',
-	styleUrls: ['./thank-colleague.component.scss'],
+	selector: 'app-thanks-colleague',
+	templateUrl: './thanks-colleague.component.html',
+	styleUrls: ['./thanks-colleague.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThankColleagueComponent implements OnInit {
+export class ThanksColleagueComponent implements OnInit {
 	public date: any;
 	public isModalVisible = false;
 	public thankColleagueForm!: FormGroup;
@@ -37,11 +39,11 @@ export class ThankColleagueComponent implements OnInit {
 
 	private readonly modelChanged: Subject<string> = new Subject<string>();
 
-	// Переменные для поиска
 	public listOfOption: Array<{ name: string; id: string }> = [];
 
 	public nzFilterOption = (): boolean => true;
 	public total!: number;
+	private readonly destroy$ = new Subject<void>();
 
 	public constructor(
 		private readonly apiService: ApiService,
@@ -49,40 +51,49 @@ export class ThankColleagueComponent implements OnInit {
 		public modalCreateService: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly cdr: ChangeDetectorRef,
-		private readonly iconService: NzIconService,
-	) {
-		this.iconService.addIconLiteral('ss:delete', AppIcons.delete);
-	}
+		private readonly userProfileStore: UserProfileStoreService,
+	) {}
 
 	public ngOnInit() {
-		zip(this.modelChanged)
+		this.modelChanged
 			.pipe(
-				// debounceTime(300),
-				tap(value => {
-					if (value[0].length >= 3) {
-						this.apiService
-							.getUsersByFIO(value[0])
-							.pipe(
-								map(({ items }) => items),
-								tap(data => {
-									this.listOfOption = data;
-								}),
-							)
-							.subscribe();
-					}
+				debounceTime(300),
+				filter(value => value.length >= 3),
+				switchMap(value =>
+					this.apiService.getUsersByFIO(value).pipe(
+						catchError((error: unknown) => {
+							console.error('Ошибка при получении данных', error);
+
+							return [];
+						}),
+					),
+				),
+				tap(({ items }) => {
+					this.listOfOption = items;
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 
-		this.apiService.getProfile().subscribe(profile => {
-			this.currentUserId = profile.id;
-		});
+		this.userProfileStore.userProfile$
+			.pipe(
+				filter(profile => profile !== null),
+				untilDestroyed(this),
+			)
+			.subscribe(profile => {
+				if (profile) {
+					this.currentUserId = profile.id;
+				}
+			});
 
 		this.loadAllThanksForColleagues(this.pageSize, this.offset);
 
 		this.apiService
 			.getWins(this.pageSize, this.offset)
-			.pipe(map(({ isExtendedMode }) => isExtendedMode))
+			.pipe(
+				map(({ isExtendedMode }) => isExtendedMode),
+				untilDestroyed(this),
+			)
 			.subscribe(value => {
 				this.getExtendedMode = value;
 			});
@@ -111,7 +122,6 @@ export class ThankColleagueComponent implements OnInit {
 		);
 	}
 
-	// TODO: перенести валидацию
 	public createThanksForColleague() {
 		this.submitted = true;
 
@@ -123,13 +133,16 @@ export class ThankColleagueComponent implements OnInit {
 	}
 
 	public deleteThanksForColleague(thanks: any): void {
-		this.apiService.deleteThanksColleague(thanks.id).subscribe({
-			next: () => {
-				this.loadAllThanksForColleagues(this.pageSize, this.offset);
-				this.cdr.detectChanges();
-			},
-			error: (error: unknown) => console.error('Ошибка при удалении спасибо', error),
-		});
+		this.apiService
+			.deleteThanksColleague(thanks.id)
+			.pipe(untilDestroyed(this))
+			.subscribe({
+				next: () => {
+					this.loadAllThanksForColleagues(this.pageSize, this.offset);
+					this.cdr.detectChanges();
+				},
+				error: (error: unknown) => console.error('Ошибка при удалении спасибо', error),
+			});
 	}
 
 	// Модальное окно комментариев
@@ -148,14 +161,15 @@ export class ThankColleagueComponent implements OnInit {
 					type,
 				},
 			})
-			.afterClose.subscribe(() => {
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe(() => {
 				this.loadAllThanksForColleagues(this.pageSize, this.offset);
 				this.cdr.detectChanges();
 			});
 	}
 
 	// Модальное окно раскрытой карточки
-	showModalOpenOut(id: number): void {
+	public showModalOpenOut(id: number): void {
 		this.modalCreateService
 			.create({
 				nzClosable: true,
@@ -169,7 +183,8 @@ export class ThankColleagueComponent implements OnInit {
 					data: id,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 
 	public showModal(): void {
@@ -185,12 +200,16 @@ export class ThankColleagueComponent implements OnInit {
 				note,
 			};
 
-			this.apiService.addThanksColleague(createThanksRequest).subscribe({
-				next: _ => {
-					this.loadAllThanksForColleagues(this.pageSize, this.offset);
-				},
-				error: (error: unknown) => console.error('Ошибка при добавлении спасибо', error),
-			});
+			this.apiService
+				.addThanksColleague(createThanksRequest)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: _ => {
+						this.loadAllThanksForColleagues(this.pageSize, this.offset);
+					},
+					error: (error: unknown) =>
+						console.error('Ошибка при добавлении спасибо', error),
+				});
 			this.thankColleagueForm.reset();
 		}
 
