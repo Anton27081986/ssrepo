@@ -1,36 +1,42 @@
-<div class="slider" nz-row nzJustify="center">
-  <div nz-col nzSpan="24">
-    <nz-carousel
-      [nzAutoPlay]="true"
-      [nzAutoPlaySpeed]="30000"
-      [nzEffect]="'fade'"
-      [nzEnableSwipe]="true"
-      [nzLoop]="true">
+<div class="container">
+	<div class="slider" nz-row nzJustify="center">
 
-      <ng-container *ngIf="banners | async">
-        <div nz-carousel-content *ngFor="let index of banners | async;">
-          <a href="{{index.linkUrl}}"
-             *ngIf="index.linkUrl"
-             target="_blank"
-             rel="noreferrer">
-            <img ngSrc="{{ index.imageUrl }}" alt="{{ index.text }}" fill="" />
-          </a>
-          <img ngSrc="{{index.imageUrl }}"
-               *ngIf="!index.linkUrl"
-               alt="{{ index.text }}" fill="" />
-        </div>
-      </ng-container>
+		<div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="24">
+			<nz-carousel
+				[nzAutoPlay]="false"
+				[nzAutoPlaySpeed]="30000"
+				[nzEffect]="'fade'"
+				[nzEnableSwipe]="true"
+				[nzLoop]="true"
+			>
 
-    </nz-carousel>
-  </div>
+				<ng-container *ngIf="banners | async">
+					<div nz-carousel-content *ngFor="let index of banners | async;" nz-row>
+						<a href="{{index.linkUrl}}"
+							 *ngIf="index.linkUrl"
+							 target="_blank"
+							 rel="noreferrer">
+							<img ngSrc="{{ index.imageUrl }}" alt="{{ index.text }}" fill="" />
+						</a>
+						<img ngSrc="{{index.imageUrl }}"
+								 *ngIf="!index.linkUrl"
+								 alt="{{ index.text }}" fill="" />
+					</div>
+				</ng-container>
 
-  <span class="arrow next" (click)="next()">
+			</nz-carousel>
+		</div>
+
+		<span class="arrow next" (click)="next()">
     <img src="assets/images/slider/arrow.png" alt="" />
-  </span>
+  	</span>
 
-  <span class="arrow prev" (click)="prev()">
+		<span class="arrow prev" (click)="prev()">
     <img src="assets/images/slider/arrow.png" alt="arrow" />
-  </span>
+  	</span>
+
+	</div>
 </div>
+
 
 

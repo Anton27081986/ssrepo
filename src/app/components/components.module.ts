@@ -37,6 +37,7 @@ import { CardVictoryComponent } from '@app/components/victory/card-victory/card-
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { TransportModule } from '@app/components/transport/transport.module';
@@ -57,7 +58,8 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ResultItemComponent } from './search/result-item/result-item.component';
 import { SearchComponent } from './search/search.component';
-import {TransportComponent} from "@app/components/transport/transport.component";
+import { CarouselComponent } from './carousel/carousel.component';
+import { TransportComponent } from '@app/components/transport/transport.component';
 
 @NgModule({
 	declarations: [
@@ -87,6 +89,7 @@ import {TransportComponent} from "@app/components/transport/transport.component"
 		PaginationComponent,
 		LoaderComponent,
 		CardVictoryComponent,
+		CarouselComponent,
 		ModalTransportNoticeComponent,
 	],
 	imports: [
@@ -123,6 +126,7 @@ import {TransportComponent} from "@app/components/transport/transport.component"
 		NzSpinModule,
 		NzTypographyModule,
 		DateTimePipe,
+		CarouselModule,
 		ButtonModule,
 		TransportModule,
 	],
@@ -140,7 +144,7 @@ import {TransportComponent} from "@app/components/transport/transport.component"
 		RatingComponent,
 		CurrencyComponent,
 		AddressBookComponent,
-		TransportComponent
+		TransportComponent,
 	],
 })
 export class ComponentsModule {}

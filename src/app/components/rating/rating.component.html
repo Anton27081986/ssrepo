@@ -4,7 +4,7 @@
       <div class="title">
         <h1>рейтинги</h1>
         <div class="rating-item">
-          <span> {{ (rankTypes | async)?.averageAll }} / {{ (rankTypes | async)?.membersTotal }}</span>
+          <span> {{ (ratingTypes$ | async)?.averageAll }} / {{ (ratingTypes$ | async)?.membersTotal }}</span>
         </div>
       </div>
     </div>
@@ -15,13 +15,13 @@
                nzShowSearch
                nzServerSearch
                nzPlaceHolder="Участник"
-               [(ngModel)]="selectedValue"
+               [(ngModel)]="selectedUserId"
                [nzShowArrow]="true"
                [nzFilterOption]="nzFilterOption"
                (ngModelChange)="onUserChange()"
-               (nzOnSearch)="search($event)"
+               (nzOnSearch)="onUserSearch($event)"
              >
-         <nz-option *ngFor="let user of listOfOption" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+         <nz-option *ngFor="let user of usersListOfOption" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
        </nz-select>
         </span>
       </div>
@@ -30,22 +30,23 @@
         <nz-select
           nzAllowClear="false"
           nzPlaceHolder="Выберите неделю"
-          [(ngModel)]="weekId"
-          (ngModelChange)="selectWeek($event)"
-          [ngModelOptions]="{ standalone: true }
-        ">
-          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of rankWeeks | async"></nz-option>
+          [(ngModel)]="selectedWeekId"
+          (ngModelChange)="onSelectWeek($event)"
+          [ngModelOptions]="{ standalone: true }">
+          <nz-option [nzValue]="group?.id" [nzLabel]="group?.name" *ngFor="let group of ratingWeeks$ | async">
+
+          </nz-option>
         </nz-select>
       </div>
     </div>
   </div>
 
-  <div class="content" *ngIf="rankTypes | async as rankTypes">
+  <div class="content" *ngIf="ratingTypes$ | async as rankTypes">
     <div class="rating-list">
       <ng-container *ngIf="rankTypes">
         <ng-container *ngFor="let type of rankTypes?.items;">
-          <div class="rating-item" [ngClass]="rankTypeId == type?.id ? 'active': ''"
-               (click)="clickByTypeRank(type.id, type?.membersCount,  $event)">
+          <div class="rating-item" [ngClass]="selectedRatingTypeId == type?.id ? 'active': ''"
+               (click)="onClickByRatingType(type.id, type?.membersCount,  $event)">
             <span
               nzTooltipTitle="{{ type?.name }}"
               nz-tooltip
@@ -72,7 +73,7 @@
       </ng-container>
     </div>
 
-    <ng-container *ngIf="(ranks | async)?.items as rating">
+    <ng-container *ngIf="(ratings$ | async)?.items as rating">
       <nz-list class="card-list" [nzDataSource]="rating" [nzRenderItem]="item">
         <ng-template #item let-rank>
           <nz-list-item [nzContent]="nzContent">
@@ -109,6 +110,7 @@
                       <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
 											<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
 												<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
+												<span class="messages-number">{{ rank?.msgCount }}</span>
 											</a>
                     </div>
                   </div>
@@ -134,6 +136,7 @@
                     <span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
 										<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
 											<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
+											<span class="messages-number">{{ rank?.msgCount }}</span>
 										</a>
                   </div>
 
@@ -158,6 +161,7 @@
 										<span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
 										<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
 											<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
+											<span class="messages-number">{{ rank?.msgCount }}</span>
 										</a>
                   </div>
 
@@ -182,6 +186,7 @@
 										<span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
 										<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
 											<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
+											<span class="messages-number">{{ rank?.msgCount }}</span>
 										</a>
                   </div>
 
