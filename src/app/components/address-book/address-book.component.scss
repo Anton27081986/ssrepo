@@ -83,8 +83,8 @@
     }
 
     .content {
-        min-height: 220px;
-        height: 220px;
+        //min-height: 220px;
+        //height: 220px;
 
         .card-list {
             display: flex;
@@ -206,14 +206,18 @@
                         top: 0;
                     }
 
+					.favorite-icon:hover {
+						opacity: 0.8;
+					}
+
                     ::ng-deep .anticon {
                         font-size: 17px !important;
                         cursor: pointer;
 
                         path {
-                            fill-opacity: 0;
+                            fill-opacity: 1;
+                            fill: $blue;
                             stroke: $blue;
-                            stroke-width: 2;
                         }
                     }
 
@@ -221,6 +225,7 @@
                         path {
                             fill-opacity: 1;
                             fill: $blue;
+							stroke: $blue;
                         }
                     }
 
@@ -327,6 +332,7 @@
 
                     ::ng-deep path {
                         stroke: $blue;
+						fill: $blue;
                         stroke-width: 2;
                     }
                 }
@@ -383,6 +389,11 @@
             width: 100%;
         }
     }
+
+	.no-data {
+		width: 100%;
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: 1309px) {

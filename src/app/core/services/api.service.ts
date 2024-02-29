@@ -8,7 +8,7 @@ import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import { IUserProfile } from '@app/core/models/user-profile';
-import {ITransport} from "@app/core/models/transport";
+import { ITransport } from '@app/core/models/transport';
 
 @Injectable({
 	providedIn: 'root',
@@ -90,14 +90,11 @@ export class ApiService {
 	}
 
 	/** Адресная книга */
-	public getAddressBookUsers(
-		Offset: number,
-		Limit: number,
-	): Observable<IResponse<IAddressBookUser>> {
+	public getAddressBookUsers(): Observable<IResponse<IAddressBookUser>> {
 		return this.http.get<IResponse<IAddressBookUser>>(
 			`${environment.apiUrl}/api/auth/AddressBook`,
 			{
-				params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
+				params: new HttpParams(),
 			},
 		);
 	}
@@ -278,7 +275,11 @@ export class ApiService {
 	}
 
 	/** Добавить уведомление в расписание транспорта */
-	public sendTransportNote(dFrom: string | undefined, dTo: string | undefined, note: string | undefined): Observable<any> {
+	public sendTransportNote(
+		dFrom: string | undefined,
+		dTo: string | undefined,
+		note: string | undefined,
+	): Observable<any> {
 		return this.http.post<any>(`${environment.apiUrl}/api/company/transport`, {
 			dFrom,
 			dTo,
