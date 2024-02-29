@@ -12,6 +12,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IAddressBookSearchUser } from '@app/core/models/address-book-search-user';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'app-address-book',
@@ -20,10 +21,12 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressBookComponent implements OnInit {
+	private readonly destroy$ = new Subject<void>();
+
 	public isFavoriteMode: boolean = true;
 	public searchForm!: FormGroup;
 	public loading: boolean = false;
-	public isFavoriteUser!: false;
+	public idFavoriteUser: number | undefined;
 	public addresses: IAddressBookUser[] = [];
 	public searchedUsers: IAddressBookSearchUser[] = [];
 
@@ -47,7 +50,7 @@ export class AddressBookComponent implements OnInit {
 	public loadFavoriteUsers() {
 		this.apiService
 			.getAddressBookUsers()
-			.pipe()
+			.pipe(takeUntil(this.destroy$))
 			.subscribe(addresses => {
 				this.addresses = addresses.items;
 				this.ref.detectChanges();
@@ -64,10 +67,13 @@ export class AddressBookComponent implements OnInit {
 			return;
 		}
 
-		this.apiService.getUsersByFIO(searchTerm).subscribe(response => {
-			this.searchedUsers = response.items;
-			this.ref.detectChanges();
-		});
+		this.apiService
+			.getUsersByFIO(searchTerm)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(response => {
+				this.searchedUsers = response.items;
+				this.ref.detectChanges();
+			});
 	}
 
 	public get search() {
@@ -79,28 +85,33 @@ export class AddressBookComponent implements OnInit {
 	}
 
 	public deleteFromFavorite(user: IAddressBookUser, event: any) {
-		this.apiService.deleteFromAddressBook(user.id).subscribe(() => {
-			this.loadFavoriteUsers();
-			event.target.style.stroke = '';
-			event.target.style.fillOpacity = '0';
-			this.notificationService.info('Пользователь удален');
-		});
+		this.apiService
+			.deleteFromAddressBook(user.id)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(() => {
+				this.loadFavoriteUsers();
+				event.target.style.stroke = '';
+				event.target.style.fillOpacity = '0';
+				this.notificationService.info('Пользователь удален');
+			});
 	}
 
 	public addToFavorite(user: IAddressBookSearchUser, event: any) {
-		this.apiService.addToAddressBook(user.id).subscribe(() => {
-			this.loadFavoriteUsers();
-			event.target.style.stroke = '#4770ff';
-			event.target.style.fillOpacity = '1';
-			this.notificationService.info('Пользователь добавлен');
-		});
+		this.apiService
+			.addToAddressBook(user.id)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(() => {
+				this.loadFavoriteUsers();
+				event.target.style.stroke = '#4770ff';
+				event.target.style.fillOpacity = '1';
+				this.notificationService.info('Пользователь добавлен');
+			});
 	}
 
 	public toggleFavorite(user: any, event: any) {
-		let idFavoriteUser;
-		idFavoriteUser = this.addresses.find(addresses => addresses.id == user.id)?.id;
+		this.idFavoriteUser = this.addresses.find(addresses => addresses.id === user.id)?.id;
 
-		if (idFavoriteUser) {
+		if (this.idFavoriteUser) {
 			this.deleteFromFavorite(user, event);
 		} else {
 			this.addToFavorite(user, event);
@@ -122,7 +133,8 @@ export class AddressBookComponent implements OnInit {
 					data: item,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(takeUntil(this.destroy$))
+			.subscribe();
 	}
 
 	public toggleMode() {
