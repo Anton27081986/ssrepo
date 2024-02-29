@@ -2,6 +2,7 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	OnDestroy,
 	OnInit,
 	ViewContainerRef,
 } from '@angular/core';
@@ -20,7 +21,7 @@ import { Subject, takeUntil } from 'rxjs';
 	styleUrls: ['./address-book.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddressBookComponent implements OnInit {
+export class AddressBookComponent implements OnInit, OnDestroy {
 	private readonly destroy$ = new Subject<void>();
 
 	public isFavoriteMode: boolean = true;
@@ -145,8 +146,11 @@ export class AddressBookComponent implements OnInit {
 		if (this.isFavoriteMode) {
 			this.clearSearch();
 			this.loadFavoriteUsers();
-		} else {
-			console.log('Грузим поиск');
 		}
+	}
+
+	public ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }
