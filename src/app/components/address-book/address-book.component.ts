@@ -146,12 +146,10 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 		if (this.isFavoriteMode) {
 			this.clearSearch();
 			this.loadFavoriteUsers();
-		} else {
-			console.log('Грузим поиск');
 		}
 	}
 
-	ngOnDestroy() {
+	public ngOnDestroy() {
 		this.destroy$.next();
 		this.destroy$.complete();
 	}
