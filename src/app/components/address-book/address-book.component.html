@@ -53,8 +53,7 @@
 						<div class="card">
 							<div>
 								<div class="personal">
-									<div class="img" (click)="showModalOpenOut(item?.id)"
-											 style="cursor: pointer;">
+									<div class="img" (click)="showModalOpenOut(item?.id)">
 										<img src="{{ item?.avatarUrl }}" alt="user" />
 									</div>
 
@@ -92,16 +91,13 @@
 						<span> У вас нет избранных контактов. Для добавления воспользуйтесь поиском </span>
 					</div>
 				</ng-template>
-
 			</div>
-
 
 			<div class="card-list" *ngIf="!isFavoriteMode">
 				<div class="card" *ngFor="let item of searchedUsers">
 					<div>
 						<div class="personal">
-							<div class="img" (click)="showModalOpenOut(item?.id)"
-									 style="cursor: pointer;">
+							<div class="img" (click)="showModalOpenOut(item?.id)">
 								<img src="{{ item?.avatarUrl }}" alt="user" />
 							</div>
 
@@ -115,7 +111,7 @@
 							</div>
 						</div>
 						<div class="icons">
-            <span class="favorite-icon not-favorite"
+            <span class="" [class]="item?.isFavorite ? 'favorite-icon' : 'not-favorite'"
 									(click)="toggleFavorite(item, $event)"
 									nz-icon
 									[nzType]="'ss:favorite'">

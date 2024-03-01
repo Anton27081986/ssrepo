@@ -73,6 +73,12 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(response => {
 				this.searchedUsers = response.items;
+				this.searchedUsers.forEach((user, index: number) => {
+					if (this.addresses.some(({ id }) => id === user.id)) {
+						this.searchedUsers[index].isFavorite = 'true';
+					}
+				});
+
 				this.ref.detectChanges();
 			});
 	}
@@ -91,9 +97,9 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(() => {
 				this.loadFavoriteUsers();
-				event.target.style.stroke = '';
+				event.target.style.stroke = '#d9d9d9';
 				event.target.style.fillOpacity = '0';
-				this.notificationService.info('Пользователь удален');
+				this.notificationService.warning('Пользователь удален');
 			});
 	}
 
@@ -105,7 +111,7 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 				this.loadFavoriteUsers();
 				event.target.style.stroke = '#4770ff';
 				event.target.style.fillOpacity = '1';
-				this.notificationService.info('Пользователь добавлен');
+				this.notificationService.success('Пользователь добавлен');
 			});
 	}
 
