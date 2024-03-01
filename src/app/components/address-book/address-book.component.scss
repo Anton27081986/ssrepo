@@ -83,9 +83,6 @@
     }
 
     .content {
-        //min-height: 220px;
-        //height: 220px;
-
         .card-list {
             display: flex;
             flex-wrap: wrap;
@@ -213,6 +210,7 @@
                     ::ng-deep .anticon {
                         font-size: 17px !important;
                         cursor: pointer;
+						fill-opacity: 1;
 
                         path {
                             fill-opacity: 1;
@@ -230,12 +228,13 @@
                     }
 
                     ::ng-deep .not-favorite {
-                        font-size: 20px !important;
+						position: absolute;
+						right: 0;
+						top: 0;
 
                         path {
                             fill-opacity: 0;
                             stroke: #d9d9d9;
-                            stroke-width: 2;
                         }
                     }
                 }
@@ -328,12 +327,9 @@
                 }
 
                 .icon {
-                    font-size: 20px;
-
                     ::ng-deep path {
                         stroke: $blue;
 						fill: $blue;
-                        stroke-width: 2;
                     }
                 }
             }
@@ -393,6 +389,10 @@
 	.no-data {
 		width: 100%;
 		text-align: center;
+	}
+
+	.ant-message .anticon {
+		fill-opacity: 1;
 	}
 }
 
@@ -554,3 +554,6 @@
         }
     }
 }
+
+
+
