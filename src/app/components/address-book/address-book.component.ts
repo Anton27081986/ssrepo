@@ -73,14 +73,8 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(response => {
 				this.searchedUsers = response.items;
-				// Добавить признак что он в избраном
-
-				console.log('this.addresses', this.addresses);
-				console.log('this.searchedUsers', this.searchedUsers);
-
 				this.searchedUsers.forEach((user, index: number) => {
 					if (this.addresses.some(({ id }) => id === user.id)) {
-						console.log('Это избранный контакт');
 						this.searchedUsers[index].isFavorite = 'true';
 					}
 				});
@@ -98,7 +92,6 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 	}
 
 	public deleteFromFavorite(user: IAddressBookUser, event: any) {
-		console.log('Удаление из поиска');
 		this.apiService
 			.deleteFromAddressBook(user.id)
 			.pipe(takeUntil(this.destroy$))
