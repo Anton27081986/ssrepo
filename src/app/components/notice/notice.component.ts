@@ -1,4 +1,4 @@
-import {booleanAttribute, Component, Input} from '@angular/core';
+import { booleanAttribute, Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-notice',
@@ -9,7 +9,7 @@ export class NoticeComponent {
 	@Input()
 	public type: 'ok' | 'error' | 'warning' = 'ok';
 
-	@Input({transform: booleanAttribute})
+	@Input({ transform: booleanAttribute })
 	public isLabeled: boolean = true;
 
 	@Input()
@@ -17,5 +17,4 @@ export class NoticeComponent {
 
 	@Input()
 	public text: string | undefined;
-
 }

@@ -39,7 +39,6 @@ import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
-import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { TransportModule } from '@app/components/transport/transport.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
@@ -127,7 +126,6 @@ import { TransportComponent } from '@app/components/transport/transport.componen
 		NzTypographyModule,
 		DateTimePipe,
 		CarouselModule,
-		ButtonModule,
 		TransportModule,
 	],
 	exports: [

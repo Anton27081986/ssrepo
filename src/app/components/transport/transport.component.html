@@ -1,7 +1,7 @@
 <div *ngIf="transport" class="transport">
 	<div class="header">
-		<ss-title-main>Корпоративный транспорт</ss-title-main>
-		<ss-button (click)="showModalNotice()">Создать уведомление</ss-button>
+		<ss-headline>Корпоративный транспорт</ss-headline>
+		<ss-button *ngIf="transport?.canAddNotification" type="primary" size="medium" (click)="showModalNotice()">Создать уведомление</ss-button>
 	</div>
 
 	<div class="content">
@@ -19,7 +19,7 @@
 					<ss-tag class="station">{{  bus.endRoute }}</ss-tag>
 				</div>
 				<div class="schedule">
-					<div *ngFor="let time of bus?.departureTime" class="item gone" [ngClass]="{'gone': isPast(time), 'next': !isPast(time)}">
+					<div *ngFor="let time of bus?.departureTime" class="item" [ngClass]="{'gone': isPast(time), 'next': !isPast(time)}">
 						<span class="bus-icon" nz-icon [nzType]="'ss:bus'"></span> {{ time }}
 					</div>
 				</div>
@@ -27,3 +27,9 @@
 		</div>
 	</div>
 </div>
+
+<!--<ss-modal id="transport-notice">
+	<h1>A Custom Modal!</h1>
+	<p>Home page text: /></p>
+	<button (click)="closeModalNotice();">Close</button>
+</ss-modal>-->

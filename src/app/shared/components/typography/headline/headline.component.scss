@@ -1,3 +1,5 @@
+@use 'src/styles/colors.scss' as *;
+
 :host {
 	display: flex;
 	align-items: center;
@@ -9,6 +11,7 @@ h1 {
 	font-weight: 600;
 	letter-spacing: -0.01em;
 	text-transform: uppercase;
+	color: $text;
 }
 
 h1.size-28 {
@@ -19,4 +22,8 @@ h1.size-28 {
 h1.size-24 {
 	font-size: 24px;
 	line-height: 29px;
+}
+
+:host-context(.dark) h1 {
+	color: $dark-text;
 }

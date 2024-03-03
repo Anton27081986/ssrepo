@@ -278,7 +278,11 @@ export class ApiService {
 	}
 
 	/** Добавить уведомление в расписание транспорта */
-	public sendTransportNote(dFrom: string | undefined, dTo: string | undefined, note: string | undefined): Observable<any> {
+	public sendTransportNote(
+		dFrom: string | undefined,
+		dTo: string | undefined,
+		note: string | undefined,
+	): Observable<any> {
 		return this.http.post<any>(`${environment.apiUrl}/api/company/transport`, {
 			dFrom,
 			dTo,

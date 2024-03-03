@@ -1,11 +1,13 @@
+@use 'src/styles/colors.scss' as *;
+
 p {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 36px;
 	border-radius: 10px;
-	border: 1px solid #A4B8FF;
-	background-color: #CBD7FF;
+	border: 1px solid $additional-outline;
+	background-color: $additional;
 	margin-bottom: 0;
-	color: #4770FF !important;
+	color: $main !important;
 }

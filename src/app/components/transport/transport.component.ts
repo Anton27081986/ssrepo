@@ -4,9 +4,12 @@ import { ITransport } from '@app/core/models/transport';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
 import { map } from 'rxjs';
+import { ModalService } from '@app/components/modal/modal.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 const NO_TIME = '--:--';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-transport',
 	templateUrl: './transport.component.html',
@@ -18,6 +21,7 @@ export class TransportComponent implements OnInit {
 		private readonly apiService: ApiService,
 		public modalCreateService: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
+		private readonly modalService: ModalService,
 	) {}
 
 	ngOnInit() {
@@ -37,6 +41,7 @@ export class TransportComponent implements OnInit {
 						}),
 					};
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe(
 				transport => {
@@ -73,6 +78,11 @@ export class TransportComponent implements OnInit {
 				nzContent: ModalTransportNoticeComponent,
 				nzViewContainerRef: this.viewContainerRef,
 			})
-			.afterClose.subscribe(() => {});
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe((res: { dTo: string; dFrom: string; note: string }) => {
+				if (this.transport) {
+					this.transport.transportNotify = { ...this.transport?.transportNotify, ...res };
+				}
+			});
 	}
 }
