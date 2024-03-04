@@ -46,3 +46,9 @@
 	background-color: $lite-ok;
 }
 
+
+:host-context(.dark) ss-text {
+	 ::ng-deep p {
+		color: $dark-island;
+	 }
+}
