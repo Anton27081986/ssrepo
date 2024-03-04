@@ -27,6 +27,11 @@ import { AppInitializerProvider } from './app-initializer.service';
 
 registerLocaleData(ru);
 
+const ngZorroConfig: NzConfig = {
+	message: { nzTop: 72 },
+	notification: { nzTop: 172 },
+};
+
 @NgModule({
 	declarations: [AppComponent, WrapperComponent],
 	imports: [
@@ -52,6 +57,7 @@ registerLocaleData(ru);
 		{ provide: NZ_I18N, useValue: ru_RU },
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+		provideNzConfig(ngZorroConfig),
 	],
 	bootstrap: [AppComponent],
 })

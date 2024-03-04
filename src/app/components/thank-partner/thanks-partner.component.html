@@ -39,54 +39,15 @@
 				</div>
 			</div>
 		</div>
-  <div class="header">
-    <div>
-      <div class="title">
-        <h1>Скажите спасибо партнеру</h1>
-      </div>
-      <div class="subtitle">
-        <h2>Топ-9 самых клиентоориентированных сотрудников</h2>
-      </div>
-    </div>
-    <div class="open-all-table">
-      <div class="calendar">
-        <nz-date-picker [nzPlaceHolder]="dateToday" [(ngModel)]="dateToday" [nzAllowClear]="false" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
-        <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
-        <ng-template #sufixCalendar>
-          <i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
-        </ng-template>
-      </div>
-      <div class="button">
-        <a href="{{ (thankYouUrl$ | async)?.addNewThanksLink }}" target="_blank" rel="noreferrer">
-          <button nz-button class="button" [nzType]="'primary'">
-            <span class="like-icon" nz-icon [nzType]="'ss:like'"></span>
-            Поблагодарить партнера
-          </button>
-        </a>
-      </div>
-      <div class="top-panel top-panel-mobile">
-        <div>
-          <div class="total-week">
-            <span>Всего за неделю:</span>
-            <span>{{ (thankYouUrl$ | async)?.weekCount }}</span>
-          </div>
-          <div class="total-time">
-            <span>За все время:</span>
-            <span>{{ (thankYouUrl$ | async)?.totalCount }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 		<div class="content">
 			<div class="card-list">
 				<ng-container *ngIf="(thankYouList$ | async) as thankyou;  else loader;">
 					<nz-list class="card-list" [nzDataSource]="thankyou" [nzRenderItem]="item">
 						<ng-template #item let-thank>
-							<nz-list-item [nzContent]="nzContent" nz-row>
+							<nz-list-item [nzContent]="nzContent">
 								<ng-template #nzContent>
-									<div class="card" nz-col nzSpan="24" nzOffset="0">
+									<div class="card">
 										<div class="personal">
 											<div class="img" (click)="showModalOpenOut(thank?.id)">
 												<img src="{{ thank?.avatarUrl }}" alt="user" />
@@ -114,41 +75,6 @@
 						</ng-template>
 					</nz-list>
 				</ng-container>
-  <div class="content">
-    <div class="card-list">
-      <ng-container *ngIf="(thankYouList$ | async) as thankyou;  else loader;">
-        <nz-list class="card-list" [nzDataSource]="thankyou" [nzRenderItem]="item">
-          <ng-template #item let-thank>
-            <nz-list-item [nzContent]="nzContent">
-              <ng-template #nzContent>
-                  <div class="card">
-                    <div class="personal">
-                      <div class="img" (click)="showModalOpenOut(thank?.id)">
-                        <img src="{{ thank?.avatarUrl }}" alt="user" />
-                      </div>
-                      <div class="title">
-                        <div class="fio">
-                          <span>{{ thank?.lastName }} {{ thank?.firstName }} {{ thank?.surName }}</span>
-                        </div>
-                        <div class="job">
-                          <div>{{ thank?.department }}</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="icons">
-                      <ng-container [ngSwitch]="thank?.place">
-                        <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-                        <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-                        <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
-                      </ng-container>
-                      <span class="count">{{ thank?.thanksCount }}</span>
-                    </div>
-                  </div>
-              </ng-template>
-            </nz-list-item>
-          </ng-template>
-        </nz-list>
-      </ng-container>
 
 				<ng-template #loader>
 					<app-loader></app-loader>

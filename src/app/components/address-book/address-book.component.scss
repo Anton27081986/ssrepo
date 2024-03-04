@@ -83,9 +83,6 @@
     }
 
     .content {
-        min-height: 220px;
-        height: 220px;
-
         .card-list {
             display: flex;
             flex-wrap: wrap;
@@ -102,6 +99,7 @@
                 .personal {
                     position: relative;
                     display: flex;
+					cursor: pointer;
 
                     .img {
                         position: relative;
@@ -206,14 +204,19 @@
                         top: 0;
                     }
 
+					.favorite-icon:hover {
+						opacity: 0.8;
+					}
+
                     ::ng-deep .anticon {
                         font-size: 17px !important;
                         cursor: pointer;
+						fill-opacity: 1;
 
                         path {
-                            fill-opacity: 0;
+                            fill-opacity: 1;
+                            fill: $blue;
                             stroke: $blue;
-                            stroke-width: 2;
                         }
                     }
 
@@ -221,16 +224,18 @@
                         path {
                             fill-opacity: 1;
                             fill: $blue;
+							stroke: $blue;
                         }
                     }
 
                     ::ng-deep .not-favorite {
-                        font-size: 20px !important;
+						position: absolute;
+						right: 0;
+						top: 0;
 
                         path {
                             fill-opacity: 0;
                             stroke: #d9d9d9;
-                            stroke-width: 2;
                         }
                     }
                 }
@@ -323,11 +328,9 @@
                 }
 
                 .icon {
-                    font-size: 20px;
-
                     ::ng-deep path {
                         stroke: $blue;
-                        stroke-width: 2;
+						fill: $blue;
                     }
                 }
             }
@@ -383,6 +386,15 @@
             width: 100%;
         }
     }
+
+	.no-data {
+		width: 100%;
+		text-align: center;
+	}
+
+	.ant-message .anticon {
+		fill-opacity: 1;
+	}
 }
 
 @media screen and (max-width: 1309px) {
@@ -543,3 +555,6 @@
         }
     }
 }
+
+
+
