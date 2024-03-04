@@ -2,8 +2,8 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	OnDestroy,
 	OnInit,
-	Renderer2,
 	ViewContainerRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IAddressBookSearchUser } from '@app/core/models/address-book-search-user';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { tap } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'app-address-book',
@@ -21,16 +21,15 @@ import { tap } from 'rxjs';
 	styleUrls: ['./address-book.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddressBookComponent implements OnInit {
+export class AddressBookComponent implements OnInit, OnDestroy {
+	private readonly destroy$ = new Subject<void>();
+
 	public isFavoriteMode: boolean = true;
 	public searchForm!: FormGroup;
 	public loading: boolean = false;
+	public idFavoriteUser: number | undefined;
 	public addresses: IAddressBookUser[] = [];
 	public searchedUsers: IAddressBookSearchUser[] = [];
-	public total!: number;
-	public pageSize = 6;
-	public pageIndex = 1;
-	public offset = 0;
 
 	public constructor(
 		private readonly apiService: ApiService,
@@ -38,7 +37,6 @@ export class AddressBookComponent implements OnInit {
 		public modalCreateService: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly ref: ChangeDetectorRef,
-		private readonly renderer: Renderer2,
 		private readonly notificationService: NzMessageService,
 	) {}
 
@@ -52,15 +50,11 @@ export class AddressBookComponent implements OnInit {
 
 	public loadFavoriteUsers() {
 		this.apiService
-			.getAddressBookUsers(this.offset, this.pageSize)
-			.pipe(
-				tap(value => {
-					this.total = value.total + this.pageSize;
-				}),
-			)
+			.getAddressBookUsers()
+			.pipe(takeUntil(this.destroy$))
 			.subscribe(addresses => {
 				this.addresses = addresses.items;
-				this.ref.markForCheck();
+				this.ref.detectChanges();
 			});
 	}
 
@@ -74,10 +68,19 @@ export class AddressBookComponent implements OnInit {
 			return;
 		}
 
-		this.apiService.getUsersByFIO(searchTerm).subscribe(response => {
-			this.searchedUsers = response.items;
-			this.ref.markForCheck();
-		});
+		this.apiService
+			.getUsersByFIO(searchTerm)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(response => {
+				this.searchedUsers = response.items;
+				this.searchedUsers.forEach((user, index: number) => {
+					if (this.addresses.some(({ id }) => id === user.id)) {
+						this.searchedUsers[index].isFavorite = 'true';
+					}
+				});
+
+				this.ref.detectChanges();
+			});
 	}
 
 	public get search() {
@@ -88,17 +91,38 @@ export class AddressBookComponent implements OnInit {
 		this.searchForm.get('search')?.setValue('');
 	}
 
-	public deleteFromFavorite(user: IAddressBookUser) {
-		this.apiService.deleteFromAddressBook(user.id).subscribe(() => {
-			this.loadFavoriteUsers();
-		});
+	public deleteFromFavorite(user: IAddressBookUser, event: any) {
+		this.apiService
+			.deleteFromAddressBook(user.id)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(() => {
+				this.loadFavoriteUsers();
+				event.target.style.stroke = '#d9d9d9';
+				event.target.style.fillOpacity = '0';
+				this.notificationService.warning('Пользователь удален');
+			});
 	}
 
 	public addToFavorite(user: IAddressBookSearchUser, event: any) {
-		this.apiService.addToAddressBook(user.id).subscribe(() => {
-			event.target.style.stroke = 'blue';
-			this.notificationService.info('Пользователь добавлен в адресную книгу');
-		});
+		this.apiService
+			.addToAddressBook(user.id)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(() => {
+				this.loadFavoriteUsers();
+				event.target.style.stroke = '#4770ff';
+				event.target.style.fillOpacity = '1';
+				this.notificationService.success('Пользователь добавлен');
+			});
+	}
+
+	public toggleFavorite(user: any, event: any) {
+		this.idFavoriteUser = this.addresses.find(addresses => addresses.id === user.id)?.id;
+
+		if (this.idFavoriteUser) {
+			this.deleteFromFavorite(user, event);
+		} else {
+			this.addToFavorite(user, event);
+		}
 	}
 
 	// Модальное окно раскрытой карточки
@@ -116,19 +140,8 @@ export class AddressBookComponent implements OnInit {
 					data: item,
 				},
 			})
-			.afterClose.subscribe();
-	}
-
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset = 0;
-		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
-		}
-
-		this.pageIndex = $event; // Установка текущего индекса
-
-		this.loadFavoriteUsers();
+			.afterClose.pipe(takeUntil(this.destroy$))
+			.subscribe();
 	}
 
 	public toggleMode() {
@@ -139,8 +152,11 @@ export class AddressBookComponent implements OnInit {
 		if (this.isFavoriteMode) {
 			this.clearSearch();
 			this.loadFavoriteUsers();
-		} else {
-			console.log('Грузим поиск');
 		}
+	}
+
+	public ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }
