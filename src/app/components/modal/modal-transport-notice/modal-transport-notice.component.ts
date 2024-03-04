@@ -43,7 +43,7 @@ export class ModalTransportNoticeComponent {
 			)
 			.subscribe(
 				() => {
-					this.modal.destroy();
+					this.modal.destroy(this.noteForm.value);
 				},
 				(error: unknown) => {
 					console.error('Уведомление не опубликовано', error);

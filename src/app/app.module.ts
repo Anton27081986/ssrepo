@@ -18,7 +18,7 @@ import { JwtInterceptor } from '@app/core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
 import { ComponentsModule } from '@app/components/components.module';
 import { CoreModule } from '@app/core/core.module';
-import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
+import { ModalModule } from '@app/components/modal/modal.module';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -49,6 +49,7 @@ const ngZorroConfig: NzConfig = {
 		NzIconModule,
 		ComponentsModule,
 		CoreModule,
+		ModalModule,
 	],
 	providers: [
 		AppInitializerProvider,

@@ -6,8 +6,17 @@
 }
 
 .transport {
-	.container {
-		padding-top: 60px;
+	padding-top: 60px;
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.content {
 		display: flex;
 		flex-direction: column;
 		gap: 40px;
