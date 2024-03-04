@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
 import { CallPhoneService } from '@app/core/services/call-phone.service';
 
 @Component({

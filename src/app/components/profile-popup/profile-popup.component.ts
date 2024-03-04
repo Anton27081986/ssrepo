@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { AuthenticationService } from '@app/core/states/authentication.service';
 import { map, Observable } from 'rxjs';

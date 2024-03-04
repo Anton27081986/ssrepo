@@ -5,8 +5,7 @@ import {
 	Component,
 	Input,
 } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
-import {LikesApiService} from "@app/core/api/likes-api.service";
+import { LikesApiService } from '@app/core/api/likes-api.service';
 
 @Component({
 	selector: 'app-super-like',

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
-import {CallPhoneApiService} from "@app/core/api/call-phone-api.service";
+import { CallPhoneApiService } from '@app/core/api/call-phone-api.service';
 
 @Injectable({
 	providedIn: 'root',
