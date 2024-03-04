@@ -5,6 +5,7 @@ import { AuthenticationService } from '@app/core/states/authentication.service';
 import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @Component({
 	selector: 'app-profile-popup',
@@ -18,14 +19,16 @@ export class ProfilePopupComponent implements OnInit {
 	public userProfile$!: Observable<IUserProfile | null>;
 
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: UsersApiService,
 		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
 	) {}
 
 	public ngOnInit(): void {
 		this.userProfile$ = this.userStateService.userProfile$;
-		this.accountsFriends = this.apiService.getAccounts().pipe(map(({ items }) => items));
+		this.accountsFriends = this.apiService
+			.getCurrentUserFriendsAccounts()
+			.pipe(map(({ items }) => items));
 	}
 
 	public logout(): void {
@@ -44,6 +47,8 @@ export class ProfilePopupComponent implements OnInit {
 			window.location.reload();
 		}, 200);
 
-		this.accountsFriends = this.apiService.getAccounts().pipe(map(({ items }) => items));
+		this.accountsFriends = this.apiService
+			.getCurrentUserFriendsAccounts()
+			.pipe(map(({ items }) => items));
 	}
 }

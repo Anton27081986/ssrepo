@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewContainerRef } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { ApiService } from '@app/core/services/api.service';
 import { formatDate } from '@angular/common';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +24,7 @@ export class ThanksPartnerComponent implements OnInit {
 	protected thankYouUrl$!: Observable<any>;
 
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: ThanksPartnerApiService,
 		public modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 	) {}

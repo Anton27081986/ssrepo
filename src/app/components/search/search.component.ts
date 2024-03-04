@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
 import { map, Observable, Subject } from 'rxjs';
-import { ApiService } from '@app/core/services/api.service';
+import { SearchApiService } from '@app/core/api/search-api.service';
 
 @Component({
 	selector: 'app-search',
@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
 	private readonly modelChanged: Subject<string> = new Subject<string>();
 	private readonly resultSearch: any;
 
-	public constructor(private readonly apiService: ApiService) {}
+	public constructor(private readonly apiService: SearchApiService) {}
 
 	public ngOnInit() {
 		this.modelChanged.pipe().subscribe(nextValue => {

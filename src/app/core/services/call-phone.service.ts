@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '@app/core/services/api.service';
+import {CallPhoneApiService} from "@app/core/api/call-phone-api.service";
 
 @Injectable({
 	providedIn: 'root',
 })
 export class CallPhoneService {
-	public constructor(public apiService: ApiService) {}
+	public constructor(public apiService: CallPhoneApiService) {}
 
 	// TODO: change any to model type
 	public toggleCallForUser(user: any) {

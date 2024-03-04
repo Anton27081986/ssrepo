@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, filter, map, Observable, Subject, tap } from 'rxjs';
-import { ApiService } from '@app/core/services/api.service';
 import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
@@ -15,6 +14,9 @@ import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError, switchMap } from 'rxjs/operators';
+import { UsersApiService } from '@app/core/api/users-api.service';
+import { WinsApiService } from '@app/core/api/wins-api.service';
+import { ThanksColleagueApiService } from '@app/core/api/thanks-colleague-api.service';
 
 @UntilDestroy()
 @Component({
@@ -43,15 +45,16 @@ export class ThanksColleagueComponent implements OnInit {
 
 	public nzFilterOption = (): boolean => true;
 	public total!: number;
-	private readonly destroy$ = new Subject<void>();
 
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: UsersApiService,
 		private readonly formBuilder: FormBuilder,
 		public modalCreateService: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly userProfileStore: UserProfileStoreService,
+		private readonly winsApiService: WinsApiService,
+		private readonly thanksColleaguesApi: ThanksColleagueApiService,
 	) {}
 
 	public ngOnInit() {
@@ -88,7 +91,7 @@ export class ThanksColleagueComponent implements OnInit {
 
 		this.loadAllThanksForColleagues(this.pageSize, this.offset);
 
-		this.apiService
+		this.winsApiService
 			.getWins(this.pageSize, this.offset)
 			.pipe(
 				map(({ isExtendedMode }) => isExtendedMode),
@@ -114,12 +117,14 @@ export class ThanksColleagueComponent implements OnInit {
 
 	public loadAllThanksForColleagues(pageSize: number, offset: number) {
 		// eslint-disable-next-line no-return-assign
-		this.thankColleagueList = this.apiService.getThanksColleagueList(pageSize, offset).pipe(
-			tap(value => {
-				this.total = value.total;
-			}),
-			map(({ items }) => items),
-		);
+		this.thankColleagueList = this.thanksColleaguesApi
+			.getThanksColleagueList(pageSize, offset)
+			.pipe(
+				tap(value => {
+					this.total = value.total;
+				}),
+				map(({ items }) => items),
+			);
 	}
 
 	public createThanksForColleague() {
@@ -133,7 +138,7 @@ export class ThanksColleagueComponent implements OnInit {
 	}
 
 	public deleteThanksForColleague(thanks: any): void {
-		this.apiService
+		this.thanksColleaguesApi
 			.deleteThanksColleague(thanks.id)
 			.pipe(untilDestroyed(this))
 			.subscribe({
@@ -200,7 +205,7 @@ export class ThanksColleagueComponent implements OnInit {
 				note,
 			};
 
-			this.apiService
+			this.thanksColleaguesApi
 				.addThanksColleague(createThanksRequest)
 				.pipe(untilDestroyed(this))
 				.subscribe({

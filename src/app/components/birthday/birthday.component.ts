@@ -7,13 +7,13 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { map } from 'rxjs';
-import { ApiService } from '@app/core/services/api.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { formatDate } from '@angular/common';
 import { IBirthday } from '@app/core/models/birthday';
 import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
+import { BirthdaysApiService } from '@app/core/api/birthdays-api.service';
 
 @Component({
 	selector: 'app-birthday',
@@ -30,8 +30,8 @@ export class BirthdayComponent implements OnInit {
 	public customOptions!: OwlOptions;
 	private readonly activeSlides!: SlidesOutputData;
 
-	constructor(
-		private readonly apiService: ApiService,
+	public constructor(
+		private readonly apiService: BirthdaysApiService,
 		public modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly cd: ChangeDetectorRef,

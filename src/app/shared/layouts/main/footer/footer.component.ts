@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
-import { ApiService } from '@app/core/services/api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { take } from 'rxjs';
+import { SocialLinksApiService } from '@app/core/api/social-links-api.service';
 
 @UntilDestroy()
 @Component({
@@ -15,7 +15,7 @@ export class FooterComponent implements OnInit {
 	protected readonly AppRoutes = AppRoutes;
 	public listIcon!: any;
 
-	public constructor(private readonly apiService: ApiService) {}
+	public constructor(private readonly apiService: SocialLinksApiService) {}
 
 	public ngOnInit(): any {
 		this.apiService

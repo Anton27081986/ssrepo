@@ -1,10 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { BehaviorSubject, filter, Observable, Subscription, tap } from 'rxjs';
-import { ApiService } from '@app/core/services/api.service';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
 import { AuthenticationService } from '@app/core/states/authentication.service';
 import { switchMap } from 'rxjs/operators';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -16,7 +16,7 @@ export class UserProfileStoreService implements OnDestroy {
 	private readonly subscription: Subscription = new Subscription();
 
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: UsersApiService,
 		private readonly localStorageService: LocalStorageService,
 		private readonly authenticationService: AuthenticationService,
 	) {
