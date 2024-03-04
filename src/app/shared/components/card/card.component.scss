@@ -1,0 +1,7 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	background-color: $island;
+	border-radius: 16px;
+	padding: 32px;
+}

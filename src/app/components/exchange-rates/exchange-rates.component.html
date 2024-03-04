@@ -1,0 +1,62 @@
+<ss-card *ngIf="exchangeRates">
+	<div class="header">
+		<div class="title">
+			<ss-headline size="h1" weight="semi-bold">КОТИРОВКИ ВАЛЮТ</ss-headline>
+			<ss-text *ngIf="requestTime" size="1" weight="medium">
+				Действительны на {{ requestTime.toLocaleTimeString('ru-RU', { hour: "2-digit", minute: "2-digit" }) }}
+				по Москве, <br class="mobile"> {{ requestTime.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long',	day: 'numeric' }) }}
+			</ss-text>
+		</div>
+		<ss-button *ngIf="exchangeRates?.lintToAll" type="secondary" size="large" class="desktop" (click)="onRedirect( exchangeRates?.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">
+			<span class="arrowRight" nz-icon [nzType]="'ss:arrowRight'"></span>
+		</ss-button>
+		<ss-button *ngIf="exchangeRates?.lintToAll" type="primary" size="large" class="mobile" (click)="onRedirect( exchangeRates?.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">
+			Открыть всю таблицу
+		</ss-button>
+	</div>
+	<div class="rates desktop">
+		<div class="column">
+			<ss-text size="1" weight="medium">Валюта:</ss-text>
+			<div *ngFor="let currencu of exchangeRates?.items" class="item">{{ currencu.currencyName }}</div>
+		</div>
+		<div class="column">
+			<ss-text size="1" weight="medium">Вчера:</ss-text>
+			<div *ngFor="let currencu of exchangeRates?.items" class="item">{{ currencu.yesterdayRate }}</div>
+		</div>
+		<div class="column">
+			<ss-text size="1" weight="medium">Сегодня:</ss-text>
+			<div *ngFor="let currencu of exchangeRates?.items" class="item">{{ currencu.todayRate }}</div>
+		</div>
+	</div>
+	<div class="rates mobile">
+		<ss-card *ngFor="let currencu of exchangeRates?.items" class="item">
+			<ss-text *ngIf="requestTime" size="1" weight="medium">{{ currencu.currencyName }}</ss-text>
+			<div class="separator"></div>
+			<div class="list">
+				<div class="row">
+					<ss-text size="1" weight="medium">Вчера:</ss-text>
+					<div class="item">{{ currencu.yesterdayRate }}</div>
+				</div>
+				<div class="row">
+					<ss-text size="1" weight="medium">Сегодня:</ss-text>
+					<div class="item">{{ currencu.todayRate }}</div>
+				</div>
+				<div class="row">
+					<ss-text size="1" weight="medium">Завтра::</ss-text>
+					<div class="item">{{ currencu.tomorrowRate }}</div>
+				</div>
+			</div>
+		</ss-card>
+	</div>
+</ss-card>
+<div *ngIf="exchangeRates" class="controls">
+	<ss-card (click)="onRedirect('https://cisp.ssnab.ru/files/magazines/index.html')">
+		<ss-headline size="h1" weight="semi-bold">Библиотека</ss-headline>
+	</ss-card>
+	<ss-card (click)="onRedirect('https://cisp.ssnab.ru/Personal/Votes/Votes')">
+		<ss-headline size="h1" weight="semi-bold">голосования</ss-headline>
+	</ss-card>
+	<ss-card (click)="onRedirect('https://cisp.ssnab.ru/Admin/News?TAG_ID=&DEVELOPER_ID=&EXTRA_ID=&SHOW=0&ID=&USER_ID=&DATE_INTERVAL=&CATEGORY_ID=')">
+		<ss-headline size="h1" weight="semi-bold">Новости</ss-headline>
+	</ss-card>
+</div>
