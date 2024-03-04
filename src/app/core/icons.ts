@@ -114,7 +114,7 @@ export class AppIcons {
 
 	public static arrowRight =
 		'<svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M1 13L7 7C4.99717 4.99717 3.00283 3.00283 1 1" stroke="#D9D9D9" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M1 13L7 7C4.99717 4.99717 3.00283 3.00283 1 1" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
 	public static arrowRightH =

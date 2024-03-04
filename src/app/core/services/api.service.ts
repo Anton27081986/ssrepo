@@ -8,7 +8,8 @@ import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import { IUserProfile } from '@app/core/models/user-profile';
-import { ITransport } from '@app/core/models/transport';
+import {ITransport} from "@app/core/models/transport";
+import {IExchangeRates} from "@app/core/models/exchange-rates";
 
 @Injectable({
 	providedIn: 'root',
@@ -285,5 +286,10 @@ export class ApiService {
 			dTo,
 			note,
 		});
+	}
+
+	/** Получить котировки транспорта */
+	public getExchangeRates(): Observable<IExchangeRates> {
+		return this.http.get<IExchangeRates>(`${environment.apiUrl}/api/company/Currency`);
 	}
 }

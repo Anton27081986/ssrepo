@@ -6,9 +6,9 @@
 }
 
 .transport {
-	padding-top: 60px;
 	display: flex;
 	flex-direction: column;
+	padding-top: 60px;
 	gap: 40px;
 
 	.header {
@@ -101,8 +101,7 @@
 @media screen and (max-width: 768px) {
 
     .transport {
-		.container {
-			gap: 20px;
+		padding: 20px;
 
 			.header {
 				justify-content: center;
