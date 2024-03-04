@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { BehaviorSubject, filter, Observable, Subscription, tap } from 'rxjs';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
-import { AuthenticationService } from '@app/core/states/authentication.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
 import { switchMap } from 'rxjs/operators';
 import { UsersApiService } from '@app/core/api/users-api.service';
 

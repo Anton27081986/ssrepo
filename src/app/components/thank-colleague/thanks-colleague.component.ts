@@ -116,7 +116,6 @@ export class ThanksColleagueComponent implements OnInit {
 	}
 
 	public loadAllThanksForColleagues(pageSize: number, offset: number) {
-		// eslint-disable-next-line no-return-assign
 		this.thankColleagueList = this.thanksColleaguesApi
 			.getThanksColleagueList(pageSize, offset)
 			.pipe(

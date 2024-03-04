@@ -23,7 +23,6 @@ export class ThankColleagueService {
 		);
 	}
 
-	// TODO: post запрос должен возвращать модель IThanksColleagueItem
 	public addThanksForColleague(createThanksRequest: ICreateThanksColleagueRequest) {
 		return this.apiService.addThanksColleague(createThanksRequest).pipe(
 			tap(newThanks => this.updateThanksForStream(newThanks)),
@@ -51,7 +50,6 @@ export class ThankColleagueService {
 		}
 	}
 
-	// Сделать обобощение методов и вынести в отдельный сервис
 	private updateThanksForStream(newThanks: IThanksColleagueItem) {
 		const existThanks = this.thanksForColleagues.getValue();
 

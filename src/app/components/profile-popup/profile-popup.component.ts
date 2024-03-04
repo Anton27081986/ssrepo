@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
-import { AuthenticationService } from '@app/core/states/authentication.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
 import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
