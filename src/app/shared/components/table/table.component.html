@@ -1,0 +1,17 @@
+<table>
+	<thead *ngIf="head">
+	<tr>
+		<th *ngFor="let headItem of head">{{ headItem.title }}</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let item of items">
+		<td *ngFor="let headItem of head">
+			<a *ngIf="headItem.link; else text" href="{{item[headItem.link]}}" target="_blank">
+				{{ Array.isArray(headItem.field) ? item[headItem.field[0]] + ' ' + item[headItem.field[1]] : item[headItem.field] }}
+			</a>
+			<ng-template #text>{{ Array.isArray(headItem.field) ? item[headItem.field[0]] + ' ' + item[headItem.field[1]] : item[headItem.field] }}</ng-template>
+		</td>
+	</tr>
+	</tbody>
+</table>
