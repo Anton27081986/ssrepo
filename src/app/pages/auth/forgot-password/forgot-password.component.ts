@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '@app/core/states/authentication.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
 
 @Component({
 	selector: 'app-forgot-password',

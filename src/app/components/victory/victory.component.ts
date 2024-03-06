@@ -6,14 +6,13 @@ import {
 	OnInit,
 	ViewChild,
 } from '@angular/core';
-import { NzIconService } from 'ng-zorro-antd/icon';
-import { AppIcons } from '@app/core/icons';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '@app/core/services/api.service';
 import { map, Observable, Subject, tap, zip } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { VictoryService } from '@app/components/victory/victory.service';
+import { WinsApiService } from '@app/core/api/wins-api.service';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @UntilDestroy()
 @Component({
@@ -58,10 +57,10 @@ export class VictoryComponent implements OnInit {
 	public listTPR: Array<{ name: string; id: string }> = [];
 
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: WinsApiService,
+		private readonly usersApiService: UsersApiService,
 		private readonly _victoryService: VictoryService,
 		private readonly formBuilder: FormBuilder,
-		private readonly iconService: NzIconService,
 		public modal: NzModalService,
 		private readonly cd: ChangeDetectorRef,
 	) {}
@@ -87,7 +86,7 @@ export class VictoryComponent implements OnInit {
 				// debounceTime(300),
 				tap(value => {
 					if (value[0].length > 1) {
-						this.apiService
+						this.usersApiService
 							.getUsersByFIO(value[0])
 							.pipe(
 								map(({ items }) => items),
@@ -154,35 +153,6 @@ export class VictoryComponent implements OnInit {
 			.subscribe();
 	}
 
-	// TODO Вынести форму в отдельный компонент - add-victory-modal
-	// Модальное окно добавления победы
-	public showModaAddWin($event: any): void {
-		$event.stopPropagation();
-
-		/*        this.modalCreate
-            .create({
-                nzClosable: true,
-                nzTitle: 'Делитесь вашими победами, ведь успех заразителен!',
-                nzFooter: [
-                    {
-                        label: 'Close',
-                        shape: 'round',
-                        onClick: () => console.log('onClick')
-                    },
-                ],
-
-                nzNoAnimation: false,
-                nzWidth: '560px',
-                nzContent: AddVictoryModalComponent,
-                nzViewContainerRef: this.viewContainerRef,
-            })
-            .afterClose.subscribe(_ => {
-                console.log('Победы закрыты');
-                this.updateWinList();
-                this.cd.markForCheck();
-            });*/
-	}
-
 	public showModal(): void {
 		this.isModalVisible = true;
 	}
@@ -229,7 +199,7 @@ export class VictoryComponent implements OnInit {
 	// При выборе клика по пользователю
 	public onUserChange() {
 		this.userWinArray.push(this.selectedUser); // Выбранные пользователи
-		this.apiService
+		this.usersApiService
 			.getUserById(this.selectedUser)
 			.pipe(
 				tap(user => {

@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
 import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
+import { RatingApiService } from '@app/core/api/rating-api.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -10,7 +10,7 @@ export class RatingStoreService implements OnDestroy {
 	public ratingWeeks$ = this.ratingWeeksSubject.asObservable();
 	private readonly subscription: Subscription = new Subscription();
 
-	public constructor(private readonly apiService: ApiService) {
+	public constructor(private readonly apiService: RatingApiService) {
 		this.init();
 	}
 

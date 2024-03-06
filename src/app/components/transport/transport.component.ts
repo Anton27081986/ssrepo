@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
 import { ITransport } from '@app/core/models/transport';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
 import { map } from 'rxjs';
-import { ModalService } from '@app/components/modal/modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { TransportApiService } from '@app/core/api/transport-api.service';
 
 const NO_TIME = '--:--';
 
@@ -18,13 +17,12 @@ const NO_TIME = '--:--';
 export class TransportComponent implements OnInit {
 	protected transport: ITransport | undefined;
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: TransportApiService,
 		public modalCreateService: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
-		private readonly modalService: ModalService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.apiService
 			.getTransport()
 			.pipe(

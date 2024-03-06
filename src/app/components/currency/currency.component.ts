@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ApiService } from '@app/core/services/api.service';
+import { CurrencyApiService } from '@app/core/api/currency-api.service';
 
 @Component({
 	selector: 'app-currency',
@@ -16,7 +16,7 @@ export class CurrencyComponent implements OnInit {
 	public currencyList!: Observable<any>;
 	public submitted = false;
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: CurrencyApiService,
 		private readonly formBuilder: FormBuilder,
 	) {}
 

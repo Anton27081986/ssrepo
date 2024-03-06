@@ -1,22 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
-import { ApiService } from '@app/core/services/api.service';
 import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
 import { catchError } from 'rxjs/operators';
 import { IResponse } from '@app/core/utils/response';
+import { ThanksColleagueApiService } from '@app/core/api/thanks-colleague-api.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ThankColleagueService {
-	// P.S на поток могут подписываться только умные компоненты
-	// Создаём поток для спасибо коллегам
 	private readonly thanksForColleagues = new BehaviorSubject<IThanksColleagueItem[]>([]);
 	public thanksForColleagues$: Observable<IThanksColleagueItem[]> =
 		this.thanksForColleagues.asObservable();
 
-	public constructor(private readonly apiService: ApiService) {}
+	public constructor(private readonly apiService: ThanksColleagueApiService) {}
 
 	public loadThanksForColleagues() {
 		return this.apiService.getThanksColleagueList().pipe(
@@ -25,7 +23,6 @@ export class ThankColleagueService {
 		);
 	}
 
-	// TODO: post запрос должен возвращать модель IThanksColleagueItem
 	public addThanksForColleague(createThanksRequest: ICreateThanksColleagueRequest) {
 		return this.apiService.addThanksColleague(createThanksRequest).pipe(
 			tap(newThanks => this.updateThanksForStream(newThanks)),
@@ -53,7 +50,6 @@ export class ThankColleagueService {
 		}
 	}
 
-	// Сделать обобощение методов и вынести в отдельный сервис
 	private updateThanksForStream(newThanks: IThanksColleagueItem) {
 		const existThanks = this.thanksForColleagues.getValue();
 

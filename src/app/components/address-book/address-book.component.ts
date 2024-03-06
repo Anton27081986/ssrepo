@@ -7,13 +7,14 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from '@app/core/services/api.service';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IAddressBookSearchUser } from '@app/core/models/address-book-search-user';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Subject, takeUntil } from 'rxjs';
+import { AddressBookApiService } from '@app/core/api/address-book-api.service';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @Component({
 	selector: 'app-address-book',
@@ -32,7 +33,8 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 	public searchedUsers: IAddressBookSearchUser[] = [];
 
 	public constructor(
-		private readonly apiService: ApiService,
+		private readonly apiService: AddressBookApiService,
+		private readonly usersApiService: UsersApiService,
 		private readonly formBuilder: FormBuilder,
 		public modalCreateService: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
@@ -68,7 +70,7 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		this.apiService
+		this.usersApiService
 			.getUsersByFIO(searchTerm)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(response => {

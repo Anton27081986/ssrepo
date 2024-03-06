@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { ApiService } from '@app/core/services/api.service';
 import { formatDate } from '@angular/common';
-import { FormControl, FormGroup, Validators} from "@angular/forms";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { TransportApiService } from '@app/core/api/transport-api.service';
 
 @Component({
 	selector: 'app-modal-transport-notice',
@@ -19,9 +19,9 @@ export class ModalTransportNoticeComponent {
 		dTo: FormControl<Date | null>;
 	}>;
 
-	constructor(
+	public constructor(
 		private readonly modal: NzModalRef,
-		private readonly apiService: ApiService,
+		private readonly apiService: TransportApiService,
 	) {
 		this.noteForm = new FormGroup({
 			dFrom: new FormControl(new Date(), Validators.required),
@@ -30,11 +30,11 @@ export class ModalTransportNoticeComponent {
 		});
 	}
 
-	closeModal(): void {
+	public closeModal(): void {
 		this.modal.destroy();
 	}
 
-	saveAndCloseModal(): void {
+	public saveAndCloseModal(): void {
 		this.apiService
 			.sendTransportNote(
 				this.noteForm.controls.dFrom.value?.toISOString(),

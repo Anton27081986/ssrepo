@@ -7,10 +7,10 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
-import { ApiService } from '@app/core/services/api.service';
 import { Observable, tap } from 'rxjs';
 import { VictoryService } from '@app/components/victory/victory.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { CommentsApiService } from '@app/core/api/comments-api.service';
 
 @Component({
 	selector: 'app-comments-modal',
@@ -28,7 +28,7 @@ export class CommentsModalComponent implements OnInit {
 	public currentUserId?: number;
 
 	public constructor(
-		private readonly _apiService: ApiService,
+		private readonly _apiService: CommentsApiService,
 		private readonly _victoryService: VictoryService,
 		private readonly modal: NzModalRef,
 		private readonly formBuilder: FormBuilder,

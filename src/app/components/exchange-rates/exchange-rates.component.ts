@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {map} from "rxjs";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {ApiService} from "@app/core/services/api.service";
-import {IExchangeRates} from "@app/core/models/exchange-rates";
+import { Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IExchangeRates } from '@app/core/models/exchange-rates';
+import { CurrencyApiService } from '@app/core/api/currency-api.service';
 
 @UntilDestroy()
 @Component({
@@ -14,14 +13,12 @@ export class ExchangeRatesComponent implements OnInit {
 	protected exchangeRates: IExchangeRates | undefined;
 	protected requestTime: Date | undefined;
 
-	public constructor(private readonly apiService: ApiService) {}
+	public constructor(private readonly apiService: CurrencyApiService) {}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.apiService
 			.getExchangeRates()
-			.pipe(
-				untilDestroyed(this),
-			)
+			.pipe(untilDestroyed(this))
 			.subscribe(
 				exchangeRates => {
 					this.exchangeRates = exchangeRates;
@@ -34,6 +31,6 @@ export class ExchangeRatesComponent implements OnInit {
 	}
 
 	onRedirect(url: string) {
-		window.open(url, "_blank");
+		window.open(url, '_blank');
 	}
 }

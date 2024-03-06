@@ -10,10 +10,11 @@ import { distinctUntilChanged, filter, map, Observable, Subject, switchMap, tap,
 import isEqual from 'lodash/isEqual';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { ApiService } from '@app/core/services/api.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { RatingStoreService } from '@app/core/states/rating-store.service';
+import { RatingApiService } from '@app/core/api/rating-api.service';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @Component({
 	selector: 'app-rating',
@@ -55,12 +56,13 @@ export class RatingComponent implements OnInit, OnDestroy {
 	};
 
 	public constructor(
-		private readonly _apiService: ApiService,
 		private readonly userProfileStoreService: UserProfileStoreService,
 		private readonly ratingStoreService: RatingStoreService,
 		private readonly modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly cd: ChangeDetectorRef,
+		private readonly ratingApiService: RatingApiService,
+		private readonly usersApiService: UsersApiService,
 	) {
 		this.userProfile$ = this.userProfileStoreService.userProfile$.pipe(
 			filter(value => value !== null),
@@ -100,7 +102,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 			.pipe(
 				tap(value => {
 					if (value[0].length >= 3) {
-						this._apiService
+						this.usersApiService
 							.getUsersByFIO(value[0])
 							.pipe(
 								map(({ items }) => items),
@@ -129,7 +131,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 			.subscribe(value => {
 				this.currentUserId = value.id!; // id пользователя
 				this.selectedWeekId = value.week.id; // id недели
-				this.ratingTypes$ = this._apiService.getRatingTypes(value.week.id, value.id);
+				this.ratingTypes$ = this.ratingApiService.getRatingTypes(value.week.id, value.id);
 			});
 	}
 
@@ -143,12 +145,15 @@ export class RatingComponent implements OnInit, OnDestroy {
 					};
 				}),
 				switchMap(() => {
-					return this._apiService.getRatingTypes(this.selectedWeekId, this.currentUserId);
+					return this.ratingApiService.getRatingTypes(
+						this.selectedWeekId,
+						this.currentUserId,
+					);
 				}),
 			)
 			.subscribe(value => {
 				this.selectedRatingTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
-				this.ratings$ = this._apiService
+				this.ratings$ = this.ratingApiService
 					.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, 0)
 					.pipe(
 						tap(value => {
@@ -175,12 +180,12 @@ export class RatingComponent implements OnInit, OnDestroy {
 					};
 				}),
 				switchMap(() => {
-					return this._apiService.getRatingTypes(weekId, userId);
+					return this.ratingApiService.getRatingTypes(weekId, userId);
 				}),
 			)
 			.subscribe(value => {
 				this.selectedRatingTypeId = value.rankTypeId;
-				this.ratings$ = this._apiService
+				this.ratings$ = this.ratingApiService
 					.getRatings(this.selectedWeekId, this.selectedRatingTypeId, limit, Offset)
 					.pipe(
 						tap(value => {
@@ -193,7 +198,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	}
 
 	public getRatingsByWeekAndRatingTypeChangeWeek(weekId: number) {
-		this.ratings$ = this._apiService
+		this.ratings$ = this.ratingApiService
 			.getRatings(weekId, this.selectedRatingTypeId, this.pageSize, 0)
 			.pipe(
 				tap(value => {
@@ -206,7 +211,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 
 	public onSelectWeek(weekId: number): void {
 		this.getRatingsByWeekAndRatingTypeChangeWeek(weekId);
-		this.ratingTypes$ = this._apiService.getRatingTypes(weekId, this.currentUserId);
+		this.ratingTypes$ = this.ratingApiService.getRatingTypes(weekId, this.currentUserId);
 	}
 
 	public onClickByRatingType(id: number, limit: number, $event: MouseEvent) {
@@ -214,7 +219,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 		this.selectedRatingTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
 
 		// Выводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
-		this.ratings$ = this._apiService
+		this.ratings$ = this.ratingApiService
 			.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, 0)
 			.pipe(
 				tap(value => {
@@ -231,7 +236,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 
 	// При выборе пользователя
 	public onUserChange() {
-		this.ratingTypes$ = this._apiService.getRatingTypes(
+		this.ratingTypes$ = this.ratingApiService.getRatingTypes(
 			this.selectedWeekId,
 			this.selectedUserId,
 		);
@@ -270,7 +275,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 
 		this.pageIndex = $event;
 
-		this.ratings$ = this._apiService
+		this.ratings$ = this.ratingApiService
 			.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, this.offset)
 			.pipe(
 				tap(value => {
