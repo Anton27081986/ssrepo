@@ -252,7 +252,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	public showModalOpenOut(id: number): void {
 		this.modalCreate
 			.create({
-				nzClosable: false,
+				nzClosable: true,
 				nzFooter: null,
 				nzTitle: 'Информация о пользователе',
 				nzNoAnimation: false,

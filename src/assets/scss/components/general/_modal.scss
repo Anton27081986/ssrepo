@@ -1,4 +1,17 @@
 .ant-modal {
+	.card-detail {
+		display: flex;
+		justify-content: flex-end;
+
+		a {
+			color: $blue;
+
+			&:hover {
+				opacity: 0.6;
+			}
+		}
+	}
+
     border-radius: 16px !important;
     overflow: hidden !important;
     padding-bottom: 0 !important;
@@ -112,6 +125,12 @@
             display: flex;
             justify-content: space-between;
             margin-top: 8px;
+
+			.phone-some {
+				display: flex;
+				flex-direction: column;
+				align-items: end;
+			}
 
             .icon {
                 svg {
