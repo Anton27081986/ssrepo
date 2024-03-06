@@ -78,7 +78,7 @@ export class TransportComponent implements OnInit {
 			})
 			.afterClose.pipe(untilDestroyed(this))
 			.subscribe((res: { dTo: string; dFrom: string; note: string }) => {
-				if (this.transport) {
+				if (this.transport && res) {
 					this.transport.transportNotify = { ...this.transport?.transportNotify, ...res };
 				}
 			});

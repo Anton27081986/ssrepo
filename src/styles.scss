@@ -3,3 +3,13 @@
 @import 'ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
 @import 'ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
 @import './assets/scss/app.scss';
+@import 'src/styles/colors.scss';
+
+
+body {
+	background-color: $background !important;
+}
+
+:host-context(.dark) body {
+	background-color: $dark-background;
+}
