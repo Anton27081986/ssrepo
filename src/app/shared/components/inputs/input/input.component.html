@@ -1,0 +1,10 @@
+<ss-caption size="1">{{ label }}</ss-caption>
+<input [type]="type"
+			 [placeholder]="placeholder"
+			 [value]="value"
+			 [disabled]="disabled"
+			 (input)="onChange($any($event.target).value)"
+			 (blur)="onTouched()"
+			 class="{{ error ? size + ' error' : size }}"
+/>
+<ss-caption class="error">{{ error }}</ss-caption>
