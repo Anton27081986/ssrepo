@@ -53,9 +53,16 @@
               <span class="icon" nz-icon [nzType]="'ss:phone'"></span>
               <span class="title">Телефон:</span>
             </div>
-            <div>
-              <span class="description">{{ userInfo?.phone }}</span>
+            <div *ngIf="userInfo?.phone.split(';').length === 0; else row">
+              <span class="description">{{ userInfo?.phone}}</span>
             </div>
+						<ng-template #row>
+							<div class="phone-some">
+								<div *ngFor="let phone of userInfo?.phone.split(';')">
+									<span class="description">{{ phone }}</span>
+								</div>
+							</div>
+						</ng-template>
           </div>
           <div class="item" *ngIf="userInfo?.email">
             <div>
