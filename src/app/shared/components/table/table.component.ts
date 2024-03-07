@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'ss-table',
@@ -6,9 +6,11 @@ import {Component, Input} from '@angular/core';
 	styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-	@Input() head: { title: string, field: string | string[], link?: string }[] | undefined;
-	@Input() items: { [key: string]: string; }[] | undefined;
+	@Input() head: Array<{ title: string; fields: string[]; link?: string }> | undefined;
+	@Input() items: Array<{ [key: string]: string | number }> | undefined;
 	protected readonly Array = Array;
 
-	getValueFrom() {}
+	protected getFieldValue(fields: string[], item: { [key: string]: string | number }): string {
+		return fields.map(field => item[field]).join(' ');
+	}
 }

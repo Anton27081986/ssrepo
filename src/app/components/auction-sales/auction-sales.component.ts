@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Observable, tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { SalesApiService } from '@app/core/api/sales-api.service';
+import { IAuctionSales } from '@app/core/models/auction-sales';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-auction-sales',
 	templateUrl: './auction-sales.component.html',
@@ -10,20 +12,13 @@ import { SalesApiService } from '@app/core/api/sales-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuctionSalesComponent implements OnInit {
-	public auctionAll!: Observable<any>;
 	public pageIndex = 1;
-	public pageSize = 6;
+	public pageSize = 8;
 	public total!: number;
-	public listAuction!: Observable<any>;
+	public listAuction!: IAuctionSales;
 	public offset = 0;
 
-	public constructor(
-		private readonly route: ActivatedRoute,
-		private readonly apiService: SalesApiService,
-		private readonly cd: ChangeDetectorRef,
-	) {
-		this.route.queryParams.subscribe();
-	}
+	public constructor(private readonly apiService: SalesApiService) {}
 
 	public ngOnInit(): any {
 		this.loadDataFromServer(this.pageSize, this.offset);
@@ -31,11 +26,13 @@ export class AuctionSalesComponent implements OnInit {
 
 	// Не верные параметры
 	public loadDataFromServer(pageSize: number, offset: number): void {
-		this.listAuction = this.apiService.getAuctions(pageSize, offset).pipe(
-			tap(value => {
+		this.apiService
+			.getAuctions(pageSize, offset)
+			.pipe(untilDestroyed(this))
+			.subscribe(value => {
+				this.listAuction = value;
 				this.total = value.total + this.pageSize; // TODO Поправить, в пагинации нужен еще один сдвиг в конце
-			}),
-		);
+			});
 	}
 
 	public nzPageIndexChange($event: number) {
@@ -49,10 +46,8 @@ export class AuctionSalesComponent implements OnInit {
 
 		this.pageIndex = $event; // Установка текущего индекса
 
-		this.updateAuctionList(this.pageSize, this.offset);
+		this.loadDataFromServer(this.pageSize, this.offset);
 	}
 
-	public updateAuctionList(pageSize: number, offset: number): void {
-		this.listAuction = this.apiService.getAuctions(pageSize, offset);
-	}
+	protected readonly window = window;
 }
