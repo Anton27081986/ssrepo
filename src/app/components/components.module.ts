@@ -43,8 +43,12 @@ import { TransportModule } from '@app/components/transport/transport.module';
 import { ThanksPartnerComponent } from '@app/components/thank-partner/thanks-partner.component';
 import { TransportComponent } from '@app/components/transport/transport.component';
 import { TableModule } from '@app/shared/components/table/table.module';
+import { SearchComponent } from '@app/shared/components/search/search.component';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
+import { CardModule } from '@app/shared/components/card/card.module';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { ModalModule } from '@app/components/modal/modal.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -58,11 +62,9 @@ import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-import { ResultItemComponent } from './search/result-item/result-item.component';
-import { SearchComponent } from './search/search.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import {CardModule} from "@app/shared/components/card/card.module";
-import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
+import { AllSearchComponent } from './all-search/all-search.component';
+import { ResultItemComponent } from './all-search/result-item/result-item.component';
 
 @NgModule({
 	declarations: [
@@ -93,49 +95,51 @@ import {CaptionModule} from "@app/shared/components/typography/caption/caption.m
 		CardVictoryComponent,
 		CarouselComponent,
 		ModalTransportNoticeComponent,
+		AllSearchComponent,
 	],
-    imports: [
-        CommonModule,
-        FormsModule,
-        NzFormModule,
-        NzInputModule,
-        ReactiveFormsModule,
-        RouterLink,
-        NzIconModule,
-        NzMenuModule,
-        NzTabsModule,
-        NzButtonModule,
-        NgOptimizedImage,
-        NzTableModule,
-        NzDividerModule,
-        NzDropDownModule,
-        NgScrollbar,
-        NzListModule,
-        NzAvatarModule,
-        NzDatePickerModule,
-        MaxLengthTextPipe,
-        UpFirstPipe,
-        NzPaginationModule,
-        NzModalModule,
-        NzSelectModule,
-        NzCheckboxModule,
-        NzCarouselModule,
-        NzCardModule,
-        TooltipDirective,
-        NzToolTipModule,
-        PeopleLikedDirective,
-        SuperLikeDirective,
-        NzSpinModule,
-        NzTypographyModule,
-        DateTimePipe,
-        CarouselModule,
-        TransportModule,
-        TableModule,
-        ButtonModule,
-        HeadlineModule,
-        CardModule,
-        CaptionModule,
-    ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		NzFormModule,
+		NzInputModule,
+		ReactiveFormsModule,
+		RouterLink,
+		NzIconModule,
+		NzMenuModule,
+		NzTabsModule,
+		NzButtonModule,
+		NgOptimizedImage,
+		NzTableModule,
+		NzDividerModule,
+		NzDropDownModule,
+		NgScrollbar,
+		NzListModule,
+		NzAvatarModule,
+		NzDatePickerModule,
+		MaxLengthTextPipe,
+		UpFirstPipe,
+		NzPaginationModule,
+		NzModalModule,
+		NzSelectModule,
+		NzCheckboxModule,
+		NzCarouselModule,
+		NzCardModule,
+		TooltipDirective,
+		NzToolTipModule,
+		PeopleLikedDirective,
+		SuperLikeDirective,
+		NzSpinModule,
+		NzTypographyModule,
+		DateTimePipe,
+		CarouselModule,
+		TransportModule,
+		TableModule,
+		ButtonModule,
+		HeadlineModule,
+		CardModule,
+		CaptionModule,
+		ModalModule,
+	],
 	exports: [
 		SearchComponent,
 		MainMenuComponent,
@@ -150,6 +154,7 @@ import {CaptionModule} from "@app/shared/components/typography/caption/caption.m
 		RatingComponent,
 		AddressBookComponent,
 		TransportComponent,
+		AllSearchComponent,
 	],
 })
 export class ComponentsModule {}

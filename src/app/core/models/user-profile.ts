@@ -15,4 +15,5 @@ export interface IUserProfile {
 	phoneLocal?: string;
 	skype?: string;
 	loggedUser: IFriendAccountDto;
+	isAdmin?: boolean;
 }

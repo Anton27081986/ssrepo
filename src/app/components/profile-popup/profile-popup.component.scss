@@ -13,7 +13,7 @@
         position: relative;
         top: 25px;
         background-color: white;
-        width: 337px;
+        width: 357px;
         border-radius: 30px;
         padding: 37px 21px 37px 21px;
 
@@ -107,6 +107,32 @@
                 }
             }
         }
+
+		.admin-enter {
+			margin-top: 10px;
+			padding-bottom: 2px;
+
+			.title {
+				font-size: 14px;
+				font-weight: bold;
+				margin-left: 2px;
+			}
+
+			.enter-by-search {
+				margin-top: 17px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				ss-search {
+					width: 234px;
+				}
+
+				.enter-icon {
+					margin-right: 41px;
+				}
+			}
+		}
 
         .card-list,
         .logged-user {
