@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
 import { CallPhoneService } from '@app/core/services/call-phone.service';
 import { environment } from '@environments/environment';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { AuthenticationService } from '@app/core/services/authentication.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
 	selector: 'ss-result-item',
@@ -10,9 +11,11 @@ import { AuthenticationService } from '@app/core/services/authentication.service
 	styleUrls: ['./result-item.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResultItemComponent {
+export class ResultItemComponent implements OnDestroy {
 	@Input() user: any;
 	@Input() call: boolean = false;
+
+	private readonly destroy$ = new Subject<void>();
 
 	public constructor(
 		private readonly callPhoneService: CallPhoneService,
@@ -24,12 +27,20 @@ export class ResultItemComponent {
 		this.callPhoneService.toggleCallForUser(this.user);
 	}
 
-	enterUnderUser(id: any) {
+	public enterUnderUser(id: any) {
 		this.userStateService.resetProfile();
-		this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
+		this.authenticationService
+			.enterUnderFriendlyAccount(id, environment.apiUrl)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe();
 
 		setTimeout(function () {
 			window.location.reload();
 		}, 200);
+	}
+
+	public ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }

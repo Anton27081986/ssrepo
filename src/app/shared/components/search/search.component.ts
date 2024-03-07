@@ -52,7 +52,6 @@ export class SearchComponent implements OnInit, OnDestroy {
 	}
 
 	public loadSearchUsers() {
-		this.showWindowResult = true;
 		const searchTerm = this.searchForm.get('search')?.value;
 
 		if (!searchTerm) {
@@ -66,6 +65,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(response => {
 				this.searchedUsers = response.items;
+
+				if (this.searchedUsers.length > 0) {
+					this.showWindowResult = true;
+				}
+
 				this.ref.detectChanges();
 			});
 	}
