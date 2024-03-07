@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { SalesApiService } from '@app/core/api/sales-api.service';
 import { IAuctionSales } from '@app/core/models/auction-sales';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -9,13 +8,12 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	selector: 'app-auction-sales',
 	templateUrl: './auction-sales.component.html',
 	styleUrls: ['./auction-sales.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuctionSalesComponent implements OnInit {
 	public pageIndex = 1;
 	public pageSize = 8;
-	public total!: number;
-	public listAuction!: IAuctionSales;
+	public total: number | undefined;
+	public listAuction: IAuctionSales | undefined;
 	public offset = 0;
 
 	public constructor(private readonly apiService: SalesApiService) {}
