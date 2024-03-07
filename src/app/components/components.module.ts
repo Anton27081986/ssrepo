@@ -43,12 +43,13 @@ import { TransportModule } from '@app/components/transport/transport.module';
 import { ThanksPartnerComponent } from '@app/components/thank-partner/thanks-partner.component';
 import { TransportComponent } from '@app/components/transport/transport.component';
 import { TableModule } from '@app/shared/components/table/table.module';
+import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
+import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
 import { TooltipDirective } from './victory/tooltip.directive';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
-import { CurrencyComponent } from './currency/currency.component';
 import { BirthdayComponent } from './birthday/birthday.component';
 import { VictoryComponent } from './victory/victory.component';
 import { ThanksColleagueComponent } from './thank-colleague/thanks-colleague.component';
@@ -60,6 +61,8 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { ResultItemComponent } from './search/result-item/result-item.component';
 import { SearchComponent } from './search/search.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import {CardModule} from "@app/shared/components/card/card.module";
+import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
 
 @NgModule({
 	declarations: [
@@ -75,7 +78,6 @@ import { CarouselComponent } from './carousel/carousel.component';
 		VictoryComponent,
 		BirthdayComponent,
 		RatingComponent,
-		CurrencyComponent,
 		AddressBookComponent,
 		ModalInfoComponent,
 		AddVictoryModalComponent,
@@ -92,44 +94,48 @@ import { CarouselComponent } from './carousel/carousel.component';
 		CarouselComponent,
 		ModalTransportNoticeComponent,
 	],
-	imports: [
-		CommonModule,
-		FormsModule,
-		NzFormModule,
-		NzInputModule,
-		ReactiveFormsModule,
-		RouterLink,
-		NzIconModule,
-		NzMenuModule,
-		NzTabsModule,
-		NzButtonModule,
-		NgOptimizedImage,
-		NzTableModule,
-		NzDividerModule,
-		NzDropDownModule,
-		NgScrollbar,
-		NzListModule,
-		NzAvatarModule,
-		NzDatePickerModule,
-		MaxLengthTextPipe,
-		UpFirstPipe,
-		NzPaginationModule,
-		NzModalModule,
-		NzSelectModule,
-		NzCheckboxModule,
-		NzCarouselModule,
-		NzCardModule,
-		TooltipDirective,
-		NzToolTipModule,
-		PeopleLikedDirective,
-		SuperLikeDirective,
-		NzSpinModule,
-		NzTypographyModule,
-		DateTimePipe,
-		CarouselModule,
-		TransportModule,
-		TableModule,
-	],
+    imports: [
+        CommonModule,
+        FormsModule,
+        NzFormModule,
+        NzInputModule,
+        ReactiveFormsModule,
+        RouterLink,
+        NzIconModule,
+        NzMenuModule,
+        NzTabsModule,
+        NzButtonModule,
+        NgOptimizedImage,
+        NzTableModule,
+        NzDividerModule,
+        NzDropDownModule,
+        NgScrollbar,
+        NzListModule,
+        NzAvatarModule,
+        NzDatePickerModule,
+        MaxLengthTextPipe,
+        UpFirstPipe,
+        NzPaginationModule,
+        NzModalModule,
+        NzSelectModule,
+        NzCheckboxModule,
+        NzCarouselModule,
+        NzCardModule,
+        TooltipDirective,
+        NzToolTipModule,
+        PeopleLikedDirective,
+        SuperLikeDirective,
+        NzSpinModule,
+        NzTypographyModule,
+        DateTimePipe,
+        CarouselModule,
+        TransportModule,
+        TableModule,
+        ButtonModule,
+        HeadlineModule,
+        CardModule,
+        CaptionModule,
+    ],
 	exports: [
 		SearchComponent,
 		MainMenuComponent,
@@ -142,7 +148,6 @@ import { CarouselComponent } from './carousel/carousel.component';
 		BirthdayComponent,
 		VictoryComponent,
 		RatingComponent,
-		CurrencyComponent,
 		AddressBookComponent,
 		TransportComponent,
 	],

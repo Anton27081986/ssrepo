@@ -7,10 +7,10 @@
 				по Москве, <br class="mobile"> {{ requestTime.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long',	day: 'numeric' }) }}
 			</ss-text>
 		</div>
-		<ss-button *ngIf="exchangeRates?.lintToAll" type="secondary" size="large" class="desktop" (click)="onRedirect( exchangeRates?.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">
+		<ss-button *ngIf="exchangeRates?.lintToAll" type="secondary" size="large" class="desktop" (click)="onRedirect( exchangeRates.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">
 			<span class="arrowRight" nz-icon [nzType]="'ss:arrowRight'"></span>
 		</ss-button>
-		<ss-button *ngIf="exchangeRates?.lintToAll" type="primary" size="large" class="mobile" (click)="onRedirect( exchangeRates?.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">
+		<ss-button *ngIf="exchangeRates?.lintToAll" type="primary" size="large" class="mobile" (click)="onRedirect( exchangeRates.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">
 			Открыть всю таблицу
 		</ss-button>
 	</div>
@@ -42,7 +42,7 @@
 					<div class="item">{{ currencu.todayRate }}</div>
 				</div>
 				<div class="row">
-					<ss-text size="1" weight="medium">Завтра::</ss-text>
+					<ss-text size="1" weight="medium">Завтра:</ss-text>
 					<div class="item">{{ currencu.tomorrowRate }}</div>
 				</div>
 			</div>

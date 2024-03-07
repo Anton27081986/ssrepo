@@ -2,60 +2,85 @@
 
 table {
 	width: 100%;
-	border-radius: 16px;
 	background-color: $island;
 	max-width: 1280px;
-	overflow: hidden;
+	border-radius: 16px;
+	border-style: hidden;
+	box-shadow: 0 0 0 1px $island-outline;
 
-	 tr > th {
-		 height: 45px;
-		 text-align: center;
-		 background: #e6ebee;
-		 padding: 2px 2px;
-		 font-size: 16px;
-		 font-weight: bold;
-		 min-width: 150px;
-	 }
+	thead {
+		tr {
+			th {
+				text-align: left;
+				background-color: #F2F3F7;
+				padding: 13px 20px;
+				min-width: 150px;
+				border: 1px solid $island-outline;
+				font-size: 16px;
+				font-weight: 700;
+				line-height: 19px;
+				letter-spacing: -0.01em;
+				color: $text;
+			}
 
-	tr > th:nth-child(1) {
-		border-radius: 16px 0 0 0;
+			th:first-child {
+				border-top-left-radius: 16px;
+			}
+
+			th:last-child {
+				border-top-right-radius: 16px;
+			}
+		}
 	}
 
-	tr > th:last-child {
-		border-radius: 0 16px 0 0;
+	tr {
+		td {
+			padding: 13px 20px;
+			font-size: 16px;
+			color: $text;
+			font-weight: 600;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 700px;
+			border: 1px solid $island-outline;
+
+			a {
+				font-size: 16px;
+				color: $text;
+				font-weight: 600;
+				opacity: 0.7;
+				text-align: left;
+				cursor: pointer;
+			}
+
+			a:hover {
+				 opacity: 1;
+			}
+		}
+	}
+}
+
+:host-context(.dark) table {
+	background-color: $dark-island;
+
+	thead {
+		tr {
+			th {
+				text-align: left;
+				background-color: #24292D;
+				color: $island;
+			}
+		}
 	}
 
-	tr > td {
-		font-size: 16px;
-		height: 45px;
-		color: $text;
-		font-weight: 600;
-		text-align: center;
-		padding: 0 20px;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		max-width: 700px;
-	}
+	tr {
+		td {
+			color: $island;
 
-	tr > td a {
-		font-size: 16px;
-		color: $text;
-		font-weight: 600;
-		opacity: 0.7;
-		text-align: center;
-		cursor: pointer;
-	}
-
-	tr > td a:hover {
-		opacity: 1;
-	}
-
-	tr > td:nth-child(1) {
-		text-align: left;
-	}
-
-	tr > td:last-child {
-		text-align: right;
+			a {
+				color: $island;
+			}
+		}
 	}
 }
