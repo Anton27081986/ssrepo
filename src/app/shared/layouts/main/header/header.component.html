@@ -23,7 +23,7 @@
 								</div>
 
 								<div class="search-header">
-									<app-search *ngIf="statusInputSearch"></app-search>
+									<app-all-search *ngIf="statusInputSearch"></app-all-search>
 
 									<div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
 										<span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline"></span>
@@ -61,7 +61,7 @@
 						</div>
 					</div>
 
-					<app-search *ngIf="statusInputSearchMobile" [ngClass]="statusInputSearchMobile ? 'mobile' : ''"></app-search>
+					<app-all-search *ngIf="statusInputSearchMobile" [ngClass]="statusInputSearchMobile ? 'mobile' : ''"></app-all-search >
 
 				</nz-content>
 			</div>

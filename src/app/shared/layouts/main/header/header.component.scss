@@ -154,7 +154,7 @@ app-mobile-menu {
     display: none;
 }
 
-app-search.mobile {
+app-all-search.mobile {
     opacity: 0;
     z-index: -1;
 }
@@ -262,12 +262,12 @@ app-search.mobile {
         width: 100%;
     }
 
-    app-search {
+    app-all-search {
         position: static;
         top: 88px;
     }
 
-    app-search.mobile {
+    app-all-search.mobile {
         opacity: 1;
     }
 }
