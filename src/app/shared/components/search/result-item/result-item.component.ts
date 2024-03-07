@@ -40,7 +40,6 @@ export class ResultItemComponent implements OnDestroy {
 	}
 
 	public ngOnDestroy() {
-		this.destroy$.next();
 		this.destroy$.complete();
 	}
 }
