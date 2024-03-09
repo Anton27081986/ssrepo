@@ -28,5 +28,4 @@ export class TransportApiService {
 			note,
 		});
 	}
-
 }

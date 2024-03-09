@@ -66,6 +66,6 @@ export class PasswordComponent implements OnInit, ControlValueAccessor {
 	protected onTouched() {}
 
 	onChangeVisibility() {
-		this.type = this.type === 'text' ? 'password' : 'text'
+		this.type = this.type === 'text' ? 'password' : 'text';
 	}
 }

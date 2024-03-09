@@ -15,7 +15,10 @@ import { UserProfileStoreService } from '@app/core/states/user-profile-store.ser
 	changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SignInComponent implements OnInit {
-	protected loginForm!: FormGroup<{ password: FormControl<string | null>; login: FormControl<string | null> }>;
+	protected loginForm!: FormGroup<{
+		password: FormControl<string | null>;
+		login: FormControl<string | null>;
+	}>;
 
 	public loading = false;
 
@@ -40,7 +43,7 @@ export class SignInComponent implements OnInit {
 		});
 	}
 
-	getControl(name:string) {
+	getControl(name: string) {
 		return this.loginForm.get(name) as FormControl;
 	}
 
@@ -51,7 +54,10 @@ export class SignInComponent implements OnInit {
 
 		this.loading = true;
 		this.authenticationService
-			.login(this.loginForm.controls.login.value || '', this.loginForm.controls.password.value || '')
+			.login(
+				this.loginForm.controls.login.value || '',
+				this.loginForm.controls.password.value || '',
+			)
 			.pipe(
 				first(),
 				switchMap(_ => {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from "rxjs";
-import {environment} from "@environments/environment";
-import {IUserProfile} from "@app/core/models/user-profile";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 @Injectable({
 	providedIn: 'root',
@@ -41,5 +41,4 @@ export class UsersApiService {
 	public getProfile(): Observable<IUserProfile> {
 		return this.http.get<IUserProfile>(`${environment.apiUrl}/api/auth/Profile`);
 	}
-
 }
