@@ -43,7 +43,7 @@
 					[nzType]="'line'">
 
 					<nz-tab *ngFor="let day of birthdays;"
-									nzTitle="{{ day.name }}" (nzClick)="onTabClick(day.name)">
+									nzTitle="{{ day.name }}" (nzClick)="onTabClick(day!.name)">
 
 						<div class="content">
 							<div class="card-list">
