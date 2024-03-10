@@ -3,7 +3,10 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 import { formatDate } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TransportApiService } from '@app/core/api/transport-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ITransportNotifyDto } from '@app/core/models/company/transport-notify-dto';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-modal-transport-notice',
 	templateUrl: './modal-transport-notice.component.html',
@@ -30,17 +33,16 @@ export class ModalTransportNoticeComponent {
 		});
 	}
 
-	public closeModal(): void {
-		this.modal.destroy();
-	}
-
 	public saveAndCloseModal(): void {
+		const transportNotify: ITransportNotifyDto = {
+			dFrom: this.noteForm.controls.dFrom.value?.toISOString(),
+			dTo: this.noteForm.controls.dTo.value?.toISOString(),
+			note: this.noteForm.controls.note.value?.toString(),
+		};
+
 		this.apiService
-			.sendTransportNote(
-				this.noteForm.controls.dFrom.value?.toISOString(),
-				this.noteForm.controls.dTo.value?.toISOString(),
-				this.noteForm.controls.note.value?.toString(),
-			)
+			.sendTransportNote(transportNotify)
+			.pipe(untilDestroyed(this))
 			.subscribe(
 				() => {
 					this.modal.destroy(this.noteForm.value);
