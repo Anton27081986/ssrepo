@@ -6,8 +6,8 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-	@Input() head: Array<{ title: string; fields: string[]; link?: string }> | undefined;
-	@Input() items: Array<{ [key: string]: string | number }> | undefined;
+	@Input() public head: Array<{ title: string; fields: string[]; link?: string }> | undefined;
+	@Input() public items: Array<{ [key: string]: string | number }> | undefined;
 	protected readonly Array = Array;
 
 	protected getFieldValue(fields: string[], item: { [key: string]: string | number }): string {

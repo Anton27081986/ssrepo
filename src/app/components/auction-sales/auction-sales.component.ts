@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SalesApiService } from '@app/core/api/sales-api.service';
-import { IAuctionSales } from '@app/core/models/auction-sales';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 
 @UntilDestroy()
 @Component({
@@ -13,7 +13,7 @@ export class AuctionSalesComponent implements OnInit {
 	public pageIndex = 1;
 	public pageSize = 8;
 	public total: number | undefined;
-	public listAuction: IAuctionSales | undefined;
+	public listAuction: IAuctionSalesDto | undefined;
 	public offset = 0;
 
 	public constructor(private readonly apiService: SalesApiService) {}
@@ -22,14 +22,16 @@ export class AuctionSalesComponent implements OnInit {
 		this.loadDataFromServer(this.pageSize, this.offset);
 	}
 
-	// Не верные параметры
 	public loadDataFromServer(pageSize: number, offset: number): void {
 		this.apiService
 			.getAuctions(pageSize, offset)
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
 				this.listAuction = value;
-				this.total = value.total + this.pageSize; // TODO Поправить, в пагинации нужен еще один сдвиг в конце
+
+				if (value.total) {
+					this.total = value.total + this.pageSize;
+				}
 			});
 	}
 
