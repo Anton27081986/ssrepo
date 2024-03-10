@@ -10,11 +10,13 @@ import { map } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { formatDate } from '@angular/common';
-import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
 import { BirthdaysApiService } from '@app/core/api/birthdays-api.service';
 import { IDayDto } from '@app/core/models/auth/day-dto';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-birthday',
 	templateUrl: './birthday.component.html',
@@ -28,7 +30,6 @@ export class BirthdayComponent implements OnInit {
 	protected birthdays: IDayDto[] = [];
 	protected selectedTabIndex = 1;
 	public customOptions!: OwlOptions;
-	private readonly activeSlides!: SlidesOutputData;
 
 	public constructor(
 		private readonly apiService: BirthdaysApiService,
@@ -77,7 +78,10 @@ export class BirthdayComponent implements OnInit {
 		// TODO : make unsubscribe
 		this.apiService
 			.getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-			.pipe(map(({ days }) => days))
+			.pipe(
+				map(({ days }) => days),
+				untilDestroyed(this),
+			)
 			.subscribe(birthdays => {
 				this.birthdays = birthdays || [];
 				this.selectTabByDay(this.date.toLocaleDateString());
@@ -99,7 +103,8 @@ export class BirthdayComponent implements OnInit {
 					data: item,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 
 	public selectTabByDay(date: string) {
