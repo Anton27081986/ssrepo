@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SalesApiService } from '@app/core/api/sales-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
+import { ITableItem } from '@app/shared/components/table/table.component';
 
 @UntilDestroy()
 @Component({
@@ -15,6 +16,7 @@ export class AuctionSalesComponent implements OnInit {
 	public total: number | undefined;
 	public listAuction: IAuctionSalesDto | undefined;
 	public offset = 0;
+	public tableItems: ITableItem[] = [];
 
 	public constructor(private readonly apiService: SalesApiService) {}
 
@@ -28,6 +30,10 @@ export class AuctionSalesComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
 				this.listAuction = value;
+
+				if (value.items) {
+					this.tableItems = <ITableItem[]>value.items;
+				}
 
 				if (value.total) {
 					this.total = value.total + this.pageSize;
