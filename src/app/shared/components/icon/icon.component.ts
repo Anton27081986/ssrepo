@@ -21,11 +21,11 @@ export class IconComponent implements OnInit {
 			let svgString = (AppIcons as any)[this.name];
 
 			if (this.height) {
-				svgString = svgString.replace(/height="\d+/,'height="' + this.height)
+				svgString = svgString.replace(/height="\d+/, `height="${this.height}`);
 			}
 
 			if (this.width) {
-				svgString = svgString.replace(/width="\d+/,'width="' + this.width)
+				svgString = svgString.replace(/width="\d+/, `width="${this.width}`);
 			}
 
 			this.svg = this.sanitizer.bypassSecurityTrustHtml(svgString);

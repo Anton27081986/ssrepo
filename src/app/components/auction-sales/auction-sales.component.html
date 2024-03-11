@@ -4,7 +4,7 @@
 			<ss-headline size="h1">АУКЦИОННЫЕ ПРОДАЖИ</ss-headline>
 			<ss-headline class="subtitle" size="h6">Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</ss-headline>
 		</div>
-		<ss-button class="desktop" size="large" type="primary" (click)="window.open(listAuction.allListLink)">Открыть всю таблицу</ss-button>
+		<ss-button class="desktop" size="large" type="primary" (click)="window.open(listAuction!.allListLink!)">Открыть всю таблицу</ss-button>
 	</div>
 	<div class="content desktop">
 			<ss-table
@@ -14,12 +14,12 @@
 					{title: 'Цена прайса', fields: ['price', 'currency']},
 					{title: 'Количество', fields: ['quantity', 'tovUnitName']}
 					]"
-				[items]="listAuction.items">
+				[items]="tableItems">
 			</ss-table>
 	</div>
 	<div class="content mobile">
 		<ss-card>
-			<div class="mobile-item" *ngFor="let item of listAuction.items">
+			<div class="mobile-item" *ngFor="let item of listAuction!.items!">
 				<ss-headline size="h6" weight="semi-bold">{{item.tovName}}</ss-headline>
 				<div class="mobile-info">
 					<ss-caption size="1">{{item.source}}</ss-caption>
@@ -41,6 +41,6 @@
 		>
 		</nz-pagination>
 	</div>
-	<ss-button class="mobile" size="large" type="primary" (click)="window.open(listAuction.allListLink)">Открыть всю таблицу</ss-button>
+	<ss-button class="mobile" size="large" type="primary" (click)="window.open(listAuction!.allListLink!)">Открыть всю таблицу</ss-button>
 </div>
 

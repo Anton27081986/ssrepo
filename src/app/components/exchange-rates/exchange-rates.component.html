@@ -4,7 +4,7 @@
 			<ss-headline size="h1" weight="semi-bold">КОТИРОВКИ ВАЛЮТ</ss-headline>
 			<ss-text *ngIf="requestTime" size="1" weight="medium">
 				Действительны на {{ requestTime.toLocaleTimeString('ru-RU', { hour: "2-digit", minute: "2-digit" }) }}
-				по Москве, <br class="mobile"> {{ requestTime.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long',	day: 'numeric' }) }}
+				по Москве, <br class="mobile" /> {{ requestTime.toLocaleDateString('ru-RU', { year: 'numeric', month: 'long',	day: 'numeric' }) }}
 			</ss-text>
 		</div>
 		<ss-button *ngIf="exchangeRates?.lintToAll" type="secondary" size="large" class="desktop" (click)="onRedirect( exchangeRates.lintToAll || 'https://cisp.ssnab.ru/catalog/ccyrates')">

@@ -10,11 +10,13 @@ import { map } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { formatDate } from '@angular/common';
-import { IBirthday } from '@app/core/models/birthday';
-import { OwlOptions, SlidesOutputData } from 'ngx-owl-carousel-o';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
 import { BirthdaysApiService } from '@app/core/api/birthdays-api.service';
+import { IDayDto } from '@app/core/models/auth/day-dto';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-birthday',
 	templateUrl: './birthday.component.html',
@@ -25,10 +27,9 @@ export class BirthdayComponent implements OnInit {
 	@ViewChild(NzCarouselComponent, { static: false }) myCarousel: NzCarouselComponent | undefined;
 
 	protected date = new Date();
-	protected birthdays: IBirthday[] = [];
+	protected birthdays: IDayDto[] = [];
 	protected selectedTabIndex = 1;
 	public customOptions!: OwlOptions;
-	private readonly activeSlides!: SlidesOutputData;
 
 	public constructor(
 		private readonly apiService: BirthdaysApiService,
@@ -77,9 +78,12 @@ export class BirthdayComponent implements OnInit {
 		// TODO : make unsubscribe
 		this.apiService
 			.getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-			.pipe(map(({ days }) => days))
+			.pipe(
+				map(({ days }) => days),
+				untilDestroyed(this),
+			)
 			.subscribe(birthdays => {
-				this.birthdays = birthdays;
+				this.birthdays = birthdays || [];
 				this.selectTabByDay(this.date.toLocaleDateString());
 				this.cd.markForCheck();
 			});
@@ -99,14 +103,21 @@ export class BirthdayComponent implements OnInit {
 					data: item,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 
 	public selectTabByDay(date: string) {
 		this.selectedTabIndex = this.birthdays.findIndex(x => x.name === date);
 	}
 
-	public onTabClick(date: string) {
+	public onTabClick(date: string | null | undefined) {
+		if (!date) {
+			console.log('Нет даты');
+
+			return;
+		}
+
 		const dateFormat = date.split('.');
 
 		this.date = new Date([dateFormat[1], dateFormat[0], dateFormat[2]].join('/'));

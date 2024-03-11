@@ -6,7 +6,7 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ModalModule } from '@app/components/modal/modal.module';
 import { ExchangeRatesComponent } from '@app/components/exchange-rates/exchange-rates.component';
-import {CardModule} from "@app/shared/components/card/card.module";
+import { CardModule } from '@app/shared/components/card/card.module';
 
 @NgModule({
 	declarations: [ExchangeRatesComponent],

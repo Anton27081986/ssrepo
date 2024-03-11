@@ -43,7 +43,7 @@
 					[nzType]="'line'">
 
 					<nz-tab *ngFor="let day of birthdays;"
-									nzTitle="{{ day.name }}" (nzClick)="onTabClick(day.name)">
+									nzTitle="{{ day.name }}" (nzClick)="onTabClick(day!.name)">
 
 						<div class="content">
 							<div class="card-list">
@@ -63,30 +63,6 @@
 										</div>
 									</div>
 								</div>
-
-								<!--<owl-carousel-o [options]="customOptions">
-
-									<ng-container *ngFor="let item of day?.items;">
-										<ng-template carouselSlide [width]="320">
-											<div class="card">
-												<div class="personal">
-													<div class="img" (click)="showModalOpenOut(item?.id)">
-														<img src="{{ item?.avatarUrl }}" alt="" />
-													</div>
-													<div class="title">
-														<div class="fio">
-															<span>{{ item?.name }}</span>
-														</div>
-														<div class="job">
-															<div>{{ item?.position }}</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</ng-template>
-									</ng-container>
-
-								</owl-carousel-o>-->
 							</div>
 						</div>
 

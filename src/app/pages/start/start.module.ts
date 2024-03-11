@@ -6,22 +6,22 @@ import { SliderComponent } from '@app/components/slider/slider.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { VictoryService } from '@app/components/victory/victory.service';
+import { ExchangeRatesModule } from '@app/components/exchange-rates/exchange-rates.module';
 import { StartComponent } from './start.component';
 import { StartRoutingModule } from './start-routing.module';
-import {ExchangeRatesModule} from "@app/components/exchange-rates/exchange-rates.module";
 
 @NgModule({
 	declarations: [StartComponent, SliderComponent],
-    imports: [
-        CommonModule,
-        StartRoutingModule,
-        MainModule,
-        NzGridModule,
-        NzCarouselModule,
-        NgOptimizedImage,
-        ComponentsModule,
-        ExchangeRatesModule,
-    ],
+	imports: [
+		CommonModule,
+		StartRoutingModule,
+		MainModule,
+		NzGridModule,
+		NzCarouselModule,
+		NgOptimizedImage,
+		ComponentsModule,
+		ExchangeRatesModule,
+	],
 	providers: [{ provide: VictoryService }],
 })
 export class StartModule {}
