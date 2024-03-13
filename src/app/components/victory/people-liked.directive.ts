@@ -1,28 +1,28 @@
-import {AfterViewInit, Directive, ElementRef, HostListener, Renderer2} from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
-    standalone: true,
-    selector: '[appPeopleLiked]',
+	standalone: true,
+	selector: '[appPeopleLiked]',
 })
 export class PeopleLikedDirective implements AfterViewInit {
-    private queryModalPeopleLikes: any;
+	private queryModalPeopleLikes: any;
 
-    constructor(
-        private readonly renderer: Renderer2,
-        private readonly el: ElementRef, // доступ к окну для отображения
-    ) {}
+	constructor(
+		private readonly renderer: Renderer2,
+		private readonly el: ElementRef, // доступ к окну для отображения
+	) {}
 
-    ngAfterViewInit() {
-        this.queryModalPeopleLikes = this.el.nativeElement.querySelector('.modal-people-likes');
-    }
+	ngAfterViewInit() {
+		this.queryModalPeopleLikes = this.el.nativeElement.querySelector('.modal-people-likes');
+	}
 
-    // mouseenter
-    @HostListener('mouseenter') onMouseEnter() {
-        this.renderer.addClass(this.queryModalPeopleLikes, 'show');
-    }
+	// mouseenter
+	@HostListener('mouseenter') onMouseEnter() {
+		this.renderer.addClass(this.queryModalPeopleLikes, 'show');
+	}
 
-    // mouseleave
-    @HostListener('mouseleave') onMouseLeave() {
-        this.renderer.removeClass(this.queryModalPeopleLikes, 'show');
-    }
+	// mouseleave
+	@HostListener('mouseleave') onMouseLeave() {
+		this.renderer.removeClass(this.queryModalPeopleLikes, 'show');
+	}
 }

@@ -1,3 +1,3 @@
 export interface IBackendErrorsInterface {
-    [key: string]: string[];
+	[key: string]: string[];
 }

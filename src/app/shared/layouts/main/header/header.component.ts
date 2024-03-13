@@ -1,11 +1,10 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {AppRoutes} from '@app/common/routes';
-import {ApiService} from '@app/core/services/api.service';
-import {UserStateService} from '@app/core/states/user-state.service';
-import {Observable} from 'rxjs';
-import {IUserProfile} from '@app/core/models/user-profile';
-import {CallPhoneService} from '@app/core/services/call-phone.service';
-import {environment} from "@environments/environment";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AppRoutes } from '@app/common/routes';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { Observable } from 'rxjs';
+import { IUserProfile } from '@app/core/models/user-profile';
+import { environment } from '@environments/environment';
+import { MenuApiService } from '@app/core/api/menu-api.service';
 
 @Component({
 	selector: 'app-header',
@@ -25,9 +24,8 @@ export class HeaderComponent implements OnInit {
 
 	protected readonly AppRoutes = AppRoutes;
 	public constructor(
-		private readonly apiService: ApiService,
-		private readonly userStateService: UserStateService,
-		private readonly callPhoneService: CallPhoneService,
+		private readonly apiService: MenuApiService,
+		private readonly userStateService: UserProfileStoreService,
 	) {}
 
 	public ngOnInit(): any {
@@ -35,7 +33,7 @@ export class HeaderComponent implements OnInit {
 			this.favoritemenu = item.menu;
 		});
 
-		this.apiService.getMenuListJson().subscribe(item => {
+		this.apiService.getMenu().subscribe(item => {
 			this.listMenu = item.menu;
 			this.listMenu.unshift({ link: '', name: 'Избранное', items: this.favoritemenu });
 		});
@@ -56,10 +54,5 @@ export class HeaderComponent implements OnInit {
 	public menuToggle(event: Event) {
 		event.stopPropagation();
 		this.statusBurger = !this.statusBurger;
-	}
-
-	public testCall() {
-		debugger;
-		this.callPhoneService.toggleCallForUser('test');
 	}
 }

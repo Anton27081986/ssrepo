@@ -105,6 +105,26 @@
 
     <hr />
 
+		<ng-container *ngIf="userProfile$ | async as data">
+			<div class="admin-enter" *ngIf="data?.isAdmin === true">
+				<span class="title">Войти под сотрудником</span>
+				<div class="enter-by-search">
+					<ss-search
+						[placeholder]="'Выберите сотрудника'"
+						[adminEnter]="true"
+						[closeIcon]="true"
+						[searchIcon]="true"
+					></ss-search>
+					<div>
+						<span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
+					</div>
+				</div>
+			</div>
+
+			<hr *ngIf="data?.isAdmin === true" />
+		</ng-container>
+
+
     <ng-container *ngIf="accountsFriends | async as accounts">
       <div class="card-list" *ngIf="accounts.length>0">
         <div class="accordion" (click)="statusAccordion=!statusAccordion;">

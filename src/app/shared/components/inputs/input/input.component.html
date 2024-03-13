@@ -1,0 +1,14 @@
+<ss-caption size="1">{{ label }}</ss-caption>
+<div class="input">
+		<input [type]="type"
+				 [placeholder]="placeholder"
+				 [value]="value"
+				 [disabled]="disabled"
+				 (input)="onChange($any($event.target).value)"
+				 (blur)="onTouched()"
+				 class="{{ error ? size + ' error' : size }}"
+					 #input
+	  />
+		<ss-icon *ngIf="input.value" height="12" name="iconClose" (click)="input.value = ''"></ss-icon>
+</div>
+<ss-caption class="error">{{ error }}</ss-caption>

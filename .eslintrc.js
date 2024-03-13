@@ -92,7 +92,14 @@ module.exports = {
 				ecmaVersion: 6,
 				project: 'tsconfig.json',
 			},
-			plugins: ['@typescript-eslint', 'rxjs', 'unicorn', 'import', 'eslint-plugin-import'],
+			plugins: [
+				'@typescript-eslint',
+				'rxjs',
+				'unicorn',
+				'import',
+				'eslint-plugin-import',
+				'rxjs-angular',
+			],
 			extends: [
 				'eslint:recommended',
 				'plugin:@typescript-eslint/recommended',
@@ -181,7 +188,7 @@ module.exports = {
 					'error',
 					{
 						type: 'element',
-						prefix: 'app',
+						prefix: ['app', 'ss'],
 						style: 'kebab-case',
 					},
 				],
@@ -217,6 +224,15 @@ module.exports = {
 				'rxjs/no-connectable': 'error',
 				'rxjs/no-ignored-observable': 'error',
 				'rxjs/no-topromise': 'error',
+				'rxjs-angular/prefer-takeuntil': [
+					'error',
+					{
+						alias: ['untilDestroyed'],
+						checkComplete: true,
+						checkDecorators: ['Component', 'UntilDestroy'],
+						checkDestroy: false,
+					},
+				],
 				'unicorn/prefer-string-slice': 'error',
 				'unicorn/no-array-push-push': 'error',
 				'unicorn/require-number-to-fixed-digits-argument': 'error',

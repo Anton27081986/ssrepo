@@ -27,6 +27,11 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:closeLight', AppIcons.iconCloseLight);
 		this.nzIconService.addIconLiteral('ss:phone', AppIcons.phone);
 		this.nzIconService.addIconLiteral('ss:mail', AppIcons.mail);
+		this.nzIconService.addIconLiteral('ss:direction', AppIcons.direction);
+		this.nzIconService.addIconLiteral('ss:bus', AppIcons.bus);
+		this.nzIconService.addIconLiteral('ss:ok', AppIcons.ok);
+		this.nzIconService.addIconLiteral('ss:warning', AppIcons.warning);
+		this.nzIconService.addIconLiteral('ss:error', AppIcons.error);
 		this.nzIconService.addIconLiteral('ss:calendar', AppIcons.calendar);
 		this.nzIconService.addIconLiteral('ss:medalGold', AppIcons.medalGold);
 		this.nzIconService.addIconLiteral('ss:medalSilver', AppIcons.medalSilver);
@@ -35,5 +40,25 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:comment', AppIcons.comment);
 		this.nzIconService.addIconLiteral('ss:plus', AppIcons.plus);
 		this.nzIconService.addIconLiteral('ss:blocknote', AppIcons.blocknote);
+		this.nzIconService.addIconLiteral('ss:medal', AppIcons.medal);
+		this.nzIconService.addIconLiteral('ss:openOut', AppIcons.openOut);
+		this.nzIconService.addIconLiteral('ss:onePeople', AppIcons.onePeople);
+		this.nzIconService.addIconLiteral('ss:twoPeople', AppIcons.twoPeople);
+		this.nzIconService.addIconLiteral('ss:attach', AppIcons.attach);
+		this.nzIconService.addIconLiteral('ss:goldLike', AppIcons.goldLike);
+		this.nzIconService.addIconLiteral('ss:silverLike', AppIcons.silverLike);
+		this.nzIconService.addIconLiteral('ss:bronzeLike', AppIcons.bronzeLike);
+		this.nzIconService.addIconLiteral('ss:delete', AppIcons.delete);
+		this.nzIconService.addIconLiteral('ss:triangleBottom', AppIcons.triangleBottom);
+		this.nzIconService.addIconLiteral('ss:triangleTop', AppIcons.triangleTop);
+		this.nzIconService.addIconLiteral('ss:favorite', AppIcons.favorite);
+		this.nzIconService.addIconLiteral('ss:call', AppIcons.call);
+		this.nzIconService.addIconLiteral('ss:password', AppIcons.password);
+		this.nzIconService.addIconLiteral('ss:profile', AppIcons.profile);
+		this.nzIconService.addIconLiteral('ss:star', AppIcons.star);
+		this.nzIconService.addIconLiteral('ss:sort', AppIcons.sort);
+		this.nzIconService.addIconLiteral('ss:theme', AppIcons.theme);
+		this.nzIconService.addIconLiteral('ss:closeFill', AppIcons.closeFill);
+		this.nzIconService.addIconLiteral('ss:arrowRightH', AppIcons.arrowRightH);
 	}
 }

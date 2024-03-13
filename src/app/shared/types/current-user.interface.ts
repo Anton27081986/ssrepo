@@ -1,5 +1,5 @@
 export interface ICurrentUserInterface {
-    id: number;
-    email: string;
-    username: string;
+	id: number;
+	email: string;
+	username: string;
 }

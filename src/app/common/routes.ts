@@ -1,13 +1,13 @@
 export class AppRoutes {
-    static root = '';
-    static signIn = 'sign-in';
-    static signUp = 'sign-up';
-    static forgotPassword = 'forgot-password';
-    static resetPassword = 'reset-password';
+	public static root = '';
+	public static signIn = 'sign-in';
+	public static signUp = 'sign-up';
+	public static forgotPassword = 'forgot-password';
+	public static resetPassword = 'reset-password';
 
-    static start = 'start';
+	public static start = 'start';
 
-    static subRoot(route: string): string {
-        return `/${route}`;
-    }
+	public static subRoot(route: string): string {
+		return `/${route}`;
+	}
 }

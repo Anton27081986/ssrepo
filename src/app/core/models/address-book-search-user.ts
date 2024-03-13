@@ -9,4 +9,5 @@ export interface IAddressBookSearchUser {
 	phoneLocal?: string;
 	city?: string;
 	branchType?: string;
+	isFavorite?: string;
 }

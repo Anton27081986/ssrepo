@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
-import { UserStateService } from '@app/core/states/user-state.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-start',
 	templateUrl: './start.component.html',
@@ -11,13 +13,16 @@ import { UserStateService } from '@app/core/states/user-state.service';
 export class StartComponent implements OnInit {
 	public loading = false;
 
-	public constructor(private readonly userStateService: UserStateService) {}
+	public constructor(private readonly userStateService: UserProfileStoreService) {}
 
 	public ngOnInit() {
 		this.loading = true;
 
-		this.userStateService.userProfile$.pipe(first()).subscribe(() => {
-			this.loading = false;
-		});
+		this.userStateService.userProfile$
+			.pipe(first())
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.loading = false;
+			});
 	}
 }

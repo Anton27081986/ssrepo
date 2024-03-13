@@ -268,3 +268,50 @@
         scrollbar-color: $gray-light;
     }
 }
+
+
+// Вынести в общий компонент
+@media screen and (max-width: 992px) {
+	.card {
+		width: 446px;
+
+		.message {
+			width: auto;
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.card {
+		width: 326px;
+	}
+}
+
+
+@media screen and (max-width: 576px) {
+	.card {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.card {
+		width: 100%;
+
+		.personals {
+			.message {
+				width: 100% !important;
+			}
+
+			.delete-icon {
+			}
+		}
+
+		.icons {
+			.medal-icon {
+				right: 12px;
+				top: 11px;
+			}
+		}
+	}
+}

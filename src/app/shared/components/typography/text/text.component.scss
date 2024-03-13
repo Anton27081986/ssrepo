@@ -1,0 +1,32 @@
+p {
+	font-family: 'Inter', serif;
+	letter-spacing: -0.01em;
+	margin: 0;
+}
+
+p.text-1 {
+	font-size: 16px;
+	line-height: 22px;
+}
+
+p.text-2 {
+	font-size: 14px;
+	line-height: 20px;
+}
+
+p.text-3 {
+	font-size: 12px;
+	line-height: 17px;
+}
+
+p.semi-bold {
+	font-weight: 600;
+}
+
+p.medium {
+	font-weight: 500;
+}
+
+p.regular {
+	font-weight: 400;
+}

@@ -6,7 +6,7 @@ import { IUser } from '@auth/models/user';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
-import {IconsService} from "@app/core/services/icons.service";
+import { IconsService } from '@app/core/services/icons.service';
 
 @UntilDestroy()
 @Component({
@@ -36,23 +36,30 @@ export class AppComponent implements OnInit {
 						this.themeService.setDarkTheme().then();
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 
 		this.profileService.isDarkTheme$
 			.pipe(
-				untilDestroyed(this),
 				tap(switchValue => {
 					if (switchValue) {
-						this.profileService.updateTheme(true).subscribe(_ => {
-							this.themeService.setDarkTheme().then();
-						});
+						this.profileService
+							.updateTheme(true)
+							.pipe(untilDestroyed(this))
+							.subscribe(_ => {
+								this.themeService.setDarkTheme().then();
+							});
 					} else {
-						this.profileService.updateTheme(false).subscribe(_ => {
-							this.themeService.setDefaultTheme().then();
-						});
+						this.profileService
+							.updateTheme(false)
+							.pipe(untilDestroyed(this))
+							.subscribe(_ => {
+								this.themeService.setDefaultTheme().then();
+							});
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}

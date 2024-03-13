@@ -1,71 +1,46 @@
-<div class="auction-sales">
-  <div class="header">
-    <div>
-      <div class="title">
-        <h1>
-          <a href="https://cisp.ssnab.ru/Sales/PlanMolsTovs/Proficits" target="_blank" rel="noreferrer">АУКЦИОННЫЕ ПРОДАЖИ</a>
-        </h1>
-      </div>
-      <div class="subtitle">
-        <h2>Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</h2>
-      </div>
-    </div>
-    <div class="open-all-table">
-      <div *ngIf="auctionAll | async as url">
-        <a href="{{ url.allListLink }}" target="_blank">
-          <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="content">
-    <div class="table">
-      <nz-table #basicTable
-                [nzData]="(listAuction | async)?.items"
-                [nzShowPagination]="false"
-      >
-        <thead>
-        <tr>
-          <th>ТП</th>
-          <th>Доступность</th>
-          <th>Цена прайса</th>
-          <th>Количество</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <td>
-            <a href="{{ data.detailUrl }}" target="_blank" nz-tooltip nzTooltipTitle="{{ data.tovName }}">{{ data.tovName | slice:0:80 }} {{ data.tovName.length > 67? '...' : '' }}</a>
-          </td>
-          <td>{{ data.source }}</td>
-          <td>
-            {{ data.price }}
-            <span>{{ data.currency }}</span>
-          </td>
-          <td>{{ data.quantity }}
-            <span>{{ data.tovUnitName }}</span>
-          </td>
-        </tr>
-        </tbody>
-      </nz-table>
-      <div class="open-all-table bottom">
-        <div>
-          <a href="https://ssnab.it/Sales/PlanMolsTovs/Proficits">
-            <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="pagination">
-    <nz-pagination
-      [nzTotal]="total"
-      [nzPageIndex]="pageIndex"
-      [nzPageSize]="pageSize"
-      (nzPageIndexChange)="nzPageIndexChange($event)"
-      (nzPageSizeChange)="pageSize = $event"
-      [nzResponsive]="true"
-    >
-    </nz-pagination>
-  </div>
+<div *ngIf="listAuction" class="container">
+	<div class="header">
+		<div class="title">
+			<ss-headline size="h1">АУКЦИОННЫЕ ПРОДАЖИ</ss-headline>
+			<ss-headline class="subtitle" size="h6">Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</ss-headline>
+		</div>
+		<ss-button class="desktop" size="large" type="primary" (click)="window.open(listAuction!.allListLink!)">Открыть всю таблицу</ss-button>
+	</div>
+	<div class="content desktop">
+			<ss-table
+				[head]="[
+					{title: 'ТП', fields: ['tovName'], link: 'detailUrl'},
+					{title: 'Доступность', fields: ['source']},
+					{title: 'Цена прайса', fields: ['price', 'currency']},
+					{title: 'Количество', fields: ['quantity', 'tovUnitName']}
+					]"
+				[items]="tableItems">
+			</ss-table>
+	</div>
+	<div class="content mobile">
+		<ss-card>
+			<div class="mobile-item" *ngFor="let item of listAuction!.items!">
+				<ss-headline size="h6" weight="semi-bold">{{item.tovName}}</ss-headline>
+				<div class="mobile-info">
+					<ss-caption size="1">{{item.source}}</ss-caption>
+					<ss-caption size="1">{{item.price + ' ' + item.currency}}</ss-caption>
+					<ss-caption size="1">{{item.quantity + ' ' + item.tovUnitName }}</ss-caption>
+				</div>
+				<div class="separator"></div>
+			</div>
+		</ss-card>
+	</div>
+	<div class="pagination">
+		<nz-pagination
+			[nzTotal]="total"
+			[nzPageIndex]="pageIndex"
+			[nzPageSize]="pageSize"
+			(nzPageIndexChange)="nzPageIndexChange($event)"
+			(nzPageSizeChange)="pageSize = $event"
+			[nzResponsive]="true"
+		>
+		</nz-pagination>
+	</div>
+	<ss-button class="mobile" size="large" type="primary" (click)="window.open(listAuction!.allListLink!)">Открыть всю таблицу</ss-button>
 </div>
+

@@ -18,6 +18,8 @@ import { JwtInterceptor } from '@app/core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
 import { ComponentsModule } from '@app/components/components.module';
 import { CoreModule } from '@app/core/core.module';
+import { ModalModule } from '@app/components/modal/modal.module';
+import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +27,11 @@ import { AppComponent } from './app.component';
 import { AppInitializerProvider } from './app-initializer.service';
 
 registerLocaleData(ru);
+
+const ngZorroConfig: NzConfig = {
+	message: { nzTop: 72 },
+	notification: { nzTop: 172 },
+};
 
 @NgModule({
 	declarations: [AppComponent, WrapperComponent],
@@ -43,6 +50,7 @@ registerLocaleData(ru);
 		NzIconModule,
 		ComponentsModule,
 		CoreModule,
+		ModalModule,
 	],
 	providers: [
 		AppInitializerProvider,
@@ -50,6 +58,7 @@ registerLocaleData(ru);
 		{ provide: NZ_I18N, useValue: ru_RU },
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+		provideNzConfig(ngZorroConfig),
 	],
 	bootstrap: [AppComponent],
 })

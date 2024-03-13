@@ -1,23 +1,24 @@
 <div class="address-book">
-  <div class="header">
-    <div>
-      <div class="title">
-        <h1>Адресная книга</h1>
-      </div>
-    </div>
-    <div class="open-all-table">
-      <!--      Поиск по сотрудникам-->
-      <div class="search">
+	<div class="container">
+		<div class="header">
+			<div>
+				<div class="title">
+					<h1>Адресная книга</h1>
+				</div>
+			</div>
+			<div class="open-all-table">
+				<!--      Поиск по сотрудникам-->
+				<div class="search">
         <span class="">
           <form nz-form [formGroup]="searchForm" class="search-form">
             <nz-form-item>
               <nz-form-control>
                 <nz-input-group [nzSuffix]="prefixSearch">
                   <input type="text"
-                         nz-input
-                         formControlName="search"
-                         placeholder="Поиск по сотрудникам"
-                         (keyup.enter)="loadSearchUsers()" />
+												 nz-input
+												 formControlName="search"
+												 placeholder="Поиск по сотрудникам"
+												 (keyup.enter)="loadSearchUsers()" />
                 </nz-input-group>
               </nz-form-control>
               <ng-template #prefixSearch>
@@ -27,113 +28,107 @@
             </nz-form-item>
           </form>
         </span>
-      </div>
-      <div class="button">
-<!--        Кнопка избранного-->
-        <button class="button"
-                nz-button
-                [nzType]="isFavoriteMode? 'primary': 'default'"
-                (click)="toggleMode()">
+				</div>
+				<div class="button">
+					<!--        Кнопка избранного-->
+					<button class="button"
+									nz-button
+									[nzType]="isFavoriteMode? 'primary': 'default'"
+									(click)="toggleMode()">
           <span class="favorite-icon"
-                [ngClass]="!isFavoriteMode ? 'not-favorite-mode':''"
-                nz-icon [nzType]="'ss:favorite'">
-            <span class="favorite-text">Избранные контакты </span>
+								[ngClass]="!isFavoriteMode ? 'not-favorite-mode':''"
+								nz-icon [nzType]="'ss:favorite'">
           </span>
-        </button>
-      </div>
-    </div>
-  </div>
+					</button>
+				</div>
+			</div>
+		</div>
 
-  <div class="content">
-<!--    Результаты поиска или избранное-->
-    <div class="card-list" *ngIf="isFavoriteMode">
+		<div class="content">
+			<!--    Результаты поиска или избранное-->
+			<div class="card-list" *ngIf="isFavoriteMode">
 
-      <ng-container *ngFor="let item of addresses; index as i">
-        <div class="card">
-          <div>
-            <div class="personal">
-              <div class="img" (click)="showModalOpenOut(item?.id)"
-                   style="cursor: pointer;">
-                <img src="{{ item?.avatarUrl }}" alt="user" />
-              </div>
+				<ng-container *ngIf="addresses.length > 0; else noData">
+					<ng-container *ngFor="let item of addresses; index as i">
+						<div class="card">
+							<div>
+								<div class="personal">
+									<div class="img" (click)="showModalOpenOut(item?.id)">
+										<img src="{{ item?.avatarUrl }}" alt="user" />
+									</div>
 
-              <div class="title">
-                <div class="fio">
-                  <span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
-                </div>
-                <div class="job">
-                  <div>{{ item?.department }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="icons">
+									<div class="title">
+										<div class="fio">
+											<span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
+										</div>
+										<div class="job">
+											<div>{{ item?.department }}</div>
+										</div>
+									</div>
+								</div>
+								<div class="icons">
             <span class="favorite-icon"
-                  (click)="deleteFromFavorite(item)"
-                  nz-icon [nzType]="'ss:favorite'">
+									(click)="deleteFromFavorite(item, $event)"
+									nz-icon [nzType]="'ss:favorite'">
             </span>
-            </div>
+								</div>
 
-            <div class="contacts">
-              <div class="call" *ngIf="item?.phoneLocal && item?.isIntranet">
-                <span>{{ item?.phoneLocal }}</span>
-                <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-              </div>
-            </div>
+								<div class="contacts">
+									<div class="call" *ngIf="item?.phoneLocal && item?.isIntranet">
+										<span>{{ item?.phoneLocal }}</span>
+										<span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
+									</div>
+								</div>
 
-          </div>
-        </div>
-        <div class="line" *ngIf="(i+1)%3 === 0"></div>
-      </ng-container>
+							</div>
+						</div>
+						<div class="line" *ngIf="(i+1)%3 === 0"></div>
+					</ng-container>
+				</ng-container>
 
-    </div>
-    <div class="card-list" *ngIf="!isFavoriteMode">
-      <div class="card" *ngFor="let item of searchedUsers">
-        <div>
-          <div class="personal">
-            <div class="img" (click)="showModalOpenOut(item?.id)"
-                 style="cursor: pointer;">
-              <img src="{{ item?.avatarUrl }}" alt="user" />
-            </div>
+				<ng-template #noData>
+					<div class="no-data">
+						<span> У вас нет избранных контактов. Для добавления воспользуйтесь поиском </span>
+					</div>
+				</ng-template>
+			</div>
 
-            <div class="title">
-              <div class="fio">
-                <span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
-              </div>
-              <div class="job">
-                <div>{{ item?.city }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="icons">
-            <span class="favorite-icon not-favorite"
-                  (click)="addToFavorite(item, $event)"
-                  nz-icon
-                  [nzType]="'ss:favorite'">
+			<div class="card-list" *ngIf="!isFavoriteMode">
+				<div class="card" *ngFor="let item of searchedUsers">
+					<div>
+						<div class="personal">
+							<div class="img" (click)="showModalOpenOut(item?.id)">
+								<img src="{{ item?.avatarUrl }}" alt="user" />
+							</div>
+
+							<div class="title">
+								<div class="fio">
+									<span>{{ item?.lastName }} {{  item?.firstName }} {{  item?.surName }}</span>
+								</div>
+								<div class="job">
+									<div>{{ item?.city }}</div>
+								</div>
+							</div>
+						</div>
+						<div class="icons">
+            <span class="" [class]="item?.isFavorite ? 'favorite-icon' : 'not-favorite'"
+									(click)="toggleFavorite(item, $event)"
+									nz-icon
+									[nzType]="'ss:favorite'">
             </span>
-          </div>
+						</div>
 
-          <div class="contacts">
-            <div class="call" *ngIf="item?.phoneLocal">
-              <span>{{ item?.phoneLocal }}</span>
-              <span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
-            </div>
-          </div>
+						<div class="contacts">
+							<div class="call" *ngIf="item?.phoneLocal">
+								<span>{{ item?.phoneLocal }}</span>
+								<span class="call-icon" nz-icon [nzType]="'ss:call'"></span>
+							</div>
+						</div>
 
-        </div>
-      </div>
-    </div>
+					</div>
+				</div>
+			</div>
 
-  </div>
-  <div class="pagination">
-    <nz-pagination
-      [nzTotal]="total"
-      [nzPageIndex]="pageIndex"
-      [nzPageSize]="pageSize"
-      (nzPageIndexChange)="nzPageIndexChange($event)"
-      (nzPageSizeChange)="pageSize = $event"
-      [nzResponsive]="true"
-    >
-    </nz-pagination>
-  </div>
-
+		</div>
+	</div>
 </div>

@@ -37,23 +37,34 @@ import { CardVictoryComponent } from '@app/components/victory/card-victory/card-
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
+import { TransportModule } from '@app/components/transport/transport.module';
+import { ThanksPartnerComponent } from '@app/components/thank-partner/thanks-partner.component';
+import { TransportComponent } from '@app/components/transport/transport.component';
+import { TableModule } from '@app/shared/components/table/table.module';
+import { SearchComponent } from '@app/shared/components/search/search.component';
+import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
+import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
+import { CardModule } from '@app/shared/components/card/card.module';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { ModalModule } from '@app/components/modal/modal.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
 import { TooltipDirective } from './victory/tooltip.directive';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
-import { CurrencyComponent } from './currency/currency.component';
 import { BirthdayComponent } from './birthday/birthday.component';
 import { VictoryComponent } from './victory/victory.component';
-import { ThankColleagueComponent } from './thank-colleague/thank-colleague.component';
-import { ThankyouComponent } from './thankyou/thankyou.component';
+import { ThanksColleagueComponent } from './thank-colleague/thanks-colleague.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
-import { ResultItemComponent } from './search/result-item/result-item.component';
-import { SearchComponent } from './search/search.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { AllSearchComponent } from './all-search/all-search.component';
+import { ResultItemComponent } from './all-search/result-item/result-item.component';
 
 @NgModule({
 	declarations: [
@@ -64,12 +75,11 @@ import { SearchComponent } from './search/search.component';
 		ProfilePopupComponent,
 		AuctionSalesComponent,
 		NotificationComponent,
-		ThankyouComponent,
-		ThankColleagueComponent,
+		ThanksPartnerComponent,
+		ThanksColleagueComponent,
 		VictoryComponent,
 		BirthdayComponent,
 		RatingComponent,
-		CurrencyComponent,
 		AddressBookComponent,
 		ModalInfoComponent,
 		AddVictoryModalComponent,
@@ -83,6 +93,9 @@ import { SearchComponent } from './search/search.component';
 		PaginationComponent,
 		LoaderComponent,
 		CardVictoryComponent,
+		CarouselComponent,
+		ModalTransportNoticeComponent,
+		AllSearchComponent,
 	],
 	imports: [
 		CommonModule,
@@ -118,6 +131,14 @@ import { SearchComponent } from './search/search.component';
 		NzSpinModule,
 		NzTypographyModule,
 		DateTimePipe,
+		CarouselModule,
+		TransportModule,
+		TableModule,
+		ButtonModule,
+		HeadlineModule,
+		CardModule,
+		CaptionModule,
+		ModalModule,
 	],
 	exports: [
 		SearchComponent,
@@ -126,13 +147,14 @@ import { SearchComponent } from './search/search.component';
 		ProfilePopupComponent,
 		AuctionSalesComponent,
 		NotificationComponent,
-		ThankyouComponent,
-		ThankColleagueComponent,
+		ThanksPartnerComponent,
+		ThanksColleagueComponent,
 		BirthdayComponent,
 		VictoryComponent,
 		RatingComponent,
-		CurrencyComponent,
 		AddressBookComponent,
+		TransportComponent,
+		AllSearchComponent,
 	],
 })
 export class ComponentsModule {}

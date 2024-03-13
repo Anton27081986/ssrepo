@@ -1,21 +1,21 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {MobileMenuComponent} from './mobile-menu.component';
+import { MobileMenuComponent } from './mobile-menu.component';
 
 describe('MobileMenuComponent', () => {
-    let component: MobileMenuComponent;
-    let fixture: ComponentFixture<MobileMenuComponent>;
+	let component: MobileMenuComponent;
+	let fixture: ComponentFixture<MobileMenuComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [MobileMenuComponent],
-        });
-        fixture = TestBed.createComponent(MobileMenuComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [MobileMenuComponent],
+		});
+		fixture = TestBed.createComponent(MobileMenuComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

@@ -1,0 +1,17 @@
+<table>
+	<thead *ngIf="head">
+		<tr>
+			<th *ngFor="let headItem of head">{{ headItem.title }}</th>
+		</tr>
+	</thead>
+	<tbody>
+	<tr *ngFor="let item of items">
+		<td *ngFor="let headItem of head">
+			<a *ngIf="headItem.link; else text" href="{{item[headItem.link]}}" target="_blank">
+				{{ getFieldValue(headItem.fields, item) }}
+			</a>
+			<ng-template #text>{{ getFieldValue(headItem.fields, item) }}</ng-template>
+		</td>
+	</tr>
+	</tbody>
+</table>

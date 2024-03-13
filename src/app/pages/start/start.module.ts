@@ -6,6 +6,7 @@ import { SliderComponent } from '@app/components/slider/slider.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { VictoryService } from '@app/components/victory/victory.service';
+import { ExchangeRatesModule } from '@app/components/exchange-rates/exchange-rates.module';
 import { StartComponent } from './start.component';
 import { StartRoutingModule } from './start-routing.module';
 
@@ -19,6 +20,7 @@ import { StartRoutingModule } from './start-routing.module';
 		NzCarouselModule,
 		NgOptimizedImage,
 		ComponentsModule,
+		ExchangeRatesModule,
 	],
 	providers: [{ provide: VictoryService }],
 })

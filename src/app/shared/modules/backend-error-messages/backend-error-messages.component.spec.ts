@@ -1,21 +1,21 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {BackendErrorMessagesComponent} from './backend-error-messages.component';
+import { BackendErrorMessagesComponent } from './backend-error-messages.component';
 
 describe('BackendErrorMessagesComponent', () => {
-    let component: BackendErrorMessagesComponent;
-    let fixture: ComponentFixture<BackendErrorMessagesComponent>;
+	let component: BackendErrorMessagesComponent;
+	let fixture: ComponentFixture<BackendErrorMessagesComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({
-            declarations: [BackendErrorMessagesComponent],
-        });
-        fixture = TestBed.createComponent(BackendErrorMessagesComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+	beforeEach(() => {
+		TestBed.configureTestingModule({
+			declarations: [BackendErrorMessagesComponent],
+		});
+		fixture = TestBed.createComponent(BackendErrorMessagesComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+	it('should create', () => {
+		expect(component).toBeTruthy();
+	});
 });

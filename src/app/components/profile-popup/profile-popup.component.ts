@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ApiService } from '@app/core/services/api.service';
-import { UserStateService } from '@app/core/states/user-state.service';
-import { AuthenticationService } from '@app/core/states/authentication.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
 import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @Component({
 	selector: 'app-profile-popup',
@@ -18,14 +18,16 @@ export class ProfilePopupComponent implements OnInit {
 	public userProfile$!: Observable<IUserProfile | null>;
 
 	public constructor(
-		private readonly apiService: ApiService,
-		private readonly userStateService: UserStateService,
+		private readonly apiService: UsersApiService,
+		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
 	) {}
 
 	public ngOnInit(): void {
 		this.userProfile$ = this.userStateService.userProfile$;
-		this.accountsFriends = this.apiService.getAccounts().pipe(map(({ items }) => items));
+		this.accountsFriends = this.apiService
+			.getCurrentUserFriendsAccounts()
+			.pipe(map(({ items }) => items));
 	}
 
 	public logout(): void {
@@ -37,12 +39,15 @@ export class ProfilePopupComponent implements OnInit {
 	}
 
 	public enterUnderFriendlyAccount(id: number) {
+		this.userStateService.resetProfile();
 		this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
 
 		setTimeout(function () {
 			window.location.reload();
 		}, 200);
 
-		this.accountsFriends = this.apiService.getAccounts().pipe(map(({ items }) => items));
+		this.accountsFriends = this.apiService
+			.getCurrentUserFriendsAccounts()
+			.pipe(map(({ items }) => items));
 	}
 }

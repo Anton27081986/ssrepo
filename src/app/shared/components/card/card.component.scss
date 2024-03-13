@@ -1,0 +1,11 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	background-color: $island;
+	border-radius: 16px;
+	padding: 32px;
+}
+
+:host-context(.dark) :host {
+	background-color: $dark-island;
+}

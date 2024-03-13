@@ -1,0 +1,54 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	width: 100%;
+}
+
+.notice {
+	display: flex;
+	gap: 11px;
+	width: 100%;
+	padding: 8px 12px;
+	border-radius: 10px;
+	border: 1px;
+	border-style: solid;
+
+	.icon {
+		font-size: 24px;
+	}
+
+	.message {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		border: none !important;
+
+		::ng-deep p.medium {
+			opacity: 70% !important;
+		}
+
+	}
+}
+
+.error {
+	border-color: $error;
+	background-color: $lite-error;
+}
+
+.warning {
+	border-color: $warning;
+	background-color: $lite-warning;
+}
+
+.ok {
+	border-color: $ok;
+	background-color: $lite-ok;
+}
+
+
+:host-context(.dark) ss-text {
+	 ::ng-deep p {
+		color: $dark-island;
+	 }
+}

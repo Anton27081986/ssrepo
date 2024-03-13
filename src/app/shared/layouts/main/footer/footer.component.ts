@@ -1,29 +1,28 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
-import { NzIconService } from 'ng-zorro-antd/icon';
-import { AppIcons } from '@app/core/icons';
-import { ApiService } from '@app/core/services/api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { take } from 'rxjs';
+import { SocialLinksApiService } from '@app/core/api/social-links-api.service';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-footer',
 	templateUrl: './footer.component.html',
 	styleUrls: ['./footer.component.scss'],
-	changeDetection: ChangeDetectionStrategy.Default,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent implements OnInit {
 	protected readonly AppRoutes = AppRoutes;
-	listIcon!: any;
+	public listIcon!: any;
 
-	constructor(
-		private readonly apiService: ApiService,
-		private readonly iconService: NzIconService,
-	) {
-		this.iconService.addIconLiteral('ss:mail', AppIcons.mail);
-	}
+	public constructor(private readonly apiService: SocialLinksApiService) {}
 
-	ngOnInit(): any {
-		this.apiService.getSocialLink().subscribe(item => {
-			this.listIcon = item.items;
-		});
+	public ngOnInit(): any {
+		this.apiService
+			.getSocialLink()
+			.pipe(take(1), untilDestroyed(this))
+			.subscribe(item => {
+				this.listIcon = item.items;
+			});
 	}
 }

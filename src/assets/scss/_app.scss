@@ -12,8 +12,8 @@
 @import 'components/layout/grid';
 
 /*Utilities*/
-@import 'utilities/_utilities';
-@import 'utilities/_tools-ssnab';
+@import 'utilities/utilities';
+@import 'utilities/tools-ssnab';
 
 /*General*/
 @import 'components/general/typorgraphy';
@@ -32,3 +32,4 @@
 @import 'components/general/pagination';
 @import 'components/general/tags';
 @import 'components/general/tooltip';
+@import 'components/general/message';
