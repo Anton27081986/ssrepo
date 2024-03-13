@@ -16,6 +16,18 @@ const routes: Routes = [
 				loadChildren: () => import('./pages/start/start.module').then(m => m.StartModule),
 			},
 			{
+				path: 'clients-list',
+				loadChildren: () =>
+					import('./pages/clients-list/clients-list.module').then(
+						m => m.ClientsListModule,
+					),
+			},
+			{
+				path: 'client-card',
+				loadChildren: () =>
+					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
+			},
+			{
 				path: '',
 				component: WrapperComponent,
 				children: [
