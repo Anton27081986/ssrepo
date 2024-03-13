@@ -109,7 +109,9 @@
                       {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
                     	</span>
 												<span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
-												<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
+												<a class="count chat"
+												   *ngIf=" rank?.talksLink && rank?.allowMsgView"
+												   href="{{ rank?.talksLink }}">
 													<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
 													<span class="messages-number">{{ rank?.msgCount }}</span>
 												</a>
@@ -117,6 +119,7 @@
 										</div>
 
 									</div>
+
 									<div class="card project" *ngSwitchCase="1">
 										<div>
 											<div class="personal">
@@ -135,7 +138,9 @@
                       {{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
                     </span>
 											<span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
-											<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
+											<a class="count chat"
+											   *ngIf=" rank?.talksLink && rank?.allowMsgView"
+											   href="{{ rank?.talksLink }}">
 												<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
 												<span class="messages-number">{{ rank?.msgCount }}</span>
 											</a>
@@ -160,7 +165,9 @@
 										{{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
 										</span>
 											<span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
-											<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
+											<a class="count chat"
+											   *ngIf=" rank?.talksLink && rank?.allowMsgView"
+											   href="{{ rank?.talksLink }}">
 												<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
 												<span class="messages-number">{{ rank?.msgCount }}</span>
 											</a>
@@ -184,8 +191,13 @@
 										<span class="count count-top">
 										{{ rank.avgWeekRate === null ? '-' : rank?.avgWeekRate}}
 										</span>
-											<span class="count count-bottom" *ngIf="rank?.avgQuarterRate">{{ rank?.avgQuarterRate }}</span>
-											<a class="count chat" *ngIf="rank?.talksLink" href="{{ rank?.talksLink }}">
+											<span class="count count-bottom"
+											      *ngIf="rank?.avgQuarterRate">
+												{{ rank?.avgQuarterRate }}
+											</span>
+											<a class="count chat"
+											   *ngIf=" rank?.talksLink && rank?.allowMsgView"
+											   href="{{ rank?.talksLink }}">
 												<span class="comment-icon" nz-icon [nzType]="'ss:comment'"></span>
 												<span class="messages-number">{{ rank?.msgCount }}</span>
 											</a>
