@@ -15,7 +15,9 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { RatingStoreService } from '@app/core/states/rating-store.service';
 import { RatingApiService } from '@app/core/api/rating-api.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-rating',
 	templateUrl: './rating.component.html',
@@ -89,6 +91,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 						this.selectedUserId = value.id;
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 
@@ -109,10 +112,12 @@ export class RatingComponent implements OnInit, OnDestroy {
 								tap(data => {
 									this.usersListOfOption = data;
 								}),
+								untilDestroyed(this),
 							)
 							.subscribe();
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}
@@ -127,11 +132,12 @@ export class RatingComponent implements OnInit, OnDestroy {
 						week: { ...week[0] },
 					};
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe(value => {
 				this.currentUserId = value.id!; // id пользователя
 				this.selectedWeekId = value.week.id; // id недели
-				this.ratingTypes$ = this.ratingApiService.getRatingTypes(value.week.id, value.id);
+				this.ratingTypes$ = this.ratingApiService.getRatingTypes(value.week.id, value.id!);
 			});
 	}
 
@@ -150,9 +156,10 @@ export class RatingComponent implements OnInit, OnDestroy {
 						this.currentUserId,
 					);
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe(value => {
-				this.selectedRatingTypeId = value.rankTypeId; // устанавливаем rankTypeId глобально
+				this.selectedRatingTypeId = value.rankTypeId!; // устанавливаем rankTypeId глобально
 				this.ratings$ = this.ratingApiService
 					.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, 0)
 					.pipe(
@@ -180,11 +187,12 @@ export class RatingComponent implements OnInit, OnDestroy {
 					};
 				}),
 				switchMap(() => {
-					return this.ratingApiService.getRatingTypes(weekId, userId);
+					return this.ratingApiService.getRatingTypes(weekId, userId!);
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe(value => {
-				this.selectedRatingTypeId = value.rankTypeId;
+				this.selectedRatingTypeId = value.rankTypeId!;
 				this.ratings$ = this.ratingApiService
 					.getRatings(this.selectedWeekId, this.selectedRatingTypeId, limit, Offset)
 					.pipe(
@@ -238,7 +246,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 	public onUserChange() {
 		this.ratingTypes$ = this.ratingApiService.getRatingTypes(
 			this.selectedWeekId,
-			this.selectedUserId,
+			this.selectedUserId!,
 		);
 		this.getRatingsByWeekAndRatingTypeSearch(
 			this.selectedUserId!,
@@ -263,7 +271,8 @@ export class RatingComponent implements OnInit, OnDestroy {
 					data: id,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 
 	public nzPageIndexChange($event: number) {

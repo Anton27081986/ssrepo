@@ -48,5 +48,9 @@ export interface IRankItemDto {
 	 * Количество сообщений в переписке
 	 */
 	msgCount?: number;
+	/**
+	 * Отображение иконки переписки
+	 */
+	allowMsgView?: boolean;
 }
 export namespace IRankItemDto {}
