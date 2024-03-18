@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
 			this.favoritemenu = item.menu;
 		});
 
-		this.apiService.getMenuListJson().subscribe(item => {
+		this.apiService.getMenu().subscribe(item => {
 			this.listMenu = item.menu;
 			this.listMenu.unshift({ link: '', name: 'Избранное', items: this.favoritemenu });
 		});

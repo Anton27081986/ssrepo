@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class MenuApiService {
 	public constructor(private readonly http: HttpClient) {}
 
-	public getMenuListJson(): Observable<any> {
+	public getMenu(): Observable<any> {
 		return this.http.get<IMainMenu[]>(`${environment.apiUrl}/api/company/menu`, {
 			withCredentials: false,
 		});
