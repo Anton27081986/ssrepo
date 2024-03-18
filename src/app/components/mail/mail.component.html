@@ -1,0 +1,90 @@
+<ss-card>
+	<div class="requisites">
+		<ss-input label="Тема:" size="medium" placeholder="Тема сообщения"></ss-input>
+		<ss-input label="Кому:" size="medium" placeholder="Email"></ss-input>
+	</div>
+	<div class="editor">
+		<div *ngIf="isCustomEditorLoaded" class="editor-controls">
+			<div class="section undo-redo">
+				<ss-icon height="16" width="16" name="undo" (click)="myEditorButtons[EditorButtons.undo].editorElement?.click()"></ss-icon>
+				<ss-icon height="16" width="16" name="redo" (click)="myEditorButtons[EditorButtons.redo].editorElement?.click()"></ss-icon>
+			</div>
+			<span class="separator"></span>
+			<div class="section">
+				<span class="font-family" (click)="myEditorButtons[EditorButtons.fontFamily].editorElement?.click(); onFontFamilyInit(myEditorButtons[EditorButtons.fontFamily].editorElement)">
+					<span>{{ fontFamily }}</span>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+			</div>
+			<span class="separator"></span>
+			<div class="section">
+				<span class="font-size" (click)="myEditorButtons[EditorButtons.fontSize].editorElement?.click(); onFontSizeInit(myEditorButtons[EditorButtons.fontSize].editorElement)">
+					<span>{{ fontSize }}</span>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+			</div>
+			<span class="separator"></span>
+			<div class="section">
+				<ss-icon height="24" width="24" name="semibold" (click)="myEditorButtons[EditorButtons.bold].editorElement?.click()"></ss-icon>
+				<ss-icon height="24" width="24" name="italic" (click)="myEditorButtons[EditorButtons.italic].editorElement?.click()"></ss-icon>
+				<ss-icon height="24" width="24" name="underline" (click)="myEditorButtons[EditorButtons.underline].editorElement?.click()"></ss-icon>
+			</div>
+			<span class="separator"></span>
+			<div class="section font-colors">
+				<span (click)="myEditorButtons[EditorButtons.fontColor].editorElement?.click()">
+					<ss-icon height="24" width="24" name="textColor"></ss-icon>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+				<span (click)="myEditorButtons[EditorButtons.fontBackgroundColor].editorElement?.click()">
+					<ss-icon height="24" width="24" name="textBackground"></ss-icon>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+			</div>
+			<span class="separator"></span>
+			<div class="section font-colors">
+				<span (click)="myEditorButtons[EditorButtons.alignment].editorElement?.click()">
+					<ss-icon height="24" width="24" name="alignment"></ss-icon>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+				<span (click)="myEditorButtons[EditorButtons.bulletedList].editorElement?.click()">
+					<ss-icon height="24" width="24" name="bulletList"></ss-icon>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+				<span (click)="myEditorButtons[EditorButtons.numberedList].editorElement?.click()">
+					<ss-icon height="24" width="24" name="numberedList"></ss-icon>
+					<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
+				</span>
+			</div>
+			<span class="separator"></span>
+			<div class="section">
+				<ss-icon height="24" width="24" name="blockquote" (click)="myEditorButtons[EditorButtons.blockQuote].editorElement?.click()"></ss-icon>
+				<ss-icon height="24" width="24" name="link" (click)="myEditorButtons[EditorButtons.link].editorElement?.click()"></ss-icon>
+			</div>
+			<span class="separator"></span>
+			<div class="section">
+				<ss-icon height="24" width="24" name="removeFormat" (click)="myEditorButtons[EditorButtons.removeFormat].editorElement?.click()"></ss-icon>
+			</div>
+		</div>
+		<ckeditor [editor]="Editor" data="" #editor></ckeditor>
+	</div>
+	<div *ngIf="files.length" class="files">
+		<ss-attachment *ngFor="let file of files" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id)"></ss-attachment>
+	</div>
+	<div class="controls">
+			<ss-caption>
+				<input type="checkbox" />
+				Доступ только адресатам
+			</ss-caption>
+		<div>
+			<label for="upload-file">
+				<ss-icon height="20" width="20" name="paperclip"></ss-icon>
+			</label>
+			<input type="file" id="upload-file"
+						 accept=".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .pdf"
+						 (change)="uploadFile($event)"
+			/>
+		</div>
+	</div>
+	<ss-button class="send-button" type="primary" size="medium">Отправить</ss-button>
+</ss-card>
+

@@ -1,0 +1,188 @@
+@use '../../../styles/colors' as *;
+
+:host {
+	display: flex;
+	width: 100%;
+	min-height: 380px;
+	width: 850px;
+}
+
+ss-card {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	padding: 20px;
+	gap: 20px;
+
+	.requisites {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.editor-controls {
+		position: relative;
+		display: flex;
+		gap: 8px;
+		color: $lite-text;
+		z-index: 100;
+
+		.undo-redo {
+			ss-icon {
+				padding: 4px;
+			}
+		}
+
+		.section {
+			display: flex;
+			align-items: center;
+
+			span {
+				display: flex;
+				align-items: center;
+			}
+
+			.font-family {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+
+				span {
+					width: 80px;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+
+			.font-size {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+
+				span {
+					width: 40px;
+				}
+			}
+		}
+
+		.font-colors {
+			gap: 4px;
+		}
+
+		ss-icon {
+			cursor: pointer;
+		}
+
+		.separator {
+			height: 24px;
+			border-left: 1px solid $island-outline;
+		}
+	}
+
+	.files {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	.controls {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		::ng-deep ss-caption {
+
+			.caption-1 {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+		}
+
+		ss-icon {
+			cursor: pointer;
+		}
+
+		#upload-file {
+			opacity: 0;
+			position: absolute;
+			z-index: -1;
+			right: 0;
+		}
+	}
+
+	.send-button {
+		width: 122px;
+	}
+
+}
+
+::ng-deep {
+	.ck.ck-balloon-panel.ck-powered-by-balloon {
+		display: none !important;
+	}
+
+	.ck.ck-editor__top {
+		transform: translateY(-20px);
+		height: 20px !important;
+	}
+
+	.ck-toolbar {
+		border: none !important;
+	}
+
+	.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+		border-color: $island-outline !important;
+		border-radius: 8px;
+	}
+	.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+		border-color: $additional-outline;
+		border-radius: 8px;
+		box-shadow: none !important;
+	}
+
+	.ck.ck-editor__editable_inline {
+		padding: 0 20px;
+		min-height: 70px;
+		max-height: 20vh;
+		overflow: auto;
+
+		ul,ol {
+			padding-left: 20px;
+		}
+
+		p {
+			margin: 0;
+		}
+	}
+
+	.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_ne, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se {
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.ck.ck-list__item .ck-button {
+		color: $lite-text;
+		//padding: 0 8px;
+	}
+
+	.ck.ck-list__item .ck-button.ck-on {
+		background: $island-outline;
+		color: $lite-text;
+		border: none;
+		outline: none;
+		box-shadow: none;
+	}
+
+	.ck.ck-list__item .ck-button.ck-on:hover:not(.ck-disabled) {
+		color: $lite-text;
+		background: $island-outline;
+	}
+
+	.ck.ck-list__item .ck-button:hover:not(.ck-disabled) {
+		color: $lite-text;
+		background: $island-outline;
+	}
+}
+
