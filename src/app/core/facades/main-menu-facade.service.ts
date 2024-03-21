@@ -48,7 +48,6 @@ export class MainMenuFacadeService {
 					throw new Error('null значения');
 				}),
 				tap(fullMenu => {
-					console.log('set menu state');
 					this.mainMenuStoreService.setMainMenu(fullMenu);
 				}),
 				untilDestroyed(this),

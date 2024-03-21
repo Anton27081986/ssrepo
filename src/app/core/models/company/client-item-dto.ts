@@ -16,10 +16,6 @@ import { IDictionaryItemDto } from './dictionary-item-dto';
  */
 export interface IClientItemDto {
 	/**
-	 * Номер. Это вообще надо? или на фронте можно выводить стадартно средствами грида?
-	 */
-	number?: number;
-	/**
 	 * Айди клиента
 	 */
 	id?: number;
@@ -42,11 +38,9 @@ export interface IClientItemDto {
 	/**
 	 * Направление продаж
 	 */
-	salesDirection?: string | null;
-	/**
-	 * Регион
-	 */
-	regionName?: string | null;
+	saleDirection?: string | null;
+	category?: IDictionaryItemDto;
+	region?: IDictionaryItemDto;
 	/**
 	 * Дата архивации, если в статусе \"Архивирован\"
 	 */

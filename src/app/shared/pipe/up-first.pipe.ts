@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 	standalone: true,
 })
 export class UpFirstPipe implements PipeTransform {
-	transform(value: string): string {
+	public transform(value: string): string {
 		return value.charAt(1).toUpperCase();
 	}
 }

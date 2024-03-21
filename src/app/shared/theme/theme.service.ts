@@ -9,7 +9,7 @@ enum ThemeType {
 	providedIn: 'root',
 })
 export class ThemeService {
-	currentTheme = ThemeType.default;
+	public currentTheme = ThemeType.default;
 
 	private reverseTheme(theme: string): ThemeType {
 		return theme === ThemeType.dark ? ThemeType.default : ThemeType.dark;
@@ -37,7 +37,7 @@ export class ThemeService {
 		});
 	}
 
-	loadTheme(firstLoad = true): Promise<Event> {
+	public loadTheme(firstLoad = true): Promise<Event> {
 		const theme = this.currentTheme;
 
 		if (firstLoad) {
@@ -60,19 +60,19 @@ export class ThemeService {
 		});
 	}
 
-	toggleTheme(): Promise<Event> {
+	public toggleTheme(): Promise<Event> {
 		this.currentTheme = this.reverseTheme(this.currentTheme);
 
 		return this.loadTheme(false);
 	}
 
-	setDefaultTheme(): Promise<Event> {
+	public setDefaultTheme(): Promise<Event> {
 		this.currentTheme = ThemeType.default;
 
 		return this.loadTheme(false);
 	}
 
-	setDarkTheme(): Promise<Event> {
+	public setDarkTheme(): Promise<Event> {
 		this.currentTheme = ThemeType.dark;
 
 		return this.loadTheme(false);

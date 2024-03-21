@@ -5,7 +5,9 @@ import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UsersApiService } from '@app/core/api/users-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-profile-popup',
 	templateUrl: './profile-popup.component.html',
@@ -40,7 +42,10 @@ export class ProfilePopupComponent implements OnInit {
 
 	public enterUnderFriendlyAccount(id: number) {
 		this.userStateService.resetProfile();
-		this.authenticationService.enterUnderFriendlyAccount(id, environment.apiUrl).subscribe();
+		this.authenticationService
+			.enterUnderFriendlyAccount(id, environment.apiUrl)
+			.pipe(untilDestroyed(this))
+			.subscribe();
 
 		setTimeout(function () {
 			window.location.reload();

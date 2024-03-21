@@ -11,7 +11,7 @@
  */
 import { IDictionaryItemDto } from './dictionary-item-dto';
 import { IClientStatus } from './client-status';
-import { IContactorItemDto } from './contactor-item-dto';
+import { IContractorItemDto } from './contractor-item-dto';
 import { IManagerItemDto } from './manager-item-dto';
 import { ISubSectorItemDto } from './sub-sector-item-dto';
 
@@ -27,10 +27,11 @@ export interface IClientDto {
 	 * Название клиента
 	 */
 	name?: string | null;
+	category?: IDictionaryItemDto;
 	/**
-	 * Категория
+	 * Направление продаж
 	 */
-	categoryName?: string | null;
+	saleDirection?: string | null;
 	status?: IClientStatus;
 	/**
 	 * Передано в юр. отдел
@@ -43,7 +44,7 @@ export interface IClientDto {
 	/**
 	 * Подотрасли
 	 */
-	subSectors?: ISubSectorItemDto[] | null;
+	sectorParts?: ISubSectorItemDto[] | null;
 	region?: IDictionaryItemDto;
 	/**
 	 * Дата добавления в базу МП, если добавлен
@@ -53,7 +54,6 @@ export interface IClientDto {
 	 * Это дистрибьютор
 	 */
 	isDistributor?: boolean;
-	currentPriceListLevel?: IDictionaryItemDto;
 	/**
 	 * Среднемесячный объем продаж за квартал
 	 */
@@ -73,7 +73,7 @@ export interface IClientDto {
 	/**
 	 * Список контрагентов
 	 */
-	contractors?: IContactorItemDto[] | null;
+	contractors?: IContractorItemDto[] | null;
 	/**
 	 * Список менеджеров
 	 */

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NzIconService } from 'ng-zorro-antd/icon';
 
 @Component({
 	selector: 'app-recovery-password',
@@ -9,27 +8,23 @@ import { NzIconService } from 'ng-zorro-antd/icon';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecoveryPasswordComponent implements OnInit {
-	recoveryForm!: FormGroup;
-	password: any;
+	public recoveryForm!: FormGroup;
+	public password: any;
 
-	loading = false;
-	submitted = false;
-	error: unknown = '';
+	public loading = false;
+	public error: unknown = '';
 
-	passwordVisible = false;
+	public passwordVisible = false;
 
-	constructor(
-		private readonly iconService: NzIconService,
-		private readonly formBuilder: FormBuilder,
-	) {}
+	public constructor(private readonly formBuilder: FormBuilder) {}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.recoveryForm = this.formBuilder.group({
 			email: ['', Validators.required],
 		});
 	}
 
-	get f() {
+	public get f() {
 		return this.recoveryForm.controls;
 	}
 }

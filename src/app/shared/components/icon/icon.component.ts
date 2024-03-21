@@ -8,15 +8,15 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 	styleUrls: ['./icon.component.scss'],
 })
 export class IconComponent implements OnInit {
-	@Input() name: string = '';
-	@Input() width: string | undefined;
-	@Input() height: string | undefined;
+	@Input() public name: string = '';
+	@Input() public width: string | undefined;
+	@Input() public height: string | undefined;
 
 	protected svg: SafeHtml | undefined;
 
-	constructor(private readonly sanitizer: DomSanitizer) {}
+	public constructor(private readonly sanitizer: DomSanitizer) {}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		if ((AppIcons as any)[this.name]) {
 			let svgString = (AppIcons as any)[this.name];
 

@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
-import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { environment } from '@environments/environment';
-import { MenuApiService } from '@app/core/api/menu-api.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';

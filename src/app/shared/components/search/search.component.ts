@@ -20,18 +20,18 @@ import { IUserProfile } from '@app/core/models/user-profile';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit, OnDestroy {
-	@Input() size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() closeIcon: boolean = false;
-	@Input() searchIcon: boolean = false;
-	@Input() placeholder: string = 'Поиск';
-	@Input() adminEnter: boolean = false;
+	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
+	@Input() public closeIcon: boolean = false;
+	@Input() public searchIcon: boolean = false;
+	@Input() public placeholder: string = 'Поиск';
+	@Input() public adminEnter: boolean = false;
 
 	private readonly destroy$ = new Subject<void>();
 	public searchForm!: FormGroup;
 	public searchedUsers: IUserProfile[] = [];
 	public showWindowResult: boolean = false;
 
-	constructor(
+	public constructor(
 		private readonly formBuilder: FormBuilder,
 		private readonly usersApiService: UsersApiService,
 		private readonly ref: ChangeDetectorRef,

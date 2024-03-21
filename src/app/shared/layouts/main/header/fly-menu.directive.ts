@@ -8,11 +8,11 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class FlyMenuDirective {
 	private offsetY!: number;
-	constructor(private readonly cd: ChangeDetectorRef) {}
+	public constructor(private readonly cd: ChangeDetectorRef) {}
 
-	@HostBinding('class') classFlyHeader: string = '';
+	@HostBinding('class') public classFlyHeader: string = '';
 
-	@HostListener('document:scroll') onMouseScrollTop() {
+	@HostListener('document:scroll') public onMouseScrollTop() {
 		fromEvent(window, 'scroll')
 			.pipe(
 				untilDestroyed(this),

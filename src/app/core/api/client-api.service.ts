@@ -30,5 +30,5 @@ export class ClientApiService {
 
 	public getSubSectors() {}
 
-	public getRegions(){}
+	public getRegions() {}
 }
