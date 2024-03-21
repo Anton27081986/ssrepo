@@ -15,7 +15,7 @@
 						</div>
 						<div class="nav-wrap">
 							<div class="nav-left">
-								<app-main-menu [menu]="listMenu"></app-main-menu>
+								<app-main-menu [menu]="listMenu$ | async"></app-main-menu>
 							</div>
 							<div class="nav-right">
 								<div class="icon-bg burger" (click)="menuToggle($event)">
@@ -68,7 +68,7 @@
 		</nz-header>
 
 		<nz-content>
-			<app-mobile-menu [menu]="listMenu" [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
+			<app-mobile-menu [menu]="listMenu$ | async" [ngClass]="statusBurger ? 'open' : 'close'"></app-mobile-menu>
 		</nz-content>
 </div>
 
