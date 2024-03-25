@@ -22,7 +22,7 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VictoryComponent implements OnInit {
-	@ViewChild('liked') likedPeople!: ElementRef;
+	@ViewChild('liked') public likedPeople!: ElementRef;
 
 	public total!: number;
 	public pageSize = 6;
@@ -93,10 +93,12 @@ export class VictoryComponent implements OnInit {
 								tap(data => {
 									this.listColleague = data;
 								}),
+								untilDestroyed(this),
 							)
 							.subscribe();
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 
@@ -113,17 +115,22 @@ export class VictoryComponent implements OnInit {
 								tap(data => {
 									this.listTPR = data;
 								}),
+								untilDestroyed(this),
 							)
 							.subscribe();
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 
 		// Опитимизировать два запросы
 		this.apiService
 			.getWins(this.pageSize, this.offset)
-			.pipe(map(({ isExtendedMode }) => isExtendedMode))
+			.pipe(
+				map(({ isExtendedMode }) => isExtendedMode),
+				untilDestroyed(this),
+			)
 			.subscribe(value => {
 				this.getExtendedMode = value;
 			});
@@ -176,17 +183,18 @@ export class VictoryComponent implements OnInit {
 
 						this.isSended = false;
 					}),
+					untilDestroyed(this),
 				)
-				.subscribe(
-					() => {
+				.subscribe({
+					next: () => {
 						this.updateWinList();
 					},
-					() => {
+					error: () => {
 						this.errorComment = true;
 					},
-				);
+				});
 		} else {
-			console.log('Форма не валидна');
+			console.error('Форма не валидна');
 		}
 
 		this.isModalVisible = false;
@@ -209,6 +217,7 @@ export class VictoryComponent implements OnInit {
 					}); // добавление тега
 					this.cd.markForCheck();
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}
@@ -227,6 +236,7 @@ export class VictoryComponent implements OnInit {
 
 					this.cd.markForCheck();
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}

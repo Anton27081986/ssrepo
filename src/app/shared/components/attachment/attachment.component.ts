@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 	styleUrls: ['./attachment.component.scss'],
 })
 export class AttachmentComponent {
-	@Input() title: string | undefined;
-	@Input() size: string | number | undefined;
+	@Input() public title: string | undefined;
+	@Input() public size: string | number | undefined;
 	@Output() protected delete = new EventEmitter();
 }

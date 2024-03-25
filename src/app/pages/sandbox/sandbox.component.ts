@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
 	selector: 'app-sandbox',
@@ -6,10 +6,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 	styleUrls: ['./sandbox.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SandboxComponent implements OnInit {
+export class SandboxComponent {
 	public loading = false;
-
-	public constructor() {}
-
-	public ngOnInit() {}
 }

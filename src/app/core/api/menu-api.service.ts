@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IMainMenu } from '@app/components/main-menu/main-menu.interface';
 import { environment } from '@environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { IMenuListDto } from '@app/core/models/company/menu-list-dto';
+import { IFavoriteMenuListDto } from '@app/core/models/company/favorite-menu-list-dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -10,14 +11,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class MenuApiService {
 	public constructor(private readonly http: HttpClient) {}
 
-	public getMenu(): Observable<any> {
-		return this.http.get<IMainMenu[]>(`${environment.apiUrl}/api/company/menu`, {
+	public getMenu(): Observable<IMenuListDto> {
+		return this.http.get<IMenuListDto>(`${environment.apiUrl}/api/company/menu`, {
 			withCredentials: false,
 		});
 	}
 
-	public getFavoriteMenu(): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/company/menu/favorite`);
+	public getFavoriteMenu(): Observable<IFavoriteMenuListDto> {
+		return this.http.get<IFavoriteMenuListDto>(
+			`${environment.apiUrl}/api/company/menu/favorite`,
+		);
 	}
 
 	public addItemToFavoriteMenu(id: number): Observable<any> {

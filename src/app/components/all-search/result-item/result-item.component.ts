@@ -8,7 +8,7 @@ import { CallPhoneService } from '@app/core/services/call-phone.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultItemComponent {
-	@Input() user: any;
+	@Input() public user: any;
 
 	public constructor(private readonly callPhoneService: CallPhoneService) {}
 	public toggleCallForUser() {

@@ -1,19 +1,18 @@
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	EventEmitter,
 	Input,
 	Output,
 	ViewContainerRef,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { NzIconService } from 'ng-zorro-antd/icon';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { VictoryService } from '@app/components/victory/victory.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-card-victory',
 	templateUrl: './card-victory.component.html',
@@ -21,21 +20,18 @@ import { VictoryService } from '@app/components/victory/victory.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardVictoryComponent {
-	@Input() item!: any;
-	@Input() extendedMode!: any;
-	@Output() DeleteWin = new EventEmitter<string>();
+	@Input() public item!: any;
+	@Input() public extendedMode!: any;
+	@Output() public DeleteWin = new EventEmitter<string>();
 
-	constructor(
+	public constructor(
 		private readonly victoryService: VictoryService,
-		private readonly formBuilder: FormBuilder,
-		private readonly iconService: NzIconService,
 		public modalCreate: NzModalService,
 		private readonly viewContainerRef: ViewContainerRef,
-		private readonly chDRef: ChangeDetectorRef,
 	) {}
 
 	// Модальное окно раскрытой карточки
-	showModalOpenOut(id: number): void {
+	public showModalOpenOut(id: number): void {
 		this.modalCreate
 			.create({
 				nzClosable: true,
@@ -49,11 +45,12 @@ export class CardVictoryComponent {
 					data: id,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 
 	// Модальное окно комментариев
-	showModalComments(data: any, type: number): void {
+	public showModalComments(data: any, type: number): void {
 		this.modalCreate
 			.create({
 				nzClosable: true,
@@ -68,16 +65,20 @@ export class CardVictoryComponent {
 					type,
 				},
 			})
-			.afterClose.subscribe();
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 
-	trackBy(_index: number, item: any) {
+	public trackBy(_index: number, item: any) {
 		return item.id;
 	}
 
-	onDeleteWin(item: any) {
-		this.victoryService.removeVictoryById(item).subscribe(_ => {
-			this.DeleteWin.emit(item);
-		});
+	public onDeleteWin(item: any) {
+		this.victoryService
+			.removeVictoryById(item)
+			.pipe(untilDestroyed(this))
+			.subscribe(_ => {
+				this.DeleteWin.emit(item);
+			});
 	}
 }

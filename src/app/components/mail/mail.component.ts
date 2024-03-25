@@ -3,8 +3,9 @@ import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import Editor from 'ckeditor5/build/ckeditor';
 import { Subject, takeUntil } from 'rxjs';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
-import { IFile } from '../../core/models/files/file';
+import { IFile } from '@app/core/models/files/file';
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 interface EditorButtonI {
 	title: string;
 	editorElement?: HTMLElement;
@@ -38,7 +39,7 @@ export class MailComponent implements AfterViewInit, OnDestroy {
 
 	protected readonly EditorButtons = EditorButtons;
 
-	@ViewChild('editor') editor: CKEditorComponent | undefined;
+	@ViewChild('editor') public editor: CKEditorComponent | undefined;
 	protected isCustomEditorLoaded = true;
 
 	public Editor = Editor;
@@ -70,13 +71,13 @@ export class MailComponent implements AfterViewInit, OnDestroy {
 
 	protected files: IFile[] = [];
 
-	constructor(
+	public constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly filesApiService: FilesApiService,
 	) {}
 
 	public ngAfterViewInit(): void {
-		this.editor?.ready.pipe(takeUntil(this.destroy$)).subscribe(val => {
+		this.editor?.ready.pipe(takeUntil(this.destroy$)).subscribe(() => {
 			const controls = document.getElementsByClassName('ck-toolbar__items')[0].childNodes;
 
 			if (!controls.length || this.myEditorButtons.length !== controls.length) {

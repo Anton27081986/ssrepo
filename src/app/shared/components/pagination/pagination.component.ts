@@ -7,12 +7,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent {
-	@Input() total!: number;
-	@Input() pageIndex!: number;
-	@Input() pageSize!: number;
-	@Input() offset!: number;
+	@Input() public total!: number;
+	@Input() public pageIndex!: number;
+	@Input() public pageSize!: number;
+	@Input() public offset!: number;
 
-	nzPageIndexChange($event: number) {
+	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
 			this.offset = 0;
 		} else {

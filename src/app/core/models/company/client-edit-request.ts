@@ -21,9 +21,9 @@ export interface IClientEditRequest {
 	name?: string | null;
 	status?: IClientStatus;
 	/**
-	 * Айди подотраслей
+	 * Категория клиента
 	 */
-	subSectorsIds?: number[] | null;
+	categoryId?: number;
 	/**
 	 * Айди региона
 	 */

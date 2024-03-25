@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./caption.component.scss'],
 })
 export class CaptionComponent {
-	@Input() size: '1' | '2' = '1';
+	@Input() public size: '1' | '2' = '1';
 }

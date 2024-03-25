@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationComponent {
-	notificationList = [
+	public notificationList = [
 		{
 			title: 'You received a new message',
 			time: '8 min',

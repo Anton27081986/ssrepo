@@ -6,7 +6,9 @@ import {
 	Input,
 } from '@angular/core';
 import { LikesApiService } from '@app/core/api/likes-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-super-like',
 	templateUrl: './super-like.component.html',
@@ -14,11 +16,11 @@ import { LikesApiService } from '@app/core/api/likes-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SuperLikeComponent implements AfterViewInit {
-	@Input() isUserLikedProps!: boolean;
-	@Input() likesCountProps!: number;
-	@Input() objectIdProps!: number;
-	@Input() typeObject!: number;
-	@Input() award: any;
+	@Input() public isUserLikedProps!: boolean;
+	@Input() public likesCountProps!: number;
+	@Input() public objectIdProps!: number;
+	@Input() public typeObject!: number;
+	@Input() public award: any;
 
 	public isUserLiked!: boolean;
 	public likesCount!: number;
@@ -40,25 +42,31 @@ export class SuperLikeComponent implements AfterViewInit {
 		$event.stopPropagation();
 
 		if (!this.isClickLike) {
-			this.apiService.setLike(objectId, type, award).subscribe({
-				next: () => {
-					this.award = award;
-					this.likesCount += 1;
-					this.isClickLike = true; // true Если тут то лайк долго ставится
-					this.chDRef.markForCheck();
-				},
-			});
+			this.apiService
+				.setLike(objectId, type, award)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: () => {
+						this.award = award;
+						this.likesCount += 1;
+						this.isClickLike = true; // true Если тут то лайк долго ставится
+						this.chDRef.markForCheck();
+					},
+				});
 		}
 
 		if (this.isClickLike) {
-			this.apiService.deleteLike(objectId, type).subscribe({
-				next: () => {
-					this.award = 0;
-					this.likesCount -= 1;
-					this.isClickLike = false;
-					this.chDRef.markForCheck();
-				},
-			});
+			this.apiService
+				.deleteLike(objectId, type)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: () => {
+						this.award = 0;
+						this.likesCount -= 1;
+						this.isClickLike = false;
+						this.chDRef.markForCheck();
+					},
+				});
 		}
 	}
 }

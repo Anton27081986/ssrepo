@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IMenu } from '@app/core/models/menu/menu';
+import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 
 @UntilDestroy()
 @Component({
@@ -15,10 +15,10 @@ import { IMenu } from '@app/core/models/menu/menu';
 })
 export class MyMenuComponent implements OnInit {
 	public myMenuForm!: FormGroup;
-	public listMenu!: IMenu[];
+	public listMenu!: IMenuItemDto[];
 	public favorIteMenu!: any;
 	public userProfile$?: Observable<IUserProfile | null>;
-	public filterListMenu: IMenu[] = [];
+	public filterListMenu: IMenuItemDto[] = [];
 
 	public constructor(
 		private readonly apiService: MenuApiService,
@@ -48,8 +48,10 @@ export class MyMenuComponent implements OnInit {
 			.getMenu()
 			.pipe(untilDestroyed(this))
 			.subscribe(item => {
-				this.listMenu = item.menu;
-				this.cd.detectChanges();
+				if (item.menu) {
+					this.listMenu = item.menu;
+					this.cd.detectChanges();
+				}
 			});
 	}
 

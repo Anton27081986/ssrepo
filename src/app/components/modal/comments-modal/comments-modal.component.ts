@@ -6,12 +6,14 @@ import {
 	OnInit,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { Observable, tap } from 'rxjs';
 import { VictoryService } from '@app/components/victory/victory.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { CommentsApiService } from '@app/core/api/comments-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-comments-modal',
 	templateUrl: './comments-modal.component.html',
@@ -30,14 +32,13 @@ export class CommentsModalComponent implements OnInit {
 	public constructor(
 		private readonly _apiService: CommentsApiService,
 		private readonly _victoryService: VictoryService,
-		private readonly modal: NzModalRef,
 		private readonly formBuilder: FormBuilder,
 		private readonly chDRef: ChangeDetectorRef,
 		private readonly userStateService: UserProfileStoreService,
 	) {}
 
 	public ngOnInit() {
-		this.userStateService.userProfile$.subscribe(userProfile => {
+		this.userStateService.userProfile$.pipe(untilDestroyed(this)).subscribe(userProfile => {
 			this.currentUserId = userProfile?.id;
 		});
 
@@ -70,11 +71,17 @@ export class CommentsModalComponent implements OnInit {
 		const awardId = this.nzModalData.data.award;
 		const note = this.addComment.get('comment')?.value;
 
-		this._apiService.addCommets(objectId, type, awardId, note).subscribe(_ => {
-			// Обновить комментарии переделать
-			this.commentList = this.getCommentList(this.nzModalData.data.id, this.nzModalData.type);
-			this.chDRef.detectChanges();
-		});
+		this._apiService
+			.addCommets(objectId, type, awardId, note)
+			.pipe(untilDestroyed(this))
+			.subscribe(_ => {
+				// Обновить комментарии переделать
+				this.commentList = this.getCommentList(
+					this.nzModalData.data.id,
+					this.nzModalData.type,
+				);
+				this.chDRef.detectChanges();
+			});
 
 		// Валидация
 		if (this.addComment.valid) {
@@ -107,6 +114,7 @@ export class CommentsModalComponent implements OnInit {
 					);
 					this.chDRef.markForCheck();
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}
