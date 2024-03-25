@@ -1,0 +1,64 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+	max-width: 1426px;
+	width: 100%;
+	padding: 20px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.hide-button {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+
+	.hide-button-icon {
+		color: $lite-text;
+		transform: rotateZ(-180deg);
+
+		transition: transform 0.3s;
+	}
+}
+
+.hide-button.active {
+	.hide-button-icon {
+		transform: rotateZ(0deg);
+	}
+}
+
+.content {
+	max-height: 1600px;
+	overflow-y: hidden;
+	display: grid;
+	grid-template-columns: 400px 1fr;
+	width: 100%;
+	gap: 15px;
+
+	transition: max-height 0.3s ease, margin-bottom 0.3s;
+
+	.messages {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+
+		ss-mail {
+			width: 100%;
+		}
+	}
+}
+
+.content.non-active {
+	max-height: 0;
+	margin-bottom: -15px;
+	overflow-y: hidden;
+
+	.subjects {
+		overflow-y: hidden;
+	}
+}

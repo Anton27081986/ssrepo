@@ -1,0 +1,46 @@
+<ss-card padding="0">
+	<div class="header">
+		<div class="tabs">
+			<ss-headline size="h6">Все сообщения по клиенту </ss-headline>
+		</div>
+		<div class="search">search</div>
+	</div>
+	<div class="content" *ngIf="(messages$ | async); else noMessages">
+		<div class="message" *ngFor="let message of (messages$ | async)?.items">
+			<ss-avatar size="s" [src]="message.author.avatarUrl"></ss-avatar>
+			<div class="message-content">
+				<div class="message-content-header">
+					<ss-text size="1" weight="semi-bold">{{message.author.name}}</ss-text>
+					<div class="message-content-header-controls">
+						<ss-icon name="unlock"></ss-icon>
+						<ss-icon name="more"></ss-icon>
+					</div>
+				</div>
+				<div class="message-content-object">
+					<ss-text size="2">
+						<b>Кому:</b> Петров. П.Н. Петров. П.Н. Петров. П.Н.
+					</ss-text>
+					<ss-text size="2">
+						<b>Копия:</b> Петров. П.Н. Петров. П.Н. Петров. П.Н.
+					</ss-text>
+				</div>
+				<div class="message-content-blockquote">
+					<div class="message-content-blockquote-author">
+						Гришин Пантелей Серапионович
+					</div>
+					<div class="message-content-blockquote-message">
+						Morbi at ultrices vitae donec. Senectus metus laoreet sed est vitae. Molestie eleifend id sit condimentum...
+					</div>
+				</div>
+				<div class="message-content-text" [innerHTML]="message.text">
+				</div>
+			</div>
+		</div>
+	</div>
+	<ng-template #noMessages>
+		<div class="no-content">
+			<ss-headline size="h3">Сообщений пока нет</ss-headline>
+			<ss-text size="2">Создайте новую тему или сообщение</ss-text>
+		</div>
+	</ng-template>
+</ss-card>

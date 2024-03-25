@@ -573,4 +573,33 @@ export class AppIcons {
 		'<path d="M6.37102 11.92C4.55602 13.135 4.55602 15.115 6.37102 16.3225C8.43352 17.7025 11.816 17.7025 13.8785 16.3225C15.6935 15.1075 15.6935 13.1275 13.8785 11.92C11.8235 10.5475 8.44102 10.5475 6.37102 11.92Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
+	public static smsTracking =
+		'<svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M1.83203 8.29159C1.83203 5.08325 3.66536 3.70825 6.41536 3.70825H15.582C18.332 3.70825 20.1654 5.08325 20.1654 8.29159V14.7083C20.1654 17.9166 18.332 19.2916 15.582 19.2916H6.41536" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M15.5846 8.75L12.7155 11.0417C11.7713 11.7933 10.2221 11.7933 9.27796 11.0417L6.41797 8.75" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M1.83203 15.625H7.33203" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M1.83203 11.9583H4.58203" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static unlock =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M8.67969 13.68C8.98635 14.0733 9.46635 14.3333 9.99969 14.3333C10.9197 14.3333 11.6664 13.5867 11.6664 12.6667C11.6664 12.2867 11.5397 11.9333 11.3264 11.6533" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M3.88065 15.8665C3.47398 15.3598 3.33398 14.5532 3.33398 13.3332V11.9998C3.33398 9.33317 4.00065 8.6665 6.66732 8.6665H13.334C13.574 8.6665 13.794 8.67317 14.0007 8.6865C16.114 8.8065 16.6673 9.57317 16.6673 11.9998V13.3332C16.6673 15.9998 16.0007 16.6665 13.334 16.6665H6.66732C6.42732 16.6665 6.20732 16.6598 6.00065 16.6465" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M6 8.66683V7.3335C6 5.12683 6.66667 3.3335 10 3.3335C12.7667 3.3335 13.6933 4.2535 13.9333 5.70683" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M16.6673 3.3335L3.33398 16.6668" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static lock =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M6 8.66683V7.3335C6 5.12683 6.66667 3.3335 10 3.3335C13.3333 3.3335 14 5.12683 14 7.3335V8.66683" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M10.0007 14.3333C10.9211 14.3333 11.6673 13.5871 11.6673 12.6667C11.6673 11.7462 10.9211 11 10.0007 11C9.08018 11 8.33398 11.7462 8.33398 12.6667C8.33398 13.5871 9.08018 14.3333 10.0007 14.3333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M13.334 16.6665H6.66732C4.00065 16.6665 3.33398 15.9998 3.33398 13.3332V11.9998C3.33398 9.33317 4.00065 8.6665 6.66732 8.6665H13.334C16.0007 8.6665 16.6673 9.33317 16.6673 11.9998V13.3332C16.6673 15.9998 16.0007 16.6665 13.334 16.6665Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static more =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M4.16667 8.3335C3.25 8.3335 2.5 9.0835 2.5 10.0002C2.5 10.9168 3.25 11.6668 4.16667 11.6668C5.08333 11.6668 5.83333 10.9168 5.83333 10.0002C5.83333 9.0835 5.08333 8.3335 4.16667 8.3335Z" fill="currentColor"/>' +
+		'<path d="M15.8327 8.3335C14.916 8.3335 14.166 9.0835 14.166 10.0002C14.166 10.9168 14.916 11.6668 15.8327 11.6668C16.7493 11.6668 17.4993 10.9168 17.4993 10.0002C17.4993 9.0835 16.7493 8.3335 15.8327 8.3335Z" fill="currentColor"/>' +
+		'<path d="M10.0007 8.3335C9.08398 8.3335 8.33398 9.0835 8.33398 10.0002C8.33398 10.9168 9.08398 11.6668 10.0007 11.6668C10.9173 11.6668 11.6673 10.9168 11.6673 10.0002C11.6673 9.0835 10.9173 8.3335 10.0007 8.3335Z" fill="currentColor"/>' +
+		'</svg>';
 }

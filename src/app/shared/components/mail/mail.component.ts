@@ -1,9 +1,9 @@
 import { Component, ViewChild, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
-import Editor from 'ckeditor5/build/ckeditor';
+import Editor from 'ckeditor5-custom-build';
 import { Subject, takeUntil } from 'rxjs';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
-import { IFile } from '../../core/models/files/file';
+import { IFile } from '../../../core/models/files/file';
 
 interface EditorButtonI {
 	title: string;
