@@ -12,6 +12,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { ComponentsModule } from '@app/components/components.module';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -46,6 +47,7 @@ import { RecoveryPasswordComponent } from './recovery-password/recovery-password
 		NzInputModule,
 		NzCardModule,
 		NzButtonModule,
+		ComponentsModule,
 	],
 })
 export class ProfileModule {}
