@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
+import { map, Observable } from 'rxjs';
+import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 
 @UntilDestroy()
 @Component({
@@ -9,14 +12,13 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientsListComponent {
-	public clientsMock = [
-		{
-			name: 'Alex',
-			id: 1,
-		},
-		{
-			name: 'Sergey',
-			id: 2,
-		},
-	];
+	public clients$: Observable<IClientItemDto[]>;
+	public constructor(private readonly clientsListFacade: ClientsListFacadeService) {
+		this.clients$ = clientsListFacade.getClients().pipe(
+			map(response => {
+				return response.items;
+			}),
+			untilDestroyed(this),
+		);
+	}
 }
