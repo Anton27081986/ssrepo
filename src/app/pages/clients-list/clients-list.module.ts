@@ -9,9 +9,13 @@ import {CardModule} from "@app/shared/components/card/card.module";
 import {HeadlineModule} from "@app/shared/components/typography/headline/headline.module";
 import {NzPaginationModule} from "ng-zorro-antd/pagination";
 import {TableModule} from "@app/shared/components/table/table.module";
+import { NzFormModule } from "ng-zorro-antd/form";
+import { ReactiveFormsModule } from "@angular/forms";
+import { NzSelectModule } from "ng-zorro-antd/select";
+import { NzTypographyModule } from "ng-zorro-antd/typography";
 
 @NgModule({
 	declarations: [ClientsListComponent],
-	imports: [CommonModule, ClientsListRoutingModule, ButtonModule, CaptionModule, CardModule, HeadlineModule, NzPaginationModule, TableModule],
+	imports: [CommonModule, ClientsListRoutingModule, ButtonModule, CaptionModule, CardModule, HeadlineModule, NzPaginationModule, TableModule, NzFormModule, ReactiveFormsModule, NzSelectModule, NzTypographyModule]
 })
 export class ClientsListModule {}

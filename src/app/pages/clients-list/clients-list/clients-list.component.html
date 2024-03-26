@@ -3,7 +3,7 @@
 		<div class="title">
 			<ss-headline size="h1">Список клиентов</ss-headline>
 		</div>
-		<ss-button class="desktop" size="large" type="primary">Фильтры</ss-button>
+		<ss-button class="desktop" size="large" type="primary" (click)="toggleFilters()">Фильтры</ss-button>
 	</div>
 	<div class="content desktop">
 <!--		<ss-table-->
@@ -29,6 +29,43 @@
 <!--			[nzResponsive]="true"-->
 <!--		>-->
 <!--		</nz-pagination>-->
+	</div>
+	<div class="filters"
+	     *ngIf="isFiltersVisible">
+		<form nz-form
+		      [formGroup]="filtersForm"
+		      nzLayout="vertical"
+		      class="form"
+		      (ngSubmit)="getFilteredClients()">
+<!--				Фильтр категории-->
+					<nz-form-item>
+						<span class="field-tile">Категория</span>
+						<nz-form-control>
+							<nz-select
+								formControlName="category"
+								nzShowSearch
+								nzServerSearch
+								nzPlaceHolder="Выберите категорию"
+								[nzShowArrow]="true"
+								[nzFilterOption]="nzFilterOption"
+								(nzOnSearch)="categorySearch($event)">
+								<nz-option *ngFor="let category of categoriesOptions"
+								           [nzLabel]="category.name"
+								           [nzValue]="category.id">
+								</nz-option>
+							</nz-select>
+						</nz-form-control>
+						<div
+							*ngIf="!category?.valid && (category?.dirty ||category?.touched)">
+							<div [hidden]="!category?.invalid" nz-typography nzType="danger">
+								Введите название категорию
+							</div>
+						</div>
+					</nz-form-item>
+
+		</form>
+
+
 	</div>
 </div>
 
