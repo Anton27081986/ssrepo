@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, debounceTime, filter, Observable, Subject, tap } from 'rxjs';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -21,16 +21,14 @@ export class ClientsListComponent implements OnInit {
 	public offset = 0;
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible: boolean = true;
 	public filtersForm!: FormGroup;
 
 	// category filter dictionary
-
 	public nzFilterOption = (): boolean => true;
-	public categoriesOptions: Array<{ name: string; id: string }> = [];
 
 	public constructor(
-		private readonly clientsListFacade: ClientsListFacadeService,
+		public readonly clientsListFacade: ClientsListFacadeService,
 		private readonly formBuilder: FormBuilder,
 	) {
 		this.clients$ = new BehaviorSubject<IClientItemDto[]>([]).asObservable();
@@ -50,6 +48,8 @@ export class ClientsListComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
+		console.log(this.filtersForm);
+
 		if (this.filtersForm.valid) {
 			const filter = {
 				category: this.filtersForm.value.category,
@@ -64,5 +64,7 @@ export class ClientsListComponent implements OnInit {
 		return this.filtersForm.get('category');
 	}
 
-	public categorySearch($event: string) {}
+	public categorySearch(searchInput: string) {
+		console.log(searchInput);
+	}
 }

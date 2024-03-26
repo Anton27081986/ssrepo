@@ -44,14 +44,12 @@
 							<nz-select
 								formControlName="category"
 								nzShowSearch
-								nzServerSearch
 								nzPlaceHolder="Выберите категорию"
 								[nzShowArrow]="true"
-								[nzFilterOption]="nzFilterOption"
 								(nzOnSearch)="categorySearch($event)">
-								<nz-option *ngFor="let category of categoriesOptions"
-								           [nzLabel]="category.name"
-								           [nzValue]="category.id">
+								<nz-option *ngFor="let category of this.clientsListFacade.categoriesOptions"
+								           [nzLabel]="category.name!"
+								           [nzValue]="category.id!">
 								</nz-option>
 							</nz-select>
 						</nz-form-control>
@@ -61,6 +59,14 @@
 								Введите название категорию
 							</div>
 						</div>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-button class="desktop"
+								   size="large"
+								   type="primary"
+								   (click)="getFilteredClients()">
+							Применить фильтры
+						</ss-button>
 					</nz-form-item>
 
 		</form>

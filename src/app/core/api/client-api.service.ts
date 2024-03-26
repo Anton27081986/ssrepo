@@ -75,14 +75,6 @@ export class ClientApiService {
 		});
 	}
 
-	public updateClientCard() {}
-
-	public addManager() {}
-
-	public deleteManager() {}
-
-	public setMainManager() {}
-
 	public getContractors(searchTerm: string) {
 		return this.http.get<IDictionaryItemDto[]>(
 			`${environment.apiUrl}/api/company/clients/contractors`,
@@ -101,11 +93,17 @@ export class ClientApiService {
 		);
 	}
 
-	public getCategories(searchTerm: string) {
+	public getCategories(searchTerm?: string | null) {
+		const params = new HttpParams();
+
+		if (searchTerm) {
+			params.set('query', searchTerm.toString());
+		}
+
 		return this.http.get<IDictionaryItemDto[]>(
 			`${environment.apiUrl}/api/company/clients/categories`,
 			{
-				params: new HttpParams().set('query', searchTerm),
+				params,
 			},
 		);
 	}
