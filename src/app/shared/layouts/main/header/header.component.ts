@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
-import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { environment } from '@environments/environment';
-import { MenuApiService } from '@app/core/api/menu-api.service';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
+import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-header',
 	templateUrl: './header.component.html',
@@ -13,32 +15,20 @@ import { MenuApiService } from '@app/core/api/menu-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
+	public listMenu$?: Observable<IMenuItemDto[] | null>;
+	public userProfile$?: Observable<IUserProfile | null>;
+
 	public statusInputSearch = false;
 	public statusInputSearchMobile = true;
 	public statusBurger = false;
-	public listMenu!: any; // IMainMenu[]
-	public profile!: Observable<any>;
-	public favoritemenu!: any; // IMainMenu[]
-	public userProfile$?: Observable<IUserProfile | null>;
 	public backUrl: boolean = environment.production;
 
 	protected readonly AppRoutes = AppRoutes;
-	public constructor(
-		private readonly apiService: MenuApiService,
-		private readonly userStateService: UserProfileStoreService,
-	) {}
+	public constructor(private readonly mainMenuFacade: MainMenuFacadeService) {}
 
 	public ngOnInit(): any {
-		this.apiService.getFavoriteMenu().subscribe(item => {
-			this.favoritemenu = item.menu;
-		});
-
-		this.apiService.getMenu().subscribe(item => {
-			this.listMenu = item.menu;
-			this.listMenu.unshift({ link: '', name: 'Избранное', items: this.favoritemenu });
-		});
-
-		this.userProfile$ = this.userStateService.userProfile$;
+		this.listMenu$ = this.mainMenuFacade.getMainMenu();
+		this.userProfile$ = this.mainMenuFacade.getUserProfile();
 	}
 
 	public openSearch(event: Event) {

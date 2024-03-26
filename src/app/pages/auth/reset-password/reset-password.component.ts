@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 
 @Component({
@@ -10,19 +10,17 @@ import { AuthenticationService } from '@app/core/services/authentication.service
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordComponent implements OnInit {
-	loginForm!: FormGroup;
-	loading = false;
-	submitted = false;
-	error: unknown = '';
+	public loginForm!: FormGroup;
+	public loading = false;
+	public error: unknown = '';
 
-	passwordVisible = false;
-	passwordVisibleRepeat = false;
-	password?: string;
-	passwordRepeat?: string;
+	public passwordVisible = false;
+	public passwordVisibleRepeat = false;
+	public password?: string;
+	public passwordRepeat?: string;
 
-	constructor(
+	public constructor(
 		private readonly formBuilder: FormBuilder,
-		private readonly route: ActivatedRoute,
 		private readonly router: Router,
 		private readonly authenticationService: AuthenticationService, // fake
 	) {
@@ -32,7 +30,7 @@ export class ResetPasswordComponent implements OnInit {
 		}
 	}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.loginForm = this.formBuilder.group({
 			username: ['', Validators.required],
 			password: ['', Validators.required],

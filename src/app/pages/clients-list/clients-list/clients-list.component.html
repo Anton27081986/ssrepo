@@ -1,9 +1,36 @@
-<table>
-	<tr *ngFor="let client of clientsMock">
-		<td>{{ client.name }}</td>
-		<td>
-<a [routerLink]="['/client-card', client.id]">Подробнее</a>
-</td>
-	</tr>
-</table>
+<div class="container">
+	<div class="header">
+		<div class="title">
+			<ss-headline size="h1">Список клиентов</ss-headline>
+		</div>
+		<ss-button class="desktop" size="large" type="primary">Фильтры</ss-button>
+	</div>
+	<div class="content desktop">
+<!--		<ss-table-->
+<!--			[head]="[-->
+<!--					{title: 'Код', fields: ['tovName'], link: 'detailUrl'},-->
+<!--					{title: 'Категория', fields: ['source']},-->
+<!--					{title: 'Клиент', fields: ['price', 'currency']},-->
+<!--					{title: 'Контрагенты', fields: ['quantity', 'tovUnitName']}-->
+		<!--					{title: 'Менеджеры', fields: ['quantity', 'tovUnitName']}-->
+		<!--					{title: 'Статус', fields: ['quantity', 'tovUnitName']}-->
+		<!--					{title: 'Клиент без БМ', fields: ['quantity', 'tovUnitName']}-->
+<!--					]"-->
+<!--			[items]="tableItems">-->
+<!--		</ss-table>-->
+	</div>
+	<div class="pagination">
+<!--		<nz-pagination-->
+<!--			[nzTotal]="total"-->
+<!--			[nzPageIndex]="pageIndex"-->
+<!--			[nzPageSize]="pageSize"-->
+<!--			(nzPageIndexChange)="nzPageIndexChange($event)"-->
+<!--			(nzPageSizeChange)="pageSize = $event"-->
+<!--			[nzResponsive]="true"-->
+<!--		>-->
+<!--		</nz-pagination>-->
+	</div>
+</div>
+
+
 

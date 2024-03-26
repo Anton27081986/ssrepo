@@ -12,8 +12,8 @@ import { Subject, takeUntil } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResultItemComponent implements OnDestroy {
-	@Input() user: any;
-	@Input() call: boolean = false;
+	@Input() public user: any;
+	@Input() public call: boolean = false;
 
 	private readonly destroy$ = new Subject<void>();
 

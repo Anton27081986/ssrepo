@@ -30,7 +30,7 @@ export class ExchangeRatesComponent implements OnInit {
 			);
 	}
 
-	onRedirect(url: string) {
+	public onRedirect(url: string) {
 		window.open(url, '_blank');
 	}
 }

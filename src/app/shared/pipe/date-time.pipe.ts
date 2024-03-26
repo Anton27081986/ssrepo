@@ -8,7 +8,7 @@ import { formatDate } from '@angular/common';
 export class DateTimePipe implements PipeTransform {
 	private todayDate!: string;
 	private currentDate!: string;
-	transform(value: number): string {
+	public transform(value: number): string {
 		this.todayDate = formatDate(new Date(), 'dd', 'ru-RU');
 		this.currentDate = formatDate(value, 'dd', 'ru-RU');
 

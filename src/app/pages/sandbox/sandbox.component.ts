@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
 	templateUrl: './sandbox.component.html',
 	styleUrls: ['./sandbox.component.scss'],
 })
-export class SandboxComponent {}
+export class SandboxComponent {
+	public loading = false;
+}

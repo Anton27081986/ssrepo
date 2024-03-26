@@ -1,6 +1,6 @@
 <div class="like"
      [ngClass]="isClickLike ? 'liked': ''"
-     (click)="setLike(isUserLiked, objectIdProps)">
+     (click)="setLike(objectIdProps)">
 
   <ng-container [ngSwitch]="award">
     <span class="like-icon icon gold-like" nz-icon [nzType]="'ss:goldLike'" *ngSwitchCase="1"></span>

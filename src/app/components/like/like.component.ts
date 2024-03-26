@@ -6,7 +6,9 @@ import {
 	Input,
 } from '@angular/core';
 import { LikesApiService } from '@app/core/api/likes-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-like',
 	templateUrl: './like.component.html',
@@ -14,11 +16,11 @@ import { LikesApiService } from '@app/core/api/likes-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LikeComponent implements AfterViewInit {
-	@Input() isUserLikedProps!: boolean;
-	@Input() likesCountProps!: number;
-	@Input() objectIdProps!: number;
-	@Input() typeObject!: number;
-	@Input() award: any;
+	@Input() public isUserLikedProps!: boolean;
+	@Input() public likesCountProps!: number;
+	@Input() public objectIdProps!: number;
+	@Input() public typeObject!: number;
+	@Input() public award: any;
 
 	public isUserLiked!: boolean;
 	public likesCount!: number;
@@ -28,7 +30,6 @@ export class LikeComponent implements AfterViewInit {
 	public constructor(
 		private readonly apiService: LikesApiService,
 		private readonly chDRef: ChangeDetectorRef,
-		// private readonly ngZone: NgZone,
 	) {}
 
 	public ngAfterViewInit(): void {
@@ -37,26 +38,32 @@ export class LikeComponent implements AfterViewInit {
 		this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
 	}
 
-	public setLike(isUserLiked: boolean, objectId: number, type = this.typeObject) {
+	public setLike(objectId: number, type = this.typeObject) {
 		if (!this.isClickLike) {
-			this.apiService.setLike(objectId, type).subscribe({
-				next: () => {
-					this.likesCount += 1;
-					this.isClickLike = true;
-					this.chDRef.markForCheck();
-				},
-				error: (error: unknown) => console.log(error),
-			});
+			this.apiService
+				.setLike(objectId, type)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: () => {
+						this.likesCount += 1;
+						this.isClickLike = true;
+						this.chDRef.markForCheck();
+					},
+					error: (error: unknown) => console.error(error),
+				});
 		}
 
 		if (this.isClickLike) {
-			this.apiService.deleteLike(objectId, type).subscribe({
-				next: () => {
-					this.likesCount -= 1;
-					this.isClickLike = false;
-					this.chDRef.markForCheck();
-				},
-			});
+			this.apiService
+				.deleteLike(objectId, type)
+				.pipe(untilDestroyed(this))
+				.subscribe({
+					next: () => {
+						this.likesCount -= 1;
+						this.isClickLike = false;
+						this.chDRef.markForCheck();
+					},
+				});
 		}
 	}
 }

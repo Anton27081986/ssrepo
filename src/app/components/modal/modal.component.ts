@@ -8,16 +8,16 @@ import { ModalService } from './modal.service';
 	encapsulation: ViewEncapsulation.None,
 })
 export class ModalComponent implements OnInit, OnDestroy {
-	@Input() id: string | undefined;
+	@Input() public id: string | undefined;
 	private readonly element: any;
-	constructor(
+	public constructor(
 		private readonly modalService: ModalService,
 		private readonly el: ElementRef,
 	) {
 		this.element = el.nativeElement;
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		// ensure id attribute exists
 		if (!this.id) {
 			console.error('modal must have an id');
@@ -38,7 +38,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 	}
 
 	// remove self from modal service when component is destroyed
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		if (typeof this.id === 'string') {
 			this.modalService.remove(this.id);
 		}
@@ -47,13 +47,13 @@ export class ModalComponent implements OnInit, OnDestroy {
 	}
 
 	// open modal
-	open(): void {
+	public open(): void {
 		this.element.style.display = 'block';
 		document.body.classList.add('ss-modal-open');
 	}
 
 	// close modal
-	close(): void {
+	public close(): void {
 		this.element.style.display = 'none';
 		document.body.classList.remove('ss-modal-open');
 	}

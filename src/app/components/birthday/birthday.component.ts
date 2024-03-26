@@ -24,7 +24,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BirthdayComponent implements OnInit {
-	@ViewChild(NzCarouselComponent, { static: false }) myCarousel: NzCarouselComponent | undefined;
+	@ViewChild(NzCarouselComponent, { static: false }) public myCarousel:
+		| NzCarouselComponent
+		| undefined;
 
 	protected date = new Date();
 	protected birthdays: IDayDto[] = [];
@@ -113,7 +115,7 @@ export class BirthdayComponent implements OnInit {
 
 	public onTabClick(date: string | null | undefined) {
 		if (!date) {
-			console.log('Нет даты');
+			console.error('Нет даты');
 
 			return;
 		}

@@ -17,6 +17,5 @@ export class ClientCardComponent implements OnInit {
 
 	public ngOnInit() {
 		this.clientId = this.router.snapshot.paramMap.get('id');
-		console.log(this.clientId);
 	}
 }

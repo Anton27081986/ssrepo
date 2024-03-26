@@ -7,11 +7,11 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BackendErrorMessagesComponent implements OnInit {
-	@Input() backendErrors: any;
+	@Input() public backendErrors: any;
 
-	errorMessages!: string[];
+	public errorMessages!: string[];
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.errorMessages = Object.keys(this.backendErrors).map((name: string) => {
 			const messages = this.backendErrors[name].join(' ');
 

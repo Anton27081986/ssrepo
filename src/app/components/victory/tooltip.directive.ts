@@ -8,21 +8,21 @@ export class TooltipDirective implements AfterViewInit {
 	// ModalUsersWinGroups
 	private queryModalUsersWinGroups: any;
 
-	constructor(
+	public constructor(
 		private readonly renderer: Renderer2,
 		private readonly el: ElementRef,
 	) {}
 
-	ngAfterViewInit() {
+	public ngAfterViewInit() {
 		this.queryModalUsersWinGroups =
 			this.el.nativeElement.querySelector('.modal-users-win-groups');
 	}
 
-	@HostListener('mouseenter') onMouseEnter() {
+	@HostListener('mouseenter') public onMouseEnter() {
 		this.renderer.addClass(this.queryModalUsersWinGroups, 'show');
 	}
 
-	@HostListener('mouseleave') onMouseLeave() {
+	@HostListener('mouseleave') public onMouseLeave() {
 		this.renderer.removeClass(this.queryModalUsersWinGroups, 'show');
 	}
 }

@@ -18,8 +18,8 @@ export class ModalTransportNoticeComponent {
 	protected readonly formatDate = formatDate;
 	protected noteForm: FormGroup<{
 		note: FormControl<string | null>;
-		dFrom: FormControl<Date | null>;
-		dTo: FormControl<Date | null>;
+		dateFrom: FormControl<Date | null>;
+		dateTo: FormControl<Date | null>;
 	}>;
 
 	public constructor(
@@ -27,33 +27,33 @@ export class ModalTransportNoticeComponent {
 		private readonly apiService: TransportApiService,
 	) {
 		this.noteForm = new FormGroup({
-			dFrom: new FormControl(new Date(), Validators.required),
-			dTo: new FormControl(new Date(), Validators.required),
+			dateFrom: new FormControl(new Date(), Validators.required),
+			dateTo: new FormControl(new Date(), Validators.required),
 			note: new FormControl('', Validators.required),
 		});
 	}
 
 	public saveAndCloseModal(): void {
 		const transportNotify: ITransportNotifyDto = {
-			dFrom: this.noteForm.controls.dFrom.value?.toISOString(),
-			dTo: this.noteForm.controls.dTo.value?.toISOString(),
+			dateFrom: this.noteForm.controls.dateFrom.value?.toISOString(),
+			dateTo: this.noteForm.controls.dateTo.value?.toISOString(),
 			note: this.noteForm.controls.note.value?.toString(),
 		};
 
 		this.apiService
 			.sendTransportNote(transportNotify)
 			.pipe(untilDestroyed(this))
-			.subscribe(
-				() => {
+			.subscribe({
+				next: () => {
 					this.modal.destroy(this.noteForm.value);
 				},
-				(error: unknown) => {
+				error: (error: unknown) => {
 					console.error('Уведомление не опубликовано', error);
 				},
-			);
+			});
 	}
 
 	public disabledDate = (current: Date): boolean => current < new Date();
 	public disabledBeforeFrom = (current: Date): boolean =>
-		current < (this.noteForm.controls.dFrom.value || Date.now());
+		current < (this.noteForm.controls.dateFrom.value || Date.now());
 }
