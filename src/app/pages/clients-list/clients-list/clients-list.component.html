@@ -35,8 +35,13 @@
 		<form nz-form
 		      [formGroup]="filtersForm"
 		      nzLayout="vertical"
-		      class="form"
-		      (ngSubmit)="getFilteredClients()">
+		      class="form">
+					<nz-form-item>
+						<span class="field-tile">Код</span>
+						<nz-form-control>
+							<ss-input size="medium" formControlName="code" placeholder="Введите код"></ss-input>
+						</nz-form-control>
+					</nz-form-item>
 <!--				Фильтр категории-->
 					<nz-form-item>
 						<span class="field-tile">Категория</span>
@@ -46,6 +51,7 @@
 								nzShowSearch
 								nzPlaceHolder="Выберите категорию"
 								[nzShowArrow]="true"
+								[nzAllowClear]="true"
 								(nzOnSearch)="categorySearch($event)">
 								<nz-option *ngFor="let category of this.clientsListFacade.categoriesOptions"
 								           [nzLabel]="category.name!"

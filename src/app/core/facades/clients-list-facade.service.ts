@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ClientApiService } from '@app/core/api/client-api.service';
-import { debounceTime, filter, map, Subject, tap } from 'rxjs';
+import { map, Subject, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { IClientStatus } from '@app/core/models/company/client-status';
 
 @UntilDestroy()
 @Injectable({

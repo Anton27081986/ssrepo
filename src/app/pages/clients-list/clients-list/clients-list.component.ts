@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import { BehaviorSubject, debounceTime, filter, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -23,9 +23,6 @@ export class ClientsListComponent implements OnInit {
 	// state
 	public isFiltersVisible: boolean = true;
 	public filtersForm!: FormGroup;
-
-	// category filter dictionary
-	public nzFilterOption = (): boolean => true;
 
 	public constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,

@@ -13,9 +13,11 @@ import { NzFormModule } from "ng-zorro-antd/form";
 import { ReactiveFormsModule } from "@angular/forms";
 import { NzSelectModule } from "ng-zorro-antd/select";
 import { NzTypographyModule } from "ng-zorro-antd/typography";
+import { InputModule } from "@app/shared/components/inputs/input/input.module";
+import { PasswordModule } from "@app/shared/components/inputs/password/password.module";
 
 @NgModule({
 	declarations: [ClientsListComponent],
-	imports: [CommonModule, ClientsListRoutingModule, ButtonModule, CaptionModule, CardModule, HeadlineModule, NzPaginationModule, TableModule, NzFormModule, ReactiveFormsModule, NzSelectModule, NzTypographyModule]
+  imports: [CommonModule, ClientsListRoutingModule, ButtonModule, CaptionModule, CardModule, HeadlineModule, NzPaginationModule, TableModule, NzFormModule, ReactiveFormsModule, NzSelectModule, NzTypographyModule, InputModule, PasswordModule]
 })
 export class ClientsListModule {}
