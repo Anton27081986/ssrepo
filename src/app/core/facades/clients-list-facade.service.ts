@@ -1,83 +1,48 @@
 import { Injectable } from '@angular/core';
 import { ClientApiService } from '@app/core/api/client-api.service';
-import { map, Subject, tap } from 'rxjs';
+import { map, Subject, switchMap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { catchError } from 'rxjs/operators';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { environment } from '@environments/environment.development';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class ClientsListFacadeService {
-	public categoriesOptions: IDictionaryItemDto[] = [];
-
-	private readonly clientInputChanged: Subject<string> = new Subject<string>();
-	public clientOptions: IDictionaryItemDto[] = [];
-
-	private readonly contractorInputChanged: Subject<string> = new Subject<string>();
-	public contractorOptions: IDictionaryItemDto[] = [];
+	public categoriesUrl = `${environment.apiUrl}/api/company/clients/categories`;
+	public contractorUrl = `${environment.apiUrl}/api/company/clients/contractors`;
+	public clientUrl = `${environment.apiUrl}/api/auth/users/search`;
+	public managerUrl = `${environment.apiUrl}/api/auth/users/search`;
 
 	public statusOptions = [
 		{ id: 1, name: 'Новый' },
 		{ id: 2, name: 'Архивный' },
-		{ id: 5, name: 'Фиксированый' },
+		{ id: 5, name: 'Передан в юр.отдел' },
 		{ id: 6, name: 'Активный' },
 	];
 
+	private readonly filtersChanged: Subject<any> = new Subject<any>();
+
 	public constructor(private readonly clientApiService: ClientApiService) {
-		// this.initCategoriesFilter();
-		this.loadCategoriesOptions();
-	}
-
-	public getClients() {
-		return this.clientApiService.getClients().pipe(
-			map(response => {
-				return response.items;
-			}),
-			untilDestroyed(this),
-		);
-	}
-
-	public applyFilters(filters: any) {}
-
-	// private initCategoriesFilter() {
-	// 	this.categoryInputChanged
-	// 		.pipe(
-	// 			debounceTime(300),
-	// 			filter(value => value.length >= 1),
-	// 			switchMap(value =>
-	// 				this.clientApiService.getCategories(value).pipe(
-	// 					catchError((error: unknown) => {
-	// 						console.error('Ошибка при получении данных', error);
-	//
-	// 						return [];
-	// 					}),
-	// 				),
-	// 			),
-	// 			tap(options => {
-	// 				console.log(options);
-	// 				this.categoriesOptions = options;
-	// 			}),
-	// 			untilDestroyed(this),
-	// 		)
-	// 		.subscribe();
-	// }
-
-	private loadCategoriesOptions() {
-		this.clientApiService
-			.getCategories()
+		this.filtersChanged
 			.pipe(
-				tap(categories => {
-					this.categoriesOptions = categories;
-				}),
-				catchError((error: unknown) => {
-					console.error('Ошибка при получении данных', error);
-
-					return [];
+				switchMap(filter => {
+					return this.getClients(filter);
 				}),
 				untilDestroyed(this),
 			)
 			.subscribe();
+	}
+
+	public getClients(filter: any) {
+		return this.clientApiService.getClients().pipe(
+			map(response => {
+				return response.items;
+			}),
+		);
+	}
+
+	public applyFilters(filters: any) {
+		this.filtersChanged.next(filters);
 	}
 }
