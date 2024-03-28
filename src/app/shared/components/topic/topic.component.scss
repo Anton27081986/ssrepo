@@ -1,8 +1,21 @@
 @use 'src/styles/colors.scss' as *;
 
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow-y: hidden;
+}
+
+.header {
+	padding: 10px 12px;
+	border-bottom: 1px solid $island-outline;
+	position: sticky;
+	top: 0;
+	background-color: $island;
+}
+
 .subjects {
-	width: 400px;
-	min-width: 400px;
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -55,5 +68,9 @@
 		ss-icon {
 			background-color: #4770FF;
 		}
+	}
+
+	.item:hover {
+		background-color:  $background;
 	}
 }

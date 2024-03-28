@@ -8,12 +8,12 @@ import {Component, Input, OnInit} from '@angular/core';
 export class AvatarComponent implements OnInit {
 	@Input() src!: string;
 	@Input() isSquare = true;
-	@Input() size: 'xs' | 's' | 'm' | 'l' = 's';
+	@Input() size: 'xs' | 's' | 'm' | 'l' = 'xs';
 
 	protected noImage = false;
 
-	protected width: number = 40;
-	protected height: number = 40;
+	protected width: number = 32;
+	protected height: number = 32;
 
 	protected onImageError() {
 		this.noImage = true;

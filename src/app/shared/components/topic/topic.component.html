@@ -1,27 +1,25 @@
-<ss-card class="subjects" padding="0">
-	<div class="item">Search</div>
-	<div class="item all">
+<ss-search-input class="header" size="small"></ss-search-input>
+<div class="subjects">
+	<div class="item all" (click)="onTopic()">
 		<ss-icon height="22" width="22" name="smsTracking" class="item-icon"></ss-icon>
 		<div class="item-content">
 			<ss-headline size="h6">Все сообщения по клиенту</ss-headline>
 			<div class="item-content-subtitle">
 				<ss-text size="2">
-					Сообщений: <b> {{ (messages$ | async)?.total }} </b>
+					Сообщений: <b> {{ totalMessages$ | async }} </b>
 				</ss-text>
-				<ss-caption size="2"> 0 </ss-caption>
 			</div>
 		</div>
 	</div>
-	<div class="item" *ngFor="let subject of subjects$ | async">
+	<div class="item" *ngFor="let subject of subjects$ | async" (click)="onTopic(subject.subject)">
 		<ss-icon height="22" width="22" name="smsTracking" class="item-icon"></ss-icon>
 		<div class="item-content">
-			<ss-headline size="h6">{{ subject }}</ss-headline>
+			<ss-headline size="h6">{{ subject.subject }}</ss-headline>
 			<div class="item-content-subtitle">
 				<ss-text size="2">
-					Сообщений: <b> 0 </b>
+					Сообщений: <b> {{ subject.messageCount }} </b>
 				</ss-text>
-				<ss-caption size="2">0</ss-caption>
 			</div>
 		</div>
 	</div>
-</ss-card>
+</div>

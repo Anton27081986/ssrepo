@@ -1,12 +1,11 @@
-<ss-card padding="7.5px 20px" class="hide-button" (click)="onHideButton()" [ngClass]="{active: isHidden}">
-	<ss-headline size="h3">Обсуждение и переписка</ss-headline>
-	<ss-icon height="16" width="16" name="arrowDown" class="hide-button-icon"></ss-icon>
-</ss-card>
-<div class="content" [ngClass]="{'non-active': isHidden}">
-	<ss-topic></ss-topic>
-	<div class="messages">
-		<ss-messages></ss-messages>
-		<ss-mail></ss-mail>
+<ss-card-dropdown title="Обсуждение/переписка">
+	<div class="correspondence">
+		<ss-topic [objectId]="objectId"></ss-topic>
+		<div class="separator"></div>
+		<div class="messages">
+			<ss-messages></ss-messages>
+			<div class="separator"></div>
+			<ss-mail [objectId]="objectId"></ss-mail>
+		</div>
 	</div>
-</div>
-
+</ss-card-dropdown>

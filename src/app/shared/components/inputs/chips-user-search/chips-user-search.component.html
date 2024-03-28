@@ -1,0 +1,27 @@
+<form>
+	<ss-caption size="1">{{ label }}</ss-caption>
+	<div class="input" [ngClass]="{'dropdown': foundUsers.length}">
+		<div class="chips" *ngFor="let user of selectedUsers">
+			<ss-avatar size="xs" [src]="user?.avatarUrl"></ss-avatar>
+			<ss-text size="3">{{ user.name }}</ss-text>
+			<ss-icon height="10" width="10" name="iconClose" (click)="onRemoveUserFromList(user, input.value !== '')"></ss-icon>
+		</div>
+		<input type="text"
+			   placeholder="Введите ФИО"
+			   [disabled]="disabled"
+			   class="{{ error ? size + ' error' : size }}"
+			   (input)="onInputChange(input.value)"
+			   #input
+		/>
+		<ss-icon class="hide-dropdown-button" *ngIf="foundUsers.length" height="14" width="14" name="arrowBottom" (click)="input.value = ''; foundUsers = []"></ss-icon>
+	</div>
+	<div class="variants-wrapper" *ngIf="foundUsers.length">
+		<div class="variants">
+			<div class="separator"></div>
+			<div class="variants-item" *ngFor="let user of foundUsers" (click)="onAddUserToList(user)">
+				<ss-text size="3">{{ user?.name }}</ss-text>
+			</div>
+		</div>
+	</div>
+</form>
+

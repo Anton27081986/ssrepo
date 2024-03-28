@@ -2,63 +2,34 @@
 
 :host {
 	display: flex;
-	flex-direction: column;
-	gap: 15px;
+	overflow-y: auto;
 	max-width: 1426px;
-	width: 100%;
+	max-height: 990px;
 	padding: 20px;
-	overflow-x: auto;
-	overflow-y: hidden;
 }
 
-.hide-button {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	cursor: pointer;
-
-	.hide-button-icon {
-		color: $lite-text;
-		transform: rotateZ(-180deg);
-
-		transition: transform 0.3s;
-	}
-}
-
-.hide-button.active {
-	.hide-button-icon {
-		transform: rotateZ(0deg);
-	}
-}
-
-.content {
-	max-height: 1600px;
-	overflow-y: hidden;
+.correspondence {
 	display: grid;
-	grid-template-columns: 400px 1fr;
-	width: 100%;
-	gap: 15px;
+	grid-template-columns: 400px 1px 1fr;
+	grid-template-rows: 1fr;
+	height: inherit;
+	width: inherit;
+	overflow-y: hidden;
 
-	transition: max-height 0.3s ease, margin-bottom 0.3s;
+	.separator {
+		background-color: $island-outline;
+	}
 
 	.messages {
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1px auto;
+		overflow-y: auto;
 
 		ss-mail {
+			position: sticky;
+			bottom: 0;
 			width: 100%;
 		}
-	}
-}
-
-.content.non-active {
-	max-height: 0;
-	margin-bottom: -15px;
-	overflow-y: hidden;
-
-	.subjects {
-		overflow-y: hidden;
 	}
 }

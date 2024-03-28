@@ -1,6 +1,6 @@
 export class AppIcons {
 	public static iconSearch =
-		'<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
+		'<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
 
 	public static iconRemind =
 		'<svg width="18" height="23" viewBox="0 0 18 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.87677 2.92944C5.63638 2.92944 3.00294 5.61257 3.00294 8.91412V11.7967C3.00294 12.4052 2.74841 13.3328 2.44493 13.8515L1.31911 15.7566C0.624043 16.9336 1.10374 18.2402 2.3764 18.6791C6.59577 20.1154 11.148 20.1154 15.3673 18.6791C16.5519 18.2801 17.0708 16.8538 16.4246 15.7566L15.2988 13.8515C15.0051 13.3328 14.7506 12.4052 14.7506 11.7967V8.91412C14.7506 5.62255 12.1074 2.92944 8.87677 2.92944Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/><path d="M12.3072 19.5769C12.3072 20.9096 10.8534 22 9.07647 22C8.1934 22 7.37493 21.7254 6.79339 21.2892C6.21186 20.8531 5.8457 20.2392 5.8457 19.5769" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M6.6543 1H11.5005" stroke="#22223A" stroke-width="1.5" stroke-linecap="round"/></svg>';
@@ -109,7 +109,7 @@ export class AppIcons {
 
 	public static arrowBottom =
 		'<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="#22223A" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
 	public static arrowRight =

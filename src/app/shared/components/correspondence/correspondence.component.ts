@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NotificationsStoreService } from '@app/core/states/notifications-store.service';
-import { filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'ss-correspondence',
@@ -8,14 +8,14 @@ import { filter, Observable } from 'rxjs';
 	styleUrls: ['./correspondence.component.scss'],
 })
 export class CorrespondenceComponent implements OnInit {
-	@Input() objectId: string | undefined;
+	@Input() objectId!: number;
 
 	protected isHidden = false;
 
-	public ratingWeeks$: Observable<string[]>;
+	public subjects$: Observable<{subject: string; messageCount: number}[]>;
 
 	constructor(private readonly storeService: NotificationsStoreService) {
-		this.ratingWeeks$ = this.storeService.subjects$;
+		this.subjects$ = this.storeService.subjects$;
 	}
 
 	ngOnInit() {

@@ -1,20 +1,19 @@
-import { Component, Input, Optional, Self } from '@angular/core';
+import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
-	selector: 'ss-input',
-	templateUrl: './input.component.html',
-	styleUrls: ['./input.component.scss'],
+	selector: 'ss-search-input',
+	templateUrl: './search-input.component.html',
+	styleUrls: ['./search-input.component.scss'],
 })
-export class InputComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' = 'medium';
+export class SearchInputComponent implements ControlValueAccessor {
+	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public type: 'text' | 'email' = 'text';
 	@Input() public error: string | undefined;
+	@Output() protected search = new EventEmitter();
 
-	@Input() public value: any = '';
+	public value: any = '';
 
 	public constructor(
 		// Retrieve the dependency only from the local injector,

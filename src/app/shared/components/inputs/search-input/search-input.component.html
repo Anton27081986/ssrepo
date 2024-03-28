@@ -1,7 +1,7 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-		<input [type]="type"
-				 [placeholder]="placeholder"
+		<input type="text"
+				 placeholder="Поиск"
 				 [value]="value"
 				 [disabled]="disabled"
 				 (input)="onChange($any($event.target).value)"
@@ -9,6 +9,6 @@
 				 class="{{ error ? size + ' error' : size }}"
 					 #input
 	  />
-		<ss-icon *ngIf="input.value" height="12" name="iconClose" (click)="input.value = ''; onChange('')"></ss-icon>
+		<ss-icon height="12" name="iconSearch" (click)="search.emit(input.value)"></ss-icon>
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>
