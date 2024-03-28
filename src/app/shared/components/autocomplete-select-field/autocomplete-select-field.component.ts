@@ -5,7 +5,7 @@ import {
 	Input,
 	OnInit,
 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -74,13 +74,17 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 	}
 
 	private requestToServer(searchTerm: string = '') {
-		const params = searchTerm ? { params: { query: searchTerm } } : {};
+		if (searchTerm) {
+			return this.httpClient.get<IDictionaryItemDto[]>(this.url!, {
+				params: new HttpParams().set('query', searchTerm),
+			});
+		}
 
-		return this.httpClient.get<IDictionaryItemDto[]>(this.url!, params);
+		return this.httpClient.get<IDictionaryItemDto[]>(this.url!);
 	}
 
 	public search(searchTerm: string) {
-		if (this.needSearch) {
+		if (this.needSearch && searchTerm.length > 0) {
 			this.searchFieldChanged.next(searchTerm);
 		}
 	}

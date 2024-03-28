@@ -6,30 +6,30 @@
 		<ss-button class="desktop" size="large" type="primary" (click)="toggleFilters()">Фильтры</ss-button>
 	</div>
 	<div class="content desktop">
-<!--		<ss-table-->
-<!--			[head]="[-->
-<!--					{title: 'Код', fields: ['tovName'], link: 'detailUrl'},-->
-<!--					{title: 'Категория', fields: ['source']},-->
-<!--					{title: 'Клиент', fields: ['price', 'currency']},-->
-<!--					{title: 'Контрагенты', fields: ['quantity', 'tovUnitName']}-->
-		<!--					{title: 'Менеджеры', fields: ['quantity', 'tovUnitName']}-->
-		<!--					{title: 'Статус', fields: ['quantity', 'tovUnitName']}-->
-		<!--					{title: 'Клиент без БМ', fields: ['quantity', 'tovUnitName']}-->
-<!--					]"-->
-<!--			[items]="tableItems">-->
-<!--		</ss-table>-->
+		<ss-table
+			[head]="[
+					{title: 'Код', fields: ['tovName'], link: 'detailUrl'},
+					{title: 'Категория', fields: ['source']},
+					{title: 'Клиент', fields: ['price', 'currency']},
+					{title: 'Контрагенты', fields: ['quantity', 'tovUnitName']},
+					{title: 'Менеджеры', fields: ['quantity', 'tovUnitName']},
+					{title: 'Статус', fields: ['quantity', 'tovUnitName']},
+					{title: 'Клиент без БМ', fields: ['quantity', 'tovUnitName']}
+					]"
+			[items]="tableItems">
+		</ss-table>
 	</div>
 	<div class="pagination">
-<!--		<nz-pagination-->
-<!--			[nzTotal]="total"-->
-<!--			[nzPageIndex]="pageIndex"-->
-<!--			[nzPageSize]="pageSize"-->
-<!--			(nzPageIndexChange)="nzPageIndexChange($event)"-->
-<!--			(nzPageSizeChange)="pageSize = $event"-->
-<!--			[nzResponsive]="true"-->
-<!--		>-->
-<!--		</nz-pagination>-->
+		<nz-pagination
+			[nzTotal]="total"
+			[nzPageIndex]="pageIndex"
+			[nzPageSize]="pageSize"
+			(nzPageIndexChange)="nzPageIndexChange($event)"
+			(nzPageSizeChange)="pageSize = $event"
+			[nzResponsive]="true">
+		</nz-pagination>
 	</div>
+
 	<div class="filters" style="width: 300px;"
 	     *ngIf="isFiltersVisible">
 		<nz-card nzTitle = "Фильтры" [nzExtra]="extraTemplate">
@@ -53,18 +53,17 @@
 					</ss-autocomplete-select-field>
 				</nz-form-item>
 				<nz-form-item>
-					<ss-autocomplete-select-field
-						formControlName="client"
-						[label]="'Клиент'"
-						[placeholder]="'Выберите клиента'"
-						[url]="clientsListFacade.clientUrl">
-					</ss-autocomplete-select-field>
+					<ss-caption size="1">Клиент</ss-caption>
+					<nz-form-control>
+						<ss-input size="medium" formControlName="client" placeholder="Введите ФИО клиента"></ss-input>
+					</nz-form-control>
 				</nz-form-item>
 				<nz-form-item>
 					<ss-autocomplete-select-field
 						formControlName="manager"
 						[label]="'Менеджеры'"
 						[placeholder]="'Выберите менеджера'"
+						[needSearch]="true"
 						[url]="clientsListFacade.managerUrl">
 					</ss-autocomplete-select-field>
 				</nz-form-item>
@@ -73,6 +72,7 @@
 						formControlName="contractor"
 						[label]="'Контрагенты'"
 						[placeholder]="'Выберите контрагента'"
+						[needSearch]="true"
 						[url]="clientsListFacade.contractorUrl">
 					</ss-autocomplete-select-field>
 				</nz-form-item>
@@ -107,7 +107,7 @@
 		</nz-card>
 
 		<ng-template #extraTemplate>
-			<a>Close</a>
+			<a (click)="toggleFilters()">Close</a>
 		</ng-template>
 
 

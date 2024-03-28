@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import { Observable } from 'rxjs';
-import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IClientsFilter } from '@app/core/models/clients-filter';
+import { ITableItem } from '@app/shared/components/table/table.component';
 
 @UntilDestroy()
 @Component({
@@ -14,11 +14,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class ClientsListComponent implements OnInit {
 	// table
-	public clients$: Observable<IClientItemDto[]> | undefined;
-	public total!: number;
+	public total: number | undefined;
 	public pageSize = 50;
 	public pageIndex = 1;
 	public offset = 0;
+	public tableItems: ITableItem[] = [];
 
 	// state
 	public isFiltersVisible: boolean = true;
@@ -32,12 +32,24 @@ export class ClientsListComponent implements OnInit {
 	public ngOnInit(): void {
 		this.filtersForm = this.formBuilder.group({
 			code: [],
-			category: [14],
+			category: [],
 			client: [],
 			manager: [],
 			contractor: [],
 			status: [6],
 			withoutBaseManager: [false],
+		});
+
+		this.clientsListFacade.applyFilters(this.getFilter());
+
+		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
+			if (response.items) {
+				this.tableItems = <ITableItem[]>response.items;
+			}
+
+			if (response.total) {
+				this.total = response.total + this.pageSize;
+			}
 		});
 	}
 
@@ -46,13 +58,39 @@ export class ClientsListComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
-		console.log(this.filtersForm);
-		// if (this.filtersForm.valid) {
-		// 	const filter = {
-		// 		category: this.filtersForm.value.category,
-		// 	};
-		//
-		// 	this.clientsListFacade.applyFilters(filter);
-		// }
+		if (this.filtersForm.valid) {
+			const filter = this.getFilter();
+
+			console.log(filter);
+
+			this.clientsListFacade.applyFilters(filter);
+		}
+	}
+
+	private getFilter(): IClientsFilter {
+		return {
+			code: this.filtersForm.get('code')?.value,
+			name: this.filtersForm.get('client')?.value,
+			categoryId: this.filtersForm.get('category')?.value,
+			contactorId: this.filtersForm.get('contractor')?.value,
+			managerId: this.filtersForm.get('manager')?.value,
+			status: this.filtersForm.get('status')?.value,
+			withoutBaseManager: this.filtersForm.get('withoutBaseManager')?.value,
+			offset: this.offset,
+			limit: this.pageSize,
+		};
+	}
+
+	public nzPageIndexChange($event: number) {
+		if ($event === 1) {
+			this.offset = 0;
+		} else {
+			this.offset = this.pageSize * $event - this.pageSize;
+		}
+
+		this.offset = this.pageSize * $event - this.pageSize;
+		this.pageIndex = $event;
+
+		this.clientsListFacade.applyFilters(this.getFilter());
 	}
 }
