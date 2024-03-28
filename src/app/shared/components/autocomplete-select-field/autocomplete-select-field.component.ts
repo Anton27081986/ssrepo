@@ -1,17 +1,14 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	forwardRef,
 	Input,
 	OnInit,
-	Optional,
-	Self,
 } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { debounceTime, distinctUntilChanged, filter, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, of, Subject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
 @UntilDestroy()
@@ -25,69 +22,69 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 	@Input() public url: string | undefined;
 	@Input() public label: string = '';
 	@Input() public placeholder: string = '';
-	@Input() public selectOptions: IDictionaryItemDto[] | undefined;
+	@Input() public selectOptions: IDictionaryItemDto[] = [];
 	@Input() public needSearch: boolean = true;
-
-	public value: any = '';
+	@Input() public isDisabled: boolean = false;
+	@Input() public isLoading: boolean = false;
+	public selectedValue?: number;
 
 	private readonly searchFieldChanged: Subject<string> = new Subject<string>();
 
 	public constructor(
 		private readonly httpClient: HttpClient,
-		@Self()
-		@Optional()
 		private readonly ngControl: NgControl,
 	) {
-		if (this.ngControl) {
+		if (this.ngControl !== null) {
 			this.ngControl.valueAccessor = this;
 		}
 	}
 
 	public ngOnInit(): void {
-		if (this.url && !this.needSearch) {
-			this.requestToServer(this.url)
-				.pipe(untilDestroyed(this))
-				.subscribe(options => {
-					this.selectOptions = options;
-				});
+		this.setupSearch();
+	}
+
+	private setupSearch() {
+		if (!this.url) {
+			return;
 		}
 
-		if (this.url && this.needSearch) {
-			this.searchFieldChanged
-				.pipe(
-					filter(term => term.length > 1),
+		const search$ = this.needSearch
+			? this.searchFieldChanged.pipe(
 					debounceTime(300),
 					distinctUntilChanged(),
-					switchMap(term => this.requestToServerWithParams(this.url!, term)),
-					catchError((err: unknown) => {
-						console.error(err);
-
-						return of([]);
-					}),
-					untilDestroyed(this),
+					switchMap(term => this.requestToServer(term)),
 				)
-				.subscribe({
-					next: options => {
-						this.selectOptions = options;
-					},
-				});
-		}
+			: this.requestToServer('');
+
+		search$
+			.pipe(
+				catchError((err: unknown) => {
+					console.error(err);
+
+					return of([]);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe(options => {
+				this.selectOptions = options;
+			});
 	}
 
-	public requestToServer(url: string) {
-		return this.httpClient.get<IDictionaryItemDto[]>(url);
-	}
+	private requestToServer(searchTerm: string = '') {
+		const params = searchTerm ? { params: { query: searchTerm } } : {};
 
-	public requestToServerWithParams(url: string, searchTerm: string) {
-		return this.httpClient.get<IDictionaryItemDto[]>(url, {
-			params: new HttpParams().set('query', searchTerm),
-		});
+		return this.httpClient.get<IDictionaryItemDto[]>(this.url!, params);
 	}
 
 	public search(searchTerm: string) {
 		if (this.needSearch) {
 			this.searchFieldChanged.next(searchTerm);
 		}
+	}
+
+	// Значение приходит из формы в текущий компонент
+	public writeValue(value: any): void {
+		this.selectedValue = value;
 	}
 
 	public registerOnChange(fn: any): void {
@@ -98,9 +95,13 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 		this.onTouched = fn;
 	}
 
-	public writeValue(value: any): void {
-		this.value = value;
-	}
+	// Передаем в форму значение выключено, если выключаем компонент
+
+	// public setDisabledState?(isDisabled: boolean): void {
+	// 	if (this.ngControl !== null) {
+	// 		isDisabled ? this.ngControl!.control!.disable() : this.ngControl!.control!.enable();
+	// 	}
+	// }
 
 	protected onChange(value: string) {}
 

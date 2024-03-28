@@ -34,7 +34,7 @@ export class ClientsListComponent implements OnInit {
 	public ngOnInit(): void {
 		this.filtersForm = this.formBuilder.group({
 			code: [''],
-			category: [''],
+			category: ['55'],
 			client: [''],
 		});
 	}
@@ -44,12 +44,13 @@ export class ClientsListComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
-		if (this.filtersForm.valid) {
-			const filter = {
-				category: this.filtersForm.value.category,
-			};
-
-			this.clientsListFacade.applyFilters(filter);
-		}
+		console.log(this.filtersForm.get('category'));
+		// if (this.filtersForm.valid) {
+		// 	const filter = {
+		// 		category: this.filtersForm.value.category,
+		// 	};
+		//
+		// 	this.clientsListFacade.applyFilters(filter);
+		// }
 	}
 }

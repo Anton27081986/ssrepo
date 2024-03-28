@@ -5,6 +5,9 @@
 		[nzPlaceHolder]="placeholder"
 		[nzShowArrow]="true"
 		[nzAllowClear]="true"
+		[nzDisabled]="isDisabled"
+		[nzLoading]="isLoading"
+		[(ngModel)]="selectedValue"
 		(nzOnSearch)="search($event)">
 		<nz-option *ngFor="let option of selectOptions"
 				   [nzLabel]="option.name!"
@@ -12,4 +15,5 @@
 		</nz-option>
 	</nz-select>
 </nz-form-control>
+<span>{{this.selectedValue}}</span>
 

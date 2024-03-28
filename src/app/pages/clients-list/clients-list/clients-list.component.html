@@ -37,55 +37,56 @@
 				  [formGroup]="filtersForm"
 				  nzLayout="vertical"
 				  class="form">
-				<nz-form-item>
-					<ss-caption size="1">Код</ss-caption>
-					<nz-form-control>
-						<ss-input size="medium" formControlName="code" placeholder="Введите код"></ss-input>
-					</nz-form-control>
-				</nz-form-item>
+<!--				<nz-form-item>-->
+<!--					<ss-caption size="1">Код</ss-caption>-->
+<!--					<nz-form-control>-->
+<!--						<ss-input size="medium" formControlName="code" placeholder="Введите код"></ss-input>-->
+<!--					</nz-form-control>-->
+<!--				</nz-form-item>-->
 				<nz-form-item>
 					<ss-autocomplete-select-field
+						formControlName="category"
 						[label]="'Категория'"
 						[placeholder]="'Выберите категория'"
 						[needSearch]="false"
 						[url]="clientsListFacade.categoriesUrl">
 					</ss-autocomplete-select-field>
 				</nz-form-item>
-				<nz-form-item>
-					<ss-autocomplete-select-field
-						[label]="'Клиент'"
-						[placeholder]="'Выберите клиента'"
-						[url]="clientsListFacade.clientUrl">
-					</ss-autocomplete-select-field>
-				</nz-form-item>
-				<nz-form-item>
-					<ss-autocomplete-select-field
-						[label]="'Менеджеры'"
-						[placeholder]="'Выберите менеджера'"
-						[url]="clientsListFacade.managerUrl">
-					</ss-autocomplete-select-field>
-				</nz-form-item>
-				<nz-form-item>
-					<ss-autocomplete-select-field
-						[label]="'Контрагенты'"
-						[placeholder]="'Выберите контрагента'"
-						[url]="clientsListFacade.contractorUrl">
-					</ss-autocomplete-select-field>
-				</nz-form-item>
-				<nz-form-item>
-					<ss-autocomplete-select-field
-						[label]="'Статус'"
-						[placeholder]="'Выберите статус'"
-						[selectOptions]="clientsListFacade.statusOptions">
-					</ss-autocomplete-select-field>
-				</nz-form-item>
-				<nz-form-item>
-					<ss-caption size="1">Клиент без БМ</ss-caption>
-					<nz-radio-group [(ngModel)]="radioValue">
-						<label nz-radio nzValue="1">Да</label>
-						<label nz-radio nzValue="0">Нет</label>
-					</nz-radio-group>
-				</nz-form-item>
+<!--				<nz-form-item>-->
+<!--					<ss-autocomplete-select-field-->
+<!--						[label]="'Клиент'"-->
+<!--						[placeholder]="'Выберите клиента'"-->
+<!--						[url]="clientsListFacade.clientUrl">-->
+<!--					</ss-autocomplete-select-field>-->
+<!--				</nz-form-item>-->
+<!--				<nz-form-item>-->
+<!--					<ss-autocomplete-select-field-->
+<!--						[label]="'Менеджеры'"-->
+<!--						[placeholder]="'Выберите менеджера'"-->
+<!--						[url]="clientsListFacade.managerUrl">-->
+<!--					</ss-autocomplete-select-field>-->
+<!--				</nz-form-item>-->
+<!--				<nz-form-item>-->
+<!--					<ss-autocomplete-select-field-->
+<!--						[label]="'Контрагенты'"-->
+<!--						[placeholder]="'Выберите контрагента'"-->
+<!--						[url]="clientsListFacade.contractorUrl">-->
+<!--					</ss-autocomplete-select-field>-->
+<!--				</nz-form-item>-->
+<!--				<nz-form-item>-->
+<!--					<ss-autocomplete-select-field-->
+<!--						[label]="'Статус'"-->
+<!--						[placeholder]="'Выберите статус'"-->
+<!--						[selectOptions]="clientsListFacade.statusOptions">-->
+<!--					</ss-autocomplete-select-field>-->
+<!--				</nz-form-item>-->
+<!--				<nz-form-item>-->
+<!--					<ss-caption size="1">Клиент без БМ</ss-caption>-->
+<!--					<nz-radio-group [(ngModel)]="radioValue">-->
+<!--						<label nz-radio nzValue="1">Да</label>-->
+<!--						<label nz-radio nzValue="0">Нет</label>-->
+<!--					</nz-radio-group>-->
+<!--				</nz-form-item>-->
 
 
 				<nz-form-item>
