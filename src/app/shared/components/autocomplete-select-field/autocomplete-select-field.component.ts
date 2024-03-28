@@ -1,9 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, Optional, Self } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	forwardRef,
+	Input,
+	OnInit,
+	Optional,
+	Self,
+} from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, of, Subject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
 @UntilDestroy()
@@ -29,16 +37,13 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 		@Self()
 		@Optional()
 		private readonly ngControl: NgControl,
-	) {}
-
-	public ngOnInit(): void {
-		console.log(this.url);
-
+	) {
 		if (this.ngControl) {
 			this.ngControl.valueAccessor = this;
 		}
+	}
 
-		// Забираем все данные
+	public ngOnInit(): void {
 		if (this.url && !this.needSearch) {
 			this.requestToServer(this.url)
 				.pipe(untilDestroyed(this))
@@ -57,7 +62,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 					catchError((err: unknown) => {
 						console.error(err);
 
-						return [];
+						return of([]);
 					}),
 					untilDestroyed(this),
 				)
