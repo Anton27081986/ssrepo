@@ -227,6 +227,9 @@ export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
 			.pipe()
 			.subscribe(() => {
 				this.notificationsStoreService.init(this.objectId);
+				this.mailForm.reset();
+				this.toUsers = [];
+				this.toUsersCopy = [];
 			});
 	}
 

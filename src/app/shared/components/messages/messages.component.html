@@ -4,7 +4,7 @@
     </div>
     <ss-search-input class="search" size="small"></ss-search-input>
 </div>
-<div class="content" *ngIf="(messages$ | async); else noMessages">
+<div class="content" *ngIf="(messages$ | async); else noMessages"  #messages (scrollend)="loadMessages()">
     <div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
         <ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
         <div class="message-content">
