@@ -8,6 +8,7 @@
 		[nzDisabled]="isDisabled"
 		[nzLoading]="isLoading"
 		[(ngModel)]="selectedValue"
+		(ngModelChange)="onValueChange($event)"
 		(nzOnSearch)="search($event)">
 		<nz-option *ngFor="let option of selectOptions"
 				   [nzLabel]="option.name!"

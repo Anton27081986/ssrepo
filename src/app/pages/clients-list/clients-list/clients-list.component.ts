@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
 import { Observable } from 'rxjs';
@@ -24,8 +24,6 @@ export class ClientsListComponent implements OnInit {
 	public isFiltersVisible: boolean = true;
 	public filtersForm!: FormGroup;
 
-	public radioValue: any = '1';
-
 	public constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
 		private readonly formBuilder: FormBuilder,
@@ -33,9 +31,13 @@ export class ClientsListComponent implements OnInit {
 
 	public ngOnInit(): void {
 		this.filtersForm = this.formBuilder.group({
-			code: [''],
-			category: ['55'],
-			client: [''],
+			code: [],
+			category: [14],
+			client: [],
+			manager: [],
+			contractor: [],
+			status: [6],
+			withoutBaseManager: [false],
 		});
 	}
 
@@ -44,7 +46,7 @@ export class ClientsListComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
-		console.log(this.filtersForm.get('category'));
+		console.log(this.filtersForm);
 		// if (this.filtersForm.valid) {
 		// 	const filter = {
 		// 		category: this.filtersForm.value.category,

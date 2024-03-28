@@ -1,5 +1,6 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	Input,
 	OnInit,
@@ -33,6 +34,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly ngControl: NgControl,
+		private readonly cdr: ChangeDetectorRef,
 	) {
 		if (this.ngControl !== null) {
 			this.ngControl.valueAccessor = this;
@@ -67,6 +69,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 			)
 			.subscribe(options => {
 				this.selectOptions = options;
+				this.cdr.detectChanges();
 			});
 	}
 
@@ -82,7 +85,6 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 		}
 	}
 
-	// Значение приходит из формы в текущий компонент
 	public writeValue(value: any): void {
 		this.selectedValue = value;
 	}
@@ -95,15 +97,17 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 		this.onTouched = fn;
 	}
 
-	// Передаем в форму значение выключено, если выключаем компонент
-
-	// public setDisabledState?(isDisabled: boolean): void {
-	// 	if (this.ngControl !== null) {
-	// 		isDisabled ? this.ngControl!.control!.disable() : this.ngControl!.control!.enable();
-	// 	}
-	// }
-
 	protected onChange(value: string) {}
 
 	protected onTouched() {}
+
+	public onValueChange(value: any) {
+		if (value === null || value === undefined) {
+			this.selectedValue = value;
+		}
+
+		if (this.ngControl.control) {
+			this.ngControl.control.setValue(this.selectedValue);
+		}
+	}
 }
