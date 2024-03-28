@@ -66,4 +66,8 @@ export class MainMenuFacadeService {
 	public getUserProfile() {
 		return this.userProfileStoreService.userProfile$;
 	}
+
+	public updateFavoriteMenu() {
+		this.mainMenuStoreService.updateFavoriteMenu().pipe(untilDestroyed(this)).subscribe();
+	}
 }
