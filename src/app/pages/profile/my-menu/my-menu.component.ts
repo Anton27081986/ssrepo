@@ -5,6 +5,8 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
+import { MainMenuStoreService } from '@app/core/states/main-menu-store.service';
+import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -21,6 +23,8 @@ export class MyMenuComponent implements OnInit {
 	public filterListMenu: IMenuItemDto[] = [];
 
 	public constructor(
+		private readonly mainMenuStoreService: MainMenuStoreService,
+		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly apiService: MenuApiService,
 		private readonly formBuilder: FormBuilder,
 		private readonly cd: ChangeDetectorRef,
@@ -55,12 +59,18 @@ export class MyMenuComponent implements OnInit {
 			});
 	}
 
+	public updateItemsMenu() {
+		this.mainMenuFacade.updateFavoriteMenu();
+	}
+
 	public addItemToFavorite(id: number) {
 		this.apiService
 			.addItemToFavoriteMenu(id)
 			.pipe(untilDestroyed(this))
 			.subscribe(_ => {
 				this.getFavoriteMenu();
+
+				this.updateItemsMenu();
 			});
 	}
 
@@ -70,6 +80,8 @@ export class MyMenuComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(_ => {
 				this.getFavoriteMenu();
+
+				this.updateItemsMenu();
 			});
 	}
 
