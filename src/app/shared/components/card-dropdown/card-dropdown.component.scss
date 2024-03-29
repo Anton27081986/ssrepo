@@ -1,0 +1,52 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: grid;
+	width: inherit;
+	height: inherit;
+	overflow: hidden;
+}
+
+ss-card {
+	display: grid;
+	width: inherit;
+	height: inherit;
+	max-height: calc(100% - 0px);
+	grid-template-rows: 52px 1fr;
+	overflow-y: hidden;
+	overflow-x: auto;
+
+	transition: max-height 0.3s ease;
+
+	.hide-button {
+		z-index: 1;
+
+		::ng-deep button {
+			justify-content: space-between;
+			border-radius: 16px;
+
+			.hide-button-icon {
+				color: $lite-text;
+				transform: rotateZ(0deg);
+
+				transition: transform 0.3s;
+			}
+		}
+	}
+}
+
+.hide-button.active {
+	.hide-button-icon {
+		transform: rotateZ(45deg);
+	}
+}
+
+.content {
+	display: grid;
+	overflow-y: hidden;
+	border-top: 1px solid $island-outline;
+}
+
+ss-card.non-active {
+	max-height: 52px;
+}

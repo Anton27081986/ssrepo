@@ -1,11 +1,21 @@
-import { Component, ViewChild, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+	Component,
+	ViewChild,
+	AfterViewInit,
+	ChangeDetectorRef,
+	OnDestroy,
+	OnInit,
+	Input,
+} from '@angular/core';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import Editor from 'ckeditor5/build/ckeditor';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
 import { IFile } from '@app/core/models/files/file';
+import {FormControl, FormGroup, NG_VALIDATORS, Validators} from '@angular/forms';
+import { NotificationsApiService } from '@app/core/api/notifications-api.service';
+import { NotificationsStoreService } from '@app/core/states/notifications-store.service';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 interface EditorButtonI {
 	title: string;
 	editorElement?: HTMLElement;
@@ -34,7 +44,10 @@ enum EditorButtons {
 	templateUrl: './mail.component.html',
 	styleUrls: ['./mail.component.scss'],
 })
-export class MailComponent implements AfterViewInit, OnDestroy {
+export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
+	@Input() public objectId!: number;
+	@Input() public replyToMessageId: string | null = null;
+
 	private readonly destroy$ = new Subject<void>();
 
 	protected readonly EditorButtons = EditorButtons;
@@ -50,6 +63,11 @@ export class MailComponent implements AfterViewInit, OnDestroy {
 	protected fontSizes = ['10 pt', '12 pt', '14 pt', '18 pt', '24 pt'];
 	protected fontSize = '14 pt';
 	protected isFontSizesInitialized = false;
+
+	protected toUsers: any[] = [];
+	protected toUsersCopy: any[] = [];
+
+	public subject$: Observable<string | null>;
 
 	protected myEditorButtons: EditorButtonI[] = [
 		{ title: 'Отменить' },
@@ -71,10 +89,28 @@ export class MailComponent implements AfterViewInit, OnDestroy {
 
 	protected files: IFile[] = [];
 
+	protected mailForm!: FormGroup<{
+		subject: FormControl<string | null>;
+		text: FormControl<string | null>;
+		isPrivate: FormControl<boolean | null>;
+	}>;
+
 	public constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly filesApiService: FilesApiService,
-	) {}
+		private readonly notificationsApiService: NotificationsApiService,
+		private readonly notificationsStoreService: NotificationsStoreService,
+	) {
+		this.subject$ = this.notificationsStoreService.selectedSubject$;
+	}
+
+	public ngOnInit() {
+		this.mailForm = new FormGroup({
+			subject: new FormControl<string>('', [Validators.required]),
+			text: new FormControl<string>('', Validators.required),
+			isPrivate: new FormControl<boolean>(true),
+		});
+	}
 
 	public ngAfterViewInit(): void {
 		this.editor?.ready.pipe(takeUntil(this.destroy$)).subscribe(() => {
@@ -166,6 +202,34 @@ export class MailComponent implements AfterViewInit, OnDestroy {
 			.subscribe(() => {
 				this.files = this.files.filter(file => file.id !== id);
 				this.changeDetectorRef.detectChanges();
+			});
+	}
+
+	sendMessage() {
+		if (this.mailForm.controls.subject.errors || this.mailForm.controls.text.errors) {
+			this.mailForm.markAllAsTouched();
+
+			return;
+		}
+
+		this.notificationsApiService
+			.sendMessage({
+				objectId: this.objectId,
+				type: 0,
+				subject: this.mailForm.controls.subject.value,
+				text: this.mailForm.controls.text.value,
+				toUserIds: this.toUsers.map(user => user.id),
+				copyUserIds: this.toUsersCopy.map(user => user.id),
+				isPrivate: this.mailForm.controls.isPrivate.value || true,
+				replyToMessageId: this.replyToMessageId,
+				fileIds: this.files.map(file => file.id),
+			})
+			.pipe()
+			.subscribe(() => {
+				this.notificationsStoreService.init(this.objectId);
+				this.mailForm.reset();
+				this.toUsers = [];
+				this.toUsersCopy = [];
 			});
 	}
 

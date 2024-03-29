@@ -1,0 +1,76 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow-y: hidden;
+}
+
+.header {
+	padding: 10px 12px;
+	border-bottom: 1px solid $island-outline;
+	position: sticky;
+	top: 0;
+	background-color: $island;
+}
+
+.subjects {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	overflow-y: auto;
+
+	.item {
+		display: flex;
+		width: 100%;
+		border-bottom: 1px solid $island-outline;
+		padding: 17px 20px;
+		display: flex;
+		gap: 16px;
+		align-items: center;
+		cursor: pointer;
+
+		ss-icon {
+			padding: 9px;
+			background-color: #7C3FFF;
+			border-radius: 8px;
+			color: $island;
+		}
+
+		.item-content {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			justify-content: center;
+
+			.item-content-subtitle {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				ss-caption {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border-radius: 50%;
+					width: 20px;
+					height: 20px;
+					overflow: hidden;
+					background-color: $background;
+				}
+			}
+		}
+	}
+
+	.item.all {
+
+		ss-icon {
+			background-color: #4770FF;
+		}
+	}
+
+	.item:hover {
+		background-color:  $background;
+	}
+}

@@ -1,6 +1,6 @@
 export class AppIcons {
 	public static iconSearch =
-		'<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
+		'<svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.64705 18.2941C14.4227 18.2941 18.2941 14.4227 18.2941 9.64705C18.2941 4.87141 14.4227 1 9.64705 1C4.87141 1 1 4.87141 1 9.64705C1 14.4227 4.87141 18.2941 9.64705 18.2941Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/><path d="M15.7969 15.8235L21.9733 21.9999" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/></svg>';
 
 	public static iconRemind =
 		'<svg width="18" height="23" viewBox="0 0 18 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.87677 2.92944C5.63638 2.92944 3.00294 5.61257 3.00294 8.91412V11.7967C3.00294 12.4052 2.74841 13.3328 2.44493 13.8515L1.31911 15.7566C0.624043 16.9336 1.10374 18.2402 2.3764 18.6791C6.59577 20.1154 11.148 20.1154 15.3673 18.6791C16.5519 18.2801 17.0708 16.8538 16.4246 15.7566L15.2988 13.8515C15.0051 13.3328 14.7506 12.4052 14.7506 11.7967V8.91412C14.7506 5.62255 12.1074 2.92944 8.87677 2.92944Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/><path d="M12.3072 19.5769C12.3072 20.9096 10.8534 22 9.07647 22C8.1934 22 7.37493 21.7254 6.79339 21.2892C6.21186 20.8531 5.8457 20.2392 5.8457 19.5769" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M6.6543 1H11.5005" stroke="#22223A" stroke-width="1.5" stroke-linecap="round"/></svg>';
@@ -109,7 +109,7 @@ export class AppIcons {
 
 	public static arrowBottom =
 		'<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="#22223A" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
 	public static arrowRight =
@@ -571,5 +571,35 @@ export class AppIcons {
 		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<path d="M10.1219 9.1525C10.0469 9.145 9.95687 9.145 9.87437 9.1525C8.08937 9.0925 6.67188 7.63 6.67188 5.83C6.67187 3.9925 8.15688 2.5 10.0019 2.5C11.8394 2.5 13.3319 3.9925 13.3319 5.83C13.3244 7.63 11.9069 9.0925 10.1219 9.1525Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M6.37102 11.92C4.55602 13.135 4.55602 15.115 6.37102 16.3225C8.43352 17.7025 11.816 17.7025 13.8785 16.3225C15.6935 15.1075 15.6935 13.1275 13.8785 11.92C11.8235 10.5475 8.44102 10.5475 6.37102 11.92Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static smsTracking =
+		'<svg width="22" height="23" viewBox="0 0 22 23" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M1.83203 8.29159C1.83203 5.08325 3.66536 3.70825 6.41536 3.70825H15.582C18.332 3.70825 20.1654 5.08325 20.1654 8.29159V14.7083C20.1654 17.9166 18.332 19.2916 15.582 19.2916H6.41536" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M15.5846 8.75L12.7155 11.0417C11.7713 11.7933 10.2221 11.7933 9.27796 11.0417L6.41797 8.75" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M1.83203 15.625H7.33203" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M1.83203 11.9583H4.58203" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static unlock =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M8.67969 13.68C8.98635 14.0733 9.46635 14.3333 9.99969 14.3333C10.9197 14.3333 11.6664 13.5867 11.6664 12.6667C11.6664 12.2867 11.5397 11.9333 11.3264 11.6533" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M3.88065 15.8665C3.47398 15.3598 3.33398 14.5532 3.33398 13.3332V11.9998C3.33398 9.33317 4.00065 8.6665 6.66732 8.6665H13.334C13.574 8.6665 13.794 8.67317 14.0007 8.6865C16.114 8.8065 16.6673 9.57317 16.6673 11.9998V13.3332C16.6673 15.9998 16.0007 16.6665 13.334 16.6665H6.66732C6.42732 16.6665 6.20732 16.6598 6.00065 16.6465" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M6 8.66683V7.3335C6 5.12683 6.66667 3.3335 10 3.3335C12.7667 3.3335 13.6933 4.2535 13.9333 5.70683" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M16.6673 3.3335L3.33398 16.6668" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static lock =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M6 8.66683V7.3335C6 5.12683 6.66667 3.3335 10 3.3335C13.3333 3.3335 14 5.12683 14 7.3335V8.66683" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M10.0007 14.3333C10.9211 14.3333 11.6673 13.5871 11.6673 12.6667C11.6673 11.7462 10.9211 11 10.0007 11C9.08018 11 8.33398 11.7462 8.33398 12.6667C8.33398 13.5871 9.08018 14.3333 10.0007 14.3333Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M13.334 16.6665H6.66732C4.00065 16.6665 3.33398 15.9998 3.33398 13.3332V11.9998C3.33398 9.33317 4.00065 8.6665 6.66732 8.6665H13.334C16.0007 8.6665 16.6673 9.33317 16.6673 11.9998V13.3332C16.6673 15.9998 16.0007 16.6665 13.334 16.6665Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static more =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M4.16667 8.3335C3.25 8.3335 2.5 9.0835 2.5 10.0002C2.5 10.9168 3.25 11.6668 4.16667 11.6668C5.08333 11.6668 5.83333 10.9168 5.83333 10.0002C5.83333 9.0835 5.08333 8.3335 4.16667 8.3335Z" fill="currentColor"/>' +
+		'<path d="M15.8327 8.3335C14.916 8.3335 14.166 9.0835 14.166 10.0002C14.166 10.9168 14.916 11.6668 15.8327 11.6668C16.7493 11.6668 17.4993 10.9168 17.4993 10.0002C17.4993 9.0835 16.7493 8.3335 15.8327 8.3335Z" fill="currentColor"/>' +
+		'<path d="M10.0007 8.3335C9.08398 8.3335 8.33398 9.0835 8.33398 10.0002C8.33398 10.9168 9.08398 11.6668 10.0007 11.6668C10.9173 11.6668 11.6673 10.9168 11.6673 10.0002C11.6673 9.0835 10.9173 8.3335 10.0007 8.3335Z" fill="currentColor"/>' +
 		'</svg>';
 }
