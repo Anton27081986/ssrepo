@@ -32,7 +32,7 @@ export class ClientsListFacadeService {
 		this.filtersChanged
 			.pipe(
 				switchMap(filter => {
-					return this.getClients(filter);
+					return this.clientApiService.getClients(filter);
 				}),
 				tap(clients => {
 					this.clients.next(clients);
@@ -40,10 +40,6 @@ export class ClientsListFacadeService {
 				untilDestroyed(this),
 			)
 			.subscribe();
-	}
-
-	public getClients(filter: IClientsFilter) {
-		return this.clientApiService.getClients(filter);
 	}
 
 	public applyFilters(filters: any) {
