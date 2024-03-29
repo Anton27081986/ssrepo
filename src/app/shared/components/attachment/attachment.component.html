@@ -3,4 +3,4 @@
 	<ss-caption size="2" class="title">{{ title }}</ss-caption>
 	<ss-caption size="2" class="size">{{ size | ssFileSize }}</ss-caption>
 </div>
-<ss-icon height="8" width="8" name="iconClose" class="close" (click)="delete.emit()"></ss-icon>
+<ss-icon height="8" width="8" name="iconClose" class="close" (click)="delete.emit()" *ngIf="!readonly"></ss-icon>

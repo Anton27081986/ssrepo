@@ -20,14 +20,19 @@ input {
 
 	ss-icon {
 		position: absolute;
-		right: 22px;
+		right: 8px;
 		top: 16px;
 		cursor: pointer;
+		color: $main;
 	}
 }
 
 input.large ~ ss-icon {
 	top: 20px;
+}
+
+input.small ~ ss-icon {
+	top: 10px;
 }
 
 input::placeholder {
@@ -36,6 +41,11 @@ input::placeholder {
 
 input:focus {
 	border-color: $additional-outline;
+}
+
+input.small {
+	height: 32px;
+	font-weight: 400;
 }
 
 input.medium {
@@ -51,10 +61,6 @@ input.large {
 input.error {
 	border: 1px solid $error;
 	background-color: $lite-error;
-}
-input.error:focus {
-	border: 1px solid $additional-outline;
-	background-color: $island;
 }
 
 ss-caption {

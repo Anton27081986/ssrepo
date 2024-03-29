@@ -6,6 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filter, forkJoin, map, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 
 @UntilDestroy()
 @Injectable({
@@ -65,5 +66,27 @@ export class MainMenuFacadeService {
 
 	public getUserProfile() {
 		return this.userProfileStoreService.userProfile$;
+	}
+
+	public addFavoriteItem(item: IMenuItemDto) {
+		this.menuApiService
+			.addItemToFavoriteMenu(item!.id!)
+			.pipe(untilDestroyed(this))
+			.subscribe(_ => {
+				this.mainMenuStoreService.addFavoriteMenu(item);
+			});
+	}
+
+	public deleteFavoriteItem(item: IMenuItemDto, index: number) {
+		return this.menuApiService
+			.deleteItemToFavoriteMenu(item!.id!)
+			.pipe(untilDestroyed(this))
+			.subscribe(_ => {
+				this.mainMenuStoreService.deleteFavoriteMenu(item, index);
+			});
+	}
+
+	public getFavoriteItems() {
+		return this.mainMenuStoreService.getFavoriteMainMenu();
 	}
 }

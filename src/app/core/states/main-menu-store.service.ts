@@ -15,4 +15,24 @@ export class MainMenuStoreService {
 	public setMainMenu(newMainMenu: IMenuItemDto[]) {
 		this.mainMenuSubject.next(newMainMenu);
 	}
+
+	public getFavoriteMainMenu(): Observable<IMenuItemDto[] | null> {
+		return this.mainMenuSubject.asObservable();
+	}
+
+	public addFavoriteMenu(newItem: IMenuItemDto) {
+		const currentMenu = this.mainMenuSubject.getValue();
+		const favoriteMenuItems = currentMenu![0].items;
+
+		favoriteMenuItems?.push(newItem);
+		this.mainMenuSubject.next(currentMenu);
+	}
+
+	public deleteFavoriteMenu(newItem: IMenuItemDto, index: number) {
+		const currentMenu = this.mainMenuSubject.getValue();
+		const favoriteMenuItems = currentMenu![0].items;
+
+		favoriteMenuItems?.splice(index, 1);
+		this.mainMenuSubject.next(currentMenu);
+	}
 }

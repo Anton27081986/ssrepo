@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MenuApiService } from '@app/core/api/menu-api.service';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
+import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -15,13 +15,13 @@ import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 })
 export class MyMenuComponent implements OnInit {
 	public myMenuForm!: FormGroup;
-	public listMenu!: IMenuItemDto[];
-	public favorIteMenu!: any;
+	public listMenu?: IMenuItemDto[] | null | undefined;
+	public favorIteMenu?: IMenuItemDto[] | null;
 	public userProfile$?: Observable<IUserProfile | null>;
 	public filterListMenu: IMenuItemDto[] = [];
 
 	public constructor(
-		private readonly apiService: MenuApiService,
+		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly formBuilder: FormBuilder,
 		private readonly cd: ChangeDetectorRef,
 	) {}
@@ -34,43 +34,39 @@ export class MyMenuComponent implements OnInit {
 	}
 
 	public getFavoriteMenu() {
-		this.apiService
-			.getFavoriteMenu()
+		this.mainMenuFacade
+			.getFavoriteItems()
 			.pipe(untilDestroyed(this))
 			.subscribe(item => {
-				this.favorIteMenu = item.menu;
-				this.cd.detectChanges();
-			});
-	}
-
-	public getMenu() {
-		this.apiService
-			.getMenu()
-			.pipe(untilDestroyed(this))
-			.subscribe(item => {
-				if (item.menu) {
-					this.listMenu = item.menu;
-					this.cd.detectChanges();
+				if (item !== null) {
+					this.favorIteMenu = item![0]?.items;
 				}
 			});
 	}
 
-	public addItemToFavorite(id: number) {
-		this.apiService
-			.addItemToFavoriteMenu(id)
+	public getMenu() {
+		this.mainMenuFacade
+			.getMainMenu()
 			.pipe(untilDestroyed(this))
-			.subscribe(_ => {
-				this.getFavoriteMenu();
+			.subscribe(item => {
+				if (item !== null) {
+					this.listMenu = item!.slice(1);
+				}
+
+				this.cd.markForCheck();
 			});
 	}
 
-	public deleteItemToFavoriteMenu(id: number) {
-		this.apiService
-			.deleteItemToFavoriteMenu(id)
-			.pipe(untilDestroyed(this))
-			.subscribe(_ => {
-				this.getFavoriteMenu();
-			});
+	public addItemToFavorite(item: IMenuItemDto) {
+		this.mainMenuFacade.addFavoriteItem(item);
+
+		this.cd.detectChanges();
+	}
+
+	public deleteItemToFavoriteMenu(item: IMenuItemDto, index: number) {
+		this.mainMenuFacade.deleteFavoriteItem(item, index);
+
+		this.cd.detectChanges();
 	}
 
 	public trackBy(_index: number, item: any) {
@@ -80,11 +76,11 @@ export class MyMenuComponent implements OnInit {
 	public filterItems($event: any) {
 		if ($event.target.value.length > 2) {
 			this.filterListMenu = [];
-			this.listMenu.forEach((element: any) => {
-				element.items.forEach((item: any) => {
+			this.listMenu?.forEach(element => {
+				element.items?.forEach(item => {
 					if (
-						item.name
-							.toLowerCase()
+						item
+							.name!.toLowerCase()
 							.indexOf(String($event.target.value).toLowerCase()) !== -1
 					) {
 						this.filterListMenu.push(item);

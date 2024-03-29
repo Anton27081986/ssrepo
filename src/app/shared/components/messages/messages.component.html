@@ -1,0 +1,46 @@
+<div class="header">
+    <div class="tabs">
+        <ss-text size="1" weight="semi-bold">{{ (subject$ | async) || 'Все сообщения по клиенту' }}</ss-text>
+    </div>
+    <ss-search-input class="search" size="small"></ss-search-input>
+</div>
+<div class="content" *ngIf="(messages$ | async); else noMessages"  #messages (scrollend)="loadMessages()">
+    <div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
+        <ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
+        <div class="message-content">
+            <div class="message-content-header">
+                <ss-text size="1" weight="semi-bold">{{message.author?.name}}</ss-text>
+                <div class="message-content-header-controls">
+                    <ss-icon name="{{ message.isPrivate ? 'lock' : 'unlock' }}"></ss-icon>
+                    <ss-icon name="more"></ss-icon>
+                </div>
+            </div>
+            <div class="message-content-object">
+                <ss-text size="2" *ngIf="message.toUsers?.length">
+					<b>Кому:</b>
+ <span *ngFor="let user of message.toUsers"> {{ user.name }}</span>
+                </ss-text>
+                <ss-text size="2" *ngIf="message.copyUsers?.length">
+                    <b>Копия:</b>
+ <span *ngFor="let user of message.copyUsers"> {{ user.name }}</span>
+                </ss-text>
+            </div>
+            <div class="message-content-blockquote" *ngIf="message.replyToMessage">
+                <div class="message-content-blockquote-author">
+					{{ message.replyToMessage.author?.name }}
+                </div>
+                <div class="message-content-blockquote-message" [innerHTML]="message.replyToMessage.text"></div>
+            </div>
+            <div class="message-content-text" [innerHTML]="message.text">
+            </div>
+			<div *ngIf="message.attachments?.length" class="files">
+				<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
+			</div>
+        </div>
+    </div>
+</div>
+<ng-template #noMessages>
+    <div class="no-content">
+        <ss-headline size="h3">Сообщений нет</ss-headline>
+    </div>
+</ng-template>

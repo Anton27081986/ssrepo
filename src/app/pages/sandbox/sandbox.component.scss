@@ -1,42 +1,9 @@
 @use 'src/styles/colors.scss' as *;
 
 :host {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 	align-items: center;
 	background-color: $background;
-}
-
-.sandbox {
-	display: grid;
-	height: 100%;
-	max-height: 897px;
-	grid-template-columns: 400px 1fr;
-	gap: 15px;
-	max-width: 1280px;
-
-	.menu {
-		display: flex;
-		height: 100%;
-	}
-
-	.content {
-		display: flex;
-		flex-direction: column;
-		gap: 15px;
-
-		.messages {
-			flex-grow: 1;
-
-			ss-card {
-				height: 100%;
-			}
-		}
-
-		ss-card {
-			flex-grow: 1;
-		}
-	}
 }

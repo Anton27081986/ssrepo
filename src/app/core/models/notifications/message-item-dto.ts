@@ -25,6 +25,14 @@ export interface IMessageItemDto {
 	 */
 	subject?: string | null;
 	/**
+	 * Список айди пользователей, кому отправляем
+	 */
+	toUsers?: IUserDto[] | null;
+	/**
+	 * Список айди пользователей, кому отправить копию
+	 */
+	copyUsers?: IUserDto[] | null;
+	/**
 	 * Сообщение
 	 */
 	text?: string | null;
