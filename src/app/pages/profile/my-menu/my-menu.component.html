@@ -37,7 +37,7 @@
 					<div class="items" *ngFor="let item of menu.items; trackBy: trackBy">
 						<div class="item">
 							<span>{{ item.name }}</span>
-							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item.id!);" *ngIf="item.link"></span>
+							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></span>
 						</div>
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 					<div class="items" *ngFor="let item of filterListMenu; trackBy: trackBy">
 						<div class="item">
 							<span>{{ item.name }}</span>
-							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item.id!);" *ngIf="item.link"></span>
+							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></span>
 						</div>
 					</div>
 				</div>
@@ -55,9 +55,9 @@
 		</div>
 		<div class="groups to">
 			<div class="category">
-				<div class="item" *ngFor="let favorite of favorIteMenu; trackBy: trackBy">
+				<div class="item" *ngFor="let favorite of favorIteMenu; index as i; trackBy: trackBy">
 					<span>{{ favorite.name }}</span>
-					<span nz-icon nzType="ss:closeFill" (click)="deleteItemToFavoriteMenu(favorite.id!);"></span>
+					<span nz-icon nzType="ss:closeFill" (click)="deleteItemToFavoriteMenu(favorite, i);"></span>
 				</div>
 			</div>
 		</div>

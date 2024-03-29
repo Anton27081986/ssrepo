@@ -3,12 +3,9 @@ import { AppRoutes } from '@app/common/routes';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { environment } from '@environments/environment';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
-import { MainMenuStoreService } from '@app/core/states/main-menu-store.service';
-import { switchMap } from 'rxjs/operators';
-import { MenuApiService } from '@app/core/api/menu-api.service';
 
 @UntilDestroy()
 @Component({
@@ -19,7 +16,6 @@ import { MenuApiService } from '@app/core/api/menu-api.service';
 })
 export class HeaderComponent implements OnInit {
 	public listMenu$?: Observable<IMenuItemDto[] | null>;
-	public listMenu: any; // IMenuItemDto[] // Временно
 	public userProfile$?: Observable<IUserProfile | null>;
 
 	public statusInputSearch = false;
@@ -28,33 +24,11 @@ export class HeaderComponent implements OnInit {
 	public backUrl: boolean = environment.production;
 
 	protected readonly AppRoutes = AppRoutes;
-	public constructor(
-		private readonly mainMenuFacade: MainMenuFacadeService,
-
-		private readonly mainMenuStoreService: MainMenuStoreService,
-		private readonly apiService: MenuApiService,
-	) {}
+	public constructor(private readonly mainMenuFacade: MainMenuFacadeService) {}
 
 	public ngOnInit(): any {
 		this.listMenu$ = this.mainMenuFacade.getMainMenu();
 		this.userProfile$ = this.mainMenuFacade.getUserProfile();
-
-		// Переписать
-		this.listMenu$.pipe(untilDestroyed(this)).subscribe(item => {
-			this.listMenu = item;
-		});
-
-		// Переписать
-		this.mainMenuStoreService.menu$
-			.pipe(
-				untilDestroyed(this),
-				switchMap(_ => {
-					return this.apiService.getFavoriteMenu();
-				}),
-			)
-			.subscribe(item => {
-				this.listMenu[0].items = item.menu;
-			});
 	}
 
 	public openSearch(event: Event) {
