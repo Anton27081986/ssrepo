@@ -7,6 +7,7 @@ import { IClientStatus } from '@app/core/models/company/client-status';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { IClientsFilter } from '@app/core/models/clients-filter';
 
 @Injectable({
 	providedIn: 'root',
@@ -14,53 +15,43 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 export class ClientApiService {
 	public constructor(private readonly http: HttpClient) {}
 
-	public getClients(
-		code?: number,
-		name?: string,
-		categoryId?: number,
-		contactorId?: number,
-		managerId?: number,
-		status?: IClientStatus,
-		withoutBaseManager?: boolean,
-		limit?: number,
-		offset?: number,
-	) {
+	public getClients(filter: IClientsFilter) {
 		const params = new HttpParams();
 
-		if (code) {
-			params.set('code', code.toString());
+		if (filter.code) {
+			params.set('code', filter.code.toString());
 		}
 
-		if (name) {
-			params.set('name', name.toString());
+		if (filter.name) {
+			params.set('name', filter.name.toString());
 		}
 
-		if (categoryId) {
-			params.set('categoryId', categoryId.toString());
+		if (filter.categoryId) {
+			params.set('categoryId', filter.categoryId.toString());
 		}
 
-		if (contactorId) {
-			params.set('contactorId', contactorId.toString());
+		if (filter.contactorId) {
+			params.set('contactorId', filter.contactorId.toString());
 		}
 
-		if (managerId) {
-			params.set('managerId', managerId.toString());
+		if (filter.managerId) {
+			params.set('managerId', filter.managerId.toString());
 		}
 
-		if (status) {
-			params.set('status', status.toString());
+		if (filter.status) {
+			params.set('status', filter.status.toString());
 		}
 
-		if (withoutBaseManager) {
-			params.set('withoutBaseManager', withoutBaseManager.toString());
+		if (filter.withoutBaseManager) {
+			params.set('withoutBaseManager', filter.withoutBaseManager.toString());
 		}
 
-		if (limit) {
-			params.set('limit', limit.toString());
+		if (filter.limit) {
+			params.set('limit', filter.limit.toString());
 		}
 
-		if (offset) {
-			params.set('offset', offset.toString());
+		if (filter.offset) {
+			params.set('offset', filter.offset.toString());
 		}
 
 		return this.http.get<IResponse<IClientItemDto>>(
@@ -74,14 +65,6 @@ export class ClientApiService {
 			params: new HttpParams().set('id', id),
 		});
 	}
-
-	public updateClientCard() {}
-
-	public addManager() {}
-
-	public deleteManager() {}
-
-	public setMainManager() {}
 
 	public getContractors(searchTerm: string) {
 		return this.http.get<IDictionaryItemDto[]>(
@@ -101,11 +84,17 @@ export class ClientApiService {
 		);
 	}
 
-	public getCategories(searchTerm: string) {
+	public getCategories(searchTerm?: string | null) {
+		const params = new HttpParams();
+
+		if (searchTerm) {
+			params.set('query', searchTerm.toString());
+		}
+
 		return this.http.get<IDictionaryItemDto[]>(
 			`${environment.apiUrl}/api/company/clients/categories`,
 			{
-				params: new HttpParams().set('query', searchTerm),
+				params,
 			},
 		);
 	}

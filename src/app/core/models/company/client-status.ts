@@ -16,8 +16,8 @@
 export type IClientStatus = 1 | 2 | 5 | 6;
 
 export const IClientStatus = {
-	NUMBER_1: 1 as IClientStatus,
-	NUMBER_2: 2 as IClientStatus,
+	New: 1 as IClientStatus,
+	Archived: 2 as IClientStatus,
 	NUMBER_5: 5 as IClientStatus,
 	NUMBER_6: 6 as IClientStatus,
 };
