@@ -13,7 +13,7 @@ export class UsersApiService {
 	/** Поиск пользователей по ФИО */
 	public getUsersByFIO(title: string): Observable<any> {
 		return this.http.get<any>(`${environment.apiUrl}/api/auth/users/search`, {
-			params: new HttpParams().set('q', title),
+			params: new HttpParams().set('query', title),
 		});
 	}
 
