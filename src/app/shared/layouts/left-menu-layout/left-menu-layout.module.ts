@@ -4,11 +4,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { LeftMenuTmplComponent } from './left-menu-tmpl.component';
+import { LeftMenuLayoutComponent } from './left-menu-layout.component';
 import { IconsProviderModule } from '../../../icons-provider.module';
 
 @NgModule({
-	declarations: [LeftMenuTmplComponent],
+	declarations: [LeftMenuLayoutComponent],
 	imports: [
 		CommonModule,
 		NzIconModule,
@@ -19,4 +19,4 @@ import { IconsProviderModule } from '../../../icons-provider.module';
 		IconsProviderModule,
 	],
 })
-export class LeftMenuTmplModule {}
+export class LeftMenuLayoutModule {}

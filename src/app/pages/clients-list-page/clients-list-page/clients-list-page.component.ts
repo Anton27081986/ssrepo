@@ -7,12 +7,12 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 
 @UntilDestroy()
 @Component({
-	selector: 'app-clients-list',
-	templateUrl: './clients-list.component.html',
-	styleUrls: ['./clients-list.component.scss'],
+	selector: 'app-clients-list-page-page',
+	templateUrl: './clients-list-page.component.html',
+	styleUrls: ['./clients-list-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientsListComponent implements OnInit {
+export class ClientsListPageComponent implements OnInit {
 	// table
 	public total: number | undefined;
 	public pageSize = 50;
@@ -43,6 +43,7 @@ export class ClientsListComponent implements OnInit {
 		this.clientsListFacade.applyFilters(this.getFilter());
 
 		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
+
 			if (response.items) {
 				this.tableItems = <ITableItem[]>response.items;
 			}
@@ -72,7 +73,7 @@ export class ClientsListComponent implements OnInit {
 			code: this.filtersForm.get('code')?.value,
 			name: this.filtersForm.get('client')?.value,
 			categoryId: this.filtersForm.get('category')?.value,
-			contactorId: this.filtersForm.get('contractor')?.value,
+			contractorId: this.filtersForm.get('contractor')?.value,
 			managerId: this.filtersForm.get('manager')?.value,
 			status: this.filtersForm.get('status')?.value,
 			withoutBaseManager: this.filtersForm.get('withoutBaseManager')?.value,

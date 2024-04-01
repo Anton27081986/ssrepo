@@ -2,12 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { RouterLink } from '@angular/router';
-import { MainModule } from './main/main.module';
-import { LeftMenuTmplModule } from './left-menu-tmpl/left-menu-tmpl.module';
+import { WithoutFooterLayoutModule } from '@app/shared/layouts/without-footer-layout/without-footer-layout.module';
+import { FullLayoutModule } from '@app/shared/layouts/full-layout/full-layout.module';
+import { LeftMenuLayoutModule } from '@app/shared/layouts/left-menu-layout/left-menu-layout.module';
 
 @NgModule({
 	declarations: [],
-	imports: [CommonModule, MainModule, LeftMenuTmplModule, NzLayoutModule, RouterLink],
+	imports: [
+		CommonModule,
+		FullLayoutModule,
+		LeftMenuLayoutModule,
+		NzLayoutModule,
+		RouterLink,
+		WithoutFooterLayoutModule,
+	],
 	exports: [],
 })
 export class LayoutsModule {}

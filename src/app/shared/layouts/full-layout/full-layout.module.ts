@@ -15,21 +15,14 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { IconsProviderModule } from '@app/icons-provider.module';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import { FooterComponent } from '@app/shared/layouts/main/footer/footer.component';
-import { HeaderComponent } from '@app/shared/layouts/main/header/header.component';
 import { PagesModule } from '@app/pages/pages.module';
 import { ComponentsModule } from '@app/components/components.module';
-import { MainComponent } from './main.component';
-import { FlyMenuDirective } from './header/fly-menu.directive';
+import { HeaderModule } from '@app/shared/components/header/header.module';
+import { FooterModule } from '@app/shared/components/footer/footer.module';
+import { FullLayoutComponent } from './full-layout.component';
 
 @NgModule({
-	declarations: [
-		MainComponent,
-		HeaderComponent,
-		FooterComponent,
-		HeaderComponent,
-		FlyMenuDirective,
-	],
+	declarations: [FullLayoutComponent],
 	imports: [
 		CommonModule,
 		NzIconModule,
@@ -51,7 +44,9 @@ import { FlyMenuDirective } from './header/fly-menu.directive';
 		NzCarouselModule,
 		PagesModule,
 		ComponentsModule,
+		HeaderModule,
+		FooterModule,
 	],
 	exports: [],
 })
-export class MainModule {}
+export class FullLayoutModule {}

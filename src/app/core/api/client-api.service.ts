@@ -3,7 +3,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
 import { IClientDto } from '@app/core/models/company/client-dto';
-import { IClientStatus } from '@app/core/models/company/client-status';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -16,42 +15,42 @@ export class ClientApiService {
 	public constructor(private readonly http: HttpClient) {}
 
 	public getClients(filter: IClientsFilter) {
-		const params = new HttpParams();
+		let params = new HttpParams();
 
-		if (filter.code) {
-			params.set('code', filter.code.toString());
+		if (filter.code !== null && filter.code !== undefined) {
+			params = params.set('code', filter.code);
 		}
 
-		if (filter.name) {
-			params.set('name', filter.name.toString());
+		if (filter.name !== null && filter.name !== undefined) {
+			params = params.set('name', filter.name);
 		}
 
-		if (filter.categoryId) {
-			params.set('categoryId', filter.categoryId.toString());
+		if (filter.categoryId !== null && filter.categoryId !== undefined) {
+			params = params.set('categoryId', filter.categoryId);
 		}
 
-		if (filter.contactorId) {
-			params.set('contactorId', filter.contactorId.toString());
+		if (filter.contractorId !== null && filter.contractorId !== undefined) {
+			params = params.set('contractorId', filter.contractorId);
 		}
 
-		if (filter.managerId) {
-			params.set('managerId', filter.managerId.toString());
+		if (filter.managerId !== null && filter.managerId !== undefined) {
+			params = params.set('managerId', filter.managerId);
 		}
 
-		if (filter.status) {
-			params.set('status', filter.status.toString());
+		if (filter.status !== null && filter.status !== undefined) {
+			params = params.set('status', filter.status);
 		}
 
 		if (filter.withoutBaseManager) {
-			params.set('withoutBaseManager', filter.withoutBaseManager.toString());
+			params = params.set('withoutBaseManager', filter.withoutBaseManager);
 		}
 
-		if (filter.limit) {
-			params.set('limit', filter.limit.toString());
+		if (filter.limit !== null && filter.limit !== undefined) {
+			params = params.set('limit', filter.limit);
 		}
 
-		if (filter.offset) {
-			params.set('offset', filter.offset.toString());
+		if (filter.offset !== null && filter.offset !== undefined) {
+			params = params.set('offset', filter.offset);
 		}
 
 		return this.http.get<IResponse<IClientItemDto>>(

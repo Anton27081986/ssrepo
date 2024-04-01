@@ -1,0 +1,129 @@
+<div class="container">
+	<div class="header m-b-25">
+		<div class="title">
+			<ss-headline size="h3">Список клиентов</ss-headline>
+		</div>
+		<div class="filter-button">
+			<ss-button size="small"
+					   type="outline"
+					   (click)="toggleFilters()">
+				Фильтры
+			</ss-button>
+		</div>
+
+	</div>
+	<div class="table-with-filters">
+		<div class="table m-r-15">
+			<div class="table-container">
+				<ss-table
+					[head]="[
+						{title: 'Код', fields: ['tovName'], link: 'detailUrl'},
+						{title: 'Категория', fields: ['source']},
+						{title: 'Клиент', fields: ['price', 'currency']},
+						{title: 'Контрагенты', fields: ['quantity', 'tovUnitName']},
+						{title: 'Менеджеры', fields: ['quantity', 'tovUnitName']},
+						{title: 'Статус', fields: ['quantity', 'tovUnitName']},
+						{title: 'Клиент без БМ', fields: ['quantity', 'tovUnitName']}
+						]"
+					[items]="tableItems">
+				</ss-table>
+				<div class="pagination">
+					<nz-pagination
+						[nzTotal]="total"
+						[nzPageIndex]="pageIndex"
+						[nzPageSize]="pageSize"
+						(nzPageIndexChange)="nzPageIndexChange($event)"
+						(nzPageSizeChange)="pageSize = $event"
+						[nzResponsive]="true">
+					</nz-pagination>
+				</div>
+			</div>
+		</div>
+
+		<div class="filters"
+			 *ngIf="isFiltersVisible">
+			<nz-card nzTitle = "Фильтры" [nzExtra]="extraTemplate">
+				<form nz-form
+					  [formGroup]="filtersForm"
+					  nzLayout="vertical"
+					  class="form">
+					<nz-form-item>
+						<ss-caption size="1">Код</ss-caption>
+						<nz-form-control>
+							<ss-input size="medium" formControlName="code" placeholder="Введите код"></ss-input>
+						</nz-form-control>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-autocomplete-select-field
+							formControlName="category"
+							[label]="'Категория'"
+							[placeholder]="'Выберите категория'"
+							[needSearch]="false"
+							[url]="clientsListFacade.categoriesUrl">
+						</ss-autocomplete-select-field>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-caption size="1">Клиент</ss-caption>
+						<nz-form-control>
+							<ss-input size="medium" formControlName="client" placeholder="Введите ФИО клиента"></ss-input>
+						</nz-form-control>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-autocomplete-select-field
+							formControlName="manager"
+							[label]="'Менеджеры'"
+							[placeholder]="'Выберите менеджера'"
+							[needSearch]="true"
+							[url]="clientsListFacade.managerUrl">
+						</ss-autocomplete-select-field>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-autocomplete-select-field
+							formControlName="contractor"
+							[label]="'Контрагенты'"
+							[placeholder]="'Выберите контрагента'"
+							[needSearch]="true"
+							[url]="clientsListFacade.contractorUrl">
+						</ss-autocomplete-select-field>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-autocomplete-select-field
+							formControlName="status"
+							[label]="'Статус'"
+							[placeholder]="'Выберите статус'"
+							[selectOptions]="clientsListFacade.statusOptions">
+						</ss-autocomplete-select-field>
+					</nz-form-item>
+					<nz-form-item>
+						<ss-caption size="1">Клиент без БМ</ss-caption>
+						<nz-radio-group
+							formControlName="withoutBaseManager">
+							<label nz-radio [nzValue]="true">Да</label>
+							<label nz-radio [nzValue]="false">Нет</label>
+						</nz-radio-group>
+					</nz-form-item>
+
+					<nz-form-item>
+						<ss-button class="desktop"
+								   size="large"
+								   type="primary"
+								   (click)="getFilteredClients()">
+							Применить фильтры
+						</ss-button>
+					</nz-form-item>
+
+				</form>
+
+			</nz-card>
+
+			<ng-template #extraTemplate>
+				<a (click)="toggleFilters()">Close</a>
+			</ng-template>
+
+
+		</div>
+	</div>
+</div>
+
+
+

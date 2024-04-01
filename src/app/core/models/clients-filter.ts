@@ -2,7 +2,7 @@ export interface IClientsFilter {
 	code?: number;
 	name: string;
 	categoryId?: number;
-	contactorId?: number;
+	contractorId?: number;
 	managerId?: number;
 	status?: number;
 	withoutBaseManager: boolean;

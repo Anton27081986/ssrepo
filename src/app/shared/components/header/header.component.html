@@ -42,11 +42,12 @@
 									<div class="icon-bg">
 
 										<ng-container *ngIf="(userProfile$ | async) as userProfile; else noImagePlaceholder">
-											<img src="{{ userProfile?.avatarUrl }}" alt="user" />
+											<img ngSrc="{{ userProfile?.avatarUrl }}" alt="user" fill />
 										</ng-container>
 
 										<ng-template #noImagePlaceholder>
-											<img src="assets/images/noimage.jpg" alt="user1" />
+											<img ngSrc="../../../../assets/images/noimage.jpg" alt="user1" height="162"
+												 width="120" />
 										</ng-template>
 
 									</div>

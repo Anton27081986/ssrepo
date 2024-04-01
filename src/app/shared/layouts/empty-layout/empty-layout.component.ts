@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
 
 @Component({
-	selector: 'app-wrapper',
-	templateUrl: './wrapper.component.html',
-	styleUrls: ['./wrapper.component.scss'],
+	selector: 'app-empty-layout',
+	templateUrl: './empty-layout.component.html',
+	styleUrls: ['./empty-layout.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WrapperComponent {
+export class EmptyLayoutComponent {
 	protected readonly AppRoutes = AppRoutes;
 }

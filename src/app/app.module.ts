@@ -21,7 +21,7 @@ import { CoreModule } from '@app/core/core.module';
 import { ModalModule } from '@app/components/modal/modal.module';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { LayoutsModule } from './shared/layouts/layouts.module';
-import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
+import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppInitializerProvider } from './app-initializer.service';
@@ -34,7 +34,7 @@ const ngZorroConfig: NzConfig = {
 };
 
 @NgModule({
-	declarations: [AppComponent, WrapperComponent],
+	declarations: [AppComponent, EmptyLayoutComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
