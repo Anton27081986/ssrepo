@@ -1,0 +1,53 @@
+<ss-card class="invite">
+	<div class="header">
+		<ss-headline size="h3" weight="semi-bold">Подтверждение</ss-headline>
+	</div>
+    <div class="text" *ngIf="!cancelClick && !acceptClick">
+        Вам пришел запрос на установление дружественной связи для совместной работы
+    </div>
+
+	<div class="text" *ngIf="acceptClick && !cancelClick">
+		Запрос на создание дружественной связи подтвержден
+	</div>
+
+	<div class="text" *ngIf="cancelClick && !acceptClick">
+		Запрос на создание дружественной связи отклонен
+	</div>
+    <div>
+		<ng-container *ngIf="friendsAccount$ | async as user">
+			<ss-card class="personality">
+				<div class="personal">
+					<div class="img">
+						<img src="" alt="user" />
+					</div>
+					<div class="title">
+						<div class="fio">
+							<span>{{ user?.lastName }} {{ user?.firstName }} {{ user?.surName }}</span>
+						</div>
+						<div class="job">
+							<div>{{ user?.position }}</div>
+							<div>{{ user?.department }}</div>
+						</div>
+					</div>
+				</div>
+				<div class="connection-type">
+					<!-- <span class="connect-icon" nz-icon [nzType]="'ss:oneConnect'"></span> -->
+					<span>Двусторонняя</span>
+				</div>
+			</ss-card>
+		</ng-container>
+
+    </div>
+    <div class="buttons" *ngIf="!cancelClick && !acceptClick; else back">
+        <ss-button size="large" type="primary" (click)="acceptAddUser('e644009e-68f9-4927-8e3d-7fe23e1a8e52')">Подтвердить</ss-button>
+        <ss-button size="large" type="secondary" (click)="cancelAddUser('e644009e-68f9-4927-8e3d-7fe23e1a8e52')">Отклонить</ss-button>
+    </div>
+
+	<ng-template #back>
+		<div class="buttons">
+			<a href="/">
+				<ss-button size="large" type="primary" (click)="acceptAddUser('e644009e-68f9-4927-8e3d-7fe23e1a8e52')">Перейти на главную страницу</ss-button>
+			</a>
+		</div>
+	</ng-template>
+</ss-card>
