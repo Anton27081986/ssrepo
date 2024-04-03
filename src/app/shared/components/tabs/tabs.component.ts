@@ -45,4 +45,8 @@ export class TabsComponent implements OnInit {
 		});
 		this.select.emit(name);
 	}
+
+	public trackBy(_index: number, item: any) {
+		return item.id;
+	}
 }

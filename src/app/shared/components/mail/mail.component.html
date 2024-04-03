@@ -85,7 +85,7 @@
 			<ss-caption class="error" size="1" *ngIf="mailForm.controls.text.hasError('required') && mailForm.controls.text.touched">Поле обязательно для заполнения</ss-caption>
 		</div>
 		<div *ngIf="files.length" class="files">
-			<ss-attachment *ngFor="let file of files" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id)" [readonly]="false"></ss-attachment>
+			<ss-attachment *ngFor="let file of files" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
 		</div>
 		<div class="controls">
 			<ss-caption>

@@ -5,6 +5,7 @@ import { environment } from '@environments/environment.development';
 import { ISendMessageRequest } from '@app/core/models/notifications/send-message-request';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
+import {IResponse} from "@app/core/utils/response";
 
 @Injectable({
 	providedIn: 'root',
@@ -28,8 +29,8 @@ export class NotificationsApiService {
 	public getMessages(params: {
 		ObjectId: number;
 		subject?: string;
-	}): Observable<{ items: IMessageItemDto[]; total: number }> {
-		return this.http.get<{ items: IMessageItemDto[]; total: number }>(
+	}): Observable<IResponse<IMessageItemDto>> {
+		return this.http.get<IResponse<IMessageItemDto>>(
 			`${environment.apiUrl}/api/notifications/messages`,
 			{
 				params,
@@ -43,16 +44,16 @@ export class NotificationsApiService {
 	}
 
 	/** Изменить сообщение */
-	public patchMessage(id: string, body: ISendMessageRequest): Observable<any> {
-		return this.http.put<any>(`${environment.apiUrl}/api/notifications/messages/${id}/edit`, body);
+	public patchMessage(id: string, body: ISendMessageRequest): Observable<IMessageItemDto> {
+		return this.http.put<IMessageItemDto>(`${environment.apiUrl}/api/notifications/messages/${id}/edit`, body);
 	}
 
 	/** Получить список файлов */
 	public getFiles(params: {
 		ObjectId: number;
 		subject?: string;
-	}): Observable<{ items: IAttachmentDto[]; total: number }> {
-		return this.http.get<{ items: IAttachmentDto[]; total: number }>(
+	}): Observable<IResponse<IAttachmentDto>> {
+		return this.http.get<IResponse<IAttachmentDto>>(
 			`${environment.apiUrl}/api/notifications/messages/attachments`,
 			{
 				params,

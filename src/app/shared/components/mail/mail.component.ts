@@ -17,6 +17,7 @@ import { NotificationsFacadeService } from '@app/core/facades/notifications-faca
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {IUserDto} from "@app/core/models/notifications/user-dto";
 import {IMessageItemDto} from "@app/core/models/notifications/message-item-dto";
+import {IAttachmentDto} from "@app/core/models/notifications/attachment-dto";
 
 interface EditorButtonI {
 	title: string;
@@ -91,7 +92,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 		{ title: 'Без оформления' },
 	];
 
-	protected files: IFile[] = [];
+	protected files: IAttachmentDto[] = [];
 
 	protected mailForm!: FormGroup<{
 		subject: FormControl<string | null>;
@@ -190,8 +191,8 @@ export class MailComponent implements OnInit, AfterViewInit {
 			const reader = new FileReader();
 
 			reader.onload = () => {
-				this.filesApiService
-					.uploadFile(FileBucketsEnum.Attachments, file)
+				this.notificationsFacadeService
+					.uploadFile(file)
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
 						this.files.push(res);
@@ -204,7 +205,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 	}
 
 	protected deleteFile(id: string) {
-		this.filesApiService
+		this.notificationsFacadeService
 			.deleteFile(id)
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
@@ -230,7 +231,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 				copyUserIds: this.toUsersCopy.map(user => user.id!),
 				isPrivate: this.mailForm.controls.isPrivate.value!,
 				replyToMessageId: this.selectedMessageToReply?.id,
-				fileIds: this.files.map(file => file.id),
+				fileIds: this.files.map(file => file.id!),
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
@@ -241,11 +242,6 @@ export class MailComponent implements OnInit, AfterViewInit {
 				this.toUsersCopy = [];
 				this.files = [];
 			});
-	}
-
-	protected replyTo(message: IMessageItemDto, users: IUserDto[]) {
-		// this.repliedMessage = message;
-		this.toUsers = users;
 	}
 
 	protected closeReply() {
