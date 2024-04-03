@@ -27,7 +27,7 @@ export class FilesApiService {
 		);
 	}
 
-	public deleteFile(id: string): Observable<unknown> {
-		return this.http.delete<unknown>(`${environment.apiUrl}/api/files/fileStorage/${id}`);
+	public deleteFile(id: string): Observable<IFile> {
+		return this.http.delete<IFile>(`${environment.apiUrl}/api/files/fileStorage/${id}`);
 	}
 }

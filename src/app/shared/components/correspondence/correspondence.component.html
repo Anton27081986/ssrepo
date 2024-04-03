@@ -3,9 +3,9 @@
 		<ss-topic [objectId]="objectId"></ss-topic>
 		<div class="separator"></div>
 		<div class="messages">
-			<ss-messages></ss-messages>
+			<ss-messages [objectId]="objectId" (selectMessageToReply)="replyTo($event)"></ss-messages>
 			<div class="separator"></div>
-			<ss-mail [objectId]="objectId"></ss-mail>
+			<ss-mail [objectId]="objectId" [toUsers]="selectedMessageToReply?.toUsers!" [selectedMessageToReply]="selectedMessageToReply?.message"></ss-mail>
 		</div>
 	</div>
 </ss-card-dropdown>
