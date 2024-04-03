@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ProfileFacadeService } from '@app/core/facades/profile-facade.service';
+import { FrendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { Observable } from 'rxjs';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FrendlyAccountsStoreService } from '@app/core/states/frendly-accounts-store.service';
 
 @UntilDestroy()
 @Component({
@@ -16,21 +18,36 @@ export class InvitationComponent implements OnInit {
 
 	public friendsAccount$!: Observable<any>;
 
-	constructor(private readonly profileFacadeService: ProfileFacadeService) {}
+	private tokenAccept!: string;
+
+	constructor(
+		private readonly profileFacadeService: FrendlyAccountsFacadeService,
+		private readonly frendlyAccountsStoreService: FrendlyAccountsStoreService,
+		private readonly activateRoute: ActivatedRoute,
+		private readonly router: Router,
+	) {}
 
 	ngOnInit(): void {
-		this.friendsAccount$ = this.profileFacadeService.getUserForAccet(
-			'e644009e-68f9-4927-8e3d-7fe23e1a8e52',
-		);
+		this.tokenAccept = this.activateRoute.snapshot.queryParams.token;
+
+		if (!this.tokenAccept) {
+			this.router.navigate(['/']);
+		}
+
+		this.friendsAccount$ = this.profileFacadeService.getUserForAccet(this.tokenAccept);
 	}
 
-	public acceptAddUser(token: string) {
+	public acceptAddUser() {
 		this.acceptClick = true;
-		// this.profileFacadeService.acceptAddUsersInListFrendlyLogins(token, true);
+		this.profileFacadeService.acceptAddUsersInListFrendlyLogins(this.tokenAccept, true);
+
+		this.friendsAccount$.pipe(untilDestroyed(this)).subscribe(item => {
+			this.frendlyAccountsStoreService.addfrendlyAccounts(item);
+		});
 	}
 
-	public cancelAddUser(token: string) {
+	public cancelAddUser() {
 		this.cancelClick = true;
-		// this.profileFacadeService.acceptAddUsersInListFrendlyLogins(token, false);
+		this.profileFacadeService.acceptAddUsersInListFrendlyLogins(this.tokenAccept, false);
 	}
 }

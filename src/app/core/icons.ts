@@ -623,4 +623,17 @@ export class AppIcons {
 		'<path d="M4 8C4 10.208 5.776 12 8 12C10.668 12 12 9.776 12 9.776M12 9.776V11.6M12 9.776H11.196H10.224" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M12 7.75C12 5.542 10.224 3.75 8 3.75C5.332 3.75 4 5.974 4 5.974M4 5.974V4.15M4 5.974H4.804H5.776" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
+
+	public static accept =
+		'<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M34.0003 67C51.9464 67 66.6295 52.15 66.6295 34C66.6295 15.85 51.9464 1 34.0003 1C16.0542 1 1.37109 15.85 1.37109 34C1.37109 52.15 16.0542 67 34.0003 67Z" stroke="#65D909" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M22.1348 34.0838L30.0047 41.9538L45.7724 26.2139" stroke="#65D909" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
+	public static cancel =
+		'<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M34.0003 67C51.9464 67 66.6295 52.15 66.6295 34C66.6295 15.85 51.9464 1 34.0003 1C16.0542 1 1.37109 15.85 1.37109 34C1.37109 52.15 16.0542 67 34.0003 67Z" stroke="#EE1C25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M24 24L44 44" stroke="#EE1C25" stroke-width="2" stroke-linecap="round"/>\n' +
+		'<path d="M44 24L24 44" stroke="#EE1C25" stroke-width="2" stroke-linecap="round"/>\n' +
+		'</svg>';
 }

@@ -42,4 +42,10 @@ export class UsersEqusService {
 			isConfirm,
 		});
 	}
+
+	public removeEQUsUsersById(deleteUserId: number): Observable<any> {
+		return this.http.delete<any[]>(`${environment.apiUrl}/api/auth/users/friends/`, {
+			params: new HttpParams().set('deleteUserId', deleteUserId),
+		});
+	}
 }

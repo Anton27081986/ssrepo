@@ -26,6 +26,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { RecoveryPasswordComponent } from './recovery-password/recovery-password.component';
 import { CardModule } from '../../shared/components/card/card.module';
 import { ButtonModule } from '../../shared/components/buttons/button/button-module';
+import { InvitationComponent } from './invitation/invitation.component';
 
 @NgModule({
 	declarations: [
@@ -34,6 +35,7 @@ import { ButtonModule } from '../../shared/components/buttons/button/button-modu
 		ChangePasswordComponent,
 		MyMenuComponent,
 		FrendlyAccountsComponent,
+		InvitationComponent,
 		OrderWidgetsComponent,
 		NotificationsComponent,
 		RecoveryPasswordComponent,

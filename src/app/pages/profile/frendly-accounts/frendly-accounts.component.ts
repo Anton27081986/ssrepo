@@ -4,9 +4,9 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { map, Observable, Subject, tap, zip } from 'rxjs';
-import { ProfileFacadeService } from '@app/core/facades/profile-facade.service';
+import { FrendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
-import { UsersEqusService } from '@app/core/api/users-equs.service';
+import { FrendlyAccountsStoreService } from '@app/core/states/frendly-accounts-store.service';
 
 @UntilDestroy()
 @Component({
@@ -16,16 +16,6 @@ import { UsersEqusService } from '@app/core/api/users-equs.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FrendlyAccountsComponent {
-	public total!: number;
-	public pageSize = 6;
-	public pageIndex = 1;
-	public offset = 0;
-
-	public winsList!: Observable<any>;
-	public winsUrl!: Observable<any>;
-	public winsGroupsList!: Observable<any>;
-
-	// Форма
 	private readonly modelChangedColleague: Subject<string> = new Subject<string>();
 
 	public isConfirmLoading = false;
@@ -33,29 +23,24 @@ export class FrendlyAccountsComponent {
 	public isSended = true;
 	public addForm!: FormGroup;
 	public submitted = false;
+	public valid = false;
 
 	protected isModalVisible = false;
-	// public errorComment = false;
 
-	public partyWinSelectedTags: Array<{ name: string; id: number }> = [];
-	public userWinArray: string[] = [];
+	public partyFrendlyAccountsSelectedTags: Array<{ name: string; id: number }> = [];
 	public selectedUser!: string;
 
 	public listColleague: Array<{ name: string; id: string }> = [];
-
-	public radioValue = 1;
+	public radioValue: string = '1';
 
 	public friendsAccount$!: Observable<IFriendAccountDto[] | null>;
 	public filterFriendsAccount: IFriendAccountDto[] = [];
-	public friendsAccount: IFriendAccountDto[] = [];
+	public friendsAccount: any;
 
 	public constructor(
-		// private readonly apiService: WinsApiService,
 		private readonly usersApiService: UsersApiService,
-		// private readonly _victoryService: VictoryService,
-		private readonly profileFacadeService: ProfileFacadeService,
-
-		private readonly usersEqusService: UsersEqusService, // Удалить
+		private readonly frendlyAccountsFacadeService: FrendlyAccountsFacadeService,
+		private readonly frendlyAccountsStoreService: FrendlyAccountsStoreService,
 
 		private readonly formBuilder: FormBuilder,
 		public modal: NzModalService,
@@ -63,27 +48,14 @@ export class FrendlyAccountsComponent {
 	) {}
 
 	public ngOnInit() {
-		this.addForm = this.formBuilder.group({
-			// comment: ['', [Validators.required, Validators.maxLength(3000)]],
-		});
+		this.addForm = this.formBuilder.group({});
 
-		this.profileFacadeService
-			.getFriendsAccountsForCurrentUser()
-			.pipe(untilDestroyed(this))
-			.subscribe(item => {
-				console.log('item френдли', item);
-
-				this.friendsAccount = item;
-
-				console.log('friendsAccount френдли', this.friendsAccount);
-			});
-
-		this.friendsAccount$ = this.profileFacadeService.getFriendsAccountsForCurrentUser();
+		this.setFriendsAccount();
+		this.getFriendsAccount();
 
 		// Подписка на изменения input поиска коллег
 		zip(this.modelChangedColleague)
 			.pipe(
-				// debounceTime(300),
 				tap(value => {
 					if (value[0].length > 1) {
 						this.usersApiService
@@ -101,116 +73,71 @@ export class FrendlyAccountsComponent {
 				untilDestroyed(this),
 			)
 			.subscribe();
-
-		// Опитимизировать два запросы
-
-		// this.apiService
-		// 	.getWins(this.pageSize, this.offset)
-		// 	.pipe(
-		// 		untilDestroyed(this),
-		// 		map(({ total }) => total),
-		// 		tap(value => {
-		// 			this.total = value;
-		// 		}),
-		// 	)
-		// 	.subscribe();
-
-		// this.winsUrl = this.apiService.getWins(this.pageSize, this.offset);
-		// this.winsGroupsList = this.apiService.getWinsGroups().pipe(map(({ items }) => items));
-
-		// Подписка на комментарий
-		// this._victoryService.count$
-		// 	.pipe(
-		// 		untilDestroyed(this),
-		// 		tap(_ => {
-		// 			this.updateWinList();
-		// 		}),
-		// 	)
-		// 	.subscribe();
 	}
 
-	public delteteFrendlyConnect() {
-		console.log('delteteFrendlyConnect');
+	public setFriendsAccount() {
+		this.frendlyAccountsFacadeService.setFriendsAccountsForCurrentUser();
+	}
+
+	public getFriendsAccount() {
+		this.frendlyAccountsFacadeService
+			.getFriendsAccountsForCurrentUser()
+			.pipe(untilDestroyed(this))
+			.subscribe(item => {
+				this.friendsAccount = item;
+				this.cd.detectChanges();
+			});
 	}
 
 	public filterItems($event: any) {
-		console.log('filterItems', $event.target.value);
-
 		if ($event.target.value.length > 2) {
 			this.filterFriendsAccount = [];
-			// this.listMenu.forEach((element: any) => {
-			// 	element.items.forEach((item: any) => {
-			// 		if (
-			// 			item.name
-			// 				.toLowerCase()
-			// 				.indexOf(String($event.target.value).toLowerCase()) !== -1
-			// 		) {
-			// 			this.filterFriendsAccount.push(item);
-			// 		}
-			// 	});
-			// });
+
+			this.friendsAccount.forEach((element: any) => {
+				if (
+					(element.firstName + element.lastName + element.surName)
+						.toLowerCase()
+						.indexOf(String($event.target.value).toLowerCase()) !== -1
+				) {
+					this.filterFriendsAccount.push(element);
+				}
+			});
+
+			this.friendsAccount = [];
+			this.filterFriendsAccount.forEach((element: any) => {
+				this.friendsAccount.push(element);
+			});
 		} else {
 			this.filterFriendsAccount = [];
+			this.setFriendsAccount();
 		}
 	}
-
-	public addFrendlytProfile() {
-		console.log('addFrendlytProfile');
-	}
-
-	// public get comment() {
-	// 	return this.addForm.get('comment');
-	// }
 
 	public showModal(): void {
 		this.isModalVisible = true;
 	}
 
+	public postHandleOk(): void {
+		if (this.addForm.valid) {
+			this.submitted = false;
+
+			this.isModalVisible = false;
+		}
+	}
+
 	public handleOk(): void {
 		if (this.addForm.valid) {
-			// const comment = this.comment?.value;
-			const userList = this.partyWinSelectedTags.map(item => item.id);
+			this.submitted = true;
 
-			console.log('radioValue', this.radioValue);
-			console.log('userList', userList);
+			const userList = this.partyFrendlyAccountsSelectedTags.map(item => item.id);
 
-			this.profileFacadeService.addUsersInListFrendlyLogins(userList, this.radioValue);
-
-			this.usersEqusService
-				.addEQUsUsers(userList, this.radioValue)
-				.pipe(untilDestroyed(this))
-				.subscribe(_ => {
-					console.log('добавление пользователей в список дружестенных логинов');
-				});
-
-			// Создание запроса на установлении связи
-			// this.apiService
-			// 	.addWins(comment, userList)
-			// 	.pipe(
-			// 		tap(_ => {
-			// 			this.partyWinSelectedTags = [];
-
-			// 			this.updateWinList();
-
-			// 			this.cd.detectChanges();
-
-			// 			this.isSended = false;
-			// 		}),
-			// 		untilDestroyed(this),
-			// 	)
-			// 	.subscribe({
-			// 		next: () => {
-			// 			this.updateWinList();
-			// 		},
-			// 		error: () => {
-			// 			this.errorComment = true;
-			// 		},
-			// 	});
+			this.frendlyAccountsFacadeService.addUsersInListFrendlyLogins(
+				userList,
+				Number(this.radioValue),
+			);
 		} else {
 			console.error('Форма не валидна');
 		}
-
-		this.isModalVisible = false;
 	}
 
 	public handleCancel(): void {
@@ -219,16 +146,21 @@ export class FrendlyAccountsComponent {
 
 	// При выборе клика по пользователю
 	public onUserChange() {
-		this.userWinArray.push(this.selectedUser); // Выбранные пользователи
 		this.usersApiService
 			.getUserById(this.selectedUser)
 			.pipe(
 				tap(user => {
-					this.partyWinSelectedTags.push({
+					this.partyFrendlyAccountsSelectedTags.push({
 						id: user.id,
 						name: user.name,
 					}); // добавление тега
 					this.cd.markForCheck();
+
+					if (this.partyFrendlyAccountsSelectedTags.length > 0) {
+						this.valid = true;
+					} else {
+						this.valid = false;
+					}
 				}),
 				untilDestroyed(this),
 			)
@@ -239,29 +171,13 @@ export class FrendlyAccountsComponent {
 		this.modelChangedColleague.next($event);
 	}
 
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset = 0;
-		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
-		}
-
-		this.pageIndex = $event; // Установка текущего индекса
-
-		// this.updateWinList();
+	public deleteFrendlyAccount(id: number, index: number) {
+		this.frendlyAccountsFacadeService.removeEQUsUsersById(id, index);
 	}
 
-	// Обновление списка связей
-	// public updateWinList() {
-	// 	this.winsList = this.apiService.getWins(this.pageSize, this.offset).pipe(
-	// 		tap(_ => {
-	// 			this.cd.markForCheck();
-	// 		}),
-	// 	);
-	// }
-
 	public deleteTagUser(i: number) {
-		this.partyWinSelectedTags.splice(i, 1);
+		this.partyFrendlyAccountsSelectedTags.splice(i, 1);
 		this.cd.markForCheck();
+		this.valid = false;
 	}
 }

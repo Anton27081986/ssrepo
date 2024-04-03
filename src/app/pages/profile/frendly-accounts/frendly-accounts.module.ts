@@ -7,17 +7,14 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { PasswordModule } from '@app/shared/components/inputs/password/password.module';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
-import { InvitationModule } from '@app/pages/profile/invitation/invitation.module';
-import { InvitationComponent } from '@app/pages/profile/invitation/invitation.component';
 import { CardModule } from '../../../shared/components/card/card.module';
 import { FrendlyAccountsRoutingModule } from './frendly-accounts-routing.module';
 
 @NgModule({
-	declarations: [InvitationComponent],
+	declarations: [],
 	imports: [
 		CommonModule,
 		FrendlyAccountsRoutingModule,
-		InvitationModule,
 		CardModule,
 		IconModule,
 		HeadlineModule,

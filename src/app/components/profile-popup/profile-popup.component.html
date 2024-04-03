@@ -77,7 +77,7 @@
                     </div>
                   </div>
                 </div>
-                <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(loggedUser.id)"></span>
+                <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(loggedUser)"></span>
               </div>
             </div>
         </div>
@@ -124,8 +124,7 @@
 			<hr *ngIf="data?.isAdmin === true" />
 		</ng-container>
 
-
-    <ng-container *ngIf="accountsFriends | async as accounts">
+    <ng-container *ngIf="friendsAccount as accounts">
       <div class="card-list" *ngIf="accounts.length>0">
         <div class="accordion" (click)="statusAccordion=!statusAccordion;">
         <span class="title">Связь с другими сотрудниками</span>
@@ -149,7 +148,7 @@
                   </div>
                 </div>
               </div>
-              <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(account?.id)"></span>
+              <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(account)"></span>
             </div>
           </div>
         </ng-container>

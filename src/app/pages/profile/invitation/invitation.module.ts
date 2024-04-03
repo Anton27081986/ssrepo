@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { InvitationRoutingModule } from './invitation-routing.module';
 
-
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    InvitationRoutingModule
-  ]
+	declarations: [],
+	imports: [CommonModule, InvitationRoutingModule],
 })
-export class InvitationModule { }
+export class InvitationModule {}

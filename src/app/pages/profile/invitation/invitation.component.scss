@@ -4,8 +4,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	// background: center no-repeat url("/src/assets/images/logo/logo.svg");
-	background: center no-repeat url("../../../../assets/images/background/login.svg");
+	background: center no-repeat url("/src/assets/images/logo/logo.svg");
+	// background: center no-repeat url("../../../../assets/images/background/login.svg");
 }
 
 .invite {
@@ -15,7 +15,7 @@
 	border-radius: 16px;
 	border: 1px solid $border-color;
 	background-color: $white;
-	padding: 16px 16px 45px 16px;
+	padding: 16px 16px 45px 16px!important;
 
 	display: flex;
 	flex-wrap: wrap;
@@ -32,12 +32,21 @@
 		font-size: 14px;
 		font-weight: bold;
 		line-height: 19px;
+
+		p {
+			line-height: inherit;
+		}
+	}
+
+	.accept-icon,
+	.cancel-icon {
+		font-size: 70px;
 	}
 
 	.personality {
 		width: 300px;
 		border: 1px solid $border-color;
-		padding: 14px 0 14px 14px;
+		padding: 14px 8px 14px 14px!important;
 		margin-top: 21px;
 		background-color: $gray;
 
@@ -98,9 +107,9 @@
 		}
 
 	}
-	
+
 	.connection-type {
-		margin-left: 88px;
+		margin-left: 73px;
 
 		span:last-child {
 			font-size: 12px;
@@ -112,7 +121,7 @@
 		margin-top: 24px;
 		flex: auto;
 		max-width: 300px;
-	
+
 
 		ss-button:last-child {
 			margin-top: 14px;

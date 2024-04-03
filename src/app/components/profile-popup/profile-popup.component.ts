@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { map, Observable } from 'rxjs';
@@ -6,6 +6,8 @@ import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { FrendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
+import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 
 @UntilDestroy()
 @Component({
@@ -16,20 +18,42 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class ProfilePopupComponent implements OnInit {
 	public statusAccordion: boolean = false;
-	public accountsFriends!: Observable<any>;
+	public accountsFriends$!: Observable<any>;
 	public userProfile$!: Observable<IUserProfile | null>;
+
+	public friendsAccount!: IFriendAccountDto[] | null;
 
 	public constructor(
 		private readonly apiService: UsersApiService,
 		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
+		private readonly frendlyAccountsFacadeService: FrendlyAccountsFacadeService,
+		private readonly cd: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit(): void {
 		this.userProfile$ = this.userStateService.userProfile$;
-		this.accountsFriends = this.apiService
+
+		this.getAccountsFriends();
+		this.setFriendsAccount();
+
+		this.accountsFriends$ = this.apiService
 			.getCurrentUserFriendsAccounts()
 			.pipe(map(({ items }) => items));
+	}
+
+	public setFriendsAccount() {
+		this.frendlyAccountsFacadeService.setFriendsAccountsForCurrentUser();
+	}
+
+	private getAccountsFriends() {
+		this.frendlyAccountsFacadeService
+			.getFriendsAccountsForCurrentUser()
+			.pipe(untilDestroyed(this))
+			.subscribe(item => {
+				this.friendsAccount = item;
+				this.cd.detectChanges();
+			});
 	}
 
 	public logout(): void {
@@ -40,10 +64,10 @@ export class ProfilePopupComponent implements OnInit {
 		}, 0);
 	}
 
-	public enterUnderFriendlyAccount(id: number) {
+	public enterUnderFriendlyAccount(loggedUser: any) {
 		this.userStateService.resetProfile();
 		this.authenticationService
-			.enterUnderFriendlyAccount(id, environment.apiUrl)
+			.enterUnderFriendlyAccount(loggedUser?.id, environment.apiUrl)
 			.pipe(untilDestroyed(this))
 			.subscribe();
 
@@ -51,8 +75,6 @@ export class ProfilePopupComponent implements OnInit {
 			window.location.reload();
 		}, 200);
 
-		this.accountsFriends = this.apiService
-			.getCurrentUserFriendsAccounts()
-			.pipe(map(({ items }) => items));
+		this.getAccountsFriends();
 	}
 }
