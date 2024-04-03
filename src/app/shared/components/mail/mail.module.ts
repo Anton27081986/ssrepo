@@ -12,26 +12,30 @@ import {CardDropdownModule} from "@app/shared/components/card-dropdown/card-drop
 import {ComponentsModule} from "@app/components/components.module";
 import {ChipsUserSearchModule} from "@app/shared/components/inputs/chips-user-search/chips-user-search.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import {HeadlineModule} from "@app/shared/components/typography/headline/headline.module";
+import {TextModule} from "@app/shared/components/typography/text/text.module";
 
 @NgModule({
 	declarations: [MailComponent],
 	exports: [MailComponent],
-    imports: [
-        CardModule,
-        InputModule,
-        CKEditorModule,
-        IconModule,
-        ButtonModule,
-        CaptionModule,
-        NgIf,
-        AttachmentModule,
-        NgForOf,
-        CardDropdownModule,
-        ComponentsModule,
-        ChipsUserSearchModule,
-        ReactiveFormsModule,
-        AsyncPipe,
-        NgClass,
-    ],
+	imports: [
+		CardModule,
+		InputModule,
+		CKEditorModule,
+		IconModule,
+		ButtonModule,
+		CaptionModule,
+		NgIf,
+		AttachmentModule,
+		NgForOf,
+		CardDropdownModule,
+		ComponentsModule,
+		ChipsUserSearchModule,
+		ReactiveFormsModule,
+		AsyncPipe,
+		NgClass,
+		HeadlineModule,
+		TextModule,
+	],
 })
 export class MailModule {}

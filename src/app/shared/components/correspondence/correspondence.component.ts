@@ -1,30 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NotificationsStoreService } from '@app/core/states/notifications-store.service';
-import { Observable } from 'rxjs';
+import { Component, Input } from '@angular/core';
+import {IMessageItemDto} from "@app/core/models/notifications/message-item-dto";
+import {IUserDto} from "@app/core/models/notifications/user-dto";
 
 @Component({
 	selector: 'ss-correspondence',
 	templateUrl: './correspondence.component.html',
 	styleUrls: ['./correspondence.component.scss'],
 })
-export class CorrespondenceComponent implements OnInit {
+export class CorrespondenceComponent {
 	@Input() objectId!: number;
 
-	protected isHidden = false;
+	protected selectedMessageToReply: { message: IMessageItemDto; toUsers: IUserDto[] } | undefined;
 
-	public subjects$: Observable<{subject: string; messageCount: number}[]>;
-
-	constructor(private readonly storeService: NotificationsStoreService) {
-		this.subjects$ = this.storeService.subjects$;
-	}
-
-	ngOnInit() {
-		if (this.objectId) {
-			this.storeService.init(this.objectId);
-		}
-	}
-
-	onHideButton() {
-		this.isHidden = !this.isHidden;
+	constructor() {}
+	replyTo(event: { message: IMessageItemDto, toUsers: IUserDto[] }) {
+		this.selectedMessageToReply = event;
 	}
 }

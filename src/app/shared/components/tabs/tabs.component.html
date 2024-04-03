@@ -1,0 +1,10 @@
+<ss-headline
+	class="tab"
+	*ngFor="let tab of selectedTabs"
+	[ngClass]="{'selected': tab.isSelected }"
+	size="h6"
+	weight="semi-bold"
+	(click)="onSelect(tab.name)"
+>
+	{{ tab.name }}
+</ss-headline>

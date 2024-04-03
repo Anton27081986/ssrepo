@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
-import { IMessage } from '@app/core/models/correspondence/message';
 import { ISendMessageRequest } from '@app/core/models/notifications/send-message-request';
-import {IMessageItemDto} from "@app/core/models/notifications/message-item-dto";
+import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
+import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -37,8 +37,26 @@ export class NotificationsApiService {
 		);
 	}
 
-	/** Получить список сообщений */
+	/** Отправить сообщение */
 	public sendMessage(body: ISendMessageRequest): Observable<any> {
 		return this.http.post<any>(`${environment.apiUrl}/api/notifications/messages`, body);
+	}
+
+	/** Изменить сообщение */
+	public patchMessage(id: string, body: ISendMessageRequest): Observable<any> {
+		return this.http.put<any>(`${environment.apiUrl}/api/notifications/messages/${id}/edit`, body);
+	}
+
+	/** Получить список файлов */
+	public getFiles(params: {
+		ObjectId: number;
+		subject?: string;
+	}): Observable<{ items: IAttachmentDto[]; total: number }> {
+		return this.http.get<{ items: IAttachmentDto[]; total: number }>(
+			`${environment.apiUrl}/api/notifications/messages/attachments`,
+			{
+				params,
+			},
+		);
 	}
 }
