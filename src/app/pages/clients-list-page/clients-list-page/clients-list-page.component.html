@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="header m-b-25">
 		<div class="title">
-			<ss-headline size="h3">Список клиентов</ss-headline>
+			<ss-headline size="h3">Справочник клиентов</ss-headline>
 		</div>
 		<div class="filter-button" *ngIf="!isFiltersVisible">
 			<ss-button size="small"
@@ -13,7 +13,7 @@
 		</div>
 
 	</div>
-	<div class="table-with-filters m-b-40">
+	<div class="content desktop table-with-filters m-b-40">
 		<div class="table m-r-15">
 			<div class="table-container">
 				<ss-table
@@ -144,6 +144,38 @@
 
 		</div>
 	</div>
+	<div class="content mobile m-b-20">
+		<ss-card>
+			<div class="mobile-item" *ngFor="let item of items">
+				<div class="mobile-info">
+					<ss-caption size="1">
+						<b> Код: </b>
+						<a href="{{item.clientCardLink}}"> {{item.code }} </a>
+					</ss-caption>
+					<ss-caption size="1">
+						<b>Категория: </b>
+						{{item.category}}
+					</ss-caption>
+					<ss-caption size="1">Клиент:{{item.clientName }}</ss-caption>
+					<ss-caption size="1">Менеджеры:{{item.managers }}</ss-caption>
+					<ss-caption size="1">Статус:{{item.status }}</ss-caption>
+					<ss-caption size="1">Клиент без БМ:{{item.withoutManager }}</ss-caption>
+				</div>
+				<div class="separator"></div>
+			</div>
+		</ss-card>
+		<div class="pagination" style="justify-content: center">
+			<nz-pagination
+				[nzTotal]="total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</div>
+	</div>
+
 </div>
 
 

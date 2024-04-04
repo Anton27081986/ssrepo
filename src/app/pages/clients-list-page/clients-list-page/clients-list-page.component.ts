@@ -4,7 +4,6 @@ import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { ITableItem } from '@app/shared/components/table/table.component';
-import { options } from 'prettier-plugin-organize-attributes';
 
 export interface IClientTableItem {
 	code: string;
@@ -31,9 +30,10 @@ export class ClientsListPageComponent implements OnInit {
 	public pageIndex = 1;
 	public offset = 0;
 	public tableItems: ITableItem[] = [];
+	public items: IClientTableItem[] = [];
 
 	// state
-	public isFiltersVisible: boolean = true;
+	public isFiltersVisible: boolean = false;
 	public filtersForm!: FormGroup;
 
 	public constructor(
@@ -50,7 +50,7 @@ export class ClientsListPageComponent implements OnInit {
 			manager: [],
 			contractor: [],
 			status: [6],
-			withoutBaseManager: [false],
+			withoutBaseManager: [],
 		});
 
 		this.clientsListFacade.applyFilters(this.getFilter());
@@ -70,13 +70,15 @@ export class ClientsListPageComponent implements OnInit {
 
 					tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
 					tableItem.status =
-						this.clientsListFacade.statusOptions.find(option => option.id === x.id)
+						this.clientsListFacade.statusOptions.find(option => option.id === x.status)
 							?.name ?? '-';
 
 					tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
 
 					return tableItem;
 				});
+
+				this.items = items;
 
 				this.tableItems = <ITableItem[]>(<unknown>items);
 			}
