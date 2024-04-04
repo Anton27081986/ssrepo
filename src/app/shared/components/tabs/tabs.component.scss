@@ -1,0 +1,19 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+
+	.tab {
+		cursor: pointer;
+	}
+
+	::ng-deep h1 {
+		color: $lite-text;
+	}
+
+	::ng-deep .selected h1 {
+		color: $text;
+	}
+}

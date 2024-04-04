@@ -62,7 +62,8 @@ class Editor extends ClassicEditor {
 				'removeFormat'
 			]
 		},
-		language: 'ru'
+		language: 'ru',
+		placeholder: 'Введите текст сообщения'
 	};
 }
 

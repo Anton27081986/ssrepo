@@ -1,15 +1,23 @@
 <ss-card-dropdown title="Создать сообщение" titleSize="2">
-	<form class="mail" [formGroup]="mailForm">
+	<form class="mail" [formGroup]="mailForm" (submit)="$event.preventDefault()">
 		<div class="requisites">
 			<ss-input label="Тема:"
 					  size="medium"
-					  placeholder="Тема сообщения"
+					  placeholder="Введите тему сообщения"
 					  formControlName="subject"
 					  value="{{(subject$ | async)}}"
 					  [error]="mailForm.controls.subject.hasError('required') && mailForm.controls.subject.touched ? 'Поле обязательно для заполнения' : undefined"
 			></ss-input>
 			<ss-chips-user-search label="Кому:" size="medium" [selectedUsers]="toUsers"></ss-chips-user-search>
 			<ss-chips-user-search label="Копия:" size="medium" [selectedUsers]="toUsersCopy"></ss-chips-user-search>
+		</div>
+		<div class="reply" *ngIf="selectedMessageToReply">
+			<ss-icon width="28" height="28" name="reply"></ss-icon>
+			<div class="reply-message">
+				<ss-text size="2" weight="semi-bold" class="reply-author">В ответ: {{ selectedMessageToReply.author?.name }}</ss-text>
+				<div class="reply-text" [innerHTML]="selectedMessageToReply.text"></div>
+			</div>
+			<ss-icon width="12" height="12" name="iconClose" class="close-reply" (click)="closeReply()"></ss-icon>
 		</div>
 		<div class="editor" [ngClass]="{'error': mailForm.controls.text.hasError('required') && mailForm.controls.text.touched}">
 			<div *ngIf="isCustomEditorLoaded" class="editor-controls">
@@ -77,11 +85,11 @@
 			<ss-caption class="error" size="1" *ngIf="mailForm.controls.text.hasError('required') && mailForm.controls.text.touched">Поле обязательно для заполнения</ss-caption>
 		</div>
 		<div *ngIf="files.length" class="files">
-			<ss-attachment *ngFor="let file of files" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id)" [readonly]="false"></ss-attachment>
+			<ss-attachment *ngFor="let file of files" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
 		</div>
 		<div class="controls">
 			<ss-caption>
-				<input type="checkbox" formControlName="isPrivate"/>
+				<input type="checkbox" formControlName="isPrivate" />
 				Доступ для просмотра только адресатам
 			</ss-caption>
 			<div class="upload-file">
@@ -90,8 +98,9 @@
 					<ss-caption>Прикрепить файл</ss-caption>
 				</label>
 				<input type="file" id="upload-file"
-							 accept=".jpg, .jpeg, .png, .doc, .docx, .xls, .xlsx, .pdf"
-							 (change)="uploadFile($event)"
+					   accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf, .mp4, .mov, .avi"
+					   multiple
+					   (change)="uploadFile($event)"
 				/>
 			</div>
 			<ss-button class="send-button" type="primary" size="medium" (click)="sendMessage()">Отправить</ss-button>

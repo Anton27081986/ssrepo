@@ -2,7 +2,7 @@
 
 :host {
 	width: 100%;
-	min-width: 710px;
+	min-width: 976px;
 	display: flex;
 	overflow-y: hidden;
 }
@@ -17,6 +17,37 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+	}
+
+	.reply {
+		position: relative;
+		display: flex;
+		gap: 4px;
+		align-items: center;
+		color: #6D7885;
+
+		.reply-author {
+			color: $text;
+		}
+
+		.reply-message {
+			padding: 4px 12px;
+			border-left: 4px solid #6D7885;
+			background-color: #F2F3F7;
+			border-radius: 0 8px 8px 0;
+			flex-grow: 1;
+
+			.reply-text {
+				max-height: 24px;
+				overflow: hidden;
+			}
+		}
+
+		.close-reply {
+			cursor: pointer;
+			position: absolute;
+			right: 12px;
+		}
 	}
 
 	.editor-controls {

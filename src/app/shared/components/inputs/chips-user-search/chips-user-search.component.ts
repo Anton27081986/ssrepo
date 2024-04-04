@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
-import { map, tap } from 'rxjs';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { map } from 'rxjs';
 
 @Component({
 	selector: 'ss-chips-user-search',
@@ -15,6 +14,8 @@ export class ChipsUserSearchComponent {
 	@Input() public error: string | undefined;
 	@Input() public selectedUsers: any[] = [];
 
+	@ViewChild('input') public input!: ElementRef;
+
 	protected foundUsers: any[] = [];
 	constructor(private readonly usersApiService: UsersApiService) {}
 
@@ -25,12 +26,14 @@ export class ChipsUserSearchComponent {
 				.pipe(map(({ items }) => items))
 				.subscribe(res => {
 					if (this.selectedUsers.length) {
-						const selectedIds = this.selectedUsers.map((user)=>user.id)
-						this.foundUsers = res.filter((user: { id: any; })=>!selectedIds.includes(user.id))
+						const selectedIds = this.selectedUsers.map(user => user.id);
+
+						this.foundUsers = res.filter(
+							(user: { id: any }) => !selectedIds.includes(user.id),
+						);
 					} else {
 						this.foundUsers = res;
 					}
-
 				});
 		} else {
 			this.foundUsers = [];
@@ -40,12 +43,22 @@ export class ChipsUserSearchComponent {
 	protected onAddUserToList(user: any) {
 		this.selectedUsers.push(user);
 		this.foundUsers = this.foundUsers.filter(foundUser => foundUser.id !== user.id);
+		setTimeout(() => {
+			this.input.nativeElement.value = '';
+			this.input.nativeElement.focus();
+		}, 0);
 	}
 
-	protected onRemoveUserFromList(user: any, returnToFoundList: boolean) {
+	protected onRemoveUserFromList(user: any) {
 		this.selectedUsers = this.selectedUsers.filter(selectedUser => selectedUser.id !== user.id);
-		if (returnToFoundList) {
-			this.foundUsers.push(user);
+		this.foundUsers.unshift(user);
+	}
+
+	protected dontSend(event: any): any {
+		const key = event.which || event.keyCode;
+
+		if (key == 13) {
+			return false;
 		}
 	}
 }

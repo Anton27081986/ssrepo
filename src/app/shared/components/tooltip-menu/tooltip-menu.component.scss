@@ -1,0 +1,42 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	position: relative;
+	overflow: visible;
+
+	.dropdown-menu {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		top: 100%;
+		right: 50%;
+		background-color: $island;
+		border-radius: 8px;
+		box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+		transform: translateX(45%);
+
+		::ng-deep ss-caption {
+			cursor: pointer;
+			padding: 4px 8px;
+
+			span {
+				width: 100%;
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				align-items: center;
+				color: $text !important;
+				white-space: nowrap;
+			}
+		}
+
+		::ng-deep ss-caption:hover {
+			background-color: $background !important;
+		}
+	}
+
+	.dropdown-menu.hidden {
+		display: none;
+	}
+}

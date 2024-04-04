@@ -3,7 +3,6 @@ import {
 	ViewChild,
 	AfterViewInit,
 	ChangeDetectorRef,
-	OnDestroy,
 	OnInit,
 	Input,
 } from '@angular/core';
@@ -12,9 +11,13 @@ import Editor from 'ckeditor5/build/ckeditor';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
 import { IFile } from '@app/core/models/files/file';
-import {FormControl, FormGroup, NG_VALIDATORS, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsApiService } from '@app/core/api/notifications-api.service';
-import { NotificationsStoreService } from '@app/core/states/notifications-store.service';
+import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {IUserDto} from "@app/core/models/notifications/user-dto";
+import {IMessageItemDto} from "@app/core/models/notifications/message-item-dto";
+import {IAttachmentDto} from "@app/core/models/notifications/attachment-dto";
 
 interface EditorButtonI {
 	title: string;
@@ -39,14 +42,14 @@ enum EditorButtons {
 	'removeFormat',
 }
 
+@UntilDestroy()
 @Component({
 	selector: 'ss-mail',
 	templateUrl: './mail.component.html',
 	styleUrls: ['./mail.component.scss'],
 })
-export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MailComponent implements OnInit, AfterViewInit {
 	@Input() public objectId!: number;
-	@Input() public replyToMessageId: string | null = null;
 
 	private readonly destroy$ = new Subject<void>();
 
@@ -64,8 +67,10 @@ export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
 	protected fontSize = '14 pt';
 	protected isFontSizesInitialized = false;
 
-	protected toUsers: any[] = [];
-	protected toUsersCopy: any[] = [];
+	@Input() toUsers: IUserDto[] = [];
+	protected toUsersCopy: IUserDto[] = [];
+
+	@Input() selectedMessageToReply: IMessageItemDto | undefined;
 
 	public subject$: Observable<string | null>;
 
@@ -87,7 +92,7 @@ export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
 		{ title: 'Без оформления' },
 	];
 
-	protected files: IFile[] = [];
+	protected files: IAttachmentDto[] = [];
 
 	protected mailForm!: FormGroup<{
 		subject: FormControl<string | null>;
@@ -99,17 +104,21 @@ export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly filesApiService: FilesApiService,
 		private readonly notificationsApiService: NotificationsApiService,
-		private readonly notificationsStoreService: NotificationsStoreService,
+		private readonly notificationsFacadeService: NotificationsFacadeService,
 	) {
-		this.subject$ = this.notificationsStoreService.selectedSubject$;
+		this.subject$ = this.notificationsFacadeService.selectedSubject$;
 	}
 
 	public ngOnInit() {
 		this.mailForm = new FormGroup({
-			subject: new FormControl<string>('', [Validators.required]),
+			subject: new FormControl<string>('', Validators.required),
 			text: new FormControl<string>('', Validators.required),
 			isPrivate: new FormControl<boolean>(true),
 		});
+
+		this.subject$.pipe(takeUntil(this.destroy$)).subscribe((subject)=>{
+			this.mailForm.controls.subject.setValue(subject);
+		})
 	}
 
 	public ngAfterViewInit(): void {
@@ -178,35 +187,35 @@ export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
 			return;
 		}
 
-		const file = Array.from(fileList)[0];
+		Array.from(fileList).forEach((file)=>{
+			const reader = new FileReader();
 
-		const reader = new FileReader();
+			reader.onload = () => {
+				this.notificationsFacadeService
+					.uploadFile(file)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.files.push(res);
+						this.changeDetectorRef.detectChanges();
+					});
+			};
 
-		reader.onload = () => {
-			this.filesApiService
-				.uploadFile(FileBucketsEnum.Attachments, file)
-				.pipe(takeUntil(this.destroy$))
-				.subscribe(res => {
-					this.files.push(res);
-					this.changeDetectorRef.detectChanges();
-				});
-		};
-
-		reader.readAsDataURL(file);
+			reader.readAsDataURL(file);
+		})
 	}
 
-	public deleteFile(id: string) {
-		this.filesApiService
+	protected deleteFile(id: string) {
+		this.notificationsFacadeService
 			.deleteFile(id)
-			.pipe(takeUntil(this.destroy$))
+			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.files = this.files.filter(file => file.id !== id);
 				this.changeDetectorRef.detectChanges();
 			});
 	}
 
-	sendMessage() {
-		if (this.mailForm.controls.subject.errors || this.mailForm.controls.text.errors) {
+	protected sendMessage() {
+		if (this.mailForm.controls.subject.errors) {
 			this.mailForm.markAllAsTouched();
 
 			return;
@@ -218,23 +227,24 @@ export class MailComponent implements OnInit, AfterViewInit, OnDestroy {
 				type: 0,
 				subject: this.mailForm.controls.subject.value,
 				text: this.mailForm.controls.text.value,
-				toUserIds: this.toUsers.map(user => user.id),
-				copyUserIds: this.toUsersCopy.map(user => user.id),
-				isPrivate: this.mailForm.controls.isPrivate.value || true,
-				replyToMessageId: this.replyToMessageId,
-				fileIds: this.files.map(file => file.id),
+				toUserIds: this.toUsers.map(user => user.id!),
+				copyUserIds: this.toUsersCopy.map(user => user.id!),
+				isPrivate: this.mailForm.controls.isPrivate.value!,
+				replyToMessageId: this.selectedMessageToReply?.id,
+				fileIds: this.files.map(file => file.id!),
 			})
-			.pipe()
+			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.notificationsStoreService.init(this.objectId);
+				this.notificationsFacadeService.loadSubjects(this.objectId).pipe(takeUntil(this.destroy$)).subscribe();
+				this.notificationsFacadeService.loadMessages(this.objectId, this.mailForm.controls.subject.value!).pipe(takeUntil(this.destroy$)).subscribe();
 				this.mailForm.reset();
 				this.toUsers = [];
 				this.toUsersCopy = [];
+				this.files = [];
 			});
 	}
 
-	public ngOnDestroy() {
-		this.destroy$.next();
-		this.destroy$.complete();
+	protected closeReply() {
+		this.selectedMessageToReply = undefined;
 	}
 }

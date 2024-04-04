@@ -1,0 +1,75 @@
+<ss-card class="invite">
+	<div class="header">
+		<ss-headline size="h3" weight="semi-bold">Подтверждение</ss-headline>
+	</div>
+    <div class="text" *ngIf="!cancelClick && !acceptClick">
+		<div>
+			<p>Вам пришел запрос на установление дружественной связи для совместной работы</p>
+		</div>
+    </div>
+
+	<div class="text" *ngIf="acceptClick && !cancelClick">
+		<div>
+			<p>Запрос на создание дружественной связи подтвержден</p>
+		</div>
+		<div>
+			<span class="accept-icon" nz-icon [nzType]="'ss:accept'"></span>
+		</div>
+	</div>
+
+	<div class="text" *ngIf="cancelClick && !acceptClick">
+		<div>
+			<p>Запрос на создание дружественной связи отклонен</p>
+		</div>
+		<div>
+			<span class="cancel-icon" nz-icon [nzType]="'ss:cancel'"></span>
+		</div>
+	</div>
+    <div>
+		<ng-container *ngIf="friendsAccount$ | async as user">
+			<ss-card class="personality">
+				<div class="personal">
+					<div class="img">
+						<img src="{{ user?.avatarUrl }}" alt="users" />
+					</div>
+					<div class="title">
+						<div class="fio">
+							<span>{{ user?.lastName }} {{ user?.firstName }} {{ user?.surName }}</span>
+						</div>
+						<div class="job">
+							<div>{{ user?.position }}</div>
+							<div>{{ user?.department }}</div>
+						</div>
+					</div>
+				</div>
+				<ng-container [ngSwitch]="user?.equType">
+					<div class="connection-type" *ngSwitchCase="1">
+						<span class="connect-icon" nz-icon [nzType]="'ss:oneConnect'"></span>
+						<span>Односторонняя связь (от имени друга)</span>
+					</div>
+					<div class="connection-type" *ngSwitchCase="2">
+						<span class="connect-icon" nz-icon [nzType]="'ss:oneConnect'"></span>
+						<span>Односторонняя связь (от моего имени)</span>
+					</div>
+					<div class="connection-type" *ngSwitchCase="3">
+						<span class="connect-icon" nz-icon [nzType]="'ss:twoWayConnect'"></span>
+						<span>Двусторонняя связь</span>
+					</div>
+				</ng-container>
+			</ss-card>
+		</ng-container>
+
+    </div>
+    <div class="buttons" *ngIf="!cancelClick && !acceptClick; else back">
+        <ss-button size="large" type="primary" (click)="acceptAddUser()">Подтвердить</ss-button>
+        <ss-button size="large" type="secondary" (click)="cancelAddUser()">Отклонить</ss-button>
+    </div>
+
+	<ng-template #back>
+		<div class="buttons">
+			<a href="/">
+				<ss-button size="large" type="primary">Перейти на главную страницу</ss-button>
+			</a>
+		</div>
+	</ng-template>
+</ss-card>

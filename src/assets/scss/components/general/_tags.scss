@@ -1,3 +1,11 @@
+.tag-selected-name {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
 .item-tag {
     display: inline-flex;
     padding: 0 16px;

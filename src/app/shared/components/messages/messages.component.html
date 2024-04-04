@@ -1,46 +1,76 @@
 <div class="header">
     <div class="tabs">
-        <ss-text size="1" weight="semi-bold">{{ (subject$ | async) || 'Все сообщения по клиенту' }}</ss-text>
+		<ss-tabs [asyncTabs]="tabs" (select)="selectTab($event)"></ss-tabs>
     </div>
     <ss-search-input class="search" size="small"></ss-search-input>
 </div>
-<div class="content" *ngIf="(messages$ | async); else noMessages"  #messages (scrollend)="loadMessages()">
-    <div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
-        <ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
-        <div class="message-content">
-            <div class="message-content-header">
-                <ss-text size="1" weight="semi-bold">{{message.author?.name}}</ss-text>
-                <div class="message-content-header-controls">
-                    <ss-icon name="{{ message.isPrivate ? 'lock' : 'unlock' }}"></ss-icon>
-                    <ss-icon name="more"></ss-icon>
-                </div>
-            </div>
-            <div class="message-content-object">
-                <ss-text size="2" *ngIf="message.toUsers?.length">
-					<b>Кому:</b>
- <span *ngFor="let user of message.toUsers"> {{ user.name }}</span>
-                </ss-text>
-                <ss-text size="2" *ngIf="message.copyUsers?.length">
-                    <b>Копия:</b>
- <span *ngFor="let user of message.copyUsers"> {{ user.name }}</span>
-                </ss-text>
-            </div>
-            <div class="message-content-blockquote" *ngIf="message.replyToMessage">
-                <div class="message-content-blockquote-author">
-					{{ message.replyToMessage.author?.name }}
-                </div>
-                <div class="message-content-blockquote-message" [innerHTML]="message.replyToMessage.text"></div>
-            </div>
-            <div class="message-content-text" [innerHTML]="message.text">
-            </div>
-			<div *ngIf="message.attachments?.length" class="files">
-				<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
+<div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="content">
+	<div *ngIf="(messages$ | async); else noMessages" class="content" (scrollend)="loadMessages()" #messages>
+		<div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
+			<ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
+			<div class="message-content">
+				<div class="message-content-header">
+					<ss-text size="1" weight="semi-bold">{{message.author?.name}}</ss-text>
+					<div class="message-content-header-controls">
+						<ss-icon name="{{ message.isPrivate ? 'lock' : 'unlock' }}"></ss-icon>
+						<ss-tooltip-menu icon="more">
+							<ss-caption size="1" (click)="replyTo(message, message.author!)">
+								<ss-icon name="reply"></ss-icon>Ответить
+							</ss-caption>
+							<ss-caption size="1" (click)="replyTo(message, message.author!, message.toUsers!)">
+								<ss-icon name="reply"></ss-icon>Ответить всем
+							</ss-caption>
+							<ss-caption size="1" (click)="changeVisibility(message)">
+								<ss-icon name="{{ message.isPrivate ? 'unlock' : 'lock' }}"></ss-icon>
+								{{ message.isPrivate ? 'Доступ только адресатам' : 'Доступ для всех' }}
+							</ss-caption>
+						</ss-tooltip-menu>
+					</div>
+				</div>
+				<div class="message-content-object">
+					<ss-text size="2" *ngIf="message.toUsers?.length">
+						<b>Кому:</b>
+	 <span *ngFor="let user of message.toUsers"> {{ user.name }}</span>
+					</ss-text>
+					<ss-text size="2" *ngIf="message.copyUsers?.length">
+						<b>Копия:</b>
+	 <span *ngFor="let user of message.copyUsers"> {{ user.name }}</span>
+					</ss-text>
+				</div>
+				<div class="message-content-blockquote" *ngIf="message.replyToMessage">
+					<div class="message-content-blockquote-author">
+						{{ message.replyToMessage.author?.name }}
+					</div>
+					<div class="message-content-blockquote-message" [innerHTML]="message.replyToMessage.text"></div>
+				</div>
+				<div class="message-content-text" [innerHTML]="message.text">
+				</div>
+				<div *ngIf="message.attachments?.length" class="files">
+					<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
+				</div>
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
+	<ng-template #noMessages>
+		<div class="no-content">
+			<ss-headline size="h3">Сообщений нет</ss-headline>
+		</div>
+	</ng-template>
 </div>
-<ng-template #noMessages>
-    <div class="no-content">
-        <ss-headline size="h3">Сообщений нет</ss-headline>
-    </div>
-</ng-template>
+<div *ngIf="selectedTab === CorrespondenceTabsEnum.Files">
+	<div *ngIf="(files$ | async); else noFiles" class="files-list">
+		<div *ngFor="let file of (files$ | async)?.items" class="files-list-item">
+			<ss-icon height="28" width="28" name="file" class="doc"></ss-icon>
+			<div class="files-list-item-content" (click)="downloadFile(file.directUrl!, file.fileName!)">
+				<ss-caption size="1" class="title">{{ file.fileName }}</ss-caption>
+				<ss-caption size="2" class="size">{{ file.size | ssFileSize }}</ss-caption>
+			</div>
+
+		</div>
+	</div>
+	<ng-template #noFiles>
+		<div class="no-content">
+			<ss-headline size="h3">Нет вложений</ss-headline>
+		</div>
+	</ng-template>
+</div>
