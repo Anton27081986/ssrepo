@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManagerComponent } from './manager.component';
+import { FrendlyAccountsComponent } from './frendly-accounts.component';
 
 describe('ManagerComponent', () => {
-	let component: ManagerComponent;
-	let fixture: ComponentFixture<ManagerComponent>;
+	let component: FrendlyAccountsComponent;
+	let fixture: ComponentFixture<FrendlyAccountsComponent>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [ManagerComponent],
+			declarations: [FrendlyAccountsComponent],
 		});
-		fixture = TestBed.createComponent(ManagerComponent);
+		fixture = TestBed.createComponent(FrendlyAccountsComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
