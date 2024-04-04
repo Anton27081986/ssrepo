@@ -24,7 +24,6 @@ export class FrendlyAccountsStoreService {
 		this.frendlyAccountsSubject.next(currentfrendlyAccounts);
 	}
 
-	// newItem: IFriendAccountDto,
 	public deleteFrendlyAccount(index: number) {
 		const currentfrendlyAccounts = this.frendlyAccountsSubject.getValue();
 		const frendlyAccountsItems = currentfrendlyAccounts;
