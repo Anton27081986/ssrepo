@@ -5,7 +5,6 @@
 	justify-content: center;
 	align-items: center;
 	background: center no-repeat url("/src/assets/images/logo/logo.svg");
-	// background: center no-repeat url("../../../../assets/images/background/login.svg");
 }
 
 .invite {
@@ -110,6 +109,8 @@
 
 	.connection-type {
 		margin-left: 73px;
+		margin-top: 8px;
+		line-height: 14px;
 
 		span:last-child {
 			font-size: 12px;

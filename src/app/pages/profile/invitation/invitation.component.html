@@ -42,14 +42,20 @@
 						</div>
 					</div>
 				</div>
-				<div class="connection-type">
-					<span class="connect-icon" nz-icon [nzType]="'ss:oneConnect'"></span>
-					<ng-container [ngSwitch]="user?.equType">
-						<span *ngSwitchCase="1">Односторонняя связь (от имени друга)</span>
-						<span *ngSwitchCase="2">Односторонняя связь (от моего имени)</span>
-						<span *ngSwitchCase="3">Двусторонняя связь </span>
-					</ng-container>
-				</div>
+				<ng-container [ngSwitch]="user?.equType">
+					<div class="connection-type" *ngSwitchCase="1">
+						<span class="connect-icon" nz-icon [nzType]="'ss:oneConnect'"></span>
+						<span>Односторонняя связь (от имени друга)</span>
+					</div>
+					<div class="connection-type" *ngSwitchCase="2">
+						<span class="connect-icon" nz-icon [nzType]="'ss:oneConnect'"></span>
+						<span>Односторонняя связь (от моего имени)</span>
+					</div>
+					<div class="connection-type" *ngSwitchCase="3">
+						<span class="connect-icon" nz-icon [nzType]="'ss:twoWayConnect'"></span>
+						<span>Двусторонняя связь</span>
+					</div>
+				</ng-container>
 			</ss-card>
 		</ng-container>
 
