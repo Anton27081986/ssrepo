@@ -45,4 +45,6 @@ export interface IClientItemDto {
 	 * Дата архивации, если в статусе \"Архивирован\"
 	 */
 	archiveDate?: string | null;
+	status: number;
+	isBaseManagerFired: boolean;
 }

@@ -5,7 +5,7 @@
           <li nz-menu-group [nzTitle]="titleTpl" [class]="subcategory.link ? 'url': 'no-url'">
             <ul>
               <li *ngFor="let subitem of subcategory.items" nz-menu-item [ngClass]="subitem.name.length > 50 ? 'long-text': ''">
-                <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
+                <a href="{{ subitem.link }}" target="_self">{{ subitem.name }}</a>
               </li>
             </ul>
           </li>
@@ -17,7 +17,7 @@
             </ng-container>
 
             <ng-container *ngIf="subcategory.link">
-                <a href="{{ subcategory.link }}" target="_blank" class="without-url">{{ subcategory.name }}</a>
+                <a href="{{ subcategory.link }}" target="_self" class="without-url">{{ subcategory.name }}</a>
             </ng-container>
           </span>
           </ng-template>

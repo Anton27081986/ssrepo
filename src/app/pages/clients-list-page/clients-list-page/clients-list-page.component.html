@@ -17,17 +17,17 @@
 			<div class="table-container">
 				<ss-table
 					[head]="[
-						{title: 'Код', fields: ['tovName'], link: 'detailUrl'},
-						{title: 'Категория', fields: ['source']},
-						{title: 'Клиент', fields: ['price', 'currency']},
-						{title: 'Контрагенты', fields: ['quantity', 'tovUnitName']},
-						{title: 'Менеджеры', fields: ['quantity', 'tovUnitName']},
-						{title: 'Статус', fields: ['quantity', 'tovUnitName']},
-						{title: 'Клиент без БМ', fields: ['quantity', 'tovUnitName']}
+						{title: 'Код', fields: ['code'], link: 'clientCardLink'},
+						{title: 'Категория', fields: ['category']},
+						{title: 'Клиент', fields: ['clientName']},
+						{title: 'Контрагенты', fields: ['contractors']},
+						{title: 'Менеджеры', fields: ['managers']},
+						{title: 'Статус', fields: ['status']},
+						{title: 'Клиент без БМ', fields: ['withoutManager']}
 						]"
 					[items]="tableItems">
 				</ss-table>
-				<div class="pagination">
+				<div class="pagination" style="justify-content: flex-end">
 					<nz-pagination
 						[nzTotal]="total"
 						[nzPageIndex]="pageIndex"
