@@ -60,18 +60,18 @@ export class ClientsListPageComponent implements OnInit {
 				const items = response.items.map(x => {
 					const tableItem: IClientTableItem = {} as IClientTableItem;
 
-					tableItem.code = x.id !== undefined ? x.id.toString() : '';
-					tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '';
-					tableItem.category = x.category?.name ?? '';
-					tableItem.clientName = x.name ?? '';
+					tableItem.code = x.id !== undefined ? x.id.toString() : '-';
+					tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '-';
+					tableItem.category = x.category?.name ?? '-';
+					tableItem.clientName = x.name ?? '-';
 					tableItem.contractors = x.contractors
 						? x.contractors.map(c => c.name).join(', ')
-						: '';
+						: '-';
 
-					tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '';
+					tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
 					tableItem.status =
 						this.clientsListFacade.statusOptions.find(option => option.id === x.id)
-							?.name ?? '';
+							?.name ?? '-';
 
 					tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
 
@@ -79,7 +79,6 @@ export class ClientsListPageComponent implements OnInit {
 				});
 
 				this.tableItems = <ITableItem[]>(<unknown>items);
-				console.log(items);
 			}
 
 			if (response.total) {
@@ -97,8 +96,6 @@ export class ClientsListPageComponent implements OnInit {
 	public getFilteredClients() {
 		if (this.filtersForm.valid) {
 			const filter = this.getFilter();
-
-			console.log(filter);
 
 			this.clientsListFacade.applyFilters(filter);
 		}
@@ -129,5 +126,17 @@ export class ClientsListPageComponent implements OnInit {
 		this.pageIndex = $event;
 
 		this.clientsListFacade.applyFilters(this.getFilter());
+	}
+
+	public clearFilter() {
+		this.filtersForm.reset({
+			code: [],
+			category: [],
+			client: [],
+			manager: [],
+			contractor: [],
+			status: [6],
+			withoutBaseManager: [false],
+		});
 	}
 }

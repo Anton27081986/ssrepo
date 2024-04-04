@@ -15,4 +15,18 @@
 		min-width: 300px;
 		flex-shrink: 0;
 	}
+
+	.pagination {
+		justify-content: flex-end;
+	}
+
+	hr {
+		margin-right: -25px;
+		margin-left: -25px;
+		margin-bottom: 5px;
+	}
+
+	.ant-card-bordered {
+		border-radius: 16px;
+	}
 }

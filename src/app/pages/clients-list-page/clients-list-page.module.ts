@@ -18,6 +18,8 @@ import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomple
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page/clients-list-page.component';
 import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
+import { LinkModule } from "@app/shared/components/link/link.module";
+import { IconModule } from "@app/shared/components/icon/icon.module";
 
 @NgModule({
 	declarations: [ClientsListPageComponent],
@@ -40,6 +42,8 @@ import { ClientsListPageRoutingModule } from './clients-list-page-routing.module
 		AutocompleteSelectFieldModule,
 		NzRadioModule,
 		FormsModule,
-	],
+		LinkModule,
+		IconModule
+	]
 })
 export class ClientsListPageModule {}

@@ -3,16 +3,17 @@
 		<div class="title">
 			<ss-headline size="h3">Список клиентов</ss-headline>
 		</div>
-		<div class="filter-button">
+		<div class="filter-button" *ngIf="!isFiltersVisible">
 			<ss-button size="small"
 					   type="outline"
 					   (click)="toggleFilters()">
-				Фильтры
+				<ss-icon height="20" width="20" name="filter" class="filter"></ss-icon>
+				<span>Фильтры</span>
 			</ss-button>
 		</div>
 
 	</div>
-	<div class="table-with-filters">
+	<div class="table-with-filters m-b-40">
 		<div class="table m-r-15">
 			<div class="table-container">
 				<ss-table
@@ -48,11 +49,22 @@
 					  nzLayout="vertical"
 					  class="form">
 					<nz-form-item>
-						<ss-caption size="1">Код</ss-caption>
+						<div style="display: flex; justify-content: space-between; align-items: center">
+							<ss-caption size="1" class="m-b-5">Выбранные</ss-caption>
+							<div style="display: flex; flex-wrap: nowrap; align-items: center">
+								<ss-button type="quaternary" size="small" (click)="clearFilter()">Очистить всё</ss-button>
+								<ss-icon height="8" width="8" name="iconClose" class="close" (click)="clearFilter()"></ss-icon>
+							</div>
+						</div>
+					</nz-form-item>
+					<hr />
+					<nz-form-item>
+						<ss-caption size="1" class="m-b-5">Код</ss-caption>
 						<nz-form-control>
 							<ss-input size="medium" formControlName="code" placeholder="Введите код"></ss-input>
 						</nz-form-control>
 					</nz-form-item>
+					<hr />
 					<nz-form-item>
 						<ss-autocomplete-select-field
 							formControlName="category"
@@ -62,21 +74,14 @@
 							[url]="clientsListFacade.categoriesUrl">
 						</ss-autocomplete-select-field>
 					</nz-form-item>
+					<hr />
 					<nz-form-item>
-						<ss-caption size="1">Клиент</ss-caption>
+						<ss-caption size="1" class="m-b-5">Клиент</ss-caption>
 						<nz-form-control>
 							<ss-input size="medium" formControlName="client" placeholder="Введите ФИО клиента"></ss-input>
 						</nz-form-control>
 					</nz-form-item>
-					<nz-form-item>
-						<ss-autocomplete-select-field
-							formControlName="manager"
-							[label]="'Менеджеры'"
-							[placeholder]="'Выберите менеджера'"
-							[needSearch]="true"
-							[url]="clientsListFacade.managerUrl">
-						</ss-autocomplete-select-field>
-					</nz-form-item>
+					<hr />
 					<nz-form-item>
 						<ss-autocomplete-select-field
 							formControlName="contractor"
@@ -86,6 +91,17 @@
 							[url]="clientsListFacade.contractorUrl">
 						</ss-autocomplete-select-field>
 					</nz-form-item>
+					<hr />
+					<nz-form-item>
+						<ss-autocomplete-select-field
+							formControlName="manager"
+							[label]="'Менеджеры'"
+							[placeholder]="'Выберите менеджера'"
+							[needSearch]="true"
+							[url]="clientsListFacade.managerUrl">
+						</ss-autocomplete-select-field>
+					</nz-form-item>
+					<hr />
 					<nz-form-item>
 						<ss-autocomplete-select-field
 							formControlName="status"
@@ -94,17 +110,19 @@
 							[selectOptions]="clientsListFacade.statusOptions">
 						</ss-autocomplete-select-field>
 					</nz-form-item>
+					<hr />
 					<nz-form-item>
-						<ss-caption size="1">Клиент без БМ</ss-caption>
+						<ss-caption size="1" class="m-b-5">Клиент без БМ</ss-caption>
 						<nz-radio-group
 							formControlName="withoutBaseManager">
 							<label nz-radio [nzValue]="true">Да</label>
 							<label nz-radio [nzValue]="false">Нет</label>
 						</nz-radio-group>
 					</nz-form-item>
+					<hr />
 
 					<nz-form-item>
-						<ss-button class="desktop"
+						<ss-button class="desktop m-t-10"
 								   size="large"
 								   type="primary"
 								   (click)="getFilteredClients()">
@@ -112,12 +130,15 @@
 						</ss-button>
 					</nz-form-item>
 
+
 				</form>
 
 			</nz-card>
 
 			<ng-template #extraTemplate>
-				<a (click)="toggleFilters()">Close</a>
+				<a (click)="toggleFilters()">
+					<ss-icon height="20" width="20" name="logout" class="filter"></ss-icon>
+				</a>
 			</ng-template>
 
 

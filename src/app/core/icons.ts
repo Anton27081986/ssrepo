@@ -635,4 +635,17 @@ export class AppIcons {
 		'<path d="M24 24L44 44" stroke="#EE1C25" stroke-width="2" stroke-linecap="round"/>\n' +
 		'<path d="M44 24L24 44" stroke="#EE1C25" stroke-width="2" stroke-linecap="round"/>\n' +
 		'</svg>';
+
+	public static filter =
+		'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M4.05078 1.5752H13.9508C14.7758 1.5752 15.4508 2.2502 15.4508 3.0752V4.7252C15.4508 5.3252 15.0758 6.0752 14.7008 6.4502L11.4758 9.30019C11.0258 9.67519 10.7258 10.4252 10.7258 11.0252V14.2502C10.7258 14.7002 10.4258 15.3002 10.0508 15.5252L9.00078 16.2002C8.02578 16.8002 6.67578 16.1252 6.67578 14.9252V10.9502C6.67578 10.4252 6.37578 9.7502 6.07578 9.3752L3.22578 6.3752C2.85078 6.0002 2.55078 5.3252 2.55078 4.8752V3.1502C2.55078 2.2502 3.22578 1.5752 4.05078 1.5752Z" stroke="#6D7885" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.1975 1.5752L4.5 7.5002" stroke="#6D7885" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
+	public static logout =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M7.81634 14.5332L9.94967 16.6665L12.083 14.5332" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M9.9502 8.13281L9.95019 16.6078" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M5 4L15 4" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
 }

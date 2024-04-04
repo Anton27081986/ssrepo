@@ -6,7 +6,14 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
-	@Input() public type: 'primary' | 'secondary' | 'muted' | 'tertiary' | 'outline' = 'primary';
+	@Input() public type:
+		| 'primary'
+		| 'secondary'
+		| 'muted'
+		| 'tertiary'
+		| 'quaternary'
+		| 'outline' = 'primary';
+
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 }
