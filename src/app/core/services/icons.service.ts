@@ -64,5 +64,7 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:twoWayConnect', AppIcons.twoWayConnect);
 		this.nzIconService.addIconLiteral('ss:accept', AppIcons.accept);
 		this.nzIconService.addIconLiteral('ss:cancel', AppIcons.cancel);
+		this.nzIconService.addIconLiteral('ss:filter', AppIcons.filter);
+		this.nzIconService.addIconLiteral('ss:logout', AppIcons.logout);
 	}
 }

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
-import { MainComponent } from './shared/layouts/main/main.component';
-import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
+import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
+import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
+import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
 	{
 		path: '',
-		component: MainComponent,
+		component: FullLayoutComponent,
 		canActivate: [AuthGuard],
 		children: [
 			{
@@ -16,20 +17,8 @@ const routes: Routes = [
 				loadChildren: () => import('./pages/start/start.module').then(m => m.StartModule),
 			},
 			{
-				path: 'clients-list',
-				loadChildren: () =>
-					import('./pages/clients-list/clients-list.module').then(
-						m => m.ClientsListModule,
-					),
-			},
-			{
-				path: 'client-card',
-				loadChildren: () =>
-					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
-			},
-			{
 				path: '',
-				component: WrapperComponent,
+				component: EmptyLayoutComponent,
 				children: [
 					{
 						path: 'partners',
@@ -44,6 +33,25 @@ const routes: Routes = [
 							import('./pages/profile/profile.module').then(m => m.ProfileModule),
 					},
 				],
+			},
+		],
+	},
+	{
+		path: '',
+		component: WithoutFooterLayoutComponent,
+		canActivate: [AuthGuard],
+		children: [
+			{
+				path: 'clients-list',
+				loadChildren: () =>
+					import('@app/pages/clients-list-page/clients-list-page.module').then(
+						m => m.ClientsListPageModule,
+					),
+			},
+			{
+				path: 'client-card',
+				loadChildren: () =>
+					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
 			},
 		],
 	},

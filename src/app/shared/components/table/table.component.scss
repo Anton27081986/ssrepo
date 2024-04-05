@@ -2,8 +2,9 @@
 
 table {
 	width: 100%;
+	table-layout: auto;
 	background-color: $island;
-	max-width: 1280px;
+//	max-width: 1280px;
 	border-radius: 16px;
 	border-style: hidden;
 	box-shadow: 0 0 0 1px $island-outline;
@@ -14,9 +15,9 @@ table {
 				text-align: left;
 				background-color: #F2F3F7;
 				padding: 13px 20px;
-				min-width: 150px;
+				//min-width: 30px;
 				border: 1px solid $island-outline;
-				font-size: 16px;
+				font-size: 14px;
 				font-weight: 700;
 				line-height: 19px;
 				letter-spacing: -0.01em;
@@ -36,19 +37,22 @@ table {
 	tr {
 		td {
 			padding: 13px 20px;
-			font-size: 16px;
+			font-size: 12px;
 			color: $text;
-			font-weight: 600;
-			white-space: nowrap;
+
+			font-weight: 400;
+			//white-space: nowrap;
+			max-height: 300px;
 			overflow: hidden;
 			text-overflow: ellipsis;
-			max-width: 700px;
+			max-width: 200px;
+			word-break: break-word;
 			border: 1px solid $island-outline;
 
 			a {
-				font-size: 16px;
-				color: $text;
-				font-weight: 600;
+				font-size: 14px;
+				color: $main-outline ;
+				font-weight: 400;
 				opacity: 0.7;
 				text-align: left;
 				cursor: pointer;
@@ -60,6 +64,8 @@ table {
 		}
 	}
 }
+
+
 
 :host-context(.dark) table {
 	background-color: $dark-island;

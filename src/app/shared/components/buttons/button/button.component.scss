@@ -67,10 +67,16 @@ button.tertiary {
 	color: $text;
 }
 
-button.outline {
-	background-color: $island;
-	border-color: $text;
+button.quaternary {
+	border: none;
+	background-color: transparent;
 	color: $text;
+}
+
+button.outline {
+	background-color: transparent;
+	border-color: $lite-text;
+	color: $lite-text;
 }
 
 button:disabled {

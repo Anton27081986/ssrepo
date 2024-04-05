@@ -12,8 +12,8 @@ import { IResponse } from '@app/core/utils/response';
 	providedIn: 'root',
 })
 export class ClientsListFacadeService {
-	public categoriesUrl = `${environment.apiUrl}/api/company/clients/categories`;
-	public contractorUrl = `${environment.apiUrl}/api/company/clients/contractors`;
+	public categoriesUrl = `${environment.apiUrl}/api/company/dictionary/categories`;
+	public contractorUrl = `${environment.apiUrl}/api/company/dictionary/contractors`;
 	public managerUrl = `${environment.apiUrl}/api/auth/users/search`;
 
 	public statusOptions = [

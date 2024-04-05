@@ -16,14 +16,16 @@ import { PasswordModule } from '@app/shared/components/inputs/password/password.
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { ClientsListComponent } from './clients-list/clients-list.component';
-import { ClientsListRoutingModule } from './clients-list-routing.module';
+import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page/clients-list-page.component';
+import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
+import { LinkModule } from "@app/shared/components/link/link.module";
+import { IconModule } from "@app/shared/components/icon/icon.module";
 
 @NgModule({
-	declarations: [ClientsListComponent],
+	declarations: [ClientsListPageComponent],
 	imports: [
 		CommonModule,
-		ClientsListRoutingModule,
+		ClientsListPageRoutingModule,
 		ButtonModule,
 		CaptionModule,
 		CardModule,
@@ -40,6 +42,8 @@ import { ClientsListRoutingModule } from './clients-list-routing.module';
 		AutocompleteSelectFieldModule,
 		NzRadioModule,
 		FormsModule,
-	],
+		LinkModule,
+		IconModule
+	]
 })
-export class ClientsListModule {}
+export class ClientsListPageModule {}
