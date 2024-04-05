@@ -15,8 +15,9 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ComponentsModule } from '@app/components/components.module';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { FrendlyAccountsComponent } from '@app/pages/profile/frendly-accounts/frendly-accounts.component';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
+import { FriendlyAccountsPageComponent } from '@app/pages/profile/friendly-accounts-page/friendly-accounts-page.component';
+import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -34,7 +35,7 @@ import { InvitationComponent } from './invitation/invitation.component';
 		SettingsComponent,
 		ChangePasswordComponent,
 		MyMenuComponent,
-		FrendlyAccountsComponent,
+		FriendlyAccountsPageComponent,
 		InvitationComponent,
 		OrderWidgetsComponent,
 		NotificationsComponent,
@@ -60,6 +61,7 @@ import { InvitationComponent } from './invitation/invitation.component';
 		NzModalModule,
 		NzSelectModule,
 		HeadlineModule,
+		AutocompleteSelectFieldModule,
 	],
 })
 export class ProfileModule {}

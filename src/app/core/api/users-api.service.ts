@@ -3,6 +3,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { IResponse } from '@app/core/utils/response';
+import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -22,8 +24,10 @@ export class UsersApiService {
 		return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings`);
 	}
 
-	public getCurrentUserFriendsAccounts(): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/friends`);
+	public getCurrentUserFriendsAccounts() {
+		return this.http.get<IResponse<IFriendAccountDto>>(
+			`${environment.apiUrl}/api/auth/users/friends`,
+		);
 	}
 
 	/** Получение пользователя по id */

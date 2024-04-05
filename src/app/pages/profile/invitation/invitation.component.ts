@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FrendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { Observable } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FrendlyAccountsStoreService } from '@app/core/states/frendly-accounts-store.service';
+import { FriendlyAccountsStoreService } from '@app/core/states/friendly-accounts-store.service';
+import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -21,8 +21,8 @@ export class InvitationComponent implements OnInit {
 	private tokenAccept!: string;
 
 	constructor(
-		private readonly profileFacadeService: FrendlyAccountsFacadeService,
-		private readonly frendlyAccountsStoreService: FrendlyAccountsStoreService,
+		private readonly profileFacadeService: FriendlyAccountsFacadeService,
+		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService,
 		private readonly activateRoute: ActivatedRoute,
 		private readonly router: Router,
 	) {}
@@ -39,15 +39,15 @@ export class InvitationComponent implements OnInit {
 
 	public acceptAddUser() {
 		this.acceptClick = true;
-		this.profileFacadeService.acceptAddUsersInListFrendlyLogins(this.tokenAccept, true);
+		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(this.tokenAccept, true);
 
 		this.friendsAccount$.pipe(untilDestroyed(this)).subscribe(item => {
-			this.frendlyAccountsStoreService.addfrendlyAccounts(item);
+			this.friendlyAccountsStoreService.addFriendlyAccount(item);
 		});
 	}
 
 	public cancelAddUser() {
 		this.cancelClick = true;
-		this.profileFacadeService.acceptAddUsersInListFrendlyLogins(this.tokenAccept, false);
+		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(this.tokenAccept, false);
 	}
 }

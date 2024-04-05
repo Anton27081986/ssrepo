@@ -8,7 +8,7 @@ import { IFriendAccountDto } from '@app/core/models/friend-account-dto';
 @Injectable({
 	providedIn: 'root',
 })
-export class UsersEqusService {
+export class UsersRelationsApiService {
 	public constructor(private readonly http: HttpClient) {}
 
 	public getEQUsTypes(): Observable<IResponse<IFriendAccountDto>> {
@@ -17,14 +17,11 @@ export class UsersEqusService {
 		);
 	}
 
-	public addEQUsUsers(
-		usersIds: number[],
-		type: number,
-	): Observable<IResponse<IFriendAccountDto>> {
-		return this.http.post<IResponse<IFriendAccountDto>>(
-			`${environment.apiUrl}/api/auth/usersEQUs/addEQUsUsers`,
-			{ usersIds, type },
-		);
+	public addEQUsUsers(usersIds: number[], type: number) {
+		return this.http.post(`${environment.apiUrl}/api/auth/usersEQUs/addEQUsUsers`, {
+			usersIds,
+			type,
+		});
 	}
 
 	public getEQUUser(token: string): Observable<IResponse<IFriendAccountDto>> {
@@ -43,7 +40,7 @@ export class UsersEqusService {
 		});
 	}
 
-	public removeEQUsUsersById(deleteUserId: number): Observable<any> {
+	public removeEQUsUsersById(deleteUserId: number) {
 		return this.http.delete<any[]>(`${environment.apiUrl}/api/auth/users/friends/`, {
 			params: new HttpParams().set('deleteUserId', deleteUserId),
 		});

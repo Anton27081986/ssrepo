@@ -20,14 +20,14 @@ const routes: Routes = [
 				title: 'Основная информация',
 			},
 			{
-				path: 'frendly-accounts',
+				path: 'friendly-accounts',
 				loadChildren: () =>
-					import('./frendly-accounts/frendly-accounts.module').then(
-						m => m.FrendlyAccountsModule,
+					import('./friendly-accounts-page/friendly-accounts-page.module').then(
+						m => m.FriendlyAccountsModule,
 					),
 			},
 			{
-				path: 'frendly-accounts/invite',
+				path: 'friendly-accounts/invite',
 				loadChildren: () =>
 					import('./invitation/invitation.module').then(m => m.InvitationModule),
 			},

@@ -4,12 +4,15 @@
 
 <div class="content">
     <div class="top-panel">
-        <ss-search
-            [placeholder]="'Поиск по сотрудникам'"
-            [closeIcon]="false"
-            [searchIcon]="true"
-            (input)="filterItems($event)"
-        ></ss-search>
+<!--        <ss-search-->
+<!--            [placeholder]="'Поиск по сотрудникам'"-->
+<!--            [closeIcon]="false"-->
+<!--            [searchIcon]="true"-->
+<!--            (input)="filterItems($event)"-->
+<!--        ></ss-search>-->
+
+		<ss-autocomplete-select-field></ss-autocomplete-select-field>
+
         <ss-button size="medium" type="primary"
             (click)="showModal()"
         >Добавить</ss-button>
@@ -34,7 +37,7 @@
                             </div>
                         </div>
                         <div class="icons">
-                            <div class="delete" (click)="deleteFrendlyAccount(item?.id, i);">
+                            <div class="delete" (click)="deleteFriendlyAccount(item?.id!, i);">
                                 <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
                             </div>
                         </div>
@@ -92,9 +95,9 @@
             <ng-template #notFoundUserTmpl></ng-template>
             <ng-template #selectUserTmpl></ng-template>
 
-            <div *ngIf="partyFrendlyAccountsSelectedTags.length>0">
+            <div *ngIf="partyFriendlyAccountsSelectedTags.length>0">
               <div class="tag-selected-name">
-                <ng-container *ngFor="let party of partyFrendlyAccountsSelectedTags; index as i">
+                <ng-container *ngFor="let party of partyFriendlyAccountsSelectedTags; index as i">
                   <div class="item-tag">
                     <span>{{ party?.name }}</span>
                     <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:close'" (click)="deleteTagUser(i)"></span>

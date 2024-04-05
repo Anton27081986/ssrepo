@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FrendlyAccountsComponent } from '@app/pages/profile/frendly-accounts/frendly-accounts.component';
+import { FriendlyAccountsPageComponent } from './friendly-accounts-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: FrendlyAccountsComponent,
+		component: FriendlyAccountsPageComponent,
 		children: [
 			{
 				path: 'invitation',
@@ -20,4 +20,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class FrendlyAccountsRoutingModule {}
+export class FriendlyAccountsRoutingModule {}

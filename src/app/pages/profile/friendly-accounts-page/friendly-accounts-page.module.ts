@@ -8,13 +8,13 @@ import { PasswordModule } from '@app/shared/components/inputs/password/password.
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { CardModule } from '../../../shared/components/card/card.module';
-import { FrendlyAccountsRoutingModule } from './frendly-accounts-routing.module';
+import { FriendlyAccountsRoutingModule } from './friendly-accounts-page-routing.module';
 
 @NgModule({
 	declarations: [],
 	imports: [
 		CommonModule,
-		FrendlyAccountsRoutingModule,
+		FriendlyAccountsRoutingModule,
 		CardModule,
 		IconModule,
 		HeadlineModule,
@@ -24,4 +24,4 @@ import { FrendlyAccountsRoutingModule } from './frendly-accounts-routing.module'
 		ButtonModule,
 	],
 })
-export class FrendlyAccountsModule {}
+export class FriendlyAccountsModule {}
