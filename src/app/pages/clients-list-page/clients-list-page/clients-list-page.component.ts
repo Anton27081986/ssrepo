@@ -51,6 +51,7 @@ export class ClientsListPageComponent implements OnInit {
 	) {}
 
 	public ngOnInit(): void {
+		this.tableState = TableState.Loading;
 		this.filtersForm = this.formBuilder.group({
 			code: [],
 			category: [],
@@ -103,6 +104,8 @@ export class ClientsListPageComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
+		this.tableState = TableState.Loading;
+
 		if (this.filtersForm.valid) {
 			const filter = this.getFilter();
 

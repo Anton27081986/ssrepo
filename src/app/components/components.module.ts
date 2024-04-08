@@ -155,6 +155,7 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		AddressBookComponent,
 		TransportComponent,
 		AllSearchComponent,
-	],
+		LoaderComponent
+	]
 })
 export class ComponentsModule {}

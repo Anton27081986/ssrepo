@@ -46,10 +46,9 @@
 						<ss-text [size]="'3'">Попробуйте изменить параметры поиска</ss-text>
 					</div>
 				</ss-empty-placeholder>
-
 			</div>
-			<div>
-
+			<div class="table-container" *ngIf="tableState === TableState.Loading">
+				<app-loader></app-loader>
 			</div>
 		</div>
 
