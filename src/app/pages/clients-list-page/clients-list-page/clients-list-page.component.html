@@ -15,7 +15,7 @@
 	</div>
 	<div class="content desktop table-with-filters m-b-40">
 		<div class="table m-r-15">
-			<div class="table-container">
+			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
 					[head]="[
 						{title: 'Код', fields: ['code'], link: 'clientCardLink'},
@@ -39,6 +39,18 @@
 					</nz-pagination>
 				</div>
 			</div>
+			<div class="table-container" *ngIf="tableState === TableState.Empty">
+				<ss-empty-placeholder>
+					<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+					<div class="placeholder-subtitle">
+						<ss-text [size]="'3'">Попробуйте изменить параметры поиска</ss-text>
+					</div>
+				</ss-empty-placeholder>
+
+			</div>
+			<div>
+
+			</div>
 		</div>
 
 		<div class="filters"
@@ -61,7 +73,10 @@
 					<nz-form-item>
 						<ss-caption size="1" class="m-b-5">Код</ss-caption>
 						<nz-form-control>
-							<ss-input size="medium" formControlName="code" placeholder="Введите код"></ss-input>
+							<ss-input size="medium"
+							          type="number"
+							          formControlName="code"
+							          placeholder="Введите код"></ss-input>
 						</nz-form-control>
 					</nz-form-item>
 					<hr />

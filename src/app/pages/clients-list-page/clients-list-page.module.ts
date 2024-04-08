@@ -20,6 +20,8 @@ import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-l
 import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
 import { LinkModule } from "@app/shared/components/link/link.module";
 import { IconModule } from "@app/shared/components/icon/icon.module";
+import { EmptyPlaceholderModule } from "@app/shared/components/empty-placeholder/empty-placeholder.module";
+import { TextModule } from "@app/shared/components/typography/text/text.module";
 
 @NgModule({
 	declarations: [ClientsListPageComponent],
@@ -43,7 +45,9 @@ import { IconModule } from "@app/shared/components/icon/icon.module";
 		NzRadioModule,
 		FormsModule,
 		LinkModule,
-		IconModule
+		IconModule,
+		EmptyPlaceholderModule,
+		TextModule
 	]
 })
 export class ClientsListPageModule {}
