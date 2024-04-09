@@ -5,10 +5,10 @@
 				<nz-form-control>
 					<nz-input-group [nzSuffix]="prefixSearch">
 						<input type="text"
-									 nz-input
-									 formControlName="search"
-									 placeholder="{{ placeholder }}"
-									 (keyup.enter)="loadSearchUsers()" />
+							   nz-input
+							   formControlName="search"
+							   placeholder="{{ placeholder }}"
+							   (keyup.enter)="loadSearchUsers()" />
 					</nz-input-group>
 				</nz-form-control>
 				<ng-template #prefixSearch>
@@ -22,10 +22,10 @@
 	<ng-container *ngIf="showWindowResult">
 		<ng-container *ngIf="searchedUsers as users">
 			<div class="result">
-				<ss-result-item
+				<ss-result-search-with-auth
 					*ngFor="let user of users"
 					[user]="user"
-				></ss-result-item>
+				></ss-result-search-with-auth>
 			</div>
 		</ng-container>
 	</ng-container>

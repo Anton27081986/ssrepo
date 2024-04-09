@@ -6,8 +6,8 @@ import { environment } from '@environments/environment';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FrendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
+import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +27,7 @@ export class ProfilePopupComponent implements OnInit {
 		private readonly apiService: UsersApiService,
 		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
-		private readonly frendlyAccountsFacadeService: FrendlyAccountsFacadeService,
+		private readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,
 		private readonly cd: ChangeDetectorRef,
 	) {}
 
@@ -43,12 +43,11 @@ export class ProfilePopupComponent implements OnInit {
 	}
 
 	public setFriendsAccount() {
-		this.frendlyAccountsFacadeService.setFriendsAccountsForCurrentUser();
+		this.friendlyAccountsFacadeService.setFriendsAccountsForCurrentUser();
 	}
 
 	private getAccountsFriends() {
-		this.frendlyAccountsFacadeService
-			.getFriendsAccountsForCurrentUser()
+		this.friendlyAccountsFacadeService.friendlyAccounts$
 			.pipe(untilDestroyed(this))
 			.subscribe(item => {
 				this.friendsAccount = item;

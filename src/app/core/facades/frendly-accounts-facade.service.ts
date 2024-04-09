@@ -1,55 +1,69 @@
 import { Injectable } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
-import { UsersEqusService } from '@app/core/api/users-equs.service';
+import { UsersRelationsApiService } from '@app/core/api/users-relations-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FrendlyAccountsStoreService } from '@app/core/states/frendly-accounts-store.service';
-import { map } from 'rxjs';
+import { FriendlyAccountsStoreService } from '@app/core/states/friendly-accounts-store.service';
+import { map, Observable, tap } from 'rxjs';
+import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
-export class FrendlyAccountsFacadeService {
-	constructor(
-		private readonly apiService: UsersApiService,
-		private readonly usersEqusService: UsersEqusService,
-		private readonly frendlyAccountsStoreService: FrendlyAccountsStoreService,
-	) {}
+export class FriendlyAccountsFacadeService {
+	public friendlyAccounts$: Observable<IFriendAccountDto[] | null>;
 
-	public getFriendsAccountsForCurrentUser() {
-		return this.frendlyAccountsStoreService.getFriendsAccountsForCurrentUser();
+	public constructor(
+		private readonly usersApiService: UsersApiService,
+		private readonly usersRelationsApiService: UsersRelationsApiService,
+		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService,
+	) {
+		this.friendlyAccounts$ = this.friendlyAccountsStoreService.friendlyAccounts$;
+
+		this.setFriendsAccountsForCurrentUser();
 	}
 
 	public setFriendsAccountsForCurrentUser() {
-		this.apiService
+		this.usersApiService
 			.getCurrentUserFriendsAccounts()
 			.pipe(
 				map(({ items }) => items),
 				untilDestroyed(this),
 			)
-			.subscribe(item => {
-				this.frendlyAccountsStoreService.setFriendsAccountsForCurrentUser(item);
+			.subscribe(accounts => {
+				this.friendlyAccountsStoreService.setFriendsAccountsForCurrentUser(accounts);
 			});
 	}
 
-	public addUsersInListFrendlyLogins(usersIds: number[], type: number) {
-		this.usersEqusService.addEQUsUsers(usersIds, type).pipe(untilDestroyed(this)).subscribe();
+	public addUsersInListFriendlyLogins(usersIds: number[], type: number) {
+		this.usersRelationsApiService
+			.addRelationsUsers(usersIds, type)
+			.pipe(
+				tap(item => {
+					this.friendlyAccountsStoreService.addFriendlyAccount(item);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 	}
 
-	public acceptAddUsersInListFrendlyLogins(token: string, isConfirm: boolean) {
-		this.usersEqusService
-			.сonfirmEQUsUsers(token, isConfirm)
+	public acceptAddUsersInListFriendlyLogins(token: string, isConfirm: boolean) {
+		this.usersRelationsApiService
+			.confirmRelationsUsers(token, isConfirm)
 			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
 
 	public getUserForAccet(token: string) {
-		return this.usersEqusService.getEQUUser(token).pipe(untilDestroyed(this));
+		return this.usersRelationsApiService.getRelationsUser(token).pipe(untilDestroyed(this));
 	}
 
-	public removeEQUsUsersById(id: number, index: number) {
-		this.frendlyAccountsStoreService.deleteFrendlyAccount(index);
+	public removeRelationsUsersById(id: number, index: number) {
+		this.friendlyAccountsStoreService.deleteFriendlyAccount(index);
 
-		this.usersEqusService.removeEQUsUsersById(id).pipe(untilDestroyed(this)).subscribe();
+		this.usersRelationsApiService
+			.removeRelationsUsersById(id)
+			.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 }

@@ -1,13 +1,13 @@
 <form>
 	<ss-caption size="1">{{ label }}</ss-caption>
 	<div class="input" [ngClass]="{'dropdown': foundUsers.length}">
-		<div class="chips" *ngFor="let user of selectedUsers">
+		<div class="chips" *ngFor="let user of selectedUsers;  index as i">
 			<ss-avatar size="xs" [src]="user?.avatarUrl"></ss-avatar>
 			<ss-text size="3">{{ user.name }}</ss-text>
-			<ss-icon height="10" width="10" name="iconClose" (click)="onRemoveUserFromList(user)"></ss-icon>
+			<ss-icon height="10" width="10" name="iconClose" (click)="onRemoveUserFromList(user, i)"></ss-icon>
 		</div>
 		<input type="text"
-			   placeholder="Введите ФИО"
+			   [placeholder]="placeholder"
 			   [disabled]="disabled"
 			   class="{{ error ? size + ' error' : size }}"
 			   (input)="onInputChange(input.value)"

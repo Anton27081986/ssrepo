@@ -8,42 +8,39 @@ import { IFriendAccountDto } from '@app/core/models/friend-account-dto';
 @Injectable({
 	providedIn: 'root',
 })
-export class UsersEqusService {
+export class UsersRelationsApiService {
 	public constructor(private readonly http: HttpClient) {}
 
-	public getEQUsTypes(): Observable<IResponse<IFriendAccountDto>> {
+	public getRelationsTypes(): Observable<IResponse<IFriendAccountDto>> {
 		return this.http.get<IResponse<IFriendAccountDto>>(
-			`${environment.apiUrl}/api/auth/usersEQUs/getEQUsTypes`,
+			`${environment.apiUrl}/api/auth/UsersRelations/Types`,
 		);
 	}
 
-	public addEQUsUsers(
-		usersIds: number[],
-		type: number,
-	): Observable<IResponse<IFriendAccountDto>> {
-		return this.http.post<IResponse<IFriendAccountDto>>(
-			`${environment.apiUrl}/api/auth/usersEQUs/addEQUsUsers`,
-			{ usersIds, type },
-		);
+	public addRelationsUsers(usersIds: number[], type: number) {
+		return this.http.post(`${environment.apiUrl}/api/auth/usersRelations`, {
+			usersIds,
+			type,
+		});
 	}
 
-	public getEQUUser(token: string): Observable<IResponse<IFriendAccountDto>> {
+	public getRelationsUser(token: string): Observable<IResponse<IFriendAccountDto>> {
 		return this.http.get<IResponse<IFriendAccountDto>>(
-			`${environment.apiUrl}/api/auth/usersEQUs/getEQUUser`,
+			`${environment.apiUrl}/api/auth/UsersRelations/User`,
 			{
 				params: new HttpParams().set('token', token),
 			},
 		);
 	}
 
-	public сonfirmEQUsUsers(token: string, isConfirm: boolean): Observable<any> {
-		return this.http.post<any>(`${environment.apiUrl}/api/auth/usersEQUs/сonfirmEQUsUsers`, {
+	public confirmRelationsUsers(token: string, isConfirm: boolean): Observable<any> {
+		return this.http.post<any>(`${environment.apiUrl}/api/auth/UsersRelations/Confirm`, {
 			token,
 			isConfirm,
 		});
 	}
 
-	public removeEQUsUsersById(deleteUserId: number): Observable<any> {
+	public removeRelationsUsersById(deleteUserId: number) {
 		return this.http.delete<any[]>(`${environment.apiUrl}/api/auth/users/friends/`, {
 			params: new HttpParams().set('deleteUserId', deleteUserId),
 		});

@@ -1,10 +1,11 @@
 @use '/src/assets/scss/_variables.scss' as *;
 
 :host {
+	height: 90vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: center no-repeat url("/src/assets/images/logo/logo.svg");
+	background: center no-repeat url("../../../assets/images/background/login.svg");
 }
 
 .invite {
@@ -13,7 +14,6 @@
 	height: auto;
 	border-radius: 16px;
 	border: 1px solid $border-color;
-	background-color: $white;
 	padding: 16px 16px 45px 16px!important;
 
 	display: flex;
@@ -28,26 +28,30 @@
 		margin-top: 21px;
 		text-align: center;
 		width: 264px;
-		font-size: 14px;
-		font-weight: bold;
-		line-height: 19px;
-
 		p {
-			line-height: inherit;
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 19px;
+			letter-spacing: -0.2px;
+		}
+
+		div:nth-child(1) {
+			margin-bottom: 20px;
 		}
 	}
 
 	.accept-icon,
 	.cancel-icon {
 		font-size: 70px;
+		padding-bottom: 20px;
 	}
 
 	.personality {
 		width: 300px;
 		border: 1px solid $border-color;
-		padding: 14px 8px 14px 14px!important;
-		margin-top: 21px;
-		background-color: $gray;
+		padding: 11px 8px 14px 14px!important;
+		margin-top: 3px;
+		background-color: #FBFBFB;
 
 		.personal {
 			position: relative;
@@ -82,7 +86,7 @@
 				font-size: 11.8px;
 				line-height: 14px;
 				font-weight: 500;
-				margin-top: 8px;
+				margin-top: 4px;
 			}
 		}
 
@@ -136,9 +140,10 @@
 
 .success {
 	.header-success {
-		font-size: 24px;
+		font-size: 23.4px;
 		font-weight: bold;
 		text-align: center;
+		margin-top: 14px;
 	}
 	.text-success {
 		font-size: 14px;
@@ -156,11 +161,3 @@
 .connect-icon+span {
 	margin-left: 4px;
 }
-
-
-
-
-
-
-
-

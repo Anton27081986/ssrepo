@@ -11,6 +11,7 @@ export class ChipsUserSearchComponent {
 	@Input() public size: 'large' | 'medium' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
+	@Input() public placeholder: string = 'Введите ФИО';
 	@Input() public error: string | undefined;
 	@Input() public selectedUsers: any[] = [];
 
@@ -50,8 +51,8 @@ export class ChipsUserSearchComponent {
 		}, 0);
 	}
 
-	protected onRemoveUserFromList(user: any) {
-		this.selectedUsers = this.selectedUsers.filter(selectedUser => selectedUser.id !== user.id);
+	protected onRemoveUserFromList(user: any, i: any) {
+		this.selectedUsers.splice(i, 1);
 	}
 
 	protected dontSend(event: any): any {

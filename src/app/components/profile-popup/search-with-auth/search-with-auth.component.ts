@@ -6,20 +6,19 @@ import {
 	HostListener,
 	Input,
 	OnDestroy,
-	OnInit,
 } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsersApiService } from '@app/core/api/users-api.service';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @Component({
-	selector: 'ss-search',
-	templateUrl: './search.component.html',
-	styleUrls: ['./search.component.scss'],
+	selector: 'ss-search-with-auth',
+	templateUrl: './search-with-auth.component.html',
+	styleUrls: ['./search-with-auth.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchWithAuthComponent implements OnDestroy {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public closeIcon: boolean = false;
 	@Input() public searchIcon: boolean = false;
