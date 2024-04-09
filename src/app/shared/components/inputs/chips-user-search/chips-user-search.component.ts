@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
 
@@ -17,6 +17,7 @@ export class ChipsUserSearchComponent {
 	@ViewChild('input') public input!: ElementRef;
 
 	protected foundUsers: any[] = [];
+	@Output('[selectedUsers]') selectUsers = new EventEmitter<unknown>();
 	constructor(private readonly usersApiService: UsersApiService) {}
 
 	protected onInputChange(value: string) {
@@ -25,7 +26,7 @@ export class ChipsUserSearchComponent {
 				.getUsersByFIO(value)
 				.pipe(map(({ items }) => items))
 				.subscribe(res => {
-					if (this.selectedUsers.length) {
+					if (this.selectedUsers?.length) {
 						const selectedIds = this.selectedUsers.map(user => user.id);
 
 						this.foundUsers = res.filter(
@@ -51,7 +52,6 @@ export class ChipsUserSearchComponent {
 
 	protected onRemoveUserFromList(user: any) {
 		this.selectedUsers = this.selectedUsers.filter(selectedUser => selectedUser.id !== user.id);
-		this.foundUsers.unshift(user);
 	}
 
 	protected dontSend(event: any): any {

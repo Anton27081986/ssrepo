@@ -1,0 +1,23 @@
+<ss-card padding="0">
+	<div class="header">
+		<ss-headline size="h6" weight="semi-bold">Состав контрагентов</ss-headline>
+		<div class="header-controls">
+			<input type="checkbox" (change)="onActiveContractorChange($event)" />
+			<ss-text size="2">
+				Показать архивных контрагентов
+			</ss-text>
+		</div>
+	</div>
+	<div class="content">
+		<ss-table
+			[head]="[
+					{title: 'Код', fields: ['id']},
+					{title: 'ИНН', fields: ['inn']},
+					{title: 'Название', fields: ['name']},
+					{title: 'Кредитный статус', fields: ['creditStatus']},
+					{title: 'Состояние', fields: ['status']}
+					]"
+			[items]="tableItems"
+		></ss-table>
+	</div>
+</ss-card>

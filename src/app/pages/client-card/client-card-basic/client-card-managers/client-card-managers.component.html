@@ -1,0 +1,62 @@
+<ss-card padding="0">
+	<div class="header">
+		<ss-headline size="h6" weight="semi-bold">Базовый менеджер</ss-headline>
+		<ss-icon *ngIf="!isEditing; else closeButton" name="edit" (click)="onEditing(true)"></ss-icon>
+		<ng-template #closeButton>
+			<ss-icon name="iconCloseLight" (click)="onEditing(false)"></ss-icon>
+		</ng-template>
+	</div>
+	<div *ngIf="!isEditing; else changeMain" class="manager">
+		<ss-avatar [src]="basicManager?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+		<div class="manager-info">
+			<div class="manager-name">
+				<ss-headline size="h6">{{ basicManager?.lastName }} {{ basicManager?.firstName }} {{ basicManager?.surName }}</ss-headline>
+				<ss-icon name="flag"></ss-icon>
+			</div>
+			<div class="manager-info-content">
+				<ss-text size="3">{{ basicManager?.department }}</ss-text>
+				<ss-text size="3" weight="semi-bold">
+					<ss-icon name="phone"></ss-icon>{{ basicManager?.phone || 'Нет' }}
+				</ss-text>
+			</div>
+		</div>
+		<ss-caption class="manager-date" size="2"> </ss-caption>
+	</div>
+	<ng-template #changeMain>
+		<div class="edit-basic-manager">
+			<ss-icon name="flag"></ss-icon>
+			<ss-select (onChange)="onBasicManagerChange($event)">
+				<option *ngFor="let manager of (managers$ | async)" [selected]="manager.id === basicManager?.id" [value]="manager.id">
+					<ss-text size="2" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }} - </ss-text>
+					<ss-caption size="2">{{ manager?.position }}</ss-caption>
+				</option>
+			</ss-select>
+		</div>
+	</ng-template>
+	<div class="header">
+		<ss-headline size="h6" weight="semi-bold">Состав менеджеров</ss-headline>
+	</div>
+	<div *ngIf="!isEditing; else changeList" class="managers-list">
+		<div class="managers-list-item" *ngFor="let manager of (managers$ | async)">
+			<ss-avatar [src]="manager?.avatarUrl || ''" [isSquare]="false"></ss-avatar>
+			<div class="managers-list-item-info">
+				<ss-text size="2" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
+				<ss-caption size="2">{{ manager?.position }}</ss-caption>
+			</div>
+		</div>
+	</div>
+	<ng-template #changeList>
+		<div class="managers-list">
+			<div class="managers-list-item" *ngFor="let manager of changedData.managersList" [ngClass]="{'deleted': manager.status === 'delete'}">
+				<div class="managers-list-item-info">
+					<ss-text size="2" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
+					<ss-caption size="2">{{ manager.manager.position }}</ss-caption>
+				</div>
+				<ss-icon name="iconCloseLight" (click)="manager.status = 'delete'"></ss-icon>
+			</div>
+		</div>
+	</ng-template>
+	<div *ngIf="isEditing" class="footer">
+		<ss-button size="medium" type="primary" (click)="onSaveChanges()">Сохранить</ss-button>
+	</div>
+</ss-card>

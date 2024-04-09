@@ -1,6 +1,20 @@
-import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	Optional,
+	Output,
+	Self,
+} from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
+type searchType = 'user' | 'subsector' | 'region';
+
+@UntilDestroy()
 @Component({
 	selector: 'ss-search-input',
 	templateUrl: './search-input.component.html',
@@ -11,9 +25,11 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public error: string | undefined;
-	@Output() protected search = new EventEmitter();
+	@Input() public searchType: searchType = 'user';
+	@Output() public select = new EventEmitter<any>();
 
 	public value: any = '';
+	public found: IDictionaryItemDto[] = [];
 
 	public constructor(
 		// Retrieve the dependency only from the local injector,
@@ -23,6 +39,8 @@ export class SearchInputComponent implements ControlValueAccessor {
 		// so we mark the dependency as optional.
 		@Optional()
 		private readonly ngControl: NgControl,
+		public readonly searchFacade: SearchFacadeService,
+		private readonly ref: ChangeDetectorRef,
 	) {
 		if (this.ngControl) {
 			this.ngControl.valueAccessor = this;
@@ -61,4 +79,29 @@ export class SearchInputComponent implements ControlValueAccessor {
 
 	protected onChange(value: string) {}
 	protected onTouched() {}
+
+	protected onSearch(query: string) {
+		switch (this.searchType) {
+			case 'user':
+				break;
+			case 'subsector':
+				this.searchFacade
+					.getSubSectors(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res.items;
+						this.ref.detectChanges();
+					});
+				break;
+			case 'region':
+				this.searchFacade
+					.getRegions(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res.items;
+						this.ref.detectChanges();
+					});
+				break;
+		}
+	}
 }

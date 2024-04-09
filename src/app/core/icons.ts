@@ -608,6 +608,25 @@ export class AppIcons {
 		'<path d="M16.2992 14.688C16.4592 14.9526 16.8592 14.8606 16.9049 14.5615C17.282 12.134 16.5278 9.6836 14.8135 8.02696C12.5392 5.81811 9.61348 6.00218 9.13348 6.0482V3.45971C9.13348 3.05705 8.65348 2.84997 8.35633 3.12608C6.61523 4.78808 4.87414 6.45008 3.13304 8.1198C2.72635 8.50981 2.72252 9.15868 3.12426 9.55378L8.3449 14.688C8.63062 14.9756 9.12205 14.7686 9.12205 14.3544V11.0411C9.8649 10.9721 11.0192 10.9606 12.3106 11.4208C14.4363 12.1801 15.6706 13.7101 16.2878 14.688H16.2992Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>' +
 		'</svg>';
 
+	public static arrow =
+		'<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M9.97532 7.44141L4.91699 12.4997L9.97532 17.5581" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M19.0836 12.5H5.05859" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static edit =
+		'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M11.25 4.5H9.75C6 4.5 4.5 6 4.5 9.75V14.25C4.5 18 6 19.5 9.75 19.5H14.25C18 19.5 19.5 18 19.5 14.25V12.75" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M15.0304 5.26495L9.1204 11.1749C8.8954 11.3999 8.6704 11.8424 8.6254 12.1649L8.3029 14.4224C8.1829 15.2399 8.7604 15.8099 9.5779 15.6974L11.8354 15.3749C12.1504 15.3299 12.5929 15.1049 12.8254 14.8799L18.7354 8.96995C19.7554 7.94995 20.2354 6.76495 18.7354 5.26495C17.2354 3.76495 16.0504 4.24495 15.0304 5.26495Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M14.1816 6.1123C14.6841 7.9048 16.0866 9.3073 17.8866 9.8173" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static flag =
+		'<svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M4.86328 3.5V18.5" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M4.86328 5H13.2633C15.2883 5 15.7383 6.125 14.3133 7.55L13.4133 8.45C12.8133 9.05 12.8133 10.025 13.4133 10.55L14.3133 11.45C15.7383 12.875 15.2133 14 13.2633 14H4.86328" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
 	public static oneConnect =
 		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<rect width="16" height="16" rx="6" fill="#4770FF"/>' +
@@ -616,6 +635,21 @@ export class AppIcons {
 		'<path d="M8.41602 5.57129V7.58379H10.4285" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
+	public static download =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M9.75 2H8.25C4.5 2 3 3.5 3 7.25V11.75C3 15.5 4.5 17 8.25 17H12.75C16.5 17 18 15.5 18 11.75V10.25" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M18 10H14C11 10 10 9 10 6V2L18 10Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M7.33398 10V14L8.66732 12.6667" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M7.33333 13.9993L6 12.666" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static box =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M2.64258 6.2002L10.0009 10.4585L17.3092 6.22517" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M10.001 18.0085V10.4502" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M8.2755 2.06602L3.82551 4.54104C2.81717 5.09938 1.99219 6.49936 1.99219 7.64936V12.3577C1.99219 13.5077 2.81717 14.9077 3.82551 15.466L8.2755 17.9411C9.2255 18.4661 10.7838 18.4661 11.7338 17.9411L16.1839 15.466C17.1922 14.9077 18.0172 13.5077 18.0172 12.3577V7.64936C18.0172 6.49936 17.1922 5.09938 16.1839 4.54104L11.7338 2.06602C10.7755 1.53268 9.2255 1.53268 8.2755 2.06602Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M14.1681 11.0337V7.98369L6.25977 3.41699" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
 	public static twoWayConnect =
 		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<rect width="16" height="16" rx="6" fill="#4770FF"/>' +
