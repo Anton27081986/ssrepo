@@ -17,8 +17,10 @@ export class FriendlyAccountsStoreService {
 	public addFriendlyAccount(newAccount: IFriendAccountDto) {
 		const currentFriendlyAccounts = this.friendly.getValue();
 
-		currentFriendlyAccounts?.push(newAccount);
-		this.friendly.next(currentFriendlyAccounts);
+		if (newAccount.id) {
+			currentFriendlyAccounts?.push(newAccount);
+			this.friendly.next(currentFriendlyAccounts);
+		}
 	}
 
 	public deleteFriendlyAccount(index: number) {
