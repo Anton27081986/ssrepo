@@ -116,3 +116,20 @@ ss-caption {
 ss-caption.error {
 	color: $error;
 }
+
+:host-context(.dark) {
+	.input, input, {
+		background-color: $dark-island;
+	}
+
+	.variants-wrapper, .variants {
+		background-color: $dark-island!important;
+	}
+
+	.variants-item:hover {
+		::ng-deep p {
+			color: $dark-island!important;
+		}
+	}
+}
+

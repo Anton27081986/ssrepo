@@ -6,6 +6,7 @@ import { CardModule } from '@app/shared/components/card/card.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
+import { IconModule } from '@app/shared/components/icon/icon.module';
 
 @NgModule({
 	declarations: [InviteComponent],
@@ -16,6 +17,7 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 		HeadlineModule,
 		NzIconModule,
 		ButtonModule,
+		IconModule,
 	],
 })
 export class InviteModule {}
