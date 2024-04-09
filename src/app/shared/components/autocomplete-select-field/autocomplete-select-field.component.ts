@@ -53,7 +53,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 		const search$ = this.needSearch
 			? this.searchFieldChanged.pipe(
 					debounceTime(300),
-					distinctUntilChanged(),
+				//	distinctUntilChanged(),
 					switchMap(term => this.requestToServer(term)),
 				)
 			: this.requestToServer('');
@@ -90,7 +90,9 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 	}
 
 	public writeValue(value: any): void {
+		this.selectedValue = undefined;
 		this.selectedValue = value;
+		this.cdr.detectChanges();
 	}
 
 	public registerOnChange(fn: any): void {
