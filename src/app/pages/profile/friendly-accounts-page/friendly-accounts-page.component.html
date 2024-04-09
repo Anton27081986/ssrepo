@@ -16,7 +16,7 @@
 
 		<div class="card-list">
 			<ng-container *ngIf="friendsAccount; else noData">
-				<ng-container *ngFor="let item of friendsAccount; index as i">
+				<ng-container *ngFor="let item of friendsAccount; index as i; trackBy: trackBy">
 					<ss-card>
 						<div class="personal">
 							<div class="img">

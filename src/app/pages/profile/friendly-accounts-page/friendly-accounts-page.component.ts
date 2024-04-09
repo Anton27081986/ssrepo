@@ -122,4 +122,8 @@ export class FriendlyAccountsPageComponent implements OnInit {
 			this.valid = false;
 		}
 	}
+
+	public trackBy(_index: number, item: any) {
+		return item.id;
+	}
 }

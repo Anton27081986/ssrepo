@@ -23,6 +23,7 @@ import { SearchInputModule } from '@app/shared/components/inputs/search-input/se
 import { FilterInputModule } from '@app/shared/components/inputs/filter-input/filter-input.module';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -66,6 +67,7 @@ import { RecoveryPasswordComponent } from './recovery-password/recovery-password
 		ChipsUserSearchModule,
 		SearchInputModule,
 		FilterInputModule,
+		TextModule,
 	],
 })
 export class ProfileModule {}

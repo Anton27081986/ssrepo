@@ -70,3 +70,7 @@ ss-caption {
 ss-caption.error {
 	color: $error;
 }
+
+:host-context(.dark) input {
+	background-color: $dark-island;
+}
