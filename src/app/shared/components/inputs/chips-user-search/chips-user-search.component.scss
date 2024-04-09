@@ -117,18 +117,19 @@ ss-caption.error {
 	color: $error;
 }
 
-:host-context(.dark) .input, input, {
-	background-color: $dark-island;
-}
+:host-context(.dark) {
+	.input, input, {
+		background-color: $dark-island;
+	}
 
-:host-context(.dark) .variants-wrapper, .variants {
-	background-color: $dark-island!important;
-}
+	.variants-wrapper, .variants {
+		background-color: $dark-island!important;
+	}
 
-:host-context(.dark) .variants-item:hover {
-	::ng-deep p {
-		color: $dark-island!important;
+	.variants-item:hover {
+		::ng-deep p {
+			color: $dark-island!important;
+		}
 	}
 }
-
 
