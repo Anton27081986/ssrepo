@@ -7,15 +7,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent implements OnInit {
-	@Input() tabs?: string[] = ['Все'];
+	@Input() tabs?: string[] = [];
 	@Input() asyncTabs?: Observable<string[]> = new BehaviorSubject(['Все']);
 	@Output() select = new EventEmitter<string>();
 
 	protected selectedTabs: Array<{ name: string; isSelected: boolean }> = [];
 
 	public ngOnInit() {
-		if (this.tabs) {
+		if (this.tabs?.length) {
 			this.initTabs(this.tabs);
+			return
 		}
 
 		if (this.asyncTabs) {

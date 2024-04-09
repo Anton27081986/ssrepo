@@ -1,0 +1,8 @@
+<div class="header">
+	<div class="header-title">
+		<ss-icon name="arrow" [routerLink]="['/clients-list']"></ss-icon>
+		<ss-headline size="h3" weight="semi-bold">{{ (client$ | async)?.name }}</ss-headline>
+	</div>
+	<ss-tabs [tabs]="['Общая информация', 'Заявки на продажу', 'Образцы', 'ЖНТПР', 'Возвраты/претензии', 'ПКП', 'Договоры', 'Дни рождения']" (select)="selectTab($event)"></ss-tabs>
+</div>
+<router-outlet></router-outlet>
