@@ -626,7 +626,6 @@ export class AppIcons {
 		'<path d="M4.86328 3.5V18.5" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M4.86328 5H13.2633C15.2883 5 15.7383 6.125 14.3133 7.55L13.4133 8.45C12.8133 9.05 12.8133 10.025 13.4133 10.55L14.3133 11.45C15.7383 12.875 15.2133 14 13.2633 14H4.86328" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
-		'</svg>';
 
 	public static oneConnect =
 		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
