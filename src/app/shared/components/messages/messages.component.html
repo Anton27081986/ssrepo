@@ -5,7 +5,7 @@
     <ss-search-input class="search" size="small"></ss-search-input>
 </div>
 <div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="content">
-	<div *ngIf="(messages$ | async); else noMessages" class="content" (scrollend)="loadMessages()" #messages>
+	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMessages()" #messages>
 		<div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
 			<ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
 			<div class="message-content">
@@ -58,7 +58,7 @@
 	</ng-template>
 </div>
 <div *ngIf="selectedTab === CorrespondenceTabsEnum.Files">
-	<div *ngIf="(files$ | async); else noFiles" class="files-list">
+	<div *ngIf="(files$ | async)?.total; else noFiles" class="files-list">
 		<div *ngFor="let file of (files$ | async)?.items" class="files-list-item">
 			<ss-icon height="28" width="28" name="file" class="doc"></ss-icon>
 			<div class="files-list-item-content" (click)="downloadFile(file.directUrl!, file.fileName!)">

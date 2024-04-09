@@ -50,4 +50,8 @@ export interface IManagerItemDto {
 	 * Базовый менеджер клиента
 	 */
 	isBase?: boolean;
+	/**
+	 * Номер телефона
+	 */
+	phone?: string | null;
 }

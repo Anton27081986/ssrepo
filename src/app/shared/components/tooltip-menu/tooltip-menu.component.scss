@@ -2,7 +2,12 @@
 
 :host {
 	position: relative;
+	display: flex;
 	overflow: visible;
+
+	ss-icon {
+		cursor: pointer;
+	}
 
 	.dropdown-menu {
 		position: absolute;
@@ -14,7 +19,7 @@
 		background-color: $island;
 		border-radius: 8px;
 		box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
-		transform: translateX(45%);
+		transform: translateX(15%);
 
 		::ng-deep ss-caption {
 			cursor: pointer;
@@ -22,6 +27,7 @@
 
 			span {
 				width: 100%;
+				min-height: 26px;
 				display: flex;
 				align-items: center;
 				gap: 4px;

@@ -8,6 +8,9 @@ import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { IClientsFilter } from '@app/core/models/clients-filter';
+import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
+import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
+import {IClientEditRequest} from "@app/core/models/company/client-edit-request";
 
 @Injectable({
 	providedIn: 'root',
@@ -61,23 +64,27 @@ export class ClientApiService {
 	}
 
 	public getClientCardById(id: number): Observable<IClientDto> {
-		return this.http.get<IClientDto>(`${environment.apiUrl}/api/company/client/${id}`, {
-			params: new HttpParams().set('id', id),
-		});
+		return this.http.get<IClientDto>(`${environment.apiUrl}/api/company/clients/${id}`);
 	}
 
-	public getContractors(searchTerm: string) {
-		return this.http.get<IDictionaryItemDto[]>(
-			`${environment.apiUrl}/api/company/clients/contractors`,
+	public getManagers(id: number): Observable<IManagerItemDto[]> {
+		return this.http.get<IManagerItemDto[]>(
+			`${environment.apiUrl}/api/company/clients/${id}/managers`,
+		);
+	}
+
+	public getContractors(id: number, isActiveOnly: boolean): Observable<IContractorItemDto[]> {
+		return this.http.get<IContractorItemDto[]>(
+			`${environment.apiUrl}/api/company/clients/${id}/contractors`,
 			{
-				params: new HttpParams().set('query', searchTerm),
+				params: new HttpParams().set('isActiveOnly', isActiveOnly),
 			},
 		);
 	}
 
-	public getRegions(searchTerm: string) {
-		return this.http.get<IDictionaryItemDto[]>(
-			`${environment.apiUrl}/api/company/clients/regions`,
+	public getRegions(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/regions`,
 			{
 				params: new HttpParams().set('query', searchTerm),
 			},
@@ -99,12 +106,39 @@ export class ClientApiService {
 		);
 	}
 
-	public getSubSectors(searchTerm: string) {
-		return this.http.get<IDictionaryItemDto[]>(
-			`${environment.apiUrl}/api/company/clients/subsectors`,
+	public getSubSectors(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/subsectors`,
 			{
 				params: new HttpParams().set('query', searchTerm),
 			},
+		);
+	}
+
+	public setBasicManager(clientId: number, managerId: number) {
+		return this.http.put<IManagerItemDto>(
+			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,
+			{},
+		);
+	}
+
+	public addManager(clientId: number, userId: number) {
+		return this.http.post<IManagerItemDto>(
+			`${environment.apiUrl}/api/company/clients/${clientId}/managers`,
+			{ userId, isMain: false },
+		);
+	}
+
+	public deleteManager(clientId: number, managerId: number) {
+		return this.http.delete<IManagerItemDto>(
+			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`
+		);
+	}
+
+	public saveInfo(clientId: number, body: IClientEditRequest) {
+		return this.http.put<IManagerItemDto>(
+			`${environment.apiUrl}/api/company/clients/${clientId}`,
+			body,
 		);
 	}
 }
