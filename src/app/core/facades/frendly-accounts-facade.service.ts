@@ -23,7 +23,7 @@ export class FriendlyAccountsFacadeService {
 		this.setFriendsAccountsForCurrentUser();
 	}
 
-	setFriendsAccountsForCurrentUser() {
+	public setFriendsAccountsForCurrentUser() {
 		this.usersApiService
 			.getCurrentUserFriendsAccounts()
 			.pipe(
@@ -37,7 +37,7 @@ export class FriendlyAccountsFacadeService {
 
 	public addUsersInListFriendlyLogins(usersIds: number[], type: number) {
 		this.usersRelationsApiService
-			.addEQUsUsers(usersIds, type)
+			.addRelationsUsers(usersIds, type)
 			.pipe(
 				tap(item => {
 					this.friendlyAccountsStoreService.addFriendlyAccount(item);
@@ -49,25 +49,21 @@ export class FriendlyAccountsFacadeService {
 
 	public acceptAddUsersInListFriendlyLogins(token: string, isConfirm: boolean) {
 		this.usersRelationsApiService
-			.сonfirmEQUsUsers(token, isConfirm)
+			.confirmRelationsUsers(token, isConfirm)
 			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
 
 	public getUserForAccet(token: string) {
-		return this.usersRelationsApiService.getEQUUser(token).pipe(untilDestroyed(this));
+		return this.usersRelationsApiService.getRelationsUser(token).pipe(untilDestroyed(this));
 	}
 
-	public removeEQUsUsersById(id: number, index: number) {
+	public removeRelationsUsersById(id: number, index: number) {
 		this.friendlyAccountsStoreService.deleteFriendlyAccount(index);
 
 		this.usersRelationsApiService
-			.removeEQUsUsersById(id)
+			.removeRelationsUsersById(id)
 			.pipe(untilDestroyed(this))
 			.subscribe();
-	}
-
-	public getUserByClickFromSearch(selectedUser: string): Observable<any> {
-		return this.usersApiService.getUserById(selectedUser).pipe(untilDestroyed(this));
 	}
 }

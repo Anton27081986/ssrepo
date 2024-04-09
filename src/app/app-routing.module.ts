@@ -53,6 +53,11 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
 			},
+			{
+				path: 'invite',
+				loadChildren: () =>
+					import('./pages/invite/invite.module').then(m => m.InviteModule),
+			},
 		],
 	},
 	{

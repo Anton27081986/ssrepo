@@ -6,13 +6,6 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FriendlyAccountsPageComponent,
-		children: [
-			{
-				path: 'invitation',
-				loadChildren: () =>
-					import('../invitation/invitation.module').then(m => m.InvitationModule),
-			},
-		],
 	},
 ];
 

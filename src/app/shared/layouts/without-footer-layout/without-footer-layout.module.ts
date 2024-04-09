@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { RouterOutlet } from '@angular/router';
+import { FullLayoutModule } from '@app/shared/layouts/full-layout/full-layout.module';
+import { HeaderModule } from '@app/shared/components/header/header.module';
 import { WithoutFooterLayoutComponent } from './without-footer-layout.component';
-import {NzLayoutModule} from "ng-zorro-antd/layout";
-import {RouterOutlet} from "@angular/router";
-import {FullLayoutModule} from "@app/shared/layouts/full-layout/full-layout.module";
-import {HeaderModule} from "@app/shared/components/header/header.module";
 
 @NgModule({
 	declarations: [WithoutFooterLayoutComponent],

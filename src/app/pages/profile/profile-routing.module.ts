@@ -26,11 +26,6 @@ const routes: Routes = [
 						m => m.FriendlyAccountsModule,
 					),
 			},
-			{
-				path: 'friendly-accounts/invite',
-				loadChildren: () =>
-					import('./invitation/invitation.module').then(m => m.InvitationModule),
-			},
 			{ path: 'my-menu', component: MyMenuComponent, title: 'Основная информация' },
 			{
 				path: 'order-widgets',

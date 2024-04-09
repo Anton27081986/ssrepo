@@ -627,12 +627,27 @@ export class AppIcons {
 		'<path d="M4.86328 5H13.2633C15.2883 5 15.7383 6.125 14.3133 7.55L13.4133 8.45C12.8133 9.05 12.8133 10.025 13.4133 10.55L14.3133 11.45C15.7383 12.875 15.2133 14 13.2633 14H4.86328" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
-	public static oneConnect =
+	public static oneConnectIn =
 		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<rect width="16" height="16" rx="6" fill="#4770FF"/>' +
 		'<path d="M8.00065 3.83301C5.70065 3.83301 3.83398 5.69967 3.83398 7.99967C3.83398 10.2997 5.70065 12.1663 8.00065 12.1663C10.3007 12.1663 12.1673 10.2997 12.1673 7.99967" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M12.1667 3.83301L8.75 7.24967" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M8.41602 5.57129V7.58379H10.4285" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static oneConnectOut =
+		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<rect width="16" height="16" rx="6" fill="#4770FF"/>\n' +
+		'<path d="M8.00065 3.83301C5.70065 3.83301 3.83398 5.69967 3.83398 7.99967C3.83398 10.2997 5.70065 12.1663 8.00065 12.1663C10.3007 12.1663 12.1673 10.2997 12.1673 7.99967" stroke="white" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.41602 7.58366L11.8327 4.16699" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.1668 5.84551V3.83301H10.1543" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>\n';
+
+	public static twoWayConnect =
+		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<rect width="16" height="16" rx="6" fill="#4770FF"/>' +
+		'<path d="M4 8C4 10.208 5.776 12 8 12C10.668 12 12 9.776 12 9.776M12 9.776V11.6M12 9.776H11.196H10.224" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M12 7.75C12 5.542 10.224 3.75 8 3.75C5.332 3.75 4 5.974 4 5.974M4 5.974V4.15M4 5.974H4.804H5.776" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
 	public static download =
@@ -650,12 +665,30 @@ export class AppIcons {
 		'<path d="M8.2755 2.06602L3.82551 4.54104C2.81717 5.09938 1.99219 6.49936 1.99219 7.64936V12.3577C1.99219 13.5077 2.81717 14.9077 3.82551 15.466L8.2755 17.9411C9.2255 18.4661 10.7838 18.4661 11.7338 17.9411L16.1839 15.466C17.1922 14.9077 18.0172 13.5077 18.0172 12.3577V7.64936C18.0172 6.49936 17.1922 5.09938 16.1839 4.54104L11.7338 2.06602C10.7755 1.53268 9.2255 1.53268 8.2755 2.06602Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M14.1681 11.0337V7.98369L6.25977 3.41699" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
-	public static twoWayConnect =
-		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-		'<rect width="16" height="16" rx="6" fill="#4770FF"/>' +
-		'<path d="M4 8C4 10.208 5.776 12 8 12C10.668 12 12 9.776 12 9.776M12 9.776V11.6M12 9.776H11.196H10.224" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
-		'<path d="M12 7.75C12 5.542 10.224 3.75 8 3.75C5.332 3.75 4 5.974 4 5.974M4 5.974V4.15M4 5.974H4.804H5.776" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>' +
+
+	public static oneConnectInLight =
+		'' +
+		'<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<rect x="0.5" y="0.5" width="16" height="16" rx="6" fill="#CBD7FF"/>\n' +
+		'<path d="M8.50065 4.33301C6.20065 4.33301 4.33398 6.19967 4.33398 8.49967C4.33398 10.7997 6.20065 12.6663 8.50065 12.6663C10.8007 12.6663 12.6673 10.7997 12.6673 8.49967" stroke="#4770FF" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.6667 4.33301L9.25 7.74967" stroke="#4770FF" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.91602 6.07129V8.08379H10.9285" stroke="#4770FF" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
+
+	public static oneConnectOutLight =
+		'<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<rect x="0.5" y="0.5" width="16" height="16" rx="6" fill="#CBD7FF"/>\n' +
+		'<path d="M8.50065 4.33301C6.20065 4.33301 4.33398 6.19967 4.33398 8.49967C4.33398 10.7997 6.20065 12.6663 8.50065 12.6663C10.8007 12.6663 12.6673 10.7997 12.6673 8.49967" stroke="#4770FF" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.91602 8.08366L12.3327 4.66699" stroke="#4770FF" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.6668 6.34551V4.33301H10.6543" stroke="#4770FF" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
+	public static twoWayConnectLight =
+		'<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<rect x="0.5" y="0.5" width="16" height="16" rx="6" fill="#CBD7FF"/>\n' +
+		'<path d="M4.5 8.5C4.5 10.708 6.276 12.5 8.5 12.5C11.168 12.5 12.5 10.276 12.5 10.276M12.5 10.276V12.1M12.5 10.276H11.696H10.724" stroke="#4770FF" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.5 8.25C12.5 6.042 10.724 4.25 8.5 4.25C5.832 4.25 4.5 6.474 4.5 6.474M4.5 6.474V4.65M4.5 6.474H5.304H6.276" stroke="#4770FF" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>\n';
 
 	public static accept =
 		'<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +

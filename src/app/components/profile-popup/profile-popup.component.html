@@ -109,12 +109,14 @@
 			<div class="admin-enter" *ngIf="data?.isAdmin === true">
 				<span class="title">Войти под сотрудником</span>
 				<div class="enter-by-search">
-					<ss-search
+					<ss-search-with-auth
 						[placeholder]="'Выберите сотрудника'"
 						[adminEnter]="true"
 						[closeIcon]="true"
 						[searchIcon]="true"
-					></ss-search>
+					>
+					</ss-search-with-auth>
+
 					<div>
 						<span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
 					</div>

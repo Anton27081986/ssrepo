@@ -3,14 +3,14 @@
 		<div class="text">
 			<div class="title">
 				<div>
-						<span [innerHTML]="user?.name" (click)="enterUnderUser(user?.id);">{{user?.name}}</span>
+					<span [innerHTML]="user?.name" (click)="enterUnderUser(user?.id);">{{user?.name}}</span>
 				</div>
 
 				<ng-template *ngIf="call">
 					<div class="call"
-							 *ngIf="user?.viewerIsIpPhone && user?.phoneLocal"
-							 [ngClass]="user?.isCalling? 'is-calling': '' "
-							 (click)="toggleCallForUser();">
+						 *ngIf="user?.viewerIsIpPhone && user?.phoneLocal"
+						 [ngClass]="user?.isCalling? 'is-calling': '' "
+						 (click)="toggleCallForUser();">
 						<span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
 						<span class="inner-phone">{{ user?.phoneLocal }}</span>
 					</div>

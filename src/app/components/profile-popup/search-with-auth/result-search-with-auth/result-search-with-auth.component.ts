@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { Subject, takeUntil } from 'rxjs';
 import { CallPhoneService } from '@app/core/services/call-phone.service';
-import { environment } from '@environments/environment';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { AuthenticationService } from '@app/core/services/authentication.service';
-import { Subject, takeUntil } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Component({
-	selector: 'ss-result-item',
-	templateUrl: './result-item.component.html',
-	styleUrls: ['./result-item.component.scss'],
+	selector: 'ss-result-search-with-auth',
+	templateUrl: './result-search-with-auth.component.html',
+	styleUrls: ['./result-search-with-auth.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ResultItemComponent implements OnDestroy {
+export class ResultSearchWithAuthComponent implements OnDestroy {
 	@Input() public user: any;
 	@Input() public call: boolean = false;
 
