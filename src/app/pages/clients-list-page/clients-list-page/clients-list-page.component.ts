@@ -4,6 +4,7 @@ import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { ITableItem } from '@app/shared/components/table/table.component';
+import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 
 export interface IClientTableItem {
 	code: string;
@@ -14,6 +15,12 @@ export interface IClientTableItem {
 	managers: string;
 	status: string;
 	withoutManager: string;
+}
+
+export enum TableState {
+	Loading,
+	Empty,
+	Full,
 }
 
 @UntilDestroy()
@@ -34,6 +41,7 @@ export class ClientsListPageComponent implements OnInit {
 
 	// state
 	public isFiltersVisible: boolean = false;
+	public tableState: TableState = TableState.Loading;
 	public filtersForm!: FormGroup;
 
 	public constructor(
@@ -43,6 +51,7 @@ export class ClientsListPageComponent implements OnInit {
 	) {}
 
 	public ngOnInit(): void {
+		this.tableState = TableState.Loading;
 		this.filtersForm = this.formBuilder.group({
 			code: [],
 			category: [],
@@ -50,44 +59,43 @@ export class ClientsListPageComponent implements OnInit {
 			manager: [],
 			contractor: [],
 			status: [6],
-			withoutBaseManager: [],
+			withoutBaseManager: [false],
 		});
 
 		this.clientsListFacade.applyFilters(this.getFilter());
 
 		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
-			if (response.items) {
-				const items = response.items.map(x => {
-					const tableItem: IClientTableItem = {} as IClientTableItem;
-
-					tableItem.code = x.id !== undefined ? x.id.toString() : '-';
-					tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '-';
-					tableItem.category = x.category?.name ?? '-';
-					tableItem.clientName = x.name ?? '-';
-					tableItem.contractors = x.contractors
-						? x.contractors.map(c => c.name).join(', ')
-						: '-';
-
-					tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
-					tableItem.status =
-						this.clientsListFacade.statusOptions.find(option => option.id === x.status)
-							?.name ?? '-';
-
-					tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
-
-					return tableItem;
-				});
-
-				this.items = items;
-
-				this.tableItems = <ITableItem[]>(<unknown>items);
-			}
-
-			if (response.total) {
-				this.total = response.total + this.pageSize;
+			if (!response.items || response.items.length === 0) {
+				this.tableState = TableState.Empty;
+			} else {
+				this.items = this.mapClientsToTableItems(response.items);
+				this.total = (response.total ?? 0) + this.pageSize;
+				this.tableItems = <ITableItem[]>(<unknown>this.items);
+				this.tableState = TableState.Full;
 			}
 
 			this.cdr.detectChanges();
+		});
+	}
+
+	private mapClientsToTableItems(clients: IClientItemDto[]) {
+		return clients.map(x => {
+			const tableItem: IClientTableItem = {} as IClientTableItem;
+
+			tableItem.code = x.id !== undefined ? x.id.toString() : '-';
+			tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '-';
+			tableItem.category = x.category?.name ?? '-';
+			tableItem.clientName = x.name ?? '-';
+			tableItem.contractors = x.contractors ? x.contractors.map(c => c.name).join(', ') : '-';
+
+			tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
+			tableItem.status =
+				this.clientsListFacade.statusOptions.find(option => option.id === x.status)?.name ??
+				'-';
+
+			tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
+
+			return tableItem;
 		});
 	}
 
@@ -96,6 +104,8 @@ export class ClientsListPageComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
+		this.tableState = TableState.Loading;
+
 		if (this.filtersForm.valid) {
 			const filter = this.getFilter();
 
@@ -141,4 +151,6 @@ export class ClientsListPageComponent implements OnInit {
 			withoutBaseManager: [false],
 		});
 	}
+
+	protected readonly TableState = TableState;
 }

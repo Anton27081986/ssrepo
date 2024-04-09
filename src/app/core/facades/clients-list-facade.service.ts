@@ -20,7 +20,7 @@ export class ClientsListFacadeService {
 		{ id: 1, name: 'Новый' },
 		{ id: 2, name: 'Архивный' },
 		{ id: 5, name: 'Передан в юр.отдел' },
-		{ id: 6, name: 'Активный' },
+		{ id: 6, name: 'Действующий' },
 	];
 
 	private readonly filtersChanged: Subject<IClientsFilter> = new Subject<IClientsFilter>();

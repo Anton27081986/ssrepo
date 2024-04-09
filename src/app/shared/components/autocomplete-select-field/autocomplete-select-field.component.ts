@@ -9,8 +9,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { debounceTime, distinctUntilChanged, of, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, of, Subject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { IResponse } from '@app/core/utils/response';
 
 @UntilDestroy()
 @Component({
@@ -53,7 +54,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 		const search$ = this.needSearch
 			? this.searchFieldChanged.pipe(
 					debounceTime(300),
-				//	distinctUntilChanged(),
+					distinctUntilChanged(),
 					switchMap(term => this.requestToServer(term)),
 				)
 			: this.requestToServer('');
@@ -75,12 +76,16 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 
 	private requestToServer(searchTerm: string = '') {
 		if (searchTerm) {
-			return this.httpClient.get<IDictionaryItemDto[]>(this.url!, {
-				params: new HttpParams().set('query', searchTerm),
-			});
+			return this.httpClient
+				.get<IResponse<IDictionaryItemDto>>(this.url!, {
+					params: new HttpParams().set('query', searchTerm),
+				})
+				.pipe(map(response => response.items));
 		}
 
-		return this.httpClient.get<IDictionaryItemDto[]>(this.url!);
+		return this.httpClient
+			.get<IResponse<IDictionaryItemDto>>(this.url!)
+			.pipe(map(response => response.items));
 	}
 
 	public search(searchTerm: string) {

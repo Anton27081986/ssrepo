@@ -11,7 +11,7 @@ export class InputComponent implements ControlValueAccessor {
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = '';
-	@Input() public type: 'text' | 'email' = 'text';
+	@Input() public type: 'text' | 'email' | 'number' = 'text';
 	@Input() public error: string | undefined;
 
 	@Input() public value: any = '';
