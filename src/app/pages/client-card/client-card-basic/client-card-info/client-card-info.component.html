@@ -2,12 +2,15 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Общая информация</ss-headline>
 		<div class="header-controls" *ngIf="!isEditing; else closeButton">
-				<ss-icon name="box" [tooltip]="'Открыть модель клиента'" [theme]="TooltipTheme.MAIN" [position]="TooltipPosition.ABOVE"></ss-icon>
+				<a class="header-controls-button" href="https://ssnab.it/Catalog/preds/Pred/{{(client$ | async)?.id}}" target="_blank">
+					<ss-icon name="box" [tooltip]="'Открыть модель клиента'" [theme]="TooltipTheme.MAIN" [position]="TooltipPosition.ABOVE"></ss-icon>
+				</a>
 				<ss-tooltip-menu icon="download">
-					<a>
-<ss-caption size="1">
+					<ss-caption size="1">
+						<a [href]="clientCardListFacade.methodFileLink" target="_blank">
 						Методика расчета категории Дистребьютеров
-					</ss-caption></a>
+						</a>
+					</ss-caption>
 				</ss-tooltip-menu>
 				<ss-icon name="edit" (click)="onEditing(true)"></ss-icon>
 		</div>
@@ -62,7 +65,7 @@
 			<ss-text size="3" class="info-list-item-name">Регион:</ss-text>
 			<ss-search-input searchType="region" *ngIf="isEditing; else region" (select)="selectRegion($event)"></ss-search-input>
 			<ng-template #region>
-				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region || '—' }}</ss-text>
+				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region?.name || '—' }}</ss-text>
 			</ng-template>
 		</div>
 		<div class="info-list-item" *ngIf="(client$ | async)?.exclusive">

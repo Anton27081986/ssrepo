@@ -1,11 +1,10 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
 import { ClientApiService } from '@app/core/api/client-api.service';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
-import { environment } from '@environments/environment.development';
 import { IClientEditRequest } from '@app/core/models/company/client-edit-request';
 
 @UntilDestroy()
@@ -13,6 +12,9 @@ import { IClientEditRequest } from '@app/core/models/company/client-edit-request
 	providedIn: 'root',
 })
 export class ClientsCardFacadeService {
+	public methodFileLink =
+		'https://erp-dev.ssnab.it/api/static/general/2024/04/10/Методика_расчета_категории_Дистрибьюторов_5f544e66-24fb-417d-8a0e-a71dd2010ba5.xlsx';
+
 	private readonly clientIdSubject = new BehaviorSubject<number | null>(null);
 	public clientId$ = this.clientIdSubject.asObservable();
 
