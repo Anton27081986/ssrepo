@@ -39,7 +39,7 @@ class Editor extends ClassicEditor {
 		PasteFromOffice,
 		RemoveFormat,
 		Underline,
-		Undo
+		Undo,
 	];
 
 	public static override defaultConfig: EditorConfig = {
@@ -59,11 +59,11 @@ class Editor extends ClassicEditor {
 				'alignment',
 				'link',
 				'blockQuote',
-				'removeFormat'
-			]
+				'removeFormat',
+			],
 		},
 		language: 'ru',
-		placeholder: 'Введите текст сообщения'
+		placeholder: 'Введите текст сообщения',
 	};
 }
 
