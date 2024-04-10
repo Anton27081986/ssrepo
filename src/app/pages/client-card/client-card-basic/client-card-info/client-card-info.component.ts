@@ -40,6 +40,9 @@ export class ClientCardInfoComponent implements OnInit {
 	protected newCategoryId: number | undefined;
 	protected newRegionId: number | undefined;
 
+	protected methodFileLink =
+		'https://erp-dev.ssnab.it/api/static/general/2024/04/10/Методика_расчета_категории_Дистрибьюторов_5f544e66-24fb-417d-8a0e-a71dd2010ba5.xlsx';
+
 	public constructor(public readonly clientCardListFacade: ClientsCardFacadeService) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.infoForm = new FormGroup({
