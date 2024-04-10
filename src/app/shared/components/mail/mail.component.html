@@ -8,7 +8,7 @@
 					  value="{{(subject$ | async)}}"
 					  [error]="mailForm.controls.subject.hasError('required') && mailForm.controls.subject.touched ? 'Поле обязательно для заполнения' : undefined"
 			></ss-input>
-			<ss-chips-user-search label="Кому:" size="medium" ([selectedUsers])="toUsers"></ss-chips-user-search>
+			<ss-chips-user-search label="Кому:" size="medium" [selectedUsers]="toUsers"></ss-chips-user-search>
 			<ss-chips-user-search label="Копия:" size="medium" [selectedUsers]="toUsersCopy"></ss-chips-user-search>
 		</div>
 		<div class="reply" *ngIf="selectedMessageToReply">

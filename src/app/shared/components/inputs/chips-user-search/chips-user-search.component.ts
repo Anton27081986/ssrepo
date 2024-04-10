@@ -17,7 +17,6 @@ export class ChipsUserSearchComponent {
 	@ViewChild('input') public input!: ElementRef;
 
 	protected foundUsers: any[] = [];
-	@Output('[selectedUsers]') selectUsers = new EventEmitter<unknown>();
 	constructor(private readonly usersApiService: UsersApiService) {}
 
 	protected onInputChange(value: string) {
