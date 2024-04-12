@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientCardComponent } from '@app/pages/client-card/client-card.component';
-import {ClientCardBasicComponent} from "@app/pages/client-card/client-card-basic/client-card-basic.component";
+import { ClientCardBasicComponent } from '@app/pages/client-card/client-card-basic/client-card-basic.component';
+import { ClientCardBirthdaysComponent } from '@app/pages/client-card/client-card-birthdays/client-card-birthdays.component';
 
 const routes: Routes = [
 	{
@@ -14,9 +15,13 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'basic',
-				component: ClientCardBasicComponent
+				component: ClientCardBasicComponent,
 			},
-			{ path: '**', redirectTo: 'basic' }
+			{
+				path: 'birthdays',
+				component: ClientCardBirthdaysComponent,
+			},
+			// { path: '**', redirectTo: 'basic' },
 		],
 	},
 ];

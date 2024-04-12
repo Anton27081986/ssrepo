@@ -23,8 +23,10 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
+import { TagModule } from '@app/shared/components/tag/tag.module';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardComponent } from './client-card.component';
+import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
 
 @NgModule({
 	declarations: [
@@ -33,6 +35,7 @@ import { ClientCardComponent } from './client-card.component';
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
 		ClientCardContragentsComponent,
+		ClientCardBirthdaysComponent,
 	],
 	imports: [
 		CommonModule,
@@ -56,6 +59,7 @@ import { ClientCardComponent } from './client-card.component';
 		InputModule,
 		CKEditorModule,
 		SearchInputModule,
+		TagModule,
 	],
 })
 export class ClientCardModule {}
