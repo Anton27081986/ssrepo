@@ -4,6 +4,10 @@
 	flex-grow: 1;
 
 	ss-card {
+		ss-search-input {
+			color: $text;
+		}
+
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -50,11 +54,24 @@
 						display: inline;
 						padding: 4px 8px;
 						font-size: 12px;
+						background-color: #CDE4FF;
+						border: 1px solid #B4D2FF;
+						font-weight: 600;
 					}
+				}
+
+				ss-text {
+					::ng-deep p::first-letter {
+						text-transform: uppercase!important;
+					}
+
 				}
 			}
 		}
 
-		.footer {}
+		.pagination {
+			margin-top: 0;
+			padding: 16px 20px;
+		}
 	}
 }

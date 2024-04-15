@@ -5,54 +5,31 @@
 
 	<div class="panel">
 		<div class="date">
-			<ss-search-input size="small"></ss-search-input>
+			<ss-datepicker-input size="small" [placeholder]="periodDate"></ss-datepicker-input>
 		</div>
 		<div class="search">
-			<ss-search-input size="small"></ss-search-input>
+			<ss-search-input size="small" searchType="contractor" (select)="filterbirthdaysContractors($event)" (input)="clearFilter($any($event.target).value)"></ss-search-input>
 		</div>
 	</div>
 	<div class="card-list">
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
-		</ss-card>
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
-		</ss-card>
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
-		</ss-card>
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
-		</ss-card>
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
-		</ss-card>
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
-		</ss-card>
-		<ss-card padding="12">
-			<ss-text [size]="'2'" weight="semi-bold">Гришин Пантелей Серапионович</ss-text>
-			<ss-text [size]="'3'" weight="medium">Руководитель Отдела продаж</ss-text>
-			<ss-text [size]="'2'" weight="semi-bold">Эвентус+</ss-text>
-			<ss-tag class="station">3 марта 1970</ss-tag>
+		<ss-card padding="12" *ngFor="let birthdays of (birthdaysContractors$ | async)?.items; trackBy: trackBy">
+			<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.name }}</ss-text>
+			<ss-text [size]="'3'" weight="medium">{{ birthdays?.position }}</ss-text>
+			<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.contractor?.name }}</ss-text>
+				<ss-tag class="station">{{ birthdays?.birthDate | date:'dd MMMM yyyy':'':'ru' }}</ss-tag>
 		</ss-card>
 	</div>
+
+	<div class="pagination">
+		<nz-pagination
+			[nzTotal]="total"
+			[nzPageIndex]="pageIndex"
+			[nzPageSize]="pageSize"
+			(nzPageIndexChange)="nzPageIndexChange($event)"
+			(nzPageSizeChange)="pageSize = $event"
+			[nzResponsive]="true"
+		>
+		</nz-pagination>
+	</div>
+
 </ss-card>
