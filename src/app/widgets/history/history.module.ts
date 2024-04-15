@@ -5,10 +5,11 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { NgForOf, NgIf } from '@angular/common';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { NzPaginationModule } from "ng-zorro-antd/pagination";
 
 @NgModule({
 	declarations: [HistoryComponent],
 	exports: [HistoryComponent],
-	imports: [CardModule, HeadlineModule, IconModule, NgIf, TextModule, NgForOf],
+  imports: [CardModule, HeadlineModule, IconModule, NgIf, TextModule, NgForOf, NzPaginationModule]
 })
 export class HistoryModule {}

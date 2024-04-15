@@ -19,7 +19,7 @@ export class ChangeTrackerApiService {
 		params = params.set('offset', offset);
 
 		return this.http.get<IResponse<IChangeTrackerItemDto>>(
-			`${environment.apiUrl}/api/change-tracker/changeTracker`,
+			`${environment.apiUrl}/api/change-tracker/history`,
 			{ params },
 		);
 	}
