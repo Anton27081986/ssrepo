@@ -27,7 +27,7 @@ export class ClientsCardFacadeService {
 	private readonly contractorsSubject = new BehaviorSubject<IContractorItemDto[]>([]);
 	public contractors$ = this.contractorsSubject.asObservable();
 
-	constructor(private readonly clientApiService: ClientApiService) {}
+	public constructor(private readonly clientApiService: ClientApiService) {}
 
 	public setClientId(id: number) {
 		this.clientIdSubject.next(id);

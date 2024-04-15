@@ -17,7 +17,7 @@ import { ClientCardContragentsComponent } from '@app/pages/client-card/client-ca
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from '@app/shared/components/table/table.module';
-import { HistoryModule } from '@app/shared/components/history/history.module';
+import { HistoryModule } from '@app/widgets/history/history.module';
 import { SelectModule } from '@app/shared/components/select/select.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
