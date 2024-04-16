@@ -42,6 +42,11 @@
 			padding: 20px;
 			flex-wrap: wrap;
 
+			.contacts {
+				display: flex;
+				flex-direction: column;
+			}
+
 			ss-card {
 				width: 308px;
 				padding: 12px;
@@ -64,7 +69,24 @@
 					::ng-deep p::first-letter {
 						text-transform: uppercase!important;
 					}
+				}
 
+				ss-text:nth-child(1) {
+					::ng-deep p {
+						margin-top: -2px;
+					}
+				}
+
+				ss-text:nth-child(2) {
+					::ng-deep p {
+						margin-top: 2px;
+					}
+				}
+
+				ss-text:nth-child(3) {
+					::ng-deep p {
+						margin-top: 2px;
+					}
 				}
 			}
 		}

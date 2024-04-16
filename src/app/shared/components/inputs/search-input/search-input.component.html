@@ -1,8 +1,8 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
 	<input type="text"
-	placeholder="Поиск"
-	[value]="value"
+   	[placeholder]="placeholder"
+   	[value]="value"
 	[disabled]="disabled"
 	(input)="onChange($any($event.target).value)"
 	(blur)="onTouched()"

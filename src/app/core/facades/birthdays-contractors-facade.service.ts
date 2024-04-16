@@ -19,7 +19,7 @@ export class BirthdaysContractorsFacadeService {
 			.getBirthdayContractor(pageSize, offset)
 			.pipe(
 				tap(contractors => {
-					return this.birthdaysContractorsSubject.next(contractors);
+					this.birthdaysContractorsSubject.next(contractors);
 				}),
 				untilDestroyed(this),
 			)
@@ -31,7 +31,7 @@ export class BirthdaysContractorsFacadeService {
 			.searchBirthdayContractor(id)
 			.pipe(
 				tap(contractors => {
-					return this.birthdaysContractorsSubject.next(contractors);
+					this.birthdaysContractorsSubject.next(contractors);
 				}),
 				untilDestroyed(this),
 			)

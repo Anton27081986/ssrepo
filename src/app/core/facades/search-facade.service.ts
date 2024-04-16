@@ -14,7 +14,7 @@ import { environment } from '@environments/environment.development';
 export class SearchFacadeService {
 	public contractorUrl = `${environment.apiUrl}/api/company/dictionary/contractors`;
 
-	constructor(
+	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly clientApiService: ClientApiService,
 	) {}

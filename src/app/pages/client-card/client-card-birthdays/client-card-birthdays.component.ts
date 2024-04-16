@@ -55,7 +55,7 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			),
 		);
 
-		this.periodDate = `${this.firstDate} - ${this.lastDate}`;
+		this.periodDate = `${this.firstDate}-${this.lastDate}`;
 
 		this.birthdaysContractors$
 			.pipe(
