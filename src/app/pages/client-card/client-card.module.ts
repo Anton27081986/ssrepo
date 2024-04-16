@@ -36,8 +36,14 @@ import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomple
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
+import { TagModule } from '@app/shared/components/tag/tag.module';
+import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
+import { DatepickerInputComponent } from '@app/shared/components/inputs/datepicker-input/datepicker-input.component';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
+import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
 
 @NgModule({
 	declarations: [
@@ -47,6 +53,7 @@ import { ClientCardRoutingModule } from './client-card-routing.module';
 		ClientCardInfoComponent,
 		ClientCardContragentsComponent,
 		SaleRequestsComponent,
+		ClientCardBirthdaysComponent,
 	],
 	imports: [
 		CommonModule,
@@ -97,6 +104,10 @@ import { ClientCardRoutingModule } from './client-card-routing.module';
 		EmptyPlaceholderModule,
 		TextModule,
 		ComponentsModule,
+		TagModule,
+		AutocompleteSelectFieldModule,
+		DatepickerInputComponent,
+		NzPaginationModule,
 	],
 })
 export class ClientCardModule {}

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientCardComponent } from '@app/pages/client-card/client-card.component';
 import { ClientCardBasicComponent } from '@app/pages/client-card/client-card-basic/client-card-basic.component';
-import { SamplesComponent } from '@app/pages/client-card/samples/samples.component';
 import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
+import { ClientCardBirthdaysComponent } from '@app/pages/client-card/client-card-birthdays/client-card-birthdays.component';
 
 const routes: Routes = [
 	{
@@ -23,10 +23,10 @@ const routes: Routes = [
 				component: SaleRequestsComponent,
 			},
 			{
-				path: 'samples',
-				component: SamplesComponent,
+				path: 'birthdays',
+				component: ClientCardBirthdaysComponent,
 			},
-			{ path: '**', redirectTo: 'basic' },
+			// { path: '**', redirectTo: 'basic' },
 		],
 	},
 ];
