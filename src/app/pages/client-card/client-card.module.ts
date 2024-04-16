@@ -25,8 +25,8 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { TagModule } from '@app/shared/components/tag/tag.module';
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
-import { DatepickerInputComponent } from '@app/shared/components/inputs/datepicker-input/datepicker-input.component';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
@@ -64,8 +64,8 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		SearchInputModule,
 		TagModule,
 		AutocompleteSelectFieldModule,
-		DatepickerInputComponent,
 		NzPaginationModule,
+		DatepickerInputModule,
 	],
 })
 export class ClientCardModule {}

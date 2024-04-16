@@ -8,16 +8,12 @@ import {
 	Self,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { IconModule } from '@app/shared/components/icon/icon.module';
 
 @Component({
 	selector: 'ss-datepicker-input',
 	templateUrl: './datepicker-input.component.html',
 	styleUrls: ['./datepicker-input.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true,
-	imports: [CaptionModule, IconModule],
 })
 export class DatepickerInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
