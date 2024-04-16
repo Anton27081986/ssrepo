@@ -14,7 +14,7 @@
 	<div class="card-list">
 		<ng-container *ngFor="let birthdays of (birthdaysContractors$ | async)?.items; trackBy: trackBy">
 				<ss-card padding="12">
-					<a href="https://cisp.ssnab.ru/crm/subscribers#/{{ birthdays?.contractor?.id }}" target="_blank" class="contacts">
+					<a href="{{ birthdays?.detailLink }}" class="contacts" target="_blank" rel="noreferrer">
 						<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.name }}</ss-text>
 						<ss-text [size]="'3'" weight="medium">{{ birthdays?.position }}</ss-text>
 						<ss-text [size]="'3'" weight="semi-bold">{{ birthdays?.contractor?.name }}</ss-text>
