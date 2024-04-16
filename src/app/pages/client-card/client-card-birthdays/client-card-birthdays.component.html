@@ -13,14 +13,14 @@
 	</div>
 	<div class="card-list">
 		<ng-container *ngFor="let birthdays of (birthdaysContractors$ | async)?.items; trackBy: trackBy">
-				<ss-card padding="12">
-					<a href="{{ birthdays?.detailLink }}" class="contacts" target="_blank" rel="noreferrer">
-						<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.name }}</ss-text>
-						<ss-text [size]="'3'" weight="medium">{{ birthdays?.position }}</ss-text>
-						<ss-text [size]="'3'" weight="semi-bold">{{ birthdays?.contractor?.name }}</ss-text>
-						<ss-tag class="station">{{ birthdays?.birthDate | date:'dd MMMM yyyy':'':'ru' }}</ss-tag>
-					</a>
-				</ss-card>
+			<ss-card padding="12">
+				<a href="{{ birthdays?.detailLink }}" class="contacts" target="_blank" rel="noreferrer">
+					<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.name }}</ss-text>
+					<ss-text [size]="'3'" weight="medium">{{ birthdays?.position }}</ss-text>
+					<ss-text [size]="'3'" weight="semi-bold">{{ birthdays?.contractor?.name }}</ss-text>
+					<ss-tag class="station">{{ birthdays?.birthDate | date:'dd MMMM yyyy':'':'ru' }}</ss-tag>
+				</a>
+			</ss-card>
 		</ng-container>
 	</div>
 
