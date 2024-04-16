@@ -23,8 +23,21 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
-import { ClientCardRoutingModule } from './client-card-routing.module';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
+import { ComponentsModule } from '@app/components/components.module';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { ClientsListPageRoutingModule } from '@app/pages/clients-list-page/clients-list-page-routing.module';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { PasswordModule } from '@app/shared/components/inputs/password/password.module';
+import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { LinkModule } from '@app/shared/components/link/link.module';
+import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
 import { ClientCardComponent } from './client-card.component';
+import { ClientCardRoutingModule } from './client-card-routing.module';
 
 @NgModule({
 	declarations: [
@@ -33,6 +46,7 @@ import { ClientCardComponent } from './client-card.component';
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
 		ClientCardContragentsComponent,
+		SaleRequestsComponent,
 	],
 	imports: [
 		CommonModule,
@@ -56,6 +70,33 @@ import { ClientCardComponent } from './client-card.component';
 		InputModule,
 		CKEditorModule,
 		SearchInputModule,
+		NzPaginationModule,
+		EmptyPlaceholderModule,
+		ComponentsModule,
+		NzCardModule,
+		CommonModule,
+		ClientsListPageRoutingModule,
+		ButtonModule,
+		CaptionModule,
+		CardModule,
+		HeadlineModule,
+		NzPaginationModule,
+		TableModule,
+		NzFormModule,
+		ReactiveFormsModule,
+		NzSelectModule,
+		NzTypographyModule,
+		InputModule,
+		PasswordModule,
+		NzCardModule,
+		AutocompleteSelectFieldModule,
+		NzRadioModule,
+		FormsModule,
+		LinkModule,
+		IconModule,
+		EmptyPlaceholderModule,
+		TextModule,
+		ComponentsModule,
 	],
 })
 export class ClientCardModule {}

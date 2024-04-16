@@ -35,10 +35,10 @@ export class MessagesComponent implements OnInit {
 	protected user$: Observable<IUserProfile | null>;
 	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
 
-	protected tabs: BehaviorSubject<string[]> = new BehaviorSubject([
+	protected tabs: string[] = [
 		'Все сообщения по клиенту',
 		'Вложения',
-	]);
+	];
 
 	protected selectedTab: CorrespondenceTabsEnum = CorrespondenceTabsEnum.Messages;
 
@@ -86,7 +86,7 @@ export class MessagesComponent implements OnInit {
 
 		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
 			this.selectedTab = CorrespondenceTabsEnum.Messages;
-			this.tabs.next([subject || 'Все сообщения по клиенту', 'Вложения']);
+			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
 			this.scrollToBottom();
 		});
 	}

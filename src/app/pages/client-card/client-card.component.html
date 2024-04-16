@@ -3,6 +3,13 @@
 		<ss-icon name="arrow" [routerLink]="['/clients-list']"></ss-icon>
 		<ss-headline size="h3" weight="semi-bold">{{ (client$ | async)?.name }}</ss-headline>
 	</div>
-	<ss-tabs [tabs]="['Общая информация', 'Заявки на продажу', 'Образцы', 'ЖНТПР', 'Возвраты/претензии', 'ПКП', 'Договоры', 'Дни рождения']" (select)="selectTab($event)"></ss-tabs>
+	<ss-tabs [tabs]="tabs" (select)="selectTab($event)" [selectedTab]="selectedTab"></ss-tabs>
 </div>
 <router-outlet></router-outlet>
+<div class="footer">
+	<div class="contragents">
+		<ss-client-card-contragents></ss-client-card-contragents>
+		<ss-history></ss-history>
+	</div>
+	<ss-correspondence *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-correspondence>
+</div>

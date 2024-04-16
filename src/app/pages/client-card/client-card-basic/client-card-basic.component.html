@@ -2,8 +2,3 @@
 	<ss-client-card-managers></ss-client-card-managers>
 	<ss-client-card-info></ss-client-card-info>
 </div>
-<div class="contragents">
-	<ss-client-card-contragents></ss-client-card-contragents>
-	<ss-history></ss-history>
-</div>
-<ss-correspondence *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-correspondence>

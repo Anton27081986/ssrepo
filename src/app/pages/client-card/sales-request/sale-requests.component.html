@@ -1,0 +1,85 @@
+<ss-card padding="0" class="container">
+	<div class="header">
+		<ss-headline class="title" size="h6">Заявки на продажу</ss-headline>
+		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" class="filter" (click)="toggleFilters()"></ss-icon>
+	</div>
+	<div class="content desktop table-with-filters">
+		<div class="table">
+			<div class="table-container" *ngIf="tableState === TableState.Full">
+				<ss-table
+					[head]="[
+						{title: 'Код', fields: ['code'], link: 'saleLink'},
+						{title: 'Контрагент', fields: ['contractorId']},
+						{title: 'Дата отгрузки',  fields: ['shipDate']},
+						{title: 'Дата оплаты',  fields: ['paymentDate']},
+						{title: 'Статус', fields: ['status']}
+						]"
+					[items]="tableItems">
+				</ss-table>
+				<div class="pagination" style="justify-content: flex-end">
+					<nz-pagination
+						[nzTotal]="total"
+						[nzPageIndex]="pageIndex"
+						[nzPageSize]="pageSize"
+						(nzPageIndexChange)="nzPageIndexChange($event)"
+						(nzPageSizeChange)="pageSize = $event"
+						[nzResponsive]="true">
+					</nz-pagination>
+				</div>
+			</div>
+			<div class="table-container" *ngIf="tableState === TableState.Empty">
+				<ss-empty-placeholder>
+					<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+					<div class="placeholder-subtitle">
+						<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
+					</div>
+				</ss-empty-placeholder>
+			</div>
+			<div class="table-container" *ngIf="tableState === TableState.Loading">
+				<app-loader></app-loader>
+			</div>
+		</div>
+
+	</div>
+</ss-card>
+<ss-card padding="0" class="filters container"
+	 *ngIf="isFiltersVisible">
+	<div class="header">
+		<ss-headline size="h6">Фильтры</ss-headline>
+		<ss-icon height="18" width="18" name="logout" class="filter-button" (click)="toggleFilters()"></ss-icon>
+	</div>
+	<div class="content">
+		<form nz-form
+			  [formGroup]="filtersForm"
+			  nzLayout="vertical"
+			  class="form">
+			<nz-form-item>
+				<div style="display: flex; justify-content: space-between; align-items: center">
+					<ss-caption size="1" class="m-b-5">Выбранные</ss-caption>
+					<div style="display: flex; flex-wrap: nowrap; align-items: center">
+						<ss-button type="quaternary" size="small" (click)="clearFilter()">Очистить всё</ss-button>
+						<ss-icon height="8" width="8" name="iconClose" class="close" (click)="clearFilter()"></ss-icon>
+					</div>
+				</div>
+			</nz-form-item>
+			<hr />
+			<nz-form-item>
+				<ss-button class="desktop m-t-10"
+						   size="large"
+						   type="primary"
+						   (click)="getFilteredSales()">
+					Применить фильтры
+				</ss-button>
+			</nz-form-item>
+		</form>
+
+	</div>
+
+	<ng-template #extraTemplate>
+		<a (click)="toggleFilters()">
+			<ss-icon height="20" width="20" name="logout" class="filter"></ss-icon>
+		</a>
+	</ng-template>
+
+
+</ss-card>
