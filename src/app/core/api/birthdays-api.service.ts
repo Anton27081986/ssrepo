@@ -16,4 +16,17 @@ export class BirthdaysApiService {
 			params: new HttpParams().set('date', date),
 		});
 	}
+
+	/** Birthdays contractor */
+	public getBirthdayContractor(pageSize?: number, offset?: number): Observable<any> {
+		return this.http.get<any>(`${environment.apiUrl}/api/company/BirthDays`, {
+			params: new HttpParams().set('pageSize', pageSize!).set('offset', offset!),
+		});
+	}
+
+	public searchBirthdayContractor(contractorId?: number): Observable<any> {
+		return this.http.get<any>(`${environment.apiUrl}/api/company/BirthDays`, {
+			params: new HttpParams().set('contractorId', contractorId!),
+		});
+	}
 }

@@ -12,7 +12,7 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
-type searchType = 'user' | 'subsector' | 'region';
+type searchType = 'user' | 'subsector' | 'region' | 'contractor';
 
 @UntilDestroy()
 @Component({
@@ -24,6 +24,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
+	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
 	@Input() public searchType: searchType = 'user';
 	@Output() public select = new EventEmitter<any>();
@@ -99,6 +100,15 @@ export class SearchInputComponent implements ControlValueAccessor {
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
 						this.found = res.items;
+						this.ref.detectChanges();
+					});
+				break;
+			case 'contractor':
+				this.searchFacade
+					.getContractor(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res;
 						this.ref.detectChanges();
 					});
 				break;

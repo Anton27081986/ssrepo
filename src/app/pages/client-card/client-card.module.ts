@@ -23,8 +23,13 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
+import { TagModule } from '@app/shared/components/tag/tag.module';
+import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
+import { DatepickerInputComponent } from '@app/shared/components/inputs/datepicker-input/datepicker-input.component';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardComponent } from './client-card.component';
+import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
 
 @NgModule({
 	declarations: [
@@ -33,6 +38,7 @@ import { ClientCardComponent } from './client-card.component';
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
 		ClientCardContragentsComponent,
+		ClientCardBirthdaysComponent,
 	],
 	imports: [
 		CommonModule,
@@ -56,6 +62,10 @@ import { ClientCardComponent } from './client-card.component';
 		InputModule,
 		CKEditorModule,
 		SearchInputModule,
+		TagModule,
+		AutocompleteSelectFieldModule,
+		DatepickerInputComponent,
+		NzPaginationModule,
 	],
 })
 export class ClientCardModule {}
