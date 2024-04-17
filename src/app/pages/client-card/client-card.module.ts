@@ -17,7 +17,6 @@ import { ClientCardContragentsComponent } from '@app/pages/client-card/client-ca
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from '@app/shared/components/table/table.module';
-import { HistoryModule } from '@app/shared/components/history/history.module';
 import { SelectModule } from '@app/shared/components/select/select.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
@@ -37,13 +36,12 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
 import { TagModule } from '@app/shared/components/tag/tag.module';
-import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { DatepickerInputComponent } from '@app/shared/components/inputs/datepicker-input/datepicker-input.component';
-import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
+import {HistoryModule} from "@app/widgets/history/history.module";
+import {FiltersModule} from "@app/shared/components/filters/filters.module";
 
 @NgModule({
 	declarations: [
@@ -108,6 +106,7 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		AutocompleteSelectFieldModule,
 		DatepickerInputComponent,
 		NzPaginationModule,
+		FiltersModule,
 	],
 })
 export class ClientCardModule {}

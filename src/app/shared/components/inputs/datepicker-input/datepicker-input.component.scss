@@ -5,41 +5,46 @@ input {
 	align-items: center;
 	padding: 0 20px;
 	width: 100%;
-	border-radius: 8px;
-	border: 1px solid $island-outline;
-	background-color: $island;
 	outline: none;
 	font-family: 'Inter', serif;
 	font-size: 14px;
 	line-height: 17px;
 	letter-spacing: -0.01em;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+input::-webkit-calendar-picker-indicator {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
 }
 
 .input {
 	position: relative;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background: right 10px center no-repeat url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTYuNjY2MDIgMS42NjYwMlY0LjE2NjAyIiBzdHJva2U9IiM0NzcwRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTMuMzM0IDEuNjY2MDJWNC4xNjYwMiIgc3Ryb2tlPSIjNDc3MEZGIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTIuOTE2MDIgNy41NzUySDE3LjA4MjciIHN0cm9rZT0iIzQ3NzBGRiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1taXRlcmxpbWl0PSIxMCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik0xNy41IDcuMDgzNjZWMTQuMTY3QzE3LjUgMTYuNjY3IDE2LjI1IDE4LjMzMzcgMTMuMzMzMyAxOC4zMzM3SDYuNjY2NjdDMy43NSAxOC4zMzM3IDIuNSAxNi42NjcgMi41IDE0LjE2N1Y3LjA4MzY2QzIuNSA0LjU4MzY2IDMuNzUgMi45MTY5OSA2LjY2NjY3IDIuOTE2OTlIMTMuMzMzM0MxNi4yNSAyLjkxNjk5IDE3LjUgNC41ODM2NiAxNy41IDcuMDgzNjZaIiBzdHJva2U9IiM0NzcwRkYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTAuMDY2NCAxMC43NjE0SDEwLjA3MzkiIHN0cm9rZT0iIzQ3NzBGRiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTUuOTI5NjcgMTAuNzYxNEg1LjkzNzE1IiBzdHJva2U9IiM0NzcwRkYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjxwYXRoIGQ9Ik01LjkyOTY3IDE0LjIwOTZINS45MzcxNSIgc3Ryb2tlPSIjNDc3MEZGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K');
 
-	ss-icon {
+	.value {
 		position: absolute;
-		right: 8px;
-		top: 16px;
-		cursor: pointer;
-		color: $main;
+		bottom: 12px;
+		left: 12px;
 	}
-}
-
-input.large ~ ss-icon {
-	top: 20px;
-}
-
-input.small ~ ss-icon {
-	top: 10px;
 }
 
 input::placeholder {
 	color: $lite-text;
 }
 
-input:focus {
+.input:has(input:focus) {
 	border-color: $additional-outline;
 }
 
@@ -48,14 +53,15 @@ input.small {
 	font-weight: 400;
 }
 
+.input:has(input.small) {
+	.value {
+		bottom: 6px;
+	}
+}
+
 input.medium {
 	height: 41px;
 	font-weight: 400;
-}
-
-input.large {
-	height: 52px;
-	font-weight: 600;
 }
 
 input.error {

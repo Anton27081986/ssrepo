@@ -26,7 +26,7 @@ const routes: Routes = [
 				path: 'birthdays',
 				component: ClientCardBirthdaysComponent,
 			},
-			// { path: '**', redirectTo: 'basic' },
+			{ path: '**', redirectTo: 'basic' },
 		],
 	},
 ];

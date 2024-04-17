@@ -5,6 +5,7 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { SaleRequestsFacadeService } from '@app/core/facades/sale-requests-facade.service';
 import { ISaleRequestsFilter } from '@app/core/models/sale-requests-filter';
 import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';
+import { IFilter } from '@app/shared/components/filters/filters.component';
 
 export interface ISaleTableItem {
 	code: string;
@@ -33,14 +34,30 @@ export class SaleRequestsComponent implements OnInit {
 	public total: number | undefined;
 	public pageSize = 6;
 	public pageIndex = 1;
-	public offset = 0;
 	public tableItems: ITableItem[] = [];
 	public items: ISaleTableItem[] = [];
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible: boolean = true;
 	public tableState: TableState = TableState.Loading;
 	public filtersForm!: FormGroup;
+	public filter: ISaleRequestsFilter = {
+		offset: 0,
+		limit: this.pageSize,
+	};
+
+	public filters: IFilter[] = [
+		{
+			name: 'ContractorId',
+			type: 'input',
+			label: 'Контрагент',
+		},
+		{
+			name: 'FromShipDate',
+			type: 'date',
+			label: 'Дата отгрузки',
+		},
+	];
 
 	public constructor(
 		public readonly saleRequestsFacade: SaleRequestsFacadeService,
@@ -56,7 +73,7 @@ export class SaleRequestsComponent implements OnInit {
 			toShipDate: [],
 		});
 
-		this.saleRequestsFacade.applyFilters(this.getFilter());
+		this.saleRequestsFacade.applyFilters(this.filter);
 
 		this.saleRequestsFacade.sales$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
@@ -106,45 +123,26 @@ export class SaleRequestsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales() {
+	public getFilteredSales(filter: { [key: string]: string }) {
+		this.filter = filter as unknown as ISaleRequestsFilter;
 		this.tableState = TableState.Loading;
 
 		if (this.filtersForm.valid) {
-			const filter = this.getFilter();
-
-			this.saleRequestsFacade.applyFilters(filter);
+			this.saleRequestsFacade.applyFilters({ ...this.filter, limit: this.pageSize });
 		}
-	}
-
-	private getFilter(): ISaleRequestsFilter {
-		return {
-			ContractorId: this.filtersForm.get('contractorId')?.value,
-			FromShipDate: this.filtersForm.get('fromShipDate')?.value,
-			ToShipDate: this.filtersForm.get('toShipDate')?.value,
-			offset: this.offset,
-			limit: this.pageSize,
-		};
 	}
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.offset = 0;
+			this.filter.offset = 0;
 		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
+			this.filter.offset = this.pageSize * $event - this.pageSize;
 		}
 
-		this.offset = this.pageSize * $event - this.pageSize;
+		this.filter.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.saleRequestsFacade.applyFilters(this.getFilter());
-	}
-
-	public clearFilter() {
-		this.filtersForm.reset({
-			contractorId: [],
-			fromShipDate: [],
-			toShipDate: [],
-		});
+		this.saleRequestsFacade.applyFilters(this.filter);
 	}
 
 	protected readonly TableState = TableState;

@@ -25,11 +25,6 @@
 		}
 	}
 
-	.filters {
-		width: 300px;
-		flex-shrink: 0;
-	}
-
 	.pagination {
 		justify-content: flex-end;
 	}
@@ -69,6 +64,7 @@
 		}
 
 		.filter-button {
+			cursor: pointer;
 			color: $main;
 		}
 	}
@@ -79,14 +75,5 @@
 
 	.pagination {
 		margin-top: 20px;
-	}
-}
-
-.filters {
-	width: 300px;
-	flex-shrink: 0;
-
-	.filter-button {
-		transform: rotateZ(-90deg);
 	}
 }

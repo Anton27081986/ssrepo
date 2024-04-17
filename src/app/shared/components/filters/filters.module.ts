@@ -1,0 +1,35 @@
+import { NgModule } from '@angular/core';
+import { FiltersComponent } from '@app/shared/components/filters/filters.component';
+import {ButtonModule} from "@app/shared/components/buttons/button/button-module";
+import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
+import {CardModule} from "@app/shared/components/card/card.module";
+import {HeadlineModule} from "@app/shared/components/typography/headline/headline.module";
+import {IconModule} from "@app/shared/components/icon/icon.module";
+import {NgForOf, NgIf} from "@angular/common";
+import {NzFormModule} from "ng-zorro-antd/form";
+import {NzGridModule} from "ng-zorro-antd/grid";
+import {ReactiveFormsModule} from "@angular/forms";
+import {InputModule} from "@app/shared/components/inputs/input/input.module";
+import {TextModule} from "@app/shared/components/typography/text/text.module";
+import {DatepickerInputComponent} from "@app/shared/components/inputs/datepicker-input/datepicker-input.component";
+
+@NgModule({
+	declarations: [FiltersComponent],
+	exports: [FiltersComponent],
+	imports: [
+		ButtonModule,
+		CaptionModule,
+		CardModule,
+		HeadlineModule,
+		IconModule,
+		NgIf,
+		NzFormModule,
+		NzGridModule,
+		ReactiveFormsModule,
+		NgForOf,
+		InputModule,
+		TextModule,
+		DatepickerInputComponent
+	]
+})
+export class FiltersModule {}

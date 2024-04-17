@@ -1,7 +1,7 @@
 export interface ISaleRequestsFilter {
 	ContractorId?: number;
-	FromShipDate: Date;
-	ToShipDate: Date;
+	FromShipDate?: string;
+	ToShipDate?: string;
 	limit: number;
 	offset: number;
 }

@@ -14,16 +14,16 @@ export class SaleRequestsApiService {
 	public getSaleRequests(filter: ISaleRequestsFilter): Observable<ISaleRequestsDto> {
 		let params = new HttpParams();
 
-		if (filter.ContractorId !== null && filter.ContractorId !== undefined) {
+		if (filter.ContractorId) {
 			params = params.set('ContractorId', filter.ContractorId);
 		}
 
-		if (filter.FromShipDate !== null && filter.FromShipDate !== undefined) {
-			params = params.set('FromShipDate', filter.FromShipDate.toISOString());
+		if (filter.FromShipDate) {
+			params = params.set('FromShipDate', new Date(filter.FromShipDate).toISOString());
 		}
 
-		if (filter.ToShipDate !== null && filter.ToShipDate !== undefined) {
-			params = params.set('ToShipDate', filter.ToShipDate.toISOString());
+		if (filter.ToShipDate) {
+			params = params.set('ToShipDate', new Date(filter.ToShipDate).toISOString());
 		}
 
 		if (filter.limit !== null && filter.limit !== undefined) {
