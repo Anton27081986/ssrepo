@@ -11,7 +11,7 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputModule} from "@app/shared/components/inputs/input/input.module";
 import {TextModule} from "@app/shared/components/typography/text/text.module";
-import {DatepickerInputComponent} from "@app/shared/components/inputs/datepicker-input/datepicker-input.component";
+import {DatepickerInputModule} from "@app/shared/components/inputs/datepicker-input/datepicker-input.module";
 
 @NgModule({
 	declarations: [FiltersComponent],
@@ -29,7 +29,7 @@ import {DatepickerInputComponent} from "@app/shared/components/inputs/datepicker
 		NgForOf,
 		InputModule,
 		TextModule,
-		DatepickerInputComponent
+		DatepickerInputModule,
 	]
 })
 export class FiltersModule {}

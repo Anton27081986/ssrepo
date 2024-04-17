@@ -18,7 +18,7 @@
 	<form [formGroup]="filtersForm" class="filters-form">
 		<div class="filters-form-item" *ngFor="let filter of filters">
 			<ss-input *ngIf="filter.type === 'input'" [label]="filter.label" [formControlName]="filter.name"></ss-input>
-			<ss-datepicker-input *ngIf="filter.type === 'date'" size="small" [disabled]="false" [label]="filter.label" [formControlName]="filter.name"></ss-datepicker-input>
+			<ss-datepicker-input *ngIf="filter.type === 'date'" size="small" [disabled]="false" [label]="filter.label" [formControlName]="filter.name" placeholder=""></ss-datepicker-input>
 		</div>
 	</form>
 	<div class="footer">

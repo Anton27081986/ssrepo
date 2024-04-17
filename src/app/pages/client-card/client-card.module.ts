@@ -36,12 +36,12 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
 import { TagModule } from '@app/shared/components/tag/tag.module';
-import { DatepickerInputComponent } from '@app/shared/components/inputs/datepicker-input/datepicker-input.component';
+import { HistoryModule } from '@app/widgets/history/history.module';
+import { FiltersModule } from '@app/shared/components/filters/filters.module';
+import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
-import {HistoryModule} from "@app/widgets/history/history.module";
-import {FiltersModule} from "@app/shared/components/filters/filters.module";
 
 @NgModule({
 	declarations: [
