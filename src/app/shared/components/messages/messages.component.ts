@@ -30,6 +30,8 @@ enum CorrespondenceTabsEnum {
 })
 export class MessagesComponent implements OnInit {
 	@Input() objectId!: number;
+	public currentUserId: number | undefined;
+
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	protected subject$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
@@ -89,6 +91,10 @@ export class MessagesComponent implements OnInit {
 			this.tabs.next([subject || 'Все сообщения по клиенту', 'Вложения']);
 			this.scrollToBottom();
 		});
+
+		this.notificationsFacadeService.getUserProfile().subscribe(user => {
+			this.currentUserId = user?.id;
+		});
 	}
 
 	protected scrollToBottom(): void {
@@ -127,7 +133,10 @@ export class MessagesComponent implements OnInit {
 			.patchMessage(message.id!, { ...message, isPrivate: !message.isPrivate })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.notificationsFacadeService.loadMessages(this.objectId).pipe(untilDestroyed(this)).subscribe();
+				this.notificationsFacadeService
+					.loadMessages(this.objectId)
+					.pipe(untilDestroyed(this))
+					.subscribe();
 			});
 	}
 
