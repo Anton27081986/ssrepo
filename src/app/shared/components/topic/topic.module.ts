@@ -6,20 +6,20 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { AsyncPipe, NgForOf } from '@angular/common';
-import {SearchInputModule} from "@app/shared/components/inputs/search-input/search-input.module";
+import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 
 @NgModule({
 	declarations: [TopicComponent],
 	exports: [TopicComponent],
-    imports: [
-        CardModule,
-        IconModule,
-        HeadlineModule,
-        TextModule,
-        CaptionModule,
-        AsyncPipe,
-        NgForOf,
-        SearchInputModule,
-    ],
+	imports: [
+		CardModule,
+		IconModule,
+		HeadlineModule,
+		TextModule,
+		CaptionModule,
+		AsyncPipe,
+		NgForOf,
+		SearchInputModule,
+	],
 })
 export class TopicModule {}

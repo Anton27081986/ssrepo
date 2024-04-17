@@ -41,7 +41,11 @@ export class ClientCardComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.clientId = Number.parseInt(this.activatedRoute.snapshot.paramMap.get('id')!, 10);
+		const id = this.activatedRoute.snapshot.paramMap.get('id');
+
+		if (id) {
+			this.clientId = Number.parseInt(id, 10);
+		}
 
 		if (this.clientId) {
 			this.clientCardListFacade.setClientId(this.clientId);

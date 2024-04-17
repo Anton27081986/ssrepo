@@ -7,11 +7,14 @@
 	<div *ngIf="selectedFilters.length" class="filters-selected">
 		<div class="filters-selected-header">
 			<ss-caption size="1">Выбранные</ss-caption>
-			<ss-caption class="filters-selected-header-button" size="2" (click)="resetForm()">Очистить все <ss-icon height="8" width="8" name="iconClose"></ss-icon></ss-caption>
+			<ss-caption class="filters-selected-header-button" size="2" (click)="resetForm()">
+Очистить все <ss-icon height="8" width="8" name="iconClose"></ss-icon>
+</ss-caption>
 		</div>
 		<div class="filters-selected-list">
 			<div class="filters-selected-list-item" *ngFor="let filter of selectedFilters">
-				<ss-text size="3">{{ filter.label }}: {{ filter.value }}</ss-text> <ss-icon height="8" width="8" name="iconClose" (click)="removeFilter(filter.name)"></ss-icon>
+				<ss-text size="3">{{ filter.label }}: {{ filter.value }}</ss-text>
+ <ss-icon height="8" width="8" name="iconClose" (click)="removeFilter(filter.name)"></ss-icon>
 			</div>
 		</div>
 	</div>

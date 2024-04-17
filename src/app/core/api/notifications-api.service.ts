@@ -5,7 +5,7 @@ import { environment } from '@environments/environment.development';
 import { ISendMessageRequest } from '@app/core/models/notifications/send-message-request';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
-import {IResponse} from "@app/core/utils/response";
+import { IResponse } from '@app/core/utils/response';
 
 @Injectable({
 	providedIn: 'root',
@@ -45,7 +45,10 @@ export class NotificationsApiService {
 
 	/** Изменить сообщение */
 	public patchMessage(id: string, body: ISendMessageRequest): Observable<IMessageItemDto> {
-		return this.http.put<IMessageItemDto>(`${environment.apiUrl}/api/notifications/messages/${id}/edit`, body);
+		return this.http.put<IMessageItemDto>(
+			`${environment.apiUrl}/api/notifications/messages/${id}/edit`,
+			body,
+		);
 	}
 
 	/** Получить список файлов */

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 
 @Component({
@@ -6,15 +6,13 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 	templateUrl: './tooltip.component.html',
 	styleUrls: ['./tooltip.component.scss'],
 })
-export class TooltipComponent implements OnInit {
-	position: TooltipPosition = TooltipPosition.DEFAULT;
-	theme: TooltipTheme = TooltipTheme.DEFAULT;
-	tooltip = '';
-	left = 0;
-	top = 0;
-	visible = false;
+export class TooltipComponent {
+	public position: TooltipPosition = TooltipPosition.DEFAULT;
+	public theme: TooltipTheme = TooltipTheme.DEFAULT;
+	public tooltip = '';
+	public left = 0;
+	public top = 0;
+	public visible = false;
 
 	constructor() {}
-
-	ngOnInit(): void {}
 }

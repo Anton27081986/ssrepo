@@ -14,12 +14,12 @@ export interface IFilter {
 	styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent implements OnInit {
-	@Input() isFiltersVisible!: boolean;
-	@Output() isFiltersVisibleChange = new EventEmitter<boolean>();
+	@Input() public isFiltersVisible!: boolean;
+	@Output() public isFiltersVisibleChange = new EventEmitter<boolean>();
 
-	@Input() filters: IFilter[] = [];
+	@Input() public filters: IFilter[] = [];
 
-	@Output() getFilter: EventEmitter<{ [key: string]: string }> = new EventEmitter<{
+	@Output() public getFilter: EventEmitter<{ [key: string]: string }> = new EventEmitter<{
 		[key: string]: string;
 	}>();
 
@@ -28,7 +28,7 @@ export class FiltersComponent implements OnInit {
 
 	constructor(private readonly formBuilder: FormBuilder) {}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.filtersForm = this.formBuilder.group(
 			this.filters.reduce((group, filter) => {
 				return { ...group, [filter.name]: [] };
@@ -38,7 +38,7 @@ export class FiltersComponent implements OnInit {
 		this.selectedFilters = this.filters.filter(item => item.value);
 	}
 
-	resetForm() {
+	public resetForm() {
 		this.selectedFilters = [];
 
 		for (const controlsKey in this.filtersForm.controls) {
@@ -67,7 +67,7 @@ export class FiltersComponent implements OnInit {
 		this.getFilter.emit(this.filtersForm.value);
 	}
 
-	removeFilter(name: string) {
+	public removeFilter(name: string) {
 		this.filtersForm.get(name)?.setValue('');
 
 		this.selectedFilters = this.selectedFilters.filter(item => item.name !== name);

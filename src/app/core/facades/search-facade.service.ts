@@ -30,14 +30,14 @@ export class SearchFacadeService {
 	public getContractor(query: string) {
 		if (query) {
 			return this.httpClient
-				.get<IResponse<IDictionaryItemDto>>(this.contractorUrl!, {
+				.get<IResponse<IDictionaryItemDto>>(this.contractorUrl, {
 					params: new HttpParams().set('query', query),
 				})
 				.pipe(map(response => response.items));
 		}
 
 		return this.httpClient
-			.get<IResponse<IDictionaryItemDto>>(this.contractorUrl!)
+			.get<IResponse<IDictionaryItemDto>>(this.contractorUrl)
 			.pipe(map(response => response.items));
 	}
 }

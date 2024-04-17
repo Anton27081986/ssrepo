@@ -13,7 +13,7 @@ import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ClientCardInfoComponent } from '@app/pages/client-card/client-card-basic/client-card-info/client-card-info.component';
 import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
 import { CorrespondenceModule } from '@app/shared/components/correspondence/correspondence.module';
-import { ClientCardContragentsComponent } from '@app/pages/client-card/client-card-basic/client-card-contragents/client-card-contragents.component';
+import { ClientCardContractorsComponent } from '@app/pages/client-card/client-card-basic/client-card-contractors/client-card-contractors.component';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from '@app/shared/components/table/table.module';
@@ -49,7 +49,7 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		ClientCardManagersComponent,
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
-		ClientCardContragentsComponent,
+		ClientCardContractorsComponent,
 		SaleRequestsComponent,
 		ClientCardBirthdaysComponent,
 	],

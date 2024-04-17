@@ -6,11 +6,11 @@ import { Component, Input } from '@angular/core';
 	styleUrls: ['./card-dropdown.component.scss'],
 })
 export class CardDropdownComponent {
-	@Input() title!: string;
-	@Input() titleSize: '1' | '2' | '3' = '1';
+	@Input() public title!: string;
+	@Input() public titleSize: '1' | '2' | '3' = '1';
 
 	protected isHidden = false;
-	onHideButton() {
+	public onHideButton() {
 		this.isHidden = !this.isHidden;
 	}
 }

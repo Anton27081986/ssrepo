@@ -98,8 +98,6 @@ export class NotificationsFacadeService {
 	}
 
 	public deleteFile(id: string): Observable<IAttachmentDto> {
-		return this.filesApiService
-			.deleteFile(id)
-			.pipe(untilDestroyed(this));
+		return this.filesApiService.deleteFile(id).pipe(untilDestroyed(this));
 	}
 }

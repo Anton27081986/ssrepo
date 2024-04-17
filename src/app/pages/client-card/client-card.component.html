@@ -7,8 +7,8 @@
 </div>
 <router-outlet></router-outlet>
 <div class="footer">
-	<div class="contragents">
-		<ss-client-card-contragents></ss-client-card-contragents>
+	<div class="contractors">
+		<ss-client-card-contractors></ss-client-card-contractors>
 		<ss-history></ss-history>
 	</div>
 	<ss-correspondence *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-correspondence>

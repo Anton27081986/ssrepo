@@ -7,7 +7,7 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
@@ -29,27 +29,24 @@ enum CorrespondenceTabsEnum {
 	styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-	@Input() objectId!: number;
+	@Input() public objectId!: number;
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	protected subject$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
 	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
 
-	protected tabs: string[] = [
-		'Все сообщения по клиенту',
-		'Вложения',
-	];
+	protected tabs: string[] = ['Все сообщения по клиенту', 'Вложения'];
 
 	protected selectedTab: CorrespondenceTabsEnum = CorrespondenceTabsEnum.Messages;
 
 	@ViewChild('messages') public messagesElement!: ElementRef;
 
-	@Output() selectMessageToReply = new EventEmitter<{
+	@Output() public selectMessageToReply = new EventEmitter<{
 		message: IMessageItemDto;
 		toUsers: IUserDto[];
 	}>();
 
-	constructor(
+	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: NotificationsFacadeService,
 		private readonly userService: UserProfileStoreService,
@@ -127,7 +124,10 @@ export class MessagesComponent implements OnInit {
 			.patchMessage(message.id!, { ...message, isPrivate: !message.isPrivate })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.notificationsFacadeService.loadMessages(this.objectId).pipe(untilDestroyed(this)).subscribe();
+				this.notificationsFacadeService
+					.loadMessages(this.objectId)
+					.pipe(untilDestroyed(this))
+					.subscribe();
 			});
 	}
 

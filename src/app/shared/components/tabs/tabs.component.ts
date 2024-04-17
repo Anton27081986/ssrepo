@@ -8,9 +8,9 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 	styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent {
-	@Input() tabs?: string[] = [];
-	@Input() selectedTab: string = 'Все';
-	@Output() select = new EventEmitter<string>();
+	@Input() public tabs?: string[] = [];
+	@Input() public selectedTab: string = 'Все';
+	@Output() public select = new EventEmitter<string>();
 
 	public onSelect(tab: string) {
 		this.selectedTab = tab;

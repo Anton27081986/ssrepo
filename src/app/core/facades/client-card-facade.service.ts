@@ -34,27 +34,31 @@ export class ClientsCardFacadeService {
 	}
 
 	public getClientCardById(id: number) {
-		this.clientApiService
-			.getClientCardById(id)
-			.pipe(
-				tap(client => {
-					this.clientSubject.next(client);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
+		if (this.clientIdSubject.value) {
+			this.clientApiService
+				.getClientCardById(id)
+				.pipe(
+					tap(client => {
+						this.clientSubject.next(client);
+					}),
+					untilDestroyed(this),
+				)
+				.subscribe();
+		}
 	}
 
 	public refreshClientCard() {
-		this.clientApiService
-			.getClientCardById(this.clientIdSubject.value!)
-			.pipe(
-				tap(client => {
-					this.clientSubject.next(client);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
+		if (this.clientIdSubject.value) {
+			this.clientApiService
+				.getClientCardById(this.clientIdSubject.value)
+				.pipe(
+					tap(client => {
+						this.clientSubject.next(client);
+					}),
+					untilDestroyed(this),
+				)
+				.subscribe();
+		}
 	}
 
 	public getManagers() {
@@ -92,21 +96,36 @@ export class ClientsCardFacadeService {
 		}
 	}
 
-	addManager(managerId: number) {
-		return this.clientApiService
-			.addManager(this.clientIdSubject.value!, managerId)
-			.pipe(untilDestroyed(this));
+	public addManager(managerId?: number) {
+		if (this.clientIdSubject.value && managerId) {
+			this.clientApiService
+				.addManager(this.clientIdSubject.value, managerId)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getManagers();
+				});
+		}
 	}
 
-	deleteManager(managerId: number) {
-		return this.clientApiService
-			.deleteManager(this.clientIdSubject.value!, managerId)
-			.pipe(untilDestroyed(this));
+	public deleteManager(managerId?: number) {
+		if (this.clientIdSubject.value && managerId) {
+			this.clientApiService
+				.deleteManager(this.clientIdSubject.value, managerId)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getManagers();
+				});
+		}
 	}
 
-	saveInfo(body: IClientEditRequest) {
-		return this.clientApiService
-			.saveInfo(this.clientIdSubject.value!, body)
-			.pipe(untilDestroyed(this));
+	public saveInfo(body: IClientEditRequest) {
+		if (this.clientIdSubject.value) {
+			this.clientApiService
+				.saveInfo(this.clientIdSubject.value!, body)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.refreshClientCard();
+				});
+		}
 	}
 }
