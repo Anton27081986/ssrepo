@@ -104,8 +104,8 @@ import {FiltersModule} from "@app/shared/components/filters/filters.module";
 		ComponentsModule,
 		TagModule,
 		AutocompleteSelectFieldModule,
-		DatepickerInputComponent,
 		NzPaginationModule,
+		DatepickerInputModule,
 		FiltersModule,
 	],
 })
