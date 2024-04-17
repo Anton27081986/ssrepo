@@ -12,7 +12,7 @@
 				<div class="message-content-header">
 					<ss-text size="1" weight="semi-bold">{{message.author?.name}}</ss-text>
 					<div class="message-content-header-controls">
-						<ss-icon name="{{ message.isPrivate ? 'lock' : 'unlock' }}"></ss-icon>
+						<ss-icon name="{{ message.isPrivate ? 'lock' : '' }}"></ss-icon>
 						<ss-tooltip-menu icon="more">
 							<ss-caption size="1" (click)="replyTo(message, message.author!)">
 								<ss-icon name="reply"></ss-icon>Ответить
