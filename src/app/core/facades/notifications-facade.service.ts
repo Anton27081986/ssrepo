@@ -6,6 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { IResponse } from '@app/core/utils/response';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 @UntilDestroy()
 @Injectable({
@@ -43,6 +44,7 @@ export class NotificationsFacadeService {
 	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly filesApiService: FilesApiService,
+		private readonly userProfileStoreService: UserProfileStoreService,
 	) {}
 
 	public loadSubjects(
@@ -98,8 +100,10 @@ export class NotificationsFacadeService {
 	}
 
 	public deleteFile(id: string): Observable<IAttachmentDto> {
-		return this.filesApiService
-			.deleteFile(id)
-			.pipe(untilDestroyed(this));
+		return this.filesApiService.deleteFile(id).pipe(untilDestroyed(this));
+	}
+
+	public getUserProfile() {
+		return this.userProfileStoreService.userProfile$;
 	}
 }
