@@ -29,7 +29,9 @@ enum CorrespondenceTabsEnum {
 	styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-	@Input() public objectId!: number;
+	@Input() objectId!: number;
+	public currentUserId: number | undefined;
+
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	protected subject$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
@@ -85,6 +87,10 @@ export class MessagesComponent implements OnInit {
 			this.selectedTab = CorrespondenceTabsEnum.Messages;
 			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
 			this.scrollToBottom();
+		});
+
+		this.notificationsFacadeService.getUserProfile().subscribe(user => {
+			this.currentUserId = user?.id;
 		});
 	}
 
