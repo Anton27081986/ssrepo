@@ -1,38 +1,67 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
+
+enum TabsEnum {
+	'Общая информация' = 'basic',
+	'Заявки на продажу' = 'sales',
+	'Образцы' = 'samples',
+	'ЖНТПР' = 'gntpr',
+	'Возвраты/претензии' = 'refund',
+	'ПКП' = 'pkp',
+	'Договоры' = 'contracts',
+	'Дни рождения' = 'birthdays',
+}
 
 @UntilDestroy()
 @Component({
 	selector: 'app-client-card',
 	templateUrl: './client-card.component.html',
-	styleUrls: ['./client-card.component.scss']
+	styleUrls: ['./client-card.component.scss'],
 })
 export class ClientCardComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;
 	public clientId$: Observable<number | null>;
 
+	private clientId: number | undefined;
+
+	protected tabs = Object.keys(TabsEnum);
+	protected selectedTab = '';
+
 	public constructor(
-		private readonly router: ActivatedRoute,
+		private readonly activatedRoute: ActivatedRoute,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
+		private readonly router: Router,
 	) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.clientId$ = this.clientCardListFacade.clientId$;
 	}
 
 	public ngOnInit() {
-		const clientId = Number.parseInt(this.router.snapshot.paramMap.get('id')!, 10);
+		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
-		if (clientId) {
-			this.clientCardListFacade.setClientId(clientId);
-			this.clientCardListFacade.getClientCardById(clientId);
+		if (id) {
+			this.clientId = Number.parseInt(id, 10);
+		}
+
+		if (this.clientId) {
+			this.clientCardListFacade.setClientId(this.clientId);
+			this.clientCardListFacade.getClientCardById(this.clientId);
+		}
+
+		for (const tabsEnumKey in TabsEnum) {
+			if (this.router.url.includes(TabsEnum[tabsEnumKey as keyof typeof TabsEnum])) {
+				this.selectedTab = tabsEnumKey;
+			}
 		}
 	}
 
-	selectTab(ev: any) {
-		console.log(ev)
+	selectTab(page: string) {
+		this.router.navigate([
+			`/client-card/${this.clientId}/${TabsEnum[page as keyof typeof TabsEnum]}`,
+		]);
 	}
 }

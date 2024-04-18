@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { from, mergeMap, Observable } from 'rxjs';
+import { from, Observable, tap } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
@@ -26,7 +26,7 @@ export class ClientCardManagersComponent implements OnInit {
 		this.managers$ = this.clientCardListFacade.managers$;
 	}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
 			if (clientId) {
 				this.clientCardListFacade.getManagers();
@@ -54,19 +54,15 @@ export class ClientCardManagersComponent implements OnInit {
 			this.clientCardListFacade.setBasicManager(this.changedData.basicManager);
 		}
 
-		from(this.changedData.managersList.filter(manager => manager.status !== 'static'))
-			.pipe(
-				mergeMap(manager => {
-					if (manager.status === 'add') {
-						return this.clientCardListFacade.addManager(manager.manager.id!);
-					}
+		from(this.changedData.managersList.filter(manager => manager.status !== 'static')).pipe(
+			tap(manager => {
+				if (manager.status === 'add') {
+					this.clientCardListFacade.addManager(manager.manager.id);
+				}
 
-					return this.clientCardListFacade.deleteManager(manager.manager.id!);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe(() => {
-				this.clientCardListFacade.getManagers();
-			});
+				this.clientCardListFacade.deleteManager(manager.manager.id);
+			}),
+			untilDestroyed(this),
+		);
 	}
 }

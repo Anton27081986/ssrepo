@@ -13,22 +13,34 @@ import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ClientCardInfoComponent } from '@app/pages/client-card/client-card-basic/client-card-info/client-card-info.component';
 import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
 import { CorrespondenceModule } from '@app/shared/components/correspondence/correspondence.module';
-import { ClientCardContragentsComponent } from '@app/pages/client-card/client-card-basic/client-card-contragents/client-card-contragents.component';
+import { ClientCardContractorsComponent } from '@app/pages/client-card/client-card-basic/client-card-contractors/client-card-contractors.component';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from '@app/shared/components/table/table.module';
-import { HistoryModule } from '@app/widgets/history/history.module';
 import { SelectModule } from '@app/shared/components/select/select.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
-import { TagModule } from '@app/shared/components/tag/tag.module';
-import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
+import { ComponentsModule } from '@app/components/components.module';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { ClientsListPageRoutingModule } from '@app/pages/clients-list-page/clients-list-page-routing.module';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { PasswordModule } from '@app/shared/components/inputs/password/password.module';
+import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { LinkModule } from '@app/shared/components/link/link.module';
+import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
+import { TagModule } from '@app/shared/components/tag/tag.module';
+import { HistoryModule } from '@app/widgets/history/history.module';
+import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
-import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardComponent } from './client-card.component';
+import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
 
 @NgModule({
@@ -37,7 +49,8 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		ClientCardManagersComponent,
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
-		ClientCardContragentsComponent,
+		ClientCardContractorsComponent,
+		SaleRequestsComponent,
 		ClientCardBirthdaysComponent,
 	],
 	imports: [
@@ -62,10 +75,38 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		InputModule,
 		CKEditorModule,
 		SearchInputModule,
+		NzPaginationModule,
+		EmptyPlaceholderModule,
+		ComponentsModule,
+		NzCardModule,
+		CommonModule,
+		ClientsListPageRoutingModule,
+		ButtonModule,
+		CaptionModule,
+		CardModule,
+		HeadlineModule,
+		NzPaginationModule,
+		TableModule,
+		NzFormModule,
+		ReactiveFormsModule,
+		NzSelectModule,
+		NzTypographyModule,
+		InputModule,
+		PasswordModule,
+		NzCardModule,
+		AutocompleteSelectFieldModule,
+		NzRadioModule,
+		FormsModule,
+		LinkModule,
+		IconModule,
+		EmptyPlaceholderModule,
+		TextModule,
+		ComponentsModule,
 		TagModule,
 		AutocompleteSelectFieldModule,
 		NzPaginationModule,
 		DatepickerInputModule,
+		FiltersModule,
 	],
 })
 export class ClientCardModule {}

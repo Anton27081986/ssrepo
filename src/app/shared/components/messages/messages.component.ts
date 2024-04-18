@@ -7,7 +7,7 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
@@ -37,21 +37,18 @@ export class MessagesComponent implements OnInit {
 	protected user$: Observable<IUserProfile | null>;
 	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
 
-	protected tabs: BehaviorSubject<string[]> = new BehaviorSubject([
-		'Все сообщения по клиенту',
-		'Вложения',
-	]);
+	protected tabs: string[] = ['Все сообщения по клиенту', 'Вложения'];
 
 	protected selectedTab: CorrespondenceTabsEnum = CorrespondenceTabsEnum.Messages;
 
 	@ViewChild('messages') public messagesElement!: ElementRef;
 
-	@Output() selectMessageToReply = new EventEmitter<{
+	@Output() public selectMessageToReply = new EventEmitter<{
 		message: IMessageItemDto;
 		toUsers: IUserDto[];
 	}>();
 
-	constructor(
+	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: NotificationsFacadeService,
 		private readonly userService: UserProfileStoreService,
@@ -88,7 +85,7 @@ export class MessagesComponent implements OnInit {
 
 		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
 			this.selectedTab = CorrespondenceTabsEnum.Messages;
-			this.tabs.next([subject || 'Все сообщения по клиенту', 'Вложения']);
+			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
 			this.scrollToBottom();
 		});
 

@@ -1,0 +1,30 @@
+<ss-card padding="0" class="filters"
+		 *ngIf="isFiltersVisible">
+	<div class="header">
+		<ss-headline size="h6">Фильтры</ss-headline>
+		<ss-icon height="18" width="18" name="logout" class="filter-button" (click)="toggleFilters()"></ss-icon>
+	</div>
+	<div *ngIf="selectedFilters.length" class="filters-selected">
+		<div class="filters-selected-header">
+			<ss-caption size="1">Выбранные</ss-caption>
+			<ss-caption class="filters-selected-header-button" size="2" (click)="resetForm()">
+Очистить все <ss-icon height="8" width="8" name="iconClose"></ss-icon>
+</ss-caption>
+		</div>
+		<div class="filters-selected-list">
+			<div class="filters-selected-list-item" *ngFor="let filter of selectedFilters">
+				<ss-text size="3">{{ filter.label }}: {{ filter.value }}</ss-text>
+ <ss-icon height="8" width="8" name="iconClose" (click)="removeFilter(filter.name)"></ss-icon>
+			</div>
+		</div>
+	</div>
+	<form [formGroup]="filtersForm" class="filters-form">
+		<div class="filters-form-item" *ngFor="let filter of filters">
+			<ss-input *ngIf="filter.type === 'input'" [label]="filter.label" [formControlName]="filter.name"></ss-input>
+			<ss-datepicker-input *ngIf="filter.type === 'date'" size="small" [disabled]="false" [label]="filter.label" [formControlName]="filter.name" placeholder=""></ss-datepicker-input>
+		</div>
+	</form>
+	<div class="footer">
+		<ss-button size="small" (click)="onFiltersApply()">Применить фильтры</ss-button>
+	</div>
+</ss-card>

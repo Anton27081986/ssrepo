@@ -156,7 +156,7 @@ import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/
 		AddressBookComponent,
 		TransportComponent,
 		AllSearchComponent,
-		LoaderComponent
-	]
+		LoaderComponent,
+	],
 })
 export class ComponentsModule {}

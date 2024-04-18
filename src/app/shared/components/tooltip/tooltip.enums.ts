@@ -4,11 +4,11 @@ export enum TooltipPosition {
 	LEFT = 'left',
 	RIGHT = 'right',
 	DYNAMIC = 'dynamic',
-	DEFAULT = 'below'
+	DEFAULT = 'below',
 }
 
 export enum TooltipTheme {
 	MAIN = 'main',
 	LIGHT = 'light',
-	DEFAULT = 'light'
+	DEFAULT = 'light',
 }

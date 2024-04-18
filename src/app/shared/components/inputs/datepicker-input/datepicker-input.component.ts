@@ -16,14 +16,14 @@ import { NgControl } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatepickerInputComponent {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
+	@Input() public size: 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = true;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = '01.02.2024-08.02.2024';
 	@Input() public error: string | undefined;
 	@Output() protected datepicker = new EventEmitter();
 
-	public value: any = '';
+	@Input() public value: any = '';
 
 	public constructor(
 		// Retrieve the dependency only from the local injector,

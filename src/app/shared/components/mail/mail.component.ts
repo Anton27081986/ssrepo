@@ -66,10 +66,10 @@ export class MailComponent implements OnInit, AfterViewInit {
 	protected fontSize = '14 pt';
 	protected isFontSizesInitialized = false;
 
-	@Input() toUsers: IUserDto[] = [];
+	@Input() public toUsers: IUserDto[] = [];
 	protected toUsersCopy: IUserDto[] = [];
 
-	@Input() selectedMessageToReply: IMessageItemDto | undefined;
+	@Input() public selectedMessageToReply: IMessageItemDto | undefined;
 
 	public subject$: Observable<string | null>;
 

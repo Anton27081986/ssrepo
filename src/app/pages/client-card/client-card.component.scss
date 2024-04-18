@@ -23,4 +23,17 @@
 			cursor: pointer;
 		}
 	}
+
+	.footer {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding-top: 8px;
+
+		.contractors {
+			display: flex;
+			gap: 16px;
+			height: 397px;
+		}
+	}
 }

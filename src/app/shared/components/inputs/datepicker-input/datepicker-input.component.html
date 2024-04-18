@@ -1,7 +1,6 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input type="text"
-		   [placeholder]="placeholder"
+	<input type="date"
 		   [value]="value"
 		   [disabled]="disabled"
 		   (input)="onChange($any($event.target).value)"
@@ -9,6 +8,7 @@
 		   class="{{ error ? size + ' error' : size }}"
 		   #input
 	/>
-	<ss-icon height="12" name="calendar" (click)="datepicker.emit(input.value)"></ss-icon>
+	<ss-text class="value" size="2">{{ (input.value | date: 'dd.MM.yyyy') }}</ss-text>
+	<ss-text *ngIf="!input.value" class="value" size="2">{{ placeholder }}</ss-text>
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>

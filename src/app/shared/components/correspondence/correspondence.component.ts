@@ -12,7 +12,6 @@ export class CorrespondenceComponent {
 
 	protected selectedMessageToReply: { message: IMessageItemDto; toUsers: IUserDto[] } | undefined;
 
-	constructor() {}
 	public replyTo(event: { message: IMessageItemDto; toUsers: IUserDto[] }) {
 		this.selectedMessageToReply = event;
 	}
