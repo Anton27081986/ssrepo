@@ -6,6 +6,7 @@ import { IClientDto } from '@app/core/models/company/client-dto';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
 import { IClientEditRequest } from '@app/core/models/company/client-edit-request';
+import { CallPhoneService } from '@app/core/services/call-phone.service';
 
 @UntilDestroy()
 @Injectable({
@@ -27,7 +28,10 @@ export class ClientsCardFacadeService {
 	private readonly contractorsSubject = new BehaviorSubject<IContractorItemDto[]>([]);
 	public contractors$ = this.contractorsSubject.asObservable();
 
-	public constructor(private readonly clientApiService: ClientApiService) {}
+	public constructor(
+		private readonly clientApiService: ClientApiService,
+		private readonly callPhoneService: CallPhoneService,
+	) {}
 
 	public setClientId(id: number) {
 		this.clientIdSubject.next(id);
@@ -127,5 +131,9 @@ export class ClientsCardFacadeService {
 					this.refreshClientCard();
 				});
 		}
+	}
+
+	public callLocalUser(id: number | undefined) {
+		this.callPhoneService.toggleCallForUser(id);
 	}
 }

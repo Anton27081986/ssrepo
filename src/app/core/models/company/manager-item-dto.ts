@@ -54,4 +54,8 @@ export interface IManagerItemDto {
 	 * Номер телефона
 	 */
 	phone?: string | null;
+	/**
+	 * Номер локального телефона
+	 */
+	phoneLocal?: string | null;
 }

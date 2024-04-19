@@ -65,4 +65,8 @@ export class ClientCardManagersComponent implements OnInit {
 			untilDestroyed(this),
 		);
 	}
+
+	public callLocalUser(id: number | undefined) {
+		this.clientCardListFacade.callLocalUser(id);
+	}
 }
