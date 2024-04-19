@@ -71,12 +71,7 @@ export class MessagesComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.notificationsFacadeService
-			.loadMessages(this.objectId)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.scrollToBottom();
-			});
+		this.loadAllMessages();
 
 		this.notificationsFacadeService
 			.loadFiles(this.objectId)
@@ -92,6 +87,15 @@ export class MessagesComponent implements OnInit {
 		this.notificationsFacadeService.getUserProfile().subscribe(user => {
 			this.currentUserId = user?.id;
 		});
+	}
+
+	protected loadAllMessages() {
+		this.notificationsFacadeService
+			.loadMessages(this.objectId)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.scrollToBottom();
+			});
 	}
 
 	protected scrollToBottom(): void {
@@ -138,4 +142,17 @@ export class MessagesComponent implements OnInit {
 	}
 
 	protected readonly CorrespondenceTabsEnum = CorrespondenceTabsEnum;
+
+	protected searchByMessage($event: Event) {
+		const target = $event.target as HTMLInputElement;
+
+		if (target.value.length > 2) {
+			this.notificationsFacadeService
+				.searchByMessages(this.objectId, target.value)
+				.pipe(untilDestroyed(this))
+				.subscribe();
+		} else {
+			this.loadAllMessages();
+		}
+	}
 }
