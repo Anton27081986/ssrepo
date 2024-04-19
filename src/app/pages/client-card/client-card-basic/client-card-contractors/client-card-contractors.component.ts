@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -8,11 +7,11 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 
 @UntilDestroy()
 @Component({
-	selector: 'ss-client-card-contragents',
-	templateUrl: './client-card-contragents.component.html',
-	styleUrls: ['./client-card-contragents.component.scss'],
+	selector: 'ss-client-card-contractors',
+	templateUrl: './client-card-contractors.component.html',
+	styleUrls: ['./client-card-contractors.component.scss'],
 })
-export class ClientCardContragentsComponent implements OnInit {
+export class ClientCardContractorsComponent implements OnInit {
 	public contractors$: Observable<IContractorItemDto[] | null>;
 
 	private clientId: number | undefined;

@@ -8,5 +8,5 @@ import { Component, HostBinding, Input } from '@angular/core';
 export class CardComponent {
 	@HostBinding('style.padding')
 	@Input()
-	padding = '32px';
+	public padding = '32px';
 }

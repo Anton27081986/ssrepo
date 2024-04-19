@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { async, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
@@ -74,17 +74,11 @@ export class ClientCardInfoComponent implements OnInit {
 	}
 
 	public saveChanges() {
-		this.clientCardListFacade
-			.saveInfo({
-				name: this.infoForm.controls.name.value,
-				status: this.infoForm.controls.status.value!,
-				categoryId: this.newCategoryId,
-				regionId: this.newRegionId,
-			})
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.clientCardListFacade.refreshClientCard();
-				this.isEditing = false;
-			});
+		this.clientCardListFacade.saveInfo({
+			name: this.infoForm.controls.name.value,
+			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
+			categoryId: this.newCategoryId,
+			regionId: this.newRegionId,
+		});
 	}
 }

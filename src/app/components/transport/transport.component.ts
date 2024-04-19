@@ -32,7 +32,9 @@ export class TransportComponent implements OnInit {
 						transportList: transport.transportList?.map(bus => {
 							return {
 								...bus,
-								departureTime: new Array(6 - bus.departureTime!.length)
+								departureTime: new Array(
+									6 - (bus.departureTime ? bus.departureTime.length : 0),
+								)
 									.fill(NO_TIME)
 									.concat(bus.departureTime),
 							};

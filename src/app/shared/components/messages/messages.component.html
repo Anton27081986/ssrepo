@@ -1,8 +1,8 @@
 <div class="header">
     <div class="tabs">
-		<ss-tabs [asyncTabs]="tabs" (select)="selectTab($event)"></ss-tabs>
+		<ss-tabs [tabs]="tabs" (select)="selectTab($event)"></ss-tabs>
     </div>
-    <ss-search-input class="search" size="small"></ss-search-input>
+    <ss-search-input class="search" size="small" placeholder="Поиск по сообщениям" (input)="searchByMessage($event)"></ss-search-input>
 </div>
 <div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="content">
 	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMessages()" #messages>
@@ -12,7 +12,7 @@
 				<div class="message-content-header">
 					<ss-text size="1" weight="semi-bold">{{message.author?.name}}</ss-text>
 					<div class="message-content-header-controls">
-						<ss-icon name="{{ message.isPrivate ? 'lock' : 'unlock' }}"></ss-icon>
+						<ss-icon name="{{ message.isPrivate ? 'lock' : '' }}"></ss-icon>
 						<ss-tooltip-menu icon="more">
 							<ss-caption size="1" (click)="replyTo(message, message.author!)">
 								<ss-icon name="reply"></ss-icon>Ответить
@@ -20,9 +20,9 @@
 							<ss-caption size="1" (click)="replyTo(message, message.author!, message.toUsers!)">
 								<ss-icon name="reply"></ss-icon>Ответить всем
 							</ss-caption>
-							<ss-caption size="1" (click)="changeVisibility(message)">
+							<ss-caption size="1" (click)="changeVisibility(message)" *ngIf="this.currentUserId == message.author?.id">
 								<ss-icon name="{{ message.isPrivate ? 'unlock' : 'lock' }}"></ss-icon>
-								{{ message.isPrivate ? 'Доступ только адресатам' : 'Доступ для всех' }}
+								{{ message.isPrivate ? 'Доступ для всех' : 'Доступ только адресатам' }}
 							</ss-caption>
 						</ss-tooltip-menu>
 					</div>

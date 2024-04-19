@@ -1,10 +1,10 @@
 import {
-	Component,
-	ViewChild,
 	AfterViewInit,
 	ChangeDetectorRef,
-	OnInit,
+	Component,
 	Input,
+	OnInit,
+	ViewChild,
 } from '@angular/core';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import Editor from 'ckeditor5/build/ckeditor';
@@ -235,14 +235,22 @@ export class MailComponent implements OnInit, AfterViewInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.notificationsFacadeService
-					.loadSubjects(this.objectId);
+					.loadSubjects(this.objectId)
+					.pipe(takeUntil(this.destroy$))
+					.subscribe();
 				this.notificationsFacadeService
-					.loadMessages(this.objectId, this.mailForm.controls.subject.value!);
+					.loadMessages(this.objectId, this.mailForm.controls.subject.value!)
+					.pipe(takeUntil(this.destroy$))
+					.subscribe();
 				this.mailForm.reset();
 				this.toUsers = [];
 				this.toUsersCopy = [];
 				this.files = [];
 			});
+
+		this.notificationsFacadeService
+			.loadFiles(this.objectId, this.mailForm.controls.subject.value!)
+			.subscribe();
 	}
 
 	protected closeReply() {

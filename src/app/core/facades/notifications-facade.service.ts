@@ -6,6 +6,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { IResponse } from '@app/core/utils/response';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 @UntilDestroy()
 @Injectable({
@@ -43,12 +44,13 @@ export class NotificationsFacadeService {
 	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly filesApiService: FilesApiService,
+		private readonly userProfileStoreService: UserProfileStoreService,
 	) {}
 
 	public loadSubjects(
 		objectId: number,
-	) {
-		this.notificationsApiService.getSubjects(objectId).pipe(
+	): Observable<Array<{ subject: string; messageCount: number }>> {
+		return this.notificationsApiService.getSubjects(objectId).pipe(
 			tap(x => {
 				this.subjectsSubject.next(x);
 				this.totalMessagesSubject.next(
@@ -58,13 +60,13 @@ export class NotificationsFacadeService {
 				);
 			}),
 			untilDestroyed(this),
-		).subscribe();
+		);
 	}
 
 	public loadMessages(
 		ObjectId: number,
 		subject?: string,
-	) {
+	): Observable<IResponse<IMessageItemDto>> {
 		return this.notificationsApiService
 			.getMessages(subject ? { ObjectId, subject } : { ObjectId })
 			.pipe(
@@ -73,7 +75,19 @@ export class NotificationsFacadeService {
 					this.selectedSubjectSubject.next(subject || null);
 				}),
 				untilDestroyed(this),
-			).subscribe();
+			);
+	}
+
+	public searchByMessages(
+		ObjectId: number,
+		query?: string,
+	): Observable<IResponse<IMessageItemDto>> {
+		return this.notificationsApiService.searchMessages({ ObjectId, query }).pipe(
+			tap(x => {
+				this.messagesSubject.next(x);
+			}),
+			untilDestroyed(this),
+		);
 	}
 
 	public loadFiles(ObjectId: number, subject?: string): Observable<IResponse<IAttachmentDto>> {
@@ -99,5 +113,9 @@ export class NotificationsFacadeService {
 
 	public deleteFile(id: string): Observable<IAttachmentDto> {
 		return this.filesApiService.deleteFile(id).pipe(untilDestroyed(this));
+	}
+
+	public getUserProfile() {
+		return this.userProfileStoreService.userProfile$;
 	}
 }

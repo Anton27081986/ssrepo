@@ -38,6 +38,19 @@ export class NotificationsApiService {
 		);
 	}
 
+	/** Поиск по сообщениям */
+	public searchMessages(params: {
+		ObjectId: number;
+		query?: string;
+	}): Observable<IResponse<IMessageItemDto>> {
+		return this.http.get<IResponse<IMessageItemDto>>(
+			`${environment.apiUrl}/api/notifications/messages`,
+			{
+				params,
+			},
+		);
+	}
+
 	/** Отправить сообщение */
 	public sendMessage(body: ISendMessageRequest): Observable<any> {
 		return this.http.post<any>(`${environment.apiUrl}/api/notifications/messages`, body);

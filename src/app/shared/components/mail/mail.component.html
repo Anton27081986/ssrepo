@@ -3,7 +3,7 @@
 		<div class="requisites">
 			<ss-input label="Тема:"
 					  size="medium"
-					  placeholder="Введите тему сообщения"
+					  placeholder="Введите тему"
 					  formControlName="subject"
 					  value="{{(subject$ | async)}}"
 					  [error]="mailForm.controls.subject.hasError('required') && mailForm.controls.subject.touched ? 'Поле обязательно для заполнения' : undefined"

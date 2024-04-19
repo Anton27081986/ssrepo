@@ -6,12 +6,12 @@ import { Component, HostListener, Input } from '@angular/core';
 	styleUrls: ['./tooltip-menu.component.scss'],
 })
 export class TooltipMenuComponent {
-	@Input() icon!: string;
+	@Input() public icon!: string;
 
 	protected isHidden: boolean = true;
 
 	@HostListener('mouseleave')
-	onMouseLeave(): void {
+	public onMouseLeave(): void {
 		this.isHidden = true;
 	}
 }

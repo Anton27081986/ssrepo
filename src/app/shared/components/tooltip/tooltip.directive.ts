@@ -15,7 +15,7 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 @Directive({
 	selector: '[tooltip]',
 })
-export class TooltipDirective implements OnDestroy {
+export class TooltipDirective implements OnDestroy{
 	@Input() public tooltip = '';
 	@Input() public position: TooltipPosition = TooltipPosition.DEFAULT;
 	@Input() public theme: TooltipTheme = TooltipTheme.DEFAULT;
@@ -27,7 +27,7 @@ export class TooltipDirective implements OnDestroy {
 	private hideTimeout?: number;
 	private touchTimeout?: number;
 
-	constructor(
+	public constructor(
 		private readonly elementRef: ElementRef,
 		private readonly appRef: ApplicationRef,
 		private readonly componentFactoryResolver: ComponentFactoryResolver,

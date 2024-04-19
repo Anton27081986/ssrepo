@@ -7,7 +7,7 @@ import {
 	Output,
 	ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
@@ -29,16 +29,15 @@ enum CorrespondenceTabsEnum {
 	styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-	@Input() public objectId!: number;
+	@Input() objectId!: number;
+	public currentUserId: number | undefined;
+
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	protected subject$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
 	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
 
-	protected tabs: BehaviorSubject<string[]> = new BehaviorSubject([
-		'Все сообщения по клиенту',
-		'Вложения',
-	]);
+	protected tabs: string[] = ['Все сообщения по клиенту', 'Вложения'];
 
 	protected selectedTab: CorrespondenceTabsEnum = CorrespondenceTabsEnum.Messages;
 
@@ -49,7 +48,7 @@ export class MessagesComponent implements OnInit {
 		toUsers: IUserDto[];
 	}>();
 
-	constructor(
+	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: NotificationsFacadeService,
 		private readonly userService: UserProfileStoreService,
@@ -72,8 +71,7 @@ export class MessagesComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.notificationsFacadeService
-			.loadMessages(this.objectId);
+		this.loadAllMessages();
 
 		this.notificationsFacadeService
 			.loadFiles(this.objectId)
@@ -82,9 +80,22 @@ export class MessagesComponent implements OnInit {
 
 		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
 			this.selectedTab = CorrespondenceTabsEnum.Messages;
-			this.tabs.next([subject || 'Все сообщения по клиенту', 'Вложения']);
+			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
 			this.scrollToBottom();
 		});
+
+		this.notificationsFacadeService.getUserProfile().subscribe(user => {
+			this.currentUserId = user?.id;
+		});
+	}
+
+	protected loadAllMessages() {
+		this.notificationsFacadeService
+			.loadMessages(this.objectId)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.scrollToBottom();
+			});
 	}
 
 	protected scrollToBottom(): void {
@@ -124,9 +135,24 @@ export class MessagesComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.notificationsFacadeService
-					.loadMessages(this.objectId);
+					.loadMessages(this.objectId)
+					.pipe(untilDestroyed(this))
+					.subscribe();
 			});
 	}
 
 	protected readonly CorrespondenceTabsEnum = CorrespondenceTabsEnum;
+
+	protected searchByMessage($event: Event) {
+		const target = $event.target as HTMLInputElement;
+
+		if (target.value.length > 2) {
+			this.notificationsFacadeService
+				.searchByMessages(this.objectId, target.value)
+				.pipe(untilDestroyed(this))
+				.subscribe();
+		} else {
+			this.loadAllMessages();
+		}
+	}
 }
