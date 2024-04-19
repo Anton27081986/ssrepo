@@ -9,7 +9,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
-import {IClientEditRequest} from "@app/core/models/company/client-edit-request";
+import { IClientEditRequest } from '@app/core/models/company/client-edit-request';
 
 @Injectable({
 	providedIn: 'root',
@@ -130,7 +130,7 @@ export class ClientApiService {
 
 	public deleteManager(clientId: number, managerId: number) {
 		return this.http.delete<IManagerItemDto>(
-			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`
+			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,
 		);
 	}
 

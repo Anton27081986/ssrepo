@@ -92,19 +92,19 @@ export class ClientsCardFacadeService {
 		}
 	}
 
-	addManager(managerId: number) {
+	public addManager(managerId: number) {
 		return this.clientApiService
 			.addManager(this.clientIdSubject.value!, managerId)
 			.pipe(untilDestroyed(this));
 	}
 
-	deleteManager(managerId: number) {
+	public deleteManager(managerId: number) {
 		return this.clientApiService
 			.deleteManager(this.clientIdSubject.value!, managerId)
 			.pipe(untilDestroyed(this));
 	}
 
-	saveInfo(body: IClientEditRequest) {
+	public saveInfo(body: IClientEditRequest) {
 		return this.clientApiService
 			.saveInfo(this.clientIdSubject.value!, body)
 			.pipe(untilDestroyed(this));

@@ -16,17 +16,18 @@ export class TopicComponent implements OnInit {
 	public messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	public totalMessages$: Observable<number>;
 
-	constructor(private readonly facadeService: NotificationsFacadeService) {
+	public constructor(private readonly facadeService: NotificationsFacadeService) {
 		this.subjects$ = this.facadeService.subjects$;
 		this.messages$ = this.facadeService.messages$;
 		this.totalMessages$ = this.facadeService.totalMessages$;
 	}
 
-	ngOnInit() {
-		this.facadeService.loadSubjects(this.objectId).pipe().subscribe();
+	public ngOnInit() {
+		this.facadeService.loadSubjects(this.objectId);
 	}
 
-	onTopic(subject?: string) {
-		this.facadeService.loadMessages(this.objectId, subject).pipe(untilDestroyed(this)).subscribe();
+	public onTopic(subject?: string) {
+		this.facadeService
+			.loadMessages(this.objectId, subject);
 	}
 }

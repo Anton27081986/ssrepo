@@ -47,8 +47,8 @@ export class NotificationsFacadeService {
 
 	public loadSubjects(
 		objectId: number,
-	): Observable<Array<{ subject: string; messageCount: number }>> {
-		return this.notificationsApiService.getSubjects(objectId).pipe(
+	) {
+		this.notificationsApiService.getSubjects(objectId).pipe(
 			tap(x => {
 				this.subjectsSubject.next(x);
 				this.totalMessagesSubject.next(
@@ -58,13 +58,13 @@ export class NotificationsFacadeService {
 				);
 			}),
 			untilDestroyed(this),
-		);
+		).subscribe();
 	}
 
 	public loadMessages(
 		ObjectId: number,
 		subject?: string,
-	): Observable<IResponse<IMessageItemDto>> {
+	) {
 		return this.notificationsApiService
 			.getMessages(subject ? { ObjectId, subject } : { ObjectId })
 			.pipe(
@@ -73,7 +73,7 @@ export class NotificationsFacadeService {
 					this.selectedSubjectSubject.next(subject || null);
 				}),
 				untilDestroyed(this),
-			);
+			).subscribe();
 	}
 
 	public loadFiles(ObjectId: number, subject?: string): Observable<IResponse<IAttachmentDto>> {
@@ -98,8 +98,6 @@ export class NotificationsFacadeService {
 	}
 
 	public deleteFile(id: string): Observable<IAttachmentDto> {
-		return this.filesApiService
-			.deleteFile(id)
-			.pipe(untilDestroyed(this));
+		return this.filesApiService.deleteFile(id).pipe(untilDestroyed(this));
 	}
 }

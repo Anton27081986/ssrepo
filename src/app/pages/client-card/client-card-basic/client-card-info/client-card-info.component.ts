@@ -50,7 +50,7 @@ export class ClientCardInfoComponent implements OnInit {
 		});
 	}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.client$.pipe(untilDestroyed(this)).subscribe(client => {
 			this.infoForm.controls.name.setValue(client?.name || '');
 			this.infoForm.controls.status.setValue(client?.status || null);
@@ -73,7 +73,7 @@ export class ClientCardInfoComponent implements OnInit {
 		this.newRegionId = region.id;
 	}
 
-	saveChanges() {
+	public saveChanges() {
 		this.clientCardListFacade
 			.saveInfo({
 				name: this.infoForm.controls.name.value,

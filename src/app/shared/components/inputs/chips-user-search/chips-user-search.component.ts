@@ -18,7 +18,7 @@ export class ChipsUserSearchComponent {
 	@ViewChild('input') public input!: ElementRef;
 
 	protected foundUsers: any[] = [];
-	constructor(private readonly usersApiService: UsersApiService) {}
+	public constructor(private readonly usersApiService: UsersApiService) {}
 
 	protected onInputChange(value: string) {
 		if (value.length > 2) {

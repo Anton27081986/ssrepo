@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
 	selector: 'app-client-card',
 	templateUrl: './client-card.component.html',
-	styleUrls: ['./client-card.component.scss']
+	styleUrls: ['./client-card.component.scss'],
 })
 export class ClientCardComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;
@@ -32,7 +32,7 @@ export class ClientCardComponent implements OnInit {
 		}
 	}
 
-	selectTab(ev: any) {
-		console.log(ev)
+	public selectTab(ev: any) {
+		console.log(ev);
 	}
 }

@@ -7,7 +7,7 @@ import {
 	EmbeddedViewRef,
 	HostListener,
 	Injector,
-	Input,
+	Input, OnDestroy,
 } from '@angular/core';
 import { TooltipComponent } from './tooltip.component';
 import { TooltipPosition, TooltipTheme } from './tooltip.enums';
@@ -15,12 +15,12 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 @Directive({
 	selector: '[tooltip]',
 })
-export class TooltipDirective {
-	@Input() tooltip = '';
-	@Input() position: TooltipPosition = TooltipPosition.DEFAULT;
-	@Input() theme: TooltipTheme = TooltipTheme.DEFAULT;
-	@Input() showDelay = 30;
-	@Input() hideDelay = 30;
+export class TooltipDirective implements OnDestroy {
+	@Input() public tooltip = '';
+	@Input() public position: TooltipPosition = TooltipPosition.DEFAULT;
+	@Input() public theme: TooltipTheme = TooltipTheme.DEFAULT;
+	@Input() public showDelay = 30;
+	@Input() public hideDelay = 30;
 
 	private componentRef: ComponentRef<any> | null = null;
 	private showTimeout?: number;
@@ -35,17 +35,17 @@ export class TooltipDirective {
 	) {}
 
 	@HostListener('mouseenter')
-	onMouseEnter(): void {
+	public onMouseEnter(): void {
 		this.initializeTooltip();
 	}
 
 	@HostListener('mouseleave')
-	onMouseLeave(): void {
+	public onMouseLeave(): void {
 		this.setHideTooltipTimeout();
 	}
 
 	@HostListener('mousemove', ['$event'])
-	onMouseMove($event: MouseEvent): void {
+	public onMouseMove($event: MouseEvent): void {
 		if (this.componentRef !== null && this.position === TooltipPosition.DYNAMIC) {
 			this.componentRef.instance.left = $event.clientX;
 			this.componentRef.instance.top = $event.clientY;
@@ -54,14 +54,14 @@ export class TooltipDirective {
 	}
 
 	@HostListener('touchstart', ['$event'])
-	onTouchStart($event: TouchEvent): void {
+	public onTouchStart($event: TouchEvent): void {
 		$event.preventDefault();
 		window.clearTimeout(this.touchTimeout);
 		this.touchTimeout = window.setTimeout(this.initializeTooltip.bind(this), 500);
 	}
 
 	@HostListener('touchend')
-	onTouchEnd(): void {
+	public onTouchEnd(): void {
 		window.clearTimeout(this.touchTimeout);
 		this.setHideTooltipTimeout();
 	}
@@ -132,11 +132,11 @@ export class TooltipDirective {
 		this.hideTimeout = window.setTimeout(this.destroy.bind(this), this.hideDelay);
 	}
 
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		this.destroy();
 	}
 
-	destroy(): void {
+	public destroy(): void {
 		if (this.componentRef !== null) {
 			window.clearInterval(this.showTimeout);
 			window.clearInterval(this.hideDelay);

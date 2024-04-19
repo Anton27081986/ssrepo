@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'ss-avatar',
@@ -6,9 +6,9 @@ import {Component, Input, OnInit} from '@angular/core';
 	styleUrls: ['./avatar.component.scss'],
 })
 export class AvatarComponent implements OnInit {
-	@Input() src!: string;
-	@Input() isSquare = true;
-	@Input() size: 'xs' | 's' | 'm' | 'l' = 'xs';
+	@Input() public src!: string;
+	@Input() public isSquare = true;
+	@Input() public size: 'xs' | 's' | 'm' | 'l' = 'xs';
 
 	protected noImage = false;
 

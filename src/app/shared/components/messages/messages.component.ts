@@ -29,7 +29,7 @@ enum CorrespondenceTabsEnum {
 	styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-	@Input() objectId!: number;
+	@Input() public objectId!: number;
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	protected subject$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
@@ -44,7 +44,7 @@ export class MessagesComponent implements OnInit {
 
 	@ViewChild('messages') public messagesElement!: ElementRef;
 
-	@Output() selectMessageToReply = new EventEmitter<{
+	@Output() public selectMessageToReply = new EventEmitter<{
 		message: IMessageItemDto;
 		toUsers: IUserDto[];
 	}>();
@@ -73,11 +73,7 @@ export class MessagesComponent implements OnInit {
 
 	public ngOnInit() {
 		this.notificationsFacadeService
-			.loadMessages(this.objectId)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.scrollToBottom();
-			});
+			.loadMessages(this.objectId);
 
 		this.notificationsFacadeService
 			.loadFiles(this.objectId)
@@ -127,7 +123,8 @@ export class MessagesComponent implements OnInit {
 			.patchMessage(message.id!, { ...message, isPrivate: !message.isPrivate })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.notificationsFacadeService.loadMessages(this.objectId).pipe(untilDestroyed(this)).subscribe();
+				this.notificationsFacadeService
+					.loadMessages(this.objectId);
 			});
 	}
 

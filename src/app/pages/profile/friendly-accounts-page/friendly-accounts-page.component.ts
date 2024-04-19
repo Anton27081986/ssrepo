@@ -32,7 +32,7 @@ export class FriendlyAccountsPageComponent implements OnInit {
 	public friendsAccount: IFriendAccountDto[] | undefined | null;
 	public friendsAccountDefault: IFriendAccountDto[] | undefined | null;
 
-	@Input() toUsers: IUserDto[] = [];
+	@Input() public toUsers: IUserDto[] = [];
 
 	public constructor(
 		protected readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,

@@ -23,7 +23,7 @@ export class ClientCardContragentsComponent implements OnInit {
 		this.contractors$ = this.clientCardListFacade.contractors$;
 	}
 
-	ngOnInit() {
+	public ngOnInit() {
 		this.clientCardListFacade.contractors$.pipe(untilDestroyed(this)).subscribe(contractors => {
 			if (contractors) {
 				this.tableItems = <ITableItem[]>contractors;

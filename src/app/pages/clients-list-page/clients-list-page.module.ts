@@ -17,12 +17,12 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page/clients-list-page.component';
+import { LinkModule } from '@app/shared/components/link/link.module';
+import { IconModule } from '@app/shared/components/icon/icon.module';
+import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { ComponentsModule } from '@app/components/components.module';
 import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
-import { LinkModule } from "@app/shared/components/link/link.module";
-import { IconModule } from "@app/shared/components/icon/icon.module";
-import { EmptyPlaceholderModule } from "@app/shared/components/empty-placeholder/empty-placeholder.module";
-import { TextModule } from "@app/shared/components/typography/text/text.module";
-import { ComponentsModule } from "@app/components/components.module";
 
 @NgModule({
 	declarations: [ClientsListPageComponent],
@@ -49,7 +49,7 @@ import { ComponentsModule } from "@app/components/components.module";
 		IconModule,
 		EmptyPlaceholderModule,
 		TextModule,
-		ComponentsModule
-	]
+		ComponentsModule,
+	],
 })
 export class ClientsListPageModule {}

@@ -9,15 +9,14 @@ import {
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import Editor from 'ckeditor5/build/ckeditor';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
-import { IFile } from '@app/core/models/files/file';
+import { FilesApiService } from '@app/core/api/files.api.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsApiService } from '@app/core/api/notifications-api.service';
 import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {IUserDto} from "@app/core/models/notifications/user-dto";
-import {IMessageItemDto} from "@app/core/models/notifications/message-item-dto";
-import {IAttachmentDto} from "@app/core/models/notifications/attachment-dto";
+import { IUserDto } from '@app/core/models/notifications/user-dto';
+import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
+import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 
 interface EditorButtonI {
 	title: string;
@@ -67,10 +66,10 @@ export class MailComponent implements OnInit, AfterViewInit {
 	protected fontSize = '14 pt';
 	protected isFontSizesInitialized = false;
 
-	@Input() toUsers: IUserDto[] = [];
+	@Input() public toUsers: IUserDto[] = [];
 	protected toUsersCopy: IUserDto[] = [];
 
-	@Input() selectedMessageToReply: IMessageItemDto | undefined;
+	@Input() public selectedMessageToReply: IMessageItemDto | undefined;
 
 	public subject$: Observable<string | null>;
 
@@ -116,9 +115,9 @@ export class MailComponent implements OnInit, AfterViewInit {
 			isPrivate: new FormControl<boolean>(true),
 		});
 
-		this.subject$.pipe(takeUntil(this.destroy$)).subscribe((subject)=>{
+		this.subject$.pipe(takeUntil(this.destroy$)).subscribe(subject => {
 			this.mailForm.controls.subject.setValue(subject);
-		})
+		});
 	}
 
 	public ngAfterViewInit(): void {
@@ -187,7 +186,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			return;
 		}
 
-		Array.from(fileList).forEach((file)=>{
+		Array.from(fileList).forEach(file => {
 			const reader = new FileReader();
 
 			reader.onload = () => {
@@ -201,7 +200,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			};
 
 			reader.readAsDataURL(file);
-		})
+		});
 	}
 
 	protected deleteFile(id: string) {
@@ -235,8 +234,10 @@ export class MailComponent implements OnInit, AfterViewInit {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.notificationsFacadeService.loadSubjects(this.objectId).pipe(takeUntil(this.destroy$)).subscribe();
-				this.notificationsFacadeService.loadMessages(this.objectId, this.mailForm.controls.subject.value!).pipe(takeUntil(this.destroy$)).subscribe();
+				this.notificationsFacadeService
+					.loadSubjects(this.objectId);
+				this.notificationsFacadeService
+					.loadMessages(this.objectId, this.mailForm.controls.subject.value!);
 				this.mailForm.reset();
 				this.toUsers = [];
 				this.toUsersCopy = [];
