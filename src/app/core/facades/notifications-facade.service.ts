@@ -78,6 +78,18 @@ export class NotificationsFacadeService {
 			);
 	}
 
+	public searchByMessages(
+		ObjectId: number,
+		query?: string,
+	): Observable<IResponse<IMessageItemDto>> {
+		return this.notificationsApiService.searchMessages({ ObjectId, query }).pipe(
+			tap(x => {
+				this.messagesSubject.next(x);
+			}),
+			untilDestroyed(this),
+		);
+	}
+
 	public loadFiles(ObjectId: number, subject?: string): Observable<IResponse<IAttachmentDto>> {
 		return this.notificationsApiService
 			.getFiles(subject ? { ObjectId, subject } : { ObjectId })

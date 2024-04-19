@@ -13,6 +13,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 export class TopicComponent implements OnInit {
 	@Input() public objectId!: number;
 	public subjects$: Observable<Array<{ subject: string; messageCount: number }>>;
+	public subjects: Array<{ subject: string; messageCount: number }> | undefined;
+	public subjectsDefault: Array<{ subject: string; messageCount: number }> | undefined;
 	public messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	public totalMessages$: Observable<number>;
 
@@ -24,6 +26,13 @@ export class TopicComponent implements OnInit {
 
 	ngOnInit() {
 		this.facadeService.loadSubjects(this.objectId).pipe().subscribe();
+
+		this.subjects$.subscribe(subjects => {
+			if (subjects.length > 0) {
+				this.subjects = subjects;
+				this.subjectsDefault = subjects;
+			}
+		});
 	}
 
 	onTopic(subject?: string) {
@@ -31,5 +40,23 @@ export class TopicComponent implements OnInit {
 			.loadMessages(this.objectId, subject)
 			.pipe(untilDestroyed(this))
 			.subscribe();
+	}
+
+	filterBySubject($event: Event) {
+		const target = $event.target as HTMLInputElement;
+
+		this.subjects = [];
+
+		if (target.value.length > 0) {
+			this.subjectsDefault?.forEach((element: any) => {
+				if (
+					element.subject.toLowerCase().indexOf(String(target.value).toLowerCase()) !== -1
+				) {
+					this.subjects?.push(element);
+				}
+			});
+		} else {
+			this.subjects = this.subjectsDefault;
+		}
 	}
 }
