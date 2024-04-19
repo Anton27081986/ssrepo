@@ -1,3 +1,5 @@
+{{ basicManager | json }}
+
 <ss-card padding="0">
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Базовый менеджер</ss-headline>
@@ -15,8 +17,8 @@
 			</div>
 			<div class="manager-info-content">
 				<ss-text size="3">{{ basicManager?.department }}</ss-text>
-				<ss-text size="3" weight="semi-bold">
-					<ss-icon name="phone"></ss-icon>{{ basicManager?.phone || 'Нет' }}
+				<ss-text size="3" weight="semi-bold" (click)="callLocalUser(basicManager?.id)" class="local-call">
+					<ss-icon name="phone"></ss-icon>{{ basicManager?.phoneLocal || 'Нет' }}
 				</ss-text>
 			</div>
 		</div>
