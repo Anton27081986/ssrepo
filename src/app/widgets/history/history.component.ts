@@ -36,6 +36,9 @@ export class HistoryComponent implements OnInit {
 
 		this.loadDataFromServer(this.pageSize, this.offset);
 
+		// TODO: Сервис должен создавать только 1 соединение, если оно не создано
+		// TODO: subscribe должен делать каждый компонент, асинхронно если коннект сделан
+		// TODO: connect нужно переделать на поток, если user изменился и его токен тоже
 		this.signalHistoryService.startConnection(this.authService.userValue.token!);
 
 		this.signalHistoryService.subscribeToChanges(this.objectId, 0);
