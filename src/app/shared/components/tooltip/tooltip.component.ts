@@ -13,6 +13,4 @@ export class TooltipComponent {
 	public left = 0;
 	public top = 0;
 	public visible = false;
-
-	constructor() {}
 }
