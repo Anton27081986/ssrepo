@@ -138,10 +138,10 @@ export class ClientApiService {
 		return this.http.put<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}`,
 			{
-				categoryId: 14,
-				name: 'ADM (Holl)',
-				regionId: 1035,
-				status: 3,
+				categoryId: body.categoryId,
+				name: body.name,
+				regionId: body.regionId,
+				status: Number(body.status),
 			},
 		);
 	}
