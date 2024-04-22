@@ -36,6 +36,9 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Состав менеджеров</ss-headline>
 	</div>
+	<div class="search-by-manager">
+		<ss-search-input class="search" searchType="user" placeholder="Введите ФИО" (select)="selectManager($event)"></ss-search-input>
+	</div>
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<div class="managers-list-item" *ngFor="let manager of (managers$ | async)">
 			<ss-avatar [src]="manager?.avatarUrl || ''" [isSquare]="false"></ss-avatar>

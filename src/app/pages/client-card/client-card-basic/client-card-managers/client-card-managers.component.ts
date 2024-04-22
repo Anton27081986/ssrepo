@@ -69,4 +69,8 @@ export class ClientCardManagersComponent implements OnInit {
 	public callLocalUser(id: number | undefined) {
 		this.clientCardListFacade.callLocalUser(id);
 	}
+
+	public selectManager($event: any) {
+		this.clientCardListFacade.addManager($event?.id);
+	}
 }

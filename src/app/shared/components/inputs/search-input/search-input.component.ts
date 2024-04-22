@@ -84,6 +84,13 @@ export class SearchInputComponent implements ControlValueAccessor {
 	protected onSearch(query: string) {
 		switch (this.searchType) {
 			case 'user':
+				this.searchFacade
+					.getUsers(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res.items;
+						this.ref.detectChanges();
+					});
 				break;
 			case 'subsector':
 				this.searchFacade
