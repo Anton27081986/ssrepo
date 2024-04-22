@@ -15,24 +15,30 @@ export interface IChangeTrackerWithObjectId {
 })
 export class SignalService {
 	private hubConnection: HubConnection | undefined;
+	private connectionEstablished = false;
 	private readonly historyChanged: Subject<IChangeTrackerWithObjectId> =
 		new Subject<IChangeTrackerWithObjectId>();
 
 	public startConnection(token: string): void {
-		this.hubConnection = new HubConnectionBuilder()
-			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`, {
-				accessTokenFactory: () => token,
-			})
-			.withAutomaticReconnect()
-			.build();
+		if (!this.connectionEstablished) {
+			this.hubConnection = new HubConnectionBuilder()
+				.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`, {
+					accessTokenFactory: () => token,
+				})
+				.withAutomaticReconnect()
+				.build();
 
-		this.hubConnection
-			.start()
-			.then(() => {
-				console.info('Соединение выполнено');
-				this.registerOnServerEvents();
-			})
-			.catch(err => console.error(`Ошибка соединения: ${err}`));
+			this.hubConnection
+				.start()
+				.then(() => {
+					console.info('Соединение выполнено');
+					this.connectionEstablished = true;
+					this.registerOnServerEvents();
+				})
+				.catch(err => console.error(`Ошибка соединения: ${err}`));
+		} else {
+			console.warn('Соединение уже создано');
+		}
 	}
 
 	private registerOnServerEvents(): void {
@@ -63,12 +69,12 @@ export class SignalService {
 	}
 
 	public disconnect(): void {
-		if (this.hubConnection) {
+		if (this.hubConnection && this.connectionEstablished) {
 			this.hubConnection
 				.stop()
 				.then(() => {
 					console.info('Отлючились от хаба');
-					this.registerOnServerEvents();
+					this.connectionEstablished = false;
 				})
 				.catch(err => console.error(`Ошибка отключения от хаба: ${err}`));
 		}
