@@ -18,7 +18,7 @@ import { IUserDto } from '@app/core/models/notifications/user-dto';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 
-interface EditorButtonI {
+interface IEditorButton {
 	title: string;
 	editorElement?: HTMLElement;
 }
@@ -73,7 +73,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public subject$: Observable<string | null>;
 
-	protected myEditorButtons: EditorButtonI[] = [
+	protected myEditorButtons: IEditorButton[] = [
 		{ title: 'Отменить' },
 		{ title: 'Вернуть' },
 		{ title: 'Шрифт' },
@@ -250,6 +250,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 		this.notificationsFacadeService
 			.loadFiles(this.objectId, this.mailForm.controls.subject.value!)
+			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
 

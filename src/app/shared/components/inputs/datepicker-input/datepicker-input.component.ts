@@ -69,6 +69,7 @@ export class DatepickerInputComponent {
 		this.onTouched = fn;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	protected onChange(value: string) {}
 	protected onTouched() {}
 }

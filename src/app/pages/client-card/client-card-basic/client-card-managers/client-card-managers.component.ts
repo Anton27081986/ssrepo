@@ -54,16 +54,18 @@ export class ClientCardManagersComponent implements OnInit {
 			this.clientCardListFacade.setBasicManager(this.changedData.basicManager);
 		}
 
-		from(this.changedData.managersList.filter(manager => manager.status !== 'static')).pipe(
-			tap(manager => {
-				if (manager.status === 'add') {
-					this.clientCardListFacade.addManager(manager.manager.id);
-				}
+		from(this.changedData.managersList.filter(manager => manager.status !== 'static'))
+			.pipe(
+				tap(manager => {
+					if (manager.status === 'add') {
+						this.clientCardListFacade.addManager(manager.manager.id);
+					}
 
-				this.clientCardListFacade.deleteManager(manager.manager.id);
-			}),
-			untilDestroyed(this),
-		);
+					this.clientCardListFacade.deleteManager(manager.manager.id);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 	}
 
 	public callLocalUser(id: number | undefined) {
