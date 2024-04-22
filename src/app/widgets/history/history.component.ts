@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HistoryFacadeService } from '@app/core/facades/history-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import { SignalHistoryService } from '@app/core/signalR/signal-history.service';
+import { SignalService } from '@app/core/signalR/signal.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +23,8 @@ export class HistoryComponent implements OnInit {
 
 	public constructor(
 		private readonly historyFacadeService: HistoryFacadeService,
-		private readonly signalHistoryService: SignalHistoryService,
+		private readonly signalHistoryService: SignalService,
+		private readonly authService: AuthenticationService,
 	) {}
 
 	public ngOnInit() {
@@ -34,7 +36,10 @@ export class HistoryComponent implements OnInit {
 
 		this.loadDataFromServer(this.pageSize, this.offset);
 
+		this.signalHistoryService.startConnection(this.authService.userValue.token!);
+
 		this.signalHistoryService.subscribeToChanges(this.objectId, 0);
+
 		this.signalHistoryService
 			.getHistoryChanged()
 			.pipe(untilDestroyed(this))

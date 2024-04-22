@@ -13,29 +13,18 @@ export interface IChangeTrackerWithObjectId {
 @Injectable({
 	providedIn: 'root',
 })
-export class SignalHistoryService {
+export class SignalService {
 	private hubConnection: HubConnection | undefined;
 	private readonly historyChanged: Subject<IChangeTrackerWithObjectId> =
 		new Subject<IChangeTrackerWithObjectId>();
 
-	public constructor() {
-		this.buildConnection();
-		this.startConnection();
-	}
-
-	private buildConnection() {
+	public startConnection(token: string): void {
 		this.hubConnection = new HubConnectionBuilder()
-			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`)
+			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`, {
+				accessTokenFactory: () => token,
+			})
 			.withAutomaticReconnect()
 			.build();
-	}
-
-	private startConnection(): void {
-		if (!this.hubConnection) {
-			console.error('Хаб не инициализирован');
-
-			return;
-		}
 
 		this.hubConnection
 			.start()
@@ -71,6 +60,18 @@ export class SignalHistoryService {
 		this.hubConnection
 			.invoke('Subscribe', objectId, type)
 			.catch(err => console.error(`Ошибка подписки: ${err}`));
+	}
+
+	public disconnect(): void {
+		if (this.hubConnection) {
+			this.hubConnection
+				.stop()
+				.then(() => {
+					console.info('Отлючились от хаба');
+					this.registerOnServerEvents();
+				})
+				.catch(err => console.error(`Ошибка отключения от хаба: ${err}`));
+		}
 	}
 
 	public getHistoryChanged(): Observable<IChangeTrackerWithObjectId> {

@@ -9,7 +9,7 @@
 <div class="footer">
 	<div class="contractors">
 		<ss-client-card-contractors></ss-client-card-contractors>
-		<ss-history></ss-history>
+		<ss-history *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-history>
 	</div>
 	<ss-correspondence *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-correspondence>
 </div>
