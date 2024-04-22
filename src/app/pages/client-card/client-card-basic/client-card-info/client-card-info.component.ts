@@ -74,6 +74,11 @@ export class ClientCardInfoComponent implements OnInit {
 	}
 
 	public saveChanges() {
+		console.log('this.infoForm.controls.name.value', this.infoForm.controls.name.value);
+		console.log('this.infoForm.controls.status.value', this.infoForm.controls.status.value);
+		console.log('this.newCategoryId', this.newCategoryId);
+		console.log('this.newRegionId', this.newRegionId);
+
 		this.clientCardListFacade.saveInfo({
 			name: this.infoForm.controls.name.value,
 			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,

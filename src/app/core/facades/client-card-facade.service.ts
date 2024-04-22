@@ -123,6 +123,8 @@ export class ClientsCardFacadeService {
 	}
 
 	public saveInfo(body: IClientEditRequest) {
+		console.log('this.clientIdSubject', this.clientIdSubject.value);
+
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.saveInfo(this.clientIdSubject.value!, body)
