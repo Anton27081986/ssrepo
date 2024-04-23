@@ -18,6 +18,7 @@
 				<ss-text size="3" weight="semi-bold" (click)="callLocalUser(basicManager?.id)" class="local-call">
 					<ss-icon name="phone"></ss-icon>{{ basicManager?.phoneLocal || 'Нет' }}
 				</ss-text>
+				<ss-caption size="2" class="appointed">Назначен {{ basicManager?.introducedAtSM | date: 'dd.MM.yyyy'}}</ss-caption>
 			</div>
 		</div>
 		<ss-caption class="manager-date" size="2"> </ss-caption>

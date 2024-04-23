@@ -58,4 +58,8 @@ export interface IManagerItemDto {
 	 * Номер локального телефона
 	 */
 	phoneLocal?: string | null;
+	/**
+	 * Назначен
+	 */
+	introducedAtSM?: string | null;
 }
