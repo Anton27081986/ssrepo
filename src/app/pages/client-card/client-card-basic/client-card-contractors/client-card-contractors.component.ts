@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
@@ -18,7 +18,10 @@ export class ClientCardContractorsComponent implements OnInit {
 
 	public tableItems: ITableItem[] = [];
 
-	public constructor(public readonly clientCardListFacade: ClientsCardFacadeService) {
+	public constructor(
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+		private readonly ref: ChangeDetectorRef,
+	) {
 		this.contractors$ = this.clientCardListFacade.contractors$;
 	}
 
@@ -26,6 +29,7 @@ export class ClientCardContractorsComponent implements OnInit {
 		this.clientCardListFacade.contractors$.pipe(untilDestroyed(this)).subscribe(contractors => {
 			if (contractors) {
 				this.tableItems = <ITableItem[]>contractors;
+				this.ref.detectChanges();
 			}
 		});
 		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
