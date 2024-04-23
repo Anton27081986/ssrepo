@@ -22,7 +22,7 @@ export class NotificationsFacadeService {
 	private readonly messagesSubject = new BehaviorSubject<{
 		items: IMessageItemDto[];
 		total: number;
-	} | null>(null);
+	}>({ items: [], total: 0 });
 
 	public messages$ = this.messagesSubject.asObservable();
 
@@ -65,14 +65,21 @@ export class NotificationsFacadeService {
 
 	public loadMessages(
 		ObjectId: number,
-		subject?: string,
+		limit = 10,
+		offset = 1,
 	): Observable<IResponse<IMessageItemDto>> {
 		return this.notificationsApiService
-			.getMessages(subject ? { ObjectId, subject } : { ObjectId })
+			.getMessages(
+				this.selectedSubjectSubject.value
+					? { ObjectId, subject: this.selectedSubjectSubject.value, limit, offset }
+					: { ObjectId, limit, offset },
+			)
 			.pipe(
 				tap(x => {
-					this.messagesSubject.next(x);
-					this.selectedSubjectSubject.next(subject || null);
+					this.messagesSubject.next({
+						items: [...this.messagesSubject.value.items, ...x.items],
+						total: x.total,
+					});
 				}),
 				untilDestroyed(this),
 			);
@@ -101,8 +108,22 @@ export class NotificationsFacadeService {
 			);
 	}
 
-	public selectSubject(subject: string) {
+	public selectSubject(subject: string | null) {
 		this.selectedSubjectSubject.next(subject);
+		this.messagesSubject.next({ items: [], total: 0 });
+	}
+
+	public setMessageVisibility(id: string, isPrivate: boolean) {
+		this.messagesSubject.next({
+			items: this.messagesSubject.value.items.map(message => {
+				if (message.id === id) {
+					return { ...message, isPrivate };
+				}
+
+				return message;
+			}),
+			total: this.messagesSubject.value.total
+		});
 	}
 
 	public uploadFile(file: File): Observable<IAttachmentDto> {

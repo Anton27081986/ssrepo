@@ -1,11 +1,11 @@
 <div class="header">
     <div class="tabs">
-		<ss-tabs [tabs]="tabs" (select)="selectTab($event)"></ss-tabs>
+		<ss-tabs [tabs]="tabs" [selectedTab]="(subject$ | async) || 'Все сообщения по клиенту'" (select)="selectTab($event)"></ss-tabs>
     </div>
     <ss-search-input class="search" size="small" placeholder="Поиск по сообщениям" (input)="searchByMessage($event)"></ss-search-input>
 </div>
 <div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="content">
-	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMessages()" #messages>
+	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMoreMessages()" #messages>
 		<div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
 			<ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
 			<div class="message-content">
@@ -30,11 +30,11 @@
 				<div class="message-content-object">
 					<ss-text size="2" *ngIf="message.toUsers?.length">
 						<b>Кому:</b>
-	 <span *ngFor="let user of message.toUsers"> {{ user.name }}</span>
+	 					<span *ngFor="let user of message.toUsers"> {{ user.name }}</span>
 					</ss-text>
 					<ss-text size="2" *ngIf="message.copyUsers?.length">
 						<b>Копия:</b>
-	 <span *ngFor="let user of message.copyUsers"> {{ user.name }}</span>
+	 					<span *ngFor="let copyUser of message.copyUsers"> {{ copyUser.name }}</span>
 					</ss-text>
 				</div>
 				<div class="message-content-blockquote" *ngIf="message.replyToMessage">
@@ -48,9 +48,11 @@
 				<div *ngIf="message.attachments?.length" class="files">
 					<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
 				</div>
+				<ss-caption size="2" class="message-content-time">{{ message.createdAt | date: 'hh:mm, dd.MM.yyyy' }}</ss-caption>
 			</div>
 		</div>
 	</div>
+	<ss-text class="message-loader" *ngIf="isLoading">Сообщения загружаются</ss-text>
 	<ng-template #noMessages>
 		<div class="no-content">
 			<ss-headline size="h3">Сообщений нет</ss-headline>

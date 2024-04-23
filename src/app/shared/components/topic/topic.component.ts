@@ -35,11 +35,8 @@ export class TopicComponent implements OnInit {
 		});
 	}
 
-	onTopic(subject?: string) {
-		this.facadeService
-			.loadMessages(this.objectId, subject)
-			.pipe(untilDestroyed(this))
-			.subscribe();
+	onTopic(subject: string | null = null) {
+		this.facadeService.selectSubject(subject);
 	}
 
 	filterBySubject($event: Event) {

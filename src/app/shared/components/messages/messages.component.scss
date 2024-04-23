@@ -29,6 +29,14 @@
 		gap: 20px;
 		overflow-y: auto;
 
+		.message-loader {
+			align-self: center;
+			animation-name: blink;
+			animation-timing-function: linear;
+			animation-duration: 1s;
+			animation-iteration-count: infinite;
+		}
+
 		.message {
 			display: flex;
 			gap: 7px;
@@ -43,7 +51,6 @@
 				gap: 8px;
 				padding: 12px;
 				border-radius: 8px;
-				min-height: 135px;
 
 				.message-content-header {
 					display: flex;
@@ -75,6 +82,11 @@
 
 				ss-attachment {
 					cursor: pointer;
+				}
+
+				&-time {
+					color: $lite-text;
+					align-self: flex-end;
 				}
 			}
 		}
@@ -147,5 +159,11 @@
 		width: 100%;
 		align-items: center;
 		justify-content: center;
+	}
+}
+
+@keyframes blink {
+	50% {
+		opacity: 0;
 	}
 }

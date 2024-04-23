@@ -14,6 +14,7 @@ import { ChipsUserSearchModule } from '@app/shared/components/inputs/chips-user-
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
+import {DialogModule} from "@app/shared/components/dialog/dialog.module";
 
 @NgModule({
 	declarations: [MailComponent],
@@ -36,6 +37,7 @@ import { TextModule } from '@app/shared/components/typography/text/text.module';
 		NgClass,
 		HeadlineModule,
 		TextModule,
+		DialogModule
 	],
 })
 export class MailModule {}

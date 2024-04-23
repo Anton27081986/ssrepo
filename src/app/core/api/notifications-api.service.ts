@@ -29,6 +29,8 @@ export class NotificationsApiService {
 	public getMessages(params: {
 		ObjectId: number;
 		subject?: string;
+		limit?: number;
+		offset?: number;
 	}): Observable<IResponse<IMessageItemDto>> {
 		return this.http.get<IResponse<IMessageItemDto>>(
 			`${environment.apiUrl}/api/notifications/messages`,
