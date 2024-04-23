@@ -28,7 +28,7 @@ export class ClientCardContractorsComponent implements OnInit {
 	public ngOnInit() {
 		this.clientCardListFacade.contractors$.pipe(untilDestroyed(this)).subscribe(contractors => {
 			if (contractors) {
-				this.tableItems = <ITableItem[]>contractors;
+				this.tableItems = this.mapClientsToTableItems(<ITableItem[]>contractors);
 				this.ref.detectChanges();
 			}
 		});
@@ -37,6 +37,21 @@ export class ClientCardContractorsComponent implements OnInit {
 				this.clientId = clientId;
 				this.getContractors(true);
 			}
+		});
+	}
+
+	private mapClientsToTableItems(client: any[]) {
+		return client.map(x => {
+			const tableItem: any = {};
+
+			tableItem.id = x.id !== undefined ? x.id.toString() : '-';
+			tableItem.inn = x.inn !== undefined ? x.inn : '-';
+			tableItem.name = x.name !== undefined ? x.name : '-';
+			tableItem.linkToDetail = x.linkToDetail !== undefined ? x.linkToDetail : '-';
+			tableItem.status = x.status !== undefined ? x.status.name : '-';
+			tableItem.creditStatus = x.creditStatus !== undefined ? x.creditStatus.name : '-';
+
+			return tableItem;
 		});
 	}
 
