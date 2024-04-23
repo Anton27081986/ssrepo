@@ -78,12 +78,20 @@ export class SearchInputComponent implements ControlValueAccessor {
 		this.onTouched = fn;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	protected onChange(value: string) {}
 	protected onTouched() {}
 
 	protected onSearch(query: string) {
 		switch (this.searchType) {
 			case 'user':
+				this.searchFacade
+					.getUsers(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res.items;
+						this.ref.detectChanges();
+					});
 				break;
 			case 'subsector':
 				this.searchFacade

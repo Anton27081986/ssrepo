@@ -94,9 +94,12 @@ export class MessagesComponent implements OnInit {
 			this.loadMessages();
 		});
 
-		this.notificationsFacadeService.getUserProfile().subscribe(user => {
-			this.currentUserId = user?.id;
-		});
+		this.notificationsFacadeService
+			.getUserProfile()
+			.pipe(untilDestroyed(this))
+			.subscribe(user => {
+				this.currentUserId = user?.id;
+			});
 	}
 
 	protected loadMessages() {
@@ -117,7 +120,9 @@ export class MessagesComponent implements OnInit {
 		try {
 			this.messagesElement.nativeElement.scrollTop =
 				this.messagesElement.nativeElement.scrollHeight;
-		} catch (err) {}
+		} catch (err) {
+			console.log(err);
+		}
 	}
 
 	protected loadMoreMessages() {

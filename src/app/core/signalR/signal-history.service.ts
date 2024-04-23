@@ -25,7 +25,7 @@ export class SignalHistoryService {
 
 	private buildConnection() {
 		this.hubConnection = new HubConnectionBuilder()
-			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs/changeTracker`)
+			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`)
 			.withAutomaticReconnect()
 			.build();
 	}

@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
 	selector: 'ss-chips-user-search',
@@ -25,7 +26,10 @@ export class ChipsUserSearchComponent {
 		if (value.length > 2) {
 			this.usersApiService
 				.getUsersByFIO(value)
-				.pipe(map(({ items }) => items))
+				.pipe(
+					map(({ items }) => items),
+					untilDestroyed(this),
+				)
 				.subscribe(res => {
 					if (this.selectedUsers?.length) {
 						const selectedIds = this.selectedUsers.map(user => user.id);
@@ -61,7 +65,7 @@ export class ChipsUserSearchComponent {
 	protected dontSend(event: any): any {
 		const key = event.which || event.keyCode;
 
-		if (key == 13) {
+		if (key === 13) {
 			return false;
 		}
 	}

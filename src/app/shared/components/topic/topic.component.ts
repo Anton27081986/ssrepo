@@ -25,9 +25,9 @@ export class TopicComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.facadeService.loadSubjects(this.objectId).pipe().subscribe();
+		this.facadeService.loadSubjects(this.objectId).pipe(untilDestroyed(this)).subscribe();
 
-		this.subjects$.subscribe(subjects => {
+		this.subjects$.pipe(untilDestroyed(this)).subscribe(subjects => {
 			if (subjects.length > 0) {
 				this.subjects = subjects;
 				this.subjectsDefault = subjects;

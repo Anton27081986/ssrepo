@@ -36,6 +36,9 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Состав менеджеров</ss-headline>
 	</div>
+	<div class="search-by-manager" *ngIf="isEditing;">
+		<ss-search-input class="search" searchType="user" placeholder="Введите ФИО" (select)="selectManager($event)"></ss-search-input>
+	</div>
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<div class="managers-list-item" *ngFor="let manager of (managers$ | async)">
 			<ss-avatar [src]="manager?.avatarUrl || ''" [isSquare]="false"></ss-avatar>
@@ -52,7 +55,7 @@
 					<ss-text size="2" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
 					<ss-caption size="2">{{ manager.manager.position }}</ss-caption>
 				</div>
-				<ss-icon name="iconCloseLight" (click)="manager.status = 'delete'"></ss-icon>
+				<ss-icon name="iconCloseLight" (click)="manager.status = 'delete'" *ngIf="!manager.manager.isBase"></ss-icon>
 			</div>
 		</div>
 	</ng-template>
