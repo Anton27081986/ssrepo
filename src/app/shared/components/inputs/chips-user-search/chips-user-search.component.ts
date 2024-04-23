@@ -1,8 +1,9 @@
 import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'ss-chips-user-search',
 	templateUrl: './chips-user-search.component.html',
@@ -20,7 +21,9 @@ export class ChipsUserSearchComponent {
 
 	protected foundUsers: any[] = [];
 	public constructor(
-		private readonly changeDetectorRef: ChangeDetectorRef, private readonly usersApiService: UsersApiService) {}
+		private readonly changeDetectorRef: ChangeDetectorRef,
+		private readonly usersApiService: UsersApiService,
+	) {}
 
 	protected onInputChange(value: string) {
 		if (value.length > 2) {
@@ -41,6 +44,7 @@ export class ChipsUserSearchComponent {
 					} else {
 						this.foundUsers = res;
 					}
+
 					this.changeDetectorRef.detectChanges();
 				});
 		} else {
