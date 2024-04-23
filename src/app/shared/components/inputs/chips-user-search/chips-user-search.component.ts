@@ -1,7 +1,9 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'ss-chips-user-search',
 	templateUrl: './chips-user-search.component.html',
@@ -19,13 +21,18 @@ export class ChipsUserSearchComponent {
 
 	protected foundUsers: any[] = [];
 	public constructor(
-		private readonly changeDetectorRef: ChangeDetectorRef, private readonly usersApiService: UsersApiService) {}
+		private readonly changeDetectorRef: ChangeDetectorRef,
+		private readonly usersApiService: UsersApiService,
+	) {}
 
 	protected onInputChange(value: string) {
 		if (value.length > 2) {
 			this.usersApiService
 				.getUsersByFIO(value)
-				.pipe(map(({ items }) => items))
+				.pipe(
+					map(({ items }) => items),
+					untilDestroyed(this),
+				)
 				.subscribe(res => {
 					if (this.selectedUsers?.length) {
 						const selectedIds = this.selectedUsers.map(user => user.id);
@@ -33,10 +40,10 @@ export class ChipsUserSearchComponent {
 						this.foundUsers = res.filter(
 							(user: { id: any }) => !selectedIds.includes(user.id),
 						);
-
 					} else {
 						this.foundUsers = res;
 					}
+
 					this.changeDetectorRef.detectChanges();
 				});
 		} else {
