@@ -48,6 +48,13 @@ export class MessagesComponent implements OnInit {
 		toUsers: IUserDto[];
 	}>();
 
+	public pageIndex = 1;
+	public pageSize = 10;
+	public total = 0;
+	public offset = 0;
+
+	public isLoading = false;
+
 	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: NotificationsFacadeService,
@@ -71,17 +78,20 @@ export class MessagesComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.loadAllMessages();
-
-		this.notificationsFacadeService
-			.loadFiles(this.objectId)
-			.pipe(untilDestroyed(this))
-			.subscribe();
-
 		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
 			this.selectedTab = CorrespondenceTabsEnum.Messages;
 			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
 			this.scrollToBottom();
+			this.notificationsFacadeService
+				.loadFiles(this.objectId, subject || undefined)
+				.pipe(untilDestroyed(this))
+				.subscribe();
+
+			this.pageIndex = 1;
+			this.pageSize = 10;
+			this.total = 0;
+			this.offset = 0;
+			this.loadMessages();
 		});
 
 		this.notificationsFacadeService.getUserProfile().subscribe(user => {
@@ -89,12 +99,17 @@ export class MessagesComponent implements OnInit {
 		});
 	}
 
-	protected loadAllMessages() {
+	protected loadMessages() {
 		this.notificationsFacadeService
-			.loadMessages(this.objectId)
+			.loadMessages(this.objectId, this.pageSize, this.offset)
 			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.scrollToBottom();
+			.subscribe(res => {
+				if (this.pageIndex === 1) {
+					this.scrollToBottom();
+				}
+
+				this.total = res.total;
+				this.isLoading = false;
 			});
 	}
 
@@ -105,14 +120,21 @@ export class MessagesComponent implements OnInit {
 		} catch (err) {}
 	}
 
-	protected loadMessages() {
+	protected loadMoreMessages() {
 		if (
 			this.messagesElement.nativeElement.scrollHeight -
 				this.messagesElement.nativeElement.offsetHeight +
 				this.messagesElement.nativeElement.scrollTop <
 			100
 		) {
-			console.log('Грузим еще сообщения');
+			this.pageIndex = this.pageIndex += 1;
+
+			this.offset = this.pageSize * this.pageIndex - this.pageSize;
+
+			if (this.total > this.offset) {
+				this.isLoading = true;
+				this.loadMessages();
+			}
 		}
 	}
 
@@ -125,8 +147,15 @@ export class MessagesComponent implements OnInit {
 	}
 
 	protected replyTo(message: IMessageItemDto, author: IUserDto, toUsers: IUserDto[] = []) {
+		const users = [author, ...toUsers];
+
 		this.notificationsFacadeService.selectSubject(message.subject!);
-		this.selectMessageToReply.emit({ message, toUsers: [author, ...toUsers] });
+		this.selectMessageToReply.emit({
+			message,
+			toUsers: users.filter(
+				(user, index) => index === users.findIndex(el => user.id === el.id),
+			),
+		});
 	}
 
 	protected changeVisibility(message: IMessageItemDto) {
@@ -134,10 +163,10 @@ export class MessagesComponent implements OnInit {
 			.patchMessage(message.id!, { ...message, isPrivate: !message.isPrivate })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.notificationsFacadeService
-					.loadMessages(this.objectId)
-					.pipe(untilDestroyed(this))
-					.subscribe();
+				this.notificationsFacadeService.setMessageVisibility(
+					message.id!,
+					!message.isPrivate,
+				);
 			});
 	}
 
@@ -152,7 +181,7 @@ export class MessagesComponent implements OnInit {
 				.pipe(untilDestroyed(this))
 				.subscribe();
 		} else {
-			this.loadAllMessages();
+			this.loadMessages();
 		}
 	}
 }

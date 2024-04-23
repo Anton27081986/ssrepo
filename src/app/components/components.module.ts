@@ -47,7 +47,6 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { ModalModule } from '@app/components/modal/modal.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -140,7 +139,6 @@ import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/
 		HeadlineModule,
 		CardModule,
 		CaptionModule,
-		ModalModule,
 	],
 	exports: [
 		MainMenuComponent,

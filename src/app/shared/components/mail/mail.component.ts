@@ -9,7 +9,6 @@ import {
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
 import Editor from 'ckeditor5/build/ckeditor';
 import { Observable, Subject, takeUntil } from 'rxjs';
-import { FilesApiService } from '@app/core/api/files.api.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsApiService } from '@app/core/api/notifications-api.service';
 import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
@@ -17,6 +16,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
+import { ModalService } from '@app/core/modal/modal.service';
+import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
+import {ModalRef} from "@app/core/modal/modal.ref";
 
 interface EditorButtonI {
 	title: string;
@@ -99,11 +101,13 @@ export class MailComponent implements OnInit, AfterViewInit {
 		isPrivate: FormControl<boolean | null>;
 	}>;
 
+	private modal: ModalRef | undefined;
+
 	public constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly filesApiService: FilesApiService,
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: NotificationsFacadeService,
+		private readonly modalService: ModalService,
 	) {
 		this.subject$ = this.notificationsFacadeService.selectedSubject$;
 	}
@@ -116,7 +120,30 @@ export class MailComponent implements OnInit, AfterViewInit {
 		});
 
 		this.subject$.pipe(takeUntil(this.destroy$)).subscribe(subject => {
-			this.mailForm.controls.subject.setValue(subject);
+			if ((this.toUsers.length || this.toUsersCopy.length || this.mailForm.controls.text.value)&& !this.modal) {
+				this.modal = this.modalService.open(DialogComponent, {
+					data: {
+						header: 'Изменения не будут сохранены',
+						text:
+							'Вы переходите в другую тему. Введенное сообщение не будет сохранено.\n Продолжить?',
+					},
+				});
+
+				this.modal
+					.afterClosed()
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						if (res) {
+							this.resetForm();
+							this.mailForm.controls.subject.setValue(subject);
+						} else {
+							this.notificationsFacadeService.selectSubject(this.mailForm.controls.subject.value);
+						}
+						this.modal = undefined;
+					});
+			} else {
+				this.mailForm.controls.subject.setValue(subject);
+			}
 		});
 	}
 
@@ -213,13 +240,38 @@ export class MailComponent implements OnInit, AfterViewInit {
 			});
 	}
 
-	protected sendMessage() {
+	public onSendMessage() {
 		if (this.mailForm.controls.subject.errors) {
 			this.mailForm.markAllAsTouched();
 
 			return;
 		}
 
+		if (!this.toUsers.length) {
+			const dialog = this.modalService.open(DialogComponent, {
+				data: {
+					header: 'Вы не указали адресатов',
+					text:
+						'Ваше сообщение будет сохранено, \n' +
+						'но уведомления не будут отправлены на e-mail. \n' +
+						'Продолжить?',
+				},
+			});
+
+			dialog
+				.afterClosed()
+				.pipe(untilDestroyed(this))
+				.subscribe(res => {
+					if (res) {
+						this.sendMessage();
+					}
+				});
+		} else {
+			this.sendMessage();
+		}
+	}
+
+	private sendMessage() {
 		this.notificationsApiService
 			.sendMessage({
 				objectId: this.objectId,
@@ -237,20 +289,25 @@ export class MailComponent implements OnInit, AfterViewInit {
 				this.notificationsFacadeService
 					.loadSubjects(this.objectId)
 					.pipe(takeUntil(this.destroy$))
-					.subscribe();
-				this.notificationsFacadeService
-					.loadMessages(this.objectId, this.mailForm.controls.subject.value!)
-					.pipe(takeUntil(this.destroy$))
-					.subscribe();
-				this.mailForm.reset();
-				this.toUsers = [];
-				this.toUsersCopy = [];
-				this.files = [];
+					.subscribe(() => {
+						this.notificationsFacadeService.selectSubject(
+							null
+						);
+						this.resetForm();
+					});
 			});
+	}
 
-		this.notificationsFacadeService
-			.loadFiles(this.objectId, this.mailForm.controls.subject.value!)
-			.subscribe();
+	private resetForm() {
+		this.mailForm.reset({
+			subject: '',
+			text: '',
+			isPrivate: true,
+		});
+		this.selectedMessageToReply = undefined;
+		this.toUsers = [];
+		this.toUsersCopy = [];
+		this.files = [];
 	}
 
 	protected closeReply() {

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
 
@@ -18,7 +18,8 @@ export class ChipsUserSearchComponent {
 	@ViewChild('input') public input!: ElementRef;
 
 	protected foundUsers: any[] = [];
-	public constructor(private readonly usersApiService: UsersApiService) {}
+	public constructor(
+		private readonly changeDetectorRef: ChangeDetectorRef, private readonly usersApiService: UsersApiService) {}
 
 	protected onInputChange(value: string) {
 		if (value.length > 2) {
@@ -32,18 +33,21 @@ export class ChipsUserSearchComponent {
 						this.foundUsers = res.filter(
 							(user: { id: any }) => !selectedIds.includes(user.id),
 						);
+
 					} else {
 						this.foundUsers = res;
 					}
+					this.changeDetectorRef.detectChanges();
 				});
 		} else {
 			this.foundUsers = [];
+			this.changeDetectorRef.detectChanges();
 		}
 	}
 
 	protected onAddUserToList(user: any) {
 		this.selectedUsers.push(user);
-		this.foundUsers = this.foundUsers.filter(foundUser => foundUser.id !== user.id);
+		this.foundUsers = [];
 		setTimeout(() => {
 			this.input.nativeElement.value = '';
 			this.input.nativeElement.focus();

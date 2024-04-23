@@ -7,7 +7,6 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { TagModule } from '@app/shared/components/tag/tag.module';
 import { NoticeModule } from '@app/components/notice/notice.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
-import { ModalModule } from '@app/components/modal/modal.module';
 
 @NgModule({
 	declarations: [TransportComponent],
@@ -20,7 +19,6 @@ import { ModalModule } from '@app/components/modal/modal.module';
 		TagModule,
 		NoticeModule,
 		TextModule,
-		ModalModule,
 	],
 	exports: [TransportComponent],
 })
