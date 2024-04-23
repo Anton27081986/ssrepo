@@ -68,6 +68,7 @@ export class FilterInputComponent {
 		this.onTouched = fn;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	protected onChange(value: string) {}
 	protected onTouched() {}
 }

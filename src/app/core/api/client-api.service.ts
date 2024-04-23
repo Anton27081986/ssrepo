@@ -137,7 +137,12 @@ export class ClientApiService {
 	public saveInfo(clientId: number, body: IClientEditRequest) {
 		return this.http.put<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}`,
-			body,
+			{
+				categoryId: body.categoryId,
+				name: body.name,
+				regionId: body.regionId,
+				status: Number(body.status),
+			},
 		);
 	}
 }

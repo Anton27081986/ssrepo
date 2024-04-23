@@ -20,7 +20,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import {ModalRef} from "@app/core/modal/modal.ref";
 
-interface EditorButtonI {
+interface IEditorButton {
 	title: string;
 	editorElement?: HTMLElement;
 }
@@ -75,7 +75,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public subject$: Observable<string | null>;
 
-	protected myEditorButtons: EditorButtonI[] = [
+	protected myEditorButtons: IEditorButton[] = [
 		{ title: 'Отменить' },
 		{ title: 'Вернуть' },
 		{ title: 'Шрифт' },

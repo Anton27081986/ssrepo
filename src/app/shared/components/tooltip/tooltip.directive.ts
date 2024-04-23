@@ -7,7 +7,8 @@ import {
 	EmbeddedViewRef,
 	HostListener,
 	Injector,
-	Input, OnDestroy,
+	Input,
+	OnDestroy,
 } from '@angular/core';
 import { TooltipComponent } from './tooltip.component';
 import { TooltipPosition, TooltipTheme } from './tooltip.enums';
@@ -15,7 +16,7 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 @Directive({
 	selector: '[tooltip]',
 })
-export class TooltipDirective implements OnDestroy{
+export class TooltipDirective implements OnDestroy {
 	@Input() public tooltip = '';
 	@Input() public position: TooltipPosition = TooltipPosition.DEFAULT;
 	@Input() public theme: TooltipTheme = TooltipTheme.DEFAULT;

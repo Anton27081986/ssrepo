@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { map, Observable, Subject, takeUntil } from 'rxjs';
 import { SearchApiService } from '@app/core/api/search-api.service';
 
@@ -8,7 +8,7 @@ import { SearchApiService } from '@app/core/api/search-api.service';
 	styleUrls: ['./all-search.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AllSearchComponent implements OnInit {
+export class AllSearchComponent implements OnInit, OnDestroy {
 	private readonly destroy$ = new Subject<void>();
 
 	public title!: string;

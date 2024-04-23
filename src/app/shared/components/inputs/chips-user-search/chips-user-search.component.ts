@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -40,6 +40,7 @@ export class ChipsUserSearchComponent {
 						this.foundUsers = res.filter(
 							(user: { id: any }) => !selectedIds.includes(user.id),
 						);
+
 					} else {
 						this.foundUsers = res;
 					}
@@ -68,7 +69,7 @@ export class ChipsUserSearchComponent {
 	protected dontSend(event: any): any {
 		const key = event.which || event.keyCode;
 
-		if (key == 13) {
+		if (key === 13) {
 			return false;
 		}
 	}

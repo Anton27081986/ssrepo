@@ -6,6 +6,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs';
 import { environment } from '@environments/environment.development';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -17,7 +18,12 @@ export class SearchFacadeService {
 	public constructor(
 		private readonly httpClient: HttpClient,
 		private readonly clientApiService: ClientApiService,
+		private readonly usersApiService: UsersApiService,
 	) {}
+
+	public getUsers(query: string) {
+		return this.usersApiService.getUsersByFIO(query);
+	}
 
 	public getRegions(query: string) {
 		return this.clientApiService.getRegions(query);

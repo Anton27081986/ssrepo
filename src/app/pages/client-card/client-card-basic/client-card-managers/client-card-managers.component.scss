@@ -19,6 +19,10 @@
 		}
 	}
 
+	.search-by-manager {
+		padding: 12px 20px;
+	}
+
 	.manager {
 		display: flex;
 		padding: 16px 20px;
@@ -39,6 +43,7 @@
 			&-content {
 				display: flex;
 				flex-direction: column;
+				position: relative;
 
 				::ng-deep ss-text {
 					p {
@@ -46,6 +51,12 @@
 						align-items: center;
 						gap: 3px;
 					}
+				}
+
+				.appointed {
+					position: absolute;
+					bottom: -3px;
+					right: -71px;
 				}
 
 				.local-call {
