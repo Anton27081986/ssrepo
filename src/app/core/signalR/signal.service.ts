@@ -13,37 +13,32 @@ export interface IChangeTrackerWithObjectId {
 @Injectable({
 	providedIn: 'root',
 })
-export class SignalHistoryService {
+export class SignalService {
 	private hubConnection: HubConnection | undefined;
+	private connectionEstablished = false;
 	private readonly historyChanged: Subject<IChangeTrackerWithObjectId> =
 		new Subject<IChangeTrackerWithObjectId>();
 
-	public constructor() {
-		this.buildConnection();
-		this.startConnection();
-	}
+	public startConnection(token: string): void {
+		if (!this.connectionEstablished) {
+			this.hubConnection = new HubConnectionBuilder()
+				.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`, {
+					accessTokenFactory: () => token,
+				})
+				.withAutomaticReconnect()
+				.build();
 
-	private buildConnection() {
-		this.hubConnection = new HubConnectionBuilder()
-			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`)
-			.withAutomaticReconnect()
-			.build();
-	}
-
-	private startConnection(): void {
-		if (!this.hubConnection) {
-			console.error('Хаб не инициализирован');
-
-			return;
+			this.hubConnection
+				.start()
+				.then(() => {
+					console.info('Соединение выполнено');
+					this.connectionEstablished = true;
+					this.registerOnServerEvents();
+				})
+				.catch(err => console.error(`Ошибка соединения: ${err}`));
+		} else {
+			console.warn('Соединение уже создано');
 		}
-
-		this.hubConnection
-			.start()
-			.then(() => {
-				console.info('Соединение выполнено');
-				this.registerOnServerEvents();
-			})
-			.catch(err => console.error(`Ошибка соединения: ${err}`));
 	}
 
 	private registerOnServerEvents(): void {
@@ -71,6 +66,18 @@ export class SignalHistoryService {
 		this.hubConnection
 			.invoke('Subscribe', objectId, type)
 			.catch(err => console.error(`Ошибка подписки: ${err}`));
+	}
+
+	public disconnect(): void {
+		if (this.hubConnection && this.connectionEstablished) {
+			this.hubConnection
+				.stop()
+				.then(() => {
+					console.info('Отлючились от хаба');
+					this.connectionEstablished = false;
+				})
+				.catch(err => console.error(`Ошибка отключения от хаба: ${err}`));
+		}
 	}
 
 	public getHistoryChanged(): Observable<IChangeTrackerWithObjectId> {
