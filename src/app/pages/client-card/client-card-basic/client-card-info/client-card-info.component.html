@@ -39,7 +39,6 @@
 			<ss-select size="medium" *ngIf="isEditing; else status"(onChange)="infoForm.controls.status.setValue(($event))">
 				<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
 				<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
-				<option [selected]="(client$ | async)!.status === 5" [value]="5">Передано в юр.отдел</option>
 				<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>
 			</ss-select>
 			<ng-template #status>
