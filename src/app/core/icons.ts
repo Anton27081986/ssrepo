@@ -621,6 +621,13 @@ export class AppIcons {
 		'<path d="M14.1816 6.1123C14.6841 7.9048 16.0866 9.3073 17.8866 9.8173" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
+	public static editNew =
+		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M7.29749 1.52344H5.99353C2.73364 1.52344 1.42969 2.81885 1.42969 6.0574V9.94365C1.42969 13.1822 2.73364 14.4776 5.99353 14.4776H9.9054C13.1653 14.4776 14.4692 13.1822 14.4692 9.94365V8.64823" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M10.5836 2.18374L5.44606 7.28768C5.25047 7.48199 5.05487 7.86414 5.01575 8.14266L4.7354 10.0923C4.63109 10.7983 5.13311 11.2905 5.84377 11.1934L7.80622 10.9149C8.08005 10.876 8.46472 10.6817 8.66683 10.4874L13.8044 5.38342C14.6911 4.50253 15.1084 3.47916 13.8044 2.18374C12.5005 0.88832 11.4703 1.30285 10.5836 2.18374Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M9.8457 2.91504C10.2825 4.46306 11.5017 5.67428 13.0665 6.11472" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
 	public static flag =
 		'<svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<path d="M4.86328 3.5V18.5" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
