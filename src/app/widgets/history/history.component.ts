@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HistoryFacadeService } from '@app/core/facades/history-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { SignalService } from '@app/core/signalR/signal.service';
 import { AuthenticationService } from '@app/core/services/authentication.service';
+import { IChangeItemDto } from '@app/core/models/change-tracker/change-item-dto';
 
 @UntilDestroy()
 @Component({
@@ -11,10 +12,10 @@ import { AuthenticationService } from '@app/core/services/authentication.service
 	templateUrl: './history.component.html',
 	styleUrls: ['./history.component.scss'],
 })
-export class HistoryComponent implements OnInit {
+export class HistoryComponent implements OnInit, OnDestroy {
 	@Input() public objectId: number | undefined;
 
-	public historyItems: IChangeTrackerItemDto[] | undefined;
+	public historyItems: IChangeTrackerItemDto[] = [];
 
 	public pageIndex = 1;
 	public pageSize = 8;
@@ -36,21 +37,23 @@ export class HistoryComponent implements OnInit {
 
 		this.loadDataFromServer(this.pageSize, this.offset);
 
-		// TODO: Сервис должен создавать только 1 соединение, если оно не создано
-		// TODO: subscribe должен делать каждый компонент, асинхронно если коннект сделан
-		// TODO: connect нужно переделать на поток, если user изменился и его токен тоже
-		this.signalHistoryService.startConnection(this.authService.userValue.token!);
+		this.signalHistoryService.startConnection(
+			this.authService.userValue.token!,
+			this.objectId,
+			0,
+		);
 
-		this.signalHistoryService.subscribeToChanges(this.objectId, 0);
+		this.signalHistoryService.historyChange$.pipe(untilDestroyed(this)).subscribe(change => {
+			console.info('signalR change', change);
 
-		this.signalHistoryService
-			.getHistoryChanged()
-			.pipe(untilDestroyed(this))
-			.subscribe(change => {
-				if (this.objectId === change.objectId) {
-					this.historyItems?.push(change.item);
-				}
-			});
+			if (this.objectId === change.objectId) {
+				this.historyItems.push(change.item);
+			}
+		});
+	}
+
+	public ngOnDestroy(): void {
+		this.signalHistoryService.disconnect();
 	}
 
 	public loadDataFromServer(pageSize: number, offset: number) {
@@ -80,5 +83,13 @@ export class HistoryComponent implements OnInit {
 		this.pageIndex = $event; // Установка текущего индекса
 
 		this.loadDataFromServer(this.pageSize, this.offset);
+	}
+
+	public trackByHistoryItems(index: number, item: IChangeTrackerItemDto) {
+		return item.id;
+	}
+
+	public trackByChanges(index: number, item: IChangeItemDto) {
+		return index;
 	}
 }
