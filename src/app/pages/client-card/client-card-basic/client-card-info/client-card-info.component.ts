@@ -35,6 +35,7 @@ export class ClientCardInfoComponent implements OnInit {
 		status: FormControl<IClientStatus | null>;
 		category: FormControl<string | null>;
 		region: FormControl<string | null>;
+		comment: FormControl<string | null>;
 	}>;
 
 	protected newCategoryId: number | undefined;
@@ -47,6 +48,7 @@ export class ClientCardInfoComponent implements OnInit {
 			status: new FormControl(),
 			category: new FormControl(),
 			region: new FormControl(),
+			comment: new FormControl(),
 		});
 	}
 
@@ -79,6 +81,7 @@ export class ClientCardInfoComponent implements OnInit {
 			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
 			categoryId: this.newCategoryId,
 			regionId: this.newRegionId,
+			comment: this.infoForm.controls.comment.value,
 		});
 	}
 }

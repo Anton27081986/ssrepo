@@ -89,7 +89,7 @@
 		</div>
 		<div class="info-list-item comment" *ngIf="isEditing">
 			<ss-text size="3" class="info-list-item-name">Комментарий:</ss-text>
-			<ss-textarea size="medium" rows="2" placeholder="Введите текст"></ss-textarea>
+			<ss-textarea size="medium" rows="4" placeholder="Введите текст" formControlName="comment"></ss-textarea>
 		</div>
 	</form>
 	<div class="footer" *ngIf="isEditing">

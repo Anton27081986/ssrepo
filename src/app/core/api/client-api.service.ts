@@ -142,6 +142,7 @@ export class ClientApiService {
 				name: body.name,
 				regionId: body.regionId,
 				status: Number(body.status),
+				comment: body.comment,
 			},
 		);
 	}
