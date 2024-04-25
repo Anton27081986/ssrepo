@@ -62,4 +62,8 @@ export interface IManagerItemDto {
 	 * Назначен
 	 */
 	introducedAtSM?: string | null;
+	/**
+	 *  Признак что сотрудник уволен или временно не дееспособен
+	 */
+	isDismissed?: string | null;
 }

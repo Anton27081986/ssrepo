@@ -13,6 +13,12 @@
 				<ss-headline size="h6">{{ basicManager?.lastName }} {{ basicManager?.firstName }} {{ basicManager?.surName }}</ss-headline>
 				<ss-icon name="flag"></ss-icon>
 			</div>
+			<div class="manager-status">
+				<ss-tag *ngIf="!basicManager?.isDismissed; else dismissed">Активен</ss-tag>
+				<ng-template #dismissed>
+					<ss-tag class="red">Неактивен</ss-tag>
+				</ng-template>
+			</div>
 			<div class="manager-info-content">
 				<ss-text size="3">{{ basicManager?.department }}</ss-text>
 				<ss-text size="3" weight="semi-bold" (click)="callLocalUser(basicManager?.id)" class="local-call">
