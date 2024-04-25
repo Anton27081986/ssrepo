@@ -78,5 +78,6 @@ export interface IClientDto {
 	 * Список менеджеров
 	 */
 	managers?: IManagerItemDto[] | null;
+	changePriceListLevelLink?: string | null;
 }
 export namespace IClientDto {}
