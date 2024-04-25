@@ -39,6 +39,7 @@ import { TagModule } from '@app/shared/components/tag/tag.module';
 import { HistoryModule } from '@app/widgets/history/history.module';
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
+import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
@@ -107,6 +108,7 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		NzPaginationModule,
 		DatepickerInputModule,
 		FiltersModule,
+		TextareaModule,
 	],
 })
 export class ClientCardModule {}

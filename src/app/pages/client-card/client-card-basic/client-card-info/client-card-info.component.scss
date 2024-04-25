@@ -54,6 +54,17 @@
 					height: 41px;
 				}
 			}
+
+			.comment {
+				flex-direction: column;
+				align-items: start;
+				grid-row: 4 / 6;
+
+				ss-textarea {
+					margin-top: 8px;
+					width: 100%;
+				}
+			}
 		}
 
 		.footer {

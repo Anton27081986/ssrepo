@@ -28,5 +28,9 @@ export interface IClientEditRequest {
 	 * Айди региона
 	 */
 	regionId?: number;
+	/**
+	 * Комментарий
+	 */
+	comment?: string | null;
 }
 export namespace IClientEditRequest {}
