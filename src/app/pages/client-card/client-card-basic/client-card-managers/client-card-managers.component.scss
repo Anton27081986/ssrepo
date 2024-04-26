@@ -44,9 +44,9 @@
 
 			.manager-status {
 				ss-tag {
-					position: relative;
-					right: -264px;
-					top: -30px;
+					position: absolute;
+					right: 20px;
+					top: 14px;
 
 					::ng-deep p {
 						display: inline;
@@ -60,8 +60,6 @@
 					}
 				}
 				ss-tag.red {
-					right: -253px;
-
 					::ng-deep p {
 						background-color: $error;
 					}
