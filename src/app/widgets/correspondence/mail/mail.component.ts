@@ -133,12 +133,16 @@ export class MailComponent implements OnInit, AfterViewInit {
 						this.modal = undefined;
 					});
 			} else {
-				this.mailForm.controls.subject.setValue(subject);
 				this.resetForm();
+				this.mailForm.controls.subject.patchValue(subject);
 			}
 		});
 
 		this.repliedMessage$.pipe(untilDestroyed(this)).subscribe(replyObject => {
+			if (replyObject?.message) {
+				this.mailForm.controls.subject.setValue(replyObject.message.subject!);
+			}
+
 			if (replyObject?.toUsers.length) {
 				this.toUsers = replyObject.toUsers;
 			}
@@ -228,7 +232,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public onSendMessage() {
 		if (!this.mailForm.controls.subject.value || !this.mailForm.controls.text.value) {
-			this.mailForm.markAllAsTouched();
+			this.mailForm.controls.text.markAllAsTouched();
 
 			return;
 		}
