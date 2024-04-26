@@ -1,14 +1,6 @@
-import {
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	OnInit,
-	Output,
-	ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
+import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
@@ -28,10 +20,7 @@ enum CorrespondenceTabsEnum {
 	templateUrl: './messages.component.html',
 	styleUrls: ['./messages.component.scss'],
 })
-export class MessagesComponent implements OnInit {
-	@Input() objectId!: number;
-	public currentUserId: number | undefined;
-
+export class MessagesComponent {
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
 	protected subject$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
@@ -43,11 +32,6 @@ export class MessagesComponent implements OnInit {
 
 	@ViewChild('messages') public messagesElement!: ElementRef;
 
-	@Output() public selectMessageToReply = new EventEmitter<{
-		message: IMessageItemDto;
-		toUsers: IUserDto[];
-	}>();
-
 	public pageIndex = 1;
 	public pageSize = 10;
 	public total = 0;
@@ -55,16 +39,38 @@ export class MessagesComponent implements OnInit {
 
 	public isLoading = false;
 
+	private searchText: string | undefined;
+
 	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
-		private readonly notificationsFacadeService: NotificationsFacadeService,
+		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 		private readonly userService: UserProfileStoreService,
 	) {
 		this.messages$ = this.notificationsFacadeService.messages$;
 		this.files$ = this.notificationsFacadeService.files$;
 		this.subject$ = this.notificationsFacadeService.selectedSubject$;
 		this.user$ = this.userService.userProfile$;
+
+		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
+			this.selectedTab = CorrespondenceTabsEnum.Messages;
+			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
+			this.pageIndex = 1;
+			this.pageSize = 10;
+			this.total = 0;
+			this.offset = 0;
+			this.isLoading = true;
+		});
+
+		this.messages$.pipe(untilDestroyed(this)).subscribe(() => {
+			this.isLoading = false;
+
+			if (this.pageIndex === 1) {
+				this.scrollToBottom();
+			}
+		});
 	}
+
+	protected readonly CorrespondenceTabsEnum = CorrespondenceTabsEnum;
 
 	protected downloadFile(url: string, fileName: string) {
 		const link = document.createElement('a');
@@ -77,51 +83,14 @@ export class MessagesComponent implements OnInit {
 		document.body.removeChild(link);
 	}
 
-	public ngOnInit() {
-		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
-			this.selectedTab = CorrespondenceTabsEnum.Messages;
-			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
-			this.scrollToBottom();
-			this.notificationsFacadeService
-				.loadFiles(this.objectId, subject || undefined)
-				.pipe(untilDestroyed(this))
-				.subscribe();
-
-			this.pageIndex = 1;
-			this.pageSize = 10;
-			this.total = 0;
-			this.offset = 0;
-			this.loadMessages();
-		});
-
-		this.notificationsFacadeService
-			.getUserProfile()
-			.pipe(untilDestroyed(this))
-			.subscribe(user => {
-				this.currentUserId = user?.id;
-			});
-	}
-
-	protected loadMessages() {
-		this.notificationsFacadeService
-			.loadMessages(this.objectId, this.pageSize, this.offset)
-			.pipe(untilDestroyed(this))
-			.subscribe(res => {
-				if (this.pageIndex === 1) {
-					this.scrollToBottom();
-				}
-
-				this.total = res.total;
-				this.isLoading = false;
-			});
-	}
-
 	protected scrollToBottom(): void {
-		try {
-			this.messagesElement.nativeElement.scrollTop =
-				this.messagesElement.nativeElement.scrollHeight;
-		} catch (err) {
-			console.log(err);
+		if (this.messagesElement) {
+			try {
+				this.messagesElement.nativeElement.scrollTop =
+					this.messagesElement.nativeElement.scrollHeight;
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	}
 
@@ -130,15 +99,18 @@ export class MessagesComponent implements OnInit {
 			this.messagesElement.nativeElement.scrollHeight -
 				this.messagesElement.nativeElement.offsetHeight +
 				this.messagesElement.nativeElement.scrollTop <
-			100
+			200
 		) {
-			this.pageIndex = this.pageIndex += 1;
+			this.pageIndex += 1;
 
 			this.offset = this.pageSize * this.pageIndex - this.pageSize;
 
 			if (this.total > this.offset) {
-				this.isLoading = true;
-				this.loadMessages();
+				this.notificationsFacadeService.loadMessages(
+					this.pageSize,
+					this.offset,
+					this.searchText,
+				);
 			}
 		}
 	}
@@ -154,8 +126,7 @@ export class MessagesComponent implements OnInit {
 	protected replyTo(message: IMessageItemDto, author: IUserDto, toUsers: IUserDto[] = []) {
 		const users = [author, ...toUsers];
 
-		this.notificationsFacadeService.selectSubject(message.subject!);
-		this.selectMessageToReply.emit({
+		this.notificationsFacadeService.selectMessageToReply({
 			message,
 			toUsers: users.filter(
 				(user, index) => index === users.findIndex(el => user.id === el.id),
@@ -175,18 +146,16 @@ export class MessagesComponent implements OnInit {
 			});
 	}
 
-	protected readonly CorrespondenceTabsEnum = CorrespondenceTabsEnum;
-
-	protected searchByMessage($event: Event) {
+	protected searchMessagesByText($event: Event) {
 		const target = $event.target as HTMLInputElement;
 
-		if (target.value.length > 2) {
-			this.notificationsFacadeService
-				.searchByMessages(this.objectId, target.value)
-				.pipe(untilDestroyed(this))
-				.subscribe();
-		} else {
-			this.loadMessages();
-		}
+		this.pageIndex = 1;
+		this.pageSize = 10;
+		this.total = 0;
+		this.offset = 0;
+		this.isLoading = true;
+		this.searchText = target.value;
+
+		this.notificationsFacadeService.searchMessages(this.pageSize, this.offset, target.value);
 	}
 }

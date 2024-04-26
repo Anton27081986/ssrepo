@@ -1,24 +1,16 @@
-import {
-	AfterViewInit,
-	ChangeDetectorRef,
-	Component,
-	Input,
-	OnInit,
-	ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
-import Editor from 'ckeditor5/build/ckeditor';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import Editor from 'ckeditor5-custom-build';
+import { Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NotificationsApiService } from '@app/core/api/notifications-api.service';
-import { NotificationsFacadeService } from '@app/core/facades/notifications-facade.service';
+import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { ModalService } from '@app/core/modal/modal.service';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import {ModalRef} from "@app/core/modal/modal.ref";
+import { ModalRef } from '@app/core/modal/modal.ref';
 
 interface IEditorButton {
 	title: string;
@@ -50,10 +42,6 @@ enum EditorButtons {
 	styleUrls: ['./mail.component.scss'],
 })
 export class MailComponent implements OnInit, AfterViewInit {
-	@Input() public objectId!: number;
-
-	private readonly destroy$ = new Subject<void>();
-
 	protected readonly EditorButtons = EditorButtons;
 
 	@ViewChild('editor') public editor: CKEditorComponent | undefined;
@@ -68,12 +56,14 @@ export class MailComponent implements OnInit, AfterViewInit {
 	protected fontSize = '14 pt';
 	protected isFontSizesInitialized = false;
 
-	@Input() public toUsers: IUserDto[] = [];
+	public toUsers: IUserDto[] = [];
 	protected toUsersCopy: IUserDto[] = [];
 
-	@Input() public selectedMessageToReply: IMessageItemDto | undefined;
-
 	public subject$: Observable<string | null>;
+
+	public repliedMessage$: Observable<{ message: IMessageItemDto; toUsers: IUserDto[] } | null>;
+
+	public messageFiles$: Observable<IAttachmentDto[] | null>;
 
 	protected myEditorButtons: IEditorButton[] = [
 		{ title: 'Отменить' },
@@ -93,8 +83,6 @@ export class MailComponent implements OnInit, AfterViewInit {
 		{ title: 'Без оформления' },
 	];
 
-	protected files: IAttachmentDto[] = [];
-
 	protected mailForm!: FormGroup<{
 		subject: FormControl<string | null>;
 		text: FormControl<string | null>;
@@ -105,11 +93,12 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly notificationsApiService: NotificationsApiService,
-		private readonly notificationsFacadeService: NotificationsFacadeService,
+		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 		private readonly modalService: ModalService,
 	) {
 		this.subject$ = this.notificationsFacadeService.selectedSubject$;
+		this.repliedMessage$ = this.notificationsFacadeService.repliedMessage$;
+		this.messageFiles$ = this.notificationsFacadeService.messageFiles$;
 	}
 
 	public ngOnInit() {
@@ -119,13 +108,12 @@ export class MailComponent implements OnInit, AfterViewInit {
 			isPrivate: new FormControl<boolean>(true),
 		});
 
-		this.subject$.pipe(takeUntil(this.destroy$)).subscribe(subject => {
-			if ((this.toUsers.length || this.toUsersCopy.length || this.mailForm.controls.text.value)&& !this.modal) {
+		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
+			if (this.mailForm.controls.text.value && !this.modal) {
 				this.modal = this.modalService.open(DialogComponent, {
 					data: {
 						header: 'Изменения не будут сохранены',
-						text:
-							'Вы переходите в другую тему. Введенное сообщение не будет сохранено.\n Продолжить?',
+						text: 'Введенное сообщение не будет сохранено.\n Продолжить?',
 					},
 				});
 
@@ -137,18 +125,28 @@ export class MailComponent implements OnInit, AfterViewInit {
 							this.resetForm();
 							this.mailForm.controls.subject.setValue(subject);
 						} else {
-							this.notificationsFacadeService.selectSubject(this.mailForm.controls.subject.value);
+							this.notificationsFacadeService.selectSubject(
+								this.mailForm.controls.subject.value,
+							);
 						}
+
 						this.modal = undefined;
 					});
 			} else {
 				this.mailForm.controls.subject.setValue(subject);
+				this.resetForm();
+			}
+		});
+
+		this.repliedMessage$.pipe(untilDestroyed(this)).subscribe(replyObject => {
+			if (replyObject?.toUsers.length) {
+				this.toUsers = replyObject.toUsers;
 			}
 		});
 	}
 
 	public ngAfterViewInit(): void {
-		this.editor?.ready.pipe(takeUntil(this.destroy$)).subscribe(() => {
+		this.editor?.ready.pipe(untilDestroyed(this)).subscribe(() => {
 			const controls = document.getElementsByClassName('ck-toolbar__items')[0].childNodes;
 
 			if (!controls.length || this.myEditorButtons.length !== controls.length) {
@@ -217,13 +215,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			const reader = new FileReader();
 
 			reader.onload = () => {
-				this.notificationsFacadeService
-					.uploadFile(file)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.files.push(res);
-						this.changeDetectorRef.detectChanges();
-					});
+				this.notificationsFacadeService.uploadFile(file);
 			};
 
 			reader.readAsDataURL(file);
@@ -231,17 +223,11 @@ export class MailComponent implements OnInit, AfterViewInit {
 	}
 
 	protected deleteFile(id: string) {
-		this.notificationsFacadeService
-			.deleteFile(id)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.files = this.files.filter(file => file.id !== id);
-				this.changeDetectorRef.detectChanges();
-			});
+		this.notificationsFacadeService.deleteFile(id);
 	}
 
 	public onSendMessage() {
-		if (this.mailForm.controls.subject.errors) {
+		if (!this.mailForm.controls.subject.value || !this.mailForm.controls.text.value) {
 			this.mailForm.markAllAsTouched();
 
 			return;
@@ -272,30 +258,15 @@ export class MailComponent implements OnInit, AfterViewInit {
 	}
 
 	private sendMessage() {
-		this.notificationsApiService
-			.sendMessage({
-				objectId: this.objectId,
-				type: 0,
-				subject: this.mailForm.controls.subject.value,
-				text: this.mailForm.controls.text.value,
-				toUserIds: this.toUsers.map(user => user.id!),
-				copyUserIds: this.toUsersCopy.map(user => user.id!),
-				isPrivate: this.mailForm.controls.isPrivate.value!,
-				replyToMessageId: this.selectedMessageToReply?.id,
-				fileIds: this.files.map(file => file.id!),
-			})
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.notificationsFacadeService
-					.loadSubjects(this.objectId)
-					.pipe(takeUntil(this.destroy$))
-					.subscribe(() => {
-						this.notificationsFacadeService.selectSubject(
-							null
-						);
-						this.resetForm();
-					});
-			});
+		this.notificationsFacadeService.sendMessage(
+			this.mailForm.controls.subject.value!,
+			this.mailForm.controls.text.value!,
+			this.toUsers.map(user => user.id!),
+			this.toUsersCopy.map(user => user.id!),
+			this.mailForm.controls.isPrivate.value!,
+		);
+
+		this.resetForm();
 	}
 
 	private resetForm() {
@@ -304,13 +275,12 @@ export class MailComponent implements OnInit, AfterViewInit {
 			text: '',
 			isPrivate: true,
 		});
-		this.selectedMessageToReply = undefined;
 		this.toUsers = [];
 		this.toUsersCopy = [];
-		this.files = [];
+		this.notificationsFacadeService.selectMessageToReply(null);
 	}
 
 	protected closeReply() {
-		this.selectedMessageToReply = undefined;
+		this.notificationsFacadeService.selectMessageToReply(null);
 	}
 }

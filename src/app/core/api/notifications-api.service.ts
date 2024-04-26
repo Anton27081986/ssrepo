@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
 import { ISendMessageRequest } from '@app/core/models/notifications/send-message-request';
@@ -16,35 +16,48 @@ export class NotificationsApiService {
 	/** Получить список тем */
 	public getSubjects(
 		ObjectId: number,
+		Query?: string,
 	): Observable<Array<{ subject: string; messageCount: number }>> {
+		let params = new HttpParams({ fromObject: { ObjectId } });
+
+		if (Query) {
+			params = params.append('Query', Query);
+		}
+
 		return this.http.get<Array<{ subject: string; messageCount: number }>>(
 			`${environment.apiUrl}/api/notifications/messages/subjects`,
-			{
-				params: { ObjectId },
-			},
-		);
-	}
-
-	/** Получить список сообщений */
-	public getMessages(params: {
-		ObjectId: number;
-		subject?: string;
-		limit?: number;
-		offset?: number;
-	}): Observable<IResponse<IMessageItemDto>> {
-		return this.http.get<IResponse<IMessageItemDto>>(
-			`${environment.apiUrl}/api/notifications/messages`,
 			{
 				params,
 			},
 		);
 	}
 
-	/** Поиск по сообщениям */
-	public searchMessages(params: {
-		ObjectId: number;
-		query?: string;
-	}): Observable<IResponse<IMessageItemDto>> {
+	/** Получить список сообщений */
+	public getMessages(
+		ObjectId: number,
+		subject: string | null,
+		limit?: number,
+		offset?: number,
+		Query?: string | undefined,
+	): Observable<IResponse<IMessageItemDto>> {
+		let params = new HttpParams({ fromObject: { ObjectId } });
+
+		if (subject) {
+			params = params.set('subject', subject);
+		}
+
+		if (limit) {
+			params = params.set('limit', limit);
+		}
+
+		if (offset) {
+			params = params.set('offset', offset);
+		}
+
+		if (Query) {
+			params = params.set('Query', Query);
+		}
+
 		return this.http.get<IResponse<IMessageItemDto>>(
 			`${environment.apiUrl}/api/notifications/messages`,
 			{
@@ -67,10 +80,16 @@ export class NotificationsApiService {
 	}
 
 	/** Получить список файлов */
-	public getFiles(params: {
-		ObjectId: number;
-		subject?: string;
-	}): Observable<IResponse<IAttachmentDto>> {
+	public getFiles(
+		ObjectId: number,
+		subject: string | null,
+	): Observable<IResponse<IAttachmentDto>> {
+		let params = new HttpParams({ fromObject: { ObjectId } });
+
+		if (subject) {
+			params = params.set('subject', subject);
+		}
+
 		return this.http.get<IResponse<IAttachmentDto>>(
 			`${environment.apiUrl}/api/notifications/messages/attachments`,
 			{

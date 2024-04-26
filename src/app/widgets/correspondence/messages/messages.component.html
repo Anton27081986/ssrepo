@@ -2,15 +2,15 @@
     <div class="tabs">
 		<ss-tabs [tabs]="tabs" [selectedTab]="(subject$ | async) || 'Все сообщения по клиенту'" (select)="selectTab($event)"></ss-tabs>
     </div>
-    <ss-search-input class="search" size="small" placeholder="Поиск по сообщениям" (input)="searchByMessage($event)"></ss-search-input>
+    <ss-search-input class="search" size="small" placeholder="Поиск по сообщениям" (input)="searchMessagesByText($event)"></ss-search-input>
 </div>
-<div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="content">
+<div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="messages-list">
 	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMoreMessages()" #messages>
 		<div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
 			<ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
 			<div class="message-content">
 				<div class="message-content-header">
-					<ss-text size="1" weight="semi-bold">{{message.author?.name}}</ss-text>
+					<ss-text size="1" weight="semi-bold">{{ message.author?.name }}</ss-text>
 					<div class="message-content-header-controls">
 						<ss-icon name="{{ message.isPrivate ? 'lock' : '' }}"></ss-icon>
 						<ss-tooltip-menu icon="more">
@@ -20,7 +20,7 @@
 							<ss-caption size="1" (click)="replyTo(message, message.author!, message.toUsers!)">
 								<ss-icon name="reply"></ss-icon>Ответить всем
 							</ss-caption>
-							<ss-caption size="1" (click)="changeVisibility(message)" *ngIf="this.currentUserId == message.author?.id">
+							<ss-caption size="1" (click)="changeVisibility(message)" *ngIf="(user$ | async)?.id == message.author?.id">
 								<ss-icon name="{{ message.isPrivate ? 'unlock' : 'lock' }}"></ss-icon>
 								{{ message.isPrivate ? 'Доступ для всех' : 'Доступ только адресатам' }}
 							</ss-caption>
@@ -48,18 +48,17 @@
 				<div *ngIf="message.attachments?.length" class="files">
 					<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
 				</div>
-				<ss-caption size="2" class="message-content-time">{{ message.createdAt | date: 'hh:mm, dd.MM.yyyy' }}</ss-caption>
+				<ss-caption size="2" class="message-content-time">{{ message.createdAt | date: 'HH:mm, dd.MM.yyyy' }}</ss-caption>
 			</div>
 		</div>
 	</div>
-	<ss-text class="message-loader" *ngIf="isLoading">Сообщения загружаются</ss-text>
 	<ng-template #noMessages>
 		<div class="no-content">
 			<ss-headline size="h3">Сообщений нет</ss-headline>
 		</div>
 	</ng-template>
 </div>
-<div *ngIf="selectedTab === CorrespondenceTabsEnum.Files">
+<div *ngIf="selectedTab === CorrespondenceTabsEnum.Files" class="files-list">
 	<div *ngIf="(files$ | async)?.total; else noFiles" class="files-list">
 		<div *ngFor="let file of (files$ | async)?.items" class="files-list-item">
 			<ss-icon height="28" width="28" name="file" class="doc"></ss-icon>
@@ -71,7 +70,7 @@
 		</div>
 	</div>
 	<ng-template #noFiles>
-		<div class="no-content">
+		<div class="files-list no-content">
 			<ss-headline size="h3">Нет вложений</ss-headline>
 		</div>
 	</ng-template>
