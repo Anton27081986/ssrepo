@@ -213,6 +213,7 @@ export class CorrespondenceFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.messageFilesSubject.next(null);
+					this.messagesSubject.next({ items: [], total: 0 });
 
 					if (this.selectedSubjectSubject.value !== subject) {
 						this.subjectsSubject.next(
