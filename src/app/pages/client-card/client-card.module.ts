@@ -12,7 +12,7 @@ import { CaptionModule } from '@app/shared/components/typography/caption/caption
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ClientCardInfoComponent } from '@app/pages/client-card/client-card-basic/client-card-info/client-card-info.component';
 import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
-import { CorrespondenceModule } from '@app/shared/components/correspondence/correspondence.module';
+import { CorrespondenceModule } from '@app/widgets/correspondence/correspondence.module';
 import { ClientCardContractorsComponent } from '@app/pages/client-card/client-card-basic/client-card-contractors/client-card-contractors.component';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

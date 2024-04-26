@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { TopicComponent } from '@app/shared/components/topic/topic.component';
+import { TopicComponent } from '@app/widgets/correspondence/topic/topic.component';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';

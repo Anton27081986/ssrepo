@@ -1,4 +1,4 @@
-@use 'src/styles/colors.scss' as *;
+@use '../../../../styles/colors' as *;
 
 :host {
 	width: 100%;
@@ -18,6 +18,20 @@
 		background-color: $island;
 		padding: 10px 20px;
 		border-bottom: 1px solid $island-outline;
+		gap: 12px;
+
+		.tabs {
+			max-width: 650px;
+		}
+	}
+
+	.messages-list {
+		display: flex;
+		width: 100%;
+		height: 440px;
+		padding: 10px;
+		gap: 20px;
+		overflow-y: auto;
 	}
 
 	.content {
@@ -116,8 +130,7 @@
 	.files-list {
 		display: flex;
 		flex-direction: column;
-		min-height: 390px;
-		height: 390px;
+		height: 440px;
 		width: 100%;
 		overflow-y: auto;
 
@@ -154,13 +167,13 @@
 
 	.no-content {
 		display: flex;
-		min-height: 300px;
 		height: 100%;
 		width: 100%;
 		align-items: center;
 		justify-content: center;
 	}
 }
+
 
 @keyframes blink {
 	50% {

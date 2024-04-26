@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MailComponent } from '@app/shared/components/mail/mail.component';
+import { MailComponent } from '@app/widgets/correspondence/mail/mail.component';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';

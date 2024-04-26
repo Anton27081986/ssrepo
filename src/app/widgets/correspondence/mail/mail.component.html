@@ -12,11 +12,11 @@
 			<ss-chips-user-search label="Кому:" size="medium" [selectedUsers]="toUsers"></ss-chips-user-search>
 			<ss-chips-user-search label="Копия:" size="medium" [selectedUsers]="toUsersCopy"></ss-chips-user-search>
 		</div>
-		<div class="reply" *ngIf="selectedMessageToReply">
+		<div class="reply" *ngIf="repliedMessage$ | async">
 			<ss-icon width="28" height="28" name="reply"></ss-icon>
 			<div class="reply-message">
-				<ss-text size="2" weight="semi-bold" class="reply-author">В ответ: {{ selectedMessageToReply.author?.name }}</ss-text>
-				<div class="reply-text" [innerHTML]="selectedMessageToReply.text"></div>
+				<ss-text size="2" weight="semi-bold" class="reply-author">В ответ: {{ (repliedMessage$ | async)?.message?.author?.name }}</ss-text>
+				<div class="reply-text" [innerHTML]="(repliedMessage$ | async)?.message?.text"></div>
 			</div>
 			<ss-icon width="12" height="12" name="iconClose" class="close-reply" (click)="closeReply()"></ss-icon>
 		</div>
@@ -85,8 +85,8 @@
 			<ckeditor [editor]="Editor" formControlName="text" #editor></ckeditor>
 			<ss-caption class="error" size="1" *ngIf="mailForm.controls.text.hasError('required') && mailForm.controls.text.touched">Поле обязательно для заполнения</ss-caption>
 		</div>
-		<div *ngIf="files.length" class="files">
-			<ss-attachment *ngFor="let file of files" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
+		<div *ngIf="(messageFiles$ | async)?.length" class="files">
+			<ss-attachment *ngFor="let file of (messageFiles$ | async)" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
 		</div>
 		<div class="controls">
 			<ss-caption>

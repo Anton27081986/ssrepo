@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MessagesComponent } from '@app/shared/components/messages/messages.component';
+import { MessagesComponent } from '@app/widgets/correspondence/messages/messages.component';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
