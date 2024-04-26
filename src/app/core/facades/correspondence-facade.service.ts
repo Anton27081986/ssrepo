@@ -212,14 +212,19 @@ export class CorrespondenceFacadeService {
 				})
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
+					this.messageFilesSubject.next(null);
+
 					if (this.selectedSubjectSubject.value !== subject) {
+						this.subjectsSubject.next(
+							this.subjectsSubject.value
+								? [...this.subjectsSubject.value, { subject, messageCount: 1 }]
+								: [{ subject, messageCount: 1 }],
+						);
 						this.selectSubject(subject);
 					} else {
 						this.loadMessages();
+						this.loadFiles();
 					}
-
-					this.messageFilesSubject.next(null);
-					this.loadFiles();
 				});
 		}
 	}
