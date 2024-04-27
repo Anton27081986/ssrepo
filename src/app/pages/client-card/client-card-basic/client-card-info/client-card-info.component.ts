@@ -10,7 +10,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 enum ClientStatusesEnum {
 	'Новый' = 1,
 	'Архив' = 2,
-	'Передано в юр.отдел' = 5,
 	'Действующий' = 6,
 }
 
