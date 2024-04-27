@@ -5,7 +5,6 @@
 					  size="medium"
 					  placeholder="Введите тему"
 					  formControlName="subject"
-					  value="{{(subject$ | async)}}"
 					  [error]="mailForm.controls.subject.hasError('required') && mailForm.controls.subject.touched ? 'Поле обязательно для заполнения' : undefined"
 					  (input)="closeReply()"
 			></ss-input>

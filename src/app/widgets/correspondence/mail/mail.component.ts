@@ -133,8 +133,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 						this.modal = undefined;
 					});
 			} else {
-				this.resetForm();
-				this.mailForm.controls.subject.patchValue(subject);
+				this.mailForm.controls.subject.setValue(subject);
 			}
 		});
 
@@ -232,7 +231,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public onSendMessage() {
 		if (!this.mailForm.controls.subject.value || !this.mailForm.controls.text.value) {
-			this.mailForm.controls.text.markAllAsTouched();
+			this.mailForm.markAllAsTouched();
 
 			return;
 		}
