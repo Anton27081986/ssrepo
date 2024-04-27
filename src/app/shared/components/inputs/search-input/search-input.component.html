@@ -2,7 +2,7 @@
 <div class="input">
 	<input type="text"
    	[placeholder]="placeholder"
-   	[value]="value"
+   	[value]="value ? value : formValue"
 	[disabled]="disabled"
 	(input)="onChange($any($event.target).value)"
 	(blur)="onTouched()"

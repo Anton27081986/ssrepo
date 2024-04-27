@@ -55,14 +55,16 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
-			<ss-search-input searchType="subsector" *ngIf="isEditing; else subsector" (select)="selectCategory($event)"></ss-search-input>
+			<ss-search-input searchType="subsector" *ngIf="isEditing; else subsector" (select)="selectCategory($event)"
+							 value="{{ (client$ | async)?.saleDirection }}"></ss-search-input>
 			<ng-template #subsector>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
 			</ng-template>
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Регион:</ss-text>
-			<ss-search-input searchType="region" *ngIf="isEditing; else region" (select)="selectRegion($event)"></ss-search-input>
+			<ss-search-input searchType="region" *ngIf="isEditing; else region" (select)="selectRegion($event)"
+							 value="{{ (client$ | async)?.region?.name }}"></ss-search-input>
 			<ng-template #region>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region?.name || '—' }}</ss-text>
 			</ng-template>
