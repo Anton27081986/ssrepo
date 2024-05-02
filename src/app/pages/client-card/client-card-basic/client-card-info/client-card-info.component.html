@@ -12,7 +12,9 @@
 						</a>
 					</ss-caption>
 				</ss-tooltip-menu>
-				<ss-icon name="edit" (click)="onEditing(true)"></ss-icon>
+				<ng-container *ngIf="this.currentUser?.isAdmin">
+					<ss-icon name="edit" (click)="onEditing(true)"></ss-icon>
+				</ng-container>
 		</div>
 		<ng-template #closeButton>
 			<ss-icon name="iconCloseLight" (click)="onEditing(false)"></ss-icon>

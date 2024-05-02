@@ -7,6 +7,8 @@ import { IClientStatus } from '@app/core/models/company/client-status';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { IUserProfile } from '@app/core/models/user-profile';
+import { UserFacadeService } from '@app/core/facades/user-facade.service';
 
 enum ClientStatusesEnum {
 	'Новый' = 1,
@@ -22,6 +24,7 @@ enum ClientStatusesEnum {
 })
 export class ClientCardInfoComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;
+	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
 
@@ -44,6 +47,7 @@ export class ClientCardInfoComponent implements OnInit {
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NzMessageService,
+		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.infoForm = new FormGroup({
@@ -64,6 +68,13 @@ export class ClientCardInfoComponent implements OnInit {
 			this.newCategoryId = client?.category?.id;
 			this.newRegionId = client?.region?.id;
 		});
+
+		this.userFacadeService
+			.getUserProfile()
+			.pipe(untilDestroyed(this))
+			.subscribe(user => {
+				this.currentUser = user;
+			});
 	}
 
 	public onEditing(status: boolean) {

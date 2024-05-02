@@ -1,7 +1,9 @@
 <ss-card padding="0">
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Базовый менеджер</ss-headline>
-		<ss-icon *ngIf="!isEditing; else closeButton" name="edit" (click)="onEditing(true)"></ss-icon>
+		<ng-container *ngIf="this.currentUser?.isAdmin">
+			<ss-icon *ngIf="!isEditing; else closeButton" name="edit" (click)="onEditing(true)"></ss-icon>
+		</ng-container>
 		<ng-template #closeButton>
 			<ss-icon name="iconCloseLight" (click)="onEditing(false)"></ss-icon>
 		</ng-template>

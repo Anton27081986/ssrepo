@@ -4,6 +4,8 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { UserFacadeService } from '@app/core/facades/user-facade.service';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 @UntilDestroy()
 @Component({
@@ -15,6 +17,7 @@ export class ClientCardManagersComponent implements OnInit {
 	public managers$: Observable<IManagerItemDto[] | null>;
 
 	public basicManager: IManagerItemDto | undefined;
+	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
 
@@ -26,6 +29,7 @@ export class ClientCardManagersComponent implements OnInit {
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NzMessageService,
+		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 	}
@@ -43,6 +47,13 @@ export class ClientCardManagersComponent implements OnInit {
 				return { manager, status: 'static' };
 			});
 		});
+
+		this.userFacadeService
+			.getUserProfile()
+			.pipe(untilDestroyed(this))
+			.subscribe(user => {
+				this.currentUser = user;
+			});
 	}
 
 	public onEditing(status: boolean) {
