@@ -6,6 +6,7 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 import { IClientStatus } from '@app/core/models/company/client-status';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 enum ClientStatusesEnum {
 	'Новый' = 1,
@@ -40,7 +41,10 @@ export class ClientCardInfoComponent implements OnInit {
 	protected newCategoryId: number | undefined;
 	protected newRegionId: number | undefined;
 
-	public constructor(public readonly clientCardListFacade: ClientsCardFacadeService) {
+	public constructor(
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+		private readonly notificationService: NzMessageService,
+	) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.infoForm = new FormGroup({
 			name: new FormControl(),
@@ -82,5 +86,8 @@ export class ClientCardInfoComponent implements OnInit {
 			regionId: this.newRegionId,
 			comment: this.infoForm.controls.comment.value,
 		});
+
+		this.notificationService.success('Сохранено');
+		this.isEditing = false;
 	}
 }
