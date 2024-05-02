@@ -6,7 +6,7 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 import { IClientStatus } from '@app/core/models/company/client-status';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {NzMessageService} from "ng-zorro-antd/message";
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 enum ClientStatusesEnum {
 	'Новый' = 1,
