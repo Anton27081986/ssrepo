@@ -3,6 +3,7 @@ import { from, Observable, tap } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @UntilDestroy()
 @Component({
@@ -22,7 +23,10 @@ export class ClientCardManagersComponent implements OnInit {
 		managersList: Array<{ manager: IManagerItemDto; status: 'add' | 'delete' | 'static' }>;
 	} = { basicManager: undefined, managersList: [] };
 
-	public constructor(public readonly clientCardListFacade: ClientsCardFacadeService) {
+	public constructor(
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+		private readonly notificationService: NzMessageService,
+	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 	}
 
@@ -66,6 +70,9 @@ export class ClientCardManagersComponent implements OnInit {
 				untilDestroyed(this),
 			)
 			.subscribe();
+
+		this.notificationService.success('Сохранено');
+		this.isEditing = false;
 	}
 
 	public callLocalUser(id: number | undefined) {
