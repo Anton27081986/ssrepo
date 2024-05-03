@@ -25,6 +25,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public value: string | undefined;
+	@Input() public clear: boolean = false;
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
 	@Input() public searchType: searchType = 'user';

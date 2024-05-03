@@ -46,7 +46,7 @@
 		<ss-headline size="h6" weight="semi-bold">Состав менеджеров</ss-headline>
 	</div>
 	<div class="search-by-manager" *ngIf="isEditing;">
-		<ss-search-input class="search" searchType="user" placeholder="Введите ФИО" (select)="selectManager($event)"></ss-search-input>
+		<ss-search-input class="search" searchType="user" placeholder="Введите ФИО" [clear]="true" (select)="selectManager($event)"></ss-search-input>
 	</div>
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<ng-container *ngFor="let manager of (managers$ | async)">
