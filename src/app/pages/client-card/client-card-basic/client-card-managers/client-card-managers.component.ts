@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { from, Observable, tap } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -30,6 +30,7 @@ export class ClientCardManagersComponent implements OnInit {
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NzMessageService,
 		private readonly userFacadeService: UserFacadeService,
+		private readonly cd: ChangeDetectorRef,
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 	}
@@ -74,7 +75,8 @@ export class ClientCardManagersComponent implements OnInit {
 
 			setTimeout(() => {
 				this.clientCardListFacade.getManagers();
-			}, 100);
+				this.cd.detectChanges();
+			}, 200);
 		}
 
 		from(this.changedData.managersList.filter(manager => manager.status !== 'static'))
