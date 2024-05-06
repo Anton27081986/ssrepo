@@ -22,10 +22,11 @@
 		<div class="filters-form-item" *ngFor="let filter of filters">
 			<ss-input *ngIf="filter.type === 'input'" [label]="filter.label" [formControlName]="filter.name" [placeholder]="filter.placeholder"></ss-input>
 			<ss-datepicker-input *ngIf="filter.type === 'date'" size="small" [disabled]="false" [label]="filter.label" [formControlName]="filter.name" placeholder=""></ss-datepicker-input>
-			<ss-select *ngIf="filter.type === 'select'" [label]="filter.label" [formControlName]="filter.name" (onChange)="filtersForm.controls[filter.name].setValue(($event))">
+			<ss-select *ngIf="filter.type === 'select'" [label]="filter.label" (onChange)="filtersForm.controls[filter.name].setValue(($event))">
 				<option [value]="undefined">{{filter.placeholder}}</option>
 				<option *ngFor="let option of filter.options" [value]="option.id">{{option.name}}</option>
 			</ss-select>
+			<ss-search-input *ngIf="filter.type === 'search'" [label]="filter.label" (select)="filtersForm.controls[filter.name].setValue(($event.id))" [searchType]="filter.searchType || 'user'" [placeholder]="filter.placeholder"></ss-search-input>
 		</div>
 	</form>
 	<div class="footer">

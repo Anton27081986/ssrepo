@@ -12,7 +12,7 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
-type searchType = 'user' | 'subsector' | 'region' | 'contractor';
+export type searchType = 'user' | 'subsector' | 'region' | 'contractor';
 
 @UntilDestroy()
 @Component({

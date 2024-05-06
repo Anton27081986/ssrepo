@@ -68,10 +68,17 @@ export class ClientsListPageComponent implements OnInit {
 		},
 		{
 			name: 'contractorId',
-			type: 'select',
+			type: 'search',
+			searchType: 'contractor',
 			label: 'Контрагенты',
-			options: [],
 			placeholder: 'Введите наименование контрагента',
+		},
+		{
+			name: 'managerId',
+			type: 'search',
+			searchType: 'user',
+			label: 'Менеджеры',
+			placeholder: 'Введите ФИО',
 		},
 		{
 			name: 'status',

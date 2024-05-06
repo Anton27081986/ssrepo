@@ -1,13 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { searchType } from '@app/shared/components/inputs/search-input/search-input.component';
 
 export interface IFilter {
 	name: string;
-	type: 'input' | 'date' | 'select' | 'boolean';
+	type: 'input' | 'date' | 'select' | 'boolean' | 'search';
 	label: string;
 	placeholder: string;
 	value?: string;
 	options?: Array<{ id: number; name: string }>;
+	searchType?: searchType;
 }
 
 @Component({
