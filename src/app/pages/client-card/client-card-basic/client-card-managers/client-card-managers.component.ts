@@ -62,11 +62,19 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public onBasicManagerChange(managerId: number) {
 		this.changedData.basicManager = managerId;
+
+		this.clientCardListFacade.managers$.pipe(untilDestroyed(this)).subscribe(managers => {
+			this.basicManager = managers.find(manager => manager.id === Number(managerId));
+		});
 	}
 
 	public onSaveChanges() {
 		if (this.changedData.basicManager) {
 			this.clientCardListFacade.setBasicManager(this.changedData.basicManager);
+
+			setTimeout(() => {
+				this.clientCardListFacade.getManagers();
+			}, 100);
 		}
 
 		from(this.changedData.managersList.filter(manager => manager.status !== 'static'))
