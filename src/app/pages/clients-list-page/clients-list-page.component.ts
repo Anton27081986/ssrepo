@@ -5,7 +5,7 @@ import { IClientsFilter } from '@app/core/models/clients-filter';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-import {LocalStorageService} from "@app/core/services/local-storage.service";
+import { LocalStorageService } from '@app/core/services/local-storage.service';
 
 export interface IClientTableItem {
 	code: string;
@@ -181,7 +181,7 @@ export class ClientsListPageComponent implements OnInit {
 	}
 
 	public getFilteredClients(filter: { [key: string]: string }) {
-		this.filter = {...this.filter, ...filter as unknown as IClientsFilter} ;
+		this.filter = { ...this.filter, ...(filter as unknown as IClientsFilter) };
 		this.filter.withoutBaseManager = !!this.filter.withoutBaseManager;
 		this.localStorageService.setItem('clientsListFilter', this.filter);
 		this.tableState = TableState.Loading;
