@@ -1,47 +1,33 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
-import { SaleRequestsFacadeService } from '@app/core/facades/sale-requests-facade.service';
-import { ISaleRequestsFilter } from '@app/core/models/sale-requests-filter';
-import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';
+import { ISamplesTableItem } from '@app/pages/client-card/client-request-samples/samples-table-item';
+import { TableState } from '@app/shared/components/table/table-state';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { IRequestSamplesFilter } from '@app/core/models/request-samples-filter';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-
-export interface ISaleTableItem {
-	code: string;
-	saleLink: string;
-	contractorId: string;
-	shipDate: string;
-	paymentDate: string;
-	status: string;
-}
-
-export enum TableState {
-	Loading,
-	Empty,
-	Full,
-}
+import {RequestSamplesFacadeService} from "@app/core/facades/request-samples-facade.service";
+import {ISampleItemDto} from "@app/core/models/company/sample-item-dto";
 
 @UntilDestroy()
 @Component({
-	selector: 'app-sale-requests',
-	templateUrl: './sale-requests.component.html',
-	styleUrls: ['./sale-requests.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'ss-client-request-samples',
+	templateUrl: './client-request-samples.component.html',
+	styleUrls: ['./client-request-samples.component.scss'],
 })
-export class SaleRequestsComponent implements OnInit {
+export class ClientRequestSamplesComponent implements OnInit {
 	// table
 	public total: number | undefined;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public tableItems: ITableItem[] = [];
-	public items: ISaleTableItem[] = [];
+	public items: ISamplesTableItem[] = [];
 
 	// state
 	public isFiltersVisible: boolean = true;
 	public tableState: TableState = TableState.Loading;
 	public filtersForm!: FormGroup;
-	public filter: ISaleRequestsFilter = {
+	public filter: IRequestSamplesFilter = {
 		offset: 0,
 		limit: this.pageSize,
 	};
@@ -60,7 +46,7 @@ export class SaleRequestsComponent implements OnInit {
 	];
 
 	public constructor(
-		public readonly saleRequestsFacade: SaleRequestsFacadeService,
+		public readonly requestSamplesFacade: RequestSamplesFacadeService,
 		private readonly formBuilder: FormBuilder,
 		private readonly cdr: ChangeDetectorRef,
 	) {}
@@ -73,9 +59,9 @@ export class SaleRequestsComponent implements OnInit {
 			toShipDate: [],
 		});
 
-		this.saleRequestsFacade.applyFilters(this.filter);
+		this.requestSamplesFacade.applyFilters(this.filter);
 
-		this.saleRequestsFacade.sales$.pipe(untilDestroyed(this)).subscribe(response => {
+		this.requestSamplesFacade.samples$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
 				this.tableState = TableState.Empty;
 			} else {
@@ -89,10 +75,10 @@ export class SaleRequestsComponent implements OnInit {
 		});
 	}
 
-	private mapClientsToTableItems(sales: ISaleRequestsDto) {
+	private mapClientsToTableItems(sales: ISampleItemDto) {
 		return (
 			sales.items?.map(x => {
-				const tableItem: ISaleTableItem = {} as ISaleTableItem;
+				const tableItem: ISamplesTableItem = {} as ISamplesTableItem;
 
 				tableItem.code = x.id !== undefined ? x.id.toString() : '-';
 				tableItem.saleLink = x.detailLink !== undefined ? x.detailLink : '';
@@ -128,7 +114,7 @@ export class SaleRequestsComponent implements OnInit {
 		this.tableState = TableState.Loading;
 
 		if (this.filtersForm.valid) {
-			this.saleRequestsFacade.applyFilters({ ...this.filter, limit: this.pageSize });
+			this.requestSamplesFacade.applyFilters({ ...this.filter, limit: this.pageSize });
 		}
 	}
 
@@ -142,7 +128,7 @@ export class SaleRequestsComponent implements OnInit {
 		this.filter.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.saleRequestsFacade.applyFilters(this.filter);
+		this.requestSamplesFacade.applyFilters(this.filter);
 	}
 
 	protected readonly TableState = TableState;

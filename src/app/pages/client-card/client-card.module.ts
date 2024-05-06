@@ -34,7 +34,7 @@ import { PasswordModule } from '@app/shared/components/inputs/password/password.
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';
-import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
+import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-requests/client-sale-requests.component';
 import { TagModule } from '@app/shared/components/tag/tag.module';
 import { HistoryModule } from '@app/widgets/history/history.module';
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
@@ -43,6 +43,9 @@ import { TextareaModule } from '@app/shared/components/textarea/textarea.module'
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
+import {
+	ClientRequestSamplesComponent
+} from "@app/pages/client-card/client-request-samples/client-request-samples.component";
 
 @NgModule({
 	declarations: [
@@ -51,7 +54,8 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
 		ClientCardContractorsComponent,
-		SaleRequestsComponent,
+		ClientRequestSamplesComponent,
+		ClientSaleRequestsComponent,
 		ClientCardBirthdaysComponent,
 	],
 	imports: [
