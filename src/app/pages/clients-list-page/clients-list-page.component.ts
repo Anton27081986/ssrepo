@@ -5,6 +5,7 @@ import { IClientsFilter } from '@app/core/models/clients-filter';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
+import {LocalStorageService} from "@app/core/services/local-storage.service";
 
 export interface IClientTableItem {
 	code: string;
@@ -101,13 +102,20 @@ export class ClientsListPageComponent implements OnInit {
 
 	public constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
+		private readonly localStorageService: LocalStorageService,
 		private readonly cdr: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		this.clientsListFacade.applyFilters({});
+		const savedFilters = this.localStorageService.getItem<IClientsFilter>('clientsListFilter');
+
+		if (savedFilters) {
+			this.filter = savedFilters;
+		}
+
+		this.clientsListFacade.applyFilters(this.filter);
 
 		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
@@ -173,8 +181,9 @@ export class ClientsListPageComponent implements OnInit {
 	}
 
 	public getFilteredClients(filter: { [key: string]: string }) {
-		this.filter = filter as unknown as IClientsFilter;
+		this.filter = {...this.filter, ...filter as unknown as IClientsFilter} ;
 		this.filter.withoutBaseManager = !!this.filter.withoutBaseManager;
+		this.localStorageService.setItem('clientsListFilter', this.filter);
 		this.tableState = TableState.Loading;
 		this.clientsListFacade.applyFilters(filter);
 	}
