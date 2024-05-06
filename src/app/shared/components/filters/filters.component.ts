@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 export interface IFilter {
 	name: string;
-	type: 'input' | 'date';
+	type: 'input' | 'date' | 'select' | 'boolean';
 	label: string;
+	placeholder: string;
 	value?: string;
+	options?: Array<{ id: number; name: string }>;
 }
 
 @Component({

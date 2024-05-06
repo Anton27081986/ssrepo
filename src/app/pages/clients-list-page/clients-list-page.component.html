@@ -1,0 +1,92 @@
+<div class="container">
+	<div class="header m-b-25">
+		<div class="title">
+			<ss-headline size="h3">Справочник клиентов</ss-headline>
+		</div>
+		<div class="filter-button" *ngIf="!isFiltersVisible">
+			<ss-button size="small"
+					   type="outline"
+					   (click)="toggleFilters()">
+				<ss-icon height="20" width="20" name="filter" class="filter"></ss-icon>
+				<span>Фильтры</span>
+			</ss-button>
+		</div>
+
+	</div>
+	<div class="content desktop table-with-filters">
+		<div class="table">
+			<div class="table-container" *ngIf="tableState === TableState.Full">
+				<ss-table
+					[head]="[
+						{title: 'Код', fields: ['code'], link: 'clientCardLink'},
+						{title: 'Категория', fields: ['category']},
+						{title: 'Клиент', fields: ['clientName']},
+						{title: 'Контрагенты', fields: ['contractors']},
+						{title: 'Менеджеры', fields: ['managers']},
+						{title: 'Статус', fields: ['status']},
+						{title: 'Клиент без БМ', fields: ['withoutManager']}
+						]"
+					[items]="tableItems">
+				</ss-table>
+				<div class="pagination" style="justify-content: flex-end">
+					<nz-pagination
+						[nzTotal]="total"
+						[nzPageIndex]="pageIndex"
+						[nzPageSize]="pageSize"
+						(nzPageIndexChange)="nzPageIndexChange($event)"
+						(nzPageSizeChange)="pageSize = $event"
+						[nzResponsive]="true">
+					</nz-pagination>
+				</div>
+			</div>
+			<div class="table-container" *ngIf="tableState === TableState.Empty">
+				<ss-empty-placeholder>
+					<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+					<div class="placeholder-subtitle">
+						<ss-text [size]="'3'">Попробуйте изменить параметры поиска</ss-text>
+					</div>
+				</ss-empty-placeholder>
+			</div>
+			<div class="table-container" *ngIf="tableState === TableState.Loading">
+				<app-loader></app-loader>
+			</div>
+		</div>
+
+		<ss-filters *ngIf="isFiltersVisible" class="filters" [(isFiltersVisible)]="isFiltersVisible" [filters]="filters" (getFilter)="getFilteredClients($event)"></ss-filters>
+	</div>
+	<div class="content mobile m-b-20">
+		<ss-card>
+			<div class="mobile-item" *ngFor="let item of items">
+				<div class="mobile-info">
+					<ss-caption size="1">
+						<b> Код: </b>
+						<a href="{{item.clientCardLink}}"> {{item.code }} </a>
+					</ss-caption>
+					<ss-caption size="1">
+						<b>Категория: </b>
+						{{item.category}}
+					</ss-caption>
+					<ss-caption size="1">Клиент:{{item.clientName }}</ss-caption>
+					<ss-caption size="1">Менеджеры:{{item.managers }}</ss-caption>
+					<ss-caption size="1">Статус:{{item.status }}</ss-caption>
+					<ss-caption size="1">Клиент без БМ:{{item.withoutManager }}</ss-caption>
+				</div>
+				<div class="separator"></div>
+			</div>
+		</ss-card>
+		<div class="pagination" style="justify-content: center">
+			<nz-pagination
+				[nzTotal]="total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</div>
+	</div>
+
+</div>
+
+
+

@@ -16,13 +16,14 @@ import { PasswordModule } from '@app/shared/components/inputs/password/password.
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
-import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page/clients-list-page.component';
+import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page.component';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ComponentsModule } from '@app/components/components.module';
 import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
+import {FiltersModule} from "@app/shared/components/filters/filters.module";
 
 @NgModule({
 	declarations: [ClientsListPageComponent],
@@ -50,6 +51,7 @@ import { ClientsListPageRoutingModule } from './clients-list-page-routing.module
 		EmptyPlaceholderModule,
 		TextModule,
 		ComponentsModule,
+		FiltersModule,
 	],
 })
 export class ClientsListPageModule {}

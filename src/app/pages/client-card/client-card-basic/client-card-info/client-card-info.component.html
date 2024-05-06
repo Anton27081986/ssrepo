@@ -36,7 +36,7 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Статус:</ss-text>
-			<ss-select size="medium" *ngIf="isEditing; else status"(onChange)="infoForm.controls.status.setValue(($event))">
+			<ss-select size="medium" *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
 				<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
 				<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
 				<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>

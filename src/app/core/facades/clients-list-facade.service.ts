@@ -6,6 +6,7 @@ import { environment } from '@environments/environment.development';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { IResponse } from '@app/core/utils/response';
+import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -28,7 +29,28 @@ export class ClientsListFacadeService {
 	private readonly clients = new BehaviorSubject<IResponse<IClientItemDto>>({} as IResponse<any>);
 	public clients$ = this.clients.asObservable();
 
-	public constructor(private readonly clientApiService: ClientApiService) {
+	private readonly categories = new BehaviorSubject<IResponse<{ id: number; name: string }>>(
+		{} as IResponse<any>,
+	);
+
+	public categories$ = this.categories.asObservable();
+
+	private readonly contractors = new BehaviorSubject<IResponse<{ id: number; name: string }>>(
+		{} as IResponse<any>,
+	);
+
+	public contractors$ = this.contractors.asObservable();
+
+	private readonly statuses = new BehaviorSubject<IResponse<{ id: number; name: string }>>(
+		{} as IResponse<any>,
+	);
+
+	public statuses$ = this.statuses.asObservable();
+
+	public constructor(
+		private readonly clientApiService: ClientApiService,
+		private readonly dictionaryApiService: DictionaryApiService,
+	) {
 		this.filtersChanged
 			.pipe(
 				switchMap(filter => {
@@ -36,6 +58,36 @@ export class ClientsListFacadeService {
 				}),
 				tap(clients => {
 					this.clients.next(clients);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+
+		this.dictionaryApiService
+			.getCategories()
+			.pipe(
+				tap(categories => {
+					this.categories.next(categories);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+
+		this.dictionaryApiService
+			.getContractors()
+			.pipe(
+				tap(contractors => {
+					this.contractors.next(contractors);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+
+		this.dictionaryApiService
+			.getStatuses()
+			.pipe(
+				tap(statuses => {
+					this.statuses.next(statuses);
 				}),
 				untilDestroyed(this),
 			)
