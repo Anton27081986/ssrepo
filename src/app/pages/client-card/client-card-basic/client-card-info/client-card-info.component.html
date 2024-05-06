@@ -2,7 +2,7 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Общая информация</ss-headline>
 		<div class="header-controls" *ngIf="!isEditing; else closeButton">
-				<a class="header-controls-button" href="https://ssnab.it/Catalog/preds/Pred/{{(client$ | async)?.id}}" target="_blank" rel="noreferrer">
+				<a class="header-controls-button" href="{{ (client$ | async)?.linkToDetail }}" target="_blank" rel="noreferrer">
 					<ss-icon name="box" [tooltip]="'Открыть модель клиента'" [theme]="TooltipTheme.MAIN" [position]="TooltipPosition.ABOVE"></ss-icon>
 				</a>
 				<ss-tooltip-menu icon="download">
