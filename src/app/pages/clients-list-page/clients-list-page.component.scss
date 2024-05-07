@@ -1,4 +1,4 @@
-@use 'src/styles/colors.scss' as *;
+@use '../../../styles/colors' as *;
 .header {
 	display: flex;
 	justify-content: space-between;
@@ -7,9 +7,20 @@
 
 .table-with-filters {
 	display: flex;
+	height: calc(100vh - 226px);
+	position: relative;
+	gap: 16px;
 
 	.table {
 		flex-grow: 1;
+		overflow-y: hidden;
+		height: calc(100% - 56px);
+		border-radius: 16px;
+
+		.table-container {
+			height: 100%;
+			overflow-y: hidden;
+		}
 	}
 
 	.filters {
@@ -19,6 +30,8 @@
 
 	.pagination {
 		justify-content: flex-end;
+		position: absolute;
+		bottom: 0;
 	}
 
 	hr {

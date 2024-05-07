@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'ss-select',
@@ -6,6 +6,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 	styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent {
+	@Input() public label: string | undefined;
 	@Output() public onChange = new EventEmitter<any>();
 
 	public onClick(el: EventTarget | null) {

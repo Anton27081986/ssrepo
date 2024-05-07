@@ -1,11 +1,11 @@
 export interface IClientsFilter {
 	code?: number;
-	name: string;
+	name?: string;
 	categoryId?: number;
 	contractorId?: number;
 	managerId?: number;
 	status?: number;
-	withoutBaseManager: boolean;
+	withoutBaseManager?: boolean;
 	limit: number;
 	offset: number;
 }
