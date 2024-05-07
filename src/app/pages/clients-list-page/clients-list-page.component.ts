@@ -90,7 +90,7 @@ export class ClientsListPageComponent implements OnInit {
 		},
 		{
 			name: 'withoutBaseManager',
-			type: 'select',
+			type: 'boolean',
 			label: 'Клиент без БМ',
 			options: [
 				{ id: 1, name: 'Да' },

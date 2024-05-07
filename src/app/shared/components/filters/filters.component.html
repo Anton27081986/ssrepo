@@ -27,6 +27,7 @@
 				<option *ngFor="let option of filter.options" [value]="option.id">{{option.name}}</option>
 			</ss-select>
 			<ss-search-input *ngIf="filter.type === 'search'" [label]="filter.label" (select)="filtersForm.controls[filter.name].setValue(($event.id))" [searchType]="filter.searchType || 'user'" [placeholder]="filter.placeholder"></ss-search-input>
+			<ss-toggle *ngIf="filter.type === 'boolean'" [formControlName]="filter.name" [label]="filter.label" ></ss-toggle>
 		</div>
 	</form>
 	<div class="footer">

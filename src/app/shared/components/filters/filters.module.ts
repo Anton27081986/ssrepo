@@ -14,6 +14,7 @@ import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import {SelectModule} from "@app/shared/components/select/select.module";
 import {SearchInputModule} from "@app/shared/components/inputs/search-input/search-input.module";
+import {ToggleModule} from "@app/shared/components/toggle/toggle.module";
 
 @NgModule({
 	declarations: [FiltersComponent],
@@ -34,6 +35,7 @@ import {SearchInputModule} from "@app/shared/components/inputs/search-input/sear
         DatepickerInputModule,
         SelectModule,
         SearchInputModule,
+        ToggleModule,
     ],
 })
 export class FiltersModule {}

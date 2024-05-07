@@ -1,0 +1,52 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	flex-direction: column;
+	color: $lite-text;
+}
+
+.toggle-switch {
+	display: inline-block;
+
+	label {
+		display: inline-block;
+		background: $island;
+		position: relative;
+		transition: background 0.2s;
+		cursor: pointer;
+		width: 78px;
+		height: 40px;
+		border: 1px solid $island-outline;
+		border-radius: 12px;
+
+		&::before {
+			display: inline-block;
+			position: absolute;
+			content: ' ';
+			background: $island-outline;
+			vertical-align: center;
+			top: 3px;
+			left: 3px;
+			transition: left 0.2s;
+			width: 31px;
+			height: 31px;
+			line-height: 32px;
+			border-radius: 8px;
+		}
+
+		&.checked {
+			&::before {
+				left: 40px;
+				background: $main;
+			}
+		}
+
+		&.disabled {
+			background: lighten($island, 20%);
+			&::before {
+				box-shadow: none;
+			}
+		}
+	}
+}
