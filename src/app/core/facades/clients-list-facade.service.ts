@@ -20,7 +20,6 @@ export class ClientsListFacadeService {
 	public statusOptions = [
 		{ id: 1, name: 'Новый' },
 		{ id: 2, name: 'Архивный' },
-		{ id: 5, name: 'Передан в юр.отдел' },
 		{ id: 6, name: 'Действующий' },
 	];
 

@@ -24,12 +24,14 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
+	@Input() public value: string | undefined;
+	@Input() public clear: boolean = false;
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
 	@Input() public searchType: searchType = 'user';
 	@Output() public select = new EventEmitter<any>();
 
-	public value: any = '';
+	public formValue: any = '';
 	public found: IDictionaryItemDto[] = [];
 
 	public constructor(
@@ -52,7 +54,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 	 * Write form value to the DOM element (model => view)
 	 */
 	public writeValue(value: any): void {
-		this.value = value;
+		this.formValue = value;
 	}
 
 	/**

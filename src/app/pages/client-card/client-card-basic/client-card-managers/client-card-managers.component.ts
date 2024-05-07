@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { from, Observable, tap } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { UserFacadeService } from '@app/core/facades/user-facade.service';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 @UntilDestroy()
 @Component({
@@ -14,6 +17,7 @@ export class ClientCardManagersComponent implements OnInit {
 	public managers$: Observable<IManagerItemDto[] | null>;
 
 	public basicManager: IManagerItemDto | undefined;
+	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
 
@@ -22,7 +26,12 @@ export class ClientCardManagersComponent implements OnInit {
 		managersList: Array<{ manager: IManagerItemDto; status: 'add' | 'delete' | 'static' }>;
 	} = { basicManager: undefined, managersList: [] };
 
-	public constructor(public readonly clientCardListFacade: ClientsCardFacadeService) {
+	public constructor(
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+		private readonly notificationService: NzMessageService,
+		private readonly userFacadeService: UserFacadeService,
+		private readonly cd: ChangeDetectorRef,
+	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 	}
 
@@ -39,6 +48,13 @@ export class ClientCardManagersComponent implements OnInit {
 				return { manager, status: 'static' };
 			});
 		});
+
+		this.userFacadeService
+			.getUserProfile()
+			.pipe(untilDestroyed(this))
+			.subscribe(user => {
+				this.currentUser = user;
+			});
 	}
 
 	public onEditing(status: boolean) {
@@ -47,11 +63,20 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public onBasicManagerChange(managerId: number) {
 		this.changedData.basicManager = managerId;
+
+		this.clientCardListFacade.managers$.pipe(untilDestroyed(this)).subscribe(managers => {
+			this.basicManager = managers.find(manager => manager.id === Number(managerId));
+		});
 	}
 
 	public onSaveChanges() {
 		if (this.changedData.basicManager) {
 			this.clientCardListFacade.setBasicManager(this.changedData.basicManager);
+
+			setTimeout(() => {
+				this.clientCardListFacade.getManagers();
+				this.cd.detectChanges();
+			}, 200);
 		}
 
 		from(this.changedData.managersList.filter(manager => manager.status !== 'static'))
@@ -66,6 +91,9 @@ export class ClientCardManagersComponent implements OnInit {
 				untilDestroyed(this),
 			)
 			.subscribe();
+
+		this.notificationService.success('Сохранено');
+		this.isEditing = false;
 	}
 
 	public callLocalUser(id: number | undefined) {

@@ -79,5 +79,6 @@ export interface IClientDto {
 	 */
 	managers?: IManagerItemDto[] | null;
 	changePriceListLevelLink?: string | null;
+	linkToDetail?: string | null;
 }
 export namespace IClientDto {}
