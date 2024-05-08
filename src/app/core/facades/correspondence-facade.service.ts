@@ -75,7 +75,7 @@ export class CorrespondenceFacadeService {
 		}
 	}
 
-	public loadSubjects(Query?: string) {
+	public loadSubjects(selectedSubject?: string, Query?: string) {
 		if (this.objectIdSubject.value) {
 			this.notificationsApiService
 				.getSubjects(this.objectIdSubject.value, Query)
@@ -86,9 +86,13 @@ export class CorrespondenceFacadeService {
 					untilDestroyed(this),
 				)
 				.subscribe(() => {
-					this.messagesSubject.next({ items: [], total: 0 });
-					this.loadMessages();
-					this.loadFiles();
+					if (!selectedSubject) {
+						this.messagesSubject.next({ items: [], total: 0 });
+						this.loadMessages();
+						this.loadFiles();
+					} else {
+						this.selectSubject(selectedSubject);
+					}
 				});
 		}
 	}
@@ -143,6 +147,7 @@ export class CorrespondenceFacadeService {
 		this.selectedSubjectSubject.next(subject);
 		this.messagesSubject.next({ items: [], total: 0 });
 		this.loadMessages();
+		this.loadFiles();
 	}
 
 	public setMessageVisibility(id: string, isPrivate: boolean) {
@@ -215,17 +220,7 @@ export class CorrespondenceFacadeService {
 					this.messageFilesSubject.next(null);
 					this.messagesSubject.next({ items: [], total: 0 });
 
-					if (this.selectedSubjectSubject.value !== subject) {
-						this.subjectsSubject.next(
-							this.subjectsSubject.value
-								? [...this.subjectsSubject.value, { subject, messageCount: 1 }]
-								: [{ subject, messageCount: 1 }],
-						);
-						this.selectSubject(subject);
-					} else {
-						this.loadMessages();
-						this.loadFiles();
-					}
+					this.loadSubjects(subject);
 				});
 		}
 	}
