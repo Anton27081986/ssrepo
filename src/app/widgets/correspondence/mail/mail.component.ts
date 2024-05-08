@@ -274,7 +274,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	private resetForm() {
 		this.mailForm.reset({
-			subject: '',
+			subject: this.mailForm.controls.subject.value,
 			text: '',
 			isPrivate: true,
 		});
