@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { SaleRequestsFacadeService } from '@app/core/facades/sale-requests-facade.service';
 import { ISaleRequestsFilter } from '@app/core/models/sale-requests-filter';
@@ -27,7 +26,6 @@ export class ClientSaleRequestsComponent implements OnInit {
 	// state
 	public isFiltersVisible: boolean = true;
 	public tableState: TableState = TableState.Loading;
-	public filtersForm!: FormGroup;
 	public filter: ISaleRequestsFilter = {
 		offset: 0,
 		limit: this.pageSize,
@@ -38,27 +36,23 @@ export class ClientSaleRequestsComponent implements OnInit {
 			name: 'ContractorId',
 			type: 'input',
 			label: 'Контрагент',
+			placeholder: '',
 		},
 		{
 			name: 'FromShipDate',
 			type: 'date',
 			label: 'Дата отгрузки',
+			placeholder: '',
 		},
 	];
 
 	public constructor(
 		public readonly saleRequestsFacade: SaleRequestsFacadeService,
-		private readonly formBuilder: FormBuilder,
 		private readonly cdr: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
-		this.filtersForm = this.formBuilder.group({
-			contractorId: [],
-			fromShipDate: [],
-			toShipDate: [],
-		});
 
 		this.saleRequestsFacade.applyFilters(this.filter);
 
@@ -113,10 +107,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 	public getFilteredSales(filter: { [key: string]: string }) {
 		this.filter = filter as unknown as ISaleRequestsFilter;
 		this.tableState = TableState.Loading;
-
-		if (this.filtersForm.valid) {
-			this.saleRequestsFacade.applyFilters({ ...this.filter, limit: this.pageSize });
-		}
+		this.saleRequestsFacade.applyFilters({ ...this.filter, limit: this.pageSize });
 	}
 
 	public nzPageIndexChange($event: number) {

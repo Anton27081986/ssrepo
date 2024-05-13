@@ -1,3 +1,4 @@
+<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
 <select (change)="onClick($event.currentTarget)">
 	<ng-content></ng-content>
 </select>

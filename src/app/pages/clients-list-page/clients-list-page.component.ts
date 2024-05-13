@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
+import { IFilter } from '@app/shared/components/filters/filters.component';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
 
 export interface IClientTableItem {
 	code: string;
@@ -35,34 +36,86 @@ export class ClientsListPageComponent implements OnInit {
 	public total: number | undefined;
 	public pageSize = 20;
 	public pageIndex = 1;
-	public offset = 0;
 	public tableItems: ITableItem[] = [];
 	public items: IClientTableItem[] = [];
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible: boolean = true;
 	public tableState: TableState = TableState.Loading;
-	public filtersForm!: FormGroup;
+	public filter: IClientsFilter = {
+		offset: 0,
+		limit: this.pageSize,
+	};
+
+	public filters: IFilter[] = [
+		{
+			name: 'code',
+			type: 'input',
+			label: 'Код',
+			placeholder: 'Введите код',
+		},
+		{
+			name: 'categoryId',
+			type: 'select',
+			label: 'Категория',
+			options: [],
+			placeholder: 'Выберите категорию',
+		},
+		{
+			name: 'name',
+			type: 'input',
+			label: 'Клиент',
+			placeholder: 'Введите название клиента',
+		},
+		{
+			name: 'contractorId',
+			type: 'search',
+			searchType: 'contractor',
+			label: 'Контрагенты',
+			placeholder: 'Введите наименование контрагента',
+		},
+		{
+			name: 'managerId',
+			type: 'search',
+			searchType: 'user',
+			label: 'Менеджеры',
+			placeholder: 'Введите ФИО',
+		},
+		{
+			name: 'status',
+			type: 'select',
+			label: 'Статус',
+			options: [],
+			placeholder: 'Выберите статус',
+		},
+		{
+			name: 'withoutBaseManager',
+			type: 'boolean',
+			label: 'Клиент без БМ',
+			options: [
+				{ id: 1, name: 'Да' },
+				{ id: 0, name: 'Нет' },
+			],
+			placeholder: '',
+		},
+	];
 
 	public constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
-		private readonly formBuilder: FormBuilder,
+		private readonly localStorageService: LocalStorageService,
 		private readonly cdr: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
-		this.filtersForm = this.formBuilder.group({
-			code: [],
-			category: [],
-			client: [],
-			manager: [],
-			contractor: [],
-			status: [6],
-			withoutBaseManager: [false],
-		});
 
-		this.clientsListFacade.applyFilters(this.getFilter());
+		const savedFilters = this.localStorageService.getItem<IClientsFilter>('clientsListFilter');
+
+		if (savedFilters) {
+			this.filter = savedFilters;
+		}
+
+		this.clientsListFacade.applyFilters(this.filter);
 
 		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
@@ -75,6 +128,30 @@ export class ClientsListPageComponent implements OnInit {
 			}
 
 			this.cdr.detectChanges();
+		});
+
+		this.clientsListFacade.categories$.pipe(untilDestroyed(this)).subscribe(response => {
+			const categoriesFilter = this.filters.find(filter => filter.name === 'categoryId');
+
+			if (categoriesFilter) {
+				categoriesFilter.options = response.items;
+			}
+		});
+
+		this.clientsListFacade.contractors$.pipe(untilDestroyed(this)).subscribe(response => {
+			const contractorsFilter = this.filters.find(filter => filter.name === 'contractorId');
+
+			if (contractorsFilter) {
+				contractorsFilter.options = response.items;
+			}
+		});
+
+		this.clientsListFacade.statuses$.pipe(untilDestroyed(this)).subscribe(statuses => {
+			const contractorsFilter = this.filters.find(filter => filter.name === 'status');
+
+			if (contractorsFilter) {
+				contractorsFilter.options = statuses.items;
+			}
 		});
 	}
 
@@ -103,53 +180,25 @@ export class ClientsListPageComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredClients() {
+	public getFilteredClients(filter: { [key: string]: string }) {
+		this.filter = { ...this.filter, ...(filter as unknown as IClientsFilter) };
+		this.filter.withoutBaseManager = !!this.filter.withoutBaseManager;
+		this.localStorageService.setItem('clientsListFilter', this.filter);
 		this.tableState = TableState.Loading;
-
-		if (this.filtersForm.valid) {
-			const filter = this.getFilter();
-
-			this.clientsListFacade.applyFilters(filter);
-		}
-	}
-
-	private getFilter(): IClientsFilter {
-		return {
-			code: this.filtersForm.get('code')?.value,
-			name: this.filtersForm.get('client')?.value,
-			categoryId: this.filtersForm.get('category')?.value,
-			contractorId: this.filtersForm.get('contractor')?.value,
-			managerId: this.filtersForm.get('manager')?.value,
-			status: this.filtersForm.get('status')?.value,
-			withoutBaseManager: this.filtersForm.get('withoutBaseManager')?.value,
-			offset: this.offset,
-			limit: this.pageSize,
-		};
+		this.clientsListFacade.applyFilters(filter);
 	}
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.offset = 0;
+			this.filter.offset = 0;
 		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
+			this.filter.offset = this.pageSize * $event - this.pageSize;
 		}
 
-		this.offset = this.pageSize * $event - this.pageSize;
+		this.filter.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.clientsListFacade.applyFilters(this.getFilter());
-	}
-
-	public clearFilter() {
-		this.filtersForm.reset({
-			code: [],
-			category: [],
-			client: [],
-			manager: [],
-			contractor: [],
-			status: [6],
-			withoutBaseManager: [false],
-		});
+		this.clientsListFacade.applyFilters(this.filter);
 	}
 
 	protected readonly TableState = TableState;
