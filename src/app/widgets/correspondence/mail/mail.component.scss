@@ -253,3 +253,14 @@
 	}
 }
 
+:host-context(.dark) {
+	.editor-controls {
+		background-color: $dark-island;
+	}
+
+	::ng-deep {
+		.ck-toolbar, .ck-content {
+			background-color: $dark-island!important;
+		}
+	}
+}
