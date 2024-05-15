@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { ISamplesTableItem } from '@app/pages/client-card/client-request-samples/samples-table-item';
 import { TableState } from '@app/shared/components/table/table-state';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IRequestSamplesFilter } from '@app/core/models/request-samples-filter';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-import {RequestSamplesFacadeService} from "@app/core/facades/request-samples-facade.service";
-import {ISampleItemDto} from "@app/core/models/company/sample-item-dto";
+import { RequestSamplesFacadeService } from '@app/core/facades/request-samples-facade.service';
+import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
 
 @UntilDestroy()
 @Component({
@@ -34,14 +34,17 @@ export class ClientRequestSamplesComponent implements OnInit {
 
 	public filters: IFilter[] = [
 		{
-			name: 'ContractorId',
-			type: 'input',
-			label: 'Контрагент',
+			name: 'managerId',
+			type: 'search',
+			searchType: 'user',
+			label: 'Менеджер',
+			placeholder: 'Введите ФИО',
 		},
 		{
-			name: 'FromShipDate',
-			type: 'date',
-			label: 'Дата отгрузки',
+			name: 'TovId',
+			type: 'input',
+			label: 'Товарная позиция (ТП)',
+			placeholder: 'Введите ТП',
 		},
 	];
 
@@ -80,25 +83,23 @@ export class ClientRequestSamplesComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: ISamplesTableItem = {} as ISamplesTableItem;
 
-				tableItem.code = x.id !== undefined ? x.id.toString() : '-';
-				tableItem.saleLink = x.detailLink !== undefined ? x.detailLink : '';
-				tableItem.contractorId = x.contractor?.id.toString(10) ?? '-';
-				tableItem.shipDate = x.shipDate
-					? new Date(Date.parse(x.shipDate)).toLocaleString('ru-RU', {
+				tableItem.code = x.id.toString() ?? '-';
+				tableItem.detailLink = x.detailLink ?? '';
+				tableItem.status = x.status.name ?? '-';
+				tableItem.orderDate = x.orderDate
+					? new Date(Date.parse(x.orderDate)).toLocaleString('ru-RU', {
 							year: 'numeric',
 							month: 'numeric',
 							day: 'numeric',
 						})
 					: '-';
-				tableItem.paymentDate = x.paymentDate
-					? new Date(Date.parse(x.paymentDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
-					: '-';
-
-				tableItem.status = x.status !== undefined ? x.status.name : '-';
+				tableItem.managerName = x.manager.name ?? '-';
+				tableItem.tovName = x.tov.name ?? '-';
+				tableItem.planQuantity = x.planQuantity.toString() ?? '-';
+				tableItem.factQuantity = x.factQuantity.toString() ?? '-';
+				tableItem.planWeight = x.planWeight.toString() ?? '-';
+				tableItem.factWeight = x.factWeight.toString() ?? '-';
+				tableItem.comment = x.comment ?? '-';
 
 				return tableItem;
 			}) || []
@@ -110,7 +111,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 	}
 
 	public getFilteredSales(filter: { [key: string]: string }) {
-		this.filter = filter as unknown as ISaleRequestsFilter;
+		this.filter = filter as unknown as IRequestSamplesFilter;
 		this.tableState = TableState.Loading;
 
 		if (this.filtersForm.valid) {

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
-import { ISaleRequestsFilter } from '@app/core/models/sale-requests-filter';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IRequestSamplesFilter } from '@app/core/models/request-samples-filter';
 import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
@@ -31,7 +30,7 @@ export class RequestSamplesFacadeService {
 			.subscribe();
 	}
 
-	public applyFilters(filters: ISaleRequestsFilter) {
+	public applyFilters(filters: IRequestSamplesFilter) {
 		this.filtersChanged.next(filters);
 	}
 }
