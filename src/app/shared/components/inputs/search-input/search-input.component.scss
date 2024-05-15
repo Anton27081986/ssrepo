@@ -23,7 +23,11 @@ input {
 		right: 8px;
 		top: 16px;
 		cursor: pointer;
-		color: $main;
+
+		::ng-deep path {
+			stroke: $main !important;
+			fill-opacity: 0;
+		}
 	}
 
 	.search-result {
@@ -101,4 +105,26 @@ ss-caption {
 
 ss-caption.error {
 	color: $error;
+}
+
+:host-context(.dark) {
+	input {
+		background-color: $dark-island;
+	}
+	.search-result {
+		background-color: $dark-island!important;
+		color: $dark-text!important;
+	}
+
+	.ss-caption {
+		background-color: $dark-island!important;
+		color: $dark-text!important;
+	}
+
+	::ng-deep {
+		.search-result {
+			background-color: $dark-island!important;
+			color: $dark-text!important;
+		}
+	}
 }

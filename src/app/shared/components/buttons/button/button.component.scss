@@ -83,3 +83,16 @@ button:disabled {
 	opacity: 50%;
 	cursor: not-allowed;
 }
+
+:host-context(.dark) button {
+	background-color: $dark-island;
+	border: 0;
+
+	::ng-deep svg {
+		stroke: $dark-text;
+
+		rect {
+			fill: $dark-text;
+		}
+	}
+}
