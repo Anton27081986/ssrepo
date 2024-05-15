@@ -10,6 +10,8 @@ export interface ILostProductsItemDto {
 		shipDate: string;
 		quantity: string;
 		valueEff: string;
+		requestName?: string;
+		requestLink?: string;
 	}> | null;
 	total?: number;
 	linkToModule?: string | null;

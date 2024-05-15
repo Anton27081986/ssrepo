@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ILostProductsFilter } from '@app/core/models/lost-products-filter';
 import { ILostProductsItemDto } from '@app/core/models/company/lost-products-item-dto';
 import { LostProductsApiService } from '@app/core/api/lost-products-api.service';
 
+@UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
