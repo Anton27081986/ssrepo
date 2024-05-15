@@ -25,8 +25,8 @@
 				<ss-text size="3">{{ basicManager?.department }}</ss-text>
 				<ss-text size="3" weight="semi-bold" (click)="callLocalUser(basicManager?.id)" class="local-call">
 					<ss-icon name="phone"></ss-icon>{{ basicManager?.phoneLocal || 'Нет' }}
+					<ss-caption size="2" class="appointed" *ngIf="basicManager?.introducedAtSM">Назначен {{ basicManager?.introducedAtSM | date: 'dd.MM.yyyy'}}</ss-caption>
 				</ss-text>
-				<ss-caption size="2" class="appointed" *ngIf="basicManager?.introducedAtSM">Назначен {{ basicManager?.introducedAtSM | date: 'dd.MM.yyyy'}}</ss-caption>
 			</div>
 		</div>
 		<ss-caption class="manager-date" size="2"> </ss-caption>
