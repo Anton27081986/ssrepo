@@ -12,7 +12,7 @@
 						</a>
 					</ss-caption>
 				</ss-tooltip-menu>
-				<ng-container *ngIf="this.currentUser?.isAdmin">
+				<ng-container *ngIf="!this.currentUser?.isAdmin">
 					<ss-icon name="edit" (click)="onEditing(true)"></ss-icon>
 				</ng-container>
 		</div>
@@ -60,9 +60,9 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
-			<ss-search-input formControlName="category" searchType="subsector" *ngIf="isEditing; else subsector"
+			<ss-search-input formControlName="saleDirection" searchType="subsector" *ngIf="isEditing; else subsector"
 							 (select)="selectCategory($event)"
-							 [error]="infoForm.controls.category.hasError('required') && infoForm.controls.category.touched ? 'Обязательное поле' : undefined"
+							 [error]="infoForm.controls.saleDirection.hasError('required') ? 'Обязательное поле' : undefined"
 							 value="{{ (client$ | async)?.saleDirection }}"
 			></ss-search-input>
 			<ng-template #subsector>

@@ -75,6 +75,8 @@ export class ClientCardManagersComponent implements OnInit {
 
 			setTimeout(() => {
 				this.clientCardListFacade.getManagers();
+				this.clientCardListFacade.refreshClientCard();
+
 				this.cd.detectChanges();
 			}, 200);
 		}
