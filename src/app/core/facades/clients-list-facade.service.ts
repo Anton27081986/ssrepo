@@ -13,9 +13,6 @@ import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 	providedIn: 'root',
 })
 export class ClientsListFacadeService {
-	public categoriesUrl = `${environment.apiUrl}/api/company/dictionary/categories`;
-	public contractorUrl = `${environment.apiUrl}/api/company/dictionary/contractors`;
-	public managerUrl = `${environment.apiUrl}/api/auth/users/search`;
 
 	public statusOptions = [
 		{ id: 1, name: 'Новый' },
