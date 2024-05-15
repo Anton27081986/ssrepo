@@ -37,11 +37,13 @@ export class ClientCardInfoComponent implements OnInit {
 		name: FormControl<string | null>;
 		status: FormControl<IClientStatus | null>;
 		category: FormControl<string | null>;
+		saleDirection: FormControl<string | null>;
 		region: FormControl<string | null>;
 		comment: FormControl<string | null>;
 	}>;
 
 	protected newCategoryId: number | undefined;
+	protected newsaleDirectionId: number | undefined;
 	protected newRegionId: number | undefined;
 
 	public constructor(
@@ -53,7 +55,8 @@ export class ClientCardInfoComponent implements OnInit {
 		this.infoForm = new FormGroup({
 			name: new FormControl<string>('', Validators.required),
 			status: new FormControl(),
-			category: new FormControl<string>('', Validators.required),
+			category: new FormControl(),
+			saleDirection: new FormControl<string>('', Validators.required),
 			region: new FormControl<string>('', Validators.required),
 			comment: new FormControl(),
 		});
@@ -65,6 +68,7 @@ export class ClientCardInfoComponent implements OnInit {
 			this.infoForm.controls.status.setValue(client?.status || null);
 			this.infoForm.controls.category.setValue(client?.category?.name || null);
 			this.infoForm.controls.region.setValue(client?.region?.name || null);
+			this.infoForm.controls.saleDirection.setValue(client?.saleDirection || null);
 			this.newCategoryId = client?.category?.id;
 			this.newRegionId = client?.region?.id;
 		});
@@ -83,6 +87,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public selectCategory(category: { id: number; name: string }) {
 		this.newCategoryId = category.id;
+		this.newsaleDirectionId = category.id;
 	}
 
 	public selectRegion(region: { id: number; name: string }) {
@@ -99,6 +104,7 @@ export class ClientCardInfoComponent implements OnInit {
 			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
 			categoryId: this.newCategoryId,
 			regionId: this.newRegionId,
+			saleDirectionId: this.newsaleDirectionId,
 			comment: this.infoForm.controls.comment.value,
 		});
 
