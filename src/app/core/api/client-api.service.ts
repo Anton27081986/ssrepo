@@ -18,47 +18,10 @@ export class ClientApiService {
 	public constructor(private readonly http: HttpClient) {}
 
 	public getClients(filter: IClientsFilter) {
-		let params = new HttpParams();
 
-		if (filter.code !== null && filter.code !== undefined) {
-			params = params.set('code', filter.code);
-		}
-
-		if (filter.name !== null && filter.name !== undefined) {
-			params = params.set('name', filter.name);
-		}
-
-		if (filter.categoryId !== null && filter.categoryId !== undefined) {
-			params = params.set('categoryId', filter.categoryId);
-		}
-
-		if (filter.contractorId !== null && filter.contractorId !== undefined) {
-			params = params.set('contractorId', filter.contractorId);
-		}
-
-		if (filter.managerId !== null && filter.managerId !== undefined) {
-			params = params.set('managerId', filter.managerId);
-		}
-
-		if (filter.status !== null && filter.status !== undefined) {
-			params = params.set('status', filter.status);
-		}
-
-		if (filter.withoutBaseManager) {
-			params = params.set('withoutBaseManager', filter.withoutBaseManager);
-		}
-
-		if (filter.limit !== null && filter.limit !== undefined) {
-			params = params.set('limit', filter.limit);
-		}
-
-		if (filter.offset !== null && filter.offset !== undefined) {
-			params = params.set('offset', filter.offset);
-		}
-
-		return this.http.get<IResponse<IClientItemDto>>(
+		return this.http.post<IResponse<IClientItemDto>>(
 			`${environment.apiUrl}/api/company/clients`,
-			{ params },
+			{},
 		);
 	}
 
