@@ -18,10 +18,12 @@ export class ClientApiService {
 	public constructor(private readonly http: HttpClient) {}
 
 	public getClients(filter: IClientsFilter) {
-
 		return this.http.post<IResponse<IClientItemDto>>(
 			`${environment.apiUrl}/api/company/clients`,
-			{},
+			{
+				limit: filter.limit,
+				offset: filter.offset,
+			},
 		);
 	}
 
