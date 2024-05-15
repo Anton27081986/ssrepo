@@ -54,7 +54,7 @@ const routes: Routes = [
 					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
 			},
 			{
-				path: 'samples',
+				path: 'client-request-samples',
 				loadChildren: () =>
 					import('@app/pages/samples-page/samples-page.module').then(
 						m => m.SamplesPageModule,

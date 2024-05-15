@@ -5,30 +5,17 @@ import { SaleRequestsFacadeService } from '@app/core/facades/sale-requests-facad
 import { ISaleRequestsFilter } from '@app/core/models/sale-requests-filter';
 import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-
-export interface ISaleTableItem {
-	code: string;
-	saleLink: string;
-	contractorId: string;
-	shipDate: string;
-	paymentDate: string;
-	status: string;
-}
-
-export enum TableState {
-	Loading,
-	Empty,
-	Full,
-}
+import { ISaleTableItem } from '@app/pages/client-card/client-sale-requests/sale-table-item';
+import { TableState } from '@app/shared/components/table/table-state';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-sale-requests',
-	templateUrl: './sale-requests.component.html',
-	styleUrls: ['./sale-requests.component.scss'],
+	templateUrl: './client-sale-requests.component.html',
+	styleUrls: ['./client-sale-requests.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SaleRequestsComponent implements OnInit {
+export class ClientSaleRequestsComponent implements OnInit {
 	// table
 	public total: number | undefined;
 	public pageSize = 6;
