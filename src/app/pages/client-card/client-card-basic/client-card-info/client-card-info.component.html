@@ -42,13 +42,21 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Статус:</ss-text>
-			<ss-select size="medium" *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
-				<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
-				<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
-				<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>
-			</ss-select>
-			<ng-template #status>
-				<ss-text size="3" class="info-list-item-value">{{ clientStatuses[(client$ | async)!.status || 1] }}</ss-text>
+
+			<ng-container *ngIf="(client$ | async)!.status === null; else select">
+				<ss-text size="3" class="info-list-item-value">—</ss-text>
+			</ng-container>
+
+			<ng-template #select>
+				<ss-select size="medium" *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
+					<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
+					<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
+					<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>
+				</ss-select>
+
+				<ng-template #status>
+					<ss-text size="3" class="info-list-item-value">{{ clientStatuses[(client$ | async)!.status || 1] }}</ss-text>
+				</ng-template>
 			</ng-template>
 		</div>
 		<div class="info-list-item">
@@ -61,7 +69,7 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
-			<ss-search-input formControlName="saleDirection" searchType="subsector" *ngIf="isEditing; else subsector"
+			<ss-search-input formControlName="saleDirection" [disabled]="true" searchType="subsector" *ngIf="isEditing; else subsector"
 							 (select)="selectCategory($event)"
 							 [error]="infoForm.controls.saleDirection.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
 							 value="{{ (client$ | async)?.saleDirection }}"

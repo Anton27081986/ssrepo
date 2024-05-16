@@ -56,7 +56,7 @@ export class ClientCardInfoComponent implements OnInit {
 			name: new FormControl<string>('', Validators.required),
 			status: new FormControl(),
 			category: new FormControl(),
-			saleDirection: new FormControl<string>('', Validators.required),
+			saleDirection: new FormControl(),
 			region: new FormControl<string>('', Validators.required),
 			comment: new FormControl(),
 		});
@@ -68,7 +68,7 @@ export class ClientCardInfoComponent implements OnInit {
 			this.infoForm.controls.status.setValue(client?.status || null);
 			this.infoForm.controls.category.setValue(client?.category?.name || null);
 			this.infoForm.controls.region.setValue(client?.region?.name || null);
-			this.infoForm.controls.saleDirection.setValue(client?.saleDirection || null);
+			this.infoForm.controls.saleDirection.setValue(client?.mainSector || null);
 			this.newCategoryId = client?.category?.id;
 			this.newRegionId = client?.region?.id;
 		});
@@ -87,7 +87,6 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public selectCategory(category: { id: number; name: string }) {
 		this.newCategoryId = category.id;
-		this.newsaleDirectionId = category.id;
 	}
 
 	public selectRegion(region: { id: number; name: string }) {
@@ -104,7 +103,6 @@ export class ClientCardInfoComponent implements OnInit {
 			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
 			categoryId: this.newCategoryId,
 			regionId: this.newRegionId,
-			saleDirectionId: this.newsaleDirectionId,
 			comment: this.infoForm.controls.comment.value,
 		});
 
