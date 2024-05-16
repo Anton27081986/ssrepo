@@ -111,4 +111,10 @@ export class ClientCardInfoComponent implements OnInit {
 		this.notificationService.success('Сохранено');
 		this.isEditing = false;
 	}
+
+	public validators($event: any) {
+		if ($event.target.selectionStart === 0 && $event.code === 'Space') {
+			$event.preventDefault();
+		}
+	}
 }
