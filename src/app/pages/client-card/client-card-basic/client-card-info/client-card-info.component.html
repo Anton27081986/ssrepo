@@ -30,6 +30,7 @@
 			<ss-input size="medium" formControlName="name"
 					  *ngIf="isEditing; else name"
 					  [error]="infoForm.controls.name.hasError('required') && infoForm.controls.name.touched ? 'Обязательное поле' : undefined"
+					  (keydown)="validators($event)"
 			></ss-input>
 			<ng-template #name>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.name }}</ss-text>
@@ -62,8 +63,9 @@
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
 			<ss-search-input formControlName="saleDirection" searchType="subsector" *ngIf="isEditing; else subsector"
 							 (select)="selectCategory($event)"
-							 [error]="infoForm.controls.saleDirection.hasError('required') ? 'Обязательное поле' : undefined"
+							 [error]="infoForm.controls.saleDirection.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
 							 value="{{ (client$ | async)?.saleDirection }}"
+							 (keydown)="validators($event)"
 			></ss-search-input>
 			<ng-template #subsector>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
@@ -75,6 +77,7 @@
 							 (select)="selectRegion($event)"
 							 [error]="infoForm.controls.region.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
 							 value="{{ (client$ | async)?.region?.name }}"
+							 (keydown)="validators($event)"
 			></ss-search-input>
 			<ng-template #region>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region?.name || '—' }}</ss-text>
