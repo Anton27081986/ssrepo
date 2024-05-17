@@ -28,6 +28,7 @@ export interface IClientEditRequest {
 	 * Айди региона
 	 */
 	regionId?: number;
+	saleDirectionId?: number;
 	/**
 	 * Комментарий
 	 */

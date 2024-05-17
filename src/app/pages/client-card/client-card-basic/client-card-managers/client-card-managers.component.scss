@@ -69,7 +69,6 @@
 			&-content {
 				display: flex;
 				flex-direction: column;
-				position: relative;
 
 				::ng-deep ss-text {
 					p {
@@ -81,11 +80,13 @@
 
 				.appointed {
 					position: absolute;
-					bottom: -3px;
-					right: -71px;
+					bottom: 0;
+					right: 0;
 				}
 
 				.local-call {
+					position: relative;
+					width: 318px;
 					cursor: pointer;
 				}
 			}

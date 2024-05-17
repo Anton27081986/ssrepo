@@ -61,7 +61,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 	 * Write form disabled state to the DOM element (model => view)
 	 */
 	public setDisabledState(isDisabled: boolean): void {
-		this.disabled = isDisabled;
+		// this.disabled = isDisabled;
 	}
 
 	/**

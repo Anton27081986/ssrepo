@@ -28,3 +28,7 @@ select {
 ss-caption {
 	color: $lite-text;
 }
+
+:host-context(.dark) select {
+	background-color: $dark-island;
+}

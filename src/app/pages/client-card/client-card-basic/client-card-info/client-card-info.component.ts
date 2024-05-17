@@ -4,7 +4,7 @@ import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { IClientStatus } from '@app/core/models/company/client-status';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUserProfile } from '@app/core/models/user-profile';
@@ -37,11 +37,13 @@ export class ClientCardInfoComponent implements OnInit {
 		name: FormControl<string | null>;
 		status: FormControl<IClientStatus | null>;
 		category: FormControl<string | null>;
+		saleDirection: FormControl<string | null>;
 		region: FormControl<string | null>;
 		comment: FormControl<string | null>;
 	}>;
 
 	protected newCategoryId: number | undefined;
+	protected newsaleDirectionId: number | undefined;
 	protected newRegionId: number | undefined;
 
 	public constructor(
@@ -51,10 +53,11 @@ export class ClientCardInfoComponent implements OnInit {
 	) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.infoForm = new FormGroup({
-			name: new FormControl(),
+			name: new FormControl<string>('', Validators.required),
 			status: new FormControl(),
 			category: new FormControl(),
-			region: new FormControl(),
+			saleDirection: new FormControl(),
+			region: new FormControl<string>('', Validators.required),
 			comment: new FormControl(),
 		});
 	}
@@ -65,6 +68,7 @@ export class ClientCardInfoComponent implements OnInit {
 			this.infoForm.controls.status.setValue(client?.status || null);
 			this.infoForm.controls.category.setValue(client?.category?.name || null);
 			this.infoForm.controls.region.setValue(client?.region?.name || null);
+			this.infoForm.controls.saleDirection.setValue(client?.mainSector || null);
 			this.newCategoryId = client?.category?.id;
 			this.newRegionId = client?.region?.id;
 		});
@@ -90,6 +94,10 @@ export class ClientCardInfoComponent implements OnInit {
 	}
 
 	public saveChanges() {
+		if (this.infoForm.invalid) {
+			return this.infoForm.markAllAsTouched();
+		}
+
 		this.clientCardListFacade.saveInfo({
 			name: this.infoForm.controls.name.value,
 			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
@@ -100,5 +108,11 @@ export class ClientCardInfoComponent implements OnInit {
 
 		this.notificationService.success('Сохранено');
 		this.isEditing = false;
+	}
+
+	public validators($event: any) {
+		if ($event.target.selectionStart === 0 && $event.code === 'Space') {
+			$event.preventDefault();
+		}
 	}
 }

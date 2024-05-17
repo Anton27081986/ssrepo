@@ -12,7 +12,7 @@
 						</a>
 					</ss-caption>
 				</ss-tooltip-menu>
-				<ng-container *ngIf="this.currentUser?.isAdmin">
+				<ng-container *ngIf="!this.currentUser?.isAdmin">
 					<ss-icon name="edit" (click)="onEditing(true)"></ss-icon>
 				</ng-container>
 		</div>
@@ -27,7 +27,11 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Название:</ss-text>
-			<ss-input size="medium" formControlName="name" *ngIf="isEditing; else name"></ss-input>
+			<ss-input size="medium" formControlName="name"
+					  *ngIf="isEditing; else name"
+					  [error]="infoForm.controls.name.hasError('required') && infoForm.controls.name.touched ? 'Обязательное поле' : undefined"
+					  (keydown)="validators($event)"
+			></ss-input>
 			<ng-template #name>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.name }}</ss-text>
 			</ng-template>
@@ -38,13 +42,21 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Статус:</ss-text>
-			<ss-select size="medium" *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
-				<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
-				<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
-				<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>
-			</ss-select>
-			<ng-template #status>
-				<ss-text size="3" class="info-list-item-value">{{ clientStatuses[(client$ | async)!.status || 1] }}</ss-text>
+
+			<ng-container *ngIf="(client$ | async)!.status === null; else select">
+				<ss-text size="3" class="info-list-item-value">—</ss-text>
+			</ng-container>
+
+			<ng-template #select>
+				<ss-select size="medium" *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
+					<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
+					<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
+					<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>
+				</ss-select>
+
+				<ng-template #status>
+					<ss-text size="3" class="info-list-item-value">{{ clientStatuses[(client$ | async)!.status || 1] }}</ss-text>
+				</ng-template>
 			</ng-template>
 		</div>
 		<div class="info-list-item">
@@ -57,29 +69,37 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
-			<ss-search-input searchType="subsector" *ngIf="isEditing; else subsector" (select)="selectCategory($event)"
-							 value="{{ (client$ | async)?.saleDirection }}"></ss-search-input>
+			<ss-search-input formControlName="saleDirection" [disabled]="true" searchType="subsector" *ngIf="isEditing; else subsector"
+							 (select)="selectCategory($event)"
+							 [error]="infoForm.controls.saleDirection.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
+							 value="{{ (client$ | async)?.saleDirection }}"
+							 (keydown)="validators($event)"
+			></ss-search-input>
 			<ng-template #subsector>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
 			</ng-template>
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Регион:</ss-text>
-			<ss-search-input searchType="region" *ngIf="isEditing; else region" (select)="selectRegion($event)"
-							 value="{{ (client$ | async)?.region?.name }}"></ss-search-input>
+			<ss-search-input formControlName="region" searchType="region" *ngIf="isEditing; else region"
+							 (select)="selectRegion($event)"
+							 [error]="infoForm.controls.region.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
+							 value="{{ (client$ | async)?.region?.name }}"
+							 (keydown)="validators($event)"
+			></ss-search-input>
 			<ng-template #region>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region?.name || '—' }}</ss-text>
 			</ng-template>
 		</div>
 		<ng-container *ngIf="isEditing">
-			<div class="info-list-item price-list" *ngIf="(client$ | async)?.exclusive">
+			<div class="info-list-item price-list" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
 				<a href="{{ (client$ | async)?.changePriceListLevelLink }}" target="_blank">
 					<ss-icon name="editNew" class="" height="13.2"></ss-icon>
 				</a>
 				<ss-text size="3" class="info-list-item-name">Текущий уровень прайс-листа:</ss-text>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.category?.name || '—' }}</ss-text>
 			</div>
-			<div class="info-list-item" *ngIf="(client$ | async)?.exclusive">
+			<div class="info-list-item" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
 				<ss-text size="3" class="info-list-item-name">Среднемесячный объем продаж за квартал:</ss-text>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.avgSalesVolume || '—' }}</ss-text>
 			</div>

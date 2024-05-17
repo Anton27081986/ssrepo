@@ -2,8 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientCardComponent } from '@app/pages/client-card/client-card.component';
 import { ClientCardBasicComponent } from '@app/pages/client-card/client-card-basic/client-card-basic.component';
-import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
+import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-requests/client-sale-requests.component';
 import { ClientCardBirthdaysComponent } from '@app/pages/client-card/client-card-birthdays/client-card-birthdays.component';
+import { ClientRequestSamplesComponent } from '@app/pages/client-card/client-request-samples/client-request-samples.component';
+import { ClientCardNewProductsComponent } from '@app/pages/client-card/client-card-new-products/client-card-new-products.component';
+import {
+	ClientCardReturnRequestsComponent
+} from "@app/pages/client-card/client-card-return-requests/client-card-return-requests.component";
+import {
+	ClientCardLostProductsComponent
+} from "@app/pages/client-card/client-card-lost-products/client-card-lost-products.component";
+import {
+	ClientCardContractsComponent
+} from "@app/pages/client-card/client-card-contracts/client-card-contracts.component";
 
 const routes: Routes = [
 	{
@@ -20,7 +31,27 @@ const routes: Routes = [
 			},
 			{
 				path: 'sales',
-				component: SaleRequestsComponent,
+				component: ClientSaleRequestsComponent,
+			},
+			{
+				path: 'samples',
+				component: ClientRequestSamplesComponent,
+			},
+			{
+				path: 'gntpr',
+				component: ClientCardNewProductsComponent,
+			},
+			{
+				path: 'refund',
+				component: ClientCardReturnRequestsComponent,
+			},
+			{
+				path: 'pkp',
+				component: ClientCardLostProductsComponent,
+			},
+			{
+				path: 'contracts',
+				component: ClientCardContractsComponent,
 			},
 			{
 				path: 'birthdays',

@@ -180,3 +180,9 @@
 		opacity: 0;
 	}
 }
+
+:host-context(.dark) {
+	.header {
+		background-color: $dark-island;
+	}
+}

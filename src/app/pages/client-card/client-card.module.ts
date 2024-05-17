@@ -34,15 +34,20 @@ import { PasswordModule } from '@app/shared/components/inputs/password/password.
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';
-import { SaleRequestsComponent } from '@app/pages/client-card/sales-request/sale-requests.component';
+import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-requests/client-sale-requests.component';
 import { TagModule } from '@app/shared/components/tag/tag.module';
 import { HistoryModule } from '@app/widgets/history/history.module';
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
+import { ClientRequestSamplesComponent } from '@app/pages/client-card/client-request-samples/client-request-samples.component';
+import { ClientCardReturnRequestsComponent } from '@app/pages/client-card/client-card-return-requests/client-card-return-requests.component';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
+import { ClientCardNewProductsComponent } from './client-card-new-products/client-card-new-products.component';
+import { ClientCardLostProductsComponent } from './client-card-lost-products/client-card-lost-products.component';
+import { ClientCardContractsComponent } from './client-card-contracts/client-card-contracts.component';
 
 @NgModule({
 	declarations: [
@@ -51,8 +56,13 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 		ClientCardBasicComponent,
 		ClientCardInfoComponent,
 		ClientCardContractorsComponent,
-		SaleRequestsComponent,
+		ClientRequestSamplesComponent,
+		ClientSaleRequestsComponent,
 		ClientCardBirthdaysComponent,
+		ClientCardNewProductsComponent,
+		ClientCardReturnRequestsComponent,
+		ClientCardLostProductsComponent,
+		ClientCardContractsComponent,
 	],
 	imports: [
 		CommonModule,

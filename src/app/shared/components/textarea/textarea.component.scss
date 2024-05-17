@@ -69,3 +69,7 @@ ss-caption {
 ss-caption.error {
 	color: $error;
 }
+
+:host-context(.dark) textarea {
+	background-color: $dark-island;
+}

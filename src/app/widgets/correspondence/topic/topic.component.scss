@@ -74,3 +74,9 @@
 		background-color:  $background;
 	}
 }
+
+:host-context(.dark) {
+	header {
+		background-color: $dark-island;
+	}
+}

@@ -32,6 +32,7 @@ export interface IClientDto {
 	 * Направление продаж
 	 */
 	saleDirection?: string | null;
+	mainSector?: string | null;
 	status?: IClientStatus;
 	/**
 	 * Передано в юр. отдел
