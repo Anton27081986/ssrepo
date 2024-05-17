@@ -13,7 +13,7 @@
 		</div>
 		<div class="filters-selected-list">
 			<div class="filters-selected-list-item" *ngFor="let filter of selectedFilters">
-				<ss-text size="3">{{ filter.label }}: {{ filter.value }}</ss-text>
+				<ss-text size="3">{{ filter.label }}: {{ Array.isArray(filter.value) && filter.value.length ? getValuesFromDictionaryItems(filter.value) : filter.value  }}</ss-text>
  				<ss-icon height="8" width="8" name="iconClose" (click)="removeFilter(filter.name)"></ss-icon>
 			</div>
 		</div>
@@ -22,12 +22,9 @@
 		<div class="filters-form-item" *ngFor="let filter of filters">
 			<ss-input *ngIf="filter.type === 'input'" [label]="filter.label" [formControlName]="filter.name" [placeholder]="filter.placeholder"></ss-input>
 			<ss-datepicker-input *ngIf="filter.type === 'date'" size="small" [disabled]="false" [label]="filter.label" [formControlName]="filter.name" placeholder=""></ss-datepicker-input>
-			<ss-select *ngIf="filter.type === 'select'" [label]="filter.label" (onChange)="filtersForm.controls[filter.name].setValue(($event))">
-				<option [value]="undefined">{{filter.placeholder}}</option>
-				<option *ngFor="let option of filter.options" [value]="option.id">{{option.name}}</option>
-			</ss-select>
-			<ss-search-input *ngIf="filter.type === 'search'" [label]="filter.label" (select)="filtersForm.controls[filter.name].setValue(($event.id))" [searchType]="filter.searchType || 'user'" [placeholder]="filter.placeholder"></ss-search-input>
-			<ss-toggle *ngIf="filter.type === 'boolean'" [formControlName]="filter.name" [label]="filter.label" ></ss-toggle>
+			<ss-multiselect *ngIf="filter.type === 'select'" [options]="filter.options" [placeholder]="filter.placeholder" [label]="filter.label" (getSelected)="filtersForm.controls[filter.name].setValue(($event))"></ss-multiselect>
+			<ss-multiselect *ngIf="filter.type === 'search-select'" [label]="filter.label" [searchType]="filter.searchType || 'user'" [placeholder]="filter.placeholder" (getSelected)="filtersForm.controls[filter.name].setValue(($event))"></ss-multiselect>
+			<ss-toggle *ngIf="filter.type === 'boolean'" [formControlName]="filter.name" [label]="filter.label"></ss-toggle>
 		</div>
 	</form>
 	<div class="footer">

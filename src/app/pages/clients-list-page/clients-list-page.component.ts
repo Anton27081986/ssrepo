@@ -55,34 +55,35 @@ export class ClientsListPageComponent implements OnInit {
 			placeholder: 'Введите код',
 		},
 		{
-			name: 'categoryId',
+			name: 'categoryIds',
 			type: 'select',
 			label: 'Категория',
 			options: [],
-			placeholder: 'Выберите категорию',
+			placeholder: 'Выберите категории',
 		},
 		{
-			name: 'name',
-			type: 'input',
+			name: 'clientIds',
+			type: 'search-select',
+			searchType: 'client',
 			label: 'Клиент',
 			placeholder: 'Введите название клиента',
 		},
 		{
-			name: 'contractorId',
-			type: 'search',
+			name: 'contractorIds',
+			type: 'search-select',
 			searchType: 'contractor',
 			label: 'Контрагенты',
 			placeholder: 'Введите наименование контрагента',
 		},
 		{
-			name: 'managerId',
-			type: 'search',
+			name: 'managerIds',
+			type: 'search-select',
 			searchType: 'user',
 			label: 'Менеджеры',
 			placeholder: 'Введите ФИО',
 		},
 		{
-			name: 'status',
+			name: 'statuses',
 			type: 'select',
 			label: 'Статус',
 			options: [],
@@ -131,7 +132,7 @@ export class ClientsListPageComponent implements OnInit {
 		});
 
 		this.clientsListFacade.categories$.pipe(untilDestroyed(this)).subscribe(response => {
-			const categoriesFilter = this.filters.find(filter => filter.name === 'categoryId');
+			const categoriesFilter = this.filters.find(filter => filter.name === 'categoryIds');
 
 			if (categoriesFilter) {
 				categoriesFilter.options = response.items;
@@ -139,7 +140,7 @@ export class ClientsListPageComponent implements OnInit {
 		});
 
 		this.clientsListFacade.contractors$.pipe(untilDestroyed(this)).subscribe(response => {
-			const contractorsFilter = this.filters.find(filter => filter.name === 'contractorId');
+			const contractorsFilter = this.filters.find(filter => filter.name === 'contractorIds');
 
 			if (contractorsFilter) {
 				contractorsFilter.options = response.items;
@@ -147,7 +148,7 @@ export class ClientsListPageComponent implements OnInit {
 		});
 
 		this.clientsListFacade.statuses$.pipe(untilDestroyed(this)).subscribe(statuses => {
-			const contractorsFilter = this.filters.find(filter => filter.name === 'status');
+			const contractorsFilter = this.filters.find(filter => filter.name === 'statuses');
 
 			if (contractorsFilter) {
 				contractorsFilter.options = statuses.items;
@@ -180,12 +181,25 @@ export class ClientsListPageComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredClients(filter: { [key: string]: string }) {
-		this.filter = { ...this.filter, ...(filter as unknown as IClientsFilter) };
+	public getFilteredClients(filter: { [key: string]: any }) {
+		const preparedFilter: any = {};
+
+		for (const field in filter) {
+			if (Array.isArray(filter[field]) && filter[field].length) {
+				preparedFilter[field] = filter[field].map(
+					(item: { id: number; name: string }) => item.id,
+				) ?? null;
+			} else {
+				preparedFilter[field] = filter[field] ?? null;
+			}
+
+		}
+
+		this.filter = { ...this.filter, ...(preparedFilter as unknown as IClientsFilter) };
 		this.filter.withoutBaseManager = !!this.filter.withoutBaseManager;
 		this.localStorageService.setItem('clientsListFilter', this.filter);
 		this.tableState = TableState.Loading;
-		this.clientsListFacade.applyFilters(filter);
+		this.clientsListFacade.applyFilters(preparedFilter);
 	}
 
 	public nzPageIndexChange($event: number) {

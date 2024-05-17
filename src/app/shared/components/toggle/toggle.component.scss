@@ -2,7 +2,7 @@
 
 :host {
 	display: flex;
-	flex-direction: column;
+	gap: 16px;
 	color: $lite-text;
 }
 
@@ -11,12 +11,12 @@
 
 	label {
 		display: inline-block;
-		background: $island;
+		background: $island-outline;
 		position: relative;
 		transition: background 0.2s;
 		cursor: pointer;
-		width: 78px;
-		height: 40px;
+		width: 44px;
+		height: 22px;
 		border: 1px solid $island-outline;
 		border-radius: 12px;
 
@@ -24,21 +24,21 @@
 			display: inline-block;
 			position: absolute;
 			content: ' ';
-			background: $island-outline;
+			background: $island;
 			vertical-align: center;
-			top: 3px;
-			left: 3px;
+			top: 1px;
+			left: 1px;
 			transition: left 0.2s;
-			width: 31px;
-			height: 31px;
-			line-height: 32px;
-			border-radius: 8px;
+			width: 18px;
+			height: 18px;
+			line-height: 20px;
+			border-radius: 9px;
 		}
 
 		&.checked {
+			background: $main;
 			&::before {
-				left: 40px;
-				background: $main;
+				left: 23px;
 			}
 		}
 
