@@ -8,7 +8,7 @@
 			<ss-datepicker-input size="small" [placeholder]="periodDate"></ss-datepicker-input>
 		</div>
 		<div class="search">
-			<ss-search-input size="small" searchType="contractor" placeholder="Поиск по контрагенту" (select)="filterbirthdaysContractors($event)" (input)="clearFilter($any($event.target).value)"></ss-search-input>
+			<ss-search-input size="small" searchType="contractor" placeholder="Поиск по контрагенту" data="{{ clientId }}" (select)="filterbirthdaysContractors($event)" (input)="clearFilter($any($event.target).value)"></ss-search-input>
 		</div>
 	</div>
 	<div class="card-list">

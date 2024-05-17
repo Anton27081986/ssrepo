@@ -14,9 +14,9 @@ export class BirthdaysContractorsFacadeService {
 
 	public constructor(private readonly birthdaysContractorsApiService: BirthdaysApiService) {}
 
-	public getBirthdaysContractorsList(pageSize?: number, offset?: number) {
+	public getBirthdaysContractorsList(clientId?: number, pageSize?: number, offset?: number) {
 		this.birthdaysContractorsApiService
-			.getBirthdayContractor(pageSize, offset)
+			.getBirthdayContractor(clientId, pageSize, offset)
 			.pipe(
 				tap(contractors => {
 					this.birthdaysContractorsSubject.next(contractors);
@@ -26,9 +26,9 @@ export class BirthdaysContractorsFacadeService {
 			.subscribe();
 	}
 
-	public filterBirthdaysContractorsList(id?: number) {
+	public filterBirthdaysContractorsList(clientId?: number, id?: number) {
 		this.birthdaysContractorsApiService
-			.searchBirthdayContractor(id)
+			.searchBirthdayContractor(clientId, id)
 			.pipe(
 				tap(contractors => {
 					this.birthdaysContractorsSubject.next(contractors);

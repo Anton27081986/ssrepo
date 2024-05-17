@@ -25,6 +25,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public value: string | undefined;
+	@Input() public data: string | undefined;
 	@Input() public clear: boolean = false;
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
@@ -115,7 +116,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 				break;
 			case 'contractor':
 				this.searchFacade
-					.getContractor(query)
+					.getContractor(query, Number(this.data))
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
 						this.found = res;
