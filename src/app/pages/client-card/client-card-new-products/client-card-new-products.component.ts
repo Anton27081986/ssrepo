@@ -33,8 +33,8 @@ export class ClientCardNewProductsComponent implements OnInit {
 
 	public filters: IFilter[] = [
 		{
-			name: 'customerId',
-			type: 'search',
+			name: 'customerIds',
+			type: 'search-select',
 			label: 'Заказчик',
 			searchType: 'user',
 			placeholder: 'Выберите заказчика',
