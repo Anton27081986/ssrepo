@@ -37,11 +37,11 @@ export class SearchFacadeService {
 		return this.clientApiService.getClientsDictionary(query);
 	}
 
-	public getContractor(query: string) {
+	public getContractor(query: string, clientId?: number) {
 		if (query) {
 			return this.httpClient
 				.get<IResponse<IDictionaryItemDto>>(this.contractorUrl, {
-					params: new HttpParams().set('query', query),
+					params: new HttpParams().set('query', query).set('clientId', clientId!),
 				})
 				.pipe(map(response => response.items));
 		}

@@ -7,6 +7,7 @@ import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { BirthdaysContractorsFacadeService } from '@app/core/facades/birthdays-contractors-facade.service';
 import { formatDate } from '@angular/common';
+import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -29,9 +30,11 @@ export class ClientCardBirthdaysComponent implements OnInit {
 	public contractor$: Observable<IClientDto | null> | undefined;
 	public clients$: Observable<IResponse<IClientItemDto> | null>;
 	public birthdaysContractors$: Observable<any>;
+	public clientId: number | undefined;
 
 	public constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService,
 		public readonly birthdaysContractorsFacade: BirthdaysContractorsFacadeService,
 	) {
 		this.clients$ = this.clientsListFacade.clients$;
@@ -67,10 +70,25 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			.subscribe();
 
 		this.birthdaysContractorsFacade.getBirthdaysContractorsList(this.pageSize, this.offset);
+
+		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
+			if (clientId) {
+				this.clientId = Number(clientId);
+			}
+		});
+
+		this.birthdaysContractorsFacade.getBirthdaysContractorsList(
+			this.clientId,
+			this.pageSize,
+			this.offset,
+		);
 	}
 
 	public filterbirthdaysContractors(contractor: { id: number; date?: string }) {
-		this.birthdaysContractorsFacade.filterBirthdaysContractorsList(contractor.id);
+		this.birthdaysContractorsFacade.filterBirthdaysContractorsList(
+			this.clientId,
+			contractor.id,
+		);
 	}
 
 	public trackBy(_index: number, item: any) {
