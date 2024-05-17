@@ -167,8 +167,7 @@ export class ClientsListPageComponent implements OnInit {
 			tableItem.contractors = x.contractors ? x.contractors.map(c => c.name).join(', ') : '-';
 
 			tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
-			tableItem.status =
-				this.clientsListFacade.statusOptions.find(option => option.id === x.status)?.name ??
+			tableItem.status = x.status.name ??
 				'-';
 
 			tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';

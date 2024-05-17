@@ -34,8 +34,8 @@ export class ClientRequestSamplesComponent implements OnInit {
 
 	public filters: IFilter[] = [
 		{
-			name: 'managerId',
-			type: 'search',
+			name: 'managerIds',
+			type: 'search-select',
 			searchType: 'user',
 			label: 'Менеджер',
 			placeholder: 'Введите ФИО',

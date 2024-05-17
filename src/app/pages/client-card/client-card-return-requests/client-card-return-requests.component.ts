@@ -33,15 +33,15 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 
 	public filters: IFilter[] = [
 		{
-			name: 'ContractorId',
-			type: 'search',
+			name: 'ContractorIds',
+			type: 'search-select',
 			label: 'Контрагент',
 			searchType: 'contractor',
 			placeholder: 'Выберите контрагента',
 		},
 		{
-			name: 'AuthorId',
-			type: 'search',
+			name: 'AuthorIds',
+			type: 'search-select',
 			label: 'Автор',
 			searchType: 'user',
 			placeholder: 'Выберите контрагента',

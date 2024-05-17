@@ -22,8 +22,8 @@ import { IconModule } from '@app/shared/components/icon/icon.module';
 import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ComponentsModule } from '@app/components/components.module';
+import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
-import {FiltersModule} from "@app/shared/components/filters/filters.module";
 
 @NgModule({
 	declarations: [ClientsListPageComponent],
