@@ -22,4 +22,8 @@ export interface IDictionaryItemDto {
 	 * Название
 	 */
 	name?: string | null;
+	/**
+	 * link
+	 */
+	linkToDetail?: string | null;
 }

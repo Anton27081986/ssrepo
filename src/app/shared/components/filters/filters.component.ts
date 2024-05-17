@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { searchType } from '@app/shared/components/inputs/search-input/search-input.component';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { SearchType } from '@app/shared/components/multiselect/multiselect.component';
 
 export interface IFilter {
 	name: string;
-	type: 'input' | 'date' | 'select' | 'boolean' | 'search';
+	type: 'input' | 'date' | 'select' | 'boolean' | 'search-select';
 	label: string;
 	placeholder: string;
-	value?: string;
-	options?: Array<{ id: number; name: string }>;
-	searchType?: searchType;
+	value?: any;
+	options?: IDictionaryItemDto[];
+	searchType?: SearchType;
 }
 
 @Component({
@@ -56,14 +57,21 @@ export class FiltersComponent implements OnInit {
 
 	public onFiltersApply() {
 		this.selectedFilters = this.filters.reduce((selected: IFilter[], item) => {
-			const value =
-				this.filtersForm.value[item.name] && item.type.includes('date')
-					? new Date(this.filtersForm.value[item.name]).toLocaleString('ru-Ru', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
-					: this.filtersForm.value[item.name];
+			let value = this.filtersForm.value[item.name];
+
+			if (this.filtersForm.value[item.name]) {
+				if (item.type.includes('date')) {
+					value = new Date(this.filtersForm.value[item.name]).toLocaleString('ru-Ru', {
+						year: 'numeric',
+						month: 'numeric',
+						day: 'numeric',
+					});
+				}
+
+				if (item.type.includes('boolean')) {
+					value = this.filtersForm.value ? 'Да' : 'Нет';
+				}
+			}
 
 			return value ? [...selected, { ...item, value }] : selected;
 		}, []);
@@ -76,4 +84,10 @@ export class FiltersComponent implements OnInit {
 
 		this.selectedFilters = this.selectedFilters.filter(item => item.name !== name);
 	}
+
+	public getValuesFromDictionaryItems(items: Array<{ id: number; name: string }>) {
+		return items.map(item => item.name).join(', ');
+	}
+
+	protected readonly Array = Array;
 }

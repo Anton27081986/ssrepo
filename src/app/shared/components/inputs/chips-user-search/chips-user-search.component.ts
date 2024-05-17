@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Input, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -15,11 +15,11 @@ export class ChipsUserSearchComponent {
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = 'Введите ФИО';
 	@Input() public error: string | undefined;
-	@Input() public selectedUsers: any[] = [];
+	@Input() public selectedItems: any[] = [];
 
 	@ViewChild('input') public input!: ElementRef;
 
-	protected foundUsers: any[] = [];
+	protected foundItems: any[] = [];
 	public constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly usersApiService: UsersApiService,
@@ -34,36 +34,35 @@ export class ChipsUserSearchComponent {
 					untilDestroyed(this),
 				)
 				.subscribe(res => {
-					if (this.selectedUsers?.length) {
-						const selectedIds = this.selectedUsers.map(user => user.id);
+					if (this.selectedItems?.length) {
+						const selectedIds = this.selectedItems.map(item => item.id);
 
-						this.foundUsers = res.filter(
-							(user: { id: any }) => !selectedIds.includes(user.id),
+						this.foundItems = res.filter(
+							(item: { id: any }) => !selectedIds.includes(item.id),
 						);
-
 					} else {
-						this.foundUsers = res;
+						this.foundItems = res;
 					}
 
 					this.changeDetectorRef.detectChanges();
 				});
 		} else {
-			this.foundUsers = [];
+			this.foundItems = [];
 			this.changeDetectorRef.detectChanges();
 		}
 	}
 
-	protected onAddUserToList(user: any) {
-		this.selectedUsers.push(user);
-		this.foundUsers = [];
+	protected onAddItemToList(item: any) {
+		this.selectedItems.push(item);
+		this.foundItems = [];
 		setTimeout(() => {
 			this.input.nativeElement.value = '';
 			this.input.nativeElement.focus();
 		}, 0);
 	}
 
-	protected onRemoveUserFromList(user: any, i: any) {
-		this.selectedUsers.splice(i, 1);
+	protected onRemoveItemFromList(i: any) {
+		this.selectedItems.splice(i, 1);
 	}
 
 	protected dontSend(event: any): any {

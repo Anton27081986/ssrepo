@@ -1,10 +1,10 @@
 <form>
 	<ss-caption size="1">{{ label }}</ss-caption>
-	<div class="input" [ngClass]="{'dropdown': foundUsers.length}">
-		<div class="chips" *ngFor="let user of selectedUsers;  index as i">
-			<ss-avatar size="xs" [src]="user?.avatarUrl"></ss-avatar>
-			<ss-text size="3">{{ user.name }}</ss-text>
-			<ss-icon height="10" width="10" name="iconClose" (click)="onRemoveUserFromList(user, i)"></ss-icon>
+	<div class="input" [ngClass]="{'dropdown': foundItems.length}">
+		<div class="chips" *ngFor="let item of selectedItems;  index as i">
+			<ss-avatar size="xs" [src]="item?.avatarUrl"></ss-avatar>
+			<ss-text size="3">{{ item.name }}</ss-text>
+			<ss-icon height="10" width="10" name="iconClose" (click)="onRemoveItemFromList(i)"></ss-icon>
 		</div>
 		<input type="text"
 			   [placeholder]="placeholder"
@@ -14,13 +14,13 @@
 			   (keydown.enter)="dontSend($event)"
 			   #input
 		/>
-		<ss-icon class="hide-dropdown-button" *ngIf="foundUsers.length" height="14" width="14" name="arrowBottom" (click)="input.value = ''; foundUsers = []"></ss-icon>
+		<ss-icon class="hide-dropdown-button" *ngIf="foundItems.length" height="14" width="14" name="arrowBottom" (click)="input.value = ''; foundItems = []"></ss-icon>
 	</div>
-	<div class="variants-wrapper" *ngIf="foundUsers.length">
+	<div class="variants-wrapper" *ngIf="foundItems.length">
 		<div class="variants">
 			<div class="separator"></div>
-			<div class="variants-item" *ngFor="let user of foundUsers" (click)="onAddUserToList(user)">
-				<ss-text size="3">{{ user?.name }}</ss-text>
+			<div class="variants-item" *ngFor="let item of foundItems" (click)="onAddItemToList(item)">
+				<ss-text size="3">{{ item?.name }}</ss-text>
 			</div>
 		</div>
 	</div>

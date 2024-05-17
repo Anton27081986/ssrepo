@@ -20,10 +20,7 @@ export class ClientApiService {
 	public getClients(filter: IClientsFilter) {
 		return this.http.post<IResponse<IClientItemDto>>(
 			`${environment.apiUrl}/api/company/clients`,
-			{
-				limit: filter.limit,
-				offset: filter.offset,
-			},
+			filter,
 		);
 	}
 
@@ -73,6 +70,15 @@ export class ClientApiService {
 	public getSubSectors(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/subsectors`,
+			{
+				params: new HttpParams().set('query', searchTerm),
+			},
+		);
+	}
+
+	public getClientsDictionary(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/clients`,
 			{
 				params: new HttpParams().set('query', searchTerm),
 			},

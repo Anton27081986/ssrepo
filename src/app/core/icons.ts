@@ -722,4 +722,11 @@ export class AppIcons {
 		'<path d="M9.9502 8.13281L9.95019 16.6078" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'<path d="M5 4L15 4" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
+
+	public static checkbox =
+		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<rect width="16" height="16" rx="4" fill="#4770FF"/>' +
+		'<path d="M5 8.25L6.90909 10.5L11.5 5.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
 }

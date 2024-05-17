@@ -33,6 +33,10 @@ export class SearchFacadeService {
 		return this.clientApiService.getSubSectors(query);
 	}
 
+	public getClients(query: string) {
+		return this.clientApiService.getClientsDictionary(query);
+	}
+
 	public getContractor(query: string) {
 		if (query) {
 			return this.httpClient
