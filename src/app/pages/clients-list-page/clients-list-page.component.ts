@@ -85,15 +85,7 @@ export class ClientsListPageComponent implements OnInit {
 			name: 'statuses',
 			type: 'select',
 			label: 'Статус',
-			options: [
-				{ id: 1, name: 'Новый', checked: true },
-				{ id: 6, name: 'Действующий', checked: true },
-			],
 			placeholder: 'Выберите статус',
-			value: [
-				{ id: 1, name: 'Новый', checked: true },
-				{ id: 6, name: 'Действующий', checked: true },
-			],
 		},
 		{
 			name: 'withoutBaseManager',
@@ -144,6 +136,16 @@ export class ClientsListPageComponent implements OnInit {
 			if (managersFilter) {
 				managersFilter.options = [{ ...this.userService.getUserInfo(), checked: true }];
 				managersFilter.value = managersFilter.options;
+			}
+
+			const statusesFilter = this.filters.find(coreFilter => coreFilter.name === 'statuses');
+
+			if (statusesFilter) {
+				statusesFilter.options = [
+					{ id: 1, name: 'Новый', checked: true },
+					{ id: 6, name: 'Действующий', checked: true },
+				];
+				statusesFilter.value = statusesFilter.options;
 			}
 		}
 
