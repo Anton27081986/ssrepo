@@ -6,6 +6,8 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 export interface IClientTableItem {
 	code: string;
@@ -36,16 +38,13 @@ export class ClientsListPageComponent implements OnInit {
 	public total: number | undefined;
 	public pageSize = 20;
 	public pageIndex = 1;
+	public offset = 0;
 	public tableItems: ITableItem[] = [];
 	public items: IClientTableItem[] = [];
 
 	// state
 	public isFiltersVisible: boolean = true;
 	public tableState: TableState = TableState.Loading;
-	public filter: IClientsFilter = {
-		offset: 0,
-		limit: this.pageSize,
-	};
 
 	public filters: IFilter[] = [
 		{
@@ -86,8 +85,15 @@ export class ClientsListPageComponent implements OnInit {
 			name: 'statuses',
 			type: 'select',
 			label: 'Статус',
-			options: [],
+			options: [
+				{ id: 1, name: 'Новый', checked: true },
+				{ id: 6, name: 'Действующий', checked: true },
+			],
 			placeholder: 'Выберите статус',
+			value: [
+				{ id: 1, name: 'Новый', checked: true },
+				{ id: 6, name: 'Действующий', checked: true },
+			],
 		},
 		{
 			name: 'withoutBaseManager',
@@ -105,18 +111,43 @@ export class ClientsListPageComponent implements OnInit {
 		public readonly clientsListFacade: ClientsListFacadeService,
 		private readonly localStorageService: LocalStorageService,
 		private readonly cdr: ChangeDetectorRef,
+		private readonly userService: UserProfileStoreService,
 	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		const savedFilters = this.localStorageService.getItem<IClientsFilter>('clientsListFilter');
+		const savedFilters = this.localStorageService.getItem<IFilter[]>('clientsListFilter');
 
-		if (savedFilters) {
-			this.filter = savedFilters;
+		if (savedFilters?.length) {
+			savedFilters.forEach(filter => {
+				if (filter.value) {
+					const coreFilter = this.filters.find(
+						coreFilter => coreFilter.name === filter.name,
+					);
+
+					if (coreFilter) {
+						if (Array.isArray(filter.value)) {
+							coreFilter.options = filter.value;
+							coreFilter.value = filter.value;
+						} else {
+							coreFilter.value = filter.value;
+						}
+					}
+				}
+			});
+		} else {
+			const managersFilter = this.filters.find(
+				coreFilter => coreFilter.name === 'managerIds',
+			);
+
+			if (managersFilter) {
+				managersFilter.options = [{ ...this.userService.getUserInfo(), checked: true }];
+				managersFilter.value = managersFilter.options;
+			}
 		}
 
-		this.clientsListFacade.applyFilters(this.filter);
+		this.getFilteredClients();
 
 		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
@@ -131,27 +162,39 @@ export class ClientsListPageComponent implements OnInit {
 			this.cdr.detectChanges();
 		});
 
-		this.clientsListFacade.categories$.pipe(untilDestroyed(this)).subscribe(response => {
+		this.clientsListFacade.categories$.pipe(untilDestroyed(this)).subscribe(categories => {
 			const categoriesFilter = this.filters.find(filter => filter.name === 'categoryIds');
 
-			if (categoriesFilter) {
-				categoriesFilter.options = response.items;
-			}
-		});
-
-		this.clientsListFacade.contractors$.pipe(untilDestroyed(this)).subscribe(response => {
-			const contractorsFilter = this.filters.find(filter => filter.name === 'contractorIds');
-
-			if (contractorsFilter) {
-				contractorsFilter.options = response.items;
+			if (categoriesFilter && categories.items) {
+				categoriesFilter.options = categoriesFilter.options
+					? [
+							...categoriesFilter.options,
+							...categories.items.filter(
+								filter =>
+									!categoriesFilter.options?.find(
+										savedFilter => savedFilter.id === filter.id,
+									),
+							),
+						]
+					: categories.items;
 			}
 		});
 
 		this.clientsListFacade.statuses$.pipe(untilDestroyed(this)).subscribe(statuses => {
-			const contractorsFilter = this.filters.find(filter => filter.name === 'statuses');
+			const statusesFilter = this.filters.find(filter => filter.name === 'statuses');
 
-			if (contractorsFilter) {
-				contractorsFilter.options = statuses.items;
+			if (statusesFilter && statuses.items) {
+				statusesFilter.options = statusesFilter.options
+					? [
+							...statusesFilter.options,
+							...statuses.items.filter(
+								filter =>
+									!statusesFilter.options?.find(
+										savedFilter => savedFilter.id === filter.id,
+									),
+							),
+						]
+					: statuses.items;
 			}
 		});
 	}
@@ -167,8 +210,7 @@ export class ClientsListPageComponent implements OnInit {
 			tableItem.contractors = x.contractors ? x.contractors.map(c => c.name).join(', ') : '-';
 
 			tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
-			tableItem.status = x.status.name ??
-				'-';
+			tableItem.status = x.status.name ?? '-';
 
 			tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
 
@@ -180,38 +222,50 @@ export class ClientsListPageComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredClients(filter: { [key: string]: any }) {
-		const preparedFilter: any = {};
+	public getFilteredClients() {
+		this.localStorageService.setItem(
+			'clientsListFilter',
+			this.filters.filter(filter => filter.value?.length),
+		);
 
-		for (const field in filter) {
-			if (Array.isArray(filter[field]) && filter[field].length) {
-				preparedFilter[field] = filter[field].map(
-					(item: { id: number; name: string }) => item.id,
-				) ?? null;
-			} else {
-				preparedFilter[field] = filter[field] ?? null;
+		const preparedFilter: any = {
+			limit: this.pageSize,
+			offset: this.offset,
+		};
+
+		for (const filter of this.filters) {
+			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+
+			switch (filter.type) {
+				case 'select':
+				case 'search-select':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value.map(item => item.id)
+						: null;
+					break;
+				case 'boolean':
+					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					break;
+				default:
+					preparedFilter[filter.name] = filter.value || null;
 			}
-
 		}
 
-		this.filter = { ...this.filter, ...(preparedFilter as unknown as IClientsFilter) };
-		this.filter.withoutBaseManager = !!this.filter.withoutBaseManager;
-		this.localStorageService.setItem('clientsListFilter', this.filter);
 		this.tableState = TableState.Loading;
 		this.clientsListFacade.applyFilters(preparedFilter);
 	}
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.filter.offset = 0;
+			this.offset = 0;
 		} else {
-			this.filter.offset = this.pageSize * $event - this.pageSize;
+			this.offset = this.pageSize * $event - this.pageSize;
 		}
 
-		this.filter.offset = this.pageSize * $event - this.pageSize;
+		this.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.clientsListFacade.applyFilters(this.filter);
+		this.getFilteredClients();
 	}
 
 	protected readonly TableState = TableState;
