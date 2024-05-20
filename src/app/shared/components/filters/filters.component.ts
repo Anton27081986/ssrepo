@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { SearchType } from '@app/shared/components/multiselect/multiselect.component';
@@ -8,9 +8,13 @@ export interface IFilter {
 	type: 'input' | 'date' | 'select' | 'boolean' | 'search-select';
 	label: string;
 	placeholder: string;
-	value?: any;
-	options?: IDictionaryItemDto[];
+	value?: IFilterOption[] | string;
+	options?: IFilterOption[];
 	searchType?: SearchType;
+}
+
+export interface IFilterOption extends IDictionaryItemDto {
+	checked?: boolean;
 }
 
 @Component({
@@ -23,20 +27,22 @@ export class FiltersComponent implements OnInit {
 	@Output() public isFiltersVisibleChange = new EventEmitter<boolean>();
 
 	@Input() public filters: IFilter[] = [];
+	@Output() public filtersChange = new EventEmitter<IFilter[]>();
 
-	@Output() public getFilter: EventEmitter<{ [key: string]: string }> = new EventEmitter<{
-		[key: string]: string;
-	}>();
+	@Output() public applyFilter = new EventEmitter();
 
 	public filtersForm!: FormGroup;
 	public selectedFilters: IFilter[] = [];
 
-	constructor(private readonly formBuilder: FormBuilder) {}
+	constructor(
+		private readonly changeDetector: ChangeDetectorRef,
+		private readonly formBuilder: FormBuilder,
+	) {}
 
 	public ngOnInit() {
 		this.filtersForm = this.formBuilder.group(
 			this.filters.reduce((group, filter) => {
-				return { ...group, [filter.name]: [] };
+				return { ...group, [filter.name]: [filter.value] };
 			}, {}),
 		);
 
@@ -44,11 +50,9 @@ export class FiltersComponent implements OnInit {
 	}
 
 	public resetForm() {
-		this.selectedFilters = [];
-
-		for (const controlsKey in this.filtersForm.controls) {
-			this.filtersForm.get(controlsKey)?.setValue('');
-		}
+		this.selectedFilters.forEach(filter => {
+			this.removeFilter(filter.name);
+		});
 	}
 
 	public toggleFilters() {
@@ -56,7 +60,7 @@ export class FiltersComponent implements OnInit {
 	}
 
 	public onFiltersApply() {
-		this.selectedFilters = this.filters.reduce((selected: IFilter[], item) => {
+		this.filters = this.filters.reduce((selected: IFilter[], item) => {
 			let value = this.filtersForm.value[item.name];
 
 			if (this.filtersForm.value[item.name]) {
@@ -73,20 +77,42 @@ export class FiltersComponent implements OnInit {
 				}
 			}
 
-			return value ? [...selected, { ...item, value }] : selected;
+			if (item.type === 'search-select') {
+				item.options = Array.isArray(this.filtersForm.value[item.name])
+					? this.filtersForm.value[item.name]
+					: null;
+			}
+
+			return [
+				...selected,
+				{
+					...item,
+					value: value?.length ? value : null,
+				},
+			];
 		}, []);
 
-		this.getFilter.emit(this.filtersForm.value);
+		this.filtersChange.emit(this.filters);
+		this.applyFilter.emit();
+		this.selectedFilters = this.filters.filter(item => item.value);
+		this.changeDetector.detectChanges();
 	}
 
 	public removeFilter(name: string) {
-		this.filtersForm.get(name)?.setValue('');
+		this.filtersForm.get(name)?.setValue(null);
 
 		this.selectedFilters = this.selectedFilters.filter(item => item.name !== name);
+
+		const filter = this.filters.find(item => item.name === name);
+
+		if (filter) {
+			filter.value = undefined;
+			filter.options?.forEach(option => (option.checked = false));
+		}
 	}
 
-	public getValuesFromDictionaryItems(items: Array<{ id: number; name: string }>) {
-		return items.map(item => item.name).join(', ');
+	public getValuesFromDictionaryItems(items: IDictionaryItemDto[] | string) {
+		return (items as unknown as IDictionaryItemDto[]).map(item => item.name).join(', ');
 	}
 
 	protected readonly Array = Array;

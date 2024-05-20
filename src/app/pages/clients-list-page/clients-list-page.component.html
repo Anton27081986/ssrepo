@@ -52,7 +52,7 @@
 			</div>
 		</div>
 
-		<ss-filters *ngIf="isFiltersVisible" class="filters" [(isFiltersVisible)]="isFiltersVisible" [filters]="filters" (getFilter)="getFilteredClients($event)"></ss-filters>
+		<ss-filters *ngIf="isFiltersVisible" class="filters" [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredClients()"></ss-filters>
 	</div>
 	<div class="content mobile m-b-20">
 		<ss-card>

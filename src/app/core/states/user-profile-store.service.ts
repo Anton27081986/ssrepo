@@ -63,4 +63,8 @@ export class UserProfileStoreService implements OnDestroy {
 	public ngOnDestroy() {
 		this.subscription.unsubscribe();
 	}
+
+	public getUserInfo() {
+		return { id: this.userProfileSubject.value?.id, name: this.userProfileSubject.value?.name };
+	}
 }

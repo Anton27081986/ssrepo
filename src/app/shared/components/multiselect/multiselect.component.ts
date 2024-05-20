@@ -4,19 +4,14 @@ import {
 	ElementRef,
 	EventEmitter,
 	Input,
-	OnInit,
 	Output,
 	ViewChild,
 } from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import {IFilterOption} from "@app/shared/components/filters/filters.component";
 
 export type SearchType = 'user' | 'client' | 'contractor';
-
-interface ISelectedOption extends IDictionaryItemDto {
-	checked?: boolean;
-}
 
 @UntilDestroy()
 @Component({
@@ -29,13 +24,12 @@ export class MultiselectComponent {
 	@Input() public size: 'large' | 'medium' = 'medium';
 	@Input() public placeholder: string | undefined;
 	@Input() public multiple = false;
-	@Input() public options: ISelectedOption[] | undefined = [];
+	@Input() public options: IFilterOption[] = [];
 
 	@Input() public searchType: SearchType | undefined;
 
 	@Output() public getSelected = new EventEmitter<any>();
 	public isOptionsVisible = false;
-	public selectedOptions: ISelectedOption[] = [];
 
 	@ViewChild('optionsEl', { static: false }) public optionsEl: ElementRef | undefined;
 
@@ -66,9 +60,7 @@ export class MultiselectComponent {
 			option.checked = !option.checked;
 		}
 
-		this.selectedOptions = this.options?.filter(option => option.checked) || [];
-
-		this.getSelected.emit(this.selectedOptions);
+		this.getSelected.emit(this.getSelectedOptions());
 	}
 
 	protected onSearch(event: Event) {
@@ -78,16 +70,16 @@ export class MultiselectComponent {
 					.getUsers((event.target as HTMLInputElement).value)
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
-						this.options = res.items;
+						this.options = [...this.options.filter(option=>option.checked), ...res.items];
 						this.changeDetector.detectChanges();
 					});
 				break;
 			case 'client':
 				this.searchFacade
-					.getSubSectors((event.target as HTMLInputElement).value)
+					.getClients((event.target as HTMLInputElement).value)
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
-						this.options = res.items;
+						this.options = [...this.options.filter(option=>option.checked), ...res.items];
 						this.changeDetector.detectChanges();
 					});
 				break;
@@ -96,10 +88,14 @@ export class MultiselectComponent {
 					.getContractor((event.target as HTMLInputElement).value)
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
-						this.options = res;
+						this.options = [...this.options.filter(option=>option.checked), ...res];
 						this.changeDetector.detectChanges();
 					});
 				break;
 		}
+	}
+
+	getSelectedOptions() {
+		return this.options?.filter(option => option.checked) || null;
 	}
 }
