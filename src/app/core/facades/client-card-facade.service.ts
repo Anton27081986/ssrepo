@@ -28,6 +28,9 @@ export class ClientsCardFacadeService {
 	private readonly contractorsSubject = new BehaviorSubject<IContractorItemDto[]>([]);
 	public contractors$ = this.contractorsSubject.asObservable();
 
+	private readonly clientCardPermissionsSubject = new BehaviorSubject<string[]>([]);
+	public permissions$ = this.clientCardPermissionsSubject.asObservable();
+
 	public constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly callPhoneService: CallPhoneService,
@@ -42,8 +45,12 @@ export class ClientsCardFacadeService {
 			this.clientApiService
 				.getClientCardById(id)
 				.pipe(
+
 					tap(client => {
-						this.clientSubject.next(client);
+						console.log(client);
+						debugger;
+						this.clientSubject.next(client.data);
+						this.clientCardPermissionsSubject.next(client.permissions);
 					}),
 					untilDestroyed(this),
 				)
@@ -57,7 +64,9 @@ export class ClientsCardFacadeService {
 				.getClientCardById(this.clientIdSubject.value)
 				.pipe(
 					tap(client => {
-						this.clientSubject.next(client);
+						debugger;
+						this.clientSubject.next(client.data);
+						this.clientCardPermissionsSubject.next(client.permissions);
 					}),
 					untilDestroyed(this),
 				)

@@ -82,4 +82,9 @@ export interface IClientDto {
 	changePriceListLevelLink?: string | null;
 	linkToDetail?: string | null;
 }
+export interface IClientDataDto {
+	data: IClientDto;
+	permissions: string[];
+}
+
 export namespace IClientDto {}

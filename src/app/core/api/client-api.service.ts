@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
-import { IClientDto } from '@app/core/models/company/client-dto';
+import {IClientDataDto, IClientDto} from '@app/core/models/company/client-dto';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -24,8 +24,8 @@ export class ClientApiService {
 		);
 	}
 
-	public getClientCardById(id: number): Observable<IClientDto> {
-		return this.http.get<IClientDto>(`${environment.apiUrl}/api/company/clients/${id}`);
+	public getClientCardById(id: number): Observable<IClientDataDto> {
+		return this.http.get<IClientDataDto>(`${environment.apiUrl}/api/company/clients/${id}`);
 	}
 
 	public getManagers(id: number): Observable<IManagerItemDto[]> {
