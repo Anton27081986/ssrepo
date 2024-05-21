@@ -69,8 +69,6 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			)
 			.subscribe();
 
-		this.birthdaysContractorsFacade.getBirthdaysContractorsList(this.pageSize, this.offset);
-
 		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
 			if (clientId) {
 				this.clientId = Number(clientId);
@@ -103,12 +101,20 @@ export class ClientCardBirthdaysComponent implements OnInit {
 		}
 
 		this.pageIndex = $event;
-		this.birthdaysContractorsFacade.getBirthdaysContractorsList(this.pageSize, this.offset);
+		this.birthdaysContractorsFacade.getBirthdaysContractorsList(
+			this.clientId,
+			this.pageSize,
+			this.offset,
+		);
 	}
 
 	public clearFilter(value: string) {
 		if (value.length < 1) {
-			this.birthdaysContractorsFacade.getBirthdaysContractorsList(this.pageSize, this.offset);
+			this.birthdaysContractorsFacade.getBirthdaysContractorsList(
+				this.clientId,
+				this.pageSize,
+				this.offset,
+			);
 		}
 	}
 }
