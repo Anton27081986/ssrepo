@@ -1,15 +1,7 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	Output,
-	ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {IFilterOption} from "@app/shared/components/filters/filters.component";
+import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 export type SearchType = 'user' | 'client' | 'contractor';
 
@@ -31,21 +23,10 @@ export class MultiselectComponent {
 	@Output() public getSelected = new EventEmitter<any>();
 	public isOptionsVisible = false;
 
-	@ViewChild('optionsEl', { static: false }) public optionsEl: ElementRef | undefined;
-
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
 		public readonly searchFacade: SearchFacadeService,
-	) {
-		document.addEventListener('click', e => {
-			e.stopPropagation();
-
-			if (this.isOptionsVisible && !(e.target as HTMLElement).classList.contains('option')) {
-				this.isOptionsVisible = false;
-				this.changeDetector.detectChanges();
-			}
-		});
-	}
+	) {}
 
 	public changeState(e: Event) {
 		e.stopPropagation();
@@ -64,34 +45,78 @@ export class MultiselectComponent {
 	}
 
 	protected onSearch(event: Event) {
-		switch (this.searchType) {
-			case 'user':
-				this.searchFacade
-					.getUsers((event.target as HTMLInputElement).value)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.options = [...this.options.filter(option=>option.checked), ...res.items];
-						this.changeDetector.detectChanges();
-					});
-				break;
-			case 'client':
-				this.searchFacade
-					.getClients((event.target as HTMLInputElement).value)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.options = [...this.options.filter(option=>option.checked), ...res.items];
-						this.changeDetector.detectChanges();
-					});
-				break;
-			case 'contractor':
-				this.searchFacade
-					.getContractor((event.target as HTMLInputElement).value)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.options = [...this.options.filter(option=>option.checked), ...res];
-						this.changeDetector.detectChanges();
-					});
-				break;
+		const query = (event.target as HTMLInputElement).value;
+
+		if (query?.length) {
+			switch (this.searchType) {
+				case 'user':
+					this.searchFacade
+						.getUsers(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							const checkedOptions = this.options.filter(option => option.checked);
+
+							this.options = [
+								...checkedOptions,
+								...res.items.filter((option: IFilterOption) => {
+									const selectedOption = checkedOptions.find(
+										checkedOption => checkedOption.id === option.id,
+									);
+
+									return !selectedOption;
+								}),
+							];
+
+							this.changeDetector.detectChanges();
+						});
+					break;
+				case 'client':
+					this.searchFacade
+						.getClients(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							const checkedOptions = this.options.filter(option => option.checked);
+
+							this.options = [
+								...checkedOptions,
+								...res.items.filter((option: IFilterOption) => {
+									const selectedOption = checkedOptions.find(
+										checkedOption => checkedOption.id === option.id,
+									);
+
+									return !selectedOption;
+								}),
+							];
+
+							this.changeDetector.detectChanges();
+						});
+					break;
+				case 'contractor':
+					this.searchFacade
+						.getContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							const checkedOptions = this.options.filter(option => option.checked);
+
+							this.options = [
+								...checkedOptions,
+								...res.filter((option: IFilterOption) => {
+									const selectedOption = checkedOptions.find(
+										checkedOption => checkedOption.id === option.id,
+									);
+
+									return !selectedOption;
+								}),
+							];
+
+							this.changeDetector.detectChanges();
+						});
+					break;
+			}
+		} else {
+			this.options = this.options.filter(option => option.checked);
+
+			this.changeDetector.detectChanges();
 		}
 	}
 

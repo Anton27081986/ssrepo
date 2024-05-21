@@ -16,9 +16,13 @@ import { IDictionaryItemDto } from './dictionary-item-dto';
  */
 export interface IClientItemDto {
 	/**
-	 * Айди клиента
+	 * Айди клиента умноженное на 10
 	 */
 	id?: number;
+	/**
+	 * Айди клиента
+	 */
+	code?: number;
 	/**
 	 * Название клиента
 	 */
