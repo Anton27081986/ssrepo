@@ -11,7 +11,7 @@ table {
 	height: 100%;
 	background-color: $island;
 	max-width: 1280px;
-	border-radius: 16px;
+	// border-radius: 16px;
 	border-style: hidden;
 	box-shadow: 0 0 0 1px $island-outline;
 	position: relative;
@@ -20,6 +20,7 @@ table {
 	thead {
 		position: sticky;
 		top: 0;
+		z-index: 1;
 
 		tr {
 			th {
@@ -39,7 +40,7 @@ table {
 			}
 
 			th:last-child {
-				border-top-right-radius: 16px;
+				// border-top-right-radius: 16px;
 			}
 		}
 	}
@@ -75,8 +76,6 @@ table {
 		}
 	}
 }
-
-
 
 :host-context(.dark) table {
 	background-color: $dark-island;
