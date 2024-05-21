@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import { IClientsFilter } from '@app/core/models/clients-filter';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 export interface IClientTableItem {
@@ -49,7 +47,7 @@ export class ClientsListPageComponent implements OnInit {
 	public filters: IFilter[] = [
 		{
 			name: 'code',
-			type: 'input',
+			type: 'number',
 			label: 'Код',
 			placeholder: 'Введите код',
 		},
@@ -205,7 +203,7 @@ export class ClientsListPageComponent implements OnInit {
 		return clients.map(x => {
 			const tableItem: IClientTableItem = {} as IClientTableItem;
 
-			tableItem.code = x.id !== undefined ? x.id.toString() : '-';
+			tableItem.code = x.code !== undefined ? x.code.toString() : '-';
 			tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '-';
 			tableItem.category = x.category?.name ?? '-';
 			tableItem.clientName = x.name ?? '-';

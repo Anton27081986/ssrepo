@@ -5,10 +5,10 @@ import { SearchType } from '@app/shared/components/multiselect/multiselect.compo
 
 export interface IFilter {
 	name: string;
-	type: 'input' | 'date' | 'select' | 'boolean' | 'search-select';
+	type: 'string' | 'number' | 'date' | 'select' | 'boolean' | 'search-select';
 	label: string;
 	placeholder: string;
-	value?: IFilterOption[] | string;
+	value?: IFilterOption[] | string | null;
 	options?: IFilterOption[];
 	searchType?: SearchType;
 }
@@ -106,7 +106,7 @@ export class FiltersComponent implements OnInit {
 		const filter = this.filters.find(item => item.name === name);
 
 		if (filter) {
-			filter.value = undefined;
+			filter.value = null;
 			filter.options?.forEach(option => (option.checked = false));
 		}
 	}

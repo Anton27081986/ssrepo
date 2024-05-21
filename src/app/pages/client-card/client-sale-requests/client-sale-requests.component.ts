@@ -34,7 +34,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 	public filters: IFilter[] = [
 		{
 			name: 'ContractorId',
-			type: 'input',
+			type: 'string',
 			label: 'Контрагент',
 			placeholder: '',
 		},

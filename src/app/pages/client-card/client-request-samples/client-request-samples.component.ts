@@ -42,7 +42,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 		},
 		{
 			name: 'TovId',
-			type: 'input',
+			type: 'string',
 			label: 'Товарная позиция (ТП)',
 			placeholder: 'Введите ТП',
 		},

@@ -7,7 +7,7 @@
 			<ss-icon height="8" width="8" name="iconClose" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
 		</div>
 	</div>
-	<div class="options" *ngIf="isOptionsVisible" #optionsEl>
+	<div class="options" *ngIf="isOptionsVisible">
 		<input *ngIf="searchType" class="option" placeholder="Поиск..." (input)="onSearch($event)"/>
 		<div class="option" *ngFor="let option of options" (click)="onSelect(option.id!)">
 			<ss-icon *ngIf="option.checked; else empty" height="16" name="checkbox"></ss-icon>
@@ -18,3 +18,4 @@
 		</div>
 	</div>
 </div>
+<div *ngIf="isOptionsVisible" class="overflow" (click)="changeState($event)"></div>
