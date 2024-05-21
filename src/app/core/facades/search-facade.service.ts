@@ -38,16 +38,20 @@ export class SearchFacadeService {
 	}
 
 	public getContractor(query: string, clientId?: number) {
-		if (query) {
-			return this.httpClient
-				.get<IResponse<IDictionaryItemDto>>(this.contractorUrl, {
-					params: new HttpParams().set('query', query).set('clientId', clientId!),
-				})
-				.pipe(map(response => response.items));
+		let params = new HttpParams();
+
+		if (clientId !== null && clientId !== undefined) {
+			params = params.set('clientId', clientId);
+		}
+
+		if (query !== null && query !== undefined) {
+			params = params.set('query', query);
 		}
 
 		return this.httpClient
-			.get<IResponse<IDictionaryItemDto>>(this.contractorUrl)
+			.get<IResponse<IDictionaryItemDto>>(this.contractorUrl, {
+				params,
+			})
 			.pipe(map(response => response.items));
 	}
 }
