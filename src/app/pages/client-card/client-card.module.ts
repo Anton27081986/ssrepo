@@ -48,6 +48,7 @@ import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-car
 import { ClientCardNewProductsComponent } from './client-card-new-products/client-card-new-products.component';
 import { ClientCardLostProductsComponent } from './client-card-lost-products/client-card-lost-products.component';
 import { ClientCardContractsComponent } from './client-card-contracts/client-card-contracts.component';
+import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
 
 @NgModule({
 	declarations: [
@@ -63,6 +64,7 @@ import { ClientCardContractsComponent } from './client-card-contracts/client-car
 		ClientCardReturnRequestsComponent,
 		ClientCardLostProductsComponent,
 		ClientCardContractsComponent,
+		ReplacePipe,
 	],
 	imports: [
 		CommonModule,
