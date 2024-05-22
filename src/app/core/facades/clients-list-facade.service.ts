@@ -71,16 +71,6 @@ export class ClientsListFacadeService {
 			.subscribe();
 
 		this.dictionaryApiService
-			.getContractors()
-			.pipe(
-				tap(contractors => {
-					this.contractors.next(contractors);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
-
-		this.dictionaryApiService
 			.getStatuses()
 			.pipe(
 				tap(statuses => {
