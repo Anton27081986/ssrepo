@@ -23,7 +23,7 @@
 	<form class="info-list" [formGroup]="infoForm" (submit)="$event.preventDefault()">
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Код:</ss-text>
-			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.id }}</ss-text>
+			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.code | replace : '.' : ',' }}</ss-text>
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Название:</ss-text>

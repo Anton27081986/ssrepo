@@ -24,6 +24,10 @@ export interface IClientDto {
 	 */
 	id?: number;
 	/**
+	 * Код клиента
+	 */
+	code?: number;
+	/**
 	 * Название клиента
 	 */
 	name?: string | null;
