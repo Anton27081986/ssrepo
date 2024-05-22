@@ -3,7 +3,7 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
-export type SearchType = 'user' | 'client' | 'contractor';
+export type SearchType = 'user' | 'client' | 'tovs' | 'contractor';
 
 @UntilDestroy()
 @Component({
@@ -100,7 +100,7 @@ export class MultiselectComponent {
 
 							this.options = [
 								...checkedOptions,
-								...res.filter((option: IFilterOption) => {
+								...res.items.filter((option: IFilterOption) => {
 									const selectedOption = checkedOptions.find(
 										checkedOption => checkedOption.id === option.id,
 									);

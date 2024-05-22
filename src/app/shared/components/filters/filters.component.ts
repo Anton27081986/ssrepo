@@ -5,7 +5,7 @@ import { SearchType } from '@app/shared/components/multiselect/multiselect.compo
 
 export interface IFilter {
 	name: string;
-	type: 'string' | 'number' | 'date' | 'select' | 'boolean' | 'search-select';
+	type: 'string' | 'number' | 'date' | 'search' | 'select' | 'boolean' | 'search-select';
 	label: string;
 	placeholder: string;
 	value?: IFilterOption[] | string | null;
@@ -74,6 +74,16 @@ export class FiltersComponent implements OnInit {
 
 				if (item.type.includes('boolean')) {
 					value = this.filtersForm.value ? 'Да' : 'Нет';
+				}
+
+				if (item.type === 'search') {
+					item.options = [
+						{
+							id: this.filtersForm.value[item.name].id,
+							name: this.filtersForm.value[item.name].name,
+						},
+					];
+					value = item.options;
 				}
 			}
 

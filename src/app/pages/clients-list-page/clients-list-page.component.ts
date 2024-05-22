@@ -203,7 +203,7 @@ export class ClientsListPageComponent implements OnInit {
 		return clients.map(x => {
 			const tableItem: IClientTableItem = {} as IClientTableItem;
 
-			tableItem.code = x.code !== undefined ? x.code.toString() : '-';
+			tableItem.code = x.code !== undefined ? x.code.toString().replace('.', ',') : '-';
 			tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '-';
 			tableItem.category = x.category?.name ?? '-';
 			tableItem.clientName = x.name ?? '-';
@@ -247,7 +247,7 @@ export class ClientsListPageComponent implements OnInit {
 					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
 					break;
 				default:
-					preparedFilter[filter.name] = filter.value || null;
+					preparedFilter[filter.name] = filter.value?.toString().replace(',','.') || null;
 			}
 		}
 

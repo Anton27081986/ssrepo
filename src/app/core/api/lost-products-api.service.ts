@@ -15,7 +15,7 @@ export class LostProductsApiService {
 		let params = new HttpParams();
 
 		if (filter.clientId !== null && filter.clientId !== undefined) {
-			params = params.set('clientId', filter.clientId);
+			params = params.set('ClientId', filter.clientId);
 		}
 
 		if (filter.limit !== null && filter.limit !== undefined) {

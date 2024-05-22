@@ -18,8 +18,8 @@ export class RequestSamplesApiService {
 			params = params.set('ClientId', filter.clientId);
 		}
 
-		if (filter.tovId !== null && filter.tovId !== undefined) {
-			params = params.set('TovId', filter.tovId);
+		if (filter.TovId !== null && filter.TovId !== undefined) {
+			params = params.set('TovId', filter.TovId);
 		}
 
 		if (filter.managerId !== null && filter.managerId !== undefined) {

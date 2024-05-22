@@ -18,6 +18,10 @@ export class SaleRequestsApiService {
 			params = params.set('ContractorId', filter.ContractorId);
 		}
 
+		if (filter.clientId) {
+			params = params.set('ClientId', filter.clientId);
+		}
+
 		if (filter.FromShipDate) {
 			params = params.set('FromShipDate', new Date(filter.FromShipDate).toISOString());
 		}

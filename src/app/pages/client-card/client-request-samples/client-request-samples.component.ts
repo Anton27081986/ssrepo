@@ -3,11 +3,10 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { ISamplesTableItem } from '@app/pages/client-card/client-request-samples/samples-table-item';
 import { TableState } from '@app/shared/components/table/table-state';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { IRequestSamplesFilter } from '@app/core/models/request-samples-filter';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { RequestSamplesFacadeService } from '@app/core/facades/request-samples-facade.service';
 import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
+import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -20,29 +19,27 @@ export class ClientRequestSamplesComponent implements OnInit {
 	public total: number | undefined;
 	public pageSize = 6;
 	public pageIndex = 1;
+	public offset = 0;
 	public tableItems: ITableItem[] = [];
 	public items: ISamplesTableItem[] = [];
+	private clientId: number | undefined;
 
 	// state
 	public isFiltersVisible: boolean = true;
-	public tableState: TableState = TableState.Loading;
-	public filtersForm!: FormGroup;
-	public filter: IRequestSamplesFilter = {
-		offset: 0,
-		limit: this.pageSize,
-	};
+	public tableState: TableState = TableState.Empty;
 
 	public filters: IFilter[] = [
 		{
-			name: 'managerIds',
-			type: 'search-select',
+			name: 'managerId',
+			type: 'search',
 			searchType: 'user',
 			label: 'Менеджер',
 			placeholder: 'Введите ФИО',
 		},
 		{
 			name: 'TovId',
-			type: 'string',
+			type: 'search',
+			searchType: 'tovs',
 			label: 'Товарная позиция (ТП)',
 			placeholder: 'Введите ТП',
 		},
@@ -50,19 +47,14 @@ export class ClientRequestSamplesComponent implements OnInit {
 
 	public constructor(
 		public readonly requestSamplesFacade: RequestSamplesFacadeService,
-		private readonly formBuilder: FormBuilder,
 		private readonly cdr: ChangeDetectorRef,
-	) {}
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+	) {
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
-		this.filtersForm = this.formBuilder.group({
-			contractorId: [],
-			fromShipDate: [],
-			toShipDate: [],
-		});
 
-		this.requestSamplesFacade.applyFilters(this.filter);
 
 		this.requestSamplesFacade.samples$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
@@ -75,6 +67,13 @@ export class ClientRequestSamplesComponent implements OnInit {
 			}
 
 			this.cdr.detectChanges();
+		});
+
+		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client.id) {
+				this.clientId = client.id;
+				this.getFilteredSales();
+			}
 		});
 	}
 
@@ -110,26 +109,50 @@ export class ClientRequestSamplesComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales(filter: { [key: string]: string }) {
-		this.filter = filter as unknown as IRequestSamplesFilter;
-		this.tableState = TableState.Loading;
+	public getFilteredSales() {
+		const preparedFilter: any = {
+			limit: this.pageSize,
+			offset: this.offset,
+			clientId: this.clientId,
+		};
 
-		if (this.filtersForm.valid) {
-			this.requestSamplesFacade.applyFilters({ ...this.filter, limit: this.pageSize });
+		for (const filter of this.filters) {
+			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+
+			switch (filter.type) {
+				case 'select':
+				case 'search-select':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value.map(item => item.id)
+						: null;
+					break;
+				case 'boolean':
+					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					break;
+				case 'search':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value[0]?.id
+						: null;
+					break;
+				default:
+					preparedFilter[filter.name] = filter.value || null;
+			}
 		}
+
+		this.requestSamplesFacade.applyFilters(preparedFilter);
 	}
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.filter.offset = 0;
+			this.offset = 0;
 		} else {
-			this.filter.offset = this.pageSize * $event - this.pageSize;
+			this.offset = this.pageSize * $event - this.pageSize;
 		}
 
-		this.filter.offset = this.pageSize * $event - this.pageSize;
+		this.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.requestSamplesFacade.applyFilters(this.filter);
+		this.getFilteredSales();
 	}
 
 	protected readonly TableState = TableState;

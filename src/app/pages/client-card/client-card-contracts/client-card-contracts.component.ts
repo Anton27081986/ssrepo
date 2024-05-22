@@ -7,6 +7,7 @@ import { IContractsTableItem } from '@app/pages/client-card/client-card-contract
 import { IContractsFilter } from '@app/core/models/contracts-filter';
 import { ContractsFacadeService } from '@app/core/facades/contracts-facade.service';
 import { IContractsItemDto } from '@app/core/models/company/contracts-item-dto';
+import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -20,21 +21,20 @@ export class ClientCardContractsComponent implements OnInit {
 	public total: number | undefined;
 	public pageSize = 6;
 	public pageIndex = 1;
+	public offset = 0;
 	public tableItems: ITableItem[] = [];
 	public items: IContractsTableItem[] = [];
+	private clientId: number | undefined;
 
 	// state
 	public isFiltersVisible: boolean = true;
-	public tableState: TableState = TableState.Loading;
-	public filter: IContractsFilter = {
-		offset: 0,
-		limit: this.pageSize,
-	};
+	public tableState: TableState = TableState.Empty;
 
 	public filters: IFilter[] = [
 		{
 			name: 'ContractorId',
-			type: 'string',
+			type: 'search',
+			searchType: 'contractor',
 			label: 'Контрагент',
 			placeholder: 'Выберите контрагента',
 		},
@@ -43,7 +43,9 @@ export class ClientCardContractsComponent implements OnInit {
 	public constructor(
 		public readonly contractsFacadeService: ContractsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-	) {}
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+	) {
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
@@ -61,7 +63,13 @@ export class ClientCardContractsComponent implements OnInit {
 			this.cdr.detectChanges();
 		});
 
-		this.contractsFacadeService.applyFilters(this.filter);
+		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client.id) {
+				this.clientId = client.id;
+				this.getFilteredSales();
+			}
+		});
+
 	}
 
 	private mapClientsToTableItems(sales: IContractsItemDto) {
@@ -105,23 +113,50 @@ export class ClientCardContractsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales(filter: { [key: string]: string }) {
-		this.filter = filter as unknown as IContractsFilter;
-		this.tableState = TableState.Loading;
-		this.contractsFacadeService.applyFilters({ ...this.filter, limit: this.pageSize });
+	public getFilteredSales() {
+		const preparedFilter: any = {
+			limit: this.pageSize,
+			offset: this.offset,
+			clientId: this.clientId,
+		};
+
+		for (const filter of this.filters) {
+			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+
+			switch (filter.type) {
+				case 'select':
+				case 'search-select':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value.map(item => item.id)
+						: null;
+					break;
+				case 'boolean':
+					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					break;
+				case 'search':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value[0]?.id
+						: null;
+					break;
+				default:
+					preparedFilter[filter.name] = filter.value || null;
+			}
+		}
+
+		this.contractsFacadeService.applyFilters(preparedFilter);
 	}
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.filter.offset = 0;
+			this.offset = 0;
 		} else {
-			this.filter.offset = this.pageSize * $event - this.pageSize;
+			this.offset = this.pageSize * $event - this.pageSize;
 		}
 
-		this.filter.offset = this.pageSize * $event - this.pageSize;
+		this.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.contractsFacadeService.applyFilters(this.filter);
+		this.getFilteredSales();
 	}
 
 	protected readonly TableState = TableState;

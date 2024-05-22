@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { INewProductsFilter } from '@app/core/models/new-products-filter';
 import { NewProductsApiService } from '@app/core/api/new-products-api.service';
 import { INewProductsItemDto } from '@app/core/models/company/new-products-item-dto';

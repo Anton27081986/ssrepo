@@ -18,12 +18,12 @@ export class ReturnRequestsApiService {
 			params = params.set('clientId', filter.clientId);
 		}
 
-		if (filter.contractorId !== null && filter.contractorId !== undefined) {
-			params = params.set('contractorId', filter.contractorId);
+		if (filter.ContractorId !== null && filter.ContractorId !== undefined) {
+			params = params.set('ContractorId', filter.ContractorId);
 		}
 
-		if (filter.authorId !== null && filter.authorId !== undefined) {
-			params = params.set('authorId', filter.authorId);
+		if (filter.AuthorId !== null && filter.AuthorId !== undefined) {
+			params = params.set('AuthorId', filter.AuthorId);
 		}
 
 		if (filter.limit !== null && filter.limit !== undefined) {

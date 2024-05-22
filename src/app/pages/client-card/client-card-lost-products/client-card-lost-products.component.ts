@@ -7,6 +7,7 @@ import { ILostProductsTableItem } from '@app/pages/client-card/client-card-lost-
 import { ILostProductsFilter } from '@app/core/models/lost-products-filter';
 import { LostProductsFacadeService } from '@app/core/facades/lost-products-facade.service';
 import { ILostProductsItemDto } from '@app/core/models/company/lost-products-item-dto';
+import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +37,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 	public constructor(
 		public readonly lostProductsFacadeService: LostProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
+		public readonly clientCardListFacade: ClientsCardFacadeService,
 	) {}
 
 	public ngOnInit(): void {
@@ -56,7 +58,11 @@ export class ClientCardLostProductsComponent implements OnInit {
 				this.cdr.detectChanges();
 			});
 
-		this.lostProductsFacadeService.applyFilters(this.filter);
+		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client.id) {
+				this.filter.clientId = client.id;
+			}
+		});
 	}
 
 	private mapClientsToTableItems(sales: ILostProductsItemDto) {
