@@ -14,8 +14,8 @@ export class NewProductsApiService {
 	public getNewProducts(filter: INewProductsFilter): Observable<INewProductsItemDto> {
 		let params = new HttpParams();
 
-		if (filter.clientId !== null && filter.clientId !== undefined) {
-			params = params.set('clientId', filter.clientId);
+		if (filter.СlientId !== null && filter.СlientId !== undefined) {
+			params = params.set('ClientId', filter.СlientId);
 		}
 
 		if (filter.customerId !== null && filter.customerId !== undefined) {

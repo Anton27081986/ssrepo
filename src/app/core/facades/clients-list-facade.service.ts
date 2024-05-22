@@ -7,6 +7,7 @@ import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { IResponse } from '@app/core/utils/response';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
+import {IDictionaryItemDto} from "@app/core/models/company/dictionary-item-dto";
 
 @UntilDestroy()
 @Injectable({
@@ -31,13 +32,13 @@ export class ClientsListFacadeService {
 
 	public categories$ = this.categories.asObservable();
 
-	private readonly contractors = new BehaviorSubject<IResponse<{ id: number; name: string }>>(
+	private readonly contractors = new BehaviorSubject<IResponse<IDictionaryItemDto>>(
 		{} as IResponse<any>,
 	);
 
 	public contractors$ = this.contractors.asObservable();
 
-	private readonly statuses = new BehaviorSubject<IResponse<{ id: number; name: string }>>(
+	private readonly statuses = new BehaviorSubject<IResponse<IDictionaryItemDto>>(
 		{} as IResponse<any>,
 	);
 

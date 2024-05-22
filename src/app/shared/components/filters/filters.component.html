@@ -20,11 +20,12 @@
 	</div>
 	<form [formGroup]="filtersForm" class="filters-form">
 		<div class="filters-form-item" *ngFor="let filter of filters">
-			<ss-input *ngIf="filter.type === 'number'" type="number" [label]="filter.label" [formControlName]="filter.name" [value]="filter.value" [placeholder]="filter.placeholder"></ss-input>
+			<ss-input *ngIf="filter.type === 'number' || filter.type === 'string'" type="text" [label]="filter.label" [formControlName]="filter.name" [value]="filter.value" [placeholder]="filter.placeholder"></ss-input>
 			<ss-datepicker-input *ngIf="filter.type === 'date'" size="small" [disabled]="false" [label]="filter.label" [formControlName]="filter.name" placeholder=""></ss-datepicker-input>
 			<ss-multiselect *ngIf="filter.type === 'select'" [options]="filter.options!" [placeholder]="filter.placeholder" [label]="filter.label" (getSelected)="filtersForm.controls[filter.name].setValue($event)"></ss-multiselect>
 			<ss-multiselect *ngIf="filter.type === 'search-select'" [options]="filter.options || []" [label]="filter.label" [searchType]="filter.searchType || 'user'" [placeholder]="filter.placeholder" (getSelected)="filtersForm.controls[filter.name].setValue($event)"></ss-multiselect>
 			<ss-toggle *ngIf="filter.type === 'boolean'" [formControlName]="filter.name" [label]="filter.label"></ss-toggle>
+			<ss-search-input *ngIf="filter.type === 'search'" [label]="filter.label" [searchType]="filter.searchType" [placeholder]="filter.placeholder" (select)="filtersForm.controls[filter.name].setValue($event)"></ss-search-input>
 		</div>
 	</form>
 	<div class="footer">

@@ -18,8 +18,8 @@ export class ContractsApiService {
 			params = params.set('clientId', filter.clientId);
 		}
 
-		if (filter.contractorId !== null && filter.contractorId !== undefined) {
-			params = params.set('contractorId', filter.contractorId);
+		if (filter.ContractorId !== null && filter.ContractorId !== undefined) {
+			params = params.set('ContractorId', filter.ContractorId);
 		}
 
 		if (filter.limit !== null && filter.limit !== undefined) {

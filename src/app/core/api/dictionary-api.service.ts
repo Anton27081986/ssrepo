@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IResponse } from '@app/core/utils/response';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -28,13 +29,20 @@ export class DictionaryApiService {
 
 	/** Список контрагентов */
 	public getContractors(
-		query: string = 'а',
-	): Observable<IResponse<{ id: number; name: string }>> {
+		query?: string,
+		clientId?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
-		params = params.set('query', query);
+		if (clientId !== null && clientId !== undefined) {
+			params = params.set('clientId', clientId);
+		}
 
-		return this.http.get<IResponse<{ id: number; name: string }>>(
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/dictionary/contractors`,
 			{
 				params,
@@ -46,6 +54,20 @@ export class DictionaryApiService {
 	public getStatuses(): Observable<IResponse<{ id: number; name: string }>> {
 		return this.http.get<IResponse<{ id: number; name: string }>>(
 			`${environment.apiUrl}/api/company/dictionary/clientStatuses`,
+		);
+	}
+
+	/** Список товаров */
+	public getTovs(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/tovs`,
+			{ params },
 		);
 	}
 }

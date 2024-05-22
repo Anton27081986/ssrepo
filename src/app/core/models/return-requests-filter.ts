@@ -1,7 +1,7 @@
 export interface IReturnRequestsFilter {
 	clientId?: number;
-	contractorId?: number;
-	authorId?: number;
+	ContractorId?: number;
+	AuthorId?: number;
 	limit: number;
 	offset: number;
 }

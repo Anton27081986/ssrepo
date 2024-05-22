@@ -1,5 +1,5 @@
 export interface INewProductsFilter {
-	clientId?: number;
+	СlientId?: number;
 	customerId?: number;
 	limit: number;
 	offset: number;

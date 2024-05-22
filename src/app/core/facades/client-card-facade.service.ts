@@ -47,8 +47,6 @@ export class ClientsCardFacadeService {
 				.pipe(
 
 					tap(client => {
-						console.log(client);
-						debugger;
 						this.clientSubject.next(client.data);
 						this.clientCardPermissionsSubject.next(client.permissions);
 					}),

@@ -12,7 +12,14 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
-export type searchType = 'user' | 'subsector' | 'region' | 'contractor';
+export type searchType =
+	| 'user'
+	| 'subsector'
+	| 'tovs'
+	| 'region'
+	| 'contractor'
+	| 'client'
+	| undefined;
 
 @UntilDestroy()
 @Component({
@@ -116,7 +123,16 @@ export class SearchInputComponent implements ControlValueAccessor {
 				break;
 			case 'contractor':
 				this.searchFacade
-					.getContractor(query, Number(this.data))
+					.getContractor(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res.items;
+						this.ref.detectChanges();
+					});
+				break;
+			case 'tovs':
+				this.searchFacade
+					.getTovs(query)
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
 						this.found = res;

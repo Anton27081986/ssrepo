@@ -7,6 +7,7 @@ import { IReturnRequestsTableItem } from '@app/pages/client-card/client-card-ret
 import { IReturnRequestsFilter } from '@app/core/models/return-requests-filter';
 import { ReturnRequestsFacadeService } from '@app/core/facades/return-requests-facade.service';
 import { IReturnRequestsItemDto } from '@app/core/models/company/return-requests-item-dto';
+import {ClientsCardFacadeService} from "@app/core/facades/client-card-facade.service";
 
 @UntilDestroy()
 @Component({
@@ -20,28 +21,26 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 	public total: number | undefined;
 	public pageSize = 6;
 	public pageIndex = 1;
+	public offset = 0;
 	public tableItems: ITableItem[] = [];
 	public items: IReturnRequestsTableItem[] = [];
+	private clientId: number | undefined;
 
 	// state
 	public isFiltersVisible: boolean = true;
 	public tableState: TableState = TableState.Loading;
-	public filter: IReturnRequestsFilter = {
-		offset: 0,
-		limit: this.pageSize,
-	};
 
 	public filters: IFilter[] = [
 		{
-			name: 'ContractorIds',
-			type: 'search-select',
+			name: 'ContractorId',
+			type: 'search',
 			label: 'Контрагент',
 			searchType: 'contractor',
 			placeholder: 'Выберите контрагента',
 		},
 		{
-			name: 'AuthorIds',
-			type: 'search-select',
+			name: 'AuthorId',
+			type: 'search',
 			label: 'Автор',
 			searchType: 'user',
 			placeholder: 'Выберите контрагента',
@@ -51,7 +50,14 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 	public constructor(
 		public readonly returnRequestsFacadeService: ReturnRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-	) {}
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+	) {
+		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client.id) {
+				this.clientId = client.id;
+			}
+		});
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
@@ -71,7 +77,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 				this.cdr.detectChanges();
 			});
 
-		this.returnRequestsFacadeService.applyFilters(this.filter);
+		this.getFilteredSales();
 	}
 
 	private mapClientsToTableItems(sales: IReturnRequestsItemDto) {
@@ -102,23 +108,52 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales(filter: { [key: string]: string }) {
-		this.filter = filter as unknown as IReturnRequestsFilter;
+	public getFilteredSales() {
+		const preparedFilter: any = {
+			limit: this.pageSize,
+			offset: this.offset,
+			clientId: this.clientId,
+		};
+
+		for (const filter of this.filters) {
+			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+
+			switch (filter.type) {
+				case 'select':
+				case 'search-select':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value.map(item => item.id)
+						: null;
+					break;
+				case 'boolean':
+					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					break;
+				case 'search':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value[0]?.id
+						: null;
+					break;
+				default:
+					preparedFilter[filter.name] = filter.value || null;
+			}
+		}
+
 		this.tableState = TableState.Loading;
-		this.returnRequestsFacadeService.applyFilters({ ...this.filter, limit: this.pageSize });
+
+		this.returnRequestsFacadeService.applyFilters(preparedFilter);
 	}
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.filter.offset = 0;
+			this.offset = 0;
 		} else {
-			this.filter.offset = this.pageSize * $event - this.pageSize;
+			this.offset = this.pageSize * $event - this.pageSize;
 		}
 
-		this.filter.offset = this.pageSize * $event - this.pageSize;
+		this.offset = this.pageSize * $event - this.pageSize;
 		this.pageIndex = $event;
 
-		this.returnRequestsFacadeService.applyFilters(this.filter);
+		this.getFilteredSales();
 	}
 
 	protected readonly TableState = TableState;
