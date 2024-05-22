@@ -52,11 +52,6 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 	) {
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
-			}
-		});
 	}
 
 	public ngOnInit(): void {
@@ -77,7 +72,12 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 				this.cdr.detectChanges();
 			});
 
-		this.getFilteredSales();
+		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client.id) {
+				this.clientId = client.id;
+				this.getFilteredSales();
+			}
+		});
 	}
 
 	private mapClientsToTableItems(sales: IReturnRequestsItemDto) {

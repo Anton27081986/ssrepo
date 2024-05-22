@@ -50,17 +50,11 @@ export class ClientRequestSamplesComponent implements OnInit {
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 	) {
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
-			}
-		});
 	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		this.getFilteredSales();
 
 		this.requestSamplesFacade.samples$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
@@ -73,6 +67,13 @@ export class ClientRequestSamplesComponent implements OnInit {
 			}
 
 			this.cdr.detectChanges();
+		});
+
+		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client.id) {
+				this.clientId = client.id;
+				this.getFilteredSales();
+			}
 		});
 	}
 
