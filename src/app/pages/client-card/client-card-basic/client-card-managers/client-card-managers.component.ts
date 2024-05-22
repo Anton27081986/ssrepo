@@ -20,6 +20,9 @@ export class ClientCardManagersComponent implements OnInit {
 	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
+	public canAppointMainManager: boolean = false;
+	public canAddManagers: boolean = false;
+	public canRemoveManagers: boolean = false;
 
 	public changedData: {
 		basicManager: number | undefined;
@@ -47,6 +50,12 @@ export class ClientCardManagersComponent implements OnInit {
 			this.changedData.managersList = managers.map(manager => {
 				return { manager, status: 'static' };
 			});
+		});
+
+		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
+			this.canAddManagers = permissions.includes('Client.Managers.Add');
+			this.canRemoveManagers = permissions.includes('Client.Managers.Remove');
+			this.canAppointMainManager = permissions.includes('Client.Managers.AppointMainManager');
 		});
 
 		this.userFacadeService

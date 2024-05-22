@@ -27,6 +27,7 @@ export class ClientCardInfoComponent implements OnInit {
 	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
+	public canEdit: boolean = false;
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
@@ -79,6 +80,10 @@ export class ClientCardInfoComponent implements OnInit {
 			.subscribe(user => {
 				this.currentUser = user;
 			});
+
+		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
+			this.canEdit = permissions.includes('Client.Card.Edit');
+		});
 	}
 
 	public onEditing(status: boolean) {
