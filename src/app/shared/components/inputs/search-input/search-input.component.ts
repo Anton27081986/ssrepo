@@ -122,13 +122,16 @@ export class SearchInputComponent implements ControlValueAccessor {
 					});
 				break;
 			case 'contractor':
-				this.searchFacade
-					.getContractor(query)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.found = res.items;
-						this.ref.detectChanges();
-					});
+				if (query) {
+					this.searchFacade
+						.getContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+				}
+
 				break;
 			case 'tovs':
 				this.searchFacade
