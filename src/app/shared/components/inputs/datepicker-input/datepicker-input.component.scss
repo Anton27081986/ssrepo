@@ -12,7 +12,7 @@ input {
 	letter-spacing: -0.01em;
 	height: 100%;
 	opacity: 0;
-	cursor: default;
+	cursor: pointer;
 	box-sizing: border-box;
 }
 
@@ -24,7 +24,7 @@ input::-webkit-calendar-picker-indicator {
 	height: 100%;
 	margin: 0;
 	padding: 0;
-	cursor: default;
+	cursor: pointer;
 }
 
 .input {
@@ -42,6 +42,10 @@ input::-webkit-calendar-picker-indicator {
 
 input::placeholder {
 	color: $lite-text;
+}
+
+input:disabled {
+	cursor: default;
 }
 
 .input:has(input:focus) {

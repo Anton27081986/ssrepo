@@ -83,10 +83,12 @@ export class ClientCardBirthdaysComponent implements OnInit {
 	}
 
 	public filterbirthdaysContractors(contractor: { id: number; date?: string }) {
-		this.birthdaysContractorsFacade.filterBirthdaysContractorsList(
-			this.clientId,
-			contractor.id,
-		);
+		if (contractor.id) {
+			this.birthdaysContractorsFacade.filterBirthdaysContractorsList(
+				this.clientId,
+				contractor.id,
+			);
+		}
 	}
 
 	public trackBy(_index: number, item: any) {
