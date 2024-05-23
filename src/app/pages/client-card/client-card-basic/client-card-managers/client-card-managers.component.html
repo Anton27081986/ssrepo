@@ -2,10 +2,16 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Менеджеры</ss-headline>
 		<ng-container>
-			<ss-icon *ngIf="!isEditing; else closeButton" name="edit" (click)="onEditing(true)"></ss-icon>
+			<ss-icon name="edit"
+					 *ngIf="!isEditing && canAddManagers; else closeButton"
+					 (click)="onEditing(true)">
+			</ss-icon>
 		</ng-container>
 		<ng-template #closeButton>
-			<ss-icon name="iconCloseLight" (click)="onEditing(false)"></ss-icon>
+			<ss-icon name="iconCloseLight"
+					 *ngIf="canAddManagers"
+					 (click)="onEditing(false)">
+			</ss-icon>
 		</ng-template>
 	</div>
 	<div class="header">
