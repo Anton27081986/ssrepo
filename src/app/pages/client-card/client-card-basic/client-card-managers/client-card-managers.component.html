@@ -19,7 +19,7 @@
 	</div>
 
 	<div *ngIf="!isEditing; else changeMain" class="manager">
-		<ss-avatar [src]="basicManager?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+		<ss-avatar [src]="basicManager?.avatarUrl?.toString()!" size="m" [isSquare]="false"></ss-avatar>
 		<ss-avatar [src]="'https://ssnab.it/Files/MolsPhotos/w80/9591176.jpg'" size="m" [isSquare]="false" style="display: none"></ss-avatar>
 		<ss-avatar [src]="basicManager?.avatarUrl || ''" [isSquare]="false" style="display: none"></ss-avatar>
 

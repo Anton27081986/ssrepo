@@ -185,4 +185,24 @@
 	.header {
 		background-color: $dark-island;
 	}
+
+	.message-content {
+		background-color: $dark-island!important;
+		border: 1px solid $dark-island-outline;
+	}
+
+	.message {
+		border-right: unset!important;
+	}
+
+	.message-content-blockquote {
+		color: $text;
+
+		.message-content-blockquote-message {
+			::ng-deep p {
+				color: $text!important;
+			}
+		}
+	}
 }
+
