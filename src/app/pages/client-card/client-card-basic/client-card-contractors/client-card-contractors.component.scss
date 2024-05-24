@@ -35,3 +35,9 @@
 		}
 	}
 }
+
+:host-context(.dark) :host {
+	.content {
+		background-color: $dark-island!important;
+	}
+}
