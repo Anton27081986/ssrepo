@@ -12,12 +12,12 @@ table {
 	background-color: $island;
 	max-width: 1280px;
 	border-radius: 16px;
-	border-style: hidden;
+	// border-style: hidden;
 	box-shadow: 0 0 0 0.2px $island-outline;
 	position: relative;
 	overflow-y: auto;
-	border-collapse: collapse;
-	// border-collapse: separate;
+//	border-collapse: collapse;
+	border-collapse: separate;
 	border-spacing: 0;
 
 	thead {
@@ -28,7 +28,7 @@ table {
 		tr {
 			th {
 				text-align: left;
-				background-color: #e6eaeb ;
+				background-color: #F2F3F7 ;
 				padding: 12px;
 				border: 1px solid $island-outline;
 				font-size: 14px;
