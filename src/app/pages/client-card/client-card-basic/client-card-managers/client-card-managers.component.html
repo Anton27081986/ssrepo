@@ -17,8 +17,12 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Базовый менеджер</ss-headline>
 	</div>
+
 	<div *ngIf="!isEditing; else changeMain" class="manager">
 		<ss-avatar [src]="basicManager?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+		<ss-avatar [src]="'https://ssnab.it/Files/MolsPhotos/w80/9591176.jpg'" size="m" [isSquare]="false" style="display: none"></ss-avatar>
+		<ss-avatar [src]="basicManager?.avatarUrl || ''" [isSquare]="false" style="display: none"></ss-avatar>
+
 		<div class="manager-info">
 			<div class="manager-name">
 				<ss-headline size="h6">{{ basicManager?.lastName }} {{ basicManager?.firstName }} {{ basicManager?.surName }}</ss-headline>
