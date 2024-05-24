@@ -61,6 +61,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
 			if (client.id) {
 				this.filter.clientId = client.id;
+				this.lostProductsFacadeService.applyFilters(this.filter);
 			}
 		});
 	}
