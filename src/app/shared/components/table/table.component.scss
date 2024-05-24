@@ -11,11 +11,14 @@ table {
 	height: 100%;
 	background-color: $island;
 	max-width: 1280px;
-	// border-radius: 16px;
+	border-radius: 16px;
 	border-style: hidden;
-	box-shadow: 0 0 0 1px $island-outline;
+	box-shadow: 0 0 0 0.2px $island-outline;
 	position: relative;
 	overflow-y: auto;
+	border-collapse: collapse;
+	// border-collapse: separate;
+	border-spacing: 0;
 
 	thead {
 		position: sticky;
@@ -40,10 +43,13 @@ table {
 			}
 
 			th:last-child {
-				// border-top-right-radius: 16px;
+				border-top-right-radius: 16px;
 			}
 		}
 	}
+
+	tbody tr:last-child td:first-child { border-bottom-left-radius: 16px; }
+	tbody tr:last-child td:last-child { border-bottom-right-radius: 16px; }
 
 	tr {
 		td {
@@ -75,6 +81,13 @@ table {
 			}
 		}
 	}
+}
+
+.scroll {
+	border-radius: 0;
+
+	thead tr th:last-child { border-top-right-radius: 0; }
+	tbody tr:last-child td:last-child { border-bottom-right-radius: 0; }
 }
 
 :host-context(.dark) table {
