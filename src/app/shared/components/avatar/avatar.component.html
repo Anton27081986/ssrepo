@@ -5,7 +5,6 @@
 
 <ss-icon *ngIf="noImage; else avatar" class="avatar" name="noAvatar" width="{{width}}" height="{{height}}"></ss-icon>
 
-
 <ng-template #avatar>
 	<div class="avatar" style="background: center / contain no-repeat url('{{src}}'); width: {{width}}px; height: {{height}}px">
 		<img alt="" src="{{src}}" width="0" height="0" (error)="onImageError(event)" />
