@@ -17,6 +17,7 @@ export class AvatarComponent implements OnInit {
 
 	protected onImageError(e: any) {
 		console.log('Ошибка', e);
+
 		this.noImage = true;
 	}
 
