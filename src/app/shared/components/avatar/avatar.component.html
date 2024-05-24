@@ -1,5 +1,10 @@
-<div class="avatar" *ngIf="!noImage; else noAvatar" style="background: center / contain no-repeat url('{{src}}'); width: {{width}}px; height: {{height}}px">
-	<img alt="" src="{{src}}" width="0" height="0" (error)="onImageError()" />
+<div style="display: none;">
+	noImage  {{ noImage }} <br />
+	src  {{ src }}
+</div>
+
+<div class="avatar" *ngIf="src; else noAvatar" style="background: center / contain no-repeat url('{{src}}'); width: {{width}}px; height: {{height}}px">
+	<img alt="" src="{{src}}" width="0" height="0" (error)="onImageError(event)" />
 </div>
 <ng-template #noAvatar>
 	<ss-icon class="avatar" name="noAvatar" width="{{width}}" height="{{height}}"></ss-icon>
