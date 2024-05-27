@@ -45,6 +45,9 @@
 		}
 	}
 }
+th {
+	text-align: left;
+}
 
 :host-context(.dark) {
 	.history-item {
