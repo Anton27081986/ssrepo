@@ -4,9 +4,21 @@
 	</div>
 	<div class="content">
 		<div class="history-item" *ngFor="let item of historyItems; trackBy: trackByHistoryItems">
-			<div class="history-item-line" *ngFor="let line of item.changes; trackBy: trackByChanges">
-				<ss-text class="history-item-line-title" size="3" weight="semi-bold">{{ line.propertyName }}</ss-text>
-				<ss-text size="3" weight="regular">{{ line.toValue }}</ss-text>
+			<div class="history-item-line">
+				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Автор:</ss-text>
+				<ss-text size="3" weight="regular">{{ item.user.name }}, {{item.createdTime |  date: 'dd.MM.yyyy' }}</ss-text>
+			</div>
+			<div class="history-item-line">
+				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Действие:</ss-text>
+				<ss-text size="3" weight="regular">{{ item.action }}</ss-text>
+			</div>
+<!--			<div class="history-item-line" *ngFor="let line of item.changes; trackBy: trackByChanges">-->
+<!--				<ss-text class="history-item-line-title" size="3" weight="semi-bold">{{ line.propertyName }}</ss-text>-->
+<!--				<ss-text size="3" weight="regular">{{ line.toValue }}</ss-text>-->
+<!--			</div>-->
+			<div class="history-item-line">
+				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Комментарий:</ss-text>
+				<ss-text size="3" weight="regular">{{ item.comments ?? '-' }}</ss-text>
 			</div>
 		</div>
 	</div>
