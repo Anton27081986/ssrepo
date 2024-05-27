@@ -8,11 +8,10 @@ import { LocalStorageService } from '@app/core/services/local-storage.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 export interface IClientTableItem {
-	code: string;
-	clientCardLink: string;
+	code: { text: string; url: string };
 	category: string;
 	clientName: string;
-	contractors: string;
+	contractors: Array<{ text?: string | null; url?: string | null }>;
 	managers: string;
 	status: string;
 	withoutManager: string;
@@ -203,11 +202,17 @@ export class ClientsListPageComponent implements OnInit {
 		return clients.map(x => {
 			const tableItem: IClientTableItem = {} as IClientTableItem;
 
-			tableItem.code = x.code !== undefined ? x.code.toString().replace('.', ',') : '-';
-			tableItem.clientCardLink = x.id !== undefined ? `./client-card/${x.id}` : '-';
+			tableItem.code = {
+				text: x.code !== undefined ? x.code.toString().replace('.', ',') : '-',
+				url: x.id !== undefined ? `./client-card/${x.id}` : '-',
+			};
 			tableItem.category = x.category?.name ?? '-';
 			tableItem.clientName = x.name ?? '-';
-			tableItem.contractors = x.contractors ? x.contractors.map(c => c.name).join(', ') : '-';
+			tableItem.contractors = x.contractors
+				? x.contractors.map(c => {
+						return { text: c.name, url: c.linkToDetail };
+					})
+				: [];
 
 			tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
 			tableItem.status = x.status.name ?? '-';
@@ -247,7 +252,8 @@ export class ClientsListPageComponent implements OnInit {
 					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
 					break;
 				default:
-					preparedFilter[filter.name] = filter.value?.toString().replace(',','.') || null;
+					preparedFilter[filter.name] =
+						filter.value?.toString().replace(',', '.') || null;
 			}
 		}
 

@@ -1,13 +1,12 @@
 import { Component, Input } from '@angular/core';
 
 export interface ITableItem {
-	[key: string]: string | number | null;
+	[key: string]: { text: string; url?: string } & Array<{ text: string; url?: string }> & string;
 }
 
 export interface ITableHead {
 	title: string;
-	fields: string[];
-	link?: string;
+	field: string;
 }
 
 @Component({
@@ -19,8 +18,4 @@ export class TableComponent {
 	@Input() public head: ITableHead[] | undefined;
 	@Input() public items: ITableItem[] | undefined;
 	protected readonly Array = Array;
-
-	protected getFieldValue(fields: string[], item: ITableItem): string {
-		return fields.map(field => item[field]).join(' ');
-	}
 }

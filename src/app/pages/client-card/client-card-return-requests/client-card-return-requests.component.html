@@ -8,13 +8,13 @@
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
 					[head]="[
-						{title: 'Код', fields: ['code']},
-						{title: 'Дата создания', fields: ['createDate']},
-						{title: 'Статус',  fields: ['status']},
-						{title: 'Автор',  fields: ['author']},
-						{title: 'Тип', fields: ['type']},
-						{title: 'Контрагент', fields: ['contractor']},
-						{title: 'ТП', fields: ['tov']}
+						{title: 'Код', field: 'code'},
+						{title: 'Дата создания', field: 'createDate'},
+						{title: 'Статус',  field: 'status'},
+						{title: 'Автор',  field: 'author'},
+						{title: 'Тип', field: 'type'},
+						{title: 'Контрагент', field: 'contractor'},
+						{title: 'ТП', field: 'tov'}
 						]"
 					[items]="tableItems">
 				</ss-table>

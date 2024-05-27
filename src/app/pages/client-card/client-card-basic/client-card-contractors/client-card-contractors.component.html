@@ -11,11 +11,11 @@
 	<div class="content">
 		<ss-table
 			[head]="[
-					{title: 'Код', fields: ['id'], link: 'linkToDetail'},
-					{title: 'ИНН', fields: ['inn']},
-					{title: 'Название', fields: ['name']},
-					{title: 'Кредитный статус', fields: ['creditStatus']},
-					{title: 'Состояние', fields: ['status']}
+					{title: 'Код', field: 'id'},
+					{title: 'ИНН', field: 'inn'},
+					{title: 'Название', field: 'name'},
+					{title: 'Кредитный статус', field: 'creditStatus'},
+					{title: 'Состояние', field: 'status'}
 					]"
 			[items]="tableItems"
 		></ss-table>
