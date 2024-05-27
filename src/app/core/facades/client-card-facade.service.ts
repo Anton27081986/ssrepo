@@ -45,7 +45,6 @@ export class ClientsCardFacadeService {
 			this.clientApiService
 				.getClientCardById(id)
 				.pipe(
-
 					tap(client => {
 						this.clientSubject.next(client.data);
 						this.clientCardPermissionsSubject.next(client.permissions);
@@ -62,7 +61,6 @@ export class ClientsCardFacadeService {
 				.getClientCardById(this.clientIdSubject.value)
 				.pipe(
 					tap(client => {
-						debugger;
 						this.clientSubject.next(client.data);
 						this.clientCardPermissionsSubject.next(client.permissions);
 					}),

@@ -9,10 +9,6 @@
 	gap: 8px;
 
 	.header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-
 		.header-title {
 			display: flex;
 			align-items: center;
@@ -21,6 +17,10 @@
 
 		ss-icon {
 			cursor: pointer;
+		}
+
+		ss-tabs {
+			justify-content: flex-end;
 		}
 	}
 
