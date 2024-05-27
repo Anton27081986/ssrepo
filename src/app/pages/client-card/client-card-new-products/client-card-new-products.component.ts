@@ -80,8 +80,8 @@ export class ClientCardNewProductsComponent implements OnInit {
 				tableItem.code = x.id.toString() ?? '-';
 				tableItem.status = x.status.name ?? '-';
 				tableItem.productName = x.productName ?? '-';
-				tableItem.customer = x.customer.name ?? '-';
-				tableItem.developer = x.developer.name ?? '-';
+				tableItem.customer = x.customer?.name ?? '-';
+				tableItem.developer = x.developer?.name ?? '-';
 
 				return tableItem;
 			}) || []

@@ -55,7 +55,6 @@ export class ClientRequestSamplesComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-
 		this.requestSamplesFacade.samples$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
 				this.tableState = TableState.Empty;
@@ -95,9 +94,9 @@ export class ClientRequestSamplesComponent implements OnInit {
 				tableItem.managerName = x.manager.name ?? '-';
 				tableItem.tovName = x.tov.name ?? '-';
 				tableItem.planQuantity = x.planQuantity.toString() ?? '-';
-				tableItem.factQuantity = x.factQuantity.toString() ?? '-';
+				tableItem.factQuantity = x.factQuantity?.toString() ?? '-';
 				tableItem.planWeight = x.planWeight.toString() ?? '-';
-				tableItem.factWeight = x.factWeight.toString() ?? '-';
+				tableItem.factWeight = x.factWeight?.toString() ?? '-';
 				tableItem.comment = x.comment ?? '-';
 
 				return tableItem;
@@ -138,6 +137,8 @@ export class ClientRequestSamplesComponent implements OnInit {
 					preparedFilter[filter.name] = filter.value || null;
 			}
 		}
+
+		this.tableState = TableState.Loading;
 
 		this.requestSamplesFacade.applyFilters(preparedFilter);
 	}
