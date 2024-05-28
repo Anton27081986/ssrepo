@@ -26,7 +26,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = true;
+	public isFiltersVisible: boolean = false;
 	public tableState: TableState = TableState.Loading;
 
 	public filters: IFilter[] = [

@@ -25,7 +25,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = true;
+	public isFiltersVisible: boolean = false;
 	public tableState: TableState = TableState.Empty;
 
 	public filters: IFilter[] = [
