@@ -6,4 +6,6 @@ export interface IChangeTrackerItemDto {
 	createdTime: string;
 	user: IUserDto;
 	changes: IChangeItemDto[];
+	comments?: string;
+	action: string;
 }
