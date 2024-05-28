@@ -1,10 +1,9 @@
-<ss-headline
+<ss-text
 	class="tab"
 	*ngFor="let tab of tabs; trackBy: trackBy"
 	[ngClass]="{'selected': tab === selectedTab }"
-	size="h6"
-	weight="semi-bold"
+	size="2"
 	(click)="onSelect(tab)"
 >
 	{{ tab }}
-</ss-headline>
+</ss-text>

@@ -25,7 +25,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 	public items: ILostProductsTableItem[] = [];
 
 	// state
-	public isFiltersVisible: boolean = true;
+	public isFiltersVisible: boolean = false;
 	public tableState: TableState = TableState.Loading;
 	public filter: ILostProductsFilter = {
 		offset: 0,
