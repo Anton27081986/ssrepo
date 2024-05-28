@@ -3,7 +3,7 @@
 		<ss-headline class="title" size="h6">Заявки на продажу</ss-headline>
 		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 	</div>
-	<div class="content desktop table-with-filters">
+	<div class="content desktop">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
