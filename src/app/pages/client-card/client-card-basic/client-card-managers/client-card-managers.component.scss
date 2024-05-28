@@ -4,7 +4,6 @@
 	width: 434px;
 	display: flex;
 	flex-direction: column;
-	height: 354px;
 
 	.header {
 		width: 100%;
@@ -115,7 +114,7 @@
 		flex-direction: column;
 		margin: 10px;
 		overflow-y: auto;
-		max-height: 100px;
+		max-height: 56px;
 
 		&-item {
 			display: flex;
