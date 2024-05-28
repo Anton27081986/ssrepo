@@ -17,5 +17,6 @@ export interface ITableHead {
 export class TableComponent {
 	@Input() public head: ITableHead[] | undefined;
 	@Input() public items: ITableItem[] | undefined;
+	@Input() public scroll: boolean = false;
 	protected readonly Array = Array;
 }

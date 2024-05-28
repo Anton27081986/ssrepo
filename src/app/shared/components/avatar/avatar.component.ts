@@ -15,7 +15,9 @@ export class AvatarComponent implements OnInit {
 	protected width: number = 32;
 	protected height: number = 32;
 
-	protected onImageError() {
+	protected onImageError(e: any) {
+		console.log('ImageError', e);
+
 		this.noImage = true;
 	}
 
@@ -41,4 +43,6 @@ export class AvatarComponent implements OnInit {
 				this.height = this.isSquare ? 32 : 36;
 		}
 	}
+
+	protected readonly event = event;
 }

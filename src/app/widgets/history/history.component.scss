@@ -45,3 +45,15 @@
 		}
 	}
 }
+
+:host-context(.dark) {
+	.history-item {
+		background-color: $dark-island!important;
+		border: 1px solid $dark-island-outline;
+	}
+
+	.content {
+		background-color: $dark-island!important;
+	}
+}
+

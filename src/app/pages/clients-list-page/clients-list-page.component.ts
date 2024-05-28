@@ -4,7 +4,6 @@ import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-import { LocalStorageService } from '@app/core/services/local-storage.service';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 
 export interface IClientTableItem {
@@ -98,7 +97,6 @@ export class ClientsListPageComponent implements OnInit {
 
 	public constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
-		private readonly localStorageService: LocalStorageService,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly userService: UserProfileStoreService,
 	) {}
@@ -106,44 +104,21 @@ export class ClientsListPageComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		const savedFilters = this.localStorageService.getItem<IFilter[]>('clientsListFilter');
+		const managersFilter = this.filters.find(coreFilter => coreFilter.name === 'managerIds');
 
-		if (savedFilters?.length) {
-			savedFilters.forEach(filter => {
-				if (filter.value) {
-					const coreFilter = this.filters.find(
-						coreFilter => coreFilter.name === filter.name,
-					);
+		if (managersFilter) {
+			managersFilter.options = [{ ...this.userService.getUserInfo(), checked: true }];
+			managersFilter.value = managersFilter.options;
+		}
 
-					if (coreFilter) {
-						if (Array.isArray(filter.value)) {
-							coreFilter.options = filter.value;
-							coreFilter.value = filter.value;
-						} else {
-							coreFilter.value = filter.value;
-						}
-					}
-				}
-			});
-		} else {
-			const managersFilter = this.filters.find(
-				coreFilter => coreFilter.name === 'managerIds',
-			);
+		const statusesFilter = this.filters.find(coreFilter => coreFilter.name === 'statuses');
 
-			if (managersFilter) {
-				managersFilter.options = [{ ...this.userService.getUserInfo(), checked: true }];
-				managersFilter.value = managersFilter.options;
-			}
-
-			const statusesFilter = this.filters.find(coreFilter => coreFilter.name === 'statuses');
-
-			if (statusesFilter) {
-				statusesFilter.options = [
-					{ id: 1, name: 'Новый', checked: true },
-					{ id: 6, name: 'Действующий', checked: true },
-				];
-				statusesFilter.value = statusesFilter.options;
-			}
+		if (statusesFilter) {
+			statusesFilter.options = [
+				{ id: 1, name: 'Новый', checked: true },
+				{ id: 6, name: 'Действующий', checked: true },
+			];
+			statusesFilter.value = statusesFilter.options;
 		}
 
 		this.getFilteredClients();
@@ -215,7 +190,7 @@ export class ClientsListPageComponent implements OnInit {
 				: [];
 
 			tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
-			tableItem.status = x.status.name ?? '-';
+			tableItem.status = x.status?.name ?? '-';
 
 			tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
 
@@ -228,11 +203,6 @@ export class ClientsListPageComponent implements OnInit {
 	}
 
 	public getFilteredClients() {
-		this.localStorageService.setItem(
-			'clientsListFilter',
-			this.filters.filter(filter => filter.value?.length),
-		);
-
 		const preparedFilter: any = {
 			limit: this.pageSize,
 			offset: this.offset,

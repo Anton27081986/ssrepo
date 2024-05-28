@@ -16,7 +16,7 @@
 	<div class="content desktop table-with-filters">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full">
-				<ss-table
+				<ss-table [scroll]="true"
 					[head]="[
 						{title: 'Код', field: 'code'},
 						{title: 'Категория', field: 'category'},

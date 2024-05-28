@@ -1,5 +1,5 @@
-<table>
-	<thead *ngIf="head">
+<table [ngClass]="scroll ? 'scroll' : ''">
+		<thead *ngIf="head">
 		<tr>
 			<th *ngFor="let headItem of head">{{ headItem.title }}</th>
 		</tr>
