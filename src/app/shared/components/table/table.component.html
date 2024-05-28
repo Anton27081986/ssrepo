@@ -3,15 +3,22 @@
 		<tr>
 			<th *ngFor="let headItem of head">{{ headItem.title }}</th>
 		</tr>
-		</thead>
-		<tbody>
-		<tr *ngFor="let item of items">
-			<td *ngFor="let headItem of head">
-				<a *ngIf="headItem.link; else text" href="{{ item[headItem.link] }}" target="_blank">
-					{{ getFieldValue(headItem.fields, item) }}
+	</thead>
+	<tbody>
+	<tr *ngFor="let item of items">
+		<td *ngFor="let headItem of head">
+			<ng-container [ngSwitch]="true">
+			<a *ngSwitchCase="!!item[headItem.field]?.url" href="{{ item[headItem.field].url }}" target="_blank">
+				{{ item[headItem.field].text }}
+			</a>
+			<span *ngSwitchCase="Array.isArray(item[headItem.field])">
+				<a *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
+					{{ link.text }}
 				</a>
-				<ng-template #text>{{ getFieldValue(headItem.fields, item) }}</ng-template>
-			</td>
-		</tr>
-		</tbody>
-	</table>
+			</span>
+			<span *ngSwitchDefault>{{ item[headItem.field] }}</span>
+			</ng-container>
+		</td>
+	</tr>
+	</tbody>
+</table>

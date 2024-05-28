@@ -32,7 +32,9 @@ export class AuctionSalesComponent implements OnInit {
 				this.listAuction = value;
 
 				if (value.items) {
-					this.tableItems = <ITableItem[]>value.items;
+					this.tableItems = <ITableItem[]>(<unknown>value.items.map(item => {
+						return { ...item, tovName: { text: item.tovName, url: item.detailUrl } };
+					}));
 				}
 
 				if (value.total) {

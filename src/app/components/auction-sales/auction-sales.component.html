@@ -9,10 +9,10 @@
 	<div class="content desktop">
 			<ss-table
 				[head]="[
-					{title: 'ТП', fields: ['tovName'], link: 'detailUrl'},
-					{title: 'Доступность', fields: ['source']},
-					{title: 'Цена прайса', fields: ['price', 'currency']},
-					{title: 'Количество', fields: ['quantity', 'tovUnitName']}
+					{title: 'ТП', field: 'tovName'},
+					{title: 'Доступность', field: 'source'},
+					{title: 'Цена прайса', field: 'price'},
+					{title: 'Количество', field: 'quantity'}
 					]"
 				[items]="tableItems">
 			</ss-table>

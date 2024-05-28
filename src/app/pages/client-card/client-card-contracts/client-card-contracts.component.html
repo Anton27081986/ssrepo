@@ -8,11 +8,11 @@
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
 					[head]="[
-						{title: 'Код', fields: ['code'], link: 'detailLink'},
-						{title: 'Контрагент', fields: ['contractor']},
-						{title: 'Дата начала',  fields: ['beginDate']},
-						{title: 'Дата окончания',  fields: ['endDate']},
-						{title: 'Отсрочка', fields: ['prolongationDate']}
+						{title: 'Код', field: 'code'},
+						{title: 'Контрагент', field: 'contractor'},
+						{title: 'Дата начала',  field: 'beginDate'},
+						{title: 'Дата окончания',  field: 'endDate'},
+						{title: 'Отсрочка', field: 'prolongationDate'}
 						]"
 					[items]="tableItems">
 				</ss-table>

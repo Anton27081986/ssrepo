@@ -4,7 +4,6 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { IContractsTableItem } from '@app/pages/client-card/client-card-contracts/contracts-table-item';
-import { IContractsFilter } from '@app/core/models/contracts-filter';
 import { ContractsFacadeService } from '@app/core/facades/contracts-facade.service';
 import { IContractsItemDto } from '@app/core/models/company/contracts-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
