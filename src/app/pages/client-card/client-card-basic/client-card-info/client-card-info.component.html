@@ -69,12 +69,13 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
-			<ss-search-input formControlName="saleDirection" [disabled]="true" searchType="subsector" *ngIf="isEditing; else subsector"
-							 (select)="selectCategory($event)"
-							 [error]="infoForm.controls.saleDirection.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
-							 value="{{ (client$ | async)?.saleDirection }}"
-							 (keydown)="validators($event)"
-			></ss-search-input>
+			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
+			<!--			<ss-search-input formControlName="saleDirection" [disabled]="true" searchType="subsector" *ngIf="isEditing; else subsector"-->
+<!--							 (select)="selectCategory($event)"-->
+<!--							 [error]="infoForm.controls.saleDirection.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"-->
+<!--							 value="{{ (client$ | async)?.saleDirection }}"-->
+<!--							 (keydown)="validators($event)"-->
+<!--			></ss-search-input>-->
 			<ng-template #subsector>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
 			</ng-template>
