@@ -71,9 +71,16 @@
 
 	.content {
 		padding: 16px 20px;
+		overflow: auto;
 	}
 
 	.pagination {
 		margin-top: 20px;
+	}
+}
+
+::ng-deep {
+	::-webkit-scrollbar-track {
+		margin-bottom: 9px;
 	}
 }
