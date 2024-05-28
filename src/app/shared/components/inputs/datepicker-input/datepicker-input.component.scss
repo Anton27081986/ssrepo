@@ -44,6 +44,10 @@ input::placeholder {
 	color: $lite-text;
 }
 
+input:disabled {
+	cursor: default;
+}
+
 .input:has(input:focus) {
 	border-color: $additional-outline;
 }
