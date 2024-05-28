@@ -3,21 +3,21 @@
 		<ss-headline class="title" size="h6">Образцы</ss-headline>
 		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 	</div>
-	<div class="content desktop table-with-filters">
+	<div class="content desktop">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
 					[head]="[
-						{title: 'Код', fields: ['code'], link: 'detailLink'},
-						{title: 'Статус', fields: ['status']},
-						{title: 'Дата заказа',  fields: ['orderDate']},
-						{title: 'Менеджер',  fields: ['managerName']},
-						{title: 'ТП', fields: ['tovName']},
-						{title: 'Кол-во (план)', fields: ['planQuantity']},
-						{title: 'Кол-во (факт)', fields: ['factQuantity']},
-						{title: 'Вес (план)', fields: ['planWeight']},
-						{title: 'Вес (факт)', fields: ['factWeight']},
-						{title: 'Комментарий', fields: ['comment']},
+						{title: 'Код', field: 'code'},
+						{title: 'Статус', field: 'status'},
+						{title: 'Дата заказа',  field: 'orderDate'},
+						{title: 'Менеджер',  field: 'managerName'},
+						{title: 'ТП', field: 'tovName'},
+						{title: 'Кол-во (план)', field: 'planQuantity'},
+						{title: 'Кол-во (факт)', field: 'factQuantity'},
+						{title: 'Вес (план)', field: 'planWeight'},
+						{title: 'Вес (факт)', field: 'factWeight'},
+						{title: 'Комментарий', field: 'comment'},
 						]"
 					[items]="tableItems">
 				</ss-table>

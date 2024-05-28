@@ -6,12 +6,17 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
 
 	.header {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		justify-content: space-between;
+		gap: 20px;
+
 		.header-title {
 			display: flex;
-			align-items: center;
+			flex-grow: 1;
 			gap: 12px;
 		}
 
@@ -19,8 +24,19 @@
 			cursor: pointer;
 		}
 
-		ss-tabs {
-			justify-content: flex-end;
+		.header-tabs {
+			width: 100%;
+			display: flex;
+			gap: 16px;
+
+			.header-tabs-align {
+				width: 434px;
+				flex-shrink: 0;
+			}
+
+			ss-tabs {
+				flex-grow: 1;
+			}
 		}
 	}
 
@@ -28,7 +44,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
-		padding-top: 8px;
+		padding-top: 16px;
 
 		.contractors {
 			display: flex;

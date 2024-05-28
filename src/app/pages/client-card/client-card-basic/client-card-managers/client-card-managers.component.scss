@@ -4,7 +4,6 @@
 	width: 434px;
 	display: flex;
 	flex-direction: column;
-	height: 354px;
 
 	.header {
 		width: 100%;
@@ -30,6 +29,7 @@
 		padding: 16px 20px;
 		gap: 14px;
 		border-bottom: 1px solid $island-outline;
+		height: 136px;
 
 		&-name {
 			display: flex;
@@ -115,7 +115,8 @@
 		flex-direction: column;
 		margin: 10px;
 		overflow-y: auto;
-		max-height: 100px;
+		max-height: 56px;
+		height: 42px;
 
 		&-item {
 			display: flex;

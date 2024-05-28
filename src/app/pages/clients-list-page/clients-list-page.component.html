@@ -18,13 +18,13 @@
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table [scroll]="true"
 					[head]="[
-						{title: 'Код', fields: ['code'], link: 'clientCardLink'},
-						{title: 'Категория', fields: ['category']},
-						{title: 'Клиент', fields: ['clientName']},
-						{title: 'Контрагенты', fields: ['contractors']},
-						{title: 'Менеджеры', fields: ['managers']},
-						{title: 'Статус', fields: ['status']},
-						{title: 'Клиент без БМ', fields: ['withoutManager']}
+						{title: 'Код', field: 'code'},
+						{title: 'Категория', field: 'category'},
+						{title: 'Клиент', field: 'clientName'},
+						{title: 'Контрагенты', field: 'contractors'},
+						{title: 'Менеджеры', field: 'managers'},
+						{title: 'Статус', field: 'status'},
+						{title: 'Клиент без БМ', field: 'withoutManager'}
 						]"
 					[items]="tableItems">
 				</ss-table>
@@ -60,7 +60,7 @@
 				<div class="mobile-info">
 					<ss-caption size="1">
 						<b> Код: </b>
-						<a href="{{item.clientCardLink}}"> {{item.code }} </a>
+						<a href="{{item?.code?.url}}"> {{ item?.code?.text }} </a>
 					</ss-caption>
 					<ss-caption size="1">
 						<b>Категория: </b>

@@ -1,4 +1,4 @@
-<ss-card padding="0">
+<ss-card padding="0" radius="0 0 16px 16px">
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Общая информация</ss-headline>
 		<div class="header-controls" *ngIf="!isEditing; else closeButton">
@@ -91,19 +91,17 @@
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region?.name || '—' }}</ss-text>
 			</ng-template>
 		</div>
-		<ng-container *ngIf="isEditing">
-			<div class="info-list-item price-list" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
-				<a href="{{ (client$ | async)?.changePriceListLevelLink }}" target="_blank">
-					<ss-icon name="editNew" class="" height="13.2"></ss-icon>
-				</a>
-				<ss-text size="3" class="info-list-item-name">Текущий уровень прайс-листа:</ss-text>
-				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.category?.name || '—' }}</ss-text>
-			</div>
-			<div class="info-list-item" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
-				<ss-text size="3" class="info-list-item-name">Среднемесячный объем продаж за квартал:</ss-text>
-				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.avgSalesVolume || '—' }}</ss-text>
-			</div>
-		</ng-container>
+		<div class="info-list-item price-list" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
+			<a href="{{ (client$ | async)?.changePriceListLevelLink }}" target="_blank">
+				<ss-icon name="editNew" class="" height="13.2"></ss-icon>
+			</a>
+			<ss-text size="3" class="info-list-item-name">Текущий уровень прайс-листа:</ss-text>
+			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.category?.name || '—' }}</ss-text>
+		</div>
+		<div class="info-list-item" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
+			<ss-text size="3" class="info-list-item-name">Среднемесячный объем продаж за квартал:</ss-text>
+			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.avgSalesVolume || '—' }}</ss-text>
+		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Эксклюзивный дистрибьютор в регионе:</ss-text>
 			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.exclusiveInRegion ? '✔' : '—' }}</ss-text>

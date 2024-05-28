@@ -3,16 +3,16 @@
 		<ss-headline class="title" size="h6">ЖНТПР</ss-headline>
 		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 	</div>
-	<div class="content desktop table-with-filters">
+	<div class="content desktop">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
 					[head]="[
-						{title: 'Код', fields: ['code']},
-						{title: 'Статус', fields: ['status']},
-						{title: 'Название ТПР',  fields: ['productName']},
-						{title: 'Заказчик',  fields: ['customer']},
-						{title: 'Разработчик', fields: ['developer']}
+						{title: 'Код', field: 'code'},
+						{title: 'Статус', field: 'status'},
+						{title: 'Название ТПР',  field: 'productName'},
+						{title: 'Заказчик',  field: 'customer'},
+						{title: 'Разработчик', field: 'developer'}
 						]"
 					[items]="tableItems">
 				</ss-table>

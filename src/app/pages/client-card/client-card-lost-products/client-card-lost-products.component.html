@@ -2,17 +2,17 @@
 	<div class="header">
 		<ss-headline class="title" size="h6">ПКП (Потерянные клиент/продукты)</ss-headline>
 	</div>
-	<div class="content desktop table-with-filters">
+	<div class="content desktop">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
 					[head]="[
-						{title: 'ТПР', fields: ['tov']},
-						{title: 'Дата фиксации', fields: ['fixationDate']},
-						{title: 'Дата отгрузки',  fields: ['shipDate']},
-						{title: 'Кол-во, ед.',  fields: ['quantity']},
-						{title: 'Сумма отгрузки, $', fields: ['valueEff']},
-						{title: 'Заявка на продажу', fields: ['requestName'], link: 'requestLink'},
+						{title: 'ТПР', field: 'tov'},
+						{title: 'Дата фиксации', field: 'fixationDate'},
+						{title: 'Дата отгрузки',  field: 'shipDate'},
+						{title: 'Кол-во, ед.',  field: 'quantity'},
+						{title: 'Сумма отгрузки, $', field: 'valueEff'},
+						{title: 'Заявка на продажу', field: 'requestName'},
 						]"
 					[items]="tableItems">
 				</ss-table>

@@ -3,7 +3,7 @@
 :host {
 	display: block;
 	background-color: $island;
-	border-radius: 16px;
+	border: 1px solid $island-outline;
 }
 
 :host-context(.dark) :host {

@@ -4,10 +4,9 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { IReturnRequestsTableItem } from '@app/pages/client-card/client-card-return-requests/return-requests-table-item';
-import { IReturnRequestsFilter } from '@app/core/models/return-requests-filter';
 import { ReturnRequestsFacadeService } from '@app/core/facades/return-requests-facade.service';
 import { IReturnRequestsItemDto } from '@app/core/models/company/return-requests-item-dto';
-import {ClientsCardFacadeService} from "@app/core/facades/client-card-facade.service";
+import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +26,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = true;
+	public isFiltersVisible: boolean = false;
 	public tableState: TableState = TableState.Loading;
 
 	public filters: IFilter[] = [
@@ -51,8 +50,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		public readonly returnRequestsFacadeService: ReturnRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {
-	}
+	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
