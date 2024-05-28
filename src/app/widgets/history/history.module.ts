@@ -7,6 +7,7 @@ import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import {NzTableModule} from "ng-zorro-antd/table";
+import {AccordionModule} from "@app/shared/components/accordion/accordion.module";
 
 @NgModule({
 	declarations: [HistoryComponent],
@@ -21,6 +22,7 @@ import {NzTableModule} from "ng-zorro-antd/table";
 		NzPaginationModule,
 		DatePipe,
 		NzTableModule,
+		AccordionModule,
 	],
 })
 export class HistoryModule {}

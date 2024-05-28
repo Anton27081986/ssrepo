@@ -13,7 +13,7 @@
 				<ss-text size="3" weight="regular">{{ item.action }}</ss-text>
 			</div>
 
-			<div class="history-item-table" *ngIf="item.changes.length">
+			<div class="history-item-table" *ngIf="item.changes.length === 1">
 				<table >
 						<thead>
 							<tr>
@@ -42,6 +42,39 @@
 					</tr>
 					</tbody>
 				</table>
+			</div>
+
+			<div class="history-item-line" *ngIf="item.changes.length>1">
+				<ss-accordion [title]="'Подробнее'">
+					<table >
+						<thead>
+						<tr>
+							<th>
+								<ss-text class="history-item-line-title" size="3" weight="semi-bold">Поле</ss-text>
+							</th>
+							<th>
+								<ss-text class="history-item-line-title" size="3" weight="semi-bold">Старое значение</ss-text>
+							</th>
+							<th>
+								<ss-text class="history-item-line-title" size="3" weight="semi-bold">Новое значение</ss-text>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr *ngFor="let change of item.changes">
+							<td>
+								<ss-text size="3" weight="regular">{{change.propertyName}}</ss-text>
+							</td>
+							<td>
+								<ss-text size="3" weight="regular">{{change.fromValue?? '-'}}</ss-text>
+							</td>
+							<td>
+								<ss-text size="3" weight="regular">{{change.toValue?? '-'}}</ss-text>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</ss-accordion>
 			</div>
 
 			<div class="history-item-line">
