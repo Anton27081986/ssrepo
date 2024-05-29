@@ -19,6 +19,7 @@ export type searchType =
 	| 'region'
 	| 'contractor'
 	| 'client'
+	| 'technologist'
 	| undefined;
 
 @UntilDestroy()
@@ -136,6 +137,15 @@ export class SearchInputComponent implements ControlValueAccessor {
 			case 'tovs':
 				this.searchFacade
 					.getTovs(query)
+					.pipe(untilDestroyed(this))
+					.subscribe(res => {
+						this.found = res;
+						this.ref.detectChanges();
+					});
+				break;
+			case 'technologist':
+				this.searchFacade
+					.getTechnologist(query)
 					.pipe(untilDestroyed(this))
 					.subscribe(res => {
 						this.found = res;
