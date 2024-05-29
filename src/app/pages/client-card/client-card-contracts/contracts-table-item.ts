@@ -5,5 +5,5 @@ export interface IContractsTableItem {
 	beginDate: string;
 	endDate: string;
 	prolongationDate: string;
-	isSoonExpire: boolean;
+	highlight: boolean;
 }

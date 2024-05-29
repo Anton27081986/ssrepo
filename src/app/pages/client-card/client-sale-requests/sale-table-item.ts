@@ -1,8 +1,9 @@
 export interface ISaleTableItem {
-	code: string;
+	code: { text: string; url: string };
 	saleLink: string;
-	contractorId: string;
+	contractor: string;
 	shipDate: string;
 	paymentDate: string;
 	status: string;
+	highlight: boolean;
 }

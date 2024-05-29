@@ -7,10 +7,10 @@ export interface INewProductsItemDto {
 			id: number;
 			name: string;
 		};
-		customer: {
+		customers: Array<{
 			id: number;
 			name: string;
-		};
+		}>;
 		developer: {
 			id: number;
 			name: string;

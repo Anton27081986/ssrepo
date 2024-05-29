@@ -19,10 +19,10 @@ export interface IReturnRequestsItemDto {
 			id: number;
 			name: string;
 		};
-		tov: {
+		tov: Array<{
 			id: number;
 			name: string;
-		};
+		}>;
 	}> | null;
 	total?: number;
 	linkToModule?: string | null;

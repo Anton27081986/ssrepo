@@ -6,7 +6,7 @@
 	</thead>
 	<tbody>
 	<tr *ngFor="let item of items">
-		<td *ngFor="let headItem of head">
+		<td *ngFor="let headItem of head" [ngClass]="{'highlight': item.highlight}">
 			<ng-container [ngSwitch]="true">
 			<a *ngSwitchCase="!!item[headItem.field]?.url" href="{{ item[headItem.field].url }}" target="_blank">
 				{{ item[headItem.field].text }}
