@@ -6,6 +6,7 @@ import {
 	ElementRef,
 	OnInit,
 	forwardRef,
+	ChangeDetectorRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -32,8 +33,7 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 
 	@ViewChild('input', { static: true }) public input!: ElementRef<HTMLInputElement>;
 
-	public onChange = (value: string) => {};
-	public onTouched = () => {};
+	public constructor(private readonly cdr: ChangeDetectorRef) {}
 
 	public ngOnInit(): void {
 		this.input.nativeElement.addEventListener('input', this.handleInput.bind(this));
@@ -57,6 +57,8 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 		if (this.input) {
 			this.input.nativeElement.value = this.value;
 		}
+
+		this.cdr.detectChanges();
 	}
 
 	public registerOnChange(fn: (value: string) => void): void {
@@ -74,6 +76,10 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 			this.input.nativeElement.disabled = isDisabled;
 		}
 	}
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public onChange = (value: string) => {};
+	public onTouched = () => {};
 
 	public clear(): void {
 		this.writeValue('');
