@@ -47,10 +47,15 @@
 		<div class="edit-basic-manager">
 			<ss-icon name="flag"></ss-icon>
 			<ss-select (onChange)="onBasicManagerChange($event)" *ngIf="canAppointMainManager">
-				<option *ngFor="let manager of (managers$ | async)" [selected]="manager.id === basicManager?.id" [value]="manager.id">
-					<ss-text size="2" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }} - </ss-text>
-					<ss-caption size="2">{{ manager?.position }}</ss-caption>
+				<option [value]="0">
+					<ss-text size="2" weight="semi-bold">Выберите менеджера</ss-text>
 				</option>
+				<ng-container *ngFor="let manager of (managers$ | async)">
+					<option *ngIf="!manager.isBase" [selected]="manager.id === basicManager?.id" [value]="manager.id">
+						<ss-text size="2" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }} - </ss-text>
+						<ss-caption size="2">{{ manager?.position }}</ss-caption>
+					</option>
+				</ng-container>
 			</ss-select>
 			<div *ngIf="!canAppointMainManager">
 				<ss-text size="2" weight="semi-bold">{{ basicManager?.lastName }} {{ basicManager?.firstName }} {{ basicManager?.surName }} - </ss-text>
