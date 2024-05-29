@@ -73,14 +73,26 @@ table {
 				opacity: 0.7;
 				text-align: left;
 				cursor: pointer;
+
 			}
 
-			a:first-child {
-				white-space: nowrap;
+			a:after {
+				content: ', ';
+			}
+
+			a:last-child:after {
+				content: '';
 			}
 
 			a:hover {
 				 opacity: 1;
+			}
+		}
+
+		td:first-child {
+
+			a {
+				white-space: nowrap;
 			}
 		}
 
