@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { from, Observable, tap } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { Permissions } from '@app/core/constants/permissions.constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -53,9 +54,15 @@ export class ClientCardManagersComponent implements OnInit {
 		});
 
 		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
-			this.canAddManagers = permissions.includes('Client.Managers.Add');
-			this.canRemoveManagers = permissions.includes('Client.Managers.Remove');
-			this.canAppointMainManager = permissions.includes('Client.Managers.AppointMainManager');
+			this.canAddManagers = permissions.includes(
+				Permissions.CLIENT_MANAGERS_CAN_ADD_MANAGERS,
+			);
+			this.canRemoveManagers = permissions.includes(
+				Permissions.CLIENT_MANAGERS_CAN_REMOVE_MANAGERS,
+			);
+			this.canAppointMainManager = permissions.includes(
+				Permissions.CLIENT_MANAGERS_CAN_APPOINT_BASE_MANAGER,
+			);
 		});
 
 		this.userFacadeService
