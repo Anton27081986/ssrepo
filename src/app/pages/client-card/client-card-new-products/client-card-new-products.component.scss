@@ -8,23 +8,26 @@
 
 .table-with-filters {
 	display: flex;
+	flex-direction: column;
 
 	.table {
 		flex-grow: 1;
 
+		overflow-y: auto;
+		margin: 0;
+		padding: 0 10px;
+		display: flex;
+		flex-direction: column;
+
 		.table-container {
 
 			ss-table {
-				max-height: 450px;
-				overflow-y: hidden;
-
 				table {
 					max-height: 450px;
 				}
 			}
 		}
 	}
-
 	.pagination {
 		justify-content: flex-end;
 	}
@@ -70,17 +73,11 @@
 	}
 
 	.content {
-		padding: 16px 20px;
+		padding: 16px 10px;
 		overflow: auto;
 	}
 
 	.pagination {
 		margin-top: 20px;
-	}
-}
-
-::ng-deep {
-	::-webkit-scrollbar-track {
-		margin-bottom: 9px;
 	}
 }
