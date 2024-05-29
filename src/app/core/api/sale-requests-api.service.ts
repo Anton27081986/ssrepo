@@ -23,7 +23,12 @@ export class SaleRequestsApiService {
 		}
 
 		if (filter.FromShipDate) {
-			params = params.set('FromShipDate', new Date(filter.FromShipDate).toISOString());
+			const date = filter.FromShipDate.split('.');
+
+			params = params.set(
+				'FromShipDate',
+				new Date(Date.parse([date[1], date[0], date[2]].join(' '))).toISOString(),
+			);
 		}
 
 		if (filter.ToShipDate) {

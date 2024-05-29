@@ -83,7 +83,10 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: IReturnRequestsTableItem = {} as IReturnRequestsTableItem;
 
-				tableItem.code = x.id.toString() ?? '-';
+				tableItem.code = {
+					text: x.id.toString() ?? '-',
+					url: x.detailLink ?? '',
+				};
 				tableItem.createDate = x.createDate
 					? new Date(Date.parse(x.createDate)).toLocaleString('ru-RU', {
 							year: 'numeric',
@@ -95,7 +98,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 				tableItem.author = x.author.name ?? '-';
 				tableItem.type = x.type.name ?? '-';
 				tableItem.contractor = x.contractor.name ?? '-';
-				tableItem.tov = x.tov.name ?? '-';
+				tableItem.tov = x.tov.map(t => t.name).join(', ') ?? '-';
 
 				return tableItem;
 			}) || []

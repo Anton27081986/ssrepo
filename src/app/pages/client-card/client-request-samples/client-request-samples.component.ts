@@ -49,8 +49,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 		public readonly requestSamplesFacade: RequestSamplesFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {
-	}
+	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
@@ -81,8 +80,10 @@ export class ClientRequestSamplesComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: ISamplesTableItem = {} as ISamplesTableItem;
 
-				tableItem.code = x.id.toString() ?? '-';
-				tableItem.detailLink = x.detailLink ?? '';
+				tableItem.code = {
+					text: x.id.toString() ?? '-',
+					url: x.detailLink ?? '',
+				};
 				tableItem.status = x.status.name ?? '-';
 				tableItem.orderDate = x.orderDate
 					? new Date(Date.parse(x.orderDate)).toLocaleString('ru-RU', {

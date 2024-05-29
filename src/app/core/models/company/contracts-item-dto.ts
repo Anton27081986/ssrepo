@@ -8,7 +8,7 @@ export interface IContractsItemDto {
 		};
 		beginDate: string;
 		endDate: string;
-		prolongationDate: string;
+		prolongationDays: number;
 		isSoonExpire: boolean;
 	}> | null;
 	total?: number;

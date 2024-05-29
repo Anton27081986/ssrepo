@@ -43,8 +43,7 @@ export class ClientCardContractsComponent implements OnInit {
 		public readonly contractsFacadeService: ContractsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {
-	}
+	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
@@ -68,7 +67,6 @@ export class ClientCardContractsComponent implements OnInit {
 				this.getFilteredSales();
 			}
 		});
-
 	}
 
 	private mapClientsToTableItems(sales: IContractsItemDto) {
@@ -93,15 +91,9 @@ export class ClientCardContractsComponent implements OnInit {
 							day: 'numeric',
 						})
 					: '-';
-				tableItem.prolongationDate = x.endDate
-					? new Date(Date.parse(x.prolongationDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
-					: '-';
+				tableItem.prolongationDate = x.prolongationDays?.toString() ?? '-';
 
-				tableItem.isSoonExpire = x.isSoonExpire ?? false;
+				tableItem.highlight = x.isSoonExpire ?? false;
 
 				return tableItem;
 			}) || []

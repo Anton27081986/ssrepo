@@ -80,9 +80,11 @@ export class ClientSaleRequestsComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: ISaleTableItem = {} as ISaleTableItem;
 
-				tableItem.code = x.id !== undefined ? x.id.toString() : '-';
-				tableItem.saleLink = x.detailLink !== undefined ? x.detailLink : '';
-				tableItem.contractorId = x.contractor?.id.toString(10) ?? '-';
+				tableItem.code = {
+					text: x.id !== undefined ? x.id.toString() : '-',
+					url: x.detailLink !== undefined ? x.detailLink : '',
+				};
+				tableItem.contractor = x.contractor?.name ?? '-';
 				tableItem.shipDate = x.shipDate
 					? new Date(Date.parse(x.shipDate)).toLocaleString('ru-RU', {
 							year: 'numeric',
@@ -99,6 +101,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 					: '-';
 
 				tableItem.status = x.status !== undefined ? x.status.name : '-';
+				tableItem.highlight = x.isPaymentOverdue;
 
 				return tableItem;
 			}) || []

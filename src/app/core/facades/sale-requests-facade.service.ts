@@ -32,6 +32,5 @@ export class SaleRequestsFacadeService {
 
 	public applyFilters(filters: ISaleRequestsFilter) {
 		this.filtersChanged.next(filters);
-		console.log(filters)
 	}
 }

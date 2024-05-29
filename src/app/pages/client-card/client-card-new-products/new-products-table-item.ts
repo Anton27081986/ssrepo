@@ -1,5 +1,5 @@
 export interface INewProductsTableItem {
-	code: string;
+	code: { text: string; url: string };
 	status: string;
 	productName: string;
 	customer: string;

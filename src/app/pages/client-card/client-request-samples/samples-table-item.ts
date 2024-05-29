@@ -1,5 +1,5 @@
 export interface ISamplesTableItem {
-	code: string;
+	code: { text: string; url: string };
 	detailLink: string;
 	status: string;
 	orderDate: string;

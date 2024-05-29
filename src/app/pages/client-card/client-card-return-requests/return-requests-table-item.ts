@@ -1,5 +1,5 @@
 export interface IReturnRequestsTableItem {
-	code: string;
+	code: { text: string; url: string };
 	createDate: string;
 	status: string;
 	author: string;

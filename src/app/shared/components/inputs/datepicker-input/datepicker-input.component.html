@@ -6,6 +6,7 @@
 		   (input)="onChange($any($event.target).value)"
 		   (blur)="onTouched()"
 		   class="{{ error ? size + ' error' : size }}"
+		   lang="ru-RU"
 		   #input
 	/>
 	<ss-text class="value" size="2">{{ (input.value | date: 'dd.MM.yyyy') }}</ss-text>

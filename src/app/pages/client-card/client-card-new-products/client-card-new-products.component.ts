@@ -43,8 +43,7 @@ export class ClientCardNewProductsComponent implements OnInit {
 		public readonly newProductsFacadeService: NewProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {
-	}
+	) {}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
@@ -65,11 +64,11 @@ export class ClientCardNewProductsComponent implements OnInit {
 			});
 		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
 			if (client.id) {
-				this.clientId = client.id;;
+				this.clientId = client.id;
 
 				this.getFilteredSales();
 			}
-		})
+		});
 	}
 
 	private mapClientsToTableItems(sales: INewProductsItemDto) {
@@ -77,10 +76,13 @@ export class ClientCardNewProductsComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: INewProductsTableItem = {} as INewProductsTableItem;
 
-				tableItem.code = x.id.toString() ?? '-';
+				tableItem.code = {
+					text: x.id.toString() ?? '-',
+					url: x.detailLink ?? '',
+				};
 				tableItem.status = x.status.name ?? '-';
 				tableItem.productName = x.productName ?? '-';
-				tableItem.customer = x.customer?.name ?? '-';
+				tableItem.customer = x.customers?.map(c=>c.name).join(', ') ?? '-';
 				tableItem.developer = x.developer?.name ?? '-';
 
 				return tableItem;
