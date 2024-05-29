@@ -70,4 +70,17 @@ export class DictionaryApiService {
 			{ params },
 		);
 	}
+
+	public getTechnologist(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/users/search`,
+			{ params },
+		);
+	}
 }
