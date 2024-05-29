@@ -5,12 +5,13 @@
 				<a class="header-controls-button" href="{{ (client$ | async)?.linkToDetail }}" target="_blank" rel="noreferrer">
 					<ss-icon name="box" [tooltip]="'Открыть модель клиента'" [theme]="TooltipTheme.MAIN" [position]="TooltipPosition.ABOVE"></ss-icon>
 				</a>
-				<ss-tooltip-menu icon="download">
-					<ss-caption size="1">
-						<a [href]="clientCardListFacade.methodFileLink" target="_blank">
-						Методика расчета категории Дистребьютеров
-						</a>
-					</ss-caption>
+				<ss-tooltip-menu icon="download"
+				                 *ngIf="visibleCalculateDistributor">
+									<ss-caption size="1">
+										<a [href]="clientCardListFacade.methodFileLink" target="_blank">
+										Методика расчета категории Дистребьютеров
+										</a>
+									</ss-caption>
 				</ss-tooltip-menu>
 				<ng-container *ngIf="canEdit">
 					<ss-icon name="edit" (click)="onEditing(true)"></ss-icon>
@@ -70,31 +71,29 @@
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Подотрасль:</ss-text>
 			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
-			<!--			<ss-search-input formControlName="saleDirection" [disabled]="true" searchType="subsector" *ngIf="isEditing; else subsector"-->
-<!--							 (select)="selectCategory($event)"-->
-<!--							 [error]="infoForm.controls.saleDirection.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"-->
-<!--							 value="{{ (client$ | async)?.saleDirection }}"-->
-<!--							 (keydown)="validators($event)"-->
-<!--			></ss-search-input>-->
 			<ng-template #subsector>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.saleDirection || '—' }}</ss-text>
 			</ng-template>
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Регион:</ss-text>
-			<ss-search-input formControlName="region" searchType="region" *ngIf="isEditing; else region"
+			<ss-search-input formControlName="region"
+			                 searchType="region"
+			                 *ngIf="isEditing; else region"
 							 (select)="selectRegion($event)"
 							 [error]="infoForm.controls.region.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
 							 value="{{ (client$ | async)?.region?.name }}"
-							 (keydown)="validators($event)"
-			></ss-search-input>
+							 (keydown)="validators($event)">
+			</ss-search-input>
 			<ng-template #region>
 				<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.region?.name || '—' }}</ss-text>
 			</ng-template>
 		</div>
 		<div class="info-list-item price-list" *ngIf="(client$ | async)?.exclusive || (client$ | async)?.isDistributor">
-			<a href="{{ (client$ | async)?.changePriceListLevelLink }}" target="_blank">
-				<ss-icon name="editNew" class="" height="13.2"></ss-icon>
+			<a href="{{ (client$ | async)?.changePriceListLevelLink }}"
+			   target="_blank"
+			   *ngIf="visiblePriceList">
+					<ss-icon name="editNew" class="" height="13.2"></ss-icon>
 			</a>
 			<ss-text size="3" class="info-list-item-name">Текущий уровень прайс-листа:</ss-text>
 			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.category?.name || '—' }}</ss-text>

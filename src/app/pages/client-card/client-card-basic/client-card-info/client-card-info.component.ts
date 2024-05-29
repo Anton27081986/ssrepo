@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { Permissions } from '@app/core/constants/permissions.constants';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { IClientStatus } from '@app/core/models/company/client-status';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -28,6 +29,8 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public isEditing = false;
 	public canEdit: boolean = false;
+	public visiblePriceList: boolean = false;
+	public visibleCalculateDistributor: boolean = false;
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
@@ -82,7 +85,11 @@ export class ClientCardInfoComponent implements OnInit {
 			});
 
 		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
-			this.canEdit = permissions.includes('Client.Card.Edit');
+			this.canEdit = permissions.includes(Permissions.CLIENT_MAIN_INFO_EDIT);
+			this.visiblePriceList = permissions.includes(Permissions.CLIENT_MAIN_INFO_PRICE_LIST);
+			this.visibleCalculateDistributor = permissions.includes(
+				Permissions.CLIENT_MAIN_INFO_CALCULATION_DISTRIBUTORS,
+			);
 		});
 	}
 
