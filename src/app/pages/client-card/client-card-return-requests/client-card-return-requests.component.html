@@ -3,7 +3,7 @@
 		<ss-headline class="title" size="h6">Возвраты/претензии</ss-headline>
 		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 	</div>
-	<div class="content desktop">
+	<div class="content desktop table-with-filters">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full">
 				<ss-table
@@ -18,16 +18,6 @@
 						]"
 					[items]="tableItems">
 				</ss-table>
-				<div class="pagination" style="justify-content: flex-end">
-					<nz-pagination
-						[nzTotal]="total"
-						[nzPageIndex]="pageIndex"
-						[nzPageSize]="pageSize"
-						(nzPageIndexChange)="nzPageIndexChange($event)"
-						(nzPageSizeChange)="pageSize = $event"
-						[nzResponsive]="true">
-					</nz-pagination>
-				</div>
 			</div>
 			<div class="table-container" *ngIf="tableState === TableState.Empty">
 				<ss-empty-placeholder>
@@ -41,7 +31,16 @@
 				<app-loader></app-loader>
 			</div>
 		</div>
-
+		<div class="pagination">
+			<nz-pagination
+				[nzTotal]="total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</div>
 	</div>
 </ss-card>
 <ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales()" [(filters)]="filters"></ss-filters>
