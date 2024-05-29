@@ -44,10 +44,13 @@ export class ClientCardContractorsComponent implements OnInit {
 		return client.map(x => {
 			const tableItem: any = {};
 
-			tableItem.id = x.id !== undefined ? x.id.toString() : '-';
+			tableItem.id = {
+				text: x.id !== undefined ? x.id.toString() : '-',
+				url: x.linkToDetail !== undefined ? x.linkToDetail : '',
+			};
+
 			tableItem.inn = x.inn !== undefined ? x.inn : '-';
 			tableItem.name = x.name !== undefined ? x.name : '-';
-			tableItem.linkToDetail = x.linkToDetail !== undefined ? x.linkToDetail : '-';
 			tableItem.status = x.status !== undefined ? x.status.name : '-';
 			tableItem.creditStatus = x.creditStatus !== undefined ? x.creditStatus.name : '-';
 
