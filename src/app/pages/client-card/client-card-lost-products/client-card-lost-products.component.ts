@@ -71,7 +71,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: ILostProductsTableItem = {} as ILostProductsTableItem;
 
-				tableItem.tov = x.tov.toString() ?? '-';
+				tableItem.tov = x.tov.name.toString() ?? '-';
 				tableItem.fixationDate = x.fixationDate
 					? new Date(Date.parse(x.fixationDate)).toLocaleString('ru-RU', {
 							year: 'numeric',
@@ -88,8 +88,10 @@ export class ClientCardLostProductsComponent implements OnInit {
 					: '-';
 				tableItem.quantity = x.quantity ?? '-';
 				tableItem.valueEff = x.valueEff ?? '-';
-				tableItem.requestName = x.requestName ?? '-';
-				tableItem.requestLink = x.requestLink ?? '-';
+				tableItem.requestName = {
+					text: x.id.toString() ?? '-',
+					url: x.detailLink ?? '',
+				};
 
 				return tableItem;
 			}) || []

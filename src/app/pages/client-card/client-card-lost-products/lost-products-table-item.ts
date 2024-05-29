@@ -4,6 +4,5 @@ export interface ILostProductsTableItem {
 	shipDate: string;
 	quantity: string;
 	valueEff: string;
-	requestName: string;
-	requestLink: string;
+	requestName: { text: string; url: string };
 }
