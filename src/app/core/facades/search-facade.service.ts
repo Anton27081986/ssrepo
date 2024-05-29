@@ -55,4 +55,10 @@ export class SearchFacadeService {
 	public getTovs(query?: string) {
 		return this.dictionaryApiService.getTovs(query).pipe(map(response => response.items));
 	}
+
+	public getTechnologist(query?: string) {
+		return this.dictionaryApiService
+			.getTechnologist(query)
+			.pipe(map(response => response.items));
+	}
 }
