@@ -1,5 +1,8 @@
 export interface IContractsTableItem {
-	code: string;
+	code: {
+		text: string;
+		url: string;
+	};
 	detailLink: string;
 	contractor: string;
 	beginDate: string;
