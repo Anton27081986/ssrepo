@@ -5,6 +5,8 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { Observable } from 'rxjs';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 export interface IClientTableItem {
 	code: { text: string; url: string };
@@ -104,24 +106,28 @@ export class ClientsListPageComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		const managersFilter = this.filters.find(coreFilter => coreFilter.name === 'managerIds');
+		this.userService.userProfile$.pipe(untilDestroyed(this)).subscribe(user => {
+			const managersFilter = this.filters.find(
+				coreFilter => coreFilter.name === 'managerIds',
+			);
 
-		if (managersFilter) {
-			managersFilter.options = [{ ...this.userService.getUserInfo(), checked: true }];
-			managersFilter.value = managersFilter.options;
-		}
+			if (managersFilter && user) {
+				managersFilter.options = [{ id: user.id, name: user.name, checked: true }];
+				managersFilter.value = managersFilter.options;
+			}
 
-		const statusesFilter = this.filters.find(coreFilter => coreFilter.name === 'statuses');
+			const statusesFilter = this.filters.find(coreFilter => coreFilter.name === 'statuses');
 
-		if (statusesFilter) {
-			statusesFilter.options = [
-				{ id: 1, name: 'Новый', checked: true },
-				{ id: 6, name: 'Действующий', checked: true },
-			];
-			statusesFilter.value = statusesFilter.options;
-		}
+			if (statusesFilter) {
+				statusesFilter.options = [
+					{ id: 1, name: 'Новый', checked: true },
+					{ id: 6, name: 'Действующий', checked: true },
+				];
+				statusesFilter.value = statusesFilter.options;
+			}
 
-		this.getFilteredClients();
+			this.getFilteredClients();
+		});
 
 		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
 			if (!response.items || response.items.length === 0) {
