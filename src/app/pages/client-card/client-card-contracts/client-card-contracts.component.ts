@@ -74,8 +74,7 @@ export class ClientCardContractsComponent implements OnInit {
 			sales.items?.map(x => {
 				const tableItem: IContractsTableItem = {} as IContractsTableItem;
 
-				tableItem.code = x.id.toString() ?? '-';
-				tableItem.detailLink = x.detailLink ?? '';
+				tableItem.code = { text: x.id.toString() ?? '-', url: x.detailLink ?? '' };
 				tableItem.contractor = x.contractor.name ?? '-';
 				tableItem.beginDate = x.beginDate
 					? new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
