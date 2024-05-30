@@ -115,7 +115,7 @@ export class ClientCardInfoComponent implements OnInit {
 			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
 			categoryId: this.newCategoryId,
 			regionId: this.newRegionId,
-			comment: this.infoForm.controls.comment.value,
+			comments: this.infoForm.controls.comment.value,
 		});
 
 		this.notificationService.success('Сохранено');
