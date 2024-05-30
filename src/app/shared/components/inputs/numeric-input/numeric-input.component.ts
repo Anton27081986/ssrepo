@@ -41,14 +41,35 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 
 	public handleInput(event: Event): void {
 		const input = event.target as HTMLInputElement;
-		const value = input.value.replace(/[^0-9.,]/g, '');
+		let value = input.value;
 
-		if (value !== input.value) {
+		const regex = /^[0-9]+([.,][0-9]*)?$/;
+
+		if (!regex.test(value)) {
+			value = this.sanitizeValue(value);
 			input.value = value;
 		}
 
 		this.onChange(value);
 		this.value = value;
+	}
+
+	private sanitizeValue(value: string): string {
+		let sanitizedValue = value.replace(/[^0-9.,]/g, '');
+
+		if (sanitizedValue.startsWith('.') || sanitizedValue.startsWith(',')) {
+			sanitizedValue = sanitizedValue.slice(1);
+		}
+
+		const parts = sanitizedValue.split(/[.,]/);
+
+		sanitizedValue = parts[0];
+
+		if (parts.length > 1) {
+			sanitizedValue += `.${parts.slice(1).join('')}`;
+		}
+
+		return sanitizedValue;
 	}
 
 	public writeValue(value: string): void {
