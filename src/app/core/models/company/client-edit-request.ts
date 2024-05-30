@@ -32,6 +32,6 @@ export interface IClientEditRequest {
 	/**
 	 * Комментарий
 	 */
-	comment?: string | null;
+	comments?: string | null;
 }
 export namespace IClientEditRequest {}
