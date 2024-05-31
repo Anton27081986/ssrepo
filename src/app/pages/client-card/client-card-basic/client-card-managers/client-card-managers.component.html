@@ -90,7 +90,7 @@
 		</ng-container>
 	</div>
 	<ng-template #changeList>
-		<div class="managers-list">
+		<div class="managers-list" [ngClass]="isEditing ? 'edit' : ''">
 			<ng-container *ngFor="let manager of changedData.managersList">
 				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === 'delete'}">
 					<div class="managers-list-item-info">
