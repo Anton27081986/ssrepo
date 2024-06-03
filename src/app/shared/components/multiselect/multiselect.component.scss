@@ -106,3 +106,39 @@ ss-caption {
 	height: 100vh;
 	z-index: 999;
 }
+
+:host-context(.dark) {
+	.input {
+		background-color: $dark-island;
+
+		.selected {
+			::ng-deep ss-text p {
+				color: $lite-text;
+			}
+		}
+
+		.options {
+			background-color: $dark-island;
+
+			::ng-deep svg rect {
+				fill: $dark-inner;
+			}
+
+			.option {
+				background-color: $dark-island;
+			}
+
+			.option::placeholder {
+				color: $dark-text;
+			}
+		}
+
+		::ng-deep .selected .chips {
+			background-color: $dark-inner;
+
+			p {
+				color: $dark-text!important;
+			}
+		}
+	}
+}
