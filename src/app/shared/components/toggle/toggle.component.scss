@@ -50,3 +50,11 @@
 		}
 	}
 }
+
+:host-context(.dark) .toggle-switch > label {
+	background-color: $dark-inner;
+
+	&.checked {
+		background: $main;
+	}
+}
