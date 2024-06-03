@@ -34,6 +34,12 @@ export class ClientApiService {
 		);
 	}
 
+	public getClientStatuses(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/clientStatuses`,
+		);
+	}
+
 	public getContractors(id: number, isActiveOnly: boolean): Observable<IContractorItemDto[]> {
 		return this.http.get<IContractorItemDto[]>(
 			`${environment.apiUrl}/api/company/clients/${id}/contractors`,

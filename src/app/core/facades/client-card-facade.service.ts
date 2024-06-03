@@ -7,6 +7,7 @@ import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
 import { IClientEditRequest } from '@app/core/models/company/client-edit-request';
 import { CallPhoneService } from '@app/core/services/call-phone.service';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @UntilDestroy()
 @Injectable({
@@ -30,6 +31,9 @@ export class ClientsCardFacadeService {
 
 	private readonly clientCardPermissionsSubject = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.clientCardPermissionsSubject.asObservable();
+
+	private readonly clientStatusesSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public statuses$ = this.clientStatusesSubject.asObservable();
 
 	public constructor(
 		private readonly clientApiService: ClientApiService,
@@ -82,6 +86,18 @@ export class ClientsCardFacadeService {
 				)
 				.subscribe();
 		}
+	}
+
+	public getStatuses() {
+		this.clientApiService
+			.getClientStatuses()
+			.pipe(
+				tap(statuses => {
+					this.clientStatusesSubject.next(statuses.items);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 	}
 
 	public getContractors(id: number, isActiveOnly = true) {
