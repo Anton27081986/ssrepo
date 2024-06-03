@@ -37,7 +37,7 @@ export interface IClientDto {
 	 */
 	saleDirection?: string | null;
 	mainSector?: string | null;
-	status?: IClientStatus;
+	status?: IDictionaryItemDto;
 	/**
 	 * Передано в юр. отдел
 	 */

@@ -19,7 +19,7 @@ export interface IClientEditRequest {
 	 * Название клиента
 	 */
 	name?: string | null;
-	status?: IClientStatus;
+	status?: number;
 	/**
 	 * Категория клиента
 	 */

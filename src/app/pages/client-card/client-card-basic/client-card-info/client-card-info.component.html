@@ -49,15 +49,18 @@
 			</ng-container>
 
 			<ng-template #select>
-				<ss-select size="medium" *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
-					<option [selected]="(client$ | async)!.status === 1" [value]="1">Новый</option>
-					<option [selected]="(client$ | async)!.status === 2" [value]="2">Архив</option>
-					<option [selected]="(client$ | async)!.status === 6" [value]="6">Действующий</option>
+				<ss-select *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
+					<option *ngFor="let status of statuses$ | async"
+					        [value]="status.id"
+					        [selected]="status.id === (client$ | async)!.status!.id">
+						{{ status.name }}
+					</option>
 				</ss-select>
 
 				<ng-template #status>
-					<ss-text size="3" class="info-list-item-value">{{ clientStatuses[(client$ | async)!.status || 1] }}</ss-text>
+					<ss-text size="3" class="info-list-item-value">{{ (client$ | async)!.status!.name }}</ss-text>
 				</ng-template>
+
 			</ng-template>
 		</div>
 		<div class="info-list-item">

@@ -4,18 +4,12 @@ import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { IClientStatus } from '@app/core/models/company/client-status';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
-
-enum ClientStatusesEnum {
-	'Новый' = 1,
-	'Архив' = 2,
-	'Действующий' = 6,
-}
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @UntilDestroy()
 @Component({
@@ -25,6 +19,7 @@ enum ClientStatusesEnum {
 })
 export class ClientCardInfoComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;
+	public statuses$: Observable<IDictionaryItemDto[]>;
 	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
@@ -35,11 +30,9 @@ export class ClientCardInfoComponent implements OnInit {
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
 
-	protected clientStatuses = ClientStatusesEnum;
-
 	protected infoForm!: FormGroup<{
 		name: FormControl<string | null>;
-		status: FormControl<IClientStatus | null>;
+		status: FormControl<number | null>;
 		category: FormControl<string | null>;
 		saleDirection: FormControl<string | null>;
 		region: FormControl<string | null>;
@@ -56,6 +49,7 @@ export class ClientCardInfoComponent implements OnInit {
 		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.client$ = this.clientCardListFacade.client$;
+		this.statuses$ = this.clientCardListFacade.statuses$;
 		this.infoForm = new FormGroup({
 			name: new FormControl<string>('', Validators.required),
 			status: new FormControl(),
@@ -69,7 +63,7 @@ export class ClientCardInfoComponent implements OnInit {
 	public ngOnInit() {
 		this.client$.pipe(untilDestroyed(this)).subscribe(client => {
 			this.infoForm.controls.name.setValue(client?.name || '');
-			this.infoForm.controls.status.setValue(client?.status || null);
+			this.infoForm.controls.status.setValue(client?.status?.id || null);
 			this.infoForm.controls.category.setValue(client?.category?.name || null);
 			this.infoForm.controls.region.setValue(client?.region?.name || null);
 			this.infoForm.controls.saleDirection.setValue(client?.mainSector || null);
@@ -91,6 +85,8 @@ export class ClientCardInfoComponent implements OnInit {
 				Permissions.CLIENT_MAIN_INFO_CALCULATION_DISTRIBUTORS,
 			);
 		});
+
+		this.clientCardListFacade.getStatuses();
 	}
 
 	public onEditing(status: boolean) {
@@ -112,7 +108,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 		this.clientCardListFacade.saveInfo({
 			name: this.infoForm.controls.name.value,
-			status: this.infoForm.controls.status.value || ClientStatusesEnum.Новый,
+			status: this.infoForm.controls.status.value!,
 			categoryId: this.newCategoryId,
 			regionId: this.newRegionId,
 			comments: this.infoForm.controls.comment.value,
