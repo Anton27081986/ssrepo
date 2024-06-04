@@ -17,29 +17,31 @@ import { SearchInputModule } from '@app/shared/components/inputs/search-input/se
 import { ToggleModule } from '@app/shared/components/toggle/toggle.module';
 import { MultiselectModule } from '@app/shared/components/multiselect/multiselect.module';
 import { NumericInputModule } from "@app/shared/components/inputs/numeric-input/numeric-input.module";
+import {DateRangeModule} from "@app/shared/components/inputs/date-range/date-range.module";
 
 @NgModule({
 	declarations: [FiltersComponent],
 	exports: [FiltersComponent],
-  imports: [
-    ButtonModule,
-    CaptionModule,
-    CardModule,
-    HeadlineModule,
-    IconModule,
-    NgIf,
-    NzFormModule,
-    NzGridModule,
-    ReactiveFormsModule,
-    NgForOf,
-    InputModule,
-    TextModule,
-    DatepickerInputModule,
-    SelectModule,
-    SearchInputModule,
-    ToggleModule,
-    MultiselectModule,
-    NumericInputModule
-  ]
+    imports: [
+        ButtonModule,
+        CaptionModule,
+        CardModule,
+        HeadlineModule,
+        IconModule,
+        NgIf,
+        NzFormModule,
+        NzGridModule,
+        ReactiveFormsModule,
+        NgForOf,
+        InputModule,
+        TextModule,
+        DatepickerInputModule,
+        SelectModule,
+        SearchInputModule,
+        ToggleModule,
+        MultiselectModule,
+        NumericInputModule,
+        DateRangeModule
+    ]
 })
 export class FiltersModule {}

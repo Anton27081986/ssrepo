@@ -5,7 +5,7 @@ import { SearchType } from '@app/shared/components/multiselect/multiselect.compo
 
 export interface IFilter {
 	name: string;
-	type: 'string' | 'number' | 'date' | 'search' | 'select' | 'boolean' | 'search-select';
+	type: 'string' | 'number' | 'date-range' | 'search' | 'select' | 'boolean' | 'search-select';
 	label: string;
 	placeholder: string;
 	value?: IFilterOption[] | string | null;
@@ -64,13 +64,6 @@ export class FiltersComponent implements OnInit {
 			let value = this.filtersForm.value[item.name];
 
 			if (this.filtersForm.value[item.name]) {
-				if (item.type.includes('date')) {
-					value = new Date(this.filtersForm.value[item.name]).toLocaleString('ru-Ru', {
-						year: 'numeric',
-						month: 'numeric',
-						day: 'numeric',
-					});
-				}
 
 				if (item.type.includes('boolean')) {
 					value = this.filtersForm.value ? 'Да' : 'Нет';

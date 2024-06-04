@@ -1,0 +1,87 @@
+@use '../../../../../styles/colors' as *;
+
+:host {
+	display: flex;
+	flex-direction: column;
+	overflow-y: hidden;
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+.calendar-button {
+	display: flex;
+	align-items: center;
+	padding: 11px 12px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	cursor: pointer;
+
+	&-text {
+		flex-grow: 1;
+		display: flex;
+		gap: 12px;
+
+		&-separator {
+			height: 18px;
+			width: 1px;
+			background-color: $island-outline;
+		}
+	}
+}
+
+::ng-deep .mat-calendar {
+	font-family: 'Inter', serif !important;
+	font-size: 14px !important;
+	line-height: 17px !important;
+	letter-spacing: -0.01em !important;
+}
+
+::ng-deep .mat-calendar-body-selected {
+	background-color: #EEF2FF !important;
+	color: $text !important;
+}
+
+::ng-deep .mat-calendar-body-in-range::before {
+	background-color: #DAE2FF !important;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+	border-radius: 8px !important;
+}
+
+::ng-deep .mat-calendar-body-cell:hover .mat-calendar-body-cell-content {
+	background-color: #DAE2FF !important;
+}
+
+::ng-deep .mat-mdc-form-field-type-mat-date-range-input {
+	height: 0;
+	overflow: hidden;
+}
+
+::ng-deep .mat-datepicker-content {
+	border-radius: 8px !important;
+}
+
+::ng-deep .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+	background-color: $island !important;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+
+}
+::ng-deep .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+	color: $text !important;
+
+}
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+	display: none;
+}
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+	border-bottom: none;
+}
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
+	border-bottom: none;
+}

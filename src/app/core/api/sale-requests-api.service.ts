@@ -23,16 +23,11 @@ export class SaleRequestsApiService {
 		}
 
 		if (filter.FromShipDate) {
-			const date = filter.FromShipDate.split('.');
-
-			params = params.set(
-				'FromShipDate',
-				new Date(Date.parse([date[1], date[0], date[2]].join(' '))).toISOString(),
-			);
+			params = params.set('FromShipDate', filter.FromShipDate);
 		}
 
 		if (filter.ToShipDate) {
-			params = params.set('ToShipDate', new Date(filter.ToShipDate).toISOString());
+			params = params.set('ToShipDate', filter.ToShipDate);
 		}
 
 		if (filter.limit !== null && filter.limit !== undefined) {
