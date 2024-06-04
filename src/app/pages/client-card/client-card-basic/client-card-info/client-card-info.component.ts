@@ -114,6 +114,8 @@ export class ClientCardInfoComponent implements OnInit {
 			comments: this.infoForm.controls.comment.value,
 		});
 
+		this.infoForm.controls.comment.setValue(null);
+
 		this.notificationService.success('Сохранено');
 		this.isEditing = false;
 	}
