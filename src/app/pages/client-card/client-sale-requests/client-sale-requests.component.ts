@@ -129,14 +129,14 @@ export class ClientSaleRequestsComponent implements OnInit {
 						: null;
 					preparedFilter[filter.name.split('-')[0]] =
 						from
-							? new Date([from[1],from[0],from[2]].join('.')).toISOString()
+							? [from[2], from[1],parseInt(from[0])-1].join('-') + 'T00:00:00.000Z'
 							: null;
 					const to = filter.value && typeof filter.value === 'string'
 						? filter.value.split('-')[1].split('.')
 						: null;
 					preparedFilter[filter.name.split('-')[1]] =
 						to
-							? new Date([to[1],to[0],to[2]].join('.')).toISOString()
+							? [to[2],to[1],parseInt(to[0])+1].join('-') + 'T00:00:00.000Z'
 							: null;
 					break;
 				case 'select':
