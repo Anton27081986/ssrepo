@@ -38,8 +38,8 @@ export class ClientSaleRequestsComponent implements OnInit {
 			placeholder: 'Выберите контрагента',
 		},
 		{
-			name: 'FromShipDate',
-			type: 'date',
+			name: 'FromShipDate-ToShipDate',
+			type: 'date-range',
 			label: 'Дата отгрузки',
 			placeholder: '',
 		},
@@ -123,6 +123,22 @@ export class ClientSaleRequestsComponent implements OnInit {
 			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
+				case 'date-range':
+					const from = filter.value && typeof filter.value === 'string'
+						? filter.value.split('-')[0].split('.')
+						: null;
+					preparedFilter[filter.name.split('-')[0]] =
+						from
+							? new Date([from[1],from[0],from[2]].join('.')).toISOString()
+							: null;
+					const to = filter.value && typeof filter.value === 'string'
+						? filter.value.split('-')[1].split('.')
+						: null;
+					preparedFilter[filter.name.split('-')[1]] =
+						to
+							? new Date([to[1],to[0],to[2]].join('.')).toISOString()
+							: null;
+					break;
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
