@@ -29,6 +29,15 @@ ss-caption {
 	color: $lite-text;
 }
 
+select.error {
+	border: 1px solid #EE1C25;
+	background-color: #FF9196;
+}
+
+ss-caption.error {
+	color: $error;
+}
+
 :host-context(.dark) select {
 	background-color: $dark-island;
 }

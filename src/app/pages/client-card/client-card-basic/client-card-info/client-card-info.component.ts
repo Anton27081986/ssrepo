@@ -52,7 +52,7 @@ export class ClientCardInfoComponent implements OnInit {
 		this.statuses$ = this.clientCardListFacade.statuses$;
 		this.infoForm = new FormGroup({
 			name: new FormControl<string>('', Validators.required),
-			status: new FormControl(),
+			status: new FormControl<number>(0, Validators.required),
 			category: new FormControl(),
 			saleDirection: new FormControl(),
 			region: new FormControl<string>('', Validators.required),

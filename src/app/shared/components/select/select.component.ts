@@ -6,7 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 	styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent {
+	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public label: string | undefined;
+	@Input() public error: string | undefined;
 	@Output() public onChange = new EventEmitter<any>();
 
 	public onClick(el: EventTarget | null) {
