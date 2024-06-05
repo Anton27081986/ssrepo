@@ -43,25 +43,23 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Статус:</ss-text>
+			<ng-container *ngIf="client$ | async as client">
+				<ss-select *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))"
+						   [error]="infoForm.controls.status.hasError('required') && infoForm.controls.status.touched ? 'Обязательное поле' : undefined">
+					<option value="">Выберите статус</option>
 
-			<ng-container *ngIf="(client$ | async)!.status === null; else select">
-				<ss-text size="3" class="info-list-item-value">—</ss-text>
-			</ng-container>
-
-			<ng-template #select>
-				<ss-select *ngIf="isEditing; else status" (onChange)="infoForm.controls.status.setValue(($event))">
-					<option *ngFor="let status of statuses$ | async"
-					        [value]="status.id"
-					        [selected]="status.id === (client$ | async)!.status!.id">
-						{{ status.name }}
-					</option>
+					<ng-container *ngFor="let status of statuses$ | async">
+						<option *ngIf="status?.id != 7"
+							[value]="status?.id!"
+							[selected]="status?.id! === client!.status?.id">
+							{{ status?.name }}
+						</option>
+					</ng-container>
 				</ss-select>
-
 				<ng-template #status>
-					<ss-text size="3" class="info-list-item-value">{{ (client$ | async)!.status!.name }}</ss-text>
+					<ss-text size="3" class="info-list-item-value">{{ client!.status ? client!.status!.name : '—' }}</ss-text>
 				</ng-template>
-
-			</ng-template>
+			</ng-container>
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Передано в юр.отдел:</ss-text>

@@ -1,4 +1,7 @@
 <ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
-<select (change)="onClick($event.currentTarget)">
+<select (change)="onClick($event.currentTarget)"
+	[ngClass]="error ? size + ' error' : size"
+>
 	<ng-content></ng-content>
 </select>
+<ss-caption class="error">{{ error }}</ss-caption>
