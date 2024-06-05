@@ -124,20 +124,22 @@ export class ClientSaleRequestsComponent implements OnInit {
 
 			switch (filter.type) {
 				case 'date-range':
-					const from = filter.value && typeof filter.value === 'string'
-						? filter.value.split('-')[0].split('.')
-						: null;
-					preparedFilter[filter.name.split('-')[0]] =
-						from
-							? [from[2], from[1],parseInt(from[0])-1].join('-') + 'T00:00:00.000Z'
+					const from =
+						filter.value && typeof filter.value === 'string'
+							? filter.value.split('-')[0].split('.')
 							: null;
-					const to = filter.value && typeof filter.value === 'string'
-						? filter.value.split('-')[1].split('.')
+
+					preparedFilter[filter.name.split('-')[0]] = from
+						? `${[from[2], from[1], parseInt(from[0], 10)].join('-')}T00:00:00.000Z`
 						: null;
-					preparedFilter[filter.name.split('-')[1]] =
-						to
-							? [to[2],to[1],parseInt(to[0])+1].join('-') + 'T00:00:00.000Z'
+					const to =
+						filter.value && typeof filter.value === 'string'
+							? filter.value.split('-')[1].split('.')
 							: null;
+
+					preparedFilter[filter.name.split('-')[1]] = to
+						? `${[to[2], to[1], parseInt(to[0], 10) + 1].join('-')}T00:00:00.000Z`
+						: null;
 					break;
 				case 'select':
 				case 'search-select':
