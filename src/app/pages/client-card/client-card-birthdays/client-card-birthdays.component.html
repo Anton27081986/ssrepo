@@ -1,12 +1,9 @@
 <ss-card padding="0" radius="16px 0 16px 16px">
 	<div class="header">
-		<ss-headline size="h6" weight="semi-bold">Дни рождения</ss-headline>
+		<ss-headline size="h6" weight="semi-bold">Дни рождения в период {{ periodDate }}</ss-headline>
 	</div>
 
 	<div class="panel">
-		<div class="date">
-			<ss-datepicker-input size="small" [placeholder]="periodDate" [disabled]="true"></ss-datepicker-input>
-		</div>
 		<div class="search">
 			<ss-search-input size="small" searchType="contractor" placeholder="Поиск по контрагенту" data="{{ clientId }}" (select)="filterbirthdaysContractors($event)" (input)="clearFilter($any($event.target).value)"></ss-search-input>
 		</div>
