@@ -23,6 +23,7 @@ import { LayoutsModule } from './shared/layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppInitializerProvider } from './app-initializer.service';
+import {NotificationToastModule} from "@app/widgets/notification-toast/notification-toast.module";
 
 registerLocaleData(ru);
 
@@ -33,20 +34,21 @@ const ngZorroConfig: NzConfig = {
 
 @NgModule({
 	declarations: [AppComponent, EmptyLayoutComponent],
-	imports: [
-		BrowserModule,
-		AppRoutingModule,
-		FormsModule,
-		HttpClientModule,
-		BrowserAnimationsModule,
-		LayoutsModule,
-		NzCardModule,
-		ReactiveFormsModule,
-		NzFormModule,
-		NzInputModule,
-		NzButtonModule,
-		NzIconModule,
-	],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        LayoutsModule,
+        NzCardModule,
+        ReactiveFormsModule,
+        NzFormModule,
+        NzInputModule,
+        NzButtonModule,
+        NzIconModule,
+        NotificationToastModule,
+    ],
 	providers: [
 		AppInitializerProvider,
 		// eslint-disable-next-line camelcase
