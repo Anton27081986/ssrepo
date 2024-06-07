@@ -2,7 +2,7 @@
 	class="tab"
 	*ngFor="let tab of tabs; trackBy: trackBy"
 	[ngClass]="{'selected': tab === selectedTab }"
-	size="2"
+	size="3"
 	(click)="onSelect(tab)"
 >
 	{{ tab }}

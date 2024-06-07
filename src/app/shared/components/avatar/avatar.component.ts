@@ -15,9 +15,7 @@ export class AvatarComponent implements OnInit {
 	protected width: number = 32;
 	protected height: number = 32;
 
-	protected onImageError(e: any) {
-		console.log('ImageError', e);
-
+	protected onImageError() {
 		this.noImage = true;
 	}
 
