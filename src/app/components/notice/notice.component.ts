@@ -1,4 +1,4 @@
-import { booleanAttribute, Component, Input } from '@angular/core';
+import { booleanAttribute, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'app-notice',
@@ -17,4 +17,10 @@ export class NoticeComponent {
 
 	@Input()
 	public text: string | undefined;
+
+	@Output() public close = new EventEmitter<any>();
+
+	closeNotice() {
+		this.close.emit();
+	}
 }

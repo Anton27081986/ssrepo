@@ -11,8 +11,8 @@
 	width: 100%;
 	padding: 8px 12px;
 	border-radius: 10px;
-	border: 1px;
-	border-style: solid;
+	border: 1px solid;
+	position: relative;
 
 	.icon {
 		font-size: 24px;
@@ -23,11 +23,19 @@
 		flex-direction: column;
 		gap: 2px;
 		border: none !important;
+		flex-grow: 1;
 
 		::ng-deep p.medium {
 			opacity: 70% !important;
 		}
 
+	}
+
+	ss-icon {
+		cursor: pointer;
+		position: absolute;
+		right: 12px;
+		top: 12px;
 	}
 }
 
