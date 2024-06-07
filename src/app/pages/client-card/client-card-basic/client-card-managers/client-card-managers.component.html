@@ -14,7 +14,7 @@
 			</ss-icon>
 		</ng-template>
 	</div>
-	<div class="header">
+	<div class="header base">
 		<ss-headline size="h6" weight="semi-bold">Базовый менеджер</ss-headline>
 	</div>
 
@@ -23,8 +23,10 @@
 
 		<div class="manager-info">
 			<div class="manager-name">
+				<div class="bg-icon">
+					<ss-icon name="flag"></ss-icon>
+				</div>
 				<ss-headline size="h6">{{ basicManager?.lastName }} {{ basicManager?.firstName }} {{ basicManager?.surName }}</ss-headline>
-				<ss-icon name="flag"></ss-icon>
 			</div>
 			<div class="manager-status">
 				<ss-tag *ngIf="basicManager?.isDismissed; else dismissed" class="red"> Неактивен</ss-tag>
@@ -45,8 +47,11 @@
 
 	<ng-template #changeMain>
 		<div class="edit-basic-manager">
-			<ss-icon name="flag"></ss-icon>
-			<ss-select (onChange)="onBasicManagerChange($event)" *ngIf="canAppointMainManager">
+			<div class="bg-icon">
+				<ss-icon name="flag"></ss-icon>
+			</div>
+
+			<ss-select size="small" (onChange)="onBasicManagerChange($event)" *ngIf="canAppointMainManager">
 				<option [value]="0">
 					<ss-text size="2" weight="semi-bold">Выберите менеджера</ss-text>
 				</option>
@@ -64,9 +69,10 @@
 		</div>
 	</ng-template>
 
-	<div class="header">
+	<div class="header property">
 		<ss-headline size="h6"
-		             weight="semi-bold">
+		             weight="semi-bold"
+		>
 			Состав менеджеров
 		</ss-headline>
 	</div>
@@ -74,6 +80,7 @@
 		<ss-search-input class="search"
 		                 searchType="technologist"
 		                 placeholder="Введите ФИО"
+						 size="small"
 		                 [clear]="true"
 		                 (select)="selectManager($event)">
 		</ss-search-input>
@@ -81,9 +88,9 @@
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<ng-container *ngFor="let manager of (managers$ | async)">
 			<div class="managers-list-item" *ngIf="!manager.isDismissed && !manager.isBase">
-				<ss-avatar [src]="manager?.avatarUrl || ''" [isSquare]="false"></ss-avatar>
+				<ss-avatar size="xs" [src]="manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
 				<div class="managers-list-item-info">
-					<ss-text size="2" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
+					<ss-text size="3" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
 					<ss-caption size="2">{{ manager?.position }}</ss-caption>
 				</div>
 			</div>
@@ -93,8 +100,9 @@
 		<div class="managers-list" [ngClass]="isEditing ? 'edit' : ''">
 			<ng-container *ngFor="let manager of changedData.managersList">
 				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === 'delete'}">
+					<ss-avatar size="xs" [src]="manager?.manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
 					<div class="managers-list-item-info">
-						<ss-text size="2" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
+						<ss-text size="3" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
 						<ss-caption size="2">{{ manager.manager.position }}</ss-caption>
 					</div>
 					<ss-icon name="delete"
@@ -106,6 +114,6 @@
 		</div>
 	</ng-template>
 	<div *ngIf="isEditing" class="footer">
-		<ss-button size="medium" type="primary" (click)="onSaveChanges()">Сохранить</ss-button>
+		<ss-button size="small" type="primary" (click)="onSaveChanges()">Сохранить изменения</ss-button>
 	</div>
 </ss-card>
