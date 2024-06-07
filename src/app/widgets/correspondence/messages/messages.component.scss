@@ -106,6 +106,10 @@
 					color: $lite-text;
 					align-self: flex-end;
 				}
+
+				.message-content-text {
+					word-break: break-all;
+				}
 			}
 		}
 
