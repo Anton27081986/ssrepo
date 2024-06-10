@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { HistoryFacadeService } from '@app/core/facades/history-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
@@ -26,6 +26,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 		private readonly historyFacadeService: HistoryFacadeService,
 		private readonly signalHistoryService: SignalService,
 		private readonly authService: AuthenticationService,
+		private readonly ref: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit() {
@@ -47,7 +48,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
 			console.info('signalR change', change);
 
 			if (this.objectId === change.objectId) {
-				this.historyItems.push(change.item);
+				this.historyItems.unshift(change.item);
+				this.ref.detectChanges();
 			}
 		});
 	}
