@@ -55,7 +55,13 @@ export class ClientCardNewProductsComponent implements OnInit {
 					this.tableState = TableState.Empty;
 				} else {
 					this.items = this.mapClientsToTableItems(response);
-					this.total = (response.total ?? 0) + this.pageSize;
+
+					if (response.total! > 6) {
+						this.total = (response.total ?? 0) + this.pageSize;
+					} else {
+						this.total = response.total ?? 0;
+					}
+
 					this.tableItems = <ITableItem[]>(<unknown>this.items);
 					this.tableState = TableState.Full;
 				}
@@ -82,7 +88,7 @@ export class ClientCardNewProductsComponent implements OnInit {
 				};
 				tableItem.status = x.status.name ?? '-';
 				tableItem.productName = x.productName ?? '-';
-				tableItem.customer = x.customers?.map(c=>c.name).join(', ') ?? '-';
+				tableItem.customer = x.customers?.map(c => c.name).join(', ') ?? '-';
 				tableItem.developer = x.developer?.name ?? '-';
 
 				return tableItem;

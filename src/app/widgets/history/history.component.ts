@@ -65,8 +65,10 @@ export class HistoryComponent implements OnInit, OnDestroy {
 					this.historyItems = items.items;
 				}
 
-				if (items.total) {
-					this.total = items.total + this.pageSize;
+				if (items.total! > 6) {
+					this.total = (items.total ?? 0) + this.pageSize;
+				} else {
+					this.total = items.total ?? 0;
 				}
 			});
 	}

@@ -59,7 +59,13 @@ export class ClientRequestSamplesComponent implements OnInit {
 				this.tableState = TableState.Empty;
 			} else {
 				this.items = this.mapClientsToTableItems(response);
-				this.total = (response.total ?? 0) + this.pageSize;
+
+				if (response.total! > 6) {
+					this.total = (response.total ?? 0) + this.pageSize;
+				} else {
+					this.total = response.total ?? 0;
+				}
+
 				this.tableItems = <ITableItem[]>(<unknown>this.items);
 				this.tableState = TableState.Full;
 			}
