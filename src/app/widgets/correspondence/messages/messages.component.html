@@ -1,10 +1,13 @@
 <div class="header">
     <div class="tabs">
-		<ss-tabs [tabs]="tabs" [selectedTab]="(subject$ | async) || 'Все сообщения по клиенту'" (select)="selectTab($event)"></ss-tabs>
+		<ss-tabs [tabs]="tabs"
+		         [selectedTab]="this.selectedTab || this.messageTab!"
+		         (select)="selectTab($event)">
+		</ss-tabs>
     </div>
     <ss-search-input class="search" size="small" placeholder="Поиск по сообщениям" (input)="searchMessagesByText($event)"></ss-search-input>
 </div>
-<div *ngIf="selectedTab === CorrespondenceTabsEnum.Messages" class="messages-list">
+<div *ngIf="selectedTab && selectedTab.name === 'messages'" class="messages-list">
 	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMoreMessages()" #messages>
 		<div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
 			<ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
@@ -58,7 +61,7 @@
 		</div>
 	</ng-template>
 </div>
-<div *ngIf="selectedTab === CorrespondenceTabsEnum.Files" class="files-list">
+<div *ngIf="selectedTab && selectedTab.name === 'files'" class="files-list">
 	<div *ngIf="(files$ | async)?.total; else noFiles" class="files-list">
 		<div *ngFor="let file of (files$ | async)?.items" class="files-list-item">
 			<ss-icon height="28" width="28" name="file" class="doc"></ss-icon>
