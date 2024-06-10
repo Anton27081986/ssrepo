@@ -5,8 +5,6 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
-import { Observable } from 'rxjs';
-import { IUserProfile } from '@app/core/models/user-profile';
 
 export interface IClientTableItem {
 	code: { text: string; url: string };

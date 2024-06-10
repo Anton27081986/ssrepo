@@ -64,7 +64,6 @@ export class FiltersComponent implements OnInit {
 			let value = this.filtersForm.value[item.name];
 
 			if (this.filtersForm.value[item.name]) {
-
 				if (item.type.includes('boolean')) {
 					value = this.filtersForm.value ? 'Да' : 'Нет';
 				}
@@ -112,10 +111,8 @@ export class FiltersComponent implements OnInit {
 			filter.value = null;
 			filter.options?.forEach(option => (option.checked = false));
 		}
-	}
 
-	public getValuesFromDictionaryItems(items: IDictionaryItemDto[] | string) {
-		return (items as unknown as IDictionaryItemDto[]).map(item => item.name).join(', ');
+		this.changeDetector.detectChanges();
 	}
 
 	protected readonly Array = Array;

@@ -1,0 +1,137 @@
+@use '../../../../../styles/colors' as *;
+
+input {
+	border: none;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+	flex-grow: 1;
+	padding: 4px 12px;
+}
+
+.input {
+	min-height: 41px;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	padding: 8px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+
+	.hide-dropdown-button {
+		cursor: pointer;
+		color: $lite-text;
+		transform: rotateX(180deg);
+	}
+
+	.chips {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		background-color: #EEF2FF;
+		padding: 4px;
+		border-radius: 8px;
+
+		ss-avatar {
+			height: 32px;
+		}
+
+		ss-icon {
+			padding: 0 8px 0 4px;
+			cursor: pointer;
+		}
+	}
+}
+
+.variants-wrapper {
+	width: 100%;
+	height: 0;
+	position: relative;
+
+	.variants {
+		position: absolute;
+		width: 100%;
+		top: 0;
+		z-index: 101;
+		background-color: $island;
+		max-height: 162px;
+		overflow-y: auto;
+		border: 1px solid $island-outline;
+		border-radius: 0 0 8px 8px;
+		border-top: none;
+
+		.separator {
+			position: sticky;
+			top: 0;
+			border-top: 1px solid $island-outline;
+		}
+
+		.variants-item {
+			padding: 10px 20px;
+			height: 40px;
+			cursor: pointer;
+		}
+
+		.variants-item:hover {
+			background-color: #F2F3F7;
+		}
+	}
+}
+
+.input.dropdown {
+	border-bottom: none;
+	border-radius: 8px 8px 0 0;
+}
+
+input::placeholder {
+	color: $lite-text;
+}
+
+.input:has(input:focus) {
+	border-color: $additional-outline;
+}
+
+input.medium {
+	height: 100%;
+	font-weight: 400;
+}
+
+input.large {
+	font-weight: 600;
+}
+
+input.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+ss-caption.error {
+	color: $error;
+}
+
+:host-context(.dark) {
+	.input, input, {
+		background-color: $dark-island;
+	}
+
+	.variants-wrapper, .variants {
+		background-color: $dark-island!important;
+	}
+
+	.variants-item:hover {
+		::ng-deep p {
+			color: $dark-island!important;
+		}
+	}
+}
+
