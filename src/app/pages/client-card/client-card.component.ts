@@ -1,20 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
-
-enum TabsEnum {
-	'Общая информация' = 'basic',
-	'Заявки на продажу' = 'sales',
-	'Образцы' = 'samples',
-	'ЖНТПР' = 'gntpr',
-	'Возвраты/претензии' = 'refund',
-	'ПКП' = 'pkp',
-	'Договоры' = 'contracts',
-	'Дни рождения' = 'birthdays',
-}
+import { ITab } from '@app/shared/components/tabs/tab';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @UntilDestroy()
 @Component({
@@ -28,8 +19,52 @@ export class ClientCardComponent implements OnInit {
 
 	private clientId: number | undefined;
 
-	protected tabs = Object.keys(TabsEnum);
-	protected selectedTab = '';
+	public tabs: ITab[] = [
+		{
+			label: 'Общая информация',
+			name: 'basic',
+			isVisible: true,
+		},
+		{
+			label: 'Заявки на продажу',
+			name: 'sales',
+			isVisible: false,
+		},
+		{
+			label: 'Образцы',
+			name: 'samples',
+			isVisible: false,
+		},
+		{
+			label: 'ЖНТПР',
+			name: 'gntpr',
+			isVisible: false,
+		},
+		{
+			label: 'Возвраты/претензии',
+			name: 'refund',
+			isVisible: false,
+		},
+		{
+			label: 'ПКП',
+			name: 'pkp',
+			isVisible: false,
+		},
+		{
+			label: 'Договоры',
+			name: 'contracts',
+			isVisible: false,
+		},
+		{
+			label: 'Дни рождения',
+			name: 'birthdays',
+			isVisible: false,
+		},
+	];
+
+	protected mainInfoTab: ITab | undefined = this.tabs.find(tab => tab.name === 'basic');
+
+	protected selectedTab: ITab = this.mainInfoTab!;
 
 	public constructor(
 		private readonly activatedRoute: ActivatedRoute,
@@ -52,16 +87,24 @@ export class ClientCardComponent implements OnInit {
 			this.clientCardListFacade.getClientCardById(this.clientId);
 		}
 
-		for (const tabsEnumKey in TabsEnum) {
-			if (this.router.url.includes(TabsEnum[tabsEnumKey as keyof typeof TabsEnum])) {
-				this.selectedTab = tabsEnumKey;
+		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
+			const allTabsAvailable = permissions.includes(Permissions.CLIENT_ADDITIONAL_INFO_READ);
+
+			if (allTabsAvailable) {
+				this.tabs.forEach(tab => {
+					tab.isVisible = true;
+				});
+			}
+		});
+
+		for (const tab of this.tabs) {
+			if (this.router.url.includes(tab!.name!)) {
+				this.selectedTab = tab;
 			}
 		}
 	}
 
-	selectTab(page: string) {
-		this.router.navigate([
-			`/client-card/${this.clientId}/${TabsEnum[page as keyof typeof TabsEnum]}`,
-		]);
+	public selectTab(page: string) {
+		this.router.navigate([`/client-card/${this.clientId}/${page}`]);
 	}
 }

@@ -5,7 +5,10 @@
 	</div>
 	<div class="header-tabs">
 		<div class="header-tabs-align"></div>
-		<ss-tabs [tabs]="tabs" (select)="selectTab($event)" [selectedTab]="selectedTab"></ss-tabs>
+		<ss-tabs [tabs]="tabs"
+		         (select)="selectTab($event)"
+		         [selectedTab]="selectedTab">
+		</ss-tabs>
 	</div>
 </div>
 <router-outlet></router-outlet>

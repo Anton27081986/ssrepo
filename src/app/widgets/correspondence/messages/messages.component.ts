@@ -8,11 +8,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
 import { NotificationsApiService } from '@app/core/api/notifications-api.service';
-
-enum CorrespondenceTabsEnum {
-	'Messages',
-	'Files',
-}
+import { ITab } from '@app/shared/components/tabs/tab';
 
 @UntilDestroy()
 @Component({
@@ -26,9 +22,22 @@ export class MessagesComponent {
 	protected user$: Observable<IUserProfile | null>;
 	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
 
-	protected tabs: string[] = ['Все сообщения по клиенту', 'Вложения'];
+	protected tabs: ITab[] = [
+		{
+			label: 'Все сообщения по клиенту',
+			name: 'messages',
+			isVisible: true,
+		},
+		{
+			label: 'Вложения',
+			name: 'files',
+			isVisible: true,
+		},
+	];
 
-	protected selectedTab: CorrespondenceTabsEnum = CorrespondenceTabsEnum.Messages;
+	protected messageTab: ITab | undefined = this.tabs.find(x => x.name === 'messages');
+
+	protected selectedTab: ITab | undefined = this.tabs.find(x => x.name === 'messages');
 
 	@ViewChild('messages') public messagesElement!: ElementRef;
 
@@ -52,8 +61,11 @@ export class MessagesComponent {
 		this.user$ = this.userService.userProfile$;
 
 		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
-			this.selectedTab = CorrespondenceTabsEnum.Messages;
-			this.tabs = [subject || 'Все сообщения по клиенту', 'Вложения'];
+			this.selectedTab = this.tabs.find(x => x.name === 'messages');
+
+			const messageTab = this.tabs.find(x => x.name === 'messages');
+
+			messageTab!.label = subject !== null ? subject : 'Все сообщения по клиенту';
 			this.pageIndex = 1;
 			this.pageSize = 10;
 			this.total = 0;
@@ -69,8 +81,6 @@ export class MessagesComponent {
 			}
 		});
 	}
-
-	protected readonly CorrespondenceTabsEnum = CorrespondenceTabsEnum;
 
 	protected downloadFile(url: string, fileName: string) {
 		const link = document.createElement('a');
@@ -89,7 +99,7 @@ export class MessagesComponent {
 				this.messagesElement.nativeElement.scrollTop =
 					this.messagesElement.nativeElement.scrollHeight;
 			} catch (err) {
-				console.log(err);
+				console.error(err);
 			}
 		}
 	}
@@ -116,11 +126,7 @@ export class MessagesComponent {
 	}
 
 	protected selectTab(name: string) {
-		if (name === 'Вложения') {
-			this.selectedTab = CorrespondenceTabsEnum.Files;
-		} else {
-			this.selectedTab = CorrespondenceTabsEnum.Messages;
-		}
+		this.selectedTab = this.tabs.find(x => x.name === name);
 	}
 
 	protected replyTo(message: IMessageItemDto, author: IUserDto, toUsers: IUserDto[] = []) {
