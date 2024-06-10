@@ -45,7 +45,7 @@ export class SignalService {
 	private registerOnServerEvents(): void {
 		this.hubConnection?.on(
 			'OnHistoryChanged',
-			(type: number, objectId: number, item: IChangeTrackerItemDto) => {
+			(objectId: number, type: number, item: IChangeTrackerItemDto) => {
 				const change: IChangeTrackerWithObjectId = {
 					item,
 					objectId,
