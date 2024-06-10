@@ -58,7 +58,7 @@ export class SearchFacadeService {
 
 	public getTechnologist(query?: string) {
 		return this.dictionaryApiService
-			.getTechnologist(query)
+			.getTechnologist(this.clientId!, query)
 			.pipe(map(response => response.items));
 	}
 }

@@ -38,6 +38,7 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
 	@Input() public searchType: searchType = 'user';
+	@Input() public clientId: number | undefined;
 	@Output() public select = new EventEmitter<any>();
 
 	public formValue: any = '';

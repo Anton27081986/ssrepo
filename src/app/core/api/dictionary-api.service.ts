@@ -71,11 +71,18 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getTechnologist(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getTechnologist(
+		clientId: number,
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
 			params = params.set('query', query);
+		}
+
+		if (clientId) {
+			params = params.set('clientId', clientId);
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
