@@ -65,6 +65,13 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./pages/invite/invite.module').then(m => m.InviteModule),
 			},
+			{
+				path: 'clients-tpr',
+				loadChildren: () =>
+					import('./pages/recommendations-vgp/clients-tpr.module').then(
+						m => m.ClientsTprModule,
+					),
+			},
 		],
 	},
 	{
