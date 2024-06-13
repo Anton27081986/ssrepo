@@ -144,7 +144,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 							: null;
 
 					preparedFilter[filter.name.split('-')[1]] = to
-						? `${[to[2], to[1], parseInt(to[0], 10) + 1].join('-')}T00:00:00.000Z`
+						? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
 						: null;
 					break;
 				case 'select':
