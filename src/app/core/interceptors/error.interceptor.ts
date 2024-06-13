@@ -11,6 +11,7 @@ import { Observable, tap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { Notifications } from '@app/core/constants/notifications.constants';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -25,10 +26,16 @@ export class ErrorInterceptor implements HttpInterceptor {
 				if (event instanceof HttpResponse) {
 					switch (true) {
 						case request.method === 'POST' && event.status === 200:
-							this.notificationToastService.addToast(event.statusText, 'ok');
+							this.notificationToastService.addToast(
+								Notifications.OK_NOTIFICATION_TEXT,
+								'ok',
+							);
 							break;
 						case request.method === 'PUT' && event.status === 200:
-							this.notificationToastService.addToast(event.statusText, 'ok');
+							this.notificationToastService.addToast(
+								Notifications.OK_NOTIFICATION_TEXT,
+								'ok',
+							);
 							break;
 					}
 				}
@@ -36,12 +43,12 @@ export class ErrorInterceptor implements HttpInterceptor {
 			catchError((err: unknown) => {
 				if (err instanceof HttpErrorResponse) {
 					if (Math.floor(err.status / 100) === 4) {
-						this.notificationToastService.addToast(err.error.message, 'warning');
+						this.notificationToastService.addToast(err.error.title, 'warning');
 					}
 
 					if (Math.floor(err.status / 100) === 5) {
 						this.notificationToastService.addToast(
-							'Ошибка в работе сервера, повторите попытку позже или обратитесь в службу поддержки',
+							Notifications.SERVER_ERROR_NOTIFICATION_TEXT,
 							'error',
 						);
 					}
