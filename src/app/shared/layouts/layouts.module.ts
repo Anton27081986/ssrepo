@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { WithoutFooterLayoutModule } from '@app/shared/layouts/without-footer-layout/without-footer-layout.module';
 import { FullLayoutModule } from '@app/shared/layouts/full-layout/full-layout.module';
 import { LeftMenuLayoutModule } from '@app/shared/layouts/left-menu-layout/left-menu-layout.module';
+import { NewLayoutModule } from '@app/shared/layouts/new-layout/new-layout.module';
 
 @NgModule({
 	declarations: [],
@@ -15,6 +16,7 @@ import { LeftMenuLayoutModule } from '@app/shared/layouts/left-menu-layout/left-
 		NzLayoutModule,
 		RouterLink,
 		WithoutFooterLayoutModule,
+		NewLayoutModule,
 	],
 	exports: [],
 })
