@@ -31,8 +31,9 @@ export class FiltersComponent implements OnInit {
 
 	@Output() public applyFilter = new EventEmitter();
 
+	@Input() public isClearVisible: boolean = false;
+
 	public filtersForm!: FormGroup;
-	public selectedFilters: IFilter[] = [];
 
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
@@ -45,14 +46,13 @@ export class FiltersComponent implements OnInit {
 				return { ...group, [filter.name]: [filter.value] };
 			}, {}),
 		);
-
-		this.selectedFilters = this.filters.filter(item => item.value);
 	}
 
 	public resetForm() {
-		this.selectedFilters.forEach(filter => {
+		this.filters.forEach(filter => {
 			this.removeFilter(filter.name);
 		});
+		this.changeDetector.detectChanges();
 	}
 
 	public toggleFilters() {
@@ -96,14 +96,11 @@ export class FiltersComponent implements OnInit {
 
 		this.filtersChange.emit(this.filters);
 		this.applyFilter.emit();
-		this.selectedFilters = this.filters.filter(item => item.value);
 		this.changeDetector.detectChanges();
 	}
 
 	public removeFilter(name: string) {
 		this.filtersForm.get(name)?.setValue(null);
-
-		this.selectedFilters = this.selectedFilters.filter(item => item.name !== name);
 
 		const filter = this.filters.find(item => item.name === name);
 
@@ -116,4 +113,5 @@ export class FiltersComponent implements OnInit {
 	}
 
 	protected readonly Array = Array;
+	protected readonly Event = Event;
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 export type SearchType = 'user' | 'client' | 'tovs' | 'contractor';
@@ -15,10 +15,7 @@ export class MultiselectComponent {
 	@Input() public label: string | undefined;
 	@Input() public size: 'large' | 'medium' = 'medium';
 	@Input() public placeholder: string | undefined;
-	@Input() public multiple = false;
 	@Input() public options: IFilterOption[] = [];
-
-	@Input() public searchType: SearchType | undefined;
 
 	@Output() public getSelected = new EventEmitter<any>();
 	public isOptionsVisible = false;
@@ -42,82 +39,6 @@ export class MultiselectComponent {
 		}
 
 		this.getSelected.emit(this.getSelectedOptions());
-	}
-
-	protected onSearch(event: Event) {
-		const query = (event.target as HTMLInputElement).value;
-
-		if (query?.length) {
-			switch (this.searchType) {
-				case 'user':
-					this.searchFacade
-						.getUsers(query)
-						.pipe(untilDestroyed(this))
-						.subscribe(res => {
-							const checkedOptions = this.options.filter(option => option.checked);
-
-							this.options = [
-								...checkedOptions,
-								...res.items.filter((option: IFilterOption) => {
-									const selectedOption = checkedOptions.find(
-										checkedOption => checkedOption.id === option.id,
-									);
-
-									return !selectedOption;
-								}),
-							];
-
-							this.changeDetector.detectChanges();
-						});
-					break;
-				case 'client':
-					this.searchFacade
-						.getClients(query)
-						.pipe(untilDestroyed(this))
-						.subscribe(res => {
-							const checkedOptions = this.options.filter(option => option.checked);
-
-							this.options = [
-								...checkedOptions,
-								...res.items.filter((option: IFilterOption) => {
-									const selectedOption = checkedOptions.find(
-										checkedOption => checkedOption.id === option.id,
-									);
-
-									return !selectedOption;
-								}),
-							];
-
-							this.changeDetector.detectChanges();
-						});
-					break;
-				case 'contractor':
-					this.searchFacade
-						.getContractor(query)
-						.pipe(untilDestroyed(this))
-						.subscribe(res => {
-							const checkedOptions = this.options.filter(option => option.checked);
-
-							this.options = [
-								...checkedOptions,
-								...res.items.filter((option: IFilterOption) => {
-									const selectedOption = checkedOptions.find(
-										checkedOption => checkedOption.id === option.id,
-									);
-
-									return !selectedOption;
-								}),
-							];
-
-							this.changeDetector.detectChanges();
-						});
-					break;
-			}
-		} else {
-			this.options = this.options.filter(option => option.checked);
-
-			this.changeDetector.detectChanges();
-		}
 	}
 
 	getSelectedOptions() {

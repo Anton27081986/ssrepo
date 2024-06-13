@@ -2,15 +2,13 @@
 <div class="input">
 	<input type="text"
    	[placeholder]="placeholder"
-   	[value]="value ? value : formValue"
+   	[value]="selectedItem && selectedItem.checked ? selectedItem.name : ''"
 	[disabled]="disabled"
 	(input)="onChange($any($event.target).value)"
 	(blur)="onTouched()"
 	class="{{ error ? size + ' error' : size }}"
-   	(keyup.enter)="onSearch(input.value)"
 	#input
 	/>
-	<ss-icon height="12" name="iconSearch" (click)="onSearch(input.value)"></ss-icon>
 	<div class="search-result" *ngIf="found.length">
 		<div class="separator"></div>
 		<ss-caption class="search-result-item" *ngFor="let item of found"
