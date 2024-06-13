@@ -4,6 +4,7 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
+import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -65,11 +66,18 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('./pages/invite/invite.module').then(m => m.InviteModule),
 			},
+		],
+	},
+	{
+		path: '',
+		component: NewLayoutComponent,
+		canActivate: [AuthGuard],
+		children: [
 			{
-				path: 'clients-tpr',
+				path: 'client-tpr-page',
 				loadChildren: () =>
-					import('./pages/recommendations-vgp/clients-tpr.module').then(
-						m => m.ClientsTprModule,
+					import('@app/pages/client-tpr-page/client-tpr-page.module').then(
+						m => m.ClientTprPageModule,
 					),
 			},
 		],

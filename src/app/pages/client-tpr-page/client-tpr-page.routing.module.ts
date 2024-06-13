@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClientsTprComponent } from '@app/pages/recommendations-vgp/clients-tpr.component';
+import { ClientTprPageComponent } from '@app/pages/client-tpr-page/client-tpr-page.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: ClientsTprComponent,
+		component: ClientTprPageComponent,
 	},
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class ClientsTprRoutingModule {}
+export class ClientTprPageRoutingModule {}
