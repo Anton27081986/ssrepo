@@ -11,6 +11,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import {IFilterOption} from "@app/shared/components/filters/filters.component";
 
 export type searchType =
 	| 'user'
@@ -32,16 +33,17 @@ export class SearchInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
-	@Input() public value: string | undefined;
+	@Input() public value: string = '';
 	@Input() public data: string | undefined;
 	@Input() public clear: boolean = false;
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
 	@Input() public searchType: searchType = 'user';
 	@Input() public clientId: number | undefined;
+	@Input() selectedItem: IFilterOption | undefined;
+
 	@Output() public select = new EventEmitter<any>();
 
-	public formValue: any = '';
 	public found: IDictionaryItemDto[] = [];
 
 	public constructor(
@@ -64,14 +66,14 @@ export class SearchInputComponent implements ControlValueAccessor {
 	 * Write form value to the DOM element (model => view)
 	 */
 	public writeValue(value: any): void {
-		this.formValue = value;
+		this.value = value;
 	}
 
 	/**
 	 * Write form disabled state to the DOM element (model => view)
 	 */
 	public setDisabledState(isDisabled: boolean): void {
-		// this.disabled = isDisabled;
+		this.disabled = isDisabled;
 	}
 
 	/**
@@ -90,69 +92,69 @@ export class SearchInputComponent implements ControlValueAccessor {
 		this.onTouched = fn;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	protected onChange(value: string) {}
 	protected onTouched() {}
 
-	protected onSearch(query: string) {
-		switch (this.searchType) {
-			case 'user':
-				this.searchFacade
-					.getUsers(query)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.found = res.items;
-						this.ref.detectChanges();
-					});
-				break;
-			case 'subsector':
-				this.searchFacade
-					.getSubSectors(query)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.found = res.items;
-						this.ref.detectChanges();
-					});
-				break;
-			case 'region':
-				this.searchFacade
-					.getRegions(query)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.found = res.items;
-						this.ref.detectChanges();
-					});
-				break;
-			case 'contractor':
-				if (query) {
+	protected onChange(query: string) {
+		if (query.length > 2) {
+			switch (this.searchType) {
+				case 'user':
 					this.searchFacade
-						.getContractor(query)
+						.getUsers(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
-				}
+					break;
+				case 'subsector':
+					this.searchFacade
+						.getSubSectors(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'region':
+					this.searchFacade
+						.getRegions(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contractor':
+					if (query) {
+						this.searchFacade
+							.getContractor(query)
+							.pipe(untilDestroyed(this))
+							.subscribe(res => {
+								this.found = res.items;
+								this.ref.detectChanges();
+							});
+					}
 
-				break;
-			case 'tovs':
-				this.searchFacade
-					.getTovs(query)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.found = res;
-						this.ref.detectChanges();
-					});
-				break;
-			case 'technologist':
-				this.searchFacade
-					.getTechnologist(query)
-					.pipe(untilDestroyed(this))
-					.subscribe(res => {
-						this.found = res;
-						this.ref.detectChanges();
-					});
-				break;
+					break;
+				case 'tovs':
+					this.searchFacade
+						.getTovs(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'technologist':
+					this.searchFacade
+						.getTechnologist(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res;
+							this.ref.detectChanges();
+						});
+					break;
+			}
 		}
 	}
 }

@@ -35,7 +35,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 			type: 'search',
 			searchType: 'contractor',
 			label: 'Контрагент',
-			placeholder: 'Выберите контрагента',
+			placeholder: 'Введите наименование контрагента',
 		},
 		{
 			name: 'FromShipDate-ToShipDate',

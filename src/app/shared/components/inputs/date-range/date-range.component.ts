@@ -10,6 +10,7 @@ export class DateRangeComponent {
 	startDate: string | undefined;
 	endDate: string | undefined;
 	@Input() public label: string | undefined;
+	@Input() public placeholder: string | undefined;
 	@Output() public select = new EventEmitter<any>();
 
 	@Input() public value: any = '';
@@ -35,6 +36,8 @@ export class DateRangeComponent {
 		if (!this.value) {
 			this.startDate = undefined;
 			this.endDate = undefined;
+		} else {
+			[this.startDate, this.endDate] = value.split('-');
 		}
 	}
 
