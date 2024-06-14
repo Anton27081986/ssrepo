@@ -2,10 +2,9 @@
 <div class="input">
 	<input type="text"
    	[placeholder]="placeholder"
-   	[value]="selectedItem && selectedItem.checked ? selectedItem.name : ''"
+   	[value]="selectedItem ? selectedItem.name : ''"
 	[disabled]="disabled"
 	(input)="onChange($any($event.target).value)"
-	(blur)="onTouched()"
 	class="{{ error ? size + ' error' : size }}"
 	#input
 	/>
