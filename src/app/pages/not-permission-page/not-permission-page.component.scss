@@ -1,0 +1,38 @@
+.container {
+	.content {
+		.permission-img {
+			display: flex;
+			justify-content: center;
+			margin-top: 17.3%;
+		}
+
+		.text {
+			width: 320px;
+			padding-top: 45px;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+			margin: 0 auto;
+
+			ss-text {
+				margin-top: 14px;
+				text-align: center;
+			}
+		}
+
+		ss-button {
+			margin-top: 37px;
+			width: 173px;
+
+			::ng-deep button {
+				font-size: 13px;
+			}
+		}
+
+		.btn {
+			display: flex;
+			justify-content: center;
+		}
+	}
+}
