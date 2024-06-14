@@ -1,3 +1,17 @@
-<ss-headline>Доступ запрещён</ss-headline>
-<ss-text>Вы не имеете доступа к этой странице. Обратитесь к администратору</ss-text>
-<ss-button>Назад на главную</ss-button>
+<div class="container">
+	<div class="content">
+		<div class="permission">
+			<div class="permission-img">
+				<ss-icon name="notPermissions" class="logo-icon" height="200"></ss-icon>
+			</div>
+
+			<div class="text">
+				<ss-headline size="h3" weight="semi-bold">Доступ запрещён</ss-headline>
+				<ss-text size="1" weight="medium">У вас нет прав доступа к странице. Обратитесь к администратору</ss-text>
+			</div>
+			<div class="btn" [routerLink]="AppRoutes.root">
+				<ss-button size="small" type="muted">Вернуться на главную</ss-button>
+			</div>
+		</div>
+	</div>
+</div>

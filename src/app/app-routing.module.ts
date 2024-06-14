@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
-import { PermissionsGuard } from '@app/core/guards/permissions.guard';
 import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
@@ -12,7 +11,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FullLayoutComponent,
-		canActivate: [AuthGuard, PermissionsGuard],
+		canActivate: [AuthGuard],
 		children: [
 			{
 				path: '',
@@ -81,6 +80,13 @@ const routes: Routes = [
 						m => m.ClientTprPageModule,
 					),
 			},
+			{
+				path: 'not-permission',
+				loadChildren: () =>
+					import('./pages/not-permission-page/not-permission-page.module').then(
+						m => m.NotPermissionPageModule,
+					),
+			},
 		],
 	},
 	{
@@ -90,13 +96,6 @@ const routes: Routes = [
 	{
 		path: 'sandbox',
 		loadChildren: () => import('./pages/sandbox/sandbox.module').then(m => m.SandboxModule),
-	},
-	{
-		path: 'not-permission',
-		loadChildren: () =>
-			import('./pages/not-permission-page/not-permission-page.module').then(
-				m => m.NotPermissionPageModule,
-			),
 	},
 	{ path: '**', redirectTo: '' },
 ];
