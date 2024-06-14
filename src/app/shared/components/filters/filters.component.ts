@@ -31,8 +31,6 @@ export class FiltersComponent implements OnInit {
 
 	@Output() public applyFilter = new EventEmitter();
 
-	@Input() public isClearVisible: boolean = false;
-
 	public filtersForm!: FormGroup;
 
 	constructor(
@@ -106,12 +104,15 @@ export class FiltersComponent implements OnInit {
 
 		if (filter) {
 			filter.value = null;
-			filter.options?.forEach(option => (option.checked = false));
-		}
 
-		this.changeDetector.detectChanges();
+			if (filter.type === 'select') {
+				filter.options?.forEach(option => (option.checked = false));
+			} else {
+				filter.options = [];
+			}
+		}
 	}
 
-	protected readonly Array = Array;
 	protected readonly Event = Event;
+	protected readonly Array = Array;
 }

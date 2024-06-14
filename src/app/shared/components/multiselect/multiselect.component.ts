@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
@@ -22,7 +21,6 @@ export class MultiselectComponent {
 
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
-		public readonly searchFacade: SearchFacadeService,
 	) {}
 
 	public changeState(e: Event) {

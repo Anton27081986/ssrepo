@@ -7,11 +7,11 @@ import {
 	Output,
 	Self,
 } from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { NgControl } from '@angular/forms';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {IFilterOption} from "@app/shared/components/filters/filters.component";
+import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 export type searchType =
 	| 'user'
@@ -29,7 +29,7 @@ export type searchType =
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss'],
 })
-export class SearchInputComponent implements ControlValueAccessor {
+export class SearchInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
@@ -47,52 +47,9 @@ export class SearchInputComponent implements ControlValueAccessor {
 	public found: IDictionaryItemDto[] = [];
 
 	public constructor(
-		// Retrieve the dependency only from the local injector,
-		// not from parent or ancestors.
-		@Self()
-		// We want to be able to use the component without a form,
-		// so we mark the dependency as optional.
-		@Optional()
-		private readonly ngControl: NgControl,
-		public readonly searchFacade: SearchFacadeService,
+		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
-	) {
-		if (this.ngControl) {
-			this.ngControl.valueAccessor = this;
-		}
-	}
-
-	/**
-	 * Write form value to the DOM element (model => view)
-	 */
-	public writeValue(value: any): void {
-		this.value = value;
-	}
-
-	/**
-	 * Write form disabled state to the DOM element (model => view)
-	 */
-	public setDisabledState(isDisabled: boolean): void {
-		this.disabled = isDisabled;
-	}
-
-	/**
-	 * Update form when DOM element value changes (view => model)
-	 */
-	public registerOnChange(fn: any): void {
-		// Store the provided function as an internal method.
-		this.onChange = fn;
-	}
-
-	/**
-	 * Update form when DOM element is blurred (view => model)
-	 */
-	public registerOnTouched(fn: any): void {
-		// Store the provided function as an internal method.
-		this.onTouched = fn;
-	}
-
-	protected onTouched() {}
+	) {}
 
 	protected onChange(query: string) {
 		if (query.length > 2) {
