@@ -7,6 +7,7 @@ import { INewProductsTableItem } from '@app/pages/client-card/client-card-new-pr
 import { NewProductsFacadeService } from '@app/core/facades/new-products-facade.service';
 import { INewProductsItemDto } from '@app/core/models/company/new-products-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -16,6 +17,8 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientCardNewProductsComponent implements OnInit {
+	public newProducts$: Observable<INewProductsItemDto | null>;
+
 	// table
 	public total: number | undefined;
 	public pageSize = 6;
@@ -43,7 +46,9 @@ export class ClientCardNewProductsComponent implements OnInit {
 		public readonly newProductsFacadeService: NewProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {}
+	) {
+		this.newProducts$ = this.newProductsFacadeService.newProducts$;
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;

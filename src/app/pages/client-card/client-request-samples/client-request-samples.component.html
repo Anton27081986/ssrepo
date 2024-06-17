@@ -1,6 +1,11 @@
 <ss-card padding="0" class="container">
 	<div class="header">
-		<ss-headline class="title" size="h6">Образцы</ss-headline>
+		<a *ngIf="(samples$ | async)?.linkToModule; else noLink" [href]="(samples$ | async)?.linkToModule" target="_blank">
+			<ss-headline class="title" size="h6">Образцы</ss-headline>
+		</a>
+		<ng-template #noLink>
+			<ss-headline class="title" size="h6">Образцы</ss-headline>
+		</ng-template>
 		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 	</div>
 	<div class="content desktop table-with-filters">
