@@ -7,6 +7,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { HeaderModule } from '@app/shared/components/header/header.module';
 import { FlyMenuDirective } from '@app/shared/components/new-header/fly-menu.directive';
+import { IconModule } from '@app/shared/components/icon/icon.module';
 import { NewHeaderComponent } from './new-header.component';
 
 @NgModule({
@@ -20,6 +21,7 @@ import { NewHeaderComponent } from './new-header.component';
 		NgOptimizedImage,
 		NzIconModule,
 		HeaderModule,
+		IconModule,
 	],
 	exports: [NewHeaderComponent, FlyMenuDirective],
 })

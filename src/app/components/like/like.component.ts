@@ -1,10 +1,4 @@
-import {
-	AfterViewInit,
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	Input,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { LikesApiService } from '@app/core/api/likes-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -13,7 +7,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	selector: 'app-like',
 	templateUrl: './like.component.html',
 	styleUrls: ['./like.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LikeComponent implements AfterViewInit {
 	@Input() public isUserLikedProps!: boolean;

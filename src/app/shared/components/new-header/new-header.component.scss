@@ -2,18 +2,6 @@
 @use '../../../../assets/scss/variables' as *;
 
 @include ng-deep {
-	.ant-layout-header {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		color: $black;
-		height: 68px;
-		background: $white;
-		border-bottom-left-radius: 30px;
-		border-bottom-right-radius: 30px;
-		padding: 0;
-	}
-
 	.fly-header {
 		position: fixed;
 		align-items: center;
@@ -25,6 +13,7 @@
 	}
 
 	.header {
+		padding-top: 8px;
 		display: flex;
 		justify-content: space-between;
 
@@ -57,7 +46,7 @@ app-mobile-menu {
 
 .nav-wrap {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 }
 
 .nav-right ul {
@@ -163,6 +152,10 @@ app-all-search.mobile {
 	display: none;
 }
 
+.new-container {
+	margin: 0 6.25%;
+}
+
 @media screen and (min-width: 1325px) {
 	.open {
 		display: none;
@@ -195,7 +188,6 @@ app-all-search.mobile {
 	}
 }
 
-// Small devices (landscape phones, 576px and up)
 @media screen and (max-width: 801px) {
 	.nav-left {
 		display: none;
@@ -233,25 +225,18 @@ app-all-search.mobile {
 		display: none;
 	}
 
-	// Logo centering
 	.nav-right {
 		margin-left: 0;
 	}
 
-	// Logo centering
 	.nav-right .icon-bg.remind {
 		margin-left: 0;
 	}
 }
 
-// Medium devices (tablets, 414px and up)
 @media screen and (max-width: 545px) {
 	.search {
 		display: none;
-	}
-
-	.search-mobile {
-		// display: flex;
 	}
 
 	.ant-layout-header.mobile {
@@ -273,9 +258,6 @@ app-all-search.mobile {
 }
 
 .back {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	margin-top: 8px;
 
 	a {
@@ -290,12 +272,5 @@ app-all-search.mobile {
 @media screen and (max-width: 1200px) {
 	.back {
 		margin-left: 50px;
-	}
-}
-
-@media screen and (min-width: 1900px) {
-	.container {
-		width: 1680px;
-		max-width: 100%;
 	}
 }
