@@ -7,6 +7,7 @@ import { IFilter } from '@app/shared/components/filters/filters.component';
 import { RequestSamplesFacadeService } from '@app/core/facades/request-samples-facade.service';
 import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -15,6 +16,8 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 	styleUrls: ['./client-request-samples.component.scss'],
 })
 export class ClientRequestSamplesComponent implements OnInit {
+	public samples$: Observable<ISampleItemDto | null>;
+
 	// table
 	public total: number | undefined;
 	public pageSize = 6;
@@ -49,7 +52,9 @@ export class ClientRequestSamplesComponent implements OnInit {
 		public readonly requestSamplesFacade: RequestSamplesFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {}
+	) {
+		this.samples$ = this.requestSamplesFacade.samples$;
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;

@@ -57,6 +57,10 @@
 		padding: 16px 20px;
 		border-bottom: 1px solid $island-outline;
 
+		::ng-deep a h1 {
+			color: $main !important;
+		}
+
 		.title {
 			display: flex;
 			flex-direction: column;

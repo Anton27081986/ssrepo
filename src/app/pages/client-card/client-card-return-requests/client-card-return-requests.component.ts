@@ -7,6 +7,8 @@ import { IReturnRequestsTableItem } from '@app/pages/client-card/client-card-ret
 import { ReturnRequestsFacadeService } from '@app/core/facades/return-requests-facade.service';
 import { IReturnRequestsItemDto } from '@app/core/models/company/return-requests-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { Observable } from 'rxjs';
+import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';
 
 @UntilDestroy()
 @Component({
@@ -16,6 +18,8 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientCardReturnRequestsComponent implements OnInit {
+	public requests$: Observable<IReturnRequestsItemDto | null>;
+
 	// table
 	public total: number | undefined;
 	public pageSize = 6;
@@ -50,7 +54,9 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		public readonly returnRequestsFacadeService: ReturnRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {}
+	) {
+		this.requests$ = this.returnRequestsFacadeService.requests$;
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;

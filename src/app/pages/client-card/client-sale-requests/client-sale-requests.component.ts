@@ -7,6 +7,7 @@ import { IFilter } from '@app/shared/components/filters/filters.component';
 import { ISaleTableItem } from '@app/pages/client-card/client-sale-requests/sale-table-item';
 import { TableState } from '@app/shared/components/table/table-state';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { Observable } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -16,6 +17,8 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientSaleRequestsComponent implements OnInit {
+	public sales$: Observable<ISaleRequestsDto | null>;
+
 	// table
 	public total: number | undefined;
 	public pageSize = 6;
@@ -49,7 +52,9 @@ export class ClientSaleRequestsComponent implements OnInit {
 		public readonly saleRequestsFacade: SaleRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-	) {}
+	) {
+		this.sales$ = this.saleRequestsFacade.sales$;
+	}
 
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
