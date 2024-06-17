@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment.development';
-import {IClientDataDto, IClientDto} from '@app/core/models/company/client-dto';
+import { IClientDataDto } from '@app/core/models/company/client-dto';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';

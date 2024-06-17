@@ -22,24 +22,6 @@ export class ErrorInterceptor implements HttpInterceptor {
 
 	public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(
-			tap(event => {
-				if (event instanceof HttpResponse) {
-					switch (true) {
-						case request.method === 'POST' && event.status === 200:
-							this.notificationToastService.addToast(
-								Notifications.OK_NOTIFICATION_TEXT,
-								'ok',
-							);
-							break;
-						case request.method === 'PUT' && event.status === 200:
-							this.notificationToastService.addToast(
-								Notifications.OK_NOTIFICATION_TEXT,
-								'ok',
-							);
-							break;
-					}
-				}
-			}),
 			catchError((err: unknown) => {
 				if (err instanceof HttpErrorResponse) {
 					if (Math.floor(err.status / 100) === 4) {
@@ -56,7 +38,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore
-				const error = err.error.message || err.statusText;
+				const error = err.error?.message || err.statusText;
 
 				return throwError(() => error);
 			}),
