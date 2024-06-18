@@ -1,0 +1,17 @@
+<ss-card class="dialog" padding="16px 42px 16px 16px">
+	<ss-text size="2" *ngIf="cell">
+		<ng-container [ngSwitch]="true">
+			<a *ngSwitchCase="!!cell?.url" href="{{ cell.url }}" target="_blank">
+				{{ cell.text }}
+			</a>
+			<span *ngSwitchCase="Array.isArray(cell)">
+				<a *ngFor="let link of cell" href="{{ link.url }}" target="_blank">
+					{{ link.text }}
+				</a>
+			</span>
+			<span *ngSwitchDefault>{{ cell }}</span>
+		</ng-container>
+	</ss-text>
+	<ss-icon width="16"
+			 class="close-icon" name="iconClose" (click)="close()"></ss-icon>
+</ss-card>
