@@ -11,11 +11,20 @@
 }
 
 .accordion-header {
-	background-color: #f2f3f7;
+	background-color: #EBF6FB;
 	cursor: pointer;
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
+
+	&__icon-toggle {
+		cursor: pointer;
+		transform: rotate(180deg);
+
+		&--expanded {
+			transform: rotate(0deg);
+		}
+	}
 }
 
 .accordion-header h3 {
@@ -26,7 +35,7 @@
 	width: 100%;
 	max-height: 0;
 	overflow: hidden;
-	transition: max-height 0.3s ease-out;
+	transition: max-height 0.4s ease-out;
 }
 
 .accordion-content.open {

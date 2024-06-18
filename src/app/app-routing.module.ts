@@ -5,6 +5,7 @@ import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
+import { PermissionsGuard } from '@app/core/guards/permissions.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -71,7 +72,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: NewLayoutComponent,
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, PermissionsGuard],
 		children: [
 			{
 				path: 'client-tpr-page',
@@ -80,6 +81,13 @@ const routes: Routes = [
 						m => m.ClientTprPageModule,
 					),
 			},
+		],
+	},
+	{
+		path: '',
+		component: NewLayoutComponent,
+		canActivate: [AuthGuard],
+		children: [
 			{
 				path: 'not-permission',
 				loadChildren: () =>

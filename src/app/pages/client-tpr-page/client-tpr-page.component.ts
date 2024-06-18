@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -8,7 +9,11 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 	styleUrls: ['./client-tpr-page.component.scss'],
 })
 export class ClientTprPageComponent {
-	protected getSearchClient(client: { id: number; date?: string }) {
-		return client;
+	constructor(private readonly _router: Router) {}
+
+	protected getSearchClient(client: { id: number; title: string }) {
+		if (client) {
+			this._router.navigate(['/client-tpr-page', client.id]).then();
+		}
 	}
 }

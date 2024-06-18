@@ -111,6 +111,15 @@ export class SearchInputComponent {
 							this.ref.detectChanges();
 						});
 					break;
+				case 'client':
+					this.searchFacade
+						.getClients(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
 			}
 		}
 	}

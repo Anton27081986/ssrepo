@@ -122,5 +122,6 @@ import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
 		FiltersModule,
 		TextareaModule,
 	],
+	exports: [ClientCardComponent],
 })
 export class ClientCardModule {}
