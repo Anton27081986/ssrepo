@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
 	selector: 'ss-accordion',
@@ -8,9 +8,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 })
 export class AccordionComponent {
 	@Input() public title: string = '';
-	public isOpen: boolean = false;
+	@Output() public onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Input() isExpanded: boolean = false;
 
 	public toggle() {
-		this.isOpen = !this.isOpen;
+		this.isExpanded = !this.isExpanded;
+		this.onToggle.emit(this.isExpanded);
 	}
 }

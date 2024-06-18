@@ -16,14 +16,13 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { JwtInterceptor } from '@app/core/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from '@app/core/interceptors/error.interceptor';
-import { ComponentsModule } from '@app/components/components.module';
 import { NzConfig, provideNzConfig } from 'ng-zorro-antd/core/config';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppInitializerProvider } from './app-initializer.service';
-import {NotificationToastModule} from "@app/widgets/notification-toast/notification-toast.module";
+import { NotificationToastModule } from '@app/widgets/notification-toast/notification-toast.module';
 
 registerLocaleData(ru);
 
@@ -34,21 +33,21 @@ const ngZorroConfig: NzConfig = {
 
 @NgModule({
 	declarations: [AppComponent, EmptyLayoutComponent],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        LayoutsModule,
-        NzCardModule,
-        ReactiveFormsModule,
-        NzFormModule,
-        NzInputModule,
-        NzButtonModule,
-        NzIconModule,
-        NotificationToastModule,
-    ],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		FormsModule,
+		HttpClientModule,
+		BrowserAnimationsModule,
+		LayoutsModule,
+		NzCardModule,
+		ReactiveFormsModule,
+		NzFormModule,
+		NzInputModule,
+		NzButtonModule,
+		NzIconModule,
+		NotificationToastModule,
+	],
 	providers: [
 		AppInitializerProvider,
 		// eslint-disable-next-line camelcase

@@ -1,23 +1,30 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { PermissionsApiService } from '@app/core/api/permissions-api.service';
+import { Permissions } from '@app/core/constants/permissions.constants';
+import { map, Observable } from 'rxjs';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 
 @Injectable({ providedIn: 'root' })
 export class PermissionsGuard implements CanActivate {
 	public constructor(
 		private readonly router: Router,
-		private readonly permissionsApiService: PermissionsApiService,
+		private readonly permissionsFacadeService: PermissionsFacadeService,
 	) {}
 
-	public canActivate() {
-		const ClientContact: boolean = this.permissionsApiService.getClientsPermissions();
+	public canActivate(): Observable<boolean> {
+		return this.permissionsFacadeService.permissions$.pipe(
+			map(permissions => {
+				const checkPermission = permissions.items.find(
+					item => item === Permissions.CLIENT_TPR_URL_READ,
+				);
+				if (checkPermission) {
+					return true;
+				}
 
-		if (ClientContact) {
-			return true;
-		}
+				this.router.navigate(['not-permission']);
 
-		this.router.navigate(['not-permission']);
-
-		return false;
+				return false;
+			}),
+		);
 	}
 }

@@ -1,6 +1,7 @@
 @use 'src/styles/colors.scss' as *;
 
 :host {
+	width: 100%;
 	display: block;
 	background-color: $island;
 	border: 1px solid $island-outline;
