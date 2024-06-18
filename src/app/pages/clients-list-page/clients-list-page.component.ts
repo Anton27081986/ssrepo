@@ -212,10 +212,10 @@ export class ClientsListPageComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredClients() {
+	public getFilteredClients(isNewFilter: boolean = false) {
 		const preparedFilter: any = {
-			limit: this.pageSize,
-			offset: this.offset,
+			limit: isNewFilter ? 20 : this.pageSize,
+			offset: isNewFilter ? 0 : this.offset,
 		};
 
 		for (const filter of this.filters) {

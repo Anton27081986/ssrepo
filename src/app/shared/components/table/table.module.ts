@@ -11,6 +11,8 @@ import {
 } from '@angular/common';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { IconModule } from '@app/shared/components/icon/icon.module';
+import { TableFullCellModule } from '@app/shared/components/table-full-cell/table-full-cell.module';
 
 @NgModule({
 	declarations: [TableComponent],
@@ -25,6 +27,8 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 		NgSwitchCase,
 		NgSwitchDefault,
 		NgClass,
+		IconModule,
+		TableFullCellModule,
 	],
 })
 export class TableModule {}

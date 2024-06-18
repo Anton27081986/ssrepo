@@ -792,6 +792,14 @@ export class AppIcons {
 		'</defs>\n' +
 		'</svg>\n';
 
+	public static maximise =
+		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M0.999442 10.9174V15.002H4.60345H5.08398" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M0.999947 15.002L5.17871 10.8226" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M15.105 5.085V1.00046H11.501H11.0205" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M15.1045 1.00046L10.9258 5.17983" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
 	public static chevron =
 		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<g clip-path="url(#clip0_7572_8484)">' +
