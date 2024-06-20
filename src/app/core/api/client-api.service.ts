@@ -91,6 +91,12 @@ export class ClientApiService {
 		);
 	}
 
+	public getClientIdDictionary(id: number): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/clients/${id}`,
+		);
+	}
+
 	public setBasicManager(clientId: number, managerId: number) {
 		return this.http.put<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,

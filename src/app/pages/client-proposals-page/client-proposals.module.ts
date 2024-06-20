@@ -1,0 +1,51 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
+import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
+import { AccordionModule } from '@app/shared/components/accordion/accordion.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TableModule } from '@app/shared/components/table/table.module';
+import { TabsModule } from '@app/shared/components/tabs/tabs.module';
+import { CardModule } from '@app/shared/components/card/card.module';
+import { MultiselectModule } from '@app/shared/components/multiselect/multiselect.module';
+import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
+import { SearchClientInputModule } from '@app/shared/components/inputs/search-client-input/search-client-input.module';
+import { ClientProposalsRoutingModule } from '@app/pages/client-proposals-page/client-proposals.routing.module';
+import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
+import { ClientProposalsDevelopmentTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.component';
+import { ClientProposalsEncodingsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-encodings-tab/client-proposals-encodings-tab.component';
+import { ClientProposalsNewsLineTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.component';
+import { ClientProposalsTradeListTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.component';
+import { ClientProposalsSamplesTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.component';
+import { ClientProposalsLoyaltyTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-loyalty-tab/client-proposals-loyalty-tab.component';
+import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
+import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component';
+
+@NgModule({
+	declarations: [
+		ClientProposalsPageComponent,
+		ClientProposalsDevelopmentTabComponent,
+		ClientProposalsEncodingsTabComponent,
+		ClientProposalsNewsLineTabComponent,
+		ClientProposalsTradeListTabComponent,
+		ClientProposalsSamplesTabComponent,
+		ClientProposalsLoyaltyTabComponent,
+		ClientProposalsInfoComponent,
+		ClientProposalsBusinessTripsTabComponent,
+	],
+	imports: [
+		CommonModule,
+		ClientProposalsRoutingModule,
+		HeadlineModule,
+		SearchInputModule,
+		AccordionModule,
+		ReactiveFormsModule,
+		TableModule,
+		TabsModule,
+		CardModule,
+		MultiselectModule,
+		ButtonModule,
+		SearchClientInputModule,
+	],
+})
+export class ClientProposalsModule {}

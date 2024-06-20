@@ -75,10 +75,10 @@ const routes: Routes = [
 		canActivate: [AuthGuard, PermissionsGuard],
 		children: [
 			{
-				path: 'client-tpr-page',
+				path: 'client-proposals-page',
 				loadChildren: () =>
-					import('@app/pages/client-tpr-page/client-tpr-page.module').then(
-						m => m.ClientTprPageModule,
+					import('@app/pages/client-proposals-page/client-proposals.module').then(
+						m => m.ClientProposalsModule,
 					),
 			},
 		],
