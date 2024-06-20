@@ -13,9 +13,9 @@
 		</div>
 
 	</div>
-	<div class="content desktop table-with-filters">
+	<div [loader]="tableState === TableState.Loading" class="content desktop table-with-filters">
 		<div class="table">
-			<div class="table-container" *ngIf="tableState === TableState.Full">
+			<div class="table-container" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
 				<ss-table [scroll]="true"
 					[head]="[
 						{title: 'Код', field: 'code'},
@@ -46,9 +46,6 @@
 						<ss-text [size]="'3'">Попробуйте изменить параметры поиска</ss-text>
 					</div>
 				</ss-empty-placeholder>
-			</div>
-			<div class="table-container" *ngIf="tableState === TableState.Loading">
-				<app-loader></app-loader>
 			</div>
 		</div>
 
