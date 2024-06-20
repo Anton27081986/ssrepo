@@ -38,7 +38,7 @@ export class MainMenuFacadeService {
 						mainMenu.menu![0].items![5].link = './clients-list';
 						mainMenu.menu?.[0].items!.push({
 							name: 'Контакт с клиентом',
-							link: '/client-tpr-page',
+							link: '/client-proposals-page',
 						});
 
 						mainMenu.menu.unshift({

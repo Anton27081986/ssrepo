@@ -1,0 +1,49 @@
+<div class="clients-proposals-info">
+	<div class="header-content">
+		<ss-headline class="clients-proposals-info__header" size="h3">Контакт с клиентом: рекомендации по ВГП</ss-headline>
+		<ss-search-client-input
+			[formControl]="searchControl"
+			class="header-content__search"
+			(select)="getSearchClient($event)"
+		></ss-search-client-input>
+	</div>
+
+	<div class="clients-proposals__tables">
+		<ss-accordion [isExpanded]="true" [title]="'Информация о клиенте'">
+			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
+		</ss-accordion>
+
+		<ss-card [title]="'Заголовок'">
+			<div class="clients-proposals-info__main-table">
+				<div class="clients-proposals-info__header-main-table">
+					<ss-multiselect [label]="'Выберите ВГП'" [size]="'medium'"></ss-multiselect>
+					<ss-button [type]="'primary'">Просмотреть</ss-button>
+				</div>
+			</div>
+		</ss-card>
+	</div>
+</div>
+
+
+<ng-template #contentAccordion>
+	<div class="content-accordion">
+		<div class="content-accordion__block">
+			<ss-card [title]="'Заголовок'">
+				<ss-table
+					[head]="[
+							{title: 'ВГП и обьем производства', field: 'id'},
+							{title: 'Количество', field: 'inn'},
+							]"
+				>
+				</ss-table>
+			</ss-card>
+		</div>
+		<div class="content-accordion__block">
+			<ss-tabs [tabs]="tabs"
+					 (select)="selectTab($event)"
+					 [selectedTab]="selectedTab">
+			</ss-tabs>
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</ng-template>

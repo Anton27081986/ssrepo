@@ -61,4 +61,8 @@ export class SearchFacadeService {
 			.getTechnologist(this.clientId!, query)
 			.pipe(map(response => response.items));
 	}
+
+	public getClientIdDictionary(id: number) {
+		return this.clientApiService.getClientIdDictionary(id);
+	}
 }
