@@ -1,5 +1,14 @@
 @use 'src/styles/colors.scss' as *;
 
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.1);
+}
+
 .dialog {
 	display: flex;
 	flex-direction: column;
@@ -7,6 +16,7 @@
 	gap: 12px;
 	width: 410px;
 	position: relative;
+	z-index: 999999;
 
 	.close-icon {
 		position: absolute;

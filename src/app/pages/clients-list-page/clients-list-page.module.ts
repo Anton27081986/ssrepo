@@ -23,6 +23,7 @@ import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ComponentsModule } from '@app/components/components.module';
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
+import { DirectivesModule } from '@app/core/directives/directives.module';
 import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
 
 @NgModule({
@@ -52,6 +53,7 @@ import { ClientsListPageRoutingModule } from './clients-list-page-routing.module
 		TextModule,
 		ComponentsModule,
 		FiltersModule,
+		DirectivesModule,
 	],
 })
 export class ClientsListPageModule {}
