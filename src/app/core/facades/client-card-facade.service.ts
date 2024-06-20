@@ -17,6 +17,8 @@ export class ClientsCardFacadeService {
 	public methodFileLink =
 		'https://erp-dev.ssnab.it/api/static/general/2024/04/10/Методика_расчета_категории_Дистрибьюторов_5f544e66-24fb-417d-8a0e-a71dd2010ba5.xlsx';
 
+	public notInitPermission = 'not-init';
+
 	private readonly clientIdSubject = new BehaviorSubject<number | null>(null);
 	public clientId$ = this.clientIdSubject.asObservable();
 
@@ -29,7 +31,10 @@ export class ClientsCardFacadeService {
 	private readonly contractorsSubject = new BehaviorSubject<IContractorItemDto[]>([]);
 	public contractors$ = this.contractorsSubject.asObservable();
 
-	private readonly clientCardPermissionsSubject = new BehaviorSubject<string[]>([]);
+	private readonly clientCardPermissionsSubject = new BehaviorSubject<string[]>([
+		this.notInitPermission,
+	]);
+
 	public permissions$ = this.clientCardPermissionsSubject.asObservable();
 
 	private readonly clientStatusesSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
@@ -61,16 +66,7 @@ export class ClientsCardFacadeService {
 
 	public refreshClientCard() {
 		if (this.clientIdSubject.value) {
-			this.clientApiService
-				.getClientCardById(this.clientIdSubject.value)
-				.pipe(
-					tap(client => {
-						this.clientSubject.next(client.data);
-						this.clientCardPermissionsSubject.next(client.permissions);
-					}),
-					untilDestroyed(this),
-				)
-				.subscribe();
+			this.getClientCardById(this.clientIdSubject.value);
 		}
 	}
 

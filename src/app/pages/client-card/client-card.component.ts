@@ -94,6 +94,8 @@ export class ClientCardComponent implements OnInit {
 				this.tabs.forEach(tab => {
 					tab.isVisible = true;
 				});
+			} else if (!permissions.includes(this.clientCardListFacade.notInitPermission)) {
+				this.selectTab('basic');
 			}
 		});
 

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
+import {AfterContentChecked, AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 
@@ -18,7 +18,7 @@ export interface ITableHead {
 	templateUrl: './table.component.html',
 	styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements AfterViewInit {
+export class TableComponent implements AfterViewChecked {
 	@Input() public head: ITableHead[] | undefined;
 	@Input() public items: ITableItem[] | undefined;
 	@Input() public scroll: boolean = false;
@@ -29,7 +29,7 @@ export class TableComponent implements AfterViewInit {
 		private readonly modalService: ModalService,
 	) {}
 
-	ngAfterViewInit() {
+	ngAfterViewChecked () {
 		this.changeDetectorRef.detectChanges();
 	}
 
