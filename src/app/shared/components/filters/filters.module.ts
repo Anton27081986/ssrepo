@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { FiltersComponent } from '@app/shared/components/filters/filters.component';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { CardModule } from '@app/shared/components/card/card.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { NgForOf, NgIf } from '@angular/common';
@@ -26,7 +25,6 @@ import {ChipsSearchModule} from "@app/shared/components/inputs/chips-search/chip
     imports: [
         ButtonModule,
         CaptionModule,
-        CardModule,
         HeadlineModule,
         IconModule,
         NgIf,

@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HistoryFacadeService } from '@app/core/facades/history-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { SignalService } from '@app/core/signalR/signal.service';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { IChangeItemDto } from '@app/core/models/change-tracker/change-item-dto';
+import { TableState } from '@app/shared/components/table/table-state';
 
 @UntilDestroy()
 @Component({
@@ -16,6 +17,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
 	@Input() public objectId: number | undefined;
 
 	public historyItems: IChangeTrackerItemDto[] = [];
+
+	public tableState: TableState = TableState.Loading;
 
 	public pageIndex = 1;
 	public pageSize = 8;
@@ -49,6 +52,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
 
 			if (this.objectId === change.objectId) {
 				this.historyItems.unshift(change.item);
+				this.tableState = TableState.Full;
 				this.ref.detectChanges();
 			}
 		});
@@ -59,6 +63,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
 	}
 
 	public loadDataFromServer(pageSize: number, offset: number) {
+		this.tableState = TableState.Loading;
+
 		this.historyFacadeService
 			.getHistory(this.objectId!, 0, pageSize, offset)
 			.pipe(untilDestroyed(this))
@@ -72,6 +78,9 @@ export class HistoryComponent implements OnInit, OnDestroy {
 				} else {
 					this.total = items.total ?? 0;
 				}
+
+				this.tableState = TableState.Full;
+				this.ref.detectChanges();
 			});
 	}
 
@@ -96,4 +105,6 @@ export class HistoryComponent implements OnInit, OnDestroy {
 	public trackByChanges(index: number, item: IChangeItemDto) {
 		return index;
 	}
+
+	protected readonly TableState = TableState;
 }

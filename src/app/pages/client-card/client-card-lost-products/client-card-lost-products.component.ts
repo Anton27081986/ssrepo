@@ -105,6 +105,8 @@ export class ClientCardLostProductsComponent implements OnInit {
 	}
 
 	public nzPageIndexChange($event: number) {
+		this.tableState = TableState.Loading;
+
 		if ($event === 1) {
 			this.filter.offset = 0;
 		} else {

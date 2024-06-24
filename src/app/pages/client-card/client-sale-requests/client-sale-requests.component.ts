@@ -171,6 +171,8 @@ export class ClientSaleRequestsComponent implements OnInit {
 			}
 		}
 
+		this.tableState = TableState.Loading;
+
 		this.saleRequestsFacade.applyFilters(preparedFilter);
 	}
 

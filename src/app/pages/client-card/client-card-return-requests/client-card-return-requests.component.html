@@ -1,16 +1,17 @@
-<ss-card padding="0" class="container">
-	<div class="header">
-		<a *ngIf="(requests$ | async)?.linkToModule; else noLink" [href]="(requests$ | async)?.linkToModule" target="_blank">
-			<ss-headline class="title" size="h6">Возвраты/претензии</ss-headline>
-		</a>
-		<ng-template #noLink>
-			<ss-headline class="title" size="h6">Возвраты/претензии</ss-headline>
-		</ng-template>
-		<ss-icon *ngIf="!isFiltersVisible" class="filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
-	</div>
-	<div [loader]="tableState === TableState.Loading" class="content desktop table-with-filters">
-		<div class="table">
-			<div class="table-container" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+<ss-card padding="0" radius="0 0 16px 16px" class="container">
+	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
+	<div class="return-requests">
+		<div class="return-requests-header">
+			<a *ngIf="(requests$ | async)?.linkToModule; else noLink" [href]="(requests$ | async)?.linkToModule" target="_blank">
+				<ss-headline class="return-requests-header-title" size="h6">Возвраты/претензии</ss-headline>
+			</a>
+			<ng-template #noLink>
+				<ss-headline class="return-requests-header-title" size="h6">Возвраты/претензии</ss-headline>
+			</ng-template>
+			<ss-icon *ngIf="!isFiltersVisible" class="return-requests-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
+		</div>
+		<div class="return-requests-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+			<div class="return-requests-content-table">
 				<ss-table
 					[head]="[
 						{title: 'Код', field: 'code'},
@@ -24,26 +25,27 @@
 					[items]="tableItems">
 				</ss-table>
 			</div>
-			<div class="table-container" *ngIf="tableState === TableState.Empty">
-				<ss-empty-placeholder>
-					<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
-					<div class="placeholder-subtitle">
-						<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
-					</div>
-				</ss-empty-placeholder>
+			<div class="return-requests-content-pagination pagination">
+				<nz-pagination
+					[nzTotal]="total"
+					[nzPageIndex]="pageIndex"
+					[nzPageSize]="pageSize"
+					(nzPageIndexChange)="nzPageIndexChange($event)"
+					(nzPageSizeChange)="pageSize = $event"
+					[nzResponsive]="true"
+					[nzHideOnSinglePage]="true">
+				</nz-pagination>
 			</div>
 		</div>
-		<div class="pagination">
-			<nz-pagination
-				[nzTotal]="total"
-				[nzPageIndex]="pageIndex"
-				[nzPageSize]="pageSize"
-				(nzPageIndexChange)="nzPageIndexChange($event)"
-				(nzPageSizeChange)="pageSize = $event"
-				[nzHideOnSinglePage]="true"
-				[nzResponsive]="true">
-			</nz-pagination>
+		<div class="return-requests-content" *ngIf="tableState === TableState.Empty">
+			<ss-empty-placeholder>
+				<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+				<div class="placeholder-subtitle">
+					<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
+				</div>
+			</ss-empty-placeholder>
 		</div>
 	</div>
+	<div class="separator" *ngIf="isFiltersVisible"></div>
+	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales()" [(filters)]="filters"></ss-filters>
 </ss-card>
-<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales()" [(filters)]="filters"></ss-filters>

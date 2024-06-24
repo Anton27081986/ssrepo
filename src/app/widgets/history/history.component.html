@@ -1,4 +1,5 @@
 <ss-card padding="0">
+	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">История изменений</ss-headline>
 	</div>

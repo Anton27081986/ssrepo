@@ -13,7 +13,7 @@
 		</div>
 
 	</div>
-	<div [loader]="tableState === TableState.Loading" class="content desktop table-with-filters">
+	<div class="content desktop table-with-filters">
 		<div class="table">
 			<div class="table-container" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
 				<ss-table [scroll]="true"
@@ -49,7 +49,9 @@
 			</div>
 		</div>
 
-		<ss-filters *ngIf="isFiltersVisible" class="filters" [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredClients(true)"></ss-filters>
+		<ss-card *ngIf="isFiltersVisible" class="filters" padding="0">
+			<ss-filters [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredClients(true)"></ss-filters>
+		</ss-card>
 	</div>
 	<div class="content mobile m-b-20">
 		<ss-card>
