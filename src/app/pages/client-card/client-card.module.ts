@@ -49,7 +49,7 @@ import { ClientCardNewProductsComponent } from './client-card-new-products/clien
 import { ClientCardLostProductsComponent } from './client-card-lost-products/client-card-lost-products.component';
 import { ClientCardContractsComponent } from './client-card-contracts/client-card-contracts.component';
 import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
-import {DirectivesModule} from "@app/core/directives/directives.module";
+import {LoaderModule} from "@app/shared/components/loader/loader.module";
 
 @NgModule({
 	declarations: [
@@ -122,7 +122,7 @@ import {DirectivesModule} from "@app/core/directives/directives.module";
 		DatepickerInputModule,
 		FiltersModule,
 		TextareaModule,
-		DirectivesModule,
+		LoaderModule,
 	],
 	exports: [ClientCardComponent],
 })

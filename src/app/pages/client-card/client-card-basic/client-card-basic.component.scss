@@ -10,7 +10,11 @@
 		width: 100%;
 		min-height: 330px;
 		display: flex;
-		gap: 16px;
+
+		.separator {
+			width: 1px;
+			background-color: $island-outline;
+		}
 
 		.managers {
 			width: 434px;

@@ -4,7 +4,6 @@
 		<ss-headline size="h3" weight="semi-bold">{{ (client$ | async)?.name }}</ss-headline>
 	</div>
 	<div class="header-tabs">
-		<div class="header-tabs-align"></div>
 		<ss-tabs [tabs]="tabs"
 		         (select)="selectTab($event)"
 		         [selectedTab]="selectedTab">

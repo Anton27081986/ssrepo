@@ -32,7 +32,6 @@ import { PeopleLikedDirective } from '@app/components/victory/people-liked.direc
 import { SuperLikeDirective } from '@app/components/victory/super-like.directive';
 import { BackendErrorMessagesComponent } from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { LoaderComponent } from '@app/shared/components/loader/loader.component';
 import { CardVictoryComponent } from '@app/components/victory/card-victory/card-victory.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
@@ -47,6 +46,7 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { IconModule } from '@app/shared/components/icon/icon.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -65,6 +65,7 @@ import { AllSearchComponent } from './all-search/all-search.component';
 import { ResultItemComponent } from './all-search/result-item/result-item.component';
 import { SearchWithAuthComponent } from './profile-popup/search-with-auth/search-with-auth.component';
 import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/result-search-with-auth/result-search-with-auth.component';
+import {LoaderModule} from "@app/shared/components/loader/loader.module";
 
 @NgModule({
 	declarations: [
@@ -87,7 +88,6 @@ import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/
 		LikeComponent,
 		SuperLikeComponent,
 		BackendErrorMessagesComponent,
-		LoaderComponent,
 		PaginationComponent,
 		CardVictoryComponent,
 		CarouselComponent,
@@ -137,6 +137,8 @@ import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/
 		HeadlineModule,
 		CardModule,
 		CaptionModule,
+		IconModule,
+		LoaderModule,
 	],
 	exports: [
 		MainMenuComponent,
@@ -152,7 +154,6 @@ import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/
 		AddressBookComponent,
 		TransportComponent,
 		AllSearchComponent,
-		LoaderComponent,
 	],
 })
 export class ComponentsModule {}

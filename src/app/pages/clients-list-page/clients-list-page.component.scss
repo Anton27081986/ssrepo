@@ -23,7 +23,7 @@
 	}
 
 	.filters {
-		min-width: 300px;
+		width: 300px;
 		flex-shrink: 0;
 	}
 
@@ -49,7 +49,6 @@
 	padding-top: 20px;
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
 
 	.header {
 		display: flex;

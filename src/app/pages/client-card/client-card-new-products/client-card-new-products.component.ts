@@ -135,6 +135,8 @@ export class ClientCardNewProductsComponent implements OnInit {
 			}
 		}
 
+		this.tableState = TableState.Loading;
+
 		this.newProductsFacadeService.applyFilters(preparedFilter);
 	}
 

@@ -139,6 +139,8 @@ export class ClientCardContractsComponent implements OnInit {
 			}
 		}
 
+		this.tableState = TableState.Loading;
+
 		this.contractsFacadeService.applyFilters(preparedFilter);
 	}
 

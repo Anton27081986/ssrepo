@@ -29,11 +29,6 @@
 			display: flex;
 			gap: 16px;
 
-			.header-tabs-align {
-				width: 450px;
-				flex-shrink: 0;
-			}
-
 			ss-tabs {
 				flex-grow: 1;
 			}

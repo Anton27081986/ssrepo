@@ -28,33 +28,3 @@ body {
 ::-webkit-scrollbar-thumb {
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
-
-.loader {
-	position : absolute;
-	width: 100%;
-	height: 100%;
-	z-index: 999999;
-	background-color: rgba(0, 0, 0, 0.04);
-	border-radius: 16px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	svg {
-		animation: 1s linear 0s normal none infinite running rotation;
-		z-index: 9999999;
-	}
-}
-
-.loader.hidden {
-	display: none;
-}
-
-@keyframes rotation {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}

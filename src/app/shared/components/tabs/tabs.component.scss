@@ -14,6 +14,8 @@
 		border-color: $island-outline;
 		border-style: solid;
 		padding: 8px;
+		display: flex;
+		justify-content: center;
 	}
 
 	.selected {
