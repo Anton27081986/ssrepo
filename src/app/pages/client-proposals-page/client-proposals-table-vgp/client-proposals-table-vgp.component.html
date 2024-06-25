@@ -1,0 +1,52 @@
+<div class="client-proposals-table-vgp">
+	<div class="client-proposals-table-vgp__input-vpg">
+		<ss-multiselect (getSelected)="getSelected($event)" [options]="optionsVgp" [label]="'Выберите ВГП'"
+						[size]="'medium'"></ss-multiselect>
+		<ss-button [type]="'primary'">Просмотреть</ss-button>
+	</div>
+	<ng-container *ngIf="vgp.length > 0">
+		<div class="client-proposals-table-vgp__header">
+			<div class="header-vpg__left">
+				<ss-file-picker class="table-vpg__file-picker"></ss-file-picker>
+			</div>
+			<div class="header-vpg__center">
+				<ss-button [type]="'usually'">Скачать</ss-button>
+				<ss-button [type]="'usually'">Печать</ss-button>
+				<ss-button [type]="'usually'" (click)="openPopoverSendToTheCloud()">Отправить в облако</ss-button>
+			</div>
+			<div class="header-vpg__right">
+				<ss-button [type]="'usually'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="filters">Фильтры(0)
+				</ss-button>
+				<ss-button [type]="'usually'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="settingsColumn">
+					Отображение столбцов
+				</ss-button>
+			</div>
+		</div>
+		<div class="client-proposals-table-vgp__content">
+			<ss-table-v2
+			>
+				<tr app-client-proposals-row-item-tr [item]=""></tr>
+			</ss-table-v2>
+		</div>
+	</ng-container>
+	<ng-container *ngIf="vgp.length === 0">
+		<div class="client-proposals-table-vgp__no-content">
+			<img
+				src="../../../../assets/images/ss-empty-state%20placeholder/ss-empty-state%20placeholder.png"
+				alt="" />
+			<ss-headline class="clients-proposals-info__header" size="h3">Сформулируйте предложение
+			</ss-headline>
+			<ss-headline class="clients-proposals-info__header" size="h4">Выберите ВГП клиента выше и
+				нажмите кнопку “Просмотреть”
+			</ss-headline>
+		</div>
+	</ng-container>
+</div>
+
+<nz-dropdown-menu #settingsColumn="nzDropdownMenu">
+	<ss-settings-view-column></ss-settings-view-column>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #filters="nzDropdownMenu">
+	<app-client-proposals-filter></app-client-proposals-filter>
+</nz-dropdown-menu>

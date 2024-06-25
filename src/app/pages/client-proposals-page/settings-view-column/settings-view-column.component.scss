@@ -1,0 +1,28 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.ss-settings-view-column {
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		background-color: white;
+		width: 357px;
+		border-radius: 30px;
+		border: 1px solid $white;
+		padding: 13px;
+
+		&__item {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			gap: 12px;
+		}
+
+		&__checkbox {
+			width: 16px;
+			height: 16px;
+			border: 1px solid $island-outline;
+			border-radius: 4px;
+		}
+	}

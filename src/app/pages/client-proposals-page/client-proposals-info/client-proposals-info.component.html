@@ -1,6 +1,7 @@
 <div class="clients-proposals-info">
 	<div class="header-content">
-		<ss-headline class="clients-proposals-info__header" size="h3">Контакт с клиентом: рекомендации по ВГП</ss-headline>
+		<ss-headline class="clients-proposals-info__header" size="h3">Контакт с клиентом: рекомендации по ВГП
+		</ss-headline>
 		<ss-search-client-input
 			[formControl]="searchControl"
 			class="header-content__search"
@@ -8,18 +9,13 @@
 		></ss-search-client-input>
 	</div>
 
-	<div class="clients-proposals__tables">
+	<div class="clients-proposals-info__tables">
 		<ss-accordion [isExpanded]="true" [title]="'Информация о клиенте'">
 			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
 		</ss-accordion>
 
-		<ss-card [title]="'Заголовок'">
-			<div class="clients-proposals-info__main-table">
-				<div class="clients-proposals-info__header-main-table">
-					<ss-multiselect [label]="'Выберите ВГП'" [size]="'medium'"></ss-multiselect>
-					<ss-button [type]="'primary'">Просмотреть</ss-button>
-				</div>
-			</div>
+		<ss-card>
+			<app-client-proposals-table-vgp></app-client-proposals-table-vgp>
 		</ss-card>
 	</div>
 </div>
@@ -28,12 +24,13 @@
 <ng-template #contentAccordion>
 	<div class="content-accordion">
 		<div class="content-accordion__block">
-			<ss-card [title]="'Заголовок'">
+			<ss-card>
 				<ss-table
 					[head]="[
 							{title: 'ВГП и обьем производства', field: 'id'},
 							{title: 'Количество', field: 'inn'},
 							]"
+					[items]=""
 				>
 				</ss-table>
 			</ss-card>

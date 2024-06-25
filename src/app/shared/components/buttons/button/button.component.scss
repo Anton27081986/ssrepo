@@ -67,6 +67,12 @@ button.tertiary {
 	color: $text;
 }
 
+button.usually {
+	background-color: $island;
+	border-color: $text;
+	color: $text;
+}
+
 button.quaternary {
 	border: none;
 	background-color: transparent;

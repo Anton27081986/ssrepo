@@ -1,0 +1,40 @@
+<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
+	<ng-container>
+		<td
+			class="hc-table-td"
+		>
+			<ng-container [ngSwitch]="col.id">
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
+					<div class="hc-table-td__content">{{ item?.item1 }}</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ClientTprRowItemField.TPRrating">
+					<div class="hc-table-td__content">{{ item?.item2 }}</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
+					<div class="hc-table-td__content">{{ item?.item3 }}</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
+					<div class="hc-table-td__canvas">
+						<td class="hc-table-td__nesting">
+							<div class="hc-table-td__content">{{ 'example' }}</div>
+						</td>
+						<td class="hc-table-td__nesting">
+							<div class="hc-table-td__content"> {{ 'example' }}</div>
+						</td>
+						<td class="hc-table-td__nesting">
+							<div class="hc-table-td__content"> {{ 'example' }}</div>
+						</td>
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ClientTprRowItemField.countSell">
+					{{ item?.item5 }}
+				</ng-container>
+				<!--default case when there are no matches -->
+				<ng-container *ngSwitchDefault>
+					<div class="hc-table-td__content"> -</div>
+				</ng-container>
+			</ng-container>
+			<!---->
+		</td>
+	</ng-container>
+</ng-container>

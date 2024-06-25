@@ -1,0 +1,24 @@
+<table
+	class="ss-table-v2"
+>
+	<thead class="ss-table-v2__thead">
+	<tr class="ss-table-tr">
+		<th
+			*ngFor="let col of stateColumn.visibleCols$ | async "
+			class="ss-table-th"
+		>
+			<div
+				class="ss-table-th-item"
+				[class.justify-content-center]="col.align && col.align === 'center'"
+				[title]="col.title "
+			>
+				{{ col.title  }}
+
+			</div>
+		</th>
+	</tr>
+	</thead>
+	<tbody class="ss-table-table__tbody">
+		<ng-content></ng-content>
+	</tbody>
+</table>

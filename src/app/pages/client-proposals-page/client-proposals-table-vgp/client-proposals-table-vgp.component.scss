@@ -1,0 +1,55 @@
+.client-proposals-table-vgp {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+
+	&__input-vpg {
+		display: flex;
+		max-width: 600px;
+		gap: 16px;
+		align-items: flex-end;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__content {
+		height: 540px;
+		overflow: auto;
+	}
+
+
+	&__no-content {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin: auto;
+		align-items: center;
+		min-height: 520px;
+	}
+}
+
+
+.header-vpg {
+	display: flex;
+	justify-content: space-between;
+
+	&__left {
+		display: flex;
+		flex-direction: row;
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: row;
+		gap: 58px;
+	}
+
+	&__center {
+		display: flex;
+		flex-direction: row;
+		gap: 26px;
+	}
+}

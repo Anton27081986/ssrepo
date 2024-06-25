@@ -12,6 +12,7 @@ export class ButtonComponent {
 		| 'muted'
 		| 'tertiary'
 		| 'quaternary'
+		| 'usually'
 		| 'outline' = 'primary';
 
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
