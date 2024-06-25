@@ -2,7 +2,7 @@
 <div class="input">
 	<input type="text"
    	[placeholder]="placeholder"
-   	[value]="selectedItem ? selectedItem.name : ''"
+   	[value]="selectedItem?.name || ''"
 	[disabled]="disabled"
 	(input)="onChange($any($event.target).value)"
 	class="{{ error ? size + ' error' : size }}"
@@ -19,3 +19,4 @@
 	</div>
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>
+<div *ngIf="found.length" class="overflow" (click)="found = []"></div>

@@ -15,7 +15,7 @@
 	</div>
 	<div class="content desktop table-with-filters">
 		<div class="table">
-			<div class="table-container" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+			<ng-container *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
 				<ss-table [scroll]="true"
 					[head]="[
 						{title: 'Код', field: 'code'},
@@ -38,20 +38,22 @@
 						[nzResponsive]="true">
 					</nz-pagination>
 				</div>
-			</div>
-			<div class="table-container" *ngIf="tableState === TableState.Empty">
+			</ng-container>
+			<ng-container *ngIf="tableState === TableState.Empty">
 				<ss-empty-placeholder>
 					<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
 					<div class="placeholder-subtitle">
 						<ss-text [size]="'3'">Попробуйте изменить параметры поиска</ss-text>
 					</div>
 				</ss-empty-placeholder>
-			</div>
+			</ng-container>
 		</div>
 
 		<ss-card *ngIf="isFiltersVisible" class="filters" padding="0">
 			<ss-filters [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredClients(true)"></ss-filters>
 		</ss-card>
+
+		<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
 	</div>
 	<div class="content mobile m-b-20">
 		<ss-card>
