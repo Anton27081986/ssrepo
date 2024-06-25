@@ -1,0 +1,28 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.hc-table-td {
+	border: 2px solid $border-table;
+
+	&__canvas {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	&__nesting {
+		border-bottom: 2px solid $border-table;
+
+		&:last-child {
+			border: none;
+		}
+	}
+
+	&__content {
+		display: flex;
+		padding: 16px 19px;
+		align-items: center;
+		justify-content: center;
+	}
+}

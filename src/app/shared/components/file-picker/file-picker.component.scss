@@ -1,0 +1,42 @@
+:host {
+	display: block;
+	width:100%;
+}
+
+.ss-file-picker {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	margin-bottom: 10px;
+}
+
+.ss-file-picker-header {
+	cursor: pointer;
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+
+	&__icon-toggle {
+		cursor: pointer;
+		transform: rotate(180deg);
+
+		&--expanded {
+			transform: rotate(0deg);
+		}
+	}
+}
+
+.ss-file-picker-header h3 {
+	margin: 0;
+}
+
+.ss-file-picker-content {
+	width: 100%;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.4s ease-out;
+}
+
+.ss-file-picker-content.open {
+	max-height: 500px;
+}

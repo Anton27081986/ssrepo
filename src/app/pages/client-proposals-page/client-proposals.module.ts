@@ -20,6 +20,16 @@ import { ClientProposalsSamplesTabComponent } from '@app/pages/client-proposals-
 import { ClientProposalsLoyaltyTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-loyalty-tab/client-proposals-loyalty-tab.component';
 import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
 import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component';
+import { ClientProposalsRowItemTrComponent } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
+import { TableV2Module } from '@app/shared/components/ss-table-v2/ss-table-v2.module';
+import { IconModule } from '@app/shared/components/icon/icon.module';
+import { FilePickerModule } from '@app/shared/components/file-picker/file-picker.module';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { SettingsViewColumnComponent } from '@app/pages/client-proposals-page/settings-view-column/settings-view-column.component';
+import { ClientProposalsFilterComponent } from '@app/pages/client-proposals-page/client-proposals-filter/client-proposals-filter.component';
+import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
+import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-page/client-proposals-table-vgp/client-proposals-table-vgp.component';
+import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/scrollable-block.module';
 
 @NgModule({
 	declarations: [
@@ -32,6 +42,11 @@ import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-prop
 		ClientProposalsLoyaltyTabComponent,
 		ClientProposalsInfoComponent,
 		ClientProposalsBusinessTripsTabComponent,
+		ClientProposalsRowItemTrComponent,
+		SettingsViewColumnComponent,
+		ClientProposalsFilterComponent,
+		ClientProposalsSendCloudPopoverComponent,
+		ClientProposalsTableVgpComponent,
 	],
 	imports: [
 		CommonModule,
@@ -46,6 +61,11 @@ import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-prop
 		MultiselectModule,
 		ButtonModule,
 		SearchClientInputModule,
+		TableV2Module,
+		IconModule,
+		FilePickerModule,
+		NzDropDownModule,
+		ScrollableBlockModule,
 	],
 })
 export class ClientProposalsModule {}

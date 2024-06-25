@@ -1,0 +1,32 @@
+.ss-table-v2 {
+	width: 100%;
+
+	&__thead{
+		min-height: 54px;
+	}
+
+	&__tbody {
+		overflow: auto;
+	}
+}
+
+.ss-table-tr {
+	border: 2px solid #F0F0F0;
+}
+
+.ss-table-th{
+}
+
+.ss-table-th-item{
+	display: flex;
+	align-items: center;
+	padding: 16px 19px;
+	border: 2px solid #F0F0F0;
+}
+
+.ss-table-v2 th {
+	position: sticky;
+	top: -1px;
+	background-color: #EEF2FF;
+	z-index: 1000;
+}

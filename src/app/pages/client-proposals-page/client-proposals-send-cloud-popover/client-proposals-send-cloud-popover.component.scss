@@ -1,0 +1,36 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.client-proposals-send-cloud-popover {
+	display: flex;
+	background-color: $white;
+	flex-direction: column;
+	min-width: 520px;
+	padding: 20px 16px;
+	gap: 60px;
+	border: 1px solid $border-color;
+	border-radius: 8px;
+	height: 228px;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__body {
+		display: flex;
+		justify-content: flex-start;
+		gap: 20px;
+		flex-direction: column;
+	}
+
+	&__input {
+		display: flex;
+		gap: 16px;
+	}
+
+	&__close {
+		cursor: pointer;
+	}
+}

@@ -1,13 +1,4 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	EventEmitter,
-	Input,
-	Optional,
-	Output,
-	Self,
-} from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';

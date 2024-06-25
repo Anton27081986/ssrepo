@@ -1,0 +1,71 @@
+.scrollable-block {
+  --_scroll-x-overflow: auto;
+  --_scroll-y-overflow: auto;
+  --_scroll-padding-inline: 0;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 1px;
+
+  overflow-x: var(--_scroll-x-overflow);
+  overflow-y: var(--_scroll-y-overflow);
+  padding-inline: var(--_scroll-padding-inline);
+
+  &--not-auto-size {
+    flex-basis: auto;
+  }
+
+  &--h-hidden {
+    --_scroll-x-overflow: hidden;
+  }
+
+  &--v-hidden {
+    --_scroll-y-overflow: hidden;
+  }
+
+  &--padding {
+    --_scroll-padding-inline: #{10px};
+  }
+
+  //@media #{$md} {
+  //  &--padding {
+  //    --_scroll-padding-inline: #{10px};
+  //  }
+  //}
+
+  /* Width */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Arrows */
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background-color: grey;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: grey;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: grey;
+  }
+
+  /* Firefox */
+  @supports (-moz-appearance: none) {
+    scrollbar-color: grey grey;
+    scrollbar-width: thin;
+  }
+
+  @media print {
+    overflow: visible !important;
+  }
+}
