@@ -105,7 +105,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 		this.mailForm = new FormGroup({
 			subject: new FormControl<string>('', Validators.required),
 			text: new FormControl<string>('', Validators.required),
-			isPrivate: new FormControl<boolean>(true),
+			isPrivate: new FormControl<boolean>(false),
 		});
 
 		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {

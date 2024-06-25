@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
 	selector: 'ss-tag',
 	templateUrl: './tag.component.html',
 	styleUrls: ['./tag.component.scss'],
 })
-export class TagComponent {}
+export class TagComponent {
+	@Input()
+	public type: 'ok' | 'error' | 'warning' | undefined;
+}

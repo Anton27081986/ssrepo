@@ -113,17 +113,24 @@ export class ClientsCardFacadeService {
 			this.clientApiService
 				.setBasicManager(this.clientIdSubject.value, managerId)
 				.pipe(untilDestroyed(this))
-				.subscribe();
+				.subscribe(() => {
+					this.getManagers();
+					this.refreshClientCard();
+				});
 		}
 	}
 
-	public addManager(managerId?: number) {
+	public addManager(managerId?: number, isBase = false) {
 		if (this.clientIdSubject.value && managerId) {
 			this.clientApiService
 				.addManager(this.clientIdSubject.value, managerId)
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
-					this.getManagers();
+					if (isBase) {
+						this.setBasicManager(managerId);
+					} else {
+						this.getManagers();
+					}
 				});
 		}
 	}
