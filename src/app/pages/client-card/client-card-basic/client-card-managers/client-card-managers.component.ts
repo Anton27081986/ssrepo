@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { from, Observable, tap } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
@@ -34,7 +34,6 @@ export class ClientCardManagersComponent implements OnInit {
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NzMessageService,
 		private readonly userFacadeService: UserFacadeService,
-		private readonly cd: ChangeDetectorRef,
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 	}
@@ -75,36 +74,44 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public onEditing(status: boolean) {
 		this.isEditing = status;
+
+		if (status) {
+			this.clientCardListFacade.getManagers();
+		}
 	}
 
 	public onBasicManagerChange(managerId: number) {
 		this.changedData.basicManager = managerId;
-
-		this.clientCardListFacade.managers$.pipe(untilDestroyed(this)).subscribe(managers => {
-			this.basicManager = managers.find(manager => manager.id === Number(managerId));
+		this.changedData.managersList.map(item => {
+			if (item.manager.id == managerId) {
+				item.manager.isBase = true;
+			} else {
+				item.manager.isBase = false;
+			}
 		});
 	}
 
 	public onSaveChanges() {
-		if (this.changedData.basicManager) {
-			this.clientCardListFacade.setBasicManager(this.changedData.basicManager);
-
-			setTimeout(() => {
-				this.clientCardListFacade.getManagers();
-				this.clientCardListFacade.refreshClientCard();
-
-				this.cd.detectChanges();
-			}, 200);
-		}
-
-		from(this.changedData.managersList.filter(manager => manager.status !== 'static'))
+		from(this.changedData.managersList)
 			.pipe(
-				tap(manager => {
-					if (manager.status === 'add') {
-						this.clientCardListFacade.addManager(manager.manager.id);
+				tap(item => {
+					if (item.status === 'add') {
+						this.clientCardListFacade.addManager(
+							item.manager.id,
+							this.changedData.basicManager == item.manager.id,
+						);
 					}
 
-					this.clientCardListFacade.deleteManager(manager.manager.id);
+					if (item.status === 'delete') {
+						this.clientCardListFacade.deleteManager(item.manager.id);
+					}
+
+					if (
+						item.status === 'static' &&
+						this.changedData.basicManager == item.manager.id
+					) {
+						this.clientCardListFacade.setBasicManager(this.changedData.basicManager!);
+					}
 				}),
 				untilDestroyed(this),
 			)
@@ -119,6 +126,8 @@ export class ClientCardManagersComponent implements OnInit {
 	}
 
 	public selectManager($event: any) {
-		this.clientCardListFacade.addManager($event?.id);
+		if ($event.id) {
+			this.changedData.managersList.push({ manager: $event, status: 'add' });
+		}
 	}
 }

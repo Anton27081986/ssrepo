@@ -85,6 +85,8 @@ export interface IClientDto {
 	managers?: IManagerItemDto[] | null;
 	changePriceListLevelLink?: string | null;
 	linkToDetail?: string | null;
+	isArchived?: boolean;
+	isDeleted?: boolean;
 }
 export interface IClientDataDto {
 	data: IClientDto;
