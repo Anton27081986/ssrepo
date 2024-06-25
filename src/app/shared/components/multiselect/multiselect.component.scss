@@ -74,6 +74,10 @@
 	}
 }
 
+::ng-deep ss-text.placeholder p {
+	color: $lite-text;
+}
+
 input.option {
 	outline: none;
 	border: none;

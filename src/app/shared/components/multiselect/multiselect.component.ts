@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
@@ -19,6 +19,8 @@ export class MultiselectComponent {
 	@Output() public getSelected = new EventEmitter<any>();
 	public isOptionsVisible = false;
 
+	@ViewChild('optionsEl') public optionsEl!: ElementRef;
+
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
 	) {}
@@ -27,6 +29,9 @@ export class MultiselectComponent {
 		e.stopPropagation();
 		this.isOptionsVisible = !this.isOptionsVisible;
 		this.changeDetector.detectChanges();
+		if (this.isOptionsVisible) {
+			this.optionsEl.nativeElement.scrollIntoView(false);
+		}
 	}
 
 	public onSelect(id: number) {

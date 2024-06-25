@@ -1,4 +1,5 @@
 @use '../../../styles/colors' as *;
+
 .header {
 	display: flex;
 	justify-content: space-between;
@@ -13,12 +14,13 @@
 
 	.table {
 		flex-grow: 1;
-		overflow-y: hidden;
-		height: calc(100% - 56px);
 		border-radius: 16px;
+		max-height: calc(100% - 56px);
+		overflow-y: hidden;
 
-		.table-container {
-			overflow-y: hidden;
+		ss-table {
+			max-height: 100%;
+			overflow-y: auto;
 		}
 	}
 
@@ -31,6 +33,7 @@
 		justify-content: flex-end;
 		position: absolute;
 		bottom: 0;
+		left: 0;
 	}
 
 	hr {

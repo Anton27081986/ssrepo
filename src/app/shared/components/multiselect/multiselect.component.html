@@ -1,13 +1,13 @@
 <ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
 <div class="input {{ size }}">
 	<div class="selected" (click)="changeState($event)">
-		<ss-text *ngIf="placeholder && !getSelectedOptions()?.length" size="3">{{ placeholder }}</ss-text>
+		<ss-text class="placeholder" *ngIf="placeholder && !getSelectedOptions()?.length" size="2">{{ placeholder }}</ss-text>
 		<div class="chips" *ngFor="let option of getSelectedOptions()">
 			<ss-text size="3">{{ option.name }}</ss-text>
 			<ss-icon height="8" width="8" name="iconClose" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
 		</div>
 	</div>
-	<div class="options" *ngIf="isOptionsVisible">
+	<div class="options" *ngIf="isOptionsVisible" #optionsEl>
 		<div class="option" *ngFor="let option of options" (click)="onSelect(option.id!)">
 			<ss-icon *ngIf="option.checked; else empty" height="16" name="checkbox"></ss-icon>
 			<ng-template #empty>
