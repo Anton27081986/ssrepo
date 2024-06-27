@@ -78,12 +78,11 @@
 		</div>
 		<div class="info-list-item">
 			<ss-text size="3" class="info-list-item-name">Регион:</ss-text>
-			<ss-search-input formControlName="region"
-			                 searchType="region"
+			<ss-search-input searchType="region"
 			                 *ngIf="isEditing; else region"
 							 (select)="selectRegion($event)"
 							 [error]="infoForm.controls.region.hasError('required') && infoForm.controls.region.touched ? 'Обязательное поле' : undefined"
-							 value="{{ (client$ | async)?.region?.name }}"
+							 [selectedItem]="(client$ | async)?.region"
 							 (keydown)="validators($event)">
 			</ss-search-input>
 			<ng-template #region>
