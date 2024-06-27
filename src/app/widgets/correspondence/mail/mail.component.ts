@@ -276,7 +276,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 		this.mailForm.reset({
 			subject: this.mailForm.controls.subject.value,
 			text: '',
-			isPrivate: true,
+			isPrivate: false,
 		});
 		this.toUsers = [];
 		this.toUsersCopy = [];
