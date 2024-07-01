@@ -106,16 +106,16 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                          "port": 5000,
-                            "buildTarget": "erpss:build:production"
+                            "browserTarget": "erpss:build:production",
+                            "port": 5000
                         },
                         "development": {
-                          "port": 5000,
-                            "buildTarget": "erpss:build:development"
+                            "browserTarget": "erpss:build:development",
+                            "port": 5000
                         },
                         "staging": {
-                          "port": 5000,
-                            "buildTarget": "erpss:build:staging"
+                            "browserTarget": "erpss:build:staging",
+                            "port": 5000
                         }
                     },
                     "defaultConfiguration": "development"
@@ -123,7 +123,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                      "buildTarget": "erpss:build"
+                        "browserTarget": "erpss:build"
                     }
                 },
                 "test": {
