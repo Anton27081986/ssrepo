@@ -1,7 +1,7 @@
 <div class="client-proposals-table-vgp">
 	<div class="client-proposals-table-vgp__input-vpg">
-		<ss-multiselect (getSelected)="getSelected($event)" [options]="optionsVgp" [label]="'Выберите ВГП'"
-						[size]="'medium'"></ss-multiselect>
+		<ss-chips-search [placeholder]="'ВГП Клиента'" (getSelected)="getSelected($event)"
+						 [searchType]="'productions'"></ss-chips-search>
 		<ss-button [type]="'primary'">Просмотреть</ss-button>
 	</div>
 	<ng-container *ngIf="vgp.length > 0">
@@ -24,7 +24,7 @@
 		</div>
 		<div class="client-proposals-table-vgp__content">
 			<ss-table-v2
-			>
+			> // через for
 				<tr app-client-proposals-row-item-tr [item]=""></tr>
 			</ss-table-v2>
 		</div>
@@ -33,7 +33,7 @@
 		<div class="client-proposals-table-vgp__no-content">
 			<img
 				src="../../../../assets/images/ss-empty-state%20placeholder/ss-empty-state%20placeholder.png"
-				alt="" />
+				alt=""/>
 			<ss-headline class="clients-proposals-info__header" size="h3">Сформулируйте предложение
 			</ss-headline>
 			<ss-headline class="clients-proposals-info__header" size="h4">Выберите ВГП клиента выше и

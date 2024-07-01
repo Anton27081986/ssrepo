@@ -1,8 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
 import { IClientDataDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
+import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
+import { IResponse } from '@app/core/utils/response';
+import { INewsDto } from '@app/core/models/client-proposails/news';
+import { ISamples } from '@app/core/models/client-proposails/samples';
+import { ITradeList } from '@app/core/models/client-proposails/trade-list';
+import { IContractorsDto } from '@app/core/models/client-proposails/contractors';
+import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
+import { IRequestGetProposals } from '@app/core/models/client-proposails/request-get-proposals';
+import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 
 @Injectable({
 	providedIn: 'root',
@@ -11,39 +20,84 @@ export class ClientProposalsApiService {
 	// заготовка для таблиц в аккордионе
 	public constructor(private readonly http: HttpClient) {}
 
-	public getModelClientData(clientId: number): Observable<any> {
-		return this.http.get<IClientDataDto>(
-			`${environment.apiUrl}/api/ClientProposals/doneProductions/${clientId}`,
+	public getDoneProductions(clientId: number): Observable<IResponse<ProposalsProduction>> {
+		return this.http.get<IResponse<ProposalsProduction>>(
+			`${environment.apiUrl}/api/company/ClientProposals/doneProductions/${clientId}`,
 		);
 	}
 
-	public getContractors(): Observable<any> {
-		return this.http.get<IClientDataDto>(
-			`${environment.apiUrl}/api/ClientProposals/contractors`,
+	public getNews(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {
+		return this.http.get<IResponse<INewsDto>>(
+			`${environment.apiUrl}/api/company/ClientProposals/news`,
+			{
+				params: new HttpParams()
+					.set('clientId', params.clientId)
+					.set('Limit', params.limit)
+					.set('Offset', params.offset),
+			},
 		);
 	}
 
-	public getNews(): Observable<any> {
-		return this.http.get<IClientDataDto>(`${environment.apiUrl}/api/ClientProposals/news`);
-	}
-
-	public getSamples(): Observable<any> {
-		return this.http.get<IClientDataDto>(`${environment.apiUrl}/api/ClientProposals/samples`);
-	}
-
-	public getProductSheets(): Observable<any> {
-		return this.http.get<IClientDataDto>(
-			`${environment.apiUrl}/api/ClientProposals/productSheets`,
+	public getTrips(params: IRequestGetProposals): Observable<IResponse<IBusinessTripsDto>> {
+		return this.http.get<IResponse<IBusinessTripsDto>>(
+			`${environment.apiUrl}/api/company/ClientProposals/trips`,
+			{
+				params: new HttpParams()
+					.set('clientId', params.clientId)
+					.set('Limit', params.limit)
+					.set('Offset', params.offset),
+			},
 		);
 	}
 
-	public getCommitteeDevelopments(): Observable<any> {
-		return this.http.get<IClientDataDto>(
-			`${environment.apiUrl}/api/ClientProposals/CommitteeDevelopments`,
+	public getTradeList(params: IRequestGetProposals): Observable<IResponse<ITradeList>> {
+		return this.http.get<IResponse<ITradeList>>(
+			`${environment.apiUrl}/api/company/ClientProposals/productSheets`,
+			{
+				params: new HttpParams()
+					.set('clientId', params.clientId)
+					.set('Limit', params.limit)
+					.set('Offset', params.offset),
+			},
 		);
 	}
 
-	public getTrips(): Observable<any> {
-		return this.http.get<IClientDataDto>(`${environment.apiUrl}/api/ClientProposals/trips`);
+	public getContractors(params: IRequestGetProposals): Observable<IResponse<IContractorsDto>> {
+		return this.http.get<IResponse<IContractorsDto>>(
+			`${environment.apiUrl}/api/company/ClientProposals/contractors`,
+			{
+				params: new HttpParams()
+					.set('ClientId', params.clientId)
+					.set('Limit', params.limit)
+					.set('Offset', params.offset)
+					.set('WithArchived', params.withArchiver!),
+			},
+		);
+	}
+
+	public getSamples(params: IRequestGetProposals): Observable<IResponse<ISamples>> {
+		return this.http.get<IResponse<ISamples>>(
+			`${environment.apiUrl}/api/company/ClientProposals/samples`,
+			{
+				params: new HttpParams()
+					.set('clientId', params.clientId)
+					.set('Limit', params.limit)
+					.set('Offset', params.offset),
+			},
+		);
+	}
+
+	public getCommitteeDevelopments(
+		params: IRequestGetProposals,
+	): Observable<IResponse<IDevelopmentDto>> {
+		return this.http.get<IResponse<IDevelopmentDto>>(
+			`${environment.apiUrl}/api/company/ClientProposals/CommitteeDevelopments`,
+			{
+				params: new HttpParams()
+					.set('clientId', params.clientId)
+					.set('Limit', params.limit)
+					.set('Offset', params.offset),
+			},
+		);
 	}
 }

@@ -14,29 +14,24 @@
 			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
 		</ss-accordion>
 
-		<ss-card>
-			<app-client-proposals-table-vgp></app-client-proposals-table-vgp>
-		</ss-card>
+		<!--		Пока убрал  до  готовности большой таблицы-->
+		<!--		<ss-card>-->
+		<!--			<app-client-proposals-table-vgp></app-client-proposals-table-vgp>-->
+		<!--		</ss-card>-->
 	</div>
 </div>
 
 
 <ng-template #contentAccordion>
 	<div class="content-accordion">
-		<div class="content-accordion__block">
-			<ss-card>
-				<ss-table
-					[head]="[
-							{title: 'ВГП и обьем производства', field: 'id'},
-							{title: 'Количество', field: 'inn'},
-							]"
-					[items]=""
-				>
-				</ss-table>
+		<div class="content-accordion__model-client model-client">
+			<ss-card [padding]="'0'">
+				<app-client-proposals-done-production></app-client-proposals-done-production>
 			</ss-card>
 		</div>
-		<div class="content-accordion__block">
+		<div class="content-accordion__tabs">
 			<ss-tabs [tabs]="tabs"
+					 [size]="'medium'"
 					 (select)="selectTab($event)"
 					 [selectedTab]="selectedTab">
 			</ss-tabs>

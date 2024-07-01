@@ -1,5 +1,14 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+	ClientProposalsFacadeService,
+	filterTruthy,
+} from '@app/core/facades/client-proposals-facade.service';
+import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { IResponse } from '@app/core/utils/response';
+import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
+import { ITableItem } from '@app/shared/components/table/table.component';
+import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-table-item';
 
 @UntilDestroy()
 @Component({
@@ -8,4 +17,64 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	styleUrls: ['./client-proposals-business-trips-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsBusinessTripsTabComponent {}
+export class ClientProposalsBusinessTripsTabComponent {
+	public businessTrips$: Observable<IResponse<IBusinessTripsDto>>;
+	public pageSize = 6;
+	public pageIndex = 1;
+	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
+		this.businessTrips$ = combineLatest([
+			this.clientProposalsFacadeService.clientId$,
+			this.offset,
+		]).pipe(
+			filterTruthy(),
+			map(([id, offset]) => {
+				return this.clientProposalsFacadeService.getTrips({
+					clientId: id,
+					limit: 3,
+					offset,
+				});
+			}),
+			switchMap(item => {
+				return item;
+			}),
+		);
+	}
+
+	protected getTableItems(production: IResponse<IBusinessTripsDto>): ITableItem[] {
+		const productionTableItem = production.items.map(x => {
+			const tableItem: IClientProposalsBusinessTripsTableItem =
+				{} as IClientProposalsBusinessTripsTableItem;
+
+			tableItem.code = {
+				text: x.id.toString() ?? '-',
+				url: x.linkToDetail ?? '',
+			};
+			tableItem.date = x.beginDate
+				? new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
+						year: 'numeric',
+						month: 'numeric',
+						day: 'numeric',
+					})
+				: '-';
+			tableItem.task = x.goal.name;
+			tableItem.members = x.members[0]?.name ?? '-';
+
+			return tableItem;
+		});
+
+		return <ITableItem[]>(<unknown>productionTableItem);
+	}
+
+	public nzPageIndexChange($event: number) {
+		if ($event === 1) {
+			this.offset.next(0);
+		} else {
+			this.offset.next(this.pageSize * $event - this.pageSize);
+		}
+
+		this.offset.next(this.pageSize * $event - this.pageSize);
+		this.pageIndex = $event;
+	}
+}

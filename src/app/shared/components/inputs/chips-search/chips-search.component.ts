@@ -18,7 +18,9 @@ export type searchType =
 	| 'contractor'
 	| 'client'
 	| 'technologist'
+	| 'productions'
 	| undefined;
+
 @UntilDestroy()
 @Component({
 	selector: 'ss-chips-search',
@@ -39,6 +41,7 @@ export class ChipsSearchComponent {
 	@ViewChild('input') public input!: ElementRef;
 
 	protected found: any[] = [];
+
 	public constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		public readonly searchFacade: SearchFacadeService,
@@ -108,6 +111,15 @@ export class ChipsSearchComponent {
 				case 'client':
 					this.searchFacade
 						.getClients(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'productions':
+					this.searchFacade
+						.getProductions(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;

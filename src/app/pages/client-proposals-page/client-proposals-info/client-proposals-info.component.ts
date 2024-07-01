@@ -1,42 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
 import { SearchInputItem } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
 import { ColumnsStateService } from '@app/core/columns.state.service';
-import { ClientProposalsService } from '@app/pages/client-proposals-page/client-proposals.service';
+import { Subscription } from 'rxjs';
+import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-client-proposals-info',
 	templateUrl: './client-proposals-info.component.html',
 	styleUrls: ['./client-proposals-info.component.scss'],
-	providers: [ColumnsStateService, ClientProposalsService],
+	providers: [ColumnsStateService, ClientProposalsFacadeService],
+	encapsulation: ViewEncapsulation.None,
 })
-export class ClientProposalsInfoComponent {
+export class ClientProposalsInfoComponent implements OnInit {
 	protected clientId: number | null = null;
 
-	// protected readonly modelClientItems$: Observable<ITableItem[]>;
+	private readonly subscription = new Subscription();
 
 	protected readonly searchControl = new FormControl<number>(0);
 
 	public tabs: ITab[] = [
+		{
+			label: 'Состав контрагентов',
+			name: 'contractors',
+			isVisible: true,
+		},
+		{
+			label: 'Товарная ведомость по КА',
+			name: 'trade-list',
+			isVisible: true,
+		},
 		{
 			label: 'Командировки',
 			name: 'business-trips',
 			isVisible: true,
 		},
 		{
-			label: 'Разработка АК',
+			label: 'Разработки АК',
 			name: 'development',
-			isVisible: true,
-		},
-		{
-			label: 'Товарная ведомость',
-			name: 'trade-list',
 			isVisible: true,
 		},
 		{
@@ -49,60 +56,50 @@ export class ClientProposalsInfoComponent {
 			name: 'news-line',
 			isVisible: true,
 		},
-		{
-			label: 'Повышение лояльности',
-			name: 'loyalty',
-			isVisible: true,
-		},
 	];
 
-	protected mainInfoTab: ITab | undefined = this.tabs.find(tab => tab.name === 'business-trips');
+	protected mainInfoTab: ITab | undefined = this.tabs.find(tab => tab.name === 'contractors');
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
 	constructor(
-		_activatedRoute: ActivatedRoute,
 		private readonly _router: Router,
 		protected readonly _columnState: ColumnsStateService,
-		protected readonly clientProposalsService: ClientProposalsService,
+		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 	) {
 		this._columnState.cols$.next(this.defaultCols);
 
-		const id = _activatedRoute.snapshot.paramMap.get('clientId');
+		this.subscription.add(
+			this.clientProposalsFacadeService.clientId$.subscribe(id => {
+				if (id) {
+					this.searchControl.setValue(id);
+				} else {
+					this._router.navigate(['/client-proposals-page']).then();
+				}
+			}),
+		);
+	}
 
-		// Закоменчено в ожидании бэка.
-		// this.modelClientItems$ = _activatedRoute.paramMap.pipe(
-		// 	switchMap(params => {
-		// 		this.clientId = Number.parseInt(params.get('clientId'), 10);
-		//
-		// 		return clientProposalsService.getModelClientData(this.clientId);
-		// 	}),
-		// 	shareReplay({
-		// 		bufferSize: 1,
-		// 		refCount: true,
-		// 	}),
-		// );
-
-		if (id) {
-			this.clientId = Number.parseInt(id, 10);
-			this.searchControl.setValue(this.clientId);
-		} else {
-			this._router.navigate(['/client-proposals-page']).then();
+	ngOnInit() {
+		for (const tab of this.tabs) {
+			if (this._router.url.includes(tab!.name!)) {
+				this.selectedTab = tab;
+			}
 		}
 	}
 
 	protected getSearchClient(client: SearchInputItem | null) {
 		if (client) {
-			this.clientId = client.id;
-			this._router.navigate(['/client-proposals-page', this.clientId]).then();
+			this._router.navigate(['/client-proposals-page', client.id]).then();
 		} else {
 			this._router.navigate(['/client-proposals-page']).then();
 		}
 	}
 
 	public selectTab(page: string) {
-		if (this.clientId) {
-			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
+		const id = this.clientProposalsFacadeService.clientIdSubject.value;
+		if (id) {
+			this._router.navigate([`/client-proposals-page/${id}/${page}`]);
 		}
 	}
 

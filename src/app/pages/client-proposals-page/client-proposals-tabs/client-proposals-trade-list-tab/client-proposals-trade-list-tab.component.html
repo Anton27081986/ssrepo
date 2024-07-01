@@ -1,12 +1,46 @@
-<ss-table
-	[head]="[
-{title: 'ТП', field: ''},
-{title: 'Дата', field: ''},
-{title: 'Кол-во', field: ''},
-{title: 'Сумма', field: ''},
-{title: 'Валюта', field: ''},
-]
+<ss-card class="container" padding="0" radius="0 0 16px 16px">
+	<ng-container *ngIf="tradeList$ | async as list">
+		<app-client-proposals-tabs-canvas
+			[headerTemplateRef]="header"
+			[bodyTemplateRef]="body"
+			[footerTemplateRef]="footer">
+		</app-client-proposals-tabs-canvas>
+		<ng-template #header>
+			<a class="app-client-proposals-trade-list-tab__link" href="{{ list.linkToModule }}" target="_blank">
+				Товарная ведомость
+			</a>
+		</ng-template>
+		<ng-template #body>
+			<ss-table
+				*ngIf="list.total > 0;else empty"
+				[padding]="'8px'"
+				[head]="[
+				{title: 'ТП', field: 'name'},
+				{title: 'Дата', field: 'date'},
+				{title: 'Цена', field: 'price'},
+				{title: 'Количество', field: 'quantity'},
+				{title: 'Сумма', field: 'amount'},
+				{title: 'Валюта', field: 'currency'},
+				]"
+				[items]="getTableItems(list)
 "
->
-</ss-table>
+			>
+			</ss-table>
 
+			<ng-template #empty>
+				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+			</ng-template>
+		</ng-template>
+		<ng-template #footer>
+			<nz-pagination
+				class="pagination"
+				[nzTotal]="list.total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</ng-template>
+	</ng-container>
+</ss-card>

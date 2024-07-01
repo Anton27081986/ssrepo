@@ -1,4 +1,4 @@
-import {AfterContentChecked, AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Input} from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, HostBinding, Input } from '@angular/core';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 
@@ -20,16 +20,17 @@ export interface ITableHead {
 })
 export class TableComponent implements AfterViewChecked {
 	@Input() public head: ITableHead[] | undefined;
-	@Input() public items: ITableItem[] | undefined;
+	@Input() public items: ITableItem[] | undefined | null;
 	@Input() public scroll: boolean = false;
 	protected readonly Array = Array;
+	@Input() public padding: string = '12px';
 
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly modalService: ModalService,
 	) {}
 
-	ngAfterViewChecked () {
+	ngAfterViewChecked() {
 		this.changeDetectorRef.detectChanges();
 	}
 

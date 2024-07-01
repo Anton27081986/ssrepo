@@ -4,10 +4,9 @@ import {
 	HttpHandler,
 	HttpEvent,
 	HttpInterceptor,
-	HttpResponse,
 	HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, tap, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';

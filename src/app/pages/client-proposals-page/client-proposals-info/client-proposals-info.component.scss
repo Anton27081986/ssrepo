@@ -1,9 +1,12 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
 
 .clients-proposals-info {
 	display: flex;
 	width: 100%;
 	flex-direction: column;
-	gap: 85px;
+	gap: 24px;
 
 	&__content {
 		display: flex;
@@ -36,20 +39,21 @@
 
 .header-content {
 	display: flex;
-	justify-content: left;
-	gap: 36px;
-	flex-direction: column;
-	margin: 20px;
+	justify-content: space-between;
 
 
 	&__search {
-		max-width: 320px;
+		min-width: 340px;
 	}
 }
 
 .content-accordion {
 	display: flex;
-	justify-content: space-between;
-	gap: 37px;
-	padding: 16px 40px;
+	gap: 16px;
+	padding: 16px;
+	height: 364px;
+
+	&__tabs {
+		width: 100%;
+	}
 }

@@ -1,4 +1,12 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
@@ -21,9 +29,7 @@ export class MultiselectComponent {
 
 	@ViewChild('optionsEl') public optionsEl!: ElementRef;
 
-	constructor(
-		private readonly changeDetector: ChangeDetectorRef,
-	) {}
+	constructor(private readonly changeDetector: ChangeDetectorRef) {}
 
 	public changeState(e: Event) {
 		e.stopPropagation();

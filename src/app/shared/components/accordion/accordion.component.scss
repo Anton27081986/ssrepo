@@ -1,21 +1,29 @@
+@use 'src/styles/colors.scss' as *;
+
 :host {
 	display: block;
-	width:100%;
+	width: 100%;
 }
 
 .accordion {
 	width: 100%;
 	border: 1px solid #ccc;
-	border-radius: 4px;
+	border-radius: 16px;
 	margin-bottom: 10px;
 }
 
 .accordion-header {
-	background-color: #EBF6FB;
 	cursor: pointer;
-	padding: 10px;
+	border-radius: 16px 16px 0 0;
+	padding: 12.5px 16px;
 	display: flex;
 	justify-content: space-between;
+	min-height: 44px;
+	align-items: center;
+
+	&--border-none {
+		border-bottom: none;
+	}
 
 	&__icon-toggle {
 		cursor: pointer;
@@ -36,6 +44,7 @@
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.4s ease-out;
+	border-top: 1px solid #ccc;
 }
 
 .accordion-content.open {

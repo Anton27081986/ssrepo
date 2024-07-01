@@ -1,10 +1,45 @@
-<ss-table
-	[head]="[
-{title: 'Код', field: ''},
-{title: 'Дата', field: ''},
-{title: 'Название ТПР', field: ''},
-]
-"
->
+<ss-card padding="0" radius="0 0 16px 16px">
+	<ng-container *ngIf="developments$ | async as items">
 
-</ss-table>
+		<app-client-proposals-tabs-canvas
+			[headerTemplateRef]="header"
+			[bodyTemplateRef]="body"
+			[footerTemplateRef]="footer">
+		</app-client-proposals-tabs-canvas>
+
+		<ng-template #header>
+			<a class="client-proposals-development-tab__link" href="{{ items.linkToModule }}">Разработки АК</a>
+		</ng-template>
+
+		<ng-template #body>
+			<ss-table
+				*ngIf="items.total > 0;else empty"
+				[padding]="'8px'"
+				[head]="[
+					{title: 'Код', field: 'code'},
+					{title: 'Дата', field: 'date'},
+					{title: 'Название ТПР', field: 'name'},
+					]"
+				[items]="getTableItems(items)"
+			>
+			</ss-table>
+		</ng-template>
+
+		<ng-template #footer>
+			<nz-pagination
+				class="pagination"
+				[nzTotal]="items.total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</ng-template>
+	</ng-container>
+
+	<ng-template #empty>
+		<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+	</ng-template>
+</ss-card>
+
