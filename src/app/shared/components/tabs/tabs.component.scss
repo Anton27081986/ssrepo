@@ -10,13 +10,20 @@
 		cursor: pointer;
 		flex-grow: 1;
 		border-width: 1px 1px 0 1px;
-		border-radius: 8px 8px 0 0;
+		border-radius: 16px 16px 0 0;
 		border-color: $island-outline;
 		border-style: solid;
-		padding: 8px;
 		display: flex;
 		justify-content: center;
 		max-width: 250px;
+
+		&__small {
+			padding: 8px;
+		}
+
+		&__medium {
+			padding: 14px 19.71px;
+		}
 	}
 
 	.selected {

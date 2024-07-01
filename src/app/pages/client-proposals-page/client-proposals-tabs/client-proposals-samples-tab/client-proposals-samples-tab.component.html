@@ -1,11 +1,42 @@
-<ss-table
-	[head]="[
-{title: 'Код', field: ''},
-{title: 'Количество(факт)', field: ''},
-{title: 'Вес(факт)', field: ''},
-]
+<ss-card padding="0" radius="0 0 16px 16px">
+	<ng-container *ngIf="samples$ | async as samples">
+		<app-client-proposals-tabs-canvas
+			[headerTemplateRef]="header"
+			[bodyTemplateRef]="body"
+			[footerTemplateRef]="footer">
+		</app-client-proposals-tabs-canvas>
+		<ng-template #header>
+			<a class="app-client-tpr-samples-tab__link" href="{{ samples.linkToModule }}">Образцы</a>
+		</ng-template>
+		<ng-template #body>
+			<ss-table
+				*ngIf="samples.total > 0;else empty"
+				[padding]="'8px'"
+				[head]="[
+							{title: 'Код', field: 'code'},
+							{title: 'Количество(факт)', field: 'quantity'},
+							{title: 'Вес(факт)', field: 'weight'},
+							]"
+				[items]="getTableItems(samples)
 "
->
-</ss-table>
+			>
+			</ss-table>
+			<ng-template #empty>
+				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+			</ng-template>
+		</ng-template>
+		<ng-template #footer>
+			<nz-pagination
+				class="pagination"
+				[nzTotal]="samples.total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</ng-template>
+	</ng-container>
+</ss-card>
 
 

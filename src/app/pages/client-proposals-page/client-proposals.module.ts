@@ -13,11 +13,10 @@ import { SearchClientInputModule } from '@app/shared/components/inputs/search-cl
 import { ClientProposalsRoutingModule } from '@app/pages/client-proposals-page/client-proposals.routing.module';
 import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
 import { ClientProposalsDevelopmentTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.component';
-import { ClientProposalsEncodingsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-encodings-tab/client-proposals-encodings-tab.component';
 import { ClientProposalsNewsLineTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.component';
 import { ClientProposalsTradeListTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.component';
 import { ClientProposalsSamplesTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.component';
-import { ClientProposalsLoyaltyTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-loyalty-tab/client-proposals-loyalty-tab.component';
+import { ClientProposalsContractorsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.component';
 import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
 import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component';
 import { ClientProposalsRowItemTrComponent } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
@@ -30,16 +29,21 @@ import { ClientProposalsFilterComponent } from '@app/pages/client-proposals-page
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-page/client-proposals-table-vgp/client-proposals-table-vgp.component';
 import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/scrollable-block.module';
+import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
+import { ClientProposalsDoneProductionComponent } from '@app/pages/client-proposals-page/client-proposals-done-production/client-proposals-done-production.component';
+import { ClientProposalsTabsCanvasComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component';
 
 @NgModule({
 	declarations: [
 		ClientProposalsPageComponent,
 		ClientProposalsDevelopmentTabComponent,
-		ClientProposalsEncodingsTabComponent,
 		ClientProposalsNewsLineTabComponent,
 		ClientProposalsTradeListTabComponent,
 		ClientProposalsSamplesTabComponent,
-		ClientProposalsLoyaltyTabComponent,
+		ClientProposalsContractorsTabComponent,
 		ClientProposalsInfoComponent,
 		ClientProposalsBusinessTripsTabComponent,
 		ClientProposalsRowItemTrComponent,
@@ -47,6 +51,8 @@ import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/s
 		ClientProposalsFilterComponent,
 		ClientProposalsSendCloudPopoverComponent,
 		ClientProposalsTableVgpComponent,
+		ClientProposalsDoneProductionComponent,
+		ClientProposalsTabsCanvasComponent,
 	],
 	imports: [
 		CommonModule,
@@ -66,6 +72,10 @@ import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/s
 		FilePickerModule,
 		NzDropDownModule,
 		ScrollableBlockModule,
+		ChipsSearchModule,
+		TextModule,
+		NzPaginationModule,
+		EmptyDataPageModule,
 	],
 })
 export class ClientProposalsModule {}

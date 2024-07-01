@@ -1,0 +1,33 @@
+
+:host {
+	flex-grow: 1;
+}
+
+.client-proposals-tabs-canvas {
+	display: flex;
+	flex-direction: column;;
+	justify-content: space-around;
+	flex-grow: 1;
+
+	&__header {
+		display: flex;
+		padding: 16px;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__body {
+		padding: 0 16px;
+		height: 157px;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		padding: 16px;
+	}
+
+	&__content {
+		flex-grow: 1;
+	}
+}

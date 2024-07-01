@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ITab } from '@app/shared/components/tabs/tab';
 
@@ -11,6 +11,7 @@ import { ITab } from '@app/shared/components/tabs/tab';
 export class TabsComponent {
 	@Input() public tabs?: ITab[] = [];
 	@Input() public selectedTab: ITab = { name: 'Все', isVisible: true } as ITab;
+	@Input() public size: 'small' | 'medium' | 'big' = 'small';
 	@Output() public select = new EventEmitter<string>();
 
 	public onSelect(tab: ITab) {

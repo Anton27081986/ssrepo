@@ -3,28 +3,26 @@
 .clients-proposals-page {
 	display: flex;
 	width: 100%;
-	height: 86vh;
-	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+	gap: 70px;
 
 	&__content {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		min-width: 362px;
-		min-height: 385px;
-		gap: 50px;
+		gap: 24px;
 	}
 
 	&__search-input {
-		width: 100%;
+		min-width: 520px;
 	}
 
 	&__img {
 		display: flex;
 		flex-direction: column;
-		gap: 25px;
+		align-items: center;
+		gap: 32px;
 	}
 }

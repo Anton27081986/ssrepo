@@ -1,0 +1,31 @@
+<div class="client-proposals-done-production">
+	<div class="client-proposals-done-production__header">
+		<ss-headline class="client-proposals-done-production__header-title" size="h6">Модель клиента</ss-headline>
+	</div>
+	<div class="client-proposals-done-production__body">
+		<ng-container *ngIf="doneProductions$ | async as production">
+
+			<div class="client-proposals-done-production__content" *ngIf="production.total > 0;else empty">
+				<ss-table
+					[scroll]="true"
+					[padding]="'8px'"
+					[head]="[
+							{title: 'ВГП', field: 'name'},
+							{title: 'Обьем производства', field: 'quantity'},
+							]"
+					[items]="getTableItems(production)"
+				>
+				</ss-table>
+			</div>
+
+		</ng-container>
+		<ng-template #empty>
+			<div class="client-proposals-done-production__no-content">
+				<ss-empty-data-page></ss-empty-data-page>
+			</div>
+		</ng-template>
+	</div>
+</div>
+
+
+

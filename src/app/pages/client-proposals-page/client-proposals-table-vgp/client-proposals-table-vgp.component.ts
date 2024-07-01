@@ -13,18 +13,6 @@ import { ModalService } from '@app/core/modal/modal.service';
 export class ClientProposalsTableVgpComponent {
 	protected vgp: IFilterOption[] = [];
 
-	protected optionsVgp: IFilterOption[] = [
-		// заглушка
-		{
-			id: 1,
-			name: 'example-vgp-1',
-		},
-		{
-			id: 2,
-			name: 'example-vgp-2',
-		},
-	];
-
 	constructor(private readonly modalService: ModalService) {}
 
 	protected getSelected(event: IFilterOption[]) {

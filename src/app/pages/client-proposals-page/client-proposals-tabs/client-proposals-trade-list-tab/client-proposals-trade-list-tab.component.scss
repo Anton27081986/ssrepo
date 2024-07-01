@@ -1,3 +1,30 @@
-.client-tpr-trade-list-tab {
-	padding: 34px 45px 34px 17px;
+.app-client-proposals-trade-list-tab {
+	&__control {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 8px;
+	}
+
+	&__link {
+		font-size: 16px;
+		line-height: 19px;
+	}
+
+	&__content {
+		flex-grow: 1;
+	}
 }
+
+.pagination {
+	justify-content: flex-end;
+	margin: 0;
+}
+
+ss-card {
+	height: 282px;
+}
+
+.container {
+	display: flex;
+}
+

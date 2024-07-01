@@ -1,11 +1,40 @@
-<ss-table
-	[head]="[
-{title: 'Код', field: ''},
-{title: 'Дата командировки', field: ''},
-{title: 'Задачи', field: ''},
-{title: 'Участники', field: ''}
-]
-"
->
-
-</ss-table>
+<ss-card class="container" padding="0" radius="0 0 16px 16px">
+	<ng-container *ngIf="businessTrips$ | async as trips">
+		<app-client-proposals-tabs-canvas
+			[headerTemplateRef]="header"
+			[bodyTemplateRef]="body"
+			[footerTemplateRef]="footer">
+		</app-client-proposals-tabs-canvas>
+		<ng-template #header>
+			<a class="client-tpr-business-trips-tab__link" href="{{ trips.linkToModule }}">Командировки</a>
+		</ng-template>
+		<ng-template #body>
+			<ss-table
+				*ngIf="trips.total > 0;else empty"
+				[padding]="'8px'"
+				[head]="[
+					{title: 'Код', field: 'code'},
+					{title: 'Дата командировки', field: 'date'},
+					{title: 'Задачи', field: 'task'},
+					{title: 'Участники', field: 'members'}
+					]"
+				[items]="getTableItems(trips)"
+			>
+			</ss-table>
+			<ng-template #empty>
+				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+			</ng-template>
+		</ng-template>
+		<ng-template #footer>
+			<nz-pagination
+				class="pagination"
+				[nzTotal]="trips.total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</ng-template>
+	</ng-container>
+</ss-card>

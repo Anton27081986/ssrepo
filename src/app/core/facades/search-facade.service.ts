@@ -1,14 +1,12 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
 import { ClientApiService } from '@app/core/api/client-api.service';
-import { IResponse } from '@app/core/utils/response';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs';
 import { environment } from '@environments/environment.development';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import { ProductionsApiService } from '@app/core/api/productions-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -19,11 +17,11 @@ export class SearchFacadeService {
 	private clientId: number | undefined;
 
 	public constructor(
-		private readonly httpClient: HttpClient,
 		private readonly clientApiService: ClientApiService,
 		private readonly usersApiService: UsersApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly productionsApiService: ProductionsApiService,
 	) {
 		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
 			if (client.id) {
@@ -46,6 +44,10 @@ export class SearchFacadeService {
 
 	public getClients(query: string) {
 		return this.clientApiService.getClientsDictionary(query);
+	}
+
+	public getProductions(query: string) {
+		return this.productionsApiService.searchProductions(query);
 	}
 
 	public getContractor(query: string) {

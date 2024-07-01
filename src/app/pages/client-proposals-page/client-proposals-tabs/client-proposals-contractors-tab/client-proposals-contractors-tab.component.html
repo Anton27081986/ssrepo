@@ -1,0 +1,48 @@
+<ss-card padding="0" radius="0 0 16px 16px" class="container">
+	<ng-container *ngIf="contractors$ | async as contractors">
+		<app-client-proposals-tabs-canvas
+			[headerTemplateRef]="header"
+			[bodyTemplateRef]="body"
+			[footerTemplateRef]="footer">
+		</app-client-proposals-tabs-canvas>
+		<ng-template #header>
+			<ss-text size="1">Состав контрагентов</ss-text>
+			<div class="control">
+				<input type="checkbox" (change)="onActiveContractorChange($event)"/>
+				<ss-text size="2">
+					Показать архивных контрагентов
+				</ss-text>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<ss-table
+				*ngIf="contractors.total > 0;else empty"
+				[padding]="'8px'"
+				[head]="[
+							{title: 'Контрагент', field: 'name'},
+							{title: 'Кредитный статус', field: 'creditStatus'},
+							]"
+				[items]="getTableItems(contractors)"
+			>
+			</ss-table>
+
+			<ng-template #empty>
+				<ss-empty-data-page></ss-empty-data-page>
+			</ng-template>
+		</ng-template>
+		<ng-template #footer>
+			<nz-pagination
+				class="pagination"
+				[nzTotal]="contractors.total"
+				[nzPageIndex]="pageIndex"
+				[nzPageSize]="pageSize"
+				(nzPageIndexChange)="nzPageIndexChange($event)"
+				(nzPageSizeChange)="pageSize = $event"
+				[nzResponsive]="true">
+			</nz-pagination>
+		</ng-template>
+	</ng-container>
+</ss-card>
+
+
+

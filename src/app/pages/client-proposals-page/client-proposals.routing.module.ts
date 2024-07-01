@@ -3,11 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
 import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component';
 import { ClientProposalsDevelopmentTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.component';
-import { ClientProposalsEncodingsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-encodings-tab/client-proposals-encodings-tab.component';
 import { ClientProposalsNewsLineTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.component';
 import { ClientProposalsTradeListTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.component';
 import { ClientProposalsSamplesTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.component';
-import { ClientProposalsLoyaltyTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-loyalty-tab/client-proposals-loyalty-tab.component';
+import { ClientProposalsContractorsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.component';
 import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
 
 const routes: Routes = [
@@ -28,11 +27,7 @@ const routes: Routes = [
 				component: ClientProposalsDevelopmentTabComponent,
 			},
 			{
-				path: 'encodings',
-				component: ClientProposalsEncodingsTabComponent,
-			},
-			{
-				path: 'newsLine',
+				path: 'news-line',
 				component: ClientProposalsNewsLineTabComponent,
 			},
 			{
@@ -44,14 +39,10 @@ const routes: Routes = [
 				component: ClientProposalsSamplesTabComponent,
 			},
 			{
-				path: 'news-line',
-				component: ClientProposalsNewsLineTabComponent,
+				path: 'contractors',
+				component: ClientProposalsContractorsTabComponent,
 			},
-			{
-				path: 'loyalty',
-				component: ClientProposalsLoyaltyTabComponent,
-			},
-			{ path: '**', redirectTo: 'business-trips' },
+			{ path: '**', redirectTo: 'contractors' },
 		],
 	},
 ];

@@ -4,6 +4,7 @@ import {
 	NgClass,
 	NgForOf,
 	NgIf,
+	NgStyle,
 	NgSwitch,
 	NgSwitchCase,
 	NgSwitchDefault,
@@ -29,6 +30,7 @@ import { TableFullCellModule } from '@app/shared/components/table-full-cell/tabl
 		NgClass,
 		IconModule,
 		TableFullCellModule,
+		NgStyle,
 	],
 })
 export class TableModule {}
