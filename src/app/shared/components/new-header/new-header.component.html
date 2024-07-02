@@ -68,7 +68,7 @@
 	</div>
 </div>
 
-<div class="new-container">
+<div class="new-container" *ngIf="route === '/'">
 	<div class="back">
 		<div class="content" *ngIf="backUrl; else devUrl">
 			<a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>
