@@ -73,7 +73,7 @@
 		</nz-content>
 </div>
 
-<div class="container">
+<div class="container" *ngIf="route === '/'">
 	<div class="back">
 		<nz-content *ngIf="backUrl; else devUrl">
 			<a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к старому интерфейсу</a>

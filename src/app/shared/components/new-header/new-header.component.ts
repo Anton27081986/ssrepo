@@ -5,6 +5,7 @@ import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { environment } from '@environments/environment';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-new-header',
@@ -22,11 +23,17 @@ export class NewHeaderComponent {
 	public backUrl: boolean = environment.production;
 
 	protected readonly AppRoutes = AppRoutes;
-	public constructor(private readonly mainMenuFacade: MainMenuFacadeService) {}
+	public route: string | undefined;
+	public constructor(
+		private readonly mainMenuFacade: MainMenuFacadeService,
+		public readonly router: Router,
+	) {}
 
 	public ngOnInit(): any {
 		this.listMenu$ = this.mainMenuFacade.getMainMenu();
 		this.userProfile$ = this.mainMenuFacade.getUserProfile();
+
+		this.route = String(this.router.routerState.snapshot.url);
 	}
 
 	public openSearch(event: Event) {

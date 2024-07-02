@@ -6,6 +6,7 @@ import { environment } from '@environments/environment';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
+import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Component({
@@ -24,11 +25,17 @@ export class HeaderComponent implements OnInit {
 	public backUrl: boolean = environment.production;
 
 	protected readonly AppRoutes = AppRoutes;
-	public constructor(private readonly mainMenuFacade: MainMenuFacadeService) {}
+	public route: string | undefined;
+	public constructor(
+		private readonly mainMenuFacade: MainMenuFacadeService,
+		public readonly router: Router,
+	) {}
 
 	public ngOnInit(): any {
 		this.listMenu$ = this.mainMenuFacade.getMainMenu();
 		this.userProfile$ = this.mainMenuFacade.getUserProfile();
+
+		this.route = String(this.router.routerState.snapshot.url);
 	}
 
 	public openSearch(event: Event) {
