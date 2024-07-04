@@ -15,6 +15,9 @@ import {
 import {
 	ClientCardContractsComponent
 } from "@app/pages/client-card/client-card-contracts/client-card-contracts.component";
+import {
+	ClientCardBusinessTripsComponent
+} from "@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component";
 
 const routes: Routes = [
 	{
@@ -52,6 +55,10 @@ const routes: Routes = [
 			{
 				path: 'contracts',
 				component: ClientCardContractsComponent,
+			},
+			{
+				path: 'business-trips',
+				component: ClientCardBusinessTripsComponent,
 			},
 			{
 				path: 'birthdays',
