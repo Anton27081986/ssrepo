@@ -104,6 +104,12 @@ export class ClientCardComponent implements OnInit {
 			}
 		});
 
+		this.client$.pipe(untilDestroyed(this)).subscribe(client => {
+			if (client?.isAnyPaymentOverdue) {
+				this.tabs = this.tabs.map((tab)=> tab.name==='sales' ? {...tab, icon: 'error'} : tab)
+			}
+		});
+
 		for (const tab of this.tabs) {
 			if (this.router.url.includes(tab!.name!)) {
 				this.selectedTab = tab;

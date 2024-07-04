@@ -15,7 +15,9 @@
 		border-style: solid;
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		max-width: 250px;
+		gap: 4px;
 
 		&__small {
 			padding: 8px;

@@ -31,8 +31,14 @@
 				}
 
 				&-filter-button {
+					margin-left: 16px;
 					cursor: pointer;
 					color: $main;
+				}
+
+				&-controls {
+					display: flex;
+					gap: 8px;
 				}
 			}
 

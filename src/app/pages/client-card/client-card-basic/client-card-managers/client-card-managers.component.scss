@@ -38,7 +38,7 @@
 		padding: 0 16px 16px;
 		gap: 12px;
 		border-bottom: 1px solid $island-outline;
-		height: 88px;
+		min-height: 88px;
 
 		&-name {
 			display: flex;

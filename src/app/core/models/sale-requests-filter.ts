@@ -5,4 +5,5 @@ export interface ISaleRequestsFilter {
 	ToShipDate?: string;
 	limit: number;
 	offset: number;
+	WithPaymentOverdue?: boolean;
 }
