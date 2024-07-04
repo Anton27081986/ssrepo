@@ -56,6 +56,11 @@ export class ClientCardComponent implements OnInit {
 			isVisible: false,
 		},
 		{
+			label: 'Командировки',
+			name: 'business-trips',
+			isVisible: false,
+		},
+		{
 			label: 'Дни рождения',
 			name: 'birthdays',
 			isVisible: false,

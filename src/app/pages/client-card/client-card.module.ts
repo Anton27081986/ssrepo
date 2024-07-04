@@ -42,14 +42,16 @@ import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
 import { ClientRequestSamplesComponent } from '@app/pages/client-card/client-request-samples/client-request-samples.component';
 import { ClientCardReturnRequestsComponent } from '@app/pages/client-card/client-card-return-requests/client-card-return-requests.component';
+import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { ClientCardBusinessTripsComponent } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
 import { ClientCardNewProductsComponent } from './client-card-new-products/client-card-new-products.component';
 import { ClientCardLostProductsComponent } from './client-card-lost-products/client-card-lost-products.component';
 import { ClientCardContractsComponent } from './client-card-contracts/client-card-contracts.component';
-import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
-import {LoaderModule} from "@app/shared/components/loader/loader.module";
+import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-data-page.module";
 
 @NgModule({
 	declarations: [
@@ -65,6 +67,7 @@ import {LoaderModule} from "@app/shared/components/loader/loader.module";
 		ClientCardReturnRequestsComponent,
 		ClientCardLostProductsComponent,
 		ClientCardContractsComponent,
+		ClientCardBusinessTripsComponent,
 		ReplacePipe,
 	],
 	imports: [
@@ -123,6 +126,7 @@ import {LoaderModule} from "@app/shared/components/loader/loader.module";
 		FiltersModule,
 		TextareaModule,
 		LoaderModule,
+		EmptyDataPageModule,
 	],
 	exports: [ClientCardComponent],
 })
