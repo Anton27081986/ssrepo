@@ -8,7 +8,13 @@
 			<ng-template #noLink>
 				<ss-headline class="sale-requests-header-title" size="h6">Заявки на продажу</ss-headline>
 			</ng-template>
-			<ss-icon *ngIf="!isFiltersVisible" class="sale-requests-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
+			<div class="sale-requests-header-controls">
+				<input type="checkbox" (change)="onOverdueChange($event)" />
+				<ss-text size="2">
+					Показывать только просроченные
+				</ss-text>
+				<ss-icon *ngIf="!isFiltersVisible" class="sale-requests-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
+			</div>
 		</div>
 		<div class="sale-requests-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
 			<div class="sale-requests-content-table">

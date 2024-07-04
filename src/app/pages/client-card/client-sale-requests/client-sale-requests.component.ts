@@ -123,11 +123,12 @@ export class ClientSaleRequestsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales() {
+	public getFilteredSales(WithPaymentOverdue?:boolean) {
 		const preparedFilter: any = {
 			limit: this.pageSize,
 			offset: this.offset,
 			clientId: this.clientId,
+			WithPaymentOverdue
 		};
 
 		for (const filter of this.filters) {
@@ -174,6 +175,10 @@ export class ClientSaleRequestsComponent implements OnInit {
 		this.tableState = TableState.Loading;
 
 		this.saleRequestsFacade.applyFilters(preparedFilter);
+	}
+
+	protected onOverdueChange(e: Event) {
+		this.getFilteredSales((e.currentTarget! as HTMLInputElement).checked);
 	}
 
 	public nzPageIndexChange($event: number) {

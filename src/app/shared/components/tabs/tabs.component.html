@@ -1,12 +1,16 @@
 <ng-container *ngFor="let tab of tabs; trackBy: trackBy">
-	<ss-text
-		class="tab"
-		*ngIf="tab.isVisible"
-		[class.tab__small]="size === 'small'"
-		[class.tab__medium]="size === 'medium'"
-		[ngClass]="{'selected': tab === selectedTab }"
-		[size]="size === 'small' ? '3' : '2' "
-		(click)="onSelect(tab)">
-		{{ tab.label }}
-	</ss-text>
+	<div class="tab"
+		 *ngIf="tab.isVisible"
+		 [ngClass]="{'selected': tab.name === selectedTab.name }"
+		 [class.tab__small]="size === 'small'"
+		 [class.tab__medium]="size === 'medium'"
+		 (click)="onSelect(tab)"
+	>
+		<ss-icon height="18" width="18" *ngIf="tab.icon" [name]="tab.icon"></ss-icon>
+		<ss-text
+			[size]="size === 'small' ? '3' : '2' "
+			>
+			{{ tab.label }}
+		</ss-text>
+	</div>
 </ng-container>

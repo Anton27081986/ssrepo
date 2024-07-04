@@ -38,6 +38,11 @@ export class SaleRequestsApiService {
 			params = params.set('offset', filter.offset);
 		}
 
+		if (filter.WithPaymentOverdue !== null && filter.WithPaymentOverdue !== undefined) {
+			params = params.set('WithPaymentOverdue', filter.WithPaymentOverdue);
+		}
+
+
 		return this.http.get<ISaleRequestsDto>(`${environment.apiUrl}/api/company/SaleRequests`, {
 			params,
 		});

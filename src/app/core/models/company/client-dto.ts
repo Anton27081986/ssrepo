@@ -87,6 +87,7 @@ export interface IClientDto {
 	linkToDetail?: string | null;
 	isArchived?: boolean;
 	isDeleted?: boolean;
+	isAnyPaymentOverdue?: boolean;
 }
 export interface IClientDataDto {
 	data: IClientDto;
