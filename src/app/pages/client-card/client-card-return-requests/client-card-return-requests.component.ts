@@ -8,7 +8,6 @@ import { ReturnRequestsFacadeService } from '@app/core/facades/return-requests-f
 import { IReturnRequestsItemDto } from '@app/core/models/company/return-requests-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
-import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';
 
 @UntilDestroy()
 @Component({
@@ -121,10 +120,14 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales() {
+	public getFilteredSales(isNewFilter: boolean = false) {
+		if (isNewFilter) {
+			this.pageIndex = 1;
+		}
+
 		const preparedFilter: any = {
-			limit: this.pageSize,
-			offset: this.offset,
+			limit: isNewFilter ? 6 : this.pageSize,
+			offset: isNewFilter ? 0 : this.offset,
 			clientId: this.clientId,
 		};
 

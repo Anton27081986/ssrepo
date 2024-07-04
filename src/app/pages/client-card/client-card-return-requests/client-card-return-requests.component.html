@@ -47,5 +47,5 @@
 		</div>
 	</div>
 	<div class="separator" *ngIf="isFiltersVisible"></div>
-	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales()" [(filters)]="filters"></ss-filters>
+	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales(true)" [(filters)]="filters"></ss-filters>
 </ss-card>

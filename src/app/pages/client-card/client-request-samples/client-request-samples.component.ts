@@ -120,10 +120,14 @@ export class ClientRequestSamplesComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales() {
+	public getFilteredSales(isNewFilter: boolean = false) {
+		if (isNewFilter) {
+			this.pageIndex = 1;
+		}
+
 		const preparedFilter: any = {
-			limit: this.pageSize,
-			offset: this.offset,
+			limit: isNewFilter ? 6 : this.pageSize,
+			offset: isNewFilter ? 0 : this.offset,
 			clientId: this.clientId,
 		};
 

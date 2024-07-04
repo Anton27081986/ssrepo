@@ -105,11 +105,15 @@ export class ClientCardNewProductsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales() {
+	public getFilteredSales(isNewFilter: boolean = false) {
+		if (isNewFilter) {
+			this.pageIndex = 1;
+		}
+
 		const preparedFilter: any = {
-			limit: this.pageSize,
-			offset: this.offset,
-			СlientId: this.clientId,
+			limit: isNewFilter ? 6 : this.pageSize,
+			offset: isNewFilter ? 0 : this.offset,
+			clientId: this.clientId,
 		};
 
 		for (const filter of this.filters) {

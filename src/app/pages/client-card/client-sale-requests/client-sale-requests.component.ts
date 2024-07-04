@@ -46,6 +46,16 @@ export class ClientSaleRequestsComponent implements OnInit {
 			label: 'Дата отгрузки',
 			placeholder: '',
 		},
+		{
+			name: 'WithPaymentOverdue',
+			type: 'boolean',
+			label: 'Только просроченные',
+			options: [
+				{ id: 1, name: 'Да' },
+				{ id: 0, name: 'Нет' },
+			],
+			placeholder: '',
+		},
 	];
 
 	public constructor(
@@ -123,12 +133,15 @@ export class ClientSaleRequestsComponent implements OnInit {
 		this.isFiltersVisible = !this.isFiltersVisible;
 	}
 
-	public getFilteredSales(WithPaymentOverdue?:boolean) {
+	public getFilteredSales(isNewFilter: boolean = false) {
+		if (isNewFilter) {
+			this.pageIndex = 1;
+		}
+
 		const preparedFilter: any = {
-			limit: this.pageSize,
-			offset: this.offset,
+			limit: isNewFilter ? 6 : this.pageSize,
+			offset: isNewFilter ? 0 : this.offset,
 			clientId: this.clientId,
-			WithPaymentOverdue
 		};
 
 		for (const filter of this.filters) {
@@ -175,10 +188,6 @@ export class ClientSaleRequestsComponent implements OnInit {
 		this.tableState = TableState.Loading;
 
 		this.saleRequestsFacade.applyFilters(preparedFilter);
-	}
-
-	protected onOverdueChange(e: Event) {
-		this.getFilteredSales((e.currentTarget! as HTMLInputElement).checked);
 	}
 
 	public nzPageIndexChange($event: number) {
