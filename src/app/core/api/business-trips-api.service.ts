@@ -30,7 +30,7 @@ export class BusinessTripsApiService {
 		}
 
 		return this.http.get<IResponse<IBusinessTripsDto>>(
-			`${environment.apiUrl}/api/company/Trips/Trips`,
+			`${environment.apiUrl}/api/company/Trips`,
 			{
 				params,
 			},
