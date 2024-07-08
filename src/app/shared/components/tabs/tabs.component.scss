@@ -15,7 +15,7 @@
 		flex-grow: 1;
 		display: flex;
 		justify-content: center;
-		align-items: center;
+		align-items: start;
 		max-width: 250px;
 		gap: 4px;
 
@@ -25,6 +25,17 @@
 
 		&__medium {
 			padding: 12px 8px;
+		}
+
+		.icon {
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+		}
+
+		.icon.error {
+			background-color: #FF5A5A;
 		}
 	}
 
