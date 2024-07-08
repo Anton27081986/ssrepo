@@ -90,14 +90,12 @@ export class ClientProposalsInfoComponent implements OnInit {
 	}
 
 	protected getSearchClient(client: SearchInputItem | null) {
-		if (client) {
+		if (client && client.id) {
 			const arrUrl = this._router.url.split('/');
 
 			this._router
 				.navigate([`/client-proposals-page/${client.id}/${arrUrl[arrUrl.length - 1]}`])
 				.then();
-		} else {
-			this._router.navigate(['/client-proposals-page']).then();
 		}
 	}
 
