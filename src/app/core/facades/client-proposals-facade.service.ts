@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.service';
-import { BehaviorSubject, filter, map, Observable, OperatorFunction } from 'rxjs';
+import { filter, map, Observable, OperatorFunction } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -14,7 +14,6 @@ import { IDevelopmentDto } from '@app/core/models/client-proposails/development'
 
 @Injectable()
 export class ClientProposalsFacadeService {
-	public readonly clientIdSubject = new BehaviorSubject<number | null>(null);
 	public clientId$: Observable<number>;
 
 	constructor(
@@ -24,8 +23,6 @@ export class ClientProposalsFacadeService {
 		this.clientId$ = activatedRoute.paramMap.pipe(
 			filterTruthy(),
 			map(params => {
-				this.clientIdSubject.next(Number(params.get('clientId')));
-
 				return Number(params.get('clientId'));
 			}),
 		);

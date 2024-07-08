@@ -1,18 +1,18 @@
 @use 'src/styles/colors.scss' as *;
 
 :host {
-	display: flex;
-	width: 100%;
-	margin-bottom: -1px;
-	z-index: 9;
+
+	.tabs {
+		display: flex;
+		border-radius: 16px 16px 0 0;
+		border: 1px solid $island-outline;
+		background: $island;
+		border-bottom: none;
+	}
 
 	.tab {
 		cursor: pointer;
 		flex-grow: 1;
-		border-width: 1px 1px 0 1px;
-		border-radius: 16px 16px 0 0;
-		border-color: $island-outline;
-		border-style: solid;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -24,12 +24,20 @@
 		}
 
 		&__medium {
-			padding: 14px 19.71px;
+			padding: 12px 8px;
 		}
 	}
 
 	.selected {
-		background-color: $island;
+		border-bottom: 2px solid $main;
+
+		&__small {
+			padding-bottom: 6px;
+		}
+
+		&__medium {
+			padding-bottom: 10px;
+		}
 	}
 
 	::ng-deep .selected p {

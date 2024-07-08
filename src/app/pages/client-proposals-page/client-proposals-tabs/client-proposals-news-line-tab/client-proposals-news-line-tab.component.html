@@ -1,36 +1,37 @@
 <ss-card padding="0" radius="0 0 16px 16px">
-	<ng-container *ngIf="news$ | async as items">
+	<ng-container *ngIf="news$ | async as news">
 		<app-client-proposals-tabs-canvas
 			[headerTemplateRef]="header"
 			[bodyTemplateRef]="body"
 			[footerTemplateRef]="footer">
 		</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a class="client-tpr-news-line-tab__link" href="{{ items.linkToModule }}">Лента новостей</a>
+			<a *ngIf=" news.linkToModule;else text" class="client-tpr-news-line-tab__link" href="{{ news.linkToModule }}">Лента новостей</a>
+			<ng-template #text>
+				<ss-text size="1">Лента новостей</ss-text>
+			</ng-template>
 		</ng-template>
 		<ng-template #body>
 			<ss-table
-				*ngIf="items.total > 0;else empty"
+				*ngIf="news.total > 0;else empty"
 				[padding]="'8px'"
 				[head]="[
 						{title: 'Код', field: 'code'},
 						{title: 'Дата создания', field: 'createDate'},
 						{title: 'Заголовок', field: 'title'}
 						]"
-				[items]="getTableItems(items)"
+				[items]="getTableItems(news)"
 			>
 			</ss-table>
 		</ng-template>
 		<ng-template #footer>
-			<nz-pagination
-				class="pagination"
-				[nzTotal]="items.total"
-				[nzPageIndex]="pageIndex"
-				[nzPageSize]="pageSize"
-				(nzPageIndexChange)="nzPageIndexChange($event)"
-				(nzPageSizeChange)="pageSize = $event"
-				[nzResponsive]="true">
-			</nz-pagination>
+			<ss-pagination
+				[total]="news.total"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="nzPageIndexChange($event)"
+			>
+			</ss-pagination>
 		</ng-template>
 	</ng-container>
 

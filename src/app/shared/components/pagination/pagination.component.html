@@ -1,11 +1,36 @@
-<div class="pagination">
-  <nz-pagination
-    [nzTotal]="total"
-    [nzPageIndex]="pageIndex"
-    [nzPageSize]="pageSize"
-    (nzPageIndexChange)="nzPageIndexChange($event)"
-    (nzPageSizeChange)="pageSize = $event"
-    [nzResponsive]="true"
-  >
-  </nz-pagination>
+<div class="ss-pagination" *ngIf="countAllTabs > 1">
+	<ul class="ss-pagination__tabs">
+		<li
+			class="ss-pagination__tab"
+			(click)="back()"
+			[class.ss-pagination__tab--disabled]="!disabledLeft"
+		>
+			<
+		</li>
+		<li
+			class="ss-pagination__tab"
+			*ngIf="viewFirstWaiting"
+			(click)="changePageIndex(1)"
+			[class.ss-pagination__tab--active]="pageIndex === 1">
+			{{ 1 }}
+		</li>
+		<div *ngIf="viewFirstWaiting" class="ss-pagination__tab">...</div>
+		<li
+			class="ss-pagination__tab"
+			(click)="changePageIndex(tab)"
+			*ngFor="let tab of arrTabs | async"
+			[class.ss-pagination__tab--active]="pageIndex === tab">
+			{{ tab }}
+		</li>
+		<div *ngIf="viewLastWaiting" class="ss-pagination__tab">...</div>
+		<li
+			class="ss-pagination__tab"
+			*ngIf="viewLastWaiting"
+			(click)="changePageIndex(countAllTabs)"
+			[class.ss-pagination__tab--active]="pageIndex === countAllTabs">
+			{{ countAllTabs }}
+		</li>
+		<li class="ss-pagination__tab" [class.ss-pagination__tab--disabled]="!disabledRight" (click)="next()"> > </li>
+
+	</ul>
 </div>

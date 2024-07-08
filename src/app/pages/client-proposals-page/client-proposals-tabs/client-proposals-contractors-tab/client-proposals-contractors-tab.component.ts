@@ -4,7 +4,7 @@ import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, switchMap, take } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { IContractorsDto } from '@app/core/models/client-proposails/contractors';
 import { ITableItem } from '@app/shared/components/table/table.component';
@@ -19,22 +19,23 @@ import { IClientProposalsContractorsTableItem } from '@app/pages/client-proposal
 })
 export class ClientProposalsContractorsTabComponent {
 	public contractors$: Observable<IResponse<IContractorsDto>>;
-	public pageSize = 6;
+	public pageSize = 4;
 	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-	public withArchiver: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public isArchiver$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
 		this.contractors$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
-			this.offset,
-			this.withArchiver,
+			this.offset$,
 		]).pipe(
 			filterTruthy(),
-			map(([id, offset, withArchiver]) => {
+			map(([id, offset]) => {
+				const withArchiver = this.isArchiver$.value;
+
 				return this.clientProposalsFacadeService.getContractors({
 					clientId: id,
-					limit: 3,
+					limit: this.pageSize,
 					offset,
 					withArchiver,
 				});
@@ -51,7 +52,7 @@ export class ClientProposalsContractorsTabComponent {
 				{} as IClientProposalsContractorsTableItem;
 
 			tableItem.name = {
-				text: x.id.toString() ?? '-',
+				text: x.name.toString() ?? '-',
 				url: x.linkToDetail ?? '',
 			};
 			tableItem.creditStatus = x.creditStatus.name;
@@ -64,18 +65,17 @@ export class ClientProposalsContractorsTabComponent {
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
-			this.offset.next(0);
+			this.offset$.next(0);
 		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
+			this.offset$.next(this.pageSize * $event - this.pageSize);
 		}
 
-		this.offset.next(this.pageSize * $event - this.pageSize);
 		this.pageIndex = $event;
 	}
 
 	protected onActiveContractorChange(e: Event) {
-		this.offset.next(0);
+		this.isArchiver$.next((e.currentTarget! as HTMLInputElement).checked);
+		this.offset$.next(0);
 		this.pageIndex = 1;
-		this.withArchiver.next((e.currentTarget! as HTMLInputElement).checked);
 	}
 }

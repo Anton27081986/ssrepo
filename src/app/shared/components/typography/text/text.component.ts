@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class TextComponent {
 	@Input() public size: '1' | '2' | '3' = '1';
 	@Input() public weight: 'semi-bold' | 'medium' | 'regular' = 'medium';
+	@Input() public color: 'black' | 'gray' = 'black';
 }

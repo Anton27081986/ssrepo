@@ -8,7 +8,7 @@
 table {
 	width: 100%;
 	background-color: $island;
-	max-width: 1280px;
+	//max-width: 1280px;
 	border-radius: 16px;
 	// border-style: hidden;
 	box-shadow: 0 0 0 0.2px $island-outline;
@@ -96,7 +96,7 @@ table {
 		}
 
 		td.overflow {
-			padding-right: 32px;
+			padding-right: 32px !important;
 		}
 
 		td:first-child {

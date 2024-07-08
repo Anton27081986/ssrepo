@@ -1,4 +1,4 @@
-<ss-card class="container" padding="0" radius="0 0 16px 16px">
+<ss-card padding="0" radius="0 0 16px 16px">
 	<ng-container *ngIf="businessTrips$ | async as trips">
 		<app-client-proposals-tabs-canvas
 			[headerTemplateRef]="header"
@@ -6,7 +6,10 @@
 			[footerTemplateRef]="footer">
 		</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a class="client-tpr-business-trips-tab__link" href="{{ trips.linkToModule }}">Командировки</a>
+			<a *ngIf="trips.linkToModule;else text" class="client-tpr-business-trips-tab__link" href="{{ trips.linkToModule }}">Командировки</a>
+			<ng-template #text>
+				<ss-text size="1">Командировки</ss-text>
+			</ng-template>
 		</ng-template>
 		<ng-template #body>
 			<ss-table
@@ -26,15 +29,13 @@
 			</ng-template>
 		</ng-template>
 		<ng-template #footer>
-			<nz-pagination
-				class="pagination"
-				[nzTotal]="trips.total"
-				[nzPageIndex]="pageIndex"
-				[nzPageSize]="pageSize"
-				(nzPageIndexChange)="nzPageIndexChange($event)"
-				(nzPageSizeChange)="pageSize = $event"
-				[nzResponsive]="true">
-			</nz-pagination>
+			<ss-pagination
+				[total]="trips.total"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="nzPageIndexChange($event)"
+			>
+			</ss-pagination>
 		</ng-template>
 	</ng-container>
 </ss-card>

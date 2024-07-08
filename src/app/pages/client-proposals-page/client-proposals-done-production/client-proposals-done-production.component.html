@@ -1,9 +1,10 @@
 <div class="client-proposals-done-production">
-	<div class="client-proposals-done-production__header">
-		<ss-headline class="client-proposals-done-production__header-title" size="h6">Модель клиента</ss-headline>
-	</div>
+	<ng-container *ngIf="doneProductions$ | async as production">
+	<a *ngIf="production.linkToModule;else text" class="client-proposals-done-production__header" href="{{ production.linkToModule }}">Модель клиента</a>
+		<ng-template #text>
+			<ss-text size="1">Модель клиента</ss-text>
+		</ng-template>
 	<div class="client-proposals-done-production__body">
-		<ng-container *ngIf="doneProductions$ | async as production">
 
 			<div class="client-proposals-done-production__content" *ngIf="production.total > 0;else empty">
 				<ss-table
@@ -18,13 +19,13 @@
 				</ss-table>
 			</div>
 
-		</ng-container>
 		<ng-template #empty>
 			<div class="client-proposals-done-production__no-content">
 				<ss-empty-data-page></ss-empty-data-page>
 			</div>
 		</ng-template>
 	</div>
+	</ng-container>
 </div>
 
 

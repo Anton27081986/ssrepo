@@ -19,7 +19,7 @@ import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-propos
 })
 export class ClientProposalsBusinessTripsTabComponent {
 	public businessTrips$: Observable<IResponse<IBusinessTripsDto>>;
-	public pageSize = 6;
+	public pageSize = 4;
 	public pageIndex = 1;
 	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
@@ -32,7 +32,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 			map(([id, offset]) => {
 				return this.clientProposalsFacadeService.getTrips({
 					clientId: id,
-					limit: 3,
+					limit: this.pageSize,
 					offset,
 				});
 			}),
@@ -51,14 +51,19 @@ export class ClientProposalsBusinessTripsTabComponent {
 				text: x.id.toString() ?? '-',
 				url: x.linkToDetail ?? '',
 			};
-			tableItem.date = x.beginDate
-				? new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
-						year: 'numeric',
-						month: 'numeric',
-						day: 'numeric',
-					})
-				: '-';
-			tableItem.task = x.goal.name;
+			tableItem.date =
+				new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				}) +
+				' - ' +
+				new Date(Date.parse(x.endDate)).toLocaleString('ru-RU', {
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				});
+			tableItem.task = x.goal ? x.goal.name : '-';
 			tableItem.members = x.members[0]?.name ?? '-';
 
 			return tableItem;
@@ -74,7 +79,6 @@ export class ClientProposalsBusinessTripsTabComponent {
 			this.offset.next(this.pageSize * $event - this.pageSize);
 		}
 
-		this.offset.next(this.pageSize * $event - this.pageSize);
 		this.pageIndex = $event;
 	}
 }
