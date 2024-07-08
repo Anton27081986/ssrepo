@@ -1,5 +1,5 @@
 <ss-card padding="0" radius="0 0 16px 16px">
-	<ng-container *ngIf="developments$ | async as items">
+	<ng-container *ngIf="developments$ | async as developments">
 
 		<app-client-proposals-tabs-canvas
 			[headerTemplateRef]="header"
@@ -8,33 +8,34 @@
 		</app-client-proposals-tabs-canvas>
 
 		<ng-template #header>
-			<a class="client-proposals-development-tab__link" href="{{ items.linkToModule }}">Разработки АК</a>
+			<a *ngIf="developments.linkToModule; else text" class="client-proposals-development-tab__link" href="{{ developments.linkToModule }}">Разработки АК</a>
+			<ng-template #text>
+				<ss-text size="1">Разработки АК</ss-text>
+			</ng-template>
 		</ng-template>
 
 		<ng-template #body>
 			<ss-table
-				*ngIf="items.total > 0;else empty"
+				*ngIf="developments.total > 0;else empty"
 				[padding]="'8px'"
 				[head]="[
 					{title: 'Код', field: 'code'},
 					{title: 'Дата', field: 'date'},
 					{title: 'Название ТПР', field: 'name'},
 					]"
-				[items]="getTableItems(items)"
+				[items]="getTableItems(developments)"
 			>
 			</ss-table>
 		</ng-template>
 
 		<ng-template #footer>
-			<nz-pagination
-				class="pagination"
-				[nzTotal]="items.total"
-				[nzPageIndex]="pageIndex"
-				[nzPageSize]="pageSize"
-				(nzPageIndexChange)="nzPageIndexChange($event)"
-				(nzPageSizeChange)="pageSize = $event"
-				[nzResponsive]="true">
-			</nz-pagination>
+			<ss-pagination
+				[total]="developments.total"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="nzPageIndexChange($event)"
+			>
+			</ss-pagination>
 		</ng-template>
 	</ng-container>
 

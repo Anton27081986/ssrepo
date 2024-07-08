@@ -32,7 +32,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 			isVisible: true,
 		},
 		{
-			label: 'Товарная ведомость по КА',
+			label: 'Товарная ведомость по клиенту',
 			name: 'trade-list',
 			isVisible: true,
 		},
@@ -72,6 +72,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 		this.subscription.add(
 			this.clientProposalsFacadeService.clientId$.subscribe(id => {
 				if (id) {
+					this.clientId = id;
 					this.searchControl.setValue(id);
 				} else {
 					this._router.navigate(['/client-proposals-page']).then();
@@ -90,16 +91,19 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	protected getSearchClient(client: SearchInputItem | null) {
 		if (client) {
-			this._router.navigate(['/client-proposals-page', client.id]).then();
+			const arrUrl = this._router.url.split('/');
+
+			this._router
+				.navigate([`/client-proposals-page/${client.id}/${arrUrl[arrUrl.length - 1]}`])
+				.then();
 		} else {
 			this._router.navigate(['/client-proposals-page']).then();
 		}
 	}
 
 	public selectTab(page: string) {
-		const id = this.clientProposalsFacadeService.clientIdSubject.value;
-		if (id) {
-			this._router.navigate([`/client-proposals-page/${id}/${page}`]);
+		if (this.clientId) {
+			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}
 

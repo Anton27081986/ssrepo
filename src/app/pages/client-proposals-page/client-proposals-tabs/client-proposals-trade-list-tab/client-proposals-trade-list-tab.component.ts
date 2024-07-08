@@ -19,7 +19,7 @@ import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-
 })
 export class ClientProposalsTradeListTabComponent {
 	public tradeList$: Observable<IResponse<ITradeList>>;
-	public pageSize = 6;
+	public pageSize = 4;
 	public pageIndex = 1;
 	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
@@ -32,7 +32,7 @@ export class ClientProposalsTradeListTabComponent {
 			map(([id, offset]) => {
 				return this.clientProposalsFacadeService.getTradeList({
 					clientId: id,
-					limit: 3,
+					limit: this.pageSize,
 					offset,
 				});
 			}),
@@ -73,7 +73,6 @@ export class ClientProposalsTradeListTabComponent {
 			this.offset.next(this.pageSize * $event - this.pageSize);
 		}
 
-		this.offset.next(this.pageSize * $event - this.pageSize);
 		this.pageIndex = $event;
 	}
 }

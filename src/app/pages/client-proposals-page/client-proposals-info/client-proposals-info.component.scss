@@ -51,9 +51,13 @@
 	display: flex;
 	gap: 16px;
 	padding: 16px;
-	height: 364px;
+	min-height: 351px;
 
 	&__tabs {
 		width: 100%;
 	}
+}
+
+.card-client {
+	height: 100%;
 }

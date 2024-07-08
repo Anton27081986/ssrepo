@@ -10,6 +10,8 @@
 	&__header {
 		padding: 14px 12.5px;
 		border-bottom: 1px solid $island-outline;
+		font-size: 16px;
+		line-height: 19px;
 	}
 
 	&__content {
@@ -21,7 +23,6 @@
 		padding: 16px;
 		display: flex;
 		justify-content: center;
-		align-items: center;
 	}
 
 	&__table {

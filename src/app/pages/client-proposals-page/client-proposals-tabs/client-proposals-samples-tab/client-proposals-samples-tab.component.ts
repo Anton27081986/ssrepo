@@ -19,7 +19,7 @@ import {
 })
 export class ClientProposalsSamplesTabComponent {
 	public readonly samples$: Observable<IResponse<ISamples>>;
-	public pageSize = 6;
+	public pageSize = 4;
 	public pageIndex = 1;
 	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
@@ -29,7 +29,7 @@ export class ClientProposalsSamplesTabComponent {
 			map(([id, offset]) => {
 				return this.facadeService.getExamplesByClientId({
 					clientId: id,
-					limit: 3,
+					limit: this.pageSize,
 					offset,
 				});
 			}),
@@ -64,7 +64,6 @@ export class ClientProposalsSamplesTabComponent {
 			this.offset.next(this.pageSize * $event - this.pageSize);
 		}
 
-		this.offset.next(this.pageSize * $event - this.pageSize);
 		this.pageIndex = $event;
 	}
 }

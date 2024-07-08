@@ -65,7 +65,7 @@ import { AllSearchComponent } from './all-search/all-search.component';
 import { ResultItemComponent } from './all-search/result-item/result-item.component';
 import { SearchWithAuthComponent } from './profile-popup/search-with-auth/search-with-auth.component';
 import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/result-search-with-auth/result-search-with-auth.component';
-import {LoaderModule} from "@app/shared/components/loader/loader.module";
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
 
 @NgModule({
 	declarations: [
@@ -154,6 +154,7 @@ import {LoaderModule} from "@app/shared/components/loader/loader.module";
 		AddressBookComponent,
 		TransportComponent,
 		AllSearchComponent,
+		PaginationComponent,
 	],
 })
 export class ComponentsModule {}

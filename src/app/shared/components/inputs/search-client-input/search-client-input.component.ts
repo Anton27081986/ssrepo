@@ -12,7 +12,7 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
-import { ClientApiService } from '@app/core/api/client-api.service';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 export type searchType =
 	| 'user'
@@ -63,8 +63,9 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 		this.entityId$
 			.pipe(
 				untilDestroyed(this),
+				filterTruthy(),
 				switchMap(id => {
-					return this.getEntity(id!);
+					return this.getEntity(id);
 				}),
 				tap(entity => {
 					if (entity && entity.title) {
@@ -109,7 +110,6 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 
 	public onInputValueChange(event: Event) {
 		const targetDivElement = event.target as HTMLInputElement;
-
 		this.search(targetDivElement.value);
 	}
 
