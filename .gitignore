@@ -44,3 +44,5 @@ Thumbs.db
 
 #Other
 /.lh
+/ckeditor5/node_modules
+/ckeditor5/package-lock.json
