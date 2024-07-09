@@ -20,68 +20,13 @@
 			<ss-icon width="12" height="12" name="iconClose" class="close-reply" (click)="closeReply()"></ss-icon>
 		</div>
 		<div class="editor" [ngClass]="{'error': mailForm.controls.text.hasError('required') && mailForm.controls.text.touched}">
-			<div *ngIf="isCustomEditorLoaded" class="editor-controls">
-				<div class="section undo-redo">
-					<ss-icon height="16" width="16" name="undo" (click)="myEditorButtons[EditorButtons.undo].editorElement?.click()"></ss-icon>
-					<ss-icon height="16" width="16" name="redo" (click)="myEditorButtons[EditorButtons.redo].editorElement?.click()"></ss-icon>
-				</div>
-				<span class="separator"></span>
-				<div class="section">
-					<span class="font-family" (click)="myEditorButtons[EditorButtons.fontFamily].editorElement?.click(); onFontFamilyInit(myEditorButtons[EditorButtons.fontFamily].editorElement)">
-						<span>{{ fontFamily }}</span>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-				</div>
-				<span class="separator"></span>
-				<div class="section">
-					<span class="font-size" (click)="myEditorButtons[EditorButtons.fontSize].editorElement?.click(); onFontSizeInit(myEditorButtons[EditorButtons.fontSize].editorElement)">
-						<span>{{ fontSize }}</span>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-				</div>
-				<span class="separator"></span>
-				<div class="section">
-					<ss-icon height="24" width="24" name="semibold" (click)="myEditorButtons[EditorButtons.bold].editorElement?.click()"></ss-icon>
-					<ss-icon height="24" width="24" name="italic" (click)="myEditorButtons[EditorButtons.italic].editorElement?.click()"></ss-icon>
-					<ss-icon height="24" width="24" name="underline" (click)="myEditorButtons[EditorButtons.underline].editorElement?.click()"></ss-icon>
-				</div>
-				<span class="separator"></span>
-				<div class="section font-colors">
-					<span (click)="myEditorButtons[EditorButtons.fontColor].editorElement?.click()">
-						<ss-icon height="24" width="24" name="textColor"></ss-icon>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-					<span (click)="myEditorButtons[EditorButtons.fontBackgroundColor].editorElement?.click()">
-						<ss-icon height="24" width="24" name="textBackground"></ss-icon>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-				</div>
-				<span class="separator"></span>
-				<div class="section font-colors">
-					<span (click)="myEditorButtons[EditorButtons.alignment].editorElement?.click()">
-						<ss-icon height="24" width="24" name="alignment"></ss-icon>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-					<span (click)="myEditorButtons[EditorButtons.bulletedList].editorElement?.click()">
-						<ss-icon height="24" width="24" name="bulletList"></ss-icon>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-					<span (click)="myEditorButtons[EditorButtons.numberedList].editorElement?.click()">
-						<ss-icon height="24" width="24" name="numberedList"></ss-icon>
-						<ss-icon height="12" width="12" name="arrowDown"></ss-icon>
-					</span>
-				</div>
-				<span class="separator"></span>
-				<div class="section">
-					<ss-icon height="24" width="24" name="blockquote" (click)="myEditorButtons[EditorButtons.blockQuote].editorElement?.click()"></ss-icon>
-					<ss-icon height="24" width="24" name="link" (click)="myEditorButtons[EditorButtons.link].editorElement?.click()"></ss-icon>
-				</div>
-				<span class="separator"></span>
-				<div class="section">
-					<ss-icon height="24" width="24" name="removeFormat" (click)="myEditorButtons[EditorButtons.removeFormat].editorElement?.click()"></ss-icon>
+			<div class="editor-container editor-container_classic-editor" #editorContainerElement>
+				<div class="editor-container__editor">
+					<div #editorElement>
+						<ckeditor [editor]="Editor" [config]="config" *ngIf="isLayoutReady" formControlName="text" />
+					</div>
 				</div>
 			</div>
-			<ckeditor [editor]="Editor" formControlName="text" #editor></ckeditor>
 			<ss-caption class="error" size="1" *ngIf="mailForm.controls.text.hasError('required') && mailForm.controls.text.touched">Поле обязательно для заполнения</ss-caption>
 		</div>
 		<div *ngIf="(messageFiles$ | async)?.length" class="files">

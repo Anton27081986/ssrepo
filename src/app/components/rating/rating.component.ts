@@ -7,7 +7,6 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { distinctUntilChanged, filter, map, Observable, Subject, switchMap, tap, zip } from 'rxjs';
-import isEqual from 'lodash/isEqual';
 import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
@@ -74,7 +73,7 @@ export class RatingComponent implements OnInit, OnDestroy {
 		);
 
 		this.ratingTypes$ = new Observable<any>().pipe(
-			distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
+			distinctUntilChanged((prev, curr) => prev?.membersTotal === curr?.membersTotal),
 		);
 	}
 

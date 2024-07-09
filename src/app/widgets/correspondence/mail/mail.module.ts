@@ -6,7 +6,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { AsyncPipe, NgClass, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, CommonModule, NgClass, NgForOf, NgIf } from '@angular/common';
 import { AttachmentModule } from '@app/shared/components/attachment/attachment.module';
 import { CardDropdownModule } from '@app/shared/components/card-dropdown/card-dropdown.module';
 import { ComponentsModule } from '@app/components/components.module';
@@ -38,6 +38,7 @@ import { DialogModule } from '@app/shared/components/dialog/dialog.module';
 		HeadlineModule,
 		TextModule,
 		DialogModule,
+		CommonModule,
 	],
 })
 export class MailModule {}

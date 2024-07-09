@@ -6,6 +6,8 @@
 @import 'src/styles/colors.scss';
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
 
+@import './../node_modules/ckeditor5/dist/ckeditor5.css';
+
 
 body {
 	background-color: $background !important;
@@ -27,4 +29,50 @@ body {
 
 ::-webkit-scrollbar-thumb {
 	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+@media print {
+	body {
+		margin: 0 !important;
+	}
+}
+
+.main-container {
+	width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.ck-content {
+	line-height: 1.6;
+	word-break: break-word;
+}
+
+.editor-container_classic-editor .editor-container__editor {
+	width: 100%;
+	min-width: 795px;
+}
+
+.ck-editor {
+	&__main {
+		max-height: 120px;
+		overflow-y: auto;
+		border: 1px solid $island-outline;
+		border-radius: 8px;
+	}
+
+	.ck-sticky-panel {
+		&__content {
+			border: none !important;
+		}
+	}
+
+	&__editable {
+		padding: 0 16px !important;
+		border-radius: 16px;
+		border: none !important;
+		box-shadow: none !important;
+	}
 }

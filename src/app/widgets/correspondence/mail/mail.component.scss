@@ -170,88 +170,6 @@
 			}
 		}
 	}
-
-	.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_s, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_sme, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_smw, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_sw {
-		bottom: 100%;
-		top: auto;
-		max-height: 202px;
-	}
-
-	.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_ne, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se {
-		overflow-y: auto !important;
-	}
-
-	.ck.ck-balloon-panel.ck-powered-by-balloon {
-		display: none !important;
-	}
-
-	.ck.ck-editor__top {
-		transform: translateY(-20px);
-		height: 20px !important;
-	}
-
-	.ck-toolbar {
-		border: none !important;
-	}
-
-	.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-		border-color: $island-outline !important;
-		border-radius: 8px;
-	}
-
-	.ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
-		border-color: $additional-outline;
-		border-radius: 8px;
-		box-shadow: none !important;
-	}
-
-	.editor.error .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-		border-color: $error !important;
-		background-color: $lite-error !important;
-	}
-
-	.ck.ck-editor__editable_inline {
-		max-width: 874px;
-		padding: 0 20px;
-		min-height: 80px;
-		max-height: 20vh;
-		overflow: auto;
-
-		ul,ol {
-			padding-left: 20px;
-		}
-
-		p {
-			margin: 0;
-		}
-	}
-
-	.ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_ne, .ck.ck-dropdown .ck-dropdown__panel.ck-dropdown__panel_se {
-		border-radius: 8px;
-		overflow: hidden;
-	}
-
-	.ck.ck-list__item .ck-button {
-		color: $lite-text;
-	}
-
-	.ck.ck-list__item .ck-button.ck-on {
-		background: $island-outline;
-		color: $lite-text;
-		border: none;
-		outline: none;
-		box-shadow: none;
-	}
-
-	.ck.ck-list__item .ck-button.ck-on:hover:not(.ck-disabled) {
-		color: $lite-text;
-		background: $island-outline;
-	}
-
-	.ck.ck-list__item .ck-button:hover:not(.ck-disabled) {
-		color: $lite-text;
-		background: $island-outline;
-	}
 }
 
 :host-context(.dark) {
@@ -263,5 +181,11 @@
 		.ck-toolbar, .ck-content {
 			background-color: $dark-island!important;
 		}
+	}
+}
+
+::ng-deep ss-card-dropdown {
+	ss-card {
+		border: none !important;
 	}
 }

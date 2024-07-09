@@ -1,6 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
-import Editor from 'ckeditor5-custom-build';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
@@ -11,29 +9,32 @@ import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { ModalService } from '@app/core/modal/modal.service';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { ModalRef } from '@app/core/modal/modal.ref';
-
-interface IEditorButton {
-	title: string;
-	editorElement?: HTMLElement;
-}
-
-enum EditorButtons {
-	'undo',
-	'redo',
-	'fontFamily',
-	'fontSize',
-	'bold',
-	'italic',
-	'underline',
-	'fontColor',
-	'fontBackgroundColor',
-	'blockQuote',
-	'link',
-	'alignment',
-	'bulletedList',
-	'numberedList',
-	'removeFormat',
-}
+import {
+	ClassicEditor,
+	AccessibilityHelp,
+	Alignment,
+	AutoLink,
+	Autosave,
+	BlockQuote,
+	Bold,
+	Essentials,
+	FontBackgroundColor,
+	FontColor,
+	FontFamily,
+	FontSize,
+	Indent,
+	IndentBlock,
+	Italic,
+	Link,
+	List,
+	Paragraph,
+	RemoveFormat,
+	SelectAll,
+	Strikethrough,
+	Underline,
+	Undo,
+	type EditorConfig
+} from 'ckeditor5';
 
 @UntilDestroy()
 @Component({
@@ -42,19 +43,9 @@ enum EditorButtons {
 	styleUrls: ['./mail.component.scss'],
 })
 export class MailComponent implements OnInit, AfterViewInit {
-	protected readonly EditorButtons = EditorButtons;
-
-	@ViewChild('editor') public editor: CKEditorComponent | undefined;
-	protected isCustomEditorLoaded = true;
-
-	public Editor = Editor;
-
-	protected fontFamily = 'По умолчанию';
-	protected isFontsInitialized = false;
-
-	protected fontSizes = ['10 pt', '12 pt', '14 pt', '18 pt', '24 pt'];
-	protected fontSize = '14 pt';
-	protected isFontSizesInitialized = false;
+	public isLayoutReady = false;
+	public Editor = ClassicEditor;
+	public config: EditorConfig = {};
 
 	public toUsers: IUserDto[] = [];
 	protected toUsersCopy: IUserDto[] = [];
@@ -65,24 +56,6 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public messageFiles$: Observable<IAttachmentDto[] | null>;
 
-	protected myEditorButtons: IEditorButton[] = [
-		{ title: 'Отменить' },
-		{ title: 'Вернуть' },
-		{ title: 'Шрифт' },
-		{ title: 'Размер шрифта' },
-		{ title: 'Полужирный' },
-		{ title: 'Курсив' },
-		{ title: 'Подчеркнутый' },
-		{ title: 'Цвет текста' },
-		{ title: 'Цвет фона' },
-		{ title: 'Цитата' },
-		{ title: 'Ссылка' },
-		{ title: 'Выравнивание' },
-		{ title: 'Маркированный список' },
-		{ title: 'Нумерованный список' },
-		{ title: 'Без оформления' },
-	];
-
 	protected mailForm!: FormGroup<{
 		subject: FormControl<string | null>;
 		text: FormControl<string | null>;
@@ -92,7 +65,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 	private modal: ModalRef | undefined;
 
 	public constructor(
-		private readonly changeDetectorRef: ChangeDetectorRef,
+		private readonly changeDetector: ChangeDetectorRef,
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 		private readonly modalService: ModalService,
 	) {
@@ -149,61 +122,84 @@ export class MailComponent implements OnInit, AfterViewInit {
 	}
 
 	public ngAfterViewInit(): void {
-		this.editor?.ready.pipe(untilDestroyed(this)).subscribe(() => {
-			const controls = document.getElementsByClassName('ck-toolbar__items')[0].childNodes;
-
-			if (!controls.length || this.myEditorButtons.length !== controls.length) {
-				this.isCustomEditorLoaded = false;
-				throw new Error('Ошибка загрузки редактора сообщений');
-			}
-
-			controls.forEach((button, index) => {
-				if (button.nodeName.toLowerCase() === 'button') {
-					this.myEditorButtons[index].editorElement = button as HTMLElement;
+		this.config = {
+			toolbar: {
+				items: [
+					'undo',
+					'redo',
+					'|',
+					'fontSize',
+					'fontFamily',
+					'fontColor',
+					'fontBackgroundColor',
+					'|',
+					'bold',
+					'italic',
+					'underline',
+					'strikethrough',
+					'removeFormat',
+					'|',
+					'link',
+					'blockQuote',
+					'|',
+					'alignment',
+					'|',
+					'bulletedList',
+					'numberedList',
+					'indent',
+					'outdent'
+				],
+				shouldNotGroupWhenFull: true
+			},
+			plugins: [
+				AccessibilityHelp,
+				Alignment,
+				AutoLink,
+				Autosave,
+				BlockQuote,
+				Bold,
+				Essentials,
+				FontBackgroundColor,
+				FontColor,
+				FontFamily,
+				FontSize,
+				Indent,
+				IndentBlock,
+				Italic,
+				Link,
+				List,
+				Paragraph,
+				RemoveFormat,
+				SelectAll,
+				Strikethrough,
+				Underline,
+				Undo
+			],
+			fontFamily: {
+				supportAllValues: true
+			},
+			fontSize: {
+				options: [12, 14, 'default', 18, 20],
+				supportAllValues: true
+			},
+			link: {
+				addTargetToExternalLinks: true,
+				defaultProtocol: 'https://',
+				decorators: {
+					toggleDownloadable: {
+						mode: 'manual',
+						label: 'Downloadable',
+						attributes: {
+							download: 'file'
+						}
+					}
 				}
+			},
+			placeholder: 'Введите текст сообщения'
+		};
 
-				if (button.nodeName.toLowerCase() === 'div') {
-					this.myEditorButtons[index].editorElement =
-						button.childNodes[0].nodeName.toLowerCase() === 'button'
-							? (button.childNodes[0] as HTMLElement)
-							: (button.childNodes[0].childNodes[1] as HTMLElement);
-					(button.childNodes[0] as HTMLElement).style.visibility = 'hidden';
-				}
-
-				this.myEditorButtons[index].editorElement!.style.visibility = 'hidden';
-			});
-		});
-	}
-
-	protected onFontFamilyInit(element: HTMLElement | undefined) {
-		if (this.isFontsInitialized) {
-			return;
-		}
-
-		element?.parentNode?.childNodes[1].childNodes[0].childNodes.forEach(font => {
-			font?.childNodes[0].addEventListener('click', event => {
-				this.fontFamily = (event.target as HTMLElement).innerText;
-				this.changeDetectorRef.detectChanges();
-			});
-		});
-
-		this.isFontsInitialized = true;
-	}
-
-	protected onFontSizeInit(element: HTMLElement | undefined) {
-		if (this.isFontSizesInitialized) {
-			return;
-		}
-
-		element?.parentNode?.childNodes[1].childNodes[0].childNodes.forEach((size, index) => {
-			(size?.childNodes[0].childNodes[0] as HTMLElement).innerText = this.fontSizes[index];
-			size?.childNodes[0].addEventListener('click', () => {
-				this.fontSize = this.fontSizes[index];
-				this.changeDetectorRef.detectChanges();
-			});
-		});
-
-		this.isFontSizesInitialized = true;
+		this.isLayoutReady = true;
+		this.changeDetector.detectChanges();
 	}
 
 	protected uploadFile(event: Event) {
