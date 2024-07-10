@@ -1,11 +1,14 @@
 <div class="ss-settings-view-column">
 	<ng-container *ngFor="let col of state.cols$ | async">
 		<div class="ss-settings-view-column__item">
-			<ss-icon *ngIf="col.show; else empty" height="16" name="checkbox" (click)="toggleItemShow(col.id)"></ss-icon>
+			<ss-icon *ngIf="col.show; else empty" height="12" name="checkbox" (click)="toggleItemShow(col.id)"></ss-icon>
 			<ng-template #empty>
 				<div class="ss-settings-view-column__checkbox" (click)="toggleItemShow(col.id)"></div>
 			</ng-template>
-			{{ col.title }}
+
+			<div class="ss-settings-view-column__title">
+				<ss-text size="3">{{ col.title }}</ss-text>
+			</div>
 		</div>
 	</ng-container>
 </div>

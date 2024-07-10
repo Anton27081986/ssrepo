@@ -1,27 +1,45 @@
 <div class="client-proposals-table-vgp">
-	<div class="client-proposals-table-vgp__input-vpg">
-		<ss-chips-search [placeholder]="'ВГП Клиента'" (getSelected)="getSelected($event)"
-						 [searchType]="'productions'"></ss-chips-search>
-		<ss-button [type]="'primary'">Просмотреть</ss-button>
+	<div class="client-proposals-table-vgp__header">
+		<ss-headline class="client-proposals-table-vgp__header-title" size="h6">Предложение</ss-headline>
 	</div>
-	<ng-container *ngIf="vgp.length > 0">
-		<div class="client-proposals-table-vgp__header">
-			<div class="header-vpg__left">
-				<ss-file-picker class="table-vpg__file-picker"></ss-file-picker>
-			</div>
-			<div class="header-vpg__center">
-				<ss-button [type]="'usually'">Скачать</ss-button>
-				<ss-button [type]="'usually'">Печать</ss-button>
-				<ss-button [type]="'usually'" (click)="openPopoverSendToTheCloud()">Отправить в облако</ss-button>
-			</div>
-			<div class="header-vpg__right">
-				<ss-button [type]="'usually'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="filters">Фильтры(0)
-				</ss-button>
-				<ss-button [type]="'usually'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="settingsColumn">
-					Отображение столбцов
-				</ss-button>
+
+	<div class="client-proposals-table-vgp__panel">
+		<div class="select-vgp">
+			<ss-caption size="2">Выберите ВГП</ss-caption>
+			<div class="client-proposals-table-vgp__input-vpg">
+					<ss-chips-search size="medium" [placeholder]="'ВГП Клиента'" (getSelected)="getSelected($event)"
+									 [searchType]="'productions'"></ss-chips-search>
+					<ss-button size="small" [type]="'muted'">Посмотреть</ss-button>
 			</div>
 		</div>
+		<div class="select-docs" *ngIf="vgp.length > 0">
+			<ng-container>
+				<div class="client-proposals-table-vgp__documents">
+					<div class="documents-vpg__left">
+						<ss-file-picker class="table-vpg__file-picker">
+							<div class="test">1</div>
+						</ss-file-picker>
+					</div>
+					<div class="documents-vpg__center">
+						<ss-button size="small" [type]="'muted'" [disabled]="true">Скачать</ss-button>
+						<ss-button size="small" [type]="'muted'" [disabled]="false" (click)="openPopoverSendToTheCloud()">Сохранить в облако</ss-button>
+					</div>
+					<div class="documents-vpg__right">
+						<ss-button size="small" [type]="'outline'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="settingsColumn">
+							Отображение столбцов
+							<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>
+						</ss-button>
+						<ss-button size="small" [type]="'outline'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="filters">
+							Фильтры(0)
+							<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>
+						</ss-button>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+
+	<ng-container *ngIf="vgp.length > 0">
 		<div class="client-proposals-table-vgp__content">
 			<ss-table-v2
 			> // через for
@@ -29,11 +47,12 @@
 			</ss-table-v2>
 		</div>
 	</ng-container>
+
 	<ng-container *ngIf="vgp.length === 0">
 		<div class="client-proposals-table-vgp__no-content">
 			<img
 				src="../../../../assets/images/ss-empty-state%20placeholder/ss-empty-state%20placeholder.png"
-				alt=""/>
+				alt="" />
 			<ss-headline class="clients-proposals-info__header" size="h3">Сформулируйте предложение
 			</ss-headline>
 			<ss-headline class="clients-proposals-info__header" size="h4">Выберите ВГП клиента выше и
