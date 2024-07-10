@@ -25,6 +25,10 @@ export class ErrorInterceptor implements HttpInterceptor {
 				if (err instanceof HttpErrorResponse) {
 					if (Math.floor(err.status / 100) === 4) {
 						this.notificationToastService.addToast(err.error.title, 'warning');
+
+						if (err.status === 401) {
+							this.authenticationService.logout();
+						}
 					}
 
 					if (Math.floor(err.status / 100) === 5) {
