@@ -13,6 +13,7 @@ export class InputComponent implements ControlValueAccessor {
 	@Input() public placeholder: string = '';
 	@Input() public type: 'text' | 'email' | 'number' = 'text';
 	@Input() public error: string | undefined;
+	@Input() public maxlength: string | undefined;
 
 	@Input() public value: any = '';
 
