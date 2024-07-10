@@ -7,16 +7,23 @@
 		flex-direction: column;
 		position: relative;
 		background-color: white;
-		width: 357px;
-		border-radius: 30px;
+		width: 218px;
+		border-radius: 8px;
 		border: 1px solid $white;
-		padding: 13px;
+		padding: 4px 0 8px 0;
+		border: 1px solid $border-color;
 
-		&__item {
+	&__item {
 			display: flex;
 			flex-wrap: nowrap;
 			align-items: center;
-			gap: 12px;
+			gap: 7px;
+			margin-left: 8px;
+			margin-top: 2px;
+		}
+
+		ss-icon {
+			padding-top: 2px;
 		}
 
 		&__checkbox {

@@ -1,16 +1,54 @@
-<div class="ss-file-picker">
+<div class="ss-file-picker" [class.open]="isExpanded">
 	<div class="ss-file-picker-header" (click)="toggle()">
-		<ss-text size="3" weight="semi-bold">{{ "Выбранные документы" + ""}}</ss-text>
-		<ss-icon name="busket" class="ss-file-picker__icon-basket"
-				 [class.accordion-header__icon-toggle--expanded]="isExpanded">
-
-		</ss-icon>
-		<ss-icon name="chevron" class="ss-file-picker__icon-toggle"
-				 [class.accordion-header__icon-toggle--expanded]="isExpanded">
-
-		</ss-icon>
+		<ss-text size="3" weight="medium">{{ "Выбранные документы"}}</ss-text>
+		<div class="ss-file-picker__icon">
+			<ss-icon height="12" name="basket" class="ss-file-picker__icon-basket"
+					 [class.accordion-header__icon-toggle--expanded]="isExpanded">
+			</ss-icon>
+			<span class="count">{{count}}</span>
+			<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle"
+					 [class.accordion-header__icon-toggle--expanded]="isExpanded">
+			</ss-icon>
+		</div>
 	</div>
 	<div class="ss-file-picker__content" [class.open]="isExpanded">
-		<ng-content></ng-content>
+		<div class="ss-file-picker__content-item">
+			<div>
+				<ss-caption size="2">Ароматизаторы</ss-caption>
+				<ss-caption> — </ss-caption>
+				<ss-caption size="2">Ароматизатор 1</ss-caption>
+				<ss-caption> — </ss-caption>
+				<ss-caption size="2" class="last-element">Сертификат по охране труда 1</ss-caption>
+			</div>
+			<div>
+				<ss-icon height="12" name="iconCloseLight" class="ss-file-picker__icon-basket"></ss-icon>
+			</div>
+		</div>
+		<div class="ss-file-picker__content-item">
+			<div>
+				<ss-caption size="2">Ароматизаторы</ss-caption>
+				<ss-caption> — </ss-caption>
+				<ss-caption size="2">Ароматизатор 1</ss-caption>
+				<ss-caption> — </ss-caption>
+				<ss-caption size="2" class="last-element">Сертификат по охране труда 2</ss-caption>
+				<ss-text></ss-text>
+			</div>
+			<div>
+				<ss-icon height="12" name="iconCloseLight" class="ss-file-picker__icon-basket"></ss-icon>
+			</div>
+		</div>
+		<div class="ss-file-picker__content-item">
+			<div>
+				<ss-caption size="2">Ароматизаторы</ss-caption>
+				<ss-caption> — </ss-caption>
+				<ss-caption size="2">Ароматизатор 1</ss-caption>
+				<ss-caption> — </ss-caption>
+				<ss-caption size="2" class="last-element">Сертификат по охране труда 3</ss-caption>
+			</div>
+			<div>
+				<ss-icon height="12" name="iconCloseLight" class="ss-file-picker__icon-basket"></ss-icon>
+			</div>
+		</div>
+<!--		<ng-content></ng-content>-->
 	</div>
 </div>

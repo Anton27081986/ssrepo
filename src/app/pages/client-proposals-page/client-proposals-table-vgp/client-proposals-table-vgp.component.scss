@@ -1,16 +1,54 @@
+@use 'src/styles/colors.scss' as *;
+
 .client-proposals-table-vgp {
 	display: flex;
 	flex-direction: column;
-	gap: 30px;
+
+	&__panel {
+		border-bottom: 1px solid $island-outline;
+		padding: 0 16px 16px 16px;
+
+		ss-caption {
+			padding-bottom: 2px;
+		}
+
+		.select-docs {
+			margin-top: 16px;
+		}
+	}
 
 	&__input-vpg {
 		display: flex;
-		max-width: 600px;
 		gap: 16px;
 		align-items: flex-end;
+
+		ss-chips-search {
+			width: 50%;
+
+			::ng-deep {
+				.input {
+					min-height: 36px;
+					padding: 4px 8px 4px 8px;
+				}
+
+				input {
+
+				}
+
+				.chips {
+					padding: 4px 8px 4px 8px;
+				}
+			}
+		}
 	}
 
 	&__header {
+		display: flex;
+		justify-content: space-between;
+		padding: 14px 16px;
+	}
+
+	&__documents {
 		display: flex;
 		justify-content: space-between;
 	}
@@ -20,7 +58,6 @@
 		overflow: auto;
 	}
 
-
 	&__no-content {
 		display: flex;
 		flex-direction: column;
@@ -28,28 +65,45 @@
 		margin: auto;
 		align-items: center;
 		min-height: 520px;
+		padding-top: 20px;
 	}
 }
 
-
-.header-vpg {
+.documents-vpg {
 	display: flex;
 	justify-content: space-between;
 
 	&__left {
+		width: 456px;
 		display: flex;
 		flex-direction: row;
-	}
-
-	&__right {
-		display: flex;
-		flex-direction: row;
-		gap: 58px;
+		padding-right: 16px;
 	}
 
 	&__center {
 		display: flex;
 		flex-direction: row;
-		gap: 26px;
+		gap: 16px;
+		padding-right: 33.5px;
+	}
+
+	&__right {
+		display: flex;
+		flex-direction: row;
+		gap: 16px;
+
+		ss-button {
+			::ng-deep button {
+				justify-content: space-between;
+			}
+		}
+
+		ss-button:nth-child(1) {
+			width: 220px;
+		}
+
+		ss-button:nth-child(2) {
+			width: 129px;
+		}
 	}
 }

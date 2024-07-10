@@ -35,6 +35,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
 import { ClientProposalsDoneProductionComponent } from '@app/pages/client-proposals-page/client-proposals-done-production/client-proposals-done-production.component';
 import { ClientProposalsTabsCanvasComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { ComponentsModule } from '@app/components/components.module';
 
 @NgModule({
@@ -77,7 +78,9 @@ import { ComponentsModule } from '@app/components/components.module';
 		TextModule,
 		NzPaginationModule,
 		EmptyDataPageModule,
+		CaptionModule,
 		ComponentsModule,
+		CaptionModule,
 	],
 })
 export class ClientProposalsModule {}
