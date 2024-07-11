@@ -42,6 +42,10 @@ export class TableComponent implements AfterViewChecked {
 
 	ngAfterViewChecked() {
 		this.changeDetectorRef.detectChanges();
+		this.resizeHeader();
+	}
+
+	resizeHeader() {
 		setTimeout(() => {
 			const headItemsArr: HTMLElement[] = [...this.pseudoHeadEl.nativeElement.children];
 

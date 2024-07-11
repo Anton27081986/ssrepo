@@ -4,7 +4,7 @@
 <div class="table-wrapper">
 	<table>
 		<thead *ngIf="head">
-			<tr #headEl >
+			<tr #headEl>
 				<th [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">{{ headItem.title }}</th>
 			</tr>
 		</thead>
