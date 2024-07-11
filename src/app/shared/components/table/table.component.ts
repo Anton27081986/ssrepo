@@ -1,4 +1,11 @@
-import { AfterViewChecked, ChangeDetectorRef, Component, HostBinding, Input } from '@angular/core';
+import {
+	AfterViewChecked,
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	Input,
+	ViewChild,
+} from '@angular/core';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 
@@ -25,6 +32,9 @@ export class TableComponent implements AfterViewChecked {
 	protected readonly Array = Array;
 	@Input() public padding: string = '12px';
 
+	@ViewChild('headEl') public headEl!: ElementRef;
+	@ViewChild('pseudoHeadEl') public pseudoHeadEl!: ElementRef;
+
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly modalService: ModalService,
@@ -32,6 +42,13 @@ export class TableComponent implements AfterViewChecked {
 
 	ngAfterViewChecked() {
 		this.changeDetectorRef.detectChanges();
+		setTimeout(() => {
+			const headItemsArr: HTMLElement[] = [...this.pseudoHeadEl.nativeElement.children];
+
+			[...this.headEl.nativeElement.children].forEach((headItem: HTMLElement, index) => {
+				headItemsArr[index].style.minWidth = `${Math.round(headItem.offsetWidth)}px`;
+			});
+		}, 0);
 	}
 
 	showText(cell: Cell) {

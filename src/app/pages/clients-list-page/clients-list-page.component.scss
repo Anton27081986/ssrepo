@@ -9,6 +9,7 @@
 .table-with-filters {
 	display: flex;
 	height: calc(100vh - 226px);
+	min-width: 1280px;
 	position: relative;
 	gap: 16px;
 
@@ -17,11 +18,6 @@
 		border-radius: 16px;
 		max-height: calc(100% - 56px);
 		overflow-y: hidden;
-
-		ss-table {
-			max-height: 100%;
-			overflow-y: auto;
-		}
 	}
 
 	.filters {
