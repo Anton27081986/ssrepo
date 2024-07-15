@@ -1,5 +1,6 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
 
 .menu {
     display: flex;
@@ -8,18 +9,18 @@
     color: $black;
     height: 44px;
     line-height: 44px;
+	gap: 26px;
+	margin-left: 18px;
 
     li:first-child {
-        font-weight: bold;
-        margin-left: 21px;
+        font-weight: 600;
     }
 
     li {
         color: $black;
-        font-size: 16px;
+        font-size: 13px;
         font-family: Inter, serif;
-        font-weight: 500;
-        padding: 0 7.2px !important;
+        font-weight: 400;
         border-radius: 10px;
     }
 }
@@ -194,4 +195,15 @@
     ::ng-deep .ant-menu-submenu.ant-menu-submenu-popup {
         display: none;
     }
+}
+
+:host-context(.dark) :host {
+	.ant-menu-item:hover,
+	.ant-menu-submenu:hover {
+		background-color: $dark-background;
+	}
+
+	.menu {
+		background-color: $dark-background!important;
+	}
 }

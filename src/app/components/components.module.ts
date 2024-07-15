@@ -47,6 +47,9 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { CardModule } from '@app/shared/components/card/card.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -65,7 +68,6 @@ import { AllSearchComponent } from './all-search/all-search.component';
 import { ResultItemComponent } from './all-search/result-item/result-item.component';
 import { SearchWithAuthComponent } from './profile-popup/search-with-auth/search-with-auth.component';
 import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/result-search-with-auth/result-search-with-auth.component';
-import { LoaderModule } from '@app/shared/components/loader/loader.module';
 
 @NgModule({
 	declarations: [
@@ -139,6 +141,8 @@ import { LoaderModule } from '@app/shared/components/loader/loader.module';
 		CaptionModule,
 		IconModule,
 		LoaderModule,
+		TextModule,
+		AvatarModule,
 	],
 	exports: [
 		MainMenuComponent,
