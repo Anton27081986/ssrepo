@@ -4,10 +4,7 @@ import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
 import { SearchInputItem } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
-import { IStoreTableBaseColumn } from '@app/core/store';
-import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
-import { ColumnsStateService } from '@app/core/columns.state.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 
 @UntilDestroy()
@@ -15,7 +12,7 @@ import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals
 	selector: 'app-client-proposals-info',
 	templateUrl: './client-proposals-info.component.html',
 	styleUrls: ['./client-proposals-info.component.scss'],
-	providers: [ColumnsStateService, ClientProposalsFacadeService],
+	providers: [ClientProposalsFacadeService],
 	encapsulation: ViewEncapsulation.None,
 })
 export class ClientProposalsInfoComponent implements OnInit {
@@ -24,6 +21,8 @@ export class ClientProposalsInfoComponent implements OnInit {
 	private readonly subscription = new Subscription();
 
 	protected readonly searchControl = new FormControl<number>(0);
+
+	public clientId$: Observable<number>;
 
 	public tabs: ITab[] = [
 		{
@@ -64,13 +63,11 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	constructor(
 		private readonly _router: Router,
-		protected readonly _columnState: ColumnsStateService,
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 	) {
-		this._columnState.cols$.next(this.defaultCols);
-
+		this.clientId$ = this.clientProposalsFacadeService.clientId$;
 		this.subscription.add(
-			this.clientProposalsFacadeService.clientId$.subscribe(id => {
+			this.clientId$.subscribe(id => {
 				if (id) {
 					this.clientId = id;
 					this.searchControl.setValue(id);
@@ -104,81 +101,5 @@ export class ClientProposalsInfoComponent implements OnInit {
 			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}
-
-	// width: '140px' и align: 'center' Покачто как заглушка, в будующем сделаю возможность центрования и настройку размера ячейки.
-
-	private readonly defaultCols: IStoreTableBaseColumn[] = [
-		{
-			id: ClientProposalsRowItemField.vgp,
-			title: 'ВГП',
-			order: 1,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.tg,
-			title: 'ТГ',
-			order: 2,
-			show: true,
-			width: '140px',
-			align: 'center',
-		},
-		{
-			id: ClientProposalsRowItemField.tpr,
-			title: 'ТПР',
-			order: 4,
-			show: true,
-			width: '140px',
-			align: 'center',
-		},
-		{
-			id: ClientProposalsRowItemField.countKA,
-			title: 'Количество КА с продажами этих ТПР',
-			order: 5,
-			show: true,
-			width: '100%',
-			align: 'center',
-		},
-		{
-			id: ClientProposalsRowItemField.volumeOfSales,
-			title: 'Обьем продаж',
-			order: 6,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.ratingTpr,
-			title: 'Рейтинг ТПР',
-			order: 7,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.price,
-			title: 'Цена прайса',
-			order: 8,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.ytpTpr,
-			title: 'УТП ТПР',
-			order: 9,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.analoguesOfCompetitors,
-			title: 'Аналоги конкурентов',
-			order: 10,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.rim,
-			title: 'РИМ',
-			order: 11,
-			show: true,
-		},
-		{
-			id: ClientProposalsRowItemField.documents,
-			title: 'Документы',
-			order: 12,
-			show: true,
-		},
-	];
 }
+// width: '140px' и align: 'center' Покачто как заглушка, в будующем сделаю возможность центрования и настройку размера ячейки.

@@ -37,6 +37,7 @@ import { ClientProposalsDoneProductionComponent } from '@app/pages/client-propos
 import { ClientProposalsTabsCanvasComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { ComponentsModule } from '@app/components/components.module';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 @NgModule({
 	declarations: [
@@ -55,6 +56,7 @@ import { ComponentsModule } from '@app/components/components.module';
 		ClientProposalsTableVgpComponent,
 		ClientProposalsDoneProductionComponent,
 		ClientProposalsTabsCanvasComponent,
+		ClientProposalsRowItemTrComponent,
 	],
 	imports: [
 		CommonModule,
@@ -81,6 +83,7 @@ import { ComponentsModule } from '@app/components/components.module';
 		CaptionModule,
 		ComponentsModule,
 		CaptionModule,
+		TooltipModule,
 	],
 })
 export class ClientProposalsModule {}

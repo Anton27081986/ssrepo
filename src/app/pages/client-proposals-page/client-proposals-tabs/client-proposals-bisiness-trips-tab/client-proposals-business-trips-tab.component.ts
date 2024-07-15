@@ -64,7 +64,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 					day: 'numeric',
 				});
 			tableItem.task = x.goal ? x.goal.name : '-';
-			tableItem.members = x.members[0]?.name ?? '-';
+			tableItem.members = x.members?.map(c => c.name).join(', ') ?? '-';
 
 			return tableItem;
 		});

@@ -11,6 +11,10 @@ import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-t
 import { IRequestGetProposals } from '@app/core/models/client-proposails/request-get-proposals';
 import { ActivatedRoute } from '@angular/router';
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
+import {
+	IClientOffersDto,
+	IRequestGetClientOffer,
+} from '@app/core/models/client-proposails/client-offers';
 
 @Injectable()
 export class ClientProposalsFacadeService {
@@ -56,6 +60,12 @@ export class ClientProposalsFacadeService {
 
 	public getDevelopment(params: IRequestGetProposals): Observable<IResponse<IDevelopmentDto>> {
 		return this.clientProposalsApiService.getCommitteeDevelopments(params);
+	}
+
+	public getClientOffers(
+		params: IRequestGetClientOffer,
+	): Observable<IResponse<IClientOffersDto>> {
+		return this.clientProposalsApiService.getClientOffers(params);
 	}
 }
 
