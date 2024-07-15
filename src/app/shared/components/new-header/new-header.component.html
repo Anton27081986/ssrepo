@@ -1,66 +1,66 @@
-<div appFlyMenu>
+<div appFlyMenu class="main">
 	<div class="new-container" [ngClass]="statusInputSearchMobile ? 'mobile' : ''">
-				<div class="content">
-					<div class="header">
-						<div class="icon-bg mobile-burger" (click)="menuToggle($event)">
-							<ss-icon [name]="statusBurger ? 'iconClose' : 'iconBurger'"></ss-icon>
-						</div>
-						<div class="logo" [routerLink]="AppRoutes.root">
+		<div class="content">
+			<div class="header">
+				<div class="icon-bg mobile-burger" (click)="menuToggle($event)">
+					<ss-icon [name]="statusBurger ? 'iconClose' : 'iconBurger'"></ss-icon>
+				</div>
+				<div class="logo" [routerLink]="AppRoutes.root">
 					  <span>
 						  <ss-icon name="logo"></ss-icon>
 					  </span>
-						</div>
-						<div class="nav-wrap">
-							<div class="nav-left">
-								<app-main-menu [menu]="listMenu$ | async"></app-main-menu>
-							</div>
-							<div class="nav-right">
-								<div class="icon-bg burger" (click)="menuToggle($event)">
-									<ss-icon [name]="statusBurger ? 'iconClose' : 'iconBurger'"></ss-icon>
-								</div>
-
-								<div class="search-header">
-									<app-all-search *ngIf="statusInputSearch"></app-all-search>
-
-									<div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
-										<ss-icon [name]="statusInputSearch ? 'iconCloseLight' : 'iconSearch'"></ss-icon>
-									</div>
-
-									<div class="icon-bg search-mobile" (click)="openSearchMobile($event)">
-										<ss-icon [name]="statusInputSearchMobile ? 'iconCloseLight' : 'iconSearch'"></ss-icon>
-									</div>
-								</div>
-
-								<div>
-									<app-notification></app-notification>
-								</div>
-
-								<div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
-									<div class="icon-bg">
-
-										<ng-container *ngIf="(userProfile$ | async) as userProfile; else noImagePlaceholder">
-											<img src="{{ userProfile?.avatarUrl }}" alt="user" fill />
-										</ng-container>
-
-										<ng-template #noImagePlaceholder>
-											<img src="../../../../assets/images/noimage.jpg" alt="user1" height="162"
-												 width="120" />
-										</ng-template>
-
-									</div>
-									<div class="title">Мой профиль</div>
-
-									<nz-dropdown-menu #popProfile="nzDropdownMenu">
-										<app-profile-popup></app-profile-popup>
-									</nz-dropdown-menu>
-								</div>
-
-							</div>
-						</div>
-					</div>
-
-					<app-all-search *ngIf="statusInputSearchMobile" [ngClass]="statusInputSearchMobile ? 'mobile' : ''"></app-all-search >
 				</div>
+				<div class="nav-wrap">
+					<div class="nav-left">
+						<app-main-menu [menu]="listMenu$ | async"></app-main-menu>
+					</div>
+					<div class="nav-right">
+						<div class="icon-bg burger" (click)="menuToggle($event)">
+							<ss-icon [name]="statusBurger ? 'iconClose' : 'iconBurger'"></ss-icon>
+						</div>
+
+						<div class="search-header">
+							<app-all-search *ngIf="statusInputSearch"></app-all-search>
+
+							<div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
+								<ss-icon width="20" [name]="statusInputSearch ? 'iconCloseLight' : 'iconSearch'"></ss-icon>
+							</div>
+
+							<div class="icon-bg search-mobile" (click)="openSearchMobile($event)">
+								<ss-icon [name]="statusInputSearchMobile ? 'iconCloseLight' : 'iconSearch'"></ss-icon>
+							</div>
+						</div>
+
+						<div>
+							<app-notification></app-notification>
+						</div>
+
+						<div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
+							<div class="icon-bg">
+
+								<ng-container *ngIf="(userProfile$ | async) as userProfile; else noImagePlaceholder">
+									<img src="{{ userProfile?.avatarUrl }}" alt="user" fill />
+								</ng-container>
+
+								<ng-template #noImagePlaceholder>
+									<img src="../../../../assets/images/noimage.jpg" alt="user1" height="162"
+										 width="120" />
+								</ng-template>
+
+							</div>
+							<div class="title">Мой профиль</div>
+
+							<nz-dropdown-menu #popProfile="nzDropdownMenu">
+								<app-profile-popup></app-profile-popup>
+							</nz-dropdown-menu>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<app-all-search *ngIf="statusInputSearchMobile" [ngClass]="statusInputSearchMobile ? 'mobile' : ''"></app-all-search >
+		</div>
 	</div>
 
 	<div class="content">

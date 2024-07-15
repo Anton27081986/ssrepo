@@ -19,6 +19,7 @@ import { PagesModule } from '@app/pages/pages.module';
 import { ComponentsModule } from '@app/components/components.module';
 import { HeaderModule } from '@app/shared/components/header/header.module';
 import { FooterModule } from '@app/shared/components/footer/footer.module';
+import { NewHeaderModule } from '@app/shared/components/new-header/new-header.module';
 import { FullLayoutComponent } from './full-layout.component';
 
 @NgModule({
@@ -46,6 +47,7 @@ import { FullLayoutComponent } from './full-layout.component';
 		ComponentsModule,
 		HeaderModule,
 		FooterModule,
+		NewHeaderModule,
 	],
 	exports: [],
 })

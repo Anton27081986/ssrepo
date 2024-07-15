@@ -8,6 +8,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { HeaderModule } from '@app/shared/components/header/header.module';
 import { FlyMenuDirective } from '@app/shared/components/new-header/fly-menu.directive';
 import { IconModule } from '@app/shared/components/icon/icon.module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { NewHeaderComponent } from './new-header.component';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NewHeaderComponent } from './new-header.component';
 		NzIconModule,
 		HeaderModule,
 		IconModule,
+		TextModule,
 	],
 	exports: [NewHeaderComponent, FlyMenuDirective],
 })
