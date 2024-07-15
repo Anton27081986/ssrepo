@@ -1,24 +1,22 @@
-<table
-	class="ss-table-v2"
->
-	<thead class="ss-table-v2__thead">
-	<tr class="ss-table-tr">
-		<th
-			*ngFor="let col of stateColumn.visibleCols$ | async "
-			class="ss-table-th"
-		>
-			<div
-				class="ss-table-th-item"
-				[class.justify-content-center]="col.align && col.align === 'center'"
-				[title]="col.title "
+<div class="pseudo-header" #pseudoHeadEl>
+	<div class="pseudo-header__item" [ngStyle]="{ 'padding': padding }"
+		 *ngFor="let headItem of stateColumn.visibleCols$ | async">{{ headItem.title }}</div>
+</div>
+<div class="table-wrapper">
+	<table>
+		<thead>
+		<tr #headEl>
+			<th
+				*ngFor="let col of stateColumn.visibleCols$ | async "
+				class="ss-table-th"
 			>
 				{{ col.title  }}
 
-			</div>
-		</th>
-	</tr>
-	</thead>
-	<tbody class="ss-table-table__tbody">
-		<ng-content></ng-content>
-	</tbody>
-</table>
+			</th>
+		</tr>
+		</thead>
+		<tbody class="ss-table-table__tbody">
+			<ng-content></ng-content>
+		</tbody>
+	</table>
+</div>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IStoreTableBaseColumn } from '@app/core/store';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ColumnsStateService {
 	public readonly cols$: BehaviorSubject<IStoreTableBaseColumn[] | null> = new BehaviorSubject<
 		IStoreTableBaseColumn[] | null

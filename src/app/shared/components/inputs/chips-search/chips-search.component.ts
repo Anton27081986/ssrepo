@@ -145,6 +145,7 @@ export class ChipsSearchComponent {
 
 	protected onRemoveItemFromList(i: any) {
 		this.selectedItems.splice(i, 1);
+		this.getSelected.emit(this.selectedItems);
 	}
 
 	protected dontSend(event: any): any {

@@ -54,8 +54,17 @@
 	}
 
 	&__content {
-		height: 540px;
-		overflow: auto;
+	    height: 500px;
+		padding: 16px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&__description {
+		display: flex;
+		justify-content: flex-start;
 	}
 
 	&__no-content {
@@ -64,8 +73,14 @@
 		gap: 16px;
 		margin: auto;
 		align-items: center;
-		min-height: 520px;
+		height: 448px;
 		padding-top: 20px;
+		justify-content: center;
+
+		&--description {
+			color: #6D7885;
+		}
+
 	}
 }
 

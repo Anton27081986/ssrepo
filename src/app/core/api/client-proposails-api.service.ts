@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import { IClientDataDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse } from '@app/core/utils/response';
@@ -12,6 +11,10 @@ import { IContractorsDto } from '@app/core/models/client-proposails/contractors'
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { IRequestGetProposals } from '@app/core/models/client-proposails/request-get-proposals';
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
+import {
+	IClientOffersDto,
+	IRequestGetClientOffer,
+} from '@app/core/models/client-proposails/client-offers';
 
 @Injectable({
 	providedIn: 'root',
@@ -97,6 +100,29 @@ export class ClientProposalsApiService {
 					.set('clientId', params.clientId)
 					.set('Limit', params.limit)
 					.set('Offset', params.offset),
+			},
+		);
+	}
+
+	public getClientOffers(
+		params: IRequestGetClientOffer,
+	): Observable<IResponse<IClientOffersDto>> {
+		let httpParams = new HttpParams();
+
+		httpParams = httpParams.set('clientId', params.clientId);
+
+		params.productionIds.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('ProductionIds', id);
+			} else {
+				httpParams = httpParams.append('ProductionIds', id);
+			}
+		});
+
+		return this.http.get<IResponse<IClientOffersDto>>(
+			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
+			{
+				params: httpParams,
 			},
 		);
 	}

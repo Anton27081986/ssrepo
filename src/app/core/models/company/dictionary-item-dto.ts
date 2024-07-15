@@ -17,7 +17,7 @@ export interface IDictionaryItemDto {
 	/**
 	 * Айди элемента
 	 */
-	id?: number;
+	id: number;
 	/**
 	 * Название
 	 */

@@ -839,4 +839,11 @@ export class AppIcons {
 		'<path d="M26.9997 14.3999V19.9709C26.9997 21.3659 25.8657 22.4999 24.4707 22.4999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'<path d="M26.9996 14.4H24.2996C22.2746 14.4 21.5996 13.725 21.5996 11.7V9L26.9996 14.4Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
+
+	public static search =
+		'<svg width="45" height="44" viewBox="0 0 45 44" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M0.5 12C0.5 5.37258 5.87258 0 12.5 0H32.5C39.1274 0 44.5 5.37258 44.5 12V32C44.5 38.6274 39.1274 44 32.5 44H12.5C5.87258 44 0.5 38.6274 0.5 32V12Z" fill="#F8FAFF"/>' +
+		'<circle cx="20.9778" cy="20.4778" r="7.72785" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M27.0703 26.5713L31.7492 31.2489" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
 }

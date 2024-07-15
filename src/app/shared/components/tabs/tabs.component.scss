@@ -52,6 +52,10 @@
 	}
 
 	::ng-deep .selected p {
-		color: $main;
+		color: $main!important;
+	}
+
+	:host-context(.dark) .tabs {
+		background-color: $dark-island!important;
 	}
 }

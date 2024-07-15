@@ -4,6 +4,7 @@ import {
 	NgClass,
 	NgForOf,
 	NgIf,
+	NgStyle,
 	NgSwitch,
 	NgSwitchCase,
 	NgSwitchDefault,
@@ -29,6 +30,7 @@ import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/s
 		NgClass,
 		AsyncPipe,
 		ScrollableBlockModule,
+		NgStyle,
 	],
 })
 export class TableV2Module {}
