@@ -9,7 +9,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let clientPropTovGroup of item.clientPropTovGroups">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="clientPropTovGroup">
 								<div class="hc-table-td__content">{{ clientPropTovGroup.tovGroupName }}</div>
 							</div>
 						</ng-container>
@@ -19,7 +19,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let clientPropProduction of clientPropProductionGroup">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="clientPropProduction">
 								<div class="hc-table-td__content">{{ clientPropProduction.productionGroupName }}</div>
 							</div>
 						</ng-container>
@@ -30,7 +30,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let clientPropNewProduct of clientPropNewProducts">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="clientPropNewProduct">
 								<div class="hc-table-td__content">{{ clientPropNewProduct.newProductName }}</div>
 							</div>
 						</ng-container>
@@ -40,7 +40,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let saleClientCount of saleClientsCount">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="saleClientCount">
 								<div class="hc-table-td__content">{{ saleClientCount }}</div>
 							</div>
 						</ng-container>
@@ -50,7 +50,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let saleWeight of salesWeight">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="saleWeight">
 								<div class="hc-table-td__content">{{ saleWeight }}</div>
 							</div>
 						</ng-container>
@@ -60,7 +60,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let rating of ratings">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="rating">
 								<div class="hc-table-td__content">{{ rating }}</div>
 							</div>
 						</ng-container>
@@ -70,7 +70,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let price of prices">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="price">
 								<div [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT" class="hc-table-td__content">
 									{{ price.price }}
 								</div>
@@ -82,7 +82,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let advantageTpr of advantagesTpr">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="advantageTpr">
 								<div class="hc-table-td__content">{{ advantageTpr.name }}</div>
 							</div>
 						</ng-container>
@@ -92,7 +92,7 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let rim of rims">
-							<div class="hc-table-td__nesting">
+							<div class="hc-table-td__nesting" *ngIf="rim">
 								<div class="hc-table-td__content">{{ rim.name }}</div>
 							</div>
 						</ng-container>
@@ -103,7 +103,7 @@
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let document of documents">
 							<div class="hc-table-td__nesting">
-								<div class="hc-table-td__content">{{ document.name }}</div>
+								<div class="hc-table-td__content" *ngIf="document">{{ document.name }}</div>
 							</div>
 						</ng-container>
 					</div>
