@@ -168,10 +168,18 @@
 
 	tr {
 		td {
-			color: $island;
+			color: $island !important;
 
 			a {
-				color: $island;
+				color: $island !important;
+			}
+		}
+
+		.highlight {
+			color: $dark-island !important;
+
+			a {
+				color: $dark-island !important;
 			}
 		}
 	}
