@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
 import { ProfileService } from '@app/pages/profile/profile.service';
@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 	public constructor(
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
+		private readonly changeDetector: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit(): void {
@@ -25,6 +26,7 @@ export class ProfileComponent implements OnInit {
 			.pipe(
 				tap(value => {
 					this.switchValue = value.isDarkTheme;
+					this.changeDetector.detectChanges();
 				}),
 				untilDestroyed(this),
 			)
