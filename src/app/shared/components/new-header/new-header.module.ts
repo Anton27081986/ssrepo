@@ -9,6 +9,7 @@ import { HeaderModule } from '@app/shared/components/header/header.module';
 import { FlyMenuDirective } from '@app/shared/components/new-header/fly-menu.directive';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
 import { NewHeaderComponent } from './new-header.component';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NewHeaderComponent } from './new-header.component';
 		HeaderModule,
 		IconModule,
 		TextModule,
+		AvatarModule,
 	],
 	exports: [NewHeaderComponent, FlyMenuDirective],
 })

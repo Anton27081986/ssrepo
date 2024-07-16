@@ -38,14 +38,9 @@
 						<div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
 							<div class="icon-bg">
 
-								<ng-container *ngIf="(userProfile$ | async) as userProfile; else noImagePlaceholder">
-									<img src="{{ userProfile?.avatarUrl }}" alt="user" fill />
+								<ng-container *ngIf="(userProfile$ | async) as userProfile;">
+									<ss-avatar [src]="userProfile?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
 								</ng-container>
-
-								<ng-template #noImagePlaceholder>
-									<img src="../../../../assets/images/noimage.jpg" alt="user1" height="162"
-										 width="120" />
-								</ng-template>
 
 							</div>
 							<div class="title">Мой профиль</div>
