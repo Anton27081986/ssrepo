@@ -7,7 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AvatarComponent implements OnInit {
 	@Input() public src!: string;
-	@Input() public fit!: string;
 	@Input() public isSquare = true;
 	@Input() public size: 'xs' | 's' | 'm' | 'l' = 'xs';
 
