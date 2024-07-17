@@ -3,8 +3,9 @@
 		<td class="hc-table-td">
 			<ng-container [ngSwitch]="col.id">
 				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
-					<div class="hc-table-td__content">{{ item.productionName }}</div>
+								<div class="hc-table-td__content">{{ item.productionName }}</div>
 				</ng-container>
+
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
 					<div class="hc-table-td__canvas">
@@ -71,7 +72,8 @@
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let price of prices">
 							<div class="hc-table-td__nesting" *ngIf="price">
-								<div [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT" class="hc-table-td__content">
+								<div [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
+									 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content">
 									{{ price.price }}
 								</div>
 							</div>
@@ -91,9 +93,10 @@
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
 					<div class="hc-table-td__canvas">
-						<ng-container *ngFor="let rim of rims">
-							<div class="hc-table-td__nesting" *ngIf="rim">
-								<div class="hc-table-td__content">{{ rim.name }}</div>
+						<ng-container *ngFor="let rim of rims$ | async">
+							<div class="hc-table-td__file-form">
+								<input type="checkbox" [(ngModel)]="rim.checked" (change)="onToggle()"/>
+								<a href="{{ rim.url }}" target="_blank">{{ rim.name }}</a>
 							</div>
 						</ng-container>
 					</div>
@@ -101,9 +104,10 @@
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.documents">
 					<div class="hc-table-td__canvas">
-						<ng-container *ngFor="let document of documents">
-							<div class="hc-table-td__nesting">
-								<div class="hc-table-td__content" *ngIf="document">{{ document.name }}</div>
+						<ng-container *ngFor="let document of documents$ | async">
+							<div class="hc-table-td__file-form">
+								<input type="checkbox" [(ngModel)]="document.checked" (change)="onToggle()"/>
+								<a href="{{ document.url }}" target="_blank">{{ document.name }}</a>
 							</div>
 						</ng-container>
 					</div>

@@ -6,7 +6,7 @@
 			[footerTemplateRef]="footer">
 		</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a *ngIf="samples.linkToModule; else text" class="app-client-tpr-samples-tab__link" href="{{ samples.linkToModule }}">Образцы</a>
+			<a *ngIf="samples.linkToModule; else text" class="app-client-tpr-samples-tab__link" href="{{ samples.linkToModule }}" target="_blank">Образцы</a>
 			<ng-template #text>
 				<ss-text size="1">Образцы</ss-text>
 			</ng-template>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { AccordionModule } from '@app/shared/components/accordion/accordion.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from '@app/shared/components/table/table.module';
 import { TabsModule } from '@app/shared/components/tabs/tabs.module';
 import { CardModule } from '@app/shared/components/card/card.module';
@@ -38,6 +38,9 @@ import { ClientProposalsTabsCanvasComponent } from '@app/pages/client-proposals-
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { ComponentsModule } from '@app/components/components.module';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import { ClipboardModule } from '@angular/cdk/clipboard';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { InputModule } from '@app/shared/components/inputs/input/input.module';
 
 @NgModule({
 	declarations: [
@@ -84,6 +87,10 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 		ComponentsModule,
 		CaptionModule,
 		TooltipModule,
+		FormsModule,
+		ClipboardModule,
+		LoaderModule,
+		InputModule,
 	],
 })
 export class ClientProposalsModule {}

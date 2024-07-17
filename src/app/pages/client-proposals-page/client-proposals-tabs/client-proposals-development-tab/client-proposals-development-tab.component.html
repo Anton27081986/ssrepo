@@ -8,7 +8,7 @@
 		</app-client-proposals-tabs-canvas>
 
 		<ng-template #header>
-			<a *ngIf="developments.linkToModule; else text" class="client-proposals-development-tab__link" href="{{ developments.linkToModule }}">Разработки АК</a>
+			<a *ngIf="developments.linkToModule; else text" class="client-proposals-development-tab__link" href="{{ developments.linkToModule }}" target="_blank">Разработки АК</a>
 			<ng-template #text>
 				<ss-text size="1">Разработки АК</ss-text>
 			</ng-template>

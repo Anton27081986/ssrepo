@@ -13,8 +13,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 import {
 	IClientOffersDto,
+	IFilesProposals,
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
+import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 
 @Injectable()
 export class ClientProposalsFacadeService {
@@ -66,6 +68,10 @@ export class ClientProposalsFacadeService {
 		params: IRequestGetClientOffer,
 	): Observable<IResponse<IClientOffersDto>> {
 		return this.clientProposalsApiService.getClientOffers(params);
+	}
+
+	public saveInCloud(files: IFilesProposals[]): Observable<SaveInCloud> {
+		return this.clientProposalsApiService.saveInCloud(files);
 	}
 }
 

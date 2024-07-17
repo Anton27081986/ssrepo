@@ -6,7 +6,7 @@
 			[footerTemplateRef]="footer">
 		</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a *ngIf="contractors.linkToModule; else text" class="app-client-tpr-contractors-tab__link" href="{{ contractors.linkToModule }}">Состав контрагентов</a>
+			<a *ngIf="contractors.linkToModule; else text" class="app-client-tpr-contractors-tab__link" href="{{ contractors.linkToModule }}" target="_blank">Состав контрагентов</a>
 			<ng-template #text>
 				<ss-text size="1">Состав контрагентов</ss-text>
 			</ng-template>
