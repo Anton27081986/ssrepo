@@ -131,8 +131,8 @@ app-mobile-menu {
 
 		.avatar-user {
 			::ng-deep .avatar {
-				width: 48px;
-				height: 48px;
+				width: 48px!important;
+				height: 48px!important;
 				background-position-y: 6px!important;
 			}
 		}
