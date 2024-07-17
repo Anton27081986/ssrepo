@@ -13,8 +13,20 @@ import { IRequestGetProposals } from '@app/core/models/client-proposails/request
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 import {
 	IClientOffersDto,
+	IFilesProposals,
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
+import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
+
+export interface IFile {
+	id: number;
+	type: number;
+	url: string;
+}
+
+export interface IShareFile {
+	files: IFile[];
+}
 
 @Injectable({
 	providedIn: 'root',
@@ -125,5 +137,19 @@ export class ClientProposalsApiService {
 				params: httpParams,
 			},
 		);
+	}
+
+	public saveInCloud(files: IFilesProposals[]): Observable<SaveInCloud> {
+		const request: IFile[] = files.map(file => {
+			return {
+				id: file.id,
+				type: file.type,
+				url: file.url,
+			};
+		});
+
+		const dataRequest: IShareFile = { files: request };
+
+		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
 	}
 }

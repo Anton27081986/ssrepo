@@ -35,4 +35,10 @@
 		font-weight: 400;
 		line-height: 11px;
 	}
+
+	&__file-form {
+		display: flex;
+		flex-direction: row;
+		gap: 5px;
+	}
 }

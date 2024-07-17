@@ -1,6 +1,7 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
 	<input type="text"
+		   [attr.value]="value"
    	[placeholder]="placeholder"
    	[value]="selectedItem?.name || ''"
 	[disabled]="disabled"

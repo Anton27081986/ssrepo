@@ -129,9 +129,10 @@ app-mobile-menu {
 		flex: none;
 		border-radius: 8px;
 
-		img {
-			width: 44px;
-			padding-top: 17px;
+		.avatar-user {
+			::ng-deep .avatar {
+				background-position-y: 8px!important;
+			}
 		}
 	}
 
