@@ -20,4 +20,5 @@ export interface IFriendAccountDto {
 	email?: string | null;
 	department?: string | null;
 	position?: string | null;
+	equType?: string | null;
 }

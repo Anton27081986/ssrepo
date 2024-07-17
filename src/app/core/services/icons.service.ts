@@ -60,5 +60,15 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:theme', AppIcons.theme);
 		this.nzIconService.addIconLiteral('ss:closeFill', AppIcons.closeFill);
 		this.nzIconService.addIconLiteral('ss:arrowRightH', AppIcons.arrowRightH);
+		this.nzIconService.addIconLiteral('ss:oneConnectIn', AppIcons.oneConnectIn);
+		this.nzIconService.addIconLiteral('ss:oneConnectOut', AppIcons.oneConnectOut);
+		this.nzIconService.addIconLiteral('ss:twoWayConnect', AppIcons.twoWayConnect);
+		this.nzIconService.addIconLiteral('ss:oneConnectInLight', AppIcons.oneConnectInLight);
+		this.nzIconService.addIconLiteral('ss:oneConnectOutLight', AppIcons.oneConnectOutLight);
+		this.nzIconService.addIconLiteral('ss:twoWayConnectLight', AppIcons.twoWayConnectLight);
+		this.nzIconService.addIconLiteral('ss:accept', AppIcons.accept);
+		this.nzIconService.addIconLiteral('ss:cancel', AppIcons.cancel);
+		this.nzIconService.addIconLiteral('ss:filter', AppIcons.filter);
+		this.nzIconService.addIconLiteral('ss:logout', AppIcons.logout);
 	}
 }

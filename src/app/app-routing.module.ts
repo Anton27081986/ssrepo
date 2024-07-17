@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
-import { MainComponent } from './shared/layouts/main/main.component';
-import { WrapperComponent } from './shared/layouts/wrapper/wrapper.component';
+import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
+import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
+import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
+import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
+import { PermissionsGuard } from '@app/core/guards/permissions.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
 	{
 		path: '',
-		component: MainComponent,
+		component: FullLayoutComponent,
 		canActivate: [AuthGuard],
 		children: [
 			{
@@ -16,20 +19,8 @@ const routes: Routes = [
 				loadChildren: () => import('./pages/start/start.module').then(m => m.StartModule),
 			},
 			{
-				path: 'clients-list',
-				loadChildren: () =>
-					import('./pages/clients-list/clients-list.module').then(
-						m => m.ClientsListModule,
-					),
-			},
-			{
-				path: 'client-card',
-				loadChildren: () =>
-					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
-			},
-			{
 				path: '',
-				component: WrapperComponent,
+				component: EmptyLayoutComponent,
 				children: [
 					{
 						path: 'partners',
@@ -48,8 +39,71 @@ const routes: Routes = [
 		],
 	},
 	{
+		path: '',
+		component: WithoutFooterLayoutComponent,
+		canActivate: [AuthGuard],
+		children: [
+			{
+				path: 'clients-list',
+				loadChildren: () =>
+					import('@app/pages/clients-list-page/clients-list-page.module').then(
+						m => m.ClientsListPageModule,
+					),
+			},
+			{
+				path: 'client-card',
+				loadChildren: () =>
+					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
+			},
+			{
+				path: 'client-request-samples',
+				loadChildren: () =>
+					import('@app/pages/samples-page/samples-page.module').then(
+						m => m.SamplesPageModule,
+					),
+			},
+			{
+				path: 'invite',
+				loadChildren: () =>
+					import('./pages/invite/invite.module').then(m => m.InviteModule),
+			},
+		],
+	},
+	{
+		path: '',
+		component: NewLayoutComponent,
+		canActivate: [AuthGuard, PermissionsGuard],
+		children: [
+			{
+				path: 'client-proposals-page',
+				loadChildren: () =>
+					import('@app/pages/client-proposals-page/client-proposals.module').then(
+						m => m.ClientProposalsModule,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: NewLayoutComponent,
+		canActivate: [AuthGuard],
+		children: [
+			{
+				path: 'not-permission',
+				loadChildren: () =>
+					import('./pages/not-permission-page/not-permission-page.module').then(
+						m => m.NotPermissionPageModule,
+					),
+			},
+		],
+	},
+	{
 		path: 'auth',
 		loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
+	},
+	{
+		path: 'sandbox',
+		loadChildren: () => import('./pages/sandbox/sandbox.module').then(m => m.SandboxModule),
 	},
 	{ path: '**', redirectTo: '' },
 ];

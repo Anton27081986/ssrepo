@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Optional, Self } from '@angular/core';
+import { Component, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -6,17 +6,17 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 	templateUrl: './password.component.html',
 	styleUrls: ['./password.component.scss'],
 })
-export class PasswordComponent implements OnInit, ControlValueAccessor {
-	@Input() size: 'large' | 'medium' = 'medium';
-	@Input() disabled: boolean = false;
-	@Input() label: string | undefined;
-	@Input() placeholder: string = '';
-	@Input() error: string | undefined;
+export class PasswordComponent implements ControlValueAccessor {
+	@Input() public size: 'large' | 'medium' = 'medium';
+	@Input() public disabled: boolean = false;
+	@Input() public label: string | undefined;
+	@Input() public placeholder: string = '';
+	@Input() public error: string | undefined;
 
-	type: 'text' | 'password' = 'password';
-	value: any = '';
+	public type: 'text' | 'password' = 'password';
+	public value: any = '';
 
-	constructor(
+	public constructor(
 		// Retrieve the dependency only from the local injector,
 		// not from parent or ancestors.
 		@Self()
@@ -30,26 +30,24 @@ export class PasswordComponent implements OnInit, ControlValueAccessor {
 		}
 	}
 
-	ngOnInit() {}
-
 	/**
 	 * Write form value to the DOM element (model => view)
 	 */
-	writeValue(value: any): void {
+	public writeValue(value: any): void {
 		this.value = value;
 	}
 
 	/**
 	 * Write form disabled state to the DOM element (model => view)
 	 */
-	setDisabledState(isDisabled: boolean): void {
+	public setDisabledState(isDisabled: boolean): void {
 		this.disabled = isDisabled;
 	}
 
 	/**
 	 * Update form when DOM element value changes (view => model)
 	 */
-	registerOnChange(fn: any): void {
+	public registerOnChange(fn: any): void {
 		// Store the provided function as an internal method.
 		this.onChange = fn;
 	}
@@ -57,15 +55,18 @@ export class PasswordComponent implements OnInit, ControlValueAccessor {
 	/**
 	 * Update form when DOM element is blurred (view => model)
 	 */
-	registerOnTouched(fn: any): void {
+	public registerOnTouched(fn: any): void {
 		// Store the provided function as an internal method.
 		this.onTouched = fn;
 	}
 
-	protected onChange(value: string) {}
+	protected onChange(value: string) {
+		console.warn(value);
+	}
+
 	protected onTouched() {}
 
-	onChangeVisibility() {
+	public onChangeVisibility() {
 		this.type = this.type === 'text' ? 'password' : 'text';
 	}
 }

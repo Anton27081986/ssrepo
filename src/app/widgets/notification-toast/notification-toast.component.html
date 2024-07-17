@@ -1,0 +1,8 @@
+<div class="toast-list" *ngIf="(toasts$ | async)?.length">
+	<app-notice
+		*ngFor="let toast of (toasts$ | async)"
+		[type]="toast.type" [isLabeled]="true"
+		[title]="toast.message"
+		(close)="deleteToast(toast.id)">
+	</app-notice>
+</div>

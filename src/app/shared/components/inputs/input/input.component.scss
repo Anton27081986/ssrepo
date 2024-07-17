@@ -3,7 +3,7 @@
 input {
 	display: flex;
 	align-items: center;
-	padding: 0 20px;
+	padding: 0 44px 0 20px;
 	width: 100%;
 	border-radius: 8px;
 	border: 1px solid $island-outline;
@@ -14,6 +14,11 @@ input {
 	line-height: 17px;
 	letter-spacing: -0.01em;
 }
+
+input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+	 -webkit-appearance: none;
+ }
 
 .input {
 	position: relative;
@@ -52,6 +57,10 @@ input.error {
 	border: 1px solid $error;
 	background-color: $lite-error;
 }
+input.error:focus {
+	border: 1px solid $additional-outline;
+	background-color: $island;
+}
 
 ss-caption {
 	color: $lite-text;
@@ -59,4 +68,8 @@ ss-caption {
 
 ss-caption.error {
 	color: $error;
+}
+
+:host-context(.dark) input {
+	background-color: $dark-island;
 }

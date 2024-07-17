@@ -1,0 +1,101 @@
+@use '../../../../styles/colors' as *;
+
+:host {
+	flex-grow: 1;
+
+	ss-card {
+		ss-search-input {
+			color: $text;
+		}
+
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+
+		.header {
+			width: 100%;
+			height: 52px;
+			padding: 16px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid $island-outline;
+		}
+
+		.panel {
+			padding: 10px 20px;
+			display: flex;
+			border-bottom: 1px solid #E4E8EA;
+
+			.date {
+				width: 230px;
+			}
+			.search {
+				width: 240px;
+				margin-left: 12px;
+			}
+		}
+
+		.card-list {
+			display: flex;
+			gap: 16px;
+			padding: 20px;
+			flex-wrap: wrap;
+
+			.contacts {
+				display: flex;
+				flex-direction: column;
+			}
+
+			ss-card {
+				width: 308px;
+				padding: 12px;
+				border: 1px solid $island-outline;
+
+				ss-tag {
+					margin-top: 6px;
+
+					::ng-deep p {
+						display: inline;
+						padding: 4px 8px;
+						font-size: 12px;
+						background-color: #CDE4FF;
+						border: 1px solid #B4D2FF;
+						font-weight: 600;
+					}
+				}
+
+				ss-text {
+					::ng-deep p::first-letter {
+						text-transform: uppercase!important;
+					}
+				}
+
+				ss-text:nth-child(1) {
+					::ng-deep p {
+						margin-top: -2px;
+					}
+				}
+
+				ss-text:nth-child(2) {
+					::ng-deep p {
+						margin-top: 2px;
+					}
+				}
+
+				ss-text:nth-child(3) {
+					::ng-deep p {
+						margin-top: 2px;
+					}
+				}
+			}
+		}
+
+		.pagination {
+			margin-top: 0;
+			padding: 16px 20px;
+			display: flex;
+			justify-content: flex-end;
+		}
+	}
+}

@@ -1,0 +1,23 @@
+<ss-caption size="1">{{ label }}</ss-caption>
+<div class="input">
+	<input type="text"
+		   [attr.value]="value"
+   	[placeholder]="placeholder"
+   	[value]="selectedItem?.name || ''"
+	[disabled]="disabled"
+	(input)="onChange($any($event.target).value)"
+	class="{{ error ? size + ' error' : size }}"
+	#input
+	/>
+	<div class="search-result" *ngIf="found.length">
+		<div class="separator"></div>
+		<ss-caption class="search-result-item" *ngFor="let item of found"
+		(click)="
+			clear ? input.value = '' : input.value = item.name!;
+			found = [];
+			select.emit(item);
+		">{{ item.name }}</ss-caption>
+	</div>
+</div>
+<ss-caption class="error">{{ error }}</ss-caption>
+<div *ngIf="found.length" class="overflow" (click)="found = []"></div>

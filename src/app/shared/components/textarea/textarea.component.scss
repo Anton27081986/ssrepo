@@ -1,0 +1,75 @@
+@use '../../../../styles/colors' as *;
+
+textarea {
+	display: flex;
+	align-items: center;
+	padding: 8px 12px 0 12px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+}
+
+.textarea {
+	position: relative;
+
+	ss-icon {
+		position: absolute;
+		right: 22px;
+		top: 16px;
+		cursor: pointer;
+	}
+}
+
+textarea.large ~ ss-icon {
+	top: 20px;
+}
+
+textarea::placeholder {
+	color: $lite-text;
+}
+
+textarea:focus {
+	border-color: $additional-outline;
+}
+
+textarea::-webkit-resizer {
+	border: none;
+}
+textarea {
+	resize: none;
+}
+
+textarea.medium {
+	font-weight: 400;
+}
+
+textarea.large {
+	font-weight: 600;
+}
+
+textarea.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+textarea.error:focus {
+	border: 1px solid $additional-outline;
+	background-color: $island;
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+ss-caption.error {
+	color: $error;
+}
+
+:host-context(.dark) textarea {
+	background-color: $dark-island;
+}

@@ -1,0 +1,135 @@
+@use '../../../styles/colors' as *;
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.table-with-filters {
+	display: flex;
+	height: calc(100vh - 226px);
+	min-width: 1280px;
+	position: relative;
+	gap: 16px;
+
+	.table {
+		flex-grow: 1;
+		border-radius: 16px;
+		max-height: calc(100% - 56px);
+		overflow-y: hidden;
+	}
+
+	.filters {
+		width: 300px;
+		flex-shrink: 0;
+	}
+
+	.pagination {
+		justify-content: flex-end;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
+
+	hr {
+		margin-right: -25px;
+		margin-left: -25px;
+		margin-bottom: 5px;
+	}
+
+	.ant-card-bordered {
+		border-radius: 16px;
+	}
+}
+
+
+.container {
+	padding-top: 20px;
+	display: flex;
+	flex-direction: column;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.title {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+
+			.subtitle {
+				opacity: 70%;
+			}
+		}
+	}
+
+	.pagination {
+		margin-top: 20px;
+	}
+
+	.mobile {
+		display: none;
+
+		ss-card {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			padding: 20px;
+		}
+
+		.separator {
+			border-bottom: 1px solid $island-outline;
+			width: 100%;
+			height: 13px;
+		}
+
+		.mobile-item {
+			display: flex;
+			flex-direction: column;
+			gap: 7px;
+		}
+
+		.mobile-item:last-child .separator{
+			display: none;
+		}
+
+		.mobile-info {
+			display: flex;
+			justify-content: space-between;
+			opacity: 70%;
+			flex-direction: column;
+		}
+	}
+}
+
+
+@media screen and (max-width: 760px) {
+	.container {
+		gap: 20px;
+
+		.header {
+			flex-direction: column;
+			gap: 20px;
+
+			.title {
+				align-items: center;
+				text-align: center;
+			}
+
+			ss-button {
+				width: 100%;
+			}
+		}
+
+		.desktop {
+			display: none;
+		}
+
+		.mobile {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}

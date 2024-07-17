@@ -10,7 +10,9 @@ import { map, Subject, tap, zip } from 'rxjs';
 import { NzSelectComponent } from 'ng-zorro-antd/select';
 import { WinsApiService } from '@app/core/api/wins-api.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-add-victory-modal',
 	templateUrl: './add-victory-modal.component.html',
@@ -18,7 +20,7 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddVictoryModalComponent implements OnInit {
-	@ViewChild(NzSelectComponent, { static: true }) selectNode!: NzSelectComponent;
+	@ViewChild(NzSelectComponent, { static: true }) public selectNode!: NzSelectComponent;
 
 	private readonly modelChangedColleague: Subject<string> = new Subject<string>();
 	private readonly modelChangedTpr: Subject<string> = new Subject<string>();
@@ -68,10 +70,12 @@ export class AddVictoryModalComponent implements OnInit {
 								tap(data => {
 									this.listColleague = data;
 								}),
+								untilDestroyed(this),
 							)
 							.subscribe();
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 
@@ -88,10 +92,12 @@ export class AddVictoryModalComponent implements OnInit {
 								tap(data => {
 									this.listTPR = data;
 								}),
+								untilDestroyed(this),
 							)
 							.subscribe();
 					}
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}
@@ -117,13 +123,13 @@ export class AddVictoryModalComponent implements OnInit {
 
 					this.isSended = false;
 				}),
+				untilDestroyed(this),
 			)
-			.subscribe(
-				() => {},
-				() => {
+			.subscribe({
+				error: () => {
 					this.errorComment = true;
 				},
-			);
+			});
 	}
 
 	public searchUsers($event: any) {
@@ -147,6 +153,7 @@ export class AddVictoryModalComponent implements OnInit {
 					}); // добавление тега
 					this.cd.markForCheck();
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}
@@ -164,6 +171,7 @@ export class AddVictoryModalComponent implements OnInit {
 
 					this.cd.markForCheck();
 				}),
+				untilDestroyed(this),
 			)
 			.subscribe();
 	}

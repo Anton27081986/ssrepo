@@ -17,9 +17,13 @@ export interface IDictionaryItemDto {
 	/**
 	 * Айди элемента
 	 */
-	id?: number;
+	id: number;
 	/**
 	 * Название
 	 */
 	name?: string | null;
+	/**
+	 * link
+	 */
+	linkToDetail?: string | null;
 }

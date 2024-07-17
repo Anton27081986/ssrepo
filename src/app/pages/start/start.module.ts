@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ComponentsModule } from '@app/components/components.module';
-import { MainModule } from '@app/shared/layouts/main/main.module';
+import { FullLayoutModule } from '@app/shared/layouts/full-layout/full-layout.module';
 import { SliderComponent } from '@app/components/slider/slider.component';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
@@ -15,7 +15,7 @@ import { StartRoutingModule } from './start-routing.module';
 	imports: [
 		CommonModule,
 		StartRoutingModule,
-		MainModule,
+		FullLayoutModule,
 		NzGridModule,
 		NzCarouselModule,
 		NgOptimizedImage,

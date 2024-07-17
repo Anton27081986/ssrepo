@@ -11,15 +11,14 @@
         <span class="title">Изменить пароль</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
-<!--      [routerLink]="'manager-profiles'"-->
-      <div class="item" *ngIf="false">
+      <div class="item" [routerLink]="'friendly-accounts'">
         <span class="icon left-icon" nz-icon [nzType]="'ss:profile'"></span>
         <span class="title">Управление другими профилями</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>
       </div>
     </div>
     <div class="group">
-      <div class="item" [routerLink]="'my-menu'" *ngIf="false">
+      <div class="item" [routerLink]="'my-menu'" *ngIf="true">
         <span class="icon left-icon" nz-icon [nzType]="'ss:star'"></span>
         <span class="title">Настроить пункты моего меню</span>
         <span class="icon right-icon" nz-icon [nzType]="'ss:arrowRight'"></span>

@@ -1,0 +1,314 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
+@use '../../../../styles/colors' as *;
+
+:host {
+	.main {
+		background: $island;
+		border-bottom: 1px solid $island-outline;
+		border-radius: 0 0 8px 8px;
+		padding-bottom: 4px;
+	}
+}
+
+@include ng-deep {
+	.fly-header {
+		position: fixed;
+		align-items: center;
+		justify-content: center;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 1001;
+	}
+
+	.header {
+		padding-top: 4px;
+		display: flex;
+		justify-content: space-between;
+
+		.nav-wrap {
+			svg {
+				fill: $island;
+				fill-opacity: 1;
+
+				path {
+					stroke: $main;
+				}
+			}
+		}
+
+		.search-mobile {
+			svg {
+				stroke: $white;
+			}
+		}
+
+		.burger {
+			display: none;
+		}
+	}
+}
+
+app-mobile-menu {
+	display: none;
+}
+
+.nav-wrap {
+	display: flex;
+	justify-content: space-between;
+}
+
+.nav-right ul {
+	display: flex;
+	list-style-type: none;
+}
+
+.nav-right ul > li {
+	padding-left: 24px;
+}
+
+.nav-right {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: 15px;
+
+	.search-header {
+		position: relative;
+		margin-left: 0;
+
+		.icon-bg {
+			width: 36px;
+			height: 36px;
+			border-radius: 8px;
+			background-color: white;
+		}
+
+		.small {
+			margin-top: 2px;
+			width: 32px;
+			height: 32px;
+			margin-right: 5px;
+			border-radius: 8px;
+			font-size: 12px;
+		}
+	}
+
+	div {
+		margin-left: 12px;
+	}
+}
+
+.menu {
+	display: none;
+}
+
+.close {
+	display: none;
+}
+
+.open {
+	display: block;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+	height: 36px;
+	border-radius: 8px;
+	border: 1px $island-outline solid;
+	font-family: Inter, serif;
+	cursor: pointer;
+
+	.icon-bg {
+		margin-left: 0;
+		overflow: hidden;
+		width: 36px;
+		height: 36px;
+		flex: none;
+		border-radius: 8px;
+
+		.avatar-user {
+			::ng-deep .avatar {
+				width: 48px!important;
+				height: 48px!important;
+				background-position-y: 6px!important;
+			}
+		}
+	}
+
+	.title {
+		padding-right: 14px;
+		font-size: 12px;
+	}
+}
+
+.logo {
+	display: flex;
+	cursor: pointer;
+
+	span {
+		display: flex;
+		align-items: center;
+	}
+}
+
+.search {
+	position: relative;
+	z-index: 3;
+}
+
+.search-mobile {
+	display: none;
+}
+
+app-all-search.mobile {
+	opacity: 0;
+	z-index: -1;
+}
+
+.mobile-burger {
+	display: none;
+}
+
+.new-container {
+	margin: 0 6.25%;
+}
+
+@media screen and (min-width: 1325px) {
+	.open {
+		display: none;
+	}
+
+	.nav-wrap {
+		flex: auto;
+	}
+}
+
+@media screen and (max-width: 1326px) {
+	.nav-left {
+		display: none;
+	}
+
+	.profile {
+		.title {
+			display: none;
+		}
+	}
+
+	.header {
+		.burger {
+			display: flex;
+
+			.anticon {
+				fill-opacity: 1;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 801px) {
+	.nav-left {
+		display: none;
+	}
+
+	.profile {
+		.title {
+			display: none;
+		}
+	}
+
+	.header {
+		.burger {
+			display: flex;
+		}
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.logo {
+		flex: auto;
+		display: flex;
+		justify-content: center;
+	}
+
+	.mobile-burger {
+		display: flex;
+
+		.anticon {
+			fill-opacity: 1;
+		}
+	}
+
+	.header .burger {
+		display: none;
+	}
+
+	.nav-right {
+		margin-left: 0;
+	}
+
+	.nav-right .icon-bg.remind {
+		margin-left: 0;
+	}
+}
+
+@media screen and (max-width: 545px) {
+	.search {
+		display: none;
+	}
+
+	.ant-layout-header.mobile {
+		display: block;
+		height: 160px;
+		align-items: unset;
+		padding-top: 20px;
+		width: 100%;
+	}
+
+	app-all-search {
+		position: static;
+		top: 88px;
+	}
+
+	app-all-search.mobile {
+		opacity: 1;
+	}
+}
+
+.back {
+	margin-top: 8px;
+
+	a {
+		color: $blue;
+
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.back {
+		margin-left: 50px;
+	}
+}
+
+:host-context(.dark) :host {
+	.main {
+		background-color: $dark-background!important;
+		border-bottom: 1px solid $dark-island-outline;
+	}
+
+	.ant-menu-submenu-popup > .ant-menu {
+		background-color: $dark-background!important;
+	}
+
+	.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title .without-url {
+		color: #ffffff;
+		font-size: 14px;
+		font-weight: 400;
+	}
+}
+

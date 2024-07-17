@@ -9,10 +9,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 export class VictoryService {
 	public count$ = new Subject<number>();
 
-	constructor(private readonly http: HttpClient) {}
+	public constructor(private readonly http: HttpClient) {}
 
 	/** Удаление комментария по id */
-	removeVictoryById(id: number): Observable<any> {
+	public removeVictoryById(id: number): Observable<any> {
 		return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/wins/${id}`, {
 			params: new HttpParams().set('id', id),
 		});

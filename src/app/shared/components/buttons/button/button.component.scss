@@ -13,7 +13,7 @@ button {
 	border-width: 1px;
 	border-style: solid;
 	height: 52px;
-	border-radius: 16px;
+	border-radius: 8px;
 	font-family: 'Inter', serif;
 	font-weight: 600;
 	cursor: pointer;
@@ -39,7 +39,7 @@ button.medium {
 button.small {
 	height: 36px;
 	padding: 8px 13px;
-	font-size: 16px;
+	font-size: 13px;
 	line-height: 19px;
 }
 
@@ -67,13 +67,38 @@ button.tertiary {
 	color: $text;
 }
 
-button.outline {
+button.usually {
 	background-color: $island;
 	border-color: $text;
 	color: $text;
 }
 
+button.quaternary {
+	border: none;
+	background-color: transparent;
+	color: $text;
+}
+
+button.outline {
+	background-color: transparent;
+	border-color: $lite-text;
+	color: $lite-text;
+}
+
 button:disabled {
 	opacity: 50%;
 	cursor: not-allowed;
+}
+
+:host-context(.dark) button {
+	background-color: $dark-island;
+	border: 0;
+
+	::ng-deep svg {
+		stroke: $dark-text;
+
+		rect {
+			fill: $dark-text;
+		}
+	}
 }

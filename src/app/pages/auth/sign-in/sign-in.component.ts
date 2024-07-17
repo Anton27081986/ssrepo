@@ -6,8 +6,9 @@ import { first, of, tap } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
-import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-sign-in',
 	templateUrl: './sign-in.component.html',
@@ -36,14 +37,12 @@ export class SignInComponent implements OnInit {
 
 	public ngOnInit() {
 		this.loginForm = new FormGroup({
-			login: new FormControl<string>('', [
-				Validators.required, // Добавить проверки
-			]),
-			password: new FormControl<string>('', Validators.required), // Добавить проверки
+			login: new FormControl<string>('', [Validators.required]),
+			password: new FormControl<string>('', Validators.required),
 		});
 	}
 
-	getControl(name: string) {
+	public getControl(name: string) {
 		return this.loginForm.get(name) as FormControl;
 	}
 
@@ -62,8 +61,8 @@ export class SignInComponent implements OnInit {
 				first(),
 				switchMap(_ => {
 					return this.authenticationService.authImages().pipe(
-						tap(_ => console.log('authImages Ok')),
-						catchError((_: unknown) => {
+						tap(() => console.warn('authImages Ok')),
+						catchError(() => {
 							return of(0);
 						}),
 					);
@@ -75,26 +74,26 @@ export class SignInComponent implements OnInit {
 								this.themeService.setDarkTheme().then();
 							}
 						}),
-						catchError((_: unknown) => {
+						catchError(() => {
 							return of(0);
 						}),
 					);
 				}),
+				untilDestroyed(this),
 			)
-			.subscribe(
-				_ => {
+			.subscribe({
+				next: () => {
 					const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
 
 					setTimeout(() => {
 						this.router.navigateByUrl(returnUrl);
 					}, 0);
 				},
-				(err: unknown) => {
+				error: (err: unknown) => {
 					this.loading = false;
-					console.log('HTTP Error', err);
+					console.error('HTTP Error', err);
 					this.loginForm.setErrors({ unauthorized: 'Неверный логин или пароль' });
 				},
-				() => console.log('HTTP request completed.'),
-			);
+			});
 	}
 }

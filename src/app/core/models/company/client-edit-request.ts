@@ -19,14 +19,19 @@ export interface IClientEditRequest {
 	 * Название клиента
 	 */
 	name?: string | null;
-	status?: IClientStatus;
+	status?: number;
 	/**
-	 * Айди подотраслей
+	 * Категория клиента
 	 */
-	subSectorsIds?: number[] | null;
+	categoryId?: number;
 	/**
 	 * Айди региона
 	 */
 	regionId?: number;
+	saleDirectionId?: number;
+	/**
+	 * Комментарий
+	 */
+	comments?: string | null;
 }
 export namespace IClientEditRequest {}

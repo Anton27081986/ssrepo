@@ -8,7 +8,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarouselComponent {
-	customOptions: OwlOptions = {
+	public customOptions: OwlOptions = {
 		loop: true,
 		mouseDrag: false,
 		touchDrag: false,

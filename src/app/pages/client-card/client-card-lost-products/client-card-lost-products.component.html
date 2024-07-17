@@ -1,0 +1,42 @@
+<ss-card padding="0" radius="0 0 16px 16px" class="container">
+	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
+	<div class="lost-products">
+		<div class="lost-products-header">
+			<ss-headline class="lost-products-header-title" size="h6">ПКП (Потерянные клиент/продукты)</ss-headline>
+		</div>
+		<div class="lost-products-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+			<div class="lost-products-content-table">
+				<ss-table
+					[head]="[
+						{title: 'ТПР', field: 'tov'},
+						{title: 'Дата фиксации', field: 'fixationDate'},
+						{title: 'Дата отгрузки',  field: 'shipDate'},
+						{title: 'Кол-во, ед.',  field: 'quantity'},
+						{title: 'Сумма отгрузки, $', field: 'valueEff'},
+						{title: 'Заявка на продажу', field: 'requestName'},
+						]"
+					[items]="tableItems">
+				</ss-table>
+			</div>
+			<div class="lost-products-content-pagination pagination">
+				<nz-pagination
+					[nzTotal]="total"
+					[nzPageIndex]="pageIndex"
+					[nzPageSize]="pageSize"
+					(nzPageIndexChange)="nzPageIndexChange($event)"
+					(nzPageSizeChange)="pageSize = $event"
+					[nzResponsive]="true"
+					[nzHideOnSinglePage]="true">
+				</nz-pagination>
+			</div>
+		</div>
+		<div class="lost-products-content" *ngIf="tableState === TableState.Empty">
+			<ss-empty-placeholder>
+				<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+				<div class="placeholder-subtitle">
+					<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
+				</div>
+			</ss-empty-placeholder>
+		</div>
+	</div>
+</ss-card>

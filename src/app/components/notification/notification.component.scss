@@ -8,21 +8,21 @@
 .remind-dot {
     position: absolute;
     border-radius: 50%;
-    width: 18px;
-    min-width: 18px;
-    height: 18px;
+    width: 14px;
+    min-width: 14px;
+    height: 14px;
     background: #4770ff !important;
     top: -7px;
     right: -5px;
 
     span {
-        position: absolute;
-        top: -23px;
-        right: 5px;
-        color: #ffffff;
-        font-size: 12px;
-        font-family: 'Inter', serif;
-    }
+		position: absolute;
+		top: 0;
+		right: 4.1px;
+		color: #ffffff;
+		font-size: 10px;
+		font-family: "Inter", serif;
+	}
 }
 
 ::ng-deep {

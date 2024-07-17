@@ -1,0 +1,11 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.app-client-proposals-filter {
+	display: flex;
+	flex-direction: column;
+	background-color: $white;
+	padding: 12px;
+	gap: 12px;
+}

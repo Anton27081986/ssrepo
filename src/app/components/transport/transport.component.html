@@ -9,7 +9,7 @@
 								isLabeled="false"
 								type="warning"
 								title="Изменение в расписании корпоративного транспорта"
-								text="{{ 'В период с ' + (transport!.transportNotify!.dFrom | date: 'dd.MM.yyyy, hh:mm') + ' до ' + (transport!.transportNotify!.dTo | date: 'dd.MM.yyyy, hh:mm')   + ' ' + transport!.transportNotify!.note }}">
+								text="{{ 'В период с ' + (transport!.transportNotify!.dateFrom | date: 'dd.MM.yyyy, hh:mm') + ' до ' + (transport!.transportNotify!.dateTo | date: 'dd.MM.yyyy, hh:mm')   + ' ' + transport!.transportNotify!.note }}">
 		</app-notice>
 		<div class="bus-list">
 			<div *ngFor="let bus of transport!.transportList" class="bus">

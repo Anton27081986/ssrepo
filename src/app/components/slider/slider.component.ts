@@ -10,7 +10,10 @@ import { BannersApiService } from '@app/core/api/banners-api.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderComponent implements OnInit {
-	@ViewChild(NzCarouselComponent, { static: false }) myCarousel: NzCarouselComponent | undefined;
+	@ViewChild(NzCarouselComponent, { static: false }) public myCarousel:
+		| NzCarouselComponent
+		| undefined;
+
 	public banners!: Observable<any>;
 
 	public constructor(private readonly apiService: BannersApiService) {}
@@ -20,12 +23,14 @@ export class SliderComponent implements OnInit {
 	}
 
 	public next() {
-		// @ts-ignore
-		this.myCarousel.next();
+		if (this.myCarousel) {
+			this.myCarousel.next();
+		}
 	}
 
 	public prev() {
-		// @ts-ignore
-		this.myCarousel.pre();
+		if (this.myCarousel) {
+			this.myCarousel.pre();
+		}
 	}
 }

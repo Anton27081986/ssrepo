@@ -1,0 +1,41 @@
+<ss-card padding="0" radius="0 0 16px 16px">
+	<ng-container *ngIf="businessTrips$ | async as trips">
+		<app-client-proposals-tabs-canvas
+			[headerTemplateRef]="header"
+			[bodyTemplateRef]="body"
+			[footerTemplateRef]="footer">
+		</app-client-proposals-tabs-canvas>
+		<ng-template #header>
+			<a *ngIf="trips.linkToModule;else text" class="client-tpr-business-trips-tab__link" href="{{ trips.linkToModule }}" target="_blank">Командировки</a>
+			<ng-template #text>
+				<ss-text size="1">Командировки</ss-text>
+			</ng-template>
+		</ng-template>
+		<ng-template #body>
+			<ss-table
+				*ngIf="trips.total > 0;else empty"
+				[padding]="'8px'"
+				[head]="[
+					{title: 'Код', field: 'code'},
+					{title: 'Дата командировки', field: 'date'},
+					{title: 'Задачи', field: 'task'},
+					{title: 'Участники', field: 'members'}
+					]"
+				[items]="getTableItems(trips)"
+			>
+			</ss-table>
+			<ng-template #empty>
+				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+			</ng-template>
+		</ng-template>
+		<ng-template #footer>
+			<ss-pagination
+				[total]="trips.total"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="nzPageIndexChange($event)"
+			>
+			</ss-pagination>
+		</ng-template>
+	</ng-container>
+</ss-card>

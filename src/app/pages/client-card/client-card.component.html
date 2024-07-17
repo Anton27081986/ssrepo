@@ -1,0 +1,22 @@
+<div class="header">
+	<div class="header-title">
+		<ss-icon name="arrow" [routerLink]="['/clients-list']"></ss-icon>
+		<ss-headline size="h3" weight="semi-bold">{{ (client$ | async)?.name }}</ss-headline>
+		<ss-tag *ngIf="(client$ | async)?.isDeleted" type="error">Удалён</ss-tag>
+		<ss-tag *ngIf="(client$ | async)?.isArchived" type="warning">Архив</ss-tag>
+	</div>
+	<div class="header-tabs">
+		<ss-tabs [tabs]="tabs"
+		         (select)="selectTab($event)"
+		         [selectedTab]="selectedTab">
+		</ss-tabs>
+	</div>
+</div>
+<router-outlet></router-outlet>
+<div class="footer">
+	<div class="contractors">
+		<ss-client-card-contractors></ss-client-card-contractors>
+		<ss-history *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-history>
+	</div>
+	<ss-correspondence *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-correspondence>
+</div>

@@ -1,0 +1,44 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.hc-table-td {
+	border: 1px solid $border-table;
+
+	&__canvas {
+		display: flex;
+		justify-content: space-around;
+		flex-direction: column;
+	}
+
+	&__nesting {
+		border-bottom: 1px solid $border-table;
+		width: 100%;
+
+		&:last-child {
+			border: none;
+		}
+	}
+
+	&__content {
+		display: flex;
+		padding: 8px 12px;
+		align-items: center;
+		font-size: 10px;
+		font-weight: 400;
+		line-height: 11px;
+	}
+
+	&__content-nesting {
+		padding: 8px 12px;
+		font-size: 10px;
+		font-weight: 400;
+		line-height: 11px;
+	}
+
+	&__file-form {
+		display: flex;
+		flex-direction: row;
+		gap: 5px;
+	}
+}

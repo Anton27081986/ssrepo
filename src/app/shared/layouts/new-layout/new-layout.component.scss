@@ -1,0 +1,12 @@
+@use 'src/assets/scss/_variables.scss' as *;
+
+
+.content {
+	min-height: 100vh;
+	//background: $white;
+}
+
+.outlet {
+	//margin: 25px 6.25% 25px 6.25%;
+	margin: 25px 12px 25px 12px;
+}

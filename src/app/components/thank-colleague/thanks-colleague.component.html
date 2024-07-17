@@ -14,7 +14,7 @@
 					</button>
 
 					<!--        модальное окно-->
-					<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Поблагодарить коллегу" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+					<nz-modal [(nzVisible)]="isModalVisible" nzTitle="Сказать спасибо" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
 						<ng-container *nzModalContent>
 							<div>
 								<form nz-form [formGroup]="thankColleagueForm" nzLayout="vertical" class="form" (ngSubmit)="createThanksForColleague()">
@@ -184,7 +184,7 @@
 				<!--      </ng-container>-->
 			</ng-container>
 			<ng-template #loader>
-				<app-loader></app-loader>
+				<ss-loader></ss-loader>
 			</ng-template>
 		</div>
 

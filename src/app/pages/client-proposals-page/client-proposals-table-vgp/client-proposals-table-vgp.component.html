@@ -1,0 +1,89 @@
+<div class="client-proposals-table-vgp">
+	<div class="client-proposals-table-vgp__header">
+		<ss-headline class="client-proposals-table-vgp__header-title" size="h6">Предложение</ss-headline>
+	</div>
+
+	<div class="client-proposals-table-vgp__panel">
+		<div class="select-vgp">
+			<ss-caption size="2">Выберите ВГП</ss-caption>
+			<div class="client-proposals-table-vgp__input-vpg">
+				<ss-chips-search size="medium" [placeholder]="'ВГП'" (getSelected)="getSelected($event)"
+								 [searchType]="'productions'"></ss-chips-search>
+				<ss-button (click)="submit()" size="small" [type]="'primary'">Посмотреть</ss-button>
+			</div>
+		</div>
+		<div class="select-docs">
+			<ng-container *ngIf="(productionIds$ | async)?.length">
+<!--				{{ (checkListStateService.checkFiles$ | async)?.length }}-->
+				<div class="client-proposals-table-vgp__documents">
+					<div class="documents-vpg__left">
+						<ss-file-picker class="table-vpg__file-picker"></ss-file-picker>
+					</div>
+					<div class="documents-vpg__center">
+						<ss-button size="small" [type]="'primary'" (click)="saveFiles()" *ngIf="(this.checkListStateService.checkFiles$ | async)?.length">Скачать</ss-button>
+						<ss-button size="small" [type]="'primary'" *ngIf="(this.checkListStateService.checkFiles$ | async)?.length" (click)="saveInCloud()">Сохранить в
+							облако
+						</ss-button>
+					</div>
+					<div class="documents-vpg__right">
+						<ss-button size="small" [type]="'outline'" nz-dropdown nzTrigger="click"
+								   [nzDropdownMenu]="settingsColumn">
+							Отображение столбцов
+							<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>
+						</ss-button>
+						<!--						<ss-button size="small" [type]="'outline'" nz-dropdown nzTrigger="click" [nzDropdownMenu]="filters">-->
+						<!--							Фильтры(0)-->
+						<!--							<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>-->
+						<!--						</ss-button>-->
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+
+	<div class="client-proposals-table-vgp__content">
+		<ng-template #loader>
+			<ss-loader></ss-loader>
+		</ng-template>
+		<ng-container *ngIf="(productionIds$ | async)?.length">
+			<ng-container *ngIf="clientOffers$ | async as offers;else loader">
+				<ss-text class="client-proposals-table-vgp__description" size="4">Цена прайса, руб - Склад Союзснаб, прайс
+					Союзснаб, предоплата
+				</ss-text>
+				<ss-table-v2 *ngIf="offers.total > 0">
+					<tr app-client-proposals-row-item-tr *ngFor="let offer of offers.items" [item]="offer"></tr>
+				</ss-table-v2>
+				<ng-container *ngIf="offers.total === 0">
+					<tr class="client-proposals-table-vgp__no-content">
+						<ss-icon name="search"></ss-icon>
+						<ss-headline class="client-proposals-table-vgp__no-content--title" size="h3">Нет Данных
+						</ss-headline>
+						<ss-headline class="client-proposals-table-vgp__no-content--description" size="h4">Попробуйте
+							изменить параметры поиска
+						</ss-headline>
+					</tr>
+				</ng-container>
+			</ng-container>
+		</ng-container>
+
+		<ng-container *ngIf="(productionIds$ | async)?.length === 0">
+			<div class="client-proposals-table-vgp__no-content">
+				<ss-icon name="search"></ss-icon>
+				<ss-headline class="client-proposals-table-vgp__no-content--title" size="h3">Сформулируйте предложение
+				</ss-headline>
+				<ss-headline class="client-proposals-table-vgp__no-content--description" size="h4">Выберите ВГП клиента
+					выше и
+					нажмите кнопку “Просмотреть”
+				</ss-headline>
+			</div>
+		</ng-container>
+	</div>
+</div>
+
+<nz-dropdown-menu #settingsColumn="nzDropdownMenu">
+	<ss-settings-view-column></ss-settings-view-column>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #filters="nzDropdownMenu">
+	<app-client-proposals-filter></app-client-proposals-filter>
+</nz-dropdown-menu>

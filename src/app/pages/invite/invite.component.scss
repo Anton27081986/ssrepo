@@ -1,0 +1,163 @@
+@use '/src/assets/scss/_variables.scss' as *;
+
+:host {
+	height: 90vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: center no-repeat url("../../../assets/images/background/login.svg");
+}
+
+.invite {
+	position: relative;
+	width: 372px;
+	height: auto;
+	border-radius: 16px;
+	border: 1px solid $border-color;
+	padding: 16px 16px 45px 16px!important;
+
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+
+	.header {
+		margin-top: 23px;
+	}
+
+	.text {
+		margin-top: 21px;
+		text-align: center;
+		width: 264px;
+		p {
+			font-size: 14px;
+			font-weight: bold;
+			line-height: 19px;
+			letter-spacing: -0.2px;
+		}
+
+		div:nth-child(1) {
+			margin-bottom: 20px;
+		}
+	}
+
+	.accept-icon,
+	.cancel-icon {
+		font-size: 70px;
+		padding-bottom: 20px;
+	}
+
+	.personality {
+		width: 300px;
+		border: 1px solid $border-color;
+		padding: 11px 8px 14px 14px!important;
+		margin-top: 3px;
+		background-color: #FBFBFB;
+
+		.personal {
+			position: relative;
+			display: flex;
+
+			.img {
+				border-radius: 14px;
+				overflow: hidden;
+				flex: none;
+				width: 50px;
+				height: 50px;
+
+				img {
+					width: 50px;
+				}
+			}
+
+			.title {
+				margin-left: 22px;
+			}
+
+			.fio {
+				font-size: 14px;
+				font-weight: bold;
+				line-height: 20px;
+				margin-top: 0;
+				max-width: 238px;
+			}
+
+			.job {
+				max-width: 186px;
+				font-size: 11.8px;
+				line-height: 14px;
+				font-weight: 500;
+				margin-top: 4px;
+			}
+		}
+
+		.icons {
+			.delete {
+				position: absolute;
+				top: 16px;
+				right: 16px;
+
+				cursor: pointer !important;
+				font-size: 10px;
+				z-index: 1;
+				background: #f4f5f6;
+				padding: 6px;
+				border-radius: 6px;
+
+				::ng-deep rect {
+					fill-opacity: 1 !important;
+				}
+			}
+		}
+
+	}
+
+	.connection-type {
+		margin-left: 73px;
+		margin-top: 8px;
+		line-height: 14px;
+
+		span:last-child {
+			font-size: 12px;
+			margin-left: 4px;
+		}
+	}
+
+	.buttons {
+		margin-top: 24px;
+		flex: auto;
+		max-width: 300px;
+
+
+		ss-button:last-child {
+			margin-top: 14px;
+		}
+	}
+}
+
+.card .active {
+	border: 1px $blue solid;
+}
+
+.success {
+	.header-success {
+		font-size: 23.4px;
+		font-weight: bold;
+		text-align: center;
+		margin-top: 14px;
+	}
+	.text-success {
+		font-size: 14px;
+		font-weight: bold;
+		text-align: center;
+	}
+}
+
+.connect-icon {
+	::ng-deep rect {
+		fill-opacity: 1 !important;
+	}
+}
+
+.connect-icon+span {
+	margin-left: 4px;
+}

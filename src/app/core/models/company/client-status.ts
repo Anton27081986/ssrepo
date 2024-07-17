@@ -11,12 +11,13 @@
  */
 
 /**
- * Статус клиента  1 = New  2 = Active  3 = Archive
+ * Статус клиента  1 = New  2 = Archive  5 = TransferredToLD  6 = Active
  */
-export type IClientStatus = 1 | 2 | 3;
+export type IClientStatus = 1 | 2 | 5 | 6;
 
 export const IClientStatus = {
-	NUMBER_1: 1 as IClientStatus,
-	NUMBER_2: 2 as IClientStatus,
-	NUMBER_3: 3 as IClientStatus,
+	New: 1 as IClientStatus,
+	Archived: 2 as IClientStatus,
+	NUMBER_5: 5 as IClientStatus,
+	NUMBER_6: 6 as IClientStatus,
 };

@@ -1,0 +1,29 @@
+.client-proposals-tabs-canvas {
+	display: flex;
+	flex-direction: column;;
+	justify-content: space-around;
+	min-height: 272px;
+
+	&__header {
+		display: flex;
+		padding: 16px;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__body {
+		width: 100%;
+		padding: 0 16px;
+		height: 200px;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		padding: 16px;
+		min-height: 48px;
+	}
+
+	&__content {
+	}
+}

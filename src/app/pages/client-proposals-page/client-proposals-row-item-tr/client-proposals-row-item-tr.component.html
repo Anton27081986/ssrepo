@@ -1,0 +1,122 @@
+<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
+	<ng-container *ngIf="item">
+		<td class="hc-table-td">
+			<ng-container [ngSwitch]="col.id">
+				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
+								<div class="hc-table-td__content">{{ item.productionName }}</div>
+				</ng-container>
+
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let clientPropTovGroup of item.clientPropTovGroups">
+							<div class="hc-table-td__nesting" *ngIf="clientPropTovGroup">
+								<div class="hc-table-td__content">{{ clientPropTovGroup.tovGroupName }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let clientPropProduction of clientPropProductionGroup">
+							<div class="hc-table-td__nesting" *ngIf="clientPropProduction">
+								<div class="hc-table-td__content">{{ clientPropProduction.productionGroupName }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let clientPropNewProduct of clientPropNewProducts">
+							<div class="hc-table-td__nesting" *ngIf="clientPropNewProduct">
+								<div class="hc-table-td__content">{{ clientPropNewProduct.newProductName }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let saleClientCount of saleClientsCount">
+							<div class="hc-table-td__nesting" *ngIf="saleClientCount">
+								<div class="hc-table-td__content">{{ saleClientCount }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let saleWeight of salesWeight">
+							<div class="hc-table-td__nesting" *ngIf="saleWeight">
+								<div class="hc-table-td__content">{{ saleWeight }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let rating of ratings">
+							<div class="hc-table-td__nesting" *ngIf="rating">
+								<div class="hc-table-td__content">{{ rating }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let price of prices">
+							<div class="hc-table-td__nesting" *ngIf="price">
+								<div [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
+									 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content">
+									{{ price.price }}
+								</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let advantageTpr of advantagesTpr">
+							<div class="hc-table-td__nesting" *ngIf="advantageTpr">
+								<div class="hc-table-td__content">{{ advantageTpr.name }}</div>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let rim of rims$ | async">
+							<div class="hc-table-td__file-form">
+								<input type="checkbox" [(ngModel)]="rim.checked" (change)="onToggle()"/>
+								<a href="{{ rim.url }}" target="_blank">{{ rim.name }}</a>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.documents">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let document of documents$ | async">
+							<div class="hc-table-td__file-form">
+								<input type="checkbox" [(ngModel)]="document.checked" (change)="onToggle()"/>
+								<a href="{{ document.url }}" target="_blank">{{ document.name }}</a>
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					<div class="hc-table-td__content"> -</div>
+				</ng-container>
+			</ng-container>
+		</td>
+	</ng-container>
+</ng-container>

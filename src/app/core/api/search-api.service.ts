@@ -12,7 +12,7 @@ export class SearchApiService {
 	/** Общий поиск */
 	public search(title: string): Observable<any> {
 		return this.http.get<any[]>(`${environment.apiUrl}/api/search`, {
-			params: new HttpParams().set('q', title),
+			params: new HttpParams().set('query', title),
 		});
 	}
 }

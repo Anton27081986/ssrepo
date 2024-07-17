@@ -1,0 +1,36 @@
+<ss-card padding="0" radius="16px 0 16px 16px">
+	<div class="header">
+		<ss-headline size="h6" weight="semi-bold">Дни рождения в период {{ periodDate }}</ss-headline>
+	</div>
+
+	<div class="panel">
+		<div class="search">
+			<ss-search-input size="small" searchType="contractor" placeholder="Поиск по контрагенту" data="{{ clientId }}" (select)="filterbirthdaysContractors($event)" (input)="clearFilter($any($event.target).value)"></ss-search-input>
+		</div>
+	</div>
+	<div class="card-list">
+		<ng-container *ngFor="let birthdays of (birthdaysContractors$ | async)?.items; trackBy: trackBy">
+			<ss-card padding="12">
+				<a href="{{ birthdays?.detailLink }}" class="contacts" target="_blank" rel="noreferrer">
+					<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.name }}</ss-text>
+					<ss-text [size]="'3'" weight="medium">{{ birthdays?.position }}</ss-text>
+					<ss-text [size]="'3'" weight="semi-bold">{{ birthdays?.contractor?.name }}</ss-text>
+					<ss-tag class="station">{{ birthdays?.birthDate | date:'dd MMMM yyyy':'':'ru' }}</ss-tag>
+				</a>
+			</ss-card>
+		</ng-container>
+	</div>
+
+	<div class="pagination">
+		<nz-pagination
+			[nzTotal]="total"
+			[nzPageIndex]="pageIndex"
+			[nzPageSize]="pageSize"
+			(nzPageIndexChange)="nzPageIndexChange($event)"
+			(nzPageSizeChange)="pageSize = $event"
+			[nzResponsive]="true"
+		>
+		</nz-pagination>
+	</div>
+
+</ss-card>

@@ -50,4 +50,20 @@ export interface IManagerItemDto {
 	 * Базовый менеджер клиента
 	 */
 	isBase?: boolean;
+	/**
+	 * Номер телефона
+	 */
+	phone?: string | null;
+	/**
+	 * Номер локального телефона
+	 */
+	phoneLocal?: string | null;
+	/**
+	 * Назначен
+	 */
+	introducedAtSM?: string | null;
+	/**
+	 *  Признак что сотрудник уволен или временно не дееспособен
+	 */
+	isDismissed?: string | null;
 }

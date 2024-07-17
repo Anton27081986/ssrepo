@@ -21,11 +21,11 @@ export interface ITransportNotifyDto {
 	/**
 	 * Действительно от
 	 */
-	dFrom?: string;
+	dateFrom?: string;
 	/**
 	 * Действительно До
 	 */
-	dTo?: string;
+	dateTo?: string;
 	/**
 	 * Текст уведомления
 	 */

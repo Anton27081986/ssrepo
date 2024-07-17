@@ -1,0 +1,22 @@
+.app-client-proposals-trade-list-tab {
+	&__control {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 8px;
+	}
+
+	&__link {
+		font-size: 16px;
+		line-height: 19px;
+	}
+
+	&__content {
+		flex-grow: 1;
+	}
+}
+
+.pagination {
+	justify-content: flex-end;
+	margin: 0;
+}
+

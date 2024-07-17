@@ -1,0 +1,36 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.client-proposals-done-production {
+	display: flex;
+	flex-direction: column;
+	width: 450px;
+
+	&__header {
+		padding: 14px 12.5px;
+		border-bottom: 1px solid $island-outline;
+		font-size: 16px;
+		line-height: 19px;
+	}
+
+	&__content {
+		width: 500px;
+	}
+
+	&__body {
+		min-height: 280px;
+		padding: 16px;
+		display: flex;
+		justify-content: center;
+	}
+
+	&__table {
+		max-width: 100%;
+		overflow: auto;
+	}
+}
+
+ss-table {
+	max-height: 224px;
+}

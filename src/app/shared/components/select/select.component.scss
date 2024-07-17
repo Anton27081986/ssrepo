@@ -1,0 +1,47 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	width: 100%;
+}
+
+select {
+	display: flex;
+	align-items: center;
+	padding: 5px 12px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+	height: 41px;
+
+	::ng-deep option {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+select.error {
+	border: 1px solid #EE1C25;
+	background-color: #FF9196;
+}
+
+select.small {
+	height: 36px;
+}
+
+ss-caption.error {
+	color: $error;
+}
+
+:host-context(.dark) select {
+	background-color: $dark-island;
+}

@@ -16,13 +16,13 @@ import { IDictionaryItemDto } from './dictionary-item-dto';
  */
 export interface IClientItemDto {
 	/**
-	 * Номер. Это вообще надо? или на фронте можно выводить стадартно средствами грида?
+	 * Айди клиента умноженное на 10
 	 */
-	number?: number;
+	id?: number;
 	/**
 	 * Айди клиента
 	 */
-	id?: number;
+	code?: number;
 	/**
 	 * Название клиента
 	 */
@@ -42,13 +42,13 @@ export interface IClientItemDto {
 	/**
 	 * Направление продаж
 	 */
-	salesDirection?: string | null;
-	/**
-	 * Регион
-	 */
-	regionName?: string | null;
+	saleDirection?: string | null;
+	category?: IDictionaryItemDto;
+	region?: IDictionaryItemDto;
 	/**
 	 * Дата архивации, если в статусе \"Архивирован\"
 	 */
 	archiveDate?: string | null;
+	status: IDictionaryItemDto;
+	isBaseManagerFired: boolean;
 }

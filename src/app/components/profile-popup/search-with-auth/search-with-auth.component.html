@@ -1,0 +1,32 @@
+<div class="search">
+	<span class="">
+		<form nz-form [formGroup]="searchForm" class="search-form {{ size }}">
+			<nz-form-item>
+				<nz-form-control>
+					<nz-input-group [nzSuffix]="prefixSearch">
+						<input type="text"
+							   nz-input
+							   formControlName="search"
+							   placeholder="{{ placeholder }}"
+							   (keyup.enter)="loadSearchUsers()" />
+					</nz-input-group>
+				</nz-form-control>
+				<ng-template #prefixSearch>
+					<i nz-icon nzType="close-circle" (click)="clearSearch()" *ngIf="closeIcon"></i>
+					<i nz-icon nzType="search" (click)="loadSearchUsers()" *ngIf="searchIcon"></i>
+				</ng-template>
+			</nz-form-item>
+		</form>
+	</span>
+
+	<ng-container *ngIf="showWindowResult">
+		<ng-container *ngIf="searchedUsers as users">
+			<div class="result">
+				<ss-result-search-with-auth
+					*ngFor="let user of users"
+					[user]="user"
+				></ss-result-search-with-auth>
+			</div>
+		</ng-container>
+	</ng-container>
+</div>

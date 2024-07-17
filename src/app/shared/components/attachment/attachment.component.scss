@@ -1,0 +1,57 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	padding: 8px;
+	gap: 8px;
+	width: 168px;
+	height: 56px;
+	border-radius: 8px;
+	background-color: initial;
+	color: $text;
+}
+
+.doc {
+	padding: 8px;
+	border-radius: 8px;
+	background-color: rgba(71, 112, 255, 0.1);
+}
+
+.file-info {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	overflow: hidden;
+
+	.title {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		max-height: 22px;
+	}
+
+	::ng-deep .size span {
+		font-weight: 500;
+		font-size: 8px !important;
+		letter-spacing: -0.01em;
+		color: #6D7885;
+	}
+}
+
+.close {
+	visibility: hidden;
+	padding: 6px;
+	cursor: pointer;
+}
+
+:host:hover {
+	background-color: #F2F3F7;
+
+	.close {
+		visibility: visible;
+	}
+;
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AppIcons } from '@app/core/icons';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -7,16 +7,24 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 	templateUrl: './icon.component.html',
 	styleUrls: ['./icon.component.scss'],
 })
-export class IconComponent implements OnInit {
-	@Input() name: string = '';
-	@Input() width: string | undefined;
-	@Input() height: string | undefined;
+export class IconComponent implements OnInit, OnChanges {
+	@Input() public name: string = '';
+	@Input() public width: string | undefined;
+	@Input() public height: string | undefined;
 
 	protected svg: SafeHtml | undefined;
 
-	constructor(private readonly sanitizer: DomSanitizer) {}
+	public constructor(private readonly sanitizer: DomSanitizer) {}
 
-	ngOnInit(): void {
+	public ngOnChanges() {
+		this.setIcon();
+	}
+
+	public ngOnInit(): void {
+		this.setIcon();
+	}
+
+	private setIcon() {
 		if ((AppIcons as any)[this.name]) {
 			let svgString = (AppIcons as any)[this.name];
 

@@ -32,7 +32,6 @@ import { PeopleLikedDirective } from '@app/components/victory/people-liked.direc
 import { SuperLikeDirective } from '@app/components/victory/super-like.directive';
 import { BackendErrorMessagesComponent } from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { LoaderComponent } from '@app/shared/components/loader/loader.component';
 import { CardVictoryComponent } from '@app/components/victory/card-victory/card-victory.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
@@ -43,12 +42,14 @@ import { TransportModule } from '@app/components/transport/transport.module';
 import { ThanksPartnerComponent } from '@app/components/thank-partner/thanks-partner.component';
 import { TransportComponent } from '@app/components/transport/transport.component';
 import { TableModule } from '@app/shared/components/table/table.module';
-import { SearchComponent } from '@app/shared/components/search/search.component';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { ModalModule } from '@app/components/modal/modal.module';
+import { IconModule } from '@app/shared/components/icon/icon.module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -65,10 +66,11 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { AllSearchComponent } from './all-search/all-search.component';
 import { ResultItemComponent } from './all-search/result-item/result-item.component';
+import { SearchWithAuthComponent } from './profile-popup/search-with-auth/search-with-auth.component';
+import { ResultSearchWithAuthComponent } from './profile-popup/search-with-auth/result-search-with-auth/result-search-with-auth.component';
 
 @NgModule({
 	declarations: [
-		SearchComponent,
 		ResultItemComponent,
 		MainMenuComponent,
 		MobileMenuComponent,
@@ -88,14 +90,13 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		LikeComponent,
 		SuperLikeComponent,
 		BackendErrorMessagesComponent,
-		LoaderComponent,
-		LoaderComponent,
 		PaginationComponent,
-		LoaderComponent,
 		CardVictoryComponent,
 		CarouselComponent,
 		ModalTransportNoticeComponent,
 		AllSearchComponent,
+		SearchWithAuthComponent,
+		ResultSearchWithAuthComponent,
 	],
 	imports: [
 		CommonModule,
@@ -138,10 +139,12 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		HeadlineModule,
 		CardModule,
 		CaptionModule,
-		ModalModule,
+		IconModule,
+		LoaderModule,
+		TextModule,
+		AvatarModule,
 	],
 	exports: [
-		SearchComponent,
 		MainMenuComponent,
 		MobileMenuComponent,
 		ProfilePopupComponent,
@@ -155,6 +158,7 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		AddressBookComponent,
 		TransportComponent,
 		AllSearchComponent,
+		PaginationComponent,
 	],
 })
 export class ComponentsModule {}

@@ -1,0 +1,60 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	gap: 16px;
+	color: $lite-text;
+}
+
+.toggle-switch {
+	display: inline-block;
+
+	label {
+		display: inline-block;
+		background: $island-outline;
+		position: relative;
+		transition: background 0.2s;
+		cursor: pointer;
+		width: 44px;
+		height: 22px;
+		border: 1px solid $island-outline;
+		border-radius: 12px;
+
+		&::before {
+			display: inline-block;
+			position: absolute;
+			content: ' ';
+			background: $island;
+			vertical-align: center;
+			top: 1px;
+			left: 1px;
+			transition: left 0.2s;
+			width: 18px;
+			height: 18px;
+			line-height: 20px;
+			border-radius: 9px;
+		}
+
+		&.checked {
+			background: $main;
+			&::before {
+				left: 23px;
+			}
+		}
+
+		&.disabled {
+			background: lighten($island, 20%);
+			&::before {
+				box-shadow: none;
+			}
+		}
+	}
+}
+
+:host-context(.dark) .toggle-switch > label {
+	background-color: $dark-inner;
+
+	&.checked {
+		background: $main;
+	}
+}

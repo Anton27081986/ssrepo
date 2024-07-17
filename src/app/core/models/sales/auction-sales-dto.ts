@@ -18,11 +18,11 @@ export interface IAuctionSalesDto {
 	/**
 	 * Ссылка на список всех в старой системе
 	 */
-	allListLink?: string | null;
+	allListLink?: string;
 	/**
 	 * Список аукционных продаж
 	 */
-	items?: IProficitDto[] | null;
+	items?: IProficitDto[];
 	/**
 	 * Всего записей по запросу
 	 */
