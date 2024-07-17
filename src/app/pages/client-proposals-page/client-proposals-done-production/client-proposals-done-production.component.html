@@ -1,6 +1,6 @@
 <div class="client-proposals-done-production">
 	<ng-container *ngIf="doneProductions$ | async as production">
-	<a *ngIf="production.linkToModule;else text" class="client-proposals-done-production__header" href="{{ production.linkToModule }}">Модель клиента</a>
+	<a *ngIf="production.linkToModule;else text" class="client-proposals-done-production__header" href="{{ production.linkToModule }}" target="_blank">Модель клиента</a>
 		<ng-template #text>
 			<ss-text size="1">Модель клиента</ss-text>
 		</ng-template>

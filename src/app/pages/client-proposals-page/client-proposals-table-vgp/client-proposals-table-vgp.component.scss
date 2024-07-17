@@ -54,12 +54,13 @@
 	}
 
 	&__content {
-	    height: 500px;
+	    min-height: 500px;
 		padding: 16px;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
+		position: relative;
 	}
 
 	&__description {

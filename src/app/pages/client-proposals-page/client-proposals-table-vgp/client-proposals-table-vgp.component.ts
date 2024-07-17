@@ -1,22 +1,24 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
+import { HttpClient } from '@angular/common/http';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-client-proposals-table-vgp',
 	templateUrl: './client-proposals-table-vgp.component.html',
 	styleUrls: ['./client-proposals-table-vgp.component.scss'],
-	providers: [ColumnsStateService],
+	providers: [ColumnsStateService, CheckFileListStateService],
 })
 export class ClientProposalsTableVgpComponent {
 	protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
@@ -25,12 +27,14 @@ export class ClientProposalsTableVgpComponent {
 
 	protected clientOffers$: Observable<IResponse<IClientOffersDto>> | undefined;
 
-	private subscription: Subscription = new Subscription();
+	private readonly subscription: Subscription = new Subscription();
 
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		protected readonly _columnState: ColumnsStateService,
+		protected readonly checkListStateService: CheckFileListStateService,
+		protected readonly http: HttpClient,
 	) {
 		this._columnState.cols$.next(this.defaultCols);
 		this.subscription.add(
@@ -57,12 +61,49 @@ export class ClientProposalsTableVgpComponent {
 		}
 	}
 
-	protected openPopoverSendToTheCloud() {
-		this.modalService.open(ClientProposalsSendCloudPopoverComponent, {});
+	protected openPopoverSendToTheCloud(url: string) {
+		this.modalService.open(ClientProposalsSendCloudPopoverComponent, { data: { url } });
+	}
+
+	protected saveInCloud() {
+		const files = this.checkListStateService.checkFiles$.value;
+
+		if (files.length) {
+			this.clientProposalsFacadeService.saveInCloud(files).subscribe(url => {
+				this.openPopoverSendToTheCloud(url.shareLink);
+			});
+		}
 	}
 
 	protected submit() {
+		this.checkListStateService.checkFiles$.next([]);
 		this.productionIds$.next(this.productionIds);
+	}
+
+	protected saveFiles() {
+		if (this.checkListStateService.checkFiles$.value.length) {
+			this.clientProposalsFacadeService
+				.saveInCloud(this.checkListStateService.checkFiles$.value)
+				.pipe(
+					map(urlInCloud => {
+						return this.http.get(urlInCloud.shareLink, {
+							responseType: 'blob',
+						});
+					}),
+					switchMap(blob => {
+						return blob;
+					}),
+				)
+				.subscribe(blob => {
+					const fileURL = window.URL.createObjectURL(blob);
+					const link = document.createElement('a');
+
+					link.href = fileURL;
+					link.click();
+
+					window.URL.revokeObjectURL(fileURL);
+				});
+		}
 	}
 
 	public readonly defaultCols: IStoreTableBaseColumn[] = [

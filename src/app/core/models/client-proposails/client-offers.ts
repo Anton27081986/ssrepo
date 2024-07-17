@@ -20,17 +20,12 @@ export interface IAdvantage {
 	name: string;
 }
 
-export interface IPromotionalMaterial {
-	rimId: number;
-	name: string;
-	fileUrl: string;
-	url: string;
-}
-
-export interface IDocuments {
+export interface IFilesProposals {
 	id: number;
-	type: string;
+	type: number;
 	name: string;
+	url: string;
+	checked: boolean;
 }
 
 export interface IClientPropNewProducts {
@@ -41,8 +36,8 @@ export interface IClientPropNewProducts {
 	rating: number;
 	prices: IPrice[];
 	advantages: IAdvantage[];
-	promotionalMaterials: IPromotionalMaterial[];
-	documents: IDocuments[];
+	promotionalMaterials: IFilesProposals[];
+	documents: IFilesProposals[];
 }
 
 export interface IClientPropProductionGroups {
