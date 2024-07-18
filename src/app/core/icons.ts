@@ -5,6 +5,13 @@ export class AppIcons {
 	public static iconRemind =
 		'<svg width="18" height="23" viewBox="0 0 18 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.87677 2.92944C5.63638 2.92944 3.00294 5.61257 3.00294 8.91412V11.7967C3.00294 12.4052 2.74841 13.3328 2.44493 13.8515L1.31911 15.7566C0.624043 16.9336 1.10374 18.2402 2.3764 18.6791C6.59577 20.1154 11.148 20.1154 15.3673 18.6791C16.5519 18.2801 17.0708 16.8538 16.4246 15.7566L15.2988 13.8515C15.0051 13.3328 14.7506 12.4052 14.7506 11.7967V8.91412C14.7506 5.62255 12.1074 2.92944 8.87677 2.92944Z" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/><path d="M12.3072 19.5769C12.3072 20.9096 10.8534 22 9.07647 22C8.1934 22 7.37493 21.7254 6.79339 21.2892C6.21186 20.8531 5.8457 20.2392 5.8457 19.5769" stroke="#22223A" stroke-width="1.5" stroke-miterlimit="10"/><path d="M6.6543 1H11.5005" stroke="#22223A" stroke-width="1.5" stroke-linecap="round"/></svg>';
 
+	public static remind =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M10.0194 1.64844C6.97828 1.64844 4.50675 4.11996 4.50675 7.16113V9.81641C4.50675 10.3769 4.26787 11.2313 3.98305 11.7091L2.92645 13.464C2.27411 14.5481 2.72431 15.7517 3.91873 16.156C7.87868 17.4791 12.151 17.4791 16.111 16.156C17.2227 15.7885 17.7097 14.4746 17.1033 13.464L16.0467 11.7091C15.771 11.2313 15.5321 10.3769 15.5321 9.81641V7.16113C15.5321 4.12915 13.0514 1.64844 10.0194 1.64844Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>\n' +
+		'<path d="M11.7179 1.91548C11.433 1.83279 11.139 1.76847 10.8358 1.73172C9.95379 1.62147 9.10851 1.68578 8.31836 1.91548C8.58481 1.23558 9.24633 0.757812 10.0181 0.757812C10.7899 0.757812 11.4514 1.23558 11.7179 1.91548Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.7764 16.4863C12.7764 18.0023 11.536 19.2427 10.02 19.2427C9.26662 19.2427 8.56834 18.9303 8.0722 18.4341C7.57606 17.938 7.26367 17.2397 7.26367 16.4863" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10"/>\n' +
+		'</svg>';
+
 	public static iconBurger =
 		'<svg width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<rect width="20" height="2" rx="1" fill="#22223A"/>\n' +
@@ -73,20 +80,6 @@ export class AppIcons {
 		'<path d="M81 12.375V9.09766H81.543C81.7279 8.96484 81.8971 8.77734 82.0508 8.53516C82.2044 8.29036 82.3359 7.95312 82.4453 7.52344C82.5547 7.09115 82.6328 6.52604 82.6797 5.82812L82.9062 2.44531H88.1992V9.09766H89.0742V12.3672H87.4492V10.4453H82.625V12.375H81ZM83.4961 9.09766H86.5742V3.83984H84.4297L84.3047 5.82812C84.2708 6.35677 84.2148 6.82552 84.1367 7.23438C84.0612 7.64323 83.9688 8.0013 83.8594 8.30859C83.7526 8.61328 83.6315 8.8763 83.4961 9.09766Z" fill="#314381"/>\n' +
 		'</svg>';
 
-	public static iconCloseLight =
-		'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<g opacity="0.3">\n' +
-		'<rect width="2.04274" height="16.3419" rx="1" transform="matrix(0.707103 0.707111 -0.707103 0.707111 12.0557 0.5)" fill="#22223A"/>\n' +
-		'<rect width="2.04274" height="16.3419" rx="1" transform="matrix(-0.707103 0.707111 -0.707103 -0.707111 13.501 12.0557)" fill="#22223A"/>\n' +
-		'</g>\n' +
-		'</svg>';
-
-	public static iconClose =
-		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<rect width="2" height="25" rx="1" transform="matrix(0.707103 0.707111 -0.707103 0.707111 18.3379 0.292969)" fill="#22223A"/>\n' +
-		'<rect width="2" height="25" rx="1" transform="matrix(-0.707103 0.707111 -0.707103 -0.707111 19.3379 18.293)" fill="#22223A"/>\n' +
-		'</svg>\n';
-
 	public static phone =
 		'<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<path d="M14.9011 11.9289C14.9011 12.1239 14.8577 12.3243 14.7657 12.5193C14.6736 12.7143 14.5544 12.8985 14.3973 13.0718C14.1319 13.3643 13.8394 13.5756 13.509 13.711C13.184 13.8464 12.8319 13.9168 12.4527 13.9168C11.9002 13.9168 11.3098 13.7868 10.6869 13.5214C10.064 13.256 9.44107 12.8985 8.82357 12.4489C8.20065 11.9939 7.61023 11.4902 7.0469 10.9322C6.48898 10.3689 5.98523 9.7785 5.53565 9.161C5.09148 8.5435 4.73398 7.926 4.47398 7.31391C4.21398 6.69641 4.08398 6.106 4.08398 5.54266C4.08398 5.17433 4.14898 4.82225 4.27898 4.49725C4.40898 4.16683 4.61482 3.8635 4.9019 3.59266C5.24857 3.25141 5.62773 3.0835 6.02857 3.0835C6.18023 3.0835 6.3319 3.116 6.46732 3.181C6.60815 3.246 6.73273 3.3435 6.83023 3.48433L8.0869 5.25558C8.1844 5.391 8.25482 5.51558 8.30357 5.63475C8.35232 5.7485 8.3794 5.86225 8.3794 5.96516C8.3794 6.09516 8.34148 6.22516 8.26565 6.34975C8.19523 6.47433 8.09232 6.60433 7.96232 6.73433L7.55065 7.16225C7.49107 7.22183 7.46398 7.29225 7.46398 7.37891C7.46398 7.42225 7.4694 7.46016 7.48023 7.5035C7.49648 7.54683 7.51273 7.57933 7.52357 7.61183C7.62107 7.79058 7.78898 8.0235 8.02732 8.30516C8.27107 8.58683 8.53107 8.87391 8.81273 9.161C9.10523 9.44808 9.3869 9.7135 9.67398 9.95725C9.95565 10.1956 10.1886 10.3581 10.3727 10.4556C10.3998 10.4664 10.4323 10.4827 10.4702 10.4989C10.5136 10.5152 10.5569 10.5206 10.6057 10.5206C10.6977 10.5206 10.7682 10.4881 10.8277 10.4285L11.2394 10.0222C11.3748 9.88683 11.5048 9.78391 11.6294 9.71891C11.754 9.64308 11.8786 9.60516 12.014 9.60516C12.1169 9.60516 12.2252 9.62683 12.3444 9.67558C12.4636 9.72433 12.5882 9.79475 12.7236 9.88683L14.5165 11.1597C14.6573 11.2572 14.7548 11.371 14.8144 11.5064C14.8686 11.6418 14.9011 11.7772 14.9011 11.9289Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10"/>\n' +
@@ -105,6 +98,13 @@ export class AppIcons {
 		'<path d="M16.3096 7.03662L18.7523 9.47933L16.3096 11.922" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
+	public static exit2 =
+		'<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M13.7773 10.4875L16.1122 8.1527L13.7773 5.81787" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M6.77344 8.15039H16.0489" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.59714 15.3925C4.5659 15.3925 1.30078 12.6564 1.30078 8.09616C1.30078 3.53594 4.5659 0.799805 8.59714 0.799805" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
 	public static settings =
 		'<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<path d="M8.25244 1.54517H6.75244C3.00244 1.54517 1.50244 3.04517 1.50244 6.79517V11.2952C1.50244 15.0452 3.00244 16.5452 6.75244 16.5452H11.2524C15.0024 16.5452 16.5024 15.0452 16.5024 11.2952V9.79516" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
@@ -112,9 +112,15 @@ export class AppIcons {
 		'<path d="M11.1841 3.15747C11.6866 4.94997 13.0891 6.35247 14.8891 6.86247" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
+	public static settings2 =
+		'<svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M9.00059 10.2199C10.2263 10.2199 11.2199 9.22629 11.2199 8.00059C11.2199 6.77488 10.2263 5.78125 9.00059 5.78125C7.77488 5.78125 6.78125 6.77488 6.78125 8.00059C6.78125 9.22629 7.77488 10.2199 9.00059 10.2199Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M1.60156 8.65177V7.34976C1.60156 6.58039 2.23037 5.94418 3.00714 5.94418C4.34614 5.94418 4.89358 4.99726 4.22038 3.83581C3.83569 3.17001 4.06503 2.30447 4.73822 1.91978L6.01804 1.1874C6.60247 0.839707 7.35704 1.04684 7.70474 1.63127L7.78611 1.77183C8.45191 2.93328 9.54679 2.93328 10.22 1.77183L10.3014 1.63127C10.6491 1.04684 11.4036 0.839707 11.9881 1.1874L13.2679 1.91978C13.9411 2.30447 14.1704 3.17001 13.7857 3.83581C13.1125 4.99726 13.66 5.94418 14.999 5.94418C15.7683 5.94418 16.4045 6.57299 16.4045 7.34976V8.65177C16.4045 9.42114 15.7757 10.0573 14.999 10.0573C13.66 10.0573 13.1125 11.0043 13.7857 12.1657C14.1704 12.8389 13.9411 13.6971 13.2679 14.0817L11.9881 14.8141C11.4036 15.1618 10.6491 14.9547 10.3014 14.3703L10.22 14.2297C9.55418 13.0682 8.45931 13.0682 7.78611 14.2297L7.70474 14.3703C7.35704 14.9547 6.60247 15.1618 6.01804 14.8141L4.73822 14.0817C4.06503 13.6971 3.83569 12.8315 4.22038 12.1657C4.89358 11.0043 4.34614 10.0573 3.00714 10.0573C2.23037 10.0573 1.60156 9.42114 1.60156 8.65177Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
 	public static arrowBottom =
-		'<svg width="9" height="5" viewBox="0 0 9 5" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M1.00049 0.753418L4.50049 4.3369C5.66881 3.14072 6.83217 1.9496 8.00049 0.753418" stroke="currentColor" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M1 5L4.29289 1.70711C4.68342 1.31658 5.31658 1.31658 5.70711 1.70711L9 5" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
 		'</svg>';
 
 	public static arrowRight =
@@ -129,18 +135,19 @@ export class AppIcons {
 		'<path d="M17.5 12H6.5" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
-	public static closeFill =
-		'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<rect width="24" height="24" rx="8" transform="matrix(-1 0 0 1 24 0)" fill="#22223A" fill-opacity="0.1"/>\n' +
-		'<path d="M16.75 16.75L8.25 8.25" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M8.25 16.75L16.75 8.25" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'</svg>\n';
+	public static close =
+		'<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M13 1L1 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
+		'<path d="M1 1L13 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
+		'</svg>';
 
 	public static enter =
-		'<svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M5.19189 4.45518C5.37273 2.35518 6.45189 1.49768 8.81439 1.49768H8.89023C11.4977 1.49768 12.5419 2.54185 12.5419 5.14935V8.95268C12.5419 11.5602 11.4977 12.6043 8.89023 12.6043H8.81439C6.46939 12.6043 5.39023 11.7585 5.19773 9.69351" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M1.16846 7.04517H8.68179" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M7.37939 5.09094L9.33356 7.04511L7.37939 8.99928" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M0.5 8C0.5 3.85786 3.85786 0.5 8 0.5H16C20.1421 0.5 23.5 3.85786 23.5 8V16C23.5 20.1421 20.1421 23.5 16 23.5H8C3.85786 23.5 0.5 20.1421 0.5 16V8Z" fill="#F2F3F7"/>\n' +
+		'<path d="M0.5 8C0.5 3.85786 3.85786 0.5 8 0.5H16C20.1421 0.5 23.5 3.85786 23.5 8V16C23.5 20.1421 20.1421 23.5 16 23.5H8C3.85786 23.5 0.5 20.1421 0.5 16V8Z" stroke="#E4E8EA"/>\n' +
+		'<path d="M11.9297 13.9722L13.7068 12.1951L11.9297 10.418" stroke="#6D7885" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M6.59961 12.1953H13.6595" stroke="#6D7885" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.1523 6.6001C15.2207 6.6001 17.7059 8.68267 17.7059 12.1536C17.7059 15.6246 15.2207 17.7071 12.1523 17.7071" stroke="#6D7885" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
 	public static password =
@@ -846,4 +853,15 @@ export class AppIcons {
 		'<circle cx="20.9778" cy="20.4778" r="7.72785" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M27.0703 26.5713L31.7492 31.2489" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
+
+	public static search2 =
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<circle cx="8.47785" cy="8.47785" r="7.72785" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M14.5703 14.5713L19.2492 19.2489" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
+	public static tail =
+		'<svg width="32" height="13" viewBox="0 0 32 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C20.8 0 25.5998 13 32 13H0C6.35984 13 11.2 0 16 0Z" fill="white"/>\n' +
+		'</svg>\n';
 }

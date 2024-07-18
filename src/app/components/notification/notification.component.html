@@ -3,8 +3,9 @@
 	  <span>1</span>
 	</span>
 
-  <a href="https://cisp.ssnab.ru/Personal/Votes" target="_blank" rel="noreferrer" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popNotification" [nzPlacement]="'bottomRight'">
-    <i nz-icon nzType="ss:remind" theme="outline"></i>
+  <a href="https://cisp.ssnab.ru/Personal/Votes" target="_blank" rel="noreferrer" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popNotification" [nzPlacement]="'bottomRight'" class="remind-ref">
+<!--    <i nz-icon nzType="ss:remind" theme="outline"></i>-->
+	  <ss-icon name="remind"></ss-icon>
   </a>
   <nz-dropdown-menu #popNotification="nzDropdownMenu">
     <div nz-menu class="pop-notification" *ngIf="false">
