@@ -41,6 +41,4 @@ export class AvatarComponent implements OnInit {
 				this.height = this.isSquare ? 32 : 36;
 		}
 	}
-
-	protected readonly event = event;
 }

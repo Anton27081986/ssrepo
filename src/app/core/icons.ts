@@ -141,6 +141,12 @@ export class AppIcons {
 		'<path d="M1 1L13 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
 		'</svg>';
 
+	public static closeGray =
+		'<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M13 1L1 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
+		'<path d="M1 1L13 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
+		'</svg>';
+
 	public static enter =
 		'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<path d="M0.5 8C0.5 3.85786 3.85786 0.5 8 0.5H16C20.1421 0.5 23.5 3.85786 23.5 8V16C23.5 20.1421 20.1421 23.5 16 23.5H8C3.85786 23.5 0.5 20.1421 0.5 16V8Z" fill="#F2F3F7"/>\n' +
