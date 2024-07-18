@@ -27,23 +27,6 @@
 		display: flex;
 		justify-content: space-between;
 
-		.nav-wrap {
-			svg {
-				fill: $island;
-				fill-opacity: 1;
-
-				path {
-					stroke: $main;
-				}
-			}
-		}
-
-		.search-mobile {
-			svg {
-				stroke: $white;
-			}
-		}
-
 		.burger {
 			display: none;
 		}
@@ -69,10 +52,19 @@ app-mobile-menu {
 }
 
 .nav-right {
+	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	margin-left: 15px;
+
+
+	app-profile-popup {
+		position: absolute;
+		z-index: 9999;
+		top: 60px;
+		right: 0;
+	}
 
 	.search-header {
 		position: relative;
@@ -113,6 +105,7 @@ app-mobile-menu {
 }
 
 .profile {
+	position: relative;
 	display: flex;
 	align-items: center;
 	height: 36px;
@@ -311,4 +304,3 @@ app-all-search.mobile {
 		font-weight: 400;
 	}
 }
-

@@ -23,11 +23,11 @@
 							<app-all-search *ngIf="statusInputSearch"></app-all-search>
 
 							<div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
-								<ss-icon width="20" [name]="statusInputSearch ? 'iconCloseLight' : 'iconSearch'"></ss-icon>
+								<ss-icon height="30" [name]="statusInputSearch ? 'iconCloseLight' : 'search2'"></ss-icon>
 							</div>
 
 							<div class="icon-bg search-mobile" (click)="openSearchMobile($event)">
-								<ss-icon [name]="statusInputSearchMobile ? 'iconCloseLight' : 'iconSearch'"></ss-icon>
+								<ss-icon [name]="statusInputSearchMobile ? 'iconCloseLight' : 'search'"></ss-icon>
 							</div>
 						</div>
 
@@ -35,7 +35,7 @@
 							<app-notification></app-notification>
 						</div>
 
-						<div class="profile" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popProfile" [nzPlacement]="'bottomRight'">
+						<div class="profile" (click)="toggleProfilePopup($event)">
 							<div class="icon-bg">
 
 								<ng-container *ngIf="(userProfile$ | async) as userProfile;">
@@ -45,10 +45,8 @@
 							</div>
 							<div class="title">Мой профиль</div>
 
-							<nz-dropdown-menu #popProfile="nzDropdownMenu">
-								<app-profile-popup></app-profile-popup>
-							</nz-dropdown-menu>
 						</div>
+						<app-profile-popup *ngIf="(profilePopup$ | async)"></app-profile-popup>
 
 					</div>
 				</div>
