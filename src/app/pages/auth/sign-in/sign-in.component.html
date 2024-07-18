@@ -5,10 +5,10 @@
 	</div>
 	<form class="login-form" [formGroup]="loginForm">
 		<fieldset class="login-form-inputs">
-			<ss-input size="large" formControlName="login" placeholder="Логин" error="{{ loginForm.getError('unauthorized') }}"></ss-input>
-			<ss-password size="large" formControlName="password" placeholder="Пароль" error="{{ loginForm.getError('unauthorized') }}"></ss-password>
-			<ss-link [routerLink]="['/auth/forgot-password']">Не помню пароль</ss-link>
+			<ss-input size="small" formControlName="login" placeholder="Логин" error="{{ loginForm.getError('unauthorized') }}"></ss-input>
+			<ss-password size="small" formControlName="password" placeholder="Пароль" error="{{ loginForm.getError('unauthorized') }}"></ss-password>
+<!--			<ss-link [routerLink]="['/auth/forgot-password']">Не помню пароль</ss-link>-->
 		</fieldset>
-		<ss-button size="large" type="primary" (click)="onSubmit()" [disabled]="loading">Войти</ss-button>
+		<ss-button size="small" type="primary" (click)="onSubmit()" [disabled]="loading">Войти</ss-button>
 	</form>
 </ss-card>

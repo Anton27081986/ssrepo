@@ -35,6 +35,10 @@ input.large ~ ss-icon {
 	top: 20px;
 }
 
+input.small ~ ss-icon {
+	top: 12px;
+}
+
 input::placeholder {
 	color: $lite-text;
 }
@@ -51,6 +55,11 @@ input.medium {
 input.large {
 	height: 52px;
 	font-weight: 600;
+}
+
+input.small {
+	height: 36px;
+	font-weight: 400;
 }
 
 input.error {

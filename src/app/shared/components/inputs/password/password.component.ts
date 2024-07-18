@@ -7,7 +7,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 	styleUrls: ['./password.component.scss'],
 })
 export class PasswordComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' = 'medium';
+	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = '';
