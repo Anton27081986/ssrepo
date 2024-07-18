@@ -11,6 +11,7 @@
  */
 
 export interface IPrice {
+	tovId: number;
 	price: number;
 	name: string;
 }
@@ -55,7 +56,19 @@ export interface IClientPropTovGroups {
 export interface IClientOffersDto {
 	productionId: number;
 	productionName: string;
-	clientPropTovGroups: IClientPropTovGroups[];
+	tovGroupId: number;
+	tovGroupName: string;
+	productionGroupId: number;
+	productionGroupName: string;
+	tovProductionId: number;
+	newProductName: string;
+	saleClientsCount: number;
+	salesWeight: number;
+	rating: number;
+	prices: IPrice[];
+	advantages: IAdvantage[];
+	promotionalMaterials: IFilesProposals[];
+	documents: IFilesProposals[];
 }
 
 export interface IRequestGetClientOffer {
