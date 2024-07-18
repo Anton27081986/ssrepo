@@ -113,7 +113,7 @@ export class ClientCardNewProductsComponent implements OnInit {
 		const preparedFilter: any = {
 			limit: isNewFilter ? 6 : this.pageSize,
 			offset: isNewFilter ? 0 : this.offset,
-			clientId: this.clientId,
+			СlientId: this.clientId,
 		};
 
 		for (const filter of this.filters) {
