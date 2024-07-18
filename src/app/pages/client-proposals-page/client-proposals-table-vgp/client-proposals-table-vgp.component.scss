@@ -54,7 +54,8 @@
 	}
 
 	&__content {
-	    min-height: 500px;
+	    max-height: 80vh;
+		min-height: 500px;
 		padding: 16px;
 		overflow: hidden;
 		display: flex;
