@@ -3,8 +3,11 @@ import { Component, Input } from '@angular/core';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
+import {
+	ClientProposalsFacadeService,
+	filterTruthy,
+} from '@app/core/facades/client-proposals-facade.service';
+import { BehaviorSubject, debounceTime, map, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
@@ -22,7 +25,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ClientProposalsTableVgpComponent {
 	protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private productionIds: number[] = [];
+	private readonly urlInCloud$: BehaviorSubject<null | string> = new BehaviorSubject<
+		null | string
+	>(null);
+
+	private urlInCloud: string | null = null;
 	@Input() clientId: number | null = null;
 
 	protected clientOffers$: Observable<IResponse<IClientOffersDto>> | undefined;
@@ -80,30 +89,48 @@ export class ClientProposalsTableVgpComponent {
 		this.productionIds$.next(this.productionIds);
 	}
 
-	protected saveFiles() {
-		if (this.checkListStateService.checkFiles$.value.length) {
+	protected getUrlFile() {
+		this.subscription.add(
 			this.clientProposalsFacadeService
 				.saveInCloud(this.checkListStateService.checkFiles$.value)
-				.pipe(
-					map(urlInCloud => {
-						return this.http.get(urlInCloud.shareLink, {
-							responseType: 'blob',
-						});
-					}),
-					switchMap(blob => {
-						return blob;
-					}),
-				)
-				.subscribe(blob => {
-					const fileURL = window.URL.createObjectURL(blob);
-					const link = document.createElement('a');
+				.subscribe(val => {
+					this.urlInCloud$.next(val.shareLink);
+					this.urlInCloud = val.shareLink;
+				}),
+		);
+	}
 
-					link.href = fileURL;
-					link.click();
-
-					window.URL.revokeObjectURL(fileURL);
-				});
-		}
+	protected saveFiles() {
+		// if (this.checkListStateService.checkFiles$.value.length) {
+		// 	if (!this.urlInCloud$.value) {
+		// 		this.getUrlFile();
+		// 	}
+		//
+		// 	this.urlInCloud$
+		// 		.pipe(
+		// 			filterTruthy(),
+		// 			map(url => {
+		// 				this.waitingForLoading$.next(true);
+		//
+		// 				return this.clientProposalsFacadeService.getFiles(url);
+		// 			}),
+		// 			switchMap(data => {
+		// 				return data;
+		// 			}),
+		// 		)
+		// 		.subscribe(blob => {
+		// 			console.log(blob);
+		// 			debugger;
+		// 			this.waitingForLoading$.next(false);
+		// 			const fileURL = window.URL.createObjectURL(blob);
+		// 			const link = document.createElement('a');
+		// 			link.href = fileURL;
+		// 			link.click();
+		//
+		// 			window.URL.revokeObjectURL(fileURL);
+		// 			this.waitingForLoading$.next(false);
+		// 		});
+		// }
 	}
 
 	public readonly defaultCols: IStoreTableBaseColumn[] = [

@@ -11,7 +11,6 @@ import { IFilesProposals } from '@app/core/models/client-proposails/client-offer
 export class FilePickerComponent {
 	@Input() public size: 'small' | 'large' | 'medium' = 'medium';
 	@Input() public title: string = '';
-	// @Output() public onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 	@Input() isExpanded: boolean = false;
 	public count: number = 0;
 

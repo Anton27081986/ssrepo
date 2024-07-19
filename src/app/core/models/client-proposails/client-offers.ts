@@ -27,30 +27,7 @@ export interface IFilesProposals {
 	name: string;
 	url: string;
 	checked: boolean;
-}
-
-export interface IClientPropNewProducts {
-	tovProductionId: number;
-	newProductName: string;
-	saleClientsCount: number;
-	salesWeight: number;
-	rating: number;
-	prices: IPrice[];
-	advantages: IAdvantage[];
-	promotionalMaterials: IFilesProposals[];
-	documents: IFilesProposals[];
-}
-
-export interface IClientPropProductionGroups {
-	productionGroupId: number;
-	productionGroupName: string;
-	clientPropNewProducts: IClientPropNewProducts[];
-}
-
-export interface IClientPropTovGroups {
-	tovGroupId: number;
-	tovGroupName: string;
-	clientPropProductionGroups: IClientPropProductionGroups[];
+	uniqId: string;
 }
 
 export interface IClientOffersDto {
