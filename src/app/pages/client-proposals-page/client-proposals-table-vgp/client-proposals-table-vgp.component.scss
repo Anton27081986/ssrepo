@@ -4,6 +4,13 @@
 	display: flex;
 	flex-direction: column;
 
+	&__loader {
+		animation: 1s linear 0s normal none infinite running rotation;
+		z-index: 9999999;
+		width: 15px;
+		height: 15px;
+	}
+
 	&__panel {
 		border-bottom: 1px solid $island-outline;
 		padding: 0 16px 16px 16px;
@@ -122,5 +129,14 @@
 		ss-button:nth-child(2) {
 			width: 129px;
 		}
+	}
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }

@@ -5,10 +5,9 @@
 	<div class="client-proposals-view-files-popover__body">
 		<ng-container *ngFor="let file of files$ | async">
 			<div class="client-proposals-view-files-popover__file-form">
-				<input type="checkbox" [(ngModel)]="file.checked" />
+				<input type="checkbox" [(ngModel)]="file.checked" (change)="onToggle(file.uniqId)" />
 				<a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
 			</div>
 		</ng-container>
 	</div>
 </div>
-<!--(change)="onToggle()"-->

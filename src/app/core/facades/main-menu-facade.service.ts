@@ -36,10 +36,10 @@ export class MainMenuFacadeService {
 					if (mainMenu && mainMenu.menu) {
 						// Temp solution, while links not be changed
 						mainMenu.menu![0].items![5].link = './clients-list';
-						// mainMenu.menu?.[0].items!.push({
-						// 	name: 'Контакт с клиентом',
-						// 	link: '/client-proposals-page',
-						// });
+						mainMenu.menu?.[0].items!.push({
+							name: 'Контакт с клиентом',
+							link: '/client-proposals-page',
+						});
 
 						mainMenu.menu.unshift({
 							link: '',

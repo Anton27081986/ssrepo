@@ -3,9 +3,11 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { BehaviorSubject } from 'rxjs';
 import { IFilesProposals } from '@app/core/models/client-proposails/client-offers';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
 
 interface FileData {
 	files: IFilesProposals[];
+	checkListService: CheckFileListStateService;
 }
 
 @Component({
@@ -27,14 +29,35 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 		this.modalRef.close();
 	}
 
-	// onToggle() {
-	// 	const filterDoc = this.documents$.value.filter(x => x.checked);
-	// 	const filterRim = this.rims$.value.filter(x => x.checked);
-	//
-	// 	this.checkListService.changeArrFile([...filterDoc, ...filterRim]);
-	// }
+	onToggle(uniqId: string) {
+		const file = this.files$.value.find(x => x.uniqId === uniqId);
+
+		if (file) {
+			this.data.checkListService.changeArrFile(file);
+		}
+	}
 
 	ngOnInit() {
-		this.files$.next(this.data.files);
+		let files;
+
+		if (this.data.checkListService.checkFiles$.value.length) {
+			files = this.data.files.map(file => {
+				const findFile = this.data.checkListService.checkFiles$.value.find(
+					checkFiles => file.uniqId === checkFiles.uniqId,
+				);
+				console.log(this.data.checkListService.checkFiles$.value);
+				file.checked = !!findFile;
+
+				return file;
+			});
+		} else {
+			files = this.data.files.map(file => {
+				file.checked = false;
+
+				return file;
+			});
+		}
+
+		this.files$.next(files);
 	}
 }

@@ -1,7 +1,21 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import { Observable } from 'rxjs';
+import {
+	delay,
+	delayWhen,
+	EMPTY,
+	expand,
+	interval,
+	last,
+	map,
+	Observable,
+	of,
+	retryWhen,
+	switchMap,
+	tap,
+	throwError,
+} from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -17,6 +31,8 @@ import {
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
+import { catchError } from 'rxjs/operators';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 export interface IFile {
 	id: number;
@@ -26,6 +42,11 @@ export interface IFile {
 
 export interface IShareFile {
 	files: IFile[];
+}
+
+export interface ILoadFileStatus {
+	blob: Observable<Blob>;
+	isLoad: boolean;
 }
 
 @Injectable({
@@ -151,5 +172,25 @@ export class ClientProposalsApiService {
 		const dataRequest: IShareFile = { files: request };
 
 		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
+	}
+	// Есть проблемы  с скачиванием пока оставлю
+	public getFiles(url: string): Observable<HttpResponse<Blob>> {
+		return this.http.get<Blob>(url, { observe: 'response' }).pipe(
+			expand((response: HttpResponse<Blob>) => {
+				if (response.status === 202) {
+					// Wait for 5 seconds before making another request
+					return this.http.get<Blob>(url, { observe: 'response' }).pipe(delay(3000));
+				} else {
+					// Stop the recursion by returning an empty observable
+					return EMPTY;
+				}
+			}),
+			//last(),
+			catchError(error => {
+				console.error('Error fetching files:', error);
+
+				return throwError(() => new Error('Error fetching files'));
+			}),
+		);
 	}
 }

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.service';
+import {
+	ClientProposalsApiService,
+	ILoadFileStatus,
+} from '@app/core/api/client-proposails-api.service';
 import { filter, map, Observable, OperatorFunction } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
@@ -17,6 +20,7 @@ import {
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class ClientProposalsFacadeService {
@@ -67,11 +71,57 @@ export class ClientProposalsFacadeService {
 	public getClientOffers(
 		params: IRequestGetClientOffer,
 	): Observable<IResponse<IClientOffersDto>> {
-		return this.clientProposalsApiService.getClientOffers(params);
+		return this.clientProposalsApiService.getClientOffers(params).pipe(
+			map(items => {
+				const data = items.items;
+
+				data.forEach(item => {
+					if (item.documents) {
+						item.documents.forEach(doc => {
+							doc.checked = false;
+							doc.uniqId = this.generateRandomString(10);
+						});
+					}
+
+					if (item.promotionalMaterials) {
+						item.promotionalMaterials.forEach(doc => {
+							doc.checked = false;
+							doc.uniqId = this.generateRandomString(10);
+						});
+					}
+				});
+
+				return {
+					total: items.total,
+					items: data,
+					linkToModule: items.linkToModule,
+				};
+			}),
+		);
+	}
+
+	generateRandomString(length: number) {
+		let result = '';
+		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const charactersLength = characters.length;
+
+		for (let i = 0; i < length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+
+		return result;
 	}
 
 	public saveInCloud(files: IFilesProposals[]): Observable<SaveInCloud> {
 		return this.clientProposalsApiService.saveInCloud(files);
+	}
+
+	public getFiles(url: string): Observable<Blob> {
+		return this.clientProposalsApiService.getFiles(url).pipe(
+			map(res => {
+				return res.body as Blob;
+			}),
+		);
 	}
 }
 

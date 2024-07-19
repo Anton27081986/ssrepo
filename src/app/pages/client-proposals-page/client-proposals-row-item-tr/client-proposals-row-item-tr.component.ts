@@ -48,62 +48,14 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 		public readonly columnsStateService: ColumnsStateService,
 		public readonly checkListService: CheckFileListStateService,
 		private readonly modalService: ModalService,
-	) {
-		this.checkListService.checkFiles$.subscribe(checkFiles => {
-			const rims = this.rims$.value;
-			const documents = this.documents$.value;
-
-			if (checkFiles.length) {
-				for (let i = 0; i < checkFiles.length; i++) {
-					this.rims$.next(
-						rims.map(rim => {
-							if (checkFiles[i].id === rim.id) {
-								rim.checked = true;
-							} else {
-								rim.checked = false;
-							}
-
-							return rim;
-						}),
-					);
-
-					this.documents$.next(
-						documents.map(document => {
-							if (checkFiles[i].id === document.id) {
-								document.checked = true;
-							} else {
-								document.checked = false;
-							}
-
-							return document;
-						}),
-					);
-				}
-			} else {
-				this.rims$.next(
-					rims.map(rim => {
-						rim.checked = false;
-
-						return rim;
-					}),
-				);
-
-				this.documents$.next(
-					documents.map(document => {
-						document.checked = false;
-
-						return document;
-					}),
-				);
-			}
-		});
-	}
+	) {}
 
 	ngOnInit() {
 		if (this.item) {
 			if (this.item.promotionalMaterials) {
 				this.rims$.next(this.item.promotionalMaterials.filter(item => item !== null));
 			}
+
 			if (this.item.documents) {
 				this.documents$.next(this.item.documents.filter(item => item !== null));
 			}
@@ -116,14 +68,16 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 	openPopoverRimsView() {
 		const rims = this.rims$.value;
 
-		this.modalService.open(ClientProposalsViewFilesPopoverComponent, { data: { files: rims } });
+		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
+			data: { files: rims, checkListService: this.checkListService },
+		});
 	}
 
 	openPopoverDocumentView() {
 		const documents = this.documents$.value;
 
 		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
-			data: { files: documents },
+			data: { files: documents, checkListService: this.checkListService },
 		});
 	}
 }
