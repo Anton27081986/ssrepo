@@ -1,211 +1,223 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
 
-::ng-deep {
-    .profile-popup {
-        border: 1px solid $border-color;
+:host ss-card {
+	border: none;
+}
 
-        hr {
-            margin-top: 15px;
-            margin-bottom: 0;
-        }
+.profile-popup {
+	position: relative;
+	width: 360px;
+	box-shadow: 4px 4px 10px #00000014;
+	background-color: white;
+	border-radius: 16px;
 
-        position: relative;
-        top: 25px;
-        background-color: white;
-        width: 357px;
-        border-radius: 30px;
-        padding: 37px 21px 37px 21px;
+	.tail-icon {
+		position: absolute;
+		top: -10px;
+		right: 60px;
+	}
 
-        .personal {
-            display: flex;
+	hr {
+		margin-bottom: 0;
+	}
 
-            .img {
-                border-radius: 10px;
-                overflow: hidden;
-                flex: none;
+	.personal {
+		display: flex;
 
-                img {
-                    object-fit: cover;
-                }
-            }
+		.close-icon {
+			position: absolute;
+			right: 16px;
+			top: 20px;
+			cursor: pointer;
+		}
 
-            .title {
-                margin-left: 22px;
+		.img {
+			border-radius: 8px;
+			overflow: hidden;
+			flex: none;
 
-                .fio {
-                    font-size: 18px;
-                    font-weight: bold;
-                    line-height: 19px;
-                    margin-top: 1px;
-                }
-                .job {
-                    font-size: 12px;
-                    line-height: 15px;
-                    margin-top: 16px;
-                }
-            }
-        }
-
-        .contacts {
-            margin-top: 17px;
-
-            .item {
-                display: flex;
-                justify-content: space-between;
-
-                .icon {
-                    svg {
-                        fill: white;
-                    }
-                }
-
-                span:nth-child(2) {
-                    margin-left: 7px;
-                }
-
-                .title {
-                    font-size: 12px;
-                }
-
-                .description {
-                    font-size: 12px;
-                    font-weight: bold;
-                }
-            }
-        }
-
-        .manager {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 17px;
-
-            .settings-icon {
-                fill-opacity: 0;
-            }
-
-            .exit-icon {
-                fill-opacity: 0;
-            }
-
-            .button-icon-left {
-                display: flex;
-                justify-content: center;
-                background-color: #ecf0f2;
-                padding: 12px;
-                border-radius: 16px;
-                cursor: pointer;
-
-                .icon {
-                    font-size: 21px;
-                    padding-top: 1px;
-                }
-                .title {
-                    font-size: 14px;
-                    font-weight: bold;
-                    margin-left: 2px;
-                }
-            }
-        }
-
-		.admin-enter {
-			margin-top: 10px;
-			padding-bottom: 2px;
-
-			.title {
-				font-size: 14px;
-				font-weight: bold;
-				margin-left: 2px;
-			}
-
-			.enter-by-search {
-				margin-top: 17px;
-				display: flex;
-				align-items: center;
-				justify-content: space-between;
-
-				ss-search {
-					width: 234px;
-				}
-
-				.enter-icon {
-					margin-right: 0;
-				}
+			img {
+				object-fit: cover;
 			}
 		}
 
-        .card-list,
-        .logged-user {
-            margin-top: 14px;
+		.title {
+			margin-left: 12px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
 
-            .accordion {
-                display: flex;
-                justify-content: space-between;
-                cursor: pointer;
-            }
+			.fio {
+				margin-top: 0;
+			}
+			.job {
+				display: flex;
+				flex-direction: column;
+				line-height: 16px;
+			}
+		}
+	}
 
-            .accordion > .title {
-                margin-left: 2px;
-                font-size: 12px;
-                font-weight: bold;
-            }
+	.contacts {
+		margin-top: 17px;
 
-            .accordion > .icon {
-                fill-opacity: 0;
-                font-size: 10px;
-                margin-right: 6px;
-                margin-top: 3px;
-            }
+		.item {
+			display: flex;
+			justify-content: space-between;
 
-            .card {
-                margin-top: 17px;
+			div {
+				display: flex;
+				gap: 8px;
+			}
 
-                .personal {
-                    position: relative;
+			.icon {
+				svg {
+					fill: white;
+				}
+			}
 
-                    .img {
-                        border-radius: 14px;
-                        overflow: hidden;
-                        width: 44px;
-                        height: 44px;
+			span:nth-child(2) {
+				margin-left: 7px;
+			}
+		}
+	}
 
-                        img {
-                            width: 44px;
-                        }
-                    }
+	.manager {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 16px;
+		margin-bottom: 16px;
 
-                    .enter-icon {
-                        position: absolute;
-                        right: 17px;
-                        bottom: 0;
-                        font-size: 17px;
-                        fill-opacity: 0;
-                        cursor: pointer;
-                    }
+		.settings-button ss-icon, .exit-button ss-icon {
+			padding-right: 8px;
+		}
+	}
 
-                    .title {
-                        margin-left: 16px;
-                    }
+	.admin-enter {
+		margin-top: 10px;
+		padding: 0 16px;
 
-                    .fio {
-                        font-size: 12px;
-                        font-weight: 600;
-                        margin-top: 0;
-                    }
+		.enter-by-search {
+			margin-top: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 
-                    .job {
-                        max-width: 186px;
-                        font-size: 9px;
-                        line-height: 11px;
-                        font-weight: 500;
-                        margin-top: 0;
-                    }
-                }
-            }
-        }
+			ss-search-input {
+				width: 100%;
+				margin-bottom: 16px;
+			}
 
-        .logged-user {
-            margin-top: 0 !important;
-        }
-    }
+			.enter-icon {
+				margin-right: 0;
+			}
+		}
+	}
+
+	.card-list,
+	.logged-user {
+		margin-top: 14px;
+		padding: 0 8px;
+
+		.accordion {
+			display: flex;
+			justify-content: space-between;
+			cursor: pointer;
+			padding-bottom: 16px;
+		}
+
+		.accordion > .icon {
+			margin-right: 6px;
+			margin-top: 3px;
+		}
+
+		.card {
+			margin-top: 16px;
+
+			.personal {
+				position: relative;
+				display: flex;
+				justify-content: space-between;
+
+				&-data {
+					display: flex;
+
+					.title {
+						.job {
+							max-width: 186px;
+							line-height: 11px;
+						}
+					}
+				}
+
+				&-enter {
+					display: flex;
+					align-items: center;
+				}
+
+				&-enter-icon {
+					position: absolute;
+					right: 17px;
+					bottom: 0;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+	.logged-user {
+		margin-top: 0!important;
+	}
+
+	.card-list.connected {
+		padding: 0 16px 16px 16px;
+
+		.accordion {
+			padding-bottom: 0;
+		}
+
+		.arrowBottom {
+			display: flex;
+			align-items: center;
+		}
+
+		.personal {
+			.title {
+				margin-left: 10px!important;
+			}
+
+			.personal-enter {
+				cursor: pointer;
+			}
+		}
+
+		.arrow-bottom {
+			transform: rotate(180deg);
+		}
+
+		.open {
+			transform: rotate(0deg);
+		}
+	}
 }
+
+:host-context(.dark) {
+	border-radius: 8px;
+
+	.wrapper {
+		background-color: $dark-island;
+		border-radius: 16px;
+	}
+
+	.contacts {
+		background-color: $dark-island;
+	}
+
+	ss-button {
+		border: 1px solid $dark-island-outline;
+		border-radius: 8px;
+	}
+}
+

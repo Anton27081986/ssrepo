@@ -7,4 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CaptionComponent {
 	@Input() public size: '1' | '2' = '1';
+	@Input() public weight: 'semi-bold' | 'medium' | 'regular' = 'medium';
+	@Input() public color: 'black' | 'gray' = 'black';
 }

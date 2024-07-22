@@ -17,6 +17,9 @@ export class ClientsCardFacadeService {
 	public methodFileLink =
 		'https://erp-dev.ssnab.it/api/static/general/2024/04/10/Методика_расчета_категории_Дистрибьюторов_5f544e66-24fb-417d-8a0e-a71dd2010ba5.xlsx';
 
+	public instructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2024/07/19/Инструкция_Карточка_клиента_8297f84a-348f-4a8b-a889-f5febc111134.docx';
+
 	public notInitPermission = 'not-init';
 
 	private readonly clientIdSubject = new BehaviorSubject<number | null>(null);
@@ -45,7 +48,7 @@ export class ClientsCardFacadeService {
 		private readonly callPhoneService: CallPhoneService,
 	) {}
 
-	public setClientId(id: number) {
+	public setClientId(id: number | null) {
 		this.clientIdSubject.next(id);
 	}
 

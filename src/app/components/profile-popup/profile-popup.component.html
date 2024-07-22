@@ -1,161 +1,170 @@
-<div class="profile-popup">
-  <div class="wrapper">
+<ss-card padding="0" class="profile-popup">
+	<ss-icon name="tail" height="13" width="32" class="tail-icon"></ss-icon>
+	<div class="wrapper">
 
-    <ng-container *ngIf="userProfile$ | async as url">
-      <div class="card">
-        <div class="personal">
-          <div class="img">
+		<ng-container *ngIf="userProfile$ | async as url">
+			<ss-card padding="16px" class="card">
+				<div class="personal">
+					<ss-icon name="close" width="14" height="14" class="close-icon" (click)="close()"></ss-icon>
 
-            <ng-container>
-              <img src="{{ url!.avatarUrl }}" alt="user" />
-            </ng-container>
+					<div class="img">
+						<ng-container>
+							<ss-avatar [src]="url!.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+						</ng-container>
 
-          </div>
-          <div class="title">
-            <div class="fio">
-              <span>{{ url!.name }}</span>
-            </div>
-            <div class="job">
-              <div>
-                <div>{{ url?.position }}</div>
-                <div>{{ url?.department }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="contacts">
-          <div class="item" *ngIf="url?.phone">
-            <div>
-              <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
-              <span class="title">Tелефон:</span>
-            </div>
-            <div>
-              <span class="description">{{ url?.phone }}</span>
-            </div>
-          </div>
-          <div class="item" *ngIf="url?.phoneLocal">
-            <div>
-              <span class="icon phone-icon" nz-icon [nzType]="'ss:phone'"></span>
-              <span class="title">Внутренний телефон:</span>
-            </div>
-            <div>
-              <span class="description">{{ url?.phoneLocal }}</span>
-            </div>
-          </div>
-          <div class="item" *ngIf="url?.email">
-            <div>
-              <span class="icon" nz-icon [nzType]="'ss:mail'"></span>
-              <span class="title">Email:</span>
-            </div>
-            <div>
-              <span class="description">{{ url?.email }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </ng-container>
+					</div>
+					<div class="title">
+						<div class="fio">
+							<ss-text size="1" weight="medium">{{ url!.name }}</ss-text>
+						</div>
+						<div class="job">
+							<ss-caption size="2" color="gray">{{ url?.position }}</ss-caption>
+							<ss-caption size="2" color="gray">{{ url?.department }}</ss-caption>
+						</div>
+					</div>
+				</div>
+				<div class="contacts">
+					<div class="item" *ngIf="url?.phone">
+						<div>
+							<ss-icon name="phone" height="16" width="16"></ss-icon>
+							<ss-text size="3" class="title">Tелефон:</ss-text>
+						</div>
+						<div>
+							<ss-text size="3" class="description" color="gray">{{ url?.phone }}</ss-text>
+						</div>
+					</div>
+					<div class="item" *ngIf="url?.phoneLocal">
+						<div>
+							<ss-icon name="phone" height="16" width="16"></ss-icon>
+							<ss-text size="3" class="title">Внутренний телефон:</ss-text>
+						</div>
+						<div>
+							<ss-text size="3" class="description" color="gray">{{ url?.phoneLocal }}</ss-text>
+						</div>
+					</div>
+					<div class="item" *ngIf="url?.email">
+						<div>
+							<ss-icon name="mail" height="16" width="16"></ss-icon>
+							<ss-text size="3" class="title">Email:</ss-text>
+						</div>
+						<div>
+							<ss-text size="3" class="description" color="gray">{{ url?.email }}</ss-text>
+						</div>
+					</div>
+				</div>
+			</ss-card>
+		</ng-container>
 
+		<div class="manager">
+			<ng-container *ngIf="userProfile$ | async as data">
+				<ng-container *ngIf="!data?.loggedUser">
 
-    <ng-container *ngIf="userProfile$ | async as data">
-      <ng-container *ngIf="data?.loggedUser as loggedUser">
-      <hr />
-        <div class="card-list">
-        <div class="accordion">
-            <div class="card logged-user">
-              <div class="personal">
-                <div class="img">
-                  <img src="{{ loggedUser?.avatarUrl }}" alt="users" />
-                </div>
-                <div class="title">
-                  <div class="fio">
-                    <span>{{ loggedUser?.lastName }} {{ loggedUser?.firstName }} {{ loggedUser?.surName }}</span>
-                  </div>
-                  <div class="job">
-                    <div>
-                      <div>{{ loggedUser?.position }}</div>
-                      <div>{{ loggedUser?.department }}</div>
-                    </div>
-                  </div>
-                </div>
-                <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(loggedUser)"></span>
-              </div>
-            </div>
-        </div>
-      </div>
+					<ss-button size="small" type="muted" class="settings-button" [routerLink]="'profile/settings'">
+						<ss-icon name="settings2"></ss-icon>
+						<span>Настройки профиля</span>
+					</ss-button>
 
-      </ng-container>
-    </ng-container>
-    <hr />
+				</ng-container>
+			</ng-container>
 
-    <div class="manager">
-      <ng-container *ngIf="userProfile$ | async as data">
-        <ng-container *ngIf="!data?.loggedUser">
-          <div nz-menu-item [routerLink]="'profile/settings'" class="button-icon-left">
-            <span class="icon settings-icon" nz-icon [nzType]="'ss:settings'"></span>
-            <span class="title">Настройки профиля</span>
-          </div>
-        </ng-container>
-      </ng-container>
+			<ss-button size="small" type="muted" class="exit-button" (click)="logout()">
+				<ss-icon name="exit2"></ss-icon>
+				Выйти
+			</ss-button>
+		</div>
 
-      <div class="button-icon-left" (click)="logout()">
-        <span class="icon exit-icon" nz-icon [nzType]="'ss:exit'"></span>
-        <span class="title">Выйти</span>
-      </div>
-    </div>
+		<ng-container *ngIf="userProfile$ | async as data">
+			<ng-container *ngIf="data?.loggedUser as loggedUser">
+				<hr />
+				<div class="card-list">
+					<div class="accordion">
+						<ss-card padding="16" class="card logged-user">
+							<div class="personal">
+								<div class="personal-data">
+									<div class="img">
+										<ss-avatar [src]="loggedUser?.avatarUrl!" size="xs" [isSquare]="false"></ss-avatar>
+									</div>
+									<div class="title">
+										<div class="fio">
+											<ss-text size="3">{{ loggedUser?.lastName }} {{ loggedUser?.firstName }} {{ loggedUser?.surName }}</ss-text>
+										</div>
+										<div class="job">
+											<div>
+												<ss-caption size="2" color="gray">{{ loggedUser?.position }}</ss-caption>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="personal-enter">
+									<ss-icon name="enter" (click)="enterUnderFriendlyAccount(loggedUser)"></ss-icon>
+								</div>
+							</div>
+						</ss-card>
+					</div>
+				</div>
 
-    <hr />
+			</ng-container>
+		</ng-container>
+
+		<hr />
 
 		<ng-container *ngIf="userProfile$ | async as data">
 			<div class="admin-enter" *ngIf="data?.isAdmin === true">
-				<span class="title">Войти под сотрудником</span>
+				<ss-caption size="2">Войти под сотрудником</ss-caption>
 				<div class="enter-by-search">
-					<ss-search-with-auth
-						[placeholder]="'Выберите сотрудника'"
-						[adminEnter]="true"
-						[closeIcon]="true"
-						[searchIcon]="true"
-					>
-					</ss-search-with-auth>
-
-					<div>
-						<span class="icon enter-icon" nz-icon [nzType]="'ss:enter'"></span>
-					</div>
+					<ss-search-input class="search"
+									 searchType="user"
+									 placeholder="Поиск"
+									 size="small"
+									 [clear]="true"
+									 (select)="AuthUser($event)">
+					</ss-search-input>
 				</div>
 			</div>
 
-			<hr *ngIf="data?.isAdmin === true" />
+			<ng-container *ngIf="friendsAccount?.length!>0">
+				<hr *ngIf="data?.isAdmin === true" />
+			</ng-container>
 		</ng-container>
 
-    <ng-container *ngIf="friendsAccount as accounts">
-      <div class="card-list" *ngIf="accounts.length>0">
-        <div class="accordion" (click)="statusAccordion=!statusAccordion;">
-        <span class="title">Связь с другими сотрудниками</span>
-        <span class="icon" nz-icon [nzType]="'ss:arrowBottom'"></span>
-      </div>
+		<ng-container *ngIf="friendsAccount as accounts">
+			<div class="card-list connected" *ngIf="accounts.length>0">
+				<div class="accordion" (click)="isExpanded=!isExpanded;">
+					<ss-text size="3" weight="medium">Связь с другими сотрудниками: {{ accounts.length }}</ss-text>
+					<div class="arrowBottom">
+						<ss-icon name="arrowBottom" width="16" height="8" class="arrow-bottom"
+								 [class.open]="isExpanded"
+						></ss-icon>
+					</div>
+				</div>
 
-      <ng-container *ngIf="statusAccordion">
-          <div class="card" *ngFor="let account of accounts">
-            <div class="personal">
-              <div class="img">
-                <img src="{{ account?.avatarUrl }}" alt="users" />
-              </div>
-              <div class="title">
-                <div class="fio">
-                  <span>{{ account?.lastName }} {{ account?.firstName }} {{ account?.surName }}</span>
-                </div>
-                <div class="job">
-                  <div>
-                    <div>{{ account?.position }}</div>
-                    <div>{{ account?.department }}</div>
-                  </div>
-                </div>
-              </div>
-              <span class="icon enter-icon" nz-icon [nzType]="'ss:enter'" (click)="enterUnderFriendlyAccount(account)"></span>
-            </div>
-          </div>
-        </ng-container>
+				<ng-container *ngIf="isExpanded">
+					<ss-card padding="16" class="card" *ngFor="let account of accounts">
+						<div class="personal">
+							<div class="personal-data">
+								<div class="img">
+									<ss-avatar [src]="account?.avatarUrl!" size="xs" [isSquare]="false"></ss-avatar>
+								</div>
+								<div class="title">
+									<div class="fio">
+										<ss-caption size="1">{{ account?.lastName }} {{ account?.firstName }} {{ account?.surName }}</ss-caption>
+									</div>
+									<div class="job">
+										<div>
+											<ss-caption size="2" color="gray">{{ account?.position }}{{ account?.department ? ', ': ''}}</ss-caption>
+											<ss-caption size="2" color="gray">{{ account?.department }}</ss-caption>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="personal-enter">
+								<ss-icon name="enter" (click)="enterUnderFriendlyAccount(account)"></ss-icon>
+							</div>
+						</div>
+					</ss-card>
+				</ng-container>
 
-    </div>
-    </ng-container>
-  </div>
-</div>
+			</div>
+		</ng-container>
+	</div>
+</ss-card>

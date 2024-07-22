@@ -1,179 +1,86 @@
 @use 'src/styles/colors.scss' as *;
 
 :host {
-	display: grid;
 	height: 100%;
-	overflow-y: hidden;
-	position: relative;
-	border-radius: 16px;
-	overflow-x: auto;
 	width: 100%;
-}
-
-.pseudo-header {
-	display: flex;
-	width: 100%;
-	position: absolute;
-	top: 0;
-	z-index: 999;
-	background-color: #F2F3F7;
-
-	&__item {
-		text-align: left;
-		background-color: #F2F3F7 ;
-		font-size: 14px;
-		font-weight: 700;
-		line-height: 19px;
-		letter-spacing: -0.01em;
-		color: $text;
-		border: 1px solid $island-outline;
-	}
-
-	&__item:first-child {
-		border-top-left-radius: 16px;
-	}
-
-	&__item:last-child {
-		flex-grow: 1;
-		border-top-right-radius: 16px;
-	}
-}
-
-.table-wrapper {
 	display: flex;
 	flex-direction: column;
-	max-height: 100%;
-	overflow-y: auto;
+	overflow-y: hidden;
+	position: relative;
+	overflow-x: auto;
 
-	table {
-		width: 100%;
-		background-color: $island;
-		border-spacing: 0;
-		border-collapse: collapse;
+	.header {
+		display: grid;
+		grid-auto-columns: 1fr;
+		border: 1px solid #E4E8EA;
+		border-radius: 16px 16px 0 0;
+		background-color: #F2F3F7;
 
-		thead {
-			width: 100%;
-			visibility: hidden;
-
-			tr {
-				min-width: 100%;
-
-				th {
-					text-align: left;
-					background-color: #F2F3F7 ;
-					border: 1px solid $island-outline;
-					font-size: 14px;
-					font-weight: 700;
-					line-height: 19px;
-					letter-spacing: -0.01em;
-					color: $text;
-				}
-			}
+		&__cell {
+			border-right: 1px solid #E4E8EA;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-weight: 600;
 		}
 
-		tbody tr:last-child td:first-child { border-bottom-left-radius: 16px; }
-		tbody tr:last-child td:last-child { border-bottom-right-radius: 16px; }
-
-		tbody {
-			tr {
-				td {
-					position: relative;
-					//padding: 12px;
-					font-size: 12px;
-					color: $text;
-
-					font-weight: 400;
-					white-space: nowrap;
-					max-height: 300px;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					max-width: 180px;
-					word-break: break-word;
-					border: 1px solid $island-outline;
-
-					a {
-						font-size: 14px;
-						color: $main-outline ;
-						font-weight: 400;
-						opacity: 0.7;
-						text-align: left;
-						cursor: pointer;
-
-					}
-
-					a:after {
-						content: ', ';
-					}
-
-					a:last-child:after {
-						content: '';
-					}
-
-					a:hover {
-						opacity: 1;
-					}
-
-					.maximise {
-						position: absolute;
-						bottom: 8px;
-						right: 12px;
-						cursor: pointer;
-					}
-				}
-
-				td.overflow {
-					padding-right: 32px !important;
-				}
-
-				td:first-child {
-
-					a {
-						white-space: nowrap;
-					}
-				}
-
-				.highlight {
-					background-color: #FFE8E9;
-				}
-			}
+		&__cell:last-child {
+			border-right: none;
 		}
-
-		tr:first-child {
-			border-bottom-left-radius: 16px;
-		}
-
-		tr:last-child {
-			border-bottom-right-radius: 16px;
-		}
-
 	}
 
-	.empty-space {
-		flex-grow: 1;
+	.header.scroll {
+		width: calc(100% - 4px);
+	}
+
+	.body {
+		overflow-y: auto;
+		background-color: $island;
+
+		&__row {
+			display: grid;
+			grid-auto-columns: 1fr;
+			border-left: 1px solid #E4E8EA;
+			border-right: 1px solid #E4E8EA;
+			border-bottom: 1px solid #E4E8EA;
+		}
+
+		&__row:last-child {
+			border-radius: 0 0 16px 16px;
+		}
+
+		&__cell {
+			position: relative;
+			border-right: 1px solid #E4E8EA;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			max-height: 300px;
+
+			.maximise {
+				position: absolute;
+				right: 4px;
+				bottom: 4px;
+				cursor: pointer;
+			}
+		}
+
+		&__cell:last-child {
+			border-right: none;
+		}
 	}
 }
 
-:host-context(.dark) table {
-	background-color: $dark-island;
+:host-context(.dark) :host {
+	background-color: $dark-island !important;
 
-	thead {
-		tr {
-			th {
-				text-align: left;
-				background-color: #24292D;
-				color: $island;
-			}
-		}
+	.header {
+		background-color: #24292D;
+		color: $island;
 	}
 
-	tr {
-		td {
-			color: $island !important;
-
-			a {
-				color: $island !important;
-			}
-		}
+	.body {
+		background-color: #394545 !important;
+		color: $island !important;
 
 		.highlight {
 			background-color: #FF5A5A !important;

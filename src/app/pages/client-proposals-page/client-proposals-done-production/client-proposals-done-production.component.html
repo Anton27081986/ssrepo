@@ -8,11 +8,10 @@
 
 			<div class="client-proposals-done-production__content" *ngIf="production.total > 0;else empty">
 				<ss-table
-					[scroll]="true"
 					[padding]="'8px'"
 					[head]="[
 							{title: 'ВГП', field: 'name'},
-							{title: 'Обьем производства', field: 'quantity'},
+							{title: 'Объём производства, тн/год', field: 'quantity'},
 							]"
 					[items]="getTableItems(production)"
 				>

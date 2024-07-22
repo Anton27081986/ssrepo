@@ -1,4 +1,4 @@
-<div class="avatar" *ngIf="src; else noAvatar" style="background: center / contain no-repeat url('{{src}}'); width: {{width}}px; height: {{height}}px">
+<div class="avatar" *ngIf="!noImage; else noAvatar" style="background: center / contain no-repeat url('{{src}}'); width: {{width}}px; height: {{height}}px">
 	<img alt="" src="{{src}}" width="0" height="0" (error)="onImageError()" />
 </div>
 

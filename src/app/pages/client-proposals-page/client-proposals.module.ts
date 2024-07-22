@@ -41,6 +41,7 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
+import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
 
 @NgModule({
 	declarations: [
@@ -60,6 +61,7 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 		ClientProposalsDoneProductionComponent,
 		ClientProposalsTabsCanvasComponent,
 		ClientProposalsRowItemTrComponent,
+		ClientProposalsViewFilesPopoverComponent,
 	],
 	imports: [
 		CommonModule,

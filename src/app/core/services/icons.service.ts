@@ -23,8 +23,6 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:sun', AppIcons.iconSun);
 		this.nzIconService.addIconLiteral('ss:logo', AppIcons.iconLogoHeader);
 		this.nzIconService.addIconLiteral('ss:logofooter', AppIcons.iconLogoFooter);
-		this.nzIconService.addIconLiteral('ss:close', AppIcons.iconClose);
-		this.nzIconService.addIconLiteral('ss:closeLight', AppIcons.iconCloseLight);
 		this.nzIconService.addIconLiteral('ss:phone', AppIcons.phone);
 		this.nzIconService.addIconLiteral('ss:mail', AppIcons.mail);
 		this.nzIconService.addIconLiteral('ss:direction', AppIcons.direction);
@@ -58,7 +56,6 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:star', AppIcons.star);
 		this.nzIconService.addIconLiteral('ss:sort', AppIcons.sort);
 		this.nzIconService.addIconLiteral('ss:theme', AppIcons.theme);
-		this.nzIconService.addIconLiteral('ss:closeFill', AppIcons.closeFill);
 		this.nzIconService.addIconLiteral('ss:arrowRightH', AppIcons.arrowRightH);
 		this.nzIconService.addIconLiteral('ss:oneConnectIn', AppIcons.oneConnectIn);
 		this.nzIconService.addIconLiteral('ss:oneConnectOut', AppIcons.oneConnectOut);

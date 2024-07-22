@@ -1,5 +1,6 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
 
 .settings {
     display: flex;
@@ -111,3 +112,16 @@
         }
     }
 }
+
+:host-context(.dark) {
+	.left-menu > .group > .item {
+		background-color: $dark-island;
+	}
+
+	.left-menu > .group {
+		background-color: $dark-island;
+	}
+}
+
+
+
