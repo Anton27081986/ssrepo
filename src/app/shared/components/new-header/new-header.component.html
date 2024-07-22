@@ -3,7 +3,7 @@
 		<div class="content">
 			<div class="header">
 				<div class="icon-bg mobile-burger" (click)="menuToggle($event)">
-					<ss-icon [name]="statusBurger ? 'iconClose' : 'iconBurger'"></ss-icon>
+					<ss-icon [name]="statusBurger ? 'close' : 'iconBurger'"></ss-icon>
 				</div>
 				<div class="logo" [routerLink]="AppRoutes.root">
 					  <span>
@@ -16,18 +16,18 @@
 					</div>
 					<div class="nav-right">
 						<div class="icon-bg burger" (click)="menuToggle($event)">
-							<ss-icon [name]="statusBurger ? 'iconClose' : 'iconBurger'"></ss-icon>
+							<ss-icon [name]="statusBurger ? 'close' : 'iconBurger'"></ss-icon>
 						</div>
 
 						<div class="search-header">
 							<app-all-search *ngIf="statusInputSearch"></app-all-search>
 
 							<div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
-								<ss-icon height="30" [name]="statusInputSearch ? 'iconCloseLight' : 'search2'"></ss-icon>
+								<ss-icon height="30" [name]="statusInputSearch ? 'close' : 'search2'"></ss-icon>
 							</div>
 
 							<div class="icon-bg search-mobile" (click)="openSearchMobile($event)">
-								<ss-icon [name]="statusInputSearchMobile ? 'iconCloseLight' : 'search'"></ss-icon>
+								<ss-icon [name]="statusInputSearchMobile ? 'close' : 'search'"></ss-icon>
 							</div>
 						</div>
 

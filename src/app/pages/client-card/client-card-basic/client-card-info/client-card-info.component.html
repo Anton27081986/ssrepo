@@ -22,7 +22,7 @@
 			</ng-container>
 		</div>
 		<ng-template #closeButton>
-			<ss-icon name="iconCloseLight" (click)="onEditing(false)"></ss-icon>
+			<ss-icon name="close" (click)="onEditing(false)"></ss-icon>
 		</ng-template>
 	</div>
 	<form class="info-list" [formGroup]="infoForm" (submit)="$event.preventDefault()">

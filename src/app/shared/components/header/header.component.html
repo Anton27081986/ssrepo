@@ -26,7 +26,7 @@
 									<app-all-search *ngIf="statusInputSearch"></app-all-search>
 
 									<div class="icon-bg search" [class]="statusInputSearch? 'small' : ''" (click)="openSearch($event)">
-										<span nz-icon [nzType]="statusInputSearch ? 'ss:closeLight' : 'ss:search'" class="search-icon" nzTheme="outline"></span>
+										<span nz-icon [nzType]="statusInputSearch ? 'ss:close' : 'ss:search'" class="search-icon" nzTheme="outline"></span>
 									</div>
 
 									<div class="icon-bg search-mobile" (click)="openSearchMobile($event)">
