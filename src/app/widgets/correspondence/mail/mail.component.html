@@ -18,7 +18,7 @@
 				<ss-text size="2" weight="semi-bold" class="reply-author">В ответ: {{ (repliedMessage$ | async)?.message?.author?.name }}</ss-text>
 				<div class="reply-text" [innerHTML]="(repliedMessage$ | async)?.message?.text"></div>
 			</div>
-			<ss-icon width="12" height="12" name="iconClose" class="close-reply" (click)="closeReply()"></ss-icon>
+			<ss-icon width="12" height="12" name="close" class="close-reply" (click)="closeReply()"></ss-icon>
 		</div>
 		<div class="editor" [ngClass]="{'error': mailForm.controls.text.hasError('required') && mailForm.controls.text.touched}">
 			<div class="editor-container editor-container_classic-editor" #editorContainerElement>

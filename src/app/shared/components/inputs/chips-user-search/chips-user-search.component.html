@@ -4,7 +4,7 @@
 		<div class="chips" *ngFor="let item of selectedItems;  index as i">
 			<ss-avatar size="xs" [src]="item?.avatarUrl"></ss-avatar>
 			<ss-text size="3">{{ item.name }}</ss-text>
-			<ss-icon height="10" width="10" name="iconClose" (click)="onRemoveItemFromList(i)"></ss-icon>
+			<ss-icon height="10" width="10" name="close" (click)="onRemoveItemFromList(i)"></ss-icon>
 		</div>
 		<input type="text"
 			   [placeholder]="placeholder"
