@@ -48,7 +48,7 @@ export class ClientsCardFacadeService {
 		private readonly callPhoneService: CallPhoneService,
 	) {}
 
-	public setClientId(id: number) {
+	public setClientId(id: number | null) {
 		this.clientIdSubject.next(id);
 	}
 
