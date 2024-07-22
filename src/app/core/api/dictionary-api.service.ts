@@ -30,7 +30,7 @@ export class DictionaryApiService {
 	/** Список контрагентов */
 	public getContractors(
 		query?: string,
-		clientId?: number,
+		clientId?: number | null,
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
