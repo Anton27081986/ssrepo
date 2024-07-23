@@ -1,13 +1,10 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import {
-	ClientProposalsFacadeService,
-	filterTruthy,
-} from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, debounceTime, map, Observable, Subscription, switchMap, tap } from 'rxjs';
+import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
+import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
@@ -23,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 	styleUrls: ['./client-proposals-table-vgp.component.scss'],
 	providers: [ColumnsStateService, CheckFileListStateService],
 })
-export class ClientProposalsTableVgpComponent {
+export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 	protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private productionIds: number[] = [];
@@ -31,7 +28,6 @@ export class ClientProposalsTableVgpComponent {
 		null | string
 	>(null);
 
-	private urlInCloud: string | null = null;
 	@Input() clientId: number | null = null;
 
 	protected clientOffers$: Observable<IResponse<IClientOffersDto>> | undefined;
@@ -46,6 +42,9 @@ export class ClientProposalsTableVgpComponent {
 		protected readonly http: HttpClient,
 	) {
 		this._columnState.cols$.next(this.defaultCols);
+	}
+
+	ngOnInit() {
 		this.subscription.add(
 			this.productionIds$.subscribe(ids => {
 				if (ids.length && this.clientId) {
@@ -89,13 +88,18 @@ export class ClientProposalsTableVgpComponent {
 		this.productionIds$.next(this.productionIds);
 	}
 
+	ngOnChanges(changes: SimpleChanges) {
+		if (changes.clientId) {
+			this.ngOnInit();
+		}
+	}
+
 	protected getUrlFile() {
 		this.subscription.add(
 			this.clientProposalsFacadeService
 				.saveInCloud(this.checkListStateService.checkFiles$.value)
 				.subscribe(val => {
 					this.urlInCloud$.next(val.shareLink);
-					this.urlInCloud = val.shareLink;
 				}),
 		);
 	}
@@ -174,7 +178,7 @@ export class ClientProposalsTableVgpComponent {
 		},
 		{
 			id: ClientProposalsRowItemField.volumeOfSales,
-			title: 'Объём продаж, тн/год',
+			title: 'Объём продаж ТПР, тн/год',
 			order: 6,
 			show: true,
 		},
