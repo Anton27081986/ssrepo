@@ -1,21 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import {
-	delay,
-	delayWhen,
-	EMPTY,
-	expand,
-	interval,
-	last,
-	map,
-	Observable,
-	of,
-	retryWhen,
-	switchMap,
-	tap,
-	throwError,
-} from 'rxjs';
+import { delay, map, Observable, of, retryWhen, switchMap, take, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -32,7 +18,6 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { catchError } from 'rxjs/operators';
-import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 export interface IFile {
 	id: number;
@@ -173,24 +158,35 @@ export class ClientProposalsApiService {
 
 		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
 	}
-	// Есть проблемы  с скачиванием пока оставлю
-	public getFiles(url: string): Observable<HttpResponse<Blob>> {
-		return this.http.get<Blob>(url, { observe: 'response' }).pipe(
-			expand((response: HttpResponse<Blob>) => {
-				if (response.status === 202) {
-					// Wait for 5 seconds before making another request
-					return this.http.get<Blob>(url, { observe: 'response' }).pipe(delay(3000));
-				} else {
-					// Stop the recursion by returning an empty observable
-					return EMPTY;
-				}
-			}),
-			//last(),
-			catchError(error => {
-				console.error('Error fetching files:', error);
 
-				return throwError(() => new Error('Error fetching files'));
-			}),
+	public getFiles(url: string): Observable<Blob> {
+		return timer(0, 5000).pipe(
+			switchMap(() =>
+				this.http.get<Blob>(url, { observe: 'response', responseType: 'blob' as 'json' }),
+			),
+			map(response => this.handleResponse(response)),
+			catchError((error: unknown) => this.handleError(error)),
+			take(1),
 		);
+	}
+
+	private handleResponse(response: HttpResponse<Blob>) {
+		if (response.status === 200 && response.body) {
+			return response.body;
+		}
+
+		throw new Error(`Unexpected response status: ${response.status}`);
+	}
+
+	private handleError(error: any): Observable<never> {
+		if (error.status === 404) {
+			console.info('File not found. Retrying...');
+
+			return throwError(() => error);
+		}
+
+		console.error('Error fetching file from S3:', error);
+
+		return throwError(() => new Error('Error fetching file from S3'));
 	}
 }

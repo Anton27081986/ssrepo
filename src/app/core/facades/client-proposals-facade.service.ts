@@ -100,7 +100,7 @@ export class ClientProposalsFacadeService {
 		);
 	}
 
-	generateRandomString(length: number) {
+	public generateRandomString(length: number) {
 		let result = '';
 		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		const charactersLength = characters.length;
@@ -117,11 +117,7 @@ export class ClientProposalsFacadeService {
 	}
 
 	public getFiles(url: string): Observable<Blob> {
-		return this.clientProposalsApiService.getFiles(url).pipe(
-			map(res => {
-				return res.body as Blob;
-			}),
-		);
+		return this.clientProposalsApiService.getFiles(url);
 	}
 }
 
