@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import { delay, map, Observable, of, retryWhen, switchMap, take, throwError, timer } from 'rxjs';
+import { interval, map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -160,17 +160,28 @@ export class ClientProposalsApiService {
 	}
 
 	public getFiles(url: string): Observable<Blob> {
-		return timer(0, 5000).pipe(
-			switchMap(() =>
-				this.http.get<Blob>(url, { observe: 'response', responseType: 'blob' as 'json' }),
-			),
-			map(response => this.handleResponse(response)),
-			catchError((error: unknown) => this.handleError(error)),
-			take(1),
-		);
+		return this.http
+			.get<Blob>(url, { observe: 'response', responseType: 'blob' as 'json' })
+			.pipe(
+				map(response => this.handleResponse(response)),
+				retryWhen(errors =>
+					errors.pipe(
+						switchMap(error => {
+							if (error.status !== 200) {
+								console.log('Retrying request...');
+
+								return timer(1000); // Повторная попытка через 1 секунду
+							}
+
+							return throwError(error);
+						}),
+					),
+				),
+				catchError(this.handleError),
+			);
 	}
 
-	private handleResponse(response: HttpResponse<Blob>) {
+	private handleResponse(response: HttpResponse<Blob>): Blob {
 		if (response.status === 200 && response.body) {
 			return response.body;
 		}
@@ -179,12 +190,6 @@ export class ClientProposalsApiService {
 	}
 
 	private handleError(error: any): Observable<never> {
-		if (error.status === 404) {
-			console.info('File not found. Retrying...');
-
-			return throwError(() => error);
-		}
-
 		console.error('Error fetching file from S3:', error);
 
 		return throwError(() => new Error('Error fetching file from S3'));
