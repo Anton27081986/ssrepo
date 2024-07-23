@@ -1,6 +1,6 @@
 <div class="wrapper" (click)="close()">
 	<ss-card class="dialog" padding="16px 42px 16px 16px" (click)="$event.stopPropagation()">
-		<ss-text size="2" *ngIf="cell">
+		<ss-text class="body" size="2" *ngIf="cell">
 			<ng-container [ngSwitch]="true">
 				<a *ngSwitchCase="!!cell?.url" href="{{ cell.url }}" target="_blank">
 					{{ cell.text }}
