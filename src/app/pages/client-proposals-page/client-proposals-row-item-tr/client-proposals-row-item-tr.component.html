@@ -50,6 +50,8 @@
 						<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
 								 (click)="showText(advantagesTpr.join('\n'))"></ss-icon>
 					</div>
+					<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
+							 (click)="showText(advantagesTpr)"></ss-icon>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">

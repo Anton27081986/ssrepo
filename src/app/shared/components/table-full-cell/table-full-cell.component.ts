@@ -5,6 +5,7 @@ import { Cell } from '@app/shared/components/table/table.component';
 
 interface DialogData {
 	cell: Cell;
+	arr: string[];
 }
 
 @Component({

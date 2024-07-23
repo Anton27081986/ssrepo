@@ -77,10 +77,12 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 		this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
 	}
 
-	showText(text: string) {
+	showText(text: string[]) {
 		this.modalService.open(TableFullCellComponent, {
 			data: {
-				cell: text,
+				cell: text.map(item => {
+					return { text: item };
+				}),
 			},
 		});
 	}
