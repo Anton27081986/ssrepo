@@ -5,11 +5,16 @@
 				<a *ngSwitchCase="!!cell?.url" href="{{ cell.url }}" target="_blank">
 					{{ cell.text }}
 				</a>
-				<span *ngSwitchCase="Array.isArray(cell)">
-					<a *ngFor="let link of cell" href="{{ link.url }}" target="_blank">
-						{{ link.text }}
-					</a>
-				</span>
+				<p class="column" *ngSwitchCase="Array.isArray(cell)">
+					<ng-container *ngFor="let item of cell">
+						<a *ngIf="item?.url; else noLink" href="{{ item.url }}" target="_blank">
+							{{ item.text }}
+						</a>
+						<ng-template #noLink>
+							<span>{{ item.text }}</span>
+						</ng-template>
+					</ng-container>
+				</p>
 				<span *ngSwitchDefault>{{ cell }}</span>
 			</ng-container>
 		</ss-text>

@@ -18,6 +18,12 @@
 	position: relative;
 	z-index: 999999;
 
+	.column {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
 	.close-icon {
 		position: absolute;
 		cursor: pointer;
