@@ -45,10 +45,8 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
-					<div class="hc-table-td__td">
+					<div class="hc-table-td__td limit">
 						<div #content class="hc-table-td__content" *ngIf="advantagesTpr">{{ advantagesTpr }}</div>
-						<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
-								 (click)="showText(advantagesTpr)"></ss-icon>
 					</div>
 					<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
 							 (click)="showText(advantagesTpr)"></ss-icon>
