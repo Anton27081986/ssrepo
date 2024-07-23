@@ -1,10 +1,13 @@
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
+import {
+	ClientProposalsFacadeService,
+	filterTruthy,
+} from '@app/core/facades/client-proposals-facade.service';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
@@ -12,6 +15,7 @@ import { IStoreTableBaseColumn } from '@app/core/store';
 import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
 import { HttpClient } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -28,13 +32,11 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 		null | string
 	>(null);
 
-	@Input() clientId: number | null = null;
+	@Input() public clientId: number | null = null;
 
 	protected clientOffers$: Observable<IResponse<IClientOffersDto>> | undefined;
 
-	private readonly subscription: Subscription = new Subscription();
-
-	constructor(
+	public constructor(
 		private readonly modalService: ModalService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		protected readonly _columnState: ColumnsStateService,
@@ -44,26 +46,22 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 		this._columnState.cols$.next(this.defaultCols);
 	}
 
-	ngOnInit() {
-		this.subscription.add(
-			this.productionIds$.subscribe(ids => {
-				if (ids.length && this.clientId) {
-					this.clientOffers$ = this.clientProposalsFacadeService.getClientOffers({
-						clientId: this.clientId,
-						productionIds: ids,
-					});
-				}
-			}),
-		);
+	public ngOnInit() {
+		this.productionIds$.pipe(untilDestroyed(this)).subscribe(ids => {
+			if (ids.length && this.clientId) {
+				this.clientOffers$ = this.clientProposalsFacadeService.getClientOffers({
+					clientId: this.clientId,
+					productionIds: ids,
+				});
+			}
+		});
 	}
 
 	protected getSelected(event: IFilterOption[]) {
 		if (event.length) {
-			const ids: number[] = event.map(item => {
+			this.productionIds = event.map(item => {
 				return item.id;
 			});
-
-			this.productionIds = ids;
 		} else {
 			this.productionIds = [];
 		}
@@ -77,9 +75,12 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 		const files = this.checkListStateService.checkFiles$.value;
 
 		if (files.length) {
-			this.clientProposalsFacadeService.saveInCloud(files).subscribe(url => {
-				this.openPopoverSendToTheCloud(url.shareLink);
-			});
+			this.clientProposalsFacadeService
+				.saveInCloud(files)
+				.pipe(untilDestroyed(this))
+				.subscribe(url => {
+					this.openPopoverSendToTheCloud(url.shareLink);
+				});
 		}
 	}
 
@@ -88,53 +89,52 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 		this.productionIds$.next(this.productionIds);
 	}
 
-	ngOnChanges(changes: SimpleChanges) {
+	public ngOnChanges(changes: SimpleChanges) {
 		if (changes.clientId) {
 			this.ngOnInit();
 		}
 	}
 
 	protected getUrlFile() {
-		this.subscription.add(
-			this.clientProposalsFacadeService
-				.saveInCloud(this.checkListStateService.checkFiles$.value)
-				.subscribe(val => {
-					this.urlInCloud$.next(val.shareLink);
-				}),
-		);
+		this.clientProposalsFacadeService
+			.saveInCloud(this.checkListStateService.checkFiles$.value)
+			.pipe(untilDestroyed(this))
+			.subscribe(val => {
+				this.urlInCloud$.next(val.shareLink);
+			});
 	}
 
 	protected saveFiles() {
-		// if (this.checkListStateService.checkFiles$.value.length) {
-		// 	if (!this.urlInCloud$.value) {
-		// 		this.getUrlFile();
-		// 	}
-		//
-		// 	this.urlInCloud$
-		// 		.pipe(
-		// 			filterTruthy(),
-		// 			map(url => {
-		// 				this.waitingForLoading$.next(true);
-		//
-		// 				return this.clientProposalsFacadeService.getFiles(url);
-		// 			}),
-		// 			switchMap(data => {
-		// 				return data;
-		// 			}),
-		// 		)
-		// 		.subscribe(blob => {
-		// 			console.log(blob);
-		// 			debugger;
-		// 			this.waitingForLoading$.next(false);
-		// 			const fileURL = window.URL.createObjectURL(blob);
-		// 			const link = document.createElement('a');
-		// 			link.href = fileURL;
-		// 			link.click();
-		//
-		// 			window.URL.revokeObjectURL(fileURL);
-		// 			this.waitingForLoading$.next(false);
-		// 		});
-		// }
+		if (this.checkListStateService.checkFiles$.value.length) {
+			if (!this.urlInCloud$.value) {
+				this.getUrlFile();
+			}
+
+			this.urlInCloud$
+				.pipe(
+					filterTruthy(),
+					map(url => {
+						this.waitingForLoading$.next(true);
+
+						return this.clientProposalsFacadeService.getFiles(url);
+					}),
+					switchMap(data => {
+						return data;
+					}),
+					untilDestroyed(this),
+				)
+				.subscribe(blob => {
+					this.waitingForLoading$.next(false);
+					const fileURL = window.URL.createObjectURL(blob);
+					const link = document.createElement('a');
+
+					link.href = fileURL;
+					link.click();
+
+					window.URL.revokeObjectURL(fileURL);
+					this.waitingForLoading$.next(false);
+				});
+		}
 	}
 
 	public readonly defaultCols: IStoreTableBaseColumn[] = [
