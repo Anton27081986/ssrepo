@@ -3,12 +3,12 @@
 		<td class="hc-table-td">
 			<ng-container [ngSwitch]="col.id">
 				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
-								<div class="hc-table-td__content">{{ item.productionName }}</div>
+					<div class="hc-table-td__content">{{ item.productionName }}</div>
 				</ng-container>
 
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
-								<div class="hc-table-td__content">{{ item.tovGroupName }}</div>
+					<div class="hc-table-td__content">{{ item.tovGroupName }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
@@ -35,34 +35,43 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let price of item.prices">
-								<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
-									 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content" style="cursor: pointer">
-									{{ price.price }}
-								</div>
+							<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
+								 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content"
+								 style="cursor: pointer">
+								{{ price.price }}
+							</div>
 						</ng-container>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
-					<div class="hc-table-td__canvas">
-						<ng-container *ngFor="let advantageTpr of item.advantages">
-								<div class="hc-table-td__content" *ngIf="advantageTpr">{{ advantageTpr.name }}</div>
-						</ng-container>
+					<div class="hc-table-td__td">
+						<div #content class="hc-table-td__content" *ngIf="advantagesTpr">{{ advantagesTpr }}</div>
+						<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
+								 (click)="showText(advantagesTpr.join('\n'))"></ss-icon>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
-					<a class="hc-table-td__content" *ngIf="(rims$ | async)?.length else empty" (click)="openPopoverRimsView()">Показать рим</a>
+					<div class="hc-table-td__td">
+					<a class="hc-table-td__content" *ngIf="(rims$ | async)?.length else empty"
+					   (click)="openPopoverRimsView()">Показать рим</a>
 					<ng-template #empty>
-						<div class="hc-table-td__content"> - </div>
+						<div class="hc-table-td__content"> -</div>
 					</ng-template>
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.documents">
-					<a class="hc-table-td__content" *ngIf="(documents$ | async)?.length else  empty" (click)="openPopoverDocumentView()">Показать документы</a>
+					<div class="hc-table-td__td">
+					<div class="hc-table-td__content" *ngIf="(documents$ | async)?.length else  empty"
+						 (click)="openPopoverDocumentView()">
+						<span class="hc-table-td__open-doc">Показать документы</span>
+					</div>
 					<ng-template #empty>
-						<div class="hc-table-td__content"> - </div>
+						<div class="hc-table-td__content"> -</div>
 					</ng-template>
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchDefault>
