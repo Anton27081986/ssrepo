@@ -6,8 +6,14 @@
 		<ng-container *ngFor="let file of files$ | async">
 			<div class="client-proposals-view-files-popover__file-form">
 				<input type="checkbox" [(ngModel)]="file.checked" (change)="onToggle(file.uniqId)" />
-				<a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+				<ng-container *ngIf="type === ClientProposalsTypeDocuments.documents && file">
+					 {{ getToolTip(file.type) }} — <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+				</ng-container>
+				<ng-container *ngIf="type === ClientProposalsTypeDocuments.rim && file">
+					<a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+				</ng-container>
 			</div>
 		</ng-container>
 	</div>
 </div>
+

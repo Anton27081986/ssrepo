@@ -52,3 +52,8 @@ export interface IRequestGetClientOffer {
 	clientId: number;
 	productionIds: number[];
 }
+
+export enum ClientProposalsTypeDocuments {
+	rim = 0,
+	documents,
+}

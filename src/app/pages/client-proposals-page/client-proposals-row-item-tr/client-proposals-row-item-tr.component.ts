@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import {
+	ClientProposalsTypeDocuments,
 	IClientOffersDto,
 	IFilesProposals,
 } from '@app/core/models/client-proposails/client-offers';
@@ -8,7 +9,6 @@ import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
 import { BehaviorSubject } from 'rxjs';
-import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
 
@@ -69,7 +69,11 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 		const rims = this.rims$.value;
 
 		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
-			data: { files: rims, checkListService: this.checkListService },
+			data: {
+				files: rims,
+				checkListService: this.checkListService,
+				clientProposalsTypeDocuments: ClientProposalsTypeDocuments.rim,
+			},
 		});
 	}
 
@@ -77,7 +81,11 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 		const documents = this.documents$.value;
 
 		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
-			data: { files: documents, checkListService: this.checkListService },
+			data: {
+				files: documents,
+				checkListService: this.checkListService,
+				clientProposalsTypeDocuments: ClientProposalsTypeDocuments.documents,
+			},
 		});
 	}
 }
