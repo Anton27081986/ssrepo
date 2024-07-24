@@ -8,8 +8,6 @@
 		<div class="body__cell"
 			 [ngStyle]="{ 'padding': padding }"
 			 *ngFor="let headItem of head"
-			 [tooltip]="cell.innerText"
-			 [theme]="TooltipTheme.DEFAULT"
 			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth}"
 			 #cell>
 			<ng-container [ngSwitch]="true">
