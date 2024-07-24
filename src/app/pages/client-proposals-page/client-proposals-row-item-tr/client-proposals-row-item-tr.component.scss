@@ -32,6 +32,8 @@
 
 
 	&__content {
+		display: flex;
+		align-items: center;
 		padding: 8px 12px;
 		font-size: 10px;
 		font-weight: 400;
@@ -39,7 +41,6 @@
 		word-wrap: break-word;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		white-space: pre-wrap;
 	}
 
 	&__open-doc {

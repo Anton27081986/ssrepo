@@ -3,21 +3,21 @@
 		<td class="hc-table-td">
 			<ng-container [ngSwitch]="col.id">
 				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
-					<div class="hc-table-td__content">{{ item.productionName }}</div>
+					<a class="hc-table-td__content" href="{{ item.productionUrl }}" target="_blank"> {{ item.productionName }}</a>
 				</ng-container>
 
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
-					<div class="hc-table-td__content">{{ item.tovGroupName }}</div>
+					<a class="hc-table-td__content" href="{{ item.tovGroupUrl }}" target="_blank"> {{ item.tovGroupName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
-					<div class="hc-table-td__content">{{ item.productionGroupName }}</div>
+					<a class="hc-table-td__content" href="{{ item.productionGroupUrl }}" target="_blank"> {{ item.productionGroupName }}</a>
 				</ng-container>
 
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
-					<div class="hc-table-td__content">{{ item.newProductName }}</div>
+					<a class="hc-table-td__content" href="{{ item.newProductUrl }}" target="_blank"> {{ item.newProductName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
@@ -25,11 +25,11 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
-					<div class="hc-table-td__content">{{ item.salesWeight }}</div>
+					<div class="hc-table-td__content">{{ item.salesWeight | numWithSpaces:2 }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
-					<div class="hc-table-td__content">{{ item.rating }}</div>
+					<div class="hc-table-td__content">{{ item.rating | numWithSpaces:4 }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
@@ -38,7 +38,7 @@
 							<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
 								 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content"
 								 style="cursor: pointer">
-								{{ price.price }}
+								{{ price.price | numWithSpaces:2 }}
 							</div>
 						</ng-container>
 					</div>
@@ -49,7 +49,7 @@
 						<div #content class="hc-table-td__content" *ngIf="advantagesTpr">{{ advantagesTpr }}</div>
 					</div>
 					<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
-							 (click)="showText(advantagesTpr)"></ss-icon>
+							 (click)="showText(advantagesTpr, 'Преимущества ТПР')"></ss-icon>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">

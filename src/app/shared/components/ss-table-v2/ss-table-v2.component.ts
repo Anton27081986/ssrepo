@@ -8,6 +8,7 @@ import {
 	ViewEncapsulation,
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 @Component({
 	selector: 'ss-table-v2',
@@ -28,4 +29,7 @@ export class TableV2Component {
 	@Output() protected readonly changeSortByOn: EventEmitter<string> = new EventEmitter<string>();
 
 	constructor(protected readonly stateColumn: ColumnsStateService) {}
+
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 }

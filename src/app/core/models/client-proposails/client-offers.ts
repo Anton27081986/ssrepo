@@ -42,6 +42,10 @@ export interface IClientOffersDto {
 	saleClientsCount: number;
 	salesWeight: number;
 	rating: number;
+	newProductUrl: string;
+	tovGroupUrl: string;
+	productionUrl: string;
+	productionGroupUrl: string;
 	prices: IPrice[];
 	advantages: IAdvantage[];
 	promotionalMaterials: IFilesProposals[];
