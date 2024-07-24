@@ -49,7 +49,7 @@
 						<div #content class="hc-table-td__content" *ngIf="advantagesTpr">{{ advantagesTpr }}</div>
 					</div>
 					<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
-							 (click)="showText(advantagesTpr)"></ss-icon>
+							 (click)="showText(advantagesTpr, 'Преимущества ТПР')"></ss-icon>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
