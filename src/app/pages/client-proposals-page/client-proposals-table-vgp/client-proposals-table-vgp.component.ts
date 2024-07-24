@@ -205,7 +205,7 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 			title: 'Преимущества ТПР',
 			order: 9,
 			show: true,
-			width: '500px',
+			width: '400px',
 		},
 		{
 			id: ClientProposalsRowItemField.rim,
