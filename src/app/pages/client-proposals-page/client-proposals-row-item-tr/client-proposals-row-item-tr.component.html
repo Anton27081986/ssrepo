@@ -25,11 +25,11 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
-					<div class="hc-table-td__content">{{ item.salesWeight }}</div>
+					<div class="hc-table-td__content">{{ item.salesWeight | numWithSpaces:2 }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
-					<div class="hc-table-td__content">{{ item.rating }}</div>
+					<div class="hc-table-td__content">{{ item.rating | numWithSpaces:4 }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
@@ -38,7 +38,7 @@
 							<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
 								 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content"
 								 style="cursor: pointer">
-								{{ price.price }}
+								{{ price.price | numWithSpaces:2 }}
 							</div>
 						</ng-container>
 					</div>
