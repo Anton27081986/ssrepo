@@ -106,9 +106,7 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 
 	protected saveFiles() {
 		if (this.checkListStateService.checkFiles$.value.length) {
-			if (!this.urlInCloud$.value) {
-				this.getUrlFile();
-			}
+			this.getUrlFile();
 
 			this.urlInCloud$
 				.pipe(
