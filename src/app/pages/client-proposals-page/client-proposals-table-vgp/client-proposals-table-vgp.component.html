@@ -50,9 +50,6 @@
 		</ng-template>
 		<ng-container *ngIf="(productionIds$ | async)?.length">
 			<ng-container *ngIf="clientOffers$ | async as offers;else loader">
-				<ss-text class="client-proposals-table-vgp__description" size="4">Цена прайса, руб - Склад Союзснаб, прайс
-					Союзснаб, предоплата
-				</ss-text>
 				<ss-table-v2 *ngIf="offers.total > 0">
 					<tr app-client-proposals-row-item-tr *ngFor="let offer of offers.items" [item]="offer"></tr>
 				</ss-table-v2>

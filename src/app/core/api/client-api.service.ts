@@ -82,11 +82,19 @@ export class ClientApiService {
 		);
 	}
 
-	public getClientsDictionary(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getClientsDictionary(
+		searchTerm: string,
+		onlyActive: boolean,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		params = params.set('onlyActive', onlyActive);
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/clients`,
 			{
-				params: new HttpParams().set('query', searchTerm),
+				params,
 			},
 		);
 	}

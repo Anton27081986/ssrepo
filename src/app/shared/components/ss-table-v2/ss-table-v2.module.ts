@@ -14,6 +14,7 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
 import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/scrollable-block.module';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 @NgModule({
 	declarations: [TableV2Component],
@@ -31,6 +32,7 @@ import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/s
 		AsyncPipe,
 		ScrollableBlockModule,
 		NgStyle,
+		TooltipModule,
 	],
 })
 export class TableV2Module {}
