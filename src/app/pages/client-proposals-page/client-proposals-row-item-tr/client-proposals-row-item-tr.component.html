@@ -21,22 +21,22 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
-					<div class="hc-table-td__content">{{ item.saleClientsCount }}</div>
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item.saleClientsCount }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
-					<div class="hc-table-td__content">{{ item.salesWeight | numWithSpaces:3 }}</div>
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item.salesWeight | numWithSpaces:3 }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
-					<div class="hc-table-td__content">{{ item.rating | numWithSpaces:4 }}</div>
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item.rating | numWithSpaces:4 }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
 					<div class="hc-table-td__canvas">
 						<ng-container *ngFor="let price of item.prices">
 							<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
-								 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content"
+								 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content hc-table-td__content--number"
 								 style="cursor: pointer">
 								{{ price.price | numWithSpaces:2 }}
 							</div>

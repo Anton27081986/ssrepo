@@ -41,6 +41,11 @@
 		word-wrap: break-word;
 		overflow: hidden;
 		text-overflow: ellipsis;
+
+		&--number {
+			display: flex;
+			justify-content: end;
+		}
 	}
 
 	&__open-doc {
