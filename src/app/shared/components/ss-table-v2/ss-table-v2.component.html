@@ -4,6 +4,9 @@
 		<tr>
 			<th
 				*ngFor="let col of stateColumn.visibleCols$ | async "
+				[ngStyle]="{'width': col.width}"
+				[tooltip]="col.toolTip!" [theme]="TooltipTheme.DEFAULT"
+				[position]="TooltipPosition.DEFAULT"
 				class="ss-table-th"
 			>
 				{{ col.title  }}

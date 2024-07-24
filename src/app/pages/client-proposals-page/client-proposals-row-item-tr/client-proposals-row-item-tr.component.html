@@ -3,21 +3,21 @@
 		<td class="hc-table-td">
 			<ng-container [ngSwitch]="col.id">
 				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
-					<div class="hc-table-td__content">{{ item.productionName }}</div>
+					<a class="hc-table-td__content" href="{{ item.productionUrl }}" target="_blank"> {{ item.productionName }}</a>
 				</ng-container>
 
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
-					<div class="hc-table-td__content">{{ item.tovGroupName }}</div>
+					<a class="hc-table-td__content" href="{{ item.tovGroupUrl }}" target="_blank"> {{ item.tovGroupName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
-					<div class="hc-table-td__content">{{ item.productionGroupName }}</div>
+					<a class="hc-table-td__content" href="{{ item.productionGroupUrl }}" target="_blank"> {{ item.productionGroupName }}</a>
 				</ng-container>
 
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
-					<div class="hc-table-td__content">{{ item.newProductName }}</div>
+					<a class="hc-table-td__content" href="{{ item.newProductUrl }}" target="_blank"> {{ item.newProductName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
