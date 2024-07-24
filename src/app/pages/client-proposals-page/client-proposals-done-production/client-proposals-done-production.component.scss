@@ -14,23 +14,11 @@
 		line-height: 19px;
 	}
 
-	&__content {
-		width: 500px;
-	}
-
 	&__body {
-		min-height: 280px;
 		padding: 16px;
 		display: flex;
 		justify-content: center;
-	}
-
-	&__table {
-		max-width: 100%;
-		overflow: auto;
+		align-items: center;
 	}
 }
 
-ss-table {
-	max-height: 320px;
-}

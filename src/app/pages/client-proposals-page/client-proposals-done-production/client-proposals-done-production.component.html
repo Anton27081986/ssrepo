@@ -5,19 +5,15 @@
 			<ss-text size="1">Модель клиента</ss-text>
 		</ng-template>
 	<div class="client-proposals-done-production__body">
-
-			<div class="client-proposals-done-production__content" *ngIf="production.total > 0;else empty">
-				<ss-table
-					[padding]="'8px'"
-					[head]="[
-							{title: 'ВГП', field: 'name'},
-							{title: 'Объём производства, тн/год', field: 'quantity'},
-							]"
-					[items]="getTableItems(production)"
-				>
-				</ss-table>
-			</div>
-
+		<ss-table *ngIf="production.total > 0;else empty"
+			[padding]="'8px'"
+			[head]="[
+					{title: 'ВГП', field: 'name'},
+					{title: 'Объём производства, тн/год', field: 'quantity'},
+					]"
+			[items]="getTableItems(production)"
+		>
+		</ss-table>
 		<ng-template #empty>
 			<div class="client-proposals-done-production__no-content">
 				<ss-empty-data-page></ss-empty-data-page>
