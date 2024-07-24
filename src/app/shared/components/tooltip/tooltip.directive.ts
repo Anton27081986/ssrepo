@@ -17,7 +17,7 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 	selector: '[tooltip]',
 })
 export class TooltipDirective implements OnDestroy {
-	@Input() public tooltip = '';
+	@Input() public tooltip: string | null = null;
 	@Input() public position: TooltipPosition = TooltipPosition.DEFAULT;
 	@Input() public theme: TooltipTheme = TooltipTheme.DEFAULT;
 	@Input() public showDelay = 30;

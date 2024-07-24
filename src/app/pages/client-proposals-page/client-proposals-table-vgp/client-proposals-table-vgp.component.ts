@@ -197,7 +197,7 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 			title: 'Цена прайса, руб',
 			order: 8,
 			show: true,
-			width: null,
+			width: '100px',
 			toolTip: 'Цена прайса, руб - Склад Союзснаб, прайс Союзснаб, предоплата',
 		},
 		{
