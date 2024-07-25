@@ -22,7 +22,7 @@
 				*ngIf="contractors.total > 0;else empty"
 				[padding]="'8px'"
 				[head]="[
-							{title: 'Контрагент', field: 'name'},
+							{title: 'Контрагент', field: 'name', sizeRatio: 3},
 							{title: 'Кредитный статус', field: 'creditStatus'},
 							]"
 				[items]="getTableItems(contractors)"
