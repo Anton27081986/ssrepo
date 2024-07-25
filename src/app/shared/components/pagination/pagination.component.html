@@ -5,7 +5,7 @@
 			(click)="back()"
 			[class.ss-pagination__tab--disabled]="!disabledLeft"
 		>
-			<
+			<ss-icon width="5" height="9" name="arrowRight" class="ss-pagination__tab--left-arrow"></ss-icon>
 		</li>
 		<li
 			class="ss-pagination__tab"
@@ -30,7 +30,8 @@
 			[class.ss-pagination__tab--active]="pageIndex === countAllTabs">
 			{{ countAllTabs }}
 		</li>
-		<li class="ss-pagination__tab" [class.ss-pagination__tab--disabled]="!disabledRight" (click)="next()"> > </li>
-
+		<li class="ss-pagination__tab" [class.ss-pagination__tab--disabled]="!disabledRight" (click)="next()">
+			<ss-icon width="5" height="9" name="arrowRight" class="left-arrow"></ss-icon>
+		</li>
 	</ul>
 </div>

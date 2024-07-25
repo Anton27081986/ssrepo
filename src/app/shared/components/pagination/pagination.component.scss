@@ -1,8 +1,11 @@
+@use 'src/styles/colors.scss' as *;
+
 .ss-pagination {
 	display: flex;
 	gap: 6px;
 
 	&__tabs {
+		margin-bottom: 0;
 		display: flex;
 		flex-wrap: nowrap;
 		gap: 6px;
@@ -13,27 +16,42 @@
 	}
 
 	&__tab {
-		font-size: 16px;
+		font-size: 13px;
 		line-height: 40px;
-		font-weight: 600;
-		border: 2px solid #e4e8ea;
-		border-radius: 10px;
-		height: 40px;
-		width: 40px;
+		font-weight: 500;
+		border: 1px solid $island-outline;
+		border-radius: 8px;
+		height: 32px;
+		width: 32px;
 		color: black;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 
 		&--active {
-			background: #4770ff;
-			color: #FFFFFF;
+			background: $main;
+			color: $island;
 			border: none;
 		}
 
 		&--disabled {
-			opacity: 0.5;
 			cursor: default;
+
+			ss-icon {
+				opacity: 0.1;
+				cursor: default;
+			}
+		}
+
+		&--left-arrow {
+			transform: rotate(180deg);
 		}
 	}
 }
+
+:host-context(.dark) :host {
+	li {
+		color: $island;
+	}
+}
+

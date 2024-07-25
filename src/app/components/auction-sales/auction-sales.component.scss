@@ -1,90 +1,53 @@
-@use 'src/styles/colors.scss' as *;
+@use '../../../styles/colors' as *;
 
-.container {
-    padding-top: 60px;
+:host {
+	margin-top: 60px;
 	display: flex;
-	flex-direction: column;
-	gap: 40px;
+	height: 100%;
+	flex-grow: 1;
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-		align-items: center;
-
-        .title {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-
-			.subtitle {
-				opacity: 70%;
-			}
-        }
-    }
-
-	.pagination {
-		margin-top: 20px;
-	}
-
-	.mobile {
-		display: none;
-
-		ss-card {
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-			padding: 20px;
-		}
-
-		.separator {
-			border-bottom: 1px solid $island-outline;
-			width: 100%;
-			height: 13px;
-		}
-
-		.mobile-item {
-			display: flex;
-			flex-direction: column;
-			gap: 7px;
-		}
-
-		.mobile-item:last-child .separator{
-			display: none;
-		}
-
-		.mobile-info {
-			display: flex;
-			justify-content: space-between;
-			opacity: 70%;
-		}
-	}
-}
-
-@media screen and (max-width: 760px) {
-    .container {
-		gap: 20px;
+	ss-card {
+		width: 100%;
+		position: relative;
 
 		.header {
-			flex-direction: column;
-			gap: 20px;
-
-			.title {
-				align-items: center;
-				text-align: center;
-			}
-
-			ss-button {
-				width: 100%;
-			}
-		}
-
-		.desktop {
-			display: none;
-		}
-
-		.mobile {
+			width: 100%;
+			padding: 16px 20px 12px 20px;
 			display: flex;
+			flex-direction: column;
+			align-items: start;
+			border-bottom: 1px solid $island-outline;
+			gap: 4px;
+
+			&-controls {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
 		}
-    }
+
+		.content {
+			margin: 16px 10px;
+			padding: 0 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+
+			ss-table {
+				min-height: 362px;
+			}
+
+			.pagination {
+				margin-top: 0;
+				display: flex;
+				justify-content: end;
+			}
+		}
+	}
 }
 
+:host-context(.dark) :host {
+	.content {
+		background-color: $dark-island!important;
+	}
+}
