@@ -3,4 +3,5 @@ export interface IClientProposalsSamplesTableItem {
 	quantity: number;
 	weight: number;
 	linkToDetail: string;
+	tov: string;
 }
