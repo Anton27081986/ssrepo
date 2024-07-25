@@ -46,6 +46,9 @@ export interface SearchInputItem {
 export class SearchClientInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public label: string | undefined;
+	@Input() onlyActive: boolean = false;
+	@Input() onlyUserClients: boolean = false;
+
 	@Output() public select = new EventEmitter<SearchInputItem | null>();
 
 	private readonly entityId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(
@@ -110,13 +113,14 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 
 	public onInputValueChange(event: Event) {
 		const targetDivElement = event.target as HTMLInputElement;
+
 		this.search(targetDivElement.value);
 	}
 
 	protected search(query: string) {
 		if (query.length > 2) {
 			this.searchFacade
-				.getClients(query)
+				.getClients(query, this.onlyActive, this.onlyUserClients)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
 					this.found = res.items;
