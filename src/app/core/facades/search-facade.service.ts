@@ -38,8 +38,12 @@ export class SearchFacadeService {
 		return this.clientApiService.getSubSectors(query);
 	}
 
-	public getClients(query: string, onlyActive: boolean = false) {
-		return this.clientApiService.getClientsDictionary(query, onlyActive);
+	public getClients(
+		query: string,
+		onlyActive: boolean = false,
+		onlyUserClients: boolean = false,
+	) {
+		return this.clientApiService.getClientsDictionary(query, onlyActive, onlyUserClients);
 	}
 
 	public getProductions(query: string) {
