@@ -49,9 +49,11 @@ import { CaptionModule } from '@app/shared/components/typography/caption/caption
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
+import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
+import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -140,10 +142,11 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		IconModule,
 		LoaderModule,
 		TextModule,
-		TextModule,
 		AvatarModule,
 		InputModule,
 		SearchInputModule,
+		EmptyDataPageModule,
+		EmptyPlaceholderModule,
 	],
 	exports: [
 		MainMenuComponent,

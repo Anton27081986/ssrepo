@@ -44,6 +44,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 			this.arrTabs.next(this.buildArrTabs(1, this.countAllTabs - 1));
 		} else if (this.countAllTabs > this.countViewTabs) {
 			const arr: number[] = this.buildArrTabs(1, this.countAllTabs - 1);
+
 			if (Math.ceil(this.countAllTabs / 3) > 2) {
 				const lastPath = arr.slice(this.countAllTabs - 3, this.countAllTabs);
 				const firstPath = arr.slice(0, 3);
@@ -83,11 +84,14 @@ export class PaginationComponent implements OnInit, OnChanges {
 
 	private buildArrTabs(startIndex: number, limit: number): number[] {
 		const arr: number[] = [];
+
 		arr.push(startIndex);
+
 		for (let i = startIndex; i <= limit; i++) {
 			if (i > this.countAllTabs - 1) {
 				break;
 			}
+
 			arr.push(i + 1);
 		}
 

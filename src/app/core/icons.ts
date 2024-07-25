@@ -135,6 +135,11 @@ export class AppIcons {
 		'<path d="M17.5 12H6.5" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
+	public arrow =
+		'<svg width="6" height="10" viewBox="0 0 6 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M1 1L5 5L1 9" stroke="#22223A" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
+
 	public static close =
 		'<svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<path d="M13 1L1 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
@@ -620,12 +625,6 @@ export class AppIcons {
 		'<path d="M16.2992 14.688C16.4592 14.9526 16.8592 14.8606 16.9049 14.5615C17.282 12.134 16.5278 9.6836 14.8135 8.02696C12.5392 5.81811 9.61348 6.00218 9.13348 6.0482V3.45971C9.13348 3.05705 8.65348 2.84997 8.35633 3.12608C6.61523 4.78808 4.87414 6.45008 3.13304 8.1198C2.72635 8.50981 2.72252 9.15868 3.12426 9.55378L8.3449 14.688C8.63062 14.9756 9.12205 14.7686 9.12205 14.3544V11.0411C9.8649 10.9721 11.0192 10.9606 12.3106 11.4208C14.4363 12.1801 15.6706 13.7101 16.2878 14.688H16.2992Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>' +
 		'</svg>';
 
-	public static arrow =
-		'<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-		'<path d="M9.97532 7.44141L4.91699 12.4997L9.97532 17.5581" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
-		'<path d="M19.0836 12.5H5.05859" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
-		'</svg>';
-
 	public static edit =
 		'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<path d="M11.25 4.5H9.75C6 4.5 4.5 6 4.5 9.75V14.25C4.5 18 6 19.5 9.75 19.5H14.25C18 19.5 19.5 18 19.5 14.25V12.75" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
@@ -686,7 +685,6 @@ export class AppIcons {
 		'</svg>';
 
 	public static oneConnectInLight =
-		'' +
 		'<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<rect x="0.5" y="0.5" width="16" height="16" rx="6" fill="#CBD7FF"/>\n' +
 		'<path d="M8.50065 4.33301C6.20065 4.33301 4.33398 6.19967 4.33398 8.49967C4.33398 10.7997 6.20065 12.6663 8.50065 12.6663C10.8007 12.6663 12.6673 10.7997 12.6673 8.49967" stroke="#4770FF" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
@@ -864,4 +862,13 @@ export class AppIcons {
 		'<svg width="32" height="13" viewBox="0 0 32 13" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
 		'<path fill-rule="evenodd" clip-rule="evenodd" d="M16 0C20.8 0 25.5998 13 32 13H0C6.35984 13 11.2 0 16 0Z" fill="white"/>\n' +
 		'</svg>\n';
+
+	public static empty =
+		'<svg width="21" height="22" viewBox="0 0 21 22" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+		'<path d="M13.3816 9.76971L19.0416 5.97973C19.6116 5.59973 19.7616 4.81973 19.3816 4.25973L17.5616 1.54971C17.1816 0.979711 16.4016 0.829715 15.8416 1.20971L10.1816 4.99972L13.3816 9.76971Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M10.5257 5.47896L5.74805 8.67883L8.30795 12.501L13.0856 9.3011L10.5257 5.47896Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M4.18209 14.8997L8.13209 12.2597L5.89209 8.91968L1.94209 11.5597C1.48209 11.8697 1.36209 12.4897 1.67209 12.9497L2.80209 14.6297C3.10209 15.0797 3.72209 15.1997 4.18209 14.8997Z" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M10.4021 11.1997L5.91211 20.9997" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M10.3516 11.1997L14.7916 20.9997" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'</svg>';
 }

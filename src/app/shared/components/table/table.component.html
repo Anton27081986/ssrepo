@@ -14,14 +14,14 @@
 				<a *ngSwitchCase="!!item[headItem.field]?.url"
 				   href="{{ item[headItem.field].url }}"
 				   target="_blank">
-					{{ item[headItem.field].text }}
+					<span class="text-{{ size }}">{{ item[headItem.field].text }}</span>
 				</a>
 				<span *ngSwitchCase="Array.isArray(item[headItem.field])">
-					<a *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
+					<a class="text-{{ size }}" *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
 						{{ link.text }}
 					</a>
 				</span>
-				<span *ngSwitchDefault>{{ item[headItem.field] }}</span>
+				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
 			</ng-container>
 			<ss-icon class="maximise" name="maximise" *ngIf="cell.clientWidth < cell.scrollWidth" (click)="showText(item[headItem.field])"></ss-icon>
 		</div>
