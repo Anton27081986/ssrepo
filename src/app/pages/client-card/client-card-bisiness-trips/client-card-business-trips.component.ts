@@ -5,8 +5,6 @@ import { IResponse } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { TableState } from '@app/shared/components/table/table-state';
-import { INewProductsTableItem } from '@app/pages/client-card/client-card-new-products/new-products-table-item';
-import { IFilter } from '@app/shared/components/filters/filters.component';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { BusinessTripsFacadeService } from '@app/core/facades/business-trips-facade.service';
 import { IClientBusinessTripsTableItem } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips-table-item';
