@@ -15,4 +15,11 @@ export interface ISamples {
 	 *  Ссылка на детальную страницу
 	 */
 	linkToDetail: string;
+	/**
+	 *  Наименование ТП
+	 */
+	tov: {
+		id: number;
+		name: string;
+	};
 }
