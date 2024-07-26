@@ -28,7 +28,7 @@
 				<app-client-proposals-done-production></app-client-proposals-done-production>
 			</ss-card>
 		</div>
-		<div class="content-accordion__tabs">
+		<div *ngIf="isTabsVisible" class="content-accordion__tabs">
 			<ss-tabs [tabs]="tabs"
 					 [size]="'medium'"
 					 (select)="selectTab($event)"

@@ -41,8 +41,10 @@ export class ClientProposalsApiService {
 	// заготовка для таблиц в аккордионе
 	public constructor(private readonly http: HttpClient) {}
 
-	public getDoneProductions(clientId: number): Observable<IResponse<ProposalsProduction>> {
-		return this.http.get<IResponse<ProposalsProduction>>(
+	public getDoneProductions(
+		clientId: number,
+	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
+		return this.http.get<{ data: IResponse<ProposalsProduction>; permissions: string[] }>(
 			`${environment.apiUrl}/api/company/ClientProposals/doneProductions/${clientId}`,
 		);
 	}
