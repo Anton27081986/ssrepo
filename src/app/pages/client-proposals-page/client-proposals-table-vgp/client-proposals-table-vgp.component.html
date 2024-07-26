@@ -25,7 +25,7 @@
 								<path d="M9.1323 0.873481C11.4608 0.0100084 13.9771 -0.218541 16.423 0.211273C18.869 0.641088 21.1566 1.7138 23.0512 3.31937C24.9458 4.92495 26.3792 7.0056 27.2045 9.34792C28.0297 11.6902 28.217 14.2099 27.7472 16.6485L22.2483 15.5891C22.5302 14.1259 22.4178 12.6141 21.9227 11.2087C21.4275 9.80336 20.5675 8.55497 19.4307 7.59162C18.2939 6.62828 16.9214 5.98465 15.4538 5.72676C13.9862 5.46887 12.4765 5.606 11.0794 6.12409L9.1323 0.873481Z" fill="#4770FF" />
 							</svg>
 						</ng-container>
-						<ss-button *ngIf="(this.checkListStateService.checkFiles$ | async)?.length || (waitingForLoading$ | async)" size="small" [type]="'primary'" (click)="saveFiles()">Скачать</ss-button>
+						<ss-button [disabled]="(waitingForLoading$ | async)!" *ngIf="(this.checkListStateService.checkFiles$ | async)?.length || (waitingForLoading$ | async)" size="small" [type]="'primary'" (click)="saveFiles()">Скачать</ss-button>
 
 						<ss-button size="small" [type]="'primary'" *ngIf="(this.checkListStateService.checkFiles$ | async)?.length" (click)="saveInCloud()">Сохранить в
 							облако
