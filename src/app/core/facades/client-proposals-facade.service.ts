@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-	ClientProposalsApiService,
-	ILoadFileStatus,
-} from '@app/core/api/client-proposails-api.service';
-import { filter, map, Observable, OperatorFunction } from 'rxjs';
+import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.service';
+import { BehaviorSubject, filter, map, Observable, OperatorFunction, tap } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -20,11 +17,15 @@ import {
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
-import { HttpResponse } from '@angular/common/http';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Injectable()
 export class ClientProposalsFacadeService {
 	public clientId$: Observable<number>;
+
+	private readonly permissionsSubject = new BehaviorSubject<string[]>([]);
+	public permissions$ = this.permissionsSubject.asObservable();
 
 	constructor(
 		private readonly clientProposalsApiService: ClientProposalsApiService,
@@ -40,8 +41,10 @@ export class ClientProposalsFacadeService {
 
 	public getDoneProductionsByClientId(
 		clientId: number,
-	): Observable<IResponse<ProposalsProduction>> {
-		return this.clientProposalsApiService.getDoneProductions(clientId);
+	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
+		return this.clientProposalsApiService
+			.getDoneProductions(clientId)
+			.pipe(tap(res => this.permissionsSubject.next(res.permissions)));
 	}
 
 	public getNewsByClientId(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {

@@ -6,6 +6,7 @@ import { ITab } from '@app/shared/components/tabs/tab';
 import { SearchInputItem } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
 import { Observable, Subscription } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @UntilDestroy()
 @Component({
@@ -61,11 +62,16 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
+	protected permissions$: Observable<string[]>;
+	protected isTabsVisible: boolean = false;
+
 	constructor(
 		private readonly _router: Router,
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 	) {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
+		this.permissions$ = this.clientProposalsFacadeService.permissions$;
+
 		this.subscription.add(
 			this.clientId$.subscribe(id => {
 				if (id) {
@@ -74,6 +80,12 @@ export class ClientProposalsInfoComponent implements OnInit {
 				} else {
 					this._router.navigate(['/client-proposals-page']).then();
 				}
+			}),
+		);
+
+		this.subscription.add(
+			this.permissions$.subscribe(list => {
+				this.isTabsVisible = list.includes(Permissions.CLIENT_ADDITIONAL_INFO_READ);
 			}),
 		);
 	}
