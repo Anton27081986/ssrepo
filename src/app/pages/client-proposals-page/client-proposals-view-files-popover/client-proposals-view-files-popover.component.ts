@@ -2,12 +2,23 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { BehaviorSubject } from 'rxjs';
-import { IFilesProposals } from '@app/core/models/client-proposails/client-offers';
+import {
+	ClientProposalsTypeDocuments,
+	IFilesProposals,
+} from '@app/core/models/client-proposails/client-offers';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 interface FileData {
 	files: IFilesProposals[];
 	checkListService: CheckFileListStateService;
+	clientProposalsTypeDocuments: ClientProposalsTypeDocuments;
+}
+
+export enum IFileType {
+	RIM = 1,
+	Declaration = 2,
+	Specification = 3,
 }
 
 @Component({
@@ -19,11 +30,13 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 	protected readonly files$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<
 		IFilesProposals[]
 	>([]);
-
+	protected readonly type: ClientProposalsTypeDocuments = ClientProposalsTypeDocuments.rim;
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: FileData,
-	) {}
+		@Inject(DIALOG_DATA) protected readonly data: FileData,
+	) {
+		this.type = data.clientProposalsTypeDocuments;
+	}
 
 	protected close() {
 		this.modalRef.close();
@@ -39,13 +52,11 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 
 	ngOnInit() {
 		let files;
-
 		if (this.data.checkListService.checkFiles$.value.length) {
 			files = this.data.files.map(file => {
 				const findFile = this.data.checkListService.checkFiles$.value.find(
 					checkFiles => file.uniqId === checkFiles.uniqId,
 				);
-				console.log(this.data.checkListService.checkFiles$.value);
 				file.checked = !!findFile;
 
 				return file;
@@ -60,4 +71,18 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 
 		this.files$.next(files);
 	}
+
+	getToolTip(type: number): string {
+		switch (type) {
+			case IFileType.RIM:
+				return 'Рим';
+			case IFileType.Specification:
+				return 'Спецификация';
+			case IFileType.Declaration:
+				return 'Декларация соответствия';
+			default:
+				return '';
+		}
+	}
+	protected readonly ClientProposalsTypeDocuments = ClientProposalsTypeDocuments;
 }

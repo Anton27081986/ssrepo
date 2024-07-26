@@ -1,13 +1,12 @@
-<div class="pseudo-header" #pseudoHeadEl>
-	<div class="pseudo-header__item" [ngStyle]="{ 'padding': padding }"
-		 *ngFor="let headItem of stateColumn.visibleCols$ | async">{{ headItem.title }}</div>
-</div>
 <div class="table-wrapper">
 	<table>
 		<thead>
-		<tr #headEl>
+		<tr>
 			<th
 				*ngFor="let col of stateColumn.visibleCols$ | async "
+				[ngStyle]="{'width': col.width, 'cursor': col.toolTip ? 'pointer' : 'default'}"
+				[tooltip]="col.toolTip!" [theme]="TooltipTheme.DEFAULT"
+				[position]="TooltipPosition.DEFAULT"
 				class="ss-table-th"
 			>
 				{{ col.title  }}
@@ -15,8 +14,8 @@
 			</th>
 		</tr>
 		</thead>
-		<tbody class="ss-table-table__tbody">
+			<tbody>
 			<ng-content></ng-content>
-		</tbody>
+			</tbody>
 	</table>
 </div>

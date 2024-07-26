@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
-import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
+// import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
-import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
+import { LayoutClientProposalsComponent } from '@app/shared/layouts/layout-client-proposals/layout-client-proposals.component';
 import { PermissionsGuard } from '@app/core/guards/permissions.guard';
+import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
 	{
 		path: '',
-		component: FullLayoutComponent,
+		component: NewLayoutComponent,
 		canActivate: [AuthGuard],
 		children: [
 			{
@@ -71,7 +72,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: NewLayoutComponent,
+		component: LayoutClientProposalsComponent,
 		canActivate: [AuthGuard, PermissionsGuard],
 		children: [
 			{
@@ -85,7 +86,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: NewLayoutComponent,
+		component: LayoutClientProposalsComponent,
 		canActivate: [AuthGuard],
 		children: [
 			{

@@ -4,6 +4,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
+	HostBinding,
 	Input,
 	ViewChild,
 } from '@angular/core';
@@ -29,9 +30,13 @@ export interface ITableHead {
 	styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements AfterViewInit, AfterViewChecked {
-	@Input() public head: ITableHead[] = [];
+	@HostBinding('style.padding')
+	@Input()
+	public head: ITableHead[] = [];
+
 	@Input() public items: ITableItem[] | undefined | null;
 	@Input() public padding: string = '12px';
+	@Input() public size: '1' | '2' | '3' | '4' = '3';
 
 	protected gridTemplateColumns = '';
 	protected scroll: boolean = false;

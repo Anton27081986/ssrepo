@@ -14,6 +14,7 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @UntilDestroy()
 @Component({
@@ -71,34 +72,38 @@ export class ProfilePopupComponent implements OnInit, OnDestroy {
 		}, 0);
 	}
 
-	public enterUnderFriendlyAccount(loggedUser: any) {
-		this.userStateService.resetProfile();
-		this.authenticationService
-			.enterUnderFriendlyAccount(loggedUser?.id, environment.apiUrl)
-			.pipe(untilDestroyed(this))
-			.subscribe();
+	public enterUnderFriendlyAccount(loggedUser: IFriendAccountDto) {
+		if (loggedUser.id) {
+			this.userStateService.resetProfile();
+			this.authenticationService
+				.enterUnderFriendlyAccount(loggedUser?.id, environment.apiUrl)
+				.pipe(untilDestroyed(this))
+				.subscribe();
 
-		setTimeout(function () {
-			window.location.reload();
-		}, 200);
+			setTimeout(function () {
+				window.location.reload();
+			}, 200);
 
-		this.getAccountsFriends();
+			this.getAccountsFriends();
+		}
 	}
 
 	public close() {
 		this.userStateService.setStateWindow(false);
 	}
 
-	public AuthUser($event: any) {
-		this.userStateService.resetProfile();
-		this.authenticationService
-			.enterUnderFriendlyAccount($event.id, environment.apiUrl)
-			.pipe(takeUntil(this.destroy$))
-			.subscribe();
+	public AuthUser(user: IDictionaryItemDto) {
+		if (user.id) {
+			this.userStateService.resetProfile();
+			this.authenticationService
+				.enterUnderFriendlyAccount(user.id, environment.apiUrl)
+				.pipe(takeUntil(this.destroy$))
+				.subscribe();
 
-		setTimeout(function () {
-			window.location.reload();
-		}, 200);
+			setTimeout(function () {
+				window.location.reload();
+			}, 200);
+		}
 	}
 
 	public ngOnDestroy() {

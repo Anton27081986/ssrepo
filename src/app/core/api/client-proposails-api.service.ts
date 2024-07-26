@@ -1,21 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import {
-	delay,
-	delayWhen,
-	EMPTY,
-	expand,
-	interval,
-	last,
-	map,
-	Observable,
-	of,
-	retryWhen,
-	switchMap,
-	tap,
-	throwError,
-} from 'rxjs';
+import { interval, map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -32,7 +18,6 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { catchError } from 'rxjs/operators';
-import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 export interface IFile {
 	id: number;
@@ -42,6 +27,7 @@ export interface IFile {
 
 export interface IShareFile {
 	files: IFile[];
+	sendEmail: boolean;
 }
 
 export interface ILoadFileStatus {
@@ -56,8 +42,10 @@ export class ClientProposalsApiService {
 	// заготовка для таблиц в аккордионе
 	public constructor(private readonly http: HttpClient) {}
 
-	public getDoneProductions(clientId: number): Observable<IResponse<ProposalsProduction>> {
-		return this.http.get<IResponse<ProposalsProduction>>(
+	public getDoneProductions(
+		clientId: number,
+	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
+		return this.http.get<{ data: IResponse<ProposalsProduction>; permissions: string[] }>(
 			`${environment.apiUrl}/api/company/ClientProposals/doneProductions/${clientId}`,
 		);
 	}
@@ -160,7 +148,7 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public saveInCloud(files: IFilesProposals[]): Observable<SaveInCloud> {
+	public saveInCloud(files: IFilesProposals[], sendEmail: boolean): Observable<SaveInCloud> {
 		const request: IFile[] = files.map(file => {
 			return {
 				id: file.id,
@@ -169,28 +157,44 @@ export class ClientProposalsApiService {
 			};
 		});
 
-		const dataRequest: IShareFile = { files: request };
+		const dataRequest: IShareFile = { files: request, sendEmail: sendEmail };
 
 		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
 	}
-	// Есть проблемы  с скачиванием пока оставлю
-	public getFiles(url: string): Observable<HttpResponse<Blob>> {
-		return this.http.get<Blob>(url, { observe: 'response' }).pipe(
-			expand((response: HttpResponse<Blob>) => {
-				if (response.status === 202) {
-					// Wait for 5 seconds before making another request
-					return this.http.get<Blob>(url, { observe: 'response' }).pipe(delay(3000));
-				} else {
-					// Stop the recursion by returning an empty observable
-					return EMPTY;
-				}
-			}),
-			//last(),
-			catchError(error => {
-				console.error('Error fetching files:', error);
 
-				return throwError(() => new Error('Error fetching files'));
-			}),
-		);
+	public getFiles(url: string): Observable<Blob> {
+		return this.http
+			.get<Blob>(url, { observe: 'response', responseType: 'blob' as 'json' })
+			.pipe(
+				map(response => this.handleResponse(response)),
+				retryWhen(errors =>
+					errors.pipe(
+						switchMap(error => {
+							if (error.status !== 200) {
+								console.log('Retrying request...');
+
+								return timer(3000); // Повторная попытка через 1 секунду
+							}
+
+							return throwError(error);
+						}),
+					),
+				),
+				catchError(this.handleError),
+			);
+	}
+
+	private handleResponse(response: HttpResponse<Blob>): Blob {
+		if (response.status === 200 && response.body) {
+			return response.body;
+		}
+
+		throw new Error(`Unexpected response status: ${response.status}`);
+	}
+
+	private handleError(error: any): Observable<never> {
+		console.error('Error fetching file from S3:', error);
+
+		return throwError(() => new Error('Error fetching file from S3'));
 	}
 }

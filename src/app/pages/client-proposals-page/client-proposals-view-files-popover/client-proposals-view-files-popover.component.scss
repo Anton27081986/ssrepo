@@ -2,6 +2,16 @@
 @use 'src/assets/scss/_variables.scss' as *;
 @use 'src/styles/colors.scss' as *;
 
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.1);
+}
+
 .client-proposals-view-files-popover {
 	background-color: $white;
 	min-width: 400px;

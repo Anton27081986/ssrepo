@@ -1,16 +1,14 @@
 import {
-	AfterViewChecked,
 	ChangeDetectionStrategy,
 	Component,
-	ElementRef,
 	EventEmitter,
 	HostBinding,
 	Input,
 	Output,
-	ViewChild,
 	ViewEncapsulation,
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 @Component({
 	selector: 'ss-table-v2',
@@ -19,7 +17,7 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TableV2Component implements AfterViewChecked {
+export class TableV2Component {
 	@HostBinding('class.ss-table-v2') protected readonly addHostClass = true;
 	@Input() public padding: string = '12px';
 
@@ -30,25 +28,8 @@ export class TableV2Component implements AfterViewChecked {
 
 	@Output() protected readonly changeSortByOn: EventEmitter<string> = new EventEmitter<string>();
 
-	@ViewChild('headEl') public headEl!: ElementRef;
-	@ViewChild('pseudoHeadEl') public pseudoHeadEl!: ElementRef;
+	constructor(protected readonly stateColumn: ColumnsStateService) {}
 
-	constructor(protected readonly stateColumn: ColumnsStateService) {
-		stateColumn.visibleCols$.subscribe(item => console.log(item));
-	}
-
-	ngAfterViewChecked() {
-		// this.changeDetectorRef.detectChanges();
-		this.resizeHeader();
-	}
-
-	resizeHeader() {
-		setTimeout(() => {
-			const headItemsArr: HTMLElement[] = [...this.pseudoHeadEl.nativeElement.children];
-
-			[...this.headEl.nativeElement.children].forEach((headItem: HTMLElement, index) => {
-				headItemsArr[index].style.minWidth = `${Math.round(headItem.offsetWidth)}px`;
-			});
-		}, 0);
-	}
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 }

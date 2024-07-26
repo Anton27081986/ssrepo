@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import {
+	ClientProposalsTypeDocuments,
 	IClientOffersDto,
 	IFilesProposals,
 } from '@app/core/models/client-proposails/client-offers';
@@ -8,9 +9,9 @@ import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
 import { BehaviorSubject } from 'rxjs';
-import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
+import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 
 export enum ClientProposalsRowItemField {
 	vgp = 'vgp',
@@ -32,10 +33,16 @@ export enum ClientProposalsRowItemField {
 	styleUrls: ['client-proposals-row-item-tr.component.scss'],
 	templateUrl: './client-proposals-row-item-tr.component.html',
 })
-export class ClientProposalsRowItemTrComponent implements OnInit {
+export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly ClientTprRowItemField = ClientProposalsRowItemField;
 	@Input({ required: true }) item: IClientOffersDto | undefined;
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
+
+	protected advantagesTpr: string[] = [];
+
+	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	@ViewChild('content') public content!: ElementRef;
 	protected rims$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<IFilesProposals[]>(
 		[],
 	);
@@ -59,7 +66,26 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 			if (this.item.documents) {
 				this.documents$.next(this.item.documents.filter(item => item !== null));
 			}
+
+			this.advantagesTpr = this.item.advantages.map(item => {
+				return item.name;
+			});
 		}
+	}
+
+	ngAfterViewChecked() {
+		this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+	}
+
+	showText(text: string[], title?: string) {
+		this.modalService.open(TableFullCellComponent, {
+			data: {
+				cell: text.map(item => {
+					return { text: item };
+				}),
+				title,
+			},
+		});
 	}
 
 	protected readonly TooltipTheme = TooltipTheme;
@@ -69,7 +95,11 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 		const rims = this.rims$.value;
 
 		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
-			data: { files: rims, checkListService: this.checkListService },
+			data: {
+				files: rims,
+				checkListService: this.checkListService,
+				clientProposalsTypeDocuments: ClientProposalsTypeDocuments.rim,
+			},
 		});
 	}
 
@@ -77,7 +107,11 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 		const documents = this.documents$.value;
 
 		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
-			data: { files: documents, checkListService: this.checkListService },
+			data: {
+				files: documents,
+				checkListService: this.checkListService,
+				clientProposalsTypeDocuments: ClientProposalsTypeDocuments.documents,
+			},
 		});
 	}
 }

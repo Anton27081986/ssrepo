@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SalesApiService } from '@app/core/api/sales-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 import { ITableItem } from '@app/shared/components/table/table.component';
+import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
+import { TableState } from '@app/shared/components/table/table-state';
+import { BehaviorSubject } from 'rxjs';
+import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -12,29 +14,43 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 })
 export class AuctionSalesComponent implements OnInit {
 	public pageIndex = 1;
-	public pageSize = 8;
+	public pageSize = 10;
 	public total: number | undefined;
 	public listAuction: IAuctionSalesDto | undefined;
 	public offset = 0;
-	public tableItems: ITableItem[] = [];
+	public tableItems$: BehaviorSubject<ITableItem[]> = new BehaviorSubject<ITableItem[]>([]);
+	public tableState: TableState = TableState.Loading;
 
-	public constructor(private readonly apiService: SalesApiService) {}
+	public constructor(private readonly auctionSaleFacadeService: AuctionSaleFacadeService) {}
 
 	public ngOnInit(): any {
 		this.loadDataFromServer(this.pageSize, this.offset);
 	}
 
 	public loadDataFromServer(pageSize: number, offset: number): void {
-		this.apiService
-			.getAuctions(pageSize, offset)
+		this.tableState = TableState.Loading;
+
+		this.auctionSaleFacadeService
+			.getAuctionSale(pageSize, offset)
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
 				this.listAuction = value;
 
 				if (value.items) {
-					this.tableItems = <ITableItem[]>(<unknown>value.items.map(item => {
-						return { ...item, tovName: { text: item.tovName, url: item.detailUrl } };
+					const dataTable = <ITableItem[]>(<unknown>value.items.map(item => {
+						return {
+							...item,
+							price: `${item.price} ${item.currency!}`,
+							quantity: `${item.quantity} ${item.tovUnitName!}`,
+							tovName: {
+								text: `${item.tovName}`,
+								url: item.detailUrl,
+							},
+						};
 					}));
+
+					this.tableItems$.next(dataTable);
+					this.tableState = TableState.Full;
 				}
 
 				if (value.total) {
@@ -51,11 +67,11 @@ export class AuctionSalesComponent implements OnInit {
 		}
 
 		this.offset = this.pageSize * $event - this.pageSize;
-
 		this.pageIndex = $event; // Установка текущего индекса
 
 		this.loadDataFromServer(this.pageSize, this.offset);
 	}
 
 	protected readonly window = window;
+	protected readonly TableState = TableState;
 }

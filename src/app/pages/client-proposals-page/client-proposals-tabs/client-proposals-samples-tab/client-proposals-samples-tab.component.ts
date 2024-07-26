@@ -50,6 +50,7 @@ export class ClientProposalsSamplesTabComponent {
 			};
 			tableItem.weight = x.weight;
 			tableItem.quantity = x.quantity;
+			tableItem.tov = x.tov.name;
 
 			return tableItem;
 		});

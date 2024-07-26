@@ -7,7 +7,7 @@ import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 @Injectable({
 	providedIn: 'root',
 })
-export class SalesApiService {
+export class AuctionSalesApiService {
 	public constructor(private readonly http: HttpClient) {}
 
 	/** Sale */

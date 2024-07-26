@@ -42,6 +42,10 @@ export interface IClientOffersDto {
 	saleClientsCount: number;
 	salesWeight: number;
 	rating: number;
+	newProductUrl: string;
+	tovGroupUrl: string;
+	productionUrl: string;
+	productionGroupUrl: string;
 	prices: IPrice[];
 	advantages: IAdvantage[];
 	promotionalMaterials: IFilesProposals[];
@@ -51,4 +55,9 @@ export interface IClientOffersDto {
 export interface IRequestGetClientOffer {
 	clientId: number;
 	productionIds: number[];
+}
+
+export enum ClientProposalsTypeDocuments {
+	rim = 0,
+	documents,
 }

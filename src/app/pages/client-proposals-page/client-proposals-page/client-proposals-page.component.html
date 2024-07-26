@@ -2,10 +2,10 @@
 	<ss-headline class="clients-proposals-page__header" size="h3">Контакт с клиентом: рекомендации по ВГП</ss-headline>
 	<div class="clients-proposals-page__content">
 		<div class="clients-proposals-page__img">
-			<img src="../../../../assets/images/client-proposals-main-page/client-proposals-main-page.png" alt=""/>
+			<img src="../../../../assets/images/client-proposals-main-page/client-proposals-main-page.png" alt="" />
 			<ss-headline size="h4">Найдите клиента в поиске</ss-headline>
 		</div>
-		<ss-search-input class="clients-proposals-page__search-input" [searchType]="'client'"
+		<ss-search-input [onlyActive]="true" [onlyUserClients]="true" class="clients-proposals-page__search-input" [searchType]="'client'"
 						 (select)="getSearchClient($event)"></ss-search-input>
 	</div>
 </div>
