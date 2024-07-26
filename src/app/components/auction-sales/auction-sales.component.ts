@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
-import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
 import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 import { TableState } from '@app/shared/components/table/table-state';
 import { BehaviorSubject } from 'rxjs';
+import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
 
 @UntilDestroy()
 @Component({
