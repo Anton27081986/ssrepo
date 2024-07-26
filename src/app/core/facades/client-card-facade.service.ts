@@ -111,42 +111,19 @@ export class ClientsCardFacadeService {
 			.subscribe();
 	}
 
-	public setBasicManager(managerId: number) {
-		if (this.clientIdSubject.value) {
-			this.clientApiService
-				.setBasicManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getManagers();
-					this.refreshClientCard();
-				});
-		}
+	public setBasicManager(managerId?: number) {
+		return this.clientApiService
+			.setBasicManager(this.clientIdSubject.value, managerId)
 	}
 
-	public addManager(managerId?: number, isBase = false) {
-		if (this.clientIdSubject.value && managerId) {
-			this.clientApiService
-				.addManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					if (isBase) {
-						this.setBasicManager(managerId);
-					} else {
-						this.getManagers();
-					}
-				});
-		}
+	public addManager(managerId?: number) {
+		return this.clientApiService
+			.addManager(this.clientIdSubject.value, managerId)
 	}
 
 	public deleteManager(managerId?: number) {
-		if (this.clientIdSubject.value && managerId) {
-			this.clientApiService
-				.deleteManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getManagers();
-				});
-		}
+		return this.clientApiService
+			.deleteManager(this.clientIdSubject.value, managerId)
 	}
 
 	public saveInfo(body: IClientEditRequest) {
