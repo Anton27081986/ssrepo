@@ -135,9 +135,10 @@ export class AppIcons {
 		'<path d="M17.5 12H6.5" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
-	public arrow =
-		'<svg width="6" height="10" viewBox="0 0 6 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M1 1L5 5L1 9" stroke="#22223A" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+	public static arrow =
+		'<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M9.97532 7.44141L4.91699 12.4997L9.97532 17.5581" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M19.0836 12.5H5.05859" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
 	public static close =

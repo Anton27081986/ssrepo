@@ -73,8 +73,9 @@ export class MessagesComponent {
 			this.isLoading = true;
 		});
 
-		this.messages$.pipe(untilDestroyed(this)).subscribe(() => {
+		this.messages$.pipe(untilDestroyed(this)).subscribe((messages) => {
 			this.isLoading = false;
+			this.total = messages?.total || 0
 
 			if (this.pageIndex === 1) {
 				this.scrollToBottom();

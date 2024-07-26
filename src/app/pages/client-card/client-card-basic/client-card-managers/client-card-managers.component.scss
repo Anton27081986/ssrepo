@@ -174,14 +174,6 @@
 		max-height: 173px;
 		height: 173px;
 		margin-top: 7px;
-
-		::ng-deep svg {
-			width: 10px;
-
-			rect {
-				fill: $lite-text;
-			}
-		}
 	}
 
 	.footer {

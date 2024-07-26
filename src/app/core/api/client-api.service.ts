@@ -109,21 +109,21 @@ export class ClientApiService {
 		);
 	}
 
-	public setBasicManager(clientId: number, managerId: number) {
+	public setBasicManager(clientId: number | null, managerId?: number) {
 		return this.http.put<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,
 			{},
 		);
 	}
 
-	public addManager(clientId: number, userId: number) {
+	public addManager(clientId: number | null, userId?: number) {
 		return this.http.post<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}/managers`,
 			{ userId, isMain: false },
 		);
 	}
 
-	public deleteManager(clientId: number, managerId: number) {
+	public deleteManager(clientId: number | null, managerId?: number) {
 		return this.http.delete<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,
 		);
