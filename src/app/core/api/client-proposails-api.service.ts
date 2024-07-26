@@ -27,6 +27,7 @@ export interface IFile {
 
 export interface IShareFile {
 	files: IFile[];
+	sendEmail: boolean;
 }
 
 export interface ILoadFileStatus {
@@ -147,7 +148,7 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public saveInCloud(files: IFilesProposals[]): Observable<SaveInCloud> {
+	public saveInCloud(files: IFilesProposals[], sendEmail: boolean): Observable<SaveInCloud> {
 		const request: IFile[] = files.map(file => {
 			return {
 				id: file.id,
@@ -156,7 +157,7 @@ export class ClientProposalsApiService {
 			};
 		});
 
-		const dataRequest: IShareFile = { files: request };
+		const dataRequest: IShareFile = { files: request, sendEmail: sendEmail };
 
 		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
 	}
