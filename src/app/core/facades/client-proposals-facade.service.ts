@@ -115,8 +115,8 @@ export class ClientProposalsFacadeService {
 		return result;
 	}
 
-	public saveInCloud(files: IFilesProposals[]): Observable<SaveInCloud> {
-		return this.clientProposalsApiService.saveInCloud(files);
+	public saveInCloud(files: IFilesProposals[], sendEmail: boolean): Observable<SaveInCloud> {
+		return this.clientProposalsApiService.saveInCloud(files, sendEmail);
 	}
 
 	public getFiles(url: string): Observable<Blob> {

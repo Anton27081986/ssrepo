@@ -76,7 +76,7 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 
 		if (files.length) {
 			this.clientProposalsFacadeService
-				.saveInCloud(files)
+				.saveInCloud(files, true)
 				.pipe(untilDestroyed(this))
 				.subscribe(url => {
 					this.openPopoverSendToTheCloud(url.shareLink);
@@ -97,7 +97,7 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 
 	protected getUrlFile() {
 		this.clientProposalsFacadeService
-			.saveInCloud(this.checkListStateService.checkFiles$.value)
+			.saveInCloud(this.checkListStateService.checkFiles$.value, false)
 			.pipe(untilDestroyed(this))
 			.subscribe(val => {
 				this.urlInCloud$.next(val.shareLink);
