@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
 import { Observable } from 'rxjs';
 
@@ -7,12 +7,17 @@ import { Observable } from 'rxjs';
 	templateUrl: './topic.component.html',
 	styleUrls: ['./topic.component.scss'],
 })
-export class TopicComponent {
-	public subjects$: Observable<Array<{ subject: string; messageCount: number }>>;
+export class TopicComponent implements OnInit {
+	public topics$: Observable<Array<{ subject: string; messageCount: number }>>;
 	public totalMessages$: Observable<number>;
 
+	ngOnInit() {
+		this.facadeService.loadMessages();
+		this.facadeService.loadFiles();
+	}
+
 	constructor(private readonly facadeService: CorrespondenceFacadeService) {
-		this.subjects$ = this.facadeService.subjects$;
+		this.topics$ = this.facadeService.topics$;
 		this.totalMessages$ = this.facadeService.totalMessages$;
 	}
 

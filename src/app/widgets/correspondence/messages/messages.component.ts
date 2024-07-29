@@ -18,7 +18,7 @@ import { ITab } from '@app/shared/components/tabs/tab';
 })
 export class MessagesComponent {
 	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
-	protected subject$: Observable<string | null>;
+	protected topic$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
 	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
 
@@ -57,10 +57,10 @@ export class MessagesComponent {
 	) {
 		this.messages$ = this.notificationsFacadeService.messages$;
 		this.files$ = this.notificationsFacadeService.files$;
-		this.subject$ = this.notificationsFacadeService.selectedSubject$;
+		this.topic$ = this.notificationsFacadeService.selectedTopic$;
 		this.user$ = this.userService.userProfile$;
 
-		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
+		this.topic$.pipe(untilDestroyed(this)).subscribe(subject => {
 			this.selectedTab = this.tabs.find(x => x.name === 'messages');
 
 			const messageTab = this.tabs.find(x => x.name === 'messages');
@@ -73,9 +73,9 @@ export class MessagesComponent {
 			this.isLoading = true;
 		});
 
-		this.messages$.pipe(untilDestroyed(this)).subscribe((messages) => {
+		this.messages$.pipe(untilDestroyed(this)).subscribe(messages => {
 			this.isLoading = false;
-			this.total = messages?.total || 0
+			this.total = messages?.total || 0;
 
 			if (this.pageIndex === 1) {
 				this.scrollToBottom();
