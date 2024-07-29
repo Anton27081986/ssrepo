@@ -65,10 +65,11 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 		}, 1);
 	}
 
-	showText(cell: Cell) {
+	showText(cell: Cell, title: string) {
 		this.modalService.open(TableFullCellComponent, {
 			data: {
 				cell,
+				title,
 			},
 		});
 	}
