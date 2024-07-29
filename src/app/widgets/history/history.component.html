@@ -7,7 +7,7 @@
 		<div class="history-item" *ngFor="let item of historyItems; trackBy: trackByHistoryItems">
 			<div class="history-item-line">
 				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Автор:</ss-text>
-				<ss-text size="3" weight="regular">{{ item.user.name }}, {{item.createdTime |  date: 'dd.MM.yyyy hh:mm' }}</ss-text>
+				<ss-text size="3" weight="regular">{{ item.user.name }}, {{item.createdTime }}</ss-text>
 			</div>
 			<div class="history-item-line">
 				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Действие:</ss-text>
@@ -15,7 +15,7 @@
 			</div>
 
 			<div class="history-item-table" *ngIf="item.changes.length === 1">
-				<table >
+				<table>
 						<thead>
 							<tr>
 								<th>

@@ -70,7 +70,20 @@ export class HistoryComponent implements OnInit, OnDestroy {
 			.pipe(untilDestroyed(this))
 			.subscribe(items => {
 				if (items.items) {
-					this.historyItems = items.items;
+					this.historyItems = items.items.map(item => {
+						item.createdTime = new Date(Date.parse(item.createdTime)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+								hour: 'numeric',
+								minute: 'numeric',
+							},
+						);
+
+						return item;
+					});
 				}
 
 				if (items.total! > 6) {
