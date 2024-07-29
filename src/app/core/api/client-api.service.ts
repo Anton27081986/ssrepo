@@ -84,16 +84,13 @@ export class ClientApiService {
 
 	public getClientsDictionary(
 		searchTerm: string,
-		onlyActive: boolean,
-		onlyUserClients: boolean,
+		onlyActive: boolean
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		params = params.set('query', searchTerm);
 
 		params = params.set('onlyActive', onlyActive);
-
-		params = params.set('onlyUserClients', onlyUserClients);
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/clients`,

@@ -33,7 +33,6 @@ export class SearchInputComponent {
 	@Input() public clientId: number | undefined;
 	@Input() selectedItem: IFilterOption | undefined;
 	@Input() onlyActive: boolean = false;
-	@Input() onlyUserClients: boolean = false;
 
 	@Output() public select = new EventEmitter<any>();
 
@@ -106,7 +105,7 @@ export class SearchInputComponent {
 					break;
 				case 'client':
 					this.searchFacade
-						.getClients(query, this.onlyActive, this.onlyUserClients)
+						.getClients(query, this.onlyActive)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;
