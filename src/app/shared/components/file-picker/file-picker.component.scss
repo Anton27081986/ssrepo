@@ -91,3 +91,8 @@
 	display: block;
 	max-height: 500px;
 }
+
+:host-context(.dark) .ss-file-picker__content {
+	background-color: $dark-island !important;
+	color: $island;
+}
