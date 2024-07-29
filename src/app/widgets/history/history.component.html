@@ -80,7 +80,8 @@
 
 			<div class="history-item-line">
 				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Комментарий:</ss-text>
-				<ss-text size="3" weight="regular">{{ item.comments ?? '-' }}</ss-text>
+				<ss-text *ngIf="item.comments" [innerHTML]="item.comments" size="3" weight="regular"></ss-text>
+				<ss-text *ngIf="!item.comments" size="3" weight="regular">{{'-'}}</ss-text>
 			</div>
 		</div>
 	</div>
