@@ -62,8 +62,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
-	protected permissions$: Observable<string[]>;
-	protected isTabsVisible: boolean = false;
+	protected permissions$: Observable<string[] | null>;
 
 	constructor(
 		private readonly _router: Router,
@@ -85,7 +84,9 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 		this.subscription.add(
 			this.permissions$.subscribe(list => {
-				this.isTabsVisible = list.includes(Permissions.CLIENT_ADDITIONAL_INFO_READ);
+				if (list && !list.includes(Permissions.CLIENT_ADDITIONAL_INFO_READ)) {
+					this._router.navigate(['/not-permission']);
+				}
 			}),
 		);
 	}
