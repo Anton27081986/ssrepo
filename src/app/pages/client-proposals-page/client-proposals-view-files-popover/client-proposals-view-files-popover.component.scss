@@ -44,3 +44,8 @@
 		cursor: pointer;
 	}
 }
+
+:host-context(.dark) .client-proposals-view-files-popover {
+	background-color: $dark-island !important;
+	color: $island;
+}

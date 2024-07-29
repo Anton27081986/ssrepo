@@ -3,33 +3,40 @@
 @use 'src/styles/colors.scss' as *;
 
 .ss-settings-view-column {
-		display: flex;
-		flex-direction: column;
-		position: relative;
-		background-color: white;
-		width: 218px;
-		border-radius: 8px;
-		border: 1px solid $white;
-		padding: 4px 0 8px 0;
-		border: 1px solid $border-color;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	background-color: white;
+	width: 218px;
+	border-radius: 8px;
+	border: 1px solid $white;
+	padding: 4px 0 8px 0;
+	border: 1px solid $border-color;
 
 	&__item {
-			display: flex;
-			flex-wrap: nowrap;
-			align-items: center;
-			gap: 7px;
-			margin-left: 8px;
-			margin-top: 2px;
-		}
-
-		ss-icon {
-			padding-top: 2px;
-		}
-
-		&__checkbox {
-			width: 16px;
-			height: 16px;
-			border: 1px solid $island-outline;
-			border-radius: 4px;
-		}
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 7px;
+		margin-left: 8px;
+		margin-top: 2px;
 	}
+
+	ss-icon {
+		padding-top: 2px;
+	}
+
+	&__checkbox {
+		width: 16px;
+		height: 16px;
+		border: 1px solid $island-outline;
+		border-radius: 4px;
+	}
+}
+
+:host-context(.dark) .ss-settings-view-column {
+	background-color: $dark-island !important;
+	color: $island;
+}
+
+

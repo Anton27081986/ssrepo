@@ -37,6 +37,7 @@
 
 			&-line {
 				display: flex;
+				word-break: break-all;
 
 				&-title {
 					width: 120px;

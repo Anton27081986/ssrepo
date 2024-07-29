@@ -5,7 +5,6 @@ import {
 	HostBinding,
 	Input,
 	Output,
-	ViewEncapsulation,
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
@@ -14,7 +13,7 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 	selector: 'ss-table-v2',
 	templateUrl: 'ss-table-v2.component.html',
 	styleUrls: ['ss-table-v2.component.scss'],
-	encapsulation: ViewEncapsulation.None,
+	// encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TableV2Component {
