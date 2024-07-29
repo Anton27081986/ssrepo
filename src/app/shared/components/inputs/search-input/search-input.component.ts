@@ -29,7 +29,7 @@ export class SearchInputComponent {
 	@Input() public clear: boolean = false;
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
-	@Input() public searchType: searchType = 'user';
+	@Input() public searchType: searchType;
 	@Input() public clientId: number | undefined;
 	@Input() selectedItem: IFilterOption | undefined;
 	@Input() onlyActive: boolean = false;

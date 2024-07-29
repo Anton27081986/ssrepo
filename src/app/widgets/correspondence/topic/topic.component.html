@@ -11,13 +11,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="item" *ngFor="let subject of (subjects$ | async)" (click)="onTopic(subject.subject)">
+	<div class="item" *ngFor="let topic of (topics$ | async)" (click)="onTopic(topic.subject)">
 		<ss-icon height="22" width="22" name="smsTracking" class="item-icon"></ss-icon>
 		<div class="item-content">
-			<ss-headline size="h6">{{ subject.subject }}</ss-headline>
+			<ss-headline size="h6">{{ topic.subject }}</ss-headline>
 			<div class="item-content-subtitle">
 				<ss-text size="2">
-					Сообщений: <b> {{ subject.messageCount }} </b>
+					Сообщений: <b> {{ topic.messageCount }} </b>
 				</ss-text>
 			</div>
 		</div>
