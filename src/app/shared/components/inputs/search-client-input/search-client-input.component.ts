@@ -47,7 +47,6 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public label: string | undefined;
 	@Input() onlyActive: boolean = false;
-	@Input() onlyUserClients: boolean = false;
 
 	@Output() public select = new EventEmitter<SearchInputItem | null>();
 
@@ -120,7 +119,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 	protected search(query: string) {
 		if (query.length > 2) {
 			this.searchFacade
-				.getClients(query, this.onlyActive, this.onlyUserClients)
+				.getClients(query, this.onlyActive)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
 					this.found = res.items;

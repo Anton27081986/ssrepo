@@ -41,9 +41,8 @@ export class SearchFacadeService {
 	public getClients(
 		query: string,
 		onlyActive: boolean = false,
-		onlyUserClients: boolean = false,
 	) {
-		return this.clientApiService.getClientsDictionary(query, onlyActive, onlyUserClients);
+		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
 	public getProductions(query: string) {
