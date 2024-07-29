@@ -54,3 +54,8 @@
 		cursor: pointer;
 	}
 }
+
+:host-context(.dark) .client-proposals-send-cloud-popover {
+	background-color: $dark-island !important;
+	color: $island;
+}
