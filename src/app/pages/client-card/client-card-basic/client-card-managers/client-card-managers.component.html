@@ -1,4 +1,5 @@
 <div class="managers">
+	<ss-loader *ngIf="isLoading$ | async"></ss-loader>
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Менеджеры</ss-headline>
 		<ng-container>
