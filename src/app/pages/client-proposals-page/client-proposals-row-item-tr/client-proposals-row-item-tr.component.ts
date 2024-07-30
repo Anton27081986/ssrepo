@@ -67,9 +67,11 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 				this.documents$.next(this.item.documents.filter(item => item !== null));
 			}
 
-			this.advantagesTpr = this.item.advantages.map(item => {
-				return item.name;
-			});
+			if (this.item.advantages) {
+				this.advantagesTpr = this.item.advantages.map(item => {
+					return item.name;
+				});
+			}
 		}
 	}
 
