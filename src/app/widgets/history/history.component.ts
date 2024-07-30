@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	Input,
+	OnChanges,
+	OnDestroy,
+	SimpleChanges,
+} from '@angular/core';
 import { HistoryFacadeService } from '@app/core/facades/history-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
@@ -13,7 +20,7 @@ import { TableState } from '@app/shared/components/table/table-state';
 	templateUrl: './history.component.html',
 	styleUrls: ['./history.component.scss'],
 })
-export class HistoryComponent implements OnInit, OnDestroy {
+export class HistoryComponent implements OnChanges, OnDestroy {
 	@Input() public objectId: number | undefined;
 
 	public historyItems: IChangeTrackerItemDto[] = [];
@@ -32,30 +39,28 @@ export class HistoryComponent implements OnInit, OnDestroy {
 		private readonly ref: ChangeDetectorRef,
 	) {}
 
-	public ngOnInit() {
-		if (this.objectId === undefined) {
-			console.error('Требуется ObjectId');
+	public ngOnChanges(changes: SimpleChanges) {
+		if (changes.objectId && this.objectId) {
+			this.loadDataFromServer(this.pageSize, this.offset);
 
-			return;
+			this.signalHistoryService.startConnection(
+				this.authService.userValue.token!,
+				this.objectId,
+				0,
+			);
+
+			this.signalHistoryService.historyChange$
+				.pipe(untilDestroyed(this))
+				.subscribe(change => {
+					console.info('signalR change', change);
+
+					if (this.objectId === change.objectId) {
+						this.historyItems.unshift(change.item);
+						this.tableState = TableState.Full;
+						this.ref.detectChanges();
+					}
+				});
 		}
-
-		this.loadDataFromServer(this.pageSize, this.offset);
-
-		this.signalHistoryService.startConnection(
-			this.authService.userValue.token!,
-			this.objectId,
-			0,
-		);
-
-		this.signalHistoryService.historyChange$.pipe(untilDestroyed(this)).subscribe(change => {
-			console.info('signalR change', change);
-
-			if (this.objectId === change.objectId) {
-				this.historyItems.unshift(change.item);
-				this.tableState = TableState.Full;
-				this.ref.detectChanges();
-			}
-		});
 	}
 
 	public ngOnDestroy(): void {

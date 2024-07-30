@@ -63,6 +63,11 @@ export class CorrespondenceFacadeService {
 
 	public messageFiles$ = this.messageFilesSubject.asObservable();
 
+	// Загрузка
+	private readonly isLoadingSubject = new BehaviorSubject<boolean>(true);
+
+	public isLoading$ = this.isLoadingSubject.asObservable();
+
 	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly filesApiService: FilesApiService,
@@ -72,6 +77,8 @@ export class CorrespondenceFacadeService {
 		if (objectId && this.objectIdSubject.value !== objectId) {
 			this.objectIdSubject.next(objectId);
 			this.loadSubjects();
+			this.loadMessages();
+			this.loadFiles();
 		}
 	}
 
@@ -109,6 +116,7 @@ export class CorrespondenceFacadeService {
 					if (!this.selectedTopicSubject.value) {
 						this.totalMessagesSubject.next(res.total);
 					}
+					this.isLoadingSubject.next(false);
 				});
 		}
 	}
@@ -133,6 +141,7 @@ export class CorrespondenceFacadeService {
 	}
 
 	public selectSubject(subject: string | null) {
+		this.isLoadingSubject.next(true)
 		this.selectedTopicSubject.next(subject);
 		this.messagesSubject.next({ items: [], total: 0 });
 		this.loadMessages();

@@ -34,6 +34,8 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public operationStatuses = OperationStatuses;
 
+	public isLoading$: Observable<boolean>;
+
 	public changedData: {
 		basicManager: number | undefined;
 		managersList: Array<{ manager: IManagerItemDto; status: OperationStatuses }>;
@@ -45,6 +47,7 @@ export class ClientCardManagersComponent implements OnInit {
 		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
+		this.isLoading$ = this.clientCardListFacade.isManagersLoading$;
 	}
 
 	public ngOnInit() {

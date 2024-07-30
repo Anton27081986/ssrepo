@@ -1,4 +1,5 @@
 <div class="info">
+	<ss-loader *ngIf="isLoading$ | async"></ss-loader>
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Общая информация</ss-headline>
 		<div class="header-controls" *ngIf="!isEditing; else closeButton">
