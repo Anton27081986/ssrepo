@@ -6,4 +6,5 @@ export const environment = {
 	applicationTitle: 'DEV ERP SSNAB',
 	tabTitle: '',
 	name: 'dev',
+	redirectUrl: 'https://ssnab.it/index',
 };
