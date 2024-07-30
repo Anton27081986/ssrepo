@@ -37,6 +37,7 @@
 
 			&-line {
 				display: flex;
+				word-break: break-all;
 
 				&-title {
 					width: 120px;
@@ -107,6 +108,15 @@
 
 
 :host-context(.dark) {
+
+	table {
+		background-color: $dark-island!important;
+	}
+
+	thead tr th {
+		background-color: $dark-island!important;
+	}
+
 	.history-item {
 		background-color: $dark-island!important;
 		border: 1px solid $dark-island-outline;

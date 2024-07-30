@@ -43,6 +43,16 @@ export class ClientsCardFacadeService {
 	private readonly clientStatusesSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public statuses$ = this.clientStatusesSubject.asObservable();
 
+	// Загрузка
+	private readonly isContractorsLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isContractorsLoading$ = this.isContractorsLoadingSubject.asObservable();
+
+	private readonly isManagersLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isManagersLoading$ = this.isManagersLoadingSubject.asObservable();
+
+	private readonly isInfoLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isInfoLoading$ = this.isInfoLoadingSubject.asObservable();
+
 	public constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly callPhoneService: CallPhoneService,
@@ -53,6 +63,7 @@ export class ClientsCardFacadeService {
 	}
 
 	public getClientCardById(id: number) {
+		this.isInfoLoadingSubject.next(true)
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.getClientCardById(id)
@@ -60,6 +71,7 @@ export class ClientsCardFacadeService {
 					tap(client => {
 						this.clientSubject.next(client.data);
 						this.clientCardPermissionsSubject.next(client.permissions);
+						this.isInfoLoadingSubject.next(false);
 					}),
 					untilDestroyed(this),
 				)
@@ -74,12 +86,14 @@ export class ClientsCardFacadeService {
 	}
 
 	public getManagers() {
+		this.isManagersLoadingSubject.next(true);
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.getManagers(this.clientIdSubject.value!)
 				.pipe(
 					tap(managers => {
 						this.managersSubject.next(managers);
+						this.isManagersLoadingSubject.next(false);
 					}),
 					untilDestroyed(this),
 				)
@@ -100,53 +114,32 @@ export class ClientsCardFacadeService {
 	}
 
 	public getContractors(id: number, isActiveOnly = true) {
+		this.isContractorsLoadingSubject.next(true)
 		this.clientApiService
 			.getContractors(id, isActiveOnly)
 			.pipe(
 				tap(contractors => {
 					this.contractorsSubject.next(contractors);
+					this.isContractorsLoadingSubject.next(false)
 				}),
 				untilDestroyed(this),
 			)
 			.subscribe();
 	}
 
-	public setBasicManager(managerId: number) {
-		if (this.clientIdSubject.value) {
-			this.clientApiService
-				.setBasicManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getManagers();
-					this.refreshClientCard();
-				});
-		}
+	public setBasicManager(managerId?: number) {
+		return this.clientApiService
+			.setBasicManager(this.clientIdSubject.value, managerId)
 	}
 
-	public addManager(managerId?: number, isBase = false) {
-		if (this.clientIdSubject.value && managerId) {
-			this.clientApiService
-				.addManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					if (isBase) {
-						this.setBasicManager(managerId);
-					} else {
-						this.getManagers();
-					}
-				});
-		}
+	public addManager(managerId?: number) {
+		return this.clientApiService
+			.addManager(this.clientIdSubject.value, managerId)
 	}
 
 	public deleteManager(managerId?: number) {
-		if (this.clientIdSubject.value && managerId) {
-			this.clientApiService
-				.deleteManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getManagers();
-				});
-		}
+		return this.clientApiService
+			.deleteManager(this.clientIdSubject.value, managerId)
 	}
 
 	public saveInfo(body: IClientEditRequest) {

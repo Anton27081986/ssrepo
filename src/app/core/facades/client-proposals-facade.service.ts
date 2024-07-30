@@ -24,7 +24,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 export class ClientProposalsFacadeService {
 	public clientId$: Observable<number>;
 
-	private readonly permissionsSubject = new BehaviorSubject<string[]>([]);
+	private readonly permissionsSubject = new BehaviorSubject<string[] | null>(null);
 	public permissions$ = this.permissionsSubject.asObservable();
 
 	constructor(

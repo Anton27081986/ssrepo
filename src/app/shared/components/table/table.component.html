@@ -23,7 +23,7 @@
 				</span>
 				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
 			</ng-container>
-			<ss-icon class="maximise" name="maximise" *ngIf="cell.clientWidth < cell.scrollWidth" (click)="showText(item[headItem.field])"></ss-icon>
+			<ss-icon class="maximise" name="maximise" *ngIf="cell.clientWidth < cell.scrollWidth" (click)="showText(item[headItem.field], headItem.title)"></ss-icon>
 		</div>
 	</div>
 </div>

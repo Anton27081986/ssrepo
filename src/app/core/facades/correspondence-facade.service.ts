@@ -18,16 +18,16 @@ export class CorrespondenceFacadeService {
 	public objectId$ = this.objectIdSubject.asObservable();
 
 	// Темы
-	private readonly subjectsSubject = new BehaviorSubject<
+	private readonly topicsSubject = new BehaviorSubject<
 		Array<{ subject: string; messageCount: number }>
 	>([]);
 
-	public subjects$ = this.subjectsSubject.asObservable();
+	public topics$ = this.topicsSubject.asObservable();
 
 	// Выбранная тема
-	private readonly selectedSubjectSubject = new BehaviorSubject<string | null>(null);
+	private readonly selectedTopicSubject = new BehaviorSubject<string | null>(null);
 
-	public selectedSubject$ = this.selectedSubjectSubject.asObservable();
+	public selectedTopic$ = this.selectedTopicSubject.asObservable();
 
 	// Сообщения
 	private readonly messagesSubject = new BehaviorSubject<{
@@ -63,6 +63,11 @@ export class CorrespondenceFacadeService {
 
 	public messageFiles$ = this.messageFilesSubject.asObservable();
 
+	// Загрузка
+	private readonly isLoadingSubject = new BehaviorSubject<boolean>(true);
+
+	public isLoading$ = this.isLoadingSubject.asObservable();
+
 	public constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly filesApiService: FilesApiService,
@@ -72,27 +77,18 @@ export class CorrespondenceFacadeService {
 		if (objectId && this.objectIdSubject.value !== objectId) {
 			this.objectIdSubject.next(objectId);
 			this.loadSubjects();
+			this.loadMessages();
+			this.loadFiles();
 		}
 	}
 
-	public loadSubjects(selectedSubject?: string, Query?: string) {
+	public loadSubjects(Query?: string) {
 		if (this.objectIdSubject.value) {
 			this.notificationsApiService
 				.getSubjects(this.objectIdSubject.value, Query)
-				.pipe(
-					tap(x => {
-						this.subjectsSubject.next(x);
-					}),
-					untilDestroyed(this),
-				)
-				.subscribe(() => {
-					if (!selectedSubject) {
-						this.messagesSubject.next({ items: [], total: 0 });
-						this.loadMessages();
-						this.loadFiles();
-					} else {
-						this.selectSubject(selectedSubject);
-					}
+				.pipe(untilDestroyed(this))
+				.subscribe(x => {
+					this.topicsSubject.next(x);
 				});
 		}
 	}
@@ -102,7 +98,7 @@ export class CorrespondenceFacadeService {
 			this.notificationsApiService
 				.getMessages(
 					this.objectIdSubject.value,
-					this.selectedSubjectSubject.value,
+					this.selectedTopicSubject.value,
 					limit,
 					offset,
 					Query,
@@ -117,9 +113,10 @@ export class CorrespondenceFacadeService {
 					untilDestroyed(this),
 				)
 				.subscribe(res => {
-					if (!this.selectedSubjectSubject.value) {
+					if (!this.selectedTopicSubject.value) {
 						this.totalMessagesSubject.next(res.total);
 					}
+					this.isLoadingSubject.next(false);
 				});
 		}
 	}
@@ -132,7 +129,7 @@ export class CorrespondenceFacadeService {
 	public loadFiles() {
 		if (this.objectIdSubject.value) {
 			this.notificationsApiService
-				.getFiles(this.objectIdSubject.value, this.selectedSubjectSubject.value)
+				.getFiles(this.objectIdSubject.value, this.selectedTopicSubject.value)
 				.pipe(
 					tap(x => {
 						this.filesSubject.next(x);
@@ -144,7 +141,8 @@ export class CorrespondenceFacadeService {
 	}
 
 	public selectSubject(subject: string | null) {
-		this.selectedSubjectSubject.next(subject);
+		this.isLoadingSubject.next(true)
+		this.selectedTopicSubject.next(subject);
 		this.messagesSubject.next({ items: [], total: 0 });
 		this.loadMessages();
 		this.loadFiles();

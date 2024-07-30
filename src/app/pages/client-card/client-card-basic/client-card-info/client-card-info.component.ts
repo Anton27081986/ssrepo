@@ -43,6 +43,8 @@ export class ClientCardInfoComponent implements OnInit {
 	protected newsaleDirectionId: number | undefined;
 	protected newRegionId: number | undefined;
 
+	public isLoading$: Observable<boolean>;
+
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NzMessageService,
@@ -58,6 +60,8 @@ export class ClientCardInfoComponent implements OnInit {
 			region: new FormControl<string>('', Validators.required),
 			comment: new FormControl(),
 		});
+
+		this.isLoading$ = this.clientCardListFacade.isInfoLoading$;
 	}
 
 	public ngOnInit() {

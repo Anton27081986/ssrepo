@@ -24,11 +24,14 @@ export class ErrorInterceptor implements HttpInterceptor {
 			catchError((err: unknown) => {
 				if (err instanceof HttpErrorResponse) {
 					if (Math.floor(err.status / 100) === 4) {
-						this.notificationToastService.addToast(err.error.title, 'warning');
-
 						if (err.status === 401) {
 							this.authenticationService.logout();
 						}
+
+						this.notificationToastService.addToast(
+							err.error?.title || Notifications.SERVER_ERROR_NOTIFICATION_TEXT,
+							'warning',
+						);
 					}
 
 					if (Math.floor(err.status / 100) === 5) {

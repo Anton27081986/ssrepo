@@ -28,9 +28,6 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 	protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private productionIds: number[] = [];
-	private readonly urlInCloud$: BehaviorSubject<null | string> = new BehaviorSubject<
-		null | string
-	>(null);
 
 	@Input() public clientId: number | null = null;
 
@@ -95,26 +92,17 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 		}
 	}
 
-	protected getUrlFile() {
-		this.clientProposalsFacadeService
-			.saveInCloud(this.checkListStateService.checkFiles$.value, false)
-			.pipe(untilDestroyed(this))
-			.subscribe(val => {
-				this.urlInCloud$.next(val.shareLink);
-			});
-	}
-
 	protected saveFiles() {
-		if (this.checkListStateService.checkFiles$.value.length) {
-			this.getUrlFile();
-
-			this.urlInCloud$
+		if (this.checkListStateService.checkFiles$.value.length && !this.waitingForLoading$.value) {
+			this.clientProposalsFacadeService
+				.saveInCloud(this.checkListStateService.checkFiles$.value, false)
 				.pipe(
+					untilDestroyed(this),
 					filterTruthy(),
 					map(url => {
 						this.waitingForLoading$.next(true);
 
-						return this.clientProposalsFacadeService.getFiles(url);
+						return this.clientProposalsFacadeService.getFiles(url.shareLink);
 					}),
 					switchMap(data => {
 						return data;

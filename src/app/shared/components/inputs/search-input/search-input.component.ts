@@ -29,11 +29,10 @@ export class SearchInputComponent {
 	@Input() public clear: boolean = false;
 	@Input() public placeholder: string = 'Поиск';
 	@Input() public error: string | undefined;
-	@Input() public searchType: searchType = 'user';
+	@Input() public searchType: searchType;
 	@Input() public clientId: number | undefined;
 	@Input() selectedItem: IFilterOption | undefined;
 	@Input() onlyActive: boolean = false;
-	@Input() onlyUserClients: boolean = false;
 
 	@Output() public select = new EventEmitter<any>();
 
@@ -106,7 +105,7 @@ export class SearchInputComponent {
 					break;
 				case 'client':
 					this.searchFacade
-						.getClients(query, this.onlyActive, this.onlyUserClients)
+						.getClients(query, this.onlyActive)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;
