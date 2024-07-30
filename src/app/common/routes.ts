@@ -1,5 +1,7 @@
+import { environment } from '@environments/environment';
+
 export class AppRoutes {
-	public static root = '';
+	public static root = environment.redirectUrl;
 	public static signIn = 'sign-in';
 	public static signUp = 'sign-up';
 	public static forgotPassword = 'forgot-password';

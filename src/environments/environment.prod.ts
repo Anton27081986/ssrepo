@@ -6,4 +6,5 @@ export const environment = {
 	applicationTitle: 'ERP SSNAB',
 	tabTitle: '',
 	name: 'prod',
+	redirectUrl: 'https://cisp.ssnab.ru/index',
 };
