@@ -84,7 +84,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 		this.subscription.add(
 			this.permissions$.subscribe(list => {
-				if (list && !list.includes(Permissions.CLIENT_ADDITIONAL_INFO_READ)) {
+				if (list && !list.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
 					this._router.navigate(['/not-permission']);
 				}
 			}),
