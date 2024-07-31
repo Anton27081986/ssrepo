@@ -218,7 +218,8 @@ export class CorrespondenceFacadeService {
 					this.messageFilesSubject.next(null);
 					this.messagesSubject.next({ items: [], total: 0 });
 
-					this.loadSubjects(subject);
+					this.loadSubjects();
+					this.selectSubject(subject);
 				});
 		}
 	}
