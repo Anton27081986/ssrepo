@@ -34,27 +34,27 @@ export class ClientProposalsInfoComponent implements OnInit {
 		{
 			label: 'Товарная ведомость по клиенту',
 			name: 'trade-list',
-			isVisible: true,
+			isVisible: false,
 		},
 		{
 			label: 'Командировки',
 			name: 'business-trips',
-			isVisible: true,
+			isVisible: false,
 		},
 		{
 			label: 'Разработки АК',
 			name: 'development',
-			isVisible: true,
+			isVisible: false,
 		},
 		{
 			label: 'Образцы',
 			name: 'samples',
-			isVisible: true,
+			isVisible: false,
 		},
 		{
 			label: 'Лента новостей',
 			name: 'news-line',
-			isVisible: true,
+			isVisible: false,
 		},
 	];
 
@@ -62,7 +62,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
-	protected permissions$: Observable<string[] | null>;
+	protected permissions$: Observable<string[]>;
 
 	constructor(
 		private readonly _router: Router,
@@ -84,8 +84,17 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 		this.subscription.add(
 			this.permissions$.subscribe(list => {
-				if (list && !list.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
-					this._router.navigate(['/not-permission']);
+				if (list.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
+					this.tabs.forEach(tab => {
+						tab.isVisible = true;
+					});
+				} else {
+					this.tabs.forEach(tab => {
+						if (tab.name !== 'contractors') {
+							tab.isVisible = false;
+						}
+					});
+					this.selectTab('contractors');
 				}
 			}),
 		);
@@ -111,6 +120,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	public selectTab(page: string) {
 		if (this.clientId) {
+			this.selectedTab = this.tabs.find((tab)=>tab.name === page) || this.mainInfoTab!;
 			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}
