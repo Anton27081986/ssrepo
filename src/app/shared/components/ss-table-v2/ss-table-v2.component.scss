@@ -1,0 +1,90 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	display: grid;
+	height: 100%;
+	position: relative;
+	width: 100%;
+
+	.table-wrapper {
+		height: 70vh;
+		overflow-y: auto;
+		scrollbar-color: $lite-text;
+		border-radius: 16px;
+
+		&::-webkit-scrollbar {
+			width: 6px;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: $lite-text;
+			border-radius: 16px;
+		}
+	}
+
+	.table {
+	width: 100%;
+
+			&__thead {
+				width: 100%;
+				position: sticky;
+				top: -1px;
+				z-index: 100;
+				background-color: #F2F3F7;
+				color: $text;
+
+				tr {
+					min-width: 100%;
+
+					th {
+						text-align: left;
+						border: 1px solid $island-outline;
+						font-size: 10px;
+						font-weight: 700;
+						line-height: 19px;
+						letter-spacing: -0.01em;
+						padding: 8px;
+					}
+				}
+
+				tbody tr:last-child td:first-child {
+					border-bottom-left-radius: 16px;
+				}
+
+				tbody tr:last-child td:last-child {
+					border-bottom-right-radius: 16px;
+				}
+
+				tbody {
+				}
+
+				tr:first-child {
+					border-bottom-left-radius: 16px;
+				}
+
+				tr:last-child {
+					border-bottom-right-radius: 16px;
+				}
+
+			}
+
+			}
+
+		.empty-space {
+			flex-grow: 1;
+		}
+}
+
+:host-context(.dark) :host  table thead {
+		background-color: $dark-island !important;
+		color: $island;
+}
+
+:host-context(.dark) .table-wrapper {
+	border: 1px solid $island;
+}
+
+:host-context(.dark) tbody {
+	background-color: #394545 !important;
+	color: $island !important;
+}

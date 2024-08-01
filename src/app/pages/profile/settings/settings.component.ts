@@ -1,47 +1,31 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {UserService} from '@auth/services/user.service';
-import {Observable} from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { IUserProfile } from '@app/core/models/user-profile';
+import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-settings',
-    templateUrl: './settings.component.html',
-    styleUrls: ['./settings.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+	selector: 'app-settings',
+	templateUrl: './settings.component.html',
+	styleUrls: ['./settings.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsComponent implements OnInit {
-    settingsForm!: FormGroup;
-    value?: any;
-    public profileData!: any;
-    public profile!: Observable<any>;
+	public settingsForm!: FormGroup;
+	public userProfile$!: Observable<IUserProfile | null>;
 
-    constructor(
-        private readonly formBuilder: FormBuilder,
-        private readonly userService: UserService,
-    ) {}
+	public constructor(
+		private readonly formBuilder: FormBuilder,
+		private readonly userStateService: UserProfileStoreService,
+	) {}
 
-    ngOnInit() {
-        this.settingsForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
-            disabled: true,
-        });
+	public ngOnInit() {
+		this.settingsForm = this.formBuilder.group({
+			login: ['', [Validators.required]],
+			password: ['', Validators.required],
+			disabled: true,
+		});
 
-        this.userService
-            .getProfile()
-            .pipe()
-            .subscribe(data => {
-                this.profileData = data;
-            });
-
-        this.profile = this.userService.getProfile();
-    }
-
-    onSubmit() {}
+		this.userProfile$ = this.userStateService.userProfile$;
+	}
 }

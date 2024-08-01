@@ -1,0 +1,29 @@
+<div class="header" [ngClass]="{'scroll': scroll}" *ngIf="head" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+	<div class="header__cell" [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">
+		{{ headItem.title }}
+	</div>
+</div>
+<div class="body" #bodyEl>
+	<div class="body__row" *ngFor="let item of items" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+		<div class="body__cell"
+			 [ngStyle]="{ 'padding': padding }"
+			 *ngFor="let headItem of head"
+			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth}"
+			 #cell>
+			<ng-container [ngSwitch]="true">
+				<a *ngSwitchCase="!!item[headItem.field]?.url"
+				   href="{{ item[headItem.field].url }}"
+				   target="_blank">
+					<span class="text-{{ size }}">{{ item[headItem.field].text }}</span>
+				</a>
+				<span *ngSwitchCase="Array.isArray(item[headItem.field])">
+					<a class="text-{{ size }}" *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
+						{{ link.text }}
+					</a>
+				</span>
+				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
+			</ng-container>
+			<ss-icon class="maximise" name="maximise" *ngIf="cell.clientWidth < cell.scrollWidth" (click)="showText(item[headItem.field], headItem.title)"></ss-icon>
+		</div>
+	</div>
+</div>

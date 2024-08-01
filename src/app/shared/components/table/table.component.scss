@@ -1,0 +1,109 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow-y: hidden;
+	position: relative;
+	overflow-x: auto;
+
+	span.text-1 {
+		font-size: 16px;
+		line-height: 22px;
+	}
+
+	span.text-2 {
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	span.text-3 {
+		font-size: 13px;
+		line-height: 18px;
+	}
+
+	span.text-4 {
+		font-size: 10px;
+		line-height: 11px;
+	}
+
+	.header {
+		display: grid;
+		grid-auto-columns: 1fr;
+		border: 1px solid #E4E8EA;
+		border-radius: 16px 16px 0 0;
+		background-color: #F2F3F7;
+
+		&__cell {
+			border-right: 1px solid #E4E8EA;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			font-weight: 600;
+		}
+
+		&__cell:last-child {
+			border-right: none;
+		}
+	}
+
+	.header.scroll {
+		width: calc(100% - 4px);
+	}
+
+	.body {
+		overflow-y: auto;
+		background-color: $island;
+
+		&__row {
+			display: grid;
+			grid-auto-columns: 1fr;
+			border-left: 1px solid #E4E8EA;
+			border-right: 1px solid #E4E8EA;
+			border-bottom: 1px solid #E4E8EA;
+		}
+
+		&__row:last-child {
+			border-radius: 0 0 16px 16px;
+		}
+
+		&__cell {
+			position: relative;
+			border-right: 1px solid #E4E8EA;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			max-height: 300px;
+
+			.maximise {
+				position: absolute;
+				right: 4px;
+				bottom: 4px;
+				cursor: pointer;
+			}
+		}
+
+		&__cell:last-child {
+			border-right: none;
+		}
+	}
+}
+
+:host-context(.dark) :host {
+	background-color: $dark-island !important;
+
+	.header {
+		background-color: #24292D;
+		color: $island;
+	}
+
+	.body {
+		background-color: #394545 !important;
+		color: $island !important;
+
+		.highlight {
+			background-color: #FF5A5A !important;
+		}
+	}
+}

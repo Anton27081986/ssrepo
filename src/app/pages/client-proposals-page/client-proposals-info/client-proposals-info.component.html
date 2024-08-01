@@ -1,0 +1,39 @@
+<div class="clients-proposals-info">
+	<div class="header-content">
+		<ss-headline class="clients-proposals-info__header" size="h3">Контакт с клиентом: рекомендации по ВГП
+		</ss-headline>
+		<ss-search-client-input
+			[formControl]="searchControl"
+			[onlyActive]="true"
+			class="header-content__search"
+			(select)="getSearchClient($event)"
+		></ss-search-client-input>
+	</div>
+
+	<div class="clients-proposals-info__tables">
+		<ss-accordion [isExpanded]="true" [title]="'Информация о клиенте'">
+			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
+		</ss-accordion>
+				<ss-card [padding]="'0'">
+					<app-client-proposals-table-vgp [clientId]="this.clientId$ | async"></app-client-proposals-table-vgp>
+				</ss-card>
+	</div>
+</div>
+
+<ng-template #contentAccordion>
+	<div class="content-accordion">
+		<div class="content-accordion__model-client model-client">
+			<ss-card class="card-client" [padding]="'0'">
+				<app-client-proposals-done-production></app-client-proposals-done-production>
+			</ss-card>
+		</div>
+		<div class="content-accordion__tabs">
+			<ss-tabs [tabs]="tabs"
+					 [size]="'medium'"
+					 (select)="selectTab($event)"
+					 [selectedTab]="selectedTab">
+			</ss-tabs>
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</ng-template>

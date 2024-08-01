@@ -1,6 +1,36 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
 .add-modal {
+    .form-item-tpr {
+        margin-top: 0;
+    }
+
     .join-win {
         pointer-events: none;
+        color: $black;
+        margin-top: 8px;
+    }
+
+    .tag-selected-name {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+
+        .close-tag {
+            cursor: pointer;
+        }
+    }
+
+    // Поправить стили footers в формах
+    .footer-form {
+        margin-top: 20px !important;
+    }
+
+    .win-together {
+        font-weight: 500;
     }
 }
 

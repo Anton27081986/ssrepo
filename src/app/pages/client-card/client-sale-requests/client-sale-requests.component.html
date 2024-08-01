@@ -1,0 +1,49 @@
+<ss-card padding="0" radius="0 0 16px 16px" class="container">
+	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
+	<div class="sale-requests">
+		<div class="sale-requests-header">
+			<a *ngIf="(sales$ | async)?.linkToModule; else noLink" [href]="(sales$ | async)?.linkToModule" target="_blank">
+				<ss-headline class="sale-requests-header-title" size="h6">Заявки на продажу</ss-headline>
+			</a>
+			<ng-template #noLink>
+				<ss-headline class="sale-requests-header-title" size="h6">Заявки на продажу</ss-headline>
+			</ng-template>
+			<ss-icon *ngIf="!isFiltersVisible" class="sale-requests-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
+		</div>
+		<div class="sale-requests-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+			<div class="sale-requests-content-table">
+				<ss-table
+					[head]="[
+						{title: 'Код', field: 'code'},
+						{title: 'Контрагент', field: 'contractor', sizeRatio: 4},
+						{title: 'Дата отгрузки',  field: 'shipDate'},
+						{title: 'Дата оплаты',  field: 'paymentDate'},
+						{title: 'Статус', field: 'status'}
+						]"
+					[items]="tableItems">
+				</ss-table>
+			</div>
+			<div class="sale-requests-content-pagination pagination">
+				<nz-pagination
+					[nzTotal]="total"
+					[nzPageIndex]="pageIndex"
+					[nzPageSize]="pageSize"
+					(nzPageIndexChange)="nzPageIndexChange($event)"
+					(nzPageSizeChange)="pageSize = $event"
+					[nzResponsive]="true"
+					[nzHideOnSinglePage]="true">
+				</nz-pagination>
+			</div>
+		</div>
+		<div class="sale-requests-content" *ngIf="tableState === TableState.Empty">
+			<ss-empty-placeholder>
+				<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+				<div class="placeholder-subtitle">
+					<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
+				</div>
+			</ss-empty-placeholder>
+		</div>
+	</div>
+	<div class="separator" *ngIf="isFiltersVisible"></div>
+	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales(true)" [(filters)]="filters"></ss-filters>
+</ss-card>

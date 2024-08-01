@@ -1,38 +1,30 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NzIconService} from 'ng-zorro-antd/icon';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-    selector: 'app-recovery-password',
-    templateUrl: './recovery-password.component.html',
-    styleUrls: ['./recovery-password.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-recovery-password',
+	templateUrl: './recovery-password.component.html',
+	styleUrls: ['./recovery-password.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RecoveryPasswordComponent {
-    recoveryForm!: FormGroup;
-    password: any;
+export class RecoveryPasswordComponent implements OnInit {
+	public recoveryForm!: FormGroup;
+	public password: any;
 
-    loading = false;
-    submitted = false;
-    error: unknown = '';
+	public loading = false;
+	public error: unknown = '';
 
-    passwordVisible = false;
-    passwordVisibleRepeat = false;
+	public passwordVisible = false;
 
-    constructor(
-        private readonly iconService: NzIconService,
-        private readonly formBuilder: FormBuilder,
-    ) {}
+	public constructor(private readonly formBuilder: FormBuilder) {}
 
-    ngOnInit() {
-        this.recoveryForm = this.formBuilder.group({
-            email: ['', Validators.required],
-        });
-    }
+	public ngOnInit() {
+		this.recoveryForm = this.formBuilder.group({
+			email: ['', Validators.required],
+		});
+	}
 
-    get f() {
-        return this.recoveryForm.controls;
-    }
-
-    onSubmit() {}
+	public get f() {
+		return this.recoveryForm.controls;
+	}
 }

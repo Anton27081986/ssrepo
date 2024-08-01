@@ -1,44 +1,28 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {IUser} from '@auth/models/user';
-import {AuthenticationService} from '@auth/services/authentication.service';
-import {first} from 'rxjs';
-import {UserService} from '@auth/services/user.service';
-import {ThemeService} from '@app/shared/theme/theme.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { first } from 'rxjs';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
-    selector: 'app-start',
-    templateUrl: './start.component.html',
-    styleUrls: ['./start.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-start',
+	templateUrl: './start.component.html',
+	styleUrls: ['./start.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent {
-    loading = false;
-    user: IUser;
-    userFromApi?: IUser;
+export class StartComponent implements OnInit {
+	public loading = false;
 
-    constructor(
-        private readonly themeService: ThemeService,
-        private readonly userService: UserService,
-        private readonly authenticationService: AuthenticationService,
-    ) {
-        this.user = <IUser>this.authenticationService.userValue;
-    }
+	public constructor(private readonly userStateService: UserProfileStoreService) {}
 
-    ngOnInit() {
-        this.loading = true;
+	public ngOnInit() {
+		this.loading = true;
 
-        this.userService
-            .getProfile()
-            .pipe(first())
-            .subscribe(user => {
-                this.loading = false;
-                this.userFromApi = user;
-            });
-
-        // this.toggleTheme()
-    }
-
-    toggleTheme(): void {
-        this.themeService.toggleTheme().then();
-    }
+		this.userStateService.userProfile$
+			.pipe(first())
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.loading = false;
+			});
+	}
 }

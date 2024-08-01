@@ -11,6 +11,9 @@
 
         h1 {
             text-transform: uppercase;
+            a {
+                color: $black !important;
+            }
         }
 
         .open-all-table {
@@ -69,13 +72,17 @@
         position: relative;
         margin-top: 24px;
 
+        .ant-tabs-tab:hover {
+            color: #4770ff;
+        }
+
         ::ng-deep {
             .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
                 justify-content: right;
             }
 
             .ant-tabs-tab {
-                border: 1px solid $border-color !important;
+                border: 1px solid $border-color;
                 border-radius: $border-radius-big !important;
                 background-color: $white;
                 font-size: 16px;
@@ -104,18 +111,16 @@
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: flex-start;
-                gap: 30px;
+                gap: 20px;
 
                 .card {
                     position: relative;
-                    width: 297px;
+                    width: 305px;
                     height: 110px;
                     border-radius: 16px;
                     border: 1px solid $border-color;
                     background-color: $white;
                     padding: 20px;
-
-                    // flex: 1 0 200px;
 
                     .personal {
                         position: relative;
@@ -125,11 +130,11 @@
                             border-radius: 16px;
                             overflow: hidden;
                             flex: none;
+                            width: 60px;
+                            height: 70px;
 
                             img {
                                 width: 60px;
-                                height: 70px;
-                                object-fit: cover;
                             }
                         }
 
@@ -190,21 +195,9 @@
                         ::ng-deep .anticon {
                             fill-opacity: 1;
                             font-size: 34px;
-
-                            path {
-                                //stroke: #4770FF!important;
-                                //fill: #4770FF!important;
-                            }
                         }
                     }
                 }
-                .card:last-child {
-                    // margin-left: 28px;
-                }
-            }
-            .card-list:after {
-                //content: '';
-                //flex: auto;
             }
         }
 
@@ -216,127 +209,168 @@
     }
 }
 
+@media screen and (max-width: 1309px) {
+	.birthday {
+		margin-top: 80px;
+
+		.header {
+			justify-content: center;
+
+			.open-all-table {
+				width: 100%;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+
+				.calendar {
+					margin-right: 0;
+				}
+			}
+
+			.title h1 {
+				text-align: center;
+				margin-bottom: 0.3rem !important;
+				line-height: 34px;
+				margin-top: 4px;
+			}
+
+			.subtitle {
+				margin-top: 12px;
+
+				h2 {
+					text-align: center;
+					line-height: 19px !important;
+				}
+			}
+
+			.calendar {
+				margin-top: 25px;
+
+				.ant-picker {
+					width: 372px;
+				}
+			}
+
+			.button {
+				margin-top: 10px;
+				width: 100%;
+			}
+
+			.top-panel {
+				margin-top: 32px;
+				justify-content: space-between;
+				display: none;
+
+				.total-week {
+					span {
+						font-size: 15.8px;
+					}
+				}
+
+				.total-time {
+					span {
+						font-size: 15.8px;
+					}
+				}
+
+				.button {
+					margin-top: 14px;
+					margin-left: 0;
+
+					width: 100%;
+				}
+			}
+			.top-panel-mobile {
+				display: flex;
+			}
+		}
+
+		.tabs {
+			::ng-deep .ant-tabs-nav-wrap {
+				justify-content: center !important;
+			}
+
+			.calendar {
+				position: relative;
+				display: flex;
+				justify-content: center;
+				width: 100%;
+
+				::ng-deep .ant-picker {
+					width: 100%;
+				}
+			}
+
+			.ant-tabs {
+				margin-top: 20px;
+				width: 100%;
+			}
+
+			.content {
+				.card-list {
+					.card {
+						width: 293px;
+						height: 116px;
+						padding: 12px;
+
+						.icons {
+							.medal-icon {
+								right: 12px;
+								top: 11px;
+							}
+
+							.count {
+								right: 14px;
+								bottom: 9px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 991px) {
+	.birthday {
+		::ng-deep {
+			.ant-tabs-nav-list {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+			}
+
+			.ant-tabs-tab + .ant-tabs-tab {
+				margin: 0;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.birthday {
+		.content {
+			.card-list {
+				.card {
+					width: 330px!important;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 645px) {
+	.birthday {
+		.content {
+			.card-list {
+				.card {
+					width: 100%!important;
+				}
+			}
+		}
+	}
+}
+
 @media screen and (max-width: 414px) {
-    .birthday {
-        margin: 80px 20px 0 20px;
-
-        .header {
-            justify-content: center;
-
-            .open-all-table {
-                width: 100%;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-
-                .calendar {
-                    margin-right: 0;
-                }
-            }
-
-            .title h1 {
-                text-align: center;
-                margin-bottom: 0.3rem !important;
-                line-height: 34px;
-                margin-top: 4px;
-            }
-
-            .subtitle {
-                margin-top: 12px;
-
-                h2 {
-                    text-align: center;
-                    line-height: 19px !important;
-                }
-            }
-
-            .calendar {
-                margin-top: 25px;
-
-                .ant-picker {
-                    width: 372px;
-                }
-            }
-
-            .button {
-                margin-top: 10px;
-                width: 100%;
-            }
-
-            .top-panel {
-                margin-top: 32px;
-                justify-content: space-between;
-                display: none;
-
-                .total-week {
-                    span {
-                        font-size: 15.8px;
-                    }
-                }
-
-                .total-time {
-                    span {
-                        font-size: 15.8px;
-                    }
-                }
-
-                .button {
-                    margin-top: 14px;
-                    margin-left: 0;
-
-                    width: 100%;
-                }
-            }
-            .top-panel-mobile {
-                display: flex;
-            }
-        }
-
-        .tabs {
-            ::ng-deep .ant-tabs-nav-wrap {
-                justify-content: center !important;
-            }
-
-            .calendar {
-                position: relative;
-                display: flex;
-                justify-content: center;
-                width: 100%;
-
-                ::ng-deep .ant-picker {
-                    width: 100%;
-                }
-            }
-
-            .ant-tabs {
-                margin-top: 20px;
-                width: 100%;
-            }
-
-            .content {
-                .card-list {
-                    justify-content: center;
-
-                    .card {
-                        width: 100%;
-                        height: 116px;
-                        margin-top: 20px;
-                        padding: 12px;
-
-                        .icons {
-                            .medal-icon {
-                                right: 12px;
-                                top: 11px;
-                            }
-
-                            .count {
-                                right: 14px;
-                                bottom: 9px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+    .birthday {}
 }

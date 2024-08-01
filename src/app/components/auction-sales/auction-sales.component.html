@@ -1,63 +1,40 @@
-<div class="auction-sales">
-  <div class="header">
-    <div>
-      <div class="title">
-        <h1>АУКЦИОННЫЕ ПРОДАЖИ</h1>
-      </div>
-      <div class="subtitle">
-        <h2>Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</h2>
-      </div>
-    </div>
-    <div class="open-all-table">
-      <div *ngIf="auctionAll | async as url">
-        <a href="{{ url.allListLink }}" target="_blank">
-          <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
-        </a>
-      </div>
-    </div>
-  </div>
+<ss-card padding="0">
+	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
 
-  <div class="content">
-    <div class="table">
-      <nz-table #basicTable
-                [nzData]="auctions | async"
-                [nzFrontPagination]="false"
-                [nzTotal]="30"
-                [nzPageIndex]="1"
-                [nzPageSize]="6">
-        <thead>
-        <tr>
-          <th>ТП</th>
-          <th>Доступность</th>
-          <th>Цена прайса</th>
-          <th>Количество</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let data of basicTable.data">
-          <td>
-            <a href="{{ data.detailUrl }}" target="_blank">{{ data.tovName }}</a>
-          </td>
-          <td>{{ data.source }}</td>
-          <td>
-            {{ data.price }}
-            <span>{{ data.currency }}</span>
-          </td>
-          <td>{{ data.quantity }}
-            <span>{{ data.tovUnitName }}</span>
-          </td>
-        </tr>
-        </tbody>
-      </nz-table>
+	<div class="header">
+		<ss-headline size="h6" weight="semi-bold" (click)="window.open(listAuction!.allListLink!)">Аукционные продажи</ss-headline>
+		<ss-caption color="gray">Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</ss-caption>
+	</div>
+	<div class="content">
+		<ss-table
+			size="3"
+			[padding]="'5px 9px'"
+			*ngIf="listAuction?.total! > 0; else empty"
+			[head]="[
+				{title: 'ТП', field: 'tovName', sizeRatio: 4},
+				{title: 'Доступность', field: 'source'},
+				{title: 'Цена', field: 'price'},
+				{title: 'Количество', field: 'quantity'}
+				]"
+			[items]="tableItems$ | async">
+		</ss-table>
 
-      <div class="open-all-table bottom">
-        <div>
-          <a href="https://ssnab.it/Sales/PlanMolsTovs/Proficits">
-            <button nz-button class="recovery-password-button" [nzType]="'primary'">Открыть всю таблицу</button>
-          </a>
-        </div>
-      </div>
-    </div>
+		<ng-template #empty>
+			<ss-empty-placeholder>
+				<ss-icon name="empty"></ss-icon>
+				<ss-headline size="h3">Нет данных</ss-headline>
+			</ss-empty-placeholder>
+		</ng-template>
 
-  </div>
-</div>
+		<div class="pagination">
+			<ss-pagination
+				[total]="listAuction?.total!"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="nzPageIndexChange($event)"
+			>
+			</ss-pagination>
+		</div>
+	</div>
+</ss-card>
+

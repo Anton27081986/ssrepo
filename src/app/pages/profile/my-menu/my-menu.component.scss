@@ -65,8 +65,12 @@
             margin-top: 15px;
             padding: 11px 18px 20px 19px;
 
+			.category:first-child {
+				margin-top: 9px;
+			}
+
             .category {
-                margin-top: 9px;
+                margin-top: 24px;
                 font-size: 16px;
                 font-weight: bold;
 
@@ -84,26 +88,27 @@
                     display: flex;
                     justify-content: space-between;
                 }
-            }
 
-            .item {
-                display: flex;
-                justify-content: space-between;
-                margin-top: 12px;
+				.item {
+					display: flex;
+					justify-content: space-between;
+					margin-top: 12px;
 
-                ::ng-deep .anticon {
-                    svg {
-                        font-size: 22px;
-                    }
-                }
+					::ng-deep .anticon {
+						svg {
+							font-size: 22px;
+						}
+					}
 
-                span {
-                    font-size: 14px;
-                }
+					span {
+						font-size: 14px;
+						font-weight: 500;
+					}
 
-                span:last-child {
-                    cursor: pointer;
-                }
+					span:last-child {
+						cursor: pointer;
+					}
+				}
             }
         }
     }

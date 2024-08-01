@@ -1,0 +1,20 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	width: 100%;
+	display: block;
+	background-color: $island;
+	border: 1px solid $island-outline;
+}
+
+:host-context(.dark) :host {
+	background-color: $dark-island!important;
+
+	::ng-deep svg {
+		stroke: $dark-text;
+
+		rect {
+			fill: $dark-text;
+		}
+	}
+}

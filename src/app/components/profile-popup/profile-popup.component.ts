@@ -1,53 +1,112 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {ApiService} from '@app/shared/services/api/api.service';
-import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from '@app/common/icons';
-import {UserService} from '@auth/services/user.service';
-import {AuthenticationService} from '@auth/services/authentication.service';
-import {map, Observable} from 'rxjs';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
+import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { AuthenticationService } from '@app/core/services/authentication.service';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { environment } from '@environments/environment';
+import { IUserProfile } from '@app/core/models/user-profile';
+import { UsersApiService } from '@app/core/api/users-api.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
+import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
+@UntilDestroy()
 @Component({
-    selector: 'app-profile-popup',
-    templateUrl: './profile-popup.component.html',
-    styleUrls: ['./profile-popup.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+	selector: 'app-profile-popup',
+	templateUrl: './profile-popup.component.html',
+	styleUrls: ['./profile-popup.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfilePopupComponent {
-    public statusAccordion = false;
-    public accounts!: any;
-    public profileData!: any;
+export class ProfilePopupComponent implements OnInit, OnDestroy {
+	public accountsFriends$!: Observable<any>;
+	public userProfile$!: Observable<IUserProfile | null>;
 
-    public profile!: Observable<any>;
+	public friendsAccount!: IFriendAccountDto[] | null;
 
-    constructor(
-        private readonly apiService: ApiService,
-        private readonly userService: UserService,
-        private readonly iconService: NzIconService,
-        private readonly authenticationService: AuthenticationService,
-    ) {
-        this.iconService.addIconLiteral('ss:exit', AppIcons.exit);
-        this.iconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
+	private readonly destroy$ = new Subject<void>();
+	public isExpanded: boolean = false;
 
-        this.iconService.addIconLiteral('ss:arrowRight', AppIcons.arrowRight);
+	public constructor(
+		private readonly apiService: UsersApiService,
+		private readonly userStateService: UserProfileStoreService,
+		private readonly authenticationService: AuthenticationService,
+		private readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,
+		private readonly cd: ChangeDetectorRef,
+	) {}
 
-        this.iconService.addIconLiteral('ss:settings', AppIcons.settings);
-        this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
-        this.iconService.addIconLiteral('ss:enter', AppIcons.enter);
-    }
+	public ngOnInit(): void {
+		this.userProfile$ = this.userStateService.userProfile$;
 
-    ngOnInit(): any {
-        this.userService
-            .getProfile()
-            .pipe()
-            .subscribe(data => {
-                this.profileData = [data];
-            });
+		this.getAccountsFriends();
+		this.setFriendsAccount();
 
-        this.profile = this.userService.getProfile();
-        this.accounts = this.apiService.getAccounts().pipe(map(({accounts}) => accounts));
-    }
+		this.accountsFriends$ = this.apiService
+			.getCurrentUserFriendsAccounts()
+			.pipe(map(({ items }) => items));
+	}
 
-    logout(): void {
-        this.authenticationService.logout();
-    }
+	public setFriendsAccount() {
+		this.friendlyAccountsFacadeService.setFriendsAccountsForCurrentUser();
+	}
+
+	private getAccountsFriends() {
+		this.friendlyAccountsFacadeService.friendlyAccounts$
+			.pipe(untilDestroyed(this))
+			.subscribe(item => {
+				this.friendsAccount = item;
+				this.cd.detectChanges();
+			});
+	}
+
+	public logout(): void {
+		this.authenticationService.logout();
+		// Чтобы корректно работала темная тема, если не авторизован
+		setTimeout(function () {
+			window.location.reload();
+		}, 0);
+	}
+
+	public enterUnderFriendlyAccount(loggedUser: IFriendAccountDto) {
+		if (loggedUser.id) {
+			this.userStateService.resetProfile();
+			this.authenticationService
+				.enterUnderFriendlyAccount(loggedUser?.id, environment.apiUrl)
+				.pipe(untilDestroyed(this))
+				.subscribe();
+
+			setTimeout(function () {
+				window.location.reload();
+			}, 200);
+
+			this.getAccountsFriends();
+		}
+	}
+
+	public close() {
+		this.userStateService.setStateWindow(false);
+	}
+
+	public AuthUser(user: IDictionaryItemDto) {
+		if (user.id) {
+			this.userStateService.resetProfile();
+			this.authenticationService
+				.enterUnderFriendlyAccount(user.id, environment.apiUrl)
+				.pipe(takeUntil(this.destroy$))
+				.subscribe();
+
+			setTimeout(function () {
+				window.location.reload();
+			}, 200);
+		}
+	}
+
+	public ngOnDestroy() {
+		this.destroy$.complete();
+	}
 }

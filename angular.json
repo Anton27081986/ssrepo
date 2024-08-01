@@ -35,8 +35,10 @@
                         ],
                         "styles": [
                             "src/theme.less",
+							"node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+							"node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
                             "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
-                            "src/styles.scss",
+							"src/styles.scss",
                             {
                                 "input": "src/styles/default.less",
                                 "bundleName": "default",
@@ -142,47 +144,8 @@
                     }
                 }
             }
-        },
-        "ssnab-ui": {
-            "projectType": "library",
-            "root": "projects/ssnab-ui",
-            "sourceRoot": "projects/ssnab-ui/src",
-            "prefix": "lib",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:ng-packagr",
-                    "options": {
-                        "project": "projects/ssnab-ui/ng-package.json"
-                    },
-                    "configurations": {
-                        "production": {
-                            "tsConfig": "projects/ssnab-ui/tsconfig.lib.prod.json"
-                        },
-                        "development": {
-                            "tsConfig": "projects/ssnab-ui/tsconfig.lib.json"
-                        }
-                    },
-                    "defaultConfiguration": "production"
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "tsConfig": "projects/ssnab-ui/tsconfig.spec.json",
-                        "polyfills": ["zone.js", "zone.js/testing"]
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": [
-                            "projects/ssnab-ui/**/*.ts",
-                            "projects/ssnab-ui/**/*.html"
-                        ]
-                    }
-                }
-            }
         }
-    },
+	},
     "cli": {
         "schematicCollections": ["@angular-eslint/schematics"],
         "analytics": false

@@ -1,10 +1,9 @@
 #STAGE 1
-FROM node:16.16-alpine AS build
+FROM node:20.11-alpine AS build
 WORKDIR /usr/src/app
-COPY package.json package-lock.json ./
-RUN npm install
 COPY . .
-ARG PROJECT_ENV=development
+RUN npm install
+ARG PROJECT_ENV=prod
 RUN npm run build:$PROJECT_ENV
 
 

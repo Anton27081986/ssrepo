@@ -1,10 +1,15 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 
 body {
-    // Разобраться с приоритетами
     font-family: $font-family-inter;
     background-color: $gray;
     color: $body-color;
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 
     a {
         color: $link-color;
@@ -67,55 +72,6 @@ body {
 
     .ant-list-item {
         padding: unset;
-    }
-
-    // Пагинация
-    .ant-list-pagination {
-        display: flex;
-    }
-
-    .ant-pagination-item:hover a {
-        color: $blue;
-    }
-
-    .ant-pagination ul,
-    .ant-pagination ol {
-        margin-left: 0;
-    }
-
-    .ant-table-pagination.ant-pagination {
-        margin: 21px 0 !important;
-    }
-
-    .ant-pagination-prev,
-    .ant-pagination-next {
-        display: none;
-    }
-
-    .ant-pagination-item-active,
-    .ant-pagination-item {
-        font-size: 16px;
-        line-height: 39px;
-        font-weight: 600;
-        background: #fff;
-        border-color: $border-color;
-        border-radius: 10px;
-        height: 40px;
-        width: 40px;
-        margin-right: 8px;
-    }
-
-    .ant-pagination-item-active a {
-        color: $blue;
-    }
-
-    .ant-table-pagination.ant-pagination {
-        margin: 21px 0 !important;
-    }
-
-    .ant-pagination.mini .ant-pagination-item {
-        min-width: 44px;
-        height: 44px;
     }
 }
 

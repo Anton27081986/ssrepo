@@ -2,22 +2,19 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 .mobile-menu {
-    //position: fixed;
-    margin: 13px auto 0 auto;
+	margin-top: 13px;
+	width: 100vw;
+	background-color:$gray-light;
 
     .container {
         display: flex;
-        justify-content: center;
         z-index: 20;
-        // margin-right: -7px;
     }
 
     ::ng-deep {
         .ant-tabs-content-holder {
             background-color: $white;
             border-radius: 16px;
-            // padding: 8px;
-            // margin-right: 9px;
         }
 
         .ant-tabs-nav-operations {
@@ -51,7 +48,7 @@
         }
 
         .ant-tabs-tab {
-            border: 2px #f4f5f6 solid;
+            border: 2px$gray-light solid;
             padding: 10px;
             border-radius: 16px;
             background-color: rgba(0, 0, 0, 0) !important;
@@ -159,83 +156,22 @@
             opacity: 0 !important;
         }
     }
-}
 
-@media screen and (min-width: 240px) and (max-width: 414px) {
-    ::ng-deep .ant-tabs {
-        width: 300px;
-    }
-    .mobile-menu {
-        width: 414px;
-    }
-}
-
-@media screen and (min-width: 414px) and (max-width: 519px) {
-    ::ng-deep .ant-tabs {
-        width: 380px;
-    }
-    .mobile-menu {
-        width: 519px;
-    }
-}
-
-@media screen and (max-width: 416px) {
-    .mobile-menu {
-        width: 416px;
-    }
-}
-
-@media screen and (max-width: 545px) {
-}
-
-@media screen and (min-width: 520px) and (max-width: 599px) {
-    ::ng-deep .ant-tabs {
-        width: 500px;
-    }
-
-    .mobile-menu {
-        width: 599px;
-    }
-}
-
-@media screen and (min-width: 600px) and (max-width: 639px) {
-    .mobile-menu {
-        width: 639px;
-    }
-}
-
-@media screen and (min-width: 640px) and (max-width: 699px) {
-    .mobile-menu {
-        width: 699px;
-    }
-}
-
-@media screen and (min-width: 700px) and (max-width: 767px) {
-    .mobile-menu {
-        width: 767px;
-    }
-}
-
-@media screen and (min-width: 768px) and (max-width: 799px) {
-    .mobile-menu {
-        width: 799px;
-    }
-}
-
-@media screen and (min-width: 800px) and (max-width: 999px) {
-    .mobile-menu {
-        width: 999px;
-    }
-}
-
-@media screen and (min-width: 1000px) and (max-width: 1199px) {
-    .mobile-menu {
-        width: 1199px;
-    }
+	::ng-deep .ant-tabs {
+		margin-left: 20px;
+	}
 }
 
 @media screen and (max-width: 1326px) {
     .mobile-menu {
         display: flex;
     }
+}
+
+@media screen and (min-width: 265px) and (max-width: 970px)  {
+	.mobile-menu {
+		::ng-deep .ant-tabs-content-holder {
+			margin-right: 20px;
+		}
+	}
 }

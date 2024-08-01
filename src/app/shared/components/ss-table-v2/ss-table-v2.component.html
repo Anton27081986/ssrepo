@@ -1,0 +1,21 @@
+<div class="table-wrapper">
+	<table class="table">
+		<thead class="table__thead">
+		<tr>
+			<th
+				*ngFor="let col of stateColumn.visibleCols$ | async "
+				[ngStyle]="{'width': col.width, 'cursor': col.toolTip ? 'pointer' : 'default'}"
+				[tooltip]="col.toolTip!" [theme]="TooltipTheme.DEFAULT"
+				[position]="TooltipPosition.DEFAULT"
+				class="ss-table-th"
+			>
+				{{ col.title  }}
+
+			</th>
+		</tr>
+		</thead>
+			<tbody>
+			<ng-content></ng-content>
+			</tbody>
+	</table>
+</div>

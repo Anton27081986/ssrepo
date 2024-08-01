@@ -1,0 +1,13 @@
+<div class="client-proposals-send-cloud-popover">
+	<div class="client-proposals-send-cloud-popover__header">
+		<ss-headline size="h6">Ссылка на документы</ss-headline>
+		<ss-icon class="client-proposals-send-cloud-popover__close" width="16" name="close" (click)="close()"></ss-icon>
+	</div>
+	<div class="client-proposals-send-cloud-popover__body">
+		<div class="client-proposals-send-cloud-popover__input">
+			<ss-input [value]="(url$ | async)!"></ss-input>
+			<ss-icon class="client-proposals-send-cloud-popover__icon-copy" [cdkCopyToClipboard]="(url$ | async)!" width="32" name="copy"></ss-icon>
+		</div>
+		<ss-caption size="2">*Ссылка со списком документов так же отправлена вам на почту</ss-caption>
+	</div>
+</div>

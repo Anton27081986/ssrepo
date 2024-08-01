@@ -1,0 +1,6 @@
+<ss-card class="dialog" padding="32px 40px">
+	<ss-headline size="h5" weight="semi-bold" *ngIf="header">{{ header }}</ss-headline>
+	<ss-text size="2" *ngIf="text">{{ text }}</ss-text>
+	<ss-button type="secondary" size="medium" (click)="close(true)">Ок</ss-button>
+	<ss-button type="muted" size="medium" (click)="close(false)">Отмена</ss-button>
+</ss-card>

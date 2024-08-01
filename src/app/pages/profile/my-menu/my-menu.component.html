@@ -1,90 +1,75 @@
 <div class="title">
-  <h1>Настроить пункты избранного</h1>
+	<h1>Настроить пункты избранного</h1>
 </div>
 
 <div class="my-menu">
-  <p>Добавляйте в панель быстрого доступа наиболее удобные для вас пункты меню. Перетащите из левой колонки в правую чтобы они отображались в избранном в шапке</p>
+	<p>Добавляйте в панель быстрого доступа наиболее удобные для вас пункты меню. Перетащите из левой колонки в правую чтобы они отображались в избранном в шапке</p>
 
-    <form nz-form [formGroup]="myMenuForm" nzLayout="vertical" class="settings-form m-t-35" (ngSubmit)="onSubmit()">
-      <div class="filter">
-        <nz-form-item>
-          <nz-form-control>
-            <nz-input-group [nzSuffix]="suffixIconSearch">
-              <input type="email" nz-input formControlName="login" placeholder="Поиск по общему меню" />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
+	<form [formGroup]="myMenuForm" nz-form nzLayout="vertical" class="settings-form m-t-35">
+		<div class="filter">
+			<nz-form-item>
+				<nz-form-control>
+					<nz-input-group [nzSuffix]="suffixIconSearch">
+						<input type="email" nz-input
+									 placeholder="Поиск по общему меню"
+									 (input)="filterItems($event)"
+						/>
+					</nz-input-group>
+				</nz-form-control>
+			</nz-form-item>
 
-        <div class="favorite-title">
-          <span class="icon" nz-icon nzType="ss:star"></span>
-          <span class="text">Выбранные пункты Избранного</span>
-        </div>
+			<div class="favorite-title">
+				<span class="icon" nz-icon nzType="ss:star"></span>
+				<span class="text">Выбранные пункты Избранного</span>
+			</div>
 
-      </div>
-      <div class="select">
-        <div class="groups from">
-          <div class="category">
-            <div class="title">
-              <span>ТОРГОВЛЯ</span>
-              <span nz-icon nzType="ss:arrowBottom"></span>
-            </div>
-            <div class="items"></div>
-          </div>
-          <div class="category">
-            <div class="title">
-              <span>Ассортимент РИМ</span>
-              <span nz-icon nzType="ss:arrowBottom"></span>
-            </div>
-            <div class="items"></div>
-          </div>
-          <div class="category">
-            <div class="title">
-              <span>Планирование</span>
-              <span nz-icon nzType="ss:arrowBottom"></span>
-            </div>
-            <div class="items"></div>
-          </div>
-          <div class="item">
-            <span>Журнал контрактов покупателей</span>
-            <span nz-icon nzType="ss:arrowRightH"></span>
-          </div>
-          <div class="item">
-            <span>Регламент планирования продаж</span>
-            <span nz-icon nzType="ss:arrowRightH"></span>
-          </div>
-          <div class="item">
-            <span>Лимиты планирования продаж</span>
-            <span nz-icon nzType="ss:arrowRightH"></span>
-          </div>
-        </div>
-        <div class="groups to">
-          <div class="item">
-            <span>Журнал контрактов покупателей</span>
-            <span nz-icon nzType="ss:closeFill"></span>
-          </div>
-          <div class="item">
-            <span>Регламент планирования продаж</span>
-            <span nz-icon nzType="ss:closeFill"></span>
-          </div>
-          <div class="item">
-            <span>Лимиты планирования продаж</span>
-            <span nz-icon nzType="ss:closeFill"></span>
-          </div>
-        </div>
-      </div>
+		</div>
+	</form>
 
-      <div class="d-flex justify-content-center m-b-30 m-t-45">
-        <button nz-button class="my-menu-button" [nzType]="'primary'">Сохранить изменения</button>
-      </div>
-    </form>
+	<div class="select">
+		<div class="groups from">
+			<ng-container *ngIf="filterListMenu.length < 1; else filterItem">
+				<div class="category" *ngFor="let menu of listMenu; trackBy: trackBy">
+					<div class="title">
+						<span>{{ menu.name }}</span>
+						<span nz-icon nzType="ss:arrowBottom"></span>
+					</div>
+					<div class="items" *ngFor="let item of menu.items; trackBy: trackBy">
+						<div class="item">
+							<span>{{ item.name }}</span>
+							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></span>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+			<ng-template #filterItem>
+				<div class="category">
+					<div class="items" *ngFor="let item of filterListMenu; trackBy: trackBy">
+						<div class="item">
+							<span>{{ item.name }}</span>
+							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></span>
+						</div>
+					</div>
+				</div>
+			</ng-template>
+		</div>
+		<div class="groups to">
+			<div class="category">
+				<div class="item" *ngFor="let favorite of favorIteMenu; index as i; trackBy: trackBy">
+					<span>{{ favorite.name }}</span>
+					<span nz-icon nzType="ss:close" (click)="deleteItemToFavoriteMenu(favorite, i);"></span>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <ng-template #suffixIconSearch>
-      <span class="search" nz-icon nzType="ss:search"></span>
-    </ng-template>
+	<ng-template #suffixIconSearch>
+		<span class="search" nz-icon nzType="ss:search"></span>
+	</ng-template>
 
-    <ng-template #prefixUser>
-      <i class="star" nz-icon nzType="ss:star"></i>
-    </ng-template>
+	<ng-template #prefixUser>
+		<i class="star" nz-icon nzType="ss:star"></i>
+	</ng-template>
 </div>
 
 

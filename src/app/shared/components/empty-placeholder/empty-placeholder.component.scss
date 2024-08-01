@@ -1,0 +1,14 @@
+@use 'src/styles/colors.scss' as *;
+
+.placeholder {
+	display: flex;
+	flex-direction: column;
+	border-radius: 16px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+	align-items: center;
+}
+
+:host-context(.dark) .placeholder{
+	background-color: $dark-inner;
+}

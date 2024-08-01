@@ -1,0 +1,25 @@
+.app-client-tpr-samples-tab {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	&__header {
+		display: flex;
+	}
+
+	&__control {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 8px;
+	}
+
+	&__link {
+		font-size: 16px;
+		line-height: 19px;
+	}
+}
+
+.pagination {
+	justify-content: flex-end;
+	margin: 0;
+}

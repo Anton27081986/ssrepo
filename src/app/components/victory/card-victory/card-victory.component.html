@@ -1,0 +1,78 @@
+<div class="card">
+  <div class="delete" (click)="onDeleteWin(item?.id);" *ngIf="item?.user?.id == 9593868">
+    <span class="icon" nz-icon [nzType]="'ss:delete'"></span>
+  </div>
+
+  <div>
+    <div class="personal">
+      <div class="img" (click)="showModalOpenOut(item?.user?.id)">
+        <img src="{{ item.user?.avatarUrl }}" alt="user" />
+      </div>
+
+      <div class="users-win-groups" appTooltip *ngIf="item?.groupWinUsers">
+        <span class="people-icon icon" nz-icon [nzType]="'ss:twoPeople'"></span>
+
+        <div class="modal-users-win-groups">
+          <div class="users-win">
+            <div class="user-win" *ngFor="let groupWinUser of item?.groupWinUsers; trackBy: trackBy">
+              <span>{{ groupWinUser?.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="title">
+        <div class="fio">
+          <span>{{ item?.user?.lastName }} {{ item?.user?.firstName }} {{ item?.user?.surName }}</span>
+        </div>
+        <div class="job">
+          <div>{{ item?.user.position }}</div>
+          <div>{{ item?.user.department }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="date">
+      <span>{{ item?.createdDate | dateTime }}</span>
+    </div>
+
+    <div class="message">
+      <div class="text">
+        {{ item.note }}
+      </div>
+    </div>
+    <div class="info">
+      <div class="bottom-panel">
+        <div class="left-group">
+          <ng-container *ngIf="extendedMode; else userlike">
+            <app-super-like
+              [isUserLikedProps]="item.isUserLiked"
+              [likesCountProps]="item.likesCount"
+              [objectIdProps]="item.id"
+              [typeObject]="1"
+              [award]="item.award"
+            ></app-super-like>
+          </ng-container>
+          <ng-template #userlike>
+            <app-like
+              [isUserLikedProps]="item.isUserLiked"
+              [likesCountProps]="item.likesCount"
+              [objectIdProps]="item.id"
+              [typeObject]="1"
+              [award]="item.award"
+            ></app-like>
+          </ng-template>
+          <div class="comment" (click)="showModalComments(item, 1)">
+            <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
+            <span class="count">{{ item.commentsCount }}</span>
+          </div>
+        </div>
+        <div class="openOut">
+          <a href="{{ item?.detailUrl }}" target="_blank">
+            <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

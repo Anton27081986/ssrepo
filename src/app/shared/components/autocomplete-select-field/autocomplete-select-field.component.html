@@ -1,0 +1,19 @@
+<ss-caption size="1" class="m-b-5">{{ label }}</ss-caption>
+<nz-form-control>
+	<nz-select
+		nzShowSearch
+		[nzPlaceHolder]="placeholder"
+		[nzShowArrow]="true"
+		[nzAllowClear]="true"
+		[nzDisabled]="isDisabled"
+		[nzLoading]="isLoading"
+		[(ngModel)]="selectedValue"
+		(ngModelChange)="onValueChange($event)"
+		(nzOnSearch)="search($event)">
+		<nz-option *ngFor="let option of selectOptions"
+				   [nzLabel]="option.name!"
+				   [nzValue]="option.id!">
+		</nz-option>
+	</nz-select>
+</nz-form-control>
+

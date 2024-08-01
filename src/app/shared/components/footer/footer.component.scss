@@ -1,0 +1,225 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
+
+:host {
+    background: $content;
+}
+
+.ant-layout-footer {
+    color: #22223a;
+    background: #e4e8ea;
+
+    display: flex;
+    justify-content: center;
+    margin-top: 175px;
+
+    .footer {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            div {
+                display: flex;
+                img {
+                    width: 202px;
+                }
+            }
+
+            .description {
+                text-align: left;
+                margin-top: 27px;
+                font-family: Inter, serif;
+                opacity: 0.8;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 16.8px;
+                word-wrap: break-word;
+            }
+        }
+
+        .copyright {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 37px;
+        }
+
+        .nav-wrap {
+            display: flex;
+            align-items: center;
+            margin-left: 35px;
+
+            .nav-right {
+                display: flex;
+                align-items: flex-start;
+                margin-left: 0;
+
+                .item:first-child {
+                    margin-left: 0;
+                }
+
+                .item {
+                    text-align: start;
+                    margin-left: 40px;
+
+                    span {
+                        font-size: 12px;
+                    }
+
+                    span:nth-child(2) {
+                        margin-left: 3px;
+                        color: $blue;
+                    }
+                }
+            }
+        }
+
+        .icons {
+            .group-wrapper {
+                display: flex;
+                justify-items: flex-start;
+                margin-left: 38px;
+            }
+
+            .icon-bg:first-child {
+                margin-left: 0;
+            }
+
+            .icon-bg {
+                width: 32px;
+                height: 32px;
+                border-radius: 10px;
+                background-color: $white;
+                margin-left: 8px;
+
+                ::ng-deep .anticon {
+                    path {
+                        stroke: $black;
+                    }
+                }
+            }
+
+            .favicon {
+                cursor: pointer;
+                margin-left: 10px;
+
+                img {
+                    width: 28px;
+                }
+            }
+
+            .favicon:first-child {
+                margin-left: 0;
+            }
+        }
+    }
+}
+
+nz-footer {
+    text-align: center;
+}
+
+@media screen and (max-width: 1370px) {
+    .ant-layout-footer .icons {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto 0 auto;
+    }
+
+    .ant-layout-footer .footer .group-wrapper {
+        margin-left: 0 !important;
+    }
+}
+
+@media screen and (max-width: 801px) {
+    .ant-layout-footer {
+        margin-top: 446px;
+
+        .footer {
+            justify-content: space-between;
+
+            .copyright {
+            }
+
+            .logo {
+                display: flex;
+                flex-direction: row;
+                width: unset;
+                margin-top: 15px;
+
+                div {
+                    display: unset;
+                    img {
+                        width: 202px;
+                    }
+                }
+
+                .description {
+                    margin-top: 0;
+                    width: 495px;
+                    margin-left: 11.2%;
+                }
+            }
+
+            .nav-wrap {
+                margin-top: 4px;
+
+                .nav-right {
+                    flex-wrap: wrap;
+                    justify-content: space-around;
+
+                    .item {
+                        margin-left: 0;
+                        margin-top: 12px;
+                    }
+                }
+            }
+
+            .icons {
+                margin-top: 20px;
+
+                .group-wrapper {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .ant-layout-footer {
+        margin-top: 396px;
+
+        .footer {
+            .logo {
+                display: flex;
+                flex-direction: column;
+                margin-top: 0;
+
+                img {
+                    margin: 0 auto;
+                    width: unset;
+                }
+
+                .description {
+                    text-align: center;
+                    margin-top: 18px;
+                    margin-left: unset; // Исправить и убрать в 800
+                    width: unset;
+                }
+            }
+
+            .nav-right {
+                justify-content: space-between;
+                .item {
+                }
+            }
+        }
+    }
+}

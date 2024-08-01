@@ -1,67 +1,76 @@
 <div class="birthday">
-  <div class="header">
-    <div>
-      <div class="title">
-        <h1>ДНИ РОЖДЕНИЯ</h1>
-      </div>
-      <div class="subtitle">
-        <h2>Не забывайте поздравить коллег и партнеров!</h2>
-      </div>
-    </div>
-    <div class="open-all-table">
-      <div class="button">
-        <button nz-button class="button" [nzType]="'primary'">
-          <span class="like-icon" nz-icon [nzType]="'ss:blocknote'"></span>
-          Добавить напоминание
-        </button>
-      </div>
-    </div>
-  </div>
+		<div class="container">
+			<div class="header">
+				<div>
+					<div class="title">
+						<h1>ДНИ РОЖДЕНИЯ</h1>
+					</div>
+					<div class="subtitle">
+						<h2>Не забывайте поздравить коллег и партнеров!</h2>
+					</div>
+				</div>
+				<div class="open-all-table">
+					<a href="https://cisp.ssnab.ru/Personal/Mols/Reminder" target="_blank" rel="noreferrer">
+						<div class="button">
+							<button nz-button class="button" [nzType]="'primary'">
+								<span class="like-icon" nz-icon [nzType]="'ss:blocknote'"></span>
+								Добавить напоминание
+							</button>
+						</div>
+					</a>
+				</div>
+			</div>
 
-  <div class="panel"></div>
+			<div class="panel"></div>
 
-  <div class="tabs">
-    <div class="calendar">
-      <nz-date-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" nzFormat="dd.MM.yyyy" [nzSuffixIcon]="sufixCalendar"></nz-date-picker>
-      <span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
-      <ng-template #sufixCalendar>
-        <i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
-      </ng-template>
-    </div>
+			<div class="tabs">
+				<div class="calendar">
+					<nz-date-picker [(ngModel)]="date"
+													[nzAllowClear]="false"
+													(ngModelChange)="onChange($event)"
+													nzFormat="dd.MM.yyyy"
+													[nzSuffixIcon]="sufixCalendar"></nz-date-picker>
 
-      <nz-tabset [nzTabPosition]="'top'" [nzType]="'line'">
-        <ng-container *ngIf="birthdayList | async as birthday">
+					<span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
+					<ng-template #sufixCalendar>
+						<i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
+					</ng-template>
+				</div>
 
-          <ng-container *ngFor="let date of birthday;">
-            <nz-tab nzTitle="{{ date.name }}">
+				<nz-tabset
+					[(nzSelectedIndex)]="selectedTabIndex"
+					[nzTabPosition]="'top'"
+					[nzType]="'line'">
 
-              <div class="content">
-                <div class="card-list">
-                  <div class="card" *ngFor="let item of date.items;">
-                    <div class="personal">
-                      <div class="img">
-                        <img src="{{ item.avatarUrl }}" alt="" />
-                      </div>
-                      <div class="title">
-                        <div class="fio">
-                          <span>{{ item.name }}</span>
-                        </div>
-                        <div class="job">
-                          <div>{{ item.position }}</div>
-                          <div>{{ item.department }}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+					<nz-tab *ngFor="let day of birthdays;"
+									nzTitle="{{ day.name }}" (nzClick)="onTabClick(day!.name)">
 
-            </nz-tab>
-          </ng-container>
+						<div class="content">
+							<div class="card-list">
 
-        </ng-container>
-      </nz-tabset>
+								<div class="card" *ngFor="let item of day?.items;">
+									<div class="personal">
+										<div class="img" (click)="showModalOpenOut(item?.id)">
+											<img src="{{ item?.avatarUrl }}" alt="" />
+										</div>
+										<div class="title">
+											<div class="fio">
+												<span>{{ item?.name }}</span>
+											</div>
+											<div class="job">
+												<div>{{ item?.position }}</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-  </div>
+					</nz-tab>
+
+				</nz-tabset>
+
+			</div>
+		</div>
 
 </div>

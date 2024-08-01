@@ -1,9 +1,10 @@
 export const environment = {
-    production: false,
-    apiUrl: 'https://erp-dev.ssnab.it',
-    locales: ['en', 'ru'],
-    defaultLocale: 'ru',
-    applicationTitle: 'ERP SSNAB',
-    tabTitle: '',
-    name: 'base',
+	production: false,
+	apiUrl: 'https://erp-dev.ssnab.it',
+	locales: ['en', 'ru'],
+	defaultLocale: 'ru',
+	applicationTitle: 'ERP SSNAB',
+	tabTitle: '',
+	name: 'base',
+	redirectUrl: 'https://ssnab.it/index',
 };

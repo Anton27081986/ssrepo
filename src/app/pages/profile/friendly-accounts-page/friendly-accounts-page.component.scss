@@ -1,0 +1,202 @@
+@use 'src/assets/scss/_variables.scss' as *;
+
+.friendly-accounts {}
+	.title {
+		margin-top: 2px;
+
+		h1 {
+			font-size: 23.6px;
+			font-weight: 600;
+		}
+	}
+
+	::ng-deep .ant-modal  {
+		width: 474px!important;
+
+		.ant-modal-body {
+			padding: 0 31px;
+		}
+
+		.ant-radio-inner::after {
+			width: 13.5px;
+			height: 13.5px;
+			margin-top: -6.9px;
+			margin-left: -6.9px;
+		}
+
+		.ant-radio-wrapper {
+			margin-right: 0;
+		}
+
+		.select-radio {
+			margin-top: 47.6px;
+
+			[nz-radio] {
+				height: 29px;
+			}
+
+			.ant-radio-inner {
+				width: 13.5px;
+				height: 13.5px;
+			}
+		}
+
+		.send {
+			button {
+				width: 260px;
+			}
+
+			margin-bottom: 20px;
+		}
+	}
+
+	.content {
+		.top-panel {
+			display: flex;
+			justify-content: space-between;
+			margin-top: 30px;
+
+			ss-filter-input {
+				width: 590px;
+
+				::ng-deep svg {
+					path {
+						stroke: $blue;
+					}
+				}
+			}
+		}
+
+		.card-list {
+			margin-top: 40px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 16px;
+
+			ss-card {
+				position: relative;
+				width: 385px;
+				height: 128px;
+				border-radius: 16px;
+				border: 1px solid $border-color;
+				background-color: #fbfbfb;
+				padding: 12px!important;
+
+				.personal {
+					position: relative;
+					display: flex;
+
+					.img {
+						border-radius: 14px;
+						overflow: hidden;
+						flex: none;
+						width: 90px;
+						height: 90px;
+
+						img {
+							width: 90px;
+						}
+					}
+
+					.title {
+						margin-left: 13px;
+						max-width: 228px;
+					}
+
+					.fio {
+						font-size: 16px;
+						font-weight: bold;
+						line-height: 18px;
+						margin-top: 0;
+						max-width: 238px;
+					}
+
+					.job {
+						max-width: 210px;
+						font-size: 11.8px;
+						line-height: 14px;
+						font-weight: 500;
+						margin-top: 8px;
+					}
+				}
+
+				.icons {
+					.delete {
+						position: absolute;
+						top: 14px;
+						right: 16px;
+
+						cursor: pointer !important;
+						font-size: 10px;
+						z-index: 1;
+						background: #f4f5f6;
+						padding: 3px 6px 3px 6px;
+						border-radius: 6px;
+
+						::ng-deep rect {
+							fill-opacity: 1 !important;
+						}
+					}
+				}
+
+				.connection-type {
+					margin-left: 104px;
+
+					span:last-child {
+						font-size: 12px;
+						margin-left: 4px;
+					}
+				}
+			}
+
+			.card .active {
+				border: 1px $blue solid;
+			}
+		}
+	}
+
+	.success {
+		margin-top: 11px;
+		.header-success {
+			font-size: 23.4px;
+			font-weight: bold;
+			text-align: center;
+			margin-top: 14px;
+		}
+		.text-success {
+			font-size: 14px;
+			font-weight: bold;
+			text-align: center;
+			width: 282px;
+			margin: 16px auto 30px;
+			p {
+				line-height: 19px;
+				letter-spacing: -0.2px;
+			}
+		}
+	}
+
+	.connect-icon {
+		::ng-deep rect {
+			fill-opacity: 1 !important;
+		}
+	}
+
+	.connect-icon+span {
+		margin-left: 8px;
+		font-size: 13.8px;
+	}
+
+	ss-chips-user-search  {
+		margin-top: 20px;
+		display: block;
+	}
+
+
+
+
+
+
+
+
+

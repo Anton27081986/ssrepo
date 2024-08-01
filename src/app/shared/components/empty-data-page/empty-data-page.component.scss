@@ -1,0 +1,11 @@
+.app-empty-data-page {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 16px;
+
+	&__img {
+		height: 176px;
+	}
+}

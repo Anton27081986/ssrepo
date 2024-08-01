@@ -1,0 +1,139 @@
+@use '../../../../../styles/colors' as *;
+
+input {
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+}
+
+.input {
+	position: relative;
+
+	ss-icon {
+		position: absolute;
+		right: 8px;
+		top: 16px;
+		cursor: pointer;
+
+		::ng-deep path {
+			stroke: $main !important;
+			fill-opacity: 0;
+		}
+	}
+
+	.search-result {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: 90%;
+		background-color: $island;
+		max-height: 162px;
+		overflow-y: auto;
+		border: 1px solid $island-outline;
+		border-radius: 0 0 8px 8px;
+		border-top: none;
+		z-index: 9999;
+		display: flex;
+		flex-direction: column;
+
+		.separator {
+			position: sticky;
+			height: 3px;
+			top: 0;
+			border-bottom: 1px solid $island-outline;
+		}
+
+		.search-result-item {
+			padding: 12px 20px;
+			cursor: pointer;
+		}
+
+		.search-result-item:hover {
+			background-color: #F2F3F7;
+		}
+	}
+}
+
+input.large ~ ss-icon {
+	top: 20px;
+}
+
+input.small ~ ss-icon {
+	top: 10px;
+}
+
+input::placeholder {
+	color: $lite-text;
+}
+
+input:focus {
+	border-color: $additional-outline;
+}
+
+input.small {
+	height: 32px;
+	font-weight: 400;
+}
+
+input.medium {
+	height: 41px;
+	font-weight: 400;
+}
+
+input.large {
+	height: 52px;
+	font-weight: 600;
+}
+
+input.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+ss-caption.error {
+	color: $error;
+}
+
+:host-context(.dark) {
+	input {
+		background-color: $dark-island;
+	}
+	.search-result {
+		background-color: $dark-island!important;
+		color: $dark-text!important;
+	}
+
+	.ss-caption {
+		background-color: $dark-island!important;
+		color: $dark-text!important;
+	}
+
+	::ng-deep {
+		.search-result {
+			background-color: $dark-island!important;
+			color: $dark-text!important;
+		}
+	}
+}
+
+.overflow {
+	top: 0;
+	left: 0;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	z-index: 999;
+}

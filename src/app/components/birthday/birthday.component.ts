@@ -1,52 +1,131 @@
-import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
-import {NzIconService} from 'ng-zorro-antd/icon';
-import {NzCarouselComponent} from 'ng-zorro-antd/carousel';
-import {AppIcons} from '@app/common/icons';
-import {map, Observable} from 'rxjs';
-import {ApiService} from '@app/shared/services/api/api.service';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+	ViewChild,
+	ViewContainerRef,
+} from '@angular/core';
+import { map } from 'rxjs';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
+import { formatDate } from '@angular/common';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
+import { BirthdaysApiService } from '@app/core/api/birthdays-api.service';
+import { IDayDto } from '@app/core/models/auth/day-dto';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
-    selector: 'app-birthday',
-    templateUrl: './birthday.component.html',
-    styleUrls: ['./birthday.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-birthday',
+	templateUrl: './birthday.component.html',
+	styleUrls: ['./birthday.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BirthdayComponent {
-    @ViewChild(NzCarouselComponent, {static: false}) myCarousel: NzCarouselComponent | undefined;
-    public birthdayList!: Observable<any>;
+export class BirthdayComponent implements OnInit {
+	@ViewChild(NzCarouselComponent, { static: false }) public myCarousel:
+		| NzCarouselComponent
+		| undefined;
 
-    date = null;
+	protected date = new Date();
+	protected birthdays: IDayDto[] = [];
+	protected selectedTabIndex = 1;
+	public customOptions!: OwlOptions;
 
-    constructor(
-        private readonly iconService: NzIconService,
-        private readonly apiService: ApiService,
-    ) {
-        this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
-        this.iconService.addIconLiteral('ss:calendar', AppIcons.calendar);
-        this.iconService.addIconLiteral('ss:medalGold', AppIcons.medalGold);
-        this.iconService.addIconLiteral('ss:medalSilver', AppIcons.medalSilver);
-        this.iconService.addIconLiteral('ss:medalBronze', AppIcons.medalBronze);
-        this.iconService.addIconLiteral('ss:like', AppIcons.like);
-        this.iconService.addIconLiteral('ss:comment', AppIcons.comment);
-        this.iconService.addIconLiteral('ss:plus', AppIcons.plus);
-        this.iconService.addIconLiteral('ss:blocknote', AppIcons.blocknote);
-    }
+	public constructor(
+		private readonly apiService: BirthdaysApiService,
+		public modalCreate: NzModalService,
+		private readonly viewContainerRef: ViewContainerRef,
+		private readonly cd: ChangeDetectorRef,
+	) {}
 
-    ngOnInit(): any {
-        this.birthdayList = this.apiService.getBirthday().pipe(map(({days}) => days));
-    }
+	public ngOnInit(): any {
+		this.onChange(this.date);
 
-    onChange(result: Date): void {
-        console.log('onChange: ', result);
-    }
+		this.customOptions = {
+			loop: true,
+			mouseDrag: false,
+			touchDrag: false,
+			pullDrag: false,
+			navSpeed: 700,
+			dots: false,
+			items: 4,
+			navText: ['', ''],
+			autoWidth: true,
+			lazyLoad: true,
+			responsive: {
+				0: {
+					items: 1,
+				},
+				400: {
+					items: 1,
+				},
+				740: {
+					items: 3,
+				},
+				940: {
+					items: 4,
+				},
+			},
+			nav: true,
+		};
 
-    next() {
-        // @ts-ignore
-        this.myCarousel.next();
-    }
+		this.changeOptions();
+	}
 
-    prev() {
-        // @ts-ignore
-        this.myCarousel.pre();
-    }
+	public onChange(result: Date): void {
+		this.date = result;
+
+		// TODO : make unsubscribe
+		this.apiService
+			.getBirthday(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
+			.pipe(
+				map(({ days }) => days),
+				untilDestroyed(this),
+			)
+			.subscribe(birthdays => {
+				this.birthdays = birthdays || [];
+				this.selectTabByDay(this.date.toLocaleDateString());
+				this.cd.markForCheck();
+			});
+	}
+
+	public showModalOpenOut(item: any): void {
+		this.modalCreate
+			.create({
+				nzClosable: true,
+				nzFooter: null,
+				nzTitle: 'Информация о пользователе',
+				nzNoAnimation: false,
+				nzWidth: '365px',
+				nzContent: ModalInfoComponent,
+				nzViewContainerRef: this.viewContainerRef,
+				nzData: {
+					data: item,
+				},
+			})
+			.afterClose.pipe(untilDestroyed(this))
+			.subscribe();
+	}
+
+	public selectTabByDay(date: string) {
+		this.selectedTabIndex = this.birthdays.findIndex(x => x.name === date);
+	}
+
+	public onTabClick(date: string | null | undefined) {
+		if (!date) {
+			console.error('Нет даты');
+
+			return;
+		}
+
+		const dateFormat = date.split('.');
+
+		this.date = new Date([dateFormat[1], dateFormat[0], dateFormat[2]].join('/'));
+	}
+
+	public changeOptions() {
+		this.customOptions.responsive = {};
+	}
 }

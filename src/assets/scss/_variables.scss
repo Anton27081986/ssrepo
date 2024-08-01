@@ -1,11 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,700');
-
 // Custom Color
 $custom-1: #fff !default;
 $arrow: #d9d9d9 !default;
 
 // Start with assigning color names to specific hex values.
-$white: #fff !default;
+$white: #ffffff !default;
 $black: #22223a !default;
 $red: #de4436 !default;
 $orange: #fa8c16 !default;
@@ -112,7 +110,7 @@ $container-max-widths: (
     sm: 540px,
     md: 720px,
     lg: 960px,
-    xl: 1140px,
+    xl: 1320px,
 ) !default;
 
 // Grid columns

@@ -1,21 +1,77 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {map, Observable} from 'rxjs';
-import {ApiService} from '@app/shared/services/api/api.service';
+import { Component, OnInit } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ITableItem } from '@app/shared/components/table/table.component';
+import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
+import { TableState } from '@app/shared/components/table/table-state';
+import { BehaviorSubject } from 'rxjs';
+import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
 
+@UntilDestroy()
 @Component({
-    selector: 'app-auction-sales',
-    templateUrl: './auction-sales.component.html',
-    styleUrls: ['./auction-sales.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-auction-sales',
+	templateUrl: './auction-sales.component.html',
+	styleUrls: ['./auction-sales.component.scss'],
 })
 export class AuctionSalesComponent implements OnInit {
-    public auctions!: Observable<any>;
-    public auctionAll!: Observable<any>;
+	public pageIndex = 1;
+	public pageSize = 10;
+	public total: number | undefined;
+	public listAuction: IAuctionSalesDto | undefined;
+	public offset = 0;
+	public tableItems$: BehaviorSubject<ITableItem[]> = new BehaviorSubject<ITableItem[]>([]);
+	public tableState: TableState = TableState.Loading;
 
-    constructor(private readonly apiService: ApiService) {}
+	public constructor(private readonly auctionSaleFacadeService: AuctionSaleFacadeService) {}
 
-    ngOnInit(): any {
-        this.auctions = this.apiService.getAuctions().pipe(map(({items}) => items));
-        this.auctionAll = this.apiService.getAuctions().pipe();
-    }
+	public ngOnInit(): any {
+		this.loadDataFromServer(this.pageSize, this.offset);
+	}
+
+	public loadDataFromServer(pageSize: number, offset: number): void {
+		this.tableState = TableState.Loading;
+
+		this.auctionSaleFacadeService
+			.getAuctionSale(pageSize, offset)
+			.pipe(untilDestroyed(this))
+			.subscribe(value => {
+				this.listAuction = value;
+
+				if (value.items) {
+					const dataTable = <ITableItem[]>(<unknown>value.items.map(item => {
+						return {
+							...item,
+							price: `${item.price} ${item.currency!}`,
+							quantity: `${item.quantity} ${item.tovUnitName!}`,
+							tovName: {
+								text: `${item.tovName}`,
+								url: item.detailUrl,
+							},
+						};
+					}));
+
+					this.tableItems$.next(dataTable);
+					this.tableState = TableState.Full;
+				}
+
+				if (value.total) {
+					this.total = value.total + this.pageSize;
+				}
+			});
+	}
+
+	public nzPageIndexChange($event: number) {
+		if ($event === 1) {
+			this.offset = 0;
+		} else {
+			this.offset = this.pageSize * $event - this.pageSize;
+		}
+
+		this.offset = this.pageSize * $event - this.pageSize;
+		this.pageIndex = $event; // Установка текущего индекса
+
+		this.loadDataFromServer(this.pageSize, this.offset);
+	}
+
+	protected readonly window = window;
+	protected readonly TableState = TableState;
 }

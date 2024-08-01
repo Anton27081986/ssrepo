@@ -1,5 +1,6 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
 
 .settings {
     display: flex;
@@ -7,6 +8,7 @@
     margin-top: 20px;
 
     .left-menu {
+		margin-left: 20px;
         width: 366px;
 
         .group:first-child {
@@ -18,6 +20,12 @@
             overflow: hidden;
             margin-top: 20px;
             background-color: $white;
+
+            .item.active-link {
+                span {
+                    color: $blue;
+                }
+            }
 
             .item {
                 position: relative;
@@ -104,3 +112,16 @@
         }
     }
 }
+
+:host-context(.dark) {
+	.left-menu > .group > .item {
+		background-color: $dark-island;
+	}
+
+	.left-menu > .group {
+		background-color: $dark-island;
+	}
+}
+
+
+

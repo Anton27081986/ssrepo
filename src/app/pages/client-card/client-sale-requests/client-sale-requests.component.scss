@@ -1,0 +1,68 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	height: 480px;
+
+	.container {
+		display: flex;
+		height: 100%;
+
+		.sale-requests {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+			height: 100%;
+
+			&-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 16px 20px;
+				border-bottom: 1px solid $island-outline;
+
+				::ng-deep a h1 {
+					color: $main !important;
+				}
+
+				&-title {
+					display: flex;
+					flex-direction: column;
+					gap: 20px;
+				}
+
+				&-filter-button {
+					margin-left: 16px;
+					cursor: pointer;
+					color: $main;
+				}
+
+				&-controls {
+					display: flex;
+					gap: 8px;
+				}
+			}
+
+			&-content {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 1;
+				padding: 16px;
+				gap: 16px;
+
+				&-table {
+					flex-grow: 1;
+				}
+
+				&-pagination {
+					margin: 0;
+					align-self: end;
+				}
+			}
+		}
+	}
+
+	.separator {
+		width: 1px;
+		background-color: $island-outline;
+	}
+}

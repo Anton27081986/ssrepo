@@ -1,0 +1,26 @@
+<div class="wrapper" (click)="close()">
+	<ss-card class="dialog" padding="16px 16px 16px 16px" (click)="$event.stopPropagation()">
+		<div class="header">
+			<ss-icon width="16" class="close-icon" name="close" (click)="close()"></ss-icon>
+			<ss-headline *ngIf="title" size="h6">{{ title }}</ss-headline>
+		</div>
+		<ss-text class="body" size="2" *ngIf="cell">
+			<ng-container [ngSwitch]="true">
+				<a *ngSwitchCase="!!cell?.url" href="{{ cell.url }}" target="_blank">
+					{{ cell.text }}
+				</a>
+				<p class="column" *ngSwitchCase="Array.isArray(cell)">
+					<ng-container *ngFor="let item of cell">
+						<a *ngIf="item?.url; else noLink" href="{{ item.url }}" target="_blank">
+							{{ item.text }}
+						</a>
+						<ng-template #noLink>
+							<span>{{ item.text }}</span>
+						</ng-template>
+					</ng-container>
+				</p>
+				<span *ngSwitchDefault>{{ cell }}</span>
+			</ng-container>
+		</ss-text>
+	</ss-card>
+</div>

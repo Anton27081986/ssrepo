@@ -1,0 +1,64 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.clients-proposals-info {
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	gap: 24px;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		min-width: 362px;
+		min-height: 385px;
+		gap: 50px;
+	}
+
+	&__no-content {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		align-items: center;
+		gap: 12px
+	}
+
+	&__search-input {
+		width: 100%;
+	}
+
+	&__tables {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		margin-bottom: 30px;
+	}
+}
+
+.header-content {
+	display: flex;
+	justify-content: space-between;
+
+
+	&__search {
+		min-width: 340px;
+	}
+}
+
+.content-accordion {
+	display: flex;
+	gap: 16px;
+	padding: 16px;
+	min-height: 351px;
+
+	&__tabs {
+		width: 100%;
+	}
+}
+
+.card-client {
+	height: 100%;
+}

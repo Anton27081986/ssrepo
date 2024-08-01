@@ -1,42 +1,94 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {NzIconService} from 'ng-zorro-antd/icon';
-import {AppIcons} from '@app/common/icons';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IUserProfile } from '@app/core/models/user-profile';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
+import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
 
+@UntilDestroy()
 @Component({
-    selector: 'app-my-menu',
-    templateUrl: './my-menu.component.html',
-    styleUrls: ['./my-menu.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: 'app-my-menu',
+	templateUrl: './my-menu.component.html',
+	styleUrls: ['./my-menu.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MyMenuComponent {
-    myMenuForm!: FormGroup;
+export class MyMenuComponent implements OnInit {
+	public myMenuForm!: FormGroup;
+	public listMenu?: IMenuItemDto[] | null | undefined;
+	public favorIteMenu?: IMenuItemDto[] | null;
+	public userProfile$?: Observable<IUserProfile | null>;
+	public filterListMenu: IMenuItemDto[] = [];
 
-    constructor(
-        private readonly iconService: NzIconService,
-        private readonly formBuilder: FormBuilder,
-    ) {
-        this.iconService.addIconLiteral('ss:search', AppIcons.iconSearch);
-        this.iconService.addIconLiteral('ss:favorite', AppIcons.star);
+	public constructor(
+		private readonly mainMenuFacade: MainMenuFacadeService,
+		private readonly formBuilder: FormBuilder,
+		private readonly cd: ChangeDetectorRef,
+	) {}
 
-        this.iconService.addIconLiteral('ss:closeFill', AppIcons.closeFill);
-        this.iconService.addIconLiteral('ss:arrowRightH', AppIcons.arrowRightH);
+	public ngOnInit() {
+		this.getMenu();
+		this.getFavoriteMenu();
 
-        this.iconService.addIconLiteral('ss:arrowBottom', AppIcons.arrowBottom);
-    }
+		this.myMenuForm = this.formBuilder.group({});
+	}
 
-    ngOnInit() {
-        this.myMenuForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
-        });
-    }
+	public getFavoriteMenu() {
+		this.mainMenuFacade
+			.getFavoriteItems()
+			.pipe(untilDestroyed(this))
+			.subscribe(item => {
+				if (item !== null) {
+					this.favorIteMenu = item![0]?.items;
+				}
+			});
+	}
 
-    onSubmit() {}
+	public getMenu() {
+		this.mainMenuFacade
+			.getMainMenu()
+			.pipe(untilDestroyed(this))
+			.subscribe(item => {
+				if (item !== null) {
+					this.listMenu = item!.slice(1);
+				}
+
+				this.cd.markForCheck();
+			});
+	}
+
+	public addItemToFavorite(item: IMenuItemDto) {
+		this.mainMenuFacade.addFavoriteItem(item);
+
+		this.cd.detectChanges();
+	}
+
+	public deleteItemToFavoriteMenu(item: IMenuItemDto, index: number) {
+		this.mainMenuFacade.deleteFavoriteItem(item, index);
+
+		this.cd.detectChanges();
+	}
+
+	public trackBy(_index: number, item: any) {
+		return item.id;
+	}
+
+	public filterItems($event: any) {
+		if ($event.target.value.length > 2) {
+			this.filterListMenu = [];
+			this.listMenu?.forEach(element => {
+				element.items?.forEach(item => {
+					if (
+						item
+							.name!.toLowerCase()
+							.indexOf(String($event.target.value).toLowerCase()) !== -1
+					) {
+						this.filterListMenu.push(item);
+					}
+				});
+			});
+		} else {
+			this.filterListMenu = [];
+		}
+	}
 }

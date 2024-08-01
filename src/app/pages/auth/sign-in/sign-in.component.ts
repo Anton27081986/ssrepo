@@ -1,89 +1,99 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from '@auth/services/authentication.service';
-import {first} from 'rxjs';
-import {NzMessageService} from 'ng-zorro-antd/message';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthenticationService } from '@app/core/services/authentication.service';
+import { first, of, tap } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { ProfileService } from '@app/pages/profile/profile.service';
+import { ThemeService } from '@app/shared/theme/theme.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
-    selector: 'app-sign-in',
-    templateUrl: './sign-in.component.html',
-    styleUrls: ['./sign-in.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+	selector: 'app-sign-in',
+	templateUrl: './sign-in.component.html',
+	styleUrls: ['./sign-in.component.scss'],
+	changeDetection: ChangeDetectionStrategy.Default,
 })
 export class SignInComponent implements OnInit {
-    loginForm!: FormGroup;
-    loading = false;
-    submitted = false;
-    error: unknown = '';
-    errorState = false;
+	protected loginForm!: FormGroup<{
+		password: FormControl<string | null>;
+		login: FormControl<string | null>;
+	}>;
 
-    passwordVisible = false;
-    password?: string;
+	public loading = false;
 
-    constructor(
-        private readonly formBuilder: FormBuilder,
-        private readonly route: ActivatedRoute,
-        private readonly router: Router,
-        private readonly authenticationService: AuthenticationService,
-        private readonly message: NzMessageService,
-    ) {}
+	public passwordVisible = false;
+	public password?: string;
 
-    ngOnInit() {
-        this.loginForm = this.formBuilder.group({
-            login: [
-                '',
-                [
-                    Validators.required,
-                    // Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-                ],
-            ],
-            password: ['', Validators.required],
-        });
-    }
+	public constructor(
+		private readonly formBuilder: FormBuilder,
+		private readonly route: ActivatedRoute,
+		private readonly router: Router,
+		private readonly authenticationService: AuthenticationService,
+		private readonly profileService: ProfileService,
+		private readonly themeService: ThemeService,
+	) {}
 
-    // convenience getter for easy access to form fields
-    get f() {
-        return this.loginForm.controls;
-    }
+	public ngOnInit() {
+		this.loginForm = new FormGroup({
+			login: new FormControl<string>('', [Validators.required]),
+			password: new FormControl<string>('', Validators.required),
+		});
+	}
 
-    createMessage(type: string): void {
-        this.message.create(type, `This is a message of ${type}`);
-    }
+	public getControl(name: string) {
+		return this.loginForm.get(name) as FormControl;
+	}
 
-    onSubmit() {
-        this.submitted = true;
+	public onSubmit() {
+		if (this.loginForm.invalid) {
+			return;
+		}
 
-        // stop here if form is invalid
-        if (this.loginForm.invalid) {
-            return;
-        }
+		this.loading = true;
+		this.authenticationService
+			.login(
+				this.loginForm.controls.login.value || '',
+				this.loginForm.controls.password.value || '',
+			)
+			.pipe(
+				first(),
+				switchMap(_ => {
+					return this.authenticationService.authImages().pipe(
+						tap(() => console.warn('authImages Ok')),
+						catchError(() => {
+							return of(0);
+						}),
+					);
+				}),
+				switchMap(_ => {
+					return this.profileService.getTheme().pipe(
+						tap(value => {
+							if (value.isDarkTheme) {
+								this.themeService.setDarkTheme().then();
+							}
+						}),
+						catchError(() => {
+							return of(0);
+						}),
+					);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe({
+				next: () => {
+					const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
 
-        this.loading = true;
-        this.authenticationService
-            .login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
-            .pipe(first())
-            .subscribe(
-                (data: any) => {
-                    // get return url from query parameters or default to home page
-
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-
-                    this.router.navigateByUrl(returnUrl);
-
-                    if (data) {
-                        // console.log('data', data);
-                    }
-                },
-                (err: unknown) => {
-                    this.loading = false;
-                    console.log('HTTP Error', err);
-                    this.error = err;
-                    this.errorState = true;
-                    // this.stateDescription = err.message; // настроить текст ошибки
-                    // this.createMessage('error'); // всплывающее окно с ошибкой
-                },
-                () => console.log('HTTP request completed.'),
-            );
-    }
+					setTimeout(() => {
+						this.router.navigateByUrl(returnUrl);
+					}, 0);
+				},
+				error: (err: unknown) => {
+					this.loading = false;
+					console.error('HTTP Error', err);
+					this.loginForm.setErrors({ unauthorized: 'Неверный логин или пароль' });
+				},
+			});
+	}
 }

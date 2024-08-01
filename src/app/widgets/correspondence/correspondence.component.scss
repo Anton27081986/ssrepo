@@ -1,0 +1,35 @@
+@use '../../../styles/colors' as *;
+
+:host {
+	display: flex;
+	width: 100%;
+	overflow-y: auto;
+	max-width: 1426px;
+}
+
+.correspondence {
+	display: grid;
+	grid-template-columns: 400px 1px 1fr;
+	grid-template-rows: 1fr;
+	height: inherit;
+	width: inherit;
+	overflow-y: hidden;
+	position: relative;
+
+	.separator {
+		background-color: $island-outline;
+	}
+
+	.messages {
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1px auto;
+		overflow-y: hidden;
+
+		ss-mail {
+			position: sticky;
+			bottom: 0;
+			width: 100%;
+		}
+	}
+}

@@ -1,0 +1,83 @@
+<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
+	<ng-container *ngIf="item">
+		<td class="hc-table-td">
+			<ng-container [ngSwitch]="col.id">
+				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
+					<a class="hc-table-td__content" href="{{ item.productionUrl }}" target="_blank"> {{ item.productionName }}</a>
+				</ng-container>
+
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
+					<a class="hc-table-td__content" href="{{ item.tovGroupUrl }}" target="_blank"> {{ item.tovGroupName }}</a>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
+					<a class="hc-table-td__content" href="{{ item.productionGroupUrl }}" target="_blank"> {{ item.productionGroupName }}</a>
+				</ng-container>
+
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
+					<a class="hc-table-td__content" href="{{ item.newProductUrl }}" target="_blank"> {{ item.newProductName }}</a>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item.saleClientsCount }}</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item.salesWeight | numWithSpaces:3 }}</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item.rating | numWithSpaces:4 }}</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
+					<div class="hc-table-td__canvas">
+						<ng-container *ngFor="let price of item.prices">
+							<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
+								 [position]="TooltipPosition.DEFAULT" class="hc-table-td__content hc-table-td__content--number"
+								 style="cursor: pointer">
+								{{ price.price | numWithSpaces:2 }}
+							</div>
+						</ng-container>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
+					<div class="hc-table-td__td limit">
+						<div #content class="hc-table-td__content" *ngIf="advantagesTpr">{{ advantagesTpr }}</div>
+					</div>
+					<ss-icon class="hc-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
+							 (click)="showText(advantagesTpr, 'Преимущества ТПР')"></ss-icon>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
+					<div class="hc-table-td__td">
+					<a class="hc-table-td__content" *ngIf="(rims$ | async)?.length else empty"
+					   (click)="openPopoverRimsView()">Показать рим</a>
+					<ng-template #empty>
+						<div class="hc-table-td__content"> -</div>
+					</ng-template>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ClientTprRowItemField.documents">
+					<div class="hc-table-td__td">
+					<div class="hc-table-td__content" *ngIf="(documents$ | async)?.length else  empty"
+						 (click)="openPopoverDocumentView()">
+						<span class="hc-table-td__open-doc">Показать документы</span>
+					</div>
+					<ng-template #empty>
+						<div class="hc-table-td__content"> -</div>
+					</ng-template>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					<div class="hc-table-td__content"> -</div>
+				</ng-container>
+			</ng-container>
+		</td>
+	</ng-container>
+</ng-container>

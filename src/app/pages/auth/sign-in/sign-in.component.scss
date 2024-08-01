@@ -1,48 +1,45 @@
-@use 'src/assets/scss/_mixins.scss' as *;
+@import "src/styles/colors";
 
-@include ng-deep {
-    .ant-card-body {
-        padding: 0 36px;
-    }
+:host {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: center no-repeat url("../../../../assets/images/background/login.svg");
 }
 
-.auth {
-    .anticon {
-        fill-opacity: 1;
-    }
+.login {
+	display: flex;
+	flex-direction: column;
+	width: 400px;
+	height: 353px;
+	padding: 32px;
+	gap: 32px;
+	box-shadow: 4px 4px 10px #00000014;
 
-    .logo {
-        h2 {
-            margin-top: 10px;
-            font-weight: bold;
-            font-size: 24px;
-        }
-    }
+	.login-header {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		align-items: center;
 
-    .ant-card-bordered {
-        border-radius: 30px;
-        width: 372px;
-    }
-}
+		.logo-icon {
+			color: $main;
+		}
+	}
 
-.relative {
-    .position-right {
-        position: absolute;
-        right: 0;
-    }
-}
+	.login-form {
+		display: flex;
+		flex-grow: 1;
+		flex-direction: column;
+		justify-content: space-between;
 
-.ant-form-vertical .ant-form-item {
-    margin-bottom: 30px;
-}
+		.login-form-inputs {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+	}
 
-.error-message {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    margin-top: 0;
-
-    span {
-        color: #ee1c25;
-    }
 }

@@ -1,13 +1,14 @@
 <div class="icon-bg remind">
-            <span class="remind-dot">
-              <span>1</span>
-            </span>
+	<span class="remind-dot" *ngIf="0">
+	  <span>1</span>
+	</span>
 
-  <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="popNotification" [nzPlacement]="'bottomRight'">
-    <i nz-icon nzType="ss:remind" theme="outline"></i>
+  <a href="https://cisp.ssnab.ru/Personal/Votes" target="_blank" rel="noreferrer" nz-dropdown nzTrigger="click" [nzDropdownMenu]="popNotification" [nzPlacement]="'bottomRight'" class="remind-ref">
+<!--    <i nz-icon nzType="ss:remind" theme="outline"></i>-->
+	  <ss-icon name="remind"></ss-icon>
   </a>
   <nz-dropdown-menu #popNotification="nzDropdownMenu">
-    <div nz-menu class="pop-notification">
+    <div nz-menu class="pop-notification" *ngIf="false">
       <div class="p-v-15 p-h-25 d-flex justify-content-between align-items-center">
         <p class="text-dark font-weight-semibold m-b-0">
           <i nz-icon nzType="bell" theme="outline"></i>

@@ -1,0 +1,20 @@
+<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
+<div class="input {{ size }}">
+	<div class="selected" (click)="changeState($event)">
+		<ss-text class="placeholder" *ngIf="placeholder && !getSelectedOptions()?.length" size="2">{{ placeholder }}</ss-text>
+		<div class="chips" *ngFor="let option of getSelectedOptions()">
+			<ss-text size="3">{{ option.name }}</ss-text>
+			<ss-icon height="8" width="8" name="close" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
+		</div>
+	</div>
+	<div class="options" *ngIf="isOptionsVisible" #optionsEl>
+		<div class="option" *ngFor="let option of options" (click)="onSelect(option.id!)">
+			<ss-icon *ngIf="option.checked; else empty" height="16" name="checkbox"></ss-icon>
+			<ng-template #empty>
+				<div class="checkbox"></div>
+			</ng-template>
+			{{ option.name }}
+		</div>
+	</div>
+</div>
+<div *ngIf="isOptionsVisible" class="overflow" (click)="changeState($event)"></div>

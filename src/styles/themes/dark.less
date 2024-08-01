@@ -1,14 +1,25 @@
 @import (multiple) '../../../node_modules/ng-zorro-antd/src/style/themes/dark';
 @import './base';
+@import 'dark/var';
+@import 'dark/components/tabs';
+@import 'dark/components/select';
+@import 'dark/components/modal';
+@import 'dark/components/form';
+@import 'dark/components/search-header';
+@import 'dark/components/rating';
+@import 'dark/components/address-book';
+@import 'dark/components/pagination';
+@import 'dark/components/mobile-menu';
+
 @layout-sider-background: @component-background;
 @layout-header-background: @component-background;
 
 body {
     p {
-        color: #ffffff !important;
+        color: @text-color;
     }
 
-    color: #ffffff;
+    color: @text-color;
 
     .wrapper {
         background-color: #1b2123;
@@ -20,62 +31,59 @@ body {
         }
     }
 
-    .profile-popup {
-        background-color: #1b2123;
-        border: 0.5px solid #394245;
-
-        .manager .button-icon-left {
-            background-color: #4770ff;
-        }
-
-        .card {
-            background-color: #1b2123 !important;
-            border: unset !important;
-        }
-
-        .item {
-            background-color: #1b2123 !important;
-        }
-    }
-
     .select {
         .groups {
-            background-color: #202629 !important;
-            border: 1px solid #394245 !important;
+            background-color: @main-bg-color !important;
+            border: 1px solid @border-color !important;
         }
     }
 
     .title {
-        color: #ffffff !important;
+        color: @text-color !important;
+
+        a {
+            color: @text-color !important;
+        }
 
         h1,
         .h1 {
-            color: #ffffff !important;
+            color: @text-color !important;
         }
     }
 
     .filter {
         .favorite-title {
-            background-color: #202629 !important;
-            border: 1px solid #394245 !important;
+            background-color: @main-bg-color !important;
+            border: 1px solid @border-color !important;
         }
     }
 
     // Убрать !important
     .ant-layout-header {
-        background-color: #202629 !important;
+        border-bottom: 1px solid @border-color;
+        background-color: @main-bg-color !important;
 
         .nav-left {
             .menu {
-                background-color: #202629 !important;
+                background-color: @main-bg-color !important;
 
                 li {
-                    color: #ffffff;
+                    color: @text-color;
                     &:hover {
-                        background-color: #31393d;
+                        background-color: unset;
+
+                        span {
+                            color: @base-element-color!important;
+                        }
                     }
                 }
             }
+        }
+    }
+
+    .ant-menu-submenu-open {
+        span {
+            color: @base-element-color!important;
         }
     }
 
@@ -91,7 +99,7 @@ body {
     }
 
     .ant-menu-item {
-        color: #ffffff !important;
+        color: @text-color !important;
     }
 
     .ant-layout {
@@ -104,26 +112,13 @@ body {
         }
     }
 
-    .ant-select {
-        background: #202629;
-    }
-
     app-footer {
         background-color: #0e0f10 !important;
     }
 
     .ant-layout-footer {
-        background-color: #202629 !important;
-        color: #ffffff !important;
-    }
-
-    // Убрать общее применение
-    svg {
-        fill: #31393d !important;
-
-        path {
-            stroke: #ffffff !important;
-        }
+        background-color: @main-bg-color !important;
+        color: @text-color !important;
     }
 
     .header,
@@ -131,9 +126,7 @@ body {
         .logo {
             svg {
                 path {
-                    // fill: unset;
-                    stroke: unset !important;
-                    // fill-opacity: 1;
+                    stroke: none !important;
                 }
             }
         }
@@ -160,38 +153,25 @@ body {
     .header {
         .search-header {
             svg {
-                stroke: #ffffff;
+                stroke: @text-color;
             }
         }
     }
 
     .icon-bg {
-        background-color: #31393d !important;
-        border: 1px #313131 solid !important;
+        background-color: @bg-color !important;
+        border: 1px @border-color solid !important;
     }
 
     .profile {
-        background-color: #31393d !important;
-        border: 1px #313131 solid !important;
-        color: #ffffff;
+        background-color: @bg-color !important;
+        border: 1px @border-color solid !important;
+        color: @text-color;
     }
-
-    form {
-        // Background search
-        .ant-input-affix-wrapper {
-            background-color: #202629 !important;
-            color: #fff;
-        }
-        // Background search
-        .ant-input.ant-input-stepperless {
-            background-color: #202629 !important;
-        }
-    }
-
     .icon-bg.burger {
         svg {
             rect {
-                fill: #ffffff;
+                fill: @text-color;
             }
         }
     }
@@ -200,7 +180,7 @@ body {
         g {
             opacity: 0.7;
             rect {
-                fill: #ffffff;
+                fill: @text-color;
             }
         }
     }
@@ -210,28 +190,20 @@ body {
             background-color: #1b2023 !important;
         }
         ::ng-deep .ant-input[disabled] {
-            color: #ffffff !important;
+            color: @text-color !important;
         }
 
         .ant-input[disabled] {
-            color: #ffffff !important;
+            color: @text-color !important;
         }
     }
 
     .ant-input[disabled] {
-        color: #ffffff !important;
+        color: @text-color !important;
     }
 
     .content {
-        background-color: #0e0f10 !important;
-    }
-
-    .group {
-        background-color: #202629 !important;
-    }
-
-    .item {
-        background-color: #202629 !important;
+        background-color: #0e0f10;
     }
 
     .ant-table-thead > tr > th {
@@ -240,56 +212,32 @@ body {
 
     .ant-table-thead > tr > td {
         background: #1b2123 !important;
-        color: #ffffff !important;
+        color: @text-color !important;
     }
 
     // Таблицы
     .ant-table-tbody > tr > td {
-        color: #ffffff !important;
-    }
-
-    .ant-pagination-item a {
-        color: #000000 !important;
-    }
-
-    .card {
-        background-color: #31393d !important;
-        border: 1px solid #394245 !important;
-    }
-
-    // Скажи спсибо
-    .icons {
-        .anticon svg {
-            path {
-                stroke: none !important;
-            }
-        }
+        color: @text-color !important;
     }
 }
 
 ::ng-deep .ant-table-tbody > tr > td {
-    background: #1b2123 !important;
     background-color: #1b2123 !important;
-    color: #ffffff !important;
+    color: @text-color !important;
 }
 
 // Главное меню
-::ng-deep .ant-menu-submenu-placement-bottom {
-    //top: -4px!important;
-    //position: relative;
-}
-
 .ant-menu-submenu-inline .ant-menu-submenu-arrow::after {
-    color: #ffffff;
+    color: @text-color;
 }
 .ant-menu-submenu-inline .ant-menu-submenu-arrow::before {
-    color: #ffffff;
+    color: @text-color;
 }
 
 .ant-menu-submenu .menu-item-custom {
-    top: 4px !important;
-    border-right: 20px solid #20282c !important;
-    scrollbar-color: #20282c !important;
+    top: 22px !important;
+    border-right: 20px solid @main-bg-color !important;
+    scrollbar-color: @scrollbar-color !important;
 }
 
 .menu-item-custom::-webkit-scrollbar-track {
@@ -301,182 +249,62 @@ body {
 }
 
 :host ::ng-deep .ant-menu-light .ant-menu-submenu-title {
-    color: #ffffff;
+    color: @text-color;
+}
+
+body .ant-menu-submenu-popup > .ant-menu {
+    background-color: @main-bg-color;
 }
 
 .menu-item-custom::-webkit-scrollbar-track {
-    background-color: #202629;
+    background-color: @main-bg-color;
+}
+
+.ant-menu-submenu-open {
+    color: @base-element-color!important;
 }
 
 .menu-item-custom {
-    scrollbar-color: #ffffff;
-    scrollbar-width: thin;
+    scrollbar-color: @scrollbar-color;
+    scrollbar-width: auto;
 }
 
 .menu-item-custom::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
 }
 
-/** Мобильное меню */
-.ant-menu .ng-star-inserted {
-    color: #ffffff;
-}
-
-.mobile-menu .ant-menu.ant-menu-root {
-    // background-color: #31393d !important;
-    background-color: #0e0f10 !important;
-}
-
-.mobile-menu .ant-menu-submenu .ant-menu-submenu-title .without-url {
-    color: #ffffff !important;
-}
-
-.mobile-menu .ant-tabs-tab + .ant-tabs-tab,
-.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
-    border: 1px #394245 solid !important;
-    background-color: #202629 !important;
-}
-
-.ant-tabs-tab {
-    border: 1px #394245 solid !important;
-    background-color: #202629 !important;
-}
-
-.mobile-menu .ant-menu-submenu.ant-menu-submenu-inline {
-    // color: #394245!important;
-    border-bottom: 1px #394245 solid !important;
-}
-
-.mobile-menu .ant-tabs-content-holder {
-    border-radius: 0 !important;
-}
-
-.mobile-menu .ant-tabs-tab.ant-tabs-tab-active {
-    // border: 1px!important;
-}
-
-.mobile-menu .ant-menu-submenu.without-url-li {
-    border-bottom: unset !important;
-}
-
-.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-    background-color: #202629 !important;
-    color: #ffffff !important;
-}
-
-.ant-tabs-tab.ng-star-inserted {
-    // color: #22223a;
-    padding: 10px;
-}
-
-.ant-tabs-tab {
-    border: 2px #e4e8ea solid;
-}
-
-.ant-menu-submenu > .ant-menu {
-    border-radius: 30px;
-}
-
-.ant-menu-submenu .menu-item-custom ul.ng-star-inserted {
-    padding: 36px;
-}
-
-.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title,
-.ant-menu-submenu .menu-item-custom .ant-menu-item-group-title .without-url {
-    color: #ffffff;
-}
-
-.ant-menu-submenu.ant-menu-submenu-popup .menu-item-custom {
-    border: 0 solid #394245;
-    border-top: 16px solid #202629;
-    border-bottom: 16px solid #202629;
-    outline: 0.5px solid #394245;
-}
-
-.mobile-menu .ant-menu-submenu .ant-menu-submenu-title {
-    padding-left: 0 !important;
-}
-
 // Аукционные продажи
 body {
     .auction-sales .table .ant-table-cell a {
-        color: #ffffff !important;
-    }
-}
-
-.content .card-list .card .icon path {
-    stroke: #4770ff !important;
-}
-
-.content .card-list .card {
-    .message {
-        top: 4px !important;
-        border-right: 20px solid #31393d !important;
-        scrollbar-color: #c7d0d2 !important;
-        width: 386px !important;
-    }
-
-    .message::-webkit-scrollbar-track {
-        background-color: #31393d !important;
-    }
-
-    .message::-webkit-scrollbar-thumb {
-        box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
+        color: @text-color !important;
     }
 }
 
 .currency-item .name,
 .currency-item .value,
 .rating-item {
-    // color: #000000!important;
     background-color: #1b2123 !important;
 }
 
 .ant-modal-body {
-    background: #31393d !important;
-
-    .openout-modal {
-        .card {
-            border: 1px solid #31393d !important;
-        }
-        .contacts .item {
-            background: #31393d !important;
-        }
-    }
-
-    .comments-modal {
-        .card {
-            border: 1px solid #31393d !important;
-
-            .icon path {
-                stroke: #4770ff !important;
-                font-size: 23px;
-            }
-
-            .date {
-                span {
-                    color: #ffffff !important;
-                }
-            }
-
-            .message {
-                top: 4px !important;
-                border-right: 20px solid #31393d !important;
-                scrollbar-color: #c7d0d2 !important;
-                width: 386px !important;
-            }
-
-            .message::-webkit-scrollbar-track {
-                background-color: #31393d !important;
-            }
-
-            .message::-webkit-scrollbar-thumb {
-                box-shadow: inset 0 0 6px rgba(255, 255, 255, 1);
-            }
-        }
-
-        .contacts .item {
-            background: #31393d !important;
-        }
-    }
+    background: @bg-color !important;
 }
+
+ss-topic {
+	.header {
+		background-color: #1b2123!important;
+	}
+}
+
+ss-mail {
+	button {
+		background-color: #0e0f10!important;
+	}
+
+	ss-card {
+		ss-button {
+			background-color: #0e0f10!important;
+		}
+	}
+}
+

@@ -1,160 +1,168 @@
 <div class="victory">
-  <div class="header">
-    <div>
-      <div class="title" *ngIf="winsUrl | async as url">
-        <a href="{{ url.linkToActivity }}" target="_blank">
-          <h1>Победы</h1>
-        </a>
-      </div>
-    </div>
-    <div class="open-all-table">
-
-      <ng-container *ngIf="searchPanelVisible">
-        <div class="search">
-        <span class="">
-          <form nz-form [formGroup]="loginForm" class="search-form" (ngSubmit)="onSubmit()">
-            <nz-form-item>
-              <nz-form-control>
-                <nz-input-group [nzSuffix]="prefixSearch">
-                  <input type="text" nz-input formControlName="search" placeholder="Введите запрос" (input)="search()" />
-                </nz-input-group>
-              </nz-form-control>
-              <ng-template #prefixSearch>
-                <i nz-icon nzType="search" class="search-icon-suffix"></i>
-              </ng-template>
-            </nz-form-item>
-          </form>
-        </span>
-          <!--    <div class="result" *ngIf="books && showWindowResult" #result>-->
-          <!--        <app-result-item-->
-          <!--            *ngFor="let book of books"-->
-          <!--            [book]="book"-->
-          <!--            [title]="title"-->
-          <!--        ></app-result-item>-->
-          <!--    </div>-->
-        </div>
-        <div class="select-group">
-          <!--        [(ngModel)]="selectedValue"  -->
-          <nz-select ngModel="lucy" nzPlaceHolder="Выберите группу" [ngModelOptions]="{ standalone: true }">
-            <nz-option nzValue="{{ group?.name }}" nzLabel="{{ group?.name }}" *ngFor="let group of winsGroupsList | async "></nz-option>
-          </nz-select>
-        </div>
-      </ng-container>
-
-      <div class="button" (click)="showModaAddWin()">
-        <button nz-button class="button" [nzType]="'primary'">
-          Добавить победу
-        </button>
-      </div>
-    </div>
-  </div>
+	<div class="container">
+		<div class="header">
+			<div>
+				<div class="title" *ngIf="winsUrl | async as url">
+					<a href="{{ url.linkToActivity }}" target="_blank">
+						<h1>Победы</h1>
+					</a>
+				</div>
+			</div>
+			<div class="open-all-table">
+				<div class="button" (click)="showModal()">
+					<button nz-button class="button" [nzType]="'primary'">
+						Добавить победу
+					</button>
+				</div>
+			</div>
+		</div>
 
   <div class="content">
-
-    <ng-container *ngIf="winsList | async as wins">
-      <nz-list class="card-list" [nzDataSource]="wins | slice: (pageIndex - 1) * pageSize : pageIndex * pageSize" [nzRenderItem]="item" [nzPagination]="pagination">
-
+    <ng-container *ngIf="(winsList | async)?.items as wins; else loader">
+      <nz-list class="card-list" [nzDataSource]="wins" [nzRenderItem]="item">
         <ng-template #item let-item>
           <nz-list-item [nzContent]="nzContent">
+            <app-card-victory
+              (DeleteWin)="updateWinList()"
+              [item]="item"
+              [extendedMode]="getExtendedMode"
+            ></app-card-victory>
             <ng-template #nzContent>
-              <!--              <nz-card [nzTitle]="item.name">-->
-
-              <div class="card">
-                <div>
-                  <div class="personal">
-                    <div class="img">
-                      <img src="{{ item.user.avatarUrl }}" alt="user" />
-                    </div>
-
-                    <span class="people-icon icon" nz-icon [nzType]="'ss:twoPeople'" *ngIf="item?.groupWinUsers"></span>
-
-                    <div class="title">
-                      <div class="fio">
-                        <span>{{ item?.user?.lastName }} {{ item?.user?.firstName }} {{ item?.user?.surName }}</span>
-                      </div>
-                      <div class="job">
-                        <div>{{ item?.user.position }}</div>
-                        <div>{{ item?.user.department }}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="icons">
-                    <ng-container [ngSwitch]="item?.award">
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalGold'" *ngSwitchCase="1"></span>
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalSilver'" *ngSwitchCase="2"></span>
-                      <span class="medal-icon" nz-icon [nzType]="'ss:medalBronze'" *ngSwitchCase="3"></span>
-                    </ng-container>
-                  </div>
-
-                  <div class="date">
-                    <span>{{ item?.createdDate | date: 'dd.MM.yyyy' }}</span>
-                  </div>
-
-                  <div class="message">
-                    <div class="text">
-                      {{ item.note }}
-                    </div>
-                  </div>
-                  <div class="info">
-                    <div class="left-group">
-
-                      <!-- (mouseleave)="peoplelikesOpen=!peoplelikesOpen;"
-                                        (mouseenter)="peoplelikesOpen=!peoplelikesOpen;"-->
-                      <div appTooltip class="modal-people-likes">
-                        <span class="title">Нравится:</span>
-                        <nz-avatar-group class="list-item">
-                          <nz-avatar class="item" nzIcon="user" nzSrc="assets/images/profile/user-popup.png"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Яна"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nz-tooltip nzTooltipTitle="NG-ZORRO User" nzIcon="user"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                          <nz-avatar class="item" style="background-color: #4770ff" nzText="Гриша"></nz-avatar>
-                        </nz-avatar-group>
-                      </div>
-
-                      <div class="like" [ngClass]="item.isUserLiked ? 'liked': ''">
-                        <span class="like-icon icon" nz-icon [nzType]="'ss:like'" (click)="setLike(item, item?.id)"></span>
-                        <span class="count">{{ item.likesCount }}</span>
-                      </div>
-
-                      <div class="comment" (click)="showModalComments(item)">
-                        <span class="comment-icon icon" nz-icon [nzType]="'ss:comment'"></span>
-                        <span class="count">{{ item.commentsCount }}</span>
-                      </div>
-                      <div class="medal">
-                        <span class="medal-icon icon" nz-icon [nzType]="'ss:medal'"></span>
-                      </div>
-                    </div>
-                    <div class="openOut" (click)="showModalOpenOut(item)">
-                      <span class="openOut-icon icon" nz-icon [nzType]="'ss:openOut'"></span>
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-
-              <!--              </nz-card>-->
             </ng-template>
           </nz-list-item>
         </ng-template>
-
-        <ng-template #pagination>
-          <nz-pagination [nzPageIndex]="pageIndex"
-                         [nzPageSize]="pageSize"
-                         [nzTotal]="wins.length"
-                         (nzPageIndexChange)="pageIndex = $event"
-                         (nzPageSizeChange)="pageSize = $event">
-
-          </nz-pagination>
-        </ng-template>
       </nz-list>
-
     </ng-container>
-
-<!--    <div class="bottom-panel">-->
-<!--      <nz-pagination [nzPageIndex]="2" [nzTotal]="8" [nzPageSize]="8"></nz-pagination>-->
-<!--    </div>-->
+    <ng-template #loader>
+      <ss-loader></ss-loader>
+    </ng-template>
   </div>
+
+  <div class="pagination">
+    <nz-pagination
+      [nzTotal]="total"
+      [nzPageIndex]="pageIndex"
+      [nzPageSize]="pageSize"
+      (nzPageIndexChange)="nzPageIndexChange($event)"
+      (nzPageSizeChange)="pageSize = $event"
+      [nzResponsive]="true"
+    >
+    </nz-pagination>
+  </div>
+
+  <div class="add-modal">
+    <!--Форма добавления победы -->
+    <nz-modal [(nzVisible)]="isModalVisible" nzTitle="Новая победа" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+      <ng-container *nzModalContent>
+        <div>
+          <form nz-form [formGroup]="addVictoryForm" nzLayout="vertical" class="form">
+
+            <nz-form-item>
+              <nz-form-control>
+                <nz-form-label class="field-tile" [nzSpan]="6">Описание:</nz-form-label>
+                <div class="textarea m-b-18">
+                  <textarea nz-input formControlName="comment" placeholder="Поделитесь своим достижением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
+                  <div class="icon-bg attach" *ngIf="false">
+                    <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
+                  </div>
+                </div>
+                <div *ngIf="!comment?.valid && (comment?.dirty || comment?.touched)">
+                  <div [hidden]="!comment?.invalid" nz-typography nzType="danger">
+                    Введите текст достижения
+                  </div>
+                </div>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item class="m-t-2">
+              <nz-form-label class="field-tile win" [nzSpan]="8">Совместная победа:</nz-form-label>
+              <nz-form-control>
+
+                <nz-select
+                  [nzShowSearch]="true"
+                  nzServerSearch
+                  [nzPlaceHolder]="textPlaceHolder"
+                  [(ngModel)]="selectedUser"
+                  [nzAllowClear]="true"
+                  [nzShowArrow]="false"
+                  [nzCustomTemplate]="selectUserTmpl"
+                  (ngModelChange)="onUserChange()"
+                  (nzOnSearch)="searchUsers($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <nz-option *ngFor="let user of listColleague" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <ng-template #notFoundUserTmpl></ng-template>
+            <ng-template #selectUserTmpl></ng-template>
+
+            <div *ngIf="partyWinSelectedTags.length>0">
+              <div class="tag-selected-name">
+                <ng-container *ngFor="let party of partyWinSelectedTags; index as i">
+                  <div class="item-tag">
+                    <span>{{ party?.name }}</span>
+                    <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:close'" (click)="deleteTagUser(i)"></span>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <nz-form-item class="form-item-tpr">
+              <nz-form-label class="field-tile" [nzSpan]="6">ТПР:</nz-form-label>
+              <nz-form-control>
+                <nz-select
+                  nzShowSearch
+                  nzServerSearch
+                  nzPlaceHolder="Укажите ТПР"
+                  [(ngModel)]="selectedTpr"
+                  [nzAllowClear]="true"
+                  [nzShowArrow]="false"
+                  [nzCustomTemplate]="selectTPRTmpl"
+                  (ngModelChange)="onTprChange()"
+                  (nzOnSearch)="searchTpr($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <ng-container *ngIf="listTPR.length>0">
+                    <nz-option *ngFor="let user of listTPR" [nzLabel]="user.name" [nzValue]="user.id"></nz-option>
+                  </ng-container>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <ng-template #selectTPRTmpl></ng-template>
+
+            <div class="tag-selected-name" *ngIf="tprSelectedTags.length>0">
+              <div class="item-tag item-tag-selected" *ngFor="let tpr of tprSelectedTags; index as i">
+                <a nzTooltipTitle="{{ tpr?.name }}" nz-tooltip>{{ tpr?.name | maxLengthText:20 }}</a>
+                <span class="close-icon icon close-tag" nz-icon [nzType]="'ss:close'" (click)="deleteTagTpr(i)"></span>
+              </div>
+            </div>
+
+            <ng-template #prefixUser>
+              <i nz-icon nzType="user"></i>
+            </ng-template>
+          </form>
+        </div>
+
+				</ng-container>
+				<div class="footer-form">
+					<div *nzModalFooter>
+						<div class="send d-flex justify-content-center">
+							<div class="">
+								<button nz-button nzType="primary" class="login-form-button"
+												(click)="handleOk()"
+												[nzLoading]="isConfirmLoading"
+												[ngStyle]="!addVictoryForm.valid ? {'color': 'darkgray'}: {}"
+												[disabled]="!addVictoryForm.valid"
+								>Добавить победу</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</nz-modal>
+		</div>
+	</div>
 </div>
 

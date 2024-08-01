@@ -1,0 +1,11 @@
+@use 'src/styles/colors.scss' as *;
+
+ss-caption {
+	text-decoration: underline;
+	color: $main;
+	cursor: pointer;
+
+	::ng-deep span {
+		font-weight: 600 !important;
+	}
+}

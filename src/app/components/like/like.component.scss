@@ -1,0 +1,177 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+
+:host {
+    .icon {
+        font-size: 20px;
+
+        ::ng-deep path {
+            stroke: $blue;
+        }
+    }
+
+    .like {
+        .gold-like {
+            margin-bottom: 2px;
+            ::ng-deep path {
+                fill: #ffe18a !important;
+                stroke: #ffb800 !important;
+            }
+        }
+
+        .silver-like {
+            margin-bottom: 2px;
+            ::ng-deep path {
+                fill: #a9a9a9 !important;
+                stroke: #748494 !important;
+            }
+        }
+
+        .bronze-like {
+            ::ng-deep path {
+                fill: #d8a36f !important;
+                stroke: #94724a !important;
+            }
+        }
+
+        position: relative;
+        background-color: $gray-light;
+        color: $blue;
+        font-size: 12px;
+        width: 50px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding-left: 1px;
+        cursor: pointer;
+
+        .like-icon {
+            padding-left: 1px;
+        }
+
+        .count {
+            padding-right: 6px;
+        }
+    }
+
+    .like.liked {
+        .icon {
+            ::ng-deep path {
+                stroke: #4770ff;
+                fill: #afc0ff;
+                fill-opacity: 1;
+            }
+        }
+
+        .count {
+            padding-right: 6px;
+        }
+    }
+
+    .modal-people-likes {
+        opacity: 0;
+        display: none;
+        position: absolute;
+        bottom: 39px;
+        left: 0;
+        padding: 0 8px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 4px;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(3.5px);
+
+        .title {
+            margin-top: 4px;
+            color: $white;
+            font-size: 10px;
+            font-style: normal;
+            display: block;
+        }
+
+        .list-item {
+            position: relative;
+            z-index: 1;
+            padding-bottom: 9px;
+
+            .item {
+                position: relative;
+                width: 28px;
+                height: 28px;
+                background-color: #886cff;
+                border-radius: 20px;
+                border: 1px solid $border-radius;
+                overflow-y: hidden;
+                z-index: 2;
+
+                img {
+                    width: 28px;
+                }
+            }
+        }
+    }
+
+    .modal-people-likes.show {
+        opacity: 1;
+        display: block;
+    }
+
+    .modal-appSuper-like {
+        opacity: 0;
+        display: none;
+
+        position: absolute;
+        bottom: 39px;
+        left: 0;
+        padding: 0 13px;
+        gap: 4px;
+        border-radius: 8px;
+        border: 1px dashed #9747ff;
+        background: $gray-light;
+
+        .app-super-like {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 4px 0 4px 0;
+
+            .gold-like {
+                margin-bottom: 2px;
+                ::ng-deep path {
+                    fill: #ffe18a !important;
+                    stroke: #ffb800 !important;
+                }
+            }
+
+            .silver-like {
+                margin-bottom: 2px;
+                ::ng-deep path {
+                    fill: #a9a9a9 !important;
+                    stroke: #748494 !important;
+                }
+            }
+
+            .bronze-like {
+                ::ng-deep path {
+                    fill: #d8a36f !important;
+                    stroke: #94724a !important;
+                }
+            }
+
+            .like-icon:last-child {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .modal-appSuper-like.show {
+        opacity: 1;
+        display: block;
+    }
+}

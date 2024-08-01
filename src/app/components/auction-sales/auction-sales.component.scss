@@ -1,196 +1,53 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
 
-.auction-sales {
-    margin-top: 60px;
+:host {
+	margin-top: 60px;
+	display: flex;
+	height: 100%;
+	flex-grow: 1;
 
-    .header {
-        display: flex;
-        justify-content: space-between;
+	ss-card {
+		width: 100%;
+		position: relative;
 
-        .open-all-table {
-            display: flex;
-            align-items: center;
-        }
-    }
+		.header {
+			width: 100%;
+			padding: 16px 20px 12px 20px;
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			border-bottom: 1px solid $island-outline;
+			gap: 4px;
 
-    .table {
-        margin-top: 20px;
+			&-controls {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+		}
 
-        ::ng-deep {
-            .ant-table-pagination-right {
-                justify-content: flex-start;
-            }
+		.content {
+			margin: 16px 10px;
+			padding: 0 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
 
-            .ant-pagination ul,
-            .ant-pagination ol {
-                margin-left: 2px;
-            }
+			ss-table {
+				min-height: 362px;
+			}
 
-            .ant-table {
-                border-radius: $border-radius;
-                overflow: hidden;
-            }
-
-            .ant-pagination-prev,
-            .ant-pagination-next {
-                display: none;
-            }
-
-            .ant-pagination-item-active,
-            .ant-pagination-item {
-                font-size: 16px;
-                line-height: 39px;
-                font-weight: 600;
-                background: #fff;
-                border-color: $border-color;
-                border-radius: 10px;
-                height: 44px;
-                width: 44px;
-                margin-right: 10px;
-            }
-
-            .ant-pagination-item-active a {
-                color: $black;
-            }
-
-            .ant-table-pagination.ant-pagination {
-                margin: 21px 0 !important;
-            }
-
-            .ant-table-thead > tr > th {
-                height: 45px;
-                text-align: center;
-                background: #e6ebee;
-                padding: 2px 2px;
-                font-size: 16px;
-                font-weight: bold;
-            }
-
-            .ant-pagination.mini .ant-pagination-item {
-                min-width: 44px;
-                height: 44px;
-            }
-
-            .ant-table-thead > tr > th:nth-child(1) {
-                width: 520px;
-            }
-            .ant-table-tbody > tr.ant-table-row:hover > td,
-            .ant-table-tbody > tr > td.ant-table-cell-row-hover {
-                background: unset;
-            }
-
-            .ant-table-cell {
-                a {
-                    color: $black;
-                }
-            }
-
-            .ant-table-tbody > tr > td {
-                font-size: 16px;
-                color: $black;
-                font-weight: 600;
-                text-align: center;
-            }
-
-            .ant-table-tbody > tr > td:nth-child(1) {
-                text-align: left;
-            }
-
-            .open-all-table.bottom {
-                display: none;
-            }
-        }
-    }
+			.pagination {
+				margin-top: 0;
+				display: flex;
+				justify-content: end;
+			}
+		}
+	}
 }
 
-@media screen and (max-width: 414px) {
-    .auction-sales {
-        margin: 80px 20px 0 20px;
-
-        .header {
-            .open-all-table {
-                display: none;
-            }
-
-            .title h1 {
-                text-align: center;
-                margin-bottom: 0.3rem !important;
-            }
-
-            .subtitle h2 {
-                text-align: center;
-                line-height: 19px !important;
-            }
-        }
-
-        .table {
-            margin-top: 24px;
-
-            .open-all-table.bottom {
-                display: block;
-                margin-top: 1px;
-
-                .ant-btn {
-                    width: 100%;
-                }
-            }
-        }
-    }
-
-    ::ng-deep {
-        .ant-table thead {
-            display: none;
-        }
-
-        .ant-table tr {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            border-bottom: 1px solid #ddd;
-            padding: 0 0;
-            width: 89%;
-            margin: 0 auto;
-        }
-
-        .ant-table tr:last-child {
-            border-bottom: unset;
-        }
-
-        .ant-table-tbody > tr > td {
-            border-bottom: unset;
-            font-size: 14px !important;
-            padding-top: 3px;
-            font-weight: 500 !important;
-        }
-
-        .ant-table td:first-child {
-            border: 0;
-            display: block;
-            text-align: left;
-            font-size: 14px !important;
-            font-weight: bold !important;
-            line-height: 19px;
-            padding-bottom: 0 !important;
-            padding-top: 18px;
-
-            flex: 0 0 auto;
-            flex: none;
-            width: 100%;
-        }
-
-        .ant-table td {
-            padding-top: 10px;
-        }
-
-        .ant-table-tbody > tr > td:last-child {
-            // border-bottom: 1px solid $border-color;
-        }
-
-        .ant-table-tbody > tr > td {
-            padding-left: 0;
-            padding-right: 0;
-            padding-bottom: 16px !important;
-        }
-    }
+:host-context(.dark) :host {
+	.content {
+		background-color: $dark-island!important;
+	}
 }
