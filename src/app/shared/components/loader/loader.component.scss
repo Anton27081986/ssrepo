@@ -9,6 +9,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	border-radius: 16px;
 
 	.loader {
 		animation: 1s linear 0s normal none infinite running rotation;
@@ -16,6 +17,10 @@
 		width: 28px;
 		height: 28px;
 	}
+}
+
+:host-context(.dark) :host {
+	background-color: $dark-background;
 }
 
 @keyframes rotation {
