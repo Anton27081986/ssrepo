@@ -1,8 +1,18 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
+import { BehaviorSubject } from 'rxjs';
+import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
 
 export type searchType =
 	| 'user'
@@ -12,6 +22,7 @@ export type searchType =
 	| 'contractor'
 	| 'client'
 	| 'technologist'
+	| 'global'
 	| undefined;
 
 @UntilDestroy()
@@ -36,7 +47,11 @@ export class SearchInputComponent {
 
 	@Output() public select = new EventEmitter<any>();
 
-	public found: IDictionaryItemDto[] = [];
+	@ViewChild('input', { static: true }) public input!: ElementRef<HTMLInputElement>;
+
+	public found$: BehaviorSubject<IDictionaryItemDto[]> = new BehaviorSubject<
+		IDictionaryItemDto[]
+	>([]);
 
 	public constructor(
 		private readonly searchFacade: SearchFacadeService,
@@ -51,7 +66,7 @@ export class SearchInputComponent {
 						.getUsers(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -60,7 +75,7 @@ export class SearchInputComponent {
 						.getSubSectors(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -69,7 +84,7 @@ export class SearchInputComponent {
 						.getRegions(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -79,7 +94,7 @@ export class SearchInputComponent {
 							.getContractor(query)
 							.pipe(untilDestroyed(this))
 							.subscribe(res => {
-								this.found = res.items;
+								this.found$.next(res.items);
 								this.ref.detectChanges();
 							});
 					}
@@ -90,7 +105,7 @@ export class SearchInputComponent {
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res;
+							this.found$.next(res);
 							this.ref.detectChanges();
 						});
 					break;
@@ -99,7 +114,7 @@ export class SearchInputComponent {
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res;
+							this.found$.next(res);
 							this.ref.detectChanges();
 						});
 					break;
@@ -108,11 +123,29 @@ export class SearchInputComponent {
 						.getClients(query, this.onlyActive)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
+						});
+					break;
+				case 'global':
+					this.searchFacade
+						.globalSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(this.mapIDictionaryItemDto(res.items));
 						});
 					break;
 			}
 		}
+	}
+
+	public mapIDictionaryItemDto(items: IGlobalSearchDto[]): IDictionaryItemDto[] {
+		return items.map(item => {
+			return {
+				id: 0,
+				name: item.title,
+				linkToDetail: item.linkToDetail,
+			};
+		});
 	}
 }

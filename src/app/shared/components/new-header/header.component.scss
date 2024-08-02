@@ -1,0 +1,68 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
+@use '../../../../styles/colors' as *;
+
+.header {
+	width: 100%;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	background-color: $white;
+	user-select: none;
+	border-bottom: 1px solid #E4E8EA;
+
+	&__content {
+		display: flex;
+		margin: 0 6.25%;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__logo {
+		color: #4770FF;
+		cursor: pointer;
+	}
+
+	&__profile {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 12px;
+		cursor: pointer;
+		overflow-y: hidden;
+		box-sizing: border-box;
+	}
+
+	&__content-left {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+	}
+
+	&__content-right {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+	}
+}
+
+.profile {
+	border: 1px solid #E4E8EA;
+	border-radius: 8px;
+	min-width: 142px;
+	height: 36px;
+
+	ss-avatar {
+		align-self: flex-start;
+	}
+
+	&__text {
+		word-break: unset;
+	}
+}
+
+:host-context(.dark) .header {
+	background-color: $dark-island;
+	color: $dark-text;
+}

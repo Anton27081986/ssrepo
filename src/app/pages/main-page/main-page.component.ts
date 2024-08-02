@@ -5,12 +5,12 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-	selector: 'app-start',
-	templateUrl: './start.component.html',
-	styleUrls: ['./start.component.scss'],
+	selector: 'app-main-page',
+	templateUrl: './main-page.component.html',
+	styleUrls: ['./main-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StartComponent implements OnInit {
+export class MainPageComponent implements OnInit {
 	public loading = false;
 
 	public constructor(private readonly userStateService: UserProfileStoreService) {}

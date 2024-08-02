@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
-// import { FullLayoutComponent } from '@app/shared/layouts/full-layout/full-layout.component';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { LayoutClientProposalsComponent } from '@app/shared/layouts/layout-client-proposals/layout-client-proposals.component';
@@ -17,7 +16,8 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				loadChildren: () => import('./pages/start/start.module').then(m => m.StartModule),
+				loadChildren: () =>
+					import('@app/pages/main-page/main-page.module').then(m => m.MainPageModule),
 			},
 			{
 				path: '',

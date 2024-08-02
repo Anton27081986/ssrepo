@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { HeaderComponent } from '@app/shared/components/header/header.component';
-import { FlyMenuDirective } from '@app/shared/components/header/fly-menu.directive';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { RouterLink } from '@angular/router';
 import { ComponentsModule } from '@app/components/components.module';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { FlyMenuDirective } from '@app/shared/components/new-header/fly-menu.directive';
+import { IconModule } from '@app/shared/components/icon/icon.module';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
+import { HeaderComponent } from './header.component';
+import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
+import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 
 @NgModule({
 	declarations: [HeaderComponent, FlyMenuDirective],
@@ -18,6 +23,11 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 		NzDropDownModule,
 		NgOptimizedImage,
 		NzIconModule,
+		IconModule,
+		TextModule,
+		AvatarModule,
+		SearchInputModule,
+		ButtonModule,
 	],
 	exports: [HeaderComponent, FlyMenuDirective],
 })

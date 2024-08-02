@@ -9,15 +9,15 @@
 	class="{{ error ? size + ' error' : size }}"
 	#input
 	/>
-	<div class="search-result" *ngIf="found.length">
+	<div class="search-result" *ngIf="(found$ | async)?.length">
 		<div class="separator"></div>
-		<ss-caption class="search-result-item" *ngFor="let item of found"
+		<ss-caption class="search-result-item" *ngFor="let item of found$ | async"
 		(click)="
 			clear ? input.value = '' : input.value = item.name!;
-			found = [];
+			found$.next([]);
 			select.emit(item);
 		">{{ item.name }}</ss-caption>
 	</div>
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>
-<div *ngIf="found.length" class="overflow" (click)="found = []"></div>
+<div *ngIf="(found$ | async)?.length" class="overflow" (click)="found$.next([])"></div>
