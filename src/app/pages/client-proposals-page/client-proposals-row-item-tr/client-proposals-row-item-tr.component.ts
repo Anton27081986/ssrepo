@@ -76,7 +76,9 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 	}
 
 	ngAfterViewChecked() {
-		this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		if (this.content) {
+			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		}
 	}
 
 	showText(text: string[], title?: string) {
