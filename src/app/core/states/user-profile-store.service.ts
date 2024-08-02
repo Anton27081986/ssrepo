@@ -16,7 +16,6 @@ export class UserProfileStoreService implements OnDestroy {
 	private readonly subscription: Subscription = new Subscription();
 
 	private readonly windowProfileSubject = new BehaviorSubject<boolean | null>(null);
-	private openWindowProfile: boolean = false;
 	public windowProfile$ = this.windowProfileSubject.asObservable();
 
 	public constructor(
@@ -62,15 +61,6 @@ export class UserProfileStoreService implements OnDestroy {
 				this.userProfileSubject.next(profile);
 			}),
 		);
-	}
-
-	public getStateWindow() {
-		return this.openWindowProfile;
-	}
-
-	public setStateWindow(state: boolean) {
-		this.openWindowProfile = state;
-		this.windowProfileSubject.next(state);
 	}
 
 	public ngOnDestroy() {

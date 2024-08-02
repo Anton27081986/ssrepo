@@ -68,12 +68,9 @@ import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CarouselComponent } from './carousel/carousel.component';
-import { AllSearchComponent } from './all-search/all-search.component';
-import { ResultItemComponent } from './all-search/result-item/result-item.component';
 
 @NgModule({
 	declarations: [
-		ResultItemComponent,
 		MainMenuComponent,
 		MobileMenuComponent,
 		ProfilePopupComponent,
@@ -96,7 +93,6 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		CardVictoryComponent,
 		CarouselComponent,
 		ModalTransportNoticeComponent,
-		AllSearchComponent,
 	],
 	imports: [
 		CommonModule,
@@ -161,7 +157,6 @@ import { ResultItemComponent } from './all-search/result-item/result-item.compon
 		RatingComponent,
 		AddressBookComponent,
 		TransportComponent,
-		AllSearchComponent,
 		PaginationComponent,
 	],
 })

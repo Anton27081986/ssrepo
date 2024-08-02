@@ -7,11 +7,13 @@
 }
 
 .profile-popup {
-	position: relative;
+	position: absolute;
 	width: 360px;
 	box-shadow: 4px 4px 10px #00000014;
 	background-color: white;
 	border-radius: 16px;
+	z-index: 1000;
+	right: 0;
 
 	.tail-icon {
 		position: absolute;
