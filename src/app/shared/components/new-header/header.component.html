@@ -10,14 +10,12 @@
 
 			<app-notification></app-notification>
 
-			<div class="header__profile profile" nz-dropdown nzTrigger="click"
-				 [nzDropdownMenu]="profilePopup">
 				<ng-container *ngIf="(userProfile$ | async) as userProfile;">
-					<ss-avatar [src]="userProfile?.avatarUrl!" size="xs"
+					<ss-avatar [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
+							   [position]="TooltipPosition.DEFAULT" [src]="userProfile?.avatarUrl!" size="xs" nz-dropdown nzTrigger="click"
+							   [nzDropdownMenu]="profilePopup"
 							   ></ss-avatar>
 				</ng-container>
-				<ss-text class="profile__text" size="3" color="gray">Мой профиль</ss-text>
-			</div>
 		</div>
 	</div>
 </div>

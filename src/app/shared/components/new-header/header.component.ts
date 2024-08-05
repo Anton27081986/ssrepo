@@ -8,6 +8,7 @@ import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.servic
 import { Router } from '@angular/router';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 @Component({
 	selector: 'app-header',
@@ -46,4 +47,7 @@ export class HeaderComponent implements OnInit {
 			link.click();
 		}
 	}
+
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
 }
