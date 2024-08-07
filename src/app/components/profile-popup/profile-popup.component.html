@@ -1,110 +1,45 @@
-<ss-card padding="0" class="profile-popup">
-	<ss-icon name="tail" height="13" width="32" class="tail-icon"></ss-icon>
-	<div class="wrapper">
+<div class="profile-popup">
+	<div class="profile-popup__wrapper">
+		<app-profile-card></app-profile-card>
+		<div class="profile-popup__manager">
+			<div class="profile-popup__manager-buttons">
+				<ng-container *ngIf="userProfile$ | async as data">
+					<ng-container *ngIf="!data?.loggedUser">
 
-		<ng-container *ngIf="userProfile$ | async as url">
-			<ss-card padding="16px" class="card">
-				<div class="personal">
-					<div class="img">
-						<ng-container>
-							<ss-avatar [src]="url!.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
-						</ng-container>
+						<ss-button size="small" type="muted"
+								   [routerLink]="'profile/settings'">
+							<ss-icon name="settings2"></ss-icon>
+							<span>Настройки профиля</span>
+						</ss-button>
 
-					</div>
-					<div class="title">
-						<div class="fio">
-							<ss-text size="1" weight="medium">{{ url!.name }}</ss-text>
-						</div>
-						<div class="job">
-							<ss-caption size="2" color="gray">{{ url?.position }}</ss-caption>
-							<ss-caption size="2" color="gray">{{ url?.department }}</ss-caption>
-						</div>
-					</div>
-				</div>
-				<div class="contacts">
-					<div class="item" *ngIf="url?.phone">
-						<div>
-							<ss-icon name="phone" height="16" width="16"></ss-icon>
-							<ss-text size="3" class="title">Tелефон:</ss-text>
-						</div>
-						<div>
-							<ss-text size="3" class="description" color="gray">{{ url?.phone }}</ss-text>
-						</div>
-					</div>
-					<div class="item" *ngIf="url?.phoneLocal">
-						<div>
-							<ss-icon name="phone" height="16" width="16"></ss-icon>
-							<ss-text size="3" class="title">Внутренний телефон:</ss-text>
-						</div>
-						<div>
-							<ss-text size="3" class="description" color="gray">{{ url?.phoneLocal }}</ss-text>
-						</div>
-					</div>
-					<div class="item" *ngIf="url?.email">
-						<div>
-							<ss-icon name="mail" height="16" width="16"></ss-icon>
-							<ss-text size="3" class="title">Email:</ss-text>
-						</div>
-						<div>
-							<ss-text size="3" class="description" color="gray">{{ url?.email }}</ss-text>
-						</div>
-					</div>
-				</div>
-			</ss-card>
-		</ng-container>
-
-		<div class="manager">
-			<ng-container *ngIf="userProfile$ | async as data">
-				<ng-container *ngIf="!data?.loggedUser">
-
-					<ss-button size="small" type="muted" class="settings-button" [routerLink]="'profile/settings'">
-						<ss-icon name="settings2"></ss-icon>
-						<span>Настройки профиля</span>
-					</ss-button>
-
+					</ng-container>
 				</ng-container>
-			</ng-container>
 
-			<ss-button size="small" type="muted" class="exit-button" (click)="logout()">
-				<ss-icon name="exit2"></ss-icon>
-				Выйти
-			</ss-button>
+				<ss-button size="small" type="muted" class="exit-button" (click)="logout()">
+					<ss-icon name="exit2"></ss-icon>
+					Выйти
+				</ss-button>
+			</div>
 		</div>
 
 		<ng-container *ngIf="userProfile$ | async as data">
 			<ng-container *ngIf="data?.loggedUser as loggedUser">
-				<hr />
-				<div class="card-list">
-					<div class="accordion">
-						<ss-card padding="16" class="card logged-user">
-							<div class="personal">
-								<div class="personal-data">
-									<div class="img">
-										<ss-avatar [src]="loggedUser?.avatarUrl!" size="xs" [isSquare]="false"></ss-avatar>
-									</div>
-									<div class="title">
-										<div class="fio">
-											<ss-text size="3">{{ loggedUser?.lastName }} {{ loggedUser?.firstName }} {{ loggedUser?.surName }}</ss-text>
-										</div>
-										<div class="job">
-											<div>
-												<ss-caption size="2" color="gray">{{ loggedUser?.position }}</ss-caption>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="personal-enter">
-									<ss-icon name="enter" (click)="enterUnderFriendlyAccount(loggedUser)"></ss-icon>
-								</div>
-							</div>
-						</ss-card>
+				<ss-divider></ss-divider>
+				<div class="profile-popup__return-in-personal-user">
+					<div class="profile-popup__return-personal-info">
+						<ss-avatar [size]="'small'" [type]="'rectangle'" [src]="loggedUser?.avatarUrl!"></ss-avatar>
+						<div class="profile-popup__return-personal-description">
+							<ss-text
+								size="3">{{ loggedUser?.lastName }} {{ loggedUser?.firstName }} {{ loggedUser?.surName }}
+							</ss-text>
+							<ss-caption size="2" color="gray">{{ loggedUser?.position }}</ss-caption>
+						</div>
 					</div>
+					<ss-icon style="cursor: pointer" name="enter"
+							 (click)="enterUnderFriendlyAccount(loggedUser)"></ss-icon>
 				</div>
-
 			</ng-container>
 		</ng-container>
-
-		<hr />
 
 		<ng-container *ngIf="userProfile$ | async as data">
 			<div class="admin-enter" *ngIf="data?.isAdmin === true">
@@ -113,7 +48,7 @@
 					<ss-search-input class="search"
 									 searchType="user"
 									 placeholder="Поиск"
-									 size="small"
+									 size="medium"
 									 [clear]="true"
 									 (select)="AuthUser($event)">
 					</ss-search-input>
@@ -121,13 +56,12 @@
 			</div>
 
 			<ng-container *ngIf="friendsAccount?.length!>0">
-				<hr *ngIf="data?.isAdmin === true" />
 			</ng-container>
 		</ng-container>
 
 		<ng-container *ngIf="friendsAccount as accounts">
-			<div class="card-list connected" *ngIf="accounts.length>0">
-				<div class="accordion" (click)="isExpanded=!isExpanded;">
+			<div class="profile-popup__list-friends" *ngIf="accounts.length>0">
+				<div class="profile-popup__accordion" (click)="isExpanded=!isExpanded;">
 					<ss-text size="3" weight="medium">Связь с другими сотрудниками: {{ accounts.length }}</ss-text>
 					<div class="arrowBottom">
 						<ss-icon name="arrowBottom" width="16" height="8" class="arrow-bottom"
@@ -137,32 +71,25 @@
 				</div>
 
 				<ng-container *ngIf="isExpanded">
-					<ss-card padding="16" class="card" *ngFor="let account of accounts">
-						<div class="personal">
-							<div class="personal-data">
-								<div class="img">
-									<ss-avatar [src]="account?.avatarUrl!" size="xs" [isSquare]="false"></ss-avatar>
+					<div class="profile-popup__list-friends">
+						<div class="profile-popup__list-friend" *ngFor="let account of accounts">
+							<div class="profile-popup__list-friend-description">
+								<ss-avatar [size]="'medium'" [type]="'rectangle'" [src]="account?.avatarUrl!"></ss-avatar>
+								<div class="profile-popup__caption">
+									<ss-caption
+										size="2">{{ account?.lastName }} {{ account?.firstName }} {{ account?.surName }}
+									</ss-caption>
+									<ss-caption size="2"
+												color="gray">{{ account?.position }}{{ account?.department ? ', ' : '' }}
+									</ss-caption>
+									<ss-caption size="2" color="gray">{{ account?.department }}</ss-caption>
 								</div>
-								<div class="title">
-									<div class="fio">
-										<ss-caption size="1">{{ account?.lastName }} {{ account?.firstName }} {{ account?.surName }}</ss-caption>
-									</div>
-									<div class="job">
-										<div>
-											<ss-caption size="2" color="gray">{{ account?.position }}{{ account?.department ? ', ': ''}}</ss-caption>
-											<ss-caption size="2" color="gray">{{ account?.department }}</ss-caption>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="personal-enter">
 								<ss-icon name="enter" (click)="enterUnderFriendlyAccount(account)"></ss-icon>
 							</div>
 						</div>
-					</ss-card>
+					</div>
 				</ng-container>
-
 			</div>
 		</ng-container>
 	</div>
-</ss-card>
+</div>

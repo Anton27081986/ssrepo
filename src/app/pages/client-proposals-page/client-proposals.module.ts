@@ -43,6 +43,8 @@ import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
 import { PipesModule } from '@app/core/pipes/pipes.module';
+import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
+import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 
 @NgModule({
 	declarations: [
@@ -95,6 +97,8 @@ import { PipesModule } from '@app/core/pipes/pipes.module';
 		LoaderModule,
 		InputModule,
 		PipesModule,
+		SsMenuModule,
+		SsDividerModule,
 	],
 })
 export class ClientProposalsModule {}

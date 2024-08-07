@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+	AfterViewInit,
+	Component,
+	ElementRef,
+	Input,
+	OnChanges,
+	OnInit,
+	SimpleChanges,
+	ViewChild,
+} from '@angular/core';
 import { AppIcons } from '@app/core/icons';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -7,17 +16,27 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 	templateUrl: './icon.component.html',
 	styleUrls: ['./icon.component.scss'],
 })
-export class IconComponent implements OnInit, OnChanges {
+export class IconComponent implements OnInit, OnChanges, AfterViewInit {
 	@Input() public name: string = '';
 	@Input() public width: string | undefined;
 	@Input() public height: string | undefined;
+	@ViewChild('svgIcon') public svgIcon!: ElementRef;
 
 	protected svg: SafeHtml | undefined;
 
 	public constructor(private readonly sanitizer: DomSanitizer) {}
 
-	public ngOnChanges() {
-		this.setIcon();
+	ngAfterViewInit() {
+		this.svgIcon.nativeElement.setAttribute(
+			'style',
+			`width: ${this.width}px; height: ${this.height}px`,
+		);
+	}
+
+	public ngOnChanges(simple: SimpleChanges) {
+		if (simple.width || simple.height) {
+			this.setIcon();
+		}
 	}
 
 	public ngOnInit(): void {
@@ -27,14 +46,6 @@ export class IconComponent implements OnInit, OnChanges {
 	private setIcon() {
 		if ((AppIcons as any)[this.name]) {
 			let svgString = (AppIcons as any)[this.name];
-
-			if (this.height) {
-				svgString = svgString.replace(/height="\d+/, `height="${this.height}`);
-			}
-
-			if (this.width) {
-				svgString = svgString.replace(/width="\d+/, `width="${this.width}`);
-			}
 
 			this.svg = this.sanitizer.bypassSecurityTrustHtml(svgString);
 		}

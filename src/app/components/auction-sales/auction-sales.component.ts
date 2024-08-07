@@ -5,6 +5,7 @@ import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 import { TableState } from '@app/shared/components/table/table-state';
 import { BehaviorSubject } from 'rxjs';
 import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 
 @UntilDestroy()
 @Component({
@@ -38,10 +39,11 @@ export class AuctionSalesComponent implements OnInit {
 
 				if (value.items) {
 					const dataTable = <ITableItem[]>(<unknown>value.items.map(item => {
+						const pipeNumWithSpaces = new NumWithSpacesPipe();
 						return {
 							...item,
-							price: `${item.price} ${item.currency!}`,
-							quantity: `${item.quantity} ${item.tovUnitName!}`,
+							price: `${pipeNumWithSpaces.numberWithSpaces(item.price!, 2)} ${item.currency!}`,
+							quantity: `${pipeNumWithSpaces.numberWithSpaces(item.quantity!, 2)} ${item.tovUnitName!}`,
 							tovName: {
 								text: `${item.tovName}`,
 								url: item.detailUrl,
