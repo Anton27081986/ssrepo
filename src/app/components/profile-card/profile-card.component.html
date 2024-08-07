@@ -1,0 +1,45 @@
+<div class="profile-card" *ngIf="profile$ | async as profile">
+	<div class="profile-card__info">
+		<div class="profile-card__avatar">
+			<ss-avatar [size]="'large'" [type]="'rectangle'" [src]="profile.avatarUrl!"></ss-avatar>
+		</div>
+		<div class="profile-card__block-info">
+			<ss-text size="2" weight="medium">{{ profile.name }}</ss-text>
+			<div class="profile-card__description">
+				<ss-caption size="2" color="gray">{{ profile.position }}</ss-caption>
+				<ss-caption size="2" color="gray">{{ profile.department }}</ss-caption>
+			</div>
+		</div>
+	</div>
+	<ss-divider></ss-divider>
+	<div class="profile-card__contacts">
+		<div class="profile-card__item" *ngIf="profile.phone">
+			<div class="profile-card__item-description">
+				<ss-icon name="phone" height="16" width="16"></ss-icon>
+				<ss-text size="3" class="title">Tелефон:</ss-text>
+			</div>
+			<div>
+				<ss-text size="3" class="description" color="gray">{{ profile.phone }}</ss-text>
+			</div>
+		</div>
+		<div class="profile-card__item" *ngIf="profile.phoneLocal">
+			<div class="profile-card__item-description">
+				<ss-icon name="phone" height="16" width="16"></ss-icon>
+				<ss-text size="3" class="title">Внутренний телефон:</ss-text>
+			</div>
+			<div>
+				<ss-text size="3" class="description" color="gray">{{ profile.phoneLocal }}</ss-text>
+			</div>
+		</div>
+		<div class="profile-card__item" *ngIf="profile.email">
+			<div class="profile-card__item-description">
+				<ss-icon name="mail" height="16" width="16"></ss-icon>
+				<ss-text size="3" class="title">Email:</ss-text>
+			</div>
+			<div>
+				<ss-text size="3" class="description" color="gray">{{ profile.email }}</ss-text>
+			</div>
+		</div>
+	</div>
+</div>
+

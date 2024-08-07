@@ -54,6 +54,7 @@ import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
+import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
 import { SuperLikeComponent } from './victory/super-like/super-like.component';
 import { LikeComponent } from './like/like.component';
 import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
@@ -68,6 +69,8 @@ import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { ProfileCardComponent } from '@app/components/profile-card/profile-card.component';
+import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 
 @NgModule({
 	declarations: [
@@ -93,6 +96,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 		CardVictoryComponent,
 		CarouselComponent,
 		ModalTransportNoticeComponent,
+		ProfileCardComponent,
 	],
 	imports: [
 		CommonModule,
@@ -143,6 +147,8 @@ import { CarouselComponent } from './carousel/carousel.component';
 		SearchInputModule,
 		EmptyDataPageModule,
 		EmptyPlaceholderModule,
+		SsMenuModule,
+		SsDividerModule,
 	],
 	exports: [
 		MainMenuComponent,
@@ -158,6 +164,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 		AddressBookComponent,
 		TransportComponent,
 		PaginationComponent,
+		ProfileCardComponent,
 	],
 })
 export class ComponentsModule {}

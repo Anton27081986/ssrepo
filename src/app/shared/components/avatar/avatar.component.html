@@ -1,7 +1,7 @@
-<div class="avatar" *ngIf="!noImage; else noAvatar" style="background: center / contain no-repeat url('{{src}}'); width: {{width}}px; height: {{height}}px">
+<div class="avatar" *ngIf="!noImage; else noAvatar" style="background: center / contain no-repeat url('{{src}}') white; width: {{(width | async)!}}px; height: {{(height | async)!}}px">
 	<img alt="" src="{{src}}" width="0" height="0" (error)="onImageError()" />
 </div>
 
 <ng-template #noAvatar>
-	<ss-icon class="avatar" name="noAvatar" width="{{width}}" height="{{height}}"></ss-icon>
+	<ss-icon class="avatar" name="noAvatar" [width]="(width | async)!" [height]="(height | async)!"></ss-icon>
 </ng-template>
