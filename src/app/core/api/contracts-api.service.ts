@@ -30,6 +30,10 @@ export class ContractsApiService {
 			params = params.set('offset', filter.offset);
 		}
 
+		if (filter.isActiveOnly !== null && filter.isActiveOnly !== undefined) {
+			params = params.set('isActiveOnly', filter.isActiveOnly);
+		}
+
 		return this.http.get<IContractsItemDto>(`${environment.apiUrl}/api/company/contracts`, {
 			params,
 		});

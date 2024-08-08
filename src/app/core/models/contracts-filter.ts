@@ -3,4 +3,5 @@ export interface IContractsFilter {
 	ContractorId?: number;
 	limit: number;
 	offset: number;
+	isActiveOnly: boolean;
 }
