@@ -37,6 +37,16 @@ export class ClientCardContractsComponent implements OnInit {
 			label: 'Контрагент',
 			placeholder: 'Выберите контрагента',
 		},
+		{
+			name: 'isActiveOnly',
+			type: 'boolean',
+			label: 'Показать архивные',
+			options: [
+				{ id: 1, name: 'Да' },
+				{ id: 0, name: 'Нет' },
+			],
+			placeholder: '',
+		},
 	];
 
 	public constructor(
