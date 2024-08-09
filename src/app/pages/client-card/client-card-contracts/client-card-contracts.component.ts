@@ -38,7 +38,7 @@ export class ClientCardContractsComponent implements OnInit {
 			placeholder: 'Выберите контрагента',
 		},
 		{
-			name: 'isActiveOnly',
+			name: 'WithArchive',
 			type: 'boolean',
 			label: 'Показать архивные',
 			options: [
