@@ -8,9 +8,11 @@
 		<div class="body__cell"
 			 [ngStyle]="{ 'padding': padding }"
 			 *ngFor="let headItem of head"
-			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth}"
+			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon}"
 			 #cell>
 			<ng-container [ngSwitch]="true">
+				<ss-icon *ngSwitchCase="!!item[headItem.field]?.icon" [name]="item[headItem.field].icon"
+						 (click)="onControlClick(item, item[headItem.field].icon)"></ss-icon>
 				<a *ngSwitchCase="!!item[headItem.field]?.url"
 				   href="{{ item[headItem.field].url }}"
 				   target="_blank">
@@ -23,7 +25,7 @@
 				</span>
 				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
 			</ng-container>
-			<ss-icon class="maximise" name="maximise" *ngIf="cell.clientWidth < cell.scrollWidth" (click)="showText(item[headItem.field], headItem.title)"></ss-icon>
+			<ss-icon class="maximise" name="maximise" *ngIf="(cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
 		</div>
 	</div>
 </div>

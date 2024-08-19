@@ -19,6 +19,10 @@
 	letter-spacing: -0.01em;
 	cursor: pointer;
 
+	::ng-deep .placeholder p {
+		color: $lite-text !important;
+	}
+
 	.selected {
 		display: flex;
 		flex-wrap: wrap;

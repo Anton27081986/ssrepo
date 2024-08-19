@@ -22,6 +22,7 @@ export type searchType =
 	| 'contractor'
 	| 'client'
 	| 'technologist'
+	| 'contract'
 	| 'global'
 	| undefined;
 
@@ -121,6 +122,15 @@ export class SearchInputComponent {
 				case 'client':
 					this.searchFacade
 						.getClients(query, this.onlyActive)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contract':
+					this.searchFacade
+						.getContracts(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);

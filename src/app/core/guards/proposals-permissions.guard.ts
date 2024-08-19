@@ -5,14 +5,14 @@ import { map, Observable } from 'rxjs';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 
 @Injectable({ providedIn: 'root' })
-export class PermissionsGuard implements CanActivate {
+export class ProposalsPermissionsGuard implements CanActivate {
 	public constructor(
 		private readonly router: Router,
 		private readonly permissionsFacadeService: PermissionsFacadeService,
 	) {}
 
 	public canActivate(): Observable<boolean> {
-		return this.permissionsFacadeService.permissions$.pipe(
+		return this.permissionsFacadeService.proposalsPermissions$.pipe(
 			map(permissions => {
 				const checkPermission = permissions.items.find(
 					item => item === Permissions.CLIENT_TPR_URL_READ,

@@ -4,15 +4,20 @@ import {
 	ChangeDetectorRef,
 	Component,
 	ElementRef,
+	EventEmitter,
 	HostBinding,
 	Input,
+	Output,
 	ViewChild,
 } from '@angular/core';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
-import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
-export type Cell = { text: string; url?: string } & Array<{ text: string; url?: string }> & string;
+export type Cell = { icon: string } & { text: string; url?: string } & Array<{
+		text: string;
+		url?: string;
+	}> &
+	string;
 
 export interface ITableItem {
 	[key: string]: Cell;
@@ -37,6 +42,8 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 	@Input() public items: ITableItem[] | undefined | null;
 	@Input() public padding: string = '12px';
 	@Input() public size: '1' | '2' | '3' | '4' = '3';
+
+	@Output() public controlClick = new EventEmitter<{ row: ITableItem; icon: string }>();
 
 	protected gridTemplateColumns = '';
 	protected scroll: boolean = false;
@@ -74,5 +81,7 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 		});
 	}
 
-	protected readonly TooltipTheme = TooltipTheme;
+	onControlClick(row: ITableItem, icon: string) {
+		this.controlClick.emit({ row, icon });
+	}
 }

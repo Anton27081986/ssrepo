@@ -4,8 +4,9 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { LayoutClientProposalsComponent } from '@app/shared/layouts/layout-client-proposals/layout-client-proposals.component';
-import { PermissionsGuard } from '@app/core/guards/permissions.guard';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
+import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
+import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -34,6 +35,14 @@ const routes: Routes = [
 						canActivate: [AuthGuard],
 						loadChildren: () =>
 							import('./pages/profile/profile.module').then(m => m.ProfileModule),
+					},
+					{
+						path: 'raw-material-accounting',
+						canActivate: [ProcurementsPermissionsGuard],
+						loadChildren: () =>
+							import(
+								'./pages/raw-material-accounting/raw-material-accounting.module'
+							).then(m => m.RawMaterialAccountingModule),
 					},
 				],
 			},
@@ -73,7 +82,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: LayoutClientProposalsComponent,
-		canActivate: [AuthGuard, PermissionsGuard],
+		canActivate: [AuthGuard, ProposalsPermissionsGuard],
 		children: [
 			{
 				path: 'client-proposals-page',

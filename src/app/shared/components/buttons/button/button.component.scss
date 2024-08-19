@@ -10,6 +10,7 @@ button {
 	width: 100%;
 	align-items: center;
 	justify-content: center;
+	gap: 8px;
 	border-width: 1px;
 	border-style: solid;
 	height: 52px;
@@ -81,8 +82,8 @@ button.quaternary {
 
 button.outline {
 	background-color: transparent;
-	border-color: $lite-text;
-	color: $lite-text;
+	border-color: $text;
+	color: $text;
 }
 
 button:disabled {
@@ -101,6 +102,10 @@ button:disabled {
 			fill: $dark-text;
 		}
 	}
+}
+
+:host-context(.dark) button.outline {
+	color: $dark-text !important;
 }
 
 .button-content {
