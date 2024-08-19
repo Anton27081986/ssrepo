@@ -1,0 +1,39 @@
+<div class="header">
+	<ss-headline size="h3">Учет законтрактованного сырья</ss-headline>
+	<div class="header__controls">
+		<ss-button *ngIf="canAdd" size="small" (click)="addContract()">Добавить контракт</ss-button>
+		<ss-button *ngIf="!isFiltersVisible" size="small" type="outline" (click)="toggleFilters()">
+			<ss-icon height="16" width="16" name="filter"></ss-icon>
+			<span>Фильтры</span>
+		</ss-button>
+	</div>
+</div>
+<ss-card class="content" padding="16px" radius="16px">
+	<div class="table" *ngIf="tableItems?.length">
+		<ss-table
+			[head]="[
+						{title: 'Контракт, №', field: 'contractNumber'},
+						{title: 'Контрагент', field: 'contractor'},
+						{title: 'Договор', field: 'contract'},
+						{title: 'Кол-во, кг (всего)', field: 'quantityTotal'},
+						{title: 'Кол-во, кг (поступило)', field: 'quantityReceived'},
+						{title: 'Кол-во, кг (осталось)', field: 'quantityRemaining'},
+						{title: 'Период контракта', field: 'period', sizeRatio: 2},
+						{title: 'Автор', field: 'user'},
+						{title: 'Статус', field: 'status'},
+						{title: '', field: 'control', sizeRatio: 0.5}
+						]"
+			[items]="tableItems"
+			(controlClick)="showContract($event)"
+		>
+		</ss-table>
+		<ss-pagination [total]="total" [pageIndex]="pageIndex" [pageSize]="pageSize"
+					   (changeIndex)="pageIndexChange($event)"></ss-pagination>
+	</div>
+	<div *ngIf="!tableItems || tableItems?.length === 0" class="no-data">
+		<ss-empty-data-page width="458" height="458" [isNotFound]="tableItems?.length === 0"></ss-empty-data-page>
+	</div>
+	<ss-card *ngIf="isFiltersVisible" class="filters" padding="0">
+		<ss-filters [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredContracts(true)" [(filters)]="filters"></ss-filters>
+	</ss-card>
+</ss-card>

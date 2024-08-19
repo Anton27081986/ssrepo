@@ -56,6 +56,21 @@
 		overflow-y: auto;
 		background-color: $island;
 
+		.highlight {
+			background-color: $error !important;
+		}
+
+		.icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: $main;
+
+			ss-icon {
+				cursor: pointer;
+			}
+		}
+
 		&__row {
 			display: grid;
 			grid-auto-columns: 1fr;

@@ -8,6 +8,9 @@ export const Permissions = {
 	CLIENT_ADDITIONAL_INFO_READ: 'Client.AdditionalInfo.Read',
 	CLIENT_TPR_URL_READ: 'Client.Proposals.Read',
 	CLIENT_PROPOSALS_ADDITIONAL_INFO_READ: 'Client.Proposals.AdditionalInfo.Read',
+	CLIENT_PROCUREMENTS_URL_READ: 'Contract.Read',
+	CLIENT_PROCUREMENTS_ADD: 'Contract.Add',
+	CLIENT_PROCUREMENTS_EDIT: 'Contract.Edit',
 } as const;
 
 export type PermissionType = (typeof Permissions)[keyof typeof Permissions];

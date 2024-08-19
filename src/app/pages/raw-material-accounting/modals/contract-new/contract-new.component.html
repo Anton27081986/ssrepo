@@ -1,0 +1,100 @@
+<div class="wrapper" (click)="close()">
+	<ss-card class="dialog" padding="0" (click)="$event.stopPropagation()">
+		<div class="header">
+			<ss-headline size="h5">Добавить контракт</ss-headline>
+			<ss-icon class="close-icon" name="close" (click)="close()"></ss-icon>
+		</div>
+		<form [formGroup]="newContractForm" class="body">
+			<div class="body__column">
+				<div class="body__column__item">
+					<ss-input
+						size="small"
+						label="Контракт, №"
+						placeholder="Введите данные"
+						formControlName="contractNumber"
+						[error]="newContractForm.controls['contractNumber'].touched && newContractForm.controls['contractNumber'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-input>
+				</div>
+				<div class="body__column__item">
+					<ss-search-input
+						searchType="contractor"
+						size="small"
+						label="Контрагент"
+						placeholder="Введите данные"
+						[selectedItem]="newContractForm.controls['contractor'].value"
+						(select)="newContractForm.controls['contractor'].setValue($event);"
+						[error]="newContractForm.controls['contractor'].touched && newContractForm.controls['contractor'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-search-input>
+				</div>
+				<div class="body__column__item">
+					<ss-search-input
+						searchType="contract"
+						size="small"
+						label="Договор"
+						placeholder="Введите данные"
+						[selectedItem]="newContractForm.controls['contractDetail'].value"
+						(select)="newContractForm.controls['contractDetail'].setValue($event);"
+						[error]="newContractForm.controls['contractDetail'].touched && newContractForm.controls['contractDetail'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-search-input>
+				</div>
+				<div class="body__column__item">
+					<ss-input
+						size="small"
+						label="Количество, кг (всего)"
+						type="number"
+						formControlName="quantityTotal"
+						[error]="newContractForm.controls['quantityTotal'].touched && newContractForm.controls['quantityTotal'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-input>
+				</div>
+				<div class="body__column__item">
+					<ss-input
+						size="small"
+						label="Цена"
+						type="number"
+						formControlName="price"
+						[error]="newContractForm.controls['price'].touched && newContractForm.controls['price'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-input>
+				</div>
+				<div class="body__column__item">
+					<ss-date-range
+						formControlName="period"
+						label="Период контракта:"
+						(select)="newContractForm.controls['period'].setValue($event)"
+					></ss-date-range>
+				</div>
+			</div>
+			<div class="body__column">
+				<div class="body__column__item">
+					<ss-textarea
+						label="Условия оплаты"
+						placeholder="Введите данные"
+						formControlName="paymentConditions"
+						[error]="newContractForm.controls['paymentConditions'].touched && newContractForm.controls['paymentConditions'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-textarea>
+				</div>
+				<div class="body__column__item">
+					<ss-textarea
+						label="Условия отгрузки"
+						placeholder="Введите данные"
+						formControlName="deliveryConditions"
+						[error]="newContractForm.controls['deliveryConditions'].touched && newContractForm.controls['deliveryConditions'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-textarea>
+				</div>
+				<div class="body__column__item">
+					<ss-datepicker-input
+						size="small"
+						placeholder="Выберите период"
+						label="Напоминание"
+						[placeholder]="newContractForm.controls['notificationDate'].value"
+						formControlName="notificationDate"
+						[error]="newContractForm.controls['notificationDate'].touched && newContractForm.controls['notificationDate'].errors?.required ? 'Некорректные данные' : undefined"
+					></ss-datepicker-input>
+				</div>
+			</div>
+		</form>
+		<div class="footer">
+			<ss-button size="small" (click)="addContract()">Сохранить</ss-button>
+			<ss-button size="small" type="muted" (click)="close()">Отменить</ss-button>
+		</div>
+	</ss-card>
+</div>

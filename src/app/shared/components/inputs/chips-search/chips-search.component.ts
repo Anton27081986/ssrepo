@@ -16,6 +16,7 @@ export type searchType =
 	| 'tovs'
 	| 'region'
 	| 'contractor'
+	| 'contract'
 	| 'client'
 	| 'technologist'
 	| 'productions'

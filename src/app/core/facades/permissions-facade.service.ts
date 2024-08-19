@@ -8,9 +8,12 @@ import { Injectable } from '@angular/core';
 	providedIn: 'root',
 })
 export class PermissionsFacadeService {
-	public permissions$: Observable<{ items: string[] }>;
+	public proposalsPermissions$: Observable<{ items: string[] }>;
+	public procurementsPermissions$: Observable<{ items: string[] }>;
 
 	constructor(private readonly permissionsApiService: PermissionsApiService) {
-		this.permissions$ = this.permissionsApiService.getPermissionClientTpr();
+		this.proposalsPermissions$ =
+			this.permissionsApiService.getPermissionClient('Client.Proposals');
+		this.procurementsPermissions$ = this.permissionsApiService.getPermissionClient('Contract');
 	}
 }

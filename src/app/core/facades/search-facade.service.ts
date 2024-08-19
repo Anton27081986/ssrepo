@@ -68,6 +68,10 @@ export class SearchFacadeService {
 		return this.clientApiService.getClientIdDictionary(id);
 	}
 
+	public getContracts(query?: string) {
+		return this.dictionaryApiService.getContracts(query);
+	}
+
 	public globalSearch(query: string) {
 		return this.menuApiService.globalSearch(query);
 	}
