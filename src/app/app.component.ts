@@ -28,17 +28,17 @@ export class AppComponent implements OnInit {
 	}
 
 	public ngOnInit(): void {
-		this.profileService
-			.getTheme()
-			.pipe(
-				tap(value => {
-					if (value.isDarkTheme) {
-						this.themeService.setDarkTheme().then();
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
+		// this.profileService
+		// 	.getTheme()
+		// 	.pipe(
+		// 		tap(value => {
+		// 			if (value.isDarkTheme) {
+		// 				this.themeService.setDarkTheme().then();
+		// 			}
+		// 		}),
+		// 		untilDestroyed(this),
+		// 	)
+		// 	.subscribe();
 
 		this.profileService.isDarkTheme$
 			.pipe(

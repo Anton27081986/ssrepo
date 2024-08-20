@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IUser } from '@auth/models/user';
 import { environment } from '@environments/environment';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { ResetPasswordDto } from '@auth/models/reset-password.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -102,5 +103,15 @@ export class AuthenticationService {
 				reportProgress: true,
 			},
 		);
+	}
+
+	public resetPasswordRequest(login: string) {
+		return this.http.post<any>(`${environment.apiUrl}/api/auth/resetPasswordRequest`, {
+			login,
+		});
+	}
+
+	public resetPassword(body: ResetPasswordDto) {
+		return this.http.post<any>(`${environment.apiUrl}/api/auth/resetPassword`, body);
 	}
 }

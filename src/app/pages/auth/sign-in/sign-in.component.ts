@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { first, of, tap } from 'rxjs';
@@ -10,7 +10,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
-	selector: 'app-sign-in',
+	selector: 'ss-sign-in',
 	templateUrl: './sign-in.component.html',
 	styleUrls: ['./sign-in.component.scss'],
 	changeDetection: ChangeDetectionStrategy.Default,
@@ -23,11 +23,9 @@ export class SignInComponent implements OnInit {
 
 	public loading = false;
 
-	public passwordVisible = false;
 	public password?: string;
 
 	public constructor(
-		private readonly formBuilder: FormBuilder,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
 		private readonly authenticationService: AuthenticationService,

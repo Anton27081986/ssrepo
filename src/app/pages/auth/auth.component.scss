@@ -1,0 +1,24 @@
+@import "src/styles/colors";
+
+:host {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: center no-repeat url("../../../assets/images/background/login.svg");
+}
+
+.login {
+	width: 400px;
+	min-height: 353px;
+	padding: 32px;
+	box-shadow: 4px 4px 10px #00000014;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.logo {
+	height: 30px;
+}
