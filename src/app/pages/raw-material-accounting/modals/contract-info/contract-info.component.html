@@ -24,7 +24,14 @@
 				</div>
 				<ng-template #quantityTotalEdit>
 					<div class="body__column__item">
-						<ss-input size="small" label="Количество, кг (всего):" type="number" formControlName="quantityTotal" [value]="contract.quantityTotal"></ss-input>
+						<ss-input
+							size="small"
+							label="Количество, кг (всего):"
+							type="number"
+							formControlName="quantityTotal"
+							[value]="contract.quantityTotal"
+							[error]="editForm.controls['quantityTotal'].touched && editForm.controls['quantityTotal'].errors?.required ? 'Некорректные данные' : undefined"
+						></ss-input>
 					</div>
 				</ng-template>
 				<div class="body__column__item">
@@ -41,16 +48,23 @@
 				</div>
 				<ng-template #priceEdit>
 					<div class="body__column__item">
-						<ss-input size="small" label="Цена:" type="number" formControlName="price" [value]="contract.price"></ss-input>
+						<ss-input
+							size="small"
+							label="Цена:"
+							type="number"
+							formControlName="price"
+							[value]="contract.price"
+							[error]="editForm.controls['price'].touched && editForm.controls['price'].errors?.required ? 'Некорректные данные' : undefined"
+						></ss-input>
 					</div>
 				</ng-template>
 				<div *ngIf="!isEditMode; else periodEdit" class="body__column__item">
 					<ss-text size="4">Период контракта:</ss-text>
-					<ss-text size="3">{{ contract.periodStartDate }} - {{ contract.periodStartDate }}</ss-text>
+					<ss-text size="3">{{ contract.periodStartDate }} - {{ contract.periodEndDate }}</ss-text>
 				</div>
 				<ng-template #periodEdit>
 					<div class="body__column__item">
-						<ss-date-range formControlName="period" label="Период контракта:" value="{{ contract.periodStartDate }} - {{ contract.periodStartDate }}" (select)="editForm.controls['period'].setValue($event)"></ss-date-range>
+						<ss-date-range formControlName="period" label="Период контракта:" value="{{ contract.periodStartDate }}-{{ contract.periodEndDate }}" (select)="editForm.controls['period'].setValue($event)"></ss-date-range>
 					</div>
 				</ng-template>
 			</div>

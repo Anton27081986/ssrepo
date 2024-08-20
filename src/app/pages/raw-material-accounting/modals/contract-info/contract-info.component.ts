@@ -66,7 +66,7 @@ export class ContractInfoComponent {
 				this.editForm.controls.quantityTotal.setValue(contract.data.quantityTotal);
 				this.editForm.controls.price.setValue(contract.data.price);
 				this.editForm.controls.period.setValue(
-					`${this.contract.periodStartDate}-${this.contract.periodStartDate}`,
+					`${this.contract.periodStartDate}-${this.contract.periodEndDate}`,
 				);
 			}
 		});
@@ -96,12 +96,15 @@ export class ContractInfoComponent {
 			contractDetailId: this.contract!.contractDetail.id,
 		};
 
-		this.facadeService
-			.editContract(newContract)
-			.pipe(untilDestroyed(this))
-			.subscribe(contract => {
-				this.modalRef.close(contract);
-			});
+		if (this.contract?.id) {
+			this.facadeService
+				.editContract(this.contract?.id, newContract)
+				.pipe(untilDestroyed(this))
+				.subscribe(contract => {
+					this.modalRef.close(contract);
+					this.facadeService.selectContract(null);
+				});
+		}
 	}
 
 	switchMode(status: boolean) {
