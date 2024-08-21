@@ -24,6 +24,7 @@ export type searchType =
 	| 'technologist'
 	| 'contract'
 	| 'global'
+	| 'products'
 	| undefined;
 
 @UntilDestroy()
@@ -143,6 +144,15 @@ export class SearchInputComponent {
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(this.mapIDictionaryItemDto(res.items));
+						});
+					break;
+				case 'products':
+					this.searchFacade
+						.getProductSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
 						});
 					break;
 			}

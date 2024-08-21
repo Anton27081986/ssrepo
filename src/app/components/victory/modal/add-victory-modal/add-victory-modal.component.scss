@@ -1,39 +1,50 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
 
-.add-modal {
-    .form-item-tpr {
-        margin-top: 0;
-    }
-
-    .join-win {
-        pointer-events: none;
-        color: $black;
-        margin-top: 8px;
-    }
-
-    .tag-selected-name {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 8px;
-        margin-bottom: 12px;
-
-        .close-tag {
-            cursor: pointer;
-        }
-    }
-
-    // Поправить стили footers в формах
-    .footer-form {
-        margin-top: 20px !important;
-    }
-
-    .win-together {
-        font-weight: 500;
-    }
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.1);
 }
 
-.join-win {
-    pointer-events: none;
+.add-victory-modal {
+	display: flex;
+	background-color: $white;
+	flex-direction: column;
+	width: 512px;
+	border: 1px solid $border-color;
+	border-radius: 16px;
+	gap: 16px;
+	padding: 16px 0;
+
+	&__header {
+		padding: 0 16px;
+	}
+
+	&__body {
+		display: flex;
+		gap: 16px;
+		flex-direction: column;
+	}
+
+	&__form-item {
+		padding: 0 16px;
+	}
+
+	&__form {
+		display: flex;
+		gap: 16px;
+		flex-direction: column;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0 16px;
+	}
 }
+

@@ -1,4 +1,4 @@
-import { Component, Input, Optional, Self } from '@angular/core';
+import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -9,11 +9,13 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 export class InputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
+	@Input() public funcEdit: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = '';
 	@Input() public type: 'text' | 'email' | 'number' = 'text';
 	@Input() public error: string | undefined;
 	@Input() public maxlength: string = '256';
+	@Output() public cancelEditing: EventEmitter<any> = new EventEmitter<any>();
 
 	@Input() public value: any = '';
 
@@ -59,6 +61,10 @@ export class InputComponent implements ControlValueAccessor {
 	public registerOnTouched(fn: any): void {
 		// Store the provided function as an internal method.
 		this.onTouched = fn;
+	}
+
+	close() {
+		this.cancelEditing.emit();
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars

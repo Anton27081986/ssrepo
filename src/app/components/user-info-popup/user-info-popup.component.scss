@@ -1,0 +1,61 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.1);
+}
+
+.user-info-popup {
+	display: flex;
+	background-color: white;
+	flex-direction: column;
+	min-width: 400px;
+	border: 1px solid $border-color;
+	border-radius: 16px;
+	gap: 16px;
+	padding: 16px 0 16px 0;
+
+	&__header {
+		padding: 0 12px;
+	}
+
+	&__user-card {
+		padding: 0 12px;
+	}
+
+	&__contacts {
+		display: flex;
+		flex-direction: column;
+		padding: 0 12px;
+		gap: 8px;
+	}
+
+	&__item {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__item-description {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 1px;
+	}
+
+	&__info-supervisors {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 0 12px;
+	}
+}
+
+:host-context(.dark) .user-info-popup {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}

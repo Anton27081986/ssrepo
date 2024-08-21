@@ -1,0 +1,43 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
+
+.choice-like {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 10px;
+	position: absolute;
+	background-color: #FFFFFF;
+	border-radius: 16px;
+	padding: 12px;
+	bottom: 40px;
+	right: -20px;
+	z-index: 10001;
+	border: 1px solid #BCC3CE;
+
+	&__item {
+		cursor: pointer;
+		padding: 4px;
+
+		&:hover {
+			background-color: #BCC3CE;
+			padding: 4px;
+			border-radius: 16px;
+		}
+	}
+}
+
+.wrapper {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	z-index: 5000;
+	left: 0;
+	top: 0;
+	cursor: default;
+}
+
+:host-context(.dark) .choice-like {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}

@@ -1,62 +1,28 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { LikesApiService } from '@app/core/api/likes-api.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IUserDto } from '@app/core/models/awards/user-dto';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+
+export enum LikeStateEnum {
+	usual = 'usual',
+	gold = 'gold',
+	copper = 'copper',
+	silver = 'silver',
+	default = 'default',
+}
 
 @UntilDestroy()
 @Component({
 	selector: 'app-like',
 	templateUrl: './like.component.html',
 	styleUrls: ['./like.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LikeComponent implements AfterViewInit {
-	@Input() public isUserLikedProps!: boolean;
-	@Input() public likesCountProps!: number;
-	@Input() public objectIdProps!: number;
-	@Input() public typeObject!: number;
-	@Input() public award: any;
-
-	public isUserLiked!: boolean;
-	public likesCount!: number;
-
-	public isClickLike!: boolean; // Начальное состояние клика
-
-	public constructor(
-		private readonly apiService: LikesApiService,
-		private readonly chDRef: ChangeDetectorRef,
-	) {}
-
-	public ngAfterViewInit(): void {
-		this.likesCount = this.likesCountProps;
-		this.isUserLiked = this.isUserLikedProps; // Используется в шаблоне ипользуется
-		this.isClickLike = this.isUserLikedProps; // Начальное состояние клика
-	}
-
-	public setLike(objectId: number, type = this.typeObject) {
-		if (!this.isClickLike) {
-			this.apiService
-				.setLike(objectId, type)
-				.pipe(untilDestroyed(this))
-				.subscribe({
-					next: () => {
-						this.likesCount += 1;
-						this.isClickLike = true;
-						this.chDRef.markForCheck();
-					},
-					error: (error: unknown) => console.error(error),
-				});
-		}
-
-		if (this.isClickLike) {
-			this.apiService
-				.deleteLike(objectId, type)
-				.pipe(untilDestroyed(this))
-				.subscribe({
-					next: () => {
-						this.likesCount -= 1;
-						this.isClickLike = false;
-						this.chDRef.markForCheck();
-					},
-				});
-		}
-	}
+export class LikeComponent {
+	@Input() count: number = 0;
+	@Input() likedUsers: IUserDto[] | null = null;
+	@Input() type: LikeStateEnum = LikeStateEnum.default;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected LikeStateEnum = LikeStateEnum;
 }

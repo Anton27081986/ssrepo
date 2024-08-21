@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewContainerRef } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { formatDate } from '@angular/common';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
@@ -40,23 +39,7 @@ export class ThanksPartnerComponent implements OnInit {
 			.pipe(map(({ items }) => items.slice(0, 9)));
 	}
 
-	public showModalOpenOut(item: any): void {
-		this.modalCreate
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: 'Информация о пользователе',
-				nzNoAnimation: false,
-				nzWidth: '365px',
-				nzContent: ModalInfoComponent,
-				nzViewContainerRef: this.viewContainerRef,
-				nzData: {
-					data: item,
-				},
-			})
-			.afterClose.pipe(untilDestroyed(this))
-			.subscribe();
-	}
+	public showModalOpenOut(item: any): void {}
 
 	public onChange(result: Date): void {
 		this.thankYouList$ = this.apiService

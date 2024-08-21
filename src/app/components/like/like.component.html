@@ -1,28 +1,25 @@
-<div class="like"
-     [ngClass]="isClickLike ? 'liked': ''"
-     (click)="setLike(objectIdProps)">
-
-  <ng-container [ngSwitch]="award">
-    <span class="like-icon icon gold-like" nz-icon [nzType]="'ss:goldLike'" *ngSwitchCase="1"></span>
-    <span class="like-icon icon silver-like" nz-icon [nzType]="'ss:silverLike'" *ngSwitchCase="2"></span>
-    <span class="like-icon icon bronze-like" nz-icon [nzType]="'ss:bronzeLike'" *ngSwitchCase="3"></span>
-    <span class="like-icon icon" nz-icon [nzType]="'ss:like'" *ngSwitchCase="0"></span>
-  </ng-container>
-
-  <span class="count">{{ likesCount }}</span>
-
-  <!-- Получить пользователей которые лайкнули -->
-  <div class="modal-people-likes" *ngIf="false">
-    <span class="title">Нравится:</span>
-    <nz-avatar-group class="list-item">
-      <!-- <nz-avatar *ngFor="let likedUser of likedUsers"
-                 class="item"
-                 nzIcon="user"
-                 nzSrc="{{ likedUser?.avatarUrl }}"
-                 nz-tooltip
-                 nzTooltipTitle="{{ likedUser?.name }}"
-      ></nz-avatar>-->
-    </nz-avatar-group>
-  </div>
-
+<div [tooltip]="null" [elemRef]="count ? toolTipRef: null" [theme]="TooltipTheme.DEFAULT"
+	 [position]="TooltipPosition.DEFAULT" class="like">
+	<ng-container [ngSwitch]="type">
+		<ng-container *ngSwitchCase="LikeStateEnum.default">
+			<ss-icon [width]="'15'" [height]="'15'" [name]="'like'"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.copper">
+			<ss-icon [width]="'15'" [height]="'15'" [name]="'likeCopper'"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.gold">
+			<ss-icon [width]="'15'" [height]="'15'" [name]="'likeGold'"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.silver">
+			<ss-icon [width]="'15'" [height]="'15'" [name]="'likeSilver'"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.usual">
+			<ss-icon [width]="'15'" [height]="'15'" [name]="'likeUsual'"></ss-icon>
+		</ng-container>
+	</ng-container>
+	<ss-text [size]="'3'">{{ count }}</ss-text>
 </div>
+
+<ng-template #toolTipRef>
+	<app-user-list-more [count]="count" [users]="likedUsers!"></app-user-list-more>
+</ng-template>

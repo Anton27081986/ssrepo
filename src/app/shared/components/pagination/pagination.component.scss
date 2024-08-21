@@ -3,6 +3,7 @@
 .ss-pagination {
 	display: flex;
 	gap: 6px;
+	justify-content: flex-end;
 
 	&__tabs {
 		margin-bottom: 0;
@@ -21,8 +22,9 @@
 		font-weight: 500;
 		border: 1px solid $island-outline;
 		border-radius: 8px;
-		height: 32px;
-		width: 32px;
+		padding: 8px;
+		max-height: 32px;
+		min-width: 32px;
 		color: black;
 		display: flex;
 		align-items: center;

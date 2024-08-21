@@ -20,6 +20,7 @@ export type searchType =
 	| 'client'
 	| 'technologist'
 	| 'productions'
+	| 'productionsTpr'
 	| undefined;
 
 @UntilDestroy()
@@ -121,6 +122,15 @@ export class ChipsSearchComponent {
 				case 'productions':
 					this.searchFacade
 						.getProductions(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'productionsTpr':
+					this.searchFacade
+						.getProductSearch(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;

@@ -1,401 +1,51 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
-
 .victory {
-    .header {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
+	display: flex;
+	flex-direction: column;
+	min-width: 828px;
+	gap: 16px;
+	padding: 16px 0;
 
-        h1 {
-            text-transform: uppercase;
-        }
-
-        .open-all-table {
-            display: flex;
-
-            .ant-input-affix-wrapper,
-            .ant-input.ant-input-stepperless {
-                background-color: #ffffff !important;
-            }
-
-            ::ng-deep .anticon {
-                fill-opacity: 1;
-            }
-
-            .button {
-                margin-left: 10px;
-            }
-
-            .select-group {
-                margin-left: 20px;
-
-                ::ng-deep {
-                    .ant-select {
-                        width: 250px;
-                    }
-                    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-                        height: 52px !important;
-                        padding: 9px 0 0 26px !important;
-                        font-size: 16px;
-                    }
-                }
-            }
-
-            .search {
-                .ant-input-affix-wrapper {
-                    min-height: 52px;
-                    height: 52px;
-                }
-
-                .ant-form-item-control-input {
-                    min-height: 52px;
-                    height: 52px;
-                }
-            }
-        }
-    }
-
-    .content {
-        position: relative;
-        margin-top: 37px;
-        min-height: 682px;
-        height: 682px;
-
-        .card-list {
-            ::ng-deep .ant-list-items {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 28px;
-            }
-        }
-    }
-}
-
-.form-item-tpr {
-    margin-top: 0;
-}
-
-.join-win {
-    pointer-events: none;
-    color: $black;
-    margin-top: 8px;
-}
-
-.join-win {
-    pointer-events: none;
-}
-
-.tag-selected-name {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 8px;
-    margin-bottom: 12px;
-
-    .close-tag {
-        cursor: pointer;
-    }
-}
-
-// Поправить стили footers в формах
-.footer-form {
-    margin-top: 20px !important;
-}
-
-.bottom-panel {
-    ::ng-deep {
-        .ant-pagination-item:hover a {
-            color: $blue;
-        }
-
-        .ant-pagination ul,
-        .ant-pagination ol {
-            margin-left: 0;
-        }
-
-        .ant-table-pagination.ant-pagination {
-            margin: 21px 0 !important;
-        }
-
-        .ant-pagination-prev,
-        .ant-pagination-next {
-            display: none;
-        }
-
-        .ant-pagination-item-active,
-        .ant-pagination-item {
-            font-size: 16px;
-            line-height: 39px;
-            font-weight: 600;
-            background: #fff;
-            border-color: $border-color;
-            border-radius: 10px;
-            height: 40px;
-            width: 40px;
-            margin-right: 8px;
-        }
-
-        .ant-pagination-item-active a {
-            color: $black;
-        }
-
-        .ant-table-pagination.ant-pagination {
-            margin: 21px 0 !important;
-        }
-
-        .ant-pagination.mini .ant-pagination-item {
-            min-width: 44px;
-            height: 44px;
-        }
-    }
-}
-
-// Модальные окна
-::ng-deep {
-    .openout-modal {
-        .card {
-            padding-bottom: 14px;
-        }
-    }
-
-    .comments-modal {
-        .card.list {
-            padding: 0;
-            margin-top: 0;
-            border: unset;
-
-            .personal {
-                .title {
-                    margin-left: 14px;
-                    margin-top: 6px;
-
-                    .job {
-                        margin-top: 7px;
-                        max-width: unset;
-                    }
-                }
-
-                .img {
-                    width: 56px;
-                    height: 56px;
-
-                    img {
-                        width: 56px;
-                    }
-                }
-            }
-            .info {
-                margin-top: 17px;
-
-                .like {
-                    ::ng-deep svg {
-                        path {
-                            stroke: $blue !important;
-                        }
-                    }
-                }
-
-                .date {
-                    margin-top: 10px;
-
-                    span {
-                        font-size: 12px;
-                        color: $black;
-                    }
-
-                    span:nth-child(1) {
-                        font-weight: 500;
-                    }
-
-                    span:nth-child(2) {
-                        margin-left: 10px;
-                        font-weight: 600;
-                    }
-                }
-            }
-
-            .comments {
-                margin-top: 19px;
-
-                .title {
-                    font-size: 18px;
-                    font-weight: 600;
-                    margin-top: 0;
-
-                    .job {
-                        margin-top: 3px;
-                    }
-
-                    .fio {
-                        font-size: 15px;
-                        font-weight: 700;
-                    }
-                }
-
-                .personal {
-                    margin-top: 14px;
-
-                    .img {
-                        width: 32px;
-                        height: 32px;
-                        border-radius: 26px;
-
-                        img {
-                            width: 32px;
-                        }
-                    }
-                }
-
-                .message {
-                    margin-left: 42px;
-                    max-width: 428px;
-                    width: 100%;
-
-                    .text {
-                        height: auto;
-                    }
-                }
-
-                .date {
-                    justify-content: flex-start;
-                    margin-top: 7px;
-                    margin-left: 42px;
-                }
-            }
-
-            .send-comments {
-                .title {
-                    font-size: 14px;
-                    font-weight: 600;
-                    margin-top: 17px;
-                }
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 1309px) {
-	.victory {
-		.content {
-			min-height: auto;
-			height: auto;
-		}
+	&__header {
+		display: flex;
+		gap: 16px;
+		padding: 0 16px;
+		justify-content: space-between;
 	}
-}
 
-@media screen and (max-width: 992px) {
-	.victory {
-		.content {
-			.card-list {
-				justify-content: center;
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 767px) {
-	.victory {
-		.header {
-			justify-content: center;
-
-			.title h1 {
-				text-align: center;
-				margin-bottom: 0.3rem !important;
-				line-height: 34px;
-				margin-top: 4px;
-			}
-
-			.subtitle {
-				margin-top: 12px;
-
-				h2 {
-					text-align: center;
-					line-height: 19px !important;
-				}
-			}
-
-			.button {
-				width: 100%;
-				margin-left: 0 !important;
-			}
-		}
-		.content {
-			.card-list {
-				justify-content: center;
-
-				nz-list-item {
-					flex: 0 0 100%;
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 576px) {
-	.header {
-		justify-content: center;
+	&__header-info {
+		display: flex;
+		gap: 16px;
 		flex-direction: column;
 
-		.open-all-table {
-			width: 100%;
-			flex-direction: column;
-			justify-content: center;
-			align-items: center;
-			margin-top: 18px;
-		}
-
-		.title h1 {
-			text-align: center;
-			margin-bottom: 0.3rem !important;
-			line-height: 34px;
-			margin-top: 4px;
-		}
-
-		.subtitle {
-			margin-top: 12px;
-
-			h2 {
-				text-align: center;
-				line-height: 19px !important;
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 414px) {
-	.victory {
-		margin-top: 80px;
-
-		.content {
-			.card-list {
-				justify-content: center;
-
-				::ng-deep .ant-list-items {
-					gap: 20px;
-				}
-			}
-			.bottom-panel {
-				margin-top: 32px;
-				justify-content: space-between;
-			}
-		}
 	}
 
-	::ng-deep {
-		.ant-modal {
-			.ant-modal-body {
-				.ant-checkbox-wrapper + .ant-checkbox-wrapper {
-					margin-left: 0 !important;
-				}
-			}
-		}
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
 	}
-}
 
+	&__header-actions {
+		display: flex;
+		justify-content: flex-end;
+	}
 
-// Вынести в форм
-.footer-form,
-.send {
-    margin-top: 18px !important;
+	&__content {
+		display: flex;
+		flex-wrap: wrap;
+		min-width: 828px;
+		gap: 16px;
+		justify-content: center;
+	}
+
+	&__pagination {
+		display: flex;
+		justify-content: center;
+	}
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
 }
