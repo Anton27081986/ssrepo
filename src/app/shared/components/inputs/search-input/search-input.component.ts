@@ -49,8 +49,6 @@ export class SearchInputComponent {
 
 	@Output() public select = new EventEmitter<any>();
 
-	@ViewChild('input', { static: true }) public input!: ElementRef<HTMLInputElement>;
-
 	public found$: BehaviorSubject<IDictionaryItemDto[]> = new BehaviorSubject<
 		IDictionaryItemDto[]
 	>([]);
