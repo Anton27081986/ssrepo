@@ -96,7 +96,7 @@ export class RawMaterialAccountingFacadeService {
 		return this.rawMaterialAccountingApiService.addContract(contract);
 	}
 
-	public editContract(contract: AddContractDto) {
-		return this.rawMaterialAccountingApiService.addContract(contract);
+	public editContract(id: number, contract: AddContractDto) {
+		return this.rawMaterialAccountingApiService.editContract(id, contract);
 	}
 }
