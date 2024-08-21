@@ -7,7 +7,6 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { distinctUntilChanged, filter, map, Observable, Subject, switchMap, tap, zip } from 'rxjs';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
@@ -253,25 +252,6 @@ export class RatingComponent implements OnInit, OnDestroy {
 			this.pageSize,
 			this.offset,
 		);
-	}
-
-	// Модальное окно раскрытой карточки
-	public showModalOpenOut(id: number): void {
-		this.modalCreate
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: 'Информация о пользователе',
-				nzNoAnimation: false,
-				nzWidth: '365px',
-				nzContent: ModalInfoComponent,
-				nzViewContainerRef: this.viewContainerRef,
-				nzData: {
-					data: id,
-				},
-			})
-			.afterClose.pipe(untilDestroyed(this))
-			.subscribe();
 	}
 
 	public nzPageIndexChange($event: number) {

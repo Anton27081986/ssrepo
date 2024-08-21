@@ -18,11 +18,11 @@ export interface ILikeRequest {
 	/**
 	 * Айди объекта
 	 */
-	objectId?: number;
-	type?: IObjectType;
+	objectId: number;
+	type: IObjectType;
 	/**
 	 * Айди награды доступно только для Ген Директора
 	 */
-	awardId?: number | null;
+	awardId: number | null;
 }
 export namespace ILikeRequest {}

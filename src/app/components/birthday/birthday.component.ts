@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import { map } from 'rxjs';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { formatDate } from '@angular/common';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
@@ -89,24 +88,6 @@ export class BirthdayComponent implements OnInit {
 				this.selectTabByDay(this.date.toLocaleDateString());
 				this.cd.markForCheck();
 			});
-	}
-
-	public showModalOpenOut(item: any): void {
-		this.modalCreate
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: 'Информация о пользователе',
-				nzNoAnimation: false,
-				nzWidth: '365px',
-				nzContent: ModalInfoComponent,
-				nzViewContainerRef: this.viewContainerRef,
-				nzData: {
-					data: item,
-				},
-			})
-			.afterClose.pipe(untilDestroyed(this))
-			.subscribe();
 	}
 
 	public selectTabByDay(date: string) {

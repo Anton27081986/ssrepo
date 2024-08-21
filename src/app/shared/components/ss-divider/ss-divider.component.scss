@@ -1,3 +1,7 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../styles/colors' as *;
+
 .ss-divider {
   display: flex;
 
@@ -16,5 +20,5 @@
 }
 
 :host-context(.dark) .ss-divider {
-	border: 1px solid #FFFFFF;
+	border: 1px solid $white;
 }

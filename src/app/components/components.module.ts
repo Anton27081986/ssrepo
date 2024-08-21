@@ -25,14 +25,9 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { AddressBookComponent } from '@app/components/address-book/address-book.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
-import { CommentsModalComponent } from '@app/components/modal/comments-modal/comments-modal.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { PeopleLikedDirective } from '@app/components/victory/people-liked.directive';
-import { SuperLikeDirective } from '@app/components/victory/super-like.directive';
 import { BackendErrorMessagesComponent } from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { CardVictoryComponent } from '@app/components/victory/card-victory/card-victory.component';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
@@ -55,13 +50,8 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
 import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
-import { SuperLikeComponent } from './victory/super-like/super-like.component';
-import { LikeComponent } from './like/like.component';
-import { ModalInfoUserComponent } from './modal/modal-info-user/modal-info-user.component';
-import { TooltipDirective } from './victory/tooltip.directive';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
 import { BirthdayComponent } from './birthday/birthday.component';
-import { VictoryComponent } from './victory/victory.component';
 import { ThanksColleagueComponent } from './thank-colleague/thanks-colleague.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
@@ -71,6 +61,20 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { ProfileCardComponent } from '@app/components/profile-card/profile-card.component';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
+import { UserCardComponent } from '@app/components/user-card/user-card.component';
+import { UserCardWidgetComponent } from '@app/components/user-card-widget/user-card-widget.component';
+import { VictoryModalComponent } from '@app/components/victory/modal/victory-modal/victory-modal.component';
+import { VictoryComponent } from '@app/components/victory/victory.component';
+import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
+import { ChipsUserSearchModule } from '@app/shared/components/inputs/chips-user-search/chips-user-search.module';
+import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
+import { LikeComponent } from '@app/components/like/like.component';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import { UserListMoreComponent } from '@app/components/user-list-more/user-list-more.component';
+import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
+import { AddVictoryModalResultComponent } from '@app/components/victory/modal/add-victory-modal-result/add-victory-modal-result.component';
+import { VictoryCommentComponent } from '@app/components/victory/victory-comment/victory-comment.component';
+import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.component';
 
 @NgModule({
 	declarations: [
@@ -85,18 +89,21 @@ import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.mo
 		BirthdayComponent,
 		RatingComponent,
 		AddressBookComponent,
-		ModalInfoComponent,
 		AddVictoryModalComponent,
-		CommentsModalComponent,
-		ModalInfoUserComponent,
-		LikeComponent,
-		SuperLikeComponent,
 		BackendErrorMessagesComponent,
 		PaginationComponent,
-		CardVictoryComponent,
 		CarouselComponent,
 		ModalTransportNoticeComponent,
 		ProfileCardComponent,
+		UserCardComponent,
+		UserCardWidgetComponent,
+		VictoryModalComponent,
+		UserInfoPopupComponent,
+		LikeComponent,
+		UserListMoreComponent,
+		AddVictoryModalResultComponent,
+		VictoryCommentComponent,
+		ChoiceLikeComponent,
 	],
 	imports: [
 		CommonModule,
@@ -125,10 +132,7 @@ import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.mo
 		NzCheckboxModule,
 		NzCarouselModule,
 		NzCardModule,
-		TooltipDirective,
 		NzToolTipModule,
-		PeopleLikedDirective,
-		SuperLikeDirective,
 		NzSpinModule,
 		NzTypographyModule,
 		DateTimePipe,
@@ -149,6 +153,10 @@ import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.mo
 		EmptyPlaceholderModule,
 		SsMenuModule,
 		SsDividerModule,
+		TextareaModule,
+		ChipsUserSearchModule,
+		TooltipModule,
+		ChipsSearchModule,
 	],
 	exports: [
 		MainMenuComponent,
@@ -165,6 +173,15 @@ import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.mo
 		TransportComponent,
 		PaginationComponent,
 		ProfileCardComponent,
+		UserCardComponent,
+		UserCardWidgetComponent,
+		VictoryModalComponent,
+		UserInfoPopupComponent,
+		LikeComponent,
+		UserListMoreComponent,
+		AddVictoryModalResultComponent,
+		VictoryCommentComponent,
+		ChoiceLikeComponent,
 	],
 })
 export class ComponentsModule {}

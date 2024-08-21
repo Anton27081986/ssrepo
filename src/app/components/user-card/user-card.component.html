@@ -1,0 +1,15 @@
+<div (click)="openModalInfoUser()" class="user-card" *ngIf="user">
+	<ss-avatar [type]="'rectangle'" [size]="size" [src]="user.avatarUrl!"></ss-avatar>
+	<div class="user-card__description">
+		<ng-container *ngIf="size === 'small'">
+			<ss-text size="2" weight="medium">{{ user.name }}</ss-text>
+			<ss-caption size="2" color="gray">{{ user.position }},{{ user.department }}</ss-caption>
+		</ng-container>
+		<ng-container *ngIf="size === 'large'">
+			<ss-text size="2" weight="medium">{{ user.name }}</ss-text>
+			<ss-caption size="2" color="gray">{{ user.position }}</ss-caption>
+			<ss-caption size="2" color="gray">{{ user.department }}</ss-caption>
+		</ng-container>
+
+	</div>
+</div>

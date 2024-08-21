@@ -9,6 +9,7 @@ import { ProductionsApiService } from '@app/core/api/productions-api.service';
 import { environment } from '@environments/environment.development';
 import { HttpParams } from '@angular/common/http';
 import { MenuApiService } from '@app/core/api/menu-api.service';
+import { WinsApiService } from '@app/core/api/wins-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -23,6 +24,7 @@ export class SearchFacadeService {
 		private readonly dictionaryApiService: DictionaryApiService,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		public readonly productionsApiService: ProductionsApiService,
+		public readonly winsApiService: WinsApiService,
 		public readonly menuApiService: MenuApiService,
 	) {
 		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
@@ -74,5 +76,9 @@ export class SearchFacadeService {
 
 	public globalSearch(query: string) {
 		return this.menuApiService.globalSearch(query);
+	}
+
+	public getProductSearch(query: string) {
+		return this.winsApiService.getProductSearch(query);
 	}
 }

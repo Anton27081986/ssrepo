@@ -7,7 +7,6 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { IAddressBookUser } from '@app/core/models/address-book-user';
 import { IAddressBookSearchUser } from '@app/core/models/address-book-search-user';
@@ -125,25 +124,6 @@ export class AddressBookComponent implements OnInit, OnDestroy {
 		} else {
 			this.addToFavorite(user, event);
 		}
-	}
-
-	// Модальное окно раскрытой карточки
-	public showModalOpenOut(item: any): void {
-		this.modalCreateService
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: 'Информация о пользователе',
-				nzNoAnimation: false,
-				nzWidth: '365px',
-				nzContent: ModalInfoComponent,
-				nzViewContainerRef: this.viewContainerRef,
-				nzData: {
-					data: item,
-				},
-			})
-			.afterClose.pipe(takeUntil(this.destroy$))
-			.subscribe();
 	}
 
 	public toggleMode() {

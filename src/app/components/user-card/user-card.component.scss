@@ -1,0 +1,15 @@
+.user-card {
+	display: flex;
+	gap: 12px;
+	flex-wrap: nowrap;
+	align-items: center;
+	cursor: pointer;
+
+
+	&__description {
+		display: flex;
+		flex-direction: column;
+		min-width: 200px;
+		//max-width: 300px;
+	}
+}

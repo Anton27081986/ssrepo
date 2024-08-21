@@ -1,15 +1,31 @@
 <ss-caption size="1">{{ label }}</ss-caption>
+<div class="input-edit" *ngIf="funcEdit">
+	<div class="input-edit__scope">
+		<div class="input-edit__left">
+			<ss-icon [name]="'editNew'"></ss-icon>
+			<ss-divider [direction]="'vertical'"></ss-divider>
+		</div>
+		<div class="input-edit__middle">
+			<ss-text [size]="'4'">Редактировать сообщение</ss-text>
+			<ss-text [size]="'3'">{{ value }}</ss-text>
+		</div>
+	</div>
+	<div class="input-edit__right">
+		<ss-icon (click)="close()" [name]="'close'"></ss-icon>
+	</div>
+</div>
 <div class="input">
 	<input [type]="type"
-		[placeholder]="placeholder"
-		[value]="value"
-		[disabled]="disabled"
-		[maxLength]="maxlength"
-		(input)="onChange($any($event.target).value)"
-		(blur)="onTouched()"
-		class="{{ error ? size + ' error' : size }}"
-		#input
+		   [placeholder]="placeholder"
+		   [value]="value"
+		   [disabled]="disabled"
+		   [maxLength]="maxlength"
+		   (input)="onChange($any($event.target).value)"
+		   (blur)="onTouched()"
+		   class="{{ error ? size + ' error' : size }}"
+		   #input
 	/>
-	<ss-icon *ngIf="input.value && !disabled" height="12" name="close" (click)="input.value = ''; onChange('')"></ss-icon>
+	<ss-icon *ngIf="input.value && !disabled" height="12" name="close"
+			 (click)="input.value = ''; onChange('')"></ss-icon>
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>
