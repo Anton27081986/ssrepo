@@ -31,7 +31,7 @@
 
 	&__actions {
 		display: flex;
-		gap: 12px
+		gap: 6px
 	}
 
 	&__card-action {
@@ -56,11 +56,6 @@
 
 	&__share {
 		cursor: pointer;
-	}
-
-	&__actions {
-		display: flex;
-		gap: 12px;
 	}
 
 	&__isExtendedMode {
