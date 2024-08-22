@@ -86,7 +86,7 @@ export class VictoryModalComponent {
 						this.victoryRootService.event$.next({
 							type: VictoryEventEnum.victoryUpdated,
 						});
-						this.notes.setValue(null);
+						this.notes.setValue('');
 					}),
 			);
 		} else if (
@@ -105,7 +105,7 @@ export class VictoryModalComponent {
 						this.victoryRootService.event$.next({
 							type: VictoryEventEnum.victoryUpdated,
 						});
-						this.notes.setValue(null);
+						this.notes.setValue('');
 						this.victoryState.activeFuncCommentEdit$.next(false);
 					}),
 			);
