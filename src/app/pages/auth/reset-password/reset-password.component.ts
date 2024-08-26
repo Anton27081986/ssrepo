@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
+import { PasswordValidator } from '@auth/reset-password/ password-validator';
 
 @UntilDestroy()
 @Component({
@@ -13,7 +14,7 @@ import { catchError } from 'rxjs/operators';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordComponent implements OnInit {
-	public loginForm!: FormGroup;
+	public resetPassForm!: FormGroup;
 	public loading = false;
 
 	public login = '';
@@ -31,15 +32,15 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.loginForm = this.formBuilder.group({
+		this.resetPassForm = this.formBuilder.group({
 			token: ['', Validators.required],
-			password: ['', Validators.required],
-			confirmPassword: ['', Validators.required],
+			password: ['', [Validators.required, PasswordValidator]],
+			confirmPassword: ['', [Validators.required, PasswordValidator]],
 		});
 
 		this.route.queryParams.pipe(untilDestroyed(this)).subscribe(params => {
 			if (params.token) {
-				this.loginForm.controls.token.setValue(params.token);
+				this.resetPassForm.controls.token.setValue(params.token);
 			}
 
 			if (params.login) {
@@ -49,8 +50,18 @@ export class ResetPasswordComponent implements OnInit {
 	}
 
 	public onSubmit() {
+		this.resetPassForm.markAllAsTouched();
+
+		if (
+			this.resetPassForm.invalid ||
+			this.resetPassForm.controls.password.value !==
+				this.resetPassForm.controls.confirmPassword.value
+		) {
+			return;
+		}
+
 		this.authenticationService
-			.resetPassword(this.loginForm.value)
+			.resetPassword(this.resetPassForm.value)
 			.pipe(
 				untilDestroyed(this),
 				catchError((error: unknown) => {
@@ -61,5 +72,9 @@ export class ResetPasswordComponent implements OnInit {
 			.subscribe(() => {
 				this.router.navigate(['auth/sign-in']);
 			});
+	}
+
+	public getFormControl(name: string) {
+		return this.resetPassForm.controls[name];
 	}
 }
