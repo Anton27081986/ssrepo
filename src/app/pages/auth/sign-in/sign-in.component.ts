@@ -40,10 +40,6 @@ export class SignInComponent implements OnInit {
 		});
 	}
 
-	public getControl(name: string) {
-		return this.loginForm.get(name) as FormControl;
-	}
-
 	public onSubmit() {
 		if (this.loginForm.invalid) {
 			return;
