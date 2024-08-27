@@ -11,6 +11,8 @@ import {
 } from '@app/shared/pipe/from-picker-date-to-iso';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ConfirmationModalComponent } from '@app/components/modal/confirmation-modal/confirmation-modal.component';
+import { Observable } from 'rxjs';
+import { IResponse } from '@app/core/utils/response';
 
 @UntilDestroy()
 @Component({
@@ -20,6 +22,7 @@ import { ConfirmationModalComponent } from '@app/components/modal/confirmation-m
 })
 export class ContractNewComponent {
 	public newContractForm!: FormGroup;
+	public contractDetails$: Observable<IResponse<IDictionaryItemDto>>;
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
@@ -28,7 +31,7 @@ export class ContractNewComponent {
 		this.newContractForm = new FormGroup({
 			contractNumber: new FormControl<string>('', [Validators.required]),
 			contractor: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			contractDetail: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			contractDetailId: new FormControl<number | null>(null, [Validators.required]),
 			quantityTotal: new FormControl<number>(0, [Validators.required]),
 			price: new FormControl<number>(0, Validators.required),
 			period: new FormControl<string>('', Validators.required),
@@ -43,6 +46,8 @@ export class ContractNewComponent {
 				Validators.required,
 			),
 		});
+
+		this.contractDetails$ = this.facadeService.contractDetails$;
 	}
 
 	addContract() {
@@ -58,7 +63,6 @@ export class ContractNewComponent {
 		const newContract: AddContractDto = {
 			...this.newContractForm.value,
 			contractorId: this.newContractForm.value.contractor.id,
-			contractDetailId: this.newContractForm.value.contractDetail.id,
 			notificationDate: fromPickerDateToIso(this.newContractForm.value.notificationDate),
 			periodStartDate: dates[0],
 			periodEndDate: dates[1],

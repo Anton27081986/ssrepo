@@ -46,6 +46,13 @@ export class RawMaterialAccountingFacadeService {
 
 	public statuses$ = this.statusesSubject.asObservable();
 
+	// Договоры из КИСП
+	private readonly contractDetailsSubject = new BehaviorSubject<IResponse<IDictionaryItemDto>>(
+		{} as IResponse<any>,
+	);
+
+	public contractDetails$ = this.contractDetailsSubject.asObservable();
+
 	public constructor(
 		private readonly rawMaterialAccountingApiService: RawMaterialAccountingApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
@@ -55,6 +62,16 @@ export class RawMaterialAccountingFacadeService {
 			.pipe(
 				tap(statuses => {
 					this.statusesSubject.next(statuses);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+
+		this.dictionaryApiService
+			.getProcurementsContractDetails()
+			.pipe(
+				tap(contractDetails => {
+					this.contractDetailsSubject.next(contractDetails);
 				}),
 				untilDestroyed(this),
 			)

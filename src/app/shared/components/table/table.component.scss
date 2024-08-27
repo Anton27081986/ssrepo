@@ -99,6 +99,10 @@
 			}
 		}
 
+		&__cell.number {
+			text-align: end;
+		}
+
 		&__cell:last-child {
 			border-right: none;
 		}

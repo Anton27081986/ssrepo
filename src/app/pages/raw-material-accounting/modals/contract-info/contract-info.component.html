@@ -82,12 +82,29 @@
 					<ss-text size="3">{{  contract.notificationDate }}</ss-text>
 				</div>
 				<div class="body__column__item">
-					<ss-text size="4">Статус</ss-text>
+					<ss-text size="4">Статус:</ss-text>
 					<ss-text size="3">{{  contract.status.name }}</ss-text>
+				</div>
+				<div *ngIf="contract.status.id === 3" class="body__column__item">
+					<ss-text size="4">Комментарий:</ss-text>
+					<ss-text size="3">{{  contract.reasonCompletion }}</ss-text>
+				</div>
+				<div *ngIf="isEditMode && contract.status.id !== 3" class="body__column__item">
+					<ss-text size="3">
+						<input type="checkbox" formControlName="isComplete" #cancelContract />
+						Завершить контракт
+					</ss-text>
+					<ss-textarea *ngIf="isEditMode && cancelContract.checked"
+						label="Комментарий:"
+						placeholder="Введите данные"
+						formControlName="reasonCompletion"
+						[error]="editForm.controls['reasonCompletion'].touched && editForm.controls['reasonCompletion'].errors?.required ? 'Некорректные данные' : undefined"
+						(click)="editForm.controls['reasonCompletion'].setErrors(null)"
+					></ss-textarea>
 				</div>
 			</div>
 		</form>
-		<div class="footer" *ngIf="canEdit">
+		<div class="footer" *ngIf="canEdit && contract.status.id !== 3">
 			<ss-button *ngIf="!isEditMode" size="small" (click)="switchMode(true)">Редактировать</ss-button>
 			<ss-button *ngIf="isEditMode" size="small" (click)="saveContract()">Сохранить</ss-button>
 			<ss-button *ngIf="isEditMode" size="small" type="quaternary" (click)="switchMode(false)">Отменить</ss-button>

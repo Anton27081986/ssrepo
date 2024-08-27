@@ -8,6 +8,8 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { ContractInfoComponent } from '@app/pages/raw-material-accounting/modals/contract-info/contract-info.component';
 import { ContractNewComponent } from '@app/pages/raw-material-accounting/modals/contract-new/contract-new.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '@environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -66,6 +68,8 @@ export class RawMaterialAccountingComponent implements OnInit {
 		private readonly facadeService: RawMaterialAccountingFacadeService,
 		private readonly modalService: ModalService,
 		private readonly cdr: ChangeDetectorRef,
+		private readonly route: ActivatedRoute,
+		private readonly router: Router,
 	) {
 		this.isLoading$ = this.facadeService.isContractsLoading$;
 
@@ -77,8 +81,15 @@ export class RawMaterialAccountingComponent implements OnInit {
 					tableItem.id = x.id ? x.id : null;
 					tableItem.contract = x.contractDetail.name ? x.contractDetail.name : '-';
 					tableItem.contractId = x.contractDetail.id ? x.contractDetail.id : '-';
-					tableItem.contractor = x.contractor.name ? x.contractor.name : '-';
-					tableItem.contractNumber = x.contractNumber ? x.contractNumber : '-';
+					tableItem.contractor = x.contractor.linkToDetail
+						? { text: x.contractor.name, url: x.contractor.linkToDetail }
+						: '-';
+					tableItem.contractNumber = x.contractNumber
+						? {
+								text: x.contractNumber,
+								url: `${environment.apiUrl}/raw-material-accounting/${x.id}`,
+							}
+						: null;
 					tableItem.quantityTotal = x.quantityTotal ? x.quantityTotal : '-';
 					tableItem.quantityReceived = x.quantityReceived ? x.quantityReceived : '-';
 					tableItem.quantityRemaining = x.quantityRemaining ? x.quantityRemaining : '-';
@@ -96,13 +107,11 @@ export class RawMaterialAccountingComponent implements OnInit {
 					})}`;
 					tableItem.user = x.user.name ? x.user.name : '-';
 					tableItem.status = x.status ? x.status.name : '-';
-					tableItem.control = { icon: 'eye' };
 
 					return tableItem;
 				});
 
 				this.total = contracts?.total | 0;
-
 				this.cdr.detectChanges();
 			}
 		});
@@ -112,6 +121,22 @@ export class RawMaterialAccountingComponent implements OnInit {
 
 			if (statusesFilter && statuses.items) {
 				statusesFilter.options = statuses.items;
+			}
+		});
+
+		this.route.params.pipe(untilDestroyed(this)).subscribe(params => {
+			if (params.id) {
+				this.modalService
+					.open(ContractInfoComponent, {
+						data: {
+							id: params.id,
+						},
+					})
+					.afterClosed()
+					.pipe(untilDestroyed(this))
+					.subscribe(contract => {
+						this.router.navigate(['/raw-material-accounting']);
+					});
 			}
 		});
 	}
@@ -198,24 +223,6 @@ export class RawMaterialAccountingComponent implements OnInit {
 			limit: this.pageSize,
 			offset: this.offset,
 		});
-	}
-
-	public showContract(contract: { row: ITableItem; icon: string }) {
-		if (contract.icon === 'eye') {
-			this.modalService
-				.open(ContractInfoComponent, {
-					data: {
-						id: contract.row.id || null,
-					},
-				})
-				.afterClosed()
-				.pipe(untilDestroyed(this))
-				.subscribe(contract => {
-					if (contract) {
-						this.getFilteredContracts(true);
-					}
-				});
-		}
 	}
 
 	public addContract() {

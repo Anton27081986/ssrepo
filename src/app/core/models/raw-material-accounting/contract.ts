@@ -17,4 +17,6 @@ export interface IRawMaterialAccountingContract {
 	user: IDictionaryItemDto;
 	dateCreated: string;
 	status: IDictionaryItemDto;
+	reasonCompletion: string;
+	isComplete: boolean;
 }

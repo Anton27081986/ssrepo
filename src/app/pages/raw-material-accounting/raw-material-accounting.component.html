@@ -15,16 +15,14 @@
 						{title: 'Контракт, №', field: 'contractNumber'},
 						{title: 'Контрагент', field: 'contractor'},
 						{title: 'Договор', field: 'contract'},
-						{title: 'Кол-во, кг (всего)', field: 'quantityTotal'},
-						{title: 'Кол-во, кг (поступило)', field: 'quantityReceived'},
-						{title: 'Кол-во, кг (осталось)', field: 'quantityRemaining'},
+						{title: 'Кол-во, кг (всего)', field: 'quantityTotal', isNumber: true},
+						{title: 'Кол-во, кг (поступило)', field: 'quantityReceived', isNumber: true},
+						{title: 'Кол-во, кг (осталось)', field: 'quantityRemaining', isNumber: true},
 						{title: 'Период контракта', field: 'period', sizeRatio: 2},
 						{title: 'Автор', field: 'user'},
-						{title: 'Статус', field: 'status'},
-						{title: '', field: 'control', sizeRatio: 0.5}
+						{title: 'Статус', field: 'status'}
 						]"
 			[items]="tableItems"
-			(controlClick)="showContract($event)"
 		>
 		</ss-table>
 		<ss-pagination [total]="total" [pageIndex]="pageIndex" [pageSize]="pageSize"
