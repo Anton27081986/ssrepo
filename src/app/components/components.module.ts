@@ -75,6 +75,8 @@ import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/ch
 import { AddVictoryModalResultComponent } from '@app/components/victory/modal/add-victory-modal-result/add-victory-modal-result.component';
 import { VictoryCommentComponent } from '@app/components/victory/victory-comment/victory-comment.component';
 import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.component';
+import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
+import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks-partner-card/thanks-parther-card.component';
 
 @NgModule({
 	declarations: [
@@ -104,6 +106,7 @@ import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.com
 		AddVictoryModalResultComponent,
 		VictoryCommentComponent,
 		ChoiceLikeComponent,
+		ThanksPartnerCardComponent,
 	],
 	imports: [
 		CommonModule,
@@ -157,6 +160,7 @@ import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.com
 		ChipsUserSearchModule,
 		TooltipModule,
 		ChipsSearchModule,
+		DatepickerInputModule,
 	],
 	exports: [
 		MainMenuComponent,
@@ -182,6 +186,7 @@ import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.com
 		AddVictoryModalResultComponent,
 		VictoryCommentComponent,
 		ChoiceLikeComponent,
+		ThanksPartnerCardComponent,
 	],
 })
 export class ComponentsModule {}
