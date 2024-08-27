@@ -1,351 +1,66 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
 
-.thankyou {
+.thanks-partner {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 16px 0;
+	min-height: 700px;
+	position: relative;
+	//min-width: 727px;
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-
-        h1 {
-            text-transform: uppercase;
-        }
-
-        .open-all-table {
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .top-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 40px;
-
-            div {
-                display: flex;
-            }
-
-            .total-week {
-                align-items: center;
-
-                span {
-                    font-size: 19.8px;
-                }
-
-                span:nth-child(2) {
-                    margin-left: 8px;
-                    font-weight: 700;
-                    color: $blue;
-                }
-            }
-
-            .total-time {
-                margin-left: 29px;
-                align-items: center;
-
-                span {
-                    font-size: 16px;
-                }
-
-                span:nth-child(2) {
-                    margin-left: 4px;
-                    font-weight: 700;
-                    line-height: normal;
-                    letter-spacing: -0.16px;
-                }
-            }
-
-            ::ng-deep .anticon {
-                font-size: 21px;
-                margin-right: 7px;
-            }
-        }
-        .top-panel-mobile {
-            display: none;
-        }
-
-        .ant-btn {
-            height: 52px;
-        }
-    }
-
-    .content {
-        // Вынести в общие стили или компонент
-        .card-list {
-            margin-top: 30px;
-
-            ::ng-deep .ant-list-items {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 28px;
-            }
-
-            .card {
-                position: relative;
-                width: 408px;
-                height: 130px;
-                border-radius: 16px;
-                border: 1px solid $border-color;
-                background-color: $white;
-                padding: 20px;
-
-                .personal {
-                    position: relative;
-                    display: flex;
-
-                    .img {
-                        border-radius: 14px;
-                        overflow: hidden;
-                        flex: none;
-                        width: 90px;
-                        height: 90px;
-
-                        img {
-                            width: 90px;
-                        }
-                    }
-
-                    .enter-icon {
-                        position: absolute;
-                        right: 17px;
-                        bottom: 0;
-                        font-size: 17px;
-                        fill-opacity: 0;
-                        cursor: pointer;
-                    }
-
-                    .title {
-                        margin-left: 19px;
-                    }
-
-                    .fio {
-                        font-size: 17.6px;
-                        font-weight: bold;
-                        line-height: 20px;
-                        margin-top: 7px;
-                        max-width: 238px;
-                    }
-
-                    .job {
-                        max-width: 186px;
-                        font-size: 11.8px;
-                        line-height: 14px;
-                        font-weight: 500;
-                        margin-top: 8px;
-                    }
-                }
-
-                .icons {
-                    .medal-icon {
-                        position: absolute;
-                        right: 16px;
-                        top: 20px;
-                    }
-
-                    .count {
-                        position: absolute;
-                        right: 20px;
-                        bottom: 13px;
-
-                        border-radius: 30px;
-                        background-color: $blue;
-                        color: $white;
-                        height: 28px;
-                        width: 28px;
-
-                        text-align: center;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        padding-right: 1px;
-                        font-weight: 500;
-                    }
-
-                    ::ng-deep .anticon {
-                        fill-opacity: 1;
-                        font-size: 34px;
-                    }
-                }
-            }
-
-            .card .active {
-                border: 1px $blue solid;
-            }
-        }
-    }
-}
-
-@media screen and (max-width: 1309px) {
-	.thankyou {
-		.content {
-			.card-list {
-				.card {
-					width: 446px;
-				}
-			}
-		}
+	&__header {
+		display: flex;
+		flex-direction: column;
+		padding: 0 16px;
+		gap: 16px;
 	}
-}
 
-@media screen and (max-width: 1200px) {
-	.thankyou {
-		.content {
-			.card-list {
-				.card {
-					width: 408px;
-				}
-			}
-		}
+	&__header-info {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
 	}
-}
 
-@media screen and (max-width: 992px){
-	.thankyou {
-		.content {
-			.card-list {
-				.card {
-					width: 446px;
-
-					.title {
-						max-width: 148px;
-					}
-					.fio {
-						font-size: 16px;
-					}
-				}
-			}
-		}
+	&__header-actions {
+		display: flex;
+		justify-content: space-between;
 	}
-}
 
-@media screen and (max-width: 759px) {
-	.thankyou {
-		.header {
-			.open-all-table {
-				width: 100%;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-			}
-
-			.calendar {
-				margin-top: 25px;
-				margin-right: 0;
-				width: 100%;
-
-				.ant-picker {
-					width: 100%;
-				}
-			}
-
-			.button {
-				margin-top: 14px;
-				width: 100%;
-			}
-
-			.title h1 {
-				text-align: center;
-				margin-bottom: 0.3rem !important;
-				line-height: 34px;
-				margin-top: 4px;
-			}
-
-			.subtitle {
-				margin-top: 12px;
-
-				h2 {
-					text-align: center;
-					line-height: 19px !important;
-				}
-			}
-		}
-
-		.content {
-			.card-list {
-				nz-list-item {
-					flex: 0 0 100%;
-
-					.card {
-						width: 400px;
-
-						.title {
-							max-width: 100%;
-						}
-					}
-				}
-			}
-		}
+	&__grid-body {
+		display: grid;
+		flex-wrap: wrap;
+		padding: 0 0 0 16px;
+		grid-template-columns: repeat(2, 50%);
+		grid-row-gap: 16px;
+		justify-content: center;
 	}
-}
 
-@media screen and (max-width: 768px){
-	.thankyou {
-		.content {
-			.card-list {
-				.card {
-					width: 326px;
-
-					.title {
-						max-width: 148px;
-					}
-					.fio {
-						font-size: 14px;
-					}
-				}
-			}
-		}
+	&__card-item {
+		padding: 0 16px 0 0 ;
 	}
+
+	&__info {
+		display: flex;
+		gap: 16px;
+		flex-wrap: nowrap;
+		padding: 0 16px;
+	}
+
+	&__no-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	ss-datepicker-input {
+		width: 202px;
+	}
+
+
 }
 
-
-@media screen and (max-width: 414px) {
-    .thankyou {
-        margin-top: 80px;
-
-        .header {
-            justify-content: center;
-
-            .calendar {
-                margin-top: 25px;
-
-                .ant-picker {
-                    width: 372px;
-                }
-            }
-
-            .button {
-                margin-top: 14px;
-            }
-        }
-
-        .content {
-            .card-list {
-                justify-content: center;
-
-				::ng-deep .ant-list-items {
-					gap: 20px;
-				}
-
-                .card {
-                    width: 100%;
-                    height: 116px;
-                    padding: 12px;
-
-                    .icons {
-                        .medal-icon {
-                            right: 12px;
-                            top: 11px;
-                        }
-
-                        .count {
-                            right: 14px;
-                            bottom: 9px;
-                        }
-                    }
-                }
-            }
-        }
-    }
+.app-thanks-partner-card  {
+	width: 100%;
 }

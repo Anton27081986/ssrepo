@@ -18,17 +18,19 @@ export interface IPartnerThanksListDto {
 	/**
 	 * Ссылка на сказать спасибо партнерам
 	 */
-	addNewThanksLink?: string | null;
+	addNewThanksLink: string | null;
 	/**
 	 * За все время
 	 */
-	totalCount?: number;
+	totalCount: number;
 	/**
 	 * Всего за неделю
 	 */
-	weekCount?: number;
+	weekCount: number;
 	/**
 	 * Список лидеров на указанную дату
 	 */
-	items?: IPartnerThanksItemDto[] | null;
+	items: IPartnerThanksItemDto[];
+
+	total: number;
 }
