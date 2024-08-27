@@ -4,9 +4,15 @@ import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounti
 
 const routes: Routes = [
 	{
+		path: ':id',
+		component: RawMaterialAccountingComponent,
+
+	},
+	{
 		path: '',
 		component: RawMaterialAccountingComponent,
-	},
+
+	}
 ];
 
 @NgModule({

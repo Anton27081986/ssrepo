@@ -8,14 +8,14 @@
 		<div class="body__cell"
 			 [ngStyle]="{ 'padding': padding }"
 			 *ngFor="let headItem of head"
-			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon}"
+			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}"
 			 #cell>
 			<ng-container [ngSwitch]="true">
 				<ss-icon *ngSwitchCase="!!item[headItem.field]?.icon" [name]="item[headItem.field].icon"
 						 (click)="onControlClick(item, item[headItem.field].icon)"></ss-icon>
 				<a *ngSwitchCase="!!item[headItem.field]?.url"
 				   href="{{ item[headItem.field].url }}"
-				   target="_blank">
+				   [target]="item[headItem.field].url?.includes(environment.apiUrl || '') ? '_self' : '_blank'">
 					<span class="text-{{ size }}">{{ item[headItem.field].text }}</span>
 				</a>
 				<span *ngSwitchCase="Array.isArray(item[headItem.field])">

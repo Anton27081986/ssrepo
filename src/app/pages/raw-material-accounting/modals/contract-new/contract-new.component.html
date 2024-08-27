@@ -27,15 +27,17 @@
 					></ss-search-input>
 				</div>
 				<div class="body__column__item">
-					<ss-search-input
+					<ss-select
 						searchType="contract"
 						size="small"
 						label="Договор"
 						placeholder="Введите данные"
-						[selectedItem]="newContractForm.controls['contractDetail'].value"
-						(select)="newContractForm.controls['contractDetail'].setValue($event);"
-						[error]="newContractForm.controls['contractDetail'].touched && newContractForm.controls['contractDetail'].errors?.required ? 'Некорректные данные' : undefined"
-					></ss-search-input>
+						(onChange)="newContractForm.controls['contractDetailId'].setValue($event)"
+						[error]="newContractForm.controls['contractDetailId'].touched && newContractForm.controls['contractDetailId'].errors?.required ? 'Некорректные данные' : undefined"
+					>
+						<option value="{{ null }}">(Не выбран)</option>
+						<option *ngFor="let item of (contractDetails$ | async)?.items" [value]="item.id">{{ item.name }}</option>
+					</ss-select>
 				</div>
 				<div class="body__column__item">
 					<ss-input

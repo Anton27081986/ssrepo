@@ -11,22 +11,26 @@ import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-r
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
+import {TextareaModule} from "@app/shared/components/textarea/textarea.module";
 
 @NgModule({
 	declarations: [ContractInfoComponent],
 	exports: [ContractInfoComponent],
-	imports: [
-		CardModule,
-		NgIf,
-		HeadlineModule,
-		IconModule,
-		TextModule,
-		ButtonModule,
-		InputModule,
-		DatepickerInputModule,
-		DateRangeModule,
-		ReactiveFormsModule,
-		MatDatepickerModule
-	],
+    imports: [
+        CardModule,
+        NgIf,
+        HeadlineModule,
+        IconModule,
+        TextModule,
+        ButtonModule,
+        InputModule,
+        DatepickerInputModule,
+        DateRangeModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        CaptionModule,
+        TextareaModule
+    ],
 })
 export class ContractInfoModule {}

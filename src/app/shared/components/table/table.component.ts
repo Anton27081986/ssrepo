@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
+import {environment} from "@environments/environment";
 
 export type Cell = { icon: string } & { text: string; url?: string } & Array<{
 		text: string;
@@ -27,6 +28,7 @@ export interface ITableHead {
 	title: string;
 	field: string;
 	sizeRatio?: number;
+	isNumber?: boolean;
 }
 
 @Component({
@@ -84,4 +86,6 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 	onControlClick(row: ITableItem, icon: string) {
 		this.controlClick.emit({ row, icon });
 	}
+
+	protected readonly environment = environment;
 }
