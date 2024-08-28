@@ -1,21 +1,22 @@
-<div class="wrapper" (click)="close()">
-	<div class="add-victory-modal" (click)="$event.stopPropagation()">
+<div class="wrapper">
+	<div class="add-victory-modal">
 		<div class="add-victory-modal__header">
 			<ss-headline [size]="'h6'">Делитесь Вашими победами, ведь успех заразителен!</ss-headline>
+			<ss-icon style="cursor: pointer;" [name]="'close'" (click)="close()"></ss-icon>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="add-victory-modal__body">
 			<form [formGroup]="formGroup" class="add-victory-modal__form">
 				<div class="add-victory-modal__form-item">
-					<ss-textarea formControlName="text" [size]="'large'" [label]="'Описание'"></ss-textarea>
+					<ss-textarea formControlName="text" [size]="'large'" [label]="'Описание'" [placeholder]="'Введите текст победы'"></ss-textarea>
 				</div>
 				<ss-divider></ss-divider>
 				<div class="add-victory-modal__form-item">
-					<ss-chips-user-search [selectedItems]="toUsers" [label]="'Совместная победа'"></ss-chips-user-search>
+					<ss-chips-user-search [placeholder]="'Введите ФИО'" [selectedItems]="toUsers" [label]="'Совместная победа'"></ss-chips-user-search>
 				</div>
 				<ss-divider></ss-divider>
 				<div class="add-victory-modal__form-item">
-					<ss-chips-search size="medium" [label]="'ТПР'" [placeholder]="'ТПР'" (getSelected)="getProducts($event)"
+					<ss-chips-search size="medium" [label]="'ТПР'" [placeholder]="'Введите ТПР'" (getSelected)="getProducts($event)"
 									 [searchType]="'productions'"></ss-chips-search>
 				</div>
 			</form>

@@ -89,13 +89,6 @@ export class WinsApiService {
 	}
 
 	/** Удаление комментария по id */
-	public removeVictoryById(id: number): Observable<any> {
-		return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/wins/${id}`, {
-			params: new HttpParams().set('id', id),
-		});
-	}
-
-	/** Удаление комментария по id */
 	public removeVictoryCommentsById(id: number): Observable<any> {
 		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
 			params: new HttpParams().set('id', id),

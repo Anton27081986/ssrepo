@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AvatarComponent implements OnInit {
 	@Input() public src: string | null = null;
-	@Input() public size: 'small' | 'medium' | 'large' | 'big' = 'medium';
+	@Input() public size: 'smallest' | 'small' | 'medium' | 'large' | 'big' = 'medium';
 	@Input() public type: 'square' | 'rectangle' | 'round' = 'square';
 
 	protected noImage = false;
@@ -23,6 +23,16 @@ export class AvatarComponent implements OnInit {
 
 	public ngOnInit() {
 		switch (this.size) {
+			case 'smallest':
+				if (this.type === 'square') {
+					this.width.next('24');
+					this.height.next('24');
+				} else if (this.type === 'rectangle') {
+					this.width.next('28');
+					this.height.next('36');
+				}
+
+				return;
 			case 'small':
 				if (this.type === 'square') {
 					this.width.next('36');

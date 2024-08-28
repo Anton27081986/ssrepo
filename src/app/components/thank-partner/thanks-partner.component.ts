@@ -31,6 +31,8 @@ export class ThanksPartnerComponent {
 		let date = new Date(new Date().setDate(new Date().getDate() - 1));
 		if (date.getDay() === 0) {
 			date = new Date(date.setDate(date.getDate() - 2));
+		} else if (date.getDay() === 1) {
+			date = new Date(date.setDate(date.getDate() - 3));
 		}
 
 		this.dateToday = formatDate(date, 'yyyy-MM-dd', 'ru-RU');

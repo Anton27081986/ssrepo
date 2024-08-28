@@ -50,6 +50,8 @@ export class VictoryCommentComponent {
 			year: 'numeric',
 			month: 'numeric',
 			day: 'numeric',
+			hour: 'numeric',
+			minute: 'numeric',
 		});
 	}
 
