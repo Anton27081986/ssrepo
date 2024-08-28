@@ -21,6 +21,8 @@
 	padding: 16px 0;
 
 	&__header {
+		display: flex;
+		justify-content: space-between;
 		padding: 0 16px;
 	}
 

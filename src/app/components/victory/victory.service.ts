@@ -53,14 +53,6 @@ export class VictoryService {
 		return this.apiService.updateCommentWins(id, request);
 	}
 
-	public removeVictoryById(id: number) {
-		return this.apiService.removeVictoryById(id).pipe(
-			tap(() => {
-				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryDeleted });
-			}),
-		);
-	}
-
 	public addLikeVictory(request: ILikeRequest) {
 		return this.apiService.addLikeVictory(request).pipe(
 			tap(() => {

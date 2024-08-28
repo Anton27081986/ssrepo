@@ -83,6 +83,8 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 			year: 'numeric',
 			month: 'numeric',
 			day: 'numeric',
+			hour: 'numeric',
+			minute: 'numeric',
 		});
 	}
 
@@ -90,7 +92,7 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 		if (users) {
 			const usersName: string[] = users.map(user => user.name);
 
-			return usersName.join(',');
+			return usersName.join(', ');
 		}
 
 		return '';
@@ -104,11 +106,11 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 		}
 	}
 
-	protected deleteVictory() {
-		if (this.widget) {
-			this.subscription.add(
-				this.victoryService.removeVictoryById(this.widget.id).subscribe(),
-			);
+	protected goToUrlVictory(url: string) {
+		if (url) {
+			const link = document.createElement('a');
+			link.href = url;
+			link.click();
 		}
 	}
 
