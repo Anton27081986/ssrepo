@@ -66,16 +66,6 @@ export class RawMaterialAccountingFacadeService {
 				untilDestroyed(this),
 			)
 			.subscribe();
-
-		this.dictionaryApiService
-			.getProcurementsContractDetails()
-			.pipe(
-				tap(contractDetails => {
-					this.contractDetailsSubject.next(contractDetails);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
 	}
 
 	public getContracts(filter: IRawMaterialAccountingFilter): void {
@@ -94,6 +84,18 @@ export class RawMaterialAccountingFacadeService {
 				this.permissionsSubject.next(contracts.permissions);
 				this.isContractsLoadingSubject.next(false);
 			});
+	}
+
+	public getContractDetails(ContractorId: string): void {
+		this.dictionaryApiService
+			.getProcurementsContractDetails(ContractorId)
+			.pipe(
+				tap(contractDetails => {
+					this.contractDetailsSubject.next(contractDetails);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 	}
 
 	public selectContract(id: string | null): void {

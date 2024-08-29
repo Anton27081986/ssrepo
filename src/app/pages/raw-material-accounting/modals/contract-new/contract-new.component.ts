@@ -76,6 +76,10 @@ export class ContractNewComponent {
 			});
 	}
 
+	onContractorSelect(id: string) {
+		this.facadeService.getContractDetails(id);
+	}
+
 	close() {
 		this.modalService
 			.open(ConfirmationModalComponent, {

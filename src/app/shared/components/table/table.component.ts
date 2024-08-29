@@ -12,9 +12,9 @@ import {
 } from '@angular/core';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
-import {environment} from "@environments/environment";
+import { environment } from '@environments/environment';
 
-export type Cell = { icon: string } & { text: string; url?: string } & Array<{
+export type Cell = { text: string; pseudoLink: string } & { icon: string } & { text: string; url?: string } & Array<{
 		text: string;
 		url?: string;
 	}> &

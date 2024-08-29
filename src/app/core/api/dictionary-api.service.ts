@@ -65,9 +65,18 @@ export class DictionaryApiService {
 	}
 
 	/** Список договоров учета законтрактованного сырья из КИСП*/
-	public getProcurementsContractDetails(): Observable<IResponse<IDictionaryItemDto>> {
+	public getProcurementsContractDetails(
+		ContractorId: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (ContractorId !== null && ContractorId !== undefined) {
+			params = params.set('ContractorId', ContractorId);
+		}
+
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/procurements/dictionary/contracts`,
+			{ params },
 		);
 	}
 

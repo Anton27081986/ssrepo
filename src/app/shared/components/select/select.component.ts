@@ -9,6 +9,7 @@ export class SelectComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public label: string | undefined;
 	@Input() public error: string | undefined;
+	@Input() public disabled: boolean = false;
 	@Output() public onChange = new EventEmitter<any>();
 
 	public onClick(el: EventTarget | null) {

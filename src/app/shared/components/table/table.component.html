@@ -11,6 +11,7 @@
 			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}"
 			 #cell>
 			<ng-container [ngSwitch]="true">
+				<span *ngSwitchCase="!!item[headItem.field]?.pseudoLink" class="icon" (click)="onControlClick(item, item[headItem.field].pseudoLink)">{{ item[headItem.field].text }}</span>
 				<ss-icon *ngSwitchCase="!!item[headItem.field]?.icon" [name]="item[headItem.field].icon"
 						 (click)="onControlClick(item, item[headItem.field].icon)"></ss-icon>
 				<a *ngSwitchCase="!!item[headItem.field]?.url"

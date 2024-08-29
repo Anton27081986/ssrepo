@@ -23,6 +23,7 @@
 						{title: 'Статус', field: 'status'}
 						]"
 			[items]="tableItems"
+			(controlClick)="showContract($event)"
 		>
 		</ss-table>
 		<ss-pagination [total]="total" [pageIndex]="pageIndex" [pageSize]="pageSize"
