@@ -19,6 +19,20 @@
 					<ss-chips-search size="medium" [label]="'ТПР'" [placeholder]="'Введите ТПР'" (getSelected)="getProducts($event)"
 									 [searchType]="'productions'"></ss-chips-search>
 				</div>
+				<div class="upload-file">
+					<label for="upload-file">
+						<ss-icon height="20" width="20" name="paperclip"></ss-icon>
+						<ss-caption>Прикрепить файл</ss-caption>
+					</label>
+					<input type="file" id="upload-file"
+						   accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf, .mp4, .mov, .avi"
+						   multiple
+						   (change)="uploadFile($event)"
+					/>
+				</div>
+				<div *ngIf="(victoryFiles | async)?.length" class="files">
+					<ss-attachment *ngFor="let file of (victoryFiles | async)" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
+				</div>
 			</form>
 			<ss-divider></ss-divider>
 			<div class="add-victory-modal__footer">

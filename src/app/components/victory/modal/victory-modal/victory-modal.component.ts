@@ -46,7 +46,10 @@ export class VictoryModalComponent {
 	protected readonly authUserId: number | null = null;
 	protected isChoiceLike: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	protected notes: FormControl<string | null> = new FormControl(null, Validators.required);
+	protected notes: FormControl<string | null> = new FormControl(null, [
+		Validators.required,
+		Validators.max(1000),
+	]);
 
 	constructor(
 		private readonly modalRef: ModalRef,

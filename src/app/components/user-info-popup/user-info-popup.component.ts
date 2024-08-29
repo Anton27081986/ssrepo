@@ -1,5 +1,5 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { Observable } from 'rxjs';

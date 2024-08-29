@@ -1,5 +1,5 @@
 <div class="wrapper" (click)="close()">
-	<div class="user-info-popup" *ngIf="$user | async as user">
+	<div (click)="$event.stopPropagation()" class="user-info-popup" *ngIf="$user | async as user">
 		<ss-headline class="user-info-popup__header" [size]="'h6'">Информация о пользователе</ss-headline>
 		<ss-divider></ss-divider>
 		<app-user-card [size]="'large'" class="user-info-popup__user-card" [viewPopupInfo]="false" [user]="user"></app-user-card>
@@ -38,6 +38,15 @@
 				</div>
 				<div>
 					<ss-text size="3" class="description" color="gray">{{ user.email }}</ss-text>
+				</div>
+			</div>
+			<div class="user-info-popup__item" *ngIf="user.room">
+				<div class="user-info-popup__item-description">
+					<ss-icon name="room" height="16" width="16"></ss-icon>
+					<ss-text size="3" class="title">Корпус/Комната:</ss-text>
+				</div>
+				<div>
+					<ss-text size="3" class="description" color="gray">{{ user.room }}</ss-text>
 				</div>
 			</div>
 		</div>

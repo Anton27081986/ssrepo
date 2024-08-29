@@ -24,11 +24,17 @@ export class WinsApiService {
 	}
 
 	/** Добавить победу */
-	public addWins(text: string, userIds: number[], productIds: number[]): Observable<any> {
+	public addWins(
+		text: string,
+		userIds: number[],
+		productIds: number[],
+		fileIds: string[],
+	): Observable<any> {
 		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/wins`, {
 			text,
 			userIds,
 			productIds,
+			fileIds,
 		});
 	}
 

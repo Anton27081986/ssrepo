@@ -21,4 +21,5 @@ export interface IUserProfile {
 	headName: string;
 	linkToCall: string;
 	isIntranet: boolean;
+	room: string;
 }
