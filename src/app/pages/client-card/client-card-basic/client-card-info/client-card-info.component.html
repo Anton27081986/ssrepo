@@ -119,7 +119,7 @@
 			<ss-text size="3" class="info-list-item-name">Структура соответствует требованиям:</ss-text>
 			<ss-text size="3" class="info-list-item-value">{{ (client$ | async)?.meetsRequirements ? '✔' : '—' }}</ss-text>
 		</div>
-		<div class="info-list-item comment" *ngIf="isEditing">
+		<div class="info-list-item comment">
 			<ss-text size="3" class="info-list-item-name">Комментарий:</ss-text>
 			<ss-textarea size="medium" rows="4" placeholder="Введите текст" formControlName="comment"></ss-textarea>
 		</div>

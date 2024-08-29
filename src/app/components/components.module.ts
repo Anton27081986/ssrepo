@@ -77,6 +77,7 @@ import { VictoryCommentComponent } from '@app/components/victory/victory-comment
 import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.component';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks-partner-card/thanks-parther-card.component';
+import { AttachmentModule } from '@app/shared/components/attachment/attachment.module';
 
 @NgModule({
 	declarations: [
@@ -161,6 +162,7 @@ import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks
 		TooltipModule,
 		ChipsSearchModule,
 		DatepickerInputModule,
+		AttachmentModule,
 	],
 	exports: [
 		MainMenuComponent,

@@ -17,7 +17,7 @@ export interface IAttachmentDto {
 	/**
 	 * Уникальный идентификатор
 	 */
-	id?: string;
+	id: string;
 	/**
 	 * Имя файла
 	 */
