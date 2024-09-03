@@ -88,7 +88,7 @@ export class ContractInfoComponent {
 	public saveContract() {
 		this.editForm.markAllAsTouched();
 
-		if (this.editForm.controls.isComplete && !this.editForm.controls.reasonCompletion.value) {
+		if (this.editForm.controls.isComplete.value && !this.editForm.controls.reasonCompletion.value) {
 			this.editForm.controls.reasonCompletion.setErrors({ required: true });
 		}
 
