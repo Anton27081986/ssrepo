@@ -1,0 +1,6 @@
+<div class="multiselect-option-v2" *ngIf="option">
+	<input type="checkbox" (change)="checkItems()"
+		   [(ngModel)]="option.checked"/>
+	<ss-text>{{ option.name }}</ss-text>
+</div>
+

@@ -140,6 +140,22 @@ export class ClientProposalsApiService {
 			}
 		});
 
+		params.TprFlags.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('TprFlags', id);
+			} else {
+				httpParams = httpParams.append('TprFlags', id);
+			}
+		});
+
+		params.TovGroups.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('TovGroups', id);
+			} else {
+				httpParams = httpParams.append('TovGroups', id);
+			}
+		});
+
 		return this.http.get<IResponse<IClientOffersDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
 			{

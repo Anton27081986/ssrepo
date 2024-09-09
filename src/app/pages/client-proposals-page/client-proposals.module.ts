@@ -45,6 +45,7 @@ import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-prop
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
+import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multiselect-v2.module';
 
 @NgModule({
 	declarations: [
@@ -99,6 +100,7 @@ import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.mo
 		PipesModule,
 		SsMenuModule,
 		SsDividerModule,
+		MultiselectV2Module,
 	],
 })
 export class ClientProposalsModule {}

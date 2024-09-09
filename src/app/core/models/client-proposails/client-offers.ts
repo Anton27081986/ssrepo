@@ -55,6 +55,8 @@ export interface IClientOffersDto {
 export interface IRequestGetClientOffer {
 	clientId: number;
 	productionIds: number[];
+	TovGroups: number[];
+	TprFlags: number[];
 }
 
 export enum ClientProposalsTypeDocuments {

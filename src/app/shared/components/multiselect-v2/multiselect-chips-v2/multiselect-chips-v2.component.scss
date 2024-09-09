@@ -1,0 +1,42 @@
+.multiselect-chips-v2 {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 6px;
+
+	&__chip {
+		background-color: #4770FF1A;
+		flex-wrap: nowrap;
+		padding: 4px 8px;
+		border-radius: 16px;
+		display: inline-flex;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 85px;
+	}
+
+	&__text {
+		height: 18px;
+		padding: 0;
+		overflow: hidden;
+		position: relative;
+		display: inline-block;
+		margin: 0 5px 0 5px;
+		text-align: center;
+		text-decoration: none;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__chip-ellipsis {
+		background-color: #4770FF1A;
+		padding: 4px 8px;
+		border-radius: 16px;
+		display: inline-flex;
+		justify-content: center;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 40px;
+	}
+}
