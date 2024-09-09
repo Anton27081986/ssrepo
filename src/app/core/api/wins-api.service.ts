@@ -57,6 +57,30 @@ export class WinsApiService {
 		);
 	}
 
+	public getTgSearch(q: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/tovGroups`,
+			{
+				params: new HttpParams().set('query', q).set('isTg', true),
+			},
+		);
+	}
+
+	public getTpgSearch(q: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/tovGroups`,
+			{
+				params: new HttpParams().set('query', q).set('isTg', false),
+			},
+		);
+	}
+
+	public getSignSearch(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/tprFlags`,
+		);
+	}
+
 	public getCommentsWins(request: ICommentRequest): Observable<IResponse<ICommentsItemDto>> {
 		return this.http.get<IResponse<ICommentsItemDto>>(
 			`${environment.apiUrl}/api/awards/comments/${request.objectId}`,

@@ -1,6 +1,5 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { IFilterOption } from '@app/shared/components/filters/filters.component';
+import { Component, Input } from '@angular/core';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
@@ -16,6 +15,16 @@ import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/cl
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
+import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+export interface IClientProposalsCriteriaForm {
+	vgpIds: FormControl<number[] | null>;
+	tgIds: FormControl<number[] | null>;
+	tpgIds: FormControl<number[] | null>;
+	TprFlags: FormControl<number[] | null>;
+}
 
 @UntilDestroy()
 @Component({
@@ -24,14 +33,40 @@ import { switchMap } from 'rxjs/operators';
 	styleUrls: ['./client-proposals-table-vgp.component.scss'],
 	providers: [ColumnsStateService, CheckFileListStateService],
 })
-export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
-	protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	private productionIds: number[] = [];
-
+export class ClientProposalsTableVgpComponent {
+	// protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 	@Input() public clientId: number | null = null;
 
-	protected clientOffers$: Observable<IResponse<IClientOffersDto>> | undefined;
+	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected clientOffers$!: Observable<IResponse<IClientOffersDto>>;
+
+	public vgpQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
+	public tgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
+	public tpgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
+	public signQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
+
+	get vgpFormControl(): number[] {
+		return this.form.controls.vgpIds.value ? this.form.controls.vgpIds.value : [];
+	}
+
+	get tgFormControl(): number[] {
+		return this.form.controls.tgIds.value ? this.form.controls.tgIds.value : [];
+	}
+
+	get tpgFormControl(): number[] {
+		return this.form.controls.tpgIds.value ? this.form.controls.tpgIds.value : [];
+	}
+
+	get TprFlagsFormControl(): number[] {
+		return this.form.controls.TprFlags.value ? this.form.controls.TprFlags.value : [];
+	}
+
+	protected readonly form: FormGroup<IClientProposalsCriteriaForm> = this.buildForm();
+
+	protected productionOptionsTg$: Observable<IDictionaryItemDto[]>;
+	protected productionOptionsVgp$: Observable<IDictionaryItemDto[]>;
+	protected productionOptionsTpg$: Observable<IDictionaryItemDto[]>;
+	protected productionOptionsSign$: Observable<IDictionaryItemDto[]>;
 
 	public constructor(
 		private readonly modalService: ModalService,
@@ -39,29 +74,65 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 		protected readonly _columnState: ColumnsStateService,
 		protected readonly checkListStateService: CheckFileListStateService,
 		protected readonly http: HttpClient,
+		protected readonly searchFacade: SearchFacadeService,
 	) {
 		this._columnState.cols$.next(this.defaultCols);
+		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
+			filterTruthy(),
+			switchMap(val => {
+				return this.searchFacade.getProductSearch(val).pipe(
+					untilDestroyed(this),
+					filterTruthy(),
+					map(val => {
+						return val.items;
+					}),
+				);
+			}),
+		);
+
+		this.productionOptionsTg$ = this.tgQueryControl.valueChanges.pipe(
+			filterTruthy(),
+			switchMap(val => {
+				return this.searchFacade.getTgSearch(val).pipe(
+					untilDestroyed(this),
+					filterTruthy(),
+					map(val => {
+						return val.items;
+					}),
+				);
+			}),
+		);
+
+		this.productionOptionsTpg$ = this.tpgQueryControl.valueChanges.pipe(
+			filterTruthy(),
+			switchMap(val => {
+				return this.searchFacade.getTpgSearch(val).pipe(
+					untilDestroyed(this),
+					filterTruthy(),
+					map(val => {
+						return val.items;
+					}),
+				);
+			}),
+		);
+
+		this.productionOptionsSign$ = this.searchFacade.getSignVgpSearch().pipe(
+			map(values => {
+				return values.items;
+			}),
+		);
 	}
 
-	public ngOnInit() {
-		this.productionIds$.pipe(untilDestroyed(this)).subscribe(ids => {
-			if (ids.length && this.clientId) {
-				this.clientOffers$ = this.clientProposalsFacadeService.getClientOffers({
-					clientId: this.clientId,
-					productionIds: ids,
-				});
-			}
+	private buildForm(): FormGroup<IClientProposalsCriteriaForm> {
+		return new FormGroup<IClientProposalsCriteriaForm>({
+			vgpIds: new FormControl<number[] | null>(
+				{ value: null, disabled: false },
+				Validators.required,
+			),
+			tpgIds: new FormControl<number[] | null>({ value: null, disabled: false }),
+			tgIds: new FormControl<number[] | null>({ value: null, disabled: false }),
+			TprFlags: new FormControl<number[] | null>({ value: null, disabled: false }),
 		});
-	}
-
-	protected getSelected(event: IFilterOption[]) {
-		if (event.length) {
-			this.productionIds = event.map(item => {
-				return item.id;
-			});
-		} else {
-			this.productionIds = [];
-		}
 	}
 
 	protected openPopoverSendToTheCloud(url: string) {
@@ -83,12 +154,18 @@ export class ClientProposalsTableVgpComponent implements OnInit, OnChanges {
 
 	protected submit() {
 		this.checkListStateService.checkFiles$.next([]);
-		this.productionIds$.next(this.productionIds);
-	}
-
-	public ngOnChanges(changes: SimpleChanges) {
-		if (changes.clientId) {
-			this.ngOnInit();
+		if (this.form.valid) {
+			this.clientOffers$ = this.clientProposalsFacadeService.clientId$.pipe(
+				filterTruthy(),
+				switchMap(clientId => {
+					return this.clientProposalsFacadeService.getClientOffers({
+						clientId,
+						productionIds: this.vgpFormControl,
+						TovGroups: [...this.tgFormControl, ...this.tpgFormControl],
+						TprFlags: this.TprFlagsFormControl,
+					});
+				}),
+			);
 		}
 	}
 

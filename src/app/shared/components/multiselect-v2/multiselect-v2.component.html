@@ -1,0 +1,43 @@
+<div class="multiselect-v2">
+	<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
+	<div class="multiselect-v2__input" [class.multiselect-v2__input--isExpanded]="isExpanded">
+		<input [placeholder]="placeholder" *ngIf="autoComplete && !(selectedOptions$ | async)?.length"
+			   [disabled]="disabled" type="text"
+			   [formControl]="queryControl"/>
+		<div class="multiselect-v2__chips" *ngIf="(selectedOptions$ | async)?.length">
+			<ss-multiselect-chips-v2 [ellipsis]="(chipsEllipsis$ | async)!" [chips]="(selectedOptions$ | async)!"
+									 (delChipEmit)="delSelectedOption($event)"></ss-multiselect-chips-v2>
+		</div>
+		<div class="multiselect-v2__count-chips"
+			 *ngIf="(this.selectedOptions$ | async)?.length"> {{ (this.selectedOptions$ | async)?.length }}
+		</div>
+		<ss-icon *ngIf="(this.selectedOptions$ | async)?.length" [name]="'close'" (click)="clear()"></ss-icon>
+		<ss-icon *ngIf="(this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length"
+				 (click)="toggle()" height="12" name="chevron"
+				 class="multiselect-v2__icon-toggle"
+				 [class.multiselect-v2__icon-toggle--expanded]="isExpanded">
+		</ss-icon>
+	</div>
+	<div class="multiselect-v2__select"
+		 *ngIf="isExpanded && (selectedOptions$ | async)?.length || isExpanded && (viewOptions$ | async)">
+		<ng-container *ngIf="selectedOptions$ | async as options">
+			<div class="multiselect-v2__input" *ngIf="autoComplete && options.length">
+				<input [disabled]="disabled" type="text"
+					   [formControl]="queryControl"/>
+			</div>
+			<div class="multiselect-option" *ngFor="let selectedOpt of options">
+				<input [style]="'cursor: pointer'" type="checkbox" (change)="delSelectedOption(selectedOpt)"
+					   [(ngModel)]="selectedOpt.checked"/>
+				<ss-text [size]="'3'">{{ selectedOpt.name }}</ss-text>
+			</div>
+			<ss-divider *ngIf="options.length"></ss-divider>
+		</ng-container>
+		<div class="multiselect-option" *ngFor="let opt of viewOptions$ | async">
+			<input [style]="'cursor: pointer'" type="checkbox" (change)="addStateOptions(opt)"
+				   [(ngModel)]="opt.checked"/>
+			<ss-text [size]="'3'">{{ opt.name }}</ss-text>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="isExpanded" class="layout" (click)="close()"></div>
