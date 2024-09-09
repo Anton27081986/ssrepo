@@ -18,6 +18,7 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { ProductionsApiService } from '@app/core/api/productions-api.service';
 
 @UntilDestroy()
 @Injectable()
@@ -29,6 +30,7 @@ export class ClientProposalsFacadeService {
 
 	constructor(
 		private readonly clientProposalsApiService: ClientProposalsApiService,
+		private readonly clientProductionsApiService: ProductionsApiService,
 		activatedRoute: ActivatedRoute,
 	) {
 		this.clientId$ = activatedRoute.paramMap.pipe(
@@ -101,6 +103,22 @@ export class ClientProposalsFacadeService {
 				};
 			}),
 		);
+	}
+
+	public getProduction(query: string) {
+		return this.clientProductionsApiService.searchProductions(query);
+	}
+
+	public getTgSearch(query: string) {
+		return this.clientProductionsApiService.getTgSearch(query);
+	}
+
+	public getTpgSearch(query: string) {
+		return this.clientProductionsApiService.getTpgSearch(query);
+	}
+
+	public getSignVgpSearch() {
+		return this.clientProductionsApiService.getSignSearch();
 	}
 
 	public generateRandomString(length: number) {

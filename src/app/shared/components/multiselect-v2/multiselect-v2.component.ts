@@ -57,13 +57,13 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 		);
 	}
 
-	writeValue() {}
+	public writeValue() {}
 
-	registerOnChange(fn: (value: number[]) => void): void {
+	public registerOnChange(fn: (value: number[]) => void): void {
 		this.OnChange = fn;
 	}
 
-	registerOnTouched(fn: () => void): void {
+	public registerOnTouched(fn: () => void): void {
 		this.OnTouched = fn;
 	}
 
@@ -83,10 +83,11 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 		this.isExpanded = false;
 		if (!this.autoComplete) {
 			this.disabled = true;
+			this.queryControl.setValue('.');
 		}
 	}
 
-	updateStateControl() {
+	protected updateStateControl() {
 		this.OnChange(this.mapIds(this.selectedOptions$.value));
 	}
 
@@ -139,8 +140,9 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 			this.updateStateControl();
 		} else {
 			this.isExpanded = false;
-			this.viewOptions$.next(this.options);
+			this.viewOptions$.next([]);
 			this.selectedOptions$.next([]);
+			this.queryControl.setValue('.');
 		}
 	}
 

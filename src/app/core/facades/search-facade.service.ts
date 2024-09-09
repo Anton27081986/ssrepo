@@ -81,16 +81,4 @@ export class SearchFacadeService {
 	public getProductSearch(query: string) {
 		return this.winsApiService.getProductSearch(query);
 	}
-
-	public getTgSearch(query: string) {
-		return this.winsApiService.getTgSearch(query);
-	}
-
-	public getTpgSearch(query: string) {
-		return this.winsApiService.getTpgSearch(query);
-	}
-
-	public getSignVgpSearch() {
-		return this.winsApiService.getSignSearch();
-	}
 }

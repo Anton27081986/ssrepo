@@ -6,7 +6,7 @@ import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, merge, Observable, of } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
@@ -15,7 +15,6 @@ import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/cl
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
-import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -74,13 +73,12 @@ export class ClientProposalsTableVgpComponent {
 		protected readonly _columnState: ColumnsStateService,
 		protected readonly checkListStateService: CheckFileListStateService,
 		protected readonly http: HttpClient,
-		protected readonly searchFacade: SearchFacadeService,
 	) {
 		this._columnState.cols$.next(this.defaultCols);
 		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
 			filterTruthy(),
 			switchMap(val => {
-				return this.searchFacade.getProductSearch(val).pipe(
+				return this.clientProposalsFacadeService.getProduction(val).pipe(
 					untilDestroyed(this),
 					filterTruthy(),
 					map(val => {
@@ -93,7 +91,7 @@ export class ClientProposalsTableVgpComponent {
 		this.productionOptionsTg$ = this.tgQueryControl.valueChanges.pipe(
 			filterTruthy(),
 			switchMap(val => {
-				return this.searchFacade.getTgSearch(val).pipe(
+				return this.clientProposalsFacadeService.getTgSearch(val).pipe(
 					untilDestroyed(this),
 					filterTruthy(),
 					map(val => {
@@ -106,7 +104,7 @@ export class ClientProposalsTableVgpComponent {
 		this.productionOptionsTpg$ = this.tpgQueryControl.valueChanges.pipe(
 			filterTruthy(),
 			switchMap(val => {
-				return this.searchFacade.getTpgSearch(val).pipe(
+				return this.clientProposalsFacadeService.getTpgSearch(val).pipe(
 					untilDestroyed(this),
 					filterTruthy(),
 					map(val => {
@@ -116,9 +114,14 @@ export class ClientProposalsTableVgpComponent {
 			}),
 		);
 
-		this.productionOptionsSign$ = this.searchFacade.getSignVgpSearch().pipe(
-			map(values => {
-				return values.items;
+		this.productionOptionsSign$ = this.signQueryControl.valueChanges.pipe(
+			filterTruthy(),
+			switchMap(val => {
+				return this.clientProposalsFacadeService.getSignVgpSearch().pipe(
+					map(values => {
+						return values.items;
+					}),
+				);
 			}),
 		);
 	}
