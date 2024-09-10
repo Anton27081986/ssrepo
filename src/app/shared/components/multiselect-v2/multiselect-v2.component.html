@@ -11,7 +11,7 @@
 		<div class="multiselect-v2__count-chips"
 			 *ngIf="(this.selectedOptions$ | async)?.length"> {{ (this.selectedOptions$ | async)?.length }}
 		</div>
-		<ss-icon *ngIf="(this.selectedOptions$ | async)?.length" [name]="'close'" (click)="clear()"></ss-icon>
+		<ss-icon *ngIf="(this.selectedOptions$ | async)?.length && (this.readOnly$ | async)" [name]="'close'" (click)="clear()"></ss-icon>
 		<ss-icon *ngIf="(this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length"
 				 (click)="toggle()" height="12" name="chevron"
 				 class="multiselect-v2__icon-toggle"

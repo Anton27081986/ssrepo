@@ -28,6 +28,8 @@ export class ClientProposalsFacadeService {
 	private readonly permissionsSubject = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissionsSubject.asObservable();
 
+	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(false);
+
 	constructor(
 		private readonly clientProposalsApiService: ClientProposalsApiService,
 		private readonly clientProductionsApiService: ProductionsApiService,
@@ -100,7 +102,7 @@ export class ClientProposalsFacadeService {
 					total: items.total,
 					items: data,
 					linkToModule: items.linkToModule,
-					clientOfferId: items.clientOfferId
+					clientOfferId: items.clientOfferId,
 				};
 			}),
 		);

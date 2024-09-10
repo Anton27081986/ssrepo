@@ -12,6 +12,7 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 export class MultiselectChipsV2Component {
 	@Input() public chips: IFilterOption[] = [];
 	@Input() public ellipsis = false;
+	@Input() public readOnly = false;
 	@Output() public delChipEmit = new EventEmitter<IFilterOption>();
 
 	protected getChips() {
@@ -23,7 +24,9 @@ export class MultiselectChipsV2Component {
 	}
 
 	protected deleteChipEmit(chip: IFilterOption) {
-		this.delChipEmit.emit(chip);
+		if (this.readOnly) {
+			this.delChipEmit.emit(chip);
+		}
 	}
 
 	protected readonly TooltipPosition = TooltipPosition;

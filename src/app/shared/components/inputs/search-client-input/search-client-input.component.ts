@@ -47,6 +47,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public label: string | undefined;
 	@Input() onlyActive: boolean = false;
+	@Input() disabled: boolean = false;
 
 	@Output() public select = new EventEmitter<SearchInputItem | null>();
 

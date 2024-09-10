@@ -34,11 +34,14 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	@Input() public placeholder: string | undefined;
 	@Input() public options: IFilterOption[] = [];
 	@Input() public disabled: boolean = false;
+	@Input() public readOnly: boolean = false;
 	@Input() public queryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	protected isExpanded: boolean = false;
 	protected readonly chipsEllipsis$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
 		false,
 	);
+
+	protected readonly readOnly$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	protected subscription: Subscription = new Subscription();
 
@@ -123,6 +126,10 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 			if (this.autoComplete) {
 				this.isExpanded = true;
 			}
+		}
+
+		if (changes.readOnly) {
+			this.readOnly$.next(changes.readOnly.currentValue);
 		}
 	}
 

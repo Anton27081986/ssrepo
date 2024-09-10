@@ -3,6 +3,7 @@
 	<input type="text"
 	class="{{ size }}"
    	[placeholder]="'поиск'"
+		   [disabled]="disabled"
 		   [value]="query"
 		   (input)="onInputValueChange($event)"
 	#input
