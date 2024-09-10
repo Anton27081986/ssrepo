@@ -23,6 +23,8 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	protected readonly searchControl = new FormControl<number>(0);
 
+	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
+
 	public clientId$: Observable<number>;
 
 	public tabs: ITab[] = [
@@ -120,7 +122,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	public selectTab(page: string) {
 		if (this.clientId) {
-			this.selectedTab = this.tabs.find((tab)=>tab.name === page) || this.mainInfoTab!;
+			this.selectedTab = this.tabs.find(tab => tab.name === page) || this.mainInfoTab!;
 			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}

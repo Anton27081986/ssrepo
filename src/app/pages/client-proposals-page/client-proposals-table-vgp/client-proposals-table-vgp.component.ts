@@ -39,6 +39,7 @@ export class ClientProposalsTableVgpComponent {
 
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	protected clientOffers$!: Observable<IResponse<IClientOffersDto>>;
+	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
 	public vgpQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	public tgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);

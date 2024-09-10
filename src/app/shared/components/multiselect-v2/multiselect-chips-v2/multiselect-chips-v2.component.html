@@ -3,7 +3,7 @@
 		<div class="multiselect-chips-v2__chip">
 		<span *ngIf="chip" class="multiselect-chips-v2__text" [tooltip]="chip.name" [theme]="TooltipTheme.DEFAULT"
 			  [position]="TooltipPosition.DEFAULT">{{ chip.name }}</span>
-			<ss-icon [name]="'close'" (click)="deleteChipEmit(chip!)"></ss-icon>
+			<ss-icon *ngIf="readOnly" [name]="'close'" (click)="deleteChipEmit(chip!)"></ss-icon>
 		</div>
 	</ng-container>
 

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
 import { interval, map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
@@ -18,6 +18,8 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { catchError } from 'rxjs/operators';
+import { TypeReportEnum } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 export interface IFile {
 	id: number;
@@ -198,6 +200,14 @@ export class ClientProposalsApiService {
 				),
 				catchError(this.handleError),
 			);
+	}
+
+	public downloadReport(type: TypeReportEnum): Observable<Blob> {
+		return this.http.get<Blob>(`${environment.apiUrl}/api/company/ClientProposals/reports`, {
+			responseType: 'blob' as 'json',
+			headers: new HttpHeaders().append('Content-Type', 'application/json'),
+			params: new HttpParams().set('report', type),
+		});
 	}
 
 	private handleResponse(response: HttpResponse<Blob>): Blob {

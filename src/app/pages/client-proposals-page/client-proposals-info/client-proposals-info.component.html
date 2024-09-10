@@ -5,6 +5,7 @@
 		<ss-search-client-input
 			[formControl]="searchControl"
 			[onlyActive]="true"
+			[disabled]="(blockForProposals$ | async)!"
 			class="header-content__search"
 			(select)="getSearchClient($event)"
 		></ss-search-client-input>
