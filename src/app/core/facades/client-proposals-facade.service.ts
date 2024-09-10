@@ -100,6 +100,7 @@ export class ClientProposalsFacadeService {
 					total: items.total,
 					items: data,
 					linkToModule: items.linkToModule,
+					clientOfferId: items.clientOfferId
 				};
 			}),
 		);

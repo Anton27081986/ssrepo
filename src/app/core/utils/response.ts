@@ -5,4 +5,5 @@ export interface IResponse<T> {
 	addNewThanksLink?: string;
 	totalCount?: number;
 	weekCount?: number;
+	clientOfferId?: string;
 }

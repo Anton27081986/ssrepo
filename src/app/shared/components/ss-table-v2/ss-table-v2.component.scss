@@ -7,7 +7,7 @@
 	width: 100%;
 
 	.table-wrapper {
-		height: 70vh;
+		max-height: 70vh;
 		overflow-y: auto;
 		scrollbar-color: $lite-text;
 		border-radius: 16px;

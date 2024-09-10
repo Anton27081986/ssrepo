@@ -45,6 +45,8 @@ import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-prop
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
+import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
+import { AtWorkRowItemTrComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component';
 import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multiselect-v2.module';
 
 @NgModule({
@@ -66,6 +68,8 @@ import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multi
 		ClientProposalsTabsCanvasComponent,
 		ClientProposalsRowItemTrComponent,
 		ClientProposalsViewFilesPopoverComponent,
+		AtWorkModalComponent,
+		AtWorkRowItemTrComponent,
 	],
 	imports: [
 		CommonModule,

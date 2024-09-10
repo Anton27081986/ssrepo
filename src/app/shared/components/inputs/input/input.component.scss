@@ -76,10 +76,6 @@ ss-caption {
 	color: $lite-text;
 }
 
-ss-caption.error {
-	color: $error;
-}
-
 :host-context(.dark) input {
 	background-color: $dark-island;
 }
