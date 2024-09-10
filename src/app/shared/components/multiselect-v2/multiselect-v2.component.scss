@@ -9,7 +9,7 @@
 	flex-direction: column;
 	position: relative;
 	user-select: none;
-	z-index: 6000;
+	z-index: 999;
 
 	&__icon-toggle {
 		cursor: pointer;
@@ -52,7 +52,7 @@
 		width: 100%;
 		top: 58px;
 		padding: 12px 0;
-		z-index: 6000;
+		z-index: 999;
 	}
 
 	input {
@@ -120,7 +120,7 @@
 	position: fixed;
 	width: 100vw;
 	height: 100vh;
-	z-index: 5000;
+	z-index: 888;
 	left: 0;
 	top: 0;
 	cursor: default;

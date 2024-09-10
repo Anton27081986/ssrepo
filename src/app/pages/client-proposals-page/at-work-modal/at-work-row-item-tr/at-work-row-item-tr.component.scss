@@ -1,0 +1,63 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.hc-table-td {
+	border: 1px solid $border-table;
+	position: relative;
+
+	&__canvas {
+		display: flex;
+		justify-content: space-around;
+		flex-direction: column;
+	}
+
+	&__td {
+		max-height: 218px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		position: relative;
+	}
+
+	 &__td.limit {
+		 max-height: 42px;
+	 }
+
+	&__maximise {
+		position: absolute;
+		bottom: 4px;
+		right: 4px;
+		cursor: pointer;
+	}
+
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		padding: 8px 12px;
+		font-size: 10px;
+		font-weight: 400;
+		line-height: 11px;
+		word-wrap: break-word;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&--number {
+			display: flex;
+			justify-content: end;
+		}
+
+		&--center {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+		}
+	}
+
+	&__error {
+
+		::ng-deep span {
+			color: #E9033A;
+		}
+	}
+}

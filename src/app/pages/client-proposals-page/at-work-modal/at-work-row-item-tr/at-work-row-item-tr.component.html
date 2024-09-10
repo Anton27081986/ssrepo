@@ -1,0 +1,70 @@
+<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
+	<ng-container *ngIf="item">
+		<td class="hc-table-td">
+			<ng-container [ngSwitch]="col.id">
+
+				<ng-container *ngSwitchCase="AtWorkRowItemField.tovProductName">
+					<div class="hc-table-td__content">{{ item.tovProductName }}</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="AtWorkRowItemField.atWork">
+					<div class="hc-table-td__content hc-table-td__content--center">
+						<input type="checkbox" (change)="onCheckAtWork($event.target!); item.errors = {}" />
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="AtWorkRowItemField.commentId">
+					<div *ngIf="!item.atWork; else noComment" class="hc-table-td__content">
+						<ss-input
+							size="small"
+							[value]="item.commentId"
+							(change)="item.commentId = getInputValue($event.target!)"
+							(click)="item.errors.commentId = false"
+							[error]="item.errors.commentId ? 'Обязательное поле' : undefined"
+						></ss-input>
+					</div>
+					<ng-template #noComment>
+						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+					</ng-template>
+
+				</ng-container>
+
+				<ng-container *ngSwitchCase="AtWorkRowItemField.potencial">
+					<div *ngIf="item.atWork; else noPotencial" class="hc-table-td__content">
+						<ss-input
+							size="small"
+							[value]="item.potencial"
+							(change)="item.potencial = getInputValue($event.target!)"
+							(click)="item.errors.potencial = false"
+							[error]="item.errors.potencial ? 'Обязательное поле' : undefined"
+						></ss-input>
+					</div>
+					<ng-template #noPotencial>
+						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+					</ng-template>
+
+				</ng-container>
+
+				<ng-container *ngSwitchCase="AtWorkRowItemField.objective">
+					<div *ngIf="item.atWork; else noObjective" class="hc-table-td__content">
+						<ss-input
+							size="small"
+							[value]="item.objective"
+							(change)="item.objective = getInputValue($event.target!)"
+							(click)="item.errors.objective = false"
+							[error]="item.errors.objective ? 'Обязательное поле' : undefined"
+						></ss-input>
+					</div>
+					<ng-template #noObjective>
+						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+					</ng-template>
+
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					<div class="hc-table-td__content hc-table-td__content--center">-</div>
+				</ng-container>
+			</ng-container>
+		</td>
+	</ng-container>
+</ng-container>

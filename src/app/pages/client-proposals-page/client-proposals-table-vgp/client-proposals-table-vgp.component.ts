@@ -6,7 +6,7 @@ import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, map, merge, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
@@ -17,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -157,6 +158,7 @@ export class ClientProposalsTableVgpComponent {
 
 	protected submit() {
 		this.checkListStateService.checkFiles$.next([]);
+
 		if (this.form.valid) {
 			this.clientOffers$ = this.clientProposalsFacadeService.clientId$.pipe(
 				filterTruthy(),
@@ -288,4 +290,13 @@ export class ClientProposalsTableVgpComponent {
 			width: null,
 		},
 	];
+
+	openAtWorkModal(clientOfferId: string, items: IClientOffersDto[]) {
+		this.modalService.open(AtWorkModalComponent, {
+			data: {
+				clientOfferId,
+				items,
+			},
+		});
+	}
 }
