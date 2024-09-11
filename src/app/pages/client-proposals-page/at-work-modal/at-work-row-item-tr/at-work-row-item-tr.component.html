@@ -69,7 +69,7 @@
 					<div *ngIf="item.atWork; else noTechnologist" class="hc-table-td__content">
 						<ss-search-input searchType="technologist"
 										 size="small"
-										 (change)="item.technologistId = getInputValue($event.target!)"
+										 (select)="item.technologistId = $event.id"
 										 (click)="item.errors.technologistId = false"
 										 [error]="item.errors.technologistId ? 'Обязательное поле' : undefined"
 						></ss-search-input>
