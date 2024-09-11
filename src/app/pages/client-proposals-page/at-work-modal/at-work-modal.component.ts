@@ -59,11 +59,17 @@ export class AtWorkModalComponent {
 			if (item.atWork) {
 				item.errors.potencial = !item.potencial;
 				item.errors.objective = !item.objective;
+				item.errors.technologistId = !item.technologistId;
 			} else {
 				item.errors.commentId = !item.commentId;
 			}
 
-			invalidForm = item.errors.potencial || item.errors.objective || item.errors.commentId;
+			invalidForm =
+				invalidForm ||
+				item.errors.potencial ||
+				item.errors.objective ||
+				item.errors.commentId ||
+				item.errors.technologistId;
 		});
 
 		if (invalidForm) {
