@@ -48,6 +48,7 @@ import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.mo
 import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
 import { AtWorkRowItemTrComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component';
 import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multiselect-v2.module';
+import { SelectModule } from '@app/shared/components/select/select.module';
 
 @NgModule({
 	declarations: [
@@ -105,6 +106,7 @@ import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multi
 		SsMenuModule,
 		SsDividerModule,
 		MultiselectV2Module,
+		SelectModule,
 	],
 })
 export class ClientProposalsModule {}

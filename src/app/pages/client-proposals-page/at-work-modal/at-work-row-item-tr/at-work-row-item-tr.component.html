@@ -15,13 +15,15 @@
 
 				<ng-container *ngSwitchCase="AtWorkRowItemField.commentId">
 					<div *ngIf="!item.atWork; else noComment" class="hc-table-td__content">
-						<ss-input
+						<ss-select
 							size="small"
-							[value]="item.commentId"
 							(change)="item.commentId = getInputValue($event.target!)"
 							(click)="item.errors.commentId = false"
 							[error]="item.errors.commentId ? 'Обязательное поле' : undefined"
-						></ss-input>
+						>
+							<option value="{{ null }}">(Не выбран)</option>
+							<option *ngFor="let item of (tprRejectsReasons$ | async)" [value]="item.id">{{ item.name }}</option>
+						</ss-select>
 					</div>
 					<ng-template #noComment>
 						<div class="hc-table-td__content hc-table-td__content--center">-</div>
@@ -34,6 +36,7 @@
 						<ss-input
 							size="small"
 							[value]="item.potencial"
+							type="number"
 							(change)="item.potencial = getInputValue($event.target!)"
 							(click)="item.errors.potencial = false"
 							[error]="item.errors.potencial ? 'Обязательное поле' : undefined"
@@ -50,12 +53,28 @@
 						<ss-input
 							size="small"
 							[value]="item.objective"
+							type="number"
 							(change)="item.objective = getInputValue($event.target!)"
 							(click)="item.errors.objective = false"
 							[error]="item.errors.objective ? 'Обязательное поле' : undefined"
 						></ss-input>
 					</div>
 					<ng-template #noObjective>
+						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+					</ng-template>
+
+				</ng-container>
+
+				<ng-container *ngSwitchCase="AtWorkRowItemField.technologistId">
+					<div *ngIf="item.atWork; else noTechnologist" class="hc-table-td__content">
+						<ss-search-input searchType="technologist"
+										 size="small"
+										 (change)="item.technologistId = getInputValue($event.target!)"
+										 (click)="item.errors.technologistId = false"
+										 [error]="item.errors.technologistId ? 'Обязательное поле' : undefined"
+						></ss-search-input>
+					</div>
+					<ng-template #noTechnologist>
 						<div class="hc-table-td__content hc-table-td__content--center">-</div>
 					</ng-template>
 

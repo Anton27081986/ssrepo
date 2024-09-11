@@ -17,8 +17,11 @@ import {
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProductionsApiService } from '@app/core/api/productions-api.service';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
+import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 
 @UntilDestroy()
 @Injectable()
@@ -28,11 +31,15 @@ export class ClientProposalsFacadeService {
 	private readonly permissionsSubject = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissionsSubject.asObservable();
 
+	private readonly tprRejectsReasonsSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public tprRejectsReasons$ = this.tprRejectsReasonsSubject.asObservable();
+
 	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(false);
 
 	constructor(
 		private readonly clientProposalsApiService: ClientProposalsApiService,
 		private readonly clientProductionsApiService: ProductionsApiService,
+		private readonly dictionaryApiService: DictionaryApiService,
 		activatedRoute: ActivatedRoute,
 	) {
 		this.clientId$ = activatedRoute.paramMap.pipe(
@@ -41,6 +48,15 @@ export class ClientProposalsFacadeService {
 				return Number(params.get('clientId'));
 			}),
 		);
+
+		this.getTprRejectReasons()
+			.pipe(
+				untilDestroyed(this),
+				tap(val => {
+					this.tprRejectsReasonsSubject.next(val.items);
+				}),
+			)
+			.subscribe();
 	}
 
 	public getDoneProductionsByClientId(
@@ -102,7 +118,7 @@ export class ClientProposalsFacadeService {
 					total: items.total,
 					items: data,
 					linkToModule: items.linkToModule,
-					clientOfferId: items.clientOfferId,
+					clientOfferId: items.clientOfferId
 				};
 			}),
 		);
@@ -142,6 +158,14 @@ export class ClientProposalsFacadeService {
 
 	public getFiles(url: string): Observable<Blob> {
 		return this.clientProposalsApiService.getFiles(url);
+	}
+
+	public getTprRejectReasons(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getTprRejectReasons();
+	}
+
+	public saveOffer(offer: ICreateOfferDto) {
+		return this.clientProposalsApiService.saveOffer(offer);
 	}
 }
 

@@ -5,9 +5,16 @@ import { IClientOffersDto } from '@app/core/models/client-proposails/client-offe
 import { ModalService } from '@app/core/modal/modal.service';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+	ClientProposalsFacadeService,
+	filterTruthy,
+} from '@app/core/facades/client-proposals-facade.service';
+import { ICreateOfferItem } from '@app/core/models/client-proposails/create-offer-item';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { map, Observable } from 'rxjs';
 
-interface OfferData {
-	clientOffersId: string;
+interface IOfferData {
+	clientOfferId: string;
 	items: IClientOffersDto[];
 }
 
@@ -18,30 +25,18 @@ interface OfferData {
 	templateUrl: './at-work-modal.component.html',
 })
 export class AtWorkModalComponent {
-	protected clientOffersId: string = '';
-	protected items: Array<{
-		tovProductId: number;
-		tovProductName: string;
-		atWork: boolean;
-		commentId: null | string;
-		potencial: null | string;
-		objective: null | string;
-		technologistId: null | string;
-		errors: {
-			commentId?: boolean;
-			potencial?: boolean;
-			objective?: boolean;
-			technologistId?: boolean;
-		};
-	}> = [];
+	protected clientOfferId: string = '';
+	protected items: ICreateOfferItem[] = [];
 
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: OfferData,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		@Inject(DIALOG_DATA) private readonly data: IOfferData,
 	) {
 		if (data) {
-			this.clientOffersId = this.data.clientOffersId;
+			this.clientOfferId = this.data.clientOfferId;
+
 			this.items = this.data.items.map(item => {
 				return {
 					tovProductId: item.tovProductionId,
@@ -75,7 +70,15 @@ export class AtWorkModalComponent {
 			return;
 		}
 
-		console.log(this.items);
+		this.clientProposalsFacadeService
+			.saveOffer({
+				offerId: this.clientOfferId,
+				items: this.items,
+			})
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.modalRef.close();
+			});
 	}
 
 	protected close() {

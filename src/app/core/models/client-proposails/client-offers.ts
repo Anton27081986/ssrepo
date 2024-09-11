@@ -50,6 +50,7 @@ export interface IClientOffersDto {
 	advantages: IAdvantage[];
 	promotionalMaterials: IFilesProposals[];
 	documents: IFilesProposals[];
+
 }
 
 export interface IRequestGetClientOffer {

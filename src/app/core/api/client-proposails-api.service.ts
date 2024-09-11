@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import { interval, map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
+import { map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
@@ -18,8 +18,8 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { catchError } from 'rxjs/operators';
+import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
 import { TypeReportEnum } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
-import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 export interface IFile {
 	id: number;
@@ -175,7 +175,7 @@ export class ClientProposalsApiService {
 			};
 		});
 
-		const dataRequest: IShareFile = { files: request, sendEmail: sendEmail };
+		const dataRequest: IShareFile = { files: request, sendEmail };
 
 		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
 	}
@@ -200,6 +200,13 @@ export class ClientProposalsApiService {
 				),
 				catchError(this.handleError),
 			);
+	}
+
+	public saveOffer(body: ICreateOfferDto): Observable<ICreateOfferDto> {
+		return this.http.post<ICreateOfferDto>(
+			`${environment.apiUrl}/api/ClientProposals/clientOffers`,
+			body,
+		);
 	}
 
 	public downloadReport(type: TypeReportEnum): Observable<Blob> {

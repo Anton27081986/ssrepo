@@ -21,6 +21,7 @@ import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-lay
 import { NotificationToastModule } from '@app/widgets/notification-toast/notification-toast.module';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +61,7 @@ const ngZorroConfig: NzConfig = {
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 		provideNzConfig(ngZorroConfig),
+		ClientProposalsFacadeService,
 	],
 	bootstrap: [AppComponent],
 })

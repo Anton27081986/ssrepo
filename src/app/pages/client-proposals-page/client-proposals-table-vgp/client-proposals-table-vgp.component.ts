@@ -77,6 +77,7 @@ export class ClientProposalsTableVgpComponent {
 		protected readonly http: HttpClient,
 	) {
 		this._columnState.cols$.next(this.defaultCols);
+
 		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
 			filterTruthy(),
 			switchMap(val => {
