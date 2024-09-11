@@ -11,9 +11,11 @@ import {
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 
 export enum AtWorkRowItemField {
 	tovProductName = 'tovProductName',
@@ -31,6 +33,7 @@ export enum AtWorkRowItemField {
 })
 export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly AtWorkRowItemField = AtWorkRowItemField;
+	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
 	@Input({ required: true }) item!: {
 		tovProductId: number;
@@ -58,8 +61,11 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		private readonly modalService: ModalService,
-	) {}
+	) {
+		this.tprRejectsReasons$ = this.clientProposalsFacadeService.tprRejectsReasons$;
+	}
 
 	ngOnInit() {
 		this.columnsStateService.cols$.next([

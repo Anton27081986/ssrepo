@@ -123,8 +123,15 @@ export class DictionaryApiService {
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/dictionary/users/search`,
+			`${environment.apiUrl}/api/company/dictionary/technologists`,
 			{ params },
+		);
+	}
+
+	/** Список комментариев ТПР */
+	public getTprRejectReasons(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/tprRejectsReasons`,
 		);
 	}
 }

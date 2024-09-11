@@ -6,7 +6,7 @@
 			[footerTemplateRef]="footer">
 		</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a *ngIf="samples.linkToModule; else text" class="app-client-tpr-samples-tab__link" href="{{ samples.linkToModule }}" target="_blank">Образцы</a>
+			<a *ngIf="samples.linkToModule;else text" class="app-client-tpr-samples-tab__link" href="{{ samples.linkToModule }}" target="_blank">Образцы</a>
 			<ng-template #text>
 				<ss-text size="1">Образцы</ss-text>
 			</ng-template>
@@ -18,16 +18,14 @@
 				[head]="[
 							{title: 'Код', field: 'code',sizeRatio: 0.2},
 							{title: 'Товарная позиция', field: 'tov', sizeRatio: 1},
+							{title: 'Стоимость образца, руб.', field: 'price',sizeRatio: 0.2},
+							{title: 'Продажи, руб.', field: 'sales',sizeRatio: 0.2},
 							{title: 'Количество(факт)', field: 'quantity',sizeRatio: 0.2},
 							{title: 'Вес(факт)', field: 'weight',sizeRatio: 0.2},
 							]"
-				[items]="getTableItems(samples)
-"
+				[items]="getTableItems(samples)"
 			>
 			</ss-table>
-			<ng-template #empty>
-				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
-			</ng-template>
 		</ng-template>
 		<ng-template #footer>
 			<ss-pagination
@@ -39,6 +37,9 @@
 			</ss-pagination>
 		</ng-template>
 	</ng-container>
+	<ng-template #empty>
+		<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+	</ng-template>
 </ss-card>
 
 

@@ -6,11 +6,11 @@ export interface ISamples {
 	/**
 	 * Кол-во
 	 */
-	quantity: number;
+	quantity: number | null;
 	/**
 	 * вес
 	 */
-	weight: number;
+	weight: number | null;
 	/**
 	 *  Ссылка на детальную страницу
 	 */
@@ -22,4 +22,12 @@ export interface ISamples {
 		id: number;
 		name: string;
 	};
+	/**
+	 *  Стоимость образца, руб.
+	 */
+	price: number;
+	/**
+	 *  Продажи, руб.
+	 */
+	sales: number;
 }

@@ -48,9 +48,11 @@ export class ClientProposalsSamplesTabComponent {
 				text: x.id.toString() ?? '-',
 				url: x.linkToDetail ?? '',
 			};
-			tableItem.weight = x.weight;
-			tableItem.quantity = x.quantity;
+			tableItem.weight = x.weight ?? 0;
+			tableItem.quantity = x.quantity ?? 0;
 			tableItem.tov = x.tov.name;
+			tableItem.price = x.price;
+			tableItem.sales = x.sales;
 
 			return tableItem;
 		});
