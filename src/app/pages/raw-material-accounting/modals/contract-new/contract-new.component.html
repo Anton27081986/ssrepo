@@ -46,7 +46,7 @@
 						label="Количество, кг (всего)"
 						type="number"
 						formControlName="quantityTotal"
-						[error]="newContractForm.controls['quantityTotal'].touched && newContractForm.controls['quantityTotal'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['quantityTotal'].touched && (newContractForm.controls['quantityTotal'].errors?.required || newContractForm.controls['price'].errors?.min) ? 'Некорректные данные' : undefined"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
@@ -55,7 +55,7 @@
 						label="Цена"
 						type="number"
 						formControlName="price"
-						[error]="newContractForm.controls['price'].touched && newContractForm.controls['price'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['price'].touched && (newContractForm.controls['price'].errors?.required || newContractForm.controls['price'].errors?.min) ? 'Некорректные данные' : undefined"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
