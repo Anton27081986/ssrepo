@@ -50,6 +50,12 @@ button.primary {
 	color: $dark-text;
 }
 
+button.warning {
+	background-color: #F5B502;
+	border-color:  #F5B502;
+	color: $dark-text;
+}
+
 button.secondary {
 	background-color: $additional;
 	border-color:  $additional-outline;

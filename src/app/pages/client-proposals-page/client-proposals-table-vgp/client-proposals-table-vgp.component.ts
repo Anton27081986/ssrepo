@@ -6,7 +6,7 @@ import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { IResponse } from '@app/core/utils/response';
 import { ColumnsStateService } from '@app/core/columns.state.service';
@@ -18,6 +18,7 @@ import { switchMap } from 'rxjs/operators';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
+import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -34,17 +35,16 @@ export interface IClientProposalsCriteriaForm {
 	providers: [ColumnsStateService, CheckFileListStateService],
 })
 export class ClientProposalsTableVgpComponent {
-	// protected productionIds$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 	@Input() public clientId: number | null = null;
 
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	protected clientOffers$!: Observable<IResponse<IClientOffersDto>>;
+	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
 	public vgpQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	public tgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	public tpgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
-	public signQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
 
 	get vgpFormControl(): number[] {
 		return this.form.controls.vgpIds.value ? this.form.controls.vgpIds.value : [];
@@ -60,6 +60,14 @@ export class ClientProposalsTableVgpComponent {
 
 	get TprFlagsFormControl(): number[] {
 		return this.form.controls.TprFlags.value ? this.form.controls.TprFlags.value : [];
+	}
+
+	get isDisabledButton(): boolean {
+		if (this.clientProposalsFacadeService.blockForProposalSubject$.value) {
+			return true;
+		}
+
+		return !this.form.valid;
 	}
 
 	protected readonly form: FormGroup<IClientProposalsCriteriaForm> = this.buildForm();
@@ -117,14 +125,9 @@ export class ClientProposalsTableVgpComponent {
 			}),
 		);
 
-		this.productionOptionsSign$ = this.signQueryControl.valueChanges.pipe(
-			filterTruthy(),
-			switchMap(val => {
-				return this.clientProposalsFacadeService.getSignVgpSearch().pipe(
-					map(values => {
-						return values.items;
-					}),
-				);
+		this.productionOptionsSign$ = this.clientProposalsFacadeService.getSignVgpSearch().pipe(
+			map(values => {
+				return values.items;
 			}),
 		);
 	}
@@ -161,16 +164,41 @@ export class ClientProposalsTableVgpComponent {
 	protected submit() {
 		this.checkListStateService.checkFiles$.next([]);
 
-		if (this.form.valid) {
+		if (this.form.valid && !this.clientProposalsFacadeService.blockForProposalSubject$.value) {
 			this.clientOffers$ = this.clientProposalsFacadeService.clientId$.pipe(
 				filterTruthy(),
+				tap(() => this.isLoading$.next(true)),
 				switchMap(clientId => {
 					return this.clientProposalsFacadeService.getClientOffers({
 						clientId,
 						productionIds: this.vgpFormControl,
-						TovGroups: [...this.tgFormControl, ...this.tpgFormControl],
+						TovGroups: this.tgFormControl,
+						TovSubGroups: this.tpgFormControl,
 						TprFlags: this.TprFlagsFormControl,
 					});
+				}),
+				tap(value => {
+					this.isLoading$.next(false);
+					if (value.total) {
+						this.clientProposalsFacadeService.blockForProposalSubject$.next(true);
+						if (!localStorage.getItem('warningClientProposalsBool')) {
+							this.modalService
+								.open(DialogComponent, {
+									data: {
+										text:
+											'Каждый раз после получения рекомендаций \n' +
+											'необходимо брать в работу хотя бы одну из ТПР  \n' +
+											'для дальнейшего продвижения.',
+										oneButton: true,
+									},
+								})
+								.afterClosed()
+								.pipe(untilDestroyed(this))
+								.subscribe(() => {
+									localStorage.setItem('warningClientProposalsBool', 'true');
+								});
+						}
+					}
 				}),
 			);
 		}
@@ -293,10 +321,10 @@ export class ClientProposalsTableVgpComponent {
 		},
 	];
 
-	openAtWorkModal(clientOfferId: string, items: IClientOffersDto[]) {
+	protected openAtWorkModal(clientId: number, items: IClientOffersDto[]) {
 		this.modalService.open(AtWorkModalComponent, {
 			data: {
-				clientOfferId,
+				clientId,
 				items,
 			},
 		});

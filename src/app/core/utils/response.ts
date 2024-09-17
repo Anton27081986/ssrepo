@@ -6,4 +6,6 @@ export interface IResponse<T> {
 	totalCount?: number;
 	weekCount?: number;
 	clientOfferId?: string;
+	isAlterFilter?: boolean;
+	alterFilterDefenitionNote?: string;
 }

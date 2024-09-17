@@ -9,26 +9,19 @@
 	display: flex;
 	gap: 11px;
 	width: 100%;
-	padding: 8px 32px 8px 12px;
 	border-radius: 10px;
 	border: 1px solid;
 	position: relative;
+	align-items: center;
+	justify-content: left;
 
-	.icon {
+	&__icon {
 		font-size: 24px;
 	}
 
-	.message {
+	&__message {
 		display: flex;
-		flex-direction: column;
-		gap: 2px;
-		border: none !important;
-		flex-grow: 1;
-
-		::ng-deep p.medium {
-			opacity: 70% !important;
-		}
-
+		flex-wrap: wrap;
 	}
 
 	ss-icon {
@@ -54,9 +47,22 @@
 	background-color: $lite-ok;
 }
 
+.ok {
+	border-color: $ok;
+	background-color: $lite-ok;
+}
+
+.small {
+	padding: 0;
+}
+
+.usual {
+	padding: 8px 12px 8px 12px;
+}
+
 
 :host-context(.dark) ss-text {
-	 ::ng-deep p {
+	::ng-deep p {
 		color: $dark-island;
-	 }
+	}
 }

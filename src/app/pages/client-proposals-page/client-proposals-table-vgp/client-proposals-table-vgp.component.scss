@@ -21,6 +21,9 @@
 
 		.select-docs {
 			margin-top: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
 		}
 	}
 
@@ -63,7 +66,7 @@
 	&__content {
 	    max-height: 80vh;
 		min-height: 500px;
-		padding: 16px;
+		padding: 16px 0;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column;
@@ -123,6 +126,10 @@
 			}
 		}
 	}
+}
+
+app-notice {
+	max-width: 33%;
 }
 
 @keyframes rotation {

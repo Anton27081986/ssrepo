@@ -8,7 +8,7 @@
 		   (input)="onInputValueChange($event)"
 	#input
 	/>
-	<div class="search-result" *ngIf="found.length">
+	<div class="search-result" *ngIf="found.length && disabled">
 		<div class="separator"></div>
 		<ss-caption class="search-result-item" *ngFor="let item of found" (click)="setItem(item)">{{ item.name }}</ss-caption>
 	</div>

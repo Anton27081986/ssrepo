@@ -49,7 +49,9 @@ import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-m
 import { AtWorkRowItemTrComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component';
 import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multiselect-v2.module';
 import { SelectModule } from '@app/shared/components/select/select.module';
-
+import { NotificationToastModule } from '@app/widgets/notification-toast/notification-toast.module';
+import { NoticeModule } from '@app/components/notice/notice.module';
+import { MultiselectAutocompleteV2Module } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.module';
 @NgModule({
 	declarations: [
 		ClientProposalsPageComponent,
@@ -107,6 +109,9 @@ import { SelectModule } from '@app/shared/components/select/select.module';
 		SsDividerModule,
 		MultiselectV2Module,
 		SelectModule,
+		NotificationToastModule,
+		NoticeModule,
+		MultiselectAutocompleteV2Module,
 	],
 })
 export class ClientProposalsModule {}

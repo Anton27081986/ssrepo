@@ -191,7 +191,7 @@ export class ClientProposalsApiService {
 							if (error.status !== 200) {
 								console.log('Retrying request...');
 
-								return timer(3000); // Повторная попытка через 1 секунду
+								return timer(3000); // Повторная попытка через 3 секунды
 							}
 
 							return throwError(error);

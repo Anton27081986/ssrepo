@@ -1,5 +1,12 @@
 .multiselect-option-v2 {
 	display: flex;
 	gap: 10px;
+	padding: 12px;
 	flex-wrap: nowrap;
+	cursor: pointer;
+	align-items: center;
+
+	&:hover {
+		background-color: #F2F2F2;
+	}
 }

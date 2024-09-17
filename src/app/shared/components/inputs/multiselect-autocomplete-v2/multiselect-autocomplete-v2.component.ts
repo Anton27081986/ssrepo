@@ -1,39 +1,43 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	ElementRef,
 	forwardRef,
+	HostListener,
 	Input,
 	OnChanges,
 	OnInit,
 	SimpleChanges,
+	ViewChild,
 } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 @UntilDestroy()
 @Component({
-	selector: 'ss-multiselect-v2',
-	templateUrl: './multiselect-v2.component.html',
-	styleUrls: ['./multiselect-v2.component.scss'],
+	selector: 'ss-multiselect-autocomplete-v2',
+	templateUrl: './multiselect-autocomplete-v2.component.html',
+	styleUrls: ['./multiselect-autocomplete-v2.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => MultiselectV2Component),
+			useExisting: forwardRef(() => MultiselectAutocompleteV2Component),
 			multi: true,
 		},
 	],
 })
-export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAccessor {
+export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, ControlValueAccessor {
 	@Input() public label: string | undefined;
 	@Input() public size: 'large' | 'medium' = 'medium';
 	@Input() public placeholder: string | undefined;
 	@Input() public options: IFilterOption[] = [];
 	@Input() public disabled: boolean = false;
 	@Input() public readOnly: boolean = false;
+	@Input() public queryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	protected isExpanded: boolean = false;
 	protected readonly chipsEllipsis$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
 		false,
@@ -46,7 +50,21 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	private OnChange!: (value: number[]) => void;
 	private OnTouched!: (value: number[]) => void;
 
-	constructor() {
+	get getViewSelect(): boolean {
+		return (
+			(this.isExpanded && this.selectedOptions$?.value.length > 0) ||
+			(this.isExpanded && this.viewOptions$.value.length > 0)
+		);
+	}
+
+	@HostListener('document:click', ['$event'])
+	DocumentClick(event: Event) {
+		if (this.isExpanded) {
+			this.isExpanded = this.elem.nativeElement.contains(event.target);
+		}
+	}
+
+	constructor(private elem: ElementRef) {
 		this.subscription.add(
 			this.selectedOptions$.subscribe(item => {
 				if (item.length > 3) {
@@ -93,7 +111,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	}
 
 	protected addStateOptions(item: IFilterOption) {
-		if (!this.readOnly$.value) {
+		if (!this.readOnly) {
 			item.checked = true;
 			this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
 			const selected = this.selectedOptions$.value;
@@ -105,7 +123,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	}
 
 	protected delSelectedOption(item: IFilterOption) {
-		if (!this.readOnly$.value) {
+		if (!this.readOnly) {
 			const oldSelected = this.selectedOptions$.value;
 			item.checked = false;
 			this.selectedOptions$.next(oldSelected.filter(val => val.checked));
@@ -121,6 +139,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 			if (this.options$.value.length) {
 				this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
 			}
+			this.isExpanded = true;
 		}
 
 		if (changes.readOnly) {
@@ -133,10 +152,12 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	}
 
 	protected clear() {
-		this.isExpanded = false;
-		this.options.forEach(opt => (opt.checked = false));
-		this.viewOptions$.next(this.options);
+		this.queryControl.setValue(null);
+		this.options = [];
+		this.viewOptions$.next([]);
 		this.selectedOptions$.next([]);
+		this.isExpanded = false;
+		this.updateStateControl();
 	}
 
 	protected close() {
