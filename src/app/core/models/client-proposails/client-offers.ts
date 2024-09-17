@@ -50,7 +50,6 @@ export interface IClientOffersDto {
 	advantages: IAdvantage[];
 	promotionalMaterials: IFilesProposals[];
 	documents: IFilesProposals[];
-
 }
 
 export interface IRequestGetClientOffer {
@@ -58,6 +57,7 @@ export interface IRequestGetClientOffer {
 	productionIds: number[];
 	TovGroups: number[];
 	TprFlags: number[];
+	TovSubGroups: number[];
 }
 
 export enum ClientProposalsTypeDocuments {

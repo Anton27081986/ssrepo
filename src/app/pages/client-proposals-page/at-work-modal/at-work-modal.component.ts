@@ -10,11 +10,9 @@ import {
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
 import { ICreateOfferItem } from '@app/core/models/client-proposails/create-offer-item';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { map, Observable } from 'rxjs';
 
 interface IOfferData {
-	clientOfferId: string;
+	clientId: number;
 	items: IClientOffersDto[];
 }
 
@@ -25,8 +23,8 @@ interface IOfferData {
 	templateUrl: './at-work-modal.component.html',
 })
 export class AtWorkModalComponent {
-	protected clientOfferId: string = '';
 	protected items: ICreateOfferItem[] = [];
+	protected clientId!: number;
 
 	constructor(
 		private readonly modalService: ModalService,
@@ -35,8 +33,7 @@ export class AtWorkModalComponent {
 		@Inject(DIALOG_DATA) private readonly data: IOfferData,
 	) {
 		if (data) {
-			this.clientOfferId = this.data.clientOfferId;
-
+			this.clientId = data.clientId;
 			this.items = this.data.items.map(item => {
 				return {
 					tovProductId: item.tovProductionId,
@@ -78,11 +75,12 @@ export class AtWorkModalComponent {
 
 		this.clientProposalsFacadeService
 			.saveOffer({
-				offerId: this.clientOfferId,
+				clientId: this.clientId,
 				items: this.items,
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
+				this.clientProposalsFacadeService.blockForProposalSubject$.next(false);
 				this.modalRef.close();
 			});
 	}

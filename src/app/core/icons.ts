@@ -92,9 +92,9 @@ export class AppIcons {
 		'</svg>';
 
 	public static close =
-		'<svg width="14" height="14" viewBox="0 0 14 10" fill="currentColor" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M13 1L1 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
-		'<path d="M1 1L13 13" stroke="#6D7885" stroke-width="1.5" stroke-linecap="round"/>\n' +
+		'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M16 4L4 16" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round"/>' +
+		'<path d="M4 4L16 16" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round"/>' +
 		'</svg>';
 
 	public static enter =

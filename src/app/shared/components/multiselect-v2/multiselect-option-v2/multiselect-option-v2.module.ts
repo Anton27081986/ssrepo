@@ -12,15 +12,14 @@ import {
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
-import { MultiselectV2Component } from '@app/shared/components/multiselect-v2/multiselect-v2.component';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MultiselectOptionV2Component } from '@app/shared/components/multiselect-v2/multiselect-option-v2/multiselect-option-v2.component';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
-import { MultiselectAutocompleteV2Module } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.module';
 
 @NgModule({
-	declarations: [MultiselectV2Component],
-	exports: [MultiselectV2Component],
+	declarations: [MultiselectOptionV2Component],
+	exports: [MultiselectOptionV2Component],
 	imports: [
 		CaptionModule,
 		NgIf,
@@ -37,7 +36,6 @@ import { MultiselectAutocompleteV2Module } from '@app/shared/components/inputs/m
 		NgSwitch,
 		NgSwitchCase,
 		TooltipModule,
-		MultiselectAutocompleteV2Module,
 	],
 })
-export class MultiselectV2Module {}
+export class MultiselectOptionV2Module {}

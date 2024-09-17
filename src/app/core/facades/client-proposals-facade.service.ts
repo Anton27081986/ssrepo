@@ -118,7 +118,9 @@ export class ClientProposalsFacadeService {
 					total: items.total,
 					items: data,
 					linkToModule: items.linkToModule,
-					clientOfferId: items.clientOfferId
+					clientOfferId: items.clientOfferId,
+					// alterFilterDefenitionNote: 'цйуцйуйцуйцуфыывйцуйц',
+					// isAlterFilter: true,
 				};
 			}),
 		);

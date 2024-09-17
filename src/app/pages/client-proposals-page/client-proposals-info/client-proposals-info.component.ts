@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
@@ -7,6 +7,7 @@ import { SearchInputItem } from '@app/shared/components/inputs/search-client-inp
 import { Observable, Subscription } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { ModalService } from '@app/core/modal/modal.service';
 
 @UntilDestroy()
 @Component({
@@ -69,6 +70,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 	constructor(
 		private readonly _router: Router,
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		private readonly modalService: ModalService,
 	) {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
 		this.permissions$ = this.clientProposalsFacadeService.permissions$;
@@ -127,4 +129,3 @@ export class ClientProposalsInfoComponent implements OnInit {
 		}
 	}
 }
-// width: '140px' и align: 'center' Покачто как заглушка, в будующем сделаю возможность центрования и настройку размера ячейки.

@@ -24,7 +24,7 @@ export class MultiselectChipsV2Component {
 	}
 
 	protected deleteChipEmit(chip: IFilterOption) {
-		if (this.readOnly) {
+		if (!this.readOnly) {
 			this.delChipEmit.emit(chip);
 		}
 	}

@@ -1,5 +1,5 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 @UntilDestroy()
@@ -10,9 +10,5 @@ import { IFilterOption } from '@app/shared/components/filters/filters.component'
 })
 export class MultiselectOptionV2Component {
 	@Input() public option: IFilterOption | null = null;
-	@Output() public outPutCheckItems: EventEmitter<any> = new EventEmitter<any>();
-
-	protected checkItems() {
-		this.outPutCheckItems.emit();
-	}
+	@Input() public disabled: boolean = false;
 }

@@ -1,10 +1,11 @@
-import {Component, Inject} from '@angular/core';
-import {ModalRef} from "@app/core/modal/modal.ref";
-import {DIALOG_DATA} from "@app/core/modal/modal-tokens";
+import { Component, Inject } from '@angular/core';
+import { ModalRef } from '@app/core/modal/modal.ref';
+import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 
 interface DialogData {
 	header: string;
 	text: string;
+	oneButton: boolean;
 }
 
 @Component({
@@ -15,16 +16,21 @@ interface DialogData {
 export class DialogComponent {
 	public header: string | undefined;
 	public text: string | undefined;
-	constructor(private modalRef: ModalRef, @Inject(DIALOG_DATA) private data: DialogData) {
+	public oneButton: boolean = false;
+	constructor(
+		private modalRef: ModalRef,
+		@Inject(DIALOG_DATA) private data: DialogData,
+	) {
 		if (!data) {
 			return;
 		}
 
 		this.header = data.header;
 		this.text = data.text;
+		this.oneButton = data.oneButton;
 	}
 
-	close(status:boolean) {
+	close(status: boolean) {
 		this.modalRef.close(status);
 	}
 }
