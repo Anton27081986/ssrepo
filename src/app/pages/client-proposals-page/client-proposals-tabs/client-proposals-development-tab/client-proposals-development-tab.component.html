@@ -12,6 +12,12 @@
 			<ng-template #text>
 				<ss-text size="1">Разработки АК</ss-text>
 			</ng-template>
+			<div class="control">
+				<input type="checkbox" (change)="onIsCompletting($event)" />
+				<ss-text size="2">
+					Выполнение задачи
+				</ss-text>
+			</div>
 		</ng-template>
 
 		<ng-template #body>
@@ -21,7 +27,9 @@
 				[head]="[
 					{title: 'Код', field: 'code'},
 					{title: 'Дата', field: 'date'},
-					{title: 'Название ТПР', field: 'name', sizeRatio: 4},
+					{title: 'Название ТПР', field: 'name', sizeRatio: 3},
+					{title: 'Статус', field: 'status'},
+					{title: 'Продажи ТПР', field: 'sale', sizeRatio: 2},
 					]"
 				[items]="getTableItems(developments)"
 			>

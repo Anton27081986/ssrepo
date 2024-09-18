@@ -20,6 +20,9 @@ import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { catchError } from 'rxjs/operators';
 import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
 import { TypeReportEnum } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
+import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
+import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
+import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
 
 export interface IFile {
 	id: number;
@@ -64,26 +67,54 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getTrips(params: IRequestGetProposals): Observable<IResponse<IBusinessTripsDto>> {
+	public getTrips(params: IRequestGetBusinessTrips): Observable<IResponse<IBusinessTripsDto>> {
+		let httpParams = new HttpParams()
+			.set('clientId', params.clientId)
+			.set('Limit', params.limit)
+			.set('Offset', params.offset);
+
+		if (params.onlyCurrentYear) {
+			httpParams = httpParams.set('OnlyCurrentYear', params.onlyCurrentYear);
+		}
+
 		return this.http.get<IResponse<IBusinessTripsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/trips`,
 			{
-				params: new HttpParams()
-					.set('clientId', params.clientId)
-					.set('Limit', params.limit)
-					.set('Offset', params.offset),
+				params: httpParams,
 			},
 		);
 	}
 
-	public getTradeList(params: IRequestGetProposals): Observable<IResponse<ITradeList>> {
+	public getTradeList(params: IRequestGetTradeList): Observable<IResponse<ITradeList>> {
+		let httpParams = new HttpParams()
+			.set('clientId', params.clientId)
+			.set('Limit', params.limit)
+			.set('Offset', params.offset);
+
+		if (params.TovIds?.length) {
+			params.TovIds.forEach((id, index) => {
+				if (id) {
+					if (index === 0) {
+						httpParams = httpParams.set('TovIds', id);
+					} else {
+						httpParams = httpParams.append('TovIds', id);
+					}
+				}
+			});
+		}
+
+		if (params.DateTo && !params.DateTo.includes('NaN')) {
+			if (params.DateFrom) {
+				httpParams = httpParams.set('DateFrom', params.DateFrom);
+			}
+
+			httpParams = httpParams.set('DateTo', params.DateTo);
+		}
+
 		return this.http.get<IResponse<ITradeList>>(
 			`${environment.apiUrl}/api/company/ClientProposals/productSheets`,
 			{
-				params: new HttpParams()
-					.set('clientId', params.clientId)
-					.set('Limit', params.limit)
-					.set('Offset', params.offset),
+				params: httpParams,
 			},
 		);
 	}
@@ -114,7 +145,7 @@ export class ClientProposalsApiService {
 	}
 
 	public getCommitteeDevelopments(
-		params: IRequestGetProposals,
+		params: IRequestGetDevelopment,
 	): Observable<IResponse<IDevelopmentDto>> {
 		return this.http.get<IResponse<IDevelopmentDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/CommitteeDevelopments`,
@@ -122,7 +153,8 @@ export class ClientProposalsApiService {
 				params: new HttpParams()
 					.set('clientId', params.clientId)
 					.set('Limit', params.limit)
-					.set('Offset', params.offset),
+					.set('Offset', params.offset)
+					.set('isCompleting', params.isCompleting),
 			},
 		);
 	}

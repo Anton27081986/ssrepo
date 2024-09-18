@@ -22,6 +22,7 @@ export class ClientProposalsDevelopmentTabComponent {
 	public pageSize = 4;
 	public pageIndex = 1;
 	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public isCompleting$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
 		this.developments$ = combineLatest([
@@ -30,10 +31,13 @@ export class ClientProposalsDevelopmentTabComponent {
 		]).pipe(
 			filterTruthy(),
 			map(([id, offset]) => {
+				const isCompleting = this.isCompleting$.value;
+
 				return this.clientProposalsFacadeService.getDevelopment({
 					clientId: id,
 					limit: this.pageSize,
 					offset,
+					isCompleting,
 				});
 			}),
 			switchMap(item => {
@@ -50,7 +54,6 @@ export class ClientProposalsDevelopmentTabComponent {
 				text: x.id.toString() ?? '-',
 				url: x.linkToDetail ?? '',
 			};
-
 			tableItem.name = x.name;
 			tableItem.date = x.reportDate
 				? new Date(Date.parse(x.reportDate)).toLocaleString('ru-RU', {
@@ -59,6 +62,8 @@ export class ClientProposalsDevelopmentTabComponent {
 						day: 'numeric',
 					})
 				: '-';
+			tableItem.status = x.status.name ?? '-';
+			tableItem.sale = x.sale ?? '-';
 
 			return tableItem;
 		});
@@ -74,5 +79,11 @@ export class ClientProposalsDevelopmentTabComponent {
 		}
 
 		this.pageIndex = $event;
+	}
+
+	protected onIsCompletting(e: Event) {
+		this.isCompleting$.next((e.currentTarget! as HTMLInputElement).checked);
+		this.offset.next(0);
+		this.pageIndex = 1;
 	}
 }

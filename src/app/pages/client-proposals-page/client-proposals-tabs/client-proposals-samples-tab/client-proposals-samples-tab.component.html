@@ -18,7 +18,7 @@
 				[head]="[
 							{title: 'Код', field: 'code',sizeRatio: 0.2},
 							{title: 'Товарная позиция', field: 'tov', sizeRatio: 1},
-							{title: 'Стоимость образца, руб.', field: 'price',sizeRatio: 0.2},
+							{title: 'Стоимость образца, руб.', field: 'price',sizeRatio: 0.2, tooltip: 'Цена прайса * дата заказа * вес * кол-во'},
 							{title: 'Продажи, руб.', field: 'sales',sizeRatio: 0.2},
 							{title: 'Количество(факт)', field: 'quantity',sizeRatio: 0.2},
 							{title: 'Вес(факт)', field: 'weight',sizeRatio: 0.2},
@@ -28,13 +28,18 @@
 			</ss-table>
 		</ng-template>
 		<ng-template #footer>
-			<ss-pagination
-				[total]="samples.total"
-				[pageIndex]="pageIndex"
-				[pageSize]="pageSize"
-				(changeIndex)="nzPageIndexChange($event)"
-			>
-			</ss-pagination>
+			<div class="footer">
+				<ss-text class="footer-total" size="3">
+					Продажи (всего), руб: {{samples.totalSales}}
+				</ss-text>
+				<ss-pagination
+					[total]="samples.total"
+					[pageIndex]="pageIndex"
+					[pageSize]="pageSize"
+					(changeIndex)="nzPageIndexChange($event)"
+				>
+				</ss-pagination>
+			</div>
 		</ng-template>
 	</ng-container>
 	<ng-template #empty>

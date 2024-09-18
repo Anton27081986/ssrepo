@@ -1,10 +1,13 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="calendar-button" (click)="picker.open()">
-	<div class="calendar-button-text">
+	<div class="calendar-button-text" *ngIf="startDate || endDate; else noDates">
 		<ss-text size="2">{{startDate}}</ss-text>
 		<div *ngIf="endDate" class="calendar-button-text-separator"></div>
 		<ss-text size="2">{{endDate}}</ss-text>
 	</div>
+	<ng-template #noDates>
+		<div class="calendar-button-text">{{placeholder}}</div>
+	</ng-template>
 	<ss-icon height="16" name="calendar"></ss-icon>
 </div>
 <mat-form-field class="date-range">

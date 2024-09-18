@@ -13,6 +13,7 @@ import {
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { environment } from '@environments/environment';
+import {TooltipPosition, TooltipTheme} from "@app/shared/components/tooltip/tooltip.enums";
 
 export type Cell = { text: string; pseudoLink: string } & { icon: string } & { text: string; url?: string } & Array<{
 		text: string;
@@ -29,6 +30,7 @@ export interface ITableHead {
 	field: string;
 	sizeRatio?: number;
 	isNumber?: boolean;
+	tooltip?: string;
 }
 
 @Component({
@@ -88,4 +90,6 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 	}
 
 	protected readonly environment = environment;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
 }

@@ -10,6 +10,12 @@
 			<ng-template #text>
 				<ss-text size="1">Командировки</ss-text>
 			</ng-template>
+			<div class="control">
+				<input type="checkbox" (change)="onOnlyCurrentYear($event)" />
+				<ss-text size="2">
+					С начала текущего года
+				</ss-text>
+			</div>
 		</ng-template>
 		<ng-template #body>
 			<ss-table
@@ -19,7 +25,8 @@
 					{title: 'Код', field: 'code'},
 					{title: 'Дата командировки', field: 'date', sizeRatio: 3},
 					{title: 'Задачи', field: 'task', sizeRatio: 4},
-					{title: 'Участники', field: 'members', sizeRatio: 4}
+					{title: 'Участники', field: 'members', sizeRatio: 4},
+					{title: 'Расходы', field: 'expensesList', sizeRatio: 4}
 					]"
 				[items]="getTableItems(trips)"
 			>
@@ -29,13 +36,16 @@
 			</ng-template>
 		</ng-template>
 		<ng-template #footer>
-			<ss-pagination
-				[total]="trips.total"
-				[pageIndex]="pageIndex"
-				[pageSize]="pageSize"
-				(changeIndex)="nzPageIndexChange($event)"
-			>
-			</ss-pagination>
+			<div class="footer">
+				<ss-text *ngIf="trips.totalClientSales" class="footer-total" size="1">Продажи по клиенту: {{trips.totalClientSales}}</ss-text>
+				<ss-pagination
+					[total]="trips.total"
+					[pageIndex]="pageIndex"
+					[pageSize]="pageSize"
+					(changeIndex)="nzPageIndexChange($event)"
+				>
+				</ss-pagination>
+			</div>
 		</ng-template>
 	</ng-container>
 </ss-card>
