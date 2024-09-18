@@ -9,6 +9,12 @@
 	}
 }
 
+.control {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 8px;
+}
+
 .pagination {
 	margin: 0;
 	justify-content: flex-end;

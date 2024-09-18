@@ -1,6 +1,11 @@
 <div class="header" [ngClass]="{'scroll': scroll}" *ngIf="head" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
 	<div class="header__cell" [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">
-		{{ headItem.title }}
+		<ng-container *ngIf="!headItem.tooltip; else tooltip">
+			<div>{{ headItem.title }}</div>
+		</ng-container>
+		<ng-template #tooltip>
+			<div [tooltip]="headItem.tooltip!" [theme]="TooltipTheme.MAIN">{{ headItem.title }}</div>
+		</ng-template>
 	</div>
 </div>
 <div class="body" #bodyEl>

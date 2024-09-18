@@ -22,6 +22,9 @@ import { ProductionsApiService } from '@app/core/api/productions-api.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
+import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
+import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
+import {IRequestGetBusinessTrips} from "@app/core/models/client-proposails/request-get-business-trips";
 
 @UntilDestroy()
 @Injectable()
@@ -75,11 +78,11 @@ export class ClientProposalsFacadeService {
 		return this.clientProposalsApiService.getSamples(params);
 	}
 
-	public getTradeList(params: IRequestGetProposals): Observable<IResponse<ITradeList>> {
+	public getTradeList(params: IRequestGetTradeList): Observable<IResponse<ITradeList>> {
 		return this.clientProposalsApiService.getTradeList(params);
 	}
 
-	public getTrips(params: IRequestGetProposals): Observable<IResponse<IBusinessTripsDto>> {
+	public getTrips(params: IRequestGetBusinessTrips): Observable<IResponse<IBusinessTripsDto>> {
 		return this.clientProposalsApiService.getTrips(params);
 	}
 
@@ -87,7 +90,7 @@ export class ClientProposalsFacadeService {
 		return this.clientProposalsApiService.getContractors(params);
 	}
 
-	public getDevelopment(params: IRequestGetProposals): Observable<IResponse<IDevelopmentDto>> {
+	public getDevelopment(params: IRequestGetDevelopment): Observable<IResponse<IDevelopmentDto>> {
 		return this.clientProposalsApiService.getCommitteeDevelopments(params);
 	}
 
@@ -118,6 +121,7 @@ export class ClientProposalsFacadeService {
 					total: items.total,
 					items: data,
 					linkToModule: items.linkToModule,
+					clientOfferId: items.clientOfferId,
 					clientOfferId: items.clientOfferId,
 					// alterFilterDefenitionNote: 'цйуцйуйцуйцуфыывйцуйц',
 					// isAlterFilter: true,

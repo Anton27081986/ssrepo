@@ -22,6 +22,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 	public pageSize = 4;
 	public pageIndex = 1;
 	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public onlyCurrentYear$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
 		this.businessTrips$ = combineLatest([
@@ -30,10 +31,13 @@ export class ClientProposalsBusinessTripsTabComponent {
 		]).pipe(
 			filterTruthy(),
 			map(([id, offset]) => {
+				const onlyCurrentYear = this.onlyCurrentYear$.value;
+
 				return this.clientProposalsFacadeService.getTrips({
 					clientId: id,
 					limit: this.pageSize,
 					offset,
+					onlyCurrentYear,
 				});
 			}),
 			switchMap(item => {
@@ -51,20 +55,19 @@ export class ClientProposalsBusinessTripsTabComponent {
 				text: x.id.toString() ?? '-',
 				url: x.linkToDetail ?? '',
 			};
-			tableItem.date =
-				new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				}) +
-				' - ' +
-				new Date(Date.parse(x.endDate)).toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				});
+			tableItem.date = `${new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+			})} - ${new Date(Date.parse(x.endDate)).toLocaleString('ru-RU', {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+			})}`;
 			tableItem.task = x.goal ? x.goal.name : '-';
 			tableItem.members = x.members?.map(c => c.name).join(', ') ?? '-';
+			tableItem.expensesList =
+				x.expensesList?.map(c => `${c.expenses} ${c.currency}`).join(', ') ?? '-';
 
 			return tableItem;
 		});
@@ -80,5 +83,11 @@ export class ClientProposalsBusinessTripsTabComponent {
 		}
 
 		this.pageIndex = $event;
+	}
+
+	protected onOnlyCurrentYear(e: Event) {
+		this.onlyCurrentYear$.next((e.currentTarget! as HTMLInputElement).checked);
+		this.offset.next(0);
+		this.pageIndex = 1;
 	}
 }
