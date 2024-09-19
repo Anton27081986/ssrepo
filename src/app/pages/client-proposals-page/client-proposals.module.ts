@@ -117,6 +117,7 @@ import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-r
 		NotificationToastModule,
 		NoticeModule,
 		MultiselectAutocompleteV2Module,
+		DateRangeModule,
 	],
 })
 export class ClientProposalsModule {}

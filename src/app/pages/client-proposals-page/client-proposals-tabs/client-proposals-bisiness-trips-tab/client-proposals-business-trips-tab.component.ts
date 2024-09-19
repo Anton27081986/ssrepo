@@ -9,6 +9,7 @@ import { IResponse } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-table-item';
+import {TooltipTheme} from "@app/shared/components/tooltip/tooltip.enums";
 
 @UntilDestroy()
 @Component({
@@ -90,4 +91,6 @@ export class ClientProposalsBusinessTripsTabComponent {
 		this.offset.next(0);
 		this.pageIndex = 1;
 	}
+
+	protected readonly TooltipTheme = TooltipTheme;
 }

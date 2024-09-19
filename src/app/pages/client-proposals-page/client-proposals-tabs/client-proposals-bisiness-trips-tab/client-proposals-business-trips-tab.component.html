@@ -37,7 +37,7 @@
 		</ng-template>
 		<ng-template #footer>
 			<div class="footer">
-				<ss-text *ngIf="trips.totalClientSales" class="footer-total" size="1">Продажи по клиенту: {{trips.totalClientSales}}</ss-text>
+				<ss-text *ngIf="trips.totalClientSales" [tooltip]="'За год от текущей даты'" [theme]="TooltipTheme.MAIN" class="footer-total" size="1">Продажи по клиенту: {{trips.totalClientSales | numWithSpaces}} RUR</ss-text>
 				<ss-pagination
 					[total]="trips.total"
 					[pageIndex]="pageIndex"
