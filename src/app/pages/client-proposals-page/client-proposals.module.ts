@@ -52,8 +52,8 @@ import { SelectModule } from '@app/shared/components/select/select.module';
 import { NotificationToastModule } from '@app/widgets/notification-toast/notification-toast.module';
 import { NoticeModule } from '@app/components/notice/notice.module';
 import { MultiselectAutocompleteV2Module } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.module';
-import {FiltersModule} from "@app/shared/components/filters/filters.module";
-import {DateRangeModule} from "@app/shared/components/inputs/date-range/date-range.module";
+import { FiltersModule } from '@app/shared/components/filters/filters.module';
+import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-range.module';
 
 @NgModule({
 	declarations: [
@@ -112,48 +112,11 @@ import {DateRangeModule} from "@app/shared/components/inputs/date-range/date-ran
 		SsDividerModule,
 		MultiselectV2Module,
 		SelectModule,
+		FiltersModule,
+		DateRangeModule,
 		NotificationToastModule,
 		NoticeModule,
 		MultiselectAutocompleteV2Module,
-		DateRangeModule,
 	],
-    imports: [
-        CommonModule,
-        ClientProposalsRoutingModule,
-        HeadlineModule,
-        SearchInputModule,
-        AccordionModule,
-        ReactiveFormsModule,
-        TableModule,
-        TabsModule,
-        CardModule,
-        MultiselectModule,
-        ButtonModule,
-        SearchClientInputModule,
-        TableV2Module,
-        IconModule,
-        FilePickerModule,
-        NzDropDownModule,
-        ScrollableBlockModule,
-        ChipsSearchModule,
-        TextModule,
-        NzPaginationModule,
-        EmptyDataPageModule,
-        CaptionModule,
-        ComponentsModule,
-        CaptionModule,
-        TooltipModule,
-        FormsModule,
-        ClipboardModule,
-        LoaderModule,
-        InputModule,
-        PipesModule,
-        SsMenuModule,
-        SsDividerModule,
-        MultiselectV2Module,
-        SelectModule,
-        FiltersModule,
-        DateRangeModule,
-    ],
 })
 export class ClientProposalsModule {}

@@ -24,7 +24,7 @@ import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
 import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
-import {IRequestGetBusinessTrips} from "@app/core/models/client-proposails/request-get-business-trips";
+import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
 
 @UntilDestroy()
 @Injectable()
@@ -122,9 +122,6 @@ export class ClientProposalsFacadeService {
 					items: data,
 					linkToModule: items.linkToModule,
 					clientOfferId: items.clientOfferId,
-					clientOfferId: items.clientOfferId,
-					// alterFilterDefenitionNote: 'цйуцйуйцуйцуфыывйцуйц',
-					// isAlterFilter: true,
 				};
 			}),
 		);
