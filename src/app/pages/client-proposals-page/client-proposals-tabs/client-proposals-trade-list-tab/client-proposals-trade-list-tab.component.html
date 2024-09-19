@@ -25,9 +25,9 @@
 				[head]="[
 				{title: 'ТП', field: 'name', sizeRatio: 3},
 				{title: 'Дата', field: 'date'},
-				{title: 'Цена', field: 'price'},
-				{title: 'Количество', field: 'quantity'},
-				{title: 'Сумма', field: 'amount'},
+				{title: 'Цена', field: 'price', isNumber: true},
+				{title: 'Количество', field: 'quantity', isNumber: true},
+				{title: 'Сумма', field: 'amount', isNumber: true},
 				{title: 'Валюта', field: 'currency'},
 				]"
 				[items]="getTableItems(list)

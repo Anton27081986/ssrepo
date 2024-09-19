@@ -29,7 +29,7 @@
 						{{ link.text }}
 					</a>
 				</span>
-				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
+				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] | numWithSpaces }}</span>
 			</ng-container>
 			<ss-icon class="maximise" name="maximise" *ngIf="(cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
 		</div>
