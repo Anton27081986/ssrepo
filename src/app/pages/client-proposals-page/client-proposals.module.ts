@@ -115,6 +115,7 @@ import {DateRangeModule} from "@app/shared/components/inputs/date-range/date-ran
 		NotificationToastModule,
 		NoticeModule,
 		MultiselectAutocompleteV2Module,
+		DateRangeModule,
 	],
     imports: [
         CommonModule,
