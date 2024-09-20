@@ -27,7 +27,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { SettingsViewColumnComponent } from '@app/pages/client-proposals-page/settings-view-column/settings-view-column.component';
 import { ClientProposalsFilterComponent } from '@app/pages/client-proposals-page/client-proposals-filter/client-proposals-filter.component';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
-import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-page/client-proposals-table-vgp/client-proposals-table-vgp.component';
+import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-page/client-proposals/client-proposals-table-vgp/client-proposals-table-vgp.component';
 import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/scrollable-block.module';
 import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
@@ -55,6 +55,7 @@ import { MultiselectAutocompleteV2Module } from '@app/shared/components/inputs/m
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-range.module';
 
+import { ClientProposalsCardComponent } from '@app/pages/client-proposals-page/client-proposals/client-proposals-card/client-proposals-card.component';
 @NgModule({
 	declarations: [
 		ClientProposalsPageComponent,
@@ -76,6 +77,7 @@ import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-r
 		ClientProposalsViewFilesPopoverComponent,
 		AtWorkModalComponent,
 		AtWorkRowItemTrComponent,
+		ClientProposalsCardComponent,
 	],
 	imports: [
 		CommonModule,

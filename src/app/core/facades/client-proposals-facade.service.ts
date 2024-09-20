@@ -3,25 +3,26 @@ import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.s
 import { BehaviorSubject, filter, map, Observable, OperatorFunction, tap } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
-import { INewsDto } from '@app/core/models/client-proposails/news';
-import { ISamples } from '@app/core/models/client-proposails/samples';
-import { ITradeList } from '@app/core/models/client-proposails/trade-list';
-import { IContractorsDto } from '@app/core/models/client-proposails/contractors';
-import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
-import { IRequestGetProposals } from '@app/core/models/client-proposails/request-get-proposals';
 import { ActivatedRoute } from '@angular/router';
-import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 import {
 	IClientOffersDto,
 	IFilesProposals,
 	IRequestGetClientOffer,
 } from '@app/core/models/client-proposails/client-offers';
-import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ProductionsApiService } from '@app/core/api/productions-api.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
+import { IRequestGetProposals } from '@app/core/models/client-proposails/request-get-proposals';
+import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
+import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
+import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
+import { IContractorsDto } from '@app/core/models/client-proposails/contractors';
+import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
+import { ITradeList } from '@app/core/models/client-proposails/trade-list';
+import { ISamples } from '@app/core/models/client-proposails/samples';
+import { INewsDto } from '@app/core/models/client-proposails/news';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
 import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
 import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
@@ -31,6 +32,8 @@ import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/req
 export class ClientProposalsFacadeService {
 	public clientId$: Observable<number>;
 
+	public isAlterFilter$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public alterFilterDefenitionNote$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 	private readonly permissionsSubject = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissionsSubject.asObservable();
 
@@ -43,7 +46,8 @@ export class ClientProposalsFacadeService {
 		private readonly clientProposalsApiService: ClientProposalsApiService,
 		private readonly clientProductionsApiService: ProductionsApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
-		activatedRoute: ActivatedRoute,
+		private readonly permissionService: PermissionsFacadeService,
+		private readonly activatedRoute: ActivatedRoute,
 	) {
 		this.clientId$ = activatedRoute.paramMap.pipe(
 			filterTruthy(),
@@ -116,6 +120,9 @@ export class ClientProposalsFacadeService {
 						});
 					}
 				});
+
+				this.isAlterFilter$.next(items.isAlterFilter!);
+				this.alterFilterDefenitionNote$.next(items.alterFilterDefenitionNote!);
 
 				return {
 					total: items.total,

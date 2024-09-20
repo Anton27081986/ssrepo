@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 

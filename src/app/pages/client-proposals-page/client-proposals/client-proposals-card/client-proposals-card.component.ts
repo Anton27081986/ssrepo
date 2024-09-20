@@ -1,24 +1,21 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Component, Input } from '@angular/core';
-import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
-import { ModalService } from '@app/core/modal/modal.service';
+import { Component } from '@angular/core';
+import { ColumnsStateService } from '@app/core/columns.state.service';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { IResponse } from '@app/core/utils/response';
+import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
-import { IResponse } from '@app/core/utils/response';
-import { ColumnsStateService } from '@app/core/columns.state.service';
-import { IStoreTableBaseColumn } from '@app/core/store';
-import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
-import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
-import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
+import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
+import { ModalService } from '@app/core/modal/modal.service';
+import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -29,22 +26,28 @@ export interface IClientProposalsCriteriaForm {
 
 @UntilDestroy()
 @Component({
-	selector: 'app-client-proposals-table-vgp',
-	templateUrl: './client-proposals-table-vgp.component.html',
-	styleUrls: ['./client-proposals-table-vgp.component.scss'],
+	selector: 'app-client-proposals-card',
+	templateUrl: './client-proposals-card.component.html',
+	styleUrls: ['./client-proposals-card.component.scss'],
 	providers: [ColumnsStateService, CheckFileListStateService],
 })
-export class ClientProposalsTableVgpComponent {
-	@Input() public clientId: number | null = null;
-
+export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	protected clientOffers$!: Observable<IResponse<IClientOffersDto>>;
 	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
+	public isAlterFilter$ = this.clientProposalsFacadeService.isAlterFilter$;
+	public alterFilterDefenitionNote$ =
+		this.clientProposalsFacadeService.alterFilterDefenitionNote$;
+
 	public vgpQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	public tgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	public tpgQueryControl: FormControl<string | null> = new FormControl<string | null>(null);
+
+	protected offersItems$: BehaviorSubject<IClientOffersDto[]> = new BehaviorSubject<
+		IClientOffersDto[]
+	>([]);
 
 	get vgpFormControl(): number[] {
 		return this.form.controls.vgpIds.value ? this.form.controls.vgpIds.value : [];
@@ -77,15 +80,11 @@ export class ClientProposalsTableVgpComponent {
 	protected productionOptionsTpg$: Observable<IDictionaryItemDto[]>;
 	protected productionOptionsSign$: Observable<IDictionaryItemDto[]>;
 
-	public constructor(
-		private readonly modalService: ModalService,
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		protected readonly _columnState: ColumnsStateService,
+	constructor(
+		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		protected readonly checkListStateService: CheckFileListStateService,
-		protected readonly http: HttpClient,
+		private readonly modalService: ModalService,
 	) {
-		this._columnState.cols$.next(this.defaultCols);
-
 		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
 			filterTruthy(),
 			switchMap(val => {
@@ -178,7 +177,7 @@ export class ClientProposalsTableVgpComponent {
 					});
 				}),
 				tap(value => {
-					this.isLoading$.next(false);
+					this.offersItems$.next(value.items);
 					if (value.total) {
 						this.clientProposalsFacadeService.blockForProposalSubject$.next(true);
 						if (!localStorage.getItem('warningClientProposalsBool')) {
@@ -199,6 +198,7 @@ export class ClientProposalsTableVgpComponent {
 								});
 						}
 					}
+					this.isLoading$.next(false);
 				}),
 			);
 		}
@@ -235,96 +235,9 @@ export class ClientProposalsTableVgpComponent {
 		}
 	}
 
-	public readonly defaultCols: IStoreTableBaseColumn[] = [
-		{
-			id: ClientProposalsRowItemField.vgp,
-			title: 'ВГП',
-			order: 1,
-			show: true,
-			width: null,
-		},
-		{
-			id: ClientProposalsRowItemField.tg,
-			title: 'ТГ',
-			order: 2,
-			show: true,
-			width: null,
-		},
-		{
-			id: ClientProposalsRowItemField.tpg,
-			title: 'ТПГ',
-			order: 3,
-			show: true,
-			width: null,
-		},
-		{
-			id: ClientProposalsRowItemField.tpr,
-			title: 'ТПР',
-			order: 4,
-			show: true,
-			width: null,
-		},
-		{
-			id: ClientProposalsRowItemField.countKA,
-			title: 'Кол-во КА с продажами ТПР',
-			order: 5,
-			show: true,
-			width: null,
-		},
-		{
-			id: ClientProposalsRowItemField.volumeOfSales,
-			title: 'Объём продаж ТПР, тн/год',
-			order: 6,
-			show: true,
-			width: null,
-		},
-
-		{
-			id: ClientProposalsRowItemField.ratingTpr,
-			title: 'Рейтинг ТПР',
-			order: 7,
-			show: true,
-			width: null,
-			toolTip:
-				'(ТПР имеет эффективное решение +1) * ' +
-				'Сумма заказов за полгода * Количество клиентов с продажами ТПР ' +
-				'за полгода * Фактический средний доход за полгода / 1000000',
-		},
-		{
-			id: ClientProposalsRowItemField.price,
-			title: 'Цена прайса, руб',
-			order: 8,
-			show: true,
-			width: '100px',
-			toolTip: 'Цена прайса, руб - Склад Союзснаб, прайс Союзснаб, предоплата',
-		},
-		{
-			id: ClientProposalsRowItemField.advantagesTpr,
-			title: 'Преимущества ТПР',
-			order: 9,
-			show: true,
-			width: '400px',
-		},
-		{
-			id: ClientProposalsRowItemField.rim,
-			title: 'РИМ',
-			order: 10,
-			show: true,
-			width: null,
-		},
-		{
-			id: ClientProposalsRowItemField.documents,
-			title: 'Документы',
-			order: 11,
-			show: true,
-			width: null,
-		},
-	];
-
-	protected openAtWorkModal(clientId: number, items: IClientOffersDto[]) {
+	protected openAtWorkModal(items: IClientOffersDto[]) {
 		this.modalService.open(AtWorkModalComponent, {
 			data: {
-				clientId,
 				items,
 			},
 		});

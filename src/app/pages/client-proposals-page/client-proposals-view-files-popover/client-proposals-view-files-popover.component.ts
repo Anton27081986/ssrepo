@@ -6,7 +6,7 @@ import {
 	ClientProposalsTypeDocuments,
 	IFilesProposals,
 } from '@app/core/models/client-proposails/client-offers';
-import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 
 interface FileData {
 	files: IFilesProposals[];
