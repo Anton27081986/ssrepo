@@ -10,9 +10,10 @@ import {
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
 import { ICreateOfferItem } from '@app/core/models/client-proposails/create-offer-item';
+import { tap } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 interface IOfferData {
-	clientId: number;
 	items: IClientOffersDto[];
 }
 
@@ -24,7 +25,6 @@ interface IOfferData {
 })
 export class AtWorkModalComponent {
 	protected items: ICreateOfferItem[] = [];
-	protected clientId!: number;
 
 	constructor(
 		private readonly modalService: ModalService,
@@ -33,7 +33,6 @@ export class AtWorkModalComponent {
 		@Inject(DIALOG_DATA) private readonly data: IOfferData,
 	) {
 		if (data) {
-			this.clientId = data.clientId;
 			this.items = this.data.items.map(item => {
 				return {
 					tovProductId: item.tovProductionId,
@@ -73,12 +72,17 @@ export class AtWorkModalComponent {
 			return;
 		}
 
-		this.clientProposalsFacadeService
-			.saveOffer({
-				clientId: this.clientId,
-				items: this.items,
-			})
-			.pipe(untilDestroyed(this))
+		this.clientProposalsFacadeService.clientId$
+			.pipe(
+				filterTruthy(),
+				switchMap(clientId => {
+					return this.clientProposalsFacadeService.saveOffer({
+						clientId,
+						items: this.items,
+					});
+				}),
+				untilDestroyed(this),
+			)
 			.subscribe(() => {
 				this.clientProposalsFacadeService.blockForProposalSubject$.next(false);
 				this.modalRef.close();

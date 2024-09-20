@@ -1,0 +1,40 @@
+@use '../../../../../styles/colors' as *;
+
+.client-proposals-table-vgp {
+	display: flex;
+	flex-direction: column;
+
+	&__loader {
+		animation: 1s linear 0s normal none infinite running rotation;
+		z-index: 9999999;
+		width: 15px;
+		height: 15px;
+	}
+
+	&__content {
+	    max-height: 80vh;
+		min-height: 450px;
+		padding: 16px 0;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		position: relative;
+	}
+
+	&__no-content {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin: auto;
+		align-items: center;
+		height: 448px;
+		padding-top: 20px;
+		justify-content: center;
+
+		&--description {
+			color: #6D7885;
+		}
+
+	}
+}
