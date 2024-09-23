@@ -75,6 +75,8 @@ export class ClientProposalsCardComponent {
 
 	protected readonly form: FormGroup<IClientProposalsCriteriaForm> = this.buildForm();
 
+	private clientId: number | null = null;
+
 	protected productionOptionsTg$: Observable<IDictionaryItemDto[]>;
 	protected productionOptionsVgp$: Observable<IDictionaryItemDto[]>;
 	protected productionOptionsTpg$: Observable<IDictionaryItemDto[]>;
@@ -85,6 +87,12 @@ export class ClientProposalsCardComponent {
 		protected readonly checkListStateService: CheckFileListStateService,
 		private readonly modalService: ModalService,
 	) {
+		this.clientProposalsFacadeService.clientId$
+			.pipe(untilDestroyed(this))
+			.subscribe(clientId => {
+				this.clientId = clientId;
+			});
+
 		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
 			filterTruthy(),
 			switchMap(val => {
@@ -178,8 +186,10 @@ export class ClientProposalsCardComponent {
 				}),
 				tap(value => {
 					this.offersItems$.next(value.items);
+
 					if (value.total) {
 						this.clientProposalsFacadeService.blockForProposalSubject$.next(true);
+
 						if (!localStorage.getItem('warningClientProposalsBool')) {
 							this.modalService
 								.open(DialogComponent, {
@@ -198,6 +208,7 @@ export class ClientProposalsCardComponent {
 								});
 						}
 					}
+
 					this.isLoading$.next(false);
 				}),
 			);
@@ -239,6 +250,7 @@ export class ClientProposalsCardComponent {
 		this.modalService.open(AtWorkModalComponent, {
 			data: {
 				items,
+				clientId: this.clientId,
 			},
 		});
 	}

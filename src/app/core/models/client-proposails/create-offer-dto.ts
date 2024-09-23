@@ -1,6 +1,12 @@
-import { ICreateOfferItem } from '@app/core/models/client-proposails/create-offer-item';
 
 export interface ICreateOfferDto {
 	clientId: number;
-	items: ICreateOfferItem[];
+	items: Array<{
+		tovProductId: number;
+		atWork: boolean;
+		commentId?: null | number;
+		potencial?: null | number;
+		objective?: null | number;
+		technologistId?: null | number;
+	}>;
 }
