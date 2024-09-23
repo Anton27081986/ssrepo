@@ -236,7 +236,7 @@ export class ClientProposalsApiService {
 
 	public saveOffer(body: ICreateOfferDto): Observable<ICreateOfferDto> {
 		return this.http.post<ICreateOfferDto>(
-			`${environment.apiUrl}/api/ClientProposals/clientOffers`,
+			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
 			body,
 		);
 	}

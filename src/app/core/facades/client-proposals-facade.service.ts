@@ -49,7 +49,7 @@ export class ClientProposalsFacadeService {
 		private readonly permissionService: PermissionsFacadeService,
 		private readonly activatedRoute: ActivatedRoute,
 	) {
-		this.clientId$ = activatedRoute.paramMap.pipe(
+		this.clientId$ = this.activatedRoute.paramMap.pipe(
 			filterTruthy(),
 			map(params => {
 				return Number(params.get('clientId'));
