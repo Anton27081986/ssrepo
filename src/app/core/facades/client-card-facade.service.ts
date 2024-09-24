@@ -8,6 +8,7 @@ import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto
 import { IClientEditRequest } from '@app/core/models/company/client-edit-request';
 import { CallPhoneService } from '@app/core/services/call-phone.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -56,6 +57,7 @@ export class ClientsCardFacadeService {
 	public constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly callPhoneService: CallPhoneService,
+		private readonly usersApiService: UsersApiService,
 	) {}
 
 	public setClientId(id: number | null) {
@@ -63,7 +65,8 @@ export class ClientsCardFacadeService {
 	}
 
 	public getClientCardById(id: number) {
-		this.isInfoLoadingSubject.next(true)
+		this.isInfoLoadingSubject.next(true);
+
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.getClientCardById(id)
@@ -87,6 +90,7 @@ export class ClientsCardFacadeService {
 
 	public getManagers() {
 		this.isManagersLoadingSubject.next(true);
+
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.getManagers(this.clientIdSubject.value!)
@@ -114,13 +118,13 @@ export class ClientsCardFacadeService {
 	}
 
 	public getContractors(id: number, isActiveOnly = true) {
-		this.isContractorsLoadingSubject.next(true)
+		this.isContractorsLoadingSubject.next(true);
 		this.clientApiService
 			.getContractors(id, isActiveOnly)
 			.pipe(
 				tap(contractors => {
 					this.contractorsSubject.next(contractors);
-					this.isContractorsLoadingSubject.next(false)
+					this.isContractorsLoadingSubject.next(false);
 				}),
 				untilDestroyed(this),
 			)
@@ -128,18 +132,15 @@ export class ClientsCardFacadeService {
 	}
 
 	public setBasicManager(managerId?: number) {
-		return this.clientApiService
-			.setBasicManager(this.clientIdSubject.value, managerId)
+		return this.clientApiService.setBasicManager(this.clientIdSubject.value, managerId);
 	}
 
 	public addManager(managerId?: number) {
-		return this.clientApiService
-			.addManager(this.clientIdSubject.value, managerId)
+		return this.clientApiService.addManager(this.clientIdSubject.value, managerId);
 	}
 
 	public deleteManager(managerId?: number) {
-		return this.clientApiService
-			.deleteManager(this.clientIdSubject.value, managerId)
+		return this.clientApiService.deleteManager(this.clientIdSubject.value, managerId);
 	}
 
 	public saveInfo(body: IClientEditRequest) {
@@ -155,5 +156,9 @@ export class ClientsCardFacadeService {
 
 	public callLocalUser(id: number | undefined) {
 		this.callPhoneService.toggleCallForUser(id);
+	}
+
+	public getUserById(id: string) {
+		return this.usersApiService.getUserById(id);
 	}
 }

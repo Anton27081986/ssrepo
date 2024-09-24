@@ -1,11 +1,9 @@
 import {
 	ChangeDetectorRef,
 	Component,
-	ElementRef,
 	EventEmitter,
 	Input,
 	Output,
-	ViewChild,
 } from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
