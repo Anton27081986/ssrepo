@@ -74,13 +74,13 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 				title: 'ТПР',
 				order: 1,
 				show: true,
-				width: '30%',
 			},
 			{
 				id: AtWorkRowItemField.atWork,
 				title: 'В работе',
 				order: 2,
 				show: true,
+				width: '12%',
 			},
 			{
 				id: AtWorkRowItemField.commentId,

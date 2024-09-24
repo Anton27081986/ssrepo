@@ -47,6 +47,8 @@
 		}
 
 		&--center {
+			gap: 12px;
+			flex-direction: row !important;
 			align-items: center;
 			display: flex;
 			justify-content: center;

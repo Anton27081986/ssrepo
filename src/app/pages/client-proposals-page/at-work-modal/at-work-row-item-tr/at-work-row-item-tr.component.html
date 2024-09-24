@@ -10,6 +10,7 @@
 				<ng-container *ngSwitchCase="AtWorkRowItemField.atWork">
 					<div class="hc-table-td__content hc-table-td__content--center">
 						<input type="checkbox" (change)="onCheckAtWork($event.target!); item.errors = {}" />
+						<ss-text size="3">Взять в работу</ss-text>
 					</div>
 				</ng-container>
 
@@ -37,6 +38,7 @@
 							size="small"
 							[value]="item.potencial"
 							type="number"
+							placeholder="Введите"
 							(change)="item.potencial = getInputValue($event.target!)"
 							(click)="item.errors.potencial = false"
 							[error]="item.errors.potencial ? 'Обязательное поле' : undefined"
@@ -54,6 +56,7 @@
 							size="small"
 							[value]="item.objective"
 							type="number"
+							placeholder="Введите"
 							(change)="item.objective = getInputValue($event.target!)"
 							(click)="item.errors.objective = false"
 							[error]="item.errors.objective ? 'Обязательное поле' : undefined"
