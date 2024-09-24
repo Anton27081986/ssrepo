@@ -3,6 +3,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';
 import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 export enum TypeReportEnum {
 	took = 0,
@@ -19,7 +21,14 @@ export class ClientProposalsPageComponent {
 	constructor(
 		private readonly _router: Router,
 		private readonly apiService: ClientProposalsApiService,
+		private readonly proposalsPermission: PermissionsFacadeService,
 	) {}
+
+	get canLoadFile(): boolean {
+		return this.proposalsPermission.hasPermission(
+			Permissions.CLIENT_PROPOSALS_CAN_DOWNLOADREPORTS,
+		);
+	}
 
 	protected readonly typeReport = TypeReportEnum;
 

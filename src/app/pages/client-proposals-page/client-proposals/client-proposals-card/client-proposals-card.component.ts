@@ -1,5 +1,5 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
@@ -13,9 +13,10 @@ import {
 } from '@app/core/facades/client-proposals-facade.service';
 import { switchMap } from 'rxjs/operators';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
-import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
+import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -30,6 +31,7 @@ export interface IClientProposalsCriteriaForm {
 	templateUrl: './client-proposals-card.component.html',
 	styleUrls: ['./client-proposals-card.component.scss'],
 	providers: [ColumnsStateService, CheckFileListStateService],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -73,6 +75,10 @@ export class ClientProposalsCardComponent {
 		return !this.form.valid;
 	}
 
+	get canTakeWork(): boolean {
+		return this.clientProposalsFacadeService.canTakeWork;
+	}
+
 	protected readonly form: FormGroup<IClientProposalsCriteriaForm> = this.buildForm();
 
 	private clientId: number | null = null;
@@ -86,6 +92,7 @@ export class ClientProposalsCardComponent {
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		protected readonly checkListStateService: CheckFileListStateService,
 		private readonly modalService: ModalService,
+		private readonly notificationToastService: NotificationToastService,
 	) {
 		this.clientProposalsFacadeService.clientId$
 			.pipe(untilDestroyed(this))
@@ -186,19 +193,21 @@ export class ClientProposalsCardComponent {
 				}),
 				tap(value => {
 					this.offersItems$.next(value.items);
-
 					if (value.total) {
-						this.clientProposalsFacadeService.blockForProposalSubject$.next(true);
+						if (this.canTakeWork) {
+							this.clientProposalsFacadeService.blockForProposalSubject$.next(true);
+						}
 
 						if (!localStorage.getItem('warningClientProposalsBool')) {
 							this.modalService
-								.open(DialogComponent, {
+								.open(NoticeDialogComponent, {
 									data: {
+										header: 'Предложение сформировано',
 										text:
 											'Каждый раз после получения рекомендаций \n' +
 											'необходимо брать в работу хотя бы одну из ТПР  \n' +
 											'для дальнейшего продвижения.',
-										oneButton: true,
+										type: 'Warning',
 									},
 								})
 								.afterClosed()
@@ -247,11 +256,20 @@ export class ClientProposalsCardComponent {
 	}
 
 	protected openAtWorkModal(items: IClientOffersDto[]) {
-		this.modalService.open(AtWorkModalComponent, {
-			data: {
-				items,
-				clientId: this.clientId,
-			},
-		});
+		this.modalService
+			.open(AtWorkModalComponent, {
+				data: {
+					items,
+					clientId: this.clientId,
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe(status => {
+				if (status) {
+					this.clientProposalsFacadeService.blockForProposalSubject$.next(false);
+					this.notificationToastService.addToast('Задачи успешно созданы', 'ok');
+				}
+			});
 	}
 }

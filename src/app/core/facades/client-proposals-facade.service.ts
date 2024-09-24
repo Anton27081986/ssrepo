@@ -26,30 +26,39 @@ import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.s
 import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
 import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
 import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @UntilDestroy()
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class ClientProposalsFacadeService {
 	public clientId$: Observable<number>;
 
 	public isAlterFilter$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public alterFilterDefenitionNote$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-	private readonly permissionsSubject = new BehaviorSubject<string[]>([]);
-	public permissions$ = this.permissionsSubject.asObservable();
 
 	private readonly tprRejectsReasonsSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public tprRejectsReasons$ = this.tprRejectsReasonsSubject.asObservable();
 
 	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(false);
 
+	get canTakeWork(): boolean {
+		return (
+			this.permissionService.proposalsPermissions$.value?.includes(
+				Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK,
+			) ?? false
+		);
+	}
+
 	constructor(
 		private readonly clientProposalsApiService: ClientProposalsApiService,
 		private readonly clientProductionsApiService: ProductionsApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
 		private readonly permissionService: PermissionsFacadeService,
-		private readonly activatedRoute: ActivatedRoute,
+		activatedRoute: ActivatedRoute,
 	) {
-		this.clientId$ = this.activatedRoute.paramMap.pipe(
+		this.clientId$ = activatedRoute.paramMap.pipe(
 			filterTruthy(),
 			map(params => {
 				return Number(params.get('clientId'));
@@ -69,9 +78,7 @@ export class ClientProposalsFacadeService {
 	public getDoneProductionsByClientId(
 		clientId: number,
 	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
-		return this.clientProposalsApiService
-			.getDoneProductions(clientId)
-			.pipe(tap(res => this.permissionsSubject.next(res.permissions)));
+		return this.clientProposalsApiService.getDoneProductions(clientId);
 	}
 
 	public getNewsByClientId(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {

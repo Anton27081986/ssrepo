@@ -78,6 +78,7 @@ import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.com
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks-partner-card/thanks-parther-card.component';
 import { AttachmentModule } from '@app/shared/components/attachment/attachment.module';
+import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
 
 @NgModule({
 	declarations: [
@@ -163,6 +164,7 @@ import { AttachmentModule } from '@app/shared/components/attachment/attachment.m
 		ChipsSearchModule,
 		DatepickerInputModule,
 		AttachmentModule,
+		FormControlInputWithFuncEditModule,
 	],
 	exports: [
 		MainMenuComponent,

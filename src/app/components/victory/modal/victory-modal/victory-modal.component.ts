@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
@@ -22,7 +22,7 @@ export interface VictoryModal {
 
 @UntilDestroy()
 @Component({
-	selector: 'app-add-victory-modal',
+	selector: 'app-victory-modal',
 	templateUrl: './victory-modal.component.html',
 	styleUrls: ['./victory-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,10 +46,7 @@ export class VictoryModalComponent {
 	protected readonly authUserId: number | null = null;
 	protected isChoiceLike: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	protected notes: FormControl<string | null> = new FormControl(null, [
-		Validators.required,
-		Validators.max(1000),
-	]);
+	protected notes: FormControl<string | null> = new FormControl(null, [Validators.required]);
 
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -146,6 +143,7 @@ export class VictoryModalComponent {
 				type: IObjectType.WINS,
 				objectId: id,
 			})
+			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryUpdated });
 			});
@@ -158,6 +156,7 @@ export class VictoryModalComponent {
 				type: IObjectType.WINS,
 				objectId: id,
 			})
+			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryUpdated });
 			});
