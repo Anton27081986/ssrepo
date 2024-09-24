@@ -36,7 +36,7 @@ export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, Co
 	@Input() public placeholder: string | undefined;
 	@Input() public options: IFilterOption[] = [];
 	@Input() public disabled: boolean = false;
-	@Input() public readOnly: boolean = false;
+	@Input() public readOnly: boolean | null = null;
 	@Input() public queryControl: FormControl<string | null> = new FormControl<string | null>(null);
 	protected isExpanded: boolean = false;
 	protected readonly chipsEllipsis$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(

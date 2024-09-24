@@ -1,0 +1,29 @@
+<ss-caption size="1">{{ label }}</ss-caption>
+<div class="input-edit" *ngIf="funcEdit">
+	<div class="input-edit__scope">
+		<div class="input-edit__left">
+			<ss-icon [name]="'editNew'"></ss-icon>
+			<ss-divider [direction]="'vertical'"></ss-divider>
+		</div>
+		<div class="input-edit__middle">
+			<ss-text [size]="'4'">Редактировать сообщение</ss-text>
+			<ss-text [size]="'3'">{{ oldValue }}</ss-text>
+		</div>
+	</div>
+	<div class="input-edit__right">
+		<ss-icon (click)="close()" [name]="'close'"></ss-icon>
+	</div>
+</div>
+<div class="input">
+	<input [type]="type"
+		   [placeholder]="placeholder"
+		   [attr.disabled]="disabled"
+		   [maxLength]="maxlength"
+		 	[formControl]="control"
+		   class="{{ error ? size + ' error' : size }}"
+		   #input
+	/>
+	<ss-icon *ngIf="input.value && !disabled" height="12" name="close"
+			 (click)="clear()"></ss-icon>
+</div>
+<ss-caption size="2" color="error">{{ error }}</ss-caption>

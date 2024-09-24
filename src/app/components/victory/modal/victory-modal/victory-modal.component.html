@@ -50,8 +50,8 @@
 		</ng-container>
 		<ss-divider></ss-divider>
 		<div class="victory-modal__footer">
-			<ss-input (cancelEditing)="cancelEditing()" [funcEdit]="(funcEdit$ | async)!" [formControl]="notes"
-					  [placeholder]="'Оставить комментарий'"></ss-input>
+			<ss-form-control-input-with-func-edit (cancelEditing)="cancelEditing()" [funcEdit]="(funcEdit$ | async)!" [control]="notes"
+					  [placeholder]="'Оставить комментарий'"></ss-form-control-input-with-func-edit>
 			<ss-button [size]="'small'" (click)="addOrUpdateComment(victory.id)">
 				<ss-icon [name]="'telegram'"></ss-icon>
 			</ss-button>

@@ -93,8 +93,7 @@ export class AtWorkModalComponent {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.clientProposalsFacadeService.blockForProposalSubject$.next(false);
-				this.modalRef.close();
+				this.modalRef.close(true);
 			});
 	}
 

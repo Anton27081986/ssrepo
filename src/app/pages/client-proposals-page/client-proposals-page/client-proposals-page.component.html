@@ -1,7 +1,7 @@
 <div class="clients-proposals-page">
 	<div class="clients-proposals-page__header">
 		<ss-headline size="h3">Контакт с клиентом: рекомендации по ВГП</ss-headline>
-		<div class="clients-proposals-page__download-reports">
+		<div class="clients-proposals-page__download-reports" *ngIf="canLoadFile">
 			<ss-text [size]="'1'">Отчеты по пользователю</ss-text>
 			<div class="clients-proposals-page__reports">
 				<ss-icon [tooltip]="'Обработанные предложения'" [theme]="TooltipTheme.MAIN"

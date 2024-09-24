@@ -33,7 +33,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	@Input() public placeholder: string | undefined;
 	@Input() public options: IFilterOption[] = [];
 	@Input() public disabled: boolean = false;
-	@Input() public readOnly: boolean = false;
+	@Input() public readOnly: boolean | null = null;
 	protected isExpanded: boolean = false;
 	protected readonly chipsEllipsis$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
 		false,

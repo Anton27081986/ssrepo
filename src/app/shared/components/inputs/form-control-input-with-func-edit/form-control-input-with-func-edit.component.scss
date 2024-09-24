@@ -79,3 +79,39 @@ ss-caption {
 :host-context(.dark) input {
 	background-color: $dark-island;
 }
+
+.input-edit {
+	padding: 4px 20px 4px 4px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	border: 1px solid $island-outline;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-bottom: none;
+	align-items: center;
+	justify-content: space-between;
+
+	&__left {
+		display: flex;
+		flex-wrap: nowrap;
+	}
+
+	&__middle {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: wrap;
+		max-width: 344px;
+	}
+
+	&__right {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	&__scope {
+		display: flex;
+		flex-wrap: nowrap;
+	}
+}

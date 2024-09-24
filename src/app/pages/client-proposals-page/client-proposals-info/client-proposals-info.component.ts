@@ -7,7 +7,7 @@ import { SearchInputItem } from '@app/shared/components/inputs/search-client-inp
 import { Observable, Subscription } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { ModalService } from '@app/core/modal/modal.service';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -65,16 +65,12 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
-	protected permissions$: Observable<string[]>;
-
 	constructor(
 		private readonly _router: Router,
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly modalService: ModalService,
+		private readonly permissionFacade: PermissionsFacadeService,
 	) {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
-		this.permissions$ = this.clientProposalsFacadeService.permissions$;
-
 		this.subscription.add(
 			this.clientId$.subscribe(id => {
 				if (id) {
@@ -86,22 +82,19 @@ export class ClientProposalsInfoComponent implements OnInit {
 			}),
 		);
 
-		this.subscription.add(
-			this.permissions$.subscribe(list => {
-				if (list.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
-					this.tabs.forEach(tab => {
-						tab.isVisible = true;
-					});
-				} else {
-					this.tabs.forEach(tab => {
-						if (tab.name !== 'contractors') {
-							tab.isVisible = false;
-						}
-					});
-					this.selectTab('contractors');
+		const permissions = this.permissionFacade.proposalsPermissions$.value;
+		if (permissions!.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
+			this.tabs.forEach(tab => {
+				tab.isVisible = true;
+			});
+		} else {
+			this.tabs.forEach(tab => {
+				if (tab.name !== 'contractors') {
+					tab.isVisible = false;
 				}
-			}),
-		);
+			});
+			this.selectTab('contractors');
+		}
 	}
 
 	ngOnInit() {
