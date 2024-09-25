@@ -14,6 +14,9 @@ const routes: Routes = [
 		path: '',
 		component: NewLayoutComponent,
 		canActivate: [AuthGuard],
+		data: {
+			animation: 'animation',
+		},
 		children: [
 			{
 				path: '',
@@ -23,6 +26,9 @@ const routes: Routes = [
 			{
 				path: '',
 				component: EmptyLayoutComponent,
+				data: {
+					animation: 'animation',
+				},
 				children: [
 					{
 						path: 'partners',
@@ -52,6 +58,9 @@ const routes: Routes = [
 		path: '',
 		component: WithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
+		data: {
+			animation: 'animation',
+		},
 		children: [
 			{
 				path: 'clients-list',
@@ -83,6 +92,9 @@ const routes: Routes = [
 		path: '',
 		component: LayoutClientProposalsComponent,
 		canActivate: [AuthGuard, ProposalsPermissionsGuard],
+		data: {
+			animation: 'animation',
+		},
 		children: [
 			{
 				path: 'client-proposals-page',
@@ -97,6 +109,9 @@ const routes: Routes = [
 		path: '',
 		component: LayoutClientProposalsComponent,
 		canActivate: [AuthGuard],
+		data: {
+			animation: 'animation',
+		},
 		children: [
 			{
 				path: 'not-permission',
@@ -109,10 +124,16 @@ const routes: Routes = [
 	},
 	{
 		path: 'auth',
+		data: {
+			animation: 'animation',
+		},
 		loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
 	},
 	{
 		path: 'sandbox',
+		data: {
+			animation: 'animation',
+		},
 		loadChildren: () => import('./pages/sandbox/sandbox.module').then(m => m.SandboxModule),
 	},
 	{ path: '**', redirectTo: '' },

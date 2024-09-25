@@ -21,6 +21,11 @@ button {
 	-webkit-transition: background-color 200ms linear;
 	-ms-transition: background-color 200ms linear;
 	transition: background-color 200ms linear;
+	text-wrap: nowrap;
+}
+
+button:hover {
+	filter: brightness(85%);;
 }
 
 button.large {
@@ -88,7 +93,7 @@ button.quaternary {
 
 button.outline {
 	background-color: transparent;
-	border-color: $text;
+	border-color: $island-outline;
 	color: $text;
 }
 

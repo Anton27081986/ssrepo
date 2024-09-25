@@ -8,7 +8,7 @@ import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -21,7 +21,6 @@ import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-lay
 import { NotificationToastModule } from '@app/widgets/notification-toast/notification-toast.module';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { LayoutsModule } from './shared/layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,7 +60,7 @@ const ngZorroConfig: NzConfig = {
 		{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
 		{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 		provideNzConfig(ngZorroConfig),
-		ClientProposalsFacadeService,
+		provideAnimations(),
 	],
 	bootstrap: [AppComponent],
 })

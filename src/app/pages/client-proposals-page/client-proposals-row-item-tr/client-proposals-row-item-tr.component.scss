@@ -2,9 +2,15 @@
 @use 'src/assets/scss/_variables.scss' as *;
 @use 'src/styles/colors.scss' as *;
 
+:host:hover {
+	color: #212529;
+	background-color: rgba(0, 0, 0, .075);
+}
+
 .hc-table-td {
 	border: 1px solid $border-table;
 	position: relative;
+
 
 	&__canvas {
 		display: flex;

@@ -10,6 +10,7 @@
 	position: relative;
 	user-select: none;
 	z-index: 999;
+	gap: 6px;
 
 	&__icon-toggle {
 		cursor: pointer;
@@ -21,7 +22,7 @@
 	}
 
 	&__input {
-		height: 36px;
+		height: 46px;
 		padding: 8px 12px;
 		border-radius: 8px;
 		border: 1px solid $island-outline;
@@ -38,6 +39,20 @@
 		}
 	}
 
+	&__select-input {
+		height: 36px;
+		padding: 8px 12px;
+		margin: 6px 12px 12px 12px;
+		border-radius: 8px;
+		border: 1px solid $island-outline;
+		display: flex;
+		align-items: center;
+		justify-content: right;
+		position: relative;
+		gap: 10px;
+	}
+
+
 	&__select {
 		position: absolute;
 		max-height: 300px;
@@ -49,7 +64,7 @@
 		border-bottom-right-radius: 16px;
 		border: 1px solid $island-outline;
 		width: 100%;
-		top: 58px;
+		top: 70px;
 		padding: 12px 0;
 		z-index: 999;
 	}

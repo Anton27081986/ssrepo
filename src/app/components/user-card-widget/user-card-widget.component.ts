@@ -78,16 +78,6 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 		}
 	}
 
-	protected getFormatDate(date: string) {
-		return new Date(Date.parse(date)).toLocaleString('ru-RU', {
-			year: 'numeric',
-			month: 'numeric',
-			day: 'numeric',
-			hour: 'numeric',
-			minute: 'numeric',
-		});
-	}
-
 	protected getGroupWinsUser(users: IUserDto[] | null): string {
 		if (users) {
 			const usersName: string[] = users.map(user => user.name);
