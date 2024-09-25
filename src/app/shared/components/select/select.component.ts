@@ -10,6 +10,7 @@ export class SelectComponent {
 	@Input() public label: string | undefined;
 	@Input() public error: string | undefined;
 	@Input() public disabled: boolean = false;
+	@Input() public placeholder: string = '';
 	@Output() public onChange = new EventEmitter<any>();
 
 	public onClick(el: EventTarget | null) {
