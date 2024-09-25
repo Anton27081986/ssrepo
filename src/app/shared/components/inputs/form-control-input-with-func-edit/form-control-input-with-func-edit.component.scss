@@ -1,9 +1,9 @@
 @use '../../../../../styles/colors' as *;
 
-input {
+textarea {
 	display: flex;
 	align-items: center;
-	padding: 0 44px 0 20px;
+	padding: 6px 44px 6px 20px;
 	width: 100%;
 	border-radius: 8px;
 	border: 1px solid $island-outline;
@@ -14,14 +14,16 @@ input {
 	line-height: 17px;
 	letter-spacing: -0.01em;
 	user-select: none;
+	min-height: 52px;
+	max-height: 100px;
 }
 
-input::-webkit-outer-spin-button,
- input::-webkit-inner-spin-button {
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
 	 -webkit-appearance: none;
  }
 
-.input {
+.textarea {
 	position: relative;
 
 	ss-icon {
@@ -32,42 +34,42 @@ input::-webkit-outer-spin-button,
 	}
 }
 
-input.large ~ ss-icon {
+textarea.large ~ ss-icon {
 	top: 20px;
 }
 
-input.small ~ ss-icon {
+textarea.small ~ ss-icon {
 	top: 12px;
 }
 
-input::placeholder {
+textarea::placeholder {
 	color: $lite-text;
 }
 
-input:focus {
+textarea:focus {
 	border-color: $additional-outline;
 }
 
-input.medium {
+textarea.medium {
 	height: 41px;
 	font-weight: 400;
 }
 
-input.large {
+textarea.large {
 	height: 52px;
 	font-weight: 600;
 }
 
-input.small {
+textarea.small {
 	height: 36px;
 	font-weight: 400;
 }
 
-input.error {
+textarea.error {
 	border: 1px solid $error;
 	background-color: $lite-error;
 }
-input.error:focus {
+textarea.error:focus {
 	border: 1px solid $additional-outline;
 	background-color: $island;
 }
@@ -92,6 +94,20 @@ ss-caption {
 	align-items: center;
 	justify-content: space-between;
 
+	&__text ss-text {
+		height: 52px;
+		width: 344px;
+		padding: 0;
+		overflow: hidden;
+		position: relative;
+		display: inline-block;
+		margin: 0 5px 0 5px;
+		text-align: center;
+		text-decoration: none;
+		text-overflow: ellipsis;
+		white-space: wrap;
+	}
+
 	&__left {
 		display: flex;
 		flex-wrap: nowrap;
@@ -104,11 +120,6 @@ ss-caption {
 		max-width: 344px;
 	}
 
-	&__right {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-	}
 
 	&__scope {
 		display: flex;

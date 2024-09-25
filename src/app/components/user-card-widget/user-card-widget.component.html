@@ -35,7 +35,7 @@
 				<ss-text [size]="'3'">{{ widget.commentsCount }}</ss-text>
 			</div>
 		</div>
-		<ss-caption class="user-card-widget__created" [size]="'2'">{{ getFormatDate(widget.createdDate!) }}</ss-caption>
+		<ss-caption class="user-card-widget__created" [size]="'2'">{{ widget.createdDate | date: 'HH:mm, dd.MM.yyyy' }}</ss-caption>
 	</div>
 
 </ss-card>

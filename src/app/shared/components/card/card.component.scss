@@ -5,6 +5,7 @@
 	display: block;
 	background-color: $island;
 	border: 1px solid $island-outline;
+	box-shadow: 0 2px 4px -1px #afb6c933;
 }
 
 :host-context(.dark) :host {

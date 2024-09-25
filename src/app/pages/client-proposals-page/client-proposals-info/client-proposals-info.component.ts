@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
 import { SearchInputItem } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
@@ -8,6 +8,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
+import { animate, query, style, transition, trigger } from '@angular/animations';
 
 @UntilDestroy()
 @Component({
@@ -27,6 +28,8 @@ export class ClientProposalsInfoComponent implements OnInit {
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
 	public clientId$: Observable<number>;
+
+	public outlet: RouterOutlet = new RouterOutlet();
 
 	public tabs: ITab[] = [
 		{

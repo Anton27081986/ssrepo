@@ -24,8 +24,9 @@
 	<div class="multiselect-autocomplete-v2__select"
 		 *ngIf="getViewSelect">
 		<ng-container *ngIf="selectedOptions$ | async as options">
-			<div class="multiselect-autocomplete-v2__input" *ngIf="options.length && !(this.readOnly$ | async)">
+			<div class="multiselect-autocomplete-v2__select-input" *ngIf="options.length && !(this.readOnly$ | async)">
 				<input type="text"
+					   [placeholder]="placeholder"
 					   [formControl]="queryControl"/>
 			</div>
 			<ss-multiselect-option-v2 [disabled]="(readOnly$ | async)!" *ngFor="let selectedOpt of options" [option]="selectedOpt" (click)="delSelectedOption(selectedOpt); $event.stopPropagation()"></ss-multiselect-option-v2>

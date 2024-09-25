@@ -12,7 +12,7 @@
 	</div>
 	<div class="victory-comment__body">
 		<ss-text class="victory-comment__note" size="3">{{ comment?.note }}</ss-text>
-		<ss-text class="victory-comment__createDate" color="gray" size="3">{{ getFormatDate(comment?.createdDate!) }}
+		<ss-text class="victory-comment__createDate" color="gray" size="3">{{  comment?.createdDate | date: 'HH:mm, dd.MM.yyyy' }}
 		</ss-text>
 	</div>
 	<ss-divider></ss-divider>

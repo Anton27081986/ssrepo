@@ -32,7 +32,8 @@
 				[placeholder]="'Признак ТПР'"
 				[options]="(productionOptionsSign$ | async)!">
 			</ss-multiselect-v2>
-			<ss-button [disabled]="isDisabledButton" (click)="submit()" size="small" [type]="'primary'">Посмотреть
+			<ss-button [tooltip]="getTooltipButton()" [theme]="TooltipTheme.DEFAULT"
+					   [position]="TooltipPosition.DEFAULT" [disabled]="isDisabledButton" (click)="submit()" size="medium" [type]="'primary'">Посмотреть
 			</ss-button>
 		</form>
 	</div>
@@ -79,7 +80,6 @@
 		</div>
 	</div>
 </div>
-<ss-divider></ss-divider>
 <div class="client-proposals-card__content">
 	<app-client-proposals-table-vgp [isLoading]="(isLoading$ | async)!"
 									[clientOffers]="clientOffers$ | async"></app-client-proposals-table-vgp>

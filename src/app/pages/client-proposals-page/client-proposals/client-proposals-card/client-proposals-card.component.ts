@@ -17,6 +17,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -255,6 +256,18 @@ export class ClientProposalsCardComponent {
 		}
 	}
 
+	getTooltipButton(): string | null {
+		if (this.clientProposalsFacadeService.blockForProposalSubject$.value) {
+			return 'Необходимо взять в работу предложение';
+		}
+
+		if (!this.form.valid) {
+			return 'Заполните необходимое поле ВГП';
+		}
+
+		return null;
+	}
+
 	protected openAtWorkModal(items: IClientOffersDto[]) {
 		this.modalService
 			.open(AtWorkModalComponent, {
@@ -272,4 +285,7 @@ export class ClientProposalsCardComponent {
 				}
 			});
 	}
+
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 }
