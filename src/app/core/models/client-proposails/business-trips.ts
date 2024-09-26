@@ -37,7 +37,7 @@ export interface IBusinessTripsDto {
 	endDate: string;
 	expensesList: Array<{
 		currency: string;
-		expenses: number;
+		value: number;
 	}>;
 }
 
