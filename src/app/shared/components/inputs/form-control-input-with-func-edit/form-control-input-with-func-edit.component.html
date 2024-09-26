@@ -1,25 +1,21 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input-edit" *ngIf="funcEdit">
-	<div class="input-edit__scope">
-		<div class="input-edit__top">
-			<div class="input-edit__"></div>
-			<ss-icon [name]="'editNew'"></ss-icon>
-			<ss-divider [direction]="'vertical'"></ss-divider>
-			<ss-icon (click)="close()" [name]="'close'"></ss-icon>
-		</div>
-		<div class="input-edit__middle">
-			<ss-text [size]="'4'">Редактировать сообщение</ss-text>
-			<div class="input-edit__text">
-				<ss-text [size]="'3'">{{ oldValue }}</ss-text>
-			</div>
-		</div>
+	<div class="input-edit__left">
+		<ss-icon [name]="'editNew'"></ss-icon>
+	</div>
+	<div class="input-edit__middle">
+		<ss-text [size]="'4'">Редактировать сообщение</ss-text>
+		<span class="input-edit__text">{{ oldValue }}</span>
+	</div>
+	<div class="input-edit__right">
+		<ss-icon (click)="close()" [name]="'close'"></ss-icon>
 	</div>
 </div>
+
 <div class="textarea">
 	<textarea
 		[attr.disabled]="disabled"
 		[placeholder]="placeholder"
-		[maxLength]="maxlength"
 		[formControl]="control"
 		maxlength="1000"
 		class="{{ error ? size + ' error' : size }}"

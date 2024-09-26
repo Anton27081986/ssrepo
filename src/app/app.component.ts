@@ -21,9 +21,9 @@ import { RouterOutlet } from '@angular/router';
 				// Скрываем новый экран до начала анимации
 				query(':enter', [style({ opacity: 0 })], { optional: true }),
 				// Анимируем уходящий экран
-				query(':leave', [animate('300ms', style({ opacity: 0 }))], { optional: true }),
+				query(':leave', [animate('500ms', style({ opacity: 0 }))], { optional: true }),
 				// Анимируем входящий экран
-				query(':enter', [animate('300ms', style({ opacity: 1 }))], { optional: true }),
+				query(':enter', [animate('500ms', style({ opacity: 1 }))], { optional: true }),
 			]),
 		]),
 	],
