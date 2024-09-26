@@ -6,10 +6,13 @@ export interface IResponse<T> {
 	totalCount?: number;
 	weekCount?: number;
 	clientOfferId?: string;
-	totalClientSales?: string;
+	totalClientSales?: {
+		currency: string;
+		value: number;
+	};
 	totalExpensesList?: Array<{
 		currency: string;
-		expenses: number;
+		value: number;
 	}>;
 	totalSales?: number;
 	isAlterFilter?: boolean;

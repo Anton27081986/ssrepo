@@ -37,13 +37,27 @@
 		</ng-template>
 		<ng-template #footer>
 			<div class="footer">
-				<ss-text *ngIf="trips.totalClientSales" [tooltip]="'За год от текущей даты'" [theme]="TooltipTheme.MAIN" class="footer-total" size="1">Продажи по клиенту: {{trips.totalClientSales | numWithSpaces}} RUR</ss-text>
-				<ss-pagination
-					[total]="trips.total"
-					[pageIndex]="pageIndex"
-					[pageSize]="pageSize"
-					(changeIndex)="nzPageIndexChange($event)"
-				>
+				<div class="total" [tooltip]="'За год от текущей даты'" [theme]="TooltipTheme.MAIN">
+					<ss-text
+						*ngIf="trips.totalClientSales"
+						class="footer-total"
+						size="3"
+					>Продажи по клиенту: {{trips.totalClientSales.value | numWithSpaces}} {{trips.totalClientSales.currency}}
+					</ss-text>
+					<ss-text
+						*ngIf="trips.totalExpensesList"
+						class="footer-total"
+						size="3"
+					>Продажи всего:
+						<ng-container *ngFor="let total of trips.totalExpensesList">{{total.value | numWithSpaces}} {{total.currency}}</ng-container>
+					</ss-text>
+				</div>
+					<ss-pagination
+						[total]="trips.total"
+						[pageIndex]="pageIndex"
+						[pageSize]="pageSize"
+						(changeIndex)="nzPageIndexChange($event)"
+					>
 				</ss-pagination>
 			</div>
 		</ng-template>

@@ -9,7 +9,7 @@ import { IResponse } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-table-item';
-import {TooltipTheme} from "@app/shared/components/tooltip/tooltip.enums";
+import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 @UntilDestroy()
 @Component({
@@ -68,7 +68,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 			tableItem.task = x.goal ? x.goal.name : '-';
 			tableItem.members = x.members?.map(c => c.name).join(', ') ?? '-';
 			tableItem.expensesList =
-				x.expensesList?.map(c => `${c.expenses} ${c.currency}`).join(', ') ?? '-';
+				x.expensesList?.map(c => `${c.value} ${c.currency}`).join(', ') ?? '-';
 
 			return tableItem;
 		});
