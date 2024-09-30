@@ -12,7 +12,7 @@
 						label="Контракт, №"
 						placeholder="Введите данные"
 						formControlName="contractNumber"
-						[error]="newContractForm.controls['contractNumber'].touched && newContractForm.controls['contractNumber'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['contractNumber'].touched && newContractForm.controls['contractNumber'].errors ? 'Некорректные данные' : undefined"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
@@ -23,7 +23,7 @@
 						placeholder="Введите данные"
 						[selectedItem]="newContractForm.controls['contractor'].value"
 						(select)="newContractForm.controls['contractor'].setValue($event); onContractorSelect($event?.id)"
-						[error]="newContractForm.controls['contractor'].touched && newContractForm.controls['contractor'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['contractor'].touched && newContractForm.controls['contractor'].errors ? 'Некорректные данные' : undefined"
 					></ss-search-input>
 				</div>
 				<div class="body__column__item">
@@ -34,7 +34,7 @@
 						placeholder="Введите данные"
 						[disabled]="!newContractForm.controls['contractor'].value"
 						(onChange)="newContractForm.controls['contractDetailId'].setValue($event)"
-						[error]="newContractForm.controls['contractDetailId'].touched && newContractForm.controls['contractDetailId'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['contractDetailId'].touched && newContractForm.controls['contractDetailId'].errors ? 'Некорректные данные' : undefined"
 					>
 						<option value="{{ null }}">(Не выбран)</option>
 						<option *ngFor="let item of (contractDetails$ | async)?.items" [value]="item.id">{{ item.name }}</option>
@@ -46,7 +46,7 @@
 						label="Количество, кг (всего)"
 						type="number"
 						formControlName="quantityTotal"
-						[error]="newContractForm.controls['quantityTotal'].touched && (newContractForm.controls['quantityTotal'].errors?.required || newContractForm.controls['price'].errors?.min) ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['quantityTotal'].touched && newContractForm.controls['quantityTotal'].errors ? 'Некорректные данные' : undefined"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
@@ -55,7 +55,7 @@
 						label="Цена"
 						type="number"
 						formControlName="price"
-						[error]="newContractForm.controls['price'].touched && (newContractForm.controls['price'].errors?.required || newContractForm.controls['price'].errors?.min) ? 'Некорректные данные' : undefined"
+						[error]="newContractForm.controls['price'].touched && newContractForm.controls['price'].errors ? 'Некорректные данные' : undefined"
 					></ss-input>
 				</div>
 				<div class="body__column__item">

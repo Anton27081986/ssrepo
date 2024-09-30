@@ -32,8 +32,16 @@ export class ContractNewComponent {
 			contractNumber: new FormControl<string>('', [Validators.required]),
 			contractor: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			contractDetailId: new FormControl<number | null>(null, [Validators.required]),
-			quantityTotal: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
-			price: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
+			quantityTotal: new FormControl<number | null>(null, [
+				Validators.required,
+				Validators.min(1),
+				Validators.max(99999999999),
+			]),
+			price: new FormControl<number | null>(null, [
+				Validators.required,
+				Validators.min(1),
+				Validators.max(99999999999),
+			]),
 			period: new FormControl<string>('', Validators.required),
 			paymentConditions: new FormControl<string>('', Validators.required),
 			deliveryConditions: new FormControl<string>('', Validators.required),
