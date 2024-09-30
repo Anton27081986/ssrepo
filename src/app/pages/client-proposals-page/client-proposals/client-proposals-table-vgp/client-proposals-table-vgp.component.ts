@@ -1,5 +1,12 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, computed, input, InputSignal, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	input,
+	InputSignal,
+	Signal,
+} from '@angular/core';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
@@ -19,6 +26,7 @@ export enum StateTableProposals {
 	selector: 'app-client-proposals-table-vgp',
 	templateUrl: './client-proposals-table-vgp.component.html',
 	styleUrls: ['./client-proposals-table-vgp.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsTableVgpComponent {
 	public readonly clientOffers: InputSignal<ResponseProposals<IClientOffersDto> | null> =
