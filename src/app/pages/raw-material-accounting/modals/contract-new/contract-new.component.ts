@@ -79,8 +79,8 @@ export class ContractNewComponent {
 		this.facadeService
 			.addContract(newContract)
 			.pipe(untilDestroyed(this))
-			.subscribe(contract => {
-				this.modalRef.close(contract);
+			.subscribe(() => {
+				this.modalRef.close(true);
 			});
 	}
 
