@@ -82,7 +82,7 @@
 </div>
 <div class="client-proposals-card__content">
 	<app-client-proposals-table-vgp [isLoading]="(isLoading$ | async)!"
-									[clientOffers]="clientOffers$ | async"></app-client-proposals-table-vgp>
+									[clientOffers]="(clientOffers$ | async)!"></app-client-proposals-table-vgp>
 </div>
 
 <nz-dropdown-menu #settingsColumn="nzDropdownMenu">

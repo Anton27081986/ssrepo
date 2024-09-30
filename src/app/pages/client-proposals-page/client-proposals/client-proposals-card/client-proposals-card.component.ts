@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -18,6 +17,7 @@ import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-m
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import { ResponseProposals } from '@app/core/utils/response-proposals';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -36,7 +36,7 @@ export interface IClientProposalsCriteriaForm {
 })
 export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	protected clientOffers$!: Observable<IResponse<IClientOffersDto>>;
+	protected clientOffers$!: Observable<ResponseProposals<IClientOffersDto>>;
 	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
@@ -77,7 +77,10 @@ export class ClientProposalsCardComponent {
 	}
 
 	get canTakeWork(): boolean {
-		return this.clientProposalsFacadeService.canTakeWork;
+		return (
+			this.clientProposalsFacadeService.canTakeWork &&
+			!this.clientProposalsFacadeService.isAlterFilter$.value
+		);
 	}
 
 	protected readonly form: FormGroup<IClientProposalsCriteriaForm> = this.buildForm();
@@ -256,7 +259,7 @@ export class ClientProposalsCardComponent {
 		}
 	}
 
-	getTooltipButton(): string | null {
+	public getTooltipButton(): string | null {
 		if (this.clientProposalsFacadeService.blockForProposalSubject$.value) {
 			return 'Необходимо взять в работу предложение';
 		}

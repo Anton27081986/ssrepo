@@ -8,7 +8,6 @@ import {
 	OnChanges,
 	OnInit,
 	SimpleChanges,
-	ViewChild,
 } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
