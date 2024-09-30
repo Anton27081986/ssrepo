@@ -34,8 +34,16 @@ export class ContractInfoComponent {
 		@Inject(DIALOG_DATA) private readonly data: IDialogData,
 	) {
 		this.editForm = new FormGroup({
-			quantityTotal: new FormControl<number>(0, [Validators.required]),
-			price: new FormControl<number>(0, Validators.required),
+			quantityTotal: new FormControl<number>(0, [
+				Validators.required,
+				Validators.min(1),
+				Validators.max(99999999999),
+			]),
+			price: new FormControl<number>(0, [
+				Validators.required,
+				Validators.min(1),
+				Validators.max(99999999999),
+			]),
 			period: new FormControl<string>('', Validators.required),
 			isComplete: new FormControl<boolean>(false),
 			reasonCompletion: new FormControl<string>(''),
@@ -88,7 +96,10 @@ export class ContractInfoComponent {
 	public saveContract() {
 		this.editForm.markAllAsTouched();
 
-		if (this.editForm.controls.isComplete.value && !this.editForm.controls.reasonCompletion.value) {
+		if (
+			this.editForm.controls.isComplete.value &&
+			!this.editForm.controls.reasonCompletion.value
+		) {
 			this.editForm.controls.reasonCompletion.setErrors({ required: true });
 		}
 

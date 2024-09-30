@@ -30,7 +30,7 @@
 							type="number"
 							formControlName="quantityTotal"
 							[value]="contract.quantityTotal"
-							[error]="editForm.controls['quantityTotal'].touched && editForm.controls['quantityTotal'].errors?.required ? 'Некорректные данные' : undefined"
+							[error]="editForm.controls['quantityTotal'].touched && editForm.controls['quantityTotal'].errors ? 'Некорректные данные' : undefined"
 						></ss-input>
 					</div>
 				</ng-template>
@@ -54,7 +54,7 @@
 							type="number"
 							formControlName="price"
 							[value]="contract.price"
-							[error]="editForm.controls['price'].touched && editForm.controls['price'].errors?.required ? 'Некорректные данные' : undefined"
+							[error]="editForm.controls['price'].touched && editForm.controls['price'].errors ? 'Некорректные данные' : undefined"
 						></ss-input>
 					</div>
 				</ng-template>
