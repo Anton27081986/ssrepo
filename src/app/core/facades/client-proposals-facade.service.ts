@@ -27,6 +27,7 @@ import { IRequestGetTradeList } from '@app/core/models/client-proposails/request
 import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
 import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { ResponseProposals } from '@app/core/utils/response-proposals';
 
 @UntilDestroy()
 @Injectable({
@@ -107,7 +108,7 @@ export class ClientProposalsFacadeService {
 
 	public getClientOffers(
 		params: IRequestGetClientOffer,
-	): Observable<IResponse<IClientOffersDto>> {
+	): Observable<ResponseProposals<IClientOffersDto>> {
 		return this.clientProposalsApiService.getClientOffers(params).pipe(
 			map(items => {
 				const data = items.items;
@@ -128,14 +129,15 @@ export class ClientProposalsFacadeService {
 					}
 				});
 
-				this.isAlterFilter$.next(items.isAlterFilter!);
+				this.isAlterFilter$.next(items.isAlterFilter);
 				this.alterFilterDefenitionNote$.next(items.alterFilterDefenitionNote!);
 
 				return {
 					total: items.total,
 					items: data,
-					linkToModule: items.linkToModule,
-					clientOfferId: items.clientOfferId,
+					isAlterFilter: items.isAlterFilter,
+					alterFilterDefenitionNote: items.alterFilterDefenitionNote,
+					alterSearch: items.alterSearch,
 				};
 			}),
 		);

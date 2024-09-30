@@ -23,6 +23,7 @@ import { TypeReportEnum } from '@app/pages/client-proposals-page/client-proposal
 import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
 import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
 import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
+import { ResponseProposals } from '@app/core/utils/response-proposals';
 
 export interface IFile {
 	id: number;
@@ -161,7 +162,7 @@ export class ClientProposalsApiService {
 
 	public getClientOffers(
 		params: IRequestGetClientOffer,
-	): Observable<IResponse<IClientOffersDto>> {
+	): Observable<ResponseProposals<IClientOffersDto>> {
 		let httpParams = new HttpParams();
 
 		httpParams = httpParams.set('clientId', params.clientId);
@@ -190,7 +191,7 @@ export class ClientProposalsApiService {
 			}
 		});
 
-		return this.http.get<IResponse<IClientOffersDto>>(
+		return this.http.get<ResponseProposals<IClientOffersDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
 			{
 				params: httpParams,
