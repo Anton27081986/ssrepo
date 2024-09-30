@@ -124,9 +124,8 @@ export class ContractInfoComponent {
 			this.facadeService
 				.editContract(this.contract?.id, newContract)
 				.pipe(untilDestroyed(this))
-				.subscribe(contract => {
-					this.modalRef.close(contract);
-					this.facadeService.selectContract(null);
+				.subscribe(() => {
+					this.modalRef.close(true);
 				});
 		}
 	}
@@ -137,7 +136,6 @@ export class ContractInfoComponent {
 
 	close() {
 		this.isEditMode = false;
-		this.facadeService.selectContract(null);
-		this.modalRef.close();
+		this.modalRef.close(false);
 	}
 }

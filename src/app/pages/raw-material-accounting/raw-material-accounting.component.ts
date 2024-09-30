@@ -67,8 +67,18 @@ export class RawMaterialAccountingComponent implements OnInit {
 		private readonly facadeService: RawMaterialAccountingFacadeService,
 		private readonly modalService: ModalService,
 		private readonly cdr: ChangeDetectorRef,
+		private readonly activatedRoute: ActivatedRoute,
+		private readonly router: Router,
 	) {
 		this.isLoading$ = this.facadeService.isContractsLoading$;
+
+		this.activatedRoute.paramMap.pipe(untilDestroyed(this)).subscribe(params => {
+			const id = params.get('id');
+
+			if (id) {
+				this.openContractModal(id);
+			}
+		});
 
 		this.facadeService.contracts$.pipe(untilDestroyed(this)).subscribe(contracts => {
 			if (contracts?.items) {
@@ -207,21 +217,25 @@ export class RawMaterialAccountingComponent implements OnInit {
 	}
 
 	public showContract(contract: { row: ITableItem; icon: string }) {
-		if (contract.icon) {
-			this.modalService
-				.open(ContractInfoComponent, {
-					data: {
-						id: contract.row.id || null,
-					},
-				})
-				.afterClosed()
-				.pipe(untilDestroyed(this))
-				.subscribe(contract => {
-					if (contract) {
-						this.getFilteredContracts(true);
-					}
-				});
+		if (contract.row.id) {
+			this.router.navigate([`raw-material-accounting/${contract.row.id}`]);
 		}
+	}
+
+	private openContractModal(id: string) {
+		this.modalService
+			.open(ContractInfoComponent, {
+				data: {
+					id,
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe(isEdited => {
+				if (isEdited) {
+					this.getFilteredContracts(true);
+				}
+			});
 	}
 
 	public addContract() {
@@ -229,8 +243,8 @@ export class RawMaterialAccountingComponent implements OnInit {
 			.open(ContractNewComponent)
 			.afterClosed()
 			.pipe(untilDestroyed(this))
-			.subscribe(contract => {
-				if (contract) {
+			.subscribe(isAdded => {
+				if (isAdded) {
 					this.getFilteredContracts(true);
 				}
 			});
