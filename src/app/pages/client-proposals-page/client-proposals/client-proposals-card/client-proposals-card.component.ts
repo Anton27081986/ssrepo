@@ -183,6 +183,7 @@ export class ClientProposalsCardComponent {
 		this.checkListStateService.checkFiles$.next([]);
 
 		if (this.form.valid && !this.clientProposalsFacadeService.blockForProposalSubject$.value) {
+			this.clientProposalsFacadeService.isAlterFilter$.next(false);
 			this.clientOffers$ = this.clientProposalsFacadeService.clientId$.pipe(
 				filterTruthy(),
 				tap(() => this.isLoading$.next(true)),
