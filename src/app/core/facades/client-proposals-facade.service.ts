@@ -28,6 +28,7 @@ import { IRequestGetDevelopment } from '@app/core/models/client-proposails/reque
 import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
+import { B } from '@angular/cdk/keycodes';
 
 @UntilDestroy()
 @Injectable({
@@ -44,11 +45,11 @@ export class ClientProposalsFacadeService {
 
 	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(false);
 
+	public readonly proposalsPermissions$ = new BehaviorSubject<string[]>([]);
+
 	get canTakeWork(): boolean {
-		return (
-			this.permissionService.proposalsPermissions$.value?.includes(
-				Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK,
-			) ?? false
+		return this.proposalsPermissions$.value.includes(
+			Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK,
 		);
 	}
 
@@ -56,7 +57,6 @@ export class ClientProposalsFacadeService {
 		private readonly clientProposalsApiService: ClientProposalsApiService,
 		private readonly clientProductionsApiService: ProductionsApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
-		private readonly permissionService: PermissionsFacadeService,
 		activatedRoute: ActivatedRoute,
 	) {
 		this.clientId$ = activatedRoute.paramMap.pipe(
@@ -79,7 +79,11 @@ export class ClientProposalsFacadeService {
 	public getDoneProductionsByClientId(
 		clientId: number,
 	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
-		return this.clientProposalsApiService.getDoneProductions(clientId);
+		return this.clientProposalsApiService.getDoneProductions(clientId).pipe(
+			tap(value => {
+				this.proposalsPermissions$.next(value.permissions);
+			}),
+		);
 	}
 
 	public getNewsByClientId(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {

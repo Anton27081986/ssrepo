@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnInit, Signal } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -7,8 +7,7 @@ import { SearchInputItem } from '@app/shared/components/inputs/search-client-inp
 import { Observable, Subscription } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
-import { animate, query, style, transition, trigger } from '@angular/animations';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -16,7 +15,7 @@ import { animate, query, style, transition, trigger } from '@angular/animations'
 	templateUrl: './client-proposals-info.component.html',
 	styleUrls: ['./client-proposals-info.component.scss'],
 	providers: [ClientProposalsFacadeService],
-	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsInfoComponent implements OnInit {
 	protected clientId: number | null = null;
@@ -31,47 +30,68 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	public outlet: RouterOutlet = new RouterOutlet();
 
-	public tabs: ITab[] = [
+	public permissions: Signal<string[]> = toSignal(
+		this.clientProposalsFacadeService.proposalsPermissions$,
 		{
-			label: 'Состав контрагентов',
-			name: 'contractors',
-			isVisible: true,
+			initialValue: [],
 		},
-		{
-			label: 'Товарная ведомость по клиенту',
-			name: 'trade-list',
-			isVisible: false,
-		},
-		{
-			label: 'Командировки',
-			name: 'business-trips',
-			isVisible: false,
-		},
-		{
-			label: 'Разработки АК',
-			name: 'development',
-			isVisible: false,
-		},
-		{
-			label: 'Образцы',
-			name: 'samples',
-			isVisible: false,
-		},
-		{
-			label: 'Лента новостей',
-			name: 'news-line',
-			isVisible: false,
-		},
-	];
+	);
 
-	protected mainInfoTab: ITab | undefined = this.tabs.find(tab => tab.name === 'contractors');
+	protected tabs: Signal<ITab[]> = computed(() => {
+		const tabs: ITab[] = [
+			{
+				label: 'Состав контрагентов',
+				name: 'contractors',
+				isVisible: true,
+			},
+			{
+				label: 'Товарная ведомость по клиенту',
+				name: 'trade-list',
+				isVisible: false,
+			},
+			{
+				label: 'Командировки',
+				name: 'business-trips',
+				isVisible: false,
+			},
+			{
+				label: 'Разработки АК',
+				name: 'development',
+				isVisible: false,
+			},
+			{
+				label: 'Образцы',
+				name: 'samples',
+				isVisible: false,
+			},
+			{
+				label: 'Лента новостей',
+				name: 'news-line',
+				isVisible: false,
+			},
+		];
+
+		if (this.permissions().includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
+			tabs.forEach(tab => {
+				tab.isVisible = true;
+			});
+		} else {
+			tabs.forEach(tab => {
+				if (tab.name !== 'contractors') {
+					tab.isVisible = false;
+				}
+			});
+		}
+		return tabs;
+	});
+
+	protected mainInfoTab: ITab | undefined = this.tabs().find(tab => tab.name === 'contractors');
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
 	constructor(
 		private readonly _router: Router,
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly permissionFacade: PermissionsFacadeService,
 	) {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
 		this.subscription.add(
@@ -85,23 +105,11 @@ export class ClientProposalsInfoComponent implements OnInit {
 			}),
 		);
 
-		const permissions = this.permissionFacade.proposalsPermissions$.value;
-		if (permissions!.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
-			this.tabs.forEach(tab => {
-				tab.isVisible = true;
-			});
-		} else {
-			this.tabs.forEach(tab => {
-				if (tab.name !== 'contractors') {
-					tab.isVisible = false;
-				}
-			});
-			this.selectTab('contractors');
-		}
+		this.selectTab('contractors');
 	}
 
 	ngOnInit() {
-		for (const tab of this.tabs) {
+		for (const tab of this.tabs()) {
 			if (this._router.url.includes(tab!.name!)) {
 				this.selectedTab = tab;
 			}
@@ -120,7 +128,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	public selectTab(page: string) {
 		if (this.clientId) {
-			this.selectedTab = this.tabs.find(tab => tab.name === page) || this.mainInfoTab!;
+			this.selectedTab = this.tabs().find(tab => tab.name === page) || this.mainInfoTab!;
 			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}
