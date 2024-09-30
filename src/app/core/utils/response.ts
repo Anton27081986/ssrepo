@@ -15,6 +15,4 @@ export interface IResponse<T> {
 		value: number;
 	}>;
 	totalSales?: number;
-	isAlterFilter?: boolean;
-	alterFilterDefenitionNote?: string;
 }
