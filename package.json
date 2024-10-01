@@ -8,6 +8,7 @@
     "build:prod": "ng build --configuration=production",
     "build:development": "ng build --configuration=development",
     "build:staging": "ng build --configuration=staging",
+	"build:reg": "ng build --configuration=reg",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prettier:fix:all": "prettier --write .",
