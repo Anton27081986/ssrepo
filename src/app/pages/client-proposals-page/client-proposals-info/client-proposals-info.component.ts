@@ -132,4 +132,6 @@ export class ClientProposalsInfoComponent implements OnInit {
 			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}
+
+	protected readonly Permissions = Permissions;
 }

@@ -9,6 +9,7 @@ import {
 } from '@app/core/facades/client-proposals-facade.service';
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 import { IClientDevelopmentTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-table-item';
+import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 
 @UntilDestroy()
 @Component({
@@ -17,17 +18,15 @@ import { IClientDevelopmentTableItem } from '@app/pages/client-proposals-page/cl
 	styleUrls: ['./client-proposals-development-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsDevelopmentTabComponent {
+export class ClientProposalsDevelopmentTabComponent extends ClientProposalsTabBase {
 	public developments$: Observable<IResponse<IDevelopmentDto>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public isCompleting$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
+		super();
 		this.developments$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
-			this.offset,
+			this.offset$,
 		]).pipe(
 			filterTruthy(),
 			map(([id, offset]) => {
@@ -71,19 +70,9 @@ export class ClientProposalsDevelopmentTabComponent {
 		return <ITableItem[]>(<unknown>productionTableItem);
 	}
 
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset.next(0);
-		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
-		}
-
-		this.pageIndex = $event;
-	}
-
 	protected onIsCompletting(e: Event) {
 		this.isCompleting$.next((e.currentTarget! as HTMLInputElement).checked);
-		this.offset.next(0);
+		this.offset$.next(0);
 		this.pageIndex = 1;
 	}
 }

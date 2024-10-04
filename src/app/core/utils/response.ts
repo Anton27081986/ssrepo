@@ -1,18 +1,20 @@
 export interface IResponse<T> {
 	items: T[];
 	total: number;
-	linkToModule?: string;
+	linkToModule: string;
 	addNewThanksLink?: string;
 	totalCount?: number;
 	weekCount?: number;
 	clientOfferId?: string;
-	totalClientSales?: {
-		currency: string;
-		value: number;
-	};
-	totalExpensesList?: Array<{
-		currency: string;
-		value: number;
-	}>;
 	totalSales?: number;
+}
+
+export interface Currency {
+	currency: string;
+	value: number;
+}
+
+export interface IResponseProposalsTrips<T> extends IResponse<T> {
+	totalClientSales: Currency;
+	totalExpensesList: Currency[];
 }

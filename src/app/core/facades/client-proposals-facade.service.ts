@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.service';
 import { BehaviorSubject, filter, map, Observable, OperatorFunction, tap } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -22,13 +22,11 @@ import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-t
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
 import { ISamples } from '@app/core/models/client-proposails/samples';
 import { INewsDto } from '@app/core/models/client-proposails/news';
-import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
 import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
 import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
-import { B } from '@angular/cdk/keycodes';
 
 @UntilDestroy()
 @Injectable({
@@ -98,7 +96,9 @@ export class ClientProposalsFacadeService {
 		return this.clientProposalsApiService.getTradeList(params);
 	}
 
-	public getTrips(params: IRequestGetBusinessTrips): Observable<IResponse<IBusinessTripsDto>> {
+	public getTrips(
+		params: IRequestGetBusinessTrips,
+	): Observable<IResponseProposalsTrips<IBusinessTripsDto>> {
 		return this.clientProposalsApiService.getTrips(params);
 	}
 

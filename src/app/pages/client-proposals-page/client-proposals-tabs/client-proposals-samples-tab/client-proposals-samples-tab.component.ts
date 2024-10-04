@@ -1,6 +1,6 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { ISamples } from '@app/core/models/client-proposails/samples';
 import { ITableItem } from '@app/shared/components/table/table.component';
@@ -9,6 +9,7 @@ import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
+import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 
 @UntilDestroy()
 @Component({
@@ -17,14 +18,12 @@ import {
 	styleUrls: ['./client-proposals-samples-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsSamplesTabComponent {
+export class ClientProposalsSamplesTabComponent extends ClientProposalsTabBase {
 	public readonly samples$: Observable<IResponse<ISamples>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
 	constructor(private readonly facadeService: ClientProposalsFacadeService) {
-		this.samples$ = combineLatest([this.facadeService.clientId$, this.offset]).pipe(
+		super();
+		this.samples$ = combineLatest([this.facadeService.clientId$, this.offset$]).pipe(
 			filterTruthy(),
 			map(([id, offset]) => {
 				return this.facadeService.getExamplesByClientId({
@@ -50,23 +49,13 @@ export class ClientProposalsSamplesTabComponent {
 			};
 			tableItem.weight = x.weight ?? 0;
 			tableItem.quantity = x.quantity ?? 0;
-			tableItem.tov = x.tov.name ?? '';
-			tableItem.price = x.price ?? '';
-			tableItem.sales = x.sales ?? '';
+			tableItem.tov = x.tov.name ?? '-';
+			tableItem.price = x.price ?? '-';
+			tableItem.sales = x.sales ?? '-';
 
 			return tableItem;
 		});
 
 		return <ITableItem[]>(<unknown>productionTableItem);
-	}
-
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset.next(0);
-		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
-		}
-
-		this.pageIndex = $event;
 	}
 }
