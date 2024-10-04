@@ -10,6 +10,7 @@ import { ITradeList } from '@app/core/models/client-proposails/trade-list';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
+import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 
 @UntilDestroy()
 @Component({
@@ -18,11 +19,8 @@ import { IFilter } from '@app/shared/components/filters/filters.component';
 	styleUrls: ['./client-proposals-trade-list-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsTradeListTabComponent {
+export class ClientProposalsTradeListTabComponent extends ClientProposalsTabBase {
 	public tradeList$: Observable<IResponse<ITradeList>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public isFiltersVisible: boolean = false;
 
 	public TovIds$: BehaviorSubject<number[] | undefined> = new BehaviorSubject<
@@ -54,9 +52,10 @@ export class ClientProposalsTradeListTabComponent {
 	];
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
+		super();
 		this.tradeList$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
-			this.offset,
+			this.offset$,
 		]).pipe(
 			filterTruthy(),
 			map(([id, offset]) => {
@@ -103,19 +102,9 @@ export class ClientProposalsTradeListTabComponent {
 		return <ITableItem[]>(<unknown>productionTableItem);
 	}
 
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset.next(0);
-		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
-		}
-
-		this.pageIndex = $event;
-	}
-
 	public onTovFilter(tov: any) {
 		tov ? this.TovIds$.next([tov.id]) : this.TovIds$.next(undefined);
-		this.offset.next(0);
+		this.offset$.next(0);
 		this.pageIndex = 1;
 	}
 
@@ -134,7 +123,7 @@ export class ClientProposalsTradeListTabComponent {
 
 		this.DateFrom$.next(preparedFrom);
 		this.DateTo$.next(preparedTo);
-		this.offset.next(0);
+		this.offset$.next(0);
 		this.pageIndex = 1;
 	}
 
@@ -142,7 +131,7 @@ export class ClientProposalsTradeListTabComponent {
 		this.TovIds$.next(undefined);
 		this.DateFrom$.next(undefined);
 		this.DateTo$.next(undefined);
-		this.offset.next(0);
+		this.offset$.next(0);
 		this.pageIndex = 1;
 	}
 }

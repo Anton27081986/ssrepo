@@ -4,11 +4,12 @@ import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsNewsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-table-item';
+import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 
 @UntilDestroy()
 @Component({
@@ -17,14 +18,15 @@ import { IClientProposalsNewsTableItem } from '@app/pages/client-proposals-page/
 	styleUrls: ['./client-proposals-news-line-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsNewsLineTabComponent {
+export class ClientProposalsNewsLineTabComponent extends ClientProposalsTabBase {
 	protected readonly news$: Observable<IResponse<INewsDto>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
 	constructor(protected readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
-		this.news$ = combineLatest([this.clientProposalsFacadeService.clientId$, this.offset]).pipe(
+		super();
+		this.news$ = combineLatest([
+			this.clientProposalsFacadeService.clientId$,
+			this.offset$,
+		]).pipe(
 			filterTruthy(),
 			map(([id, offset]) => {
 				return this.clientProposalsFacadeService.getNewsByClientId({
@@ -60,15 +62,5 @@ export class ClientProposalsNewsLineTabComponent {
 		});
 
 		return <ITableItem[]>(<unknown>productionTableItem);
-	}
-
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset.next(0);
-		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
-		}
-
-		this.pageIndex = $event;
 	}
 }

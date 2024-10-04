@@ -15,7 +15,7 @@
 		<ss-accordion [isExpanded]="true" [title]="'Информация о клиенте'">
 			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
 		</ss-accordion>
-				<ss-card [padding]="'0'">
+				<ss-card *ngIf="this.permissions().includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)" [padding]="'0'">
 					<app-client-proposals-card></app-client-proposals-card>
 				</ss-card>
 	</div>

@@ -1,8 +1,8 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -36,7 +36,7 @@ export interface IClientProposalsCriteriaForm {
 })
 export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	protected clientOffers$!: Observable<ResponseProposals<IClientOffersDto>>;
+	protected clientOffers$!: Observable<ResponseProposals<IClientOffersDto> | null>;
 	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
@@ -85,7 +85,9 @@ export class ClientProposalsCardComponent {
 
 	protected readonly form: FormGroup<IClientProposalsCriteriaForm> = this.buildForm();
 
-	private clientId: number | null = null;
+	private readonly clientId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(
+		null,
+	);
 
 	protected productionOptionsTg$: Observable<IDictionaryItemDto[]>;
 	protected productionOptionsVgp$: Observable<IDictionaryItemDto[]>;
@@ -101,7 +103,7 @@ export class ClientProposalsCardComponent {
 		this.clientProposalsFacadeService.clientId$
 			.pipe(untilDestroyed(this))
 			.subscribe(clientId => {
-				this.clientId = clientId;
+				this.clientId$.next(clientId);
 			});
 
 		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
@@ -277,7 +279,7 @@ export class ClientProposalsCardComponent {
 			.open(AtWorkModalComponent, {
 				data: {
 					items,
-					clientId: this.clientId,
+					clientId: this.clientId$.value,
 				},
 			})
 			.afterClosed()

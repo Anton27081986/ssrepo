@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { environment } from '@environments/environment.development';
 import { map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
 import { ISamples } from '@app/core/models/client-proposails/samples';
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
@@ -68,7 +68,9 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getTrips(params: IRequestGetBusinessTrips): Observable<IResponse<IBusinessTripsDto>> {
+	public getTrips(
+		params: IRequestGetBusinessTrips,
+	): Observable<IResponseProposalsTrips<IBusinessTripsDto>> {
 		let httpParams = new HttpParams()
 			.set('clientId', params.clientId)
 			.set('Limit', params.limit)
@@ -78,7 +80,7 @@ export class ClientProposalsApiService {
 			httpParams = httpParams.set('OnlyCurrentYear', params.onlyCurrentYear);
 		}
 
-		return this.http.get<IResponse<IBusinessTripsDto>>(
+		return this.http.get<IResponseProposalsTrips<IBusinessTripsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/trips`,
 			{
 				params: httpParams,
@@ -188,6 +190,14 @@ export class ClientProposalsApiService {
 				httpParams = httpParams.set('TovGroups', id);
 			} else {
 				httpParams = httpParams.append('TovGroups', id);
+			}
+		});
+
+		params.TovSubGroups.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('TovSubGroups', id);
+			} else {
+				httpParams = httpParams.append('TovSubGroups', id);
 			}
 		});
 

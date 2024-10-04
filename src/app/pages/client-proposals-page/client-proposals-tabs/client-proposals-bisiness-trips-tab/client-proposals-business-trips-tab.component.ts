@@ -1,15 +1,16 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import {
 	ClientProposalsFacadeService,
 	filterTruthy,
 } from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
+import { BehaviorSubject, combineLatest, map, Observable, switchMap, take, tap } from 'rxjs';
+import { IResponseProposalsTrips } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-table-item';
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 
 @UntilDestroy()
 @Component({
@@ -18,18 +19,17 @@ import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 	styleUrls: ['./client-proposals-business-trips-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsBusinessTripsTabComponent {
-	public businessTrips$: Observable<IResponse<IBusinessTripsDto>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+export class ClientProposalsBusinessTripsTabComponent extends ClientProposalsTabBase {
+	public businessTrips$: Observable<IResponseProposalsTrips<IBusinessTripsDto>>;
 	public onlyCurrentYear$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
+		super();
 		this.businessTrips$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
-			this.offset,
+			this.offset$,
 		]).pipe(
+			tap(() => this.isLoader$.next(true)),
 			filterTruthy(),
 			map(([id, offset]) => {
 				const onlyCurrentYear = this.onlyCurrentYear$.value;
@@ -44,10 +44,11 @@ export class ClientProposalsBusinessTripsTabComponent {
 			switchMap(item => {
 				return item;
 			}),
+			tap(() => this.isLoader$.next(false)),
 		);
 	}
 
-	protected getTableItems(production: IResponse<IBusinessTripsDto>): ITableItem[] {
+	protected getTableItems(production: IResponseProposalsTrips<IBusinessTripsDto>): ITableItem[] {
 		const productionTableItem = production.items.map(x => {
 			const tableItem: IClientProposalsBusinessTripsTableItem =
 				{} as IClientProposalsBusinessTripsTableItem;
@@ -76,19 +77,9 @@ export class ClientProposalsBusinessTripsTabComponent {
 		return <ITableItem[]>(<unknown>productionTableItem);
 	}
 
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset.next(0);
-		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
-		}
-
-		this.pageIndex = $event;
-	}
-
 	protected onOnlyCurrentYear(e: Event) {
 		this.onlyCurrentYear$.next((e.currentTarget! as HTMLInputElement).checked);
-		this.offset.next(0);
+		this.offset$.next(0);
 		this.pageIndex = 1;
 	}
 

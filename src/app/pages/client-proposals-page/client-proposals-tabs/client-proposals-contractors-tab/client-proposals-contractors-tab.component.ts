@@ -9,6 +9,7 @@ import { IResponse } from '@app/core/utils/response';
 import { IContractorsDto } from '@app/core/models/client-proposails/contractors';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsContractorsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-table-item';
+import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 
 @UntilDestroy()
 @Component({
@@ -17,14 +18,12 @@ import { IClientProposalsContractorsTableItem } from '@app/pages/client-proposal
 	styleUrls: ['./client-proposals-contractors-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsContractorsTabComponent {
+export class ClientProposalsContractorsTabComponent extends ClientProposalsTabBase {
 	public contractors$: Observable<IResponse<IContractorsDto>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public isArchiver$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
+		super();
 		this.contractors$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
 			this.offset$,
@@ -61,16 +60,6 @@ export class ClientProposalsContractorsTabComponent {
 		});
 
 		return <ITableItem[]>(<unknown>productionTableItem);
-	}
-
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset$.next(0);
-		} else {
-			this.offset$.next(this.pageSize * $event - this.pageSize);
-		}
-
-		this.pageIndex = $event;
 	}
 
 	protected onActiveContractorChange(e: Event) {
