@@ -80,7 +80,7 @@ export class AtWorkModalComponent {
 					return item.atWork
 						? {
 								tovProductId: item.tovProductId,
-								tovGroupId: item.tovGroupId,
+								productionGroupId: item.tovGroupId,
 								atWork: item.atWork,
 								potencial: Number(item.potencial),
 								objective: Number(item.objective),
@@ -88,7 +88,7 @@ export class AtWorkModalComponent {
 							}
 						: {
 								tovProductId: item.tovProductId,
-								tovGroupId: item.tovGroupId,
+								productionGroupId: item.tovGroupId,
 								atWork: item.atWork,
 								commentId: Number(item.commentId),
 							};
