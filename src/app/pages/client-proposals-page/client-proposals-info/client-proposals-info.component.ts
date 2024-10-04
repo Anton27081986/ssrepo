@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, OnInit, Signal } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
@@ -82,6 +82,7 @@ export class ClientProposalsInfoComponent implements OnInit {
 				}
 			});
 		}
+
 		return tabs;
 	});
 
@@ -96,16 +97,20 @@ export class ClientProposalsInfoComponent implements OnInit {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
 		this.subscription.add(
 			this.clientId$.subscribe(id => {
-				if (id) {
-					this.clientId = id;
-					this.searchControl.setValue(id);
-				} else {
-					this._router.navigate(['/client-proposals-page']).then();
-				}
+				this.clientId = id;
+				this.searchControl.setValue(id);
 			}),
 		);
-
-		this.selectTab('contractors');
+		this.clientProposalsFacadeService.proposalsPermissions$
+			.pipe(untilDestroyed(this))
+			.subscribe(item => {
+				const url = this._router.url.split('/');
+				if (item.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
+					this.selectTab(url[url.length - 1]);
+				} else {
+					this.selectTab('contractors');
+				}
+			});
 	}
 
 	ngOnInit() {
@@ -128,7 +133,8 @@ export class ClientProposalsInfoComponent implements OnInit {
 
 	public selectTab(page: string) {
 		if (this.clientId) {
-			this.selectedTab = this.tabs().find(tab => tab.name === page) || this.mainInfoTab!;
+			this.selectedTab =
+				this.tabs().find(tab => tab.name === page && tab.isVisible) || this.mainInfoTab!;
 			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
 		}
 	}
