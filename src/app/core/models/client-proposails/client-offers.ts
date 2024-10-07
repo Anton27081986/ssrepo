@@ -35,8 +35,8 @@ export interface IClientOffersDto {
 	productionName: string;
 	tovGroupId: number;
 	tovGroupName: string;
-	productionGroupId: number;
-	productionGroupName: string;
+	tovSubGroupId: number;
+	tovSubGroupName: string;
 	tovProductionId: number;
 	newProductName: string;
 	saleClientsCount: number;

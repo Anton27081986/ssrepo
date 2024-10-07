@@ -2,7 +2,7 @@ export interface ICreateOfferDto {
 	clientId: number;
 	items: Array<{
 		tovProductId: number;
-		productionGroupId: number;
+		tovSubGroupId: number;
 		atWork: boolean;
 		commentId?: null | number;
 		potencial?: null | number;
