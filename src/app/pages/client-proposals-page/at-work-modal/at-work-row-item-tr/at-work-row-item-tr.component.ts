@@ -37,7 +37,7 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 
 	@Input({ required: true }) item!: {
 		tovProductId: number;
-		tovGroupId: number;
+		tovSubGroupId: number;
 		tovProductName: string;
 		atWork: boolean;
 		commentId: null | string;

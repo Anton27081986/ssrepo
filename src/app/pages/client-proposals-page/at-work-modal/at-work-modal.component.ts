@@ -34,7 +34,7 @@ export class AtWorkModalComponent {
 			this.items = this.data.items.map(item => {
 				return {
 					tovProductId: item.tovProductionId,
-					tovGroupId: item.tovGroupId,
+					tovSubGroupId: item.tovSubGroupId,
 					tovProductName: item.newProductName,
 					atWork: false,
 					commentId: null,
@@ -80,7 +80,7 @@ export class AtWorkModalComponent {
 					return item.atWork
 						? {
 								tovProductId: item.tovProductId,
-								productionGroupId: item.tovGroupId,
+								tovSubGroupId: item.tovSubGroupId,
 								atWork: item.atWork,
 								potencial: Number(item.potencial),
 								objective: Number(item.objective),
@@ -88,7 +88,7 @@ export class AtWorkModalComponent {
 							}
 						: {
 								tovProductId: item.tovProductId,
-								productionGroupId: item.tovGroupId,
+								tovSubGroupId: item.tovSubGroupId,
 								atWork: item.atWork,
 								commentId: Number(item.commentId),
 							};
