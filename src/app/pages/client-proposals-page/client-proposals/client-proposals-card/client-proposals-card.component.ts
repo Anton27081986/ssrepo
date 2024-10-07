@@ -1,8 +1,8 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, tap, combineLatest } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -38,6 +38,7 @@ export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	protected clientOffers$!: Observable<ResponseProposals<IClientOffersDto> | null>;
 	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected defaultStateTable$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
 	public isAlterFilter$ = this.clientProposalsFacadeService.isAlterFilter$;
@@ -76,10 +77,14 @@ export class ClientProposalsCardComponent {
 		return !this.form.valid;
 	}
 
-	get canTakeWork(): boolean {
-		return (
-			this.clientProposalsFacadeService.canTakeWork &&
-			!this.clientProposalsFacadeService.isAlterFilter$.value
+	get canTakeWork(): Observable<boolean> {
+		return combineLatest([
+			this.clientProposalsFacadeService.canTakeWork,
+			this.clientProposalsFacadeService.isAlterFilter$,
+		]).pipe(
+			map(([canTakeWork, isAlter]) => {
+				return canTakeWork && !isAlter;
+			}),
 		);
 	}
 
@@ -104,6 +109,8 @@ export class ClientProposalsCardComponent {
 			.pipe(untilDestroyed(this))
 			.subscribe(clientId => {
 				this.clientId$.next(clientId);
+				this.refreshControl();
+				this.clientOffers$ = of(null);
 			});
 
 		this.productionOptionsVgp$ = this.vgpQueryControl.valueChanges.pipe(
@@ -152,6 +159,16 @@ export class ClientProposalsCardComponent {
 		);
 	}
 
+	private refreshControl() {
+		this.form.controls.vgpIds.setValue([]);
+		this.tgQueryControl.setValue(null);
+		this.form.controls.tgIds.setValue([]);
+		this.vgpQueryControl.setValue(null);
+		this.form.controls.tpgIds.setValue([]);
+		this.tpgQueryControl.setValue(null);
+		this.form.controls.TprFlags.setValue([]);
+	}
+
 	private buildForm(): FormGroup<IClientProposalsCriteriaForm> {
 		return new FormGroup<IClientProposalsCriteriaForm>({
 			vgpIds: new FormControl<number[] | null>(
@@ -186,48 +203,49 @@ export class ClientProposalsCardComponent {
 
 		if (this.form.valid && !this.clientProposalsFacadeService.blockForProposalSubject$.value) {
 			this.clientProposalsFacadeService.isAlterFilter$.next(false);
-			this.clientOffers$ = this.clientProposalsFacadeService.clientId$.pipe(
-				filterTruthy(),
-				tap(() => this.isLoading$.next(true)),
-				switchMap(clientId => {
-					return this.clientProposalsFacadeService.getClientOffers({
-						clientId,
-						productionIds: this.vgpFormControl,
-						TovGroups: this.tgFormControl,
-						TovSubGroups: this.tpgFormControl,
-						TprFlags: this.TprFlagsFormControl,
-					});
-				}),
-				tap(value => {
-					this.offersItems$.next(value.items);
-					if (value.total) {
-						if (this.canTakeWork) {
-							this.clientProposalsFacadeService.blockForProposalSubject$.next(true);
+			this.isLoading$.next(true);
+			this.clientOffers$ = this.clientProposalsFacadeService
+				.getClientOffers({
+					clientId: this.clientId$.value!,
+					productionIds: this.vgpFormControl,
+					TovGroups: this.tgFormControl,
+					TovSubGroups: this.tpgFormControl,
+					TprFlags: this.TprFlagsFormControl,
+				})
+				.pipe(
+					tap(value => {
+						this.offersItems$.next(value.items);
+						this.defaultStateTable$.next(false);
+						if (value.total) {
+							if (this.canTakeWork) {
+								this.clientProposalsFacadeService.blockForProposalSubject$.next(
+									true,
+								);
+							}
+
+							if (!localStorage.getItem('warningClientProposalsBool')) {
+								this.modalService
+									.open(NoticeDialogComponent, {
+										data: {
+											header: 'Предложение сформировано',
+											text:
+												'Каждый раз после получения рекомендаций \n' +
+												'необходимо брать в работу хотя бы одну из ТПР  \n' +
+												'для дальнейшего продвижения.',
+											type: 'Warning',
+										},
+									})
+									.afterClosed()
+									.pipe(untilDestroyed(this))
+									.subscribe(() => {
+										localStorage.setItem('warningClientProposalsBool', 'true');
+									});
+							}
 						}
 
-						if (!localStorage.getItem('warningClientProposalsBool')) {
-							this.modalService
-								.open(NoticeDialogComponent, {
-									data: {
-										header: 'Предложение сформировано',
-										text:
-											'Каждый раз после получения рекомендаций \n' +
-											'необходимо брать в работу хотя бы одну из ТПР  \n' +
-											'для дальнейшего продвижения.',
-										type: 'Warning',
-									},
-								})
-								.afterClosed()
-								.pipe(untilDestroyed(this))
-								.subscribe(() => {
-									localStorage.setItem('warningClientProposalsBool', 'true');
-								});
-						}
-					}
-
-					this.isLoading$.next(false);
-				}),
-			);
+						this.isLoading$.next(false);
+					}),
+				);
 		}
 	}
 

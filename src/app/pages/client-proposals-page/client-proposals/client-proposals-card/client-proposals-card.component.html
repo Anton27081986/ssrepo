@@ -71,7 +71,7 @@
 				</ng-container>
 			</div>
 			<div class="client-proposals-card__functional-right">
-				<ss-button *ngIf="offers.length > 0 && canTakeWork" size="small" type="warning"
+				<ss-button *ngIf="offers.length > 0 && (canTakeWork | async)" size="small" type="warning"
 						   (click)="openAtWorkModal(offers)">Взять в работу
 				</ss-button>
 				<ss-button *ngIf="offers.length > 0" size="small" [type]="'outline'" nz-dropdown nzTrigger="click"
@@ -84,8 +84,8 @@
 	</div>
 </div>
 <div class="client-proposals-card__content">
-	<app-client-proposals-table-vgp [isLoading]="(isLoading$ | async)!"
-									[clientOffers]="(clientOffers$ | async)!"></app-client-proposals-table-vgp>
+	<app-client-proposals-table-vgp [defaultStateTable]="(defaultStateTable$ | async)!" [isLoading]="(isLoading$ | async)!"
+									[clientOffers]="clientOffers$ | async"></app-client-proposals-table-vgp>
 </div>
 
 <nz-dropdown-menu #settingsColumn="nzDropdownMenu">
