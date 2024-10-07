@@ -75,7 +75,10 @@ export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, Co
 		);
 	}
 
-	public writeValue() {}
+	public writeValue(value: IFilterOption[]) {
+		this.selectedOptions$.next(value);
+		this.viewOptions$.next([]);
+	}
 
 	public registerOnChange(fn: (value: number[]) => void): void {
 		this.OnChange = fn;

@@ -4,7 +4,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
 import { SearchInputItem } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, take } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -17,7 +17,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 	providers: [ClientProposalsFacadeService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsInfoComponent implements OnInit {
+export class ClientProposalsInfoComponent {
 	protected clientId: number | null = null;
 
 	private readonly subscription = new Subscription();
@@ -104,21 +104,18 @@ export class ClientProposalsInfoComponent implements OnInit {
 		this.clientProposalsFacadeService.proposalsPermissions$
 			.pipe(untilDestroyed(this))
 			.subscribe(item => {
-				const url = this._router.url.split('/');
-				if (item.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
-					this.selectTab(url[url.length - 1]);
+				if (item.length) {
+					if (item.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
+						const url = this._router.url.split('/');
+						this.selectTab(url[url.length - 1]);
+					} else {
+						this.selectTab('contractors');
+					}
 				} else {
-					this.selectTab('contractors');
+					const url = this._router.url.split('/');
+					this.selectTab(url[url.length - 1]);
 				}
 			});
-	}
-
-	ngOnInit() {
-		for (const tab of this.tabs()) {
-			if (this._router.url.includes(tab!.name!)) {
-				this.selectedTab = tab;
-			}
-		}
 	}
 
 	protected getSearchClient(client: SearchInputItem | null) {
@@ -135,7 +132,9 @@ export class ClientProposalsInfoComponent implements OnInit {
 		if (this.clientId) {
 			this.selectedTab =
 				this.tabs().find(tab => tab.name === page && tab.isVisible) || this.mainInfoTab!;
-			this._router.navigate([`/client-proposals-page/${this.clientId}/${page}`]);
+			this._router.navigate([
+				`/client-proposals-page/${this.clientId}/${this.selectedTab.name}`,
+			]);
 		}
 	}
 

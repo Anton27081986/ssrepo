@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.service';
-import { BehaviorSubject, filter, map, Observable, OperatorFunction, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	filter,
+	map,
+	Observable,
+	OperatorFunction,
+	shareReplay,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { ActivatedRoute } from '@angular/router';
@@ -43,11 +52,18 @@ export class ClientProposalsFacadeService {
 
 	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(false);
 
-	public readonly proposalsPermissions$ = new BehaviorSubject<string[]>([]);
+	public doneProductions$: Observable<{
+		data: IResponse<ProposalsProduction>;
+		permissions: string[];
+	}>;
 
-	get canTakeWork(): boolean {
-		return this.proposalsPermissions$.value.includes(
-			Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK,
+	public readonly proposalsPermissions$: Observable<string[]>;
+
+	get canTakeWork(): Observable<boolean> {
+		return this.proposalsPermissions$.pipe(
+			map(permission => {
+				return permission.includes(Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK);
+			}),
 		);
 	}
 
@@ -64,6 +80,23 @@ export class ClientProposalsFacadeService {
 			}),
 		);
 
+		this.doneProductions$ = this.clientId$.pipe(
+			filterTruthy(),
+			switchMap(id => {
+				return this.getDoneProductionsByClientId(id);
+			}),
+			shareReplay({
+				refCount: true,
+				bufferSize: 1,
+			}),
+		);
+
+		this.proposalsPermissions$ = this.doneProductions$.pipe(
+			map(productions => {
+				return productions.permissions;
+			}),
+		);
+
 		this.getTprRejectReasons()
 			.pipe(
 				untilDestroyed(this),
@@ -77,11 +110,7 @@ export class ClientProposalsFacadeService {
 	public getDoneProductionsByClientId(
 		clientId: number,
 	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
-		return this.clientProposalsApiService.getDoneProductions(clientId).pipe(
-			tap(value => {
-				this.proposalsPermissions$.next(value.permissions);
-			}),
-		);
+		return this.clientProposalsApiService.getDoneProductions(clientId);
 	}
 
 	public getNewsByClientId(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {

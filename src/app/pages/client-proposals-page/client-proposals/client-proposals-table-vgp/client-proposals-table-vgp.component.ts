@@ -34,9 +34,15 @@ export class ClientProposalsTableVgpComponent {
 
 	public readonly isLoading: InputSignal<boolean> = input.required<boolean>();
 
+	public readonly defaultStateTable: InputSignal<boolean> = input.required<boolean>();
+
 	public readonly tableState: Signal<StateTableProposals> = computed(() => {
 		if (this.isLoading()) {
 			return this.StateTableProposals.loader;
+		}
+
+		if (this.defaultStateTable()) {
+			return StateTableProposals.default;
 		}
 
 		const clientOffers = this.clientOffers();
