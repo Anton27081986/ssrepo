@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, OnInit, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router, RouterOutlet } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -8,13 +8,27 @@ import { Observable, Subscription, take } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { ClientProposalsBusinessTripsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.state';
+import { ClientProposalsTradeListTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.state';
+import { ClientProposalsSamplesTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.state';
+import { ClientProposalsContractorsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.state';
+import { ClientProposalsDevelopmentTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.state';
+import { ClientProposalsNewsLineTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.state';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-client-proposals-info',
 	templateUrl: './client-proposals-info.component.html',
 	styleUrls: ['./client-proposals-info.component.scss'],
-	providers: [ClientProposalsFacadeService],
+	providers: [
+		ClientProposalsFacadeService,
+		ClientProposalsBusinessTripsTabState,
+		ClientProposalsTradeListTabState,
+		ClientProposalsSamplesTabState,
+		ClientProposalsContractorsTabState,
+		ClientProposalsDevelopmentTabState,
+		ClientProposalsNewsLineTabState,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsInfoComponent {

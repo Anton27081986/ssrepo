@@ -1,17 +1,20 @@
 <ss-card padding="0" radius="0 0 16px 16px">
-	<ng-container *ngIf="samples$ | async as samples">
-		<app-client-proposals-tabs-canvas
-			[headerTemplateRef]="header"
-			[bodyTemplateRef]="body"
-			[footerTemplateRef]="footer">
-		</app-client-proposals-tabs-canvas>
-		<ng-template #header>
-			<a *ngIf="samples.linkToModule;else text" class="app-client-tpr-samples-tab__link" href="{{ samples.linkToModule }}" target="_blank">Образцы</a>
-			<ng-template #text>
-				<ss-text size="1">Образцы</ss-text>
-			</ng-template>
+	<app-client-proposals-tabs-canvas
+		[headerTemplateRef]="header"
+		[bodyTemplateRef]="body"
+		[footerTemplateRef]="footer"
+		[isLoader]="(isLoader$ | async)!"
+	>
+	</app-client-proposals-tabs-canvas>
+	<ng-template #header>
+		<a *ngIf="linkToModule();else text" class="app-client-tpr-samples-tab__link"
+		   href="{{ linkToModule() }}" target="_blank">Образцы</a>
+		<ng-template #text>
+			<ss-text size="1">Образцы</ss-text>
 		</ng-template>
-		<ng-template #body>
+	</ng-template>
+	<ng-template #body>
+		<ng-container *ngIf="samples() as samples">
 			<ss-table
 				*ngIf="samples.total > 0;else empty"
 				[padding]="'8px'"
@@ -26,24 +29,25 @@
 				[items]="getTableItems(samples)"
 			>
 			</ss-table>
-		</ng-template>
-		<ng-template #footer>
-			<div class="footer">
-				<ss-text class="footer-total" size="3">
-					Продажи (всего), руб: {{samples.totalSales}}
-				</ss-text>
-				<ss-pagination
-					[total]="samples.total"
-					[pageIndex]="pageIndex"
-					[pageSize]="pageSize"
-					(changeIndex)="pageIndexChange($event)"
-				>
-				</ss-pagination>
-			</div>
-		</ng-template>
-	</ng-container>
-	<ng-template #empty>
-		<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+			<ng-template #empty>
+				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+			</ng-template>
+		</ng-container>
+
+	</ng-template>
+	<ng-template #footer>
+		<div class="footer">
+			<ss-text  class="footer-total" size="3">
+				Продажи (всего), руб: {{ totalSales() | numWithSpaces }}
+			</ss-text>
+			<ss-pagination
+				[total]="total()"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="pageIndexChange($event)"
+			>
+			</ss-pagination>
+		</div>
 	</ng-template>
 </ss-card>
 

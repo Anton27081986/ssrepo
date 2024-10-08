@@ -1,16 +1,12 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-	ClientProposalsFacadeService,
-	filterTruthy,
-} from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
+import { ClientProposalsTradeListTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.state';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -19,21 +15,36 @@ import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-
 	styleUrls: ['./client-proposals-trade-list-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsTradeListTabComponent extends ClientProposalsTabBase {
-	public tradeList$: Observable<IResponse<ITradeList>>;
+export class ClientProposalsTradeListTabComponent {
 	public isFiltersVisible: boolean = false;
+	protected isLoader$ = this.clientProposalsTradeListState.isLoader$;
+	protected pageIndex = this.clientProposalsTradeListState.pageIndex;
+	protected pageSize = this.clientProposalsTradeListState.pageSize;
 
-	public TovIds$: BehaviorSubject<number[] | undefined> = new BehaviorSubject<
-		number[] | undefined
-	>(undefined);
-
-	public DateFrom$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(
-		undefined,
+	protected tradeList: Signal<IResponse<ITradeList> | null> = toSignal(
+		this.clientProposalsTradeListState.tradeList$,
+		{
+			initialValue: null,
+		},
 	);
 
-	public DateTo$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(
-		undefined,
-	);
+	protected linkToModule: Signal<string | null> = computed(() => {
+		const tradeList = this.tradeList();
+		if (tradeList) {
+			return tradeList.linkToModule;
+		}
+
+		return null;
+	});
+
+	protected total: Signal<number> = computed(() => {
+		const tradeList = this.tradeList();
+		if (tradeList) {
+			return tradeList.total;
+		}
+
+		return 0;
+	});
 
 	public filters: IFilter[] = [
 		{
@@ -51,32 +62,7 @@ export class ClientProposalsTradeListTabComponent extends ClientProposalsTabBase
 		},
 	];
 
-	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
-		super();
-		this.tradeList$ = combineLatest([
-			this.clientProposalsFacadeService.clientId$,
-			this.offset$,
-		]).pipe(
-			filterTruthy(),
-			map(([id, offset]) => {
-				const TovIds = this.TovIds$.value;
-				const DateFrom = this.DateFrom$.value;
-				const DateTo = this.DateTo$.value;
-
-				return this.clientProposalsFacadeService.getTradeList({
-					clientId: id,
-					limit: this.pageSize,
-					offset,
-					TovIds,
-					DateFrom,
-					DateTo,
-				});
-			}),
-			switchMap(item => {
-				return item;
-			}),
-		);
-	}
+	constructor(private readonly clientProposalsTradeListState: ClientProposalsTradeListTabState) {}
 
 	protected getTableItems(production: IResponse<ITradeList>): ITableItem[] {
 		const productionTableItem = production.items.map(x => {
@@ -103,9 +89,21 @@ export class ClientProposalsTradeListTabComponent extends ClientProposalsTabBase
 	}
 
 	public onTovFilter(tov: any) {
-		tov ? this.TovIds$.next([tov.id]) : this.TovIds$.next(undefined);
-		this.offset$.next(0);
+		tov
+			? this.clientProposalsTradeListState.TovIds$.next([tov.id])
+			: this.clientProposalsTradeListState.TovIds$.next(undefined);
+		this.clientProposalsTradeListState.offset$.next(0);
 		this.pageIndex = 1;
+	}
+
+	public pageIndexChange($event: number) {
+		if ($event === 1) {
+			this.clientProposalsTradeListState.offset$.next(0);
+		} else {
+			this.clientProposalsTradeListState.offset$.next(this.pageSize * $event - this.pageSize);
+		}
+
+		this.pageIndex = $event;
 	}
 
 	public onDateRangeFilter(dates: any) {
@@ -121,17 +119,17 @@ export class ClientProposalsTradeListTabComponent extends ClientProposalsTabBase
 			? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
 			: undefined;
 
-		this.DateFrom$.next(preparedFrom);
-		this.DateTo$.next(preparedTo);
-		this.offset$.next(0);
+		this.clientProposalsTradeListState.DateFrom$.next(preparedFrom);
+		this.clientProposalsTradeListState.DateTo$.next(preparedTo);
+		this.clientProposalsTradeListState.offset$.next(0);
 		this.pageIndex = 1;
 	}
 
 	public resetForm() {
-		this.TovIds$.next(undefined);
-		this.DateFrom$.next(undefined);
-		this.DateTo$.next(undefined);
-		this.offset$.next(0);
+		this.clientProposalsTradeListState.TovIds$.next(undefined);
+		this.clientProposalsTradeListState.DateFrom$.next(undefined);
+		this.clientProposalsTradeListState.DateTo$.next(undefined);
+		this.clientProposalsTradeListState.offset$.next(0);
 		this.pageIndex = 1;
 	}
 }

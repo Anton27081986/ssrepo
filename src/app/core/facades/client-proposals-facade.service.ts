@@ -117,7 +117,9 @@ export class ClientProposalsFacadeService {
 		return this.clientProposalsApiService.getNews(params);
 	}
 
-	public getExamplesByClientId(params: IRequestGetProposals): Observable<IResponse<ISamples>> {
+	public getExamplesByClientId(
+		params: IRequestGetProposals,
+	): Observable<IResponseProposalsTrips<ISamples>> {
 		return this.clientProposalsApiService.getSamples(params);
 	}
 

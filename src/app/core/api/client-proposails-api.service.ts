@@ -135,8 +135,8 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getSamples(params: IRequestGetProposals): Observable<IResponse<ISamples>> {
-		return this.http.get<IResponse<ISamples>>(
+	public getSamples(params: IRequestGetProposals): Observable<IResponseProposalsTrips<ISamples>> {
+		return this.http.get<IResponseProposalsTrips<ISamples>>(
 			`${environment.apiUrl}/api/company/ClientProposals/samples`,
 			{
 				params: new HttpParams()

@@ -6,7 +6,6 @@ export interface IResponse<T> {
 	totalCount?: number;
 	weekCount?: number;
 	clientOfferId?: string;
-	totalSales?: number;
 }
 
 export interface Currency {
@@ -17,4 +16,5 @@ export interface Currency {
 export interface IResponseProposalsTrips<T> extends IResponse<T> {
 	totalClientSales: Currency;
 	totalExpensesList: Currency[];
+	totalSales: number;
 }

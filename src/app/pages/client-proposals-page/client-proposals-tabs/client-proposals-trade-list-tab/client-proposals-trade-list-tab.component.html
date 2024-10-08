@@ -1,12 +1,13 @@
 <ss-card padding="0" radius="0 0 16px 16px">
-	<ng-container *ngIf="tradeList$ | async as list">
-		<app-client-proposals-tabs-canvas
-			[headerTemplateRef]="header"
-			[bodyTemplateRef]="body"
-			[footerTemplateRef]="footer">
-		</app-client-proposals-tabs-canvas>
+	<app-client-proposals-tabs-canvas
+		[headerTemplateRef]="header"
+		[bodyTemplateRef]="body"
+		[footerTemplateRef]="footer"
+		[isLoader]="(isLoader$ | async)!"
+	>
+	</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a *ngIf="list.linkToModule;else text" class="app-client-proposals-trade-list-tab__link" href="{{ list.linkToModule }}" target="_blank">
+			<a *ngIf="linkToModule();else text" class="app-client-proposals-trade-list-tab__link" href="{{ linkToModule() }}" target="_blank">
 				Товарная ведомость по клиенту
 			</a>
 			<ng-template #text>
@@ -19,10 +20,11 @@
 			 </div>
 		</ng-template>
 		<ng-template #body>
-			<ss-table
-				*ngIf="list.total > 0;else empty"
-				[padding]="'8px'"
-				[head]="[
+			<ng-container *ngIf="tradeList() as list">
+				<ss-table
+					*ngIf="list.total > 0;else empty"
+					[padding]="'8px'"
+					[head]="[
 				{title: 'ТП', field: 'name', sizeRatio: 3},
 				{title: 'Дата', field: 'date'},
 				{title: 'Цена', field: 'price', isNumber: true},
@@ -30,22 +32,22 @@
 				{title: 'Сумма', field: 'amount', isNumber: true},
 				{title: 'Валюта', field: 'currency'},
 				]"
-				[items]="getTableItems(list)
+					[items]="getTableItems(list)
 "
-			>
-			</ss-table>
-			<ng-template #empty>
-				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
-			</ng-template>
+				>
+				</ss-table>
+				<ng-template #empty>
+					<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+				</ng-template>
+			</ng-container>
 		</ng-template>
 		<ng-template #footer>
 			<ss-pagination
-				[total]="list.total"
+				[total]="total()"
 				[pageIndex]="pageIndex"
 				[pageSize]="pageSize"
 				(changeIndex)="pageIndexChange($event)"
 			>
 			</ss-pagination>
 		</ng-template>
-	</ng-container>
 </ss-card>

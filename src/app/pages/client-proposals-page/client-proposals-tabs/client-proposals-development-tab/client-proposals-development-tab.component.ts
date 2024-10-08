@@ -1,15 +1,11 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ITableItem } from '@app/shared/components/table/table.component';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
-import {
-	ClientProposalsFacadeService,
-	filterTruthy,
-} from '@app/core/facades/client-proposals-facade.service';
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 import { IClientDevelopmentTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-table-item';
-import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
+import { ClientProposalsDevelopmentTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.state';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -18,32 +14,38 @@ import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-
 	styleUrls: ['./client-proposals-development-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsDevelopmentTabComponent extends ClientProposalsTabBase {
-	public developments$: Observable<IResponse<IDevelopmentDto>>;
-	public isCompleting$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+export class ClientProposalsDevelopmentTabComponent {
+	protected developments: Signal<IResponse<IDevelopmentDto> | null> = toSignal(
+		this.stateService.developments$,
+		{
+			initialValue: null,
+		},
+	);
 
-	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
-		super();
-		this.developments$ = combineLatest([
-			this.clientProposalsFacadeService.clientId$,
-			this.offset$,
-		]).pipe(
-			filterTruthy(),
-			map(([id, offset]) => {
-				const isCompleting = this.isCompleting$.value;
+	protected linkToModule: Signal<string | null> = computed(() => {
+		const developments = this.developments();
+		if (developments) {
+			return developments.linkToModule;
+		}
 
-				return this.clientProposalsFacadeService.getDevelopment({
-					clientId: id,
-					limit: this.pageSize,
-					offset,
-					isCompleting,
-				});
-			}),
-			switchMap(item => {
-				return item;
-			}),
-		);
-	}
+		return null;
+	});
+
+	protected total: Signal<number> = computed(() => {
+		const contractors = this.developments();
+		if (contractors) {
+			return contractors.total;
+		}
+
+		return 0;
+	});
+
+	protected isLoader$ = this.stateService.isLoader$;
+
+	protected pageIndex = this.stateService.pageIndex;
+	protected pageSize = this.stateService.pageSize;
+
+	constructor(private readonly stateService: ClientProposalsDevelopmentTabState) {}
 
 	protected getTableItems(production: IResponse<IDevelopmentDto>): ITableItem[] {
 		const productionTableItem = production.items.map(x => {
@@ -70,9 +72,21 @@ export class ClientProposalsDevelopmentTabComponent extends ClientProposalsTabBa
 		return <ITableItem[]>(<unknown>productionTableItem);
 	}
 
+	public pageIndexChange($event: number) {
+		if ($event === 1) {
+			this.stateService.offset$.next(0);
+		} else {
+			this.stateService.offset$.next(
+				this.stateService.pageSize * $event - this.stateService.pageSize,
+			);
+		}
+
+		this.stateService.pageIndex = $event;
+	}
+
 	protected onIsCompletting(e: Event) {
-		this.isCompleting$.next((e.currentTarget! as HTMLInputElement).checked);
-		this.offset$.next(0);
-		this.pageIndex = 1;
+		this.stateService.isCompleting$.next((e.currentTarget! as HTMLInputElement).checked);
+		this.stateService.offset$.next(0);
+		this.stateService.pageIndex = 1;
 	}
 }

@@ -1,16 +1,12 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
-import {
-	ClientProposalsFacadeService,
-	filterTruthy,
-} from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap, take, tap } from 'rxjs';
-import { IResponseProposalsTrips } from '@app/core/utils/response';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import { Currency, IResponseProposalsTrips } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-table-item';
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ClientProposalsBusinessTripsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.state';
 
 @UntilDestroy()
 @Component({
@@ -19,33 +15,70 @@ import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-
 	styleUrls: ['./client-proposals-business-trips-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientProposalsBusinessTripsTabComponent extends ClientProposalsTabBase {
-	public businessTrips$: Observable<IResponseProposalsTrips<IBusinessTripsDto>>;
-	public onlyCurrentYear$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+export class ClientProposalsBusinessTripsTabComponent {
+	protected trips: Signal<IResponseProposalsTrips<IBusinessTripsDto> | null> = toSignal(
+		this.clientProposalsStateService.businessTrips$,
+		{
+			initialValue: null,
+		},
+	);
 
-	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
-		super();
-		this.businessTrips$ = combineLatest([
-			this.clientProposalsFacadeService.clientId$,
-			this.offset$,
-		]).pipe(
-			tap(() => this.isLoader$.next(true)),
-			filterTruthy(),
-			map(([id, offset]) => {
-				const onlyCurrentYear = this.onlyCurrentYear$.value;
+	protected linkToModule: Signal<string | null> = computed(() => {
+		const trips = this.trips();
+		if (trips) {
+			return trips.linkToModule;
+		}
 
-				return this.clientProposalsFacadeService.getTrips({
-					clientId: id,
-					limit: this.pageSize,
-					offset,
-					onlyCurrentYear,
-				});
-			}),
-			switchMap(item => {
-				return item;
-			}),
-			tap(() => this.isLoader$.next(false)),
-		);
+		return null;
+	});
+
+	protected totalClientSales: Signal<Currency | null> = computed(() => {
+		const trips = this.trips();
+		if (trips) {
+			return trips.totalClientSales;
+		}
+
+		return null;
+	});
+
+	protected totalExpensesList: Signal<Currency[]> = computed(() => {
+		const trips = this.trips();
+		if (trips) {
+			return trips.totalExpensesList;
+		}
+
+		return [];
+	});
+
+	protected total: Signal<number> = computed(() => {
+		const trips = this.trips();
+		if (trips) {
+			return trips.total;
+		}
+
+		return 0;
+	});
+
+	protected isLoader$ = this.clientProposalsStateService.isLoader$;
+
+	protected pageIndex = this.clientProposalsStateService.pageIndex;
+	protected pageSize = this.clientProposalsStateService.pageSize;
+
+	constructor(
+		private readonly clientProposalsStateService: ClientProposalsBusinessTripsTabState,
+	) {}
+
+	public pageIndexChange($event: number) {
+		if ($event === 1) {
+			this.clientProposalsStateService.offset$.next(0);
+		} else {
+			this.clientProposalsStateService.offset$.next(
+				this.clientProposalsStateService.pageSize * $event -
+					this.clientProposalsStateService.pageSize,
+			);
+		}
+
+		this.clientProposalsStateService.pageIndex = $event;
 	}
 
 	protected getTableItems(production: IResponseProposalsTrips<IBusinessTripsDto>): ITableItem[] {
@@ -78,9 +111,11 @@ export class ClientProposalsBusinessTripsTabComponent extends ClientProposalsTab
 	}
 
 	protected onOnlyCurrentYear(e: Event) {
-		this.onlyCurrentYear$.next((e.currentTarget! as HTMLInputElement).checked);
-		this.offset$.next(0);
-		this.pageIndex = 1;
+		this.clientProposalsStateService.onlyCurrentYear$.next(
+			(e.currentTarget! as HTMLInputElement).checked,
+		);
+		this.clientProposalsStateService.offset$.next(0);
+		this.clientProposalsStateService.pageIndex = 1;
 	}
 
 	protected readonly TooltipTheme = TooltipTheme;
