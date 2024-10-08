@@ -305,7 +305,7 @@ export class ClientProposalsCardComponent {
 			.subscribe(status => {
 				if (status) {
 					this.clientProposalsFacadeService.blockForProposalSubject$.next(false);
-					this.notificationToastService.addToast('Задачи успешно созданы', 'ok');
+					this.notificationToastService.addToast('Данные успешно отправлены для создания задач(и) в ЛК МП', 'ok');
 				}
 			});
 	}
