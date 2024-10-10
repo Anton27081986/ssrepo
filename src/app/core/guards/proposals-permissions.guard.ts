@@ -23,7 +23,11 @@ export class ProposalsPermissionsGuard implements CanActivate {
 					return true;
 				}
 
-				this.router.navigate(['not-permission']);
+				this.router.navigate(['not-permission'], {
+					queryParams: {
+						redirectUrl: 'client-proposals-page',
+					},
+				});
 
 				return false;
 			}),

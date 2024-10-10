@@ -17,11 +17,16 @@ export class ProcurementsPermissionsGuard implements CanActivate {
 				const checkPermission = permissions.items.find(
 					item => item === Permissions.CLIENT_PROCUREMENTS_URL_READ,
 				);
+
 				if (checkPermission) {
 					return true;
 				}
 
-				this.router.navigate(['not-permission']);
+				this.router.navigate(['not-permission'], {
+					queryParams: {
+						redirectUrl: 'raw-material-accounting',
+					},
+				});
 
 				return false;
 			}),
