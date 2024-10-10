@@ -10,12 +10,7 @@ import { IExchangeRates } from '@app/core/models/exchange-rates';
 export class CurrencyApiService {
 	public constructor(private readonly http: HttpClient) {}
 
-	/** Валюты */
-	public getCurrency(): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/company/Currency`);
-	}
-
-	/** Получить котировки транспорта */
+	/** Получить котировки валют **/
 	public getExchangeRates(): Observable<IExchangeRates> {
 		return this.http.get<IExchangeRates>(`${environment.apiUrl}/api/company/Currency`);
 	}
