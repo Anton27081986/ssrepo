@@ -43,11 +43,13 @@ export class ErrorInterceptor implements HttpInterceptor {
 								err.status,
 							);
 						} else {
-							this.notificationToastService.addToast(
-								err.error?.title || Notifications.SERVER_ERROR_NOTIFICATION_TEXT,
-								'warning',
-								err.status,
-							);
+							for (const field in err.error.errors) {
+								this.notificationToastService.addToast(
+									err.error.errors[field][0],
+									'warning',
+									err.status,
+								);
+							}
 						}
 					}
 

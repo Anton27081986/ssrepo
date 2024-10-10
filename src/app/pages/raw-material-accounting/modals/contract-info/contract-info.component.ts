@@ -103,6 +103,13 @@ export class ContractInfoComponent {
 			this.editForm.controls.reasonCompletion.setErrors({ required: true });
 		}
 
+		if (
+			this.contract?.quantityReceived &&
+			parseFloat(this.editForm.controls.quantityTotal.value) < this.contract?.quantityReceived
+		) {
+			this.editForm.controls.quantityTotal.setErrors({ error: true });
+		}
+
 		for (const field in this.editForm.controls) {
 			if (this.editForm.get(field)?.errors) {
 				return;
