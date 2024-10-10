@@ -233,7 +233,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe(isEdited => {
 				if (isEdited) {
-					this.getFilteredContracts(true);
+					this.getFilteredContracts(false);
 				}
 			});
 	}
