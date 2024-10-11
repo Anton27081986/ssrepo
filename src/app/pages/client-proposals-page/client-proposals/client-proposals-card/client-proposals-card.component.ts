@@ -217,11 +217,13 @@ export class ClientProposalsCardComponent {
 						this.offersItems$.next(value.items);
 						this.defaultStateTable$.next(false);
 						if (value.total) {
-							if (this.canTakeWork) {
-								this.clientProposalsFacadeService.blockForProposalSubject$.next(
-									true,
-								);
-							}
+							this.canTakeWork.pipe(untilDestroyed(this)).subscribe(bol => {
+								if (bol) {
+									this.clientProposalsFacadeService.blockForProposalSubject$.next(
+										true,
+									);
+								}
+							});
 
 							if (!localStorage.getItem('warningClientProposalsBool')) {
 								this.modalService
@@ -305,7 +307,10 @@ export class ClientProposalsCardComponent {
 			.subscribe(status => {
 				if (status) {
 					this.clientProposalsFacadeService.blockForProposalSubject$.next(false);
-					this.notificationToastService.addToast('Данные успешно отправлены для создания задач(и) в ЛК МП', 'ok');
+					this.notificationToastService.addToast(
+						'Данные успешно отправлены для создания задач(и) в ЛК МП',
+						'ok',
+					);
 				}
 			});
 	}
