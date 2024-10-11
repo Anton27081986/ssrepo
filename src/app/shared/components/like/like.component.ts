@@ -4,11 +4,11 @@ import { IUserDto } from '@app/core/models/awards/user-dto';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 export enum LikeStateEnum {
-	usual = 'usual',
-	gold = 'gold',
-	copper = 'copper',
-	silver = 'silver',
-	default = 'default',
+	usual,
+	gold,
+	silver,
+	copper,
+	default,
 }
 
 @UntilDestroy()

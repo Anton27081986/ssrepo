@@ -1,6 +1,6 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
-@use '../../../styles/colors' as *;
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
+@use '../../../../styles/colors' as *;
 
 .like {
 	width: 62px;

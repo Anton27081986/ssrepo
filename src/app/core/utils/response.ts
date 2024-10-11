@@ -1,4 +1,5 @@
 export interface IResponse<T> {
+	isExtendedMode?: boolean;
 	items: T[];
 	total: number;
 	linkToModule: string;

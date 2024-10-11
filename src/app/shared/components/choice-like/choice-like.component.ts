@@ -1,6 +1,6 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { LikeStateEnum } from '@app/components/like/like.component';
+import { LikeStateEnum } from '@app/shared/components/like/like.component';
 
 @UntilDestroy()
 @Component({

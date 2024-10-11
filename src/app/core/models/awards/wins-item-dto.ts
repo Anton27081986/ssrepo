@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { IUserDto } from './user-dto';
+import {LikeStateEnum} from "@app/shared/components/like/like.component";
 
 /**
  * Модель элемента списка
@@ -35,7 +36,7 @@ export interface IWinsItemDto {
 	/**
 	 * Медаль и ее место если есть
 	 */
-	award?: number;
+	award?: LikeStateEnum;
 	/**
 	 * Количество комментариев
 	 */

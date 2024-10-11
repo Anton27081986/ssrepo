@@ -50,15 +50,6 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder/empty-placeholder.module';
 import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
-import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
-import { BirthdayComponent } from './birthday/birthday.component';
-import { ThanksColleagueComponent } from './thank-colleague/thanks-colleague.component';
-import { NotificationComponent } from './notification/notification.component';
-import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
-import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
-import { MainMenuComponent } from './main-menu/main-menu.component';
-import { CarouselComponent } from './carousel/carousel.component';
 import { ProfileCardComponent } from '@app/components/profile-card/profile-card.component';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 import { UserCardComponent } from '@app/components/user-card/user-card.component';
@@ -68,17 +59,25 @@ import { VictoryComponent } from '@app/components/victory/victory.component';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
 import { ChipsUserSearchModule } from '@app/shared/components/inputs/chips-user-search/chips-user-search.module';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
-import { LikeComponent } from '@app/components/like/like.component';
+import { LikeComponent } from '@app/shared/components/like/like.component';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
-import { UserListMoreComponent } from '@app/components/user-list-more/user-list-more.component';
 import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
 import { AddVictoryModalResultComponent } from '@app/components/victory/modal/add-victory-modal-result/add-victory-modal-result.component';
 import { VictoryCommentComponent } from '@app/components/victory/victory-comment/victory-comment.component';
-import { ChoiceLikeComponent } from '@app/components/choice-like/choice-like.component';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks-partner-card/thanks-parther-card.component';
 import { AttachmentModule } from '@app/shared/components/attachment/attachment.module';
 import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
+import { LikeModule } from '@app/shared/components/like/like.module';
+import { CarouselComponent } from './carousel/carousel.component';
+import { MainMenuComponent } from './main-menu/main-menu.component';
+import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
+import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
+import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
+import { NotificationComponent } from './notification/notification.component';
+import { BirthdayComponent } from './birthday/birthday.component';
+import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
+import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.module";
 
 @NgModule({
 	declarations: [
@@ -88,7 +87,6 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		AuctionSalesComponent,
 		NotificationComponent,
 		ThanksPartnerComponent,
-		ThanksColleagueComponent,
 		VictoryComponent,
 		BirthdayComponent,
 		RatingComponent,
@@ -103,11 +101,8 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		UserCardWidgetComponent,
 		VictoryModalComponent,
 		UserInfoPopupComponent,
-		LikeComponent,
-		UserListMoreComponent,
 		AddVictoryModalResultComponent,
 		VictoryCommentComponent,
-		ChoiceLikeComponent,
 		ThanksPartnerCardComponent,
 	],
 	imports: [
@@ -165,6 +160,8 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		DatepickerInputModule,
 		AttachmentModule,
 		FormControlInputWithFuncEditModule,
+		LikeModule,
+		ChoiceLikeModule
 	],
 	exports: [
 		MainMenuComponent,
@@ -173,7 +170,6 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		AuctionSalesComponent,
 		NotificationComponent,
 		ThanksPartnerComponent,
-		ThanksColleagueComponent,
 		BirthdayComponent,
 		VictoryComponent,
 		RatingComponent,
@@ -186,10 +182,8 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		VictoryModalComponent,
 		UserInfoPopupComponent,
 		LikeComponent,
-		UserListMoreComponent,
 		AddVictoryModalResultComponent,
 		VictoryCommentComponent,
-		ChoiceLikeComponent,
 		ThanksPartnerCardComponent,
 	],
 })

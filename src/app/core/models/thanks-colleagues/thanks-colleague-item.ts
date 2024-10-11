@@ -1,10 +1,12 @@
-import { IUser } from '@app/components/thank-colleague/models/user';
+import { IThanksColleagueUser } from '@app/core/models/thanks-colleagues/thanks-colleague-user';
+import { IUserDto } from '@app/core/models/awards/user-dto';
 
 export interface IThanksColleagueItem {
+	likedUsers: IUserDto[] | null;
 	/** Айди */
 	id?: number;
-	fromUser?: IUser;
-	toUser?: IUser;
+	fromUser?: IThanksColleagueUser;
+	toUser?: IThanksColleagueUser;
 	/** Текст */
 	text?: string | undefined;
 	/** Дата создания */

@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { IWinsItemDto } from '@app/core/models/awards/wins-item-dto';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { IResponse } from '@app/core/utils/response';
 import { ICommentsItemDto } from '@app/core/models/awards/comments-item-dto';
@@ -12,27 +11,30 @@ import { FormControl, Validators } from '@angular/forms';
 import { VictoryService } from '@app/components/victory/victory.service';
 import { VictoryEventEnum, VictoryRootService } from '@app/components/victory/victory-root.service';
 import { VictoryState } from '@app/components/victory/victory.state';
-import { Awards } from '@app/core/api/awards';
+import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
+import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
+import { ModalService } from '@app/core/modal/modal.service';
 import { LikeStateEnum } from '@app/shared/components/like/like.component';
 
-export interface VictoryModal {
-	victory: IWinsItemDto;
+export interface ThankColleagueModal {
+	thank: IThanksColleagueItem;
 	isExtendedMode: boolean;
 }
 
 @UntilDestroy()
 @Component({
-	selector: 'app-victory-modal',
-	templateUrl: './victory-modal.component.html',
-	styleUrls: ['./victory-modal.component.scss'],
+	selector: 'app-thanks-colleague-modal',
+	templateUrl: './thanks-colleague-modal.component.html',
+	styleUrls: ['./thanks-colleague-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VictoryModalComponent {
-	protected victory$: Observable<IWinsItemDto>;
+export class ThanksColleagueModalComponent {
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
 
-	protected readonly isExtendedMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
+	protected thank: IThanksColleagueItem;
+
+	protected readonly isExtendedMode: boolean = false;
 
 	protected readonly comments$: Observable<IResponse<ICommentsItemDto>>;
 	protected readonly subscription: Subscription = new Subscription();
@@ -40,32 +42,32 @@ export class VictoryModalComponent {
 	protected readonly updateComment$: BehaviorSubject<ICommentsItemDto | null> =
 		new BehaviorSubject<ICommentsItemDto | null>(null);
 
-	protected readonly typeLike$: BehaviorSubject<LikeStateEnum> =
-		new BehaviorSubject<LikeStateEnum>(LikeStateEnum.default);
-
-	protected readonly authUserId: number | null = null;
-	protected isChoiceLike: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected isChoiceLike: boolean = false;
 
 	protected notes: FormControl<string | null> = new FormControl(null, [Validators.required]);
 
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: VictoryModal,
+		private readonly modalService: ModalService,
+		@Inject(DIALOG_DATA) private readonly data: ThankColleagueModal,
 		private readonly victoryService: VictoryService,
 		private readonly victoryRootService: VictoryRootService,
 		private readonly victoryState: VictoryState,
+		private readonly cdr: ChangeDetectorRef,
 	) {
-		this.isExtendedMode$.next(this.data.isExtendedMode);
+		this.isExtendedMode = this.data.isExtendedMode;
 
 		this.comments$ = this.victoryService.getComments({
-			objectId: this.data.victory.id,
+			objectId: this.data.thank.id!,
 			type: IObjectType.WINS,
 		});
-		this.victory$ = this.victoryService.getWinModal(this.data.victory.id).pipe(
-			tap(victory => {
-				this.getStateLike(victory);
-			}),
-		);
+		this.thank = this.data.thank;
+	}
+
+	protected openModalInfoUser(id: number | undefined) {
+		if (id) {
+			this.modalService.open(UserInfoPopupComponent, { data: id });
+		}
 	}
 
 	protected close() {
@@ -82,6 +84,7 @@ export class VictoryModalComponent {
 						type: IObjectType.WINS,
 						note: this.notes.value,
 					})
+					.pipe(untilDestroyed(this))
 					.subscribe(() => {
 						this.victoryRootService.event$.next({
 							type: VictoryEventEnum.victoryUpdated,
@@ -101,6 +104,7 @@ export class VictoryModalComponent {
 						type: IObjectType.WINS,
 						note: this.notes.value,
 					})
+					.pipe(untilDestroyed(this))
 					.subscribe(() => {
 						this.victoryRootService.event$.next({
 							type: VictoryEventEnum.victoryUpdated,
@@ -119,82 +123,58 @@ export class VictoryModalComponent {
 		}
 	}
 
-	protected changeLike(isUserLiked: boolean, award: number | null = null) {
-		if (this.data.victory.id !== this.authUserId) {
-			if (!isUserLiked) {
-				this.addLike(this.data.victory.id, award);
-			} else {
-				this.removeLike(this.data.victory.id, null);
-			}
-			this.isChoiceLike.next(false);
-		}
-	}
-
 	protected cancelEditing() {
 		this.notes.setValue(null);
 		this.victoryState.activeFuncCommentEdit$.next(false);
 		this.updateComment$.next(null);
 	}
 
-	private removeLike(id: number, award: number | null) {
-		this.victoryService
-			.removeLikeVictory({
-				awardId: award,
-				type: IObjectType.WINS,
-				objectId: id,
-			})
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryUpdated });
-			});
-	}
-
-	private addLike(id: number, award: number | null) {
-		this.victoryService
-			.addLikeVictory({
-				awardId: award,
-				type: IObjectType.WINS,
-				objectId: id,
-			})
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryUpdated });
-			});
-	}
-
-	protected openChoiceLike(victory: IWinsItemDto) {
-		if (this.isExtendedMode$.value && !victory.isUserLiked) {
-			this.isChoiceLike.next(!this.isChoiceLike.value);
-		} else if (this.isExtendedMode$.value && victory.isUserLiked) {
-			this.removeLike(victory.id, null);
+	protected changeLike(
+		thank: IThanksColleagueItem,
+		likeType: LikeStateEnum = this.LikeStateEnum.default,
+	) {
+		if (thank.id) {
+			if (thank.isUserLiked) {
+				this.victoryService
+					.removeLikeVictory({
+						awardId: likeType,
+						type: IObjectType.THANKS,
+						objectId: thank.id,
+					})
+					.pipe(untilDestroyed(this))
+					.subscribe(() => {
+						thank.isUserLiked = false;
+						thank.likesCount! -= 1;
+						thank.award =
+							thank.award === this.LikeStateEnum.default || this.isExtendedMode
+								? this.LikeStateEnum.usual
+								: thank.award;
+						this.cdr.detectChanges();
+					});
+			} else {
+				this.victoryService
+					.addLikeVictory({
+						awardId:
+							likeType === this.LikeStateEnum.default
+								? this.LikeStateEnum.usual
+								: likeType,
+						type: IObjectType.THANKS,
+						objectId: thank.id,
+					})
+					.pipe(untilDestroyed(this))
+					.subscribe(() => {
+						thank.isUserLiked = true;
+						thank.likesCount! += 1;
+						thank.award =
+							thank.award === this.LikeStateEnum.default
+								? this.LikeStateEnum.usual
+								: thank.award || likeType;
+						this.isChoiceLike = false;
+						this.cdr.detectChanges();
+					});
+			}
 		}
 	}
 
-	protected getLike(isUserLiked: boolean, event: LikeStateEnum) {
-		switch (event) {
-			case LikeStateEnum.copper:
-				this.changeLike(isUserLiked, Awards.Copper);
-
-				return;
-			case LikeStateEnum.gold:
-				this.changeLike(isUserLiked, Awards.Gold);
-
-				return;
-			case LikeStateEnum.silver:
-				this.changeLike(isUserLiked, Awards.Silver);
-		}
-	}
-
-	private getStateLike(widget: IWinsItemDto) {
-		if (widget.award) {
-			this.typeLike$.next(widget.award);
-		} else if (widget.isUserLiked) {
-			this.typeLike$.next(LikeStateEnum.usual);
-		} else {
-			this.typeLike$.next(LikeStateEnum.default);
-		}
-	}
-
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly LikeStateEnum = LikeStateEnum;
 }
