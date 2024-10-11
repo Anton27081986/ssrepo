@@ -14,7 +14,7 @@ import { VictoryModalComponent } from '@app/components/victory/modal/victory-mod
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { LikeStateEnum } from '@app/components/like/like.component';
+import { LikeStateEnum } from '@app/shared/components/like/like.component';
 import { IUserProfile } from '@app/core/models/auth/user-profile';
 import { VictoryService } from '@app/components/victory/victory.service';
 import { IObjectType } from '@app/core/models/awards/object-type';
@@ -65,15 +65,11 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 	}
 
 	private getStateLike(widget: IWinsItemDto) {
-		if (widget.award === Awards.Gold) {
-			this.typeLike$.next(LikeStateEnum.gold);
-		} else if (widget.award === Awards.Silver) {
-			this.typeLike$.next(LikeStateEnum.silver);
-		} else if (widget.award === Awards.Copper) {
-			this.typeLike$.next(LikeStateEnum.copper);
-		} else if (widget.award === 0 && widget.isUserLiked) {
+		if (widget.award) {
+			this.typeLike$.next(widget.award);
+		} else if (widget.isUserLiked) {
 			this.typeLike$.next(LikeStateEnum.usual);
-		} else if (widget.award === 0 && !widget.isUserLiked) {
+		} else {
 			this.typeLike$.next(LikeStateEnum.default);
 		}
 	}

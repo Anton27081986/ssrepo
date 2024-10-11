@@ -87,8 +87,8 @@ export class AppIcons {
 
 	public static arrow =
 		'<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-		'<path d="M9.97532 7.44141L4.91699 12.4997L9.97532 17.5581" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
-		'<path d="M19.0836 12.5H5.05859" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M9.97532 7.44141L4.91699 12.4997L9.97532 17.5581" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M19.0836 12.5H5.05859" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
 	public static close =
