@@ -1,17 +1,17 @@
 <ss-card *ngIf="thankColleague" class="thanks-colleague-card" padding="16px">
 	<div class="thanks-colleague-card__header">
 		<div class="thanks-colleague-card__header__avatars">
-			<ss-avatar [src]="thankColleague.fromUser?.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thankColleague.fromUser?.id)"></ss-avatar>
-			<ss-avatar [src]="thankColleague.toUser?.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thankColleague.toUser?.id)"></ss-avatar>
+			<ss-avatar [src]="thankColleague.fromUser.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thankColleague.fromUser.id)"></ss-avatar>
+			<ss-avatar [src]="thankColleague.toUser.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thankColleague.toUser.id)"></ss-avatar>
 			<ss-icon class="thanks-colleague-card__header__avatars__arrow" name="arrow"></ss-icon>
 		</div>
 		<div class="thanks-colleague-card__header__persons">
 			<ss-text size="4">От кого:</ss-text>
-			<ss-text size="3">{{ thankColleague.fromUser?.name }}</ss-text>
+			<ss-text size="3">{{ thankColleague.fromUser.name }}</ss-text>
 			<ss-text size="4">Кому:</ss-text>
-			<ss-text size="3">{{ thankColleague.toUser?.name }}</ss-text>
+			<ss-text size="3">{{ thankColleague.toUser.name }}</ss-text>
 		</div>
-		<ss-icon name="maximise"></ss-icon>
+		<ss-icon name="maximise" (click)="openPopoverInfo(thankColleague)"></ss-icon>
 	</div>
 	<div class="thanks-colleague-card__content">
 		<ss-text size="3">{{ thankColleague.text || '' }}</ss-text>
@@ -20,9 +20,9 @@
 		<div class="thanks-colleague-card__footer__controls">
 			<app-like
 				*ngIf="!isExtendedMode" [likedUsers]="thankColleague.likedUsers"
-				[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.default : thankColleague?.award!"
-				[count]="thankColleague?.likesCount!"
-				(click)="changeLike(thankColleague!)">
+				[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.default : thankColleague.award || LikeStateEnum.usual"
+				[count]="thankColleague.likesCount || 0"
+				(click)="changeLike(thankColleague)">
 			</app-like>
 			<div class="thanks-colleague-card__footer__controls__like">
 				<app-choice-like
@@ -33,9 +33,9 @@
 				<app-like
 					*ngIf="isExtendedMode"
 					[likedUsers]="thankColleague.likedUsers"
-					[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.usual : thankColleague?.award!"
-					[count]="thankColleague?.likesCount!"
-					(click)="thankColleague?.isUserLiked ? changeLike(thankColleague, thankColleague.award) : isChoiceLike = true">
+					[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.usual : thankColleague.award || LikeStateEnum.usual"
+					[count]="thankColleague.likesCount || 0"
+					(click)="thankColleague.isUserLiked ? changeLike(thankColleague, thankColleague.award) : isChoiceLike = true">
 				</app-like>
 			</div>
 
