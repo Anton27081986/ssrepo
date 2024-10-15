@@ -4,19 +4,19 @@ import { IUserDto } from '@app/core/models/awards/user-dto';
 export interface IThanksColleagueItem {
 	likedUsers: IUserDto[] | null;
 	/** Айди */
-	id?: number;
-	fromUser?: IThanksColleagueUser;
-	toUser?: IThanksColleagueUser;
+	id: number;
+	fromUser: IThanksColleagueUser;
+	toUser: IThanksColleagueUser;
 	/** Текст */
-	text?: string | undefined;
+	text: string | undefined;
 	/** Дата создания */
-	createdDate?: string;
+	createdDate: string;
 	/** Количество лайков */
-	likesCount?: number;
+	likesCount: number;
 	/** Медаль и ее место если есть */
-	award?: number | undefined;
+	award: number | undefined;
 	/** Количество комментариев */
-	commentsCount?: number;
+	commentsCount: number;
 	/** Флаг что пользователь уже лайкнул */
-	isUserLiked?: boolean;
+	isUserLiked: boolean;
 }

@@ -38,10 +38,10 @@ export class ThanksColleagueCardComponent {
 	}
 
 	protected changeLike(
-		thank: IThanksColleagueItem,
+		thank: IThanksColleagueItem | null,
 		likeType: LikeStateEnum = this.LikeStateEnum.default,
 	) {
-		if (thank.id) {
+		if (thank) {
 			if (thank.isUserLiked) {
 				this.victoryService
 					.removeLikeVictory({
@@ -62,7 +62,10 @@ export class ThanksColleagueCardComponent {
 			} else {
 				this.victoryService
 					.addLikeVictory({
-						awardId: likeType === this.LikeStateEnum.default ? this.LikeStateEnum.usual : likeType,
+						awardId:
+							likeType === this.LikeStateEnum.default
+								? this.LikeStateEnum.usual
+								: likeType,
 						type: IObjectType.THANKS,
 						objectId: thank.id,
 					})

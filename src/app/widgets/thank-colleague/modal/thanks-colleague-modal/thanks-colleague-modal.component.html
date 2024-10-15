@@ -6,14 +6,28 @@
 		</div>
 		<ss-divider></ss-divider>
 		<div class="victory-modal__body">
-			<ss-avatar [src]="thank.fromUser?.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thank.fromUser?.id)"></ss-avatar>
-			<ss-avatar [src]="thank.toUser?.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thank.toUser?.id)"></ss-avatar>
+			<div class="victory-modal__body__user">
+				<ss-avatar [src]="thank.fromUser.avatarUrl || ''" size="medium" type="square" (click)="openModalInfoUser(thank.fromUser.id)"></ss-avatar>
+				<div class="victory-modal__body__user__info">
+					<ss-text size="3">{{ thank.fromUser.name}}</ss-text>
+					<ss-text size="4">{{ thank.fromUser.position}}</ss-text>
+					<ss-text size="4">{{ thank.fromUser.department}}</ss-text>
+				</div>
+			</div>
+			<div class="victory-modal__body__user">
+				<ss-avatar [src]="thank.toUser.avatarUrl || ''" size="medium" type="square" (click)="openModalInfoUser(thank.toUser.id)"></ss-avatar>
+				<div class="victory-modal__body__user__info">
+					<ss-text size="3">{{ thank.toUser.name}}</ss-text>
+					<ss-text size="4">{{ thank.toUser.position}}</ss-text>
+					<ss-text size="4">{{ thank.toUser.department}}</ss-text>
+				</div>
+			</div>
 			<div class="victory-modal__actions">
 				<app-like
 					*ngIf="!isExtendedMode" [likedUsers]="thank.likedUsers"
-					[type]="thank.isUserLiked && !thank.award ? LikeStateEnum.default : thank?.award!"
-					[count]="thank?.likesCount!"
-					(click)="changeLike(thank!)">
+					[type]="thank.isUserLiked && !thank.award ? LikeStateEnum.default : thank.award || LikeStateEnum.usual"
+					[count]="thank.likesCount || 0"
+					(click)="changeLike(thank)">
 				</app-like>
 				<div class="thanks-colleague-card__footer__controls__like">
 					<app-choice-like
@@ -24,12 +38,13 @@
 					<app-like
 						*ngIf="isExtendedMode"
 						[likedUsers]="thank.likedUsers"
-						[type]="thank.isUserLiked && !thank.award ? LikeStateEnum.usual : thank?.award!"
-						[count]="thank?.likesCount!"
-						(click)="thank?.isUserLiked ? changeLike(thank, thank.award) : isChoiceLike = true">
+						[type]="thank.isUserLiked && !thank.award ? LikeStateEnum.usual : thank.award || LikeStateEnum.usual"
+						[count]="thank.likesCount || 0"
+						(click)="thank.isUserLiked ? changeLike(thank, thank.award) : isChoiceLike = true">
 					</app-like>
 				</div>
 			</div>
+			<ss-icon class="victory-modal__body__arrow" name="arrow"></ss-icon>
 		</div>
 		<ss-divider></ss-divider>
 		<ng-container *ngIf="comments$ | async as comments">

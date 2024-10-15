@@ -28,10 +28,33 @@
 	}
 
 	&__body {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
 		padding: 0 16px;
+
+		&__user {
+			display: flex;
+			gap: 12px;
+
+			&__info {
+				display: flex;
+				flex-direction: column;
+
+				ss-text:first-child {
+					flex-grow: 1;
+				}
+			}
+		}
+
+		&__arrow {
+			position: absolute;
+			top: 35px;
+			left: 24px;
+			transform: rotateZ(-90deg);
+			color: #8C8C8C;
+		}
 	}
 
 	&__footer {
