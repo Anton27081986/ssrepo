@@ -326,8 +326,13 @@ export class AppIcons {
 		'</svg>';
 
 	public static favorite =
-		'<svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M13.4352 1H4.55556C2.59355 1 1 2.73944 1 4.85875V18.9442C1 20.7436 2.18826 21.5034 3.64364 20.6337L8.13874 17.9245C8.61773 17.6346 9.39148 17.6346 9.86125 17.9245L14.3564 20.6337C15.8117 21.5134 17 20.7536 17 18.9442V4.85875C16.9908 2.73944 15.3972 1 13.4352 1Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M9.29344 1H3.37131C2.06279 1 1 2.22845 1 3.72518V13.6728C1 14.9436 1.79248 15.4802 2.76312 14.866L5.76105 12.9527C6.0805 12.7479 6.59654 12.7479 6.90985 12.9527L9.90777 14.866C10.8784 15.4872 11.6709 14.9507 11.6709 13.6728V3.72518C11.6648 2.22845 10.602 1 9.29344 1Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
+
+	public static isFavorite =
+		'<svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M9.29344 1H3.37131C2.06279 1 1 2.22845 1 3.72518V13.6728C1 14.9436 1.79248 15.4802 2.76312 14.866L5.76105 12.9527C6.0805 12.7479 6.59654 12.7479 6.90985 12.9527L9.90777 14.866C10.8784 15.4872 11.6709 14.9507 11.6709 13.6728V3.72518C11.6648 2.22845 10.602 1 9.29344 1Z" fill="#4770FF" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
 
 	// Отставить 1 лайк
