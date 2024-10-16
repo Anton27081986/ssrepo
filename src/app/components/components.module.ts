@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { RouterLink } from '@angular/router';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NgScrollbar } from 'ngx-scrollbar';
 import { NzListModule } from 'ng-zorro-antd/list';
@@ -19,16 +15,10 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { MaxLengthTextPipe } from '@app/shared/pipe/max-length-text.pipe';
 import { UpFirstPipe } from '@app/shared/pipe/up-first.pipe';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import { AddressBookComponent } from '@app/components/address-book/address-book.component';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { BackendErrorMessagesComponent } from '@app/shared/modules/backend-error-messages/backend-error-messages.component';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -69,6 +59,7 @@ import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks
 import { AttachmentModule } from '@app/shared/components/attachment/attachment.module';
 import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
 import { LikeModule } from '@app/shared/components/like/like.module';
+import { ChoiceLikeModule } from '@app/shared/components/choice-like/choice-like.module';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
@@ -77,7 +68,7 @@ import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
 import { NotificationComponent } from './notification/notification.component';
 import { BirthdayComponent } from './birthday/birthday.component';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
-import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.module";
+import {NzModalModule} from "ng-zorro-antd/modal";
 
 @NgModule({
 	declarations: [
@@ -90,7 +81,6 @@ import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.m
 		VictoryComponent,
 		BirthdayComponent,
 		RatingComponent,
-		AddressBookComponent,
 		AddVictoryModalComponent,
 		BackendErrorMessagesComponent,
 		PaginationComponent,
@@ -110,15 +100,12 @@ import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.m
 		FormsModule,
 		NzFormModule,
 		NzInputModule,
+		NzModalModule,
 		ReactiveFormsModule,
 		RouterLink,
 		NzIconModule,
-		NzMenuModule,
 		NzTabsModule,
 		NzButtonModule,
-		NgOptimizedImage,
-		NzTableModule,
-		NzDividerModule,
 		NzDropDownModule,
 		NgScrollbar,
 		NzListModule,
@@ -127,14 +114,8 @@ import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.m
 		MaxLengthTextPipe,
 		UpFirstPipe,
 		NzPaginationModule,
-		NzModalModule,
 		NzSelectModule,
-		NzCheckboxModule,
-		NzCarouselModule,
-		NzCardModule,
 		NzToolTipModule,
-		NzSpinModule,
-		NzTypographyModule,
 		DateTimePipe,
 		CarouselModule,
 		TransportModule,
@@ -161,7 +142,7 @@ import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.m
 		AttachmentModule,
 		FormControlInputWithFuncEditModule,
 		LikeModule,
-		ChoiceLikeModule
+		ChoiceLikeModule,
 	],
 	exports: [
 		MainMenuComponent,
@@ -173,7 +154,6 @@ import {ChoiceLikeModule} from "@app/shared/components/choice-like/choice-like.m
 		BirthdayComponent,
 		VictoryComponent,
 		RatingComponent,
-		AddressBookComponent,
 		TransportComponent,
 		PaginationComponent,
 		ProfileCardComponent,
