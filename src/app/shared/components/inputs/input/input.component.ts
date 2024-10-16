@@ -14,9 +14,8 @@ export class InputComponent implements ControlValueAccessor {
 	@Input() public type: 'text' | 'email' | 'number' = 'text';
 	@Input() public error: string | undefined;
 	@Input() public maxlength: string = '256';
-	@Input() public value: any = '';
 
-	@Output() clear: EventEmitter<any> = new EventEmitter();
+	@Input() public value: any = '';
 
 	public constructor(
 		// Retrieve the dependency only from the local injector,
@@ -64,10 +63,6 @@ export class InputComponent implements ControlValueAccessor {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	protected onChange(value: string) {
-		if (!value) {
-			this.clear.emit();
-		}
-	}
+	protected onChange(value: string) {}
 	protected onTouched() {}
 }
