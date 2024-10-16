@@ -11,24 +11,11 @@ import { environment } from '@environments/environment.development';
 export class AddressBookApiService {
 	public constructor(private readonly http: HttpClient) {}
 
-	public getAddressBookUsers(
-		limit: number,
-		offset: number,
-	): Observable<IResponse<IAddressBookUser>> {
-		let params = new HttpParams();
-
-		if (limit !== null && limit !== undefined) {
-			params = params.set('Limit', limit);
-		}
-
-		if (offset !== null && offset !== undefined) {
-			params = params.set('Offset', offset);
-		}
-
+	public getAddressBookUsers(): Observable<IResponse<IAddressBookUser>> {
 		return this.http.get<IResponse<IAddressBookUser>>(
 			`${environment.apiUrl}/api/auth/AddressBook`,
 			{
-				params,
+				params: new HttpParams(),
 			},
 		);
 	}

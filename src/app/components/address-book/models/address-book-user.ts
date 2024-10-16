@@ -1,4 +1,4 @@
-export interface IAddressBookSearchUser {
+export interface IAddressBookUser {
 	id: number;
 	avatarUrl?: string;
 	name?: string;
@@ -6,8 +6,10 @@ export interface IAddressBookSearchUser {
 	firstName?: string;
 	surName?: string;
 	email?: string;
+	department?: string;
+	position?: string;
+	phone?: string;
 	phoneLocal?: string;
-	city?: string;
-	branchType?: string;
-	isFavorite?: string;
+	isIntranet?: string;
+	linkToCall?: string;
 }
