@@ -69,7 +69,6 @@ export class AddressBookComponent implements OnInit {
 
 	public clearSearch() {
 		this.searchedUsers = [];
-		this.isFavoriteMode = true;
 		this.loadFavoriteUsers();
 	}
 
@@ -96,10 +95,7 @@ export class AddressBookComponent implements OnInit {
 	public toggleMode() {
 		this.isFavoriteMode = !this.isFavoriteMode;
 		this.total = 0;
-
-		if (this.isFavoriteMode) {
-			this.clearSearch();
-		}
+		this.clearSearch();
 	}
 
 	public nzPageIndexChange($event: number) {
