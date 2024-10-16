@@ -5,10 +5,11 @@ import { FullLayoutModule } from '@app/shared/layouts/full-layout/full-layout.mo
 import { SliderComponent } from '@app/components/slider/slider.component';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { VictoryService } from '@app/components/victory/victory.service';
-import { MainPageComponent } from './main-page.component';
 import { ManePageRoutingModule } from '@app/pages/main-page/mane-page-routing.module';
 import { ExchangeRatesComponent } from '@app/components/exchange-rates/exchange-rates.component';
 import { ThanksColleagueModule } from '@app/widgets/thank-colleague/thanks-colleague.module';
+import { AddressBookModule } from '@app/widgets/address-book/address-book.module';
+import { MainPageComponent } from './main-page.component';
 
 @NgModule({
 	declarations: [MainPageComponent, SliderComponent],
@@ -21,6 +22,7 @@ import { ThanksColleagueModule } from '@app/widgets/thank-colleague/thanks-colle
 		ComponentsModule,
 		ThanksColleagueModule,
 		ExchangeRatesComponent,
+		AddressBookModule,
 	],
 	providers: [{ provide: VictoryService }],
 })
