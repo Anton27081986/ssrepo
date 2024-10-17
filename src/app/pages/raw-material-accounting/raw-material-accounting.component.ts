@@ -9,6 +9,7 @@ import { ContractInfoComponent } from '@app/pages/raw-material-accounting/modals
 import { ContractNewComponent } from '@app/pages/raw-material-accounting/modals/contract-new/contract-new.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
 
 @UntilDestroy()
 @Component({
@@ -20,6 +21,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 	public isLoading$: Observable<boolean>;
 	public isFiltersVisible: boolean = false;
 	public canAdd: boolean = false;
+	private selectedContract: IRawMaterialAccountingContract | undefined;
 
 	public tableItems: ITableItem[] | null = null;
 	public pageIndex = 1;
@@ -130,6 +132,12 @@ export class RawMaterialAccountingComponent implements OnInit {
 				statusesFilter.options = statuses.items;
 			}
 		});
+
+		this.facadeService.selectedContract$.pipe(untilDestroyed(this)).subscribe(contract => {
+			if (contract) {
+				this.selectedContract = contract.data;
+			}
+		});
 	}
 
 	ngOnInit() {
@@ -219,6 +227,10 @@ export class RawMaterialAccountingComponent implements OnInit {
 	public showContract(contract: { row: ITableItem; icon: string }) {
 		if (contract.row.id) {
 			this.router.navigate([`raw-material-accounting/${contract.row.id}`]);
+
+			if (this.selectedContract?.id === Number(contract.row.id)) {
+				this.openContractModal(contract.row.id);
+			}
 		}
 	}
 
