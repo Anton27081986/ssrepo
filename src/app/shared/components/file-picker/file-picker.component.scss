@@ -41,15 +41,6 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 170px;
-
-	&__icon-toggle {
-		cursor: pointer;
-		transform: rotate(180deg);
-
-		&--expanded {
-			transform: rotate(0deg);
-		}
-	}
 }
 
 .ss-file-picker-header h3 {

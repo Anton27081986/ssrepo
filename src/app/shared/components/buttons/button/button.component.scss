@@ -95,14 +95,6 @@ button.outline {
 	background-color: transparent;
 	border-color: $island-outline;
 	color: $text;
-
-	::ng-deep svg {
-		stroke: $text;
-
-		rect {
-			fill: $text;
-		}
-	}
 }
 
 button:disabled {

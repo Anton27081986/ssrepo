@@ -17,8 +17,7 @@
 		<ss-icon *ngIf="(this.selectedOptions$ | async)?.length && !(this.readOnly$ | async)" [name]="'basket'" (click)="clear()"></ss-icon>
 		<ss-icon *ngIf="(this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length"
 				 (click)="toggle()" height="12" name="chevron"
-				 class="multiselect-v2__icon-toggle"
-				 [class.multiselect-v2__icon-toggle--expanded]="isExpanded">
+				 [@rotate]="isExpanded">
 		</ss-icon>
 	</div>
 	<div class="multiselect-autocomplete-v2__select"

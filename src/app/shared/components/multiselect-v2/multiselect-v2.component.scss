@@ -12,15 +12,6 @@
 	z-index: 999;
 	gap: 6px;
 
-	&__icon-toggle {
-		cursor: pointer;
-		transform: rotate(180deg);
-
-		&--expanded {
-			transform: rotate(0deg);
-		}
-	}
-
 	&__input {
 		height: 46px;
 		padding: 8px 12px;

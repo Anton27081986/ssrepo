@@ -3,6 +3,7 @@
 	<input [type]="type"
 		   [placeholder]="placeholder"
 		   [value]="value"
+		   [class.input-padding-disabled]="disabled"
 		   [disabled]="disabled"
 		   [maxLength]="maxlength"
 		   (input)="onChange($any($event.target).value)"

@@ -7,7 +7,7 @@
 			</ss-icon>
 			<span class="count">{{ (checkListFile.checkFiles$ | async)?.length }}</span>
 			<ss-icon (click)="toggle()" height="12" name="chevron" class="ss-file-picker__icon-toggle"
-					 [class.accordion-header__icon-toggle--expanded]="isExpanded">
+					[@rotate]="isExpanded">
 			</ss-icon>
 		</div>
 	</div>

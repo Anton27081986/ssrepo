@@ -103,7 +103,7 @@ export class ClientProposalsTableVgpComponent {
 		},
 		{
 			id: ClientProposalsRowItemField.countKA,
-			title: 'Кол-во КА с продажами ТПР',
+			title: 'Кол-во клиентов с продажами ТПР',
 			order: 5,
 			show: true,
 			width: null,
