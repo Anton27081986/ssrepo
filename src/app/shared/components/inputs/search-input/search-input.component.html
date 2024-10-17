@@ -9,7 +9,7 @@
 		   class="{{ error ? size + ' error' : size }}"
 		   #input
 	/>
-	<div class="search-result" *ngIf="(found$ | async)?.length">
+	<div class="search-result" *ngIf="(found$ | async)?.length" #options>
 		<div class="separator"></div>
 		<ss-caption class="search-result-item" *ngFor="let item of found$ | async"
 					(click)="

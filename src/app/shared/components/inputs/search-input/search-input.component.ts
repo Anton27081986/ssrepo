@@ -1,9 +1,11 @@
 import {
 	ChangeDetectorRef,
 	Component,
+	ElementRef,
 	EventEmitter,
 	Input,
 	Output,
+	ViewChild,
 } from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -47,6 +49,8 @@ export class SearchInputComponent {
 
 	@Output() public select = new EventEmitter<any>();
 
+	@ViewChild('options') public options!: ElementRef;
+
 	public found$: BehaviorSubject<IDictionaryItemDto[]> = new BehaviorSubject<
 		IDictionaryItemDto[]
 	>([]);
@@ -55,6 +59,12 @@ export class SearchInputComponent {
 		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
 	) {}
+
+	private showHiddenOptions() {
+		if (this.options) {
+			this.options.nativeElement.scrollIntoView(false);
+		}
+	}
 
 	protected onChange(query: string) {
 		if (query.length > 2) {
@@ -114,6 +124,7 @@ export class SearchInputComponent {
 						.subscribe(res => {
 							this.found$.next(res);
 							this.ref.detectChanges();
+							this.showHiddenOptions();
 						});
 					break;
 				case 'client':
