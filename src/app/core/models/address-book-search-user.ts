@@ -12,4 +12,5 @@ export interface IAddressBookSearchUser {
 	isFavorite?: boolean;
 	position?: string;
 	department?: string;
+	linkToCall?: string;
 }

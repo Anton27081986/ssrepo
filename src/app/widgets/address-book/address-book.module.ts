@@ -12,7 +12,8 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { AddressBookCardComponent } from '@app/widgets/address-book/address-book-card/address-book-card.component';
 import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
-import {ComponentsModule} from "@app/components/components.module";
+import { ComponentsModule } from '@app/components/components.module';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 @NgModule({
 	declarations: [AddressBookComponent, AddressBookCardComponent],
@@ -31,6 +32,7 @@ import {ComponentsModule} from "@app/components/components.module";
 		AvatarModule,
 		SsDividerModule,
 		ComponentsModule,
+		TooltipModule,
 	],
 })
 export class AddressBookModule {}
