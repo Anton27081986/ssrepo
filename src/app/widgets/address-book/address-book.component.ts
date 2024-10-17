@@ -19,14 +19,14 @@ export class AddressBookComponent implements OnInit {
 	public searchedUsers: IAddressBookSearchUser[] = [];
 
 	public pageIndex = 1;
-	public pageSize = 10;
+	public pageSize = 12;
 	public total: number | undefined;
 	public offset = 0;
 
 	public constructor(
 		private readonly apiService: AddressBookApiService,
 		private readonly usersApiService: UsersApiService,
-		private readonly ref: ChangeDetectorRef
+		private readonly ref: ChangeDetectorRef,
 	) {}
 
 	public ngOnInit() {
@@ -46,10 +46,10 @@ export class AddressBookComponent implements OnInit {
 			});
 	}
 
-	public loadSearchUsers(event?: Event) {
-		if (event) {
-			const searchTerm = (event.target as HTMLInputElement).value;
+	public loadSearchUsers(event: Event) {
+		const searchTerm = (event.target as HTMLInputElement).value;
 
+		if (searchTerm.trim().length) {
 			this.isFavoriteMode = false;
 
 			this.usersApiService
