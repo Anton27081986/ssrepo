@@ -21,6 +21,10 @@ input::-webkit-outer-spin-button,
 	 -webkit-appearance: none;
  }
 
+.input-padding-disabled {
+	padding: 0 20px;
+}
+
 .input {
 	position: relative;
 

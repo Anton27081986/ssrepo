@@ -77,7 +77,7 @@
 				<ss-button *ngIf="offers.length > 0" size="small" [type]="'outline'" nz-dropdown nzTrigger="click"
 						   [nzDropdownMenu]="settingsColumn">
 					Отображение столбцов
-					<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>
+					<ss-icon [@rotate]="expandedPopoverCheckColumn$ | async" (click)="expandedColumnPopover()" height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>
 				</ss-button>
 			</div>
 		</ng-container>

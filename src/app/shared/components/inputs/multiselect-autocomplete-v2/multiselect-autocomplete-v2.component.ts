@@ -14,6 +14,7 @@ import { IFilterOption } from '@app/shared/components/filters/filters.component'
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { rotateAnimation } from '@app/core/animations';
 
 @UntilDestroy()
 @Component({
@@ -21,6 +22,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 	templateUrl: './multiselect-autocomplete-v2.component.html',
 	styleUrls: ['./multiselect-autocomplete-v2.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	animations: [rotateAnimation],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,

@@ -18,6 +18,7 @@ import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/noti
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
+import { rotateAnimation } from '@app/core/animations';
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -32,6 +33,7 @@ export interface IClientProposalsCriteriaForm {
 	templateUrl: './client-proposals-card.component.html',
 	styleUrls: ['./client-proposals-card.component.scss'],
 	providers: [ColumnsStateService, CheckFileListStateService],
+	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsCardComponent {
@@ -39,6 +41,10 @@ export class ClientProposalsCardComponent {
 	protected clientOffers$!: Observable<ResponseProposals<IClientOffersDto> | null>;
 	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	protected defaultStateTable$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected expandedPopoverCheckColumn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false,
+	);
+
 	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
 
 	public isAlterFilter$ = this.clientProposalsFacadeService.isAlterFilter$;
@@ -75,6 +81,10 @@ export class ClientProposalsCardComponent {
 		}
 
 		return !this.form.valid;
+	}
+
+	protected expandedColumnPopover() {
+		this.expandedPopoverCheckColumn$.next(!this.expandedPopoverCheckColumn$.value);
 	}
 
 	get canTakeWork(): Observable<boolean> {
