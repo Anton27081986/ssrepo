@@ -997,4 +997,15 @@ export class AppIcons {
 		'<path d="M18 15.5996V19.2746" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M18 21.5156V21.5856" stroke="#416CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
+
+	public static cake =
+		'<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M1 14.3333H14.3333" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M1.74219 14.3333V8.33331C1.74219 7.22665 2.73552 6.33331 3.96219 6.33331H11.3689C12.5955 6.33331 13.5889 7.22665 13.5889 8.33331V14.3333" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M3.375 6.33333V4.44667C3.375 3.64667 4.095 3 4.98833 3H10.355C11.2417 3 11.9617 3.64667 11.9617 4.44667V6.33333" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M2.02344 8.98669L2.2701 8.99336C2.76344 9.00003 3.15677 9.40003 3.15677 9.89336V10.1134C3.15677 10.6067 3.55677 11.0134 4.05677 11.0134C4.5501 11.0134 4.95677 10.6134 4.95677 10.1134V9.90669C4.95677 9.41336 5.35677 9.00669 5.85677 9.00669C6.3501 9.00669 6.75677 9.40669 6.75677 9.90669V10.1134C6.75677 10.6067 7.15677 11.0134 7.65677 11.0134C8.1501 11.0134 8.55677 10.6134 8.55677 10.1134V9.90669C8.55677 9.41336 8.95677 9.00669 9.45677 9.00669C9.9501 9.00669 10.3568 9.40669 10.3568 9.90669V10.1134C10.3568 10.6067 10.7568 11.0134 11.2568 11.0134C11.7501 11.0134 12.1568 10.6134 12.1568 10.1134V9.90669C12.1568 9.41336 12.5568 9.00669 13.0568 9.00669H13.3568" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M5 3.00002V1.66669" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M10.3359 3.00002V1.66669" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'<path d="M7.66406 3V1" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+		'</svg>';
 }

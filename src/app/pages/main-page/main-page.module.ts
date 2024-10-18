@@ -9,6 +9,7 @@ import { ManePageRoutingModule } from '@app/pages/main-page/mane-page-routing.mo
 import { ExchangeRatesComponent } from '@app/components/exchange-rates/exchange-rates.component';
 import { ThanksColleagueModule } from '@app/widgets/thank-colleague/thanks-colleague.module';
 import { AddressBookModule } from '@app/widgets/address-book/address-book.module';
+import { BirthdayComponent } from '@app/components/birthday/birthday.component';
 import { MainPageComponent } from './main-page.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { MainPageComponent } from './main-page.component';
 		ThanksColleagueModule,
 		ExchangeRatesComponent,
 		AddressBookModule,
+		BirthdayComponent,
 	],
 	providers: [{ provide: VictoryService }],
 })

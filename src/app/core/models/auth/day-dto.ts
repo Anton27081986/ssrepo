@@ -12,6 +12,6 @@
 import { IBirthdayUserDto } from './birthday-user-dto';
 
 export interface IDayDto {
-	name?: string | null;
-	items?: IBirthdayUserDto[] | null;
+	name: string | null;
+	items: IBirthdayUserDto[] | null;
 }

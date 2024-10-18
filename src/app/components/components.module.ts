@@ -66,7 +66,6 @@ import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
 import { NotificationComponent } from './notification/notification.component';
-import { BirthdayComponent } from './birthday/birthday.component';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
 import {NzModalModule} from "ng-zorro-antd/modal";
 
@@ -79,7 +78,6 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 		NotificationComponent,
 		ThanksPartnerComponent,
 		VictoryComponent,
-		BirthdayComponent,
 		RatingComponent,
 		AddVictoryModalComponent,
 		BackendErrorMessagesComponent,
@@ -151,7 +149,6 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 		AuctionSalesComponent,
 		NotificationComponent,
 		ThanksPartnerComponent,
-		BirthdayComponent,
 		VictoryComponent,
 		RatingComponent,
 		TransportComponent,
