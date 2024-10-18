@@ -12,6 +12,7 @@ export class TabsComponent {
 	@Input() public tabs?: ITab[] = [];
 	@Input() public selectedTab: ITab = { name: 'Все', isVisible: true } as ITab;
 	@Input() public size: 'small' | 'medium' | 'big' = 'small';
+	@Input() public tabsBorder = true;
 	@Output() public select = new EventEmitter<string>();
 
 	public onSelect(tab: ITab) {

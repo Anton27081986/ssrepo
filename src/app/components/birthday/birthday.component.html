@@ -1,76 +1,77 @@
 <div class="birthday">
-		<div class="container">
-			<div class="header">
-				<div>
-					<div class="title">
-						<h1>ДНИ РОЖДЕНИЯ</h1>
-					</div>
-					<div class="subtitle">
-						<h2>Не забывайте поздравить коллег и партнеров!</h2>
-					</div>
-				</div>
-				<div class="open-all-table">
-					<a href="https://cisp.ssnab.ru/Personal/Mols/Reminder" target="_blank" rel="noreferrer">
-						<div class="button">
-							<button nz-button class="button" [nzType]="'primary'">
-								<span class="like-icon" nz-icon [nzType]="'ss:blocknote'"></span>
-								Добавить напоминание
-							</button>
-						</div>
-					</a>
-				</div>
-			</div>
+    <ss-card padding="0">
+        <div class="header">
+            <div class="title">
+                <ss-text size="1">Дни рождения</ss-text>
 
-			<div class="panel"></div>
+                <ss-text size="3" weight="medium">
+                    Не забывайте поздравить коллег и партнеров!
+                </ss-text>
+            </div>
 
-			<div class="tabs">
-				<div class="calendar">
-					<nz-date-picker [(ngModel)]="date"
-													[nzAllowClear]="false"
-													(ngModelChange)="onChange($event)"
-													nzFormat="dd.MM.yyyy"
-													[nzSuffixIcon]="sufixCalendar"></nz-date-picker>
+            <ss-button
+                type="primary"
+                size="medium"
+                (click)="addNotice()"
+            >
+                <ss-icon size="small" name="blocknote"></ss-icon>
+                Добавить напоминание
+            </ss-button>
+        </div>
 
-					<span class="calendar-icon" nz-icon [nzType]="'ss:calendar'"></span>
-					<ng-template #sufixCalendar>
-						<i nz-icon [nzType]="'ss:arrowBottom'" class="search-icon-suffix"></i>
-					</ng-template>
-				</div>
+        <div class="actions">
+            <ss-datepicker-input
+                [formControl]="dateBirthCtrl"
+                [placeholder]="dateBirthCtrl.value"
+                size="small"
+            ></ss-datepicker-input>
 
-				<nz-tabset
-					[(nzSelectedIndex)]="selectedTabIndex"
-					[nzTabPosition]="'top'"
-					[nzType]="'line'">
+            <div class="tabs">
+                @if (!loading$()) {
+                    <ss-tabs
+                        [tabs]="birthDays$() | mapper : toTabsItemsFormat : shortYear"
+                        [selectedTab]="selectedTabName$() | mapper : toITabFormat : shortYear"
+                        [tabsBorder]="false"
+                        (select)="selectTab($event)"
+                    />
+                }
+            </div>
+        </div>
 
-					<nz-tab *ngFor="let day of birthdays;"
-									nzTitle="{{ day.name }}" (nzClick)="onTabClick(day!.name)">
+        <ss-divider class="divider" />
 
-						<div class="content">
-							<div class="card-list">
+        <div class="content">
+            @if (loading$()) {
+                <div class="card-list__empty">
+                    <ss-loader></ss-loader>
+                </div>
+            } @else {
+                @if (selectedTabContent$().length) {
+                    <div class="card-list">
+                        @for (userData of selectedTabContent$(); track userData.id) {
+                            <div class="card-list__item">
+                                <ss-card padding="16px">
+                                    <app-user-card [user]="userData" [size]="'large'"></app-user-card>
+                                </ss-card>
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    <div class="card-list__empty">
+                        <ss-empty-placeholder>
+                            <ss-icon name="cake" class="card-list__empty_icon"></ss-icon>
 
-								<div class="card" *ngFor="let item of day?.items;">
-									<div class="personal">
-										<div class="img">
-											<img src="{{ item?.avatarUrl }}" alt="" />
-										</div>
-										<div class="title">
-											<div class="fio">
-												<span>{{ item?.name }}</span>
-											</div>
-											<div class="job">
-												<div>{{ item?.position }}</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                            <ss-headline size="h3" class="card-list__empty_title">
+                                В этот день ни у кого нет дня рождения
+                            </ss-headline>
 
-					</nz-tab>
-
-				</nz-tabset>
-
-			</div>
-		</div>
-
+                            <ss-text size="1">Попробуйте выбрать другую дату</ss-text>
+                        </ss-empty-placeholder>
+                    </div>
+                }
+            }
+        </div>
+    </ss-card>
 </div>
+
+
