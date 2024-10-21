@@ -1,0 +1,30 @@
+.rating-team-users {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	&__users {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		grid-gap: 16px;
+		min-height: 238px;
+		position: relative;
+	}
+
+	&__users > app-rating-team-users-card {
+		text-align: left;
+	}
+
+	ss-empty-placeholder {
+		position: absolute;
+		top:50%;
+		left:50%;
+		transform:translate(-50%, -50%);
+	}
+
+	ss-pagination {
+		position: relative;
+		bottom: 0;
+		right: 0;
+	}
+}

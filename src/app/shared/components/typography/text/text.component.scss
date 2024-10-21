@@ -51,6 +51,10 @@ p.color-black {
 	color: $text;
 }
 
+p.color-white {
+	color: $island;
+}
+
 :host-context(.dark) p {
 	color: $dark-text;
 }

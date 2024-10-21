@@ -1,0 +1,17 @@
+<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
+<select
+	(change)="onClick($event.currentTarget)"
+		[disabled]="disabled"
+		[ngClass]="error ? size + ' error' : size"
+>
+	<option *ngIf="!selected()" value="">Выберите время</option>
+		<option
+			*ngFor="let option of options"
+			[value]="option.id"
+			[selected]="option.id === selected()"
+
+		>
+			{{ option.name }}
+		</option>
+</select>
+<ss-caption size="2" class="error">{{ error }}</ss-caption>

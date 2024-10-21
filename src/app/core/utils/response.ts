@@ -19,3 +19,7 @@ export interface IResponseProposalsTrips<T> extends IResponse<T> {
 	totalExpensesList: Currency[];
 	totalSales: number;
 }
+
+export interface IRatingTeamsResponse<T> extends IResponse<T> {
+	teamName: string;
+}

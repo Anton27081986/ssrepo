@@ -45,16 +45,6 @@ export class VictoryCommentComponent {
 		}
 	}
 
-	protected getFormatDate(date: string) {
-		return new Date(Date.parse(date)).toLocaleString('ru-RU', {
-			year: 'numeric',
-			month: 'numeric',
-			day: 'numeric',
-			hour: 'numeric',
-			minute: 'numeric',
-		});
-	}
-
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly TooltipTheme = TooltipTheme;
 }

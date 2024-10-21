@@ -158,7 +158,7 @@ export class ClientsCardFacadeService {
 		this.callPhoneService.toggleCallForUser(id);
 	}
 
-	public getUserById(id: string) {
+	public getUserById(id: number) {
 		return this.usersApiService.getUserById(id);
 	}
 }

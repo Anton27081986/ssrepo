@@ -1,0 +1,41 @@
+<ss-card class="rating-team-users-card" [padding]="'16px'">
+	<ng-container [ngSwitch]="teamUsers().type">
+		<ng-container *ngSwitchCase="RateTypeEnum.Mol">
+			<app-user-card [user]="teamUsers().user" [size]="'large'" [viewPopupInfo]="true"></app-user-card>
+		</ng-container>
+		<ng-container *ngSwitchCase="RateTypeEnum.Projects">
+			<app-projects-users-card [team]="teamUsers().project!"></app-projects-users-card>
+		</ng-container>
+		<ng-container *ngSwitchCase="RateTypeEnum.Distributors">
+			<app-distributors-users-card [team]="teamUsers().distributor!"></app-distributors-users-card>
+		</ng-container>
+		<ng-container *ngSwitchCase="RateTypeEnum.Teams">
+			<app-team-users-card [team]="teamUsers().team!"></app-team-users-card>
+		</ng-container>
+	</ng-container>
+
+
+	<div class="rating-team-users-card__actions">
+		<div class="rating-team-users-card__rating">
+			<div *ngIf="teamUsers().avgWeekRate" [tooltip]="'Средняя оценка за неделю'" [theme]="TooltipTheme.DEFAULT"
+				 [position]="TooltipPosition.DEFAULT" class="rating-team-users-card__tab">
+				<ss-text [size]="'4'">{{ teamUsers().avgWeekRate }}</ss-text>
+			</div>
+			<div *ngIf="teamUsers().avgQuarterRate" [tooltip]="'Средняя оценка за квартал'" [theme]="TooltipTheme.DEFAULT"
+				 [position]="TooltipPosition.DEFAULT" class="rating-team-users-card__tab">
+				<ss-text [size]="'4'">{{ teamUsers().avgQuarterRate }}</ss-text>
+			</div>
+			<ss-icon *ngIf="typeCup()" class="rating-team-users-card__tab rating-team-users-card__tab--{{ typeCup() }}" [name]="'cup'"></ss-icon>
+		</div>
+		<div class="rating-team-users-card__card-comment">
+			<div *ngIf="teamUsers().allowMsgView" class="rating-team-users-card__comment" (click)="redirectOnComment(teamUsers().talksLink!)">
+				<ss-icon [tooltip]="'Оставить комментарий'" [theme]="TooltipTheme.DEFAULT"
+						 [position]="TooltipPosition.DEFAULT" [width]="'15'" [height]="'15'" name="comment"></ss-icon>
+				<ss-text [size]="'3'">{{teamUsers().msgCount }}</ss-text>
+			</div>
+		</div>
+	</div>
+</ss-card>
+
+
+
