@@ -226,11 +226,9 @@ export class RawMaterialAccountingComponent implements OnInit {
 
 	public showContract(contract: { row: ITableItem; icon: string }) {
 		if (contract.row.id) {
-			this.router.navigate([`raw-material-accounting/${contract.row.id}`]);
-
-			if (this.selectedContract?.id === Number(contract.row.id)) {
-				this.openContractModal(contract.row.id);
-			}
+			// eslint-disable-next-line no-restricted-globals
+			history.pushState(null, document.title, `${window.location.href}/${contract.row.id}`);
+			this.openContractModal(contract.row.id);
 		}
 	}
 
@@ -247,6 +245,12 @@ export class RawMaterialAccountingComponent implements OnInit {
 				if (isEdited) {
 					this.getFilteredContracts(false);
 				}
+
+				const url = window.location.href.split('/');
+
+				url.pop();
+				// eslint-disable-next-line no-restricted-globals
+				history.pushState(null, document.title, url.join('/'));
 			});
 	}
 

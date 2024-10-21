@@ -38,21 +38,13 @@ export class ContractNewComponent {
 				Validators.max(99999999999),
 			]),
 			price: new FormControl<number | null>(null, [
-				Validators.required,
 				Validators.min(1),
 				Validators.max(99999999999),
 			]),
 			period: new FormControl<string>('', Validators.required),
-			paymentConditions: new FormControl<string>('', Validators.required),
-			deliveryConditions: new FormControl<string>('', Validators.required),
-			notificationDate: new FormControl<string>(
-				new Date().toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				}),
-				Validators.required,
-			),
+			paymentConditions: new FormControl<string>(''),
+			deliveryConditions: new FormControl<string>(''),
+			notificationDate: new FormControl<string>(''),
 		});
 
 		this.contractDetails$ = this.facadeService.contractDetails$;
@@ -61,17 +53,28 @@ export class ContractNewComponent {
 	addContract() {
 		this.newContractForm.markAllAsTouched();
 
+		if (!this.newContractForm.value.period) {
+			return;
+		}
+
+		const dates = fromPickerRangeDateToIso(this.newContractForm.value.period);
+
+		if (!dates[0] || !dates[1]) {
+			this.newContractForm.controls.period.setErrors({ period: true });
+		}
+
 		for (const field in this.newContractForm.controls) {
 			if (this.newContractForm.get(field)?.errors) {
 				return;
 			}
 		}
 
-		const dates = fromPickerRangeDateToIso(this.newContractForm.value.period);
 		const newContract: AddContractDto = {
 			...this.newContractForm.value,
 			contractorId: this.newContractForm.value.contractor.id,
-			notificationDate: fromPickerDateToIso(this.newContractForm.value.notificationDate),
+			notificationDate: this.newContractForm.value.notificationDate
+				? fromPickerDateToIso(this.newContractForm.value.notificationDate)
+				: null,
 			periodStartDate: dates[0],
 			periodEndDate: dates[1],
 		};

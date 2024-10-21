@@ -20,6 +20,10 @@ export class RawMaterialAccountingFacadeService {
 
 	public isContractsLoading$ = this.isContractsLoadingSubject.asObservable();
 
+	private readonly isContractLoadingSubject = new BehaviorSubject<boolean>(true);
+
+	public isContractLoading$ = this.isContractLoadingSubject.asObservable();
+
 	// Договоры
 	private readonly contractsSubject =
 		new BehaviorSubject<IResponse<IRawMaterialAccountingContract> | null>(null);
@@ -100,11 +104,13 @@ export class RawMaterialAccountingFacadeService {
 
 	public selectContract(id: string | null): void {
 		if (id) {
+			this.isContractLoadingSubject.next(true);
 			this.rawMaterialAccountingApiService
 				.getContractById(id)
 				.pipe(untilDestroyed(this))
 				.subscribe(contract => {
 					this.selectedContractSubject.next(contract);
+					this.isContractLoadingSubject.next(false);
 				});
 		} else {
 			this.selectedContractSubject.next(null);

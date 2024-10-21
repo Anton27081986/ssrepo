@@ -107,7 +107,8 @@
 		<div class="footer" *ngIf="canEdit && contract.status.id !== 3">
 			<ss-button *ngIf="!isEditMode" size="small" (click)="switchMode(true)">Редактировать</ss-button>
 			<ss-button *ngIf="isEditMode" size="small" (click)="saveContract()">Сохранить</ss-button>
-			<ss-button *ngIf="isEditMode" size="small" type="quaternary" (click)="switchMode(false)">Отменить</ss-button>
+			<ss-button *ngIf="isEditMode" size="small" type="muted" (click)="switchMode(false)">Отменить</ss-button>
 		</div>
+		<ss-loader *ngIf="isLoading$ | async"></ss-loader>
 	</ss-card>
 </div>

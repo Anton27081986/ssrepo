@@ -11,6 +11,7 @@ import {
 	fromPickerRangeDateToIso,
 } from '@app/shared/pipe/from-picker-date-to-iso';
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
+import { Observable } from 'rxjs';
 
 interface IDialogData {
 	id?: string | null;
@@ -23,6 +24,7 @@ interface IDialogData {
 	styleUrls: ['./contract-info.component.scss'],
 })
 export class ContractInfoComponent {
+	public isLoading$: Observable<boolean>;
 	public contract: IRawMaterialAccountingContract | null = null;
 	public canEdit: boolean = false;
 	public isEditMode: boolean = false;
@@ -33,6 +35,8 @@ export class ContractInfoComponent {
 		private readonly facadeService: RawMaterialAccountingFacadeService,
 		@Inject(DIALOG_DATA) private readonly data: IDialogData,
 	) {
+		this.isLoading$ = this.facadeService.isContractLoading$;
+
 		this.editForm = new FormGroup({
 			quantityTotal: new FormControl<number>(0, [
 				Validators.required,

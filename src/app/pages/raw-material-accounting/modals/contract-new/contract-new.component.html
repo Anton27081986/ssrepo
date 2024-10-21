@@ -63,6 +63,7 @@
 						formControlName="period"
 						label="Период контракта:"
 						(select)="newContractForm.controls['period'].setValue($event)"
+						[error]="newContractForm.controls['period'].touched && newContractForm.controls['period'].errors ? 'Некорректные данные' : undefined"
 					></ss-date-range>
 				</div>
 			</div>

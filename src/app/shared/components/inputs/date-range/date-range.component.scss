@@ -13,7 +13,7 @@ ss-caption {
 .calendar-button {
 	display: flex;
 	align-items: center;
-	padding: 11px 12px;
+	padding: 12px;
 	width: 100%;
 	border-radius: 8px;
 	border: 1px solid $island-outline;
@@ -84,4 +84,13 @@ ss-caption {
 }
 ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
 	border-bottom: none;
+}
+
+.calendar-button.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+.calendar-button.error:focus {
+	border: 1px solid $additional-outline;
+	background-color: $island;
 }
