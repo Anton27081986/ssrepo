@@ -59,7 +59,6 @@ import { ThanksPartnerCardComponent } from '@app/components/thank-partner/thanks
 import { AttachmentModule } from '@app/shared/components/attachment/attachment.module';
 import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
 import { LikeModule } from '@app/shared/components/like/like.module';
-import { ChoiceLikeModule } from '@app/shared/components/choice-like/choice-like.module';
 import { CarouselComponent } from './carousel/carousel.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
@@ -67,7 +66,20 @@ import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
 import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
-import {NzModalModule} from "ng-zorro-antd/modal";
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ChoiceLikeModule } from '@app/shared/components/choice-like/choice-like.module';
+import { RatingTeamTabComponent } from '@app/components/rating/rating-team-tab/rating-team-tab.component';
+import { SelectModule } from '@app/shared/components/select/select.module';
+import { SearchClientInputModule } from '@app/shared/components/inputs/search-client-input/search-client-input.module';
+import { SearchUserInputModule } from '@app/shared/components/inputs/search-user-input/search-user-input.module';
+import { SelectV2Module } from '@app/shared/components/inputs/select-v2/select-v2.module';
+import { RatingTeamUsersComponent } from '@app/components/rating/rating-team-users/rating-team-users.component';
+import { RatingTeamsComponent } from '@app/components/rating/rating-teams/rating-teams.component';
+import { TabsControlComponent } from '@app/components/rating/tabs-control/tabs-control.component';
+import { RatingTeamUsersCardComponent } from '@app/components/rating/rating-team-users-card/rating-team-users-card.component';
+import { TeamUsersCardComponent } from '@app/components/rating/team-users-card/team-users-card.component';
+import { ProjectsUsersCardComponent } from '@app/components/rating/projects-users-card/projects-users-card.component';
+import { DistributorsUsersCardComponent } from '@app/components/rating/distributors-users-card/distributors-users-card.component';
 
 @NgModule({
 	declarations: [
@@ -92,6 +104,14 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 		AddVictoryModalResultComponent,
 		VictoryCommentComponent,
 		ThanksPartnerCardComponent,
+		RatingTeamTabComponent,
+		RatingTeamUsersComponent,
+		RatingTeamsComponent,
+		TabsControlComponent,
+		RatingTeamUsersCardComponent,
+		TeamUsersCardComponent,
+		ProjectsUsersCardComponent,
+		DistributorsUsersCardComponent,
 	],
 	imports: [
 		CommonModule,
@@ -141,6 +161,11 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 		FormControlInputWithFuncEditModule,
 		LikeModule,
 		ChoiceLikeModule,
+		ChoiceLikeModule,
+		SelectModule,
+		SearchClientInputModule,
+		SearchUserInputModule,
+		SelectV2Module,
 	],
 	exports: [
 		MainMenuComponent,
@@ -162,6 +187,14 @@ import {NzModalModule} from "ng-zorro-antd/modal";
 		AddVictoryModalResultComponent,
 		VictoryCommentComponent,
 		ThanksPartnerCardComponent,
+		RatingTeamTabComponent,
+		RatingTeamUsersComponent,
+		RatingTeamsComponent,
+		TabsControlComponent,
+		RatingTeamUsersCardComponent,
+		TeamUsersCardComponent,
+		ProjectsUsersCardComponent,
+		DistributorsUsersCardComponent,
 	],
 })
 export class ComponentsModule {}

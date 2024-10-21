@@ -17,7 +17,7 @@ export interface IWeekItemDto {
 	/**
 	 * Айди недели
 	 */
-	id?: number;
+	id: number;
 	/**
 	 * Название недели
 	 */

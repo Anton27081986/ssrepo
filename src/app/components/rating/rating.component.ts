@@ -1,19 +1,24 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnDestroy,
-	OnInit,
-	ViewContainerRef,
-} from '@angular/core';
-import { distinctUntilChanged, filter, map, Observable, Subject, switchMap, tap, zip } from 'rxjs';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import { ChangeDetectionStrategy, Component, computed, OnInit, Signal } from '@angular/core';
 import { IUserProfile } from '@app/core/models/user-profile';
-import { RatingStoreService } from '@app/core/states/rating-store.service';
-import { RatingApiService } from '@app/core/api/rating-api.service';
-import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { RatingTeamsStateService } from '@app/components/rating/rating-teams/rating-teams.state';
+import { IWeekItemDto } from '@app/core/models/awards/week-item-dto';
+import { IRankTypeListDto } from '@app/core/models/awards/rank-type-list-dto';
+import { RatingTeamUsersState } from '@app/components/rating/rating-team-users/rating-team-users.state';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import { RatingService } from '@app/components/rating/rating.service';
+import { TypeReport } from '@app/core/api/rating-api.service';
+import { switchMap } from 'rxjs';
+import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
+
+export interface RatingCriteriaForm {
+	weekId: FormControl<number | null>;
+	userId: FormControl<number | null>;
+}
 
 @UntilDestroy()
 @Component({
@@ -21,260 +26,88 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	templateUrl: './rating.component.html',
 	styleUrls: ['./rating.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [RatingTeamsStateService, RatingTeamUsersState],
 })
-export class RatingComponent implements OnInit, OnDestroy {
-	public userProfile$: Observable<IUserProfile | null>;
-	public ratingWeeks$: Observable<any>;
-	public ratingTypes$: Observable<any>;
-	public ratings$!: Observable<any>;
+export class RatingComponent implements OnInit {
+	public weeks: Signal<IWeekItemDto[]> = toSignal(this.ratingState.weeks$, {
+		initialValue: [],
+	});
 
-	private readonly userNameChanged: Subject<string> = new Subject<string>();
+	public weeksOptions: Signal<IDictionaryItemDto[]> = computed(() => {
+		return this.weeks().map(week => {
+			return {
+				id: week.id,
+				name: week.name!,
+			};
+		});
+	});
 
-	private currentUserId!: number;
-	public selectedUserId?: number;
-	public selectedWeekId!: number;
-	public selectedRatingTypeId!: number;
-	public usersListOfOption: Array<{ name: string; id: string }> = [];
+	public rating: Signal<IRankTypeListDto | null> = toSignal(this.ratingState.rating$, {
+		initialValue: null,
+	});
 
-	private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+	public averageAll: Signal<number | undefined> = computed(() => {
+		return this.rating()?.averageAll;
+	});
 
-	public loading = false;
-	public title: any;
-	public submitted = false;
+	public membersTotal: Signal<number | undefined> = computed(() => {
+		return this.rating()?.membersTotal;
+	});
 
-	public total!: number;
-	public pageSize = 6;
-	public pageIndex = 1;
-	public offset = 0;
+	public canDownloadReport: Signal<boolean> = toSignal(this.ratingState.reportAvailable$, {
+		initialValue: false,
+	});
 
-	public nzFilterOption = (): boolean => true;
-	public rateValue = {
-		great: 4.5,
-		good1: 4.4,
-		good2: 4.0,
-		bad: 3.9,
-	};
+	protected readonly form: FormGroup<RatingCriteriaForm> = this.buildForm();
 
-	public constructor(
-		private readonly userProfileStoreService: UserProfileStoreService,
-		private readonly ratingStoreService: RatingStoreService,
-		private readonly modalCreate: NzModalService,
-		private readonly viewContainerRef: ViewContainerRef,
-		private readonly cd: ChangeDetectorRef,
-		private readonly ratingApiService: RatingApiService,
-		private readonly usersApiService: UsersApiService,
-	) {
-		this.userProfile$ = this.userProfileStoreService.userProfile$.pipe(
-			filter(value => value !== null),
-		);
-		this.ratingWeeks$ = this.ratingStoreService.ratingWeeks$.pipe(
-			filter(value => value !== null),
-		);
+	constructor(
+		private readonly ratingState: RatingTeamsStateService,
+		private readonly ratingService: RatingService,
+	) {}
 
-		this.ratingTypes$ = new Observable<any>().pipe(
-			distinctUntilChanged((prev, curr) => prev?.membersTotal === curr?.membersTotal),
-		);
+	ngOnInit() {
+		this.ratingState.weeks$.pipe(filterTruthy(), untilDestroyed(this)).subscribe(item => {
+			this.form.controls.weekId.setValue(item[0].id);
+		});
+
+		this.ratingState.currentUser$.pipe(filterTruthy(), untilDestroyed(this)).subscribe(user => {
+			this.form.controls.userId.setValue(user.id);
+		});
+
+		this.form.controls.userId.valueChanges
+			.pipe(filterTruthy(), untilDestroyed(this))
+			.subscribe(this.ratingState.userId$);
+		this.form.controls.weekId.valueChanges
+			.pipe(filterTruthy(), untilDestroyed(this))
+			.subscribe(this.ratingState.weekId$);
 	}
 
-	public ngOnInit() {
-		this.userProfile$
-			.pipe(
-				tap(value => {
-					if (value) {
-						this.usersListOfOption.push({
-							id: value.id.toString(),
-							name: value.name!,
-						});
-
-						this.selectedUserId = value.id;
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
-
-		this.getRatingTypesByWeekAndUserInit(); // Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
-		this.getRatingsByWeekAndRatingTypeInit(); // Получам и устанавливаем участников
-
-		// Получение последних 5 недель
-		this.ratingWeeks$ = this.ratingStoreService.ratingWeeks$;
-
-		zip(this.userNameChanged)
-			.pipe(
-				tap(value => {
-					if (value[0].length >= 3) {
-						this.usersApiService
-							.getUsersByFIO(value[0])
-							.pipe(
-								map(({ items }) => items),
-								tap(data => {
-									this.usersListOfOption = data;
-								}),
-								untilDestroyed(this),
-							)
-							.subscribe();
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
+	private buildForm(): FormGroup<RatingCriteriaForm> {
+		return new FormGroup<RatingCriteriaForm>({
+			weekId: new FormControl<number | null>(
+				{ value: null, disabled: false },
+				Validators.required,
+			),
+			userId: new FormControl<number | null>(
+				{ value: null, disabled: false },
+				Validators.required,
+			),
+		});
 	}
 
-	// Получаем текущий id пользователя обновляем типы рейтингов и подсвечиваем нужный тип
-	public getRatingTypesByWeekAndUserInit() {
-		zip(this.userProfile$, this.ratingWeeks$)
-			.pipe(
-				map(([user, week]) => {
-					return {
-						...user,
-						week: { ...week[0] },
-					};
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe(value => {
-				this.currentUserId = value.id!; // id пользователя
-				this.selectedWeekId = value.week.id; // id недели
-				this.ratingTypes$ = this.ratingApiService.getRatingTypes(value.week.id, value.id!);
-			});
-	}
-
-	public getRatingsByWeekAndRatingTypeInit() {
-		zip(this.userProfile$, this.ratingWeeks$)
-			.pipe(
-				map(([user, week]) => {
-					return {
-						...user,
-						week: { ...week[0] },
-					};
-				}),
-				switchMap(() => {
-					return this.ratingApiService.getRatingTypes(
-						this.selectedWeekId,
-						this.currentUserId,
-					);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe(value => {
-				this.selectedRatingTypeId = value.rankTypeId!; // устанавливаем rankTypeId глобально
-				this.ratings$ = this.ratingApiService
-					.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, 0)
-					.pipe(
-						tap(value => {
-							this.pageIndex = 1;
-							this.total = value.total;
-							this.cd.markForCheck();
-						}),
-					);
-			});
-	}
-
-	public getRatingsByWeekAndRatingTypeSearch(
-		userId: number | null,
-		weekId: number,
-		limit: number,
-		Offset: number = 0,
-	) {
-		// Переделать
-		zip(this.userProfile$)
-			.pipe(
-				map(() => {
-					return {
-						user: { userId },
-					};
-				}),
-				switchMap(() => {
-					return this.ratingApiService.getRatingTypes(weekId, userId!);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe(value => {
-				this.selectedRatingTypeId = value.rankTypeId!;
-				this.ratings$ = this.ratingApiService
-					.getRatings(this.selectedWeekId, this.selectedRatingTypeId, limit, Offset)
-					.pipe(
-						tap(value => {
-							this.pageIndex = 1;
-							this.total = value.total;
-							this.cd.markForCheck();
-						}),
-					);
-			});
-	}
-
-	public getRatingsByWeekAndRatingTypeChangeWeek(weekId: number) {
-		this.ratings$ = this.ratingApiService
-			.getRatings(weekId, this.selectedRatingTypeId, this.pageSize, 0)
-			.pipe(
-				tap(value => {
-					this.pageIndex = 1;
-					this.total = value.total;
-					this.cd.markForCheck();
-				}),
-			);
-	}
-
-	public onSelectWeek(weekId: number): void {
-		this.getRatingsByWeekAndRatingTypeChangeWeek(weekId);
-		this.ratingTypes$ = this.ratingApiService.getRatingTypes(weekId, this.currentUserId);
-	}
-
-	public onClickByRatingType(id: number, limit: number, $event: MouseEvent) {
-		$event.stopPropagation();
-		this.selectedRatingTypeId = id; // Получаем id кликнутого типа рейтига, чтобы его подсветить
-
-		// Выводим участников по кликнутому id рейтинга и id выбранной недели при смене недели в селекте
-		this.ratings$ = this.ratingApiService
-			.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, 0)
-			.pipe(
-				tap(value => {
-					this.pageIndex = 1;
-					this.total = value.total;
-					this.cd.markForCheck();
-				}),
-			);
-	}
-
-	public onUserSearch($event: any) {
-		this.userNameChanged.next($event);
-	}
-
-	// При выборе пользователя
-	public onUserChange() {
-		this.ratingTypes$ = this.ratingApiService.getRatingTypes(
-			this.selectedWeekId,
-			this.selectedUserId!,
-		);
-		this.getRatingsByWeekAndRatingTypeSearch(
-			this.selectedUserId!,
-			this.selectedWeekId,
-			this.pageSize,
-			this.offset,
-		);
-	}
-
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset = 0;
-		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
+	protected redirectUrl(type: TypeReport) {
+		const value = this.ratingState.walkerControl.value;
+		if (value && value.reportAvailable) {
+			this.ratingService
+				.getRatingReport(type, value)
+				.pipe(untilDestroyed(this))
+				.subscribe(url => {
+					window.open(url, '_blank');
+				});
 		}
-
-		this.pageIndex = $event;
-
-		this.ratings$ = this.ratingApiService
-			.getRatings(this.selectedWeekId, this.selectedRatingTypeId, this.pageSize, this.offset)
-			.pipe(
-				tap(value => {
-					this.total = value.total;
-					this.cd.markForCheck();
-				}),
-			);
 	}
 
-	public ngOnDestroy() {
-		this.destroy$.next(true);
-		this.userNameChanged.complete();
-	}
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TypeReport = TypeReport;
 }

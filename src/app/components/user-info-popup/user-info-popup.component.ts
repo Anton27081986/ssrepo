@@ -17,9 +17,9 @@ export class UserInfoPopupComponent {
 	constructor(
 		private readonly usersApiService: UsersApiService,
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: string,
+		@Inject(DIALOG_DATA) private readonly id: number,
 	) {
-		this.$user = this.usersApiService.getUserById(this.data);
+		this.$user = this.usersApiService.getUserById(this.id);
 	}
 
 	protected close() {
