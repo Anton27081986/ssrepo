@@ -20,7 +20,7 @@
 	</div>
 
 	<div *ngIf="!isEditing; else changeMain" class="manager">
-		<ss-avatar [src]="basicManager?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+		<ss-avatar [size]="'large'" [type]="'rectangle'" [src]="basicManager?.avatarUrl!"></ss-avatar>
 
 		<div class="manager-info">
 			<div class="manager-name">
@@ -89,7 +89,7 @@
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<ng-container *ngFor="let manager of (managers$ | async)">
 			<div class="managers-list-item" *ngIf="!manager.isDismissed && !manager.isBase">
-				<ss-avatar size="xs" [src]="manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
+				<ss-avatar [src]="manager?.avatarUrl || ''"></ss-avatar>
 				<div class="managers-list-item-info">
 					<ss-text size="3" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
 					<ss-caption size="2">{{ manager?.position }}</ss-caption>
@@ -101,7 +101,7 @@
 		<div class="managers-list" [ngClass]="isEditing ? 'edit' : ''">
 			<ng-container *ngFor="let manager of changedData.managersList">
 				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === operationStatuses.Delete}">
-					<ss-avatar size="xs" [src]="manager?.manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
+					<ss-avatar [src]="manager?.manager?.avatarUrl || ''"></ss-avatar>
 					<div class="managers-list-item-info">
 						<ss-text size="3" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
 						<ss-caption size="2">{{ manager.manager.position }}</ss-caption>

@@ -11,6 +11,7 @@ export class DateRangeComponent {
 	endDate: string | undefined;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string | undefined;
+	@Input() public error: string | undefined;
 	@Output() public select = new EventEmitter<any>();
 
 	@Input() public value: any = '';

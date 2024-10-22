@@ -1,0 +1,20 @@
+<div class="victory-comment">
+	<div class="victory-comment__header">
+		<app-user-card [size]="'small'" [user]="comment?.user!"></app-user-card>
+		<div class="victory-comment__actions">
+			<ss-icon [tooltip]="'Редактировать'" [theme]="TooltipTheme.DEFAULT"
+					 [position]="TooltipPosition.DEFAULT" *ngIf="authUserId && authUserId === comment?.user?.id"
+					 style="cursor: pointer" (click)="editComment()" [name]="'editNew'"></ss-icon>
+			<ss-icon [tooltip]="'Удалить'" [theme]="TooltipTheme.DEFAULT"
+					 [position]="TooltipPosition.DEFAULT" *ngIf="authUserId && authUserId === comment?.user?.id"
+					 style="cursor: pointer" (click)="deleteComment()" [name]="'close'"></ss-icon>
+		</div>
+	</div>
+	<div class="victory-comment__body">
+		<ss-text class="victory-comment__note" size="3">{{ comment?.note }}</ss-text>
+		<ss-text class="victory-comment__createDate" color="gray" size="3">{{  comment?.createdDate | date: 'HH:mm, dd.MM.yyyy' }}
+		</ss-text>
+	</div>
+	<ss-divider></ss-divider>
+</div>
+

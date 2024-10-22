@@ -7,7 +7,7 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
@@ -76,7 +76,9 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 	}
 
 	ngAfterViewChecked() {
-		this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		if (this.content) {
+			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		}
 	}
 
 	showText(text: string[], title?: string) {

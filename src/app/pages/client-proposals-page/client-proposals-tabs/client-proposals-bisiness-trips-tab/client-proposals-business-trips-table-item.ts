@@ -3,4 +3,5 @@ export interface IClientProposalsBusinessTripsTableItem {
 	date: string;
 	task: string;
 	members: string;
+	expensesList: string;
 }

@@ -21,8 +21,6 @@ export class IconsService {
 		this.nzIconService.addIconLiteral('ss:burger', AppIcons.iconBurger);
 		this.nzIconService.addIconLiteral('ss:moon', AppIcons.iconMoon);
 		this.nzIconService.addIconLiteral('ss:sun', AppIcons.iconSun);
-		this.nzIconService.addIconLiteral('ss:logo', AppIcons.iconLogoHeader);
-		this.nzIconService.addIconLiteral('ss:logofooter', AppIcons.iconLogoFooter);
 		this.nzIconService.addIconLiteral('ss:phone', AppIcons.phone);
 		this.nzIconService.addIconLiteral('ss:mail', AppIcons.mail);
 		this.nzIconService.addIconLiteral('ss:direction', AppIcons.direction);

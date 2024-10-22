@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { environment } from '@environments/environment.development';
-import { interval, map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
+import { map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
 import { ISamples } from '@app/core/models/client-proposails/samples';
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
@@ -18,6 +18,12 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { SaveInCloud } from '@app/core/models/client-proposails/save-in-cloud';
 import { catchError } from 'rxjs/operators';
+import { ICreateOfferDto } from '@app/core/models/client-proposails/create-offer-dto';
+import { TypeReportEnum } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
+import { IRequestGetTradeList } from '@app/core/models/client-proposails/request-get-trade-list';
+import { IRequestGetDevelopment } from '@app/core/models/client-proposails/request-get-development';
+import { IRequestGetBusinessTrips } from '@app/core/models/client-proposails/request-get-business-trips';
+import { ResponseProposals } from '@app/core/utils/response-proposals';
 
 export interface IFile {
 	id: number;
@@ -62,26 +68,56 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getTrips(params: IRequestGetProposals): Observable<IResponse<IBusinessTripsDto>> {
-		return this.http.get<IResponse<IBusinessTripsDto>>(
+	public getTrips(
+		params: IRequestGetBusinessTrips,
+	): Observable<IResponseProposalsTrips<IBusinessTripsDto>> {
+		let httpParams = new HttpParams()
+			.set('clientId', params.clientId)
+			.set('Limit', params.limit)
+			.set('Offset', params.offset);
+
+		if (params.onlyCurrentYear) {
+			httpParams = httpParams.set('OnlyCurrentYear', params.onlyCurrentYear);
+		}
+
+		return this.http.get<IResponseProposalsTrips<IBusinessTripsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/trips`,
 			{
-				params: new HttpParams()
-					.set('clientId', params.clientId)
-					.set('Limit', params.limit)
-					.set('Offset', params.offset),
+				params: httpParams,
 			},
 		);
 	}
 
-	public getTradeList(params: IRequestGetProposals): Observable<IResponse<ITradeList>> {
+	public getTradeList(params: IRequestGetTradeList): Observable<IResponse<ITradeList>> {
+		let httpParams = new HttpParams()
+			.set('clientId', params.clientId)
+			.set('Limit', params.limit)
+			.set('Offset', params.offset);
+
+		if (params.TovIds?.length) {
+			params.TovIds.forEach((id, index) => {
+				if (id) {
+					if (index === 0) {
+						httpParams = httpParams.set('TovIds', id);
+					} else {
+						httpParams = httpParams.append('TovIds', id);
+					}
+				}
+			});
+		}
+
+		if (params.DateTo && !params.DateTo.includes('NaN')) {
+			if (params.DateFrom) {
+				httpParams = httpParams.set('DateFrom', params.DateFrom);
+			}
+
+			httpParams = httpParams.set('DateTo', params.DateTo);
+		}
+
 		return this.http.get<IResponse<ITradeList>>(
 			`${environment.apiUrl}/api/company/ClientProposals/productSheets`,
 			{
-				params: new HttpParams()
-					.set('clientId', params.clientId)
-					.set('Limit', params.limit)
-					.set('Offset', params.offset),
+				params: httpParams,
 			},
 		);
 	}
@@ -99,8 +135,8 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getSamples(params: IRequestGetProposals): Observable<IResponse<ISamples>> {
-		return this.http.get<IResponse<ISamples>>(
+	public getSamples(params: IRequestGetProposals): Observable<IResponseProposalsTrips<ISamples>> {
+		return this.http.get<IResponseProposalsTrips<ISamples>>(
 			`${environment.apiUrl}/api/company/ClientProposals/samples`,
 			{
 				params: new HttpParams()
@@ -112,7 +148,7 @@ export class ClientProposalsApiService {
 	}
 
 	public getCommitteeDevelopments(
-		params: IRequestGetProposals,
+		params: IRequestGetDevelopment,
 	): Observable<IResponse<IDevelopmentDto>> {
 		return this.http.get<IResponse<IDevelopmentDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/CommitteeDevelopments`,
@@ -120,14 +156,15 @@ export class ClientProposalsApiService {
 				params: new HttpParams()
 					.set('clientId', params.clientId)
 					.set('Limit', params.limit)
-					.set('Offset', params.offset),
+					.set('Offset', params.offset)
+					.set('isCompleting', params.isCompleting),
 			},
 		);
 	}
 
 	public getClientOffers(
 		params: IRequestGetClientOffer,
-	): Observable<IResponse<IClientOffersDto>> {
+	): Observable<ResponseProposals<IClientOffersDto>> {
 		let httpParams = new HttpParams();
 
 		httpParams = httpParams.set('clientId', params.clientId);
@@ -140,7 +177,31 @@ export class ClientProposalsApiService {
 			}
 		});
 
-		return this.http.get<IResponse<IClientOffersDto>>(
+		params.TprFlags.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('TprFlags', id);
+			} else {
+				httpParams = httpParams.append('TprFlags', id);
+			}
+		});
+
+		params.TovGroups.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('TovGroups', id);
+			} else {
+				httpParams = httpParams.append('TovGroups', id);
+			}
+		});
+
+		params.TovSubGroups.forEach((id, index) => {
+			if (index === 0) {
+				httpParams = httpParams.set('TovSubGroups', id);
+			} else {
+				httpParams = httpParams.append('TovSubGroups', id);
+			}
+		});
+
+		return this.http.get<ResponseProposals<IClientOffersDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
 			{
 				params: httpParams,
@@ -157,7 +218,7 @@ export class ClientProposalsApiService {
 			};
 		});
 
-		const dataRequest: IShareFile = { files: request, sendEmail: sendEmail };
+		const dataRequest: IShareFile = { files: request, sendEmail };
 
 		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
 	}
@@ -173,7 +234,7 @@ export class ClientProposalsApiService {
 							if (error.status !== 200) {
 								console.log('Retrying request...');
 
-								return timer(3000); // Повторная попытка через 1 секунду
+								return timer(3000); // Повторная попытка через 3 секунды
 							}
 
 							return throwError(error);
@@ -182,6 +243,21 @@ export class ClientProposalsApiService {
 				),
 				catchError(this.handleError),
 			);
+	}
+
+	public saveOffer(body: ICreateOfferDto): Observable<ICreateOfferDto> {
+		return this.http.post<ICreateOfferDto>(
+			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
+			body,
+		);
+	}
+
+	public downloadReport(type: TypeReportEnum): Observable<Blob> {
+		return this.http.get<Blob>(`${environment.apiUrl}/api/company/ClientProposals/reports`, {
+			responseType: 'blob' as 'json',
+			headers: new HttpHeaders().append('Content-Type', 'application/json'),
+			params: new HttpParams().set('report', type),
+		});
 	}
 
 	private handleResponse(response: HttpResponse<Blob>): Blob {

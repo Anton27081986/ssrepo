@@ -106,9 +106,11 @@ export class PaginationComponent implements OnInit, OnChanges {
 	}
 
 	protected changePageIndex(index: number) {
-		this.pageIndex = index;
-		this.buildPaginationTabs(this.pageIndex);
-		this.changeIndex.emit(index);
+		if (index !== this.pageIndex) {
+			this.pageIndex = index;
+			this.buildPaginationTabs(this.pageIndex);
+			this.changeIndex.emit(index);
+		}
 	}
 
 	protected back() {

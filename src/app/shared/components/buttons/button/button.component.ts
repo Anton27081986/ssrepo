@@ -13,6 +13,7 @@ export class ButtonComponent {
 		| 'tertiary'
 		| 'quaternary'
 		| 'usually'
+		| 'warning'
 		| 'outline' = 'primary';
 
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

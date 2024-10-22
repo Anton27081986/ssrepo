@@ -7,217 +7,72 @@
 }
 
 .profile-popup {
-	position: relative;
+	position: absolute;
 	width: 360px;
 	box-shadow: 4px 4px 10px #00000014;
-	background-color: white;
+	background-color: $white;
 	border-radius: 16px;
+	z-index: 1000;
+	right: 0;
+	padding: 16px;
+	top: 8px;
 
-	.tail-icon {
-		position: absolute;
-		top: -10px;
-		right: 60px;
-	}
-
-	hr {
-		margin-bottom: 0;
-	}
-
-	.personal {
+	&__wrapper {
 		display: flex;
-
-		.close-icon {
-			position: absolute;
-			right: 16px;
-			top: 20px;
-			cursor: pointer;
-		}
-
-		.img {
-			border-radius: 8px;
-			overflow: hidden;
-			flex: none;
-
-			img {
-				object-fit: cover;
-			}
-		}
-
-		.title {
-			margin-left: 12px;
-			display: flex;
-			flex-direction: column;
-			justify-content: space-between;
-
-			.fio {
-				margin-top: 0;
-			}
-			.job {
-				display: flex;
-				flex-direction: column;
-				line-height: 16px;
-			}
-		}
+		flex-direction: column;
+		gap: 16px;
 	}
 
-	.contacts {
-		margin-top: 17px;
-
-		.item {
-			display: flex;
-			justify-content: space-between;
-
-			div {
-				display: flex;
-				gap: 8px;
-			}
-
-			.icon {
-				svg {
-					fill: white;
-				}
-			}
-
-			span:nth-child(2) {
-				margin-left: 7px;
-			}
-		}
+	&__manager-buttons {
+		display: flex;
+		gap: 12px;
+		justify-content: space-between;
 	}
 
-	.manager {
+	&__return-in-personal-user {
 		display: flex;
 		justify-content: space-between;
-		padding: 0 16px;
-		margin-bottom: 16px;
+		align-items: center;
 
-		.settings-button ss-icon, .exit-button ss-icon {
-			padding-right: 8px;
-		}
 	}
 
-	.admin-enter {
-		margin-top: 10px;
-		padding: 0 16px;
-
-		.enter-by-search {
-			margin-top: 8px;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-
-			ss-search-input {
-				width: 100%;
-				margin-bottom: 16px;
-			}
-
-			.enter-icon {
-				margin-right: 0;
-			}
-		}
+	&__return-personal-info {
+		display: flex;
+		gap: 10px;
 	}
 
-	.card-list,
-	.logged-user {
-		margin-top: 14px;
-		padding: 0 8px;
-
-		.accordion {
-			display: flex;
-			justify-content: space-between;
-			cursor: pointer;
-			padding-bottom: 16px;
-		}
-
-		.accordion > .icon {
-			margin-right: 6px;
-			margin-top: 3px;
-		}
-
-		.card {
-			margin-top: 16px;
-
-			.personal {
-				position: relative;
-				display: flex;
-				justify-content: space-between;
-
-				&-data {
-					display: flex;
-
-					.title {
-						.job {
-							max-width: 186px;
-							line-height: 11px;
-						}
-					}
-				}
-
-				&-enter {
-					display: flex;
-					align-items: center;
-				}
-
-				&-enter-icon {
-					position: absolute;
-					right: 17px;
-					bottom: 0;
-					cursor: pointer;
-				}
-			}
-		}
+	&__list-friend {
+		display: flex;
+		flex-direction: column;
 	}
 
-	.logged-user {
-		margin-top: 0!important;
+	&__list-friend {
+		display: flex;
+		justify-content: space-between;
 	}
 
-	.card-list.connected {
-		padding: 0 16px 16px 16px;
+	&__list-friend-description {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		justify-content: space-between;
+	}
 
-		.accordion {
-			padding-bottom: 0;
-		}
+	&__accordion {
+		display: flex;
+		justify-content: space-between;
+	}
 
-		.arrowBottom {
-			display: flex;
-			align-items: center;
-		}
-
-		.personal {
-			.title {
-				margin-left: 10px!important;
-			}
-
-			.personal-enter {
-				cursor: pointer;
-			}
-		}
-
-		.arrow-bottom {
-			transform: rotate(180deg);
-		}
-
-		.open {
-			transform: rotate(0deg);
-		}
+	&__caption {
+		display: flex;
+		flex-direction: column;
 	}
 }
 
-:host-context(.dark) {
-	border-radius: 8px;
-
-	.wrapper {
-		background-color: $dark-island;
-		border-radius: 16px;
-	}
-
-	.contacts {
-		background-color: $dark-island;
-	}
-
-	ss-button {
-		border: 1px solid $dark-island-outline;
-		border-radius: 8px;
-	}
+:host-context(.dark) .profile-popup {
+	background-color: $dark-background;
+	border: 1px solid $white;
 }
+
+
 

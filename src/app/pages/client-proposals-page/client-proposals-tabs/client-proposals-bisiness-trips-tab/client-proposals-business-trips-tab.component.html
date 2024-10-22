@@ -1,41 +1,67 @@
 <ss-card padding="0" radius="0 0 16px 16px">
-	<ng-container *ngIf="businessTrips$ | async as trips">
-		<app-client-proposals-tabs-canvas
-			[headerTemplateRef]="header"
-			[bodyTemplateRef]="body"
-			[footerTemplateRef]="footer">
+	<app-client-proposals-tabs-canvas
+		[headerTemplateRef]="header"
+		[bodyTemplateRef]="body"
+		[footerTemplateRef]="footer"
+		[isLoader]="(isLoader$ | async)!"
+	>
 		</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a *ngIf="trips.linkToModule;else text" class="client-tpr-business-trips-tab__link" href="{{ trips.linkToModule }}" target="_blank">Командировки</a>
+			<a *ngIf="linkToModule();else text" class="client-tpr-business-trips-tab__link" href="{{ linkToModule() }}" target="_blank">Командировки</a>
 			<ng-template #text>
 				<ss-text size="1">Командировки</ss-text>
 			</ng-template>
+			<div class="control">
+				<input type="checkbox" (change)="onOnlyCurrentYear($event)" />
+				<ss-text size="2">
+					С начала текущего года
+				</ss-text>
+			</div>
 		</ng-template>
 		<ng-template #body>
-			<ss-table
-				*ngIf="trips.total > 0;else empty"
-				[padding]="'8px'"
-				[head]="[
+			<ng-container *ngIf="trips() as trips">
+				<ss-table
+					*ngIf="trips.total > 0;else empty"
+					[padding]="'8px'"
+					[head]="[
 					{title: 'Код', field: 'code'},
 					{title: 'Дата командировки', field: 'date', sizeRatio: 3},
 					{title: 'Задачи', field: 'task', sizeRatio: 4},
-					{title: 'Участники', field: 'members', sizeRatio: 4}
+					{title: 'Участники', field: 'members', sizeRatio: 4},
+					{title: 'Расходы', field: 'expensesList', sizeRatio: 4}
 					]"
-				[items]="getTableItems(trips)"
-			>
-			</ss-table>
-			<ng-template #empty>
-				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
-			</ng-template>
+					[items]="getTableItems(trips)"
+				>
+				</ss-table>
+				<ng-template #empty>
+					<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+				</ng-template>
+			</ng-container>
 		</ng-template>
 		<ng-template #footer>
-			<ss-pagination
-				[total]="trips.total"
-				[pageIndex]="pageIndex"
-				[pageSize]="pageSize"
-				(changeIndex)="nzPageIndexChange($event)"
-			>
-			</ss-pagination>
+			<div class="footer">
+				<div class="total" [tooltip]="'За год от текущей даты'" [theme]="TooltipTheme.MAIN">
+					<ss-text
+						*ngIf="totalClientSales()"
+						class="footer-total"
+						size="3"
+					>Продажи по клиенту: {{ totalClientSales()?.value | numWithSpaces }} {{ totalClientSales()?.currency}}
+					</ss-text>
+					<ss-text
+						*ngIf="totalExpensesList().length"
+						class="footer-total"
+						size="3"
+					>Расходы всего:
+						<ng-container *ngFor="let total of totalExpensesList()">{{total.value | numWithSpaces}} {{total.currency}}</ng-container>
+					</ss-text>
+				</div>
+					<ss-pagination
+						[total]="total()"
+						[pageIndex]="pageIndex"
+						[pageSize]="pageSize"
+						(changeIndex)="pageIndexChange($event)"
+					>
+				</ss-pagination>
+			</div>
 		</ng-template>
-	</ng-container>
 </ss-card>

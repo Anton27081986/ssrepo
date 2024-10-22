@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewContainerRef } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
 import { formatDate } from '@angular/common';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
+import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import { FormControl } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -13,54 +14,78 @@ import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.servic
 	styleUrls: ['./thanks-partner.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThanksPartnerComponent implements OnInit {
-	public thankYouList$!: Observable<any>;
-	public date: any;
-	public dateToday: any;
-	private yesterday: any;
+export class ThanksPartnerComponent {
+	public thankYouList$: Observable<IPartnerThanksListDto>;
+	public dateToday: string;
 
-	public pageSize = 6;
+	public pageSize = 8;
 	public pageIndex = 1;
-	protected thankYouUrl$!: Observable<any>;
 
-	public constructor(
-		private readonly apiService: ThanksPartnerApiService,
-		public modalCreate: NzModalService,
-		private readonly viewContainerRef: ViewContainerRef,
-	) {}
+	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-	public ngOnInit(): any {
-		this.yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-		this.dateToday = formatDate(this.yesterday, 'yyyy-MM-dd', 'ru-RU');
+	private readonly subscription: Subscription = new Subscription();
 
-		this.thankYouUrl$ = this.apiService.getPartnerThanks(this.dateToday);
+	protected date: FormControl<Date | null> = new FormControl<Date | null>(null);
 
-		this.thankYouList$ = this.apiService
-			.getPartnerThanks(this.dateToday)
-			.pipe(map(({ items }) => items.slice(0, 9)));
-	}
+	public constructor(private readonly apiService: ThanksPartnerApiService) {
+		let date = new Date(new Date().setDate(new Date().getDate() - 1));
+		if (date.getDay() === 0) {
+			date = new Date(date.setDate(date.getDate() - 2));
+		} else if (date.getDay() === 1) {
+			date = new Date(date.setDate(date.getDate() - 3));
+		}
 
-	public showModalOpenOut(item: any): void {
-		this.modalCreate
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: 'Информация о пользователе',
-				nzNoAnimation: false,
-				nzWidth: '365px',
-				nzContent: ModalInfoComponent,
-				nzViewContainerRef: this.viewContainerRef,
-				nzData: {
-					data: item,
-				},
-			})
-			.afterClose.pipe(untilDestroyed(this))
-			.subscribe();
+		this.dateToday = formatDate(date, 'yyyy-MM-dd', 'ru-RU');
+
+		this.subscription.add(this.date.valueChanges.subscribe(item => this.onChange(item!)));
+
+		this.thankYouList$ = this.apiService.getPartnerThanks(this.dateToday).pipe(
+			filterTruthy(),
+			tap(() => {
+				this.isLoading$.next(true);
+			}),
+			map(items => {
+				return {
+					addNewThanksLink: items.addNewThanksLink,
+					totalCount: items.totalCount,
+					weekCount: items.weekCount,
+					items: items.items ? items.items.slice(0, 8) : [],
+					total: items.total,
+				};
+			}),
+			tap(() => {
+				this.isLoading$.next(false);
+			}),
+		);
 	}
 
 	public onChange(result: Date): void {
 		this.thankYouList$ = this.apiService
 			.getPartnerThanks(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-			.pipe(map(({ items }) => items.slice(0, 9)));
+			.pipe(
+				tap(() => {
+					this.isLoading$.next(true);
+				}),
+				map(items => {
+					return {
+						addNewThanksLink: items.addNewThanksLink,
+						totalCount: items.totalCount,
+						weekCount: items.weekCount,
+						items: items.items ? items.items.slice(0, 8) : [],
+						total: items.total,
+					};
+				}),
+				tap(() => {
+					this.isLoading$.next(false);
+				}),
+			);
+	}
+
+	public thankToUrl(url: string | undefined) {
+		if (url) {
+			const link = document.createElement('a');
+			link.href = url;
+			link.click();
+		}
 	}
 }

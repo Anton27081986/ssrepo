@@ -13,20 +13,23 @@ import { IProjectDto } from './project-dto';
 import { IDistributorDto } from './distributor-dto';
 import { ITeamDto } from './team-dto';
 import { IUserDto } from './user-dto';
-import { IRateType } from './rate-type';
+import { RateTypeEnum } from './rate-type';
+import { TypeCup } from '@app/components/rating/rating-team-tab/rating-team-tab.component';
 
 /**
  * Элемент списка рейтинга
  */
 export interface IRankItemDto {
-	user?: IUserDto;
+	user: IUserDto;
 	project?: IProjectDto;
 	distributor?: IDistributorDto;
-	team?: ITeamDto;
+	team: ITeamDto;
+	teamName: string;
+
 	/**
 	 * Место
 	 */
-	place?: number;
+	place: TypeCup;
 	/**
 	 * Средний рейтинг за неделю
 	 */
@@ -35,7 +38,7 @@ export interface IRankItemDto {
 	 * Квартальный средний рейтинг
 	 */
 	avgQuarterRate?: number | null;
-	type?: IRateType;
+	type: RateTypeEnum;
 	/**
 	 * Ссылка на детали объекта
 	 */

@@ -1,376 +1,64 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
+:host {
+    display: flex;
+    gap: 24px;
+}
 
 .birthday {
-    margin-top: 60px;
+    width: 100%;
+    padding: 0 24px 0 0;
 
     .header {
         display: flex;
         justify-content: space-between;
-        flex-wrap: wrap;
+        padding: 16px;
 
-        h1 {
-            text-transform: uppercase;
-            a {
-                color: $black !important;
-            }
-        }
-
-        .open-all-table {
+        .title {
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 8px;
         }
     }
 
-    :host {
+    .actions {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 16px 16px;
     }
 
-    [nz-carousel-content] {
-        overflow: hidden;
-        border-radius: 30px;
-    }
+    .content {
+        padding: 16px 0;
 
-    h3 {
-        color: #fff;
-        margin-bottom: 0;
-        user-select: none;
-    }
+        .card-list {
+            display: grid;
+            padding: 0 0 0 16px;
+            grid-template-columns: repeat(2, 50%);
+            grid-row-gap: 16px;
+            grid-auto-rows: min-content;
+            max-height: 494px;
+            min-height: 494px;
+            overflow-y: auto;
 
-    .slider {
-        position: relative;
-        margin-top: 31px;
-        max-width: 100%;
-        width: 1280px;
-        height: 400px;
-
-        .arrow {
-            position: absolute;
-            top: calc(50% - 20px);
-            background: #5a6164;
-            border-radius: 16px;
-            border: 1px #57585a solid;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .prev {
-            left: 31px;
-        }
-
-        .next {
-            transform: rotate(180deg);
-            right: 31px;
-        }
-    }
-
-    .tabs {
-        position: relative;
-        margin-top: 24px;
-
-        .ant-tabs-tab:hover {
-            color: #4770ff;
-        }
-
-        ::ng-deep {
-            .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap {
-                justify-content: right;
+            &__item {
+                padding: 0 16px 0 0;
             }
 
-            .ant-tabs-tab {
-                border: 1px solid $border-color;
-                border-radius: $border-radius-big !important;
-                background-color: $white;
-                font-size: 16px;
-                padding: 12.5px 20px 12.5px 20px;
-            }
-
-            .ant-tabs-ink-bar.ant-tabs-ink-bar-animated {
-                background-color: unset;
-            }
-
-            .ant-tabs-tab.ant-tabs-tab-active {
-                background-color: #e1e4e6;
-
-                .ant-tabs-tab-btn {
-                    color: $black;
-                }
-            }
-
-            .ant-tabs-top > .ant-tabs-nav::before {
-                border-bottom: unset;
-            }
-        }
-
-        .content {
-            .card-list {
+            &__empty {
+                position: relative;
                 display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                gap: 20px;
+                align-items: baseline;
+                justify-content: center;
+                max-height: 494px;
+                min-height: 494px;
 
-                .card {
-                    position: relative;
-                    width: 305px;
-                    height: 110px;
-                    border-radius: 16px;
-                    border: 1px solid $border-color;
-                    background-color: $white;
-                    padding: 20px;
+                &_icon {
+                    margin-bottom: 30px;
+                }
 
-                    .personal {
-                        position: relative;
-                        display: flex;
-
-                        .img {
-                            border-radius: 16px;
-                            overflow: hidden;
-                            flex: none;
-                            width: 60px;
-                            height: 70px;
-
-                            img {
-                                width: 60px;
-                            }
-                        }
-
-                        .enter-icon {
-                            position: absolute;
-                            right: 17px;
-                            bottom: 0;
-                            font-size: 17px;
-                            fill-opacity: 0;
-                            cursor: pointer;
-                        }
-
-                        .title {
-                            margin-left: 14px;
-                        }
-
-                        .fio {
-                            font-size: 17.6px;
-                            font-weight: bold;
-                            line-height: 20px;
-                        }
-
-                        .job {
-                            max-width: 186px;
-                            font-size: 11.8px;
-                            line-height: 14px;
-                            font-weight: 500;
-                            margin-top: 3px;
-                        }
-                    }
-
-                    .icons {
-                        .medal-icon {
-                            position: absolute;
-                            right: 16px;
-                            top: 20px;
-                        }
-
-                        .count {
-                            position: absolute;
-                            right: 20px;
-                            bottom: 13px;
-
-                            border-radius: 30px;
-                            background-color: $blue;
-                            color: $white;
-                            height: 28px;
-                            width: 28px;
-
-                            text-align: center;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            padding-right: 1px;
-                            font-weight: 500;
-                        }
-
-                        ::ng-deep .anticon {
-                            fill-opacity: 1;
-                            font-size: 34px;
-                        }
-                    }
+                &_title {
+                    margin-bottom: 10px;
                 }
             }
         }
-
-        .calendar {
-            position: absolute;
-            top: 0;
-            z-index: 1;
-        }
     }
-}
-
-@media screen and (max-width: 1309px) {
-	.birthday {
-		margin-top: 80px;
-
-		.header {
-			justify-content: center;
-
-			.open-all-table {
-				width: 100%;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-
-				.calendar {
-					margin-right: 0;
-				}
-			}
-
-			.title h1 {
-				text-align: center;
-				margin-bottom: 0.3rem !important;
-				line-height: 34px;
-				margin-top: 4px;
-			}
-
-			.subtitle {
-				margin-top: 12px;
-
-				h2 {
-					text-align: center;
-					line-height: 19px !important;
-				}
-			}
-
-			.calendar {
-				margin-top: 25px;
-
-				.ant-picker {
-					width: 372px;
-				}
-			}
-
-			.button {
-				margin-top: 10px;
-				width: 100%;
-			}
-
-			.top-panel {
-				margin-top: 32px;
-				justify-content: space-between;
-				display: none;
-
-				.total-week {
-					span {
-						font-size: 15.8px;
-					}
-				}
-
-				.total-time {
-					span {
-						font-size: 15.8px;
-					}
-				}
-
-				.button {
-					margin-top: 14px;
-					margin-left: 0;
-
-					width: 100%;
-				}
-			}
-			.top-panel-mobile {
-				display: flex;
-			}
-		}
-
-		.tabs {
-			::ng-deep .ant-tabs-nav-wrap {
-				justify-content: center !important;
-			}
-
-			.calendar {
-				position: relative;
-				display: flex;
-				justify-content: center;
-				width: 100%;
-
-				::ng-deep .ant-picker {
-					width: 100%;
-				}
-			}
-
-			.ant-tabs {
-				margin-top: 20px;
-				width: 100%;
-			}
-
-			.content {
-				.card-list {
-					.card {
-						width: 293px;
-						height: 116px;
-						padding: 12px;
-
-						.icons {
-							.medal-icon {
-								right: 12px;
-								top: 11px;
-							}
-
-							.count {
-								right: 14px;
-								bottom: 9px;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 991px) {
-	.birthday {
-		::ng-deep {
-			.ant-tabs-nav-list {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 8px;
-			}
-
-			.ant-tabs-tab + .ant-tabs-tab {
-				margin: 0;
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 768px) {
-	.birthday {
-		.content {
-			.card-list {
-				.card {
-					width: 330px!important;
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 645px) {
-	.birthday {
-		.content {
-			.card-list {
-				.card {
-					width: 100%!important;
-				}
-			}
-		}
-	}
-}
-
-@media screen and (max-width: 414px) {
-    .birthday {}
 }

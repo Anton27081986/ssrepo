@@ -1,7 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
-import {TableState} from "@app/shared/components/table/table-state";
-import {Observable} from "rxjs";
+import { TableState } from '@app/shared/components/table/table-state';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'ss-correspondence',

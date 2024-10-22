@@ -57,6 +57,29 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список статусов учета законтрактованного сырья */
+	public getProcurementsStatuses(): Observable<IResponse<{ id: number; name: string }>> {
+		return this.http.get<IResponse<{ id: number; name: string }>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contractStatuses`,
+		);
+	}
+
+	/** Список договоров учета законтрактованного сырья из КИСП*/
+	public getProcurementsContractDetails(
+		ContractorId: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (ContractorId !== null && ContractorId !== undefined) {
+			params = params.set('ContractorId', ContractorId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contracts`,
+			{ params },
+		);
+	}
+
 	/** Список товаров */
 	public getTovs(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
@@ -67,6 +90,20 @@ export class DictionaryApiService {
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/dictionary/tovs`,
+			{ params },
+		);
+	}
+
+	/** Список договоров */
+	public getContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contractDetails`,
 			{ params },
 		);
 	}
@@ -86,8 +123,15 @@ export class DictionaryApiService {
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/dictionary/users/search`,
+			`${environment.apiUrl}/api/company/dictionary/technologists`,
 			{ params },
+		);
+	}
+
+	/** Список комментариев ТПР */
+	public getTprRejectReasons(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/tprRejectsReasons`,
 		);
 	}
 }

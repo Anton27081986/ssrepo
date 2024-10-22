@@ -1,0 +1,38 @@
+:host {
+	height: 84px;
+}
+
+.book-card {
+	display: flex;
+	gap: 12px;
+	display: flex;
+
+	.info {
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		max-width: 300px;
+
+		ss-text:first-child {
+			flex-grow: 1;
+		}
+	}
+
+	.controls {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: center;
+
+		&__links {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			a {
+				height: 16px;
+			}
+		}
+	}
+}

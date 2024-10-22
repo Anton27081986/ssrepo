@@ -1,14 +1,12 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-	ClientProposalsFacadeService,
-	filterTruthy,
-} from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap, take } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { IContractorsDto } from '@app/core/models/client-proposails/contractors';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsContractorsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-table-item';
+import { ClientProposalsContractorsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.state';
+import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -18,33 +16,37 @@ import { IClientProposalsContractorsTableItem } from '@app/pages/client-proposal
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsContractorsTabComponent {
-	public contractors$: Observable<IResponse<IContractorsDto>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-	public isArchiver$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected contractors: Signal<IResponse<IContractorsDto> | null> = toSignal(
+		this.stateService.contractors$,
+		{
+			initialValue: null,
+		},
+	);
 
-	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
-		this.contractors$ = combineLatest([
-			this.clientProposalsFacadeService.clientId$,
-			this.offset$,
-		]).pipe(
-			filterTruthy(),
-			map(([id, offset]) => {
-				const withArchiver = this.isArchiver$.value;
+	protected linkToModule: Signal<string | null> = computed(() => {
+		const contractors = this.contractors();
+		if (contractors) {
+			return contractors.linkToModule;
+		}
 
-				return this.clientProposalsFacadeService.getContractors({
-					clientId: id,
-					limit: this.pageSize,
-					offset,
-					withArchiver,
-				});
-			}),
-			switchMap(item => {
-				return item;
-			}),
-		);
-	}
+		return null;
+	});
+
+	protected total: Signal<number> = computed(() => {
+		const contractors = this.contractors();
+		if (contractors) {
+			return contractors.total;
+		}
+
+		return 0;
+	});
+
+	protected isLoader$ = this.stateService.isLoader$;
+
+	protected pageIndex = this.stateService.pageIndex;
+	protected pageSize = this.stateService.pageSize;
+
+	constructor(private readonly stateService: ClientProposalsContractorsTabState) {}
 
 	protected getTableItems(production: IResponse<IContractorsDto>): ITableItem[] {
 		const productionTableItem = production.items.map(x => {
@@ -63,19 +65,21 @@ export class ClientProposalsContractorsTabComponent {
 		return <ITableItem[]>(<unknown>productionTableItem);
 	}
 
-	public nzPageIndexChange($event: number) {
+	public pageIndexChange($event: number) {
 		if ($event === 1) {
-			this.offset$.next(0);
+			this.stateService.offset$.next(0);
 		} else {
-			this.offset$.next(this.pageSize * $event - this.pageSize);
+			this.stateService.offset$.next(
+				this.stateService.pageSize * $event - this.stateService.pageSize,
+			);
 		}
 
-		this.pageIndex = $event;
+		this.stateService.pageIndex = $event;
 	}
 
 	protected onActiveContractorChange(e: Event) {
-		this.isArchiver$.next((e.currentTarget! as HTMLInputElement).checked);
-		this.offset$.next(0);
-		this.pageIndex = 1;
+		this.stateService.isArchiver$.next((e.currentTarget! as HTMLInputElement).checked);
+		this.stateService.offset$.next(0);
+		this.stateService.pageIndex = 1;
 	}
 }

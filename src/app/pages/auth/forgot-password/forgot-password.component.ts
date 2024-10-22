@@ -1,26 +1,27 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { catchError } from 'rxjs/operators';
 
+@UntilDestroy()
 @Component({
-	selector: 'app-forgot-password',
+	selector: 'ss-forgot-password',
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPasswordComponent implements OnInit {
 	public loginForm!: FormGroup;
-	public loading = false;
+	public loading = 0;
 	public submitted = false;
 	public error: unknown = '';
 
-	public password?: string;
-
 	public constructor(
 		private readonly formBuilder: FormBuilder,
+		private readonly route: ActivatedRoute,
 		private readonly router: Router,
-		private readonly authenticationService: AuthenticationService, // fake
+		private readonly authenticationService: AuthenticationService,
 	) {
 		// redirect to home if already logged in
 		if (this.authenticationService.userValue) {
@@ -30,7 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
 
 	public ngOnInit() {
 		this.loginForm = this.formBuilder.group({
-			email: [
+			login: [
 				null,
 				[
 					Validators.required,
@@ -38,10 +39,43 @@ export class ForgotPasswordComponent implements OnInit {
 				],
 			],
 		});
+
+		this.route.queryParams.pipe(untilDestroyed(this)).subscribe(params => {
+			if (params.login) {
+				this.loginForm.controls.login.setValue(params.login);
+				this.loginForm.setErrors({
+					link: 'Срок действия ссылки истек',
+				});
+			}
+		});
 	}
 
-	// convenience getter for easy access to form fields
-	public get f() {
-		return this.loginForm.controls;
+	private startTimer() {
+		this.loading = 59;
+		const timer = setInterval(() => {
+			this.loading -= 1;
+
+			if (!this.loading) {
+				clearInterval(timer);
+			}
+		}, 1000);
+	}
+
+	public onSubmit() {
+		this.authenticationService
+			.resetPasswordRequest(this.loginForm.value.login)
+			.pipe(
+				untilDestroyed(this),
+				catchError((error: unknown) => {
+					this.loginForm.setErrors({
+						unauthorized: 'Неверный или несуществующий e-mail',
+					});
+					throw error;
+				}),
+			)
+			.subscribe(() => {
+				this.submitted = true;
+				this.startTimer();
+			});
 	}
 }

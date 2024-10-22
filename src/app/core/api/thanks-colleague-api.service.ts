@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
-import { IThanksColleagueItem } from '@app/components/thank-colleague/models/thanks-colleague-item';
 import { environment } from '@environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ICreateThanksColleagueRequest } from '@app/components/thank-colleague/models/create-thanks-colleague-request';
+import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
+import { ICreateThanksColleagueRequest } from '@app/core/models/thanks-colleagues/create-thanks-colleague-request';
 
 @Injectable({
 	providedIn: 'root',
@@ -24,8 +24,8 @@ export class ThanksColleagueApiService {
 		);
 	}
 
-	public addThanksColleague(createThanksRequest: ICreateThanksColleagueRequest): Observable<any> {
-		return this.http.post<any[]>(
+	public addThanksColleague(createThanksRequest: ICreateThanksColleagueRequest): Observable<IThanksColleagueItem> {
+		return this.http.post<IThanksColleagueItem>(
 			`${environment.apiUrl}/api/awards/thanks`,
 			createThanksRequest,
 		);

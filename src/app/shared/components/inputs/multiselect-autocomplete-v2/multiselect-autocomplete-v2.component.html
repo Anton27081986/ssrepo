@@ -1,0 +1,38 @@
+<div class="multiselect-autocomplete-v2">
+	<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
+	<div class="multiselect-autocomplete-v2__input" [class.multiselect-v2__input--isExpanded]="isExpanded">
+		<ng-container *ngIf="!(selectedOptions$ | async)?.length">
+			<input [placeholder]="placeholder"
+				   [attr.disabled]="readOnly$ | async"
+				   type="text"
+				   [formControl]="queryControl"/>
+		</ng-container>
+		<div class="multiselect-autocomplete-v2__chips" *ngIf="(selectedOptions$ | async)?.length">
+			<ss-multiselect-chips-v2 [readOnly]="(readOnly$ | async)!" [ellipsis]="(chipsEllipsis$ | async)!" [chips]="(selectedOptions$ | async)!"
+									 (delChipEmit)="delSelectedOption($event)"></ss-multiselect-chips-v2>
+		</div>
+		<div class="multiselect-autocomplete-v2__count-chips"
+			 *ngIf="(this.selectedOptions$ | async)?.length"> {{ (this.selectedOptions$ | async)?.length }}
+		</div>
+		<ss-icon *ngIf="(this.selectedOptions$ | async)?.length && !(this.readOnly$ | async)" [name]="'basket'" (click)="clear()"></ss-icon>
+		<ss-icon *ngIf="(this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length"
+				 (click)="toggle()" height="12" name="chevron"
+				 [@rotate]="isExpanded">
+		</ss-icon>
+	</div>
+	<div class="multiselect-autocomplete-v2__select"
+		 *ngIf="getViewSelect">
+		<ng-container *ngIf="selectedOptions$ | async as options">
+			<div class="multiselect-autocomplete-v2__select-input" *ngIf="options.length && !(this.readOnly$ | async)">
+				<input type="text"
+					   [placeholder]="placeholder"
+					   [formControl]="queryControl"/>
+			</div>
+			<ss-multiselect-option-v2 [disabled]="(readOnly$ | async)!" *ngFor="let selectedOpt of options" [option]="selectedOpt" (click)="delSelectedOption(selectedOpt); $event.stopPropagation()"></ss-multiselect-option-v2>
+			<ss-divider *ngIf="options.length && !(readOnly$ | async)!"></ss-divider>
+		</ng-container>
+		<ng-container *ngIf="!(readOnly$ | async)!">
+			<ss-multiselect-option-v2 [disabled]="(readOnly$ | async)!" *ngFor="let opt of viewOptions$ | async" [option]="opt" (click)="addStateOptions(opt); $event.stopPropagation()"></ss-multiselect-option-v2>
+		</ng-container>
+	</div>
+</div>

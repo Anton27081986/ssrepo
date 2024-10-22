@@ -10,13 +10,12 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 	providedIn: 'root',
 })
 export class UserProfileStoreService implements OnDestroy {
-	private readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
+	public readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
 	public userProfile$ = this.userProfileSubject.asObservable();
 	private readonly userProfileKey: string = 'userProfile';
 	private readonly subscription: Subscription = new Subscription();
 
 	private readonly windowProfileSubject = new BehaviorSubject<boolean | null>(null);
-	private openWindowProfile: boolean = false;
 	public windowProfile$ = this.windowProfileSubject.asObservable();
 
 	public constructor(
@@ -62,15 +61,6 @@ export class UserProfileStoreService implements OnDestroy {
 				this.userProfileSubject.next(profile);
 			}),
 		);
-	}
-
-	public getStateWindow() {
-		return this.openWindowProfile;
-	}
-
-	public setStateWindow(state: boolean) {
-		this.openWindowProfile = state;
-		this.windowProfileSubject.next(state);
 	}
 
 	public ngOnDestroy() {

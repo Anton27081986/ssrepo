@@ -7,10 +7,10 @@
 	width: 100%;
 
 	.table-wrapper {
-		height: 70vh;
+		max-height: 70vh;
 		overflow-y: auto;
 		scrollbar-color: $lite-text;
-		border-radius: 16px;
+		//border-radius: 16px;
 
 		&::-webkit-scrollbar {
 			width: 6px;
@@ -30,19 +30,19 @@
 				position: sticky;
 				top: -1px;
 				z-index: 100;
-				background-color: #F2F3F7;
+				background-color: #f8f9fb;
 				color: $text;
 
 				tr {
 					min-width: 100%;
 
 					th {
-						text-align: left;
-						border: 1px solid $island-outline;
-						font-size: 10px;
-						font-weight: 700;
+						text-align: center;
+						//border: 1px solid $island-outline;
+						font-size: 12px;
+						font-weight: 500;
 						line-height: 19px;
-						letter-spacing: -0.01em;
+						//letter-spacing: -0.01em;
 						padding: 8px;
 					}
 				}

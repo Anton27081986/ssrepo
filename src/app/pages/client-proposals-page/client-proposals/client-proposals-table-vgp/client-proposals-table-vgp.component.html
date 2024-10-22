@@ -1,0 +1,64 @@
+<div class="client-proposals-table-vgp" xmlns="http://www.w3.org/1999/html">
+	<div class="client-proposals-table-vgp__content">
+		<ng-container [ngSwitch]="tableState()">
+			<ng-container *ngSwitchCase="StateTableProposals.default">
+				<ng-container *ngTemplateOutlet="default"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="StateTableProposals.alterSearch">
+				<ng-container *ngTemplateOutlet="alterSearch"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="StateTableProposals.loader">
+				<ng-container *ngTemplateOutlet="loader"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="StateTableProposals.data">
+				<ng-container *ngTemplateOutlet="data"></ng-container>
+			</ng-container>
+			<ng-container *ngSwitchCase="StateTableProposals.notData">
+				<ng-container *ngTemplateOutlet="notData"></ng-container>
+			</ng-container>
+		</ng-container>
+	</div>
+</div>
+<ng-template #alterSearch>
+	<ng-container *ngIf="clientOffers() as clientOffers">
+		<div class="client-proposals-table-vgp__alter-search-content">
+			<div class="client-proposals-table-vgp__alter-search-item" (click)="goToUrlProposals(alterItem.linkToDetail)" *ngFor="let alterItem of clientOffers.alterSearch">
+				<ss-icon [name]="'link'"></ss-icon>
+				<span>{{ alterItem.name }}</span>
+			</div>
+		</div>
+	</ng-container>
+</ng-template>
+<ng-template #notData>
+	<tr class="client-proposals-table-vgp__no-content">
+		<ss-icon name="search"></ss-icon>
+		<ss-headline class="client-proposals-table-vgp__no-content--title" size="h3">Нет Данных
+		</ss-headline>
+
+		<ss-headline class="client-proposals-table-vgp__no-content--description" size="h4">
+			Попробуйте
+			изменить параметры поиска
+		</ss-headline>
+	</tr>
+</ng-template>
+<ng-template #data>
+	<ss-table-v2 *ngIf="clientOffers() as clientOffers">
+		<tr app-client-proposals-row-item-tr *ngFor="let offer of clientOffers.items" [item]="offer"></tr>
+	</ss-table-v2>
+</ng-template>
+<ng-template #default>
+	<div class="client-proposals-table-vgp__no-content">
+		<ss-icon name="search"></ss-icon>
+		<ss-headline class="client-proposals-table-vgp__no-content--title" size="h3">Сформируйте
+			предложение
+		</ss-headline>
+		<ss-headline class="client-proposals-table-vgp__no-content--description" size="h4">Выберите
+			ВГП
+			и
+			нажмите кнопку “Посмотреть”
+		</ss-headline>
+	</div>
+</ng-template>
+<ng-template #loader>
+	<ss-loader></ss-loader>
+</ng-template>

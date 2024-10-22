@@ -17,17 +17,17 @@ export interface IRouteDto {
 	/**
 	 * Айди маршрута
 	 */
-	id?: number;
+	id: number;
 	/**
 	 * Начало маршрута
 	 */
-	startRoute?: string | null;
+	startRoute: string;
 	/**
 	 * Конец маршрута
 	 */
-	endRoute?: string | null;
+	endRoute: string;
 	/**
 	 * Время выезда
 	 */
-	departureTime?: string[] | null;
+	departureTime: string[];
 }

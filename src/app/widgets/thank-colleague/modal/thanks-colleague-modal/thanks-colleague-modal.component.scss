@@ -1,0 +1,118 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../styles/colors' as *;
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.victory-modal {
+	display: flex;
+	background-color: $white;
+	flex-direction: column;
+	border: 1px solid $border-color;
+	border-radius: 16px;
+	gap: 16px;
+	padding: 16px 0;
+	width: 512px;
+
+	&__header {
+		padding: 0 16px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__body {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 0 16px;
+
+		&__user {
+			display: flex;
+			gap: 12px;
+
+			&__info {
+				display: flex;
+				flex-direction: column;
+
+				ss-text:first-child {
+					flex-grow: 1;
+				}
+			}
+		}
+
+		&__arrow {
+			position: absolute;
+			top: 35px;
+			left: 24px;
+			transform: rotateZ(-90deg);
+			color: #8C8C8C;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 12px;
+		padding: 0 16px;
+	}
+
+	&__group {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		max-height: 95px;
+		overflow: auto;
+	}
+
+	&__no-comments {
+		height: 348px;
+		max-width: 512px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		position: relative;
+		padding: 0 16px;
+	}
+
+	&__comments {
+		height: 348px;
+		max-height: 348px;
+		max-width: 512px;
+		display: flex;
+		overflow: auto;
+		flex-direction: column;
+		position: relative;
+		padding: 0 16px;
+		gap: 16px;
+	}
+
+	&__isExtendedMode {
+		position: relative;
+	}
+
+	&__actions {
+		display: flex;
+	}
+}
+
+ss-form-control-input-with-func-edit {
+	width: 100%;
+}
+
+ss-divider:last-child {
+	display: none;
+}
+
+:host-context(.dark) .victory-modal {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}

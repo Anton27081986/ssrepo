@@ -15,11 +15,13 @@
 		width: 100%;
 		padding: 0 16px;
 		min-height: 200px;
+		position: relative;
 	}
 
 	&__footer {
 		display: flex;
 		justify-content: flex-end;
+		align-items: center;
 		padding: 16px;
 		min-height: 48px;
 	}

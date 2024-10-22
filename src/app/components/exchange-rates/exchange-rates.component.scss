@@ -1,152 +1,59 @@
 :host {
-	padding-top: 60px;
-	display: flex;
-	gap: 28px;
+    display: flex;
+    gap: 24px;
 }
 
 :host > ss-card {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-	gap: 32px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 10px;
 
-	.header {
-		display: flex;
-		justify-content: space-between;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 16px;
 
-		.title {
-			ss-text {
-				opacity: 70%;
-			}
-		}
+        .title {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
 
-		ss-button span {
-			margin: 0 -7px;
-		}
-	}
+    .divider {
+        padding: 4px 0;
+    }
 
-	.rates {
-		display: flex;
-		gap: 28px;
+    .rates {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        row-gap: 12px;
+        column-gap: 16px;
+        padding: 0 16px 16px;
 
-		ss-text {
-			opacity: 70%;
-		}
+        .column {
+            .item {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                padding: 8px;
+                border: 1px solid #E4E8EA;
+                border-radius: 10px;
 
-		.column:first-child {
-			flex-grow: 1;
-		}
-
-		.column {
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-
-			.item {
-				padding: 16px;
-				border: 1px solid #E4E8EA;
-				border-radius: 10px;
-
-				font-family: 'Inter', serif;
-				font-size: 16px;
-				font-weight: 700;
-				line-height: 19px;
-				letter-spacing: -0.01em;
-			}
-		}
-	}
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 19px;
+            }
+        }
+    }
 }
 
 .controls {
-	display: flex;
-	flex-grow: 1;
-	flex-direction: column;
-	gap: 28px;
+    max-width: 240px;
 
-	ss-card {
-		display: flex;
-		align-items: center;
-		flex-grow: 1;
-		cursor: pointer;
-	}
+    &-item {
+        cursor: pointer;
+    }
 }
 
-.mobile {
-	display: none !important;
-}
-
-// Small devices (landscape phones, 576px and up)
-@media screen and (max-width: 545px) {
-
-	:host {
-		display: flex;
-	}
-
-	:host > ss-card {
-		background: inherit;
-		width: 100%;
-		padding: 20px;
-
-		.header {
-			flex-direction: column;
-			gap: 20px;
-
-			.title {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				text-align: center;
-			}
-		}
-
-		.rates {
-			flex-direction: column;
-			gap: 20px;
-		}
-
-		.rates > ss-card {
-			padding: 20px !important;
-			display: flex;
-			flex-direction: column;
-			gap: 20px;
-
-			ss-text {
-				opacity: 100%;
-			}
-
-			.separator {
-				width: 100%;
-				border-top: 2px solid #EAEDEF;
-			}
-
-			.list {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-
-				.row {
-					display: flex;
-					justify-content: space-between;
-				}
-
-				.item {
-					font-size: 16px;
-					font-weight: 700;
-					line-height: 19px;
-				}
-			}
-		}
-	}
-
-	.controls {
-		display: none;
-	}
-
-	.mobile {
-		display: flex !important;
-	}
-
-	.desktop {
-		display: none !important;
-	}
-}

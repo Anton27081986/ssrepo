@@ -1,0 +1,14 @@
+<div class="multiselect-chips-v2">
+	<ng-container *ngFor="let chip of getChips()">
+		<div class="multiselect-chips-v2__chip">
+		<span *ngIf="chip" class="multiselect-chips-v2__text" [tooltip]="chip.name" [theme]="TooltipTheme.DEFAULT"
+			  [position]="TooltipPosition.DEFAULT">{{ chip.name }}</span>
+			<ss-icon *ngIf="!readOnly" [name]="'close'" (click)="deleteChipEmit(chip!); $event.stopPropagation()"></ss-icon>
+		</div>
+	</ng-container>
+
+	<div class="multiselect-chips-v2__chip-ellipsis" *ngIf="ellipsis">
+		...
+	</div>
+</div>
+

@@ -17,19 +17,19 @@ export interface IRankTypeItemDto {
 	/**
 	 * Айди типа рейтинга
 	 */
-	id?: number;
+	id: number;
 	/**
 	 * Краткое название
 	 */
-	shortName?: string | null;
+	shortName: string;
 	/**
 	 * Полное название
 	 */
-	name?: string | null;
+	name: string;
 	/**
 	 * Рейтинг
 	 */
-	rate?: number | null;
+	rate?: number;
 	/**
 	 * Количество участников в рейтинге
 	 */
@@ -37,5 +37,11 @@ export interface IRankTypeItemDto {
 	/**
 	 * Место
 	 */
-	place?: number;
+	place: number;
+
+	selected?: boolean;
+
+	signature: string;
+
+	reportAvailable: true;
 }

@@ -1,29 +1,63 @@
-<div *ngIf="transport" class="transport">
-	<div class="header">
-		<ss-headline>Корпоративный транспорт</ss-headline>
-		<ss-button *ngIf="transport?.canAddNotification" type="primary" size="medium" (click)="showModalNotice()">Создать уведомление</ss-button>
-	</div>
+@if (transport$ | async; as transport) {
+    <div class="transport">
+        <ss-card padding="0">
+            <div class="header">
+                <ss-text size="1">Корпоративный транспорт</ss-text>
 
-	<div class="content">
-		<app-notice *ngIf="transport?.transportNotify"
-								isLabeled="false"
-								type="warning"
-								title="Изменение в расписании корпоративного транспорта"
-								text="{{ 'В период с ' + (transport!.transportNotify!.dateFrom | date: 'dd.MM.yyyy, hh:mm') + ' до ' + (transport!.transportNotify!.dateTo | date: 'dd.MM.yyyy, hh:mm')   + ' ' + transport!.transportNotify!.note }}">
-		</app-notice>
-		<div class="bus-list">
-			<div *ngFor="let bus of transport!.transportList" class="bus">
-				<div class="direction">
-					<ss-tag class="station">{{ bus.startRoute }}</ss-tag>
-					<span class="direction-icon" nz-icon [nzType]="'ss:direction'"></span>
-					<ss-tag class="station">{{  bus.endRoute }}</ss-tag>
-				</div>
-				<div class="schedule">
-					<div *ngFor="let time of bus?.departureTime" class="item" [ngClass]="{'gone': isPast(time), 'next': !isPast(time)}">
-						<span class="bus-icon" nz-icon [nzType]="'ss:bus'"></span> {{ time }}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+                @if (transport?.canAddNotification) {
+                    <ss-button
+                        type="primary"
+                        size="small"
+                        (click)="showModalNotice()"
+                    >
+                        <ss-icon name="plus"></ss-icon>
+                        Создать уведомление
+                    </ss-button>
+                }
+            </div>
+
+            <ss-divider class="divider" />
+
+            <div class="content">
+                @if (transport?.transportNotify) {
+                    <div class="notice">
+                        <app-notice
+                            isLabeled="false"
+                            type="warning"
+                            title="Изменение в расписании корпоративного транспорта"
+                            [text]="transport | mapper : noticeText"
+                            @fadeInDown
+                        >
+                        </app-notice>
+                    </div>
+                }
+
+                <div class="bus-list">
+                    @for (bus of transport!.transportList; track bus.id) {
+                        <div class="bus">
+                            <div class="direction">
+                                <ss-tag class="station">{{ bus.startRoute }}</ss-tag>
+
+                                <ss-icon name="direction"></ss-icon>
+
+                                <ss-tag class="station">{{ bus.endRoute }}</ss-tag>
+                            </div>
+
+                            <div class="schedule">
+                                @for (time of bus?.departureTime; track time) {
+                                    <div
+                                        class="item"
+                                        [ngClass]="time | mapper : currentTimeClass : bus.id : nearestDepartureTimeForBuses"
+                                    >
+                                        <ss-icon name="bus"></ss-icon>
+                                        {{ time }}
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </ss-card>
+    </div>
+}

@@ -88,10 +88,6 @@ export class ProfilePopupComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public close() {
-		this.userStateService.setStateWindow(false);
-	}
-
 	public AuthUser(user: IDictionaryItemDto) {
 		if (user.id) {
 			this.userStateService.resetProfile();

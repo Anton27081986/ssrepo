@@ -3,7 +3,7 @@ import { AuthenticationService } from '@app/core/services/authentication.service
 import { MenuApiService } from '@app/core/api/menu-api.service';
 import { MainMenuStoreService } from '@app/core/states/main-menu-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { filter, forkJoin, map, tap } from 'rxjs';
+import { BehaviorSubject, filter, forkJoin, map, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
@@ -36,14 +36,10 @@ export class MainMenuFacadeService {
 					if (mainMenu && mainMenu.menu) {
 						// Temp solution, while links not be changed
 						mainMenu.menu![0].items![5].link = './clients-list';
-						// mainMenu.menu?.[0].items!.push({
-						// 	name: 'Контакт с клиентом',
-						// 	link: '/client-proposals-page',
-						// });
 
 						mainMenu.menu.unshift({
 							link: '',
-							name: 'Избранное',
+							name: 'ИЗБРАННОЕ',
 							items: favoriteMenu.menu,
 						});
 
@@ -53,6 +49,7 @@ export class MainMenuFacadeService {
 					throw new Error('null значения');
 				}),
 				tap(fullMenu => {
+					fullMenu.map(menu => (menu.toggle$ = new BehaviorSubject<boolean>(false)));
 					this.mainMenuStoreService.setMainMenu(fullMenu);
 				}),
 				untilDestroyed(this),

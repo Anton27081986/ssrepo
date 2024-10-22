@@ -12,9 +12,12 @@ export class PermissionsApiService {
 	public constructor(private readonly http: HttpClient) {}
 
 	/** Получить доступ к входу на страницу */
-	public getPermissionClientTpr(): Observable<{ items: string[] }> {
-		return this.http.get<any>(`${environment.apiUrl}/api/auth/permission/permissions`, {
-			params: new HttpParams().set('Entities', 'Client.Proposals'),
-		});
+	public getPermissionClient(entity: string): Observable<{ items: string[] }> {
+		return this.http.get<{ items: string[] }>(
+			`${environment.apiUrl}/api/auth/permission/permissions`,
+			{
+				params: new HttpParams().set('Entities', entity),
+			},
+		);
 	}
 }

@@ -41,6 +41,10 @@ span.color-black {
 	color: $text;
 }
 
+span.color-error {
+	color: #E9033A;
+}
+
 :host-context(.dark) span {
 	color: $dark-text;
 }

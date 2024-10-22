@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Injectable } from '@angular/core';
 
@@ -8,9 +8,25 @@ import { Injectable } from '@angular/core';
 	providedIn: 'root',
 })
 export class PermissionsFacadeService {
-	public permissions$: Observable<{ items: string[] }>;
+	public proposalsPermissions$: BehaviorSubject<string[] | null> = new BehaviorSubject<
+		string[] | null
+	>(null);
+	public procurementsPermissions$: Observable<{ items: string[] }>;
 
 	constructor(private readonly permissionsApiService: PermissionsApiService) {
-		this.permissions$ = this.permissionsApiService.getPermissionClientTpr();
+		this.permissionsApiService
+			.getPermissionClient('Client.Proposals')
+			.pipe(
+				untilDestroyed(this),
+				map(items => {
+					return items.items;
+				}),
+			)
+			.subscribe(this.proposalsPermissions$);
+		this.procurementsPermissions$ = this.permissionsApiService.getPermissionClient('Contract');
+	}
+
+	public hasPermission(permission: string): boolean {
+		return this.proposalsPermissions$.value!.indexOf(permission) !== -1;
 	}
 }
