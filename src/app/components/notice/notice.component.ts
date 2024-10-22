@@ -21,17 +21,18 @@ export class NoticeComponent implements OnInit {
 	@Input()
 	public text: string | undefined;
 
-	@Output() public close = new EventEmitter<any>();
+	@Output()
+	public close = new EventEmitter<void>();
 
 	public sizeText: '1' | '3' = '1';
 
-	ngOnInit() {
+	public ngOnInit() {
 		if (this.size === 'small') {
 			this.sizeText = '3';
 		}
 	}
 
-	closeNotice() {
+	public closeNotice() {
 		this.close.emit();
 	}
 }

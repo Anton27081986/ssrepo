@@ -23,9 +23,7 @@ import { DateTimePipe } from '@app/shared/pipe/date-time.pipe';
 import { RatingComponent } from '@app/components/rating/rating.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
-import { TransportModule } from '@app/components/transport/transport.module';
 import { ThanksPartnerComponent } from '@app/components/thank-partner/thanks-partner.component';
-import { TransportComponent } from '@app/components/transport/transport.component';
 import { TableModule } from '@app/shared/components/table/table.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
@@ -95,7 +93,6 @@ import { DistributorsUsersCardComponent } from '@app/components/rating/distribut
 		BackendErrorMessagesComponent,
 		PaginationComponent,
 		CarouselComponent,
-		ModalTransportNoticeComponent,
 		ProfileCardComponent,
 		UserCardComponent,
 		UserCardWidgetComponent,
@@ -136,7 +133,6 @@ import { DistributorsUsersCardComponent } from '@app/components/rating/distribut
 		NzToolTipModule,
 		DateTimePipe,
 		CarouselModule,
-		TransportModule,
 		TableModule,
 		ButtonModule,
 		HeadlineModule,
@@ -166,6 +162,7 @@ import { DistributorsUsersCardComponent } from '@app/components/rating/distribut
 		SearchClientInputModule,
 		SearchUserInputModule,
 		SelectV2Module,
+		ModalTransportNoticeComponent,
 	],
 	exports: [
 		MainMenuComponent,
@@ -176,7 +173,6 @@ import { DistributorsUsersCardComponent } from '@app/components/rating/distribut
 		ThanksPartnerComponent,
 		VictoryComponent,
 		RatingComponent,
-		TransportComponent,
 		PaginationComponent,
 		ProfileCardComponent,
 		UserCardComponent,

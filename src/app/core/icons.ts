@@ -390,24 +390,32 @@ export class AppIcons {
 		'</svg>';
 
 	public static direction =
-		'<svg width="48" height="14" viewBox="0 0 48 14" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-		'<path d="M11 7H39.1816" stroke="#4770FF" stroke-width="1.5"/>' +
-		'<circle cx="7" cy="7" r="2" fill="#4770FF"/>' +
-		'<circle cx="7" cy="7" r="4" stroke="#4770FF" stroke-width="1.5"/>' +
-		'<circle cx="7" cy="7" r="5.25" stroke="#4770FF" stroke-opacity="0.3" stroke-width="2.5"/>' +
-		'<circle cx="43.1816" cy="7" r="4" stroke="#4770FF" stroke-width="1.5"/>' +
+		'<svg width="131" height="14" viewBox="0 0 131 14" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<path d="M11 7H122" stroke="#416CFF" stroke-width="1.5"/>' +
+		'<ellipse cx="7.05457" cy="7" rx="2.0155" ry="2" fill="#416CFF"/>' +
+		'<ellipse cx="7.05445" cy="7" rx="4.03101" ry="4" stroke="#416CFF" stroke-width="1.5"/>' +
+		'<path opacity="0.2" d="M7.05445 12.25C9.96195 12.25 12.3355 9.90858 12.3355 7C12.3355 4.09142 9.96195 1.75 7.05445 1.75C4.14694 1.75 1.77344 4.09142 1.77344 7C1.77344 9.90858 4.14694 12.25 7.05445 12.25Z" stroke="#416CFF" stroke-width="2.5"/>' +
+		'<ellipse cx="126.031" cy="7" rx="4.03101" ry="4" stroke="#416CFF" stroke-width="1.5"/>' +
 		'</svg>';
 
 	public static bus =
-		'<svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-		'<path d="M4.69335 12.8424H4.69956" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
-		'<path d="M12.2949 12.8424H12.3011" stroke=currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
-		'<rect x="1.64648" y="1.49585" width="13.707" height="14.3983" rx="3.25" stroke="currentColor" stroke-width="1.5"/>' +
-		'<line x1="1.58789" y1="9.6731" x2="16.1037" y2="9.6731" stroke="currentColor" stroke-width="1.5"/>' +
-		'<line x1="1.58789" y1="4.83447" x2="16.1037" y2="4.83447" stroke="currentColor" stroke-width="1.5"/>' +
-		'<line x1="8.44141" y1="9.73193" x2="8.44141" y2="4.8938" stroke="currentColor" stroke-width="1.5"/>' +
-		'<line x1="13.1689" y1="17.1518" x2="12.3982" y2="16.2151" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
-		'<line x1="0.75" y1="-0.75" x2="1.96298" y2="-0.75" transform="matrix(0.635373 -0.772205 -0.772205 -0.635373 2.77344 17.2544)" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+		'<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<g clip-path="url(#clip0_14212_19654)">' +
+		'<path d="M4.71875 11.9399C4.30875 11.9399 3.96875 11.5999 3.96875 11.1899C3.96875 10.7799 4.29875 10.4399 4.71875 10.4399C5.12875 10.4399 5.46875 10.7799 5.46875 11.1899C5.46875 11.5999 5.12875 11.9399 4.71875 11.9399Z" fill="currentColor"/>' +
+		'<path d="M11.625 11.9399C11.215 11.9399 10.875 11.5999 10.875 11.1899C10.875 10.7799 11.205 10.4399 11.625 10.4399C12.035 10.4399 12.375 10.7799 12.375 11.1899C12.375 11.5999 12.035 11.9399 11.625 11.9399Z" fill="currentColor"/>' +
+		'<path d="M11.1641 1.75H5.16406C3.36914 1.75 1.91406 3.20507 1.91406 5V10.88C1.91406 12.6749 3.36914 14.13 5.16406 14.13H11.1641C12.959 14.13 14.4141 12.6749 14.4141 10.88V5C14.4141 3.20507 12.959 1.75 11.1641 1.75Z" stroke="currentColor" stroke-width="1.5"/>' +
+		'<path d="M2.24219 4.52002H14.0822" stroke="currentColor" stroke-width="1.5"/>' +
+		'<path d="M2.24219 8.79004H14.0822" stroke="currentColor" stroke-width="1.5"/>' +
+		'<path d="M6.16406 8.79004V4.79004" stroke="currentColor" stroke-width="1.5"/>' +
+		'<path d="M10.1641 8.79004V4.79004" stroke="currentColor" stroke-width="1.5"/>' +
+		'<path d="M12.3722 14.9001L11.7422 14.1401" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+		'<path d="M3.95312 14.9001L4.58313 14.1401" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>' +
+		'</g>' +
+		'<defs>' +
+		'<clipPath id="clip0_14212_19654">' +
+		'<rect width="14" height="14.65" fill="white" transform="translate(1.16406 1)"/>' +
+		'</clipPath>' +
+		'</defs>' +
 		'</svg>';
 
 	public static ok =
