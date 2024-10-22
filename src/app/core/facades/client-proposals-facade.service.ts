@@ -42,6 +42,9 @@ import { ResponseProposals } from '@app/core/utils/response-proposals';
 	providedIn: 'root',
 })
 export class ClientProposalsFacadeService {
+	public instructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2024/10/22/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F_%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82_%D1%81_%D0%BA%D0%BB%D0%B8%D0%B5%D0%BD%D1%82%D0%BE%D0%BC_c659ff6b-5fb7-4d31-ba64-9a37d15b3ada.docx';
+
 	public clientId$: Observable<number>;
 
 	public isAlterFilter$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

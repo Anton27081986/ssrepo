@@ -1,6 +1,13 @@
 <div class="header">
 	<ss-headline size="h3">Учет законтрактованного сырья</ss-headline>
 	<div class="header__controls">
+		<ss-tooltip-menu icon="download">
+			<ss-caption size="1">
+				<a [href]="facadeService.instructionFileLink" target="_blank">
+					Инструкция по учету законтрактованного сырья
+				</a>
+			</ss-caption>
+		</ss-tooltip-menu>
 		<ss-button *ngIf="canAdd" size="small" (click)="addContract()">Добавить контракт</ss-button>
 		<ss-button *ngIf="!isFiltersVisible" size="small" type="outline" (click)="toggleFilters()">
 			<ss-icon height="16" width="16" name="filter"></ss-icon>

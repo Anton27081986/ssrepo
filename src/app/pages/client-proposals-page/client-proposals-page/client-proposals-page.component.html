@@ -1,7 +1,7 @@
 <div class="clients-proposals-page">
 	<div class="clients-proposals-page__header">
 		<ss-headline size="h3">Контакт с клиентом: рекомендации по ВГП</ss-headline>
-		<div class="clients-proposals-page__download-reports" *ngIf="canLoadFile">
+		<div class="clients-proposals-page__download-reports" *ngIf="canLoadFile; else instruction">
 			<ss-text [size]="'1'">Отчеты по пользователю</ss-text>
 			<div class="clients-proposals-page__reports">
 				<ss-icon [tooltip]="'Обработанные предложения'" [theme]="TooltipTheme.MAIN"
@@ -12,6 +12,17 @@
 						 [height]="'20'" [name]="'download'"></ss-icon>
 			</div>
 		</div>
+		<ng-template #instruction>
+			<div class="clients-proposals-page__instructions">
+				<ss-tooltip-menu icon="download">
+					<ss-caption size="1">
+						<a [href]="clientProposalsFacadeService.instructionFileLink" target="_blank">
+							Инструкция по контакту с клиентом
+						</a>
+					</ss-caption>
+				</ss-tooltip-menu>
+			</div>
+		</ng-template>
 	</div>
 
 	<div class="clients-proposals-page__content">

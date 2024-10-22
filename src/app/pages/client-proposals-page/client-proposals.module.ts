@@ -56,6 +56,8 @@ import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-range.module';
 
 import { ClientProposalsCardComponent } from '@app/pages/client-proposals-page/client-proposals/client-proposals-card/client-proposals-card.component';
+import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
+
 @NgModule({
 	declarations: [
 		ClientProposalsPageComponent,
@@ -120,6 +122,7 @@ import { ClientProposalsCardComponent } from '@app/pages/client-proposals-page/c
 		NoticeModule,
 		MultiselectAutocompleteV2Module,
 		DateRangeModule,
+		TooltipMenuModule,
 	],
 })
 export class ClientProposalsModule {}
