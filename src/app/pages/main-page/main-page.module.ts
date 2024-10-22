@@ -11,6 +11,7 @@ import { ThanksColleagueModule } from '@app/widgets/thank-colleague/thanks-colle
 import { AddressBookModule } from '@app/widgets/address-book/address-book.module';
 import { BirthdayComponent } from '@app/components/birthday/birthday.component';
 import { MainPageComponent } from './main-page.component';
+import { TransportComponent } from '@app/components/transport/transport.component';
 
 @NgModule({
 	declarations: [MainPageComponent, SliderComponent],
@@ -25,6 +26,7 @@ import { MainPageComponent } from './main-page.component';
 		ExchangeRatesComponent,
 		AddressBookModule,
 		BirthdayComponent,
+		TransportComponent,
 	],
 	providers: [{ provide: VictoryService }],
 })

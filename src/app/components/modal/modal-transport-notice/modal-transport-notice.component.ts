@@ -1,59 +1,53 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NzModalRef } from 'ng-zorro-antd/modal';
-import { formatDate } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { TransportApiService } from '@app/core/api/transport-api.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ModalRef } from '@app/core/modal/modal.ref';
+import { SSForm } from '@app/core/models/form';
+import { dateFromLessDateTo } from '@app/core/validators/date-from-less-date-to';
+import { ModalTransportNoticeImports } from '@app/components/modal/modal-transport-notice/modal-transport-notice.imports';
 import { ITransportNotifyDto } from '@app/core/models/company/transport-notify-dto';
 
-@UntilDestroy()
+interface INoteForm {
+	dateFrom: Date | null;
+	dateTo: Date | null;
+	note: string;
+}
+
 @Component({
 	selector: 'app-modal-transport-notice',
 	templateUrl: './modal-transport-notice.component.html',
 	styleUrls: ['./modal-transport-notice.component.scss'],
+	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [ModalTransportNoticeImports],
 })
 export class ModalTransportNoticeComponent {
-	protected readonly Date = Date;
-	protected readonly formatDate = formatDate;
-	protected noteForm: FormGroup<{
-		note: FormControl<string | null>;
-		dateFrom: FormControl<Date | null>;
-		dateTo: FormControl<Date | null>;
-	}>;
-
-	public constructor(
-		private readonly modal: NzModalRef,
-		private readonly apiService: TransportApiService,
-	) {
-		this.noteForm = new FormGroup({
-			dateFrom: new FormControl(new Date(), Validators.required),
-			dateTo: new FormControl(new Date(), Validators.required),
-			note: new FormControl('', Validators.required),
-		});
-	}
+	private readonly modalRef = inject(ModalRef);
+	protected noteForm = new FormGroup<SSForm<INoteForm>>(
+		{
+			dateFrom: new FormControl<Date | null>(null, {
+				nonNullable: true,
+				validators: Validators.required,
+			}),
+			dateTo: new FormControl<Date | null>(null, {
+				nonNullable: true,
+				validators: Validators.required,
+			}),
+			note: new FormControl<string>('', [Validators.required]),
+		},
+		{ validators: dateFromLessDateTo('dateFrom', 'dateTo') },
+	);
 
 	public saveAndCloseModal(): void {
 		const transportNotify: ITransportNotifyDto = {
-			dateFrom: this.noteForm.controls.dateFrom.value?.toISOString(),
-			dateTo: this.noteForm.controls.dateTo.value?.toISOString(),
-			note: this.noteForm.controls.note.value?.toString(),
+			dateFrom: new Date(this.noteForm.controls.dateFrom?.value).toISOString(),
+			dateTo: new Date(this.noteForm.controls.dateTo?.value).toISOString(),
+			note: this.noteForm.controls.note?.value?.toString(),
 		};
 
-		this.apiService
-			.sendTransportNote(transportNotify)
-			.pipe(untilDestroyed(this))
-			.subscribe({
-				next: () => {
-					this.modal.destroy(this.noteForm.value);
-				},
-				error: (error: unknown) => {
-					console.error('Уведомление не опубликовано', error);
-				},
-			});
+		this.modalRef.close(transportNotify);
 	}
 
-	public disabledDate = (current: Date): boolean => current < new Date();
-	public disabledBeforeFrom = (current: Date): boolean =>
-		current < (this.noteForm.controls.dateFrom.value || Date.now());
+	public close() {
+		this.modalRef.close();
+	}
 }

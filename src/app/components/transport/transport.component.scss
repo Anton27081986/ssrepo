@@ -1,145 +1,106 @@
-@use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
 
-:host {
-	//background-color: #0e0f10;
-}
-
 .transport {
-	display: flex;
-	flex-direction: column;
-	gap: 40px;
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 40px;
 
-	.header {
-		display: flex;
-		justify-content: space-between;
-
-		h1 {
-			text-transform: uppercase;
-		}
-	}
-
-	.content {
-		display: flex;
-		flex-direction: column;
-		gap: 20px;
-
-		.bus-list {
-			display: flex;
-			flex-direction: column;
-			gap: 28px;
-
-			.bus {
-				display: flex;
-				justify-content: space-between;
-				gap: 16px;
-
-				.direction {
-					max-width: 550px;
-					display: flex;
-					gap: 8px;
-
-					.station {
-						width: 244px;
-					}
-
-					.direction-icon {
-						font-size: 36px;
-					}
-				}
-
-				.schedule {
-					display: flex;
-					gap: 16px;
-					flex-wrap: wrap;
-
-					.item {
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						width: 100px;
-						height: 36px;
-						border-radius: 10px;
-						background-color: $white;
-					}
-
-					.gone {
-						color: #A9AFB3;
-						border: 1px solid $border-color;
-					}
-
-					.next {
-						border: 1px solid $border-color;
-					}
-
-					.next:not(.next ~ .next) {
-						color: #2D8418 !important;
-						border: 1px solid #91D386 !important;
-						background-color: #D5EDCA !important;
-					}
-				}
-
-			}
-		}
-	}
-}
-
-// Small devices (landscape phones, 576px and up)
-@media screen and (max-width: 768px) {
-
-    .transport {
-		padding: 20px;
-
-			.header {
-				justify-content: center;
-				text-align: center;
-
-				ss-button {
-					display: none;
-				}
-			}
-
-			.content {
-
-				.bus-list {
-
-					.bus {
-						flex-direction: column;
-
-						.direction {
-							flex-direction: column;
-							position: relative;
-							padding-left: 19px;
-							overflow: visible;
-
-							.station {
-								width: 100%;
-
-								::ng-deep p {
-									justify-content: flex-start !important;
-									padding: 0 16px;
-								}
-							}
-
-							.direction-icon {
-								position: absolute;
-								left: -14px;
-								top: 14px;
-								transform: rotate(90deg);
-								font-size: 48px;
-							}
-						}
-
-						.schedule {
-							width: 100%;
-
-							.item {
-								width: 120px;
-							}
-						}
-					}
-				}
-			}
-		}
+    ss-card {
+        flex-grow: 1;
     }
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 0 16px;
+
+        .notice {
+            padding: 0 16px 16px;
+            transition: max-height 0.3s ease;
+        }
+
+        .bus-list {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+
+            .bus {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                gap: 16px;
+
+                .direction {
+                    display: grid;
+                    grid-template-columns: 1fr 131px 1fr;
+                    align-items: center;
+                    gap: 16px;
+
+                    .station {
+                        flex-grow: 1;
+                        font-size: 13px;
+
+                        ::ng-deep p {
+                            border-color: transparent;
+                        }
+                    }
+
+                    .direction-icon {
+                        font-size: 36px;
+                    }
+                }
+
+                .schedule {
+                    display: flex;
+                    gap: 16px;
+                    flex-wrap: nowrap;
+
+                    .item {
+                        height: 32px;
+                        display: flex;
+                        flex-grow: 1;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 12px;
+                        font-size: 13px;
+                        border-radius: 10px;
+                        background-color: $white;
+                    }
+
+                    .gone {
+                        color: #A9AFB3;
+                        background-color: $card-action-bg;
+                    }
+
+                    .nearest {
+                        color: #5F656F;
+                        background-color: #9FA9B933;
+                    }
+
+                    .next {
+                        color: #4D4D4D;
+                        background-color: #00000005;
+                    }
+
+                    .next:not(.next ~ .next) {
+                        color: #2D8418;
+                        background-color: #D5EDCA;
+                    }
+                }
+
+            }
+        }
+    }
+}
 
