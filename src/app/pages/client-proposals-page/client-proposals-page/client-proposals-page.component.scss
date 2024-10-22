@@ -11,6 +11,11 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 0 40px;
+		gap: 16px;
+
+		ss-headline {
+			flex-grow: 1;
+		}
 	}
 
 	&__download-reports {
@@ -27,6 +32,11 @@
 		display: flex;
 		flex-wrap: nowrap;
 		gap: 10px;
+	}
+
+	&__instructions {
+		display: flex;
+		align-items: center;
 	}
 
 	&__content {

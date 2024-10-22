@@ -66,7 +66,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 	];
 
 	constructor(
-		private readonly facadeService: RawMaterialAccountingFacadeService,
+		protected readonly facadeService: RawMaterialAccountingFacadeService,
 		private readonly modalService: ModalService,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly activatedRoute: ActivatedRoute,

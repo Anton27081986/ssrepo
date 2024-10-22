@@ -15,6 +15,9 @@ import { catchError } from 'rxjs/operators';
 	providedIn: 'root',
 })
 export class RawMaterialAccountingFacadeService {
+	public instructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2024/10/22/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F_%D0%A3%D1%87%D0%B5%D1%82_%D0%B7%D0%B0%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D1%81%D1%8B%D1%80%D1%8C%D1%8F_bb595d3f-a948-4fc3-958f-1a176fcd24e9.docx';
+
 	// Индикатор загрузки
 	private readonly isContractsLoadingSubject = new BehaviorSubject<boolean>(true);
 
