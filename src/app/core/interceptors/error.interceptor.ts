@@ -42,7 +42,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 								'warning',
 								err.status,
 							);
-						} else {
+						} else if (err.error.errors) {
 							for (const field in err.error.errors) {
 								this.notificationToastService.addToast(
 									err.error.errors[field][0],
@@ -50,6 +50,12 @@ export class ErrorInterceptor implements HttpInterceptor {
 									err.status,
 								);
 							}
+						} else {
+							this.notificationToastService.addToast(
+								err.error.title,
+								'warning',
+								err.status,
+							);
 						}
 					}
 

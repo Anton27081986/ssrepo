@@ -35,4 +35,5 @@
 	<ss-card *ngIf="isFiltersVisible" class="filters" padding="0">
 		<ss-filters [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredContracts(true)" [(filters)]="filters"></ss-filters>
 	</ss-card>
+	<ss-loader *ngIf="isLoading$ | async"></ss-loader>
 </ss-card>

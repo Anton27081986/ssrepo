@@ -6,22 +6,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import { NgIf } from '@angular/common';
+import {NgClass, NgIf} from '@angular/common';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 
 @NgModule({
 	declarations: [DateRangeComponent],
 	exports: [DateRangeComponent],
-	imports: [
-		MatDatepickerModule,
-		MatNativeDateModule,
-		MatButtonModule,
-		MatFormFieldModule,
-		IconModule,
-		TextModule,
-		NgIf,
-		CaptionModule,
-	],
+    imports: [
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        IconModule,
+        TextModule,
+        NgIf,
+        CaptionModule,
+        NgClass,
+    ],
 	providers: [{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
 })
 export class DateRangeModule {}
