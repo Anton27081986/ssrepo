@@ -13,3 +13,10 @@ export function dateTimeFromIsoString(dateString: string | undefined): string {
 
 	return `${day}:${month}:${year} ${hours}:${minutes}`;
 }
+
+export function getTime(date: Date): string {
+	const hours = `0${date.getHours()}`.slice(-2);
+	const minutes = `0${date.getMinutes()}`.slice(-2);
+
+	return `${hours}:${minutes}`;
+}
