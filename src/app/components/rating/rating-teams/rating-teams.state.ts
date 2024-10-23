@@ -9,6 +9,7 @@ import {
 	BehaviorSubject,
 	tap,
 	debounceTime,
+	take,
 } from 'rxjs';
 import { IWeekItemDto } from '@app/core/models/awards/week-item-dto';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
@@ -74,6 +75,12 @@ export class RatingTeamsStateService {
 	}
 
 	public loadLastFiveWeeks(): Observable<IWeekItemDto[]> {
-		return this.ratingService.getLastFiveRatingWeeks().pipe(map(({ items }) => items));
+		return this.ratingService.getLastFiveRatingWeeks().pipe(
+			map(({ items }) => items),
+			shareReplay({
+				refCount: true,
+				bufferSize: 1,
+			}),
+		);
 	}
 }
