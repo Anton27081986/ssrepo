@@ -16,6 +16,7 @@ import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
 
 export type searchType =
 	| 'user'
+	| 'user-dictionary'
 	| 'subsector'
 	| 'tovs'
 	| 'region'
@@ -72,6 +73,15 @@ export class SearchInputComponent {
 				case 'user':
 					this.searchFacade
 						.getUsers(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'user-dictionary':
+					this.searchFacade
+						.getDictionaryUsers(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);
