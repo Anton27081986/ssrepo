@@ -107,6 +107,23 @@ const routes: Routes = [
 	},
 	{
 		path: '',
+		component: NewLayoutComponent,
+		canActivate: [AuthGuard],
+		data: {
+			animation: 'animation',
+		},
+		children: [
+			{
+				path: 'excess-income',
+				loadChildren: () =>
+					import('@app/pages/excess-income/excess-income.module').then(
+						m => m.ExcessIncomeModule,
+					),
+			},
+		],
+	},
+	{
+		path: '',
 		component: LayoutClientProposalsComponent,
 		canActivate: [AuthGuard],
 		data: {
