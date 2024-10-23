@@ -134,4 +134,24 @@ export class DictionaryApiService {
 			`${environment.apiUrl}/api/company/dictionary/tprRejectsReasons`,
 		);
 	}
+
+	public getDictionaryUsers(
+		clientId: number,
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (clientId) {
+			params = params.set('clientId', clientId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/users/search`,
+			{ params },
+		);
+	}
 }

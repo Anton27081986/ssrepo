@@ -81,4 +81,9 @@ export class SearchFacadeService {
 	public getProductSearch(query: string) {
 		return this.winsApiService.getProductSearch(query);
 	}
+
+	public getDictionaryUsers(query?: string) {
+		return this.dictionaryApiService
+			.getDictionaryUsers(this.clientId!, query);
+	}
 }
