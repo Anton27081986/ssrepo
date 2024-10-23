@@ -33,6 +33,10 @@ ss-caption {
 	}
 }
 
+.calendar-icon {
+	color: $main;
+}
+
 ::ng-deep .mat-calendar {
 	font-family: 'Inter', serif !important;
 	font-size: 14px !important;
