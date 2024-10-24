@@ -145,10 +145,6 @@
         color: white !important;
     }
 
-    .mat-calendar-body-cell-content.mat-calendar-body-today {
-        background-color: transparent !important;
-    }
-
     .mat-calendar-body-cell:not(.mat-calendar-body-active) .mat-calendar-body-cell-content {
         background-color: #00000005 !important;
         color: $text !important;

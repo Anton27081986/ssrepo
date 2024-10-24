@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 
 export const ModalTransportNoticeImports = [
 	CardModule,
@@ -16,4 +17,5 @@ export const ModalTransportNoticeImports = [
 	DatepickerInputModule,
 	TextareaModule,
 	ButtonModule,
+	DateTimePickerComponent
 ];

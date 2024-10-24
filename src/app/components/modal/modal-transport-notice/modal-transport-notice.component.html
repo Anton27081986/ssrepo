@@ -1,8 +1,8 @@
 <div class="modal-transport-notice">
-    <ss-card [padding]="'10px 0px 16px'">
+    <ss-card [padding]="'14px 0px 16px'">
         <div class="header">
             <div class="title">
-                <ss-text size="1">Изменение расписания корпоративного транспорта</ss-text>
+                <ss-text size="1">Новое уведомление</ss-text>
             </div>
 
             <ss-icon class="close-icon" name="close" (click)="close()"></ss-icon>
@@ -17,21 +17,13 @@
                 <div class="label">
                     <ss-text size="4" class="info-list-item-name">Действителен от:</ss-text>
 
-                    <ss-datepicker-input
-                        size="small"
-                        placeholder=""
-                        formControlName="dateFrom"
-                    ></ss-datepicker-input>
+                    <ss-date-time-picker formControlName="dateFrom"></ss-date-time-picker>
                 </div>
 
                 <div class="label">
                     <ss-text size="4" class="info-list-item-name">Действителен до:</ss-text>
 
-                    <ss-datepicker-input
-                        size="small"
-                        placeholder=""
-                        formControlName="dateTo"
-                    ></ss-datepicker-input>
+                    <ss-date-time-picker formControlName="dateTo"></ss-date-time-picker>
                 </div>
             </div>
 
@@ -53,8 +45,8 @@
             <ss-button
                 size="small"
                 type="primary"
-                (click)="saveAndCloseModal()"
                 [disabled]="!noteForm.valid"
+                (click)="saveAndCloseModal()"
             >
                 Опубликовать
             </ss-button>

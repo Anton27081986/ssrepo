@@ -10,7 +10,7 @@ export function dateFromLessDateTo(dateFrom: string, dateTo: string): ValidatorF
 			!dateToCtrl ||
 			dateFromCtrl.pristine ||
 			dateToCtrl.pristine ||
-			dateFromCtrl.value < dateToCtrl.value
+			new Date(dateFromCtrl.value) < new Date(dateToCtrl.value)
 		) {
 			return null;
 		}
