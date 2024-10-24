@@ -16,7 +16,6 @@
 			 <div class="app-client-proposals-trade-list-tab__filters">
 				 <ss-search-input size="medium" searchType="tovs" placeholder="Введите товарную позицию" (select)="onTovFilter($event)"></ss-search-input>
 				 <ss-date-range placeholder="Выберите даты" (select)="onDateRangeFilter($event)" #range></ss-date-range>
-				 <ss-icon (click)="resetForm(); range.startDate= undefined; range.endDate= undefined" height="16" width="16" name="close"></ss-icon>
 			 </div>
 		</ng-template>
 		<ng-template #body>

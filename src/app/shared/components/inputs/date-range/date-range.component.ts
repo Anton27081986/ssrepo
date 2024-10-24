@@ -69,8 +69,14 @@ export class DateRangeComponent {
 	protected onTouched() {}
 
 	dateChanged(start: string, end: string) {
-		this.startDate = start;
-		this.endDate = end;
-		this.select.emit(`${start}-${end}`);
+		if (start && end) {
+			this.select.emit(`${start}-${end}`);
+		}
+	}
+
+	clear() {
+		this.startDate = undefined;
+		this.endDate = undefined;
+		this.select.emit('');
 	}
 }
