@@ -6,8 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
-import {NgClass, NgIf} from '@angular/common';
+import { DatePipe, NgClass, NgIf } from '@angular/common';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [DateRangeComponent],
@@ -22,6 +23,8 @@ import { CaptionModule } from '@app/shared/components/typography/caption/caption
         NgIf,
         CaptionModule,
         NgClass,
+        FormsModule,
+        DatePipe,
     ],
 	providers: [{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
 })

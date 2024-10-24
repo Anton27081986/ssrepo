@@ -10,11 +10,21 @@ ss-caption {
 	color: $lite-text;
 }
 
+.calendar-button-wrapper {
+	display: flex;
+	align-items: center;
+
+	&__icon {
+		margin-left: 10px;
+	}
+}
+
 .calendar-button {
 	display: flex;
 	align-items: center;
 	padding: 12px;
 	width: 100%;
+	min-width: 240px;
 	border-radius: 8px;
 	border: 1px solid $island-outline;
 	background-color: $island;

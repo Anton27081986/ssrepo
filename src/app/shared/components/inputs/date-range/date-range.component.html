@@ -1,20 +1,28 @@
 <ss-caption size="1">{{ label }}</ss-caption>
-<div class="calendar-button" [ngClass]="{'error': error}" (click)="picker.open()">
-	<div class="calendar-button-text" *ngIf="startDate || endDate; else noDates">
-		<ss-text size="2">{{startDate}}</ss-text>
-		<div *ngIf="endDate" class="calendar-button-text-separator"></div>
-		<ss-text size="2">{{endDate}}</ss-text>
-	</div>
-	<ng-template #noDates>
-		<div class="calendar-button-text">{{placeholder}}</div>
-	</ng-template>
-	<ss-icon height="16" name="calendar"></ss-icon>
+<div class="calendar-button-wrapper">
+    <div class="calendar-button" [ngClass]="{'error': error}">
+        <div class="calendar-button-text" *ngIf="startDate || endDate; else noDates">
+            <ss-text *ngIf="startDate" size="2">{{ startDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+
+            <ng-container *ngIf="endDate">
+                <div class="calendar-button-text-separator"></div>
+                <ss-text size="2">{{ endDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+            </ng-container>
+        </div>
+        <ng-template #noDates>
+            <div class="calendar-button-text">{{ placeholder }}</div>
+        </ng-template>
+        <ss-icon height="16" name="calendar" class="calendar-icon" (click)="picker.open()"></ss-icon>
+    </div>
+
+    <ss-icon class="calendar-button-wrapper__icon" height="16" width="16" name="close"
+             (click)="clear()"></ss-icon>
 </div>
 <mat-form-field class="date-range">
-	<mat-date-range-input [rangePicker]="picker">
-		<input matStartDate #start />
-		<input matEndDate #end (dateChange)="dateChanged(start.value, end.value)" />
-	</mat-date-range-input>
-	<mat-date-range-picker #picker></mat-date-range-picker>
+    <mat-date-range-input [rangePicker]="picker" #range>
+        <input matStartDate #start [(ngModel)]="startDate"/>
+        <input matEndDate #end [(ngModel)]="endDate" (dateChange)="dateChanged(start.value, end.value); "/>
+    </mat-date-range-input>
+    <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
 <ss-caption size="2" color="error">{{ error }}</ss-caption>
