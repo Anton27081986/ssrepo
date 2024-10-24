@@ -125,8 +125,8 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 	}
 
 	private timeChanges(time: string | null): void {
-		if (this.showDate && this.date$()) {
-			this.dateTimeChange(this.setTime(this.date$(), time));
+		if (this.showDate && this.dateCtrl.value) {
+			this.dateTimeChange(this.setTime(this.dateCtrl.value, time));
 
 			return;
 		}
@@ -135,11 +135,14 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 	}
 
 	private setTime(date: Date, time: string | null): string {
-		const [hours, minutes] = (time || TIME_FORMAT_DELIMITED).split(':').map(Number);
+		// eslint-disable-next-line prefer-const
+		let [hours, minutes] = (time || TIME_FORMAT_DELIMITED).split(':').map(Number);
 
-		date.setUTCHours(hours, minutes);
+		const dateCopy = new Date(date);
 
-		return date.toISOString();
+		dateCopy.setHours(hours - date.getTimezoneOffset() / 60, minutes);
+
+		return dateCopy.toISOString();
 	}
 
 	private dateTimeChange(data: string): void {

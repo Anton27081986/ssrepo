@@ -1,11 +1,11 @@
 .modal-transport-notice {
-    width: 360px;
-    height: 315px;
+    height: 373px;
+    width: 284px;
 
     .header {
         display: flex;
         justify-content: space-between;
-        padding: 0 16px 6px;
+        padding: 0 16px 10px;
 
         .title {
             display: flex;
@@ -22,8 +22,8 @@
 
         .dates {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 16px
         }
 
         .label {
