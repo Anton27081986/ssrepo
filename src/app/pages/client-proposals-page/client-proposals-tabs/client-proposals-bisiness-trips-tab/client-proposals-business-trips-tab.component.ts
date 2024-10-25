@@ -60,6 +60,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 	});
 
 	protected isLoader$ = this.clientProposalsStateService.isLoader$;
+	protected onlyCurrentYear$ = this.clientProposalsStateService.onlyCurrentYear$;
 
 	protected pageIndex = this.clientProposalsStateService.pageIndex;
 	protected pageSize = this.clientProposalsStateService.pageSize;
