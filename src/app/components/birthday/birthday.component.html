@@ -20,17 +20,15 @@
         </div>
 
         <div class="actions">
-            <ss-datepicker-input
-                [formControl]="dateBirthCtrl"
-                [placeholder]="dateBirthCtrl.value"
-                size="small"
-            ></ss-datepicker-input>
+            <div class="calendar">
+                <ss-date-time-picker [formControl]="dateBirthCtrl" [showTime]="false"></ss-date-time-picker>
+            </div>
 
             <div class="tabs">
-                @if (!loading$()) {
+                @if (!loading()) {
                     <ss-tabs
-                        [tabs]="birthDays$() | mapper : toTabsItemsFormat : shortYear"
-                        [selectedTab]="selectedTabName$() | mapper : toITabFormat : shortYear"
+                        [tabs]="birthDays() | mapper : toTabsItemsFormat : shortYear"
+                        [selectedTab]="selectedTabName() | mapper : toITabFormat : shortYear"
                         [tabsBorder]="false"
                         (select)="selectTab($event)"
                     />
@@ -41,14 +39,14 @@
         <ss-divider class="divider" />
 
         <div class="content">
-            @if (loading$()) {
+            @if (loading()) {
                 <div class="card-list__empty">
                     <ss-loader></ss-loader>
                 </div>
             } @else {
-                @if (selectedTabContent$().length) {
+                @if (selectedTabContent().length) {
                     <div class="card-list">
-                        @for (userData of selectedTabContent$(); track userData.id) {
+                        @for (userData of selectedTabContent(); track userData.id) {
                             <div class="card-list__item">
                                 <ss-card padding="16px">
                                     <app-user-card [user]="userData" [size]="'large'"></app-user-card>
