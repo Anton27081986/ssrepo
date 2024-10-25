@@ -2,65 +2,75 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 .thanks-partner {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	padding: 16px 0;
-	min-height: 700px;
-	position: relative;
-	//min-width: 727px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px 0;
+    min-height: 700px;
+    position: relative;
 
-	&__header {
-		display: flex;
-		flex-direction: column;
-		padding: 0 16px;
-		gap: 16px;
-	}
+    &__header {
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px;
+        gap: 16px;
+    }
 
-	&__header-info {
-		display: flex;
-		flex-direction: column;
-		gap: 8px;
-	}
+    &__header-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
 
-	&__header-actions {
-		display: flex;
-		justify-content: space-between;
-	}
+    &__header-actions {
+        display: flex;
+        justify-content: space-between;
 
-	&__grid-body {
-		display: grid;
-		flex-wrap: wrap;
-		padding: 0 0 0 16px;
-		grid-template-columns: repeat(2, 50%);
-		grid-row-gap: 16px;
-		justify-content: center;
-	}
+        &_calendar {
+            width: 145px;
+        }
+    }
 
-	&__card-item {
-		padding: 0 16px 0 0 ;
-	}
+    &__grid-body {
+        display: grid;
+        flex-wrap: wrap;
+        padding: 0 0 0 16px;
+        grid-template-columns: repeat(2, 50%);
+        grid-row-gap: 16px;
+        justify-content: center;
+    }
 
-	&__info {
-		display: flex;
-		gap: 16px;
-		flex-wrap: nowrap;
-		padding: 0 16px;
-	}
+    &__card-item {
+        padding: 0 16px 0 0;
+    }
 
-	&__no-content {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+    &__loading {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 540px;
+    }
 
-	ss-datepicker-input {
-		width: 202px;
-	}
+    &__info {
+        display: flex;
+        gap: 16px;
+        flex-wrap: nowrap;
+        padding: 0 16px;
+    }
 
+    &__no-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    ss-datepicker-input {
+        width: 202px;
+    }
 
 }
 
-.app-thanks-partner-card  {
-	width: 100%;
+.app-thanks-partner-card {
+    width: 100%;
 }
