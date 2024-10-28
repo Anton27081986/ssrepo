@@ -7,7 +7,7 @@
 
 .accordion {
 	width: 100%;
-	border: 1px solid #ccc;
+	border: 1px solid $island-outline;
 	border-radius: 16px;
 	margin-bottom: 10px;
 	background: $island;
@@ -45,9 +45,16 @@
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.4s ease-out;
-	border-top: 1px solid #ccc;
 }
 
 .accordion-content.open {
 	max-height: 500px;
+}
+
+:host-context(.dark) .accordion {
+	background-color: $dark-island!important;
+
+	::ng-deep svg {
+		stroke: $dark-text;
+	}
 }

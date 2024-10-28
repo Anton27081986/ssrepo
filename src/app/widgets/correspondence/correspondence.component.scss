@@ -5,6 +5,8 @@
 	width: 100%;
 	overflow-y: auto;
 	max-width: 1426px;
+	border: 1px solid $island-outline;
+	border-radius: 16px;
 }
 
 .correspondence {
@@ -14,6 +16,7 @@
 	height: inherit;
 	width: inherit;
 	overflow-y: hidden;
+	position: relative;
 
 	.separator {
 		background-color: $island-outline;

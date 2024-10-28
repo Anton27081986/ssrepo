@@ -1,4 +1,5 @@
 <div class="managers">
+	<ss-loader *ngIf="isLoading$ | async"></ss-loader>
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Менеджеры</ss-headline>
 		<ng-container>
@@ -8,7 +9,7 @@
 			</ss-icon>
 		</ng-container>
 		<ng-template #closeButton>
-			<ss-icon name="iconCloseLight"
+			<ss-icon name="close"
 					 *ngIf="canAddManagers"
 					 (click)="onEditing(false)">
 			</ss-icon>
@@ -19,7 +20,7 @@
 	</div>
 
 	<div *ngIf="!isEditing; else changeMain" class="manager">
-		<ss-avatar [src]="basicManager?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+		<ss-avatar [size]="'large'" [type]="'rectangle'" [src]="basicManager?.avatarUrl!"></ss-avatar>
 
 		<div class="manager-info">
 			<div class="manager-name">
@@ -56,7 +57,7 @@
 					<ss-text size="2" weight="semi-bold">Выберите менеджера</ss-text>
 				</option>
 				<ng-container *ngFor="let item of changedData.managersList">
-					<option *ngIf="item?.status !== 'delete'" [selected]="item?.manager?.id === basicManager?.id" [value]="item?.manager?.id">
+					<option *ngIf="item?.status !== operationStatuses.Delete" [selected]="item?.manager?.id === basicManager?.id" [value]="item?.manager?.id">
 						<ss-text size="2" weight="semi-bold">{{ item?.manager?.lastName }} {{ item?.manager?.firstName }} {{ item?.manager?.surName }} - </ss-text>
 						<ss-caption size="2">{{ item?.manager?.position }}</ss-caption>
 					</option>
@@ -78,7 +79,7 @@
 	</div>
 	<div class="search-by-manager" *ngIf="isEditing && canAddManagers">
 		<ss-search-input class="search"
-		                 searchType="technologist"
+		                 searchType="user-dictionary"
 		                 placeholder="Введите ФИО"
 						 size="small"
 		                 [clear]="true"
@@ -88,7 +89,7 @@
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<ng-container *ngFor="let manager of (managers$ | async)">
 			<div class="managers-list-item" *ngIf="!manager.isDismissed && !manager.isBase">
-				<ss-avatar size="xs" [src]="manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
+				<ss-avatar [src]="manager?.avatarUrl || ''"></ss-avatar>
 				<div class="managers-list-item-info">
 					<ss-text size="3" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
 					<ss-caption size="2">{{ manager?.position }}</ss-caption>
@@ -99,14 +100,14 @@
 	<ng-template #changeList>
 		<div class="managers-list" [ngClass]="isEditing ? 'edit' : ''">
 			<ng-container *ngFor="let manager of changedData.managersList">
-				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === 'delete'}">
-					<ss-avatar size="xs" [src]="manager?.manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
+				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === operationStatuses.Delete}">
+					<ss-avatar [src]="manager?.manager?.avatarUrl || ''"></ss-avatar>
 					<div class="managers-list-item-info">
 						<ss-text size="3" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
 						<ss-caption size="2">{{ manager.manager.position }}</ss-caption>
 					</div>
 					<ss-icon name="delete"
-					         (click)="manager.status = 'delete'"
+					         (click)="manager.status = operationStatuses.Delete"
 					         *ngIf="canRemoveManagers">
 					</ss-icon>
 				</div>

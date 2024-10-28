@@ -11,6 +11,7 @@
  */
 
 export interface IPrice {
+	tovId: number;
 	price: number;
 	name: string;
 }
@@ -26,39 +27,40 @@ export interface IFilesProposals {
 	name: string;
 	url: string;
 	checked: boolean;
+	uniqId: string;
 }
 
-export interface IClientPropNewProducts {
+export interface IClientOffersDto {
+	productionId: number;
+	productionName: string;
+	tovGroupId: number;
+	tovGroupName: string;
+	tovSubGroupId: number;
+	tovSubGroupName: string;
 	tovProductionId: number;
 	newProductName: string;
 	saleClientsCount: number;
 	salesWeight: number;
 	rating: number;
+	newProductUrl: string;
+	tovGroupUrl: string;
+	productionUrl: string;
+	productionGroupUrl: string;
 	prices: IPrice[];
 	advantages: IAdvantage[];
 	promotionalMaterials: IFilesProposals[];
 	documents: IFilesProposals[];
 }
 
-export interface IClientPropProductionGroups {
-	productionGroupId: number;
-	productionGroupName: string;
-	clientPropNewProducts: IClientPropNewProducts[];
-}
-
-export interface IClientPropTovGroups {
-	tovGroupId: number;
-	tovGroupName: string;
-	clientPropProductionGroups: IClientPropProductionGroups[];
-}
-
-export interface IClientOffersDto {
-	productionId: number;
-	productionName: string;
-	clientPropTovGroups: IClientPropTovGroups[];
-}
-
 export interface IRequestGetClientOffer {
 	clientId: number;
 	productionIds: number[];
+	TovGroups: number[];
+	TprFlags: number[];
+	TovSubGroups: number[];
+}
+
+export enum ClientProposalsTypeDocuments {
+	rim = 0,
+	documents,
 }

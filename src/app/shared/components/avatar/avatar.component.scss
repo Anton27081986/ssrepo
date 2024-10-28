@@ -1,7 +1,14 @@
 @use 'src/styles/colors.scss' as *;
 
+:host {
+	display: flex;
+	align-items: center;
+}
+
 .avatar {
-	border: 1px solid $island-outline;
 	border-radius: 8px;
 	overflow: hidden;
+	display: flex;
+	cursor: pointer;
+	border: 1px solid $island-outline;
 }

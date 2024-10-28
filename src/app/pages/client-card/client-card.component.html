@@ -1,6 +1,6 @@
 <div class="header">
 	<div class="header-title">
-		<ss-icon name="arrow" [routerLink]="['/clients-list']"></ss-icon>
+		<ss-icon name="arrow" (click)="toClientsList()"></ss-icon>
 		<ss-headline size="h3" weight="semi-bold">{{ (client$ | async)?.name }}</ss-headline>
 		<ss-tag *ngIf="(client$ | async)?.isDeleted" type="error">Удалён</ss-tag>
 		<ss-tag *ngIf="(client$ | async)?.isArchived" type="warning">Архив</ss-tag>
@@ -16,7 +16,7 @@
 <div class="footer">
 	<div class="contractors">
 		<ss-client-card-contractors></ss-client-card-contractors>
-		<ss-history *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-history>
+		<ss-history [objectId]="(client$ | async)?.id!"></ss-history>
 	</div>
-	<ss-correspondence *ngIf="(client$ | async)?.id" [objectId]="(client$ | async)?.id!"></ss-correspondence>
+	<ss-correspondence [objectId]="(client$ | async)?.id!"></ss-correspondence>
 </div>

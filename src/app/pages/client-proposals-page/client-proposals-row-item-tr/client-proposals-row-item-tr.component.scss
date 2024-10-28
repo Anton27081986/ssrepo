@@ -2,8 +2,15 @@
 @use 'src/assets/scss/_variables.scss' as *;
 @use 'src/styles/colors.scss' as *;
 
+:host:hover {
+	color: #212529;
+	background-color: rgba(0, 0, 0, .075);
+}
+
 .hc-table-td {
 	border: 1px solid $border-table;
+	position: relative;
+
 
 	&__canvas {
 		display: flex;
@@ -11,34 +18,44 @@
 		flex-direction: column;
 	}
 
-	&__nesting {
-		border-bottom: 1px solid $border-table;
-		width: 100%;
-
-		&:last-child {
-			border: none;
-		}
+	&__td {
+		max-height: 218px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		position: relative;
 	}
+
+	 &__td.limit {
+		 max-height: 42px;
+	 }
+
+	&__maximise {
+		position: absolute;
+		bottom: 4px;
+		right: 4px;
+		cursor: pointer;
+	}
+
 
 	&__content {
 		display: flex;
-		padding: 8px 12px;
 		align-items: center;
-		font-size: 10px;
-		font-weight: 400;
-		line-height: 11px;
-	}
-
-	&__content-nesting {
 		padding: 8px 12px;
 		font-size: 10px;
 		font-weight: 400;
 		line-height: 11px;
+		word-wrap: break-word;
+		overflow: hidden;
+		text-overflow: ellipsis;
+
+		&--number {
+			display: flex;
+			justify-content: end;
+		}
 	}
 
-	&__file-form {
-		display: flex;
-		flex-direction: row;
-		gap: 5px;
+	&__open-doc {
+		color: #335DF2;
+		cursor: pointer;
 	}
 }

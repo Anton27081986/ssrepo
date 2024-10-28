@@ -1,4 +1,4 @@
-import { Component, Input, Optional, Self } from '@angular/core';
+import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
@@ -7,15 +7,16 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 	styleUrls: ['./input.component.scss'],
 })
 export class InputComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' = 'medium';
+	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = '';
 	@Input() public type: 'text' | 'email' | 'number' = 'text';
 	@Input() public error: string | undefined;
 	@Input() public maxlength: string = '256';
-
 	@Input() public value: any = '';
+
+	@Output() clear: EventEmitter<any> = new EventEmitter();
 
 	public constructor(
 		// Retrieve the dependency only from the local injector,
@@ -36,6 +37,7 @@ export class InputComponent implements ControlValueAccessor {
 	 */
 	public writeValue(value: any): void {
 		this.value = value;
+		this.onChange(value);
 	}
 
 	/**
@@ -62,6 +64,10 @@ export class InputComponent implements ControlValueAccessor {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	protected onChange(value: string) {}
+	protected onChange(value: string) {
+		if (!value) {
+			this.clear.emit();
+		}
+	}
 	protected onTouched() {}
 }

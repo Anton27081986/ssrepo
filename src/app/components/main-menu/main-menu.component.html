@@ -1,29 +1,23 @@
-<ul nz-menu nzMode="horizontal" class="menu">
-   <li *ngFor="let item of menu" nz-submenu nzTitle="{{ item.name }}" [nzMenuClassName]="'menu-item-custom'" [nzOpen]="false">
-      <ul>
-        <ng-container *ngFor="let subcategory of item.items; index as i">
-          <li nz-menu-group [nzTitle]="titleTpl" [class]="subcategory.link ? 'url': 'no-url'">
-            <ul>
-              <li *ngFor="let subitem of subcategory.items" nz-menu-item [ngClass]="subitem.name.length > 50 ? 'long-text': ''">
-                <a href="{{ subitem.link }}" target="_blank">{{ subitem.name }}</a>
-              </li>
-            </ul>
-          </li>
+<div class="main-menu" *ngIf="menu">
+	<ng-container *ngFor="let item of menu">
+		<ng-container *ngIf="item.link">
+			<a href="{{ item.link }}">
+				<ss-text class="main-menu__item" [size]="'3'"> {{ item.name }}</ss-text>
+			</a>
+		</ng-container>
+		<ng-container *ngIf="!item.link">
+			<div class="main-menu__item">
+				<ss-text (click)="toggleMenu(item)" [size]="'3'" [color]="'gray'"> {{ item.name }}
+				</ss-text>
+				<ng-container *ngIf="(item.toggle$ | async) && item.items?.length">
+					<ss-menu [menuItems]="item.items" [parent]="item"></ss-menu>
+				</ng-container>
+			</div>
+		</ng-container>
+	</ng-container>
+</div>
 
-          <ng-template #titleTpl>
-          <span>
-            <ng-container *ngIf="!subcategory.link">
-                {{ subcategory.name }}
-            </ng-container>
 
-            <ng-container *ngIf="subcategory.link">
-                <a href="{{ subcategory.link }}" target="_blank" class="without-url">{{ subcategory.name }}</a>
-            </ng-container>
-          </span>
-          </ng-template>
 
-        </ng-container>
-      </ul>
-    </li>
-</ul>
+
 

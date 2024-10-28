@@ -1,0 +1,67 @@
+@use '../../../../../styles/colors' as *;
+
+.client-proposals-table-vgp {
+	display: flex;
+	flex-direction: column;
+
+	&__loader {
+		animation: 1s linear 0s normal none infinite running rotation;
+		z-index: 9999999;
+		width: 15px;
+		height: 15px;
+	}
+
+	&__content {
+	    max-height: 80vh;
+		min-height: 450px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		position: relative;
+	}
+
+	&__no-content {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin: auto;
+		align-items: center;
+		height: 448px;
+		padding-top: 20px;
+		justify-content: center;
+
+		&--description {
+			color: #6D7885;
+		}
+	}
+
+	&__alter-search-content {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(812px, 1fr));
+		flex-direction: column;
+		flex-wrap: wrap;
+		overflow: auto;
+		grid-gap: 24px;
+	}
+
+	&__alter-search-item {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		height: 40px;
+		gap: 12px;
+		padding: 0 12px;
+		border: 1px solid $island-outline;
+		border-radius: 8px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #00000005;
+			span {
+				color: #416CFF;
+			}
+		}
+	}
+}

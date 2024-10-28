@@ -10,10 +10,13 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 	providedIn: 'root',
 })
 export class UserProfileStoreService implements OnDestroy {
-	private readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
+	public readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
 	public userProfile$ = this.userProfileSubject.asObservable();
 	private readonly userProfileKey: string = 'userProfile';
 	private readonly subscription: Subscription = new Subscription();
+
+	private readonly windowProfileSubject = new BehaviorSubject<boolean | null>(null);
+	public windowProfile$ = this.windowProfileSubject.asObservable();
 
 	public constructor(
 		private readonly apiService: UsersApiService,

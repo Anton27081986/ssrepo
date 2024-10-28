@@ -4,7 +4,7 @@
 		<ss-text class="placeholder" *ngIf="placeholder && !getSelectedOptions()?.length" size="2">{{ placeholder }}</ss-text>
 		<div class="chips" *ngFor="let option of getSelectedOptions()">
 			<ss-text size="3">{{ option.name }}</ss-text>
-			<ss-icon height="8" width="8" name="iconClose" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
+			<ss-icon height="8" width="8" name="close" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
 		</div>
 	</div>
 	<div class="options" *ngIf="isOptionsVisible" #optionsEl>

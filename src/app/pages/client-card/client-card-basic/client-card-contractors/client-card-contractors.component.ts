@@ -4,6 +4,7 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
+import {TableState} from "@app/shared/components/table/table-state";
 
 @UntilDestroy()
 @Component({
@@ -18,11 +19,14 @@ export class ClientCardContractorsComponent implements OnInit {
 
 	public tableItems: ITableItem[] = [];
 
+	public isLoading$: Observable<boolean>;
+
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly ref: ChangeDetectorRef,
 	) {
 		this.contractors$ = this.clientCardListFacade.contractors$;
+		this.isLoading$ = this.clientCardListFacade.isContractorsLoading$;
 	}
 
 	public ngOnInit() {
@@ -65,4 +69,6 @@ export class ClientCardContractorsComponent implements OnInit {
 	protected onActiveContractorChange(e: Event) {
 		this.getContractors(!(e.currentTarget! as HTMLInputElement).checked);
 	}
+
+	protected readonly TableState = TableState;
 }

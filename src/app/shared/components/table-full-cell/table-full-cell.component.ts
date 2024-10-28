@@ -5,6 +5,7 @@ import { Cell } from '@app/shared/components/table/table.component';
 
 interface DialogData {
 	cell: Cell;
+	title?: string;
 }
 
 @Component({
@@ -13,9 +14,8 @@ interface DialogData {
 	styleUrls: ['./table-full-cell.component.scss'],
 })
 export class TableFullCellComponent {
-	public cell:
-		| ({ text: string; url?: string } & Array<{ text: string; url?: string }> & string)
-		| undefined;
+	public cell: Cell | undefined;
+	public title: string | undefined;
 
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -23,6 +23,10 @@ export class TableFullCellComponent {
 	) {
 		if (!data.cell) {
 			return;
+		}
+
+		if (data.title) {
+			this.title = data.title;
 		}
 
 		this.cell = data.cell;

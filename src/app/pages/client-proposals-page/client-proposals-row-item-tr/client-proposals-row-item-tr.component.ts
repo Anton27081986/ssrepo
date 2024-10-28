@@ -1,32 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import {
-	IAdvantage,
+	ClientProposalsTypeDocuments,
 	IClientOffersDto,
-	IClientPropNewProducts,
-	IClientPropProductionGroups,
-	IClientPropTovGroups,
 	IFilesProposals,
-	IPrice,
 } from '@app/core/models/client-proposails/client-offers';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject } from 'rxjs';
+import { ModalService } from '@app/core/modal/modal.service';
+import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
+import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 
 export enum ClientProposalsRowItemField {
 	vgp = 'vgp',
 	tg = 'tg',
 	tpg = 'tpg',
 	tpr = 'tpr',
-	TPRrating = 'TPRrating',
 	countKA = 'countKA',
-	countSell = 'countSell',
 	price = 'price',
 	volumeOfSales = 'volumeOfSales',
 	ratingTpr = 'ratingTpr',
 	advantagesTpr = 'advantagesTpr',
-	analoguesOfCompetitors = 'analoguesOfCompetitors',
 	rim = 'rim',
 	documents = 'documents',
 }
@@ -37,18 +33,16 @@ export enum ClientProposalsRowItemField {
 	styleUrls: ['client-proposals-row-item-tr.component.scss'],
 	templateUrl: './client-proposals-row-item-tr.component.html',
 })
-export class ClientProposalsRowItemTrComponent implements OnInit {
+export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly ClientTprRowItemField = ClientProposalsRowItemField;
 	@Input({ required: true }) item: IClientOffersDto | undefined;
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
-	protected clientPropTovGroups: IClientPropTovGroups[] = [];
-	protected clientPropProductionGroup: IClientPropProductionGroups[] = [];
-	protected clientPropNewProducts: IClientPropNewProducts[] = [];
-	protected saleClientsCount: number[] = [];
-	protected salesWeight: number[] = [];
-	protected ratings: number[] = [];
-	protected prices: IPrice[] = [];
-	protected advantagesTpr: IAdvantage[] = [];
+
+	protected advantagesTpr: string[] = [];
+
+	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	@ViewChild('content') public content!: ElementRef;
 	protected rims$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<IFilesProposals[]>(
 		[],
 	);
@@ -60,105 +54,68 @@ export class ClientProposalsRowItemTrComponent implements OnInit {
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		public readonly checkListService: CheckFileListStateService,
-	) {
-		this.checkListService.checkFiles$.subscribe(checkFiles => {
-			const rims = this.rims$.value;
-			const documents = this.documents$.value;
-
-			if (checkFiles.length) {
-				for (let i = 0; i < checkFiles.length; i++) {
-					this.rims$.next(
-						rims.map(rim => {
-							if (checkFiles[i].id === rim.id) {
-								rim.checked = true;
-							} else {
-								rim.checked = false;
-							}
-
-							return rim;
-						}),
-					);
-
-					this.documents$.next(
-						documents.map(document => {
-							if (checkFiles[i].id === document.id) {
-								document.checked = true;
-							} else {
-								document.checked = false;
-							}
-
-							return document;
-						}),
-					);
-				}
-			} else {
-				this.rims$.next(
-					rims.map(rim => {
-						rim.checked = false;
-
-						return rim;
-					}),
-				);
-
-				this.documents$.next(
-					documents.map(document => {
-						document.checked = false;
-
-						return document;
-					}),
-				);
-			}
-		});
-	}
+		private readonly modalService: ModalService,
+	) {}
 
 	ngOnInit() {
 		if (this.item) {
-			this.clientPropTovGroups = this.item.clientPropTovGroups;
+			if (this.item.promotionalMaterials) {
+				this.rims$.next(this.item.promotionalMaterials.filter(item => item !== null));
+			}
 
-			this.clientPropProductionGroup = this.clientPropTovGroups
-				.map(item => item.clientPropProductionGroups)
-				.flat();
+			if (this.item.documents) {
+				this.documents$.next(this.item.documents.filter(item => item !== null));
+			}
 
-			this.clientPropNewProducts = this.clientPropProductionGroup
-				.map(item => item.clientPropNewProducts)
-				.flat();
-
-			this.saleClientsCount = this.clientPropNewProducts.map(item => item.saleClientsCount);
-
-			this.salesWeight = this.clientPropNewProducts.map(item => item.salesWeight);
-
-			this.ratings = this.clientPropNewProducts.map(item => item.rating);
-
-			this.prices = this.clientPropNewProducts
-				.map(item => item.prices)
-				.filter(item => item !== null)
-				.flat();
-
-			this.advantagesTpr = this.clientPropNewProducts.map(item => item.advantages).flat();
-
-			this.rims$.next(
-				this.clientPropNewProducts
-					.map(item => item.promotionalMaterials)
-					.filter(item => item !== null)
-					.flat(),
-			);
-
-			this.documents$.next(
-				this.clientPropNewProducts
-					.map(item => item.documents)
-					.filter(item => item !== null)
-					.flat(),
-			);
+			if (this.item.advantages) {
+				this.advantagesTpr = this.item.advantages.map(item => {
+					return item.name;
+				});
+			}
 		}
+	}
+
+	ngAfterViewChecked() {
+		if (this.content) {
+			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		}
+	}
+
+	showText(text: string[], title?: string) {
+		this.modalService.open(TableFullCellComponent, {
+			data: {
+				cell: text.map(item => {
+					return { text: item };
+				}),
+				title,
+			},
+		});
 	}
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
 
-	onToggle() {
-		const filterDoc = this.documents$.value.filter(x => x.checked);
-		const filterRim = this.rims$.value.filter(x => x.checked);
+	openPopoverRimsView() {
+		const rims = this.rims$.value;
 
-		this.checkListService.changeArrFile([...filterDoc, ...filterRim]);
+		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
+			data: {
+				files: rims,
+				checkListService: this.checkListService,
+				clientProposalsTypeDocuments: ClientProposalsTypeDocuments.rim,
+			},
+		});
+	}
+
+	openPopoverDocumentView() {
+		const documents = this.documents$.value;
+
+		this.modalService.open(ClientProposalsViewFilesPopoverComponent, {
+			data: {
+				files: documents,
+				checkListService: this.checkListService,
+				clientProposalsTypeDocuments: ClientProposalsTypeDocuments.documents,
+			},
+		});
 	}
 }

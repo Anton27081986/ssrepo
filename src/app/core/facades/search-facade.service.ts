@@ -1,20 +1,22 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
 import { ClientApiService } from '@app/core/api/client-api.service';
-import { map } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { map, Observable } from 'rxjs';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { ProductionsApiService } from '@app/core/api/productions-api.service';
+import { environment } from '@environments/environment.development';
+import { HttpParams } from '@angular/common/http';
+import { MenuApiService } from '@app/core/api/menu-api.service';
+import { WinsApiService } from '@app/core/api/wins-api.service';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class SearchFacadeService {
-	public contractorUrl = `${environment.apiUrl}/api/company/dictionary/contractors`;
-	private clientId: number | undefined;
+	private clientId: number | null | undefined;
 
 	public constructor(
 		private readonly clientApiService: ClientApiService,
@@ -22,11 +24,11 @@ export class SearchFacadeService {
 		private readonly dictionaryApiService: DictionaryApiService,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		public readonly productionsApiService: ProductionsApiService,
+		public readonly winsApiService: WinsApiService,
+		public readonly menuApiService: MenuApiService,
 	) {
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
-			}
+		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
+			this.clientId = clientId;
 		});
 	}
 
@@ -42,8 +44,8 @@ export class SearchFacadeService {
 		return this.clientApiService.getSubSectors(query);
 	}
 
-	public getClients(query: string) {
-		return this.clientApiService.getClientsDictionary(query);
+	public getClients(query: string, onlyActive: boolean = false) {
+		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
 	public getProductions(query: string) {
@@ -66,5 +68,22 @@ export class SearchFacadeService {
 
 	public getClientIdDictionary(id: number) {
 		return this.clientApiService.getClientIdDictionary(id);
+	}
+
+	public getContracts(query?: string) {
+		return this.dictionaryApiService.getContracts(query);
+	}
+
+	public globalSearch(query: string) {
+		return this.menuApiService.globalSearch(query);
+	}
+
+	public getProductSearch(query: string) {
+		return this.winsApiService.getProductSearch(query);
+	}
+
+	public getDictionaryUsers(query?: string) {
+		return this.dictionaryApiService
+			.getDictionaryUsers(this.clientId!, query);
 	}
 }

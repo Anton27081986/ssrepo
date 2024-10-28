@@ -30,6 +30,10 @@ export class ContractsApiService {
 			params = params.set('offset', filter.offset);
 		}
 
+		if (filter.WithArchive !== null && filter.WithArchive !== undefined) {
+			params = params.set('WithArchive', filter.WithArchive);
+		}
+
 		return this.http.get<IContractsItemDto>(`${environment.apiUrl}/api/company/contracts`, {
 			params,
 		});

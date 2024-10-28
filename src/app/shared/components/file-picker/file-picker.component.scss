@@ -12,7 +12,10 @@
 	border-radius: 8px;
 
 	&__icon {
-		height: 0;
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 6px;
 
 		.count {
 			height: 24px;
@@ -23,13 +26,7 @@
 			color: $island;
 			font-size: 13px;
 			font-weight: 600;
-			margin-right: 6px;
 		}
-	}
-
-	&__icon-basket {
-		flex: 0 0 100%;
-		margin-right: 6px;
 	}
 }
 
@@ -42,15 +39,8 @@
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
-
-	&__icon-toggle {
-		cursor: pointer;
-		transform: rotate(180deg);
-
-		&--expanded {
-			transform: rotate(0deg);
-		}
-	}
+	align-items: center;
+	gap: 170px;
 }
 
 .ss-file-picker-header h3 {
@@ -84,10 +74,16 @@
 
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 	}
 }
 
 .ss-file-picker__content.open {
 	display: block;
 	max-height: 500px;
+}
+
+:host-context(.dark) .ss-file-picker__content {
+	background-color: $dark-island !important;
+	color: $island;
 }

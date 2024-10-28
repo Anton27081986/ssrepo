@@ -27,7 +27,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { SettingsViewColumnComponent } from '@app/pages/client-proposals-page/settings-view-column/settings-view-column.component';
 import { ClientProposalsFilterComponent } from '@app/pages/client-proposals-page/client-proposals-filter/client-proposals-filter.component';
 import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-send-cloud-popover/client-proposals-send-cloud-popover.component';
-import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-page/client-proposals-table-vgp/client-proposals-table-vgp.component';
+import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-page/client-proposals/client-proposals-table-vgp/client-proposals-table-vgp.component';
 import { ScrollableBlockModule } from '@app/shared/components/scrollable-block/scrollable-block.module';
 import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
@@ -41,6 +41,22 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
+import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
+import { PipesModule } from '@app/core/pipes/pipes.module';
+import { SsMenuModule } from '@app/shared/components/ss-menu/ss-menu.module';
+import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
+import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
+import { AtWorkRowItemTrComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component';
+import { MultiselectV2Module } from '@app/shared/components/multiselect-v2/multiselect-v2.module';
+import { SelectModule } from '@app/shared/components/select/select.module';
+import { NotificationToastModule } from '@app/widgets/notification-toast/notification-toast.module';
+import { NoticeModule } from '@app/components/notice/notice.module';
+import { MultiselectAutocompleteV2Module } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.module';
+import { FiltersModule } from '@app/shared/components/filters/filters.module';
+import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-range.module';
+
+import { ClientProposalsCardComponent } from '@app/pages/client-proposals-page/client-proposals/client-proposals-card/client-proposals-card.component';
+import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
 
 @NgModule({
 	declarations: [
@@ -60,6 +76,10 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 		ClientProposalsDoneProductionComponent,
 		ClientProposalsTabsCanvasComponent,
 		ClientProposalsRowItemTrComponent,
+		ClientProposalsViewFilesPopoverComponent,
+		AtWorkModalComponent,
+		AtWorkRowItemTrComponent,
+		ClientProposalsCardComponent,
 	],
 	imports: [
 		CommonModule,
@@ -91,6 +111,18 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 		ClipboardModule,
 		LoaderModule,
 		InputModule,
+		PipesModule,
+		SsMenuModule,
+		SsDividerModule,
+		MultiselectV2Module,
+		SelectModule,
+		FiltersModule,
+		DateRangeModule,
+		NotificationToastModule,
+		NoticeModule,
+		MultiselectAutocompleteV2Module,
+		DateRangeModule,
+		TooltipMenuModule,
 	],
 })
 export class ClientProposalsModule {}

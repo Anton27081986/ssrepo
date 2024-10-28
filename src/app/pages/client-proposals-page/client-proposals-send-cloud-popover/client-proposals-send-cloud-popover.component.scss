@@ -41,7 +41,7 @@
 		padding: 0 16px;
 		width: 397px;
 
-		ss-search-input {
+		ss-input {
 			width: 100%;
 		}
 	}
@@ -49,4 +49,13 @@
 	&__close {
 		cursor: pointer;
 	}
+
+	&__icon-copy {
+		cursor: pointer;
+	}
+}
+
+:host-context(.dark) .client-proposals-send-cloud-popover {
+	background-color: $dark-island !important;
+	color: $island;
 }

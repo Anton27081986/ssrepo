@@ -1,45 +1,40 @@
 @import "src/styles/colors";
 
 :host {
-	width: 100vw;
-	height: 100vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: center no-repeat url("../../../../assets/images/background/login.svg");
-}
-
-.login {
 	display: flex;
 	flex-direction: column;
-	width: 372px;
-	height: 446px;
-	padding: 40px 36px;
-	gap: 32px;
-	box-shadow: 4px 4px 10px #00000014;
-
-	.login-header {
-		display: flex;
-		flex-direction: column;
-		gap: 16px;
-		align-items: center;
-
-		.logo-icon {
-			color: $main;
-		}
-	}
-
-	.login-form {
-		display: flex;
-		flex-grow: 1;
-		flex-direction: column;
-		justify-content: space-between;
-
-		.login-form-inputs {
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-		}
-	}
-
+	gap: 16px;
+	height: 100%;
+	flex-grow: 1;
 }
+
+.login-header {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	align-items: center;
+}
+
+.login-form {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	justify-content: space-between;
+
+	.login-form-inputs {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		::ng-deep ss-text {
+			padding-top: 12px;
+			color: $lite-text;
+			text-align: center;
+		}
+
+		ss-link {
+			align-self: center;
+		}
+	}
+}
+

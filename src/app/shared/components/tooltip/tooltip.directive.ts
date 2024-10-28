@@ -9,6 +9,7 @@ import {
 	Injector,
 	Input,
 	OnDestroy,
+	TemplateRef,
 } from '@angular/core';
 import { TooltipComponent } from './tooltip.component';
 import { TooltipPosition, TooltipTheme } from './tooltip.enums';
@@ -17,11 +18,12 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 	selector: '[tooltip]',
 })
 export class TooltipDirective implements OnDestroy {
-	@Input() public tooltip = '';
+	@Input() public tooltip: string | null = null;
 	@Input() public position: TooltipPosition = TooltipPosition.DEFAULT;
 	@Input() public theme: TooltipTheme = TooltipTheme.DEFAULT;
 	@Input() public showDelay = 30;
 	@Input() public hideDelay = 30;
+	@Input() public elemRef: TemplateRef<any> | null = null;
 
 	private componentRef: ComponentRef<any> | null = null;
 	private showTimeout?: number;
@@ -51,6 +53,7 @@ export class TooltipDirective implements OnDestroy {
 			this.componentRef.instance.left = $event.clientX;
 			this.componentRef.instance.top = $event.clientY;
 			this.componentRef.instance.tooltip = this.tooltip;
+			this.componentRef.instance.elemRef = this.elemRef;
 		}
 	}
 
@@ -91,6 +94,7 @@ export class TooltipDirective implements OnDestroy {
 			this.componentRef.instance.tooltip = this.tooltip;
 			this.componentRef.instance.position = this.position;
 			this.componentRef.instance.theme = this.theme;
+			this.componentRef.instance.elemRef = this.elemRef;
 
 			const { left, right, top, bottom } =
 				this.elementRef.nativeElement.getBoundingClientRect();

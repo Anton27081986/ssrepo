@@ -14,6 +14,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TableFullCellModule } from '@app/shared/components/table-full-cell/table-full-cell.module';
+import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import {PipesModule} from "@app/core/pipes/pipes.module";
 
 @NgModule({
 	declarations: [TableComponent],
@@ -31,6 +34,10 @@ import { TableFullCellModule } from '@app/shared/components/table-full-cell/tabl
 		IconModule,
 		TableFullCellModule,
 		NgStyle,
+		HeadlineModule,
+
+		TooltipModule,
+		PipesModule,
 	],
 })
 export class TableModule {}

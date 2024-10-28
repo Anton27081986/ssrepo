@@ -10,4 +10,5 @@ export class ClientProposalsTabsCanvasComponent {
 	@Input() headerTemplateRef: TemplateRef<any> | null = null;
 	@Input() bodyTemplateRef: TemplateRef<any> | null = null;
 	@Input() footerTemplateRef: TemplateRef<any> | null = null;
+	@Input() isLoader: boolean = false;
 }

@@ -1,0 +1,25 @@
+<div [tooltip]="null" [elemRef]="count ? toolTipRef: null" [theme]="TooltipTheme.DEFAULT"
+	 [position]="TooltipPosition.DEFAULT" class="like">
+	<ng-container [ngSwitch]="type">
+		<ng-container *ngSwitchCase="LikeStateEnum.copper">
+			<ss-icon width="15" height="15" name="likeCopper"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.gold">
+			<ss-icon width="15" height="15" name="likeGold"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.silver">
+			<ss-icon width="15" height="15" name="likeSilver"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchCase="LikeStateEnum.usual">
+			<ss-icon width="15" height="15" name="likeUsual"></ss-icon>
+		</ng-container>
+		<ng-container *ngSwitchDefault>
+			<ss-icon width="15" height="15" name="like"></ss-icon>
+		</ng-container>
+	</ng-container>
+	<ss-text [size]="'3'">{{ count }}</ss-text>
+</div>
+
+<ng-template #toolTipRef>
+	<app-user-list-more [count]="count" [users]="likedUsers!"></app-user-list-more>
+</ng-template>

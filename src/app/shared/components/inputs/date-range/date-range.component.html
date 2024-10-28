@@ -1,16 +1,40 @@
 <ss-caption size="1">{{ label }}</ss-caption>
-<div class="calendar-button" (click)="picker.open()">
-	<div class="calendar-button-text">
-		<ss-text size="2">{{startDate}}</ss-text>
-		<div *ngIf="endDate" class="calendar-button-text-separator"></div>
-		<ss-text size="2">{{endDate}}</ss-text>
-	</div>
-	<ss-icon height="16" name="calendar"></ss-icon>
+<div class="calendar-button-wrapper">
+    <div class="calendar-button" [ngClass]="{'error': error}" (click)="picker.open()">
+        <div
+            *ngIf="formRange.controls.startDate.value || formRange.controls.endDate.value; else noDates"
+            class="calendar-button-text"
+        >
+            <ss-text size="2">{{ formRange.controls.startDate.value | date : 'dd.MM.yyyy' }}</ss-text>
+
+            <div *ngIf="formRange.controls.endDate.value" class="calendar-button-text-separator"></div>
+
+            <ss-text size="2">{{ formRange.controls.endDate.value  | date : 'dd.MM.yyyy' }}</ss-text>
+        </div>
+
+        <ng-template #noDates>
+            <div class="calendar-button-text">{{ placeholder }}</div>
+        </ng-template>
+
+        <ss-icon height="16" name="calendar"></ss-icon>
+    </div>
+
+    <ss-icon
+        height="16"
+        width="16"
+        name="close"
+        class="calendar-button-wrapper__icon"
+        (click)="clear()"
+    ></ss-icon>
 </div>
 <mat-form-field class="date-range">
-	<mat-date-range-input [rangePicker]="picker">
-		<input matStartDate #start>
-		<input matEndDate #end (dateChange)="dateChanged(start.value, end.value)">
-	</mat-date-range-input>
-	<mat-date-range-picker #picker></mat-date-range-picker>
+    <mat-date-range-input [rangePicker]="picker" [formGroup]="formRange">
+        <input matStartDate formControlName="startDate" />
+
+        <input matEndDate formControlName="endDate" (dateChange)="dateChanged()" />
+    </mat-date-range-input>
+
+    <mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
+
+<ss-caption size="2" color="error">{{ error }}</ss-caption>

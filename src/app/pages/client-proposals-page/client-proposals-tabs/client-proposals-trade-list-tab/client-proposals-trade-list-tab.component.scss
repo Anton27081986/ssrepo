@@ -13,10 +13,23 @@
 	&__content {
 		flex-grow: 1;
 	}
+
+	&__filters {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+	}
 }
 
 .pagination {
 	justify-content: flex-end;
 	margin: 0;
+}
+
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-grow: 1;
 }
 

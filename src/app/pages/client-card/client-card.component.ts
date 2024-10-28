@@ -120,4 +120,9 @@ export class ClientCardComponent implements OnInit {
 	public selectTab(page: string) {
 		this.router.navigate([`/client-card/${this.clientId}/${page}`]);
 	}
+
+	public toClientsList() {
+		this.clientCardListFacade.setClientId(null);
+		this.router.navigate([`/clients-list`]);
+	}
 }

@@ -4,6 +4,8 @@
 		</ss-headline>
 		<ss-search-client-input
 			[formControl]="searchControl"
+			[onlyActive]="true"
+			[disabled]="(blockForProposals$ | async)!"
 			class="header-content__search"
 			(select)="getSearchClient($event)"
 		></ss-search-client-input>
@@ -13,9 +15,9 @@
 		<ss-accordion [isExpanded]="true" [title]="'Информация о клиенте'">
 			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
 		</ss-accordion>
-<!--				<ss-card [padding]="'0'">-->
-<!--					<app-client-proposals-table-vgp [clientId]="this.clientId$ | async"></app-client-proposals-table-vgp>-->
-<!--				</ss-card>-->
+				<ss-card *ngIf="this.permissions().includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)" [padding]="'0'">
+					<app-client-proposals-card></app-client-proposals-card>
+				</ss-card>
 	</div>
 </div>
 
@@ -27,7 +29,7 @@
 			</ss-card>
 		</div>
 		<div class="content-accordion__tabs">
-			<ss-tabs [tabs]="tabs"
+			<ss-tabs [tabs]="tabs()"
 					 [size]="'medium'"
 					 (select)="selectTab($event)"
 					 [selectedTab]="selectedTab">

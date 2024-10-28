@@ -33,7 +33,7 @@ import {
 	Strikethrough,
 	Underline,
 	Undo,
-	type EditorConfig
+	type EditorConfig,
 } from 'ckeditor5';
 
 @UntilDestroy()
@@ -50,7 +50,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 	public toUsers: IUserDto[] = [];
 	protected toUsersCopy: IUserDto[] = [];
 
-	public subject$: Observable<string | null>;
+	public topic$: Observable<string | null>;
 
 	public repliedMessage$: Observable<{ message: IMessageItemDto; toUsers: IUserDto[] } | null>;
 
@@ -69,7 +69,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 		private readonly modalService: ModalService,
 	) {
-		this.subject$ = this.notificationsFacadeService.selectedSubject$;
+		this.topic$ = this.notificationsFacadeService.selectedTopic$;
 		this.repliedMessage$ = this.notificationsFacadeService.repliedMessage$;
 		this.messageFiles$ = this.notificationsFacadeService.messageFiles$;
 	}
@@ -81,7 +81,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			isPrivate: new FormControl<boolean>(false),
 		});
 
-		this.subject$.pipe(untilDestroyed(this)).subscribe(subject => {
+		this.topic$.pipe(untilDestroyed(this)).subscribe(subject => {
 			if (this.mailForm.controls.text.value && !this.modal) {
 				this.modal = this.modalService.open(DialogComponent, {
 					data: {
@@ -147,9 +147,9 @@ export class MailComponent implements OnInit, AfterViewInit {
 					'bulletedList',
 					'numberedList',
 					'indent',
-					'outdent'
+					'outdent',
 				],
-				shouldNotGroupWhenFull: true
+				shouldNotGroupWhenFull: true,
 			},
 			plugins: [
 				AccessibilityHelp,
@@ -173,14 +173,14 @@ export class MailComponent implements OnInit, AfterViewInit {
 				SelectAll,
 				Strikethrough,
 				Underline,
-				Undo
+				Undo,
 			],
 			fontFamily: {
-				supportAllValues: true
+				supportAllValues: true,
 			},
 			fontSize: {
 				options: [12, 14, 'default', 18, 20],
-				supportAllValues: true
+				supportAllValues: true,
 			},
 			link: {
 				addTargetToExternalLinks: true,
@@ -190,12 +190,12 @@ export class MailComponent implements OnInit, AfterViewInit {
 						mode: 'manual',
 						label: 'Downloadable',
 						attributes: {
-							download: 'file'
-						}
-					}
-				}
+							download: 'file',
+						},
+					},
+				},
 			},
-			placeholder: 'Введите текст сообщения'
+			placeholder: 'Введите текст сообщения',
 		};
 
 		this.isLayoutReady = true;

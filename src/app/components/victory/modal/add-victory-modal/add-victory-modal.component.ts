@@ -1,16 +1,17 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnInit,
-	ViewChild,
-} from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { map, Subject, tap, zip } from 'rxjs';
-import { NzSelectComponent } from 'ng-zorro-antd/select';
-import { WinsApiService } from '@app/core/api/wins-api.service';
-import { UsersApiService } from '@app/core/api/users-api.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ModalRef } from '@app/core/modal/modal.ref';
+import { FormBuilder, FormControl, FormGroup, MaxValidator, Validators } from '@angular/forms';
+import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import { IUserDto } from '@app/core/models/awards/user-dto';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { WinsApiService } from '@app/core/api/wins-api.service';
+import { VictoryEventEnum, VictoryRootService } from '@app/components/victory/victory-root.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { AddVictoryModalResultComponent } from '@app/components/victory/modal/add-victory-modal-result/add-victory-modal-result.component';
+import { ModalService } from '@app/core/modal/modal.service';
+import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -19,169 +20,105 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	styleUrls: ['./add-victory-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddVictoryModalComponent implements OnInit {
-	@ViewChild(NzSelectComponent, { static: true }) public selectNode!: NzSelectComponent;
+export class AddVictoryModalComponent {
+	protected formGroup: FormGroup<AddVictoryForm>;
 
-	private readonly modelChangedColleague: Subject<string> = new Subject<string>();
-	private readonly modelChangedTpr: Subject<string> = new Subject<string>();
+	public toUsers: IUserDto[] = [];
+	protected subscription: Subscription = new Subscription();
 
-	public textPlaceHolder = 'Выберите ваших коллег из списка или введите фамилию';
-	public isSended = true;
-	public addVictoryForm!: FormGroup;
-	public submitted = false;
-	public loading = false;
-	public isConfirmLoading = false;
-	public title!: string;
+	protected readonly victoryFiles = new BehaviorSubject<IAttachmentDto[] | null>(null);
 
-	public errorComment = false;
-
-	public partyWinSelectedTags: Array<{ name: string; id: number }> = [];
-	public tprSelectedTags: Array<{ name: string; id: number }> = [];
-	public userWinArray: string[] = [];
-	public tprWinArray: string[] = [];
-	public selectedUser!: string;
-	public selectedTpr!: string;
-
-	public listColleague: Array<{ name: string; id: string }> = [];
-	public listTPR: Array<{ name: string; id: string }> = [];
-
-	public constructor(
-		private readonly _apiService: WinsApiService,
-		private readonly usersApiService: UsersApiService,
-		private readonly formBuilder: FormBuilder,
-		private readonly cd: ChangeDetectorRef,
-	) {}
-
-	public ngOnInit() {
-		this.addVictoryForm = this.formBuilder.group({
-			comment: ['', [Validators.required, Validators.maxLength(3000)]],
+	constructor(
+		private readonly modalRef: ModalRef,
+		private readonly _formBuilder: FormBuilder,
+		private readonly filesApiService: FilesApiService,
+		private readonly apiService: WinsApiService,
+		private readonly victoryRootService: VictoryRootService,
+		private readonly modalService: ModalService,
+	) {
+		this.formGroup = this._formBuilder.group<AddVictoryForm>({
+			text: this._formBuilder.nonNullable.control('', Validators.required),
+			userIds: this._formBuilder.nonNullable.control([]),
+			productIds: this._formBuilder.nonNullable.control([]),
 		});
-
-		// Подписка на изменения input поиска коллег
-		zip(this.modelChangedColleague)
-			.pipe(
-				// debounceTime(300),
-				tap(value => {
-					if (value[0].length > 1) {
-						this.usersApiService
-							.getUsersByFIO(value[0])
-							.pipe(
-								map(({ items }) => items),
-								tap(data => {
-									this.listColleague = data;
-								}),
-								untilDestroyed(this),
-							)
-							.subscribe();
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
-
-		// Подписка на изменения input поиска tpr
-		zip(this.modelChangedTpr)
-			.pipe(
-				// debounceTime(300),
-				tap(value => {
-					if (value[0].length > 1) {
-						this._apiService
-							.searchProductByName(value[0])
-							.pipe(
-								map(({ items }) => items),
-								tap(data => {
-									this.listTPR = data;
-								}),
-								untilDestroyed(this),
-							)
-							.subscribe();
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
 	}
 
-	public get comment() {
-		return this.addVictoryForm.get('comment');
+	protected close() {
+		this.modalRef.close();
 	}
 
-	public handleOk($event: any): void {
-		$event.stopPropagation();
-		this.isSended = false;
+	public getProducts(products: IDictionaryItemDto[]) {
+		const productIds = products.map(prod => prod.id);
 
-		const comment = this.comment?.value;
-		const userList = this.partyWinSelectedTags.map(item => item.id);
-		const tprList = this.tprSelectedTags.map(item => item.id);
+		this.formGroup.controls.productIds.setValue(productIds);
+	}
 
-		this._apiService
-			.addWins(comment, userList, tprList)
-			.pipe(
-				tap(_ => {
-					this.partyWinSelectedTags = [];
-					this.tprSelectedTags = [];
-
-					this.isSended = false;
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe({
-				error: () => {
-					this.errorComment = true;
-				},
+	public deleteFile(id: string) {
+		this.filesApiService
+			.deleteFile(id)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				if (this.victoryFiles.value) {
+					this.victoryFiles.next(this.victoryFiles.value.filter(file => file.id !== id));
+				}
 			});
 	}
 
-	public searchUsers($event: any) {
-		this.modelChangedColleague.next($event);
+	protected uploadFile(event: Event) {
+		const element = event.currentTarget as HTMLInputElement;
+		const fileList: FileList | null = element.files;
+
+		if (!fileList) {
+			return;
+		}
+
+		Array.from(fileList).forEach(file => {
+			const reader = new FileReader();
+
+			reader.onload = () => {
+				this.filesApiService
+					.uploadFile(FileBucketsEnum.Attachments, file)
+					.pipe(filterTruthy())
+					.subscribe(file => {
+						this.victoryFiles.next(
+							this.victoryFiles.value ? [...this.victoryFiles.value, file] : [file],
+						);
+					});
+			};
+
+			reader.readAsDataURL(file);
+		});
 	}
 
-	public searchTpr($event: any) {
-		this.modelChangedTpr.next($event);
-	}
+	submit() {
+		const userIds = this.toUsers.map(user => user.id!);
 
-	// При выборе клика по пользователю
-	public onUserChange() {
-		this.userWinArray.push(this.selectedUser); // Выбранные пользователи
-		this.usersApiService
-			.getUserById(this.selectedUser)
-			.pipe(
-				tap(user => {
-					this.partyWinSelectedTags.push({
-						id: user.id,
-						name: user.name,
-					}); // добавление тега
-					this.cd.markForCheck();
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
+		if (userIds.length) {
+			this.formGroup.controls.userIds.setValue(userIds);
+		}
+		if (this.formGroup.valid) {
+			this.subscription.add(
+				this.apiService
+					.addWins(
+						this.formGroup.get('text')?.value!,
+						this.formGroup.get('userIds')?.value!,
+						this.formGroup.get('productIds')?.value!,
+						this.victoryFiles.value ? this.victoryFiles.value.map(item => item.id) : [],
+					)
+					.subscribe(() => {
+						this.modalRef.close();
+						this.victoryRootService.event$.next({
+							type: VictoryEventEnum.victoryCreated,
+						});
+						this.modalService.open(AddVictoryModalResultComponent);
+					}),
+			);
+		}
 	}
+}
 
-	public onTprChange() {
-		this.tprWinArray.push(this.selectedTpr);
-		this._apiService
-			.getProductById(Number(this.selectedTpr))
-			.pipe(
-				tap(user => {
-					this.tprSelectedTags.push({
-						id: user.id,
-						name: user.name,
-					}); // добавление тега
-
-					this.cd.markForCheck();
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
-	}
-
-	public deleteTagUser(i: number) {
-		this.partyWinSelectedTags.splice(i, 1);
-		this.cd.markForCheck();
-	}
-
-	public deleteTagTpr(i: number) {
-		this.tprSelectedTags.splice(i, 1);
-	}
+export interface AddVictoryForm {
+	text: FormControl<string>;
+	userIds: FormControl<number[]>;
+	productIds: FormControl<number[]>;
 }

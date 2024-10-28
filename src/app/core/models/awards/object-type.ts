@@ -13,9 +13,7 @@
 /**
  * Тип объекта  0 = Thanks  1 = Wins
  */
-export type IObjectType = 0 | 1;
-
-export const IObjectType = {
-	NUMBER_0: 0 as IObjectType,
-	NUMBER_1: 1 as IObjectType,
-};
+export enum IObjectType {
+	THANKS = 0,
+	WINS = 1,
+}

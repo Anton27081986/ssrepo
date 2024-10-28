@@ -780,6 +780,10 @@ $positions: static, relative, absolute, fixed, sticky;
     color: $text-muted !important;
 }
 
+.text-complementary {
+    color: $text-basic-complementary !important;
+}
+
 .text-link {
     &:hover {
         text-decoration: underline !important;

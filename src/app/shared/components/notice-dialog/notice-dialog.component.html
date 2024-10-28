@@ -1,0 +1,9 @@
+<div class="wrapper">
+	<ss-card class="notice-dialog" padding="32px 40px">
+		<ss-icon [name]="'notice' + type"></ss-icon>
+		<ss-headline size="h6" weight="semi-bold" *ngIf="header">{{ header }}</ss-headline>
+		<ss-text size="3" *ngIf="text">{{ text }}</ss-text>
+		<ss-button type="primary" size="medium" (click)="close()">Понятно</ss-button>
+	</ss-card>
+</div>
+

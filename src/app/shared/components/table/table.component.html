@@ -1,31 +1,37 @@
-<div class="pseudo-header" #pseudoHeadEl>
-	<div class="pseudo-header__item" [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">{{ headItem.title }}</div>
+<div class="header" [ngClass]="{'scroll': scroll}" *ngIf="head" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+	<div class="header__cell" [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">
+		<ng-container *ngIf="!headItem.tooltip; else tooltip">
+			<div>{{ headItem.title }}</div>
+		</ng-container>
+		<ng-template #tooltip>
+			<div [tooltip]="headItem.tooltip!" [theme]="TooltipTheme.MAIN">{{ headItem.title }}</div>
+		</ng-template>
+	</div>
 </div>
-<div class="table-wrapper">
-	<table>
-		<thead *ngIf="head">
-			<tr #headEl>
-				<th [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">{{ headItem.title }}</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let item of items">
-				<td [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head" [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth}" #cell>
-					<ng-container [ngSwitch]="true" #link>
-					<a *ngSwitchCase="!!item[headItem.field]?.url" href="{{ item[headItem.field].url }}" target="_blank">
-						{{ item[headItem.field].text }}
+<div class="body" #bodyEl>
+	<div class="body__row" *ngFor="let item of items" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+		<div class="body__cell"
+			 [ngStyle]="{ 'padding': padding }"
+			 *ngFor="let headItem of head"
+			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}"
+			 #cell>
+			<ng-container [ngSwitch]="true">
+				<span *ngSwitchCase="!!item[headItem.field]?.pseudoLink" class="icon" (click)="onControlClick(item, item[headItem.field].pseudoLink)">{{ item[headItem.field].text }}</span>
+				<ss-icon *ngSwitchCase="!!item[headItem.field]?.icon" [name]="item[headItem.field].icon"
+						 (click)="onControlClick(item, item[headItem.field].icon)"></ss-icon>
+				<a *ngSwitchCase="!!item[headItem.field]?.url"
+				   href="{{ item[headItem.field].url }}"
+				   [target]="item[headItem.field].url?.includes(environment.apiUrl || '') ? '_self' : '_blank'">
+					<span class="text-{{ size }}">{{ item[headItem.field].text }}</span>
+				</a>
+				<span *ngSwitchCase="Array.isArray(item[headItem.field])">
+					<a class="text-{{ size }}" *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
+						{{ link.text }}
 					</a>
-					<span *ngSwitchCase="Array.isArray(item[headItem.field])">
-						<a *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
-							{{ link.text }}
-						</a>
-					</span>
-					<span *ngSwitchDefault>{{ item[headItem.field] }}</span>
-					</ng-container>
-					<ss-icon class="maximise" name="maximise" *ngIf="cell.clientWidth < cell.scrollWidth" (click)="showText(item[headItem.field])"></ss-icon>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-	<div class="empty-space"></div>
+				</span>
+				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] | numWithSpaces }}</span>
+			</ng-container>
+			<ss-icon class="maximise" name="maximise" *ngIf="(cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
+		</div>
+	</div>
 </div>

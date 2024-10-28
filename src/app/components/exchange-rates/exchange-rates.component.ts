@@ -1,36 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { IExchangeRates } from '@app/core/models/exchange-rates';
 import { CurrencyApiService } from '@app/core/api/currency-api.service';
+import { ExchangeRatesImports } from '@app/components/exchange-rates/exchange-rates.imports';
+import { ExchangeRatesLinks } from '@app/components/exchange-rates/constants/exchange-rates-links';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-exchange-rates',
 	templateUrl: './exchange-rates.component.html',
 	styleUrls: ['./exchange-rates.component.scss'],
+	imports: [ExchangeRatesImports],
+	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExchangeRatesComponent implements OnInit {
-	protected exchangeRates: IExchangeRates | undefined;
+export class ExchangeRatesComponent {
+	private readonly apiService: CurrencyApiService = inject(CurrencyApiService);
+
 	protected requestTime: Date | undefined;
+	protected exchangeRates$: Observable<IExchangeRates> = this.apiService.getExchangeRates().pipe(
+		tap(() => {
+			this.requestTime = new Date();
+		}),
+	);
 
-	public constructor(private readonly apiService: CurrencyApiService) {}
+	protected readonly exchangeRatesLinks = ExchangeRatesLinks;
 
-	public ngOnInit() {
-		this.apiService
-			.getExchangeRates()
-			.pipe(untilDestroyed(this))
-			.subscribe(
-				exchangeRates => {
-					this.exchangeRates = exchangeRates;
-					this.requestTime = new Date();
-				},
-				(error: unknown) => {
-					console.error('Курсы валют не загружены', error);
-				},
-			);
-	}
-
-	public onRedirect(url: string) {
+	public onRedirect(url: string): void {
 		window.open(url, '_blank');
 	}
 }

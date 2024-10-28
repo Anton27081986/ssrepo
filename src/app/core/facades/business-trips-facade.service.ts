@@ -19,6 +19,7 @@ export class BusinessTripsFacadeService {
 	private readonly businessTrips = new BehaviorSubject<IResponse<IBusinessTripsDto>>({
 		items: [],
 		total: 0,
+		linkToModule: '',
 	});
 
 	public businessTrips$ = this.businessTrips.asObservable();

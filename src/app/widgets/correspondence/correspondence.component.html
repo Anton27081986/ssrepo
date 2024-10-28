@@ -1,5 +1,6 @@
 <ss-card-dropdown title="Обсуждение/переписка">
 	<div class="correspondence">
+		<ss-loader *ngIf="isLoading$ | async"></ss-loader>
 		<ss-topic></ss-topic>
 		<div class="separator"></div>
 		<div class="messages">

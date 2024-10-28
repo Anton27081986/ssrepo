@@ -1,7 +1,6 @@
 @import (multiple) '../../../node_modules/ng-zorro-antd/src/style/themes/dark';
 @import './base';
 @import 'dark/var';
-@import 'dark/components/card';
 @import 'dark/components/tabs';
 @import 'dark/components/select';
 @import 'dark/components/modal';
@@ -9,7 +8,6 @@
 @import 'dark/components/search-header';
 @import 'dark/components/rating';
 @import 'dark/components/address-book';
-@import 'dark/components/header';
 @import 'dark/components/pagination';
 @import 'dark/components/mobile-menu';
 
@@ -30,19 +28,6 @@ body {
     .open-all-table {
         .ant-input {
             background-color: #1b2123 !important;
-        }
-    }
-
-    .profile-popup {
-        background-color: #1b2123;
-        border: 0.5px solid @border-color;
-
-        .manager .button-icon-left {
-            background-color: @base-element-color;
-        }
-
-        .item {
-            background-color: @main-bg-color !important;
         }
     }
 
@@ -221,14 +206,6 @@ body {
         background-color: #0e0f10;
     }
 
-    .group {
-        background-color: @main-bg-color !important;
-    }
-
-    .item {
-        background-color: @main-bg-color !important;
-    }
-
     .ant-table-thead > tr > th {
         background: #24292d !important;
     }
@@ -241,14 +218,6 @@ body {
     // Таблицы
     .ant-table-tbody > tr > td {
         color: @text-color !important;
-    }
-
-    .icons {
-        .anticon svg {
-            path {
-                stroke: none;
-            }
-        }
     }
 }
 

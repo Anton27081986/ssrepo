@@ -31,8 +31,8 @@ export class UsersApiService {
 	}
 
 	/** Получение пользователя по id */
-	public getUserById(id: string): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/auth/users/${id}`);
+	public getUserById(id: number): Observable<IUserProfile> {
+		return this.http.get<IUserProfile>(`${environment.apiUrl}/api/auth/users/${id}`);
 	}
 
 	public getListLikedUsers(id: number, type: number): Observable<any> {

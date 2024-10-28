@@ -13,12 +13,17 @@ input {
 	font-size: 14px;
 	line-height: 17px;
 	letter-spacing: -0.01em;
+	user-select: none;
 }
 
 input::-webkit-outer-spin-button,
  input::-webkit-inner-spin-button {
 	 -webkit-appearance: none;
  }
+
+.input-padding-disabled {
+	padding: 0 20px;
+}
 
 .input {
 	position: relative;
@@ -33,6 +38,10 @@ input::-webkit-outer-spin-button,
 
 input.large ~ ss-icon {
 	top: 20px;
+}
+
+input.small ~ ss-icon {
+	top: 12px;
 }
 
 input::placeholder {
@@ -53,6 +62,11 @@ input.large {
 	font-weight: 600;
 }
 
+input.small {
+	height: 36px;
+	font-weight: 400;
+}
+
 input.error {
 	border: 1px solid $error;
 	background-color: $lite-error;
@@ -64,10 +78,6 @@ input.error:focus {
 
 ss-caption {
 	color: $lite-text;
-}
-
-ss-caption.error {
-	color: $error;
 }
 
 :host-context(.dark) input {

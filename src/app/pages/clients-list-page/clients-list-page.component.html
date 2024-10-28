@@ -16,15 +16,15 @@
 	<div class="content desktop table-with-filters">
 		<div class="table">
 			<ng-container *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
-				<ss-table [scroll]="true"
+				<ss-table
 					[head]="[
-						{title: 'Код', field: 'code'},
-						{title: 'Категория', field: 'category'},
-						{title: 'Клиент', field: 'clientName'},
-						{title: 'Контрагенты', field: 'contractors'},
+						{title: 'Код', field: 'code', sizeRatio: 0.5},
+						{title: 'Кате гория', field: 'category', sizeRatio: 0.4},
+						{title: 'Клиент', field: 'clientName', sizeRatio: 1.2},
+						{title: 'Контрагенты', field: 'contractors', sizeRatio: 1.2},
 						{title: 'Менеджеры', field: 'managers'},
-						{title: 'Статус', field: 'status'},
-						{title: 'Клиент без БМ', field: 'withoutManager'}
+						{title: 'Статус', field: 'status', sizeRatio: 0.8},
+						{title: 'Клиент без БМ', field: 'withoutManager', sizeRatio: 0.45}
 						]"
 					[items]="tableItems">
 				</ss-table>

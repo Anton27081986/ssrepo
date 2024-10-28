@@ -4,5 +4,7 @@ export const environment = {
     locales: ['en', 'ru'],
     defaultLocale: 'ru',
     applicationTitle: 'ERP SSNAB',
-    tabTitle: 'DEV',
+	tabTitle: 'DEV',
+	name: 'dev',
+	redirectUrl: 'https://ssnab.it/index',
 };

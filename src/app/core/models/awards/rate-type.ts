@@ -13,11 +13,9 @@
 /**
  *   0 = Mol  1 = Projects  2 = Distributors  3 = Teams
  */
-export type IRateType = 0 | 1 | 2 | 3;
-
-export const IRateType = {
-	NUMBER_0: 0 as IRateType,
-	NUMBER_1: 1 as IRateType,
-	NUMBER_2: 2 as IRateType,
-	NUMBER_3: 3 as IRateType,
-};
+export enum RateTypeEnum {
+	Mol = 0,
+	Projects = 1,
+	Distributors = 2,
+	Teams = 3,
+}

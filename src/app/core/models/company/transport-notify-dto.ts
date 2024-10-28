@@ -15,19 +15,15 @@
  */
 export interface ITransportNotifyDto {
 	/**
-	 * Айди записи
-	 */
-	id?: number;
-	/**
 	 * Действительно от
 	 */
-	dateFrom?: string;
+	dateFrom: string;
 	/**
 	 * Действительно До
 	 */
-	dateTo?: string;
+	dateTo: string;
 	/**
 	 * Текст уведомления
 	 */
-	note?: string | null;
+	note: string | null;
 }

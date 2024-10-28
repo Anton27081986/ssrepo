@@ -1,46 +1,40 @@
-<div *ngIf="listAuction" class="container">
+<ss-card padding="0">
+	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
+
 	<div class="header">
-		<div class="title">
-			<ss-headline size="h1">АУКЦИОННЫЕ ПРОДАЖИ</ss-headline>
-			<ss-headline class="subtitle" size="h6">Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</ss-headline>
+		<ss-headline size="h6" weight="semi-bold" (click)="window.open(listAuction!.allListLink!)">Аукционные продажи</ss-headline>
+		<ss-caption color="gray">Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</ss-caption>
+	</div>
+	<div class="content">
+		<ss-table
+			size="3"
+			[padding]="'5px 9px'"
+			*ngIf="listAuction?.total! > 0; else empty"
+			[head]="[
+				{title: 'ТП', field: 'tovName', sizeRatio: 4},
+				{title: 'Доступность', field: 'source'},
+				{title: 'Цена', field: 'price'},
+				{title: 'Количество', field: 'quantity'}
+				]"
+			[items]="tableItems$ | async">
+		</ss-table>
+
+		<ng-template #empty>
+			<ss-empty-placeholder>
+				<ss-icon name="empty"></ss-icon>
+				<ss-headline size="h3">Нет данных</ss-headline>
+			</ss-empty-placeholder>
+		</ng-template>
+
+		<div class="pagination">
+			<ss-pagination
+				[total]="listAuction?.total!"
+				[pageIndex]="pageIndex"
+				[pageSize]="pageSize"
+				(changeIndex)="nzPageIndexChange($event)"
+			>
+			</ss-pagination>
 		</div>
-		<ss-button class="desktop" size="large" type="primary" (click)="window.open(listAuction!.allListLink!)">Открыть всю таблицу</ss-button>
 	</div>
-	<div class="content desktop">
-			<ss-table
-				[head]="[
-					{title: 'ТП', field: 'tovName'},
-					{title: 'Доступность', field: 'source'},
-					{title: 'Цена прайса', field: 'price'},
-					{title: 'Количество', field: 'quantity'}
-					]"
-				[items]="tableItems">
-			</ss-table>
-	</div>
-	<div class="content mobile">
-		<ss-card>
-			<div class="mobile-item" *ngFor="let item of listAuction!.items!">
-				<ss-headline size="h6" weight="semi-bold">{{item.tovName}}</ss-headline>
-				<div class="mobile-info">
-					<ss-caption size="1">{{item.source}}</ss-caption>
-					<ss-caption size="1">{{item.price + ' ' + item.currency}}</ss-caption>
-					<ss-caption size="1">{{item.quantity + ' ' + item.tovUnitName }}</ss-caption>
-				</div>
-				<div class="separator"></div>
-			</div>
-		</ss-card>
-	</div>
-	<div class="pagination">
-		<nz-pagination
-			[nzTotal]="total"
-			[nzPageIndex]="pageIndex"
-			[nzPageSize]="pageSize"
-			(nzPageIndexChange)="nzPageIndexChange($event)"
-			(nzPageSizeChange)="pageSize = $event"
-			[nzResponsive]="true"
-		>
-		</nz-pagination>
-	</div>
-	<ss-button class="mobile" size="large" type="primary" (click)="window.open(listAuction!.allListLink!)">Открыть всю таблицу</ss-button>
-</div>
+</ss-card>
 

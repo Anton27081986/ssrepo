@@ -30,7 +30,7 @@ export class DictionaryApiService {
 	/** Список контрагентов */
 	public getContractors(
 		query?: string,
-		clientId?: number,
+		clientId?: number | null,
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
@@ -57,6 +57,29 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список статусов учета законтрактованного сырья */
+	public getProcurementsStatuses(): Observable<IResponse<{ id: number; name: string }>> {
+		return this.http.get<IResponse<{ id: number; name: string }>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contractStatuses`,
+		);
+	}
+
+	/** Список договоров учета законтрактованного сырья из КИСП*/
+	public getProcurementsContractDetails(
+		ContractorId: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (ContractorId !== null && ContractorId !== undefined) {
+			params = params.set('ContractorId', ContractorId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contracts`,
+			{ params },
+		);
+	}
+
 	/** Список товаров */
 	public getTovs(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
@@ -71,7 +94,48 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список договоров */
+	public getContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contractDetails`,
+			{ params },
+		);
+	}
+
 	public getTechnologist(
+		clientId: number,
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (clientId) {
+			params = params.set('clientId', clientId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/technologists`,
+			{ params },
+		);
+	}
+
+	/** Список комментариев ТПР */
+	public getTprRejectReasons(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/tprRejectsReasons`,
+		);
+	}
+
+	public getDictionaryUsers(
 		clientId: number,
 		query?: string,
 	): Observable<IResponse<IDictionaryItemDto>> {

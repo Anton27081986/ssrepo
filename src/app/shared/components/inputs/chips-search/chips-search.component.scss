@@ -135,9 +135,11 @@ ss-caption.error {
 	}
 
 	.variants-item:hover {
-		::ng-deep p {
-			color: $dark-island!important;
-		}
+		background-color: #2A3235 !important;
+	}
+
+	.chips {
+		background-color: #2A3235;
 	}
 }
 

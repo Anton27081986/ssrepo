@@ -10,6 +10,8 @@
  * Do not edit the class manually.
  */
 
+import { BehaviorSubject } from 'rxjs';
+
 /**
  * Элемент меню
  */
@@ -30,4 +32,8 @@ export interface IMenuItemDto {
 	 * Вложенные элементы подменю
 	 */
 	items?: IMenuItemDto[] | null;
+	/**
+	 * Вложенные элементы подменю
+	 */
+	toggle$?: BehaviorSubject<boolean> | null;
 }

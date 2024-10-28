@@ -8,6 +8,7 @@ import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto
 import { IClientEditRequest } from '@app/core/models/company/client-edit-request';
 import { CallPhoneService } from '@app/core/services/call-phone.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { UsersApiService } from '@app/core/api/users-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -16,6 +17,9 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 export class ClientsCardFacadeService {
 	public methodFileLink =
 		'https://erp-dev.ssnab.it/api/static/general/2024/04/10/Методика_расчета_категории_Дистрибьюторов_5f544e66-24fb-417d-8a0e-a71dd2010ba5.xlsx';
+
+	public instructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2024/07/19/Инструкция_Карточка_клиента_8297f84a-348f-4a8b-a889-f5febc111134.docx';
 
 	public notInitPermission = 'not-init';
 
@@ -40,16 +44,29 @@ export class ClientsCardFacadeService {
 	private readonly clientStatusesSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public statuses$ = this.clientStatusesSubject.asObservable();
 
+	// Загрузка
+	private readonly isContractorsLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isContractorsLoading$ = this.isContractorsLoadingSubject.asObservable();
+
+	private readonly isManagersLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isManagersLoading$ = this.isManagersLoadingSubject.asObservable();
+
+	private readonly isInfoLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isInfoLoading$ = this.isInfoLoadingSubject.asObservable();
+
 	public constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly callPhoneService: CallPhoneService,
+		private readonly usersApiService: UsersApiService,
 	) {}
 
-	public setClientId(id: number) {
+	public setClientId(id: number | null) {
 		this.clientIdSubject.next(id);
 	}
 
 	public getClientCardById(id: number) {
+		this.isInfoLoadingSubject.next(true);
+
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.getClientCardById(id)
@@ -57,6 +74,7 @@ export class ClientsCardFacadeService {
 					tap(client => {
 						this.clientSubject.next(client.data);
 						this.clientCardPermissionsSubject.next(client.permissions);
+						this.isInfoLoadingSubject.next(false);
 					}),
 					untilDestroyed(this),
 				)
@@ -71,12 +89,15 @@ export class ClientsCardFacadeService {
 	}
 
 	public getManagers() {
+		this.isManagersLoadingSubject.next(true);
+
 		if (this.clientIdSubject.value) {
 			this.clientApiService
 				.getManagers(this.clientIdSubject.value!)
 				.pipe(
 					tap(managers => {
 						this.managersSubject.next(managers);
+						this.isManagersLoadingSubject.next(false);
 					}),
 					untilDestroyed(this),
 				)
@@ -97,53 +118,29 @@ export class ClientsCardFacadeService {
 	}
 
 	public getContractors(id: number, isActiveOnly = true) {
+		this.isContractorsLoadingSubject.next(true);
 		this.clientApiService
 			.getContractors(id, isActiveOnly)
 			.pipe(
 				tap(contractors => {
 					this.contractorsSubject.next(contractors);
+					this.isContractorsLoadingSubject.next(false);
 				}),
 				untilDestroyed(this),
 			)
 			.subscribe();
 	}
 
-	public setBasicManager(managerId: number) {
-		if (this.clientIdSubject.value) {
-			this.clientApiService
-				.setBasicManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getManagers();
-					this.refreshClientCard();
-				});
-		}
+	public setBasicManager(managerId?: number) {
+		return this.clientApiService.setBasicManager(this.clientIdSubject.value, managerId);
 	}
 
-	public addManager(managerId?: number, isBase = false) {
-		if (this.clientIdSubject.value && managerId) {
-			this.clientApiService
-				.addManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					if (isBase) {
-						this.setBasicManager(managerId);
-					} else {
-						this.getManagers();
-					}
-				});
-		}
+	public addManager(managerId?: number) {
+		return this.clientApiService.addManager(this.clientIdSubject.value, managerId);
 	}
 
 	public deleteManager(managerId?: number) {
-		if (this.clientIdSubject.value && managerId) {
-			this.clientApiService
-				.deleteManager(this.clientIdSubject.value, managerId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getManagers();
-				});
-		}
+		return this.clientApiService.deleteManager(this.clientIdSubject.value, managerId);
 	}
 
 	public saveInfo(body: IClientEditRequest) {
@@ -159,5 +156,9 @@ export class ClientsCardFacadeService {
 
 	public callLocalUser(id: number | undefined) {
 		this.callPhoneService.toggleCallForUser(id);
+	}
+
+	public getUserById(id: number) {
+		return this.usersApiService.getUserById(id);
 	}
 }

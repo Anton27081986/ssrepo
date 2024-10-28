@@ -1,0 +1,63 @@
+.client-proposals-card {
+	display: flex;
+	flex-direction: column;
+	padding: 16px 16px 40px 16px;
+	gap: 16px;
+
+	&__header {
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	&__form {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: end;
+		gap: 16px;
+	}
+
+	&__loader {
+		animation: 1s linear 0s normal none infinite running rotation;
+		z-index: 9999999;
+		width: 25px;
+		height: 25px;
+	}
+
+	&__functional {
+		display: flex;
+		gap: 16px;
+		justify-content: space-between;
+	}
+
+	&__functional-right {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 16px;
+	}
+
+	&__functional-left {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		min-width: 50px;
+		gap: 16px;
+	}
+
+	&__content {
+		padding: 0 16px 16px 16px ;
+	}
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+app-notice {
+	max-width: 33%;
+}

@@ -15,14 +15,14 @@ import { IWinsItemDto } from './wins-item-dto';
  * Модель списка виджета победы
  */
 export interface IWinsListDto {
-	items?: IWinsItemDto[] | null;
-	total?: number;
+	items: IWinsItemDto[];
+	total: number;
 	/**
 	 * Расширенный режим для Ген Дира
 	 */
-	isExtendedMode?: boolean;
+	isExtendedMode: boolean;
 	/**
 	 * Ссылка на список активностей
 	 */
-	linkToActivity?: string | null;
+	linkToActivity: string;
 }

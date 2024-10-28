@@ -1,3 +1,5 @@
+@use 'src/styles/colors.scss' as *;
+
 span {
 	font-family: 'Inter', serif;
 	font-weight: 500;
@@ -9,7 +11,40 @@ span.caption-1 {
 	line-height: 15px;
 }
 
+span.caption-12 {
+	font-size: 12px;
+	line-height: 14px;
+}
+
 span.caption-2 {
 	font-size: 10px;
 	line-height: 12px;
+}
+
+span.semi-bold {
+	font-weight: 600;
+}
+
+span.medium {
+	font-weight: 500;
+}
+
+span.regular {
+	font-weight: 400;
+}
+
+span.color-gray {
+	color: $lite-text;
+}
+
+span.color-black {
+	color: $text;
+}
+
+span.color-error {
+	color: #E9033A;
+}
+
+:host-context(.dark) span {
+	color: $dark-text;
 }

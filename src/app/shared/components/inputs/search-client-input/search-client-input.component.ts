@@ -46,6 +46,9 @@ export interface SearchInputItem {
 export class SearchClientInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public label: string | undefined;
+	@Input() onlyActive: boolean = false;
+	@Input() disabled: boolean = false;
+
 	@Output() public select = new EventEmitter<SearchInputItem | null>();
 
 	private readonly entityId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(
@@ -54,7 +57,9 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 
 	protected query: string | null | undefined = '';
 
-	public found: IDictionaryItemDto[] = [];
+	public found$: BehaviorSubject<IDictionaryItemDto[]> = new BehaviorSubject<
+		IDictionaryItemDto[]
+	>([]);
 
 	public constructor(
 		private readonly searchFacade: SearchFacadeService,
@@ -93,7 +98,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 	setItem(item: IDictionaryItemDto) {
 		if (item.id && item.name) {
 			this.query = item.name;
-			this.found = [];
+			this.found$.next([]);
 			this.select.emit({ id: item.id, title: item.name });
 		} else {
 			this.select.emit({ id: null, title: null });
@@ -110,16 +115,17 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 
 	public onInputValueChange(event: Event) {
 		const targetDivElement = event.target as HTMLInputElement;
+
 		this.search(targetDivElement.value);
 	}
 
 	protected search(query: string) {
 		if (query.length > 2) {
 			this.searchFacade
-				.getClients(query)
+				.getClients(query, this.onlyActive)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
-					this.found = res.items;
+					this.found$.next(res.items);
 					this.ref.detectChanges();
 				});
 		}

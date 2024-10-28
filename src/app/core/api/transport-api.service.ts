@@ -17,7 +17,12 @@ export class TransportApiService {
 	}
 
 	/** Добавить уведомление в расписание транспорта */
-	public sendTransportNote(transportNotify: ITransportNotifyDto): Observable<any> {
-		return this.http.post<any>(`${environment.apiUrl}/api/company/transport`, transportNotify);
+	public sendTransportNote(
+		transportNotify: ITransportNotifyDto,
+	): Observable<ITransportNotifyDto> {
+		return this.http.post<ITransportNotifyDto>(
+			`${environment.apiUrl}/api/company/transport`,
+			transportNotify,
+		);
 	}
 }

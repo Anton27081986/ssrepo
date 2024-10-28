@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { ITableItem } from '@app/shared/components/table/table.component';
@@ -17,20 +17,16 @@ import { ActivatedRoute } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsDoneProductionComponent {
-	protected doneProductions$: Observable<IResponse<ProposalsProduction>>;
+	protected doneProductions$: Observable<{
+		data: IResponse<ProposalsProduction>;
+		permissions: string[];
+	}>;
 
 	constructor(
 		private readonly _activatedRoute: ActivatedRoute,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 	) {
-		this.doneProductions$ = this._activatedRoute.paramMap.pipe(
-			filterTruthy(),
-			switchMap(params => {
-				return this.clientProposalsFacadeService.getDoneProductionsByClientId(
-					Number(params.get('clientId')),
-				);
-			}),
-		);
+		this.doneProductions$ = this.clientProposalsFacadeService.doneProductions$;
 	}
 
 	protected getTableItems(production: IResponse<ProposalsProduction>): ITableItem[] {

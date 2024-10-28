@@ -1,0 +1,75 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../../styles/colors' as *;
+
+.rating-team-users-card {
+	display: flex;
+	gap: 8px;
+	position: relative;
+	width: 100%;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	&__rating {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: end;
+		gap: 4px
+	}
+
+	&__card-comment {
+		display: flex;
+		justify-content: end;
+	}
+
+	&__comment {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 8px;
+		width: 55px;
+		height: 36px;
+		cursor: pointer;
+		border: 1px solid #0000001A;
+		background-color: #F2F3F7;
+		border-radius: 8px;
+		justify-content: center;
+	}
+
+	&__tab {
+		width: 24px;
+		height: 24px;
+		background-color: #0000000A;
+		border-radius: 8px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		user-select: none;
+
+		&--gold {
+			background-color: #F7B535;
+			color: #FFFFFF;
+		}
+
+		&--silver {
+			background-color: #878E9A;
+			color: #FFFFFF;
+		}
+
+		&--cooper {
+			background-color: #C65C2E;
+			color: #FFFFFF;
+		}
+	}
+}
+
+:host-context(.dark) .rating-team-users-card {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}

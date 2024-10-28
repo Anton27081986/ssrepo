@@ -1,14 +1,12 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-	ClientProposalsFacadeService,
-	filterTruthy,
-} from '@app/core/facades/client-proposals-facade.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-table-item';
+import { IFilter } from '@app/shared/components/filters/filters.component';
+import { ClientProposalsTradeListTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.state';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -18,29 +16,53 @@ import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClientProposalsTradeListTabComponent {
-	public tradeList$: Observable<IResponse<ITradeList>>;
-	public pageSize = 4;
-	public pageIndex = 1;
-	public offset: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public isFiltersVisible: boolean = false;
+	protected isLoader$ = this.clientProposalsTradeListState.isLoader$;
+	protected pageIndex = this.clientProposalsTradeListState.pageIndex;
+	protected pageSize = this.clientProposalsTradeListState.pageSize;
 
-	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
-		this.tradeList$ = combineLatest([
-			this.clientProposalsFacadeService.clientId$,
-			this.offset,
-		]).pipe(
-			filterTruthy(),
-			map(([id, offset]) => {
-				return this.clientProposalsFacadeService.getTradeList({
-					clientId: id,
-					limit: this.pageSize,
-					offset,
-				});
-			}),
-			switchMap(item => {
-				return item;
-			}),
-		);
-	}
+	protected tradeList: Signal<IResponse<ITradeList> | null> = toSignal(
+		this.clientProposalsTradeListState.tradeList$,
+		{
+			initialValue: null,
+		},
+	);
+
+	protected linkToModule: Signal<string | null> = computed(() => {
+		const tradeList = this.tradeList();
+		if (tradeList) {
+			return tradeList.linkToModule;
+		}
+
+		return null;
+	});
+
+	protected total: Signal<number> = computed(() => {
+		const tradeList = this.tradeList();
+		if (tradeList) {
+			return tradeList.total;
+		}
+
+		return 0;
+	});
+
+	public filters: IFilter[] = [
+		{
+			name: 'TovIds',
+			type: 'search',
+			searchType: 'tovs',
+			label: 'Товарная позиция (ТП)',
+			placeholder: 'Введите ТП',
+		},
+		{
+			name: 'DateFrom-DateTo',
+			type: 'date-range',
+			label: 'Дата отгрузки',
+			placeholder: '',
+		},
+	];
+
+	constructor(private readonly clientProposalsTradeListState: ClientProposalsTradeListTabState) {}
 
 	protected getTableItems(production: IResponse<ITradeList>): ITableItem[] {
 		const productionTableItem = production.items.map(x => {
@@ -66,13 +88,48 @@ export class ClientProposalsTradeListTabComponent {
 		return <ITableItem[]>(<unknown>productionTableItem);
 	}
 
-	public nzPageIndexChange($event: number) {
+	public onTovFilter(tov: any) {
+		tov
+			? this.clientProposalsTradeListState.TovIds$.next([tov.id])
+			: this.clientProposalsTradeListState.TovIds$.next(undefined);
+		this.clientProposalsTradeListState.offset$.next(0);
+		this.pageIndex = 1;
+	}
+
+	public pageIndexChange($event: number) {
 		if ($event === 1) {
-			this.offset.next(0);
+			this.clientProposalsTradeListState.offset$.next(0);
 		} else {
-			this.offset.next(this.pageSize * $event - this.pageSize);
+			this.clientProposalsTradeListState.offset$.next(this.pageSize * $event - this.pageSize);
 		}
 
 		this.pageIndex = $event;
+	}
+
+	public onDateRangeFilter(dates: any) {
+		const from =
+			dates && typeof dates === 'string' ? dates.split('-')[0].split('.') : undefined;
+
+		const preparedFrom = from
+			? `${[from[2], from[1], parseInt(from[0], 10)].join('-')}T00:00:00.000Z`
+			: undefined;
+
+		const to = dates && typeof dates === 'string' ? dates.split('-')[1].split('.') : undefined;
+		const preparedTo = to
+			? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
+			: undefined;
+
+		this.clientProposalsTradeListState.DateFrom$.next(preparedFrom);
+		this.clientProposalsTradeListState.DateTo$.next(preparedTo);
+		this.clientProposalsTradeListState.offset$.next(0);
+		this.pageIndex = 1;
+	}
+
+	public resetForm() {
+		this.clientProposalsTradeListState.TovIds$.next(undefined);
+		this.clientProposalsTradeListState.DateFrom$.next(undefined);
+		this.clientProposalsTradeListState.DateTo$.next(undefined);
+		this.clientProposalsTradeListState.offset$.next(0);
+		this.pageIndex = 1;
 	}
 }
