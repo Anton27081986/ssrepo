@@ -4,22 +4,20 @@
 		<div class="clients-proposals-page__download-reports" *ngIf="canLoadFile">
 			<ss-text [size]="'1'">Отчеты по пользователю</ss-text>
 			<div class="clients-proposals-page__reports">
-				<ss-icon [tooltip]="'Обработанные предложения'" [theme]="TooltipTheme.MAIN"
-						 [position]="TooltipPosition.DEFAULT" (click)="download(typeReport.took)" [width]="'20'"
-						 [height]="'20'" [name]="'box'"></ss-icon>
-				<ss-icon [tooltip]="'Несостоявшиеся предложения'" [theme]="TooltipTheme.MAIN"
-						 [position]="TooltipPosition.DEFAULT" (click)="download(typeReport.skipped)" [width]="'20'"
-						 [height]="'20'" [name]="'download'"></ss-icon>
+				<ss-tooltip-menu icon="box">
+					<ss-caption size="1" (click)="download(typeReport.took)">
+						Обработанные предложения
+					</ss-caption>
+					<ss-caption size="1" (click)="download(typeReport.skipped)">
+						Несостоявшиеся предложения
+					</ss-caption>
+				</ss-tooltip-menu>
 			</div>
 		</div>
 			<div class="clients-proposals-page__instructions">
-				<ss-tooltip-menu icon="download">
-					<ss-caption size="1">
-						<a [href]="clientProposalsFacadeService.instructionFileLink" target="_blank">
-							Инструкция по контакту с клиентом
-						</a>
-					</ss-caption>
-				</ss-tooltip-menu>
+					<ss-icon [tooltip]="'Инструкция по контакту с клиентом'" [theme]="TooltipTheme.MAIN"
+							 [position]="TooltipPosition.DEFAULT" (click)="downloadInstruction(clientProposalsFacadeService.instructionFileLink)" [width]="'20'"
+							 [height]="'20'" [name]="'download'"></ss-icon>
 			</div>
 	</div>
 	<div class="clients-proposals-page__content">

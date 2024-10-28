@@ -68,6 +68,10 @@
 		font-size: 13px;
 		border-top: 1px solid $island-outline;
 
+		&:hover {
+			background-color: #F2F2F2;
+		}
+
 		.last-element {
 			color: $main-outline;
 		}

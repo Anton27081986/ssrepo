@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { filter, map, of, startWith, switchMap, tap } from 'rxjs';
 import { formatDate } from '@angular/common';
-import { UntilDestroy } from '@ngneat/until-destroy';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
-import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
-import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { FormControl } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
+import { catchError } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-thanks-partner',
 	templateUrl: './thanks-partner.component.html',
@@ -15,77 +14,67 @@ import { FormControl } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ThanksPartnerComponent {
-	public thankYouList$: Observable<IPartnerThanksListDto>;
-	public dateToday: string;
+	private readonly apiService = inject(ThanksPartnerApiService);
 
-	public pageSize = 8;
-	public pageIndex = 1;
+	protected dateCtrl: FormControl<string | null> = new FormControl<string>(this.getDate());
+	protected loading = signal(false);
 
-	protected isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public thankYouList = toSignal(
+		this.dateCtrl.valueChanges.pipe(
+			startWith(this.getDate()),
+			tap(() => this.loading.set(true)),
+			filter(Boolean),
+			switchMap(date => {
+				return this.apiService.getPartnerThanks(date).pipe(
+					map(items => {
+						return {
+							addNewThanksLink: items.addNewThanksLink,
+							totalCount: items.totalCount,
+							weekCount: items.weekCount,
+							items: items.items ? items.items.slice(0, 8) : [],
+							total: items.total,
+						};
+					}),
+					tap(() => this.loading.set(false)),
+					catchError(() => {
+						this.loading.set(false);
 
-	private readonly subscription: Subscription = new Subscription();
+						return of({} as IPartnerThanksListDto);
+					}),
+				);
+			}),
+		),
+		{ initialValue: {} as IPartnerThanksListDto },
+	);
 
-	protected date: FormControl<Date | null> = new FormControl<Date | null>(null);
+	public thankToUrl(url?: string): void {
+		if (!url) {
+			return;
+		}
 
-	public constructor(private readonly apiService: ThanksPartnerApiService) {
-		let date = new Date(new Date().setDate(new Date().getDate() - 1));
+		const link = document.createElement('a');
+
+		link.href = url;
+		link.click();
+	}
+
+	public isAddCardItemPaddings(count: number): boolean {
+		return count > 4;
+	}
+
+	private getDate(): string {
+		const date = new Date();
+
+		// Устанавливаем на вчерашний день
+		date.setDate(date.getDate() - 1);
+
+		// Если вчера было воскресенье (0), отнимаем 2 дня, если понедельник (1), отнимаем 3 дня
 		if (date.getDay() === 0) {
-			date = new Date(date.setDate(date.getDate() - 2));
+			date.setDate(date.getDate() - 2);
 		} else if (date.getDay() === 1) {
-			date = new Date(date.setDate(date.getDate() - 3));
+			date.setDate(date.getDate() - 3);
 		}
 
-		this.dateToday = formatDate(date, 'yyyy-MM-dd', 'ru-RU');
-
-		this.subscription.add(this.date.valueChanges.subscribe(item => this.onChange(item!)));
-
-		this.thankYouList$ = this.apiService.getPartnerThanks(this.dateToday).pipe(
-			filterTruthy(),
-			tap(() => {
-				this.isLoading$.next(true);
-			}),
-			map(items => {
-				return {
-					addNewThanksLink: items.addNewThanksLink,
-					totalCount: items.totalCount,
-					weekCount: items.weekCount,
-					items: items.items ? items.items.slice(0, 8) : [],
-					total: items.total,
-				};
-			}),
-			tap(() => {
-				this.isLoading$.next(false);
-			}),
-		);
-	}
-
-	public onChange(result: Date): void {
-		this.thankYouList$ = this.apiService
-			.getPartnerThanks(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-			.pipe(
-				tap(() => {
-					this.isLoading$.next(true);
-				}),
-				map(items => {
-					return {
-						addNewThanksLink: items.addNewThanksLink,
-						totalCount: items.totalCount,
-						weekCount: items.weekCount,
-						items: items.items ? items.items.slice(0, 8) : [],
-						total: items.total,
-					};
-				}),
-				tap(() => {
-					this.isLoading$.next(false);
-				}),
-			);
-	}
-
-	public thankToUrl(url: string | undefined) {
-		if (url) {
-			const link = document.createElement('a');
-			link.href = url;
-			link.click();
-		}
+		return formatDate(date, 'yyyy-MM-dd', 'ru-RU');
 	}
 }

@@ -13,7 +13,7 @@ export interface IRawMaterialAccountingContract {
 	periodEndDate: string;
 	paymentConditions: string;
 	deliveryConditions: string;
-	notificationDate: string;
+	notificationDate: string | null;
 	user: IDictionaryItemDto;
 	dateCreated: string;
 	status: IDictionaryItemDto;

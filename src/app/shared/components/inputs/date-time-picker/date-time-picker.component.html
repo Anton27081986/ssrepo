@@ -1,0 +1,43 @@
+<form class="datepicker-wrapper" [formGroup]="form">
+    @if (showDate) {
+        <mat-form-field class="custom-form-field date" appearance="outline">
+            <input
+                matInput
+                formControlName="date"
+                placeholder="дд.мм.гггг"
+                class="date__input"
+                [readonly]="readonly"
+                [maskito]="dateInputTextMask"
+                [matDatepicker]="datepicker"
+                (click)="readonly && datepicker.open()"
+            />
+
+            <mat-datepicker #datepicker></mat-datepicker>
+
+            <mat-icon matSuffix (click)="datepicker.open()" class="date__open-icon">
+                <ss-icon name="calendar"></ss-icon>
+            </mat-icon>
+
+            @if (clearDate) {
+                <mat-icon matSuffix class="date__clear-icon" (click)="clearControls()">
+                    <ss-icon name="close" width="12" height="12"></ss-icon>
+                </mat-icon>
+            }
+        </mat-form-field>
+    }
+
+    @if (showTime) {
+        <mat-form-field class="custom-form-field time" appearance="outline">
+            <input
+                matInput
+                type="time"
+                formControlName="time"
+            />
+
+            <mat-icon matSuffix class="time__icon">
+                <ss-icon name="clock"></ss-icon>
+            </mat-icon>
+        </mat-form-field>
+    }
+</form>
+
