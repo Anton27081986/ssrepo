@@ -5,7 +5,7 @@ import { ClientProposalsApiService } from '@app/core/api/client-proposails-api.s
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import {ClientProposalsFacadeService} from "@app/core/facades/client-proposals-facade.service";
+import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 
 export enum TypeReportEnum {
 	took = 0,
@@ -53,6 +53,12 @@ export class ClientProposalsPageComponent {
 
 				window.URL.revokeObjectURL(fileURL);
 			});
+	}
+
+	protected downloadInstruction(url: string) {
+		const link = document.createElement('a');
+		link.href = url;
+		link.click();
 	}
 
 	protected readonly TooltipPosition = TooltipPosition;
