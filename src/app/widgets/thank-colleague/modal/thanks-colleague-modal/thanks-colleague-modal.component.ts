@@ -86,6 +86,7 @@ export class ThanksColleagueModalComponent {
 					})
 					.pipe(untilDestroyed(this))
 					.subscribe(() => {
+						this.thank.commentsCount += 1;
 						this.victoryRootService.event$.next({
 							type: VictoryEventEnum.victoryUpdated,
 						});

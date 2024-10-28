@@ -58,13 +58,16 @@ export class ContractInfoComponent {
 				this.contract = contract.data;
 				this.canEdit = contract.permissions.includes(Permissions.CLIENT_PROCUREMENTS_EDIT);
 
-				this.contract.notificationDate = new Date(
-					Date.parse(contract.data.notificationDate),
-				).toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				});
+				if (typeof contract.data.notificationDate === 'string') {
+					this.contract.notificationDate = new Date(
+						Date.parse(contract.data.notificationDate),
+					).toLocaleString('ru-RU', {
+						year: 'numeric',
+						month: 'numeric',
+						day: 'numeric',
+					});
+				}
+
 				this.contract.periodStartDate = new Date(
 					Date.parse(contract.data.periodStartDate),
 				).toLocaleString('ru-RU', {
@@ -124,7 +127,9 @@ export class ContractInfoComponent {
 		const newContract: AddContractDto = {
 			...this.contract,
 			...this.editForm.value,
-			notificationDate: fromPickerDateToIso(this.contract!.notificationDate),
+			notificationDate: this.contract!.notificationDate
+				? fromPickerDateToIso(this.contract!.notificationDate)
+				: null,
 			periodStartDate: dates[0],
 			periodEndDate: dates[1],
 			contractorId: this.contract!.contractor.id,
