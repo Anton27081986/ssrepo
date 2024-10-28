@@ -1,3 +1,11 @@
+<ng-container *ngIf="backUrl; else devUrl">
+	<a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" target="_blank">Вернуться к
+		старому интерфейсу</a>
+</ng-container>
+<ng-template #devUrl>
+	<a href="https://ssnab.it/index/ErpActivation?command=Update&STATE=Comment" target="_blank">Вернуться к
+		старому интерфейсу</a>
+</ng-template>
 <div class="main-page">
     <app-slider class="slider"></app-slider>
     <app-auction-sales class="auction-sales"></app-auction-sales>

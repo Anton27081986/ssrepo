@@ -21,7 +21,6 @@ export class HeaderComponent implements OnInit {
 	public userProfile$?: Observable<IUserProfile | null>;
 	public profilePopup$?: Observable<boolean | null>;
 	public statusBurger = false;
-	public backUrl: boolean = environment.production;
 
 	protected readonly AppRoutes = AppRoutes;
 	public route: string | undefined;
