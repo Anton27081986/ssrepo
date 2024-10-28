@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
-import { NgControl } from '@angular/forms';
+import { FormControl, FormGroup, NgControl } from '@angular/forms';
+import { formatDate } from '@angular/common';
+import { EMPTY_FUNCTION } from '@app/core/constants/empty';
 
 @Component({
 	selector: 'ss-date-range',
@@ -7,76 +9,82 @@ import { NgControl } from '@angular/forms';
 	styleUrls: ['./date-range.component.scss'],
 })
 export class DateRangeComponent {
-	startDate: string | undefined;
-	endDate: string | undefined;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string | undefined;
 	@Input() public error: string | undefined;
-	@Output() public select = new EventEmitter<any>();
+	@Output() public select = new EventEmitter<string>();
 
 	@Input() public value: any = '';
-	public constructor(
-		// Retrieve the dependency only from the local injector,
-		// not from parent or ancestors.
-		@Self()
-		// We want to be able to use the component without a form,
-		// so we mark the dependency as optional.
-		@Optional()
-		private readonly ngControl: NgControl,
-	) {
+
+	public formRange = new FormGroup({
+		startDate: new FormControl<string | null>(null),
+		endDate: new FormControl<string | null>(null),
+	});
+
+	private onChange = EMPTY_FUNCTION;
+	private onTouched = EMPTY_FUNCTION;
+
+	public constructor(@Self() @Optional() private readonly ngControl: NgControl) {
 		if (this.ngControl) {
 			this.ngControl.valueAccessor = this;
 		}
 	}
 
-	/**
-	 * Write form value to the DOM element (model => view)
-	 */
 	public writeValue(value: any): void {
 		this.value = value;
+
 		if (!this.value) {
-			this.startDate = undefined;
-			this.endDate = undefined;
-		} else {
-			[this.startDate, this.endDate] = value.split('-');
+			this.formRange.setValue({ startDate: null, endDate: null });
+
+			return;
 		}
+
+		const [startDate, endDate] = value.split('-');
+
+		this.formRange.setValue({
+			startDate: this.convertDateFormat(startDate),
+			endDate: this.convertDateFormat(endDate),
+		});
 	}
 
-	/**
-	 * Write form disabled state to the DOM element (model => view)
-	 */
-	public setDisabledState(isDisabled: boolean): void {
-	}
-
-	/**
-	 * Update form when DOM element value changes (view => model)
-	 */
-	public registerOnChange(fn: any): void {
-		// Store the provided function as an internal method.
+	public registerOnChange(fn: Function): void {
 		this.onChange = fn;
 	}
 
-	/**
-	 * Update form when DOM element is blurred (view => model)
-	 */
-	public registerOnTouched(fn: any): void {
-		// Store the provided function as an internal method.
+	public registerOnTouched(fn: Function): void {
 		this.onTouched = fn;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	protected onChange(value: string) {}
-	protected onTouched() {}
-
-	dateChanged(start: string, end: string) {
-		if (start && end) {
-			this.select.emit(`${start}-${end}`);
-		}
+	public clear(): void {
+		this.formRange.reset();
+		this.dateChanged();
 	}
 
-	clear() {
-		this.startDate = undefined;
-		this.endDate = undefined;
-		this.select.emit('');
+	public dateChanged(): void {
+		if (!this.formRange.controls.startDate.value && !this.formRange.controls.endDate.value) {
+			this.select.emit('');
+
+			return;
+		}
+
+		if (!this.formRange.controls.startDate.value || !this.formRange.controls.endDate.value) {
+			return;
+		}
+
+		const startDate = formatDate(
+			this.formRange.controls.startDate.value,
+			'dd.MM.yyyy',
+			'ru-RU',
+		);
+
+		const endDate = formatDate(this.formRange.controls.endDate?.value, 'dd.MM.yyyy', 'ru-RU');
+
+		this.select.emit(`${startDate}-${endDate}`);
+	}
+
+	private convertDateFormat(dateStr: string): string {
+		const [day, month, year] = dateStr.split('.');
+
+		return `${year}-${month}-${day}`;
 	}
 }
