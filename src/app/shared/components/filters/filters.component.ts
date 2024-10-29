@@ -31,6 +31,8 @@ export class FiltersComponent implements OnInit {
 
 	@Output() public applyFilter = new EventEmitter();
 
+	@Input() public isDropdown: boolean = false;
+
 	public filtersForm!: FormGroup;
 
 	constructor(
