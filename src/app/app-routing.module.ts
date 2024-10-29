@@ -50,6 +50,14 @@ const routes: Routes = [
 								'./pages/raw-material-accounting/raw-material-accounting.module'
 							).then(m => m.RawMaterialAccountingModule),
 					},
+					{
+						path: 'competed-work-acts',
+						canActivate: [AuthGuard],
+						loadChildren: () =>
+							import('./pages/completed-work-acts/completed-work-acts.module').then(
+								m => m.CompletedWorkActsModule,
+							),
+					},
 				],
 			},
 		],
