@@ -6,6 +6,7 @@ import { IClientDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
 import { ITab } from '@app/shared/components/tabs/tab';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { QueryType } from '@app/widgets/history/models/query-type';
 
 @UntilDestroy()
 @Component({
@@ -70,6 +71,7 @@ export class ClientCardComponent implements OnInit {
 	protected mainInfoTab: ITab | undefined = this.tabs.find(tab => tab.name === 'basic');
 
 	protected selectedTab: ITab = this.mainInfoTab!;
+	protected readonly queryType = QueryType;
 
 	public constructor(
 		private readonly activatedRoute: ActivatedRoute,

@@ -1,65 +1,113 @@
 import {
-	ChangeDetectorRef,
+	ChangeDetectionStrategy,
 	Component,
-	Input,
+	effect,
+	inject,
+	input,
 	OnChanges,
 	OnDestroy,
+	signal,
 	SimpleChanges,
+	WritableSignal,
 } from '@angular/core';
+import { combineLatest, filter, map, of, switchMap, tap } from 'rxjs';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { HistoryFacadeService } from '@app/core/facades/history-facade.service';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { SignalService } from '@app/core/signalR/signal.service';
 import { AuthenticationService } from '@app/core/services/authentication.service';
-import { IChangeItemDto } from '@app/core/models/change-tracker/change-item-dto';
-import { TableState } from '@app/shared/components/table/table-state';
+import { QueryType } from '@app/widgets/history/models/query-type';
+import { ViewMode } from '@app/widgets/history/models/view-mode';
+import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
+import { catchError } from 'rxjs/operators';
+import { HistoryListViewComponent } from '@app/widgets/history/history-list-view/history-list-view.component';
+import { HistoryTableViewComponent } from '@app/widgets/history/history-table-view/history-table-view.component';
+import { formatDate } from '@angular/common';
 
-@UntilDestroy()
 @Component({
 	selector: 'ss-history',
 	templateUrl: './history.component.html',
-	styleUrls: ['./history.component.scss'],
+	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [HistoryListViewComponent, HistoryTableViewComponent],
 })
 export class HistoryComponent implements OnChanges, OnDestroy {
-	@Input() public objectId: number | undefined;
+	private readonly historyFacadeService = inject(HistoryFacadeService);
+	private readonly signalHistoryService = inject(SignalService);
+	private readonly authService = inject(AuthenticationService);
 
-	public historyItems: IChangeTrackerItemDto[] = [];
+	public objectId = input.required<number>();
+	public queryType = input.required<QueryType>();
+	public view = input<ViewMode>(ViewMode.List);
 
-	public tableState: TableState = TableState.Loading;
+	public pageIndex = signal(1);
+	public pageSize = input<number>(8);
+	public pageTotal = signal(0);
+	public loading = signal<boolean>(false);
+	public readonly viewMode = ViewMode;
 
-	public pageIndex = 1;
-	public pageSize = 8;
-	public total: number | undefined;
-	public offset = 0;
+	public historyItems = toSignal(
+		combineLatest([
+			toObservable(this.objectId),
+			toObservable(this.queryType),
+			toObservable(this.pageIndex),
+			toObservable(this.pageSize),
+		]).pipe(
+			tap(() => this.loading.set(true)),
+			filter(([objectId]) => !!objectId),
+			switchMap(([objectId, queryType, pageIndex, pageSize]) =>
+				this.historyFacadeService
+					.getHistory(objectId, queryType, pageSize, (pageIndex - 1) * pageSize)
+					.pipe(
+						tap(response => this.pageTotal.set(response.total || 0)),
 
-	public constructor(
-		private readonly historyFacadeService: HistoryFacadeService,
-		private readonly signalHistoryService: SignalService,
-		private readonly authService: AuthenticationService,
-		private readonly ref: ChangeDetectorRef,
-	) {}
+						map(response =>
+							response.items.map(historyItem => {
+								historyItem.createdTime = formatDate(
+									new Date(historyItem.createdTime),
+									'dd.MM.yyyy HH:mm',
+									'ru-RU',
+								);
+
+								return historyItem;
+							}),
+						),
+
+						catchError(() => {
+							this.loading.set(false);
+
+							return of([] as IChangeTrackerItemDto[]);
+						}),
+					),
+			),
+			tap(() => this.loading.set(false)),
+		),
+		{
+			initialValue: [] as IChangeTrackerItemDto[],
+		},
+	);
+
+	public mutableHistoryItems: WritableSignal<IChangeTrackerItemDto[]> = signal(
+		this.historyItems(),
+	);
+
+	public constructor() {
+		this.historyChanges();
+
+		effect(
+			() => {
+				this.mutableHistoryItems.set(this.historyItems());
+			},
+			{ allowSignalWrites: true },
+		);
+	}
 
 	public ngOnChanges(changes: SimpleChanges) {
-		if (changes.objectId && this.objectId) {
-			this.loadDataFromServer(this.pageSize, this.offset);
-
+		if (changes.objectId && this.objectId()) {
 			this.signalHistoryService.startConnection(
 				this.authService.userValue.token!,
-				this.objectId,
-				0,
+				this.objectId(),
+				this.queryType(),
 			);
-
-			this.signalHistoryService.historyChange$
-				.pipe(untilDestroyed(this))
-				.subscribe(change => {
-					console.info('signalR change', change);
-
-					if (this.objectId === change.objectId) {
-						this.historyItems.unshift(change.item);
-						this.tableState = TableState.Full;
-						this.ref.detectChanges();
-					}
-				});
 		}
 	}
 
@@ -67,62 +115,15 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 		this.signalHistoryService.disconnect();
 	}
 
-	public loadDataFromServer(pageSize: number, offset: number) {
-		this.tableState = TableState.Loading;
-
-		this.historyFacadeService
-			.getHistory(this.objectId!, 0, pageSize, offset)
-			.pipe(untilDestroyed(this))
-			.subscribe(items => {
-				if (items.items) {
-					this.historyItems = items.items.map(item => {
-						item.createdTime = new Date(Date.parse(item.createdTime)).toLocaleString(
-							'ru-RU',
-							{
-								year: 'numeric',
-								month: 'numeric',
-								day: 'numeric',
-								hour: 'numeric',
-								minute: 'numeric',
-							},
-						);
-
-						return item;
-					});
-				}
-
-				if (items.total! > 6) {
-					this.total = (items.total ?? 0) + this.pageSize;
-				} else {
-					this.total = items.total ?? 0;
-				}
-
-				this.tableState = TableState.Full;
-				this.ref.detectChanges();
-			});
+	private historyChanges(): void {
+		toSignal(
+			this.signalHistoryService.historyChange$.pipe(
+				tap(change => {
+					if (this.objectId() === change.objectId) {
+						this.mutableHistoryItems.set([change.item, ...this.mutableHistoryItems()]);
+					}
+				}),
+			),
+		);
 	}
-
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset = 0;
-		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
-		}
-
-		this.offset = this.pageSize * $event - this.pageSize;
-
-		this.pageIndex = $event; // Установка текущего индекса
-
-		this.loadDataFromServer(this.pageSize, this.offset);
-	}
-
-	public trackByHistoryItems(index: number, item: IChangeTrackerItemDto) {
-		return item.id;
-	}
-
-	public trackByChanges(index: number, item: IChangeItemDto) {
-		return index;
-	}
-
-	protected readonly TableState = TableState;
 }
