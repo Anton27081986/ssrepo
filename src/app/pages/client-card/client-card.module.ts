@@ -36,7 +36,6 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-requests/client-sale-requests.component';
 import { TagModule } from '@app/shared/components/tag/tag.module';
-import { HistoryModule } from '@app/widgets/history/history.module';
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
@@ -52,6 +51,7 @@ import { ClientCardNewProductsComponent } from './client-card-new-products/clien
 import { ClientCardLostProductsComponent } from './client-card-lost-products/client-card-lost-products.component';
 import { ClientCardContractsComponent } from './client-card-contracts/client-card-contracts.component';
 import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-data-page.module";
+import { HistoryComponent } from '@app/widgets/history/history.component';
 
 @NgModule({
 	declarations: [
@@ -86,7 +86,6 @@ import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-
 		FormsModule,
 		ReactiveFormsModule,
 		TableModule,
-		HistoryModule,
 		SelectModule,
 		ButtonModule,
 		InputModule,
@@ -127,6 +126,7 @@ import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-
 		TextareaModule,
 		LoaderModule,
 		EmptyDataPageModule,
+		HistoryComponent,
 	],
 	exports: [ClientCardComponent],
 })
