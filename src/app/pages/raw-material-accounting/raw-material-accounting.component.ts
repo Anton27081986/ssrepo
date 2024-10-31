@@ -116,6 +116,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 					})}`;
 					tableItem.user = x.user.name ? x.user.name : '-';
 					tableItem.status = x.status ? x.status.name : '-';
+					tableItem.tov = x.tov ? x.tov.name : '-';
 
 					return tableItem;
 				});

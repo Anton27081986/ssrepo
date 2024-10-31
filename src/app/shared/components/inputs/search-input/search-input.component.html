@@ -21,5 +21,5 @@
 		</ss-caption>
 	</div>
 </div>
-<ss-caption size="2" class="error">{{ error }}</ss-caption>
+<ss-caption size="2" class="error" color="error">{{ error }}</ss-caption>
 <div *ngIf="(found$ | async)?.length" class="overflow" (click)="found$.next([])"></div>
