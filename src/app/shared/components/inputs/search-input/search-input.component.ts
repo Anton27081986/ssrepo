@@ -176,6 +176,12 @@ export class SearchInputComponent {
 		}
 	}
 
+	public onBlur(): void {
+		if (!this.value.trim()) {
+			this.select.emit(null);
+		}
+	}
+
 	public mapIDictionaryItemDto(items: IGlobalSearchDto[]): IDictionaryItemDto[] {
 		return items.map(item => {
 			return {

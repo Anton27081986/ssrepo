@@ -4,7 +4,7 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import {
 	fromPickerDateToIso,
@@ -150,15 +150,9 @@ export class ContractInfoComponent {
 		}
 	}
 
-	selectTradePosition(tradePosition: IDictionaryItemDto) {
-		if (tradePosition?.id) {
-			this.editForm.controls.tradePosition.setValue(tradePosition);
-
-			return;
-		}
-
-		this.editForm.controls.tradePosition.setValue(null);
-		this.editForm.controls.tradePosition.markAsTouched();
+	selectSearchItem(item: IDictionaryItemDto | null, ctrl: AbstractControl) {
+		ctrl.setValue(item);
+		ctrl.markAsTouched();
 	}
 
 	switchMode(status: boolean) {
