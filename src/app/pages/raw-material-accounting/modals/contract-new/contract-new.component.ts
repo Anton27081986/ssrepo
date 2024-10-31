@@ -45,6 +45,7 @@ export class ContractNewComponent {
 			paymentConditions: new FormControl<string>(''),
 			deliveryConditions: new FormControl<string>(''),
 			notificationDate: new FormControl<string>(''),
+			tradePosition: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 		});
 
 		this.contractDetails$ = this.facadeService.contractDetails$;
@@ -77,6 +78,7 @@ export class ContractNewComponent {
 				: null,
 			periodStartDate: dates[0],
 			periodEndDate: dates[1],
+			tovId: this.newContractForm.value.tradePosition.id,
 		};
 
 		this.facadeService
@@ -89,6 +91,17 @@ export class ContractNewComponent {
 
 	onContractorSelect(id: string) {
 		this.facadeService.getContractDetails(id);
+	}
+
+	selectTradePosition(tradePosition: IDictionaryItemDto) {
+		if (tradePosition?.id) {
+			this.newContractForm.controls.tradePosition.setValue(tradePosition);
+
+			return;
+		}
+
+		this.newContractForm.controls.tradePosition.setValue(null);
+		this.newContractForm.controls.tradePosition.markAsTouched();
 	}
 
 	close() {

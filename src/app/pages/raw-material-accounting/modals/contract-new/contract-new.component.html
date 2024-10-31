@@ -68,6 +68,17 @@
 				</div>
 			</div>
 			<div class="body__column">
+                <div class="body__column__item">
+                    <ss-search-input
+                        searchType="tovs"
+                        size="small"
+                        label="Товарная позиция"
+                        placeholder="Введите товарную позицию"
+                        [selectedItem]="newContractForm.controls['tradePosition'].value"
+                        (select)="selectTradePosition($event?.id ? $event : null)"
+                        [error]="newContractForm.controls['tradePosition'].touched && newContractForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
+                    ></ss-search-input>
+                </div>
 				<div class="body__column__item">
 					<ss-textarea
 						label="Условия оплаты"

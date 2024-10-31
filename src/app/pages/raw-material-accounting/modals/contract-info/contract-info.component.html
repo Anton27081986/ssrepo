@@ -69,6 +69,23 @@
 				</ng-template>
 			</div>
 			<div class="body__column">
+                <div *ngIf="!isEditMode; else tradePositionEdit" class="body__column__item">
+					<ss-text size="4">Товарная позиция:</ss-text>
+					<ss-text size="3">{{ contract?.tov?.name || '-' }}</ss-text>
+				</div>
+                <ng-template #tradePositionEdit>
+                    <div class="body__column__item">
+                        <ss-search-input
+                            searchType="tovs"
+                            size="small"
+                            label="Товарная позиция"
+                            placeholder="Введите товарную позицию"
+                            [selectedItem]="editForm.controls['tradePosition'].value"
+                            (select)="selectTradePosition($event)"
+                            [error]="editForm.controls['tradePosition'].touched && editForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
+                        ></ss-search-input>
+                    </div>
+                </ng-template>
 				<div class="body__column__item">
 					<ss-text size="4">Условия оплаты:</ss-text>
 					<ss-text size="3">{{ contract.paymentConditions }}</ss-text>

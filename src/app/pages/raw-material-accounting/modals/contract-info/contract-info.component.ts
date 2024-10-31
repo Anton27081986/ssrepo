@@ -12,6 +12,7 @@ import {
 } from '@app/shared/pipe/from-picker-date-to-iso';
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
 import { Observable } from 'rxjs';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 interface IDialogData {
 	id?: string | null;
@@ -51,6 +52,7 @@ export class ContractInfoComponent {
 			period: new FormControl<string>('', Validators.required),
 			isComplete: new FormControl<boolean>(false),
 			reasonCompletion: new FormControl<string>(''),
+			tradePosition: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 		});
 
 		this.facadeService.selectedContract$.pipe(untilDestroyed(this)).subscribe(contract => {
@@ -92,6 +94,7 @@ export class ContractInfoComponent {
 					contract.data.reasonCompletion || '',
 				);
 				this.editForm.controls.isComplete.setValue(contract.data.isComplete || false);
+				this.editForm.controls.tradePosition.setValue(contract.data.tov);
 			}
 		});
 
@@ -134,6 +137,7 @@ export class ContractInfoComponent {
 			periodEndDate: dates[1],
 			contractorId: this.contract!.contractor.id,
 			contractDetailId: this.contract!.contractDetail.id,
+			tovId: this.editForm.value.tradePosition.id,
 		};
 
 		if (this.contract?.id) {
@@ -144,6 +148,17 @@ export class ContractInfoComponent {
 					this.modalRef.close(true);
 				});
 		}
+	}
+
+	selectTradePosition(tradePosition: IDictionaryItemDto) {
+		if (tradePosition?.id) {
+			this.editForm.controls.tradePosition.setValue(tradePosition);
+
+			return;
+		}
+
+		this.editForm.controls.tradePosition.setValue(null);
+		this.editForm.controls.tradePosition.markAsTouched();
 	}
 
 	switchMode(status: boolean) {
