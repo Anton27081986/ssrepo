@@ -76,6 +76,7 @@
                         placeholder="Введите товарную позицию"
                         [selectedItem]="newContractForm.controls['tradePosition'].value"
                         (select)="selectSearchItem($event, newContractForm.controls['tradePosition'])"
+                        (blurEvent)="selectSearchItem($event, newContractForm.controls['tradePosition'])"
                         [error]="newContractForm.controls['tradePosition'].touched && newContractForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
                     ></ss-search-input>
                 </div>
