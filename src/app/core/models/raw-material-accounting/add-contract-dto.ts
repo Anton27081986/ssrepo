@@ -11,4 +11,5 @@ export interface AddContractDto {
 	paymentConditions: string;
 	deliveryConditions: string;
 	notificationDate: string;
+	tovId: number;
 }

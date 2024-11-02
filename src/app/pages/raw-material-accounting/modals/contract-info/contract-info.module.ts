@@ -14,26 +14,28 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
 import {TextareaModule} from "@app/shared/components/textarea/textarea.module";
 import {LoaderModule} from "@app/shared/components/loader/loader.module";
+import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 
 @NgModule({
 	declarations: [ContractInfoComponent],
 	exports: [ContractInfoComponent],
-	imports: [
-		CardModule,
-		NgIf,
-		HeadlineModule,
-		IconModule,
-		TextModule,
-		ButtonModule,
-		InputModule,
-		DatepickerInputModule,
-		DateRangeModule,
-		ReactiveFormsModule,
-		MatDatepickerModule,
-		CaptionModule,
-		TextareaModule,
-		LoaderModule,
-		AsyncPipe
-	],
+    imports: [
+        CardModule,
+        NgIf,
+        HeadlineModule,
+        IconModule,
+        TextModule,
+        ButtonModule,
+        InputModule,
+        DatepickerInputModule,
+        DateRangeModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        CaptionModule,
+        TextareaModule,
+        LoaderModule,
+        AsyncPipe,
+        SearchInputModule
+    ],
 })
 export class ContractInfoModule {}
