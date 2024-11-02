@@ -19,4 +19,5 @@ export interface IRawMaterialAccountingContract {
 	status: IDictionaryItemDto;
 	reasonCompletion: string;
 	isComplete: boolean;
+	tov: IDictionaryItemDto;
 }

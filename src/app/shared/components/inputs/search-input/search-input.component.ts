@@ -49,6 +49,7 @@ export class SearchInputComponent {
 	@Input() onlyActive: boolean = false;
 
 	@Output() public select = new EventEmitter<any>();
+	@Output() public blurEvent = new EventEmitter<null>();
 
 	@ViewChild('options') public options!: ElementRef;
 
@@ -173,6 +174,12 @@ export class SearchInputComponent {
 						});
 					break;
 			}
+		}
+	}
+
+	public onBlur(): void {
+		if (!this.value.trim()) {
+			this.blurEvent.emit(null);
 		}
 	}
 
