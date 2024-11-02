@@ -1,0 +1,34 @@
+<div>
+    <div class="header">
+        <div class="header__status">
+            <ss-text>Статус:</ss-text>
+            <ss-tag type="ok">В работе</ss-tag>
+        </div>
+
+        <div class="header__controls">
+            <ss-tooltip-menu icon="download">
+                <ss-caption size="1">
+                    <a target="_blank">
+                        Инструкция по планированию производства
+                    </a>
+                </ss-caption>
+            </ss-tooltip-menu>
+
+
+            <ss-dropdown-button title="Фильтры">
+                <ss-filters
+                    [isFiltersVisible]="true"
+                    [isDropdown]="true"
+                    [(filters)]="planDaysFiltersIFilter"
+                />
+            </ss-dropdown-button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div>
+            Таблица
+        </div>
+    </div>
+
+</div>

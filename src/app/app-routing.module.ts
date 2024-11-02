@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
-import { LayoutClientProposalsComponent } from '@app/shared/layouts/layout-client-proposals/layout-client-proposals.component';
+import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
 import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
 import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
@@ -98,7 +98,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard, ProposalsPermissionsGuard],
 		data: {
 			animation: 'animation',
@@ -109,6 +109,22 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('@app/pages/client-proposals-page/client-proposals.module').then(
 						m => m.ClientProposalsModule,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: FullWidthWithoutFooterLayoutComponent,
+		data: {
+			animation: 'animation',
+		},
+		children: [
+			{
+				path: 'production-plan',
+				loadChildren: () =>
+					import('./pages/production-plan/production-plan.routing').then(
+						r => r.productionPlanRoutes,
 					),
 			},
 		],
@@ -132,7 +148,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
