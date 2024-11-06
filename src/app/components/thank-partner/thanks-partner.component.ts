@@ -21,9 +21,8 @@ export class ThanksPartnerComponent {
 
 	public thankYouList = toSignal(
 		this.dateCtrl.valueChanges.pipe(
-			startWith(this.getDate()),
-			tap(() => this.loading.set(true)),
 			filter(Boolean),
+			tap(() => this.loading.set(true)),
 			switchMap(date => {
 				return this.apiService.getPartnerThanks(date).pipe(
 					map(items => {
