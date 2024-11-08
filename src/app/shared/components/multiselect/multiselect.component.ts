@@ -10,7 +10,7 @@ import {
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
-export type SearchType = 'user' | 'client' | 'tovs' | 'contractor' | 'contract';
+export type SearchType = 'user' | 'client' | 'tovs' | 'contractor' | 'contract' | 'tovGroups';
 
 @UntilDestroy()
 @Component({

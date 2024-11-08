@@ -1,3 +1,23 @@
 .app-excess-income-page {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: nowrap;
+		align-items: center;
+	}
+
+	&__header-filter {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: end;
+		gap: 16px;
+	}
+
+	ss-select-v2 {
+		width: 500px;
+	}
 }

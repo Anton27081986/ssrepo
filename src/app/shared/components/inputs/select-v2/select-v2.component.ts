@@ -32,17 +32,17 @@ export class SelectV2Component implements ControlValueAccessor {
 	@Input() public placeholder: string = '';
 	protected selected: WritableSignal<number | null> = signal(null);
 
-	private OnChange!: (value: number) => void;
+	private OnChange!: (value: IDictionaryItemDto) => void;
 	private OnTouched!: (value: number) => void;
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
-	writeValue(value: number | null) {
-		this.selected.set(value);
+	writeValue(value: IDictionaryItemDto) {
+		this.selected.set(value.id);
 		this.changeDetectorRef.detectChanges();
 	}
 
-	public registerOnChange(fn: (value: number) => void): void {
+	public registerOnChange(fn: (value: IDictionaryItemDto) => void): void {
 		this.OnChange = fn;
 	}
 
@@ -52,8 +52,11 @@ export class SelectV2Component implements ControlValueAccessor {
 
 	public onClick(el: EventTarget | null) {
 		if (el) {
-			const value = (el as HTMLSelectElement).value;
-			this.OnChange(Number(value));
+			const value = Number((el as HTMLSelectElement).value);
+			const checkValue = this.options.find(opt => opt.id === value);
+			if (checkValue) {
+				this.OnChange(checkValue);
+			}
 		}
 	}
 }

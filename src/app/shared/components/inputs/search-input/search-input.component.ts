@@ -26,6 +26,7 @@ export type searchType =
 	| 'contract'
 	| 'global'
 	| 'products'
+	| 'tovGroups'
 	| undefined;
 
 @UntilDestroy()
