@@ -66,7 +66,7 @@ export class DictionaryApiService {
 
 	/** Список договоров учета законтрактованного сырья из КИСП*/
 	public getProcurementsContractDetails(
-		ContractorId: string,
+		ContractorId: number,
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
