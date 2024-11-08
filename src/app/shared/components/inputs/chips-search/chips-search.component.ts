@@ -99,7 +99,7 @@ export class ChipsSearchComponent {
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res;
+							this.found = res.items;
 							this.ref.detectChanges();
 						});
 					break;
@@ -108,7 +108,7 @@ export class ChipsSearchComponent {
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res;
+							this.found = res.items;
 							this.ref.detectChanges();
 						});
 					break;

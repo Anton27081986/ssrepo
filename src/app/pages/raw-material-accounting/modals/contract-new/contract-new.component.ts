@@ -89,7 +89,7 @@ export class ContractNewComponent {
 			});
 	}
 
-	onContractorSelect(id: string) {
+	onContractorSelect(id: number) {
 		this.facadeService.getContractDetails(id);
 	}
 

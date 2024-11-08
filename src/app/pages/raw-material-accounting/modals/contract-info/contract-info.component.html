@@ -71,7 +71,7 @@
 			<div class="body__column">
                 <div *ngIf="!isEditMode; else tradePositionEdit" class="body__column__item">
 					<ss-text size="4">Товарная позиция:</ss-text>
-					<ss-text size="3">{{ contract?.tov?.name || '-' }}</ss-text>
+					<ss-text size="3">{{ contract!.tov.name || '-' }}</ss-text>
 				</div>
                 <ng-template #tradePositionEdit>
                     <div class="body__column__item">

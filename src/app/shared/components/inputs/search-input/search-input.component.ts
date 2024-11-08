@@ -125,7 +125,7 @@ export class SearchInputComponent {
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found$.next(res);
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -134,7 +134,7 @@ export class SearchInputComponent {
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found$.next(res);
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 							this.showHiddenOptions();
 						});
