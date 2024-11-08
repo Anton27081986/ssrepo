@@ -21,6 +21,7 @@ export type searchType =
 	| 'technologist'
 	| 'productions'
 	| 'productionsTpr'
+	| 'tovGroups'
 	| undefined;
 
 @UntilDestroy()
@@ -51,6 +52,7 @@ export class ChipsSearchComponent {
 	) {}
 
 	protected onInputChange(query: string) {
+		console.log(this.searchType, query);
 		if (query.length > 2) {
 			switch (this.searchType) {
 				case 'user':
@@ -111,6 +113,7 @@ export class ChipsSearchComponent {
 						});
 					break;
 				case 'client':
+					console.log('clientttttttt');
 					this.searchFacade
 						.getClients(query)
 						.pipe(untilDestroyed(this))
@@ -122,6 +125,15 @@ export class ChipsSearchComponent {
 				case 'productions':
 					this.searchFacade
 						.getProductions(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tovGroups':
+					this.searchFacade
+						.getTovGroups(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;

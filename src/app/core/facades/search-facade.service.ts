@@ -52,6 +52,10 @@ export class SearchFacadeService {
 		return this.productionsApiService.searchProductions(query);
 	}
 
+	public getTovGroups(query: string) {
+		return this.productionsApiService.getTpgSearch(query);
+	}
+
 	public getContractor(query: string) {
 		return this.dictionaryApiService.getContractors(query, this.clientId);
 	}
@@ -83,7 +87,6 @@ export class SearchFacadeService {
 	}
 
 	public getDictionaryUsers(query?: string) {
-		return this.dictionaryApiService
-			.getDictionaryUsers(this.clientId!, query);
+		return this.dictionaryApiService.getDictionaryUsers(this.clientId!, query);
 	}
 }

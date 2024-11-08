@@ -31,12 +31,6 @@ const routes: Routes = [
 				},
 				children: [
 					{
-						path: 'partners',
-						// canActivate: [AuthGuards],
-						loadChildren: () =>
-							import('./pages/partners/partners.module').then(m => m.PartnersModule),
-					},
-					{
 						path: 'profile',
 						canActivate: [AuthGuard],
 						loadChildren: () =>
