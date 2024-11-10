@@ -1,7 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CompletedWorkActHistoryComponent } from '@app/pages/completed-work-acts/completed-work-act-history/completed-work-act-history.component';
 import { ModalService } from '@app/core/modal/modal.service';
+import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 
 @Component({
 	selector: 'ss-completed-work-act-card',
@@ -9,20 +12,39 @@ import { ModalService } from '@app/core/modal/modal.service';
 	styleUrls: ['./completed-work-act-card.component.scss'],
 })
 export class CompletedWorkActCardComponent {
-	protected actId: number | undefined;
+	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
+		initialValue: null,
+	});
+
+	protected isEdit: Signal<boolean> = toSignal(this.completedWorkActsFacade.isEditMode$, {
+		initialValue: false,
+	});
 
 	public constructor(
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly activatedRoute: ActivatedRoute,
-		@Inject(ModalService) private readonly modalService: ModalService,
+		private readonly modalService: ModalService,
 	) {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if (id) {
-			this.actId = Number.parseInt(id, 10);
+			this.completedWorkActsFacade.getAct(id);
 		}
 	}
 
 	public openHistoryModal(actId: number): void {
 		this.modalService.open(CompletedWorkActHistoryComponent, { data: actId });
+	}
+
+	public toArchiveAct() {
+		this.completedWorkActsFacade.toArchiveAct();
+	}
+
+	public pullAct() {
+		this.completedWorkActsFacade.pullAct();
+	}
+
+	public restoreAct() {
+		this.completedWorkActsFacade.restoreAct();
 	}
 }

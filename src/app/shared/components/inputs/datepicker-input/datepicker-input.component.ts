@@ -19,7 +19,7 @@ export class DatepickerInputComponent {
 	@Input() public size: 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '01.02.2024-08.02.2024';
+	@Input() public placeholder: string | null = '01.02.2024-08.02.2024';
 	@Input() public error: string | undefined;
 	@Output() protected datepicker = new EventEmitter();
 

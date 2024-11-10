@@ -26,8 +26,15 @@
 			[items]="getTableItems(acts)"
 		>
 		</ss-table>
+		<ss-pagination
+			[total]="acts.total"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			(changeIndex)="pageIndexChange($event)"
+		>
+		</ss-pagination>
 		<ng-template #empty>
-			<ss-empty-data-page width="300px" height='176px'></ss-empty-data-page>
+			<ss-empty-data-page width="300px" height="176px"></ss-empty-data-page>
 		</ng-template>
 	</ng-container>
 	<ss-loader *ngIf="isLoader()"></ss-loader>

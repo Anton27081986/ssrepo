@@ -154,4 +154,129 @@ export class DictionaryApiService {
 			{ params },
 		);
 	}
+
+	public getServices(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Services`,
+			{ params },
+		);
+	}
+
+	public getCostArticles(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/CostArticles`,
+			{ params },
+		);
+	}
+
+	public getFaObjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/FaObjects`,
+			{ params },
+		);
+	}
+
+	public getProjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Projects`,
+			{ params },
+		);
+	}
+
+	public getDepts(query?: string, userId?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (userId) {
+			params = params.set('userId', userId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Depts`,
+			{ params },
+		);
+	}
+
+	public getSections(query?: string, deptId?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (deptId) {
+			params = params.set('deptId', deptId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/MfsSections`,
+			{ params },
+		);
+	}
+
+	public getBuUnits(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/BuUnits`,
+			{ params },
+		);
+	}
+
+	public getTovUnits(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/TovUnits`,
+			{ params },
+		);
+	}
+
+	public getFinDocOrders(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/FinDocOrders`,
+			{ params },
+		);
+	}
 }

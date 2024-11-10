@@ -21,6 +21,8 @@ export type searchType =
 	| 'technologist'
 	| 'productions'
 	| 'productionsTpr'
+	| 'fin-doc-orders'
+	| string
 	| 'tovGroups'
 	| undefined;
 
@@ -31,7 +33,7 @@ export type searchType =
 	styleUrls: ['./chips-search.component.scss'],
 })
 export class ChipsSearchComponent {
-	@Input() public size: 'large' | 'medium' = 'medium';
+	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string = 'Введите ФИО';
@@ -52,7 +54,6 @@ export class ChipsSearchComponent {
 	) {}
 
 	protected onInputChange(query: string) {
-		console.log(this.searchType, query);
 		if (query.length > 2) {
 			switch (this.searchType) {
 				case 'user':
@@ -113,7 +114,6 @@ export class ChipsSearchComponent {
 						});
 					break;
 				case 'client':
-					console.log('clientttttttt');
 					this.searchFacade
 						.getClients(query)
 						.pipe(untilDestroyed(this))
@@ -143,6 +143,15 @@ export class ChipsSearchComponent {
 				case 'productionsTpr':
 					this.searchFacade
 						.getProductSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'fin-doc-orders':
+					this.searchFacade
+						.getFinDocOrders(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;
