@@ -89,6 +89,42 @@ export class SearchFacadeService {
 		return this.winsApiService.getProductSearch(query);
 	}
 
+	public getDictionaryServices(query?: string) {
+		return this.dictionaryApiService.getServices(query);
+	}
+
+	public getDictionaryCostArticles(query?: string) {
+		return this.dictionaryApiService.getCostArticles(query);
+	}
+
+	public getDictionaryFaObjects(query?: string) {
+		return this.dictionaryApiService.getFaObjects(query);
+	}
+
+	public getDictionaryProjects(query?: string) {
+		return this.dictionaryApiService.getProjects(query);
+	}
+
+	public getDictionaryDepts(query?: string, userId?: number) {
+		return this.dictionaryApiService.getDepts(query, userId);
+	}
+
+	public getDictionarySections(query?: string, deptId?: number) {
+		return this.dictionaryApiService.getSections(query, deptId);
+	}
+
+	public getDictionaryBuUnits(query?: string) {
+		return this.dictionaryApiService.getBuUnits(query);
+	}
+
+	public getDictionaryTovUnits(query?: string) {
+		return this.dictionaryApiService.getTovUnits(query);
+	}
+
+	public getFinDocOrders(query: string) {
+		return this.dictionaryApiService.getFinDocOrders(query);
+	}
+
 	public getDictionaryUsers(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getDictionaryUsers(this.clientId!, query);
 	}

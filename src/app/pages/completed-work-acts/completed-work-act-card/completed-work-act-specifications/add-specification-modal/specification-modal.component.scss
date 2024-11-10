@@ -1,0 +1,44 @@
+@use 'src/styles/colors.scss' as *;
+
+.specification {
+	width: 820px;
+}
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.header {
+	display: flex;
+	padding: 16px;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid $island-outline;
+}
+
+.content {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 16px;
+	gap: 16px 28px;
+	border-bottom: 1px solid $island-outline;
+
+	&__column {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+}
+
+.footer {
+	display: flex;
+	padding: 16px;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 16px;
+}

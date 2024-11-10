@@ -1,5 +1,49 @@
-<p>
-	карточка акта {{ actId }}
-
-    <button (click)="openHistoryModal(actId!)">Показать историю</button>
-</p>
+<ng-container *ngIf="act() as act">
+	<div class="header">
+		<div class="header__title">
+			<ss-text size="0">Акт №{{ act.id }}</ss-text>
+			@switch (act.state.id) {
+				@case (0) {
+					<ss-tag-v2 state="danger">{{ act.state.name }}</ss-tag-v2>
+				}
+				@case (1) {
+					<ss-tag-v2 state="normal">{{ act.state.name }}</ss-tag-v2>
+				}
+				@case (2) {
+					<ss-tag-v2 state="success">{{ act.state.name }}</ss-tag-v2>
+				}
+			}
+		</div>
+		<div class="header__controls">
+			<ss-button type="muted" size="small" (click)="openHistoryModal(act.id)">История</ss-button>
+			<ss-dropdown-button *ngIf="!isEdit()" title="Действия">
+				@if (act.state.id === 0) {
+					<div class="header__controls__dropdown-item" (click)="restoreAct()">
+						<ss-icon name="refresh"></ss-icon>
+						<ss-text size="3">Восстановить</ss-text>
+					</div>
+				}
+				@if (act.state.id === 1) {
+					<div class="header__controls__dropdown-item" (click)="pullAct()">
+						<ss-icon name="clipboard"></ss-icon>
+						<ss-text size="3">Провести</ss-text>
+					</div>
+				}
+				@if (act.state.id === 1 || act.state.id === 2) {
+					<div class="header__controls__dropdown-item" (click)="toArchiveAct()">
+						<ss-icon name="trash"></ss-icon>
+						<ss-text size="3">Удалить</ss-text>
+					</div>
+				}
+			</ss-dropdown-button>
+		</div>
+	</div>
+	<div class="content">
+		@if (isEdit()) {
+			<ss-completed-work-act-edit></ss-completed-work-act-edit>
+		} @else {
+			<ss-completed-work-act-info></ss-completed-work-act-info>
+		}
+		<ss-completed-work-act-specifications></ss-completed-work-act-specifications>
+	</div>
+</ng-container>

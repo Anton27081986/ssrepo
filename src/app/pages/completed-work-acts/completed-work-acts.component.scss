@@ -15,6 +15,10 @@
 		&__controls {
 			display: flex;
 			gap: 16px;
+
+			::ng-deep ss-filters .filters {
+				width: 306px;
+			}
 		}
 	}
 
@@ -25,6 +29,9 @@
 		display: flex;
 		gap: 16px;
 		overflow: hidden;
+		justify-content: center;
+		flex-direction: column;
+		padding-bottom: 16px;
 
 		.table {
 			height: 100%;

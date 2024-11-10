@@ -26,6 +26,14 @@ export type searchType =
 	| 'contract'
 	| 'global'
 	| 'products'
+	| 'services'
+	| 'cost-article'
+	| 'fa-objects'
+	| 'projects'
+	| 'depts'
+	| 'mfs-sections'
+	| 'bu-units'
+	| 'tov-units'
 	| 'tovGroups'
 	| undefined;
 
@@ -70,7 +78,10 @@ export class SearchInputComponent {
 	}
 
 	protected onChange(query: string) {
-		if (query.length > 2) {
+		if (
+			query.length > 2 ||
+			(query.length && (this.searchType === 'tov-units' || this.searchType === 'bu-units'))
+		) {
 			switch (this.searchType) {
 				case 'user':
 					this.searchFacade
@@ -168,6 +179,78 @@ export class SearchInputComponent {
 				case 'products':
 					this.searchFacade
 						.getProductSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'services':
+					this.searchFacade
+						.getDictionaryServices(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'cost-article':
+					this.searchFacade
+						.getDictionaryCostArticles(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'fa-objects':
+					this.searchFacade
+						.getDictionaryFaObjects(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'projects':
+					this.searchFacade
+						.getDictionaryProjects(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'depts':
+					this.searchFacade
+						.getDictionaryDepts(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'mfs-sections':
+					this.searchFacade
+						.getDictionarySections(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'bu-units':
+					this.searchFacade
+						.getDictionaryBuUnits(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tov-units':
+					this.searchFacade
+						.getDictionaryTovUnits(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);

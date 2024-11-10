@@ -1,1 +1,49 @@
 @use 'src/styles/colors.scss' as *;
+
+:host {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	height: calc(100vh - 113px);
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px 0;
+
+	&__title {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
+
+	&__controls {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+
+		::ng-deep ss-dropdown-button ss-card {
+			padding: 4px !important;
+		}
+
+		&__dropdown-item {
+			height: 36px;
+			display: flex;
+			align-items: center;
+			padding: 10px 12px;
+			gap: 8px;
+			cursor: pointer;
+		}
+	}
+}
+
+.content {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	overflow: hidden;
+	gap: 20px;
+	padding-bottom: 16px;
+}

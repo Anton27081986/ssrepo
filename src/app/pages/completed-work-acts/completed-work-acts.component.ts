@@ -1,7 +1,7 @@
 import { Component, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
-import { CompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
+import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
@@ -13,8 +13,7 @@ import { IFilter } from '@app/shared/components/filters/filters.component';
 	styleUrls: ['./completed-work-acts.component.scss'],
 })
 export class CompletedWorkActsComponent {
-	public total: number | undefined;
-	public pageSize = 20;
+	public pageSize = 12;
 	public pageIndex = 1;
 	public offset = 0;
 
@@ -33,50 +32,69 @@ export class CompletedWorkActsComponent {
 		},
 		{
 			name: 'BuUnitId',
-			type: 'string',
+			type: 'search',
+			searchType: 'bu-units',
 			label: 'БЕ Плательщика',
 			placeholder: 'Введите ББ',
 		},
 		{
-			name: 'statuses',
+			name: 'State',
 			type: 'select',
-			label: '',
+			label: 'Состояние',
+			options: [
+				{
+					id: 0,
+					name: 'Архив',
+				},
+				{
+					id: 1,
+					name: 'Черновик',
+				},
+				{
+					id: 2,
+					name: 'Проведен',
+				},
+			],
 			placeholder: 'Выберите состояние',
 		},
 		{
-			name: 'statuses',
-			type: 'select',
-			label: '',
+			name: 'ProviderContractorId',
+			type: 'search',
+			searchType: 'contractor',
+			label: 'Поставщик услуг',
 			placeholder: 'Выберите поставщика услуг',
 		},
 		{
-			name: 'contractorIds',
-			type: 'search-select',
-			searchType: 'contractor',
-			label: 'Контрагенты',
-			placeholder: 'Введите наименование контрагента',
-		},
-		{
-			name: 'managerIds',
-			type: 'search-select',
+			name: 'ApplicantUserId',
+			type: 'search',
 			searchType: 'user',
 			label: 'Заявитель',
 			placeholder: 'Введите ФИО',
 		},
 		{
-			name: 'amount',
+			name: 'TotalAmount',
 			type: 'string',
 			label: '',
 			placeholder: 'Введите сумму акта',
 		},
 		{
-			name: 'additional',
-			type: 'select',
-			label: 'Дополнительно',
-			placeholder: 'Требуется моя виза',
+			name: 'Additional',
+			type: 'boolean',
+			label: 'Требуется моя виза',
+			options: [
+				{
+					id: 0,
+					name: 'Все',
+				},
+				{
+					id: 1,
+					name: 'Требуется моя виза',
+				},
+			],
+			placeholder: '',
 		},
 		{
-			name: 'withArchived',
+			name: 'WithArchive',
 			type: 'boolean',
 			label: 'Показать архивные акты',
 			options: [
@@ -87,11 +105,11 @@ export class CompletedWorkActsComponent {
 		},
 	];
 
-	constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {
+	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {
 		this.getFilteredActs();
 	}
 
-	public acts: Signal<IResponse<CompletedWorkAct> | null> = toSignal(
+	public acts: Signal<IResponse<ICompletedWorkAct> | null> = toSignal(
 		this.completedWorkActsFacade.acts$,
 		{
 			initialValue: null,
@@ -102,7 +120,7 @@ export class CompletedWorkActsComponent {
 		initialValue: true,
 	});
 
-	protected getTableItems(acts: IResponse<CompletedWorkAct>): ITableItem[] {
+	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
 		const actTableItems = acts.items.map(x => {
 			const tableItem: ICompletedWorkActTableItem = {} as ICompletedWorkActTableItem;
 
@@ -111,7 +129,7 @@ export class CompletedWorkActsComponent {
 				url: x.id !== undefined ? `./competed-work-acts/${x.id}` : '-',
 			};
 
-			tableItem.state = x.state.name;
+			tableItem.state = x.state.name ?? '-';
 
 			tableItem.externalActDate = `${new Date(Date.parse(x.externalActDate)).toLocaleString(
 				'ru-RU',
@@ -135,14 +153,14 @@ export class CompletedWorkActsComponent {
 
 			tableItem.internalActNumber = x.internalActNumber;
 
-			tableItem.payerBuUnit = x.payerBuUnit.name;
+			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
-				text: x.providerContractor.name ?? '-',
+				text: x.providerContractor?.name ?? '-',
 				url: x.providerContractorLinkUrl ?? '-',
 			};
 
-			tableItem.applicantUser = x.applicantUser.name;
+			tableItem.applicantUser = x.applicantUser.name ?? '-';
 
 			tableItem.totalAmount = x.totalAmount;
 
@@ -158,7 +176,7 @@ export class CompletedWorkActsComponent {
 		}
 
 		const preparedFilter: any = {
-			limit: isNewFilter ? 20 : this.pageSize,
+			limit: isNewFilter ? 12 : this.pageSize,
 			offset: isNewFilter ? 0 : this.offset,
 		};
 
@@ -166,6 +184,25 @@ export class CompletedWorkActsComponent {
 			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
+				case 'date-range':
+					const from =
+						filter.value && typeof filter.value === 'string'
+							? filter.value.split('-')[0].split('.')
+							: null;
+
+					preparedFilter[filter.name.split('-')[0]] = from
+						? `${[from[2], from[1], parseInt(from[0], 10)].join('-')}T00:00:00.000Z`
+						: null;
+
+					const to =
+						filter.value && typeof filter.value === 'string'
+							? filter.value.split('-')[1].split('.')
+							: null;
+
+					preparedFilter[filter.name.split('-')[1]] = to
+						? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
+						: null;
+					break;
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
@@ -182,5 +219,18 @@ export class CompletedWorkActsComponent {
 		}
 
 		this.completedWorkActsFacade.applyFilters(preparedFilter);
+	}
+
+	public pageIndexChange($event: number) {
+		if ($event === 1) {
+			this.offset = 0;
+		} else {
+			this.offset = this.pageSize * $event - this.pageSize;
+		}
+
+		this.offset = this.pageSize * $event - this.pageSize;
+		this.pageIndex = $event;
+
+		this.getFilteredActs();
 	}
 }
