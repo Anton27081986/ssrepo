@@ -97,6 +97,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<ss-chips-search searchType="fin-doc-orders" size="small" placeholder="Введите значение"
+					 [selectedItems]="finDocOrders"
 					 (getSelected)="setFinDocOrdersIds($event)">
 				</ss-chips-search>
 			</div>

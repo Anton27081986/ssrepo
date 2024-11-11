@@ -45,6 +45,8 @@ export class CompletedWorkActEditComponent {
 		},
 	);
 
+	protected finDocOrders: IDictionaryItemDto[] = [];
+
 	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {
 		this.editActForm = new FormGroup({
 			externalActNumber: new FormControl<string | null>(null, [Validators.required]),
@@ -83,6 +85,11 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.currency.setValue(act.currency);
 			}
 		});
+
+		this.finDocOrders =
+			this.editActForm.controls.finDocOrderIds.value?.map(item => {
+				return { id: item, name: item.toString() };
+			}) || [];
 	}
 
 	protected switchMode() {
