@@ -11,7 +11,7 @@
                 <ss-date-time-picker [formControl]="dateCtrl" [showTime]="false"></ss-date-time-picker>
             </div>
 
-            <ss-button (click)="thankToUrl(thankYouList()?.addNewThanksLink || '')">
+            <ss-button (click)="thankToUrl(thankYouList().addNewThanksLink || '')">
                 <ss-icon [width]="'12'" [height]="'12'" [name]="'like'"></ss-icon>
                 Поблагодарить партнера
             </ss-button>
@@ -26,12 +26,12 @@
         </div>
     } @else {
         <div class="thanks-partner__info">
-            <ss-text [size]="'3'">Всего за неделю: {{ thankYouList()?.weekCount }}</ss-text>
+            <ss-text [size]="'3'">Всего за неделю: {{ thankYouList().weekCount }}</ss-text>
 
-            <ss-text [size]="'3'">Всего за все время: {{ thankYouList()?.totalCount }}</ss-text>
+            <ss-text [size]="'3'">Всего за все время: {{ thankYouList().totalCount }}</ss-text>
         </div>
 
-        @if (thankYouList()?.total) {
+        @if (thankYouList().total) {
             <div class="thanks-partner__grid-body">
                 @for (item of thankYouList().items; track item.id) {
                     <app-thanks-partner-card

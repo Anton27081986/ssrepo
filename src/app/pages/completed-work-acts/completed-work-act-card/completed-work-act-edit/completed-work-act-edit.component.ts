@@ -21,14 +21,12 @@ export class CompletedWorkActEditComponent {
 		internalActNumber: FormControl<string | null>;
 		externalActDate: FormControl<string | null>;
 		internalActDate: FormControl<string | null>;
-		inn: FormControl<string | null>;
 		finDocOrderIds: FormControl<number[] | null>;
 		oneSNumber: FormControl<string | null>;
 		oneSComment: FormControl<string | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnitId: FormControl<number | null>;
 		payerContractorId: FormControl<number | null>;
-		payerBuUnitId: FormControl<number | null>;
 		providerContractorId: FormControl<number | null>;
 		contractId: FormControl<number | null>;
 		currency: FormControl<string | null>;
@@ -53,14 +51,12 @@ export class CompletedWorkActEditComponent {
 			internalActNumber: new FormControl<string | null>(null, [Validators.required]),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
-			inn: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<number[] | null>(null),
 			oneSNumber: new FormControl<string | null>(null, [Validators.required]),
 			oneSComment: new FormControl<string | null>(null, [Validators.required]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnitId: new FormControl<number | null>(null, [Validators.required]),
 			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
-			payerBuUnitId: new FormControl<number | null>(null, [Validators.required]),
 			providerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			contractId: new FormControl<number | null>(null, [Validators.required]),
 			currency: new FormControl<string | null>(null, [Validators.required]),
@@ -72,14 +68,12 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.internalActNumber.setValue(act.internalActNumber);
 				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
 				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
-				this.editActForm.controls.inn.setValue(act.inn);
 				this.editActForm.controls.finDocOrderIds.setValue(act.finDocOrderIds);
 				this.editActForm.controls.oneSNumber.setValue(act.oneSNumber);
 				this.editActForm.controls.oneSComment.setValue(act.oneSComment);
 				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id);
 				this.editActForm.controls.buUnitId.setValue(act.buUnit?.id);
 				this.editActForm.controls.payerContractorId.setValue(act.payerContractor?.id);
-				this.editActForm.controls.payerBuUnitId.setValue(act.payerBuUnit?.id);
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
 				this.editActForm.controls.contractId.setValue(act.contract?.id);
 				this.editActForm.controls.currency.setValue(act.currency);

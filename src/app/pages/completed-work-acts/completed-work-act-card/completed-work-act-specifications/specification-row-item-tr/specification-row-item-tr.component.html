@@ -1,5 +1,5 @@
 <ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
-	<ng-container *ngIf="item">
+	<ng-container>
 		<td class="hc-table-td">
 			<ng-container [ngSwitch]="col.id">
 <!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
@@ -35,7 +35,7 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.user">
-					<div class="hc-table-td__content">{{ item?.user?.name || '-' }}</div>
+					<div class="hc-table-td__content">{{ item?.user?.name ?? '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.amount">
@@ -43,13 +43,13 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.faAsset">
-					<div class="hc-table-td__content hc-table-td__content--number">{{ item?.faAsset?.name || '-' }}</div>
+					<div class="hc-table-td__content hc-table-td__content--number">{{ item?.faAsset?.name ?? '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.controls">
 					<div class="hc-table-td__content hc-table-td__content--controls">
-						<ss-icon name="edit" (click)="onEditSpecification(item)"></ss-icon>
-						<ss-icon name="trash" (click)="onDeleteSpecification(item.id)"></ss-icon>
+						<ss-icon name="edit" (click)="onEditSpecification(item!)"></ss-icon>
+						<ss-icon name="trash" (click)="onDeleteSpecification(item!.id)"></ss-icon>
 					</div>
 				</ng-container>
 

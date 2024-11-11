@@ -60,14 +60,6 @@
 					 [error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
-			<div class="content__column__item">
-				<ss-text size="4">БЕ Плательщика</ss-text>
-				<ss-search-input searchType="bu-units" size="small"
-					 [selectedItem]="act()?.payerBuUnit"
-					 (select)="editActForm.controls.payerBuUnitId.setValue($event.id)"
-					 (click)="editActForm.controls.payerBuUnitId.setErrors(null)"
-					 [error]="editActForm.controls.payerBuUnitId.touched && editActForm.controls.payerBuUnitId.errors?.required ? 'Обязательное поле' : undefined"></ss-search-input>
-			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
@@ -78,12 +70,6 @@
 					 (click)="editActForm.controls.providerContractorId.setErrors(null)"
 					 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
-			</div>
-			<div class="content__column__item">
-				<ss-text size="4">ИНН</ss-text>
-				<ss-input formControlName="inn" size="small" placeholder="Введите значение"
-					  [error]="editActForm.controls.inn.touched && editActForm.controls.inn.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
