@@ -15,7 +15,7 @@
 		<ng-container *ngFor="let file of checkListFile.checkFiles$ | async">
 			<div class="ss-file-picker__content-item">
 					<ss-caption size="2">{{ file.name}}</ss-caption>
-					<ss-icon (click)="dropFile(file)" height="12" name="close" class="ss-file-picker__icon-basket"></ss-icon>
+					<ss-icon (click)="dropFile(file); $event.stopPropagation()" height="12" name="close" class="ss-file-picker__icon-basket"></ss-icon>
 			</div>
 		</ng-container>
 	</div>

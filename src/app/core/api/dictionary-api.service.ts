@@ -241,11 +241,18 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getBuUnits(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getBuUnits(
+		query?: string,
+		applicantUserId?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
 			params = params.set('query', query);
+		}
+
+		if (applicantUserId) {
+			params = params.set('ApplicantUserId', applicantUserId);
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
@@ -267,11 +274,11 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getCompletedActContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getCompletedActContracts(id?: number): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
-		if (query) {
-			params = params.set('query', query);
+		if (id) {
+			params = params.set('providerContractorId', id);
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(

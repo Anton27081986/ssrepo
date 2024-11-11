@@ -1,15 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Signal } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
-import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 
 @UntilDestroy()
 @Component({
@@ -18,6 +19,10 @@ import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-
 	styleUrls: ['./specification-modal.component.scss'],
 })
 export class SpecificationModalComponent {
+	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
+		initialValue: null,
+	});
+
 	protected addSpecificationForm!: FormGroup<{
 		serviceId: FormControl<number | null>;
 		comment: FormControl<string | null>;
@@ -41,7 +46,6 @@ export class SpecificationModalComponent {
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		private readonly userFacade: UserFacadeService,
 		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.addSpecificationForm = new FormGroup({
@@ -70,17 +74,15 @@ export class SpecificationModalComponent {
 			this.addSpecificationForm.controls.sectionId.setValue(spec.section?.id || null);
 			this.addSpecificationForm.controls.userId.setValue(spec.user?.id || null);
 			this.addSpecificationForm.controls.amount.setValue(spec.amount || null);
-		} else {
-			this.userFacade
-				.getUserProfile()
-				.pipe(untilDestroyed(this))
-				.subscribe(user => {
-					if (user) {
-						this.user = { id: user.id, name: user.name };
-						this.addSpecificationForm.controls.userId.setValue(user.id);
-						this.getMyDept();
-					}
-				});
+
+			this.myDept = spec.dept;
+			this.mySection = spec.section;
+		} else if (this.act()) {
+			const user = this.act()?.applicantUser;
+
+			if (user) {
+				this.onUserSelect(user);
+			}
 		}
 	}
 
@@ -108,8 +110,19 @@ export class SpecificationModalComponent {
 					if (res.items.length) {
 						this.mySection = res.items[0];
 						this.addSpecificationForm.controls.sectionId.setValue(this.mySection.id);
+					} else {
+						this.mySection = undefined;
+						this.addSpecificationForm.controls.sectionId.setValue(null);
 					}
 				});
+		}
+	}
+
+	protected onUserSelect(user: IDictionaryItemDto) {
+		if (user.id) {
+			this.user = user;
+			this.addSpecificationForm.controls.userId.setValue(user.id);
+			this.getMyDept();
 		}
 	}
 
