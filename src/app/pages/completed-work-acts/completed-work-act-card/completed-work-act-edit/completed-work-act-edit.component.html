@@ -29,7 +29,7 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внутренний)</ss-text>
-				<ss-datepicker-input formControlName="internalActDate" size="small" [placeholder]="act()!.externalActDate | date: 'dd.MM.yyyy'"></ss-datepicker-input>
+				<ss-datepicker-input formControlName="internalActDate" size="small" [placeholder]="act()!.internalActDate | date: 'dd.MM.yyyy'"></ss-datepicker-input>
 			</div>
 		</div>
 		<div class="content__column">
@@ -87,7 +87,7 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
-				<ss-search-input searchType="contract" size="small"
+				<ss-search-input searchType="completed-act-contracts" size="small"
 					 [selectedItem]="act()?.contract"
 					 (select)="editActForm.controls.contractId.setValue($event.id)"
 					 (click)="editActForm.controls.contractId.setErrors(null)"
@@ -97,7 +97,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<ss-chips-search searchType="fin-doc-orders" size="small" placeholder="Введите значение"
-					 (getSelected)="editActForm.controls.finDocOrderIds.setValue($event)">
+					 (getSelected)="setFinDocOrdersIds($event)">
 				</ss-chips-search>
 			</div>
 		</div>
@@ -105,9 +105,13 @@
 			<div class="content__column__item">
 				<ss-text size="4">Валюта</ss-text>
 				<ss-select size="small"
+					(onChange)="editActForm.controls.currency.setValue($event)"
 					 (click)="editActForm.controls.currency.setErrors(null)"
 					 [error]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : undefined">
-					<option *ngFor="let currency of currencies()" [value]="currency.name" [selected]="act()?.currency === currency.name">{{currency.name}}</option>
+					<option
+						*ngFor="let currency of currencies()"
+						[value]="currency.name"
+						[selected]="act()?.currency === currency.name">{{currency.name}}</option>
 				</ss-select>
 			</div>
 			<div class="content__column__item">

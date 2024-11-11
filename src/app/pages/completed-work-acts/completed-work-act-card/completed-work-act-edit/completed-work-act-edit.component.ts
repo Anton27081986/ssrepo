@@ -89,13 +89,27 @@ export class CompletedWorkActEditComponent {
 		this.completedWorkActsFacade.switchMode();
 	}
 
-	protected onSave() {
-		console.log(this.editActForm);
+	protected setFinDocOrdersIds(docs: IDictionaryItemDto[]) {
+		this.editActForm.controls.finDocOrderIds.setValue(docs.map(item => item.id));
+	}
 
+	protected onSave() {
 		this.editActForm.markAllAsTouched();
 
 		if (this.editActForm.invalid) {
 			return;
+		}
+
+		if (this.editActForm.controls.externalActDate.value?.length === 10) {
+			this.editActForm.controls.externalActDate.setValue(
+				`${this.editActForm.controls.externalActDate.value}T00:00:00.000Z`,
+			);
+		}
+
+		if (this.editActForm.controls.internalActDate.value?.length === 10) {
+			this.editActForm.controls.internalActDate.setValue(
+				`${this.editActForm.controls.internalActDate.value}T00:00:00.000Z`,
+			);
 		}
 
 		this.completedWorkActsFacade

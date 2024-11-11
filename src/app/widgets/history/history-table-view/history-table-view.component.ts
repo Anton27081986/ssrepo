@@ -32,7 +32,7 @@ export class HistoryTableViewComponent {
 			return {
 				createdTime: item.createdTime,
 				userName: item.user?.name,
-				comments: item.comments,
+				comments: item.comments ?? '-',
 				action: item.action,
 			};
 		}));

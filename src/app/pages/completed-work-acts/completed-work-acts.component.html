@@ -2,7 +2,7 @@
 	<ss-headline size="h3">Реестр актов выполненных работ</ss-headline>
 	<div class="header__controls">
 		<ss-dropdown-button title="Фильтры">
-			<ss-filters [isFiltersVisible]="true" [isDropdown]="true" [(filters)]="filters" (applyFilter)="getFilteredActs(true)"></ss-filters>
+			<ss-filters [isFiltersVisible]="!isLoader()" [isDropdown]="true" [(filters)]="filters" (applyFilter)="getFilteredActs(true)"></ss-filters>
 		</ss-dropdown-button>
 	</div>
 </div>
@@ -13,15 +13,16 @@
 			[padding]="'8px'"
 			[head]="[
 					{title: 'Код', field: 'code'},
-					{title: 'Состояние', field: 'state'},
-					{title: 'Дата внешн.', field: 'externalActDate', sizeRatio: 2},
-					{title: 'Дата внутр.', field: 'internalActDate', sizeRatio: 2},
-					{title: '№ внешн. акта', field: 'externalActNumber', sizeRatio: 2},
-					{title: '№ внутр. акта', field: 'internalActNumber', sizeRatio: 2},
+					{title: 'Состояние', field: 'state', sizeRatio: 2},
+					{title: 'Дата Акта (внш)', field: 'externalActDate', sizeRatio: 2},
+					{title: 'Дата Акта (внтр)', field: 'internalActDate', sizeRatio: 2},
+					{title: '№ Акта (внш)', field: 'externalActNumber', sizeRatio: 1.5},
+					{title: '№ Акта (внтр)', field: 'internalActNumber', sizeRatio: 1.5},
 					{title: 'БЕ плательщика', field: 'payerBuUnit', sizeRatio: 2},
-					{title: 'Поставщик услуг', field: 'providerContractor'},
-					{title: 'Заявитель', field: 'applicantUser'},
-					{title: 'Сумма (итого)', field: 'totalAmount', isNumber: true},
+					{title: 'Поставщик услуг', field: 'providerContractor', sizeRatio: 2},
+					{title: 'Договор', field: 'contractId', sizeRatio: 2},
+					{title: 'Заявитель', field: 'applicantUser', sizeRatio: 2},
+					{title: 'Сумма (итого)', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
 					]"
 			[items]="getTableItems(acts)"
 		>

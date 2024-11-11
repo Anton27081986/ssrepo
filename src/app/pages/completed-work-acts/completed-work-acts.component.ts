@@ -21,13 +21,13 @@ export class CompletedWorkActsComponent {
 		{
 			name: 'DateFrom-DateTo',
 			type: 'date-range',
-			label: 'Выберите дату',
+			label: 'Период (внтр)',
 			placeholder: '',
 		},
 		{
 			name: 'Id',
 			type: 'number',
-			label: '',
+			label: 'Код',
 			placeholder: 'Введите код',
 		},
 		{
@@ -73,9 +73,9 @@ export class CompletedWorkActsComponent {
 		},
 		{
 			name: 'TotalAmount',
-			type: 'string',
-			label: '',
-			placeholder: 'Введите сумму акта',
+			type: 'number',
+			label: 'Сумма (Итого)',
+			placeholder: 'Введите сумму',
 		},
 		{
 			name: 'Additional',
@@ -160,7 +160,9 @@ export class CompletedWorkActsComponent {
 				url: x.providerContractorLinkUrl ?? '-',
 			};
 
-			tableItem.applicantUser = x.applicantUser.name ?? '-';
+			tableItem.applicantUser = x.applicantUser?.name ?? '-';
+
+			tableItem.contractId = x.contractId ?? '-';
 
 			tableItem.totalAmount = x.totalAmount;
 
@@ -204,6 +206,7 @@ export class CompletedWorkActsComponent {
 						: null;
 					break;
 				case 'select':
+				case 'search':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
 						? filter.value.map(item => item.id)

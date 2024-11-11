@@ -121,6 +121,10 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getTovUnits(query);
 	}
 
+	public getDictionaryCompletedActContracts(query?: string) {
+		return this.dictionaryApiService.getCompletedActContracts(query);
+	}
+
 	public getFinDocOrders(query: string) {
 		return this.dictionaryApiService.getFinDocOrders(query);
 	}
