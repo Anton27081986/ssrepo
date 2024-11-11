@@ -11,6 +11,11 @@ export class PermissionsFacadeService {
 	public proposalsPermissions$: BehaviorSubject<string[] | null> = new BehaviorSubject<
 		string[] | null
 	>(null);
+
+	public completedWorkActsPermissions$: BehaviorSubject<string[] | null> = new BehaviorSubject<
+		string[] | null
+	>(null);
+
 	public procurementsPermissions$: Observable<{ items: string[] }>;
 
 	constructor(private readonly permissionsApiService: PermissionsApiService) {
@@ -23,6 +28,17 @@ export class PermissionsFacadeService {
 				}),
 			)
 			.subscribe(this.proposalsPermissions$);
+
+		this.permissionsApiService
+			.getPermissionClient('CompletedWorkAct')
+			.pipe(
+				untilDestroyed(this),
+				map(items => {
+					return items.items;
+				}),
+			)
+			.subscribe(this.completedWorkActsPermissions$);
+
 		this.procurementsPermissions$ = this.permissionsApiService.getPermissionClient('Contract');
 	}
 
