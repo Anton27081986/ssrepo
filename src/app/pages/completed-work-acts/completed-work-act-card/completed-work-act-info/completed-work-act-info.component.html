@@ -59,7 +59,11 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
-				<ss-text size="3">{{ act()?.finDocOrderIds }}</ss-text>
+				<div class="content__column__item__links">
+					<a class="content__column__item__links__item" *ngFor="let docOrder of finDocOrders" [href]="docOrder.linkToDetail || ''" target="_blank">
+						{{ docOrder.name }}
+					</a>
+				</div>
 			</div>
 		</div>
 		<div class="content__column">

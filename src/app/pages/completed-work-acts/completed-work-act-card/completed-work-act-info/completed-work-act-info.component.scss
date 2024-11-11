@@ -45,6 +45,29 @@
 				overflow: hidden;
 			}
 
+			&__links {
+				display: flex;
+				gap: 4px;
+
+				&__item {
+					color: $main;
+					font-family: Inter;
+					font-size: 12px;
+					font-weight: 600;
+					line-height: 14.4px;
+					letter-spacing: -0.01em;
+					display: inline;
+				}
+
+				&__item:after {
+					content: ',';
+				}
+
+				&__item:last-child:after {
+					content: '';
+				}
+			}
+
 			&__files-list {
 				display: flex;
 				flex-direction: column;

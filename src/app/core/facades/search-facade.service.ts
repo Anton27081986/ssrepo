@@ -113,16 +113,16 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getSections(query, deptId);
 	}
 
-	public getDictionaryBuUnits(query?: string) {
-		return this.dictionaryApiService.getBuUnits(query);
+	public getDictionaryBuUnits(query?: string, applicantUserId?: number) {
+		return this.dictionaryApiService.getBuUnits(query, applicantUserId);
 	}
 
 	public getDictionaryTovUnits(query?: string) {
 		return this.dictionaryApiService.getTovUnits(query);
 	}
 
-	public getDictionaryCompletedActContracts(query?: string) {
-		return this.dictionaryApiService.getCompletedActContracts(query);
+	public getDictionaryCompletedActContracts(id?: number) {
+		return this.dictionaryApiService.getCompletedActContracts(id);
 	}
 
 	public getFinDocOrders(query: string) {

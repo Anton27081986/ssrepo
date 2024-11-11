@@ -1,25 +1,6 @@
-<ss-card class="app-excess-income-page">
+<div class="app-excess-income-page">
 	<div class="app-excess-income-page__header">
 		<ss-text>Управление СНД</ss-text>
-		<div class="app-excess-income-page__header-filter">
-			<ss-select-v2 [formControl]="currencyControl" [placeholder]="'Выберите валюту'" [label]="'Валюта'"
-						  [options]="currency()"></ss-select-v2>
-			<ss-dropdown-button title="Фильтры">
-				<ss-filters [isFiltersVisible]="true" [isDropdown]="true" [(filters)]="filters"
-							(applyFilter)="getFilteredExcessIncome(true)"></ss-filters>
-			</ss-dropdown-button>
-		</div>
 	</div>
-	<div class="app-excess-income-page__body">
-		<ng-container *ngIf="clientsNode() as clients">
-			<app-excess-income-table [clients]="clients"></app-excess-income-table>
-		</ng-container>
-		<ss-dynamic-pagination
-			[total]="total()"
-			[offset]="(excessIncomeStateService.offset$ | async)!"
-			[limit]="pageSize"
-			(changeOffset)="pageOffsetChange($event)"
-		>
-		</ss-dynamic-pagination>
-	</div>
-</ss-card>
+
+</div>

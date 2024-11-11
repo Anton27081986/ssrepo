@@ -1,4 +1,4 @@
-import { Component, Input, Signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
@@ -6,6 +6,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
+import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 
 @UntilDestroy()
 @Component({
@@ -43,9 +44,16 @@ export class CompletedWorkActEditComponent {
 		},
 	);
 
-	protected finDocOrders: IDictionaryItemDto[] = [];
+	protected contracts: IDictionaryItemDto[] = [];
 
-	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {
+	protected finDocOrders: IDictionaryItemDto[] = [];
+	protected buUnit: IDictionaryItemDto | undefined;
+
+	public constructor(
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly searchFacade: SearchFacadeService,
+		private readonly ref: ChangeDetectorRef,
+	) {
 		this.editActForm = new FormGroup({
 			externalActNumber: new FormControl<string | null>(null, [Validators.required]),
 			internalActNumber: new FormControl<string | null>(null, [Validators.required]),
@@ -68,7 +76,9 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.internalActNumber.setValue(act.internalActNumber);
 				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
 				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
-				this.editActForm.controls.finDocOrderIds.setValue(act.finDocOrderIds);
+				this.editActForm.controls.finDocOrderIds.setValue(
+					act.finDocOrders.map(doc => doc.id),
+				);
 				this.editActForm.controls.oneSNumber.setValue(act.oneSNumber);
 				this.editActForm.controls.oneSComment.setValue(act.oneSComment);
 				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id);
@@ -77,6 +87,12 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
 				this.editActForm.controls.contractId.setValue(act.contract?.id);
 				this.editActForm.controls.currency.setValue(act.currency);
+
+				this.finDocOrders = this.act()?.finDocOrders || [];
+
+				this.buUnit = act.buUnit;
+
+				this.onProviderContractorSelect(act.providerContractor?.id);
 			}
 		});
 
@@ -119,6 +135,37 @@ export class CompletedWorkActEditComponent {
 			.subscribe(() => {
 				this.switchMode();
 			});
+	}
+
+	protected onApplicantUserSelect(id: number) {
+		if (id) {
+			this.editActForm.controls.applicantUserId.setValue(id);
+			this.searchFacade
+				.getDictionaryBuUnits(undefined, id)
+				.pipe(untilDestroyed(this))
+				.subscribe(res => {
+					this.buUnit = res.items[0];
+					this.ref.detectChanges();
+				});
+		}
+	}
+
+	protected onProviderContractorSelect(id: number, isSearch?: boolean) {
+		if (id) {
+			this.editActForm.controls.providerContractorId.setValue(id);
+			this.searchFacade
+				.getDictionaryCompletedActContracts(id)
+				.pipe(untilDestroyed(this))
+				.subscribe(res => {
+					this.contracts = res.items;
+
+					if (isSearch) {
+						this.editActForm.controls.contractId.setValue(res.items[0]?.id || null);
+					}
+
+					this.ref.detectChanges();
+				});
+		}
 	}
 
 	protected uploadFile(event: Event) {

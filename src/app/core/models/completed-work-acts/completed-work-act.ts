@@ -15,7 +15,7 @@ export interface ICompletedWorkAct {
 	providerContractor: IDictionaryItemDto;
 	inn: string;
 	contract: IDictionaryItemDto;
-	finDocOrderIds: number[];
+	finDocOrders: IDictionaryItemDto[];
 	documents: IFile[];
 	currency: string;
 	oneSComment: string;
