@@ -7,7 +7,7 @@
 		<form [formGroup]="addSpecificationForm" class="content">
 			<div class="content__column">
 				<ss-search-input searchType="services" label="Услуга" placeholder="Выберите из списка"
-					[selectedItem]="spec?.service"
+					[selectedItem]="spec ? spec.service : undefined"
 					(select)="addSpecificationForm.controls.serviceId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.serviceId.setErrors(null)"
 					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined">
@@ -17,19 +17,19 @@
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
 				<ss-search-input searchType="tov-units" label="Единицы измерения" placeholder="Выберите из списка"
-					[selectedItem]="spec?.tovUnit"
+					[selectedItem]="spec ? spec.tovUnit : undefined"
 					(select)="addSpecificationForm.controls.tovUnitId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.tovUnitId.setErrors(null)"
 					[error]="addSpecificationForm.controls.tovUnitId.touched && addSpecificationForm.controls.tovUnitId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 				<ss-search-input searchType="cost-article" label="Статья" placeholder="Выберите из списка"
-					[selectedItem]="spec?.cost"
+					[selectedItem]="spec ? spec.cost : undefined"
 					(select)="addSpecificationForm.controls.costId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.costId.setErrors(null)"
 					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 				<ss-search-input searchType="fa-objects" label="Объект ОС/НМА" placeholder="Выберите из списка"
-					[selectedItem]="spec?.faObject"
+					[selectedItem]="spec ? spec.faObject : undefined"
 					(select)="addSpecificationForm.controls.faObjectId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.faObjectId.setErrors(null)"
 					[error]="addSpecificationForm.controls.faObjectId.touched && addSpecificationForm.controls.faObjectId.errors?.required ? 'Обязательное поле' : undefined">
@@ -37,7 +37,7 @@
 			</div>
 			<div class="content__column">
 				<ss-search-input searchType="projects" label="Проект" placeholder="Выберите из списка"
-					[selectedItem]="spec?.project"
+					[selectedItem]="spec ? spec.project : undefined"
 					(select)="addSpecificationForm.controls.projectId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.projectId.setErrors(null)"
 					[error]="addSpecificationForm.controls.projectId.touched && addSpecificationForm.controls.projectId.errors?.required ? 'Обязательное поле' : undefined">
@@ -54,7 +54,7 @@
 					(click)="addSpecificationForm.controls.sectionId.setErrors(null)"
 					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
-				<ss-search-input searchType="user-dictionary" label="Сотрудник" placeholder="Выберите из списка"
+				<ss-search-input searchType="user" label="Сотрудник" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.user : user"
 					(select)="addSpecificationForm.controls.userId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.userId.setErrors(null)"

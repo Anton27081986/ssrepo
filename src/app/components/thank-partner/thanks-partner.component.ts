@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { filter, map, of, startWith, switchMap, tap } from 'rxjs';
+import { filter, map, of, switchMap, tap } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
 import { FormControl } from '@angular/forms';

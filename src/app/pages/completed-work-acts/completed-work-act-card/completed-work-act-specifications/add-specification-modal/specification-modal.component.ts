@@ -46,30 +46,30 @@ export class SpecificationModalComponent {
 	) {
 		this.addSpecificationForm = new FormGroup({
 			serviceId: new FormControl<number | null>(null, [Validators.required]),
-			comment: new FormControl<string | null>(null, [Validators.required]),
-			quantity: new FormControl<number | null>(null, [Validators.required]),
-			tovUnitId: new FormControl<number | null>(null, [Validators.required]),
+			comment: new FormControl<string | null>(null),
+			quantity: new FormControl<number | null>(null),
+			tovUnitId: new FormControl<number | null>(null),
 			costId: new FormControl<number | null>(null, [Validators.required]),
-			faObjectId: new FormControl<number | null>(null, [Validators.required]),
-			projectId: new FormControl<number | null>(null, [Validators.required]),
+			faObjectId: new FormControl<number | null>(null),
+			projectId: new FormControl<number | null>(null),
 			deptId: new FormControl<number | null>(null, [Validators.required]),
-			sectionId: new FormControl<number | null>(null, [Validators.required]),
+			sectionId: new FormControl<number | null>(null),
 			userId: new FormControl<number | null>(null, [Validators.required]),
 			amount: new FormControl<number | null>(null, [Validators.required]),
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id);
-			this.addSpecificationForm.controls.comment.setValue(spec.comment);
-			this.addSpecificationForm.controls.quantity.setValue(spec.quantity);
-			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id);
-			this.addSpecificationForm.controls.costId.setValue(spec.cost?.id);
-			this.addSpecificationForm.controls.faObjectId.setValue(spec.faObject?.id);
-			this.addSpecificationForm.controls.projectId.setValue(spec.project?.id);
-			this.addSpecificationForm.controls.deptId.setValue(spec.dept?.id);
-			this.addSpecificationForm.controls.sectionId.setValue(spec.section?.id);
-			this.addSpecificationForm.controls.userId.setValue(spec.user?.id);
-			this.addSpecificationForm.controls.amount.setValue(spec.amount);
+			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id || null);
+			this.addSpecificationForm.controls.comment.setValue(spec.comment || null);
+			this.addSpecificationForm.controls.quantity.setValue(spec.quantity || null);
+			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id || null);
+			this.addSpecificationForm.controls.costId.setValue(spec.cost?.id || null);
+			this.addSpecificationForm.controls.faObjectId.setValue(spec.faObject?.id || null);
+			this.addSpecificationForm.controls.projectId.setValue(spec.project?.id || null);
+			this.addSpecificationForm.controls.deptId.setValue(spec.dept?.id || null);
+			this.addSpecificationForm.controls.sectionId.setValue(spec.section?.id || null);
+			this.addSpecificationForm.controls.userId.setValue(spec.user?.id || null);
+			this.addSpecificationForm.controls.amount.setValue(spec.amount || null);
 		} else {
 			this.userFacade
 				.getUserProfile()
