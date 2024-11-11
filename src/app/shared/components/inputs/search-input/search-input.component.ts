@@ -35,6 +35,7 @@ export type searchType =
 	| 'bu-units'
 	| 'tov-units'
 	| 'tovGroups'
+	| 'completed-act-contracts'
 	| undefined;
 
 @UntilDestroy()
@@ -251,6 +252,15 @@ export class SearchInputComponent {
 				case 'tov-units':
 					this.searchFacade
 						.getDictionaryTovUnits(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'completed-act-contracts':
+					this.searchFacade
+						.getDictionaryCompletedActContracts(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);

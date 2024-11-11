@@ -59,16 +59,16 @@ export class SpecificationModalComponent {
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.serviceId.setValue(spec.service.id);
+			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id);
 			this.addSpecificationForm.controls.comment.setValue(spec.comment);
 			this.addSpecificationForm.controls.quantity.setValue(spec.quantity);
-			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit.id);
-			this.addSpecificationForm.controls.costId.setValue(spec.cost.id);
-			this.addSpecificationForm.controls.faObjectId.setValue(spec.faObject.id);
-			this.addSpecificationForm.controls.projectId.setValue(spec.project.id);
-			this.addSpecificationForm.controls.deptId.setValue(spec.dept.id);
-			this.addSpecificationForm.controls.sectionId.setValue(spec.section.id);
-			this.addSpecificationForm.controls.userId.setValue(spec.user.id);
+			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id);
+			this.addSpecificationForm.controls.costId.setValue(spec.cost?.id);
+			this.addSpecificationForm.controls.faObjectId.setValue(spec.faObject?.id);
+			this.addSpecificationForm.controls.projectId.setValue(spec.project?.id);
+			this.addSpecificationForm.controls.deptId.setValue(spec.dept?.id);
+			this.addSpecificationForm.controls.sectionId.setValue(spec.section?.id);
+			this.addSpecificationForm.controls.userId.setValue(spec.user?.id);
 			this.addSpecificationForm.controls.amount.setValue(spec.amount);
 		} else {
 			this.userFacade

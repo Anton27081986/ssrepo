@@ -9,4 +9,5 @@ export interface ICompletedWorkActTableItem {
 	providerContractor: { text: string; url: string };
 	applicantUser: string;
 	totalAmount: number;
+	contractId: number;
 }

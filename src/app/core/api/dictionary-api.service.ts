@@ -267,6 +267,19 @@ export class DictionaryApiService {
 		);
 	}
 
+	public getCompletedActContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Contracts`,
+			{ params },
+		);
+	}
+
 	public getFinDocOrders(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
