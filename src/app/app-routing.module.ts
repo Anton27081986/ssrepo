@@ -127,7 +127,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
