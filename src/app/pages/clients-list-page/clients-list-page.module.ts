@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
-import { PasswordModule } from '@app/shared/components/inputs/password/password.module';
+import { PasswordModule } from '@app/shared/components/_deprecated/password/password.module';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';

@@ -36,7 +36,7 @@ import { TextareaModule } from '@app/shared/components/textarea/textarea.module'
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NumericInputModule } from '@app/shared/components/inputs/numeric-input/numeric-input.module';
+import { NumericInputModule } from '@app/shared/components/_deprecated/numeric-input/numeric-input.module';
 import { CompletedWorkActEditComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { MultiselectModule } from '@app/shared/components/multiselect/multiselect.module';
