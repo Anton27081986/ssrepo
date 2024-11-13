@@ -7,7 +7,7 @@ import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
 import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
 import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
-import {CompletedWorkActPermissionsGuard} from "@app/core/guards/completed-work-act-permissions.guard";
+import { CompletedWorkActPermissionsGuard } from '@app/core/guards/completed-work-act-permissions.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -127,7 +127,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
