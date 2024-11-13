@@ -110,7 +110,23 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: NewLayoutComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
+		data: {
+			animation: 'animation',
+		},
+		children: [
+			{
+				path: 'production-plan',
+				loadChildren: () =>
+					import('./pages/production-plan/production-plan.routing').then(
+						r => r.productionPlanRoutes,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',

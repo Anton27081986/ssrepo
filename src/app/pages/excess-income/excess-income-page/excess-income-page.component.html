@@ -1,6 +1,87 @@
-<div class="app-excess-income-page">
+<ss-card class="app-excess-income-page">
 	<div class="app-excess-income-page__header">
 		<ss-text>Управление СНД</ss-text>
+		<div class="app-excess-income-page__header-filter">
+			<ss-select-v2 [formControl]="currencyControl" [placeholder]="'Выберите валюту'" [label]="'Валюта'"
+						  [options]="currency()"></ss-select-v2>
+			<ss-dropdown-button title="Фильтры">
+				<ss-filters [isFiltersVisible]="true" [isDropdown]="true" [(filters)]="filters"
+							(applyFilter)="getFilteredExcessIncome(true)"></ss-filters>
+			</ss-dropdown-button>
+		</div>
 	</div>
+	<div class="app-excess-income-page__body">
+		<ng-container *ngIf="clientsNode() as clients">
+			<ss-table-v2 [scroll]="false">
+				<ng-container *ngIf="isLoader$ | async; else content">
+					<ss-loader></ss-loader>
+				</ng-container>
+				<ng-template #content>
+					<ng-container *ngFor="let client of clients">
+						<tr excess-income-client-tr [client]="client" (click)="expended(client)"></tr>
 
-</div>
+						<ng-container *ngIf="client.expended$ | async">
+							<ng-container *ngFor="let contractor of client.contractors$ | async">
+								<tr excess-income-contractor-tr *ngIf="contractor.contractor" (click)="expended(contractor)" [contractor]="contractor"></tr>
+
+								<ng-container *ngIf="contractor.expended$ | async">
+									<ng-container *ngIf="contractor.isLoader$ | async; else contentGroup">
+										<tr><ss-loader></ss-loader></tr>
+									</ng-container>
+									<ng-template #contentGroup>
+										<ng-container *ngFor="let group of contractor.groups$ | async" >
+											<tr excess-income-group-tr  (click)="expended(group)" [group]="group"></tr>
+
+											<ng-container *ngIf="group.expended$ | async">
+												<ng-container *ngIf="group.isLoader$ | async; else contentTov">
+													<tr><ss-loader></ss-loader></tr>
+												</ng-container>
+
+												<ng-template #contentTov >
+													<ng-container *ngFor="let tov of group.tov$ | async">
+														<tr excess-income-tov-tr [tov]="tov"></tr>
+													</ng-container>
+												</ng-template>
+
+												<tr>
+													<td class="ss-table-td" colspan="17">
+														<ss-dynamic-pagination
+															[total]="(group.total$ | async)!"
+															[limit]="group.limit"
+															[offset]="(group.offset$ | async)!"
+															(changeOffset)="group.pageOffsetChange($event)"
+														>
+														</ss-dynamic-pagination>
+													</td>
+												</tr>
+
+											</ng-container>
+										</ng-container>
+									</ng-template>
+									<tr>
+										<td class="ss-table-td" colspan="17">
+											<ss-dynamic-pagination
+												[total]="(contractor.total$ | async)!"
+												[limit]="20"
+												[offset]="(contractor.offset$ | async)!"
+												(changeOffset)="contractor.pageOffsetChange($event)"
+											>
+											</ss-dynamic-pagination>
+										</td>
+									</tr>
+								</ng-container>
+							</ng-container>
+						</ng-container>
+					</ng-container>
+				</ng-template>
+			</ss-table-v2>
+		</ng-container>
+		<ss-dynamic-pagination
+			[total]="total()"
+			[offset]="(excessIncomeStateService.offset$ | async)!"
+			[limit]="pageSize"
+			(changeOffset)="pageOffsetChange($event)"
+		>
+		</ss-dynamic-pagination>
+	</div>
+</ss-card>
