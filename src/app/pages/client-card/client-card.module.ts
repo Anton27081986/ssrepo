@@ -30,7 +30,7 @@ import { ClientsListPageRoutingModule } from '@app/pages/clients-list-page/clien
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
-import { PasswordModule } from '@app/shared/components/inputs/password/password.module';
+import { PasswordModule } from '@app/shared/components/_deprecated/password/password.module';
 import { AutocompleteSelectFieldModule } from '@app/shared/components/autocomplete-select-field/autocomplete-select-field.module';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { LinkModule } from '@app/shared/components/link/link.module';

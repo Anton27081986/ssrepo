@@ -15,7 +15,7 @@ import { HeadlineModule } from '@app/shared/components/typography/headline/headl
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
-import { PasswordModule } from '@app/shared/components/inputs/password/password.module';
+import { PasswordModule } from '@app/shared/components/_deprecated/password/password.module';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { AuthComponent } from '@auth/auth.component';
 import { AuthRoutingModule } from './auth-routing.module';

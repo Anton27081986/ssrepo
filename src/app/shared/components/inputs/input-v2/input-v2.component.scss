@@ -1,0 +1,84 @@
+@use '../../../../../styles/colors' as *;
+
+input {
+	display: flex;
+	align-items: center;
+	padding: 0 44px 0 20px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+	user-select: none;
+}
+
+input::-webkit-outer-spin-button,
+ input::-webkit-inner-spin-button {
+	 -webkit-appearance: none;
+ }
+
+.input-padding-disabled {
+	padding: 0 20px;
+}
+
+.input {
+	position: relative;
+
+	ss-icon {
+		position: absolute;
+		top: 16px;
+		cursor: pointer;
+	}
+}
+
+input.large ~ ss-icon {
+	top: 20px;
+}
+
+input.small ~ ss-icon {
+	top: 12px;
+}
+
+input::placeholder {
+	color: $lite-text;
+}
+
+input:focus {
+	border-color: $additional-outline;
+}
+
+input.medium {
+	height: 41px;
+	font-weight: 400;
+}
+
+input.large {
+	height: 52px;
+	font-weight: 600;
+}
+
+input.small {
+	height: 36px;
+	font-weight: 400;
+}
+
+input.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+input.error:focus {
+	border: 1px solid $additional-outline;
+	background-color: $island;
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+:host-context(.dark) input {
+	background-color: $dark-island;
+}
