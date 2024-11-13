@@ -20,6 +20,7 @@ import {
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { IInputIcon } from '@app/shared/components/inputs/input-v2/models/input-icon';
 import { InputIconTypeEnum } from '@app/shared/components/inputs/input-v2/models/input-icon-type';
+import { ICON_PADDING } from '@app/shared/components/inputs/input-v2/constants/icon-padding';
 
 @Component({
 	selector: 'ss-input-v2',
@@ -152,7 +153,7 @@ export class InputV2Component implements ControlValueAccessor {
 	}
 
 	public iconPaddingCalc(iconNum: number): number {
-		return iconNum * 22 + 22;
+		return iconNum * ICON_PADDING + ICON_PADDING;
 	}
 
 	private updateIconsVisibility(
