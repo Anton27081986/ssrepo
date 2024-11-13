@@ -1,0 +1,42 @@
+<div class="header">
+	<ss-headline size="h3">Реестр актов выполненных работ</ss-headline>
+	<div class="header__controls">
+		<ss-dropdown-button title="Фильтры">
+			<ss-filters [isFiltersVisible]="!isLoader()" [isDropdown]="true" [(filters)]="filters" (applyFilter)="getFilteredActs(true)"></ss-filters>
+		</ss-dropdown-button>
+	</div>
+</div>
+<div class="content">
+	<ng-container *ngIf="acts() as acts">
+		<ss-table
+			*ngIf="acts.total > 0;else empty"
+			[padding]="'8px'"
+			[head]="[
+					{title: 'Код', field: 'code'},
+					{title: 'Состояние', field: 'state', sizeRatio: 2},
+					{title: 'Дата Акта (внш)', field: 'externalActDate', sizeRatio: 2},
+					{title: 'Дата Акта (внтр)', field: 'internalActDate', sizeRatio: 2},
+					{title: '№ Акта (внш)', field: 'externalActNumber', sizeRatio: 1.5},
+					{title: '№ Акта (внтр)', field: 'internalActNumber', sizeRatio: 1.5},
+					{title: 'БЕ плательщика', field: 'payerBuUnit', sizeRatio: 2},
+					{title: 'Поставщик услуг', field: 'providerContractor', sizeRatio: 2},
+					{title: 'Договор', field: 'contractId', sizeRatio: 2},
+					{title: 'Заявитель', field: 'applicantUser', sizeRatio: 2},
+					{title: 'Сумма (итого)', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
+					]"
+			[items]="getTableItems(acts)"
+		>
+		</ss-table>
+		<ss-pagination
+			[total]="acts.total"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			(changeIndex)="pageIndexChange($event)"
+		>
+		</ss-pagination>
+		<ng-template #empty>
+			<ss-empty-data-page width="300px" height="176px"></ss-empty-data-page>
+		</ng-template>
+	</ng-container>
+	<ss-loader *ngIf="isLoader()"></ss-loader>
+</div>

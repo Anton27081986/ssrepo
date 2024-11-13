@@ -3,10 +3,11 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
-import { LayoutClientProposalsComponent } from '@app/shared/layouts/layout-client-proposals/layout-client-proposals.component';
+import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
 import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
 import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
+import {CompletedWorkActPermissionsGuard} from "@app/core/guards/completed-work-act-permissions.guard";
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -31,12 +32,6 @@ const routes: Routes = [
 				},
 				children: [
 					{
-						path: 'partners',
-						// canActivate: [AuthGuards],
-						loadChildren: () =>
-							import('./pages/partners/partners.module').then(m => m.PartnersModule),
-					},
-					{
 						path: 'profile',
 						canActivate: [AuthGuard],
 						loadChildren: () =>
@@ -49,6 +44,14 @@ const routes: Routes = [
 							import(
 								'./pages/raw-material-accounting/raw-material-accounting.module'
 							).then(m => m.RawMaterialAccountingModule),
+					},
+					{
+						path: 'competed-work-acts',
+						canActivate: [CompletedWorkActPermissionsGuard],
+						loadChildren: () =>
+							import('./pages/completed-work-acts/completed-work-acts.module').then(
+								m => m.CompletedWorkActsModule,
+							),
 					},
 				],
 			},
@@ -90,7 +93,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard, ProposalsPermissionsGuard],
 		data: {
 			animation: 'animation',

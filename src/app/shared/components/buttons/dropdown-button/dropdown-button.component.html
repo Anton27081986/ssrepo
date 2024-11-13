@@ -1,0 +1,10 @@
+<ss-button size="small" type="muted" (click)="isOpened = true">
+	{{title}}
+	<ss-icon width="12" height="12" name="chevron" class="icon"></ss-icon>
+</ss-button>
+<ng-container *ngIf="isOpened">
+	<ss-card padding="0" class="dropdown" (click)="$event.stopPropagation()">
+		<ng-content></ng-content>
+	</ss-card>
+	<div class="overlay" (click)="isOpened = false"></div>
+</ng-container>

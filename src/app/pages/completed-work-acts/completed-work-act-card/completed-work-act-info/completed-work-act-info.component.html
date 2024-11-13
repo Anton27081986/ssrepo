@@ -1,0 +1,101 @@
+<ss-card padding="0">
+	<div class="header">
+		<ss-text size="1">Общая информация</ss-text>
+		<div *ngIf="act()?.state?.id !== 0" class="header__controls">
+			<ss-button size="small" type="muted" (click)="switchMode()">
+				<ss-icon width="24" height="24" name="edit"></ss-icon>
+			</ss-button>
+		</div>
+	</div>
+	<div class="content">
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Номер акта (внешний)</ss-text>
+				<ss-text size="3">{{ act()?.externalActNumber }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Номер акта (внутренний)</ss-text>
+				<ss-text size="3">{{ act()?.internalActNumber }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата акта (внешний)</ss-text>
+				<ss-text size="3">{{ act()?.externalActDate | date: 'dd.MM.yyyy' }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата акта (внутренний)</ss-text>
+				<ss-text size="3">{{ act()?.internalActDate | date: 'dd.MM.yyyy' }}</ss-text>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Заявитель</ss-text>
+				<ss-text size="3">{{ act()?.applicantUser?.name }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
+				<ss-text size="3">{{ act()?.payerBuUnit?.name }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Плательщик</ss-text>
+				<ss-text size="3">{{ act()?.payerContractor?.name }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">БЕ Плательщика</ss-text>
+				<ss-text size="3">{{ act()?.payerBuUnit?.name }}</ss-text>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Поставщик услуг</ss-text>
+				<ss-text size="3">{{ act()?.providerContractor?.name }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">ИНН</ss-text>
+				<ss-text size="3">{{ act()?.inn }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Договор</ss-text>
+				<ss-text size="3">{{ act()?.contract?.name }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Заявки на оплату</ss-text>
+				<div class="content__column__item__links">
+					<a class="content__column__item__links__item" *ngFor="let docOrder of finDocOrders" [href]="docOrder.linkToDetail || ''" target="_blank">
+						{{ docOrder.name }}
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Валюта</ss-text>
+				<ss-text size="3">{{ act()?.currency }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Код 1С</ss-text>
+				<ss-text size="3">{{ act()?.oneSNumber }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Комментарий из 1С</ss-text>
+				<ss-text class="content__column__item__comment" size="3">{{ act()?.oneSComment }}
+				</ss-text>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Документы</ss-text>
+				<div class="content__column__item__files-list">
+					<div class="content__column__item__files-list__item" *ngFor="let doc of act()?.documents">
+						<div class="content__column__item__files-list__item__img" (click)="downloadFile(doc.directUrl!, doc.fileName)">
+							<ss-icon height="16" width="16" name="doc"></ss-icon>
+						</div>
+						<div class="content__column__item__files-list__item__description">
+							<ss-text size="3">{{ doc.fileName }}</ss-text>
+							<ss-text class="size" size="3">{{ doc.size }}Б</ss-text>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</ss-card>

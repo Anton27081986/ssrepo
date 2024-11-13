@@ -17,4 +17,5 @@ export interface IStoreTableBaseColumn extends IStoreTableBase {
 	readonly width?: string | null;
 	readonly align?: 'center' | null;
 	readonly toolTip?: string | null;
+	readonly columnsSplit?: IStoreTableBaseColumn[];
 }

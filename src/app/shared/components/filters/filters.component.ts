@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { SearchType } from '@app/shared/components/multiselect/multiselect.component';
+import { searchType } from '@app/shared/components/inputs/search-input/search-input.component';
 
 export interface IFilter {
 	name: string;
@@ -10,7 +10,7 @@ export interface IFilter {
 	placeholder: string;
 	value?: IFilterOption[] | string | null;
 	options?: IFilterOption[];
-	searchType?: SearchType;
+	searchType?: searchType;
 }
 
 export interface IFilterOption extends IDictionaryItemDto {
@@ -30,6 +30,8 @@ export class FiltersComponent implements OnInit {
 	@Output() public filtersChange = new EventEmitter<IFilter[]>();
 
 	@Output() public applyFilter = new EventEmitter();
+
+	@Input() public isDropdown: boolean = false;
 
 	public filtersForm!: FormGroup;
 

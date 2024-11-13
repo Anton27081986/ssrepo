@@ -93,7 +93,7 @@ export class RawMaterialAccountingFacadeService {
 			});
 	}
 
-	public getContractDetails(ContractorId: string): void {
+	public getContractDetails(ContractorId: number): void {
 		this.dictionaryApiService
 			.getProcurementsContractDetails(ContractorId)
 			.pipe(

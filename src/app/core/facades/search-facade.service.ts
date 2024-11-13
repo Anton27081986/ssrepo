@@ -6,10 +6,12 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { ProductionsApiService } from '@app/core/api/productions-api.service';
-import { environment } from '@environments/environment.development';
-import { HttpParams } from '@angular/common/http';
 import { MenuApiService } from '@app/core/api/menu-api.service';
 import { WinsApiService } from '@app/core/api/wins-api.service';
+import { IResponse } from '@app/core/utils/response';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
+import { SearchTypeEnum } from '@app/core/models/search-type';
 
 @UntilDestroy()
 @Injectable({
@@ -36,54 +38,174 @@ export class SearchFacadeService {
 		return this.usersApiService.getUsersByFIO(query);
 	}
 
-	public getRegions(query: string) {
+	public getRegions(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getRegions(query);
 	}
 
-	public getSubSectors(query: string) {
+	public getSubSectors(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getSubSectors(query);
 	}
 
-	public getClients(query: string, onlyActive: boolean = false) {
+	public getClients(
+		query: string,
+		onlyActive: boolean = false,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
-	public getProductions(query: string) {
+	public getProductions(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.searchProductions(query);
 	}
 
-	public getContractor(query: string) {
+	public getContractor(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getContractors(query, this.clientId);
 	}
 
-	public getTovs(query?: string) {
-		return this.dictionaryApiService.getTovs(query).pipe(map(response => response.items));
+	public getTovs(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getTovs(query);
 	}
 
-	public getTechnologist(query?: string) {
-		return this.dictionaryApiService
-			.getTechnologist(this.clientId!, query)
-			.pipe(map(response => response.items));
+	public getTovGroups(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.productionsApiService.getTpgSearch(query);
 	}
 
-	public getClientIdDictionary(id: number) {
+	public getTechnologist(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getTechnologist(this.clientId!, query);
+	}
+
+	public getClientIdDictionary(id: number): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientIdDictionary(id);
 	}
 
-	public getContracts(query?: string) {
+	public getContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getContracts(query);
 	}
 
-	public globalSearch(query: string) {
+	public globalSearch(query: string): Observable<IResponse<IGlobalSearchDto>> {
 		return this.menuApiService.globalSearch(query);
 	}
 
-	public getProductSearch(query: string) {
+	public getProductSearch(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.winsApiService.getProductSearch(query);
 	}
 
-	public getDictionaryUsers(query?: string) {
-		return this.dictionaryApiService
-			.getDictionaryUsers(this.clientId!, query);
+	public getDictionaryServices(query?: string) {
+		return this.dictionaryApiService.getServices(query);
+	}
+
+	public getDictionaryCostArticles(query?: string) {
+		return this.dictionaryApiService.getCostArticles(query);
+	}
+
+	public getDictionaryFaObjects(query?: string) {
+		return this.dictionaryApiService.getFaObjects(query);
+	}
+
+	public getDictionaryProjects(query?: string) {
+		return this.dictionaryApiService.getProjects(query);
+	}
+
+	public getDictionaryDepts(query?: string, userId?: number) {
+		return this.dictionaryApiService.getDepts(query, userId);
+	}
+
+	public getDictionarySections(query?: string, deptId?: number) {
+		return this.dictionaryApiService.getSections(query, deptId);
+	}
+
+	public getDictionaryBuUnits(query?: string, applicantUserId?: number) {
+		return this.dictionaryApiService.getBuUnits(query, applicantUserId);
+	}
+
+	public getDictionaryTovUnits(query?: string) {
+		return this.dictionaryApiService.getTovUnits(query);
+	}
+
+	public getDictionaryCompletedActContracts(id?: number) {
+		return this.dictionaryApiService.getCompletedActContracts(id);
+	}
+
+	public getFinDocOrders(query: string) {
+		return this.dictionaryApiService.getFinDocOrders(query);
+	}
+
+	public getDictionaryUsers(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getDictionaryUsers(this.clientId!, query);
+	}
+
+	public getSearchMethodByType(
+		searchType: SearchTypeEnum,
+		query: string,
+		isActive = false,
+	): Observable<IDictionaryItemDto[]> {
+		switch (searchType) {
+			case SearchTypeEnum.User:
+				return this.getUsers(query).pipe(
+					map(data =>
+						data.items.map((item: { id: any; fio: any }) => ({
+							id: item.id,
+							name: item.fio,
+						})),
+					),
+				);
+
+			case SearchTypeEnum.UserDictionary:
+				return this.getDictionaryUsers(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.SubSector:
+				return this.getSubSectors(query).pipe(
+					map(data =>
+						data.items.map((item: { id: any; name: any }) => ({
+							id: item.id,
+							name: item.name,
+						})),
+					),
+				);
+
+			case SearchTypeEnum.Region:
+				return this.getRegions(query).pipe(
+					map(data =>
+						data.items.map((item: { id: any; name: any }) => ({
+							id: item.id,
+							name: item.name,
+						})),
+					),
+				);
+
+			case SearchTypeEnum.Contractor:
+				return this.getContractor(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.Tovs:
+				return this.getTovs(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.Technologist:
+				return this.getTechnologist(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.Client:
+				return this.getClients(query, isActive).pipe(map(data => data.items));
+
+			case SearchTypeEnum.Contract:
+				return this.getContracts(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.Products:
+				return this.getProductSearch(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.Global:
+				return this.globalSearch(query).pipe(
+					map(data => {
+						return data.items.map(
+							item =>
+								({
+									id: 0,
+									name: item.title,
+									linkToDetail: item.linkToDetail,
+								}) as IDictionaryItemDto,
+						);
+					}),
+				);
+
+			default:
+				throw new Error(`Invalid search method type`);
+		}
 	}
 }

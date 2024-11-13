@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { filter, map, of, startWith, switchMap, tap } from 'rxjs';
+import { filter, map, of, switchMap, tap } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
 import { FormControl } from '@angular/forms';
@@ -21,9 +21,8 @@ export class ThanksPartnerComponent {
 
 	public thankYouList = toSignal(
 		this.dateCtrl.valueChanges.pipe(
-			startWith(this.getDate()),
-			tap(() => this.loading.set(true)),
 			filter(Boolean),
+			tap(() => this.loading.set(true)),
 			switchMap(date => {
 				return this.apiService.getPartnerThanks(date).pipe(
 					map(items => {

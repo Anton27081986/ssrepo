@@ -1,0 +1,65 @@
+<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
+	<td class="ss-table-td">
+		<ng-container [ngSwitch]="col.id">
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
+				<div class="ss-table-td__content">
+					&nbsp;
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.contractors">
+				<div class="ss-table-td__content">
+					&nbsp;
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
+				<div class="ss-table-td__content">
+					&nbsp;
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.otsr">
+				<div class="ss-table-td__content">
+					&nbsp;
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
+				<div class="ss-table-td__content">
+					<ss-text> {{ group().group.tovSubgroup.name }}</ss-text>
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
+				<div class="ss-table-td__content">
+					&nbsp;
+				</div>
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
+				&nbsp;
+			</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.actions">
+				<div class="ss-table-td__content">
+					<ss-icon [@rotate]="group().expended$ | async" (click)="expended()" [name]="'chevron'"></ss-icon>
+				</div>
+			</ng-container>
+		</ng-container>
+	</td>
+</ng-container>

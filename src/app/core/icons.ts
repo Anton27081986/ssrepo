@@ -1016,4 +1016,31 @@ export class AppIcons {
 		'<path d="M16.4023 9.00049C16.4023 13.0855 13.087 16.4009 9.00195 16.4009C4.91694 16.4009 1.60156 13.0855 1.60156 9.00049C1.60156 4.91547 4.91694 1.6001 9.00195 1.6001C13.087 1.6001 16.4023 4.91547 16.4023 9.00049Z" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M11.7459 11.3533L9.4518 9.98427C9.05218 9.74746 8.72656 9.17763 8.72656 8.71141V5.67725" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';
+
+	public static doc = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M8.47266 8.41046L4.52557 8.41046" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M6.89453 10.6836L4.52628 10.6836" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M13.9991 6.79965V9.79944C13.9991 12.7992 12.7992 13.9991 9.79944 13.9991H6.1997C3.19991 13.9991 2 12.7992 2 9.79944V6.1997C2 3.19991 3.19991 2 6.1997 2H9.19948" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M13.9989 6.79965H11.599C9.79918 6.79965 9.19922 6.1997 9.19922 4.39983V2L13.9989 6.79965Z" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
+
+	public static trash = `<svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M14.618 4.5737C12.1695 4.33105 9.70625 4.20605 7.2504 4.20605C5.79453 4.20605 4.33866 4.27958 2.8828 4.42664L1.38281 4.5737" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M5.42969 3.83029L5.59145 2.86706C5.7091 2.16854 5.79733 1.64648 7.03996 1.64648H8.96642C10.2091 1.64648 10.3046 2.19795 10.4149 2.87441L10.5767 3.83029" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M13.0344 6.89648L12.5564 14.3008C12.4755 15.4552 12.4094 16.3523 10.3579 16.3523H5.63738C3.58593 16.3523 3.51976 15.4552 3.43887 14.3008L2.96094 6.89648" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M6.77344 12.3086H9.22194" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M6.16406 9.36719H9.84049" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
+
+	public static clipboard = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M6.66536 3.99967H9.33203C10.6654 3.99967 10.6654 3.33301 10.6654 2.66634C10.6654 1.33301 9.9987 1.33301 9.33203 1.33301H6.66536C5.9987 1.33301 5.33203 1.33301 5.33203 2.66634C5.33203 3.99967 5.9987 3.99967 6.66536 3.99967Z" stroke="#416CFF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M9.33333 14.6664H6C2.66667 14.6664 2 13.333 2 10.6664V6.66635C2 3.62635 3.11333 2.79969 5.33333 2.67969" stroke="#416CFF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M10.668 2.67969C12.888 2.79969 14.0013 3.61969 14.0013 6.66635V9.99969" stroke="#416CFF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M14 12.667V14.667H12" stroke="#416CFF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M10 10.667L13.9733 14.6403" stroke="#416CFF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
+
+	public static refresh = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M14.9349 8.26628C14.9349 11.9463 11.9482 14.9329 8.26823 14.9329C4.58823 14.9329 2.34156 11.2263 2.34156 11.2263M2.34156 11.2263H5.3549M2.34156 11.2263V14.5596M1.60156 8.26628C1.60156 4.58628 4.56156 1.59961 8.26823 1.59961C12.7149 1.59961 14.9349 5.30628 14.9349 5.30628M14.9349 5.30628V1.97294M14.9349 5.30628H11.9749" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
 }
