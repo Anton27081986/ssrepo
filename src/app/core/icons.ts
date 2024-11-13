@@ -57,9 +57,9 @@ export class AppIcons {
 
 	public static settings =
 		'<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M8.25244 1.54517H6.75244C3.00244 1.54517 1.50244 3.04517 1.50244 6.79517V11.2952C1.50244 15.0452 3.00244 16.5452 6.75244 16.5452H11.2524C15.0024 16.5452 16.5024 15.0452 16.5024 11.2952V9.79516" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M12.0289 2.30999L6.11893 8.21999C5.89393 8.44499 5.66893 8.88749 5.62393 9.20999L5.30143 11.4675C5.18143 12.285 5.75893 12.855 6.57643 12.7425L8.83393 12.42C9.14893 12.375 9.59143 12.15 9.82393 11.925L15.7339 6.01499C16.7539 4.99499 17.2339 3.80999 15.7339 2.30999C14.2339 0.809989 13.0489 1.28999 12.0289 2.30999Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M11.1841 3.15747C11.6866 4.94997 13.0891 6.35247 14.8891 6.86247" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.25244 1.54517H6.75244C3.00244 1.54517 1.50244 3.04517 1.50244 6.79517V11.2952C1.50244 15.0452 3.00244 16.5452 6.75244 16.5452H11.2524C15.0024 16.5452 16.5024 15.0452 16.5024 11.2952V9.79516" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.0289 2.30999L6.11893 8.21999C5.89393 8.44499 5.66893 8.88749 5.62393 9.20999L5.30143 11.4675C5.18143 12.285 5.75893 12.855 6.57643 12.7425L8.83393 12.42C9.14893 12.375 9.59143 12.15 9.82393 11.925L15.7339 6.01499C16.7539 4.99499 17.2339 3.80999 15.7339 2.30999C14.2339 0.809989 13.0489 1.28999 12.0289 2.30999Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M11.1841 3.15747C11.6866 4.94997 13.0891 6.35247 14.8891 6.86247" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
 	public static settings2 =

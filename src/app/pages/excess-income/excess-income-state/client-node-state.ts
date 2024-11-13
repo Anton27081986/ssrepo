@@ -21,10 +21,19 @@ export class ClientNodeState {
 				if (!val) {
 					NEVER;
 				}
-				return client.contractors.map(
-					contractor =>
-						new ContractorNodeState(contractor, client.id, this.service, state),
-				);
+				if (client.contractors.length) {
+					return client.contractors.map(
+						contractor =>
+							new ContractorNodeState(
+								contractor,
+								client.id,
+								this.service,
+								state,
+								false,
+							),
+					);
+				}
+				return [new ContractorNodeState(null, client.id, this.service, state, true)];
 			}),
 		);
 	}

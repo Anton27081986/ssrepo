@@ -1,5 +1,14 @@
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
-import { BehaviorSubject, map, NEVER, Observable, switchMap, combineLatest } from 'rxjs';
+import {
+	BehaviorSubject,
+	map,
+	NEVER,
+	Observable,
+	switchMap,
+	combineLatest,
+	tap,
+	debounceTime,
+} from 'rxjs';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
@@ -15,21 +24,26 @@ export class GroupNodeState {
 	public total$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
+	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 	public pageSize = 4;
+	public limit = 20;
 
 	constructor(
 		group: ExcessIncomeGroup,
 		clientId: number,
-		contractorId: number,
+		contractorId: number | null,
 		private readonly service: ExcessIncomeService,
 		private readonly state: ExcessIncomeState,
 	) {
-		this.state.currencyControl.valueChanges
-			.pipe(filterTruthy())
-			.subscribe(item => console.log(item));
+		// this.state.currencyControl.valueChanges
+		// 		// 	.pipe(filterTruthy())
+		// 		// 	.subscribe(item => console.log(item));
 		this.group = group;
 		combineLatest([this.expended$, this.offset$])
 			.pipe(
+				tap(() => this.isLoader$.next(true)),
+				debounceTime(2000),
 				untilDestroyed(this),
 				switchMap(([expended, offset]) => {
 					if (!expended) {
@@ -55,7 +69,10 @@ export class GroupNodeState {
 					];
 				}),
 			)
-			.subscribe(this.tov$);
+			.subscribe(items => {
+				this.tov$.next(items);
+				this.isLoader$.next(false);
+			});
 	}
 
 	public pageOffsetChange($event: number) {

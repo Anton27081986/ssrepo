@@ -1,4 +1,13 @@
-import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+	AfterViewChecked,
+	Component,
+	ElementRef,
+	input,
+	Input,
+	InputSignal,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import {
 	ClientProposalsTypeDocuments,
@@ -35,7 +44,7 @@ export enum ClientProposalsRowItemField {
 })
 export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly ClientTprRowItemField = ClientProposalsRowItemField;
-	@Input({ required: true }) item: IClientOffersDto | undefined;
+	public item: InputSignal<IClientOffersDto> = input.required<IClientOffersDto>();
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected advantagesTpr: string[] = [];
@@ -59,16 +68,16 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 
 	ngOnInit() {
 		if (this.item) {
-			if (this.item.promotionalMaterials) {
-				this.rims$.next(this.item.promotionalMaterials.filter(item => item !== null));
+			if (this.item().promotionalMaterials) {
+				this.rims$.next(this.item().promotionalMaterials.filter(item => item !== null));
 			}
 
-			if (this.item.documents) {
-				this.documents$.next(this.item.documents.filter(item => item !== null));
+			if (this.item().documents) {
+				this.documents$.next(this.item().documents.filter(item => item !== null));
 			}
 
-			if (this.item.advantages) {
-				this.advantagesTpr = this.item.advantages.map(item => {
+			if (this.item().advantages) {
+				this.advantagesTpr = this.item().advantages.map(item => {
 					return item.name;
 				});
 			}

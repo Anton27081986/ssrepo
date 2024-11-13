@@ -25,6 +25,7 @@ export enum AtWorkRowItemField {
 	objective = 'objective',
 	technologistId = 'technologistId',
 }
+
 @Component({
 	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'tr[ss-at-work-row-item-tr]',
@@ -69,47 +70,69 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	}
 
 	ngOnInit() {
-		this.columnsStateService.cols$.next([
+		this.columnsStateService.colsTr$.next([
 			{
-				id: AtWorkRowItemField.tovProductName,
-				title: 'ТПР',
-				order: 1,
-				show: true,
-			},
-			{
-				id: AtWorkRowItemField.atWork,
-				title: 'В работе',
-				order: 2,
-				show: true,
-				width: '12%',
-			},
-			{
-				id: AtWorkRowItemField.commentId,
-				title: 'Комментарий',
-				order: 3,
-				show: true,
-				width: '16%',
-			},
-			{
-				id: AtWorkRowItemField.potencial,
-				title: 'Потенциал, кг',
-				order: 4,
-				show: true,
-				width: '16%',
-			},
-			{
-				id: AtWorkRowItemField.objective,
-				title: 'Задача, кг',
-				order: 5,
-				show: true,
-				width: '16%',
-			},
-			{
-				id: AtWorkRowItemField.technologistId,
-				title: 'Технолог',
-				order: 6,
-				show: true,
-				width: '16%',
+				cols: [
+					{
+						id: AtWorkRowItemField.tovProductName,
+						title: 'ТПР',
+						order: 1,
+						show: true,
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+					{
+						id: AtWorkRowItemField.atWork,
+						title: 'В работе',
+						order: 2,
+						show: true,
+						width: '12%',
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+					{
+						id: AtWorkRowItemField.commentId,
+						title: 'Комментарий',
+						order: 3,
+						show: true,
+						width: '16%',
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+					{
+						id: AtWorkRowItemField.potencial,
+						title: 'Потенциал, кг',
+						order: 4,
+						show: true,
+						width: '16%',
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+					{
+						id: AtWorkRowItemField.objective,
+						title: 'Задача, кг',
+						order: 5,
+						show: true,
+						width: '16%',
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+					{
+						id: AtWorkRowItemField.technologistId,
+						title: 'Технолог',
+						order: 6,
+						show: true,
+						width: '16%',
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+				],
 			},
 		]);
 	}

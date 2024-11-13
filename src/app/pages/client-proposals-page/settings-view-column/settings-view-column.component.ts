@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
+import { IStoreTableBaseColumn } from '@app/core/store';
 
 @Component({
 	selector: 'ss-settings-view-column',
@@ -9,7 +10,7 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 export class SettingsViewColumnComponent {
 	constructor(protected readonly state: ColumnsStateService) {}
 
-	public toggleItemShow(item: string): void {
+	public toggleItemShow(item: IStoreTableBaseColumn): void {
 		this.state.toggleItemShow(item);
 	}
 }

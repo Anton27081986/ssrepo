@@ -1,5 +1,15 @@
 import { Injectable, Signal } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subject, switchMap, combineLatest, tap, of } from 'rxjs';
+import {
+	BehaviorSubject,
+	map,
+	Observable,
+	Subject,
+	switchMap,
+	combineLatest,
+	tap,
+	of,
+	debounceTime,
+} from 'rxjs';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
@@ -39,10 +49,11 @@ export class ExcessIncomeState {
 
 	constructor(private readonly excessIncomeService: ExcessIncomeService) {
 		this.currency$ = this.excessIncomeService.getCurrency().pipe(map(item => item.items));
-		this.filters$.subscribe(item => console.log(item));
 		combineLatest([this.offset$, this.filters$])
 			.pipe(
 				untilDestroyed(this),
+				tap(() => this.isLoader$.next(true)),
+				debounceTime(2000),
 				switchMap(([offset, filters]) => {
 					return this.excessIncomeService.getClients({
 						limit: this.limit,
@@ -64,12 +75,14 @@ export class ExcessIncomeState {
 				}),
 				tap(items => console.log(items, items.length)),
 			)
-			.subscribe(this.clientNode$);
+			.subscribe(items => {
+				this.clientNode$.next(items);
+				this.isLoader$.next(false);
+			});
 	}
 
 	public applyFilters(filters: ExcessIncomeCriteria) {
 		this.clientNode$.next([]);
-		this.isLoader$.next(true);
 		this.filters$.next(filters);
 	}
 }
