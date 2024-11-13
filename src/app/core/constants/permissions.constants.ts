@@ -13,6 +13,7 @@ export const Permissions = {
 	CLIENT_PROCUREMENTS_EDIT: 'Contract.Edit',
 	CLIENT_PROPOSALS_CAN_DOWNLOADREPORTS: 'Client.Proposals.CantDownloadReports',
 	CLIENT_PROPOSALS_CAN_TAKE_IN_WORK: 'Client.Proposals.CanTakeInWork',
+	COMPLETED_WORK_ACTS: 'CompletedWorkAct.Access',
 } as const;
 
 export type PermissionType = (typeof Permissions)[keyof typeof Permissions];

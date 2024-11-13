@@ -66,7 +66,7 @@ export class DictionaryApiService {
 
 	/** Список договоров учета законтрактованного сырья из КИСП*/
 	public getProcurementsContractDetails(
-		ContractorId: string,
+		ContractorId: number,
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
@@ -151,6 +151,151 @@ export class DictionaryApiService {
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/dictionary/users/search`,
+			{ params },
+		);
+	}
+
+	public getServices(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Services`,
+			{ params },
+		);
+	}
+
+	public getCostArticles(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/CostArticles`,
+			{ params },
+		);
+	}
+
+	public getFaObjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/FaObjects`,
+			{ params },
+		);
+	}
+
+	public getProjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Projects`,
+			{ params },
+		);
+	}
+
+	public getDepts(query?: string, userId?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (userId) {
+			params = params.set('userId', userId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Depts`,
+			{ params },
+		);
+	}
+
+	public getSections(query?: string, deptId?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (deptId) {
+			params = params.set('deptId', deptId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/MfsSections`,
+			{ params },
+		);
+	}
+
+	public getBuUnits(
+		query?: string,
+		applicantUserId?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (applicantUserId) {
+			params = params.set('ApplicantUserId', applicantUserId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/BuUnits`,
+			{ params },
+		);
+	}
+
+	public getTovUnits(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/TovUnits`,
+			{ params },
+		);
+	}
+
+	public getCompletedActContracts(id?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (id) {
+			params = params.set('providerContractorId', id);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Contracts`,
+			{ params },
+		);
+	}
+
+	public getFinDocOrders(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/FinDocOrders`,
 			{ params },
 		);
 	}

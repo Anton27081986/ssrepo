@@ -4,7 +4,7 @@
 		[disabled]="disabled"
 		[ngClass]="error ? size + ' error' : size"
 >
-	<option *ngIf="!selected()" value="">Выберите время</option>
+	<option *ngIf="!selected()" value="">{{ placeholder }}</option>
 		<option
 			*ngFor="let option of options"
 			[value]="option.id"

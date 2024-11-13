@@ -1,0 +1,8 @@
+@use 'src/styles/colors.scss' as *;
+
+.ss-dynamic-pagination {
+	display: flex;
+	justify-content: flex-end;
+	cursor: pointer;
+}
+

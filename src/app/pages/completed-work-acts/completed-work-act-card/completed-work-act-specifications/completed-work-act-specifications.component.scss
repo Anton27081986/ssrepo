@@ -1,0 +1,24 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	overflow-y: auto;
+}
+
+.header {
+	display: flex;
+	padding: 10px 16px;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid $island-outline;
+
+	&__info {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+}
+
+.content {
+	padding: 16px;
+	overflow-y: auto;
+}

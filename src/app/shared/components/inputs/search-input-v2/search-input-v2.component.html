@@ -1,0 +1,49 @@
+@if (label()) {
+    <ss-caption size="1">{{ label() }}</ss-caption>
+}
+
+<div class="input">
+    <div>
+        <input
+            type="text"
+            class="input__ellipsis"
+            [ngClass]="size() | mapper : getControlClasses : errorText()"
+            [placeholder]="placeholder()"
+            [formControl]="queryControl()"
+            (blur)="!showOptions() && onBlur()"
+        />
+
+        @if (queryControl().value) {
+            <ss-icon
+                height="16"
+                width="16"
+                name="close"
+                (click)="clear()"
+            />
+        }
+    </div>
+
+    @if (showOptions() && options().length) {
+        <div class="search-result">
+            <div class="separator"></div>
+
+            @for (item of options(); track item.id) {
+                <ss-caption
+                    class="search-result-item"
+                    (click)="setItem(item)"
+                >
+                    {{ item.name }}
+                </ss-caption>
+            }
+        </div>
+    }
+
+    <ss-caption size="2" class="error" color="error">{{ errorText() }}</ss-caption>
+</div>
+
+
+@if (showOptions() && options().length) {
+    <div class="overflow" (click)="onBlur()"></div>
+}
+
+

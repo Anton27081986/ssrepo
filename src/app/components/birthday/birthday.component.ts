@@ -41,7 +41,6 @@ export class BirthdayComponent {
 
 	public birthDays: Signal<IDayDto[]> = toSignal(
 		this.dateBirthCtrl.valueChanges.pipe(
-			startWith(formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU')),
 			filter(Boolean),
 			tap(() => this.loading.set(true)),
 			switchMap(date =>

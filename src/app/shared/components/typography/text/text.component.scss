@@ -22,7 +22,7 @@ p.text-2 {
 }
 
 p.text-3 {
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 18px;
 }
 
@@ -53,6 +53,10 @@ p.color-black {
 
 p.color-white {
 	color: $island;
+}
+
+p.color-blue {
+	color: $main;
 }
 
 :host-context(.dark) p {

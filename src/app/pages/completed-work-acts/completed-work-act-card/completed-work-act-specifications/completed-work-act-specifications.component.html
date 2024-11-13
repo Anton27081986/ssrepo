@@ -1,0 +1,16 @@
+<ss-card padding="0">
+	<div class="header">
+		<div class="header__info">
+			<ss-text size="1">Спецификация затрат</ss-text>
+			<ss-tag-v2 state="normal">
+				Итоговая сумма: <ss-text size="3">{{specificationsTotalAmount() | numWithSpaces }} р.</ss-text>
+			</ss-tag-v2>
+		</div>
+		<ss-button type="muted" size="small" (click)="onAddSpecification()">Добавить спецификацию</ss-button>
+	</div>
+	<div class="content">
+		<ss-table-v2>
+			<tr ss-specification-row-item-tr *ngFor="let item of specifications()" [item]="item"></tr>
+		</ss-table-v2>
+	</div>
+</ss-card>
