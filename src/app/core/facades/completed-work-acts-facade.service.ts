@@ -10,6 +10,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import {NotificationToastService} from "@app/core/services/notification-toast.service";
 
 @UntilDestroy()
 @Injectable({
@@ -35,15 +36,19 @@ export class CompletedWorkActsFacadeService {
 	private readonly currencies = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public currencies$ = this.currencies.asObservable();
 
+	private readonly buUnits = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public buUnits$ = this.buUnits.asObservable();
+
 	private readonly specificationsTotalAmount = new BehaviorSubject<number | null>(null);
 	public specificationsTotalAmount$ = this.specificationsTotalAmount.asObservable();
 
 	private readonly isEditMode = new BehaviorSubject<boolean>(false);
 	public isEditMode$ = this.isEditMode.asObservable();
 
-	constructor(
+	public constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
+		private readonly noticeService: NotificationToastService
 	) {
 		this.filters
 			.pipe(
@@ -60,6 +65,7 @@ export class CompletedWorkActsFacadeService {
 
 		this.getActStates();
 		this.getCurrencies();
+		this.getBuUnits();
 	}
 
 	public applyFilters(filters: ICompletedActsFilter) {
@@ -145,6 +151,18 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
+	public getBuUnits() {
+		this.actsApiService
+			.getBuUnits()
+			.pipe(
+				tap(states => {
+					this.buUnits.next(states.items);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+	}
+
 	public toArchiveAct() {
 		if (this.act.value) {
 			const id = this.act.value.id;
@@ -154,6 +172,7 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
+					this.noticeService.addToast('Акт отправлен в архив', 'ok');
 				});
 		}
 	}
@@ -167,6 +186,7 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
+					this.noticeService.addToast('Акт проведен', 'ok');
 				});
 		}
 	}
@@ -180,6 +200,7 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
+					this.noticeService.addToast('Акт восстановлен', 'ok');
 				});
 		}
 	}

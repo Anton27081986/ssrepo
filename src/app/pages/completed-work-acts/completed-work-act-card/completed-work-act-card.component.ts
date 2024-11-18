@@ -1,5 +1,5 @@
 import { Component, Signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CompletedWorkActHistoryComponent } from '@app/pages/completed-work-acts/completed-work-act-history/completed-work-act-history.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
@@ -24,6 +24,7 @@ export class CompletedWorkActCardComponent {
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly modalService: ModalService,
+		private readonly router: Router,
 	) {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -46,5 +47,9 @@ export class CompletedWorkActCardComponent {
 
 	public restoreAct() {
 		this.completedWorkActsFacade.restoreAct();
+	}
+
+	public toActsList() {
+		this.router.navigate([`/competed-work-acts`]);
 	}
 }

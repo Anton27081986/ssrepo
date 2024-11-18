@@ -157,12 +157,12 @@ export class CompletedWorkActsComponent {
 
 			tableItem.providerContractor = {
 				text: x.providerContractor?.name ?? '-',
-				url: x.providerContractorLinkUrl ?? '-',
+				url: x.providerContractor?.linkToDetail ?? '-',
 			};
 
 			tableItem.applicantUser = x.applicantUser?.name ?? '-';
 
-			tableItem.contractId = x.contract.id ?? '-';
+			tableItem.contract = x.contract.name ?? '-';
 
 			tableItem.totalAmount = x.totalAmount;
 

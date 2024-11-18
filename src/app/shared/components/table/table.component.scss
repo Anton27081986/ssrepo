@@ -41,6 +41,10 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			font-weight: 600;
+
+			&__pointer {
+				cursor: pointer;
+			}
 		}
 
 		&__cell:last-child {

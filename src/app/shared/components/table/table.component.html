@@ -4,7 +4,7 @@
 			<div>{{ headItem.title }}</div>
 		</ng-container>
 		<ng-template #tooltip>
-			<div [tooltip]="headItem.tooltip!" [theme]="TooltipTheme.MAIN">{{ headItem.title }}</div>
+			<div class="header__cell__pointer" [tooltip]="headItem.tooltip!" [theme]="TooltipTheme.MAIN">{{ headItem.title }}</div>
 		</ng-template>
 	</div>
 </div>
@@ -29,7 +29,8 @@
 						{{ link.text }}
 					</a>
 				</span>
-				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] | numWithSpaces }}</span>
+				<span *ngSwitchCase="headItem.isNumber" class="text-{{ size }}">{{ item[headItem.field] | numWithSpaces }}</span>
+				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
 			</ng-container>
 			<ss-icon class="maximise" name="maximise" *ngIf="(cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
 		</div>
