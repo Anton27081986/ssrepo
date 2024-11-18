@@ -44,20 +44,22 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-				<ss-search-input searchType="bu-units" size="small"
-					 [selectedItem]="buUnit"
-					 (select)="editActForm.controls.buUnitId.setValue($event.id)"
-					 (click)="editActForm.controls.buUnitId.setErrors(null)"
-					 [error]="editActForm.controls.buUnitId.touched && editActForm.controls.buUnitId.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-search-input>
+				<ss-select size="small"
+					(onChange)="editActForm.controls.buUnitId.setValue($event)"
+					[error]="editActForm.controls.buUnitId.touched && editActForm.controls.buUnitId.errors?.required ? 'Обязательное поле' : undefined">
+					<option
+						*ngFor="let unit of buUnits()"
+						[value]="unit.id"
+						[selected]="buUnit?.id === unit.id || act()?.buUnit?.id === unit.id">{{ unit.name }}</option>
+				</ss-select>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Плательщик</ss-text>
-				<ss-search-input searchType="contractor" size="small"
-					 [selectedItem]="act()?.payerContractor"
-					 (select)="editActForm.controls.payerContractorId.setValue($event.id)"
-					 (click)="editActForm.controls.payerContractorId.setErrors(null)"
-					 [error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+				<ss-search-input searchType="payer-contractor" size="small"
+					[selectedItem]="act()?.payerContractor"
+					(select)="editActForm.controls.payerContractorId.setValue($event.id)"
+					(click)="editActForm.controls.payerContractorId.setErrors(null)"
+					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
 		</div>
@@ -65,17 +67,17 @@
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-search-input searchType="contractor" size="small"
-					 [selectedItem]="act()?.providerContractor"
-					 (select)="onProviderContractorSelect($event.id, true)"
-					 (click)="editActForm.controls.providerContractorId.setErrors(null)"
-					 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+					[selectedItem]="act()?.providerContractor"
+					(select)="onProviderContractorSelect($event.id, true)"
+					(click)="editActForm.controls.providerContractorId.setErrors(null)"
+					[error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
 				<ss-select size="small"
-						   (onChange)="editActForm.controls.contractId.setValue($event)"
-						   [error]="editActForm.controls.contractId.touched && editActForm.controls.contractId.errors?.required ? 'Обязательное поле' : undefined">
+					(onChange)="editActForm.controls.contractId.setValue($event)"
+					[error]="editActForm.controls.contractId.touched && editActForm.controls.contractId.errors?.required ? 'Обязательное поле' : undefined">
 					<option
 						*ngFor="let contract of contracts"
 						[value]="contract.id"
@@ -85,8 +87,8 @@
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<ss-chips-search searchType="fin-doc-orders" size="small" placeholder="Введите значение"
-					 [selectedItems]="finDocOrders"
-					 (getSelected)="setFinDocOrdersIds($event)">
+					[selectedItems]="finDocOrders"
+					(getSelected)="setFinDocOrdersIds($event)">
 				</ss-chips-search>
 			</div>
 		</div>
@@ -95,8 +97,8 @@
 				<ss-text size="4">Валюта</ss-text>
 				<ss-select size="small"
 					(onChange)="editActForm.controls.currency.setValue($event)"
-					 (click)="editActForm.controls.currency.setErrors(null)"
-					 [error]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : undefined">
+					(click)="editActForm.controls.currency.setErrors(null)"
+					[error]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : undefined">
 					<option
 						*ngFor="let currency of currencies()"
 						[value]="currency.name"
@@ -105,14 +107,15 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Код 1С</ss-text>
-				<ss-input formControlName="oneSNumber" size="small" placeholder="Введите значение"
-				    [error]="editActForm.controls.oneSNumber.touched && editActForm.controls.oneSNumber.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-input>
+				<ss-text size="3">{{ act()?.oneSNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Комментарий из 1С</ss-text>
-				<ss-input formControlName="oneSComment" size="small" placeholder="Введите значение"
-					[error]="editActForm.controls.oneSComment.touched && editActForm.controls.oneSComment.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
+				<ss-text class="content__column__item__comment" size="3">{{ act()?.oneSComment }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Сумма итого 1С</ss-text>
+				<ss-text class="content__column__item__comment" size="3">{{ act()?.OneSTotalAmount | numWithSpaces }}</ss-text>
 			</div>
 		</div>
 		<div class="content__column">
@@ -123,9 +126,9 @@
 						Добавить документ
 					</label>
 					<input type="file" id="upload-file"
-						   accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
-						   multiple
-						   (change)="uploadFile($event)"
+						 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
+						 multiple
+						 (change)="uploadFile($event)"
 					/>
 				</div>
 				<div class="content__column__item__files-list">

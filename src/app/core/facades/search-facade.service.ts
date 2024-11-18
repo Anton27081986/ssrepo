@@ -61,6 +61,10 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getContractors(query, this.clientId);
 	}
 
+	public getPayerContractor(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getPayerContractors(query);
+	}
+
 	public getTovs(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getTovs(query);
 	}

@@ -12,17 +12,17 @@
 			*ngIf="acts.total > 0;else empty"
 			[padding]="'8px'"
 			[head]="[
-					{title: 'Код', field: 'code'},
-					{title: 'Состояние', field: 'state', sizeRatio: 2},
-					{title: 'Дата Акта (внш)', field: 'externalActDate', sizeRatio: 2},
-					{title: 'Дата Акта (внтр)', field: 'internalActDate', sizeRatio: 2},
+					{title: 'Код', field: 'code', sizeRatio: 0.7},
+					{title: 'Состояние', field: 'state', sizeRatio: 1.5},
+					{title: 'Дата\n (внш)', field: 'externalActDate', sizeRatio: 1.5},
+					{title: 'Дата\n (внтр)', field: 'internalActDate', sizeRatio: 1.5},
 					{title: '№ Акта (внш)', field: 'externalActNumber', sizeRatio: 1.5},
 					{title: '№ Акта (внтр)', field: 'internalActNumber', sizeRatio: 1.5},
-					{title: 'БЕ плательщика', field: 'payerBuUnit', sizeRatio: 2},
-					{title: 'Поставщик услуг', field: 'providerContractor', sizeRatio: 2},
-					{title: 'Договор', field: 'contractId', sizeRatio: 2},
+					{title: 'БЕ', field: 'payerBuUnit', sizeRatio: 0.7, tooltip: 'БЕ плательщика'},
+					{title: 'Поставщик услуг', field: 'providerContractor', sizeRatio: 3.5},
+					{title: 'Договор', field: 'contract', sizeRatio: 2},
 					{title: 'Заявитель', field: 'applicantUser', sizeRatio: 2},
-					{title: 'Сумма (итого)', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
+					{title: 'Сумма', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
 					]"
 			[items]="getTableItems(acts)"
 		>

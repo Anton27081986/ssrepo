@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { IStoreTableBaseColumn, ITrTableBaseColumn } from '@app/core/store';
 
 @Injectable({ providedIn: 'root' })

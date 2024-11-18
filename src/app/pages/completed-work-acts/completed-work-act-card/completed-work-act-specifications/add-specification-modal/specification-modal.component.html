@@ -17,7 +17,7 @@
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
 				<ss-search-input searchType="tov-units" label="Единицы измерения" placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.tovUnit : undefined"
+					[selectedItem]="spec ? spec.tovUnit : defaultTovUnits"
 					(select)="addSpecificationForm.controls.tovUnitId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.tovUnitId.setErrors(null)"
 					[error]="addSpecificationForm.controls.tovUnitId.touched && addSpecificationForm.controls.tovUnitId.errors?.required ? 'Обязательное поле' : undefined">

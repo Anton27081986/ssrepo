@@ -2,9 +2,9 @@
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
 			<td class="ss-table-td" *ngIf="col.display">
-<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
-<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
-<!--				</ng-container>-->
+				<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
+				<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
+				<!--				</ng-container>-->
 
 				<ng-container *ngSwitchCase="specificationRowItemField.service">
 					<div class="ss-table-td__content">{{ item().service?.name || '-' }}</div>

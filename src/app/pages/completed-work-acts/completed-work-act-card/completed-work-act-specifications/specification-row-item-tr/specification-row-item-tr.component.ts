@@ -1,4 +1,4 @@
-import { Component, ElementRef, input, Input, InputSignal, OnInit, ViewChild } from '@angular/core';
+import {Component, ElementRef, input, Input, InputSignal, OnInit, ViewChild} from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
@@ -7,7 +7,7 @@ import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-
 import { SpecificationModalComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/add-specification-modal/specification-modal.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
-import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
+import { DialogComponent } from "@app/shared/components/dialog/dialog.component";
 
 export enum SpecificationRowItemField {
 	service = 'service',
@@ -38,6 +38,8 @@ export class SpecificationRowItemTrComponent implements OnInit {
 		input.required<ICompletedWorkActSpecification>();
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
+	protected advantagesTpr: string[] = [];
+
 	@ViewChild('content') public content!: ElementRef;
 
 	constructor(
@@ -47,102 +49,104 @@ export class SpecificationRowItemTrComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.columnsStateService.colsTr$.next([
-			{
-				cols: [
-					{
-						id: SpecificationRowItemField.service,
-						title: 'Услуга',
-						order: 1,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.quantity,
-						title: 'Кол-во,\nед.изм',
-						order: 2,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.cost,
-						title: 'Статья',
-						order: 3,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.faObject,
-						title: 'Объект ОС/НМА, Тип ОС',
-						order: 4,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.project,
-						title: 'Проект',
-						order: 5,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.dept,
-						title: 'Отдел',
-						order: 6,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.section,
-						title: 'Производственный участок',
-						order: 7,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.user,
-						title: 'Сотрудник',
-						order: 8,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.amount,
-						title: 'Сумма',
-						order: 9,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-					{
-						id: SpecificationRowItemField.controls,
-						title: '',
-						order: 10,
-						show: true,
-						colspan: 1,
-						rowspan: 1,
-						display: true,
-					},
-				],
-			},
-		]);
+		if (this.item()) {
+			this.columnsStateService.colsTr$.next([
+				{
+					cols: [
+						{
+							id: SpecificationRowItemField.service,
+							title: 'Услуга',
+							order: 1,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.quantity,
+							title: 'Кол-во,\nед.изм',
+							order: 2,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.cost,
+							title: 'Статья',
+							order: 3,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.faObject,
+							title: 'Объект ОС/НМА, Тип ОС',
+							order: 4,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.project,
+							title: 'Проект',
+							order: 5,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.dept,
+							title: 'Отдел',
+							order: 6,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.section,
+							title: 'Производственный участок',
+							order: 7,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.user,
+							title: 'Сотрудник',
+							order: 8,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.amount,
+							title: 'Сумма',
+							order: 9,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
+							id: SpecificationRowItemField.controls,
+							title: '',
+							order: 10,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+					],
+				},
+			]);
+		}
 	}
 
 	public onEditSpecification(spec: ICompletedWorkActSpecification) {
