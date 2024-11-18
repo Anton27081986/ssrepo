@@ -70,7 +70,6 @@ import { RatingTeamTabComponent } from '@app/components/rating/rating-team-tab/r
 import { SelectModule } from '@app/shared/components/select/select.module';
 import { SearchClientInputModule } from '@app/shared/components/inputs/search-client-input/search-client-input.module';
 import { SearchUserInputModule } from '@app/shared/components/inputs/search-user-input/search-user-input.module';
-import { SelectV2Module } from '@app/shared/components/inputs/select-v2/select-v2.module';
 import { RatingTeamUsersComponent } from '@app/components/rating/rating-team-users/rating-team-users.component';
 import { RatingTeamsComponent } from '@app/components/rating/rating-teams/rating-teams.component';
 import { TabsControlComponent } from '@app/components/rating/tabs-control/tabs-control.component';
@@ -80,6 +79,7 @@ import { ProjectsUsersCardComponent } from '@app/components/rating/projects-user
 import { DistributorsUsersCardComponent } from '@app/components/rating/distributors-users-card/distributors-users-card.component';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
+import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
 
 @NgModule({
 	declarations: [
@@ -163,7 +163,7 @@ import { MapperPipe } from '@app/core/pipes/mapper.pipe';
         SelectModule,
         SearchClientInputModule,
         SearchUserInputModule,
-        SelectV2Module,
+		SelectV2Component,
         ModalTransportNoticeComponent,
         DateTimePickerComponent,
         MapperPipe,
