@@ -23,8 +23,6 @@ export class CompletedWorkActEditComponent {
 		externalActDate: FormControl<string | null>;
 		internalActDate: FormControl<string | null>;
 		finDocOrderIds: FormControl<number[] | null>;
-		oneSNumber: FormControl<string | null>;
-		oneSComment: FormControl<string | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnitId: FormControl<number | null>;
 		payerContractorId: FormControl<number | null>;
@@ -67,8 +65,6 @@ export class CompletedWorkActEditComponent {
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<number[] | null>(null),
-			oneSNumber: new FormControl<string | null>(null, [Validators.required]),
-			oneSComment: new FormControl<string | null>(null, [Validators.required]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnitId: new FormControl<number | null>(null, [Validators.required]),
 			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
@@ -86,13 +82,11 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.finDocOrderIds.setValue(
 					act.finDocOrders.map(doc => doc.id),
 				);
-				this.editActForm.controls.oneSNumber.setValue(act.oneSNumber);
-				this.editActForm.controls.oneSComment.setValue(act.oneSComment);
-				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id);
+				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id || null);
 				this.editActForm.controls.buUnitId.setValue(act.buUnit?.id);
 				this.editActForm.controls.payerContractorId.setValue(act.payerContractor?.id);
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
-				this.editActForm.controls.contractId.setValue(act.contract?.id);
+				this.editActForm.controls.contractId.setValue(act.contract?.id || null);
 				this.editActForm.controls.currency.setValue(act.currency);
 
 				this.finDocOrders = this.act()?.finDocOrders || [];
@@ -116,6 +110,18 @@ export class CompletedWorkActEditComponent {
 
 	protected onSave() {
 		this.editActForm.markAllAsTouched();
+
+		if (this.editActForm.controls.buUnitId) {
+			this.editActForm.controls.buUnitId.setErrors(null);
+		} else {
+			return;
+		}
+
+		if (this.editActForm.controls.contractId) {
+			this.editActForm.controls.contractId.setErrors(null);
+		} else {
+			return;
+		}
 
 		if (this.editActForm.invalid) {
 			return;
@@ -148,8 +154,13 @@ export class CompletedWorkActEditComponent {
 				.getDictionaryBuUnits(undefined, id)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
-					this.buUnit = res.items[0];
-					this.ref.detectChanges();
+					const unit = res.items[0];
+
+					if (unit) {
+						this.buUnit = res.items[0];
+						this.editActForm.controls.buUnitId.setValue(unit.id);
+						this.ref.detectChanges();
+					}
 				});
 		}
 	}
