@@ -46,7 +46,8 @@
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
 				<ss-select size="small"
 					(onChange)="editActForm.controls.buUnitId.setValue($event)"
-					[error]="editActForm.controls.buUnitId.touched && editActForm.controls.buUnitId.errors?.required ? 'Обязательное поле' : undefined">
+					[error]="editActForm.controls.buUnitId.touched && !editActForm.controls.buUnitId.value ? 'Обязательное поле' : undefined">
+					<option [value]="''">(Не выбрана)</option>
 					<option
 						*ngFor="let unit of buUnits()"
 						[value]="unit.id"
@@ -76,12 +77,13 @@
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
 				<ss-select size="small"
-					(onChange)="editActForm.controls.contractId.setValue($event)"
-					[error]="editActForm.controls.contractId.touched && editActForm.controls.contractId.errors?.required ? 'Обязательное поле' : undefined">
+					(onChange)="editActForm.controls.contractId.setValue($event);"
+					[error]="editActForm.controls.contractId.touched && !editActForm.controls.contractId.value ? 'Обязательное поле' : undefined">
+					<option [value]="''">(Не выбран)</option>
 					<option
 						*ngFor="let contract of contracts"
 						[value]="contract.id"
-						[selected]="act()?.contract?.id === contract.id || contracts[0].id === contract.id">{{contract.name}}</option>
+						[selected]="act()?.contract?.id === contract.id">{{contract.name}}</option>
 				</ss-select>
 			</div>
 			<div class="content__column__item">
