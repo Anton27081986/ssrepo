@@ -126,7 +126,7 @@ export class CompletedWorkActsComponent {
 
 			tableItem.code = {
 				text: x.id.toString() ?? '-',
-				url: x.id !== undefined ? `./competed-work-acts/${x.id}` : '-',
+				url: x.id !== undefined ? `./completed-work-acts/${x.id}` : '-',
 			};
 
 			tableItem.state = x.state.name ?? '-';
