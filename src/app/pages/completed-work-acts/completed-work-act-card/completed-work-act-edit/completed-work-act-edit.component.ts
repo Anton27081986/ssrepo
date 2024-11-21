@@ -60,8 +60,8 @@ export class CompletedWorkActEditComponent {
 		private readonly ref: ChangeDetectorRef,
 	) {
 		this.editActForm = new FormGroup({
-			externalActNumber: new FormControl<string | null>(null, [Validators.required]),
-			internalActNumber: new FormControl<string | null>(null, [Validators.required]),
+			externalActNumber: new FormControl<string | null>(null),
+			internalActNumber: new FormControl<string | null>(null),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<number[] | null>(null),
