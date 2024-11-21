@@ -45,6 +45,7 @@ import {ComponentsModule} from "@app/components/components.module";
 import {LinkModule} from "@app/shared/components/link/link.module";
 import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
+import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 
 @NgModule({
 	declarations: [
@@ -103,6 +104,7 @@ import { SelectV2Component } from '@app/shared/components/inputs/select-v2/selec
         LinkModule,
         SelectV2Component,
         DateTimePickerComponent,
+        MapperPipe,
     ],
 })
 export class CompletedWorkActsModule {}
