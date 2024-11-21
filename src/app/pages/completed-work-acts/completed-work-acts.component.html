@@ -1,7 +1,7 @@
 <div class="header">
 	<ss-headline size="h3">Реестр актов выполненных работ</ss-headline>
 	<div class="header__controls">
-		<ss-dropdown-button title="Фильтры">
+		<ss-dropdown-button [isDropdownVisible]="!isLoader()" title="Фильтры">
 			<ss-filters [isFiltersVisible]="!isLoader()" [isDropdown]="true" [(filters)]="filters" (applyFilter)="getFilteredActs(true)"></ss-filters>
 		</ss-dropdown-button>
 	</div>
