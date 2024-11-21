@@ -5,9 +5,9 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 import { ModalService } from '@app/core/modal/modal.service';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { SpecificationModalComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/add-specification-modal/specification-modal.component';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
-import {DialogComponent} from "@app/shared/components/dialog/dialog.component";
+import { DialogComponent } from "@app/shared/components/dialog/dialog.component";
 
 export enum SpecificationRowItemField {
 	service = 'service',

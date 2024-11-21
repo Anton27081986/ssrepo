@@ -22,6 +22,10 @@ export class NumWithSpacesPipe implements PipeTransform {
 
 		separate[0] = separate[0].replace(/\B(?=(\d{3})+(?!\d))/g, sep);
 
+		if (separate.length === 1) {
+			separate.push('00');
+		}
+
 		return separate.join(',');
 	}
 }

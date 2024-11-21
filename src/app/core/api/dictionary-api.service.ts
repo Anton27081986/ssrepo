@@ -50,6 +50,22 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список плательщиков */
+	public getPayerContractors(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/PayerContractors`,
+			{
+				params,
+			},
+		);
+	}
+
 	/** Список статусов */
 	public getStatuses(): Observable<IResponse<{ id: number; name: string }>> {
 		return this.http.get<IResponse<{ id: number; name: string }>>(
