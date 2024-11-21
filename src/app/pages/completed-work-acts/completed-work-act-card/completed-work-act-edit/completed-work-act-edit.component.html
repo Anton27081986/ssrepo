@@ -44,15 +44,13 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-				<ss-select size="small"
-					(onChange)="editActForm.controls.buUnitId.setValue($event)"
-					[error]="editActForm.controls.buUnitId.touched && !editActForm.controls.buUnitId.value ? 'Обязательное поле' : undefined">
-					<option [value]="''">(Не выбрана)</option>
-					<option
-						*ngFor="let unit of buUnits()"
-						[value]="unit.id"
-						[selected]="buUnit?.id === unit.id || act()?.buUnit?.id === unit.id">{{ unit.name }}</option>
-				</ss-select>
+
+                <ss-select-v2
+                    [size]="'small'"
+                    [options]="buUnits()"
+                    [formControlName]="'buUnit'"
+                    [errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
+                />
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Плательщик</ss-text>
@@ -69,22 +67,20 @@
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-search-input searchType="contractor" size="small"
 					[selectedItem]="act()?.providerContractor"
-					(select)="onProviderContractorSelect($event.id, true)"
+					(select)="onProviderContractorSelect($event.id)"
 					(click)="editActForm.controls.providerContractorId.setErrors(null)"
 					[error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
-				<ss-select size="small"
-					(onChange)="editActForm.controls.contractId.setValue($event);"
-					[error]="editActForm.controls.contractId.touched && !editActForm.controls.contractId.value ? 'Обязательное поле' : undefined">
-					<option [value]="''">(Не выбран)</option>
-					<option
-						*ngFor="let contract of contracts"
-						[value]="contract.id"
-						[selected]="act()?.contract?.id === contract.id">{{contract.name}}</option>
-				</ss-select>
+
+				<ss-select-v2
+					[size]="'small'"
+					[options]="contracts()"
+					[formControlName]="'contract'"
+					[errorText]="editActForm.controls.contract.touched && !editActForm.controls.contract.value ? 'Обязательное поле' : ''"
+				/>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>

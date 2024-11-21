@@ -115,7 +115,11 @@ export class SelectV2Component implements ControlValueAccessor {
 	public writeValue(value: IDictionaryItemDto | null): void {
 		if (value) {
 			this.selectCtrl.setValue(value.name, { emitEvent: false });
+
+			return;
 		}
+
+		this.selectCtrl.setValue(null, { emitEvent: false });
 	}
 
 	public setDisabledState?(isDisabled: boolean): void {
