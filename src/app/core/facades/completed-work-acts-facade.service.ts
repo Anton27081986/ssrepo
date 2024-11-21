@@ -1,5 +1,5 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { CompletedWorkActsApiService } from '@app/core/api/completed-work-acts-api.service';
 import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
@@ -11,6 +11,7 @@ import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/compl
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 
 @UntilDestroy()
 @Injectable({
@@ -39,6 +40,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly buUnits = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public buUnits$ = this.buUnits.asObservable();
 
+	private readonly contracts = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public contracts$ = this.contracts.asObservable();
+
 	private readonly specificationsTotalAmount = new BehaviorSubject<number | null>(null);
 	public specificationsTotalAmount$ = this.specificationsTotalAmount.asObservable();
 
@@ -49,6 +53,7 @@ export class CompletedWorkActsFacadeService {
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
 		private readonly noticeService: NotificationToastService,
+		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.filters
 			.pipe(
@@ -79,6 +84,9 @@ export class CompletedWorkActsFacadeService {
 			.pipe(
 				switchMap(act => {
 					this.act.next(act);
+					this.getContracts(act.providerContractor?.id)
+						.pipe(untilDestroyed(this))
+						.subscribe();
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -161,6 +169,15 @@ export class CompletedWorkActsFacadeService {
 				untilDestroyed(this),
 			)
 			.subscribe();
+	}
+
+	public getContracts(id?: number) {
+		return this.searchFacade.getDictionaryCompletedActContracts(id).pipe(
+			tap(res => {
+				this.contracts.next(res.items);
+			}),
+			untilDestroyed(this),
+		);
 	}
 
 	public toArchiveAct() {

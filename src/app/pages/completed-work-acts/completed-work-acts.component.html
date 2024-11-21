@@ -24,7 +24,7 @@
 					{title: 'Заявитель', field: 'applicantUser', sizeRatio: 2},
 					{title: 'Сумма', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
 					]"
-			[items]="getTableItems(acts)"
+			[items]="acts | mapper : getTableItems"
 		>
 		</ss-table>
 		<ss-pagination
