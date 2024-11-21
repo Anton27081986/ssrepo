@@ -25,11 +25,11 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внешний)</ss-text>
-				<ss-date-time-picker formControlName="externalActDate"></ss-date-time-picker>
+				<ss-date-time-picker [showTime]="false" formControlName="externalActDate"></ss-date-time-picker>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внутренний)</ss-text>
-				<ss-datepicker-input formControlName="internalActDate" size="small" [placeholder]="act()!.internalActDate | date: 'dd.MM.yyyy'"></ss-datepicker-input>
+				<ss-date-time-picker [showTime]="false" formControlName="internalActDate"></ss-date-time-picker>
 			</div>
 		</div>
 		<div class="content__column">
@@ -113,7 +113,7 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Сумма итого 1С</ss-text>
-				<ss-text class="content__column__item__comment" size="3">{{ act()?.OneSTotalAmount | numWithSpaces }}</ss-text>
+				<ss-text class="content__column__item__comment" size="3">{{ act()?.oneSTotalAmount | numWithSpaces }}</ss-text>
 			</div>
 		</div>
 		<div class="content__column">
