@@ -25,7 +25,7 @@ export class CompletedWorkActPermissionsGuard implements CanActivate {
 
 				this.router.navigate(['not-permission'], {
 					queryParams: {
-						redirectUrl: 'competed-work-acts',
+						redirectUrl: 'completed-work-acts',
 					},
 				});
 

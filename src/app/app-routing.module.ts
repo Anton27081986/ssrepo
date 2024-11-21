@@ -46,7 +46,7 @@ const routes: Routes = [
 							).then(m => m.RawMaterialAccountingModule),
 					},
 					{
-						path: 'competed-work-acts',
+						path: 'completed-work-acts',
 						canActivate: [CompletedWorkActPermissionsGuard],
 						loadChildren: () =>
 							import('./pages/completed-work-acts/completed-work-acts.module').then(
