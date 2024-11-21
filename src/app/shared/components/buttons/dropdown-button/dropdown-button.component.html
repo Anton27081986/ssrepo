@@ -2,7 +2,7 @@
 	{{title}}
 	<ss-icon width="12" height="12" name="chevron" class="icon"></ss-icon>
 </ss-button>
-<ng-container *ngIf="isOpened">
+<ng-container *ngIf="isOpened && isDropdownVisible">
 	<ss-card padding="0" class="dropdown" (click)="$event.stopPropagation(); close()">
 		<ng-content></ng-content>
 	</ss-card>

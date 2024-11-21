@@ -10,7 +10,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
-import {NotificationToastService} from "@app/core/services/notification-toast.service";
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
 
 @UntilDestroy()
 @Injectable({
@@ -48,7 +48,7 @@ export class CompletedWorkActsFacadeService {
 	public constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
-		private readonly noticeService: NotificationToastService
+		private readonly noticeService: NotificationToastService,
 	) {
 		this.filters
 			.pipe(

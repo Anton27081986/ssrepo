@@ -39,7 +39,7 @@
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.amount">
-					<div class="ss-table-td__content hc-table-td__content--number">{{ item().amount || '-' }}</div>
+					<div class="ss-table-td__content hc-table-td__content--number">{{ item().amount | numWithSpaces }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.faAsset">
