@@ -162,7 +162,7 @@ export class CompletedWorkActsComponent {
 
 			tableItem.applicantUser = x.applicantUser?.name ?? '-';
 
-			tableItem.contractId = x.contract.id ?? '-';
+			tableItem.contract = x.contract.name ?? '-';
 
 			tableItem.totalAmount = x.totalAmount;
 

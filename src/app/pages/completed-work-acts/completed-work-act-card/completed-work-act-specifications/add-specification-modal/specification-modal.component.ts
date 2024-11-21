@@ -19,6 +19,7 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 	styleUrls: ['./specification-modal.component.scss'],
 })
 export class SpecificationModalComponent {
+	private readonly defaultTovUnitsName = 'шт';
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
@@ -40,6 +41,7 @@ export class SpecificationModalComponent {
 	protected user: IDictionaryItemDto | undefined;
 	protected myDept: IDictionaryItemDto | undefined;
 	protected mySection: IDictionaryItemDto | undefined;
+	protected defaultTovUnits: IDictionaryItemDto | undefined;
 
 	constructor(
 		@Inject(DIALOG_DATA) protected readonly spec: ICompletedWorkActSpecification,
@@ -83,6 +85,21 @@ export class SpecificationModalComponent {
 			if (user) {
 				this.onUserSelect(user);
 			}
+
+			this.searchFacade
+				.getDictionaryTovUnits(this.defaultTovUnitsName)
+				.pipe(untilDestroyed(this))
+				.subscribe(units => {
+					this.defaultTovUnits = units.items.find(
+						item => item.name === this.defaultTovUnitsName,
+					);
+
+					if (this.defaultTovUnits) {
+						this.addSpecificationForm.controls.tovUnitId.setValue(
+							this.defaultTovUnits.id,
+						);
+					}
+				});
 		}
 	}
 

@@ -147,6 +147,12 @@ export class CompletedWorkActsApiService {
 		);
 	}
 
+	public getBuUnits(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/BuUnits`,
+		);
+	}
+
 	public toArchiveAct(actId: number): Observable<any> {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/Delete`,

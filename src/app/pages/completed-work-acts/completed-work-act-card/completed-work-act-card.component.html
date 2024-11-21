@@ -1,6 +1,7 @@
 <ng-container *ngIf="act() as act">
 	<div class="header">
 		<div class="header__title">
+			<ss-icon name="arrow" (click)="toActsList()"></ss-icon>
 			<ss-text size="0">Акт №{{ act.id }}</ss-text>
 			@switch (act.state.id) {
 				@case (0) {
@@ -16,7 +17,7 @@
 		</div>
 		<div class="header__controls">
 			<ss-button type="muted" size="small" (click)="openHistoryModal(act.id)">История</ss-button>
-			<ss-dropdown-button *ngIf="!isEdit()" title="Действия">
+			<ss-dropdown-button [closeOnClick]="true" *ngIf="!isEdit()" title="Действия">
 				@if (act.state.id === 0) {
 					<div class="header__controls__dropdown-item" (click)="restoreAct()">
 						<ss-icon name="refresh"></ss-icon>

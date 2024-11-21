@@ -44,6 +44,13 @@ export class CompletedWorkActEditComponent {
 		},
 	);
 
+	protected buUnits: Signal<IDictionaryItemDto[]> = toSignal(
+		this.completedWorkActsFacade.buUnits$,
+		{
+			initialValue: [],
+		},
+	);
+
 	protected contracts: IDictionaryItemDto[] = [];
 
 	protected finDocOrders: IDictionaryItemDto[] = [];
@@ -93,13 +100,10 @@ export class CompletedWorkActEditComponent {
 				this.buUnit = act.buUnit;
 
 				this.onProviderContractorSelect(act.providerContractor?.id);
+
+				this.finDocOrders = act.finDocOrders || [];
 			}
 		});
-
-		this.finDocOrders =
-			this.editActForm.controls.finDocOrderIds.value?.map(item => {
-				return { id: item, name: item.toString() };
-			}) || [];
 	}
 
 	protected switchMode() {

@@ -21,6 +21,7 @@ export type searchType =
 	| 'tovs'
 	| 'region'
 	| 'contractor'
+	| 'payer-contractor'
 	| 'client'
 	| 'technologist'
 	| 'contract'
@@ -120,16 +121,22 @@ export class SearchInputComponent {
 						});
 					break;
 				case 'contractor':
-					if (query) {
-						this.searchFacade
-							.getContractor(query)
-							.pipe(untilDestroyed(this))
-							.subscribe(res => {
-								this.found$.next(res.items);
-								this.ref.detectChanges();
-							});
-					}
-
+					this.searchFacade
+						.getContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'payer-contractor':
+					this.searchFacade
+						.getPayerContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
 					break;
 				case 'tovs':
 					this.searchFacade

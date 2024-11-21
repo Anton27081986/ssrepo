@@ -20,6 +20,7 @@ export interface ICompletedWorkAct {
 	currency: string;
 	oneSComment: string;
 	oneSNumber: string;
+	OneSTotalAmount: number;
 	providerContractorLinkUrl: string;
 	totalAmount: number;
 	contractId: number;
