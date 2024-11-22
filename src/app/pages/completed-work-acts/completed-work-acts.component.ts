@@ -149,9 +149,9 @@ export class CompletedWorkActsComponent {
 				},
 			)}`;
 
-			tableItem.externalActNumber = x.externalActNumber;
+			tableItem.externalActNumber = x.externalActNumber ?? '-';
 
-			tableItem.internalActNumber = x.internalActNumber;
+			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
 			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
@@ -164,7 +164,7 @@ export class CompletedWorkActsComponent {
 
 			tableItem.contract = x.contract?.name ?? '-';
 
-			tableItem.totalAmount = x.totalAmount;
+			tableItem.totalAmount = x.totalAmount ?? '-';
 
 			return tableItem;
 		});
