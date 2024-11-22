@@ -50,6 +50,6 @@ export class CompletedWorkActCardComponent {
 	}
 
 	public toActsList() {
-		this.router.navigate([`/competed-work-acts`]);
+		this.router.navigate([`/completed-work-acts`]);
 	}
 }

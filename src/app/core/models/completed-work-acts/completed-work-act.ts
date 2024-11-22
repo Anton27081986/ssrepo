@@ -17,7 +17,7 @@ export interface ICompletedWorkAct {
 	contract?: IDictionaryItemDto;
 	finDocOrders: IDictionaryItemDto[];
 	documents: IFile[];
-	currency: string;
+	currency: IDictionaryItemDto;
 	oneSComment: string;
 	oneSNumber: string;
 	oneSTotalAmount: number;

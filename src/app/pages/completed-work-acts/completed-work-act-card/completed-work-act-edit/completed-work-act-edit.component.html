@@ -93,15 +93,13 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Валюта</ss-text>
-				<ss-select size="small"
-					(onChange)="editActForm.controls.currency.setValue($event)"
-					(click)="editActForm.controls.currency.setErrors(null)"
-					[error]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : undefined">
-					<option
-						*ngFor="let currency of currencies()"
-						[value]="currency.name"
-						[selected]="act()?.currency === currency.name">{{currency.name}}</option>
-				</ss-select>
+
+				<ss-select-v2
+					[size]="'small'"
+					[options]="currencies()"
+					[formControlName]="'currency'"
+					[errorText]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : ''"
+				/>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Код 1С</ss-text>
