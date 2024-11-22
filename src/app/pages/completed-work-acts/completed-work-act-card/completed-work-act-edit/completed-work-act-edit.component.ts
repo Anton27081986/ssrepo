@@ -29,7 +29,7 @@ export class CompletedWorkActEditComponent {
 		payerContractorId: FormControl<number | null>;
 		providerContractorId: FormControl<number | null>;
 		contract: FormControl<IDictionaryItemDto | null>;
-		currency: FormControl<string | null>;
+		currency: FormControl<IDictionaryItemDto | null>;
 	}>;
 
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
@@ -65,8 +65,8 @@ export class CompletedWorkActEditComponent {
 		private readonly ref: ChangeDetectorRef,
 	) {
 		this.editActForm = new FormGroup({
-			externalActNumber: new FormControl<string | null>(null),
-			internalActNumber: new FormControl<string | null>(null),
+			externalActNumber: new FormControl<string | null>('', [Validators.required]),
+			internalActNumber: new FormControl<string | null>('', [Validators.required]),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<number[] | null>(null),
@@ -75,7 +75,7 @@ export class CompletedWorkActEditComponent {
 			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			providerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			contract: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			currency: new FormControl<string | null>(null, [Validators.required]),
+			currency: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 		});
 
 		this.completedWorkActsFacade.act$.pipe(untilDestroyed(this)).subscribe(act => {
@@ -124,6 +124,12 @@ export class CompletedWorkActEditComponent {
 			return;
 		}
 
+		if (this.editActForm.controls.currency.value) {
+			this.editActForm.controls.currency.setErrors(null);
+		} else {
+			return;
+		}
+
 		if (this.editActForm.invalid) {
 			return;
 		}
@@ -146,6 +152,7 @@ export class CompletedWorkActEditComponent {
 			...actForm,
 			buUnitId: buUnit?.id,
 			contractId: actForm.contract?.id,
+			currencyId: actForm.currency?.id,
 		};
 
 		this.completedWorkActsFacade

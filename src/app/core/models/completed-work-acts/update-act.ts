@@ -11,5 +11,5 @@ export interface IUpdateAct {
 	inn?: string | null;
 	contractId?: number | null;
 	finDocOrderIds?: number[] | null;
-	currency?: string | null;
+	currencyId?: number | null;
 }
