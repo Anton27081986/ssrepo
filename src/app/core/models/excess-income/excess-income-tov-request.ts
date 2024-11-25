@@ -4,6 +4,6 @@ export interface ExcessIncomeTovRequest {
 	clientId: number;
 	contractorId: number | null;
 	tovSubGroupId: number;
-	currency: string;
+	currencyId: number;
 	tovsIds: number[];
 }

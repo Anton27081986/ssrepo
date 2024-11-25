@@ -2,60 +2,61 @@
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
 			<td class="ss-table-td" *ngIf="col.display">
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-					<div class="ss-table-td__content">
-						&nbsp;
-					</div>
-				</ng-container>
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.contractors">
-					<div class="ss-table-td__content">
-						&nbsp;
-					</div>
-				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
 					<div class="ss-table-td__content">
-						&nbsp;
+						<ss-text>{{ tov().tov.comment }}</ss-text>
+						<ss-dropdown-button [title]="'Ред.ком'">
+							<ss-textarea [formControl]="commentControl"></ss-textarea>
+							<ss-button (click)="update();$event.stopPropagation()" >откоментировать</ss-button>
+						</ss-dropdown-button>
 					</div>
 				</ng-container>
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.otsr">
-					<div class="ss-table-td__content">
-						&nbsp;
-					</div>
-				</ng-container>
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
-					<div class="ss-table-td__content">
-						&nbsp;
-					</div>
-				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
 					<div class="ss-table-td__content">
 						<ss-text> {{ tov().tov.tov.name }}</ss-text>
 					</div>
 				</ng-container>
+
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
-					<ss-text> {{ tov().tov.currentParams.price }}</ss-text>
+					<ss-text> {{ tov().tov.currentParams.price }} {{ tov().currency.name }}</ss-text>
 				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-					<ss-text> {{ tov().tov.currentParams.excessIncomePercent }}</ss-text>
+					<app-excess-income-control (valueEmit)="checkSndCurrentControl($event)" [formControl]="sndCurrentControl"></app-excess-income-control>
 				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">
-					<ss-text> {{ tov().tov.currentParams.fixPrice }}</ss-text>
+					<app-excess-income-control (valueEmit)="checkFixPriceCurrentControl($event)" [formControl]="fixPriceCurrentControl"></app-excess-income-control>
 				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
-					<ss-text> {{ tov().tov.currentParams.finalPrice }}</ss-text>
+					<ss-text> {{ priceCalculateCurrent() | numWithSpaces:3 }}</ss-text>
 				</ng-container>
+
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
 					<ss-text> {{ tov().tov.nextParams.price }}</ss-text>
 				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-					<ss-text> {{ tov().tov.nextParams.excessIncomePercent }}</ss-text>
+					<app-excess-income-control [formControl]="sndNextControl"></app-excess-income-control>
 				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">
-					<ss-text> {{ tov().tov.nextParams.fixPrice }}</ss-text>
+					<app-excess-income-control [formControl]="fixPriceNextControl"></app-excess-income-control>
 				</ng-container>
+
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
-					<ss-text> {{ tov().tov.nextParams.finalPrice }}</ss-text>
+					<ss-text> {{ priceCalculateNext() | numWithSpaces:3 }}</ss-text>
 				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					&nbsp;
+				</ng-container>
+
 			</td>
 		</ng-container>
 	</ng-container>

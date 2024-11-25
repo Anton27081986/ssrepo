@@ -125,6 +125,10 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getTovUnits(query);
 	}
 
+	public getTovGroupsByClient(query: string, clientId: number) {
+		return this.dictionaryApiService.getTovGroupsByClient(query, clientId);
+	}
+
 	public getDictionaryCompletedActContracts(id?: number) {
 		return this.dictionaryApiService.getCompletedActContracts(id);
 	}

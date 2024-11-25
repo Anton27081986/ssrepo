@@ -22,6 +22,16 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { ExcessIncomeUpdateSndClientPopoverComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
+import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
+import { SearchInputV2Component } from '@app/shared/components/inputs/search-input-v2/search-input-v2.component';
+import { ExcessIncomeUpdateTovGroupTrComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-tr/excess-income-update-tov-group-tr.component';
+import { InputV2Component } from '@app/shared/components/inputs/input-v2/input-v2.component';
+import { MaskitoDirective } from '@maskito/angular';
+import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
+import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
+import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
+import { PipesModule } from '@app/core/pipes/pipes.module';
+import { ExcessIncomeControlComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-control/excess-income-control.component';
 
 @NgModule({
 	declarations: [
@@ -31,6 +41,8 @@ import { SelectV2Component } from '@app/shared/components/inputs/select-v2/selec
 		ExcessIncomeTovTrComponent,
 		ExcessIncomeGroupTrComponent,
 		ExcessIncomeUpdateSndClientPopoverComponent,
+		ExcessIncomeUpdateTovGroupTrComponent,
+		ExcessIncomeControlComponent,
 	],
 	imports: [
 		ExcessIncomeRoutingModule,
@@ -50,6 +62,13 @@ import { SelectV2Component } from '@app/shared/components/inputs/select-v2/selec
 		ButtonModule,
 		LoaderModule,
 		SelectV2Component,
+		SearchInputModule,
+		SearchInputV2Component,
+		InputV2Component,
+		MaskitoDirective,
+		SsDividerModule,
+		TextareaModule,
+		PipesModule,
 	],
 })
 export class ExcessIncomeModule {}

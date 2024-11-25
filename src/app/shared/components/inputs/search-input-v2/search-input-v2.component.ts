@@ -70,6 +70,8 @@ export class SearchInputV2Component implements ControlValueAccessor {
 		if (value) {
 			this.queryControl().setValue(value.name, { emitEvent: false });
 			this.isSettingValue = true;
+		} else {
+			this.queryControl().setValue('', { emitEvent: false });
 		}
 	}
 

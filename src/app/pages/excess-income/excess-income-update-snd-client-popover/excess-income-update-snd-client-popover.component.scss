@@ -1,0 +1,10 @@
+.excess-income-update-snd-client-popover {
+	display: flex;
+	flex-direction: column;
+
+	&__footer {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 12px;
+	}
+}

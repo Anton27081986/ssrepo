@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
-import { IStoreTableBaseColumn, ITrTableBaseColumn } from '@app/core/store';
+import { ITrTableBaseColumn } from '@app/core/store';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
@@ -11,6 +11,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { BehaviorSubject } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -23,7 +24,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ExcessIncomePageComponent {
 	protected clientsNode: Signal<ClientNodeState[]> = toSignal(
 		this.excessIncomeStateService.clientNode$,
-		{ requireSync: true },
+		{ initialValue: [] },
 	);
 
 	protected total: Signal<number> = toSignal(this.excessIncomeStateService.total$, {
@@ -37,9 +38,10 @@ export class ExcessIncomePageComponent {
 		},
 	);
 
-	public pageSize = this.excessIncomeStateService.limit;
+	public limit = this.excessIncomeStateService.limit;
 
 	protected currencyControl = this.excessIncomeStateService.currencyControl;
+
 	public filters: IFilter[] = [
 		{
 			name: 'client',
@@ -49,21 +51,21 @@ export class ExcessIncomePageComponent {
 			placeholder: 'Выберите клиента',
 		},
 		{
-			name: 'contractor',
+			name: 'contractors',
 			type: 'search-select',
 			searchType: 'contractor',
 			label: 'Контрагент',
 			placeholder: 'Выберите контрагента',
 		},
 		{
-			name: 'tovGroup',
+			name: 'tovGroups',
 			type: 'search-select',
 			searchType: 'tovGroups',
 			label: 'Товарная подгруппа',
 			placeholder: 'Выберите товарную подгруппу',
 		},
 		{
-			name: 'tovs',
+			name: 'tov',
 			type: 'search-select',
 			searchType: 'tovs',
 			label: 'Товарная подгруппа',
@@ -97,19 +99,19 @@ export class ExcessIncomePageComponent {
 
 	public isLoader$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoader$;
 
+	protected readonly paginationControl: FormControl<number | null> =
+		this.excessIncomeStateService.paginationControl;
+
 	constructor(
 		public readonly excessIncomeStateService: ExcessIncomeState,
 		private readonly columnStateService: ColumnsStateService,
 	) {
 		this.columnStateService.colsTr$.next(this.defaultCols);
+
 		this.currencyControl.setValue({ id: 2, name: 'RUR' });
 	}
 
-	public pageOffsetChange($event: number) {
-		this.excessIncomeStateService.offset$.next($event);
-	}
-
-	expended(node: ClientNodeState | ContractorNodeState | GroupNodeState) {
+	public expended(node: ClientNodeState | ContractorNodeState | GroupNodeState) {
 		node.expended$.next(!node.expended$.value);
 	}
 
@@ -168,7 +170,7 @@ export class ExcessIncomePageComponent {
 				},
 				{
 					id: ExcessIncomeClientRowItemField.nameTov,
-					title: 'Название ТПР',
+					title: 'Название ТП',
 					order: 6,
 					show: true,
 					display: true,

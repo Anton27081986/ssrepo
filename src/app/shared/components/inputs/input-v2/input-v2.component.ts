@@ -3,8 +3,10 @@ import {
 	Component,
 	computed,
 	effect,
+	EventEmitter,
 	forwardRef,
 	input,
+	Output,
 	signal,
 	WritableSignal,
 } from '@angular/core';
@@ -49,6 +51,8 @@ export class InputV2Component implements ControlValueAccessor {
 	public inputCtrl = new FormControl<string>('');
 	public passwordIcon: WritableSignal<'eyeSlash' | 'eye'> = signal('eyeSlash');
 	public mutableType = signal(this.type());
+
+	@Output() focused: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
 	public icons: WritableSignal<IInputIcon[]> = signal([
 		{
@@ -152,6 +156,14 @@ export class InputV2Component implements ControlValueAccessor {
 		this.onChange(value);
 	}
 
+	public onBlur() {
+		this.focused.emit(false);
+	}
+
+	public onFocus() {
+		this.focused.emit(true);
+	}
+
 	public iconPaddingCalc(iconNum: number): number {
 		return iconNum * ICON_PADDING + ICON_PADDING;
 	}
@@ -165,4 +177,6 @@ export class InputV2Component implements ControlValueAccessor {
 			items.map(item => (item.type === type ? { ...item, [property]: value } : item)),
 		);
 	}
+
+	protected readonly onfocus = onfocus;
 }

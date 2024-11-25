@@ -10,6 +10,9 @@ import { ExcessIncomeTov } from '@app/core/models/excess-income/excess-income-to
 import { ExcessIncomeGroupRequest } from '@app/core/models/excess-income/excess-income-group-request';
 import { ExcessIncomeClientRequest } from '@app/core/models/excess-income/excess-income-client-request';
 import { ExcessIncomeTovRequest } from '@app/core/models/excess-income/excess-income-tov-request';
+import { ExcessIncomeUpdateClientRequest } from '@app/core/models/excess-income/excess-income-update-client-request';
+import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/excess-income-update-group-request';
+import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
 
 @Injectable({
 	providedIn: 'root',
@@ -43,6 +46,27 @@ export class ExcessIncomeApiService {
 	public getCurrency(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/Currency`,
+		);
+	}
+
+	public updateSndClient(clientId: number, request: ExcessIncomeUpdateClientRequest) {
+		return this.http.put<IResponse<ExcessIncomeClient>>(
+			`${environment.apiUrl}/api/company/Snd/clients/${clientId}`,
+			request,
+		);
+	}
+
+	public updateSndGroup(clientId: number, request: ExcessIncomeUpdateGroupRequest) {
+		return this.http.put<IResponse<ExcessIncomeClient>>(
+			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/group`,
+			request,
+		);
+	}
+
+	public updateSndTov(request: ExcessIncomeUpdateTovRequest) {
+		return this.http.put<IResponse<ExcessIncomeClient>>(
+			`${environment.apiUrl}/api/company/Snd/tovs`,
+			request,
 		);
 	}
 }

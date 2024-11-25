@@ -3,6 +3,8 @@ export interface ExcessIncomeGroup {
 	contractor: IdName;
 	category: IdName;
 	tovSubgroup: IdName;
+	currentExcessIncomePercent: number;
+	nextExcessIncomePercent: number;
 }
 
 export interface IdName {

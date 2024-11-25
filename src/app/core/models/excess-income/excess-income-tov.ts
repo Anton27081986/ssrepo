@@ -9,14 +9,15 @@ export interface ExcessIncomeTov {
 	status: IdName;
 	currentParams: {
 		price: number;
-		excessIncomePercent: number;
-		fixPrice: number;
-		finalPrice: number;
+		excessIncomePercent: number | null;
+		fixPrice: number | null;
+		finalPrice: number | null;
 	};
 	nextParams: {
 		price: number;
-		excessIncomePercent: number;
-		fixPrice: number;
-		finalPrice: number;
+		excessIncomePercent: number | null;
+		fixPrice: number | null;
+		finalPrice: number | null;
 	};
+	comment: string;
 }

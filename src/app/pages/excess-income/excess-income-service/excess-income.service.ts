@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { merge, Observable, of, switchMap, tap } from 'rxjs';
 import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-service/excess-income.api-service';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
 import { ExcessIncomeTov } from '@app/core/models/excess-income/excess-income-tov';
-import { ExcessIncomeTableData } from '@app/core/models/excess-income/excess-income-table-data';
-import { ExcessIncomeContractor } from '@app/core/models/excess-income/excess-income-contractors-Item';
 import { ExcessIncomeGroupRequest } from '@app/core/models/excess-income/excess-income-group-request';
 import { ExcessIncomeClientRequest } from '@app/core/models/excess-income/excess-income-client-request';
 import { ExcessIncomeTovRequest } from '@app/core/models/excess-income/excess-income-tov-request';
+import { ExcessIncomeUpdateClientRequest } from '@app/core/models/excess-income/excess-income-update-client-request';
+import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/excess-income-update-group-request';
+import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
 
 @Injectable({
 	providedIn: 'root',
@@ -34,5 +35,17 @@ export class ExcessIncomeService {
 
 	public getCurrency(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.apiService.getCurrency();
+	}
+
+	public updateSndClient(clientId: number, request: ExcessIncomeUpdateClientRequest) {
+		return this.apiService.updateSndClient(clientId, request);
+	}
+
+	public updateSndTovGroups(clientId: number, request: ExcessIncomeUpdateGroupRequest) {
+		return this.apiService.updateSndGroup(clientId, request);
+	}
+
+	public updateSndTov(request: ExcessIncomeUpdateTovRequest) {
+		return this.apiService.updateSndTov(request);
 	}
 }

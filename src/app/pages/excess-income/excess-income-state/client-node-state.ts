@@ -4,10 +4,10 @@ import { ContractorNodeState } from '@app/pages/excess-income/excess-income-stat
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
 @UntilDestroy()
-export class ClientNodeState {
+export class ClientNodeState extends ExcessIncomeBaseNodeState {
 	public client: ExcessIncomeClient;
-	public expended$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public contractors$: Observable<ContractorNodeState[]>;
 
 	constructor(
@@ -15,6 +15,7 @@ export class ClientNodeState {
 		private readonly service: ExcessIncomeService,
 		private readonly state: ExcessIncomeState,
 	) {
+		super();
 		this.client = client;
 		this.contractors$ = this.expended$.pipe(
 			map(val => {

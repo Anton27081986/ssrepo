@@ -1,1 +1,16 @@
-<ss-text>Установить СНД,% для всех ТПГ Клиента {{ client.name }}</ss-text>
+<ss-card class="excess-income-update-snd-client-popover">
+	<ss-text>Установить СНД,% для всех ТПГ Клиента {{ client.name }}</ss-text>
+	<ss-divider></ss-divider>
+	<ss-search-input-v2
+		[placeholder]="'Выберите ТПГ'" [label]="'ТПГ (подгруппа товарных позиций)'"
+		[formControl]="tovGroupControl" [queryControl]="queryControl"
+		[options]="options()">
+	</ss-search-input-v2>
+	<ss-table-v2>
+		<tr *ngFor="let tovGroup of tovGroups$ | async" excess-income-update-tov-group-tr [tovGroup]="tovGroup"></tr>
+	</ss-table-v2>
+	<div class="excess-income-update-snd-client-popover__footer">
+		<ss-button [type]="'usually'" (click)="close()">Отмена</ss-button>
+		<ss-button (click)="submit()">Применить</ss-button>
+	</div>
+</ss-card>

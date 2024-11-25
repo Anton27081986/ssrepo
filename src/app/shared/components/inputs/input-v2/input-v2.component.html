@@ -2,8 +2,6 @@
     <ss-caption size="1">{{ label() }}</ss-caption>
 }
 
-<pre>{{mutableType()}}</pre>
-
 <div class="input">
     <input
         [ngClass]="size() | mapper : getControlClasses : errorText()"
@@ -13,6 +11,8 @@
         [maxLength]="maxlength()"
         [style.padding-right.px]="filteredIcons().length | mapper : iconPaddingCalc"
         (input)="onInput($event)"
+		(blur)="onBlur()"
+		(focus)="onFocus()"
     />
 
     @for (icon of filteredIcons(); track icon) {
