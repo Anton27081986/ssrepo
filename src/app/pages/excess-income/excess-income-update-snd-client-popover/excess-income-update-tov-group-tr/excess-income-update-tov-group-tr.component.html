@@ -1,0 +1,24 @@
+<ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
+	<ng-container *ngFor="let col of cols.cols">
+		<ng-container [ngSwitch]="col.id">
+			<td class="ss-table-td" *ngIf="col.display">
+				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.tovGroup">
+					<div class="ss-table-td__content">
+						<ss-text>{{ tovGroup().name }}</ss-text>
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.snd">
+					<div class="ss-table-td__content">
+						<ss-input-v2 [maskito]="numberInputTextMask" [formControl]="tovGroup().excessIncomePercent"></ss-input-v2>
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.action">
+					<div class="ss-table-td__content">
+						<ss-icon [name]="'basket'" (click)="delTovGroupsState(tovGroup().id)"></ss-icon>
+					</div>
+				</ng-container>
+			</td>
+		</ng-container>
+	</ng-container>
+</ng-container>
+

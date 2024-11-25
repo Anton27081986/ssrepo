@@ -38,9 +38,7 @@
 												</ng-container>
 
 												<ng-template #contentTov >
-													<ng-container *ngFor="let tov of group.tov$ | async">
-														<tr excess-income-tov-tr [tov]="tov"></tr>
-													</ng-container>
+														<tr *ngFor="let tov of group.tov$ | async" excess-income-tov-tr [tov]="tov"></tr>
 												</ng-template>
 
 												<tr>
@@ -48,8 +46,7 @@
 														<ss-dynamic-pagination
 															[total]="(group.total$ | async)!"
 															[limit]="group.limit"
-															[offset]="(group.offset$ | async)!"
-															(changeOffset)="group.pageOffsetChange($event)"
+															[formControl]="group.paginationControl"
 														>
 														</ss-dynamic-pagination>
 													</td>
@@ -62,9 +59,8 @@
 										<td class="ss-table-td" colspan="17">
 											<ss-dynamic-pagination
 												[total]="(contractor.total$ | async)!"
-												[limit]="20"
-												[offset]="(contractor.offset$ | async)!"
-												(changeOffset)="contractor.pageOffsetChange($event)"
+												[limit]="contractor.limit"
+												[formControl]="contractor.paginationControl"
 											>
 											</ss-dynamic-pagination>
 										</td>
@@ -78,9 +74,8 @@
 		</ng-container>
 		<ss-dynamic-pagination
 			[total]="total()"
-			[offset]="(excessIncomeStateService.offset$ | async)!"
-			[limit]="pageSize"
-			(changeOffset)="pageOffsetChange($event)"
+			[limit]="limit"
+			[formControl]="paginationControl"
 		>
 		</ss-dynamic-pagination>
 	</div>

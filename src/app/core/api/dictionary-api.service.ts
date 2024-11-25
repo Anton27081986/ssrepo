@@ -315,4 +315,20 @@ export class DictionaryApiService {
 			{ params },
 		);
 	}
+
+	public getTovGroupsByClient(
+		query: string,
+		clientId: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/tovGroups`,
+			{ params },
+		);
+	}
 }

@@ -4,6 +4,7 @@ import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/cl
 import { rotateAnimation } from '@app/core/animations';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeUpdateSndClientPopoverComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
+import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -38,13 +39,14 @@ export class ExcessIncomeClientTrComponent {
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
+		private readonly state: ExcessIncomeState,
 	) {}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 
-	openUpdateClientPriceModal(interval: number) {
+	openUpdateClientPriceModal(isCurrent: boolean) {
 		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
-			data: { client: this.client().client, interval: 1 },
+			data: { client: this.client().client, isCurrent: isCurrent, state: this.state },
 		});
 	}
 }

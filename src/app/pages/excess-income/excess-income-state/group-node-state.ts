@@ -1,33 +1,23 @@
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
-import {
-	BehaviorSubject,
-	map,
-	NEVER,
-	Observable,
-	switchMap,
-	combineLatest,
-	tap,
-	debounceTime,
-} from 'rxjs';
+import { BehaviorSubject, debounceTime, map, NEVER, scan, switchMap, tap } from 'rxjs';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
-import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ExcessIncomeGroupEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
+import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
+
 @UntilDestroy()
-export class GroupNodeState {
+export class GroupNodeState extends ExcessIncomeBaseNodeState {
+	readonly event$: BehaviorSubject<ExcessIncomeGroupEventEnum> =
+		new BehaviorSubject<ExcessIncomeGroupEventEnum>(
+			ExcessIncomeGroupEventEnum.excessIncomeGroupEventDefault,
+		);
+
 	public group: ExcessIncomeGroup;
+
 	public tov$: BehaviorSubject<TovNodeState[]> = new BehaviorSubject<TovNodeState[]>([]);
-
-	public expended$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-	public total$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
-	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-	public pageSize = 4;
-	public limit = 20;
 
 	constructor(
 		group: ExcessIncomeGroup,
@@ -36,37 +26,78 @@ export class GroupNodeState {
 		private readonly service: ExcessIncomeService,
 		private readonly state: ExcessIncomeState,
 	) {
-		// this.state.currencyControl.valueChanges
-		// 		// 	.pipe(filterTruthy())
-		// 		// 	.subscribe(item => console.log(item));
+		super();
 		this.group = group;
-		combineLatest([this.expended$, this.offset$])
+
+		this.state.currencyControl.valueChanges.pipe(filterTruthy()).subscribe(value => {
+			this.event$.next(ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency);
+		});
+
+		this.paginationControl.valueChanges
+			.pipe(
+				untilDestroyed(this),
+				tap(val => {
+					if (val) {
+						this.event$.next(
+							ExcessIncomeGroupEventEnum.excessIncomeGroupEventChangeOffset,
+						);
+					}
+				}),
+			)
+			.subscribe();
+		this.expended$
+			.pipe(
+				untilDestroyed(this),
+				tap(val => {
+					if (val) {
+						this.event$.next(ExcessIncomeGroupEventEnum.excessIncomeGroupEventExpended);
+					}
+				}),
+			)
+			.subscribe();
+
+		this.event$
 			.pipe(
 				tap(() => this.isLoader$.next(true)),
-				debounceTime(2000),
+				debounceTime(1000),
 				untilDestroyed(this),
-				switchMap(([expended, offset]) => {
-					if (!expended) {
+				switchMap(event => {
+					if (event === ExcessIncomeGroupEventEnum.excessIncomeGroupEventDefault) {
 						return NEVER;
 					}
-					return this.service.getTov({
-						limit: 10,
-						offset: offset,
-						clientId: clientId,
-						contractorId: contractorId,
-						tovSubGroupId: group.tovSubgroup.id,
-						currency: this.state.currencyControl.value?.name!,
-						tovsIds: this.state.filters$.value.tov,
-					});
+
+					if (
+						event === ExcessIncomeGroupEventEnum.excessIncomeGroupEventUpdate ||
+						event === ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency
+					) {
+						if (!this.expended$.value) {
+							return NEVER;
+						}
+
+						this.paginationControl.setValue(0, { emitEvent: false });
+					}
+
+					return this.getTov(clientId, contractorId);
 				}),
 				map(res => {
 					this.total$.next(res.total);
-					return [
-						...this.tov$.value,
-						...res.items.map(item => {
-							return new TovNodeState(item, service);
-						}),
-					];
+					return res.items.map(item => {
+						return new TovNodeState(
+							item,
+							service,
+							state,
+							this.state.currencyControl.value!,
+						);
+					});
+				}),
+				scan((acc, value) => {
+					if (
+						this.event$.value ===
+						ExcessIncomeGroupEventEnum.excessIncomeGroupEventChangeOffset
+					) {
+						return [...acc, ...value];
+					}
+					return value;
 				}),
 			)
 			.subscribe(items => {
@@ -75,7 +106,15 @@ export class GroupNodeState {
 			});
 	}
 
-	public pageOffsetChange($event: number) {
-		this.offset$.next($event);
+	private getTov(clientId: number, contractorId: number | null) {
+		return this.service.getTov({
+			limit: 10,
+			offset: this.paginationControl.value!,
+			clientId: clientId,
+			contractorId: contractorId,
+			tovSubGroupId: this.group.tovSubgroup.id,
+			currencyId: this.state.currencyControl.value?.id!,
+			tovsIds: this.state.filters$.value.tov,
+		});
 	}
 }
