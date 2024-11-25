@@ -8,5 +8,4 @@ export interface ExcessIncomeUpdateTovRequest {
 	nextFixPrice: number | null;
 	currentExcessIncomePercent: number | null;
 	nextExcessIncomePercent: number | null;
-	comment: string;
 }

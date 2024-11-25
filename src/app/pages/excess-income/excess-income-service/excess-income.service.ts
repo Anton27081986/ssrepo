@@ -12,6 +12,7 @@ import { ExcessIncomeTovRequest } from '@app/core/models/excess-income/excess-in
 import { ExcessIncomeUpdateClientRequest } from '@app/core/models/excess-income/excess-income-update-client-request';
 import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/excess-income-update-group-request';
 import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
+import { ExcessIncomeUpdateTovCommentRequest } from '@app/core/models/excess-income/excess-income-update-tov-comment-request';
 
 @Injectable({
 	providedIn: 'root',
@@ -47,5 +48,9 @@ export class ExcessIncomeService {
 
 	public updateSndTov(request: ExcessIncomeUpdateTovRequest) {
 		return this.apiService.updateSndTov(request);
+	}
+
+	public updateSndTovComment(request: ExcessIncomeUpdateTovCommentRequest) {
+		return this.apiService.updateSndTovComment(request);
 	}
 }

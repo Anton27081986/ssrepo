@@ -11,7 +11,6 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
-import { numberInputTextMask } from '@app/core/utils/mask';
 import { tap } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
@@ -133,9 +132,17 @@ export class ExcessIncomeTovTrComponent {
 				nextFixPrice: this.fixPriceNextControl.value,
 				currentExcessIncomePercent: this.sndCurrentControl.value,
 				nextExcessIncomePercent: this.sndNextControl.value,
-				comment: this.commentControl.value!,
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe();
+	}
+
+	updateComment() {
+		this.excessIncomeService.updateSndTovComment({
+			clientId: this.tov().tov.client.id,
+			contractorId: this.tov().tov.contractor.id,
+			tovId: this.tov().tov.tovSubgroup.id,
+			comment: this.commentControl.value!,
+		});
 	}
 }
