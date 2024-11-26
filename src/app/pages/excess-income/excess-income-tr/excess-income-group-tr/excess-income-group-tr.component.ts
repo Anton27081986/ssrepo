@@ -10,6 +10,8 @@ import { switchMap, tap } from 'rxjs';
 import { ExcessIncomeGroupEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
+import { ModalService } from '@app/core/modal/modal.service';
 
 @UntilDestroy()
 @Component({
@@ -26,6 +28,7 @@ export class ExcessIncomeGroupTrComponent {
 		null,
 		Validators.required,
 	);
+
 	protected sndNextControl: FormControl<number | null> = new FormControl<number | null>(
 		null,
 		Validators.required,
@@ -34,6 +37,7 @@ export class ExcessIncomeGroupTrComponent {
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly excessIncomeService: ExcessIncomeService,
+		private readonly modalService: ModalService,
 	) {
 		effect(() => {
 			this.sndCurrentControl.setValue(this.group().group.currentExcessIncomePercent);
@@ -100,6 +104,20 @@ export class ExcessIncomeGroupTrComponent {
 	// 			.subscribe();
 	// 	}
 	// }
+
+	protected openHistory() {
+		this.modalService
+			.open(GroupPriceHistoryComponent, {
+				data: {
+					clientId: this.group().group.client.id,
+					contractorId: this.group().group.contractor.id,
+					tovGroupId: this.group().group.tovSubgroup.id,
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe();
+	}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 	protected readonly numberInputTextMask = numberInputTextMask;

@@ -69,6 +69,7 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 		this.gridTemplateColumns = this.head
 			.map(el => (el.sizeRatio ? `${el.sizeRatio}fr` : '1fr'))
 			.join(' ');
+		this.changeDetectorRef.detectChanges();
 	}
 
 	ngAfterViewChecked() {

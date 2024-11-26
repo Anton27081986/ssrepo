@@ -8,6 +8,7 @@
 					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
 						<div class="ss-table-td__content">
 							<ss-text> {{ group().group.tovSubgroup.name }}</ss-text>
+							<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openHistory()"></ss-icon>
 						</div>
 					</ng-container>
 

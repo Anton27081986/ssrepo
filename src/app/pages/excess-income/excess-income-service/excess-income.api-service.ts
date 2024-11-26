@@ -14,6 +14,7 @@ import { ExcessIncomeUpdateClientRequest } from '@app/core/models/excess-income/
 import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/excess-income-update-group-request';
 import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
 import { ExcessIncomeUpdateTovCommentRequest } from '@app/core/models/excess-income/excess-income-update-tov-comment-request';
+import { ExcessIncomeTovGroupHistory } from '@app/core/models/excess-income/excess-income-tov-group-history';
 
 @Injectable({
 	providedIn: 'root',
@@ -75,6 +76,23 @@ export class ExcessIncomeApiService {
 		return this.http.post<ExcessIncomeTov>(
 			`${environment.apiUrl}/api/company/Snd/tovs`,
 			request,
+		);
+	}
+
+	public getTovGroupHistory(
+		clientId: number,
+		tovGroupId: number,
+		limit: number,
+		offset: number,
+	): Observable<ExcessIncomeTovGroupHistory> {
+		return this.http.post<ExcessIncomeTovGroupHistory>(
+			`${environment.apiUrl}/api/company/Snd/history`,
+			{
+				clientId,
+				tovGroupId,
+				limit,
+				offset,
+			},
 		);
 	}
 }
