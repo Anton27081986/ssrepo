@@ -126,19 +126,15 @@ export class CompletedWorkActsFacadeService {
 				return remove;
 			}, []) || [];
 
-		forkJoin([...addFiles, ...removeFiles]).pipe(
-			untilDestroyed(this),
-			tap(() => {
-				this.actsApiService.updateAct(this.act.value!.id, body).pipe(
-					untilDestroyed(this),
-					tap(() => {
-						this.getAct(this.act.value!.id.toString());
-					}),
-				);
-			}),
-		).subscribe(()=>{
-			this.switchMode(true)
-		});
+		forkJoin([
+			...addFiles,
+			...removeFiles,
+			this.actsApiService.updateAct(this.act.value!.id, body),
+		])
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.switchMode(true);
+			});
 	}
 
 	public addSpecificationToAct(body: IAddSpecification) {
