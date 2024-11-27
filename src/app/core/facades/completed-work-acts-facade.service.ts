@@ -1,7 +1,7 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { CompletedWorkActsApiService } from '@app/core/api/completed-work-acts-api.service';
-import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -12,6 +12,7 @@ import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import { IFile } from '@app/core/models/files/file';
 
 @UntilDestroy()
 @Injectable({
@@ -27,6 +28,9 @@ export class CompletedWorkActsFacadeService {
 
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
 	public act$ = this.act.asObservable();
+
+	private readonly actAttachment = new BehaviorSubject<IFile[]>([]);
+	public actAttachment$ = this.actAttachment.asObservable();
 
 	private readonly actStates = new BehaviorSubject<IDictionaryItemDto[] | null>(null);
 	public actStates$ = this.actStates.asObservable();
@@ -84,6 +88,7 @@ export class CompletedWorkActsFacadeService {
 			.pipe(
 				switchMap(act => {
 					this.act.next(act);
+					this.actAttachment.next(act.documents);
 					this.getContracts(act.providerContractor?.id)
 						.pipe(untilDestroyed(this))
 						.subscribe();
@@ -100,12 +105,40 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public updateAct(body: IUpdateAct) {
-		return this.actsApiService.updateAct(this.act.value!.id, body).pipe(
+		const addFiles = this.actAttachment.value.reduce<Array<Observable<string>>>((add, file) => {
+			const onAct = this.act.value?.documents.find(doc => doc.id === file.id);
+
+			if (!onAct) {
+				add.push(this.addFileToAct(this.act.value!.id, file.id));
+			}
+
+			return add;
+		}, []);
+
+		const removeFiles =
+			this.act.value?.documents.reduce<Array<Observable<string>>>((remove, file) => {
+				const onAct = this.actAttachment.value?.find(doc => doc.id === file.id);
+
+				if (!onAct) {
+					remove.push(this.removeFileFromAct(this.act.value!.id, file.id));
+				}
+
+				return remove;
+			}, []) || [];
+
+		forkJoin([...addFiles, ...removeFiles]).pipe(
 			untilDestroyed(this),
 			tap(() => {
-				this.getAct(this.act.value!.id.toString());
+				this.actsApiService.updateAct(this.act.value!.id, body).pipe(
+					untilDestroyed(this),
+					tap(() => {
+						this.getAct(this.act.value!.id.toString());
+					}),
+				);
 			}),
-		);
+		).subscribe(()=>{
+			this.switchMode(true)
+		});
 	}
 
 	public addSpecificationToAct(body: IAddSpecification) {
@@ -222,7 +255,11 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public switchMode() {
+	public switchMode(reload: boolean = false) {
+		if (reload && this.act.value?.id) {
+			this.getAct(this.act.value?.id.toString());
+		}
+
 		this.isEditMode.next(!this.isEditMode.value);
 	}
 
@@ -234,30 +271,20 @@ export class CompletedWorkActsFacadeService {
 				.uploadFile(FileBucketsEnum.Attachments, file)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
-					this.addFileToAct(id.toString(), res.id);
+					this.actAttachment.next([...this.actAttachment.value, res]);
 				});
 		}
 	}
 
-	public addFileToAct(actId: string, fileId: string) {
-		this.actsApiService
-			.addDocumentToAct(actId, fileId)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.getAct(actId);
-			});
+	public deleteFile(id: string) {
+		this.actAttachment.next(this.actAttachment.value.filter(file => file.id !== id));
 	}
 
-	public removeFileFromAct(fileId: string) {
-		if (this.act.value) {
-			const id = this.act.value.id;
+	public addFileToAct(actId: number, fileId: string) {
+		return this.actsApiService.addDocumentToAct(actId, fileId);
+	}
 
-			this.actsApiService
-				.removeDocumentFromAct(id.toString(), fileId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getAct(id.toString());
-				});
-		}
+	public removeFileFromAct(actId: number, fileId: string) {
+		return this.actsApiService.removeDocumentFromAct(actId, fileId);
 	}
 }

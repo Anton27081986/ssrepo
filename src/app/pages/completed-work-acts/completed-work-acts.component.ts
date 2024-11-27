@@ -35,7 +35,7 @@ export class CompletedWorkActsComponent {
 			type: 'search',
 			searchType: 'bu-units',
 			label: 'БЕ Плательщика',
-			placeholder: 'Введите ББ',
+			placeholder: 'Введите БЕ',
 		},
 		{
 			name: 'State',
