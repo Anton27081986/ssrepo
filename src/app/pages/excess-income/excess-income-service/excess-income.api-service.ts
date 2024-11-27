@@ -95,4 +95,21 @@ export class ExcessIncomeApiService {
 			},
 		);
 	}
+
+	public getTovHistory(
+		clientId: number,
+		tovId: number,
+		limit: number,
+		offset: number,
+	): Observable<ExcessIncomeTovGroupHistory> {
+		return this.http.post<ExcessIncomeTovGroupHistory>(
+			`${environment.apiUrl}/api/company/Snd/history`,
+			{
+				clientId,
+				tovId,
+				limit,
+				offset,
+			},
+		);
+	}
 }

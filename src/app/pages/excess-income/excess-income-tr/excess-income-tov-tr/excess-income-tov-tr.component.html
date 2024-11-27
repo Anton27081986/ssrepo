@@ -16,6 +16,7 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
 					<div class="ss-table-td__content">
 						<ss-text> {{ tov().tov.tov.name }}</ss-text>
+						<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openHistory()"></ss-icon>
 					</div>
 				</ng-container>
 

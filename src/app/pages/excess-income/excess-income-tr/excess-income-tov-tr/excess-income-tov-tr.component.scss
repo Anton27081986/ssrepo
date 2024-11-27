@@ -10,4 +10,16 @@
 .ss-table-td {
 	border: 1px solid $border-table;
 	position: relative;
+
+	&__content {
+		display: flex;
+		justify-content: space-between;
+
+		&__history {
+			border: 1px solid $island-outline;
+			border-radius: 8px;
+			padding: 4px;
+			background-color: $island;
+		}
+	}
 }

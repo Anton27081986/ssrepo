@@ -15,6 +15,13 @@ import { tap } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {
+	GroupPriceHistoryComponent
+} from "@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component";
+import {ModalService} from "@app/core/modal/modal.service";
+import {
+	ProductPriceHistoryComponent
+} from "@app/pages/excess-income/excess-income-history/product-price-history/product-price-history.component";
 @UntilDestroy()
 @Component({
 	selector: 'tr[excess-income-tov-tr]',
@@ -57,6 +64,7 @@ export class ExcessIncomeTovTrComponent {
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		protected readonly excessIncomeService: ExcessIncomeService,
+		private readonly modalService: ModalService,
 	) {
 		effect(() => {
 			this.sndCurrentControl.setValue(this.tov().tov.currentParams.excessIncomePercent);
@@ -144,5 +152,19 @@ export class ExcessIncomeTovTrComponent {
 			tovId: this.tov().tov.tovSubgroup.id,
 			comment: this.commentControl.value!,
 		});
+	}
+
+	protected openHistory() {
+		this.modalService
+			.open(ProductPriceHistoryComponent, {
+				data: {
+					clientId: this.tov().tov.client.id,
+					contractorId: this.tov().tov.contractor.id,
+					tovId: this.tov().tov.tov.id,
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 }
