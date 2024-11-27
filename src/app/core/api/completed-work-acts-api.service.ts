@@ -174,16 +174,16 @@ export class CompletedWorkActsApiService {
 		);
 	}
 
-	public addDocumentToAct(actId: string, documentId: string): Observable<any> {
-		return this.http.post<any>(
+	public addDocumentToAct(actId: number, documentId: string): Observable<string> {
+		return this.http.post<string>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document`,
 			`"${documentId}"`,
 			{ headers: new HttpHeaders({ 'Content-Type': 'application/json' }) },
 		);
 	}
 
-	public removeDocumentFromAct(actId: string, documentId: string): Observable<any> {
-		return this.http.delete<any>(
+	public removeDocumentFromAct(actId: number, documentId: string): Observable<string> {
+		return this.http.delete<string>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document/${documentId}`,
 		);
 	}

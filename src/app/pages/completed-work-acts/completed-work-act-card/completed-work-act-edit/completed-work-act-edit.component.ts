@@ -8,6 +8,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
+import {IFile} from "@app/core/models/files/file";
 
 @UntilDestroy()
 @Component({
@@ -57,6 +58,10 @@ export class CompletedWorkActEditComponent {
 		},
 	);
 
+	protected documents: Signal<IFile[]> = toSignal(this.completedWorkActsFacade.actAttachment$, {
+		initialValue: [],
+	});
+
 	protected finDocOrders: IDictionaryItemDto[] = [];
 
 	public constructor(
@@ -102,7 +107,7 @@ export class CompletedWorkActEditComponent {
 	}
 
 	protected switchMode() {
-		this.completedWorkActsFacade.switchMode();
+		this.completedWorkActsFacade.switchMode(true);
 	}
 
 	protected setFinDocOrdersIds(docs: IDictionaryItemDto[]) {
@@ -156,11 +161,7 @@ export class CompletedWorkActEditComponent {
 		};
 
 		this.completedWorkActsFacade
-			.updateAct(updatedAct)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.switchMode();
-			});
+			.updateAct(updatedAct);
 	}
 
 	protected onApplicantUserSelect(id: number) {
@@ -213,6 +214,6 @@ export class CompletedWorkActEditComponent {
 	}
 
 	protected deleteFile(fileId: string) {
-		this.completedWorkActsFacade.removeFileFromAct(fileId);
+		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 }
