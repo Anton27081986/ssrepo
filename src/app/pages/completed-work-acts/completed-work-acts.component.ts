@@ -26,7 +26,7 @@ export class CompletedWorkActsComponent {
 		},
 		{
 			name: 'Id',
-			type: 'number',
+			type: 'int-number',
 			label: 'Код',
 			placeholder: 'Введите код',
 		},
