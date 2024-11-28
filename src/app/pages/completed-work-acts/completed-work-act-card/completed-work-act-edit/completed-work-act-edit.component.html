@@ -14,13 +14,13 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Номер акта (внешний)</ss-text>
-				<ss-input formControlName="externalActNumber" size="small" placeholder="Введите значение"
+				<ss-input maxlength="50" formControlName="externalActNumber" size="small" placeholder="Введите значение"
 					[error]="editActForm.controls.externalActNumber.touched && editActForm.controls.externalActNumber.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Номер акта (внутренний)</ss-text>
-				<ss-input formControlName="internalActNumber" size="small" placeholder="Введите значение"
+				<ss-input maxlength="50" formControlName="internalActNumber" size="small" placeholder="Введите значение"
 					[error]="editActForm.controls.internalActNumber.touched && editActForm.controls.internalActNumber.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
 			</div>
 			<div class="content__column__item">
