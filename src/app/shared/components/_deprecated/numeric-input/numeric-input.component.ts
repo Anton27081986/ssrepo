@@ -30,6 +30,7 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 	@Input() public placeholder: string = '';
 	@Input() public error: string | undefined;
 	@Input() public value: any = '';
+	@Input() public isInt: boolean = false;
 
 	@ViewChild('input', { static: true }) public input!: ElementRef<HTMLInputElement>;
 
@@ -43,7 +44,7 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 		const input = event.target as HTMLInputElement;
 		let value = input.value;
 
-		const regex = /^[0-9]+([.,][0-9]*)?$/;
+		const regex = this.isInt ? /\d+$/ : /^[0-9]+([.,][0-9]*)?$/;
 
 		if (!regex.test(value)) {
 			value = this.sanitizeValue(value);
@@ -55,6 +56,10 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 	}
 
 	private sanitizeValue(value: string): string {
+		if (this.isInt) {
+			return value.replace(/[^0-9]/g, '');
+		}
+
 		let sanitizedValue = value.replace(/[^0-9.,]/g, '');
 
 		if (sanitizedValue.startsWith('.') || sanitizedValue.startsWith(',')) {

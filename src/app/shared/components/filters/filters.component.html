@@ -13,6 +13,7 @@
 		<div class="filters-form-item" *ngFor="let filter of filters">
 			<ss-input *ngIf="filter.type === 'string'" type="text" [label]="filter.label" [formControlName]="filter.name" [value]="filter.value" [placeholder]="filter.placeholder"></ss-input>
 			<ss-numeric-input *ngIf="filter.type === 'number'" [label]="filter.label" [formControlName]="filter.name" [value]="filter.value" [placeholder]="filter.placeholder"></ss-numeric-input>
+			<ss-numeric-input *ngIf="filter.type === 'int-number'" [isInt]="true" [label]="filter.label" [formControlName]="filter.name" [value]="filter.value" [placeholder]="filter.placeholder"></ss-numeric-input>
 			<ss-date-range *ngIf="filter.type === 'date-range'" [label]="filter.label" [formControlName]="filter.name" [value]="filter.value" [placeholder]="filter.placeholder" (select)="filtersForm.controls[filter.name].setValue($event)"></ss-date-range>
 			<ss-multiselect *ngIf="filter.type === 'select'" [options]="filter.options!" [placeholder]="filter.placeholder" [label]="filter.label" (getSelected)="filtersForm.controls[filter.name].setValue($event)"></ss-multiselect>
 			<ss-chips-search *ngIf="filter.type === 'search-select'" [placeholder]="filter.placeholder" [label]="filter.label" [searchType]="filter.searchType" [selectedItems]="Array.isArray(filter.options) ? filter.options : []" (getSelected)="filtersForm.controls[filter.name].setValue($event); filter.options = $event"></ss-chips-search>
