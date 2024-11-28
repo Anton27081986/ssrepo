@@ -139,6 +139,7 @@ export class SpecificationModalComponent {
 		if (user.id) {
 			this.user = user;
 			this.addSpecificationForm.controls.userId.setValue(user.id);
+			this.addSpecificationForm.controls.userId.setErrors(null);
 			this.getMyDept();
 		}
 	}
@@ -161,6 +162,22 @@ export class SpecificationModalComponent {
 	}
 
 	protected addSpecification() {
+		if (!this.addSpecificationForm.controls.serviceId.value) {
+			this.addSpecificationForm.controls.serviceId.setErrors({ required: true });
+		}
+
+		if (!this.addSpecificationForm.controls.costId.value) {
+			this.addSpecificationForm.controls.costId.setErrors({ required: true });
+		}
+
+		if (!this.addSpecificationForm.controls.deptId.value) {
+			this.addSpecificationForm.controls.deptId.setErrors({ required: true });
+		}
+
+		if (!this.addSpecificationForm.controls.userId.value) {
+			this.addSpecificationForm.controls.userId.setErrors({ required: true });
+		}
+
 		this.addSpecificationForm.markAllAsTouched();
 
 		if (this.addSpecificationForm.invalid) {
