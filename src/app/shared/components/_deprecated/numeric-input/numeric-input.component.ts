@@ -44,7 +44,7 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 		const input = event.target as HTMLInputElement;
 		let value = input.value;
 
-		const regex = this.isInt ? /\d+$/ : /^[0-9]+([.,][0-9]*)?$/;
+		const regex = this.isInt ? /^\d+$/ : /^[0-9]+([.,][0-9]*)?$/;
 
 		if (!regex.test(value)) {
 			value = this.sanitizeValue(value);
