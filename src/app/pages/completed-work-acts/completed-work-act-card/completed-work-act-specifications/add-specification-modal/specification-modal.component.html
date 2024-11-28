@@ -12,7 +12,7 @@
 					(click)="addSpecificationForm.controls.serviceId.setErrors(null)"
 					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
-				<ss-textarea formControlName="comment" label="Комментарий"></ss-textarea>
+				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"></ss-textarea>
 				<ss-input formControlName="quantity" label="Количество" type="number"
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
