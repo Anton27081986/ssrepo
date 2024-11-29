@@ -35,7 +35,7 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 	private readonly signalHistoryService = inject(SignalService);
 	private readonly authService = inject(AuthenticationService);
 
-	public objectId = input.required<number>();
+	public objectId = input.required<string>();
 	public queryType = input.required<QueryType>();
 	public view = input<ViewMode>(ViewMode.List);
 
