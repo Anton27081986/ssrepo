@@ -47,7 +47,7 @@ export class ExcessIncomeState {
 
 	public clientNode$: Observable<ClientNodeState[]>;
 
-	public limit = 4;
+	public limit = 20;
 
 	constructor(private readonly excessIncomeService: ExcessIncomeService) {
 		this.currency$ = this.excessIncomeService.getCurrency().pipe(map(item => item.items));

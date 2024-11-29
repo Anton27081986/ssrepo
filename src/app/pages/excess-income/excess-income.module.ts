@@ -28,10 +28,10 @@ import { ExcessIncomeUpdateTovGroupTrComponent } from '@app/pages/excess-income/
 import { InputV2Component } from '@app/shared/components/inputs/input-v2/input-v2.component';
 import { MaskitoDirective } from '@maskito/angular';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
-import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { ExcessIncomeControlComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-control/excess-income-control.component';
+import { NumberInputComponent } from '@app/shared/components/inputs/number-input/number-input.component';
 
 @NgModule({
 	declarations: [
@@ -69,6 +69,7 @@ import { ExcessIncomeControlComponent } from '@app/pages/excess-income/excess-in
 		SsDividerModule,
 		TextareaModule,
 		PipesModule,
+		NumberInputComponent,
 	],
 })
 export class ExcessIncomeModule {}

@@ -1,0 +1,20 @@
+@if (label()) {
+    <ss-caption size="1">{{ label() }}</ss-caption>
+}
+
+<div class="input">
+    <input
+        [ngClass]="size() | mapper : getControlClasses : errorText()"
+      	[value]="value$ | async"
+        [placeholder]="placeholder()"
+        [maxLength]="maxlength()"
+        (input)="onInput($event)"
+    />
+<div class="input__icon">
+	<ss-icon (click)="valueUp()" [name]="'chevron'"></ss-icon>
+	<ss-icon *ngIf="(value$ | async)" (click)="valueDown()" [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'"></ss-icon>
+</div>
+
+</div>
+
+<ss-caption size="2" color="error">{{ errorText() }}</ss-caption>

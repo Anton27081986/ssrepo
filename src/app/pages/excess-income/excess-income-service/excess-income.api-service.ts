@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
-import { ExcessIncomeTov } from '@app/core/models/excess-income/excess-income-tov';
+import { ExcessIncomeTovFromBackend } from '@app/core/models/excess-income/excess-income-tov-from-backend';
 import { ExcessIncomeGroupRequest } from '@app/core/models/excess-income/excess-income-group-request';
 import { ExcessIncomeClientRequest } from '@app/core/models/excess-income/excess-income-client-request';
 import { ExcessIncomeTovRequest } from '@app/core/models/excess-income/excess-income-tov-request';
@@ -39,7 +39,7 @@ export class ExcessIncomeApiService {
 	}
 
 	getTov(request: ExcessIncomeTovRequest) {
-		return this.http.post<IResponse<ExcessIncomeTov>>(
+		return this.http.post<IResponse<ExcessIncomeTovFromBackend>>(
 			`${environment.apiUrl}/api/company/Snd/tovs`,
 			request,
 		);
@@ -59,22 +59,22 @@ export class ExcessIncomeApiService {
 	}
 
 	public updateSndGroup(clientId: number, request: ExcessIncomeUpdateGroupRequest) {
-		return this.http.put<IResponse<ExcessIncomeClient>>(
+		return this.http.put<ExcessIncomeGroup>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/group`,
 			request,
 		);
 	}
 
 	public updateSndTov(request: ExcessIncomeUpdateTovRequest) {
-		return this.http.put<ExcessIncomeTov>(
+		return this.http.put<ExcessIncomeTovFromBackend>(
 			`${environment.apiUrl}/api/company/Snd/tovs`,
 			request,
 		);
 	}
 
 	public updateSndTovComment(request: ExcessIncomeUpdateTovCommentRequest) {
-		return this.http.post<ExcessIncomeTov>(
-			`${environment.apiUrl}/api/company/Snd/tovs`,
+		return this.http.post<ExcessIncomeTovFromBackend>(
+			`${environment.apiUrl}/api/company/Snd/comments`,
 			request,
 		);
 	}

@@ -10,7 +10,7 @@ import {
 import { rotateAnimation } from '@app/core/animations';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { numberInputTextMask } from '@app/core/utils/mask';
-import { BehaviorSubject, debounceTime, tap } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 @UntilDestroy()

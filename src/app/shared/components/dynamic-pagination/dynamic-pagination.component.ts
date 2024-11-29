@@ -42,6 +42,10 @@ export class DynamicPaginationComponent implements ControlValueAccessor {
 	private OnChange!: (value: number) => void;
 	private OnTouched!: (value: number) => void;
 
+	get viewPagination(): boolean {
+		return this.total() > this.limit();
+	}
+
 	writeValue(offset: number | null) {
 		if (offset) {
 			this.offset.set(offset);
