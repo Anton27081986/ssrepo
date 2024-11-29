@@ -5,7 +5,7 @@ import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-s
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
-import { ExcessIncomeTov } from '@app/core/models/excess-income/excess-income-tov';
+import { ExcessIncomeTovFromBackend } from '@app/core/models/excess-income/excess-income-tov-from-backend';
 import { ExcessIncomeGroupRequest } from '@app/core/models/excess-income/excess-income-group-request';
 import { ExcessIncomeClientRequest } from '@app/core/models/excess-income/excess-income-client-request';
 import { ExcessIncomeTovRequest } from '@app/core/models/excess-income/excess-income-tov-request';
@@ -30,7 +30,9 @@ export class ExcessIncomeService {
 		return this.apiService.getGroup(request);
 	}
 
-	public getTov(request: ExcessIncomeTovRequest): Observable<IResponse<ExcessIncomeTov>> {
+	public getTov(
+		request: ExcessIncomeTovRequest,
+	): Observable<IResponse<ExcessIncomeTovFromBackend>> {
 		return this.apiService.getTov(request);
 	}
 

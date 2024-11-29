@@ -8,6 +8,11 @@
 							<ss-text *ngIf="contractor().contractor"> {{ contractor().contractor?.name }}</ss-text>
 						</div>
 					</ng-container>
+					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.otsr">
+						<div class="ss-table-td__content">
+							<ss-text *ngIf="contractor().contractor?.havePostponement">П/п. факт</ss-text>
+						</div>
+					</ng-container>
 					<ng-container *ngSwitchDefault>
 						&nbsp;
 					</ng-container>

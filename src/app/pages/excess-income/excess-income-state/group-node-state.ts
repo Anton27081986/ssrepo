@@ -1,4 +1,4 @@
-import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
+import { ExcessIncomeGroup, IdName } from '@app/core/models/excess-income/excess-income-group';
 import { BehaviorSubject, debounceTime, map, NEVER, scan, switchMap, tap } from 'rxjs';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
