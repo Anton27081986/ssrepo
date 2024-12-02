@@ -13,6 +13,7 @@ import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.servic
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IFile } from '@app/core/models/files/file';
+import { catchError } from 'rxjs/operators';
 
 @UntilDestroy()
 @Injectable({
@@ -69,6 +70,10 @@ export class CompletedWorkActsFacadeService {
 					this.isLoader$.next(false);
 				}),
 				untilDestroyed(this),
+				catchError((err: unknown) => {
+					this.isLoader$.next(false);
+					throw err;
+				}),
 			)
 			.subscribe();
 
