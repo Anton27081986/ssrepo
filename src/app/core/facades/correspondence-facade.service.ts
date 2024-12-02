@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, tap } from 'rxjs';
-import { NotificationsApiService } from '@app/core/api/notifications-api.service';
-import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
-import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
-import { IUserDto } from '@app/core/models/notifications/user-dto';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, tap} from 'rxjs';
+import {NotificationsApiService} from '@app/core/api/notifications-api.service';
+import {IMessageItemDto} from '@app/core/models/notifications/message-item-dto';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import {IAttachmentDto} from '@app/core/models/notifications/attachment-dto';
+import {FileBucketsEnum, FilesApiService} from '@app/core/api/files.api.service';
+import {IUserDto} from '@app/core/models/notifications/user-dto';
+import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
+import {environment} from "@environments/environment";
 
 @UntilDestroy()
 @Injectable({
@@ -204,7 +206,7 @@ export class CorrespondenceFacadeService {
 			this.notificationsApiService
 				.sendMessage({
 					objectId: this.objectIdSubject.value,
-					type: 0,
+					type: CorrespondenceTypeEnum.ClientCard,
 					subject,
 					text,
 					toUserIds,
@@ -212,6 +214,7 @@ export class CorrespondenceFacadeService {
 					isPrivate,
 					replyToMessageId: this.repliedMessageSubject.value?.message.id,
 					fileIds: this.messageFilesSubject.value?.map(file => file.id!) || [],
+					sourceUrl: this.getLinkForEmail(CorrespondenceTypeEnum.ClientCard)
 				})
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
@@ -221,6 +224,13 @@ export class CorrespondenceFacadeService {
 					this.loadSubjects();
 					this.selectSubject(subject);
 				});
+		}
+	}
+
+	protected getLinkForEmail(type: CorrespondenceTypeEnum) {
+		switch (type) {
+			case CorrespondenceTypeEnum.ClientCard:
+				return `${environment.apiUrl}/client-card/${this.objectIdSubject.value}`
 		}
 	}
 }
