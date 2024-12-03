@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { environment } from '@environments/environment.development';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
@@ -15,6 +15,7 @@ import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/e
 import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
 import { ExcessIncomeUpdateTovCommentRequest } from '@app/core/models/excess-income/excess-income-update-tov-comment-request';
 import { ExcessIncomeTovGroupHistory } from '@app/core/models/excess-income/excess-income-tov-group-history';
+import {ExcessIncomeSalesHistory} from "@app/core/models/excess-income/excess-income-sales-history";
 
 @Injectable({
 	providedIn: 'root',
@@ -110,6 +111,28 @@ export class ExcessIncomeApiService {
 				limit,
 				offset,
 			},
+		);
+	}
+
+	public getSalesHistory(
+		clientId: number,
+		tovId: number,
+		limit: number,
+		offset: number,
+	): Observable<IResponse<ExcessIncomeSalesHistory>> {
+		let params = new HttpParams();
+
+		if (limit !== null && limit !== undefined) {
+			params = params.set('limit', limit);
+		}
+
+		if (offset !== null && offset !== undefined) {
+			params = params.set('offset', offset);
+		}
+
+		return this.http.get<IResponse<ExcessIncomeSalesHistory>>(
+			`${environment.apiUrl}/api/company/Snd/${clientId}/tovs/${tovId}/history`,
+			{ params },
 		);
 	}
 }

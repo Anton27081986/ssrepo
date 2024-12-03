@@ -16,7 +16,8 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
 					<div class="ss-table-td__content">
 						<ss-text> {{ tovNode().tovSignal().tov.name }}</ss-text>
-						<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openHistory()"></ss-icon>
+						<ss-icon class="ss-table-td__content__history" name="checks" (click)="$event.stopPropagation(); openSalesHistory()"></ss-icon>
+						<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openPriceHistory()"></ss-icon>
 					</div>
 				</ng-container>
 
