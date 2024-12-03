@@ -1043,4 +1043,9 @@ export class AppIcons {
 	public static refresh = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M14.9349 8.26628C14.9349 11.9463 11.9482 14.9329 8.26823 14.9329C4.58823 14.9329 2.34156 11.2263 2.34156 11.2263M2.34156 11.2263H5.3549M2.34156 11.2263V14.5596M1.60156 8.26628C1.60156 4.58628 4.56156 1.59961 8.26823 1.59961C12.7149 1.59961 14.9349 5.30628 14.9349 5.30628M14.9349 5.30628V1.97294M14.9349 5.30628H11.9749" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 		</svg>`;
+
+	public static checks = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M9.74375 6.3667L3.83125 12.2792L0.875 9.32308" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M15.9282 6.3667L10.0157 12.2792L8.44531 10.7089" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
 }
