@@ -18,15 +18,14 @@ import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-s
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { TableState } from '@app/shared/components/table/table-state';
-import { ExcessIncomeTovGroupHistoryItem } from '@app/core/models/excess-income/excess-income-tov-group-history';
-import { IGroupPriceHistoryTableItem } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history-table-item';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { NgIf } from '@angular/common';
 import { ComponentsModule } from '@app/components/components.module';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
+import { ExccessIncomeCommentsHistory } from '@app/core/models/excess-income/exccess-income-comments-history';
+import { ICommentHistoryTableItem } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history-table-item';
 
 interface IDialogData {
 	clientId?: number;
@@ -37,7 +36,7 @@ interface IDialogData {
 
 @UntilDestroy()
 @Component({
-	selector: 'app-excess-income-group-price-history',
+	selector: 'app-excess-income-comments-history',
 	standalone: true,
 	imports: [
 		CardModule,
@@ -52,23 +51,19 @@ interface IDialogData {
 		ComponentsModule,
 		EmptyDataPageModule,
 	],
-	templateUrl: './product-price-history.component.html',
-	styleUrl: './product-price-history.component.scss',
+	templateUrl: './comments-history.component.html',
+	styleUrl: './comments-history.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductPriceHistoryComponent {
+export class CommentsHistoryComponent {
 	private readonly modalRef = inject(ModalRef);
 	public total: number = 0;
 	public pageSize = 10;
 	public pageIndex = 1;
 	public offset = 0;
 	public tableItems: ITableItem[] = [];
-	public items: IGroupPriceHistoryTableItem[] = [];
+	public items: ICommentHistoryTableItem[] = [];
 	public tableState: TableState = TableState.Empty;
-	public client: IDictionaryItemDto | undefined;
-	public tovGroup: IDictionaryItemDto | undefined;
-	public tov: IDictionaryItemDto | undefined;
-	public contractor: IDictionaryItemDto | undefined;
 
 	public constructor(
 		@Inject(DIALOG_DATA)
@@ -81,18 +76,19 @@ export class ProductPriceHistoryComponent {
 	}
 
 	private getHistory() {
-		if (this.data.clientId && this.data.tovId) {
+		if (this.data.clientId && this.data.tovGroupId && this.data.contractorId) {
 			this.tableState = TableState.Loading;
 
 			this.excessIncomeApiService
-				.getTovHistory(this.data.clientId, this.data.tovId, this.pageSize, this.offset)
+				.getCommentsHistory(
+					this.data.clientId,
+					this.data.tovGroupId,
+					this.data.contractorId,
+					this.pageSize,
+					this.offset,
+				)
 				.pipe(untilDestroyed(this))
 				.subscribe(response => {
-					this.client = response.client;
-					this.tovGroup = response.tovSubgroup;
-					this.tov = response.tov;
-					this.contractor = response.contractor;
-
 					if (!response.items || response.items.length === 0) {
 						this.tableState = TableState.Empty;
 					} else {
@@ -108,15 +104,13 @@ export class ProductPriceHistoryComponent {
 		}
 	}
 
-	private mapHistoryToTableItems(history: ExcessIncomeTovGroupHistoryItem[]) {
+	private mapHistoryToTableItems(history: ExccessIncomeCommentsHistory[]) {
 		return history.map(x => {
-			const tableItem: IGroupPriceHistoryTableItem = {} as IGroupPriceHistoryTableItem;
+			const tableItem: ICommentHistoryTableItem = {} as ICommentHistoryTableItem;
 
 			tableItem.author =
 				{ text: x.author.name ?? '-', pseudoLink: x.author.id.toString() } ?? '-';
-			tableItem.newExcessIncomePercent = x.newExcessIncomePercent?.toString() ?? '-';
-			tableItem.oldExcessIncomePercent = x.oldExcessIncomePercent?.toString() ?? '-';
-			tableItem.periodType = x.periodType ?? '-';
+			tableItem.comment = x.comment ?? '-';
 			tableItem.date = x.date
 				? `${new Date(Date.parse(x.date)).toLocaleString('ru-RU', {
 						year: 'numeric',
