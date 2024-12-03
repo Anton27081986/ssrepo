@@ -124,7 +124,7 @@
 					<input type="file" id="upload-file"
 						 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
 						 multiple
-						 (change)="uploadFile($event)"
+						 (change)="addFiles($event)"
 					/>
 				</div>
 				<div class="content__column__item__files-list">
@@ -140,6 +140,20 @@
 							<ss-icon name="trash" (click)="deleteFile(doc.id)"></ss-icon>
 						</div>
 					</div>
+					<ng-container *ngIf="newDocuments">
+						<div class="content__column__item__files-list__item" *ngFor="let ndoc of newDocuments">
+							<div class="content__column__item__files-list__item__img">
+								<ss-icon height="16" width="16" name="doc"></ss-icon>
+							</div>
+							<div class="content__column__item__files-list__item__description">
+								<ss-text size="3">{{ ndoc.name }}</ss-text>
+								<ss-text class="size" size="3">{{ ndoc.size }}</ss-text>
+							</div>
+							<div class="content__column__item__files-list__item__controls">
+								<ss-icon name="trash" (click)="removeFileFromUploadList(ndoc.name)"></ss-icon>
+							</div>
+						</div>
+					</ng-container>
 				</div>
 			</div>
 		</div>
