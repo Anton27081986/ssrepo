@@ -5,6 +5,7 @@ export interface ExcessIncomeGroup {
 	tovSubgroup: IdName;
 	currentExcessIncomePercent: number;
 	nextExcessIncomePercent: number;
+	comment: string;
 }
 
 export interface IdName {

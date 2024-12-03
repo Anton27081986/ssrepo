@@ -12,6 +12,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
 import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
+import {
+	CommentsHistoryComponent
+} from "@app/pages/excess-income/excess-income-history/comments-history/comments-history.component";
 
 @UntilDestroy()
 @Component({
@@ -77,9 +80,23 @@ export class ExcessIncomeGroupTrComponent {
 			.subscribe(this.group$);
 	}
 
-	protected openHistory() {
+	protected openPriceHistory() {
 		this.modalService
 			.open(GroupPriceHistoryComponent, {
+				data: {
+					clientId: this.group().group.client.id,
+					contractorId: this.group().group.contractor.id,
+					tovGroupId: this.group().group.tovSubgroup.id,
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe();
+	}
+
+	protected openCommentsHistory() {
+		this.modalService
+			.open(CommentsHistoryComponent, {
 				data: {
 					clientId: this.group().group.client.id,
 					contractorId: this.group().group.contractor.id,

@@ -8,7 +8,14 @@
 					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
 						<div class="ss-table-td__content">
 							<ss-text> {{ group.tovSubgroup.name }}</ss-text>
-							<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openHistory()"></ss-icon>
+							<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openPriceHistory()"></ss-icon>
+						</div>
+					</ng-container>
+
+					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
+						<div class="ss-table-td__content">
+							<ss-text> {{ group.comment }}</ss-text>
+							<ss-icon *ngIf="group.comment" class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openCommentsHistory()"></ss-icon>
 						</div>
 					</ng-container>
 
