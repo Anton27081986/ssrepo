@@ -12,4 +12,5 @@ export interface IUpdateAct {
 	contractId?: number | null;
 	finDocOrderIds?: number[] | null;
 	currencyId?: number | null;
+	documentIds: string[];
 }

@@ -8,7 +8,8 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
-import {IFile} from "@app/core/models/files/file";
+import { IFile } from '@app/core/models/files/file';
+import { forkJoin } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -61,6 +62,8 @@ export class CompletedWorkActEditComponent {
 	protected documents: Signal<IFile[]> = toSignal(this.completedWorkActsFacade.actAttachment$, {
 		initialValue: [],
 	});
+
+	protected newDocuments: File[] = [];
 
 	protected finDocOrders: IDictionaryItemDto[] = [];
 
@@ -158,10 +161,25 @@ export class CompletedWorkActEditComponent {
 			buUnitId: buUnit?.id,
 			contractId: actForm.contract?.id,
 			currencyId: actForm.currency?.id,
+			documentIds: this.documents().map(file => file.id) || [],
 		};
 
-		this.completedWorkActsFacade
-			.updateAct(updatedAct);
+		if (this.newDocuments.length) {
+			forkJoin(
+				this.newDocuments.map(file => {
+					return this.completedWorkActsFacade.uploadFile(file);
+				}),
+			)
+				.pipe(untilDestroyed(this))
+				.subscribe(files => {
+					updatedAct.documentIds = updatedAct.documentIds.concat(
+						files.map(file => file.id),
+					);
+					this.completedWorkActsFacade.updateAct(updatedAct);
+				});
+		} else {
+			this.completedWorkActsFacade.updateAct(updatedAct);
+		}
 	}
 
 	protected onApplicantUserSelect(id: number) {
@@ -194,23 +212,24 @@ export class CompletedWorkActEditComponent {
 		}
 	}
 
-	protected uploadFile(event: Event) {
+	protected addFiles(event: Event) {
 		const element = event.currentTarget as HTMLInputElement;
-		const fileList: FileList | null = element.files;
 
-		if (!fileList) {
+		if (!element.files) {
 			return;
 		}
 
-		Array.from(fileList).forEach(file => {
-			const reader = new FileReader();
+		Array.from(element.files).forEach(file => {
+			const earlyLoaded = this.newDocuments.find(doc => doc.name === file.name);
 
-			reader.onload = () => {
-				this.completedWorkActsFacade.uploadFile(file);
-			};
-
-			reader.readAsDataURL(file);
+			if (!earlyLoaded) {
+				this.newDocuments.push(file);
+			}
 		});
+	}
+
+	protected removeFileFromUploadList(fileName: string) {
+		this.newDocuments = this.newDocuments.filter(file => file.name !== fileName);
 	}
 
 	protected deleteFile(fileId: string) {

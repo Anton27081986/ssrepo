@@ -110,32 +110,8 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public updateAct(body: IUpdateAct) {
-		const addFiles = this.actAttachment.value.reduce<Array<Observable<string>>>((add, file) => {
-			const onAct = this.act.value?.documents.find(doc => doc.id === file.id);
-
-			if (!onAct) {
-				add.push(this.addFileToAct(this.act.value!.id, file.id));
-			}
-
-			return add;
-		}, []);
-
-		const removeFiles =
-			this.act.value?.documents.reduce<Array<Observable<string>>>((remove, file) => {
-				const onAct = this.actAttachment.value?.find(doc => doc.id === file.id);
-
-				if (!onAct) {
-					remove.push(this.removeFileFromAct(this.act.value!.id, file.id));
-				}
-
-				return remove;
-			}, []) || [];
-
-		forkJoin([
-			...addFiles,
-			...removeFiles,
-			this.actsApiService.updateAct(this.act.value!.id, body),
-		])
+		this.actsApiService
+			.updateAct(this.act.value!.id, body)
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.switchMode(true);
@@ -265,16 +241,7 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public uploadFile(file: File) {
-		if (this.act.value) {
-			const id = this.act.value.id;
-
-			this.filesApiService
-				.uploadFile(FileBucketsEnum.Attachments, file)
-				.pipe(untilDestroyed(this))
-				.subscribe(res => {
-					this.actAttachment.next([...this.actAttachment.value, res]);
-				});
-		}
+		return this.filesApiService.uploadFile(FileBucketsEnum.Attachments, file);
 	}
 
 	public deleteFile(id: string) {
@@ -283,9 +250,5 @@ export class CompletedWorkActsFacadeService {
 
 	public addFileToAct(actId: number, fileId: string) {
 		return this.actsApiService.addDocumentToAct(actId, fileId);
-	}
-
-	public removeFileFromAct(actId: number, fileId: string) {
-		return this.actsApiService.removeDocumentFromAct(actId, fileId);
 	}
 }
