@@ -11,8 +11,4 @@ export class ExcessIncomeBaseNodeState {
 	public total$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public readonly paginationControl: FormControl<number | null> = new FormControl<number>(0);
 	public limit = 20;
-
-	// filterTruthy() {
-	// 	return filter(src => !!src) as OperatorFunction<TValue | null | undefined, TValue>;
-	// }
 }

@@ -1,5 +1,5 @@
-import { ExcessIncomeGroup, IdName } from '@app/core/models/excess-income/excess-income-group';
-import { BehaviorSubject, debounceTime, map, NEVER, scan, switchMap, tap } from 'rxjs';
+import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
+import { BehaviorSubject, map, NEVER, scan, switchMap, tap } from 'rxjs';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
@@ -7,6 +7,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExcessIncomeGroupEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @UntilDestroy()
 export class GroupNodeState extends ExcessIncomeBaseNodeState {
@@ -15,12 +16,17 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 			ExcessIncomeGroupEventEnum.excessIncomeGroupEventDefault,
 		);
 
+	get canEdit(): boolean {
+		return !this.permissions.includes(Permissions.EXCESS_INCOME_EDIT);
+	}
+
 	public group: ExcessIncomeGroup;
 
 	public tov$: BehaviorSubject<TovNodeState[]> = new BehaviorSubject<TovNodeState[]>([]);
 
 	constructor(
 		group: ExcessIncomeGroup,
+		private readonly permissions: string[],
 		clientId: number,
 		contractorId: number | null,
 		private readonly service: ExcessIncomeService,
@@ -59,7 +65,6 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 		this.event$
 			.pipe(
 				tap(() => this.isLoader$.next(true)),
-				debounceTime(1000),
 				untilDestroyed(this),
 				switchMap(event => {
 					if (event === ExcessIncomeGroupEventEnum.excessIncomeGroupEventDefault) {
@@ -80,10 +85,11 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 					return this.getTov(clientId, contractorId);
 				}),
 				map(res => {
-					this.total$.next(res.total);
-					return res.items.map(item => {
+					this.total$.next(res.data.total);
+					return res.data.items.map(item => {
 						return new TovNodeState(
 							item,
+							res.permissions,
 							service,
 							state,
 							this.state.currencyControl.value!,

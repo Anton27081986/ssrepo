@@ -18,7 +18,6 @@ import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/ch
 import { ChipsSearchV2Module } from '@app/shared/components/inputs/chips-search-v2/chips-search-v2.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DynamicPaginationModule } from '@app/shared/components/dynamic-pagination/dynamic-pagination.module';
-import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { ExcessIncomeUpdateSndClientPopoverComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
@@ -32,6 +31,8 @@ import { TextareaModule } from '@app/shared/components/textarea/textarea.module'
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { ExcessIncomeControlComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-control/excess-income-control.component';
 import { NumberInputComponent } from '@app/shared/components/inputs/number-input/number-input.component';
+import { ButtonComponent } from '@front-components/components';
+import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 
 @NgModule({
 	declarations: [
@@ -59,7 +60,6 @@ import { NumberInputComponent } from '@app/shared/components/inputs/number-input
 		ChipsSearchV2Module,
 		ReactiveFormsModule,
 		DynamicPaginationModule,
-		ButtonModule,
 		LoaderModule,
 		SelectV2Component,
 		SearchInputModule,
@@ -70,6 +70,8 @@ import { NumberInputComponent } from '@app/shared/components/inputs/number-input
 		TextareaModule,
 		PipesModule,
 		NumberInputComponent,
+		ButtonComponent,
+		ButtonModule,
 	],
 })
 export class ExcessIncomeModule {}

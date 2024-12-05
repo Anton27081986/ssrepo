@@ -7,7 +7,8 @@ import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
 import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
 import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
-import {CompletedWorkActPermissionsGuard} from "@app/core/guards/completed-work-act-permissions.guard";
+import { CompletedWorkActPermissionsGuard } from '@app/core/guards/completed-work-act-permissions.guard';
+import { ExcessIncomePermissionsGuard } from '@app/core/guards/excess-income-permission.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -127,13 +128,13 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FullWidthWithoutFooterLayoutComponent,
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuard, ExcessIncomePermissionsGuard],
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
-				path: 'excess-income',
+				path: 'excess-income-page',
 				loadChildren: () =>
 					import('@app/pages/excess-income/excess-income.module').then(
 						m => m.ExcessIncomeModule,

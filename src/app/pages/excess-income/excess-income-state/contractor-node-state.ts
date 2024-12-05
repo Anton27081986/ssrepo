@@ -13,7 +13,6 @@ import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/gro
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormControl } from '@angular/forms';
 import { ExcessIncomeContractorsEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
 
@@ -38,7 +37,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		super();
 		this.clientId = clientId;
 		this.contractor = contractor;
-		if (isFake) {
+		if (this.isFake) {
 			this.expended$.next(true);
 		}
 
@@ -66,7 +65,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		this.event$
 			.pipe(
 				tap(() => this.isLoader$.next(true)),
-				debounceTime(1000),
+				// debounceTime(1000),
 				untilDestroyed(this),
 				switchMap(event => {
 					if (
@@ -86,10 +85,11 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 					});
 				}),
 				map(groups => {
-					this.total$.next(groups.total);
-					return groups.items.map(item => {
+					this.total$.next(groups.data.total);
+					return groups.data.items.map(item => {
 						return new GroupNodeState(
 							item,
+							groups.permissions,
 							this.clientId,
 							this.contractor ? this.contractor.id : null,
 							this.service,
