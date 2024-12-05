@@ -18,6 +18,10 @@ export class PermissionsFacadeService {
 
 	public procurementsPermissions$: Observable<{ items: string[] }>;
 
+	public excessIncomePermissions$: BehaviorSubject<string[] | null> = new BehaviorSubject<
+		string[] | null
+	>(null);
+
 	constructor(private readonly permissionsApiService: PermissionsApiService) {
 		this.permissionsApiService
 			.getPermissionClient('Client.Proposals')
@@ -40,6 +44,16 @@ export class PermissionsFacadeService {
 			.subscribe(this.completedWorkActsPermissions$);
 
 		this.procurementsPermissions$ = this.permissionsApiService.getPermissionClient('Contract');
+
+		this.permissionsApiService
+			.getPermissionClient('Snd')
+			.pipe(
+				untilDestroyed(this),
+				map(items => {
+					return items.items;
+				}),
+			)
+			.subscribe(this.excessIncomePermissions$);
 	}
 
 	public hasPermission(permission: string): boolean {

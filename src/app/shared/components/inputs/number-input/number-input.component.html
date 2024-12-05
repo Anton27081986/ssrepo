@@ -6,11 +6,12 @@
     <input
         [ngClass]="size() | mapper : getControlClasses : errorText()"
       	[value]="value$ | async"
+		[disabled]="disabled()"
         [placeholder]="placeholder()"
         [maxLength]="maxlength()"
         (input)="onInput($event)"
     />
-<div class="input__icon">
+<div class="input__icon" *ngIf="disabled()">
 	<ss-icon (click)="valueUp()" [name]="'chevron'"></ss-icon>
 	<ss-icon *ngIf="(value$ | async)" (click)="valueDown()" [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'"></ss-icon>
 </div>

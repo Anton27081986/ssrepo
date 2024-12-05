@@ -5,7 +5,7 @@
 					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
 						<div class="ss-table-td__content">
 							<ss-text>{{ tovNode().tovSignal().comment.value }}</ss-text>
-							<ss-dropdown-button *ngIf="tovNode().tovSignal().id != 0" [title]="'Ред.ком'">
+							<ss-dropdown-button *ngIf="tovNode().tovSignal().id != 0 && tovNode().canEditComment" [title]="'Ред.ком'">
 								<ss-textarea [formControl]="tovNode().tovSignal().comment"></ss-textarea>
 								<ss-button (click)="tovNode().updateComment();$event.stopPropagation()">откоментировать
 								</ss-button>
@@ -54,7 +54,7 @@
 						</ng-container>
 
 						<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-							<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask"
+							<ss-number-input-v2  (click)="$event.stopPropagation()" [maskito]="numberInputTextMask"
 												formControlName="excessIncomePercent"></ss-number-input-v2>
 							<ss-button (click)="tovNode().updateTov();$event.stopPropagation()"
 									   *ngIf="tovNode().tovSignal().params.controls.nextParams.controls.excessIncomePercent.valid">

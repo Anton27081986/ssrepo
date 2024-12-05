@@ -5,6 +5,7 @@ import { rotateAnimation } from '@app/core/animations';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeUpdateSndClientPopoverComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
+import { IconType } from '@front-components/components';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -49,4 +50,6 @@ export class ExcessIncomeClientTrComponent {
 			data: { client: this.client().client, isCurrent: isCurrent, state: this.state },
 		});
 	}
+
+	protected readonly IconType = IconType;
 }

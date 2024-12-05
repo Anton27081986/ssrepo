@@ -1,6 +1,6 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
-		<ng-container *ngIf="col.display" [ngSwitch]="col.id">
+		<ng-container [formGroup]="formGroup" *ngIf="col.display" [ngSwitch]="col.id">
 
 			<td class="ss-table-td" *ngIf="group$ | async as group">
 				<ng-container [ngSwitch]="col.id">
@@ -20,12 +20,12 @@
 					</ng-container>
 
 					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-						<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask" [formControl]="sndCurrentControl"></ss-number-input-v2>
+						<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask" formControlName="sndCurrentControl"></ss-number-input-v2>
 						<ss-button (click)="updateSnd();$event.stopPropagation()" *ngIf="canSndCurrentControl"> + </ss-button>
 					</ng-container>
 
 					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-						<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask" [formControl]="sndNextControl"></ss-number-input-v2>
+						<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask" formControlName="sndNextControl"></ss-number-input-v2>
 						<ss-button (click)="updateSnd();$event.stopPropagation()" *ngIf="canSndNextControl"> + </ss-button>
 					</ng-container>
 

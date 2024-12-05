@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, forwardRef, input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	forwardRef,
+	input,
+	signal,
+	WritableSignal,
+} from '@angular/core';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { AsyncPipe, NgClass, NgIf } from '@angular/common';
@@ -34,6 +41,7 @@ export class NumberInputComponent implements ControlValueAccessor {
 	public showClearButton = input<boolean>(true);
 	public errorText = input<string>('');
 	public value$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+	protected disabled: WritableSignal<boolean> = signal(false);
 
 	private onChange!: (value: number | null) => void;
 	protected onTouched!: () => void;
@@ -72,6 +80,10 @@ export class NumberInputComponent implements ControlValueAccessor {
 		}
 		this.value$.next(value);
 		this.onChange(value);
+	}
+
+	setDisabledState(isDisabled: boolean) {
+		this.disabled.set(isDisabled);
 	}
 
 	valueUp() {

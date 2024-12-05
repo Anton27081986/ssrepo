@@ -19,6 +19,7 @@ import {
 	ValidationErrors,
 	ValidatorFn,
 } from '@angular/forms';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @UntilDestroy()
 export class TovNodeState extends ExcessIncomeBaseNodeState {
@@ -32,8 +33,17 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 	public subscription: Subscription = new Subscription();
 
+	get canEditSnd(): boolean {
+		return !this.permissions.includes(Permissions.EXCESS_INCOME_EDIT);
+	}
+
+	get canEditComment(): boolean {
+		return !this.permissions.includes(Permissions.EXCESS_INCOME_EDIT_COMMENT);
+	}
+
 	constructor(
 		private readonly tov: ExcessIncomeTovFromBackend,
+		private readonly permissions: string[],
 		private readonly service: ExcessIncomeService,
 		state: ExcessIncomeState,
 		private readonly currency: IDictionaryItemDto,
@@ -43,6 +53,10 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.state = state;
 
 		this.updateFromState();
+		if (this.canEditSnd) {
+			this.currentParams.disable();
+			this.nextParams.disable();
+		}
 	}
 
 	updateFromState() {
@@ -81,7 +95,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			this.currentParams.controls.fixPrice.valueChanges
 				.pipe(
 					tap(value => {
-						console.log(value, 'this.currentParams.controls.fixPrice');
 						this.currentParams.controls.excessIncomePercent.setValue(null, {
 							emitEvent: false,
 						});

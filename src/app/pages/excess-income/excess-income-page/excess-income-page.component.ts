@@ -11,9 +11,8 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { BehaviorSubject } from 'rxjs';
-import { ContractNewComponent } from '@app/pages/raw-material-accounting/modals/contract-new/contract-new.component';
 import { FormControl } from '@angular/forms';
-import { F } from '@angular/cdk/keycodes';
+import { ButtonType, Size } from '@front-components/components';
 
 @UntilDestroy()
 @Component({
@@ -287,4 +286,6 @@ export class ExcessIncomePageComponent {
 			],
 		},
 	];
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
 }

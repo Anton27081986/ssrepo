@@ -13,6 +13,7 @@ import { numberInputTextMask } from '@app/core/utils/mask';
 import { BehaviorSubject, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import { IconType } from '@front-components/components';
 @UntilDestroy()
 @Component({
 	selector: 'app-excess-income-control',
@@ -92,4 +93,6 @@ export class ExcessIncomeControlComponent implements ControlValueAccessor {
 			this.value = Number(value);
 		}
 	}
+
+	protected readonly IconType = IconType;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -23,7 +23,10 @@ export class ExcessIncomeUpdateTovGroupState {
 				this.addTovGroups({
 					id: value.id,
 					name: value.name!,
-					excessIncomePercent: new FormControl<number | null>(null),
+					excessIncomePercent: new FormControl<number | null>(null, [
+						Validators.required,
+						Validators.min(0.01),
+					]),
 				});
 				this.tovGroupControl.setValue(null);
 			});

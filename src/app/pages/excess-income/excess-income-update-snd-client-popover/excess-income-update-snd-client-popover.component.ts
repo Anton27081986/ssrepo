@@ -3,8 +3,8 @@ import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income
 import { rotateAnimation } from '@app/core/animations';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { FormControl } from '@angular/forms';
-import { map, NEVER, switchMap, tap } from 'rxjs';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { map, NEVER, Observable, switchMap, tap } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -16,6 +16,8 @@ import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-serv
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExcessIncomeEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { ButtonType, Size } from '@front-components/components';
 
 export interface ExcessIncomeUpdateSndClientPopoverData {
 	client: ExcessIncomeClient;
@@ -26,7 +28,6 @@ export interface ExcessIncomeUpdateSndClientPopoverData {
 export enum ExcessIncomeSndClientRowItemField {
 	tovGroup = 'tovGroup',
 	snd = 'snd',
-	action = 'action',
 }
 @UntilDestroy()
 @Component({
@@ -48,12 +49,17 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 
 	protected tovGroups$ = this.state.tovGroups$;
 
+	get getIsDisabledButton(): boolean {
+		return this.tovGroups$.value.length === 0;
+	}
+
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly stateColumn: ColumnsStateService,
 		private readonly searchService: SearchFacadeService,
 		private readonly state: ExcessIncomeUpdateTovGroupState,
 		private readonly excessIncomeService: ExcessIncomeService,
+		private readonly toastService: NotificationToastService,
 		@Inject(DIALOG_DATA) protected readonly data: ExcessIncomeUpdateSndClientPopoverData,
 	) {
 		this.client = this.data.client;
@@ -78,25 +84,32 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 	}
 
 	submit() {
-		this.excessIncomeService
-			.updateSndClient(this.client.id, {
-				isCurrent: this.data.isCurrent,
-				items: this.tovGroups$.value.map(item => {
-					return {
-						tovGroupId: item.id,
-						excessIncomePercent: Number(item.excessIncomePercent.value) ?? 0,
-					};
-				}),
-			})
-			.pipe(
-				tap(() =>
-					this.data.state.event$.next(ExcessIncomeEventEnum.excessIncomeClientUpdated),
-				),
-				untilDestroyed(this),
-			)
-			.subscribe(() => {
-				this.close();
-			});
+		const isValid = this.tovGroups$.value.find(item => item.excessIncomePercent.valid);
+		if (isValid) {
+			this.excessIncomeService
+				.updateSndClient(this.client.id, {
+					isCurrent: this.data.isCurrent,
+					items: this.tovGroups$.value.map(item => {
+						return {
+							tovGroupId: item.id,
+							excessIncomePercent: Number(item.excessIncomePercent.value) ?? 0,
+						};
+					}),
+				})
+				.pipe(
+					tap(() =>
+						this.data.state.event$.next(
+							ExcessIncomeEventEnum.excessIncomeClientUpdated,
+						),
+					),
+					untilDestroyed(this),
+				)
+				.subscribe(() => {
+					this.close();
+				});
+		} else {
+			this.toastService.addToast('Поле СНД,% заполнено неверно', 'error');
+		}
 	}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
@@ -122,18 +135,10 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 					rowspan: 1,
 					colspan: 1,
 				},
-				{
-					id: ExcessIncomeSndClientRowItemField.action,
-					title: '',
-					order: 3,
-					show: true,
-					width: null,
-					display: true,
-					rowspan: 1,
-					colspan: 1,
-				},
 			],
 		},
 	];
 	protected readonly numberInputTextMask = numberInputTextMask;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
 }

@@ -13,6 +13,7 @@ import { ExcessIncomeUpdateClientRequest } from '@app/core/models/excess-income/
 import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/excess-income-update-group-request';
 import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
 import { ExcessIncomeUpdateTovCommentRequest } from '@app/core/models/excess-income/excess-income-update-tov-comment-request';
+import { ExcessIncomeData } from '@app/core/models/excess-income/excess-income-data';
 
 @Injectable({
 	providedIn: 'root',
@@ -26,13 +27,15 @@ export class ExcessIncomeService {
 		return this.apiService.getClients(request);
 	}
 
-	public getGroup(request: ExcessIncomeGroupRequest): Observable<IResponse<ExcessIncomeGroup>> {
+	public getGroup(
+		request: ExcessIncomeGroupRequest,
+	): Observable<ExcessIncomeData<IResponse<ExcessIncomeGroup>>> {
 		return this.apiService.getGroup(request);
 	}
 
 	public getTov(
 		request: ExcessIncomeTovRequest,
-	): Observable<IResponse<ExcessIncomeTovFromBackend>> {
+	): Observable<ExcessIncomeData<IResponse<ExcessIncomeTovFromBackend>>> {
 		return this.apiService.getTov(request);
 	}
 
