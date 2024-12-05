@@ -78,7 +78,9 @@ export class SearchInputComponent {
 		}
 	}
 
-	protected onChange(query: string) {
+	protected onChange(value: string) {
+		const query = value.trim();
+
 		if (
 			query.length > 2 ||
 			(query.length && (this.searchType === 'tov-units' || this.searchType === 'bu-units'))
