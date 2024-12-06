@@ -22,7 +22,9 @@ import { catchError } from 'rxjs/operators';
 import { HistoryListViewComponent } from '@app/widgets/history/history-list-view/history-list-view.component';
 import { HistoryTableViewComponent } from '@app/widgets/history/history-table-view/history-table-view.component';
 import { formatDate } from '@angular/common';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'ss-history',
 	templateUrl: './history.component.html',
@@ -91,7 +93,16 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 	);
 
 	public constructor() {
-		this.historyChanges();
+		this.signalHistoryService.historyChange$
+			.pipe(
+				tap(change => {
+					if (this.objectId() === change.objectId) {
+						this.mutableHistoryItems.set([change.item, ...this.mutableHistoryItems()]);
+					}
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 
 		effect(
 			() => {
@@ -113,17 +124,5 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 
 	public ngOnDestroy(): void {
 		this.signalHistoryService.disconnect();
-	}
-
-	private historyChanges(): void {
-		toSignal(
-			this.signalHistoryService.historyChange$.pipe(
-				tap(change => {
-					if (this.objectId() === change.objectId) {
-						this.mutableHistoryItems.set([change.item, ...this.mutableHistoryItems()]);
-					}
-				}),
-			),
-		);
 	}
 }
