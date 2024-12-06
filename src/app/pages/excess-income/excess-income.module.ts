@@ -29,9 +29,13 @@ import { MaskitoDirective } from '@maskito/angular';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
 import { PipesModule } from '@app/core/pipes/pipes.module';
-import { ExcessIncomeControlComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-control/excess-income-control.component';
 import { NumberInputComponent } from '@app/shared/components/inputs/number-input/number-input.component';
-import { ButtonComponent } from '@front-components/components';
+import {
+	ButtonComponent,
+	IconComponent,
+	LabelComponent,
+	TextComponent,
+} from '@front-components/components';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 
 @NgModule({
@@ -43,7 +47,6 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 		ExcessIncomeGroupTrComponent,
 		ExcessIncomeUpdateSndClientPopoverComponent,
 		ExcessIncomeUpdateTovGroupTrComponent,
-		ExcessIncomeControlComponent,
 	],
 	imports: [
 		ExcessIncomeRoutingModule,
@@ -72,6 +75,9 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 		NumberInputComponent,
 		ButtonComponent,
 		ButtonModule,
+		TextComponent,
+		IconComponent,
+		LabelComponent,
 	],
 })
 export class ExcessIncomeModule {}
