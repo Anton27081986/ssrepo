@@ -27,8 +27,15 @@
 		padding: 12px;
 		gap: 12px;
 
-		ss-table-v2 {
-			height: 301px;
+		&__content {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 548px;
+
+			ss-table-v2 {
+				height: 300px;
+			}
 		}
 	}
 
@@ -37,5 +44,11 @@
 		justify-content: flex-end;
 		padding: 16px;
 		gap: 16px;
+	}
+
+	.empty-placeholder {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
 	}
 }

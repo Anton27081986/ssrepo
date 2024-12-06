@@ -5,7 +5,7 @@ import { rotateAnimation } from '@app/core/animations';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeUpdateSndClientPopoverComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
-import { IconType } from '@front-components/components';
+import { IconPosition, IconType, TextType, TextWeight } from '@front-components/components';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -52,4 +52,7 @@ export class ExcessIncomeClientTrComponent {
 	}
 
 	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly IconPosition = IconPosition;
 }
