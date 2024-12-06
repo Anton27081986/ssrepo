@@ -12,6 +12,15 @@
 		justify-content: center;
 		align-items: center;
 		gap: 6px;
+
+		&--error {
+			background-color: red;
+		}
+
+
+		ss-number-input-v2 {
+			width: 69px;
+		}
 	}
 }
 

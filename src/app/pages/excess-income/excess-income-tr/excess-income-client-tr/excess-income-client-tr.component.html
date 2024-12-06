@@ -4,17 +4,18 @@
 			<td class="ss-table-td" *ngIf="col.display">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
 					<div class="ss-table-td__content">
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold"> {{ client().client.name }}
-						</snab-text>
+						<ss-text> {{ client().client.name }}</ss-text>
 					</div>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-					<snab-button [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Settings"
-								 (click)="openUpdateClientPriceModal(true); $event.stopPropagation()"></snab-button>
+					<ss-button (click)="openUpdateClientPriceModal(true); $event.stopPropagation()">
+						<ss-icon [name]="'settings'"></ss-icon>
+					</ss-button>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-					<snab-button [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Settings"
-								 (click)="openUpdateClientPriceModal(false); $event.stopPropagation()"></snab-button>
+					<ss-button (click)="openUpdateClientPriceModal(false); $event.stopPropagation()">
+						<ss-icon [name]="'settings'"></ss-icon>
+					</ss-button>
 				</ng-container>
 				<ng-container *ngSwitchDefault>
 					&nbsp;

@@ -1,8 +1,8 @@
 <div class="wrapper">
 	<ss-card class="excess-income-update-snd-client-popover" [padding]="'0'">
 		<div class="excess-income-update-snd-client-popover__header">
-			<snab-text [type]="TextType.Title">Установить СНД,% для всех ТПГ Клиента {{ client.name }}</snab-text>
-			<snab-icon [icon]="IconType.ClearLarge" (click)="close()"></snab-icon>
+			<ss-text>Установить СНД,% для всех ТПГ Клиента {{ client.name }}</ss-text>
+			<ss-icon [name]="'close'" (click)="close()"></ss-icon>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="excess-income-update-snd-client-popover__body">
@@ -16,17 +16,16 @@
 					<tr *ngFor="let tovGroup of group" excess-income-update-tov-group-tr [tovGroup]="tovGroup"></tr>
 				</ss-table-v2>
 				<ng-template #empty>
-					<ss-empty-placeholder class="empty-placeholder">
-						<snab-label [iconPosition]="IconPosition.OnlyIcon" [size]="Size.Large" [type]="LabelType.Info" [icon]="IconType.Edit"></snab-label>
-						<snab-text [weight]="TextWeight.Regular" [type]="TextType.Title">Нет выбранных позиций, выберите ТПГ</snab-text>
+					<ss-empty-placeholder>
+						<ss-text>Выберите ТПГ из списка</ss-text>
 					</ss-empty-placeholder>
 				</ng-template>
 			</div>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="excess-income-update-snd-client-popover__footer">
-			<snab-button [size]="Size.Large" [type]="ButtonType.Outline" [text]="'Отмена'" (click)="close()"></snab-button>
-			<snab-button [disabled]="getIsDisabledButton" [size]="Size.Large" [text]="'Применить'" (click)="submit()"></snab-button>
+			<ss-button [type]="'usually'" (click)="close()">Отмена</ss-button>
+			<ss-button (click)="submit()">Применить</ss-button>
 		</div>
 	</ss-card>
 </div>

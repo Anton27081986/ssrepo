@@ -3,12 +3,12 @@
 		<ng-container [ngSwitch]="col.id">
 			<td class="ss-table-td" *ngIf="col.display">
 				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.tovGroup">
-						<snab-text [type]="TextType.Body">{{ tovGroup().name }}</snab-text>
+						<ss-text [size]="'3'">{{ tovGroup().name }}</ss-text>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.snd">
-					<div class="ss-table-td__content">
+					<div class="ss-table-td__content" [class.ss-table-td__content--error]="!tovGroup().excessIncomePercent.valid">
 						<ss-number-input-v2 [size]="'small'" [maskito]="numberInputTextMask" [formControl]="tovGroup().excessIncomePercent"></ss-number-input-v2>
-						<snab-button (click)="delTovGroupsState(tovGroup().id)" [icon]="IconType.Trash" [iconPosition]="IconPosition.OnlyIcon" [type]="ButtonType.Flat" [size]="Size.Large"></snab-button>
+						<ss-button [size]="Size.Small"><ss-icon [name]="'basket'" (click)="delTovGroupsState(tovGroup().id)"></ss-icon></ss-button>
 					</div>
 				</ng-container>
 			</td>
