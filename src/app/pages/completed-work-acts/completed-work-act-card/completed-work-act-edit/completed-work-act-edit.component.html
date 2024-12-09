@@ -25,11 +25,15 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внешний)</ss-text>
-				<ss-date-time-picker [showTime]="false" formControlName="externalActDate"></ss-date-time-picker>
+				<ss-date-time-picker
+					[showTime]="false" formControlName="externalActDate"
+					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внутренний)</ss-text>
-				<ss-date-time-picker [showTime]="false" formControlName="internalActDate"></ss-date-time-picker>
+				<ss-date-time-picker
+					[showTime]="false" formControlName="internalActDate"
+					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 		</div>
 		<div class="content__column">
