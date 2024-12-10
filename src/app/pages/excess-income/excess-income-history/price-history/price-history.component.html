@@ -1,7 +1,7 @@
 <div class="wrapper" (click)="close()">
     <ss-card padding="0" (click)="$event.stopPropagation()">
         <div class="header">
-            <ss-headline size="h6">История изменений</ss-headline>
+            <ss-headline size="h6">{{ data.title }}</ss-headline>
 
             <ss-icon width="16" name="close" (click)="close()"></ss-icon>
         </div>
@@ -9,14 +9,15 @@
         <div class="body">
             <ss-history
                 class="content"
-                [objectId]="actId.toString()"
-                [queryType]="queryType.ActCompletedWorks"
+                [objectId]="data.objectId"
+                [queryType]="queryType.ExcessIncome"
                 [view]="viewMode.Table"
 				[tableHead]="[
 					{title: 'Дата', field: 'createdTime'},
 					{title: 'Автор', field: 'userName'},
 					{title: 'Действие',  field: 'action'},
-					{title: 'Сопроводительный текст к действию',  field: 'comments'},
+					{title: 'Старое значение',  field: 'fromValue'},
+					{title: 'Новое значение',  field: 'toValue'},
 				]"
             ></ss-history>
         </div>

@@ -23,6 +23,7 @@ import { HistoryListViewComponent } from '@app/widgets/history/history-list-view
 import { HistoryTableViewComponent } from '@app/widgets/history/history-table-view/history-table-view.component';
 import { formatDate } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {ITableHead} from "@app/shared/components/table/table.component";
 
 @UntilDestroy()
 @Component({
@@ -40,6 +41,8 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 	public objectId = input.required<string>();
 	public queryType = input.required<QueryType>();
 	public view = input<ViewMode>(ViewMode.List);
+
+	public tableHead = input<ITableHead[]>([]);
 
 	public pageIndex = signal(1);
 	public pageSize = input<number>(8);

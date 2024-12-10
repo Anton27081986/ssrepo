@@ -1,8 +1,6 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	computed,
-	effect,
 	input,
 	InputSignal,
 	OnDestroy,
@@ -13,10 +11,9 @@ import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-n
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { numberInputTextMask } from '@app/core/utils/mask';
-
-import { ProductPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/product-price-history/product-price-history.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { SalesHistoryComponent } from '@app/pages/excess-income/excess-income-history/sales-history/sales-history.component';
+import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
 
 @UntilDestroy()
 @Component({
@@ -44,11 +41,10 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 
 	protected openPriceHistory() {
 		this.modalService
-			.open(ProductPriceHistoryComponent, {
+			.open(PriceHistoryComponent, {
 				data: {
-					clientId: this.tovNode().tovSignal().client.id,
-					contractorId: this.tovNode().tovSignal().contractor.id,
-					tovId: this.tovNode().tovSignal().tov.id,
+					title: 'История изменения цены ТП',
+					objectId: `${this.tovNode().tovSignal().client.id}:${this.tovNode().tovSignal().contractor.id}:${this.tovNode().tovSignal().tovSubgroup.id}:${this.tovNode().tovSignal().tov.id}`,
 				},
 			})
 			.afterClosed()

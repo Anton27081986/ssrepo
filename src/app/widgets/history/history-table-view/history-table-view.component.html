@@ -4,12 +4,7 @@
     } @else {
         <div class="table">
             <ss-table
-                [head]="[
-                {title: 'Дата', field: 'createdTime'},
-                {title: 'Автор', field: 'userName'},
-                {title: 'Действие',  field: 'action'},
-                {title: 'Сопроводительный текст к действию',  field: 'comments'},
-        ]"
+                [head]="tableHead()"
                 [items]="historyItems()">
             </ss-table>
         </div>

@@ -152,7 +152,7 @@ export class ExcessIncomeApiService {
 		}
 
 		return this.http.get<IResponse<ExcessIncomeSalesHistory>>(
-			`${environment.apiUrl}/api/company/Snd/${clientId}/tovs/${tovId}/history`,
+			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/tovs/${tovId}/sales`,
 			{ params },
 		);
 	}
