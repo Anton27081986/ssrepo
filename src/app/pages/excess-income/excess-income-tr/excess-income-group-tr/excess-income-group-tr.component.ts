@@ -1,11 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	effect,
-	input,
-	InputSignal,
-	Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, InputSignal } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
@@ -18,11 +11,9 @@ import { ExcessIncomeGroupEventEnum } from '@app/core/models/excess-income/exces
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
-import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
 import { IconType, Size } from '@front-components/components';
-import {
-	CommentsHistoryComponent
-} from "@app/pages/excess-income/excess-income-history/comments-history/comments-history.component";
+import { CommentsHistoryComponent } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history.component';
+import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
 
 export interface EditSndGroupForm {
 	sndCurrentControl: FormControl<number | null>;
@@ -72,6 +63,7 @@ export class ExcessIncomeGroupTrComponent {
 		effect(() => {
 			this.buildForm(this.group().group);
 			this.group$.next(this.group().group);
+
 			if (this.group().canEdit) {
 				this.getSndNextControl.disable();
 				this.getSndCurrentControl.disable();
@@ -110,11 +102,10 @@ export class ExcessIncomeGroupTrComponent {
 
 	protected openPriceHistory() {
 		this.modalService
-			.open(GroupPriceHistoryComponent, {
+			.open(PriceHistoryComponent, {
 				data: {
-					clientId: this.group().group.client.id,
-					contractorId: this.group().group.contractor.id,
-					tovGroupId: this.group().group.tovSubgroup.id,
+					title: 'История изменения цены ТПГ',
+					objectId: `${this.group().group.client.id}:${this.group().group.contractor.id}:${this.group().group.tovSubgroup.id}`,
 				},
 			})
 			.afterClosed()

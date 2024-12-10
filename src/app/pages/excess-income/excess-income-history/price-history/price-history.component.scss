@@ -36,30 +36,11 @@ ss-card {
 		display: flex;
 		width: 100%;
 		flex-grow: 1;
-		overflow: hidden;
+		overflow-y: auto;
 		padding: 16px;
-		flex-direction: column;
-		gap: 16px;
-		position: relative;
-		flex-grow: 1;
-
-		.description-item {
-			display: flex;
-			gap: 4px;
-		}
 
 		.content {
 			width: 100%;
-		}
-
-		.footer {
-			display: flex;
-			width: 100%;
-			justify-content: flex-end;
-		}
-
-		ss-empty-data-page {
-			align-self: center;
 		}
 	}
 }
