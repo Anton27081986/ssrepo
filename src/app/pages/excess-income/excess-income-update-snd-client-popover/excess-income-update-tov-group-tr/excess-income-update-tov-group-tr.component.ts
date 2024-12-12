@@ -5,7 +5,7 @@ import { ExcessIncomeSndClientRowItemField } from '@app/pages/excess-income/exce
 import { numberInputTextMask } from '@app/core/utils/mask';
 import { ExcessIncomeUpdateClientTovGroupItem } from '@app/core/models/excess-income/excess-income-update-client-tov-group-item';
 import { ExcessIncomeUpdateTovGroupState } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-state';
-import { ButtonType, Size } from '@front-components/components';
+import { ButtonType, IconType, Size } from '@front-components/components';
 
 @Component({
 	selector: 'tr[excess-income-update-tov-group-tr]',
@@ -30,4 +30,5 @@ export class ExcessIncomeUpdateTovGroupTrComponent {
 
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
+	protected readonly IconType = IconType;
 }

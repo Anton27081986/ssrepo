@@ -1,4 +1,4 @@
-import { IdName } from '@app/core/models/excess-income/excess-income-group';
+import { IdName } from '@app/core/models/excess-income/excess-income-from-backend-group';
 import { FormControl, FormGroup } from '@angular/forms';
 
 export interface ExcessIncomeTovFromBackend {
@@ -22,11 +22,13 @@ export interface ExcessIncomeTov {
 	category: IdName;
 	tovSubgroup: IdName;
 	status: IdName;
-	params: FormGroup<ExcessIncomeParamsFormGroup>;
+	paramsGroup: FormGroup<ExcessIncomeParamsFormTov>;
+	currentParams: ParamTov;
+	nextParams: ParamTov;
 	comment: FormControl<string | null>;
 }
 
-export interface ExcessIncomeParamsFormGroup {
+export interface ExcessIncomeParamsFormTov {
 	currentParams: FormGroup<ParamTovControls>;
 	nextParams: FormGroup<ParamTovControls>;
 }
@@ -36,6 +38,7 @@ export interface ParamTovControls {
 	excessIncomePercent: FormControl<number | null>;
 	fixPrice: FormControl<number | null>;
 	finalPrice: FormControl<number | null>;
+	fixPriceCurrency: FormControl<string | null>;
 }
 
 export interface ParamTov {
@@ -43,4 +46,5 @@ export interface ParamTov {
 	excessIncomePercent: number | null;
 	fixPrice: number | null;
 	finalPrice: number | null;
+	fixPriceCurrency: string | null;
 }

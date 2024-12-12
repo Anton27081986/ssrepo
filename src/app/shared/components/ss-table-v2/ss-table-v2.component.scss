@@ -8,7 +8,6 @@
 
 	.table-wrapper {
 		scrollbar-color: $lite-text;
-		//border-radius: 16px;
 
 		&__scroll {
 			overflow-y: auto;
@@ -33,7 +32,7 @@
 				position: sticky;
 				top: -1px;
 				z-index: 1;
-				background-color: #f8f9fb;
+				background-color: #E2E5EA;
 				color: $text;
 
 				tr {
@@ -41,11 +40,9 @@
 
 					th {
 						text-align: center;
-						//border: 1px solid $island-outline;
 						font-size: 12px;
 						font-weight: 500;
 						line-height: 19px;
-						//letter-spacing: -0.01em;
 						padding: 8px;
 					}
 				}

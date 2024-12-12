@@ -4,8 +4,7 @@ export interface ExcessIncomeUpdateTovRequest {
 	tovGroupId: number;
 	tovId: number;
 	currencyId: number;
-	currentFixPrice: number | null;
-	nextFixPrice: number | null;
-	currentExcessIncomePercent: number | null;
-	nextExcessIncomePercent: number | null;
+	fixPrice: number | null;
+	excessIncomePercent: number | null;
+	isCurrent: boolean;
 }

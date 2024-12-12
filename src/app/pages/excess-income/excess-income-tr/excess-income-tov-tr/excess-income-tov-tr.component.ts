@@ -1,6 +1,8 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	computed,
+	effect,
 	input,
 	InputSignal,
 	OnDestroy,
@@ -13,6 +15,17 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { numberInputTextMask } from '@app/core/utils/mask';
 import { ModalService } from '@app/core/modal/modal.service';
 import { SalesHistoryComponent } from '@app/pages/excess-income/excess-income-history/sales-history/sales-history.component';
+import { CommentsHistoryComponent } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history.component';
+import {
+	ButtonType,
+	IconPosition,
+	IconType,
+	InputType,
+	Size,
+	TextType,
+	TooltipPosition,
+	TooltipTheme,
+} from '@front-components/components';
 import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
 
 @UntilDestroy()
@@ -65,4 +78,27 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
+
+	protected openCommentsHistory() {
+		this.modalService
+			.open(CommentsHistoryComponent, {
+				data: {
+					clientId: this.tovNode().tovSignal().client.id,
+					contractorId: this.tovNode().tovSignal().contractor.id,
+					tovGroupId: this.tovNode().tovSignal().tovSubgroup.id,
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe();
+	}
+
+	protected readonly TextType = TextType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly InputType = InputType;
+	protected readonly Size = Size;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 }

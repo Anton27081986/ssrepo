@@ -1,21 +1,30 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display">
+			<td class="ss-table-td" *ngIf="col.display" [style.width]="col.width">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-					<div class="ss-table-td__content">
-						<ss-text> {{ client().client.name }}</ss-text>
-					</div>
+					<snab-link (click)="routerService.toClientCard(client().client.id)" [text]="client().client.name"
+							   [type]="TextType.Body"></snab-link>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-					<ss-button (click)="openUpdateClientPriceModal(true); $event.stopPropagation()">
-						<ss-icon [name]="'settings'"></ss-icon>
-					</ss-button>
+					<div class="ss-table-td__content">
+						<snab-button snab-tooltip [tooltipText]="'Установить СНД для ТПГ Клиента'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
+									 [type]="ButtonType.Primary"
+									 [iconPosition]="IconPosition.OnlyIcon"
+									 (click)="openUpdateClientPriceModal(true); $event.stopPropagation()">
+						</snab-button>
+					</div>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-					<ss-button (click)="openUpdateClientPriceModal(false); $event.stopPropagation()">
-						<ss-icon [name]="'settings'"></ss-icon>
-					</ss-button>
+					<div class="ss-table-td__content">
+						<snab-button snab-tooltip [tooltipText]="'Установить СНД для ТПГ Клиента'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
+									 [type]="ButtonType.Primary"
+									 [iconPosition]="IconPosition.OnlyIcon"
+									 (click)="openUpdateClientPriceModal(false); $event.stopPropagation()">
+						</snab-button>
+					</div>
 				</ng-container>
 				<ng-container *ngSwitchDefault>
 					&nbsp;

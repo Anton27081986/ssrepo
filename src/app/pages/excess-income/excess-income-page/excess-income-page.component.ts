@@ -12,7 +12,15 @@ import { ContractorNodeState } from '@app/pages/excess-income/excess-income-stat
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { BehaviorSubject } from 'rxjs';
 import { FormControl } from '@angular/forms';
-import { ButtonType, Size } from '@front-components/components';
+import {
+	ButtonType,
+	IconPosition,
+	IconType,
+	Size,
+	TextType,
+	TextWeight,
+} from '@front-components/components';
+import { state } from '@angular/animations';
 
 @UntilDestroy()
 @Component({
@@ -105,7 +113,7 @@ export class ExcessIncomePageComponent {
 
 	constructor(
 		public readonly excessIncomeStateService: ExcessIncomeState,
-		private readonly columnStateService: ColumnsStateService,
+		public readonly columnStateService: ColumnsStateService,
 	) {
 		this.columnStateService.colsTr$.next(this.defaultCols);
 
@@ -115,6 +123,8 @@ export class ExcessIncomePageComponent {
 	public expended(node: ClientNodeState | ContractorNodeState | GroupNodeState) {
 		node.expended$.next(!node.expended$.value);
 	}
+
+	saveManual() {}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
 		{
@@ -140,29 +150,9 @@ export class ExcessIncomePageComponent {
 					colspan: 1,
 				},
 				{
-					id: ExcessIncomeClientRowItemField.otsr,
-					title: 'Отср.',
-					order: 3,
-					show: true,
-					display: true,
-					width: null,
-					rowspan: 2,
-					colspan: 1,
-				},
-				{
-					id: ExcessIncomeClientRowItemField.comments,
-					title: 'Комментарий',
-					order: 4,
-					show: true,
-					display: true,
-					width: null,
-					rowspan: 2,
-					colspan: 1,
-				},
-				{
 					id: ExcessIncomeClientRowItemField.nameGroups,
 					title: 'Название ТПГ',
-					order: 5,
+					order: 3,
 					show: true,
 					display: true,
 					width: null,
@@ -172,7 +162,17 @@ export class ExcessIncomePageComponent {
 				{
 					id: ExcessIncomeClientRowItemField.nameTov,
 					title: 'Название ТП',
-					order: 6,
+					order: 4,
+					show: true,
+					display: true,
+					width: null,
+					rowspan: 2,
+					colspan: 1,
+				},
+				{
+					id: ExcessIncomeClientRowItemField.comments,
+					title: 'Комментарий',
+					order: 5,
 					show: true,
 					display: true,
 					width: null,
@@ -182,7 +182,7 @@ export class ExcessIncomePageComponent {
 				{
 					id: ExcessIncomeClientRowItemField.current,
 					title: 'Текущая',
-					order: 7,
+					order: 6,
 					show: true,
 					display: false,
 					width: null,
@@ -208,7 +208,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 1,
 					show: true,
-					width: null,
+					width: '145px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -218,7 +218,7 @@ export class ExcessIncomePageComponent {
 					title: 'СНД',
 					order: 2,
 					show: true,
-					width: null,
+					width: '145px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -228,7 +228,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена фикс',
 					order: 3,
 					show: true,
-					width: null,
+					width: '145px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -238,7 +238,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена*',
 					order: 4,
 					show: true,
-					width: null,
+					width: '100px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -248,7 +248,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 5,
 					show: true,
-					width: null,
+					width: '145px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -258,7 +258,7 @@ export class ExcessIncomePageComponent {
 					title: 'СНД',
 					order: 6,
 					show: true,
-					width: null,
+					width: '145px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -268,7 +268,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена фикс',
 					order: 7,
 					show: true,
-					width: null,
+					width: '145px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -279,7 +279,7 @@ export class ExcessIncomePageComponent {
 					order: 8,
 					show: true,
 					display: true,
-					width: null,
+					width: '100px',
 					colspan: 1,
 					rowspan: 1,
 				},
@@ -288,4 +288,9 @@ export class ExcessIncomePageComponent {
 	];
 	protected readonly Size = Size;
 	protected readonly ButtonType = ButtonType;
+	protected readonly TextType = TextType;
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly TextWeight = TextWeight;
+	protected readonly state = state;
 }

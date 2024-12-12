@@ -1,5 +1,5 @@
 import {
-	ExcessIncomeParamsFormGroup,
+	ExcessIncomeParamsFormTov,
 	ExcessIncomeTov,
 	ExcessIncomeTovFromBackend,
 	ParamTov,
@@ -8,17 +8,13 @@ import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-serv
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
+import {
+	compareValues,
+	ExcessIncomeBaseNodeState,
+} from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
 import { signal, WritableSignal } from '@angular/core';
 import { map, Subscription, tap } from 'rxjs';
-import {
-	AbstractControl,
-	FormBuilder,
-	FormControl,
-	FormGroup,
-	ValidationErrors,
-	ValidatorFn,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Permissions } from '@app/core/constants/permissions.constants';
 
 @UntilDestroy()
@@ -27,9 +23,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	public currencySignal: WritableSignal<IDictionaryItemDto> = signal(this.currency);
 	public state: ExcessIncomeState;
 
-	public currentParams = this.tovSignal().params.controls.currentParams;
+	public currentParams = this.tovSignal().paramsGroup.controls.currentParams;
 
-	public nextParams = this.tovSignal().params.controls.nextParams;
+	public nextParams = this.tovSignal().paramsGroup.controls.nextParams;
 
 	public subscription: Subscription = new Subscription();
 
@@ -79,53 +75,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				)
 				.subscribe(),
 		);
-
-		this.subscription.add(
-			this.currentParams.controls.excessIncomePercent.valueChanges
-				.pipe(
-					tap(value => {
-						console.log(value, this.currentParams.controls.excessIncomePercent);
-						this.currentParams.controls.fixPrice.setValue(null, { emitEvent: false });
-					}),
-				)
-				.subscribe(),
-		);
-
-		this.subscription.add(
-			this.currentParams.controls.fixPrice.valueChanges
-				.pipe(
-					tap(value => {
-						this.currentParams.controls.excessIncomePercent.setValue(null, {
-							emitEvent: false,
-						});
-					}),
-				)
-				.subscribe(),
-		);
-
-		this.subscription.add(
-			this.nextParams.controls.excessIncomePercent.valueChanges
-				.pipe(
-					tap(value => {
-						this.nextParams.controls.fixPrice.setValue(null, {
-							emitEvent: false,
-						});
-					}),
-				)
-				.subscribe(),
-		);
-
-		this.subscription.add(
-			this.nextParams.controls.fixPrice.valueChanges
-				.pipe(
-					tap(value => {
-						this.nextParams.controls.excessIncomePercent.setValue(null, {
-							emitEvent: false,
-						});
-					}),
-				)
-				.subscribe(),
-		);
 	}
 
 	public getFinalPrice(partial: Partial<ParamTov>, formGroup: FormGroup): void {
@@ -147,7 +96,15 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		return price + (snd / 100) * price;
 	}
 
-	public updateTov() {
+	public updateTov(isCurrent: boolean) {
+		let excessIncomePercentValue = isCurrent
+			? this.currentParams.controls.excessIncomePercent.value
+			: this.nextParams.controls.excessIncomePercent.value;
+
+		let fixPriceValue = isCurrent
+			? this.currentParams.controls.fixPrice.value
+			: this.nextParams.controls.fixPrice.value;
+
 		this.service
 			.updateSndTov({
 				clientId: this.tov.client.id,
@@ -155,10 +112,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				tovGroupId: this.tov.tovSubgroup.id,
 				tovId: this.tov.tov.id,
 				currencyId: this.currencySignal().id,
-				currentExcessIncomePercent: this.currentParams.controls.excessIncomePercent.value,
-				currentFixPrice: this.currentParams.controls.fixPrice.value,
-				nextExcessIncomePercent: this.nextParams.controls.excessIncomePercent.value,
-				nextFixPrice: this.nextParams.controls.fixPrice.value,
+				excessIncomePercent: fixPriceValue ? null : excessIncomePercentValue,
+				fixPrice: excessIncomePercentValue ? null : fixPriceValue,
+				isCurrent: isCurrent,
 			})
 			.pipe(
 				untilDestroyed(this),
@@ -166,8 +122,8 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			)
 			.subscribe(value => {
 				this.tovSignal.set(value);
-				this.currentParams = this.tovSignal().params.controls.currentParams;
-				this.nextParams = this.tovSignal().params.controls.nextParams;
+				this.currentParams = this.tovSignal().paramsGroup.controls.currentParams;
+				this.nextParams = this.tovSignal().paramsGroup.controls.nextParams;
 				this.updateFromState();
 			});
 	}
@@ -187,14 +143,14 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 			.subscribe(value => {
 				this.tovSignal.set(value);
-				this.currentParams = this.tovSignal().params.controls.currentParams;
-				this.nextParams = this.tovSignal().params.controls.nextParams;
+				this.currentParams = this.tovSignal().paramsGroup.controls.currentParams;
+				this.nextParams = this.tovSignal().paramsGroup.controls.nextParams;
 				this.updateFromState();
 			});
 	}
 
 	private mapExcessIncomeTov(item: ExcessIncomeTovFromBackend): ExcessIncomeTov {
-		const formGroup: FormGroup<ExcessIncomeParamsFormGroup> = new FormBuilder().group({
+		const formGroup: FormGroup<ExcessIncomeParamsFormTov> = new FormBuilder().group({
 			currentParams: new FormBuilder().group({
 				price: [item.currentParams.price],
 				excessIncomePercent: [
@@ -203,6 +159,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				],
 				fixPrice: [item.currentParams.fixPrice, compareValues(item.currentParams.fixPrice)],
 				finalPrice: [item.currentParams.finalPrice],
+				fixPriceCurrency: [item.currentParams.fixPriceCurrency],
 			}),
 			nextParams: new FormBuilder().group({
 				price: [item.nextParams.price],
@@ -212,6 +169,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				],
 				fixPrice: [item.nextParams.fixPrice, compareValues(item.nextParams.fixPrice)],
 				finalPrice: [item.nextParams.finalPrice],
+				fixPriceCurrency: [item.nextParams.fixPriceCurrency],
 			}),
 		});
 
@@ -224,16 +182,34 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			category: item.category,
 			tovSubgroup: item.tovSubgroup,
 			status: item.status,
-			params: formGroup,
+			paramsGroup: formGroup,
 			comment,
+			currentParams: item.currentParams,
+			nextParams: item.nextParams,
 		};
 	}
-}
 
-export function compareValues(oldValue: number | null): ValidatorFn {
-	return (control: AbstractControl): ValidationErrors | null => {
-		const newValue = control.value;
+	focusOutControl($event: FocusEvent) {
+		const relatedTarget = $event.relatedTarget as HTMLElement;
 
-		return newValue !== oldValue ? null : { valuesDoNotMatch: true };
-	};
+		if (
+			relatedTarget &&
+			$event.currentTarget &&
+			($event.currentTarget as HTMLElement).contains(relatedTarget)
+		) {
+			return;
+		}
+		this.tovSignal().paramsGroup.controls.nextParams.controls.excessIncomePercent.setValue(
+			this.tovSignal().nextParams.excessIncomePercent,
+		);
+		this.tovSignal().paramsGroup.controls.nextParams.controls.fixPrice.setValue(
+			this.tovSignal().nextParams.fixPrice,
+		);
+		this.tovSignal().paramsGroup.controls.currentParams.controls.excessIncomePercent.setValue(
+			this.tovSignal().currentParams.excessIncomePercent,
+		);
+		this.tovSignal().paramsGroup.controls.currentParams.controls.fixPrice.setValue(
+			this.tovSignal().currentParams.fixPrice,
+		);
+	}
 }

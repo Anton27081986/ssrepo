@@ -1,41 +1,52 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
-		<ng-container [formGroup]="formGroup" *ngIf="col.display" [ngSwitch]="col.id">
+		<ng-container [formGroup]="group().groupSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
+			<td class="ss-table-td" [style.width]="col.width">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
+					<div class="ss-table-td__content">
+						<snab-text [type]="TextType.Body"> {{ group().groupSignal().tovSubgroup.name }}</snab-text>
+						<snab-button snab-tooltip [tooltipText]="'История изменений ТПГ'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Clock"
+									 (click)="$event.stopPropagation(); openPriceHistory()"></snab-button>
+					</div>
+				</ng-container>
 
-			<td class="ss-table-td" *ngIf="group$ | async as group">
-				<ng-container [ngSwitch]="col.id">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+					<div (focusout)="group().focusOutControl($event)">
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
-						<div class="ss-table-td__content">
-							<ss-text> {{ group.tovSubgroup.name }}</ss-text>
-							<ss-icon class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openPriceHistory()"></ss-icon>
-						</div>
-					</ng-container>
+						<snab-input  [showValidationIcons]="false" [showClearButton]="false" [label]="'%'"
+									[step]="0.01" [size]="Size.Small" [type]="InputType.Number"
+									(click)="$event.stopPropagation(); $event.preventDefault()"
+									formControlName="sndCurrentControl"></snab-input>
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
-						<div class="ss-table-td__content">
-							<ss-text> {{ group.comment }}</ss-text>
-							<ss-icon *ngIf="group.comment" class="ss-table-td__content__history" name="clock" (click)="$event.stopPropagation(); openCommentsHistory()"></ss-icon>
-						</div>
-					</ng-container>
+						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Save"
+									 [size]="Size.Large"
+									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
+									 *ngIf="group().groupSignal().paramsGroup.controls.sndCurrentControl.valid"></snab-button>
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-						<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask" formControlName="sndCurrentControl"></ss-number-input-v2>
-						<ss-button (click)="updateSnd();$event.stopPropagation()" *ngIf="canSndCurrentControl"> + </ss-button>
-					</ng-container>
+					</div>
+				</ng-container>
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-						<ss-number-input-v2 (click)="$event.stopPropagation()" [maskito]="numberInputTextMask" formControlName="sndNextControl"></ss-number-input-v2>
-						<ss-button (click)="updateSnd();$event.stopPropagation()" *ngIf="canSndNextControl"> + </ss-button>
-					</ng-container>
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+					<div (focusout)="group().focusOutControl($event)">
+						<snab-input [showValidationIcons]="false"
+									[showClearButton]="false" [label]="'%'" [step]="0.01" [size]="Size.Small"
+									[type]="InputType.Number"
+									(click)="$event.stopPropagation(); $event.preventDefault()"
+									formControlName="sndNextControl"></snab-input>
+						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Save"
+									 [size]="Size.Large"
+									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
+									 *ngIf="group().groupSignal().paramsGroup.controls.sndNextControl.valid"></snab-button>
+					</div>
+				</ng-container>
 
-					<ng-container *ngSwitchDefault>
-						&nbsp;
-					</ng-container>
-
+				<ng-container *ngSwitchDefault>
+					&nbsp;
 				</ng-container>
 			</td>
-
 		</ng-container>
 	</ng-container>
 </ng-container>
