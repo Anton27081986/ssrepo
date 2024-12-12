@@ -4,7 +4,7 @@ import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income
 import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-service/excess-income.api-service';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
+import { ExcessIncomeFromBackendGroup } from '@app/core/models/excess-income/excess-income-from-backend-group';
 import { ExcessIncomeTovFromBackend } from '@app/core/models/excess-income/excess-income-tov-from-backend';
 import { ExcessIncomeGroupRequest } from '@app/core/models/excess-income/excess-income-group-request';
 import { ExcessIncomeClientRequest } from '@app/core/models/excess-income/excess-income-client-request';
@@ -29,7 +29,7 @@ export class ExcessIncomeService {
 
 	public getGroup(
 		request: ExcessIncomeGroupRequest,
-	): Observable<ExcessIncomeData<IResponse<ExcessIncomeGroup>>> {
+	): Observable<ExcessIncomeData<IResponse<ExcessIncomeFromBackendGroup>>> {
 		return this.apiService.getGroup(request);
 	}
 

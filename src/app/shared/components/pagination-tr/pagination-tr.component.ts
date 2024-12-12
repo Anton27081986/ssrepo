@@ -1,34 +1,45 @@
+import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	ChangeDetectionStrategy,
 	Component,
 	computed,
-	effect,
-	EventEmitter,
 	forwardRef,
 	input,
 	InputSignal,
-	OnInit,
-	Output,
 	signal,
-	Signal,
 	WritableSignal,
 } from '@angular/core';
+import { rotateAnimation } from '@app/core/animations';
+import {
+	ButtonComponent,
+	ButtonType,
+	Size,
+	TextComponent,
+	TextType,
+} from '@front-components/components';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
 
+@UntilDestroy()
 @Component({
-	selector: 'ss-dynamic-pagination',
-	templateUrl: './dynamic-pagination.component.html',
-	styleUrls: ['./dynamic-pagination.component.scss'],
+	selector: 'tr[pagination-tr]',
+	templateUrl: './pagination-tr.component.html',
+	styleUrls: ['./pagination-tr.component.scss'],
+	standalone: true,
+	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [TextComponent, NgIf, TextModule, ButtonComponent],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => DynamicPaginationComponent),
+			useExisting: forwardRef(() => PaginationTrComponent),
 			multi: true,
 		},
 	],
 })
-export class DynamicPaginationComponent implements ControlValueAccessor {
+export class PaginationTrComponent implements ControlValueAccessor {
+	public countCol: InputSignal<number> = input.required<number>();
 	public total: InputSignal<number> = input.required<number>();
 	public limit: InputSignal<number> = input.required<number>();
 	public offset: WritableSignal<number> = signal<number>(0);
@@ -64,4 +75,8 @@ export class DynamicPaginationComponent implements ControlValueAccessor {
 		this.OnChange(this.offset() + this.limit());
 		this.offset.set(this.offset() + this.limit());
 	}
+
+	protected readonly TextType = TextType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
 }

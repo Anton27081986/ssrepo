@@ -1,0 +1,19 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
+@use '../../../../styles/colors' as *;
+
+:host {
+	border: 1px solid $border-table;
+}
+
+.pagination-tr {
+	height: 52px;
+	background-color: $white;
+
+	&__content {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}

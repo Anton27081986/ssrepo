@@ -5,7 +5,7 @@ import { environment } from '@environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { ExcessIncomeGroup } from '@app/core/models/excess-income/excess-income-group';
+import { ExcessIncomeFromBackendGroup } from '@app/core/models/excess-income/excess-income-from-backend-group';
 import { ExcessIncomeTovFromBackend } from '@app/core/models/excess-income/excess-income-tov-from-backend';
 import { ExcessIncomeGroupRequest } from '@app/core/models/excess-income/excess-income-group-request';
 import { ExcessIncomeClientRequest } from '@app/core/models/excess-income/excess-income-client-request';
@@ -15,8 +15,8 @@ import { ExcessIncomeUpdateGroupRequest } from '@app/core/models/excess-income/e
 import { ExcessIncomeUpdateTovRequest } from '@app/core/models/excess-income/excess-income-update-tov-request';
 import { ExcessIncomeUpdateTovCommentRequest } from '@app/core/models/excess-income/excess-income-update-tov-comment-request';
 import { ExcessIncomeTovGroupHistory } from '@app/core/models/excess-income/excess-income-tov-group-history';
-import {ExccessIncomeCommentsHistory} from "@app/core/models/excess-income/exccess-income-comments-history";
-import {ExcessIncomeSalesHistory} from "@app/core/models/excess-income/excess-income-sales-history";
+import { ExccessIncomeCommentsHistory } from '@app/core/models/excess-income/exccess-income-comments-history';
+import { ExcessIncomeSalesHistory } from '@app/core/models/excess-income/excess-income-sales-history';
 import { ExcessIncomeData } from '@app/core/models/excess-income/excess-income-data';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class ExcessIncomeApiService {
 	}
 
 	getGroup(request: ExcessIncomeGroupRequest) {
-		return this.http.post<ExcessIncomeData<IResponse<ExcessIncomeGroup>>>(
+		return this.http.post<ExcessIncomeData<IResponse<ExcessIncomeFromBackendGroup>>>(
 			`${environment.apiUrl}/api/company/Snd/groups`,
 			request,
 		);
@@ -62,7 +62,7 @@ export class ExcessIncomeApiService {
 	}
 
 	public updateSndGroup(clientId: number, request: ExcessIncomeUpdateGroupRequest) {
-		return this.http.put<ExcessIncomeGroup>(
+		return this.http.put<ExcessIncomeFromBackendGroup>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/group`,
 			request,
 		);

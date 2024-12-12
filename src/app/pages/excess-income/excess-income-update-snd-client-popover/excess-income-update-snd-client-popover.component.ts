@@ -17,7 +17,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExcessIncomeEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
-import { ButtonType, Size } from '@front-components/components';
+import { ButtonType, IconType, Size } from '@front-components/components';
 
 export interface ExcessIncomeUpdateSndClientPopoverData {
 	client: ExcessIncomeClient;
@@ -141,4 +141,5 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 	protected readonly numberInputTextMask = numberInputTextMask;
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
+	protected readonly IconType = IconType;
 }

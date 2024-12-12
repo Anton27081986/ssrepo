@@ -1,14 +1,5 @@
 import { ExcessIncomeContractor } from '@app/core/models/excess-income/excess-income-contractors-Item';
-import {
-	BehaviorSubject,
-	map,
-	NEVER,
-	switchMap,
-	combineLatest,
-	tap,
-	debounceTime,
-	scan,
-} from 'rxjs';
+import { BehaviorSubject, map, NEVER, switchMap, tap, debounceTime, scan } from 'rxjs';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
@@ -65,7 +56,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		this.event$
 			.pipe(
 				tap(() => this.isLoader$.next(true)),
-				// debounceTime(1000),
+				debounceTime(2000),
 				untilDestroyed(this),
 				switchMap(event => {
 					if (

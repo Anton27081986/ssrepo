@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, scan, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, debounceTime, map, Observable, scan, switchMap, tap } from 'rxjs';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
@@ -25,6 +25,8 @@ export class ExcessIncomeState {
 		new BehaviorSubject<ExcessIncomeEventEnum>(ExcessIncomeEventEnum.excessIncomeDefault);
 
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	public dropDownVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	public readonly currency$: Observable<IDictionaryItemDto[]>;
 
@@ -54,6 +56,11 @@ export class ExcessIncomeState {
 		});
 
 		this.clientNode$ = this.event$.pipe(
+			tap(() => {
+				this.dropDownVisible$.next(false);
+				this.isLoader$.next(true);
+			}),
+			debounceTime(2000),
 			switchMap(event => {
 				if (
 					event === ExcessIncomeEventEnum.excessIncomeClientUpdated ||
@@ -79,6 +86,10 @@ export class ExcessIncomeState {
 					return [...acc, ...value];
 				}
 				return value;
+			}),
+			tap(() => {
+				this.isLoader$.next(false);
+				this.dropDownVisible$.next(true);
 			}),
 		);
 	}

@@ -1,0 +1,21 @@
+.loader-tr {
+	height: 80px;
+	background: repeating-linear-gradient(
+			-45deg,
+			var(--cool-gray-light),
+			var(--cool-gray-light) 5px,
+			var(--cool-gray-hover) 5px,
+			var(--cool-gray-hover) 10px
+	);
+	background-size: 28px 28px; /* Размер одного повторения полос */
+	animation: stripeMove 1.5s linear infinite;
+	position: relative;
+
+
+	&__content {
+		position: absolute;
+		top:50%;
+		left:50%;
+		transform:translate(-50%, -50%);
+	}
+}
