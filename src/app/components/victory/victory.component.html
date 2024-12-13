@@ -1,4 +1,6 @@
 <ss-card class="victory" [padding]="'16px 0'">
+	<ss-loader *ngIf="isLoading"></ss-loader>
+
 	<div class="victory__header">
 		<div class="victory__header-info">
 			<ss-text size="1">Победы</ss-text>
@@ -14,7 +16,7 @@
 	<ss-divider></ss-divider>
 	<div class="victory__body">
 		<div class="victory__wrapper">
-			<ng-container *ngIf="victoryList$ | async as  list">
+			<ng-container *ngIf="victoryList$ | async as list">
 				<ng-container *ngIf="list.total > 0">
 					<div class="victory__content">
 						<app-user-card-widget [isExtendedMode]="list.isExtendedMode" *ngFor="let item of list.items" [widget]="item"></app-user-card-widget>

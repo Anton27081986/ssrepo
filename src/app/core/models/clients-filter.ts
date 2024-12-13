@@ -6,6 +6,7 @@ export interface IClientsFilter {
 	managerIds?: number[];
 	statuses?: number[];
 	withoutBaseManager?: boolean;
+	hideArchived?: boolean;
 	limit: number;
 	offset: number;
 }

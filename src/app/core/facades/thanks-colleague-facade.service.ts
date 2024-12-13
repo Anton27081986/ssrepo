@@ -14,6 +14,10 @@ export class ThankColleagueFacadeService {
 	public thanksForColleagues$: Observable<IThanksColleagueItem[]> =
 		this.thanksForColleagues.asObservable();
 
+	private readonly isLoading = new BehaviorSubject<boolean>(true);
+	public isLoading$: Observable<boolean> =
+		this.isLoading.asObservable();
+
 	public isExtendedMode = false;
 	public offset = 0;
 	public pageSize = 12;
@@ -24,6 +28,7 @@ export class ThankColleagueFacadeService {
 	}
 
 	public loadThanksForColleagues() {
+		this.isLoading.next(true);
 		this.apiService
 			.getThanksColleagueList(this.pageSize, this.offset)
 			.pipe(
@@ -35,6 +40,7 @@ export class ThankColleagueFacadeService {
 					]);
 					this.total = response.total;
 					this.isExtendedMode = response.isExtendedMode || false;
+					this.isLoading.next(false);
 				}),
 			)
 			.subscribe();
@@ -47,7 +53,9 @@ export class ThankColleagueFacadeService {
 		}
 	}
 
-	public addThanksForColleague(createThanksRequest: ICreateThanksColleagueRequest): Observable<IThanksColleagueItem> {
+	public addThanksForColleague(
+		createThanksRequest: ICreateThanksColleagueRequest,
+	): Observable<IThanksColleagueItem> {
 		return this.apiService.addThanksColleague(createThanksRequest).pipe(
 			untilDestroyed(this),
 			tap(() => {
@@ -58,6 +66,6 @@ export class ThankColleagueFacadeService {
 
 	public resetThanks() {
 		this.thanksForColleagues.next([]);
-		this.loadThanksForColleagues()
+		this.loadThanksForColleagues();
 	}
 }

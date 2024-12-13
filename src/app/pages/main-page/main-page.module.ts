@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { ComponentsModule } from '@app/components/components.module';
 import { FullLayoutModule } from '@app/shared/layouts/full-layout/full-layout.module';
-import { SliderComponent } from '@app/components/slider/slider.component';
+import { SliderComponent } from '@app/widgets/slider/slider.component';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { VictoryService } from '@app/components/victory/victory.service';
 import { ManePageRoutingModule } from '@app/pages/main-page/mane-page-routing.module';
@@ -12,6 +12,8 @@ import { AddressBookModule } from '@app/widgets/address-book/address-book.module
 import { BirthdayComponent } from '@app/components/birthday/birthday.component';
 import { MainPageComponent } from './main-page.component';
 import { TransportComponent } from '@app/components/transport/transport.component';
+import {LoaderModule} from "@app/shared/components/loader/loader.module";
+import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-data-page.module";
 
 @NgModule({
 	declarations: [MainPageComponent, SliderComponent],
@@ -27,6 +29,8 @@ import { TransportComponent } from '@app/components/transport/transport.componen
 		AddressBookModule,
 		BirthdayComponent,
 		TransportComponent,
+		LoaderModule,
+		EmptyDataPageModule,
 	],
 	providers: [{ provide: VictoryService }],
 })

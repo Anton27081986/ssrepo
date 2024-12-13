@@ -7,6 +7,8 @@ import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
+import { ModalService } from '@app/core/modal/modal.service';
 
 enum OperationStatuses {
 	Add,
@@ -45,6 +47,7 @@ export class ClientCardManagersComponent implements OnInit {
 		private readonly notificationService: NzMessageService,
 		private readonly userFacadeService: UserFacadeService,
 		private readonly cdr: ChangeDetectorRef,
+		private readonly modalService: ModalService,
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 		this.isLoading$ = this.clientCardListFacade.isManagersLoading$;
@@ -141,6 +144,12 @@ export class ClientCardManagersComponent implements OnInit {
 					});
 					this.cdr.detectChanges();
 				});
+		}
+	}
+
+	protected openModalInfoUser(id: number | undefined) {
+		if (id) {
+			this.modalService.open(UserInfoPopupComponent, { data: id });
 		}
 	}
 }

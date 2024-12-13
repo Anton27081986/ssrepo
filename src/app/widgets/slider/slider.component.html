@@ -1,0 +1,48 @@
+<div class="slider" nz-row nzJustify="center">
+
+	@if(isLoading) {
+		<ss-loader></ss-loader>
+	}
+
+	@if(banners.length) {
+		<div nz-col nzXs="22" nzSm="22" nzMd="22" nzLg="22" nzXl="24">
+				<nz-carousel
+					[nzAutoPlay]="true"
+					[nzAutoPlaySpeed]="30000"
+					[nzEffect]="'effect'"
+					[nzEnableSwipe]="true"
+					[nzLoop]="true"
+				>
+
+					<ng-container *ngIf="banners">
+						<div nz-carousel-content *ngFor="let index of banners" nz-row>
+							<a href="{{index.linkUrl}}"
+							   *ngIf="index.linkUrl"
+							   target="_blank"
+							   rel="noreferrer">
+								<img ngSrc="{{ index.imageUrl }}" alt="{{ index.text }}" fill="" />
+							</a>
+							<img ngSrc="{{index.imageUrl }}"
+								 *ngIf="!index.linkUrl"
+								 alt="{{ index.text }}" fill="" />
+						</div>
+					</ng-container>
+
+				</nz-carousel>
+		</div>
+
+		<span class="arrow next" (click)="next()">
+		<img src="../../../assets/images/slider/arrow.png" alt="" />
+		</span>
+
+		<span class="arrow prev" (click)="prev()">
+		<img src="../../../assets/images/slider/arrow.png" alt="arrow" />
+		</span>
+	}
+	@else {
+		<ss-empty-data-page></ss-empty-data-page>
+	}
+</div>
+
+
+
