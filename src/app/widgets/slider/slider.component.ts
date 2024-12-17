@@ -1,25 +1,40 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NzCarouselComponent } from 'ng-zorro-antd/carousel';
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { BannersApiService } from '@app/core/api/banners-api.service';
+import { IBannerDto } from '@app/core/models/banners/banner-dto';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-slider',
 	templateUrl: './slider.component.html',
 	styleUrls: ['./slider.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SliderComponent implements OnInit {
 	@ViewChild(NzCarouselComponent, { static: false }) public myCarousel:
 		| NzCarouselComponent
 		| undefined;
 
-	public banners!: Observable<any>;
+	public banners: IBannerDto[] = [];
+	public isLoading: boolean = true;
 
 	public constructor(private readonly apiService: BannersApiService) {}
 
 	public ngOnInit(): any {
-		this.banners = this.apiService.getBanners().pipe(map(({ banners }) => banners));
+		this.apiService
+			.getBanners()
+			.pipe(
+				map(({ banners }) => {
+					if (banners) {
+						this.banners = banners;
+					}
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe(() => {
+				this.isLoading = false;
+			});
 	}
 
 	public next() {

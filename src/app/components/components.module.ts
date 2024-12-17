@@ -61,7 +61,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { MainMenuComponent } from './main-menu/main-menu.component';
 import { MobileMenuComponent } from './mobile-menu/mobile-menu.component';
 import { ProfilePopupComponent } from './profile-popup/profile-popup.component';
-import { AuctionSalesComponent } from './auction-sales/auction-sales.component';
+import { AuctionSalesComponent } from '@app/widgets/auction-sales/auction-sales.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AddVictoryModalComponent } from './victory/modal/add-victory-modal/add-victory-modal.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';

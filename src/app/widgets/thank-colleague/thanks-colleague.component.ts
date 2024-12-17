@@ -17,6 +17,8 @@ export class ThanksColleagueComponent {
 		{ initialValue: [] },
 	);
 
+	protected isLoading: Signal<boolean> = toSignal(this.facade.isLoading$, { initialValue: true });
+
 	@ViewChild('thanks') public thanks!: ElementRef;
 
 	public constructor(

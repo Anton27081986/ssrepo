@@ -1,11 +1,12 @@
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { IWinsListDto } from '@app/core/models/awards/wins-list-dto';
 import { ModalService } from '@app/core/modal/modal.service';
 import { AddVictoryModalComponent } from '@app/components/victory/modal/add-victory-modal/add-victory-modal.component';
 import { VictoryService } from '@app/components/victory/victory.service';
 import { VictoryState } from '@app/components/victory/victory.state';
+import { TableState } from '@app/shared/components/table/table-state';
 
 @UntilDestroy()
 @Component({
@@ -21,6 +22,7 @@ export class VictoryComponent {
 	public pageIndex = 1;
 	public readonly victoryList$: Observable<IWinsListDto>;
 	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public isLoading: boolean = true;
 
 	public nzPageIndexChange($event: number) {
 		if ($event === 1) {
@@ -38,12 +40,26 @@ export class VictoryComponent {
 	) {
 		this.victoryList$ = this.offset$.pipe(
 			switchMap(offset => {
+				this.isLoading = true;
+
 				return this.victoryService.getWins(this.pageSize, offset);
 			}),
+			untilDestroyed(this),
 		);
+
+		this.victoryList$
+			.pipe(
+				tap(() => {
+					this.isLoading = false;
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 	}
 
 	protected openAddVictoryPopover() {
 		this.modalService.open(AddVictoryModalComponent, { data: {} });
 	}
+
+	protected readonly TableState = TableState;
 }

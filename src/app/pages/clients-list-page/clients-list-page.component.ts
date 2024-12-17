@@ -93,6 +93,16 @@ export class ClientsListPageComponent implements OnInit {
 			],
 			placeholder: '',
 		},
+		{
+			name: 'hideArchived',
+			type: 'boolean',
+			label: 'Не показывать архивных клиентов',
+			options: [
+				{ id: 1, name: 'Да' },
+				{ id: 0, name: 'Нет' },
+			],
+			placeholder: '',
+		},
 	];
 
 	public constructor(
@@ -233,7 +243,7 @@ export class ClientsListPageComponent implements OnInit {
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] = filter.value === 'Да';
 					break;
 				default:
 					preparedFilter[filter.name] =
