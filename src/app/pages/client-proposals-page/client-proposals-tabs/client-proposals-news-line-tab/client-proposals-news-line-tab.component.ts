@@ -28,6 +28,7 @@ export class ClientProposalsNewsLineTabComponent {
 
 	protected linkToModule: Signal<string | null> = computed(() => {
 		const news = this.news();
+
 		if (news) {
 			return news.linkToModule;
 		}
@@ -37,6 +38,7 @@ export class ClientProposalsNewsLineTabComponent {
 
 	protected total: Signal<number> = computed(() => {
 		const news = this.news();
+
 		if (news) {
 			return news.total;
 		}

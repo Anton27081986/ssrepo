@@ -5,7 +5,15 @@ import { searchType } from '@app/shared/components/inputs/search-input/search-in
 
 export interface IFilter {
 	name: string;
-	type: 'string' | 'number' | 'date-range' | 'search' | 'select' | 'boolean' | 'search-select';
+	type:
+		| 'string'
+		| 'number'
+		| 'int-number'
+		| 'date-range'
+		| 'search'
+		| 'select'
+		| 'boolean'
+		| 'search-select';
 	label: string;
 	placeholder: string;
 	value?: IFilterOption[] | string | null;

@@ -177,6 +177,12 @@
         border: 1px solid $island-outline;
     }
 
+	.error .mat-mdc-text-field-wrapper {
+		background-color: $lite-error !important;
+		border-radius: 8px;
+		border: 1px solid $error;
+	}
+
     .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
         color: $text !important;
     }
@@ -189,4 +195,8 @@
     .mdc-text-field--outlined.mdc-text-field--disabled .mdc-notched-outline__notch{
         border-width: 0 !important;
     }
+}
+
+ss-caption.error {
+	color: $error;
 }

@@ -6,13 +6,11 @@ const routes: Routes = [
 	{
 		path: ':id',
 		component: RawMaterialAccountingComponent,
-
 	},
 	{
 		path: '',
 		component: RawMaterialAccountingComponent,
-
-	}
+	},
 ];
 
 @NgModule({

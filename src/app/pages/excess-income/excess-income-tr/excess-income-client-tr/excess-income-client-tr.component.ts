@@ -2,18 +2,34 @@ import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
 import { rotateAnimation } from '@app/core/animations';
+import { ModalService } from '@app/core/modal/modal.service';
+import { ExcessIncomeUpdateSndClientPopoverComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
+import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
+import {
+	ButtonType,
+	Colors,
+	IconPosition,
+	IconType,
+	Size,
+	TextType,
+	TooltipPosition,
+	TooltipTheme,
+} from '@front-components/components';
+import { RouterService } from '@app/core/services/router.service';
+import { ThemeService } from '@app/shared/theme/theme.service';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
 	contractors = 'contractors',
-	otsr = 'otsr',
 	comments = 'comments',
 	nameGroups = 'nameGroups',
 	nameTov = 'nameTov',
+	current = 'current',
 	priceCurrent = 'priceCurrent',
 	sndCurrent = 'sndCurrent',
 	priceFixCurrent = 'priceFixCurrent',
 	priceCalculateCurrent = 'priceCalculateCurrent',
+	next = 'next',
 	priceNext = 'currentIntervalNext',
 	sndNext = 'sndNext',
 	priceFixNext = 'priceFixNext',
@@ -31,11 +47,27 @@ export enum ExcessIncomeClientRowItemField {
 export class ExcessIncomeClientTrComponent {
 	public client: InputSignal<ClientNodeState> = input.required<ClientNodeState>();
 
-	constructor(protected readonly columnsStateService: ColumnsStateService) {}
+	constructor(
+		protected readonly columnsStateService: ColumnsStateService,
+		private readonly modalService: ModalService,
+		private readonly state: ExcessIncomeState,
+		protected readonly routerService: RouterService,
+	) {}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 
-	expended() {
-		this.client().expended$.next(!this.client().expended$.value);
+	openUpdateClientPriceModal(isCurrent: boolean) {
+		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
+			data: { client: this.client().client, isCurrent, state: this.state },
+		});
 	}
+
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
+	protected readonly TextType = TextType;
+	protected readonly Colors = Colors;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 }

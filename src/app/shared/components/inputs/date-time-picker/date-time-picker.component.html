@@ -1,6 +1,6 @@
 <form class="datepicker-wrapper" [formGroup]="form">
     @if (showDate) {
-        <mat-form-field class="custom-form-field date" appearance="outline">
+        <mat-form-field class="custom-form-field date" [ngClass]="{'error': error}" appearance="outline">
             <input
                 matInput
                 formControlName="date"
@@ -40,4 +40,8 @@
         </mat-form-field>
     }
 </form>
+
+@if (error) {
+	<ss-caption size="2" color="error">{{ error }}</ss-caption>
+}
 

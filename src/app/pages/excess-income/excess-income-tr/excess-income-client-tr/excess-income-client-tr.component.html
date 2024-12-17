@@ -1,65 +1,35 @@
-<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
-	<td class="ss-table-td">
+<ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
+	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-				<div class="ss-table-td__content">
-					<ss-text> {{ client().client.name }}</ss-text>
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.contractors">
-				<div class="ss-table-td__content">
+			<td class="ss-table-td" *ngIf="col.display" [style.width]="col.width">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
+					<snab-link (click)="routerService.toClientCard(client().client.id)" [text]="client().client.name"
+							   [type]="TextType.Body"></snab-link>
+				</ng-container>
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+					<div class="ss-table-td__content">
+						<snab-button snab-tooltip [tooltipText]="'Установить СНД для ТПГ Клиента'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
+									 [type]="ButtonType.Primary"
+									 [iconPosition]="IconPosition.OnlyIcon"
+									 (click)="openUpdateClientPriceModal(true); $event.stopPropagation()">
+						</snab-button>
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+					<div class="ss-table-td__content">
+						<snab-button snab-tooltip [tooltipText]="'Установить СНД для ТПГ Клиента'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
+									 [type]="ButtonType.Primary"
+									 [iconPosition]="IconPosition.OnlyIcon"
+									 (click)="openUpdateClientPriceModal(false); $event.stopPropagation()">
+						</snab-button>
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchDefault>
 					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.otsr">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.actions">
-				<div class="ss-table-td__content">
-					<ss-icon [@rotate]="client().expended$ | async" (click)="expended()" [name]="'chevron'"></ss-icon>
-				</div>
-			</ng-container>
+				</ng-container>
+			</td>
 		</ng-container>
-	</td>
+	</ng-container>
 </ng-container>

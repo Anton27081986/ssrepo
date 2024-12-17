@@ -40,6 +40,7 @@ export class AuctionSalesComponent implements OnInit {
 				if (value.items) {
 					const dataTable = <ITableItem[]>(<unknown>value.items.map(item => {
 						const pipeNumWithSpaces = new NumWithSpacesPipe();
+
 						return {
 							...item,
 							price: `${pipeNumWithSpaces.numberWithSpaces(item.price!, 2)} ${item.currency!}`,

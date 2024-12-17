@@ -1,7 +1,7 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { CompletedWorkActsApiService } from '@app/core/api/completed-work-acts-api.service';
-import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -10,7 +10,10 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
-import {NotificationToastService} from "@app/core/services/notification-toast.service";
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import { IFile } from '@app/core/models/files/file';
+import { catchError } from 'rxjs/operators';
 
 @UntilDestroy()
 @Injectable({
@@ -27,6 +30,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
 	public act$ = this.act.asObservable();
 
+	private readonly actAttachment = new BehaviorSubject<IFile[]>([]);
+	public actAttachment$ = this.actAttachment.asObservable();
+
 	private readonly actStates = new BehaviorSubject<IDictionaryItemDto[] | null>(null);
 	public actStates$ = this.actStates.asObservable();
 
@@ -39,6 +45,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly buUnits = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public buUnits$ = this.buUnits.asObservable();
 
+	private readonly contracts = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public contracts$ = this.contracts.asObservable();
+
 	private readonly specificationsTotalAmount = new BehaviorSubject<number | null>(null);
 	public specificationsTotalAmount$ = this.specificationsTotalAmount.asObservable();
 
@@ -48,7 +57,8 @@ export class CompletedWorkActsFacadeService {
 	public constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
-		private readonly noticeService: NotificationToastService
+		private readonly noticeService: NotificationToastService,
+		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.filters
 			.pipe(
@@ -60,6 +70,10 @@ export class CompletedWorkActsFacadeService {
 					this.isLoader$.next(false);
 				}),
 				untilDestroyed(this),
+				catchError((err: unknown) => {
+					this.isLoader$.next(false);
+					throw err;
+				}),
 			)
 			.subscribe();
 
@@ -79,6 +93,10 @@ export class CompletedWorkActsFacadeService {
 			.pipe(
 				switchMap(act => {
 					this.act.next(act);
+					this.actAttachment.next(act.documents);
+					this.getContracts(act.providerContractor?.id)
+						.pipe(untilDestroyed(this))
+						.subscribe();
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -92,12 +110,12 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public updateAct(body: IUpdateAct) {
-		return this.actsApiService.updateAct(this.act.value!.id, body).pipe(
-			untilDestroyed(this),
-			tap(() => {
-				this.getAct(this.act.value!.id.toString());
-			}),
-		);
+		this.actsApiService
+			.updateAct(this.act.value!.id, body)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.switchMode(true);
+			});
 	}
 
 	public addSpecificationToAct(body: IAddSpecification) {
@@ -163,6 +181,15 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
+	public getContracts(id?: number) {
+		return this.searchFacade.getDictionaryCompletedActContracts(id).pipe(
+			tap(res => {
+				this.contracts.next(res.items);
+			}),
+			untilDestroyed(this),
+		);
+	}
+
 	public toArchiveAct() {
 		if (this.act.value) {
 			const id = this.act.value.id;
@@ -205,42 +232,23 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public switchMode() {
+	public switchMode(reload: boolean = false) {
+		if (reload && this.act.value?.id) {
+			this.getAct(this.act.value?.id.toString());
+		}
+
 		this.isEditMode.next(!this.isEditMode.value);
 	}
 
 	public uploadFile(file: File) {
-		if (this.act.value) {
-			const id = this.act.value.id;
-
-			this.filesApiService
-				.uploadFile(FileBucketsEnum.Attachments, file)
-				.pipe(untilDestroyed(this))
-				.subscribe(res => {
-					this.addFileToAct(id.toString(), res.id);
-				});
-		}
+		return this.filesApiService.uploadFile(FileBucketsEnum.Attachments, file);
 	}
 
-	public addFileToAct(actId: string, fileId: string) {
-		this.actsApiService
-			.addDocumentToAct(actId, fileId)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.getAct(actId);
-			});
+	public deleteFile(id: string) {
+		this.actAttachment.next(this.actAttachment.value.filter(file => file.id !== id));
 	}
 
-	public removeFileFromAct(fileId: string) {
-		if (this.act.value) {
-			const id = this.act.value.id;
-
-			this.actsApiService
-				.removeDocumentFromAct(id.toString(), fileId)
-				.pipe(untilDestroyed(this))
-				.subscribe(() => {
-					this.getAct(id.toString());
-				});
-		}
+	public addFileToAct(actId: number, fileId: string) {
+		return this.actsApiService.addDocumentToAct(actId, fileId);
 	}
 }

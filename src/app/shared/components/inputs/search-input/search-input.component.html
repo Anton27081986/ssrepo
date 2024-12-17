@@ -7,6 +7,7 @@
 		   [disabled]="disabled"
 		   (input)="onChange($any($event.target).value)"
            (blur)="onBlur()"
+		   (focusout)="input.value = selectedItem ? selectedItem.name || '' : ''"
 		   class="{{ error ? size + ' error' : size }}"
 		   #input
 	/>

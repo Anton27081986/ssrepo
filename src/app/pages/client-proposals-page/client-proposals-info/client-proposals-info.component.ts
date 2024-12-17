@@ -121,12 +121,14 @@ export class ClientProposalsInfoComponent {
 				if (item.length) {
 					if (item.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
 						const url = this._router.url.split('/');
+
 						this.selectTab(url[url.length - 1]);
 					} else {
 						this.selectTab('contractors');
 					}
 				} else {
 					const url = this._router.url.split('/');
+
 					this.selectTab(url[url.length - 1]);
 				}
 			});

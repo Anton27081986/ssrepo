@@ -112,6 +112,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	protected delSelectedOption(item: IFilterOption) {
 		if (!this.readOnly$.value) {
 			const oldSelected = this.selectedOptions$.value;
+
 			item.checked = false;
 			this.selectedOptions$.next(oldSelected.filter(val => val.checked));
 			this.viewOptions$.next(this.options$.value.filter(item => !item.checked));

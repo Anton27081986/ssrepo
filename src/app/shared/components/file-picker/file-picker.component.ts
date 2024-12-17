@@ -17,7 +17,7 @@ export class FilePickerComponent {
 	public count: number = 0;
 
 	constructor(
-		private elem: ElementRef,
+		private readonly elem: ElementRef,
 		protected readonly checkListFile: CheckFileListStateService,
 	) {}
 

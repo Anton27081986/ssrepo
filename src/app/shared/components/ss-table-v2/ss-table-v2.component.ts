@@ -24,6 +24,7 @@ export class TableV2Component {
 	@Input() public shadowed: boolean = false;
 	@Input() public bordered: boolean = false;
 	@Input() public sticky: boolean = false;
+	@Input() public scroll: boolean = true;
 
 	@Output() protected readonly changeSortByOn: EventEmitter<string> = new EventEmitter<string>();
 

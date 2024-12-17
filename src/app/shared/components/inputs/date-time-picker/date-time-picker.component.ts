@@ -15,11 +15,13 @@ import { SSForm } from '@app/core/models/form';
 import { DateTimePickerImports } from '@app/shared/components/inputs/date-time-picker/date-time-picker.imports';
 import { dateInputTextMask } from '@app/core/utils/mask';
 import { getTime } from '@app/core/utils/date';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { NgClass } from '@angular/common';
 
 @Component({
 	selector: 'ss-date-time-picker',
 	standalone: true,
-	imports: [DateTimePickerImports],
+	imports: [DateTimePickerImports, CaptionModule, NgClass],
 	templateUrl: './date-time-picker.component.html',
 	styleUrl: './date-time-picker.component.scss',
 	providers: [
@@ -37,6 +39,7 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 	@Input() public showTime = true;
 	@Input() public clearDate = false;
 	@Input() public readonly = false;
+	@Input() public error: string | undefined;
 
 	@Input()
 	public get value(): string | null {

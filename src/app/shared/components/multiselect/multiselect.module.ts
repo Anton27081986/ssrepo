@@ -9,14 +9,6 @@ import { MultiselectComponent } from '@app/shared/components/multiselect/multise
 @NgModule({
 	declarations: [MultiselectComponent],
 	exports: [MultiselectComponent],
-	imports: [
-		CaptionModule,
-		NgIf,
-		InputModule,
-		TextModule,
-		NgForOf,
-		IconModule,
-		NgClass,
-	],
+	imports: [CaptionModule, NgIf, InputModule, TextModule, NgForOf, IconModule, NgClass],
 })
 export class MultiselectModule {}

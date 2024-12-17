@@ -21,9 +21,8 @@ import { ComponentsModule } from '@app/components/components.module';
 import { ChoiceLikeModule } from '@app/shared/components/choice-like/choice-like.module';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { ThanksColleagueModalComponent } from '@app/widgets/thank-colleague/modal/thanks-colleague-modal/thanks-colleague-modal.component';
-import {
-	FormControlInputWithFuncEditModule
-} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module";
+import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
 
 @NgModule({
 	declarations: [
@@ -56,6 +55,7 @@ import {
 		ChoiceLikeModule,
 		TooltipModule,
 		FormControlInputWithFuncEditModule,
+		LoaderModule,
 	],
 	exports: [
 		ThanksColleagueComponent,

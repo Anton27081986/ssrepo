@@ -37,13 +37,12 @@ input {
         position: absolute;
         width: 100%;
         left: 0;
-        top: 90%;
+        top: 102%;
         background-color: $island;
         max-height: 162px;
         overflow-y: auto;
         border: 1px solid $island-outline;
-        border-radius: 0 0 8px 8px;
-        border-top: none;
+        border-radius: 8px;
         z-index: 9999;
         display: flex;
         flex-direction: column;

@@ -36,13 +36,16 @@ import { TextareaModule } from '@app/shared/components/textarea/textarea.module'
 import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NumericInputModule } from '@app/shared/components/inputs/numeric-input/numeric-input.module';
+import { NumericInputModule } from '@app/shared/components/_deprecated/numeric-input/numeric-input.module';
 import { CompletedWorkActEditComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component';
 import { DatepickerInputModule } from '@app/shared/components/inputs/datepicker-input/datepicker-input.module';
 import { MultiselectModule } from '@app/shared/components/multiselect/multiselect.module';
-import {ChipsSearchModule} from "@app/shared/components/inputs/chips-search/chips-search.module";
-import {ComponentsModule} from "@app/components/components.module";
-import {LinkModule} from "@app/shared/components/link/link.module";
+import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
+import { ComponentsModule } from '@app/components/components.module';
+import { LinkModule } from '@app/shared/components/link/link.module';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
+import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 
 @NgModule({
 	declarations: [
@@ -63,42 +66,45 @@ import {LinkModule} from "@app/shared/components/link/link.module";
 		SpecificationModalComponent,
 		CompletedWorkActEditComponent,
 	],
-    imports: [
-        CompletedWorkActsRoutingModule,
-        HeadlineModule,
-        DropdownButtonModule,
-        EmptyDataPageModule,
-        NgIf,
-        TableModule,
-        FiltersModule,
-        LoaderModule,
-        ButtonModule,
-        TextModule,
-        TagModule,
-        TagV2Module,
-        CardModule,
-        IconModule,
-        AsyncPipe,
-        AttachmentModule,
-        NgForOf,
-        CaptionModule,
-        PipesModule,
-        TableV2Module,
-        NgSwitch,
-        NgSwitchCase,
-        NgSwitchDefault,
-        DatePipe,
-        SelectModule,
-        TextareaModule,
-        InputModule,
-        SearchInputModule,
-        ReactiveFormsModule,
-        NumericInputModule,
-        DatepickerInputModule,
-        MultiselectModule,
-        ChipsSearchModule,
-        ComponentsModule,
-        LinkModule,
-    ],
+	imports: [
+		CompletedWorkActsRoutingModule,
+		HeadlineModule,
+		DropdownButtonModule,
+		EmptyDataPageModule,
+		NgIf,
+		TableModule,
+		FiltersModule,
+		LoaderModule,
+		ButtonModule,
+		TextModule,
+		TagModule,
+		TagV2Module,
+		CardModule,
+		IconModule,
+		AsyncPipe,
+		AttachmentModule,
+		NgForOf,
+		CaptionModule,
+		PipesModule,
+		TableV2Module,
+		NgSwitch,
+		NgSwitchCase,
+		NgSwitchDefault,
+		DatePipe,
+		SelectModule,
+		TextareaModule,
+		InputModule,
+		SearchInputModule,
+		ReactiveFormsModule,
+		NumericInputModule,
+		DatepickerInputModule,
+		MultiselectModule,
+		ChipsSearchModule,
+		ComponentsModule,
+		LinkModule,
+		SelectV2Component,
+		DateTimePickerComponent,
+		MapperPipe,
+	],
 })
 export class CompletedWorkActsModule {}

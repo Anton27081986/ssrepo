@@ -1,0 +1,31 @@
+<div class="wrapper">
+	<ss-card class="excess-income-update-snd-client-popover" [padding]="'0'">
+		<div class="excess-income-update-snd-client-popover__header">
+			<snab-text>Установить СНД,% для всех ТПГ Клиента {{ client.name }}</snab-text>
+			<snab-icon [icon]="IconType.ClearLarge" (click)="close()"></snab-icon>
+		</div>
+		<ss-divider></ss-divider>
+		<div class="excess-income-update-snd-client-popover__body">
+			<ss-search-input-v2
+				[placeholder]="'Выберите ТПГ'" [label]="'ТПГ (подгруппа товарных позиций)'"
+				[formControl]="tovGroupControl" [queryControl]="queryControl"
+				[options]="options()">
+			</ss-search-input-v2>
+			<div class="excess-income-update-snd-client-popover__body__content" *ngIf="tovGroups$ | async as group">
+				<ss-table-v2 *ngIf="group.length;else empty">
+					<tr *ngFor="let tovGroup of group" excess-income-update-tov-group-tr [tovGroup]="tovGroup"></tr>
+				</ss-table-v2>
+				<ng-template #empty>
+					<ss-empty-placeholder>
+						<snab-text>Выберите ТПГ из списка</snab-text>
+					</ss-empty-placeholder>
+				</ng-template>
+			</div>
+		</div>
+		<ss-divider></ss-divider>
+		<div class="excess-income-update-snd-client-popover__footer">
+			<snab-button [type]="ButtonType.Secondary" (click)="close()" [text]="'Отмена'"></snab-button>
+			<snab-button [type]="ButtonType.Primary" (click)="submit()" [text]="'Применить'"></snab-button>
+		</div>
+	</ss-card>
+</div>

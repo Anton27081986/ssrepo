@@ -1,0 +1,27 @@
+@if (label()) {
+    <ss-caption size="1">{{ label() }}</ss-caption>
+}
+
+<div class="input">
+    <input
+        [ngClass]="size() | mapper : getControlClasses : errorText()"
+        [formControl]="inputCtrl"
+        [type]="mutableType()"
+        [placeholder]="placeholder()"
+        [maxLength]="maxlength()"
+        [style.padding-right.px]="filteredIcons().length | mapper : iconPaddingCalc"
+        (input)="onInput($event)"
+		(blur)="onBlur()"
+		(focus)="onFocus()"
+    />
+
+    @for (icon of filteredIcons(); track icon) {
+        <ss-icon
+            [name]="icon.iconName"
+            height="12"
+            [style.right.px]="$index | mapper : iconPaddingCalc"
+            (click)="icon.action()" />
+    }
+</div>
+
+<ss-caption size="2" color="error">{{ errorText() }}</ss-caption>

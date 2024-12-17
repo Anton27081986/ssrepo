@@ -84,7 +84,7 @@ export class ClientApiService {
 
 	public getClientsDictionary(
 		searchTerm: string,
-		onlyActive: boolean
+		onlyActive: boolean,
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 

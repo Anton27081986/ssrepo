@@ -57,9 +57,9 @@ export class AppIcons {
 
 	public static settings =
 		'<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
-		'<path d="M8.25244 1.54517H6.75244C3.00244 1.54517 1.50244 3.04517 1.50244 6.79517V11.2952C1.50244 15.0452 3.00244 16.5452 6.75244 16.5452H11.2524C15.0024 16.5452 16.5024 15.0452 16.5024 11.2952V9.79516" stroke="#4770FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M12.0289 2.30999L6.11893 8.21999C5.89393 8.44499 5.66893 8.88749 5.62393 9.20999L5.30143 11.4675C5.18143 12.285 5.75893 12.855 6.57643 12.7425L8.83393 12.42C9.14893 12.375 9.59143 12.15 9.82393 11.925L15.7339 6.01499C16.7539 4.99499 17.2339 3.80999 15.7339 2.30999C14.2339 0.809989 13.0489 1.28999 12.0289 2.30999Z" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
-		'<path d="M11.1841 3.15747C11.6866 4.94997 13.0891 6.35247 14.8891 6.86247" stroke="#4770FF" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M8.25244 1.54517H6.75244C3.00244 1.54517 1.50244 3.04517 1.50244 6.79517V11.2952C1.50244 15.0452 3.00244 16.5452 6.75244 16.5452H11.2524C15.0024 16.5452 16.5024 15.0452 16.5024 11.2952V9.79516" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M12.0289 2.30999L6.11893 8.21999C5.89393 8.44499 5.66893 8.88749 5.62393 9.20999L5.30143 11.4675C5.18143 12.285 5.75893 12.855 6.57643 12.7425L8.83393 12.42C9.14893 12.375 9.59143 12.15 9.82393 11.925L15.7339 6.01499C16.7539 4.99499 17.2339 3.80999 15.7339 2.30999C14.2339 0.809989 13.0489 1.28999 12.0289 2.30999Z" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
+		'<path d="M11.1841 3.15747C11.6866 4.94997 13.0891 6.35247 14.8891 6.86247" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>\n' +
 		'</svg>';
 
 	public static settings2 =
@@ -1042,5 +1042,10 @@ export class AppIcons {
 
 	public static refresh = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<path d="M14.9349 8.26628C14.9349 11.9463 11.9482 14.9329 8.26823 14.9329C4.58823 14.9329 2.34156 11.2263 2.34156 11.2263M2.34156 11.2263H5.3549M2.34156 11.2263V14.5596M1.60156 8.26628C1.60156 4.58628 4.56156 1.59961 8.26823 1.59961C12.7149 1.59961 14.9349 5.30628 14.9349 5.30628M14.9349 5.30628V1.97294M14.9349 5.30628H11.9749" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
+
+	public static checks = `<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M9.74375 6.3667L3.83125 12.2792L0.875 9.32308" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		<path d="M15.9282 6.3667L10.0157 12.2792L8.44531 10.7089" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 		</svg>`;
 }

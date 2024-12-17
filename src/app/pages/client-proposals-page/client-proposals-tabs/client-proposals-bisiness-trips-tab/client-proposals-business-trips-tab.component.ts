@@ -25,6 +25,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 
 	protected linkToModule: Signal<string | null> = computed(() => {
 		const trips = this.trips();
+
 		if (trips) {
 			return trips.linkToModule;
 		}
@@ -34,6 +35,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 
 	protected totalClientSales: Signal<Currency | null> = computed(() => {
 		const trips = this.trips();
+
 		if (trips) {
 			return trips.totalClientSales;
 		}
@@ -43,6 +45,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 
 	protected totalExpensesList: Signal<Currency[]> = computed(() => {
 		const trips = this.trips();
+
 		if (trips) {
 			return trips.totalExpensesList;
 		}
@@ -52,6 +55,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 
 	protected total: Signal<number> = computed(() => {
 		const trips = this.trips();
+
 		if (trips) {
 			return trips.total;
 		}

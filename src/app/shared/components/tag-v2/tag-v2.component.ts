@@ -9,5 +9,6 @@ export class TagV2Component {
 	@Input()
 	public state: 'normal' | 'success' | 'info' | 'warning' | 'danger' | 'clear' | 'outline' =
 		'normal';
+
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 }

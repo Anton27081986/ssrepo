@@ -33,8 +33,6 @@
 
     @if (isExpanded() && mutableFilteredOptions().length) {
         <div class="search-result">
-            <div class="separator"></div>
-
             @for (item of mutableFilteredOptions(); track item.id) {
                 <ss-caption
                     class="search-result-item"
@@ -46,7 +44,9 @@
         </div>
     }
 
-    <ss-caption size="2" class="error" color="error">{{ errorText() }}</ss-caption>
+    @if  (!isExpanded()) {
+        <ss-caption size="2" class="error" color="error">{{ errorText() }}</ss-caption>
+    }
 </div>
 
 

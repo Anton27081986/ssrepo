@@ -66,4 +66,5 @@ export interface IManagerItemDto {
 	 *  Признак что сотрудник уволен или временно не дееспособен
 	 */
 	isDismissed?: string | null;
+	linkToCall?: string | null;
 }

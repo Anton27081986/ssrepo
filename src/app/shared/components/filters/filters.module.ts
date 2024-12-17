@@ -13,7 +13,7 @@ import { SelectModule } from '@app/shared/components/select/select.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { ToggleModule } from '@app/shared/components/toggle/toggle.module';
 import { MultiselectModule } from '@app/shared/components/multiselect/multiselect.module';
-import { NumericInputModule } from '@app/shared/components/inputs/numeric-input/numeric-input.module';
+import { NumericInputModule } from '@app/shared/components/_deprecated/numeric-input/numeric-input.module';
 import { DateRangeModule } from '@app/shared/components/inputs/date-range/date-range.module';
 import { ChipsSearchModule } from '@app/shared/components/inputs/chips-search/chips-search.module';
 

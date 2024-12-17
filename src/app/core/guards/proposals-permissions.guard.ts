@@ -19,6 +19,7 @@ export class ProposalsPermissionsGuard implements CanActivate {
 				const checkPermission = permissions.find(
 					item => item === Permissions.CLIENT_TPR_URL_READ,
 				);
+
 				if (checkPermission) {
 					return true;
 				}

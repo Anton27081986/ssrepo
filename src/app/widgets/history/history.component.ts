@@ -22,7 +22,10 @@ import { catchError } from 'rxjs/operators';
 import { HistoryListViewComponent } from '@app/widgets/history/history-list-view/history-list-view.component';
 import { HistoryTableViewComponent } from '@app/widgets/history/history-table-view/history-table-view.component';
 import { formatDate } from '@angular/common';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { ITableHead } from '@app/shared/components/table/table.component';
 
+@UntilDestroy()
 @Component({
 	selector: 'ss-history',
 	templateUrl: './history.component.html',
@@ -35,9 +38,11 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 	private readonly signalHistoryService = inject(SignalService);
 	private readonly authService = inject(AuthenticationService);
 
-	public objectId = input.required<number>();
+	public objectId = input.required<string>();
 	public queryType = input.required<QueryType>();
 	public view = input<ViewMode>(ViewMode.List);
+
+	public tableHead = input<ITableHead[]>([]);
 
 	public pageIndex = signal(1);
 	public pageSize = input<number>(8);
@@ -91,7 +96,16 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 	);
 
 	public constructor() {
-		this.historyChanges();
+		this.signalHistoryService.historyChange$
+			.pipe(
+				tap(change => {
+					if (this.objectId() === change.objectId) {
+						this.mutableHistoryItems.set([change.item, ...this.mutableHistoryItems()]);
+					}
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 
 		effect(
 			() => {
@@ -113,17 +127,5 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 
 	public ngOnDestroy(): void {
 		this.signalHistoryService.disconnect();
-	}
-
-	private historyChanges(): void {
-		toSignal(
-			this.signalHistoryService.historyChange$.pipe(
-				tap(change => {
-					if (this.objectId() === change.objectId) {
-						this.mutableHistoryItems.set([change.item, ...this.mutableHistoryItems()]);
-					}
-				}),
-			),
-		);
 	}
 }

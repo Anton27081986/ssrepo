@@ -45,7 +45,7 @@ export class IconComponent implements OnInit, OnChanges, AfterViewInit {
 
 	private setIcon() {
 		if ((AppIcons as any)[this.name]) {
-			let svgString = (AppIcons as any)[this.name];
+			const svgString = (AppIcons as any)[this.name];
 
 			this.svg = this.sanitizer.bypassSecurityTrustHtml(svgString);
 		}

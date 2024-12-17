@@ -69,5 +69,6 @@ export class InputComponent implements ControlValueAccessor {
 			this.clear.emit();
 		}
 	}
+
 	protected onTouched() {}
 }

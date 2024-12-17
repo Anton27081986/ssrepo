@@ -1,65 +1,52 @@
-<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
-	<td class="ss-table-td">
-		<ng-container [ngSwitch]="col.id">
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-				<div class="ss-table-td__content">
+<ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
+	<ng-container *ngFor="let col of cols.cols">
+		<ng-container [formGroup]="group().groupSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
+			<td class="ss-table-td" [style.width]="col.width">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
+					<div class="ss-table-td__content">
+						<snab-text [type]="TextType.Body"> {{ group().groupSignal().tovSubgroup.name }}</snab-text>
+						<snab-button snab-tooltip [tooltipText]="'История изменений ТПГ'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Clock"
+									 (click)="$event.stopPropagation(); openPriceHistory()"></snab-button>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+					<div (focusout)="group().focusOutControl($event)">
+
+						<snab-input [showValidation]="false" [showClearButton]="false" [label]="'%'"
+									[step]="0.01" [size]="Size.Small" [type]="InputType.Number"
+									(click)="$event.stopPropagation(); $event.preventDefault()"
+									formControlName="sndCurrentControl"></snab-input>
+
+						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Save"
+									 [size]="Size.Large"
+									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
+									 *ngIf="group().groupSignal().paramsGroup.controls.sndCurrentControl.valid"></snab-button>
+
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+					<div (focusout)="group().focusOutControl($event)">
+						<snab-input [showValidation]="false"
+									[showClearButton]="false" [label]="'%'" [step]="0.01" [size]="Size.Small"
+									[type]="InputType.Number"
+									(click)="$event.stopPropagation(); $event.preventDefault()"
+									formControlName="sndNextControl"></snab-input>
+						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Save"
+									 [size]="Size.Large"
+									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
+									 *ngIf="group().groupSignal().paramsGroup.controls.sndNextControl.valid"></snab-button>
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
 					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.contractors">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.otsr">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
-				<div class="ss-table-td__content">
-					<ss-text> {{ group().group.tovSubgroup.name }}</ss-text>
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
-				<div class="ss-table-td__content">
-					&nbsp;
-				</div>
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
-				&nbsp;
-			</ng-container>
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.actions">
-				<div class="ss-table-td__content">
-					<ss-icon [@rotate]="group().expended$ | async" (click)="expended()" [name]="'chevron'"></ss-icon>
-				</div>
-			</ng-container>
+				</ng-container>
+			</td>
 		</ng-container>
-	</td>
+	</ng-container>
 </ng-container>

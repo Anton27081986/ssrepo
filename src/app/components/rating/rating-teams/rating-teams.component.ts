@@ -25,6 +25,7 @@ export class RatingTeamsComponent {
 
 	protected readonly teams: Signal<IRankTypeItemDto[]> = computed(() => {
 		const rating = this.rating();
+
 		if (rating) {
 			return rating.items;
 		}
@@ -44,8 +45,10 @@ export class RatingTeamsComponent {
 	) {
 		effect(() => {
 			const rating = this.rating();
+
 			if (rating) {
 				const findWalkerInItems = rating.items.find(item => item.id === rating.rankTypeId);
+
 				if (findWalkerInItems) {
 					this.walkerControl.setValue(findWalkerInItems);
 				} else {

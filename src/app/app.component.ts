@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
 	}
 
 	public prepareRoute(outlet: RouterOutlet) {
-		return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+		return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
 	}
 
 	public ngOnInit(): void {

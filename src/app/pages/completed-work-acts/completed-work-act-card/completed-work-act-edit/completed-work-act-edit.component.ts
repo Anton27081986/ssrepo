@@ -7,6 +7,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
+import { IFile } from '@app/core/models/files/file';
+import { forkJoin } from 'rxjs';
 
 @UntilDestroy()
 @Component({
@@ -23,14 +26,12 @@ export class CompletedWorkActEditComponent {
 		externalActDate: FormControl<string | null>;
 		internalActDate: FormControl<string | null>;
 		finDocOrderIds: FormControl<number[] | null>;
-		oneSNumber: FormControl<string | null>;
-		oneSComment: FormControl<string | null>;
 		applicantUserId: FormControl<number | null>;
-		buUnitId: FormControl<number | null>;
+		buUnit: FormControl<IDictionaryItemDto | null>;
 		payerContractorId: FormControl<number | null>;
 		providerContractorId: FormControl<number | null>;
-		contractId: FormControl<number | null>;
-		currency: FormControl<string | null>;
+		contract: FormControl<IDictionaryItemDto | null>;
+		currency: FormControl<IDictionaryItemDto | null>;
 	}>;
 
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
@@ -51,10 +52,20 @@ export class CompletedWorkActEditComponent {
 		},
 	);
 
-	protected contracts: IDictionaryItemDto[] = [];
+	protected contracts: Signal<IDictionaryItemDto[]> = toSignal(
+		this.completedWorkActsFacade.contracts$,
+		{
+			initialValue: [],
+		},
+	);
+
+	protected documents: Signal<IFile[]> = toSignal(this.completedWorkActsFacade.actAttachment$, {
+		initialValue: [],
+	});
+
+	protected newDocuments: File[] = [];
 
 	protected finDocOrders: IDictionaryItemDto[] = [];
-	protected buUnit: IDictionaryItemDto | undefined;
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
@@ -62,19 +73,17 @@ export class CompletedWorkActEditComponent {
 		private readonly ref: ChangeDetectorRef,
 	) {
 		this.editActForm = new FormGroup({
-			externalActNumber: new FormControl<string | null>(null, [Validators.required]),
-			internalActNumber: new FormControl<string | null>(null, [Validators.required]),
+			externalActNumber: new FormControl<string | null>('', [Validators.required]),
+			internalActNumber: new FormControl<string | null>('', [Validators.required]),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<number[] | null>(null),
-			oneSNumber: new FormControl<string | null>(null, [Validators.required]),
-			oneSComment: new FormControl<string | null>(null, [Validators.required]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
-			buUnitId: new FormControl<number | null>(null, [Validators.required]),
+			buUnit: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			providerContractorId: new FormControl<number | null>(null, [Validators.required]),
-			contractId: new FormControl<number | null>(null, [Validators.required]),
-			currency: new FormControl<string | null>(null, [Validators.required]),
+			contract: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			currency: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 		});
 
 		this.completedWorkActsFacade.act$.pipe(untilDestroyed(this)).subscribe(act => {
@@ -86,20 +95,14 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.finDocOrderIds.setValue(
 					act.finDocOrders.map(doc => doc.id),
 				);
-				this.editActForm.controls.oneSNumber.setValue(act.oneSNumber);
-				this.editActForm.controls.oneSComment.setValue(act.oneSComment);
-				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id);
-				this.editActForm.controls.buUnitId.setValue(act.buUnit?.id);
+				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id || null);
+				this.editActForm.controls.buUnit.setValue(act.buUnit);
 				this.editActForm.controls.payerContractorId.setValue(act.payerContractor?.id);
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
-				this.editActForm.controls.contractId.setValue(act.contract?.id);
+				this.editActForm.controls.contract.setValue(act.contract || null);
 				this.editActForm.controls.currency.setValue(act.currency);
 
 				this.finDocOrders = this.act()?.finDocOrders || [];
-
-				this.buUnit = act.buUnit;
-
-				this.onProviderContractorSelect(act.providerContractor?.id);
 
 				this.finDocOrders = act.finDocOrders || [];
 			}
@@ -107,7 +110,7 @@ export class CompletedWorkActEditComponent {
 	}
 
 	protected switchMode() {
-		this.completedWorkActsFacade.switchMode();
+		this.completedWorkActsFacade.switchMode(true);
 	}
 
 	protected setFinDocOrdersIds(docs: IDictionaryItemDto[]) {
@@ -116,6 +119,24 @@ export class CompletedWorkActEditComponent {
 
 	protected onSave() {
 		this.editActForm.markAllAsTouched();
+
+		if (this.editActForm.controls.buUnit.value) {
+			this.editActForm.controls.buUnit.setErrors(null);
+		} else {
+			return;
+		}
+
+		if (this.editActForm.controls.contract.value) {
+			this.editActForm.controls.contract.setErrors(null);
+		} else {
+			return;
+		}
+
+		if (this.editActForm.controls.currency.value) {
+			this.editActForm.controls.currency.setErrors(null);
+		} else {
+			return;
+		}
 
 		if (this.editActForm.invalid) {
 			return;
@@ -133,12 +154,32 @@ export class CompletedWorkActEditComponent {
 			);
 		}
 
-		this.completedWorkActsFacade
-			.updateAct(this.editActForm.value)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.switchMode();
-			});
+		const { buUnit, ...actForm } = this.editActForm.value;
+
+		const updatedAct: IUpdateAct = {
+			...actForm,
+			buUnitId: buUnit?.id,
+			contractId: actForm.contract?.id,
+			currencyId: actForm.currency?.id,
+			documentIds: this.documents().map(file => file.id) || [],
+		};
+
+		if (this.newDocuments.length) {
+			forkJoin(
+				this.newDocuments.map(file => {
+					return this.completedWorkActsFacade.uploadFile(file);
+				}),
+			)
+				.pipe(untilDestroyed(this))
+				.subscribe(files => {
+					updatedAct.documentIds = updatedAct.documentIds.concat(
+						files.map(file => file.id),
+					);
+					this.completedWorkActsFacade.updateAct(updatedAct);
+				});
+		} else {
+			this.completedWorkActsFacade.updateAct(updatedAct);
+		}
 	}
 
 	protected onApplicantUserSelect(id: number) {
@@ -148,50 +189,50 @@ export class CompletedWorkActEditComponent {
 				.getDictionaryBuUnits(undefined, id)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
-					this.buUnit = res.items[0];
-					this.ref.detectChanges();
+					const unit = res.items[0];
+
+					if (unit) {
+						this.editActForm.controls.buUnit.setValue(unit);
+						this.ref.detectChanges();
+					}
 				});
 		}
 	}
 
-	protected onProviderContractorSelect(id: number, isSearch?: boolean) {
+	protected onProviderContractorSelect(id: number) {
 		if (id) {
 			this.editActForm.controls.providerContractorId.setValue(id);
-			this.searchFacade
-				.getDictionaryCompletedActContracts(id)
+			this.completedWorkActsFacade
+				.getContracts(id)
 				.pipe(untilDestroyed(this))
-				.subscribe(res => {
-					this.contracts = res.items;
-
-					if (isSearch) {
-						this.editActForm.controls.contractId.setValue(res.items[0]?.id || null);
-					}
-
+				.subscribe(() => {
+					this.editActForm.controls.contract.setValue(null);
 					this.ref.detectChanges();
 				});
 		}
 	}
 
-	protected uploadFile(event: Event) {
+	protected addFiles(event: Event) {
 		const element = event.currentTarget as HTMLInputElement;
-		const fileList: FileList | null = element.files;
 
-		if (!fileList) {
+		if (!element.files) {
 			return;
 		}
 
-		Array.from(fileList).forEach(file => {
-			const reader = new FileReader();
+		Array.from(element.files).forEach(file => {
+			const earlyLoaded = this.newDocuments.find(doc => doc.name === file.name);
 
-			reader.onload = () => {
-				this.completedWorkActsFacade.uploadFile(file);
-			};
-
-			reader.readAsDataURL(file);
+			if (!earlyLoaded) {
+				this.newDocuments.push(file);
+			}
 		});
 	}
 
+	protected removeFileFromUploadList(fileName: string) {
+		this.newDocuments = this.newDocuments.filter(file => file.name !== fileName);
+	}
+
 	protected deleteFile(fileId: string) {
-		this.completedWorkActsFacade.removeFileFromAct(fileId);
+		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 }

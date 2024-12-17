@@ -26,7 +26,7 @@ export class CompletedWorkActsComponent {
 		},
 		{
 			name: 'Id',
-			type: 'number',
+			type: 'int-number',
 			label: 'Код',
 			placeholder: 'Введите код',
 		},
@@ -35,7 +35,7 @@ export class CompletedWorkActsComponent {
 			type: 'search',
 			searchType: 'bu-units',
 			label: 'БЕ Плательщика',
-			placeholder: 'Введите ББ',
+			placeholder: 'Введите БЕ',
 		},
 		{
 			name: 'State',
@@ -126,7 +126,7 @@ export class CompletedWorkActsComponent {
 
 			tableItem.code = {
 				text: x.id.toString() ?? '-',
-				url: x.id !== undefined ? `./competed-work-acts/${x.id}` : '-',
+				url: x.id !== undefined ? `./completed-work-acts/${x.id}` : '-',
 			};
 
 			tableItem.state = x.state.name ?? '-';
@@ -149,22 +149,22 @@ export class CompletedWorkActsComponent {
 				},
 			)}`;
 
-			tableItem.externalActNumber = x.externalActNumber;
+			tableItem.externalActNumber = x.externalActNumber ?? '-';
 
-			tableItem.internalActNumber = x.internalActNumber;
+			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
 			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
 				text: x.providerContractor?.name ?? '-',
-				url: x.providerContractorLinkUrl ?? '-',
+				url: x.providerContractor?.linkToDetail ?? '-',
 			};
 
 			tableItem.applicantUser = x.applicantUser?.name ?? '-';
 
-			tableItem.contract = x.contract.name ?? '-';
+			tableItem.contract = x.contract?.name ?? '-';
 
-			tableItem.totalAmount = x.totalAmount;
+			tableItem.totalAmount = x.totalAmount ?? '-';
 
 			return tableItem;
 		});

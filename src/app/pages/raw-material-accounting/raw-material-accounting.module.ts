@@ -13,31 +13,31 @@ import { ComponentsModule } from '@app/components/components.module';
 import { ContractInfoModule } from '@app/pages/raw-material-accounting/modals/contract-info/contract-info.module';
 import { ContractNewModule } from '@app/pages/raw-material-accounting/modals/contract-new/contract-new.module';
 import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
-import {LoaderModule} from "@app/shared/components/loader/loader.module";
-import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
-import {TooltipMenuModule} from "@app/shared/components/tooltip-menu/tooltip-menu.module";
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
 
 @NgModule({
 	declarations: [RawMaterialAccountingComponent],
 	exports: [RawMaterialAccountingComponent],
-    imports: [
-        RawMaterialAccountingRoutingModule,
-        CommonModule,
-        RouterLink,
-        CardModule,
-        HeadlineModule,
-        ButtonModule,
-        IconModule,
-        TableModule,
-        FiltersModule,
-        ComponentsModule,
-        ContractInfoModule,
-        ContractNewModule,
-        EmptyDataPageModule,
-        NgIf,
-        LoaderModule,
-        CaptionModule,
-        TooltipMenuModule,
-    ],
+	imports: [
+		RawMaterialAccountingRoutingModule,
+		CommonModule,
+		RouterLink,
+		CardModule,
+		HeadlineModule,
+		ButtonModule,
+		IconModule,
+		TableModule,
+		FiltersModule,
+		ComponentsModule,
+		ContractInfoModule,
+		ContractNewModule,
+		EmptyDataPageModule,
+		NgIf,
+		LoaderModule,
+		CaptionModule,
+		TooltipMenuModule,
+	],
 })
 export class RawMaterialAccountingModule {}

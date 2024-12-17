@@ -1,62 +1,62 @@
-<ng-container *ngFor="let col of columnsStateService.visibleCols$ | async">
-	<ng-container>
-		<td class="hc-table-td">
-			<ng-container [ngSwitch]="col.id">
-<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
-<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
-<!--				</ng-container>-->
+<ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
+	<ng-container *ngFor="let col of cols.cols">
+		<ng-container [ngSwitch]="col.id">
+			<td class="ss-table-td" *ngIf="col.display">
+				<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
+				<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
+				<!--				</ng-container>-->
 
 				<ng-container *ngSwitchCase="specificationRowItemField.service">
-					<div class="hc-table-td__content">{{ item?.service?.name || '-' }}</div>
+					<div class="ss-table-td__content">{{ item().service?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.quantity">
-					<div class="hc-table-td__content hc-table-td__content--number">{{ item?.quantity || '-' }} {{ item?.tovUnit?.name }}</div>
+					<div class="ss-table-td__content hc-table-td__content--number">{{ item().quantity || '-' }} {{ item().tovUnit?.name }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.cost">
-					<div class="hc-table-td__content">{{ item?.cost?.name || '-' }}</div>
+					<div class="ss-table-td__content">{{ item().cost?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.section">
-					<div class="hc-table-td__content">{{ item?.section?.name || '-' }}</div>
+					<div class="ss-table-td__content">{{ item().section?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.faObject">
-					<div class="hc-table-td__content">{{ item?.faObject?.name || '-' }}</div>
+					<div class="ss-table-td__content">{{ item().faObject?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.project">
-					<div class="hc-table-td__content">{{ item?.project?.name || '-' }}</div>
+					<div class="ss-table-td__content">{{ item().project?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.dept">
-					<div class="hc-table-td__content">{{ item?.dept?.name || '-' }}</div>
+					<div class="ss-table-td__content">{{ item().dept?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.user">
-					<div class="hc-table-td__content">{{ item?.user?.name ?? '-' }}</div>
+					<div class="ss-table-td__content">{{ item().user?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.amount">
-					<div class="hc-table-td__content hc-table-td__content--number">{{ item?.amount | numWithSpaces }}</div>
+					<div class="ss-table-td__content hc-table-td__content--number">{{ item().amount | numWithSpaces }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.faAsset">
-					<div class="hc-table-td__content hc-table-td__content--number">{{ item?.faAsset?.name ?? '-' }}</div>
+					<div class="ss-table-td__content hc-table-td__content--number">{{ item().faAsset?.name || '-' }}</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.controls">
-					<div class="hc-table-td__content hc-table-td__content--controls">
-						<ss-icon name="edit" (click)="onEditSpecification(item!)"></ss-icon>
-						<ss-icon name="trash" (click)="onDeleteSpecification(item!.id)"></ss-icon>
+					<div class="ss-table-td__content hc-table-td__content--controls">
+						<ss-icon name="edit" (click)="onEditSpecification(item())"></ss-icon>
+						<ss-icon name="trash" (click)="onDeleteSpecification(item().id)"></ss-icon>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchDefault>
-					<div class="hc-table-td__content"> - </div>
+					<div class="ss-table-td__content"> - </div>
 				</ng-container>
-			</ng-container>
-		</td>
+			</td>
+		</ng-container>
 	</ng-container>
 </ng-container>

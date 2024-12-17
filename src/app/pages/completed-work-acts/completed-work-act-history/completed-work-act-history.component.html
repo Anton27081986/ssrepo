@@ -9,9 +9,15 @@
         <div class="body">
             <ss-history
                 class="content"
-                [objectId]="actId"
+                [objectId]="actId.toString()"
                 [queryType]="queryType.ActCompletedWorks"
                 [view]="viewMode.Table"
+				[tableHead]="[
+					{title: 'Дата', field: 'createdTime'},
+					{title: 'Автор', field: 'userName'},
+					{title: 'Действие',  field: 'action'},
+					{title: 'Сопроводительный текст к действию',  field: 'comments'},
+				]"
             ></ss-history>
         </div>
     </ss-card>

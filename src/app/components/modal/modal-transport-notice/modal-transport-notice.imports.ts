@@ -17,5 +17,5 @@ export const ModalTransportNoticeImports = [
 	DatepickerInputModule,
 	TextareaModule,
 	ButtonModule,
-	DateTimePickerComponent
+	DateTimePickerComponent,
 ];

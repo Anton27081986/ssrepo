@@ -48,5 +48,7 @@ export interface ISendMessageRequest {
 	 * Список айди присоединяемых файлов
 	 */
 	fileIds?: string[] | null;
+
+	sourceUrl?: string;
 }
 export namespace ISendMessageRequest {}

@@ -8,6 +8,7 @@ import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.co
 import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
 import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
 import { CompletedWorkActPermissionsGuard } from '@app/core/guards/completed-work-act-permissions.guard';
+import { ExcessIncomePermissionsGuard } from '@app/core/guards/excess-income-permission.guard';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -46,7 +47,7 @@ const routes: Routes = [
 							).then(m => m.RawMaterialAccountingModule),
 					},
 					{
-						path: 'competed-work-acts',
+						path: 'completed-work-acts',
 						canActivate: [CompletedWorkActPermissionsGuard],
 						loadChildren: () =>
 							import('./pages/completed-work-acts/completed-work-acts.module').then(
@@ -110,14 +111,30 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: NewLayoutComponent,
-		canActivate: [AuthGuard],
+		component: FullWidthWithoutFooterLayoutComponent,
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
-				path: 'excess-income',
+				path: 'production-plan',
+				loadChildren: () =>
+					import('./pages/production-plan/production-plan.routing').then(
+						r => r.productionPlanRoutes,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: FullWidthWithoutFooterLayoutComponent,
+		canActivate: [AuthGuard, ExcessIncomePermissionsGuard],
+		data: {
+			animation: 'animation',
+		},
+		children: [
+			{
+				path: 'excess-income-page',
 				loadChildren: () =>
 					import('@app/pages/excess-income/excess-income.module').then(
 						m => m.ExcessIncomeModule,

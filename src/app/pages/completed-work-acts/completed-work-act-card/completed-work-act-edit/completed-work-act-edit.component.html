@@ -14,22 +14,26 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Номер акта (внешний)</ss-text>
-				<ss-input formControlName="externalActNumber" size="small" placeholder="Введите значение"
+				<ss-input maxlength="50" formControlName="externalActNumber" size="small" placeholder="Введите значение"
 					[error]="editActForm.controls.externalActNumber.touched && editActForm.controls.externalActNumber.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Номер акта (внутренний)</ss-text>
-				<ss-input formControlName="internalActNumber" size="small" placeholder="Введите значение"
+				<ss-input maxlength="50" formControlName="internalActNumber" size="small" placeholder="Введите значение"
 					[error]="editActForm.controls.internalActNumber.touched && editActForm.controls.internalActNumber.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внешний)</ss-text>
-				<ss-datepicker-input formControlName="externalActDate" size="small" [placeholder]="act()!.externalActDate | date: 'dd.MM.yyyy'"></ss-datepicker-input>
+				<ss-date-time-picker
+					[showTime]="false" formControlName="externalActDate"
+					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внутренний)</ss-text>
-				<ss-datepicker-input formControlName="internalActDate" size="small" [placeholder]="act()!.internalActDate | date: 'dd.MM.yyyy'"></ss-datepicker-input>
+				<ss-date-time-picker
+					[showTime]="false" formControlName="internalActDate"
+					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 		</div>
 		<div class="content__column">
@@ -44,14 +48,13 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-				<ss-select size="small"
-					(onChange)="editActForm.controls.buUnitId.setValue($event)"
-					[error]="editActForm.controls.buUnitId.touched && editActForm.controls.buUnitId.errors?.required ? 'Обязательное поле' : undefined">
-					<option
-						*ngFor="let unit of buUnits()"
-						[value]="unit.id"
-						[selected]="buUnit?.id === unit.id || act()?.buUnit?.id === unit.id">{{ unit.name }}</option>
-				</ss-select>
+
+                <ss-select-v2
+                    [size]="'small'"
+                    [options]="buUnits()"
+                    [formControlName]="'buUnit'"
+                    [errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
+                />
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Плательщик</ss-text>
@@ -68,21 +71,20 @@
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-search-input searchType="contractor" size="small"
 					[selectedItem]="act()?.providerContractor"
-					(select)="onProviderContractorSelect($event.id, true)"
+					(select)="onProviderContractorSelect($event.id)"
 					(click)="editActForm.controls.providerContractorId.setErrors(null)"
 					[error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
-				<ss-select size="small"
-					(onChange)="editActForm.controls.contractId.setValue($event)"
-					[error]="editActForm.controls.contractId.touched && editActForm.controls.contractId.errors?.required ? 'Обязательное поле' : undefined">
-					<option
-						*ngFor="let contract of contracts"
-						[value]="contract.id"
-						[selected]="act()?.contract?.id === contract.id || contracts[0].id === contract.id">{{contract.name}}</option>
-				</ss-select>
+
+				<ss-select-v2
+					[size]="'small'"
+					[options]="contracts()"
+					[formControlName]="'contract'"
+					[errorText]="editActForm.controls.contract.touched && !editActForm.controls.contract.value ? 'Обязательное поле' : ''"
+				/>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
@@ -95,27 +97,13 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Валюта</ss-text>
-				<ss-select size="small"
-					(onChange)="editActForm.controls.currency.setValue($event)"
-					(click)="editActForm.controls.currency.setErrors(null)"
-					[error]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : undefined">
-					<option
-						*ngFor="let currency of currencies()"
-						[value]="currency.name"
-						[selected]="act()?.currency === currency.name">{{currency.name}}</option>
-				</ss-select>
-			</div>
-			<div class="content__column__item">
-				<ss-text size="4">Код 1С</ss-text>
-				<ss-text size="3">{{ act()?.oneSNumber }}</ss-text>
-			</div>
-			<div class="content__column__item">
-				<ss-text size="4">Комментарий из 1С</ss-text>
-				<ss-text class="content__column__item__comment" size="3">{{ act()?.oneSComment }}</ss-text>
-			</div>
-			<div class="content__column__item">
-				<ss-text size="4">Сумма итого 1С</ss-text>
-				<ss-text class="content__column__item__comment" size="3">{{ act()?.OneSTotalAmount | numWithSpaces }}</ss-text>
+
+				<ss-select-v2
+					[size]="'small'"
+					[options]="currencies()"
+					[formControlName]="'currency'"
+					[errorText]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : ''"
+				/>
 			</div>
 		</div>
 		<div class="content__column">
@@ -128,11 +116,11 @@
 					<input type="file" id="upload-file"
 						 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
 						 multiple
-						 (change)="uploadFile($event)"
+						 (change)="addFiles($event)"
 					/>
 				</div>
 				<div class="content__column__item__files-list">
-					<div class="content__column__item__files-list__item" *ngFor="let doc of act()?.documents">
+					<div class="content__column__item__files-list__item" *ngFor="let doc of documents()">
 						<div class="content__column__item__files-list__item__img">
 							<ss-icon height="16" width="16" name="doc"></ss-icon>
 						</div>
@@ -144,6 +132,20 @@
 							<ss-icon name="trash" (click)="deleteFile(doc.id)"></ss-icon>
 						</div>
 					</div>
+					<ng-container *ngIf="newDocuments">
+						<div class="content__column__item__files-list__item" *ngFor="let ndoc of newDocuments">
+							<div class="content__column__item__files-list__item__img">
+								<ss-icon height="16" width="16" name="doc"></ss-icon>
+							</div>
+							<div class="content__column__item__files-list__item__description">
+								<ss-text size="3">{{ ndoc.name }}</ss-text>
+								<ss-text class="size" size="3">{{ ndoc.size }}</ss-text>
+							</div>
+							<div class="content__column__item__files-list__item__controls">
+								<ss-icon name="trash" (click)="removeFileFromUploadList(ndoc.name)"></ss-icon>
+							</div>
+						</div>
+					</ng-container>
 				</div>
 			</div>
 		</div>

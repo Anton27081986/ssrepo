@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
-import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { ColumnsStateService } from '@app/core/columns.state.service';
-import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
 import { rotateAnimation } from '@app/core/animations';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
+import { TextType } from '@front-components/components';
 
 @Component({
 	selector: 'tr[excess-income-contractor-tr]',
@@ -19,8 +18,6 @@ export class ExcessIncomeContractorTrComponent {
 	constructor(protected readonly columnsStateService: ColumnsStateService) {}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
-
-	expended() {
-		this.contractor().expended$.next(!this.contractor().expended$.value);
-	}
+	protected readonly Text = Text;
+	protected readonly TextType = TextType;
 }

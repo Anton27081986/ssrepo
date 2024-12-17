@@ -22,7 +22,7 @@
 					<ss-text size="3" class="description" color="gray">{{ user.skype}}</ss-text>
 				</div>
 			</div>
-			<div class="user-info-popup__item" *ngIf="user.phoneLocal">
+			<a [href]="user.linkToCall" target="_blank" class="user-info-popup__item" *ngIf="user.phoneLocal">
 				<div class="user-info-popup__item-description">
 					<ss-icon name="phone" height="16" width="16"></ss-icon>
 					<ss-text size="3" class="title">Внутренний телефон:</ss-text>
@@ -30,7 +30,7 @@
 				<div>
 					<ss-text size="3" class="description" color="gray">{{ user.phoneLocal }}</ss-text>
 				</div>
-			</div>
+			</a>
 			<div class="user-info-popup__item" *ngIf="user.email">
 				<div class="user-info-popup__item-description">
 					<ss-icon name="mail" height="16" width="16"></ss-icon>

@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
 	protected getSearchGlobal(found: IDictionaryItemDto) {
 		if (found.linkToDetail) {
 			const link = document.createElement('a');
+
 			link.href = found.linkToDetail!;
 			link.click();
 		}

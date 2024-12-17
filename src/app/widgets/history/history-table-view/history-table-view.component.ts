@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import { ITableHead, ITableItem } from '@app/shared/components/table/table.component';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { TableModule } from '@app/shared/components/table/table.module';
 import { ComponentsModule } from '@app/components/components.module';
@@ -18,6 +18,8 @@ export class HistoryTableViewComponent {
 		transform: this.convertToTableItems,
 	});
 
+	public tableHead = input<ITableHead[]>([]);
+
 	public pageIndex = model.required<number>();
 	public pageSize = input<number>(8);
 	public pageTotal = input.required<number>();
@@ -34,6 +36,8 @@ export class HistoryTableViewComponent {
 				userName: item.user?.name,
 				comments: item.comments ?? '-',
 				action: item.action,
+				fromValue: item.changes[0]?.fromValue ?? '-',
+				toValue: item.changes[0]?.toValue ?? '-',
 			};
 		}));
 	}

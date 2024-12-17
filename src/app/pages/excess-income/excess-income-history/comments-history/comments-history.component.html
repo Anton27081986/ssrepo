@@ -1,0 +1,35 @@
+<div class="wrapper" (click)="close()">
+    <ss-card padding="0" (click)="$event.stopPropagation()">
+        <div class="header">
+            <ss-headline size="h6">История комментария</ss-headline>
+
+            <ss-icon width="16" name="close" (click)="close()"></ss-icon>
+        </div>
+
+        <div class="body">
+            @switch (tableState) {
+                @case (TableState.Full) {
+                    <ss-table class="table"
+                              [head]="[
+						{title: 'Дата', field: 'date'},
+						{title: 'Автор', field: 'author'},
+						{title: 'Новое значение', field: 'comment'}
+						]"
+                              [items]="tableItems"
+                              (controlClick)="openModalInfoUser($event)"
+                    >
+                    </ss-table>
+                    <div class="footer">
+                        <ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="pageIndexChange($event)"></ss-pagination>
+                    </div>
+                }
+                @case (TableState.Loading) {
+                    <ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
+                }
+                @case (TableState.Empty) {
+                    <ss-empty-data-page></ss-empty-data-page>
+                }
+            }
+        </div>
+    </ss-card>
+</div>

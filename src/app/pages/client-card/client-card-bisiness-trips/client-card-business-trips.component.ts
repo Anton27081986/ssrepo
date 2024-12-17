@@ -1,5 +1,5 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
@@ -16,7 +16,7 @@ import { IClientBusinessTripsTableItem } from '@app/pages/client-card/client-car
 	styleUrls: ['./client-card-business-trips.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ClientCardBusinessTripsComponent {
+export class ClientCardBusinessTripsComponent implements OnInit {
 	public businessTrips$: Observable<IResponse<IBusinessTripsDto>>;
 
 	// table
