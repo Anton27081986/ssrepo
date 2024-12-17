@@ -129,6 +129,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 				}),
 				map(res => {
 					this.total$.next(res.data.total);
+
 					return res.data.items.map(item => {
 						return new TovNodeState(
 							item,
@@ -146,6 +147,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 					) {
 						return [...acc, ...value];
 					}
+
 					return value;
 				}),
 			)
@@ -181,8 +183,8 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 		return this.service.getTov({
 			limit: 10,
 			offset: this.paginationControl.value!,
-			clientId: clientId,
-			contractorId: contractorId,
+			clientId,
+			contractorId,
 			tovSubGroupId: this.group.tovSubgroup.id,
 			currencyId: this.state.currencyControl.value?.id!,
 			tovsIds: this.state.filters$.value.tov,

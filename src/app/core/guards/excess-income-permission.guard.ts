@@ -11,6 +11,7 @@ export class ExcessIncomePermissionsGuard implements CanActivate {
 		private readonly permissionsFacadeService: PermissionsFacadeService,
 		private readonly router: Router,
 	) {}
+
 	public canActivate(): Observable<boolean> {
 		return this.permissionsFacadeService.excessIncomePermissions$.pipe(
 			filterTruthy(),
@@ -18,6 +19,7 @@ export class ExcessIncomePermissionsGuard implements CanActivate {
 				const checkPermission = permissions.find(
 					item => item === Permissions.EXCESS_INCOME_READ,
 				);
+
 				if (checkPermission) {
 					return true;
 				}

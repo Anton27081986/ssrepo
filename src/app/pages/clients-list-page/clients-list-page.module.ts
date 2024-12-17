@@ -23,8 +23,8 @@ import { EmptyPlaceholderModule } from '@app/shared/components/empty-placeholder
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { ComponentsModule } from '@app/components/components.module';
 import { FiltersModule } from '@app/shared/components/filters/filters.module';
-import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { ClientsListPageRoutingModule } from './clients-list-page-routing.module';
 
 @NgModule({
 	declarations: [ClientsListPageComponent],

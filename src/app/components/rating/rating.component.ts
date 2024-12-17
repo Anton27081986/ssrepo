@@ -95,6 +95,7 @@ export class RatingComponent implements OnInit {
 
 	protected redirectUrl(type: TypeReport) {
 		const value = this.ratingState.walkerControl.value;
+
 		if (value && value.reportAvailable) {
 			this.ratingService
 				.getRatingReport(type, value)

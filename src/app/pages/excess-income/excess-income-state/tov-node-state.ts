@@ -49,6 +49,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.state = state;
 
 		this.updateFromState();
+
 		if (this.canEditSnd) {
 			this.currentParams.disable();
 			this.nextParams.disable();
@@ -97,11 +98,11 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	}
 
 	public updateTov(isCurrent: boolean) {
-		let excessIncomePercentValue = isCurrent
+		const excessIncomePercentValue = isCurrent
 			? this.currentParams.controls.excessIncomePercent.value
 			: this.nextParams.controls.excessIncomePercent.value;
 
-		let fixPriceValue = isCurrent
+		const fixPriceValue = isCurrent
 			? this.currentParams.controls.fixPrice.value
 			: this.nextParams.controls.fixPrice.value;
 
@@ -114,7 +115,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				currencyId: this.currencySignal().id,
 				excessIncomePercent: fixPriceValue ? null : excessIncomePercentValue,
 				fixPrice: excessIncomePercentValue ? null : fixPriceValue,
-				isCurrent: isCurrent,
+				isCurrent,
 			})
 			.pipe(
 				untilDestroyed(this),
@@ -174,6 +175,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		});
 
 		const comment = new FormControl<string | null>(null);
+
 		return {
 			id: item.id,
 			tov: item.tov,
@@ -199,6 +201,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		) {
 			return;
 		}
+
 		this.tovSignal().paramsGroup.controls.nextParams.controls.excessIncomePercent.setValue(
 			this.tovSignal().nextParams.excessIncomePercent,
 		);

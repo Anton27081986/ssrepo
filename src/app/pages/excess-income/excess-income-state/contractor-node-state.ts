@@ -13,6 +13,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		new BehaviorSubject<ExcessIncomeContractorsEventEnum>(
 			ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventDefault,
 		);
+
 	public contractor: ExcessIncomeContractor | null;
 	public groups$: BehaviorSubject<GroupNodeState[]> = new BehaviorSubject<GroupNodeState[]>([]);
 
@@ -28,6 +29,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		super();
 		this.clientId = clientId;
 		this.contractor = contractor;
+
 		if (this.isFake) {
 			this.expended$.next(true);
 		}
@@ -77,6 +79,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 				}),
 				map(groups => {
 					this.total$.next(groups.data.total);
+
 					return groups.data.items.map(item => {
 						return new GroupNodeState(
 							item,
@@ -95,6 +98,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 					) {
 						return [...acc, ...value];
 					}
+
 					return value;
 				}),
 			)

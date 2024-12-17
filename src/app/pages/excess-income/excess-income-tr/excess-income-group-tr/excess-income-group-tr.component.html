@@ -14,7 +14,7 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
 					<div (focusout)="group().focusOutControl($event)">
 
-						<snab-input  [showValidationIcons]="false" [showClearButton]="false" [label]="'%'"
+						<snab-input [showValidation]="false" [showClearButton]="false" [label]="'%'"
 									[step]="0.01" [size]="Size.Small" [type]="InputType.Number"
 									(click)="$event.stopPropagation(); $event.preventDefault()"
 									formControlName="sndCurrentControl"></snab-input>
@@ -30,7 +30,7 @@
 
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
 					<div (focusout)="group().focusOutControl($event)">
-						<snab-input [showValidationIcons]="false"
+						<snab-input [showValidation]="false"
 									[showClearButton]="false" [label]="'%'" [step]="0.01" [size]="Size.Small"
 									[type]="InputType.Number"
 									(click)="$event.stopPropagation(); $event.preventDefault()"

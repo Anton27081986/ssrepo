@@ -58,7 +58,7 @@ export class ExcessIncomeClientTrComponent {
 
 	openUpdateClientPriceModal(isCurrent: boolean) {
 		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
-			data: { client: this.client().client, isCurrent: isCurrent, state: this.state },
+			data: { client: this.client().client, isCurrent, state: this.state },
 		});
 	}
 

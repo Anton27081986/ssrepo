@@ -4,7 +4,7 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ITableItem } from '@app/shared/components/table/table.component';
-import {TableState} from "@app/shared/components/table/table-state";
+import { TableState } from '@app/shared/components/table/table-state';
 
 @UntilDestroy()
 @Component({

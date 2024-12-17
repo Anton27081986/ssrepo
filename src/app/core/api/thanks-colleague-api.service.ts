@@ -24,7 +24,9 @@ export class ThanksColleagueApiService {
 		);
 	}
 
-	public addThanksColleague(createThanksRequest: ICreateThanksColleagueRequest): Observable<IThanksColleagueItem> {
+	public addThanksColleague(
+		createThanksRequest: ICreateThanksColleagueRequest,
+	): Observable<IThanksColleagueItem> {
 		return this.http.post<IThanksColleagueItem>(
 			`${environment.apiUrl}/api/awards/thanks`,
 			createThanksRequest,

@@ -95,6 +95,7 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 	protected goToUrlVictory(url: string) {
 		if (url) {
 			const link = document.createElement('a');
+
 			link.href = url;
 			link.click();
 		}
@@ -150,6 +151,7 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 			} else {
 				this.removeLike(null);
 			}
+
 			this.isChoiceLike.next(false);
 		}
 	}

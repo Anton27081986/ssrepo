@@ -18,9 +18,9 @@ import { InputModule } from '@app/shared/components/inputs/input/input.module';
 import { PasswordModule } from '@app/shared/components/_deprecated/password/password.module';
 import { LinkModule } from '@app/shared/components/link/link.module';
 import { AuthComponent } from '@auth/auth.component';
+import { TextModule } from '@app/shared/components/typography/text/text.module';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { AuthRoutingModule } from './auth-routing.module';
-import {TextModule} from "@app/shared/components/typography/text/text.module";
-import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
 
 @NgModule({
 	declarations: [AuthComponent, SignInComponent, ForgotPasswordComponent, ResetPasswordComponent],

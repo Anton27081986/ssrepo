@@ -44,14 +44,14 @@ import { ClientCardReturnRequestsComponent } from '@app/pages/client-card/client
 import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { ClientCardBusinessTripsComponent } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component';
+import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
+import { HistoryComponent } from '@app/widgets/history/history.component';
 import { ClientCardComponent } from './client-card.component';
 import { ClientCardRoutingModule } from './client-card-routing.module';
 import { ClientCardBirthdaysComponent } from './client-card-birthdays/client-card-birthdays.component';
 import { ClientCardNewProductsComponent } from './client-card-new-products/client-card-new-products.component';
 import { ClientCardLostProductsComponent } from './client-card-lost-products/client-card-lost-products.component';
 import { ClientCardContractsComponent } from './client-card-contracts/client-card-contracts.component';
-import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-data-page.module";
-import { HistoryComponent } from '@app/widgets/history/history.component';
 
 @NgModule({
 	declarations: [

@@ -286,6 +286,7 @@ export class ExcessIncomePageComponent {
 			],
 		},
 	];
+
 	protected readonly Size = Size;
 	protected readonly ButtonType = ButtonType;
 	protected readonly TextType = TextType;

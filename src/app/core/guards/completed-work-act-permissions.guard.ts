@@ -19,6 +19,7 @@ export class CompletedWorkActPermissionsGuard implements CanActivate {
 				const checkPermission = permissions.find(
 					item => item === Permissions.COMPLETED_WORK_ACTS,
 				);
+
 				if (checkPermission) {
 					return true;
 				}

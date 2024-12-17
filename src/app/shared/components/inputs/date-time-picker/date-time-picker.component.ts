@@ -15,8 +15,8 @@ import { SSForm } from '@app/core/models/form';
 import { DateTimePickerImports } from '@app/shared/components/inputs/date-time-picker/date-time-picker.imports';
 import { dateInputTextMask } from '@app/core/utils/mask';
 import { getTime } from '@app/core/utils/date';
-import {CaptionModule} from "@app/shared/components/typography/caption/caption.module";
-import {NgClass} from "@angular/common";
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { NgClass } from '@angular/common';
 
 @Component({
 	selector: 'ss-date-time-picker',

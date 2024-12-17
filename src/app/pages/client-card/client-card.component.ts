@@ -108,7 +108,9 @@ export class ClientCardComponent implements OnInit {
 
 		this.client$.pipe(untilDestroyed(this)).subscribe(client => {
 			if (client?.isAnyPaymentOverdue) {
-				this.tabs = this.tabs.map((tab)=> tab.name==='sales' ? {...tab, icon: 'error'} : tab)
+				this.tabs = this.tabs.map(tab =>
+					tab.name === 'sales' ? { ...tab, icon: 'error' } : tab,
+				);
 			}
 		});
 

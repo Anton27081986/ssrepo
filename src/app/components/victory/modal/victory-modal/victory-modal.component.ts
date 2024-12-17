@@ -126,6 +126,7 @@ export class VictoryModalComponent {
 			} else {
 				this.removeLike(this.data.victory.id, null);
 			}
+
 			this.isChoiceLike.next(false);
 		}
 	}

@@ -18,8 +18,8 @@ export class DialogComponent {
 	public text: string | undefined;
 	public oneButton: boolean = false;
 	constructor(
-		private modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private data: DialogData,
+		private readonly modalRef: ModalRef,
+		@Inject(DIALOG_DATA) private readonly data: DialogData,
 	) {
 		if (!data) {
 			return;

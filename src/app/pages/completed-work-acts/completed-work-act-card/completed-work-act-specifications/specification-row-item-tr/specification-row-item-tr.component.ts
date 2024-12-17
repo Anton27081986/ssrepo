@@ -1,4 +1,4 @@
-import {Component, ElementRef, input, Input, InputSignal, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, input, Input, InputSignal, OnInit, ViewChild } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
@@ -7,7 +7,7 @@ import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-
 import { SpecificationModalComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/add-specification-modal/specification-modal.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
-import { DialogComponent } from "@app/shared/components/dialog/dialog.component";
+import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 
 export enum SpecificationRowItemField {
 	service = 'service',
@@ -36,6 +36,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 	protected readonly specificationRowItemField = SpecificationRowItemField;
 	public item: InputSignal<ICompletedWorkActSpecification> =
 		input.required<ICompletedWorkActSpecification>();
+
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected advantagesTpr: string[] = [];

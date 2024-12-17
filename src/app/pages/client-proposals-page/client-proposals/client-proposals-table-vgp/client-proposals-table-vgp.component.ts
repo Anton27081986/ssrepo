@@ -194,5 +194,6 @@ export class ClientProposalsTableVgpComponent {
 			],
 		},
 	];
+
 	protected readonly StateTableProposals = StateTableProposals;
 }

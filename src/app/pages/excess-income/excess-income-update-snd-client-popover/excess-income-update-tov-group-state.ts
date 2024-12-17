@@ -34,6 +34,7 @@ export class ExcessIncomeUpdateTovGroupState {
 
 	protected addTovGroups(tovGroup: ExcessIncomeUpdateClientTovGroupItem) {
 		const aldTovGroups = this.tovGroups$.value;
+
 		if (!aldTovGroups.find(item => item.id === tovGroup.id)) {
 			this.tovGroups$.next([...aldTovGroups, tovGroup]);
 		}
@@ -41,6 +42,7 @@ export class ExcessIncomeUpdateTovGroupState {
 
 	public delTovGroups(id: number) {
 		const aldTovGroups = this.tovGroups$.value;
+
 		this.tovGroups$.next(aldTovGroups.filter(val => val.id !== id));
 	}
 }

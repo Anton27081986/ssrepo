@@ -75,7 +75,10 @@ export class RawMaterialAccountingApiService {
 	}
 
 	/** Редактировать договор */
-	public editContract(id: number, contract: AddContractDto): Observable<IRawMaterialAccountingContract> {
+	public editContract(
+		id: number,
+		contract: AddContractDto,
+	): Observable<IRawMaterialAccountingContract> {
 		return this.http.put<IRawMaterialAccountingContract>(
 			`${environment.apiUrl}/api/procurements/contracts/${id}`,
 			contract,

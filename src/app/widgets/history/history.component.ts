@@ -23,7 +23,7 @@ import { HistoryListViewComponent } from '@app/widgets/history/history-list-view
 import { HistoryTableViewComponent } from '@app/widgets/history/history-table-view/history-table-view.component';
 import { formatDate } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableHead} from "@app/shared/components/table/table.component";
+import { ITableHead } from '@app/shared/components/table/table.component';
 
 @UntilDestroy()
 @Component({

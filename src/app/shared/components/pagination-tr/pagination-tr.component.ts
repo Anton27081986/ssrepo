@@ -47,6 +47,7 @@ export class PaginationTrComponent implements ControlValueAccessor {
 		if (this.limit() > this.total()) {
 			return this.limit() - this.total();
 		}
+
 		return this.limit();
 	});
 

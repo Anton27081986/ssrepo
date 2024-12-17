@@ -21,10 +21,8 @@ import { ComponentsModule } from '@app/components/components.module';
 import { ChoiceLikeModule } from '@app/shared/components/choice-like/choice-like.module';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { ThanksColleagueModalComponent } from '@app/widgets/thank-colleague/modal/thanks-colleague-modal/thanks-colleague-modal.component';
-import {
-	FormControlInputWithFuncEditModule
-} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module";
-import {LoaderModule} from "@app/shared/components/loader/loader.module";
+import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
 
 @NgModule({
 	declarations: [
@@ -33,32 +31,32 @@ import {LoaderModule} from "@app/shared/components/loader/loader.module";
 		AddThanksColleagueModalComponent,
 		ThanksColleagueModalComponent,
 	],
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        CardModule,
-        TextModule,
-        ButtonModule,
-        IconModule,
-        SsDividerModule,
-        AsyncPipe,
-        NgIf,
-        NgForOf,
-        AvatarModule,
-        EmptyPlaceholderModule,
-        HeadlineModule,
-        TextareaModule,
-        ChipsUserSearchModule,
-        ChipsSearchModule,
-        CaptionModule,
-        AttachmentModule,
-        ComponentsModule,
-        ChoiceLikeModule,
-        TooltipModule,
-        FormControlInputWithFuncEditModule,
-        LoaderModule,
-    ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
+		CardModule,
+		TextModule,
+		ButtonModule,
+		IconModule,
+		SsDividerModule,
+		AsyncPipe,
+		NgIf,
+		NgForOf,
+		AvatarModule,
+		EmptyPlaceholderModule,
+		HeadlineModule,
+		TextareaModule,
+		ChipsUserSearchModule,
+		ChipsSearchModule,
+		CaptionModule,
+		AttachmentModule,
+		ComponentsModule,
+		ChoiceLikeModule,
+		TooltipModule,
+		FormControlInputWithFuncEditModule,
+		LoaderModule,
+	],
 	exports: [
 		ThanksColleagueComponent,
 		ThanksColleagueCardComponent,

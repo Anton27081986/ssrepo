@@ -42,7 +42,6 @@ export class SaleRequestsApiService {
 			params = params.set('WithPaymentOverdue', filter.WithPaymentOverdue);
 		}
 
-
 		return this.http.get<ISaleRequestsDto>(`${environment.apiUrl}/api/company/SaleRequests`, {
 			params,
 		});

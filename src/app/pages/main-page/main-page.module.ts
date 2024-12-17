@@ -10,10 +10,10 @@ import { ExchangeRatesComponent } from '@app/components/exchange-rates/exchange-
 import { ThanksColleagueModule } from '@app/widgets/thank-colleague/thanks-colleague.module';
 import { AddressBookModule } from '@app/widgets/address-book/address-book.module';
 import { BirthdayComponent } from '@app/components/birthday/birthday.component';
-import { MainPageComponent } from './main-page.component';
 import { TransportComponent } from '@app/components/transport/transport.component';
-import {LoaderModule} from "@app/shared/components/loader/loader.module";
-import {EmptyDataPageModule} from "@app/shared/components/empty-data-page/empty-data-page.module";
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
+import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empty-data-page.module';
+import { MainPageComponent } from './main-page.component';
 
 @NgModule({
 	declarations: [MainPageComponent, SliderComponent],

@@ -70,6 +70,7 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 					if (val) {
 						return this.searchService.getTovGroupsByClient(val, this.client.id);
 					}
+
 					return NEVER;
 				}),
 				map(res => res.items),
@@ -85,6 +86,7 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 
 	submit() {
 		const isValid = this.tovGroups$.value.find(item => item.excessIncomePercent.valid);
+
 		if (isValid) {
 			this.excessIncomeService
 				.updateSndClient(this.client.id, {
@@ -138,6 +140,7 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 			],
 		},
 	];
+
 	protected readonly numberInputTextMask = numberInputTextMask;
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;

@@ -5,6 +5,7 @@ import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-serv
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
+
 @UntilDestroy()
 export class ClientNodeState extends ExcessIncomeBaseNodeState {
 	public client: ExcessIncomeClient;
@@ -22,6 +23,7 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 				if (!val) {
 					NEVER;
 				}
+
 				if (client.contractors.length) {
 					return client.contractors.map(
 						contractor =>
@@ -34,6 +36,7 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 							),
 					);
 				}
+
 				return [new ContractorNodeState(null, client.id, this.service, state, true)];
 			}),
 		);

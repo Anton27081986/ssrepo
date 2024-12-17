@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SamplesPageRoutingModule } from './samples-page-routing.module';
 import { SamplesPageComponent } from './samples-page.component';
 
-
 @NgModule({
-  declarations: [
-    SamplesPageComponent
-  ],
-  imports: [
-    CommonModule,
-    SamplesPageRoutingModule
-  ]
+	declarations: [SamplesPageComponent],
+	imports: [CommonModule, SamplesPageRoutingModule],
 })
-export class SamplesPageModule { }
+export class SamplesPageModule {}

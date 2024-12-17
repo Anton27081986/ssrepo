@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import {ITableHead, ITableItem} from '@app/shared/components/table/table.component';
+import { ITableHead, ITableItem } from '@app/shared/components/table/table.component';
 import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { TableModule } from '@app/shared/components/table/table.module';
 import { ComponentsModule } from '@app/components/components.module';

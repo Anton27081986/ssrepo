@@ -1,6 +1,6 @@
 export interface ICreateOfferItem {
 	tovProductId: number;
-	tovSubGroupId: number,
+	tovSubGroupId: number;
 	tovProductName: string;
 	atWork: boolean;
 	commentId: null | string;

@@ -15,8 +15,7 @@ export class ThankColleagueFacadeService {
 		this.thanksForColleagues.asObservable();
 
 	private readonly isLoading = new BehaviorSubject<boolean>(true);
-	public isLoading$: Observable<boolean> =
-		this.isLoading.asObservable();
+	public isLoading$: Observable<boolean> = this.isLoading.asObservable();
 
 	public isExtendedMode = false;
 	public offset = 0;

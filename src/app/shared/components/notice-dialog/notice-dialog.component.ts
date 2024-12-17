@@ -18,8 +18,8 @@ export class NoticeDialogComponent {
 	public text: string | undefined;
 	public type: 'Default' | 'Warning' | 'Error' = 'Default';
 	constructor(
-		private modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private data: NoticeDialogData,
+		private readonly modalRef: ModalRef,
+		@Inject(DIALOG_DATA) private readonly data: NoticeDialogData,
 	) {
 		if (!data) {
 			return;

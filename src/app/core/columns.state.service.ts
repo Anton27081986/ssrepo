@@ -13,7 +13,8 @@ export class ColumnsStateService {
 	constructor() {
 		this.visibleCols$ = this.colsTr$.pipe(
 			map(col => {
-				let newCol: ITrTableBaseColumn[] = [];
+				const newCol: ITrTableBaseColumn[] = [];
+
 				col.forEach(item => {
 					const filter = item.cols
 						.filter(col => {
@@ -22,8 +23,10 @@ export class ColumnsStateService {
 						.sort(function (a, b) {
 							return a.order - b.order;
 						});
+
 					newCol.push({ cols: filter });
 				});
+
 				return newCol;
 			}),
 		);

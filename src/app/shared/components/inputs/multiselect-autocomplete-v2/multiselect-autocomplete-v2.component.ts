@@ -65,7 +65,7 @@ export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, Co
 		}
 	}
 
-	constructor(private elem: ElementRef) {
+	constructor(private readonly elem: ElementRef) {
 		this.subscription.add(
 			this.selectedOptions$.subscribe(item => {
 				if (item.length > 3) {
@@ -129,6 +129,7 @@ export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, Co
 	protected delSelectedOption(item: IFilterOption) {
 		if (!this.readOnly) {
 			const oldSelected = this.selectedOptions$.value;
+
 			item.checked = false;
 			this.selectedOptions$.next(oldSelected.filter(val => val.checked));
 			this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
@@ -143,6 +144,7 @@ export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, Co
 			if (this.options$.value.length) {
 				this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
 			}
+
 			this.isExpanded = true;
 		}
 

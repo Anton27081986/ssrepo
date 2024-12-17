@@ -72,6 +72,7 @@ export class ExcessIncomeState {
 				return this.getClients(this.filters$.value, this.paginationControl.value!).pipe(
 					map(res => {
 						this.total$.next(res.total);
+
 						return res.items;
 					}),
 				);
@@ -85,6 +86,7 @@ export class ExcessIncomeState {
 				if (this.event$.value === ExcessIncomeEventEnum.excessIncomeChangeOffset) {
 					return [...acc, ...value];
 				}
+
 				return value;
 			}),
 			tap(() => {
@@ -100,7 +102,7 @@ export class ExcessIncomeState {
 	): Observable<IResponse<ExcessIncomeClient>> {
 		return this.excessIncomeService.getClients({
 			limit: this.limit,
-			offset: offset,
+			offset,
 			clientIds: filters.client,
 			contractorIds: filters.contractors,
 			tovSubgroupsIds: filters.tovGroups,

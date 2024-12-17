@@ -35,7 +35,7 @@ export class FormControlInputWithFuncEditComponent implements ControlValueAccess
 	protected oldValue: string | null = null;
 
 	private OnChange!: (value: string) => void;
-	private OnTouched!: (value: string) => void;
+	private readonly OnTouched!: (value: string) => void;
 
 	/**
 	 * Write form value to the DOM element (model => view)

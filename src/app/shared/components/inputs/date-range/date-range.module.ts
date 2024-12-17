@@ -13,19 +13,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
 	declarations: [DateRangeComponent],
 	exports: [DateRangeComponent],
-    imports: [
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        IconModule,
-        TextModule,
-        NgIf,
-        CaptionModule,
-        NgClass,
-        ReactiveFormsModule,
-        DatePipe,
-    ],
+	imports: [
+		MatDatepickerModule,
+		MatNativeDateModule,
+		MatButtonModule,
+		MatFormFieldModule,
+		IconModule,
+		TextModule,
+		NgIf,
+		CaptionModule,
+		NgClass,
+		ReactiveFormsModule,
+		DatePipe,
+	],
 	providers: [{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }],
 })
 export class DateRangeModule {}
