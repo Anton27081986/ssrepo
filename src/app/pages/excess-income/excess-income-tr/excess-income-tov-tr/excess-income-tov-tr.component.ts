@@ -1,12 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	computed,
-	effect,
-	input,
-	InputSignal,
-	OnDestroy,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal, OnDestroy } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
@@ -23,10 +15,12 @@ import {
 	InputType,
 	Size,
 	TextType,
+	TextWeight,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
 import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
+import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
 
 @UntilDestroy()
 @Component({
@@ -43,6 +37,24 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		private readonly modalService: ModalService,
 		protected readonly columnsStateService: ColumnsStateService,
 	) {}
+
+	get differentCurrentFinalPrice(): boolean {
+		return (
+			this.tovNode().currentParams.controls.finalPrice.value !==
+			this.tovNode().tovSignal().currentParams.finalPrice
+		);
+	}
+
+	get differentNextFinalPrice(): boolean {
+		return (
+			this.tovNode().tovSignal().nextParams.finalPrice !==
+			this.tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value
+		);
+	}
+
+	get canEditComment(): boolean {
+		return this.tovNode().tovSignal().id != 0 && this.tovNode().canEditComment;
+	}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 
@@ -93,6 +105,12 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 			.subscribe();
 	}
 
+	protected openModalEditComment() {
+		this.modalService.open(ExcessIncomeEditCommentPopoverComponent, {
+			data: { tovNode: this.tovNode() },
+		});
+	}
+
 	protected readonly TextType = TextType;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconType = IconType;
@@ -101,4 +119,5 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 	protected readonly Size = Size;
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TextWeight = TextWeight;
 }

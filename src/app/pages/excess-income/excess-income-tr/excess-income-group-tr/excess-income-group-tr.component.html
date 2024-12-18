@@ -1,52 +1,60 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [formGroup]="group().groupSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
-			<td class="ss-table-td" [style.width]="col.width">
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
-					<div class="ss-table-td__content">
-						<snab-text [type]="TextType.Body"> {{ group().groupSignal().tovSubgroup.name }}</snab-text>
-						<snab-button snab-tooltip [tooltipText]="'История изменений ТПГ'" [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Clock"
-									 (click)="$event.stopPropagation(); openPriceHistory()"></snab-button>
-					</div>
-				</ng-container>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
+				<td class="ss-table-td" [style.min-width]="col.width">
+					<snab-text [isEllipsis]="true"
+							   [type]="TextType.Caption"> {{ group().groupSignal().tovSubgroup.name }}
+					</snab-text>
+				</td>
+			</ng-container>
 
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-					<div (focusout)="group().focusOutControl($event)">
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+				<td class="ss-table-td" [style.min-width]="col.width">
+					<div class="ss-table-td__content" (focusout)="group().focusOutControl($event)">
 
-						<snab-input [showValidation]="false" [showClearButton]="false" [label]="'%'"
+						<snab-input [onlyPositiveValue]="true" [showValidation]="false" [showClearButton]="false"
 									[step]="0.01" [size]="Size.Small" [type]="InputType.Number"
 									(click)="$event.stopPropagation(); $event.preventDefault()"
 									formControlName="sndCurrentControl"></snab-input>
-
 						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Save"
-									 [size]="Size.Large"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
+									 [icon]="IconType.Check"
+									 [size]="Size.Small"
 									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
-									 *ngIf="group().groupSignal().paramsGroup.controls.sndCurrentControl.valid"></snab-button>
+									 *ngIf="group().validSndControlCurrent$ | async">
+
+						</snab-button>
 
 					</div>
-				</ng-container>
+				</td>
+			</ng-container>
 
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-					<div (focusout)="group().focusOutControl($event)">
-						<snab-input [showValidation]="false"
-									[showClearButton]="false" [label]="'%'" [step]="0.01" [size]="Size.Small"
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+				<td class="ss-table-td" [style.min-width]="col.width">
+					<div class="ss-table-td__content" (focusout)="group().focusOutControl($event)">
+						<snab-input [onlyPositiveValue]="true" [showValidation]="false"
+									[showClearButton]="false" [step]="0.01" [size]="Size.Small"
 									[type]="InputType.Number"
 									(click)="$event.stopPropagation(); $event.preventDefault()"
 									formControlName="sndNextControl"></snab-input>
 						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Save"
-									 [size]="Size.Large"
+									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
+									 [icon]="IconType.Check"
+									 [size]="Size.Small"
 									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
-									 *ngIf="group().groupSignal().paramsGroup.controls.sndNextControl.valid"></snab-button>
+									 *ngIf="group().validSndControlNext$ | async"></snab-button>
 					</div>
-				</ng-container>
+				</td>
+			</ng-container>
 
-				<ng-container *ngSwitchDefault>
+			<ng-container *ngSwitchDefault>
+				<!--				[style.min-width]="col.width"-->
+				<td class="ss-table-td">
 					&nbsp;
-				</ng-container>
-			</td>
+				</td>
+			</ng-container>
+
 		</ng-container>
 	</ng-container>
 </ng-container>

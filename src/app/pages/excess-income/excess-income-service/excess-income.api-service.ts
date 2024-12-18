@@ -27,8 +27,8 @@ export class ExcessIncomeApiService {
 
 	public getClients(
 		request: ExcessIncomeClientRequest,
-	): Observable<IResponse<ExcessIncomeClient>> {
-		return this.http.post<IResponse<ExcessIncomeClient>>(
+	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
+		return this.http.post<IResponse<ExcessIncomeData<ExcessIncomeClient>>>(
 			`${environment.apiUrl}/api/company/Snd/search`,
 			request,
 		);

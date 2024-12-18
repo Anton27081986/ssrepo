@@ -29,11 +29,14 @@
 
 			&__thead {
 				width: 100%;
-				position: sticky;
 				top: -1px;
 				z-index: 1;
 				background-color: #E2E5EA;
 				color: $text;
+
+				&__sticky {
+					position: sticky;
+				}
 
 				tr {
 					min-width: 100%;
@@ -44,28 +47,9 @@
 						font-weight: 500;
 						line-height: 19px;
 						padding: 8px;
+						border: 1px solid #C5CBD5;
 					}
 				}
-
-				tbody tr:last-child td:first-child {
-					border-bottom-left-radius: 16px;
-				}
-
-				tbody tr:last-child td:last-child {
-					border-bottom-right-radius: 16px;
-				}
-
-				tbody {
-				}
-
-				tr:first-child {
-					border-bottom-left-radius: 16px;
-				}
-
-				tr:last-child {
-					border-bottom-right-radius: 16px;
-				}
-
 			}
 
 			}

@@ -16,7 +16,6 @@ export class ExcessIncomeBaseNodeState {
 export function compareValues(oldValue: number | null): ValidatorFn {
 	return (control: AbstractControl): ValidationErrors | null => {
 		const newValue = control.value;
-
 		return newValue !== oldValue ? null : { valuesDoNotMatch: true };
 	};
 }
