@@ -16,7 +16,6 @@ import {
 	TooltipTheme,
 } from '@front-components/components';
 import { RouterService } from '@app/core/services/router.service';
-import { ThemeService } from '@app/shared/theme/theme.service';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -58,7 +57,7 @@ export class ExcessIncomeClientTrComponent {
 
 	openUpdateClientPriceModal(isCurrent: boolean) {
 		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
-			data: { client: this.client().client, isCurrent, state: this.state },
+			data: { client: this.client().client, isCurrent: isCurrent, state: this.state },
 		});
 	}
 

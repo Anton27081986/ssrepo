@@ -1,6 +1,6 @@
-<div class="table-wrapper" [class.table-wrapper__scroll]="scroll">
+<div class="table-wrapper">
 	<table class="table">
-		<thead class="table__thead">
+		<thead class="table__thead" [class.table__thead__sticky]="sticky">
 		<tr *ngFor="let cols of stateColumn.visibleCols$ | async">
 			<ng-container *ngFor="let col of cols.cols">
 				<th

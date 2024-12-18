@@ -1,6 +1,6 @@
 export interface ExcessIncomeUpdateTovRequest {
 	clientId: number;
-	contractorId: number;
+	contractorId: number | null;
 	tovGroupId: number;
 	tovId: number;
 	currencyId: number;

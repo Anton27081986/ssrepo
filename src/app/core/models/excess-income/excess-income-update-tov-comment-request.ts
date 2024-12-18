@@ -3,4 +3,5 @@ export interface ExcessIncomeUpdateTovCommentRequest {
 	contractorId: number | null;
 	tovId: number;
 	comment: string | null;
+	currencyId: number;
 }

@@ -30,8 +30,10 @@ import {
 	ButtonComponent,
 	CardComponent,
 	ClickOutsideDirective,
+	DividerComponent,
 	IconComponent,
 	InputComponent,
+	LabelComponent,
 	LinkComponent,
 	TextComponent,
 	TooltipDirective,
@@ -41,6 +43,10 @@ import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { NzTableCellDirective, NzThMeasureDirective } from 'ng-zorro-antd/table';
 import { LoaderTrComponent } from '@app/shared/components/loader-tr/loader-tr.component';
 import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
+import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
+import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
 
 @NgModule({
 	declarations: [
@@ -51,6 +57,7 @@ import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagi
 		ExcessIncomeGroupTrComponent,
 		ExcessIncomeUpdateSndClientPopoverComponent,
 		ExcessIncomeUpdateTovGroupTrComponent,
+		ExcessIncomeEditCommentPopoverComponent,
 	],
 	imports: [
 		ExcessIncomeRoutingModule,
@@ -87,6 +94,11 @@ import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagi
 		TooltipDirective,
 		PaginationTrComponent,
 		ClickOutsideDirective,
+		LabelComponent,
+		CaptionModule,
+		TooltipMenuModule,
+		DividerComponent,
+		FormControlInputWithFuncEditModule,
 	],
 })
 export class ExcessIncomeModule {}

@@ -11,7 +11,6 @@ import { rotateAnimation } from '@app/core/animations';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
 import { numberInputTextMask } from '@app/core/utils/mask';
-import { FormControl } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
@@ -24,7 +23,6 @@ import {
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
-import { CommentsHistoryComponent } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history.component';
 import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
 
 @UntilDestroy()
@@ -41,14 +39,7 @@ export class ExcessIncomeGroupTrComponent {
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
-	) {
-		effect(() => {
-			if (this.group().canEdit) {
-				this.group().getSndNextControl.disable();
-				this.group().getSndCurrentControl.disable();
-			}
-		});
-	}
+	) {}
 
 	public openPriceHistory() {
 		this.modalService

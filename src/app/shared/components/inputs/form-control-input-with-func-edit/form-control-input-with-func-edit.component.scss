@@ -16,6 +16,7 @@ textarea {
 	user-select: none;
 	min-height: 52px;
 	max-height: 100px;
+	resize: none;
 }
 
 textarea::-webkit-outer-spin-button,
@@ -48,6 +49,11 @@ textarea::placeholder {
 
 textarea:focus {
 	border-color: $additional-outline;
+}
+
+textarea.big {
+	height: 98px;
+	font-weight: 400;
 }
 
 textarea.medium {

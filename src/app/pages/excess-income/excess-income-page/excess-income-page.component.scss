@@ -23,6 +23,17 @@
 	ss-select-v2 {
 		width: 117px
 	}
+
+	&__no-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 80vh;
+	}
+}
+
+ss-loader {
+	min-height: 70vh;
 }
 
 ss-loader {
