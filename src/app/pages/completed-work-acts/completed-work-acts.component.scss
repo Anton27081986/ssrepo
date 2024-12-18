@@ -4,6 +4,7 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+	height: calc(100vh - 113px);
 
 	.header {
 		width: 100%;
@@ -24,7 +25,8 @@
 
 	.content {
 		position: relative;
-		height: calc(100vh - 181px);
+		max-height: calc(100vh - 181px);
+		min-height: 640px;
 		width: 100%;
 		display: flex;
 		gap: 16px;
@@ -34,11 +36,9 @@
 		padding-bottom: 16px;
 
 		.table {
-			height: 100%;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-end;
-			flex-grow: 1;
 		}
 
 		.no-data {
