@@ -64,9 +64,18 @@ export class SpecificationRowItemTrComponent implements OnInit {
 							display: true,
 						},
 						{
+							id: SpecificationRowItemField.comment,
+							title: 'Комментарий',
+							order: 2,
+							show: true,
+							colspan: 1,
+							rowspan: 1,
+							display: true,
+						},
+						{
 							id: SpecificationRowItemField.quantity,
 							title: 'Кол-во,\nед.изм',
-							order: 2,
+							order: 3,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -75,7 +84,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.cost,
 							title: 'Статья',
-							order: 3,
+							order: 4,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -84,7 +93,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.faObject,
 							title: 'Объект ОС/НМА, Тип ОС',
-							order: 4,
+							order: 5,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -93,7 +102,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.project,
 							title: 'Проект',
-							order: 5,
+							order: 6,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -102,7 +111,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.dept,
 							title: 'Отдел',
-							order: 6,
+							order: 7,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -111,7 +120,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.section,
 							title: 'Производственный участок',
-							order: 7,
+							order: 8,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -120,7 +129,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.user,
 							title: 'Сотрудник',
-							order: 8,
+							order: 9,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -129,7 +138,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.amount,
 							title: 'Сумма',
-							order: 9,
+							order: 10,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -138,7 +147,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.controls,
 							title: '',
-							order: 10,
+							order: 11,
 							show: true,
 							colspan: 1,
 							rowspan: 1,

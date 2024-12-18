@@ -13,7 +13,7 @@ import { IFilter } from '@app/shared/components/filters/filters.component';
 	styleUrls: ['./completed-work-acts.component.scss'],
 })
 export class CompletedWorkActsComponent {
-	public pageSize = 12;
+	public pageSize = 20;
 	public pageIndex = 1;
 	public offset = 0;
 
@@ -178,7 +178,7 @@ export class CompletedWorkActsComponent {
 		}
 
 		const preparedFilter: any = {
-			limit: isNewFilter ? 12 : this.pageSize,
+			limit: isNewFilter ? 20 : this.pageSize,
 			offset: isNewFilter ? 0 : this.offset,
 		};
 

@@ -51,6 +51,7 @@
 		&--number {
 			display: flex;
 			justify-content: end;
+			white-space: nowrap;
 		}
 
 		&--controls {
