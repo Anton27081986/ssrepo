@@ -109,9 +109,9 @@ export class SalesHistoryComponent {
 		return history.map(x => {
 			const tableItem: ISalesHistoryTableItem = {} as ISalesHistoryTableItem;
 
-			tableItem.code = { text: x.id ?? '-', link: x.detailLink } ?? '-';
+			tableItem.code = { text: x.id ?? '-', url: x.detailLink } ?? '-';
 			tableItem.contractor = x.contractor.linkToDetail
-				? { text: x.contractor.name ?? '-', link: x.contractor.linkToDetail }
+				? { text: x.contractor.name ?? '-', url: x.contractor.linkToDetail }
 				: '-';
 			tableItem.price = x.price ?? '-';
 			tableItem.quantity = x.quantity ?? '-';
