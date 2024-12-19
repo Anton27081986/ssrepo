@@ -27,6 +27,8 @@ export class ExcessIncomeState {
 
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+	public isLoaderTr$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 	public dropDownVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	public readonly currency$: Observable<IDictionaryItemDto[]>;
@@ -57,8 +59,12 @@ export class ExcessIncomeState {
 		});
 
 		this.clientNode$ = this.event$.pipe(
-			tap(() => {
+			tap(event => {
 				this.dropDownVisible$.next(false);
+				if (event === ExcessIncomeEventEnum.excessIncomeChangeOffset) {
+					this.isLoaderTr$.next(true);
+					return;
+				}
 				this.isLoader$.next(true);
 			}),
 			debounceTime(2000),
@@ -98,6 +104,7 @@ export class ExcessIncomeState {
 			}),
 			tap(() => {
 				this.isLoader$.next(false);
+				this.isLoaderTr$.next(false);
 				this.dropDownVisible$.next(true);
 			}),
 		);

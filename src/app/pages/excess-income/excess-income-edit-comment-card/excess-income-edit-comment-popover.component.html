@@ -14,7 +14,7 @@
 						 (click)="update()">
 			</snab-button>
 			<snab-button [type]="ButtonType.Outline" [text]="'Отменить'"
-						 (click)="tovNode().resetComment()">
+						 (click)="tovNode().resetComment(); close()">
 			</snab-button>
 		</div>
 	</ss-card>

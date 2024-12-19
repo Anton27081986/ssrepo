@@ -21,6 +21,7 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 export class TovNodeState extends ExcessIncomeBaseNodeState {
 	public tovSignal: WritableSignal<ExcessIncomeTov> = signal(this.createFormGroup(this.tov));
 	public currencySignal: WritableSignal<IDictionaryItemDto> = signal(this.currency);
+	public tovCommentSignal: WritableSignal<string> = signal(this.tov.comment);
 	public state: ExcessIncomeState;
 
 	public formGroup: FormGroup<ExcessIncomeParamsFormTov> = this.tovSignal().paramsGroup;
@@ -249,6 +250,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
 				this.updateState(value);
+				this.tovCommentSignal.set(value.comment);
 			});
 	}
 
@@ -271,12 +273,13 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
-				this.updateState(value);
+				this.comment.setValue(value.comment);
+				this.tovCommentSignal.set(value.comment);
 			});
 	}
 
 	public resetComment() {
-		this.tovSignal().commentControl.setValue(this.tovSignal().comment);
+		this.tovSignal().commentControl.setValue(this.tovCommentSignal());
 	}
 
 	private createFormGroup(item: ExcessIncomeTovFromBackend): ExcessIncomeTov {
@@ -320,7 +323,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			tovSubgroup: item.tovSubgroup,
 			status: item.status,
 			paramsGroup: formGroup,
-			comment: item.comment,
 			commentControl: this.comment,
 			currentParams: item.currentParams,
 			nextParams: item.nextParams,

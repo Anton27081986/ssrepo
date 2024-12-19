@@ -110,6 +110,7 @@ export class ExcessIncomePageComponent {
 	}
 
 	public isLoader$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoader$;
+	public isLoaderTr$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoaderTr$;
 
 	protected readonly paginationControl: FormControl<number | null> =
 		this.excessIncomeStateService.paginationControl;
@@ -216,7 +217,7 @@ export class ExcessIncomePageComponent {
 				},
 				{
 					id: ExcessIncomeClientRowItemField.sndCurrent,
-					title: 'СНД',
+					title: 'СНД, %',
 					order: 2,
 					show: true,
 					width: '135px',
@@ -256,7 +257,7 @@ export class ExcessIncomePageComponent {
 				},
 				{
 					id: ExcessIncomeClientRowItemField.sndNext,
-					title: 'СНД',
+					title: 'СНД, %',
 					order: 6,
 					show: true,
 					width: '135px',
@@ -269,7 +270,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена фикс',
 					order: 7,
 					show: true,
-					width: '110px',
+					width: '135px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,

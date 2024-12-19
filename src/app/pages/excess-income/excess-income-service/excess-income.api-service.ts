@@ -76,7 +76,7 @@ export class ExcessIncomeApiService {
 	}
 
 	public updateSndTovComment(request: ExcessIncomeUpdateTovCommentRequest) {
-		return this.http.post<ExcessIncomeTovFromBackend>(
+		return this.http.post<{ comment: string }>(
 			`${environment.apiUrl}/api/company/Snd/comments`,
 			request,
 		);

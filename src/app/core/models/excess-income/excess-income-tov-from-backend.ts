@@ -26,7 +26,6 @@ export interface ExcessIncomeTov {
 	currentParams: ParamTov;
 	nextParams: ParamTov;
 	commentControl: FormControl<string | null>;
-	comment: string | null;
 }
 
 export interface ExcessIncomeParamsFormTov {

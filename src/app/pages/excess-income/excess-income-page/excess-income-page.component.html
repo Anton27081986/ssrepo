@@ -19,8 +19,8 @@
 			<ss-loader></ss-loader>
 		</ng-container>
 		<ng-template #content>
-			<ng-container *ngIf="clientsNode() as clients;else empty">
-				<ng-container *ngFor="let client of clients">
+			<ng-container *ngIf="clientsNode().length;else empty">
+				<ng-container *ngFor="let client of clientsNode()">
 					<tr excess-income-client-tr [client]="client" (click)="expended(client)"></tr>
 
 					<ng-container *ngIf="client.expended$ | async">
@@ -68,6 +68,9 @@
 				</tr>
 			</ng-template>
 		</ng-template>
+		<ng-container *ngIf="isLoaderTr$ | async">
+			<tr loader-tr [countCol]="13"></tr>
+		</ng-container>
 		<tr [countCol]="13" pagination-tr [total]="total()"
 			[limit]="limit"
 			[formControl]="paginationControl"></tr>
