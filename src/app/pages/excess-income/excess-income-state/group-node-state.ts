@@ -225,7 +225,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 
 	private getTov(clientId: number, contractorId: number | null) {
 		return this.service.getTov({
-			limit: 10,
+			limit: this.limit,
 			offset: this.paginationControl.value!,
 			clientId: clientId,
 			contractorId: contractorId,
