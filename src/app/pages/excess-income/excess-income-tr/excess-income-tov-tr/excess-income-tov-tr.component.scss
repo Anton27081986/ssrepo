@@ -26,6 +26,10 @@
 		align-items: center;
 		gap: 6px;
 
+		&--space {
+			justify-content: space-between;
+		}
+
 		&--actions {
 			display: flex;
 			flex-wrap: nowrap;
