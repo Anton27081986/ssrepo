@@ -10,13 +10,15 @@
 
 			<app-notification></app-notification>
 
-			<snab-button
-				[type]="ButtonType.Outline"
-				[size]="Size.Large"
-				[icon]="IconType.Comments"
-				[iconPosition]="IconPosition.OnlyIcon"
-				(click)="openChatBot()"
-			></snab-button>
+			@if (aiPermission()) {
+				<snab-button
+					[type]="ButtonType.Outline"
+					[size]="Size.Large"
+					[icon]="IconType.Comments"
+					[iconPosition]="IconPosition.OnlyIcon"
+					(click)="openChatBot()"
+				></snab-button>
+			}
 
 			<ng-container *ngIf="(userProfile$ | async) as userProfile;">
 				<ss-avatar [size]="'small'" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
