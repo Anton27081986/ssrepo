@@ -141,4 +141,8 @@ export class ChatBotFacadeService {
 	public sendFeedback(body: ISendFeedbackBody) {
 		return this.botApiService.sendFeedback(body);
 	}
+
+	public clearStorage() {
+		this.messages.next([]);
+	}
 }
