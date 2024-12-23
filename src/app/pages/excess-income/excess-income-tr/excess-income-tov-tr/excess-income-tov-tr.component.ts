@@ -98,6 +98,7 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 					clientId: this.tovNode().tovSignal().client.id,
 					contractorId: this.tovNode().tovSignal().contractor.id,
 					tovGroupId: this.tovNode().tovSignal().tovSubgroup.id,
+					tovId: this.tovNode().tovSignal().tov.id,
 				},
 			})
 			.afterClosed()

@@ -2,7 +2,7 @@ import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
 
 export interface IChatBotMessage {
-	id: string;
+	id: string | null;
 	text: string;
 	topicId: string;
 	createdAt: string;

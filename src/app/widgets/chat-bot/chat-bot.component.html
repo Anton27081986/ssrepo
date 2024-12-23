@@ -7,7 +7,7 @@
 	</snab-card>
 	<ng-template #header>
 		<div class="chat__header">
-			<snab-avatar [size]="ExtendedSize.Small"></snab-avatar>
+			<img ngSrc="./assets/images/profile/bot.png" alt="BOT" height="36" width="36" />
 			<snab-text class="chat__header__title"
 				[type]="TextType.Title"
 				[weight]="TextWeight.Medium">
@@ -31,13 +31,13 @@
 				</div>
 			}
 			<div class="chat__body__messages" (scrollend)="loadMoreMessages()" #messagesEl>
-				@for (message of messages(); track message.id) {
+				@for (message of messages(); track message.createdAt) {
 					@if (message.messageType === ChatBotMessageTypeEnum.Me) {
 						<div class="chat__body__messages__message chat__body__messages__my-message">
 							<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
 								{{ message.text }}
 							</snab-text>
-							<snab-text [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+							<snab-text class="chat__body__messages__my-message__time" [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
 								{{ message.createdAt | date:'HH:mm, dd.MM.yyyy':'':'ru' }}
 							</snab-text>
 						</div>
@@ -51,18 +51,39 @@
 								<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
 									{{ message.text }}
 								</snab-text>
-								<snab-text [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+								<snab-text class="chat__body__messages__bot-message__text__time" [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
 									{{ message.createdAt | date:'HH:mm, dd.MM.yyyy':'':'ru' }}
 								</snab-text>
 							</div>
-							@if (message.likeType === null) {
+							@if (message.likeType === null && message.id) {
 								<div class="chat__body__messages__bot-message__controls">
 									<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
 										Ответ был полезен?
 									</snab-text>
 									<div class="chat__body__messages__bot-message__controls__buttons">
-										<snab-icon [icon]="IconType.LikeFilled" [color]="Colors.Complementary" (click)="openFeedBack(message, ChatBotLikeTypeEnum.Like)"></snab-icon>
-										<snab-icon class="chat__body__messages__bot-message__controls__buttons__dislike" [icon]="IconType.Like" [color]="Colors.Complementary" (click)="openFeedBack(message, ChatBotLikeTypeEnum.Dislike)"></snab-icon>
+										<snab-icon
+											[icon]="IconType.Like"
+											[color]="Colors.Complementary"
+											(click)="openFeedBack(message, ChatBotLikeTypeEnum.Like)">
+										</snab-icon>
+										<snab-icon class="chat__body__messages__bot-message__controls__buttons__dislike"
+											[icon]="IconType.Like" [color]="Colors.Complementary"
+											(click)="openFeedBack(message, ChatBotLikeTypeEnum.Dislike)">
+										</snab-icon>
+									</div>
+								</div>
+							}
+							@if (message.likeType !== null && message.id) {
+								<div class="chat__body__messages__bot-message__controls">
+									<div class="chat__body__messages__bot-message__controls__icons">
+										<snab-icon
+											[icon]="message.likeType === ChatBotLikeTypeEnum.Like ? IconType.LikeFilled: IconType.Like"
+											[color]="Colors.Complementary">
+										</snab-icon>
+										<snab-icon class="chat__body__messages__bot-message__controls__buttons__dislike"
+											[icon]="message.likeType === ChatBotLikeTypeEnum.Dislike ? IconType.LikeFilled: IconType.Like"
+											[color]="Colors.Complementary">
+										</snab-icon>
 									</div>
 								</div>
 							}
