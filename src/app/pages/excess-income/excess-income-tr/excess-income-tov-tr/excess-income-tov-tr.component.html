@@ -59,11 +59,20 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
 					<td class="ss-table-td" [style.max-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-							<snab-input [onlyPositiveValue]="true" [showValidation]="false" [showClearButton]="false"
-										[step]="0.01"
-										[size]="Size.Small" [type]="InputType.Number"
-										(click)="$event.stopPropagation()"
-										formControlName="excessIncomePercent"></snab-input>
+							<snab-form-field
+								[size]="Size.Small"
+								[showValidation]="false"
+								(click)="$event.stopPropagation(); $event.preventDefault()"
+							>
+								<snab-input
+									fieldCtrl
+									formControlName="excessIncomePercent"
+									[onlyPositiveValue]="true"
+									[type]="InputType.Number"
+									[showClearButton]="false"
+									[step]="0.01"
+								/>
+							</snab-form-field>
 
 							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
@@ -78,12 +87,20 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">
 					<td class="ss-table-td" [style.min-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-							<snab-input
-								[onlyPositiveValue]="true"
-								[showValidation]="false" [showClearButton]="false" [step]="0.01"
-								[size]="Size.Small" [type]="InputType.Number"
-								(click)="$event.stopPropagation()"
-								formControlName="fixPrice"></snab-input>
+							<snab-form-field
+								[size]="Size.Small"
+								[showValidation]="false"
+								(click)="$event.stopPropagation(); $event.preventDefault()"
+							>
+								<snab-input
+									fieldCtrl
+									formControlName="fixPrice"
+									[onlyPositiveValue]="true"
+									[type]="InputType.Number"
+									[showClearButton]="false"
+									[step]="0.01"
+								/>
+							</snab-form-field>
 
 							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
@@ -120,12 +137,21 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
 					<td class="ss-table-td" [style.max-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-							<snab-input [onlyPositiveValue]="true" [showValidation]="false"
-										[showClearButton]="false"
-										[step]="0.01"
-										[size]="Size.Small" [type]="InputType.Number"
-										(click)="$event.stopPropagation()"
-										formControlName="excessIncomePercent"></snab-input>
+							<snab-form-field
+								[size]="Size.Small"
+								[showValidation]="false"
+								(click)="$event.stopPropagation(); $event.preventDefault()"
+							>
+								<snab-input
+									fieldCtrl
+									formControlName="excessIncomePercent"
+									[onlyPositiveValue]="true"
+									[type]="InputType.Number"
+									[showClearButton]="false"
+									[step]="0.01"
+								/>
+							</snab-form-field>
+
 
 							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
@@ -140,12 +166,20 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">
 					<td class="ss-table-td" [style.min-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-							<snab-input
-								[onlyPositiveValue]="true" [showValidation]="false" [showClearButton]="false"
-								[step]="0.01"
-								[size]="Size.Small" [type]="InputType.Number"
-								(click)="$event.stopPropagation()"
-								formControlName="fixPrice"></snab-input>
+							<snab-form-field
+								[size]="Size.Small"
+								[showValidation]="false"
+								(click)="$event.stopPropagation(); $event.preventDefault()"
+							>
+								<snab-input
+									fieldCtrl
+									formControlName="fixPrice"
+									[onlyPositiveValue]="true"
+									[type]="InputType.Number"
+									[showClearButton]="false"
+									[step]="0.01"
+								/>
+							</snab-form-field>
 
 							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"

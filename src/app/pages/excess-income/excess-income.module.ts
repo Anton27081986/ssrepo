@@ -20,7 +20,6 @@ import { SelectV2Component } from '@app/shared/components/inputs/select-v2/selec
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { SearchInputV2Component } from '@app/shared/components/inputs/search-input-v2/search-input-v2.component';
 import { ExcessIncomeUpdateTovGroupTrComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-tr/excess-income-update-tov-group-tr.component';
-import { InputV2Component } from '@app/shared/components/inputs/input-v2/input-v2.component';
 import { MaskitoDirective } from '@maskito/angular';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
@@ -31,6 +30,8 @@ import {
 	CardComponent,
 	ClickOutsideDirective,
 	DividerComponent,
+	FieldCtrlDirective,
+	FormFieldComponent,
 	IconComponent,
 	InputComponent,
 	LabelComponent,
@@ -74,7 +75,6 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		SelectV2Component,
 		SearchInputModule,
 		SearchInputV2Component,
-		InputV2Component,
 		MaskitoDirective,
 		SsDividerModule,
 		TextareaModule,
@@ -99,6 +99,8 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		TooltipMenuModule,
 		DividerComponent,
 		FormControlInputWithFuncEditModule,
+		FormFieldComponent,
+		FieldCtrlDirective,
 	],
 })
 export class ExcessIncomeModule {}

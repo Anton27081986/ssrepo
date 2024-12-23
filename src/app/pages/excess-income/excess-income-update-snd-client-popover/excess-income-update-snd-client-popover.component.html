@@ -31,8 +31,10 @@
 		</div>
 		<ss-divider></ss-divider>
 		<div class="excess-income-update-snd-client-popover__footer">
-			<snab-button [size]="Size.Large" [type]="ButtonType.Secondary" (click)="close()" [text]="'Отмена'"></snab-button>
-			<snab-button [disabled]="(state.tovGroups$ | async)?.length === 0" [size]="Size.Large" [type]="ButtonType.Primary" (click)="submit()" [text]="'Применить'"></snab-button>
+			<snab-button [size]="Size.Large" [type]="ButtonType.Secondary" (click)="close()"
+						 [text]="'Отмена'"></snab-button>
+			<snab-button [disabled]="(state.tovGroups$ | async)?.length === 0" [size]="Size.Large"
+						 [type]="ButtonType.Primary" (click)="submit()" [text]="'Применить'"></snab-button>
 		</div>
 	</ss-card>
 </div>
