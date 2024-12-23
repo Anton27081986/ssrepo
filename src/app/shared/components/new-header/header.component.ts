@@ -9,6 +9,12 @@ import { Router } from '@angular/router';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {ButtonType, IconPosition, IconType, Size} from "@front-components/components";
+import {
+	CompletedWorkActHistoryComponent
+} from "@app/pages/completed-work-acts/completed-work-act-history/completed-work-act-history.component";
+import {ModalService} from "@app/core/modal/modal.service";
+import {ChatBotComponent} from "@app/widgets/chat-bot/chat-bot.component";
 
 @Component({
 	selector: 'app-header',
@@ -28,6 +34,7 @@ export class HeaderComponent implements OnInit {
 		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly userStateService: UserProfileStoreService,
 		public readonly _router: Router,
+		private readonly modalService: ModalService,
 	) {}
 
 	public ngOnInit(): any {
@@ -47,6 +54,14 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
+	public openChatBot(): void {
+		this.modalService.open(ChatBotComponent);
+	}
+
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
 }

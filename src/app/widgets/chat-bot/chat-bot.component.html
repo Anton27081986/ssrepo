@@ -1,0 +1,116 @@
+<div class="chat-wrapper" (click)="close()">
+	<snab-card class="chat"
+		[headerRef]="header"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(click)="$event.stopPropagation()">
+	</snab-card>
+	<ng-template #header>
+		<div class="chat__header">
+			<snab-avatar [size]="ExtendedSize.Small"></snab-avatar>
+			<snab-text class="chat__header__title"
+				[type]="TextType.Title"
+				[weight]="TextWeight.Medium">
+				Добрый день, я Чат-Бот
+			</snab-text>
+			<snab-button
+				[type]="ButtonType.Flat"
+				[icon]="IconType.ClearLarge"
+				[iconPosition]="IconPosition.OnlyIcon"
+				[size]="Size.Large"
+				(click)="close()">
+			</snab-button>
+		</div>
+	</ng-template>
+	<ng-template #body>
+		<div class="chat__body">
+			@if (state()===ChatBotStates.MessagesLoading) {
+				<div class="chat__body__loader">
+					<ss-loader></ss-loader>
+					<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.CoolGray">Загружаю историю...</snab-text>
+				</div>
+			}
+			<div class="chat__body__messages" (scrollend)="loadMoreMessages()" #messagesEl>
+				@for (message of messages(); track message.id) {
+					@if (message.messageType === ChatBotMessageTypeEnum.Me) {
+						<div class="chat__body__messages__message chat__body__messages__my-message">
+							<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
+								{{ message.text }}
+							</snab-text>
+							<snab-text [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+								{{ message.createdAt | date:'HH:mm, dd.MM.yyyy':'':'ru' }}
+							</snab-text>
+						</div>
+					}
+					@if (message.messageType === ChatBotMessageTypeEnum.Bot) {
+						<div class="chat__body__messages__bot-message">
+							<div class="chat__body__messages__message chat__body__messages__bot-message__text">
+								<snab-text class="chat__body__messages__bot-message__text__title" [type]="TextType.Title" [weight]="TextWeight.Medium">
+									Чат-бот
+								</snab-text>
+								<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
+									{{ message.text }}
+								</snab-text>
+								<snab-text [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+									{{ message.createdAt | date:'HH:mm, dd.MM.yyyy':'':'ru' }}
+								</snab-text>
+							</div>
+							@if (message.likeType === null) {
+								<div class="chat__body__messages__bot-message__controls">
+									<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+										Ответ был полезен?
+									</snab-text>
+									<div class="chat__body__messages__bot-message__controls__buttons">
+										<snab-icon [icon]="IconType.LikeFilled" [color]="Colors.Complementary" (click)="openFeedBack(message, ChatBotLikeTypeEnum.Like)"></snab-icon>
+										<snab-icon class="chat__body__messages__bot-message__controls__buttons__dislike" [icon]="IconType.Like" [color]="Colors.Complementary" (click)="openFeedBack(message, ChatBotLikeTypeEnum.Dislike)"></snab-icon>
+									</div>
+								</div>
+							}
+						</div>
+					}
+				}
+			</div>
+			@if (state()===ChatBotStates.Generating) {
+				<div class="chat__body__loader">
+					<ss-loader></ss-loader>
+					<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.CoolGray">Запрос обрабатывается...</snab-text>
+				</div>
+			}
+		</div>
+	</ng-template>
+	<ng-template #footer>
+		<div class="chat__footer">
+			<div class="chat__footer__subsectors">
+				@for (subsector of subsectors(); track subsector.id) {
+					<div class="chat__footer__subsectors__item"
+						[ngClass]="{'chat__footer__subsectors__item__active':activeSubsector()?.id === subsector.id}"
+						(click)="selectSubsector(subsector)"
+					>
+						<snab-text [type]="TextType.Body" [weight]="TextWeight.Medium" [color]="Colors.InfoHeavy">
+							{{ subsector.name }}
+						</snab-text>
+					</div>
+				}
+			</div>
+			<form [formGroup]="questionForm" class="chat__footer__form">
+				<snab-form-field class="chat__footer__form__input"
+					[size]="Size.Default"
+				>
+					<snab-input
+						fieldCtrl
+						formControlName="question"
+						placeholder="Напишите Ваше сообщение здесь..."
+					/>
+				</snab-form-field>
+				<snab-button
+					[type]="ButtonType.Primary"
+					[icon]="IconType.ArrowLongUp"
+					[iconPosition]="IconPosition.OnlyIcon"
+					[loading]="state()===ChatBotStates.Generating"
+					[disabled]="state()===ChatBotStates.Generating"
+					(click)="sendMessage()">
+				</snab-button>
+			</form>
+		</div>
+	</ng-template>
+</div>
