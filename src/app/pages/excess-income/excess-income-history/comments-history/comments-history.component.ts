@@ -76,13 +76,13 @@ export class CommentsHistoryComponent {
 	}
 
 	private getHistory() {
-		if (this.data.clientId && this.data.tovGroupId && this.data.contractorId) {
+		if (this.data.clientId && this.data.tovId && this.data.contractorId) {
 			this.tableState = TableState.Loading;
 
 			this.excessIncomeApiService
 				.getCommentsHistory(
 					this.data.clientId,
-					this.data.tovGroupId,
+					this.data.tovId,
 					this.data.contractorId,
 					this.pageSize,
 					this.offset,

@@ -21,7 +21,7 @@ import {
 import { ChatBotFacadeService, ChatBotStates } from '@app/core/facades/chat-bot-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { DatePipe, NgClass } from '@angular/common';
+import {DatePipe, NgClass, NgOptimizedImage} from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
@@ -48,6 +48,7 @@ import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
 		InputComponent,
 		LoaderModule,
 		DatePipe,
+		NgOptimizedImage,
 	],
 })
 export class ChatBotComponent {

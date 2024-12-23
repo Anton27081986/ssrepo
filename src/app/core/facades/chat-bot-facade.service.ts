@@ -8,6 +8,7 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
 import { ISendFeedbackBody } from '@app/core/models/chat-bot/send-feedback-body';
+import {catchError} from "rxjs/operators";
 
 export enum ChatBotStates {
 	Ready = 'Ready',
@@ -69,7 +70,21 @@ export class ChatBotFacadeService {
 				})
 				.pipe(untilDestroyed(this))
 				.subscribe(messages => {
-					this.messages.next([...this.messages.value, ...messages.items]);
+					if (!messages.items.length) {
+						this.messages.next([
+							{
+								id: null,
+								text: 'Выберите категорию запроса ниже',
+								likeType: null,
+								messageType: ChatBotMessageTypeEnum.Bot,
+								createdAt: '',
+								topicId: '',
+							},
+							...this.messages.value,
+						]);
+					} else {
+						this.messages.next([...this.messages.value, ...messages.items]);
+					}
 					this.totalMessages = messages.total;
 					this.state.next(ChatBotStates.Ready);
 				});
@@ -81,10 +96,27 @@ export class ChatBotFacadeService {
 	}
 
 	public sendMessage(question: string | null): void {
+		if (!this.activeSubsector.value && this.user) {
+			this.messages.next([
+				{
+					id: null,
+					text: 'Сначала выберите категорию запроса',
+					likeType: null,
+					messageType: ChatBotMessageTypeEnum.Bot,
+					createdAt: '',
+					topicId: '',
+				},
+				...this.messages.value,
+			]);
+
+			return;
+		}
+
+
 		if (!question) {
 			this.messages.next([
 				{
-					id: 'error',
+					id: null,
 					text: 'Введите текст запроса',
 					likeType: null,
 					messageType: ChatBotMessageTypeEnum.Bot,
@@ -100,17 +132,16 @@ export class ChatBotFacadeService {
 		if (this.activeSubsector.value && this.user) {
 			this.state.next(ChatBotStates.Generating);
 
-			this.messages.next([
-				{
-					id: 'error',
-					text: question,
-					likeType: null,
-					messageType: ChatBotMessageTypeEnum.Me,
-					createdAt: '',
-					topicId: '',
-				},
-				...this.messages.value,
-			]);
+			const myMessage: IChatBotMessage = {
+				id: null,
+				text: question,
+				likeType: null,
+				messageType: ChatBotMessageTypeEnum.Me,
+				createdAt: '',
+				topicId: '',
+			};
+
+			this.messages.next([myMessage, ...this.messages.value]);
 
 			this.botApiService
 				.sendMessage({
@@ -118,23 +149,26 @@ export class ChatBotFacadeService {
 					subsectorId: this.activeSubsector.value.id.toString(),
 					topicId: this.user.id.toString(),
 				})
-				.pipe(untilDestroyed(this))
+				.pipe(untilDestroyed(this), catchError((err)=>{
+					this.messages.next([
+						{
+							id: null,
+							text: 'Что-то пошло не так:( Попробуйте еще раз',
+							likeType: null,
+							messageType: ChatBotMessageTypeEnum.Bot,
+							createdAt: '',
+							topicId: '',
+						},
+						...this.messages.value,
+					]);
+					this.state.next(ChatBotStates.Ready);
+					throw err
+				}))
 				.subscribe(res => {
-					this.messages.next([res, ...this.messages.value]);
+					myMessage.id = res.id;
+					myMessage.createdAt = res.createdAt;
 					this.state.next(ChatBotStates.Ready);
 				});
-		} else {
-			this.messages.next([
-				{
-					id: 'error',
-					text: 'Выберите категорию запроса',
-					likeType: null,
-					messageType: ChatBotMessageTypeEnum.Bot,
-					createdAt: '',
-					topicId: '',
-				},
-				...this.messages.value,
-			]);
 		}
 	}
 

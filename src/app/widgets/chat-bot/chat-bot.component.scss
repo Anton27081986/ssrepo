@@ -16,6 +16,7 @@
 	height: 100%;
 	padding-right: calc(6.25% + 52px);
 	padding-top: 52px;
+	background-color: #0000002f;
 }
 
 .chat {
@@ -33,7 +34,6 @@
 		&__title {
 			flex-grow: 1;
 			display: flex;
-			justify-content: center;
 		}
 	}
 
@@ -60,20 +60,22 @@
 				max-width: 376px;
 				border-radius: 6px;
 				overflow-wrap: break-word;
-				align-items: flex-end;
 			}
 
 			&__my-message {
 				background-color: #F2F2F2;
 				align-self: flex-end;
 				margin-right: 16px;
+
+				&__time {
+					align-self: flex-end;
+				}
 			}
 
 			&__bot-message {
 				display: flex;
 				flex-direction: column;
 				gap: 8px;
-				align-items: flex-end;
 				max-width: 376px;
 
 				&__text {
@@ -82,18 +84,33 @@
 					&__title {
 						align-self: flex-start;
 					}
+
+					&__time {
+						align-self: flex-end;
+					}
 				}
 
 				&__controls {
 					display: flex;
 					gap: 12px;
 					align-items: center;
+					align-self: flex-end;
 
 					&__buttons {
 						display: flex;
 						gap: 6px;
 						align-items: center;
 						cursor: pointer;
+
+						&__dislike {
+							transform: rotateZ(180deg);
+						}
+					}
+
+					&__icons {
+						display: flex;
+						gap: 6px;
+						align-items: center;
 
 						&__dislike {
 							transform: rotateZ(180deg);
