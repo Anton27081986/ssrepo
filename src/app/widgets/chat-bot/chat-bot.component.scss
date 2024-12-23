@@ -1,0 +1,156 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+}
+
+.chat-wrapper {
+	position: relative;
+	display: flex;
+	justify-content: flex-end;
+	width: 100%;
+	height: 100%;
+	padding-right: calc(6.25% + 52px);
+	padding-top: 52px;
+}
+
+.chat {
+	display: block;
+	width: 507px;
+	background-color: $island;
+	height: fit-content;
+	border-radius: 16px;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		&__title {
+			flex-grow: 1;
+			display: flex;
+			justify-content: center;
+		}
+	}
+
+	&__body {
+		display: flex;
+		height: 498px;
+		flex-direction: column;
+		width: 100%;
+		gap: 12px;
+
+		&__messages {
+			display: flex;
+			overflow-y: auto;
+			flex-direction: column-reverse;
+			width: 100%;
+			gap: 24px;
+			flex-grow: 1;
+
+			&__message {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				padding: 8px;
+				max-width: 376px;
+				border-radius: 6px;
+				overflow-wrap: break-word;
+				align-items: flex-end;
+			}
+
+			&__my-message {
+				background-color: #F2F2F2;
+				align-self: flex-end;
+				margin-right: 16px;
+			}
+
+			&__bot-message {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				align-items: flex-end;
+				max-width: 376px;
+
+				&__text {
+					background-color: #EDF1FF;
+
+					&__title {
+						align-self: flex-start;
+					}
+				}
+
+				&__controls {
+					display: flex;
+					gap: 12px;
+					align-items: center;
+
+					&__buttons {
+						display: flex;
+						gap: 6px;
+						align-items: center;
+						cursor: pointer;
+
+						&__dislike {
+							transform: rotateZ(180deg);
+						}
+					}
+				}
+			}
+		}
+
+		&__loader {
+			position: relative;
+			height: 100%;
+			max-height: 56px;
+			overflow-y: hidden;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			snab-text {
+				position: absolute;
+				z-index: 999999;
+				bottom: -5px;
+			}
+		}
+	}
+
+	&__footer {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+
+		&__subsectors {
+			display: flex;
+			gap: 16px;
+
+			&__item {
+				cursor: pointer;
+				color: #416CFF;
+				outline: 1px solid #e6e6e6;
+				padding: 7px 12px;
+				border-radius: 8px;
+
+				&__active {
+					outline: 1px solid #416CFF;
+				}
+			}
+		}
+
+		&__form {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+
+			&__input {
+				flex-grow: 1;
+			}
+		}
+	}
+}

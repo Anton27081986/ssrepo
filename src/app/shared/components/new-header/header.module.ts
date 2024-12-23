@@ -12,6 +12,7 @@ import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import { ButtonComponent } from '@front-components/components';
 import { HeaderComponent } from './header.component';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { HeaderComponent } from './header.component';
 		SearchInputModule,
 		ButtonModule,
 		TooltipModule,
+		ButtonComponent,
 	],
 	exports: [HeaderComponent, FlyMenuDirective],
 })
