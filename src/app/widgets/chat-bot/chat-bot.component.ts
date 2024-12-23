@@ -120,6 +120,7 @@ export class ChatBotComponent {
 
 	public close() {
 		this.modalRef.close();
+		this.botFacade.clearStorage();
 	}
 
 	protected readonly IconType = IconType;
