@@ -8,7 +8,7 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
 import { ISendFeedbackBody } from '@app/core/models/chat-bot/send-feedback-body';
-import {catchError} from "rxjs/operators";
+import { catchError } from 'rxjs/operators';
 
 export enum ChatBotStates {
 	Ready = 'Ready',
@@ -85,6 +85,7 @@ export class ChatBotFacadeService {
 					} else {
 						this.messages.next([...this.messages.value, ...messages.items]);
 					}
+
 					this.totalMessages = messages.total;
 					this.state.next(ChatBotStates.Ready);
 				});
@@ -111,7 +112,6 @@ export class ChatBotFacadeService {
 
 			return;
 		}
-
 
 		if (!question) {
 			this.messages.next([
@@ -149,24 +149,28 @@ export class ChatBotFacadeService {
 					subsectorId: this.activeSubsector.value.id.toString(),
 					topicId: this.user.id.toString(),
 				})
-				.pipe(untilDestroyed(this), catchError((err)=>{
-					this.messages.next([
-						{
-							id: null,
-							text: 'Что-то пошло не так:( Попробуйте еще раз',
-							likeType: null,
-							messageType: ChatBotMessageTypeEnum.Bot,
-							createdAt: '',
-							topicId: '',
-						},
-						...this.messages.value,
-					]);
-					this.state.next(ChatBotStates.Ready);
-					throw err
-				}))
+				.pipe(
+					untilDestroyed(this),
+					catchError((err: unknown) => {
+						this.messages.next([
+							{
+								id: null,
+								text: 'Что-то пошло не так:( Попробуйте еще раз',
+								likeType: null,
+								messageType: ChatBotMessageTypeEnum.Bot,
+								createdAt: '',
+								topicId: '',
+							},
+							...this.messages.value,
+						]);
+						this.state.next(ChatBotStates.Ready);
+						throw err;
+					}),
+				)
 				.subscribe(res => {
 					myMessage.id = res.id;
 					myMessage.createdAt = res.createdAt;
+					this.messages.next([res, ...this.messages.value]);
 					this.state.next(ChatBotStates.Ready);
 				});
 		}
