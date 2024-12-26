@@ -53,7 +53,7 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 	}
 
 	get canEditComment(): boolean {
-		return this.tovNode().tovSignal().id != 0 && this.tovNode().canEditComment;
+		return this.tovNode().canEditComment;
 	}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;

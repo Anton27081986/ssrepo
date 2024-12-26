@@ -55,7 +55,7 @@ export class PaginationTrComponent implements ControlValueAccessor {
 	private OnTouched!: (value: number) => void;
 
 	get viewPagination(): boolean {
-		return this.total() > this.limit();
+		return this.total() > this.limit() && this.total() > this.offset();
 	}
 
 	writeValue(offset: number | null) {

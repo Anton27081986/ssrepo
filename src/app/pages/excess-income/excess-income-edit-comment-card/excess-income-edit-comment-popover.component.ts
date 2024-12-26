@@ -33,8 +33,10 @@ export class ExcessIncomeEditCommentPopoverComponent {
 	) {}
 
 	update() {
-		this.tovNode().updateComment();
-		this.close();
+		if (this.tovNode().comment.valid) {
+			this.tovNode().updateComment();
+			this.close();
+		}
 	}
 
 	close() {

@@ -13,7 +13,7 @@
 				<td class="ss-table-td" [style.min-width]="col.width">
 					<div class="ss-table-td__content" (focusout)="group().focusOutControl($event)">
 						<snab-form-field
-							[size]="Size.Small"
+							[size]="Size.Default"
 							[showValidation]="false"
 							(click)="$event.stopPropagation(); $event.preventDefault()"
 						>
@@ -43,7 +43,7 @@
 				<td class="ss-table-td" [style.min-width]="col.width">
 					<div class="ss-table-td__content" (focusout)="group().focusOutControl($event)">
 						<snab-form-field
-							[size]="Size.Small"
+							[size]="Size.Default"
 							[showValidation]="false"
 							(click)="$event.stopPropagation(); $event.preventDefault()"
 						>
@@ -67,7 +67,6 @@
 			</ng-container>
 
 			<ng-container *ngSwitchDefault>
-				<!--				[style.min-width]="col.width"-->
 				<td class="ss-table-td">
 					&nbsp;
 				</td>
