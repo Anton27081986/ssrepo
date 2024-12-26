@@ -8,11 +8,11 @@
 						<snab-link [text]="tovNode().tovSignal().tov.name"
 								   [url]=" tovNode().tovSignal().tov.linkToDetail"
 								   [type]="TextType.Caption"></snab-link>
-						<snab-button [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon" snab-tooltip
-									 [tooltipText]="tovNode().tovCommentSignal()"
-									 [position]="TooltipPosition.Top"
-									 [theme]="TooltipTheme.Dark"></snab-button>
 						<div class="ss-table-td__content--actions">
+							<snab-button [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon" snab-tooltip
+										 [tooltipText]="tovNode().tovCommentSignal()"
+										 [position]="TooltipPosition.Top"
+										 [theme]="TooltipTheme.Dark"></snab-button>
 							<snab-dropdown-button [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.More">
 								<snab-dropdown-item [textContent]="'История продаж ТП'"
 													(click)="$event.stopPropagation(); openSalesHistory()"></snab-dropdown-item>

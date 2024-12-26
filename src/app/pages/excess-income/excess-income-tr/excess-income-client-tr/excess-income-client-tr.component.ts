@@ -15,7 +15,7 @@ import {
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
-import { RouterService } from '@app/core/services/router.service';
+import { RouterService, routes } from '@app/core/services/router.service';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -50,7 +50,6 @@ export class ExcessIncomeClientTrComponent {
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
 		private readonly state: ExcessIncomeState,
-		protected readonly routerService: RouterService,
 	) {}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
@@ -59,6 +58,10 @@ export class ExcessIncomeClientTrComponent {
 		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
 			data: { client: this.client().client, isCurrent: isCurrent, state: this.state },
 		});
+	}
+
+	goToClientCard() {
+		window.open(routes.clientCard.toDetail(this.client().client.id).join('/'), '_target');
 	}
 
 	protected readonly IconType = IconType;
