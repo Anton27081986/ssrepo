@@ -50,7 +50,6 @@ export class ExcessIncomeClientTrComponent {
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
 		private readonly state: ExcessIncomeState,
-		protected readonly routerService: RouterService,
 	) {}
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
