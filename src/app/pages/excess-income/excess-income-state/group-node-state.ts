@@ -172,6 +172,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 							this.contractorId,
 							state,
 							this.state.currencyControl.value!,
+							this,
 						);
 					});
 				}),

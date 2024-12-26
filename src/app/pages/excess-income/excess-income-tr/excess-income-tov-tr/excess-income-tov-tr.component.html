@@ -1,47 +1,28 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [formGroup]="tovNode().tovSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
-			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.comments">
-				<td class="ss-table-td" [style.min-width]="col.width">
-					<div class="ss-table-td__content">
-						<snab-text [type]="TextType.Caption">{{ tovNode().tovCommentSignal() }}</snab-text>
-						<div class="ss-table-td__content--actions">
-							<snab-button
-								*ngIf="canEditComment"
-								snab-tooltip [tooltipText]="'Редактировать комментарий'"
-								[position]="TooltipPosition.Bottom"
-								[theme]="TooltipTheme.Dark"
-								[icon]="IconType.Edit" [iconPosition]="IconPosition.OnlyIcon"
-								[type]="ButtonType.Primary"
-								(click)="openModalEditComment()"
-							>
-							</snab-button>
-							<snab-button snab-tooltip [tooltipText]="'История изменения комментарий'"
-										 [position]="TooltipPosition.Bottom"
-										 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
-										 [icon]="IconType.Box"
-										 (click)="$event.stopPropagation(); openCommentsHistory()"></snab-button>
-						</div>
-					</div>
-				</td>
-			</ng-container>
 
 			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
 				<td class="ss-table-td" [style.min-width]="col.width">
 					<div class="ss-table-td__content ss-table-td__content--space">
-						<snab-text [isEllipsis]="true" [type]="TextType.Caption"> {{ tovNode().tovSignal().tov.name }}
-						</snab-text>
+						<snab-link [text]="tovNode().tovSignal().tov.name"
+								   [url]=" tovNode().tovSignal().tov.linkToDetail"
+								   [type]="TextType.Caption"></snab-link>
+						<snab-button [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon" snab-tooltip
+									 [tooltipText]="tovNode().tovCommentSignal()"
+									 [position]="TooltipPosition.Top"
+									 [theme]="TooltipTheme.Dark"></snab-button>
 						<div class="ss-table-td__content--actions">
-							<snab-button snab-tooltip [tooltipText]="'История продаж ТП'"
-										 [position]="TooltipPosition.Bottom"
-										 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
-										 [icon]="IconType.Clock"
-										 (click)="$event.stopPropagation(); openSalesHistory()"></snab-button>
-							<snab-button snab-tooltip [tooltipText]="'История изменения цены ТП'"
-										 [position]="TooltipPosition.Bottom"
-										 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
-										 [icon]="IconType.ArchiveIn"
-										 (click)="$event.stopPropagation(); openPriceHistory()"></snab-button>
+							<snab-dropdown-button [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.More">
+								<snab-dropdown-item [textContent]="'История продаж ТП'"
+													(click)="$event.stopPropagation(); openSalesHistory()"></snab-dropdown-item>
+								<snab-dropdown-item [textContent]="'История изменения цены ТП'"
+													(click)="$event.stopPropagation(); openPriceHistory()"></snab-dropdown-item>
+								<snab-dropdown-item [textContent]="'История изменения комментарий'"
+													(click)="$event.stopPropagation(); openCommentsHistory()"></snab-dropdown-item>
+								<snab-dropdown-item *ngIf="canEditComment" [textContent]="'Изменить комментарий'"
+													(click)="$event.stopPropagation(); openModalEditComment()"></snab-dropdown-item>
+							</snab-dropdown-button>
 						</div>
 					</div>
 				</td>
@@ -60,7 +41,7 @@
 					<td class="ss-table-td" [style.max-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
 							<snab-form-field
-								[size]="Size.Small"
+								[size]="Size.Default"
 								[showValidation]="false"
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
@@ -88,7 +69,7 @@
 					<td class="ss-table-td" [style.min-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
 							<snab-form-field
-								[size]="Size.Small"
+								[size]="Size.Default"
 								[showValidation]="false"
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
@@ -101,6 +82,8 @@
 									[step]="0.01"
 								/>
 							</snab-form-field>
+
+							<snab-text>{{ tovNode().currentParams.controls.fixPriceCurrency.value }}</snab-text>
 
 							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
@@ -138,7 +121,7 @@
 					<td class="ss-table-td" [style.max-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
 							<snab-form-field
-								[size]="Size.Small"
+								[size]="Size.Default"
 								[showValidation]="false"
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
@@ -167,7 +150,7 @@
 					<td class="ss-table-td" [style.min-width]="col.width">
 						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
 							<snab-form-field
-								[size]="Size.Small"
+								[size]="Size.Default"
 								[showValidation]="false"
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
@@ -180,6 +163,8 @@
 									[step]="0.01"
 								/>
 							</snab-form-field>
+
+							<snab-text>{{ tovNode().nextParams.controls.fixPriceCurrency.value }}</snab-text>
 
 							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"

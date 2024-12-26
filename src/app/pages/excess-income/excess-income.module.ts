@@ -30,6 +30,8 @@ import {
 	CardComponent,
 	ClickOutsideDirective,
 	DividerComponent,
+	DropdownButtonComponent,
+	DropdownItemComponent,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	IconComponent,
@@ -48,6 +50,7 @@ import { CaptionModule } from '@app/shared/components/typography/caption/caption
 import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
 import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
 import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 @NgModule({
 	declarations: [
@@ -101,6 +104,9 @@ import { FormControlInputWithFuncEditModule } from '@app/shared/components/input
 		FormControlInputWithFuncEditModule,
 		FormFieldComponent,
 		FieldCtrlDirective,
+		DropdownButtonComponent,
+		DropdownItemComponent,
+		TooltipModule,
 	],
 })
 export class ExcessIncomeModule {}

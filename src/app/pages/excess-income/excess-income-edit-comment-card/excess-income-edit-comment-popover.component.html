@@ -6,7 +6,10 @@
 		<snab-divider></snab-divider>
 		<div class="excess-income-edit-comment-popover__body">
 			<ss-form-control-input-with-func-edit [size]="'big'"
-				[control]="tovNode().tovSignal().commentControl" [funcEdit]="false"></ss-form-control-input-with-func-edit>
+												  [control]="tovNode().tovSignal().commentControl" [funcEdit]="false"
+												  [error]="tovNode().tovSignal().commentControl.hasError('max') &&
+												   tovNode().tovSignal().commentControl.touched ? 'Превышено допустимое количество символов' : undefined"
+												  ></ss-form-control-input-with-func-edit>
 		</div>
 		<snab-divider></snab-divider>
 		<div class="excess-income-edit-comment-popover__footer">
