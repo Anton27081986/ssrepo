@@ -3,7 +3,7 @@
 		<ng-container [ngSwitch]="col.id">
 			<td class="ss-table-td" *ngIf="col.display">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-					<snab-link (click)="routerService.toClientCardDetail(client().client.id)"
+					<snab-link (click)="goToClientCard()"
 							   [text]="client().client.name"
 							   [type]="TextType.Caption"></snab-link>
 				</ng-container>
