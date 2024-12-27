@@ -32,8 +32,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 	public nextParams = this.tovSignal().paramsGroup.controls.nextParams;
 
-	public comment = this.tovSignal().commentControl;
-
 	public subscription: Subscription = new Subscription();
 
 	public tovSubject$: BehaviorSubject<ExcessIncomeTovFromBackend> =
@@ -206,7 +204,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.nextParams.controls.excessIncomePercent.updateValueAndValidity();
 		this.nextParams.controls.fixPrice.setValidators(compareValues(tov.nextParams.fixPrice));
 		this.nextParams.controls.fixPrice.updateValueAndValidity();
-		this.comment.setValue(tov.comment);
 	}
 
 	private calculateFinalPrice(price: number, snd: number): number {
@@ -280,24 +277,19 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.blockValueChangeForm$.next(false);
 	}
 
-	public updateComment() {
+	public updateComment(comment: string | null) {
 		this.service
 			.updateSndTovComment({
 				clientId: this.tov.client.id,
 				contractorId: this.tov.contractor.id,
 				tovId: this.tov.tov.id,
-				comment: this.comment.value,
+				comment: comment,
 				currencyId: this.currencySignal().id,
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
-				this.comment.setValue(value.comment);
 				this.tovCommentSignal.set(value.comment);
 			});
-	}
-
-	public resetComment() {
-		this.tovSignal().commentControl.setValue(this.tovCommentSignal());
 	}
 
 	private createFormGroup(item: ExcessIncomeTovFromBackend): ExcessIncomeTov {
@@ -343,9 +335,8 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			}),
 		});
 
-		this.comment = new FormControl<string | null>(item.comment, Validators.max(50));
-		return this.mapExcessIncomeTov(formGroup, item);
 		this.blockValueChangeForm$.next(false);
+		return this.mapExcessIncomeTov(formGroup, item);
 	}
 
 	mapExcessIncomeTov(
@@ -361,9 +352,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			tovSubgroup: item.tovSubgroup,
 			status: item.status,
 			paramsGroup: formGroup,
-			commentControl: this.comment,
 			currentParams: item.currentParams,
 			nextParams: item.nextParams,
+			comment: item.comment,
 		};
 	}
 

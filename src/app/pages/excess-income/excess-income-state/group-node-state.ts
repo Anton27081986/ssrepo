@@ -17,7 +17,6 @@ import {
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ExcessIncomeParamsFormTov } from '@app/core/models/excess-income/excess-income-tov-from-backend';
 
 @UntilDestroy()
 export class GroupNodeState extends ExcessIncomeBaseNodeState {

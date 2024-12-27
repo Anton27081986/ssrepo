@@ -12,6 +12,8 @@ import { ButtonType, TextType } from '@front-components/components';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ModalRef } from '@app/core/modal/modal.ref';
+import { FormControl, Validators } from '@angular/forms';
+import { F } from '@angular/cdk/keycodes';
 
 @UntilDestroy()
 @Component({
@@ -27,14 +29,20 @@ export class ExcessIncomeEditCommentPopoverComponent {
 	protected readonly TextType = TextType;
 	protected readonly ButtonType = ButtonType;
 
+	comment: FormControl<string | null>;
+
 	constructor(
 		@Inject(DIALOG_DATA)
 		protected readonly data: { tovNode: TovNodeState },
-	) {}
+	) {
+		this.comment = new FormControl(this.tovNode().tovCommentSignal(), [
+			Validators.maxLength(50),
+		]);
+	}
 
 	update() {
-		if (this.tovNode().comment.valid) {
-			this.tovNode().updateComment();
+		if (this.comment.valid) {
+			this.tovNode().updateComment(this.comment.value);
 			this.close();
 		}
 	}
