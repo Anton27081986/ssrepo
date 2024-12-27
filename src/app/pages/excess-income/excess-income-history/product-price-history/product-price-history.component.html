@@ -45,9 +45,10 @@
 				@case (TableState.Full) {
 					<ss-table class="table"
 							  [head]="[
-						{title: 'Дата', field: 'date'},
+						{title: 'Дата', field: 'date', sizeRatio: 0.8},
 						{title: 'Автор', field: 'author'},
-						{title: 'Действие', field: 'periodType'},
+						{title: 'Действие', field: 'periodType', sizeRatio: 0.8},
+						{title: 'Поле', field: 'property', sizeRatio: 2},
 						{title: 'Старое значение', field: 'oldExcessIncomePercent'},
 						{title: 'Новое значение', field: 'newExcessIncomePercent'}
 						]"
