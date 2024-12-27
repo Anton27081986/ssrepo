@@ -23,7 +23,7 @@ import {
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
-import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
+import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
 
 @UntilDestroy()
 @Component({
@@ -43,7 +43,7 @@ export class ExcessIncomeGroupTrComponent {
 
 	public openPriceHistory() {
 		this.modalService
-			.open(PriceHistoryComponent, {
+			.open(GroupPriceHistoryComponent, {
 				data: {
 					clientId: this.group().groupSignal().client.id,
 					contractorId: this.group().groupSignal().contractor.id,

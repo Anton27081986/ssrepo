@@ -19,7 +19,7 @@ import {
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
-import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
+import { ProductPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/product-price-history/product-price-history.component';
 import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
 
 @UntilDestroy()
@@ -66,11 +66,8 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 
 	protected openPriceHistory() {
 		this.modalService
-			.open(PriceHistoryComponent, {
-				data: {
-					title: 'История изменения цены ТП',
-					objectId: `${this.tovNode().tovSignal().client.id}:${this.tovNode().tovSignal().contractor.id}:${this.tovNode().tovSignal().tovSubgroup.id}:${this.tovNode().tovSignal().tov.id}`,
-				},
+			.open(ProductPriceHistoryComponent, {
+				data: { tov: this.tovNode().tovSignal() },
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
