@@ -119,6 +119,7 @@ export class ProductPriceHistoryComponent {
 			tableItem.newExcessIncomePercent = x.changes[0].toValue?.toString() ?? '-';
 			tableItem.oldExcessIncomePercent = x.changes[0].fromValue?.toString() ?? '-';
 			tableItem.periodType = x.action ?? '-';
+			tableItem.property = x.changes[0].propertyName ?? '-';
 			tableItem.date = x.createdTime
 				? `${new Date(Date.parse(x.createdTime)).toLocaleString('ru-RU', {
 						year: 'numeric',

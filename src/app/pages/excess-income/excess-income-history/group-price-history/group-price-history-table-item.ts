@@ -4,4 +4,5 @@ export interface IGroupPriceHistoryTableItem {
 	newExcessIncomePercent: string;
 	oldExcessIncomePercent: string;
 	periodType: string;
+	property: string;
 }
