@@ -58,8 +58,6 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 
-	protected readonly numberInputTextMask = numberInputTextMask;
-
 	ngOnDestroy() {
 		this.tovNode().subscription.unsubscribe();
 	}

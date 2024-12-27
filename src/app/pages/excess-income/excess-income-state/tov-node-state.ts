@@ -20,6 +20,7 @@ import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/gro
 
 @UntilDestroy()
 export class TovNodeState extends ExcessIncomeBaseNodeState {
+	public blockValueChangeForm$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public tovSignal: WritableSignal<ExcessIncomeTov> = signal(this.createFormGroup(this.tov));
 	public currencySignal: WritableSignal<IDictionaryItemDto> = signal(this.currency);
 	public tovCommentSignal: WritableSignal<string> = signal(this.tov.comment);
@@ -37,8 +38,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 	public tovSubject$: BehaviorSubject<ExcessIncomeTovFromBackend> =
 		new BehaviorSubject<ExcessIncomeTovFromBackend>(this.tov);
-
-	public blockValueChangeForm$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	get canEditSnd(): boolean {
 		return !this.permissions.includes(Permissions.EXCESS_INCOME_EDIT);
@@ -88,11 +87,6 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		super();
 
 		this.state = state;
-
-		if (this.canEditSnd) {
-			this.currentParams.disable();
-			this.nextParams.disable();
-		}
 
 		this.currentParams.controls.excessIncomePercent.valueChanges
 			.pipe(
@@ -307,24 +301,43 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	}
 
 	private createFormGroup(item: ExcessIncomeTovFromBackend): ExcessIncomeTov {
+		this.blockValueChangeForm$.next(true);
 		const formGroup: FormGroup<ExcessIncomeParamsFormTov> = new FormBuilder().group({
 			currentParams: new FormBuilder().group({
 				price: [item.currentParams.price],
 				excessIncomePercent: [
-					item.currentParams.excessIncomePercent,
+					{
+						value: item.currentParams.excessIncomePercent,
+						disabled: this.canEditSnd,
+					},
 					compareValues(item.currentParams.excessIncomePercent),
 				],
-				fixPrice: [item.currentParams.fixPrice, compareValues(item.currentParams.fixPrice)],
+				fixPrice: [
+					{
+						value: item.currentParams.fixPrice,
+						disabled: this.canEditSnd,
+					},
+					compareValues(item.currentParams.fixPrice),
+				],
 				finalPrice: [item.currentParams.finalPrice],
 				fixPriceCurrency: [item.currentParams.fixPriceCurrency],
 			}),
 			nextParams: new FormBuilder().group({
 				price: [item.nextParams.price],
 				excessIncomePercent: [
-					item.nextParams.excessIncomePercent,
+					{
+						value: item.nextParams.excessIncomePercent,
+						disabled: this.canEditSnd,
+					},
 					compareValues(item.nextParams.excessIncomePercent),
 				],
-				fixPrice: [item.nextParams.fixPrice, compareValues(item.nextParams.fixPrice)],
+				fixPrice: [
+					{
+						value: item.nextParams.fixPrice,
+						disabled: this.canEditSnd,
+					},
+					compareValues(item.nextParams.fixPrice),
+				],
 				finalPrice: [item.nextParams.finalPrice],
 				fixPriceCurrency: [item.nextParams.fixPriceCurrency],
 			}),
@@ -332,6 +345,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 		this.comment = new FormControl<string | null>(item.comment, Validators.max(50));
 		return this.mapExcessIncomeTov(formGroup, item);
+		this.blockValueChangeForm$.next(false);
 	}
 
 	mapExcessIncomeTov(
