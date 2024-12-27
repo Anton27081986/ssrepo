@@ -32,7 +32,11 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
 					<td class="ss-table-td" [style.min-width]="col.width">
 						<div class="ss-table-td__content">
-							<snab-text> {{ tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value }}</snab-text>
+							<snab-text snab-tooltip
+									   [tooltipText]="'Рекомендованная цена.'"
+									   [position]="TooltipPosition.Top"
+									   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value }}
+							</snab-text>
 						</div>
 					</td>
 				</ng-container>
@@ -46,6 +50,10 @@
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
 								<snab-input
+									snab-tooltip
+									[tooltipText]="'СНД, %'"
+									[position]="TooltipPosition.Top"
+									[theme]="TooltipTheme.Dark"
 									fieldCtrl
 									formControlName="excessIncomePercent"
 									[onlyPositiveValue]="true"
@@ -74,6 +82,10 @@
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
 								<snab-input
+									snab-tooltip
+									[tooltipText]="'Фиксированная цена'"
+									[position]="TooltipPosition.Top"
+									[theme]="TooltipTheme.Dark"
 									fieldCtrl
 									formControlName="fixPrice"
 									[onlyPositiveValue]="true"
@@ -98,7 +110,10 @@
 					<td class="ss-table-td" [class.ss-table-td__different-price]="differentCurrentFinalPrice"
 						[style.max-width]="col.width">
 						<div class="ss-table-td__content">
-							<snab-text>
+							<snab-text snab-tooltip
+									   [tooltipText]="'Рекомендованная цена + СНД.'"
+									   [position]="TooltipPosition.Top"
+									   [theme]="TooltipTheme.Dark">
 								{{
 									tovNode().currentParams.controls.finalPrice.value
 										| numWithSpaces:2
@@ -113,7 +128,11 @@
 			<ng-container formGroupName="nextParams">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
 					<td class="ss-table-td" [style.min-width]="col.width">
-						<snab-text> {{ tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value }}</snab-text>
+						<snab-text snab-tooltip
+								   [tooltipText]="'Рекомендованная цена.'"
+								   [position]="TooltipPosition.Top"
+								   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value }}
+						</snab-text>
 					</td>
 				</ng-container>
 
@@ -126,6 +145,10 @@
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
 								<snab-input
+									snab-tooltip
+									[tooltipText]="'СНД, %'"
+									[position]="TooltipPosition.Top"
+									[theme]="TooltipTheme.Dark"
 									fieldCtrl
 									formControlName="excessIncomePercent"
 									[onlyPositiveValue]="true"
@@ -155,6 +178,10 @@
 								(click)="$event.stopPropagation(); $event.preventDefault()"
 							>
 								<snab-input
+									snab-tooltip
+									[tooltipText]="'Фиксированная цена'"
+									[position]="TooltipPosition.Top"
+									[theme]="TooltipTheme.Dark"
 									fieldCtrl
 									formControlName="fixPrice"
 									[onlyPositiveValue]="true"
@@ -166,7 +193,7 @@
 
 							<snab-text>{{ tovNode().nextParams.controls.fixPriceCurrency.value }}</snab-text>
 
-							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Top"
 										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
 										 [iconPosition]="IconPosition.OnlyIcon"
 										 (click)="tovNode().updateFixPrice(false);$event.stopPropagation()"
@@ -178,7 +205,10 @@
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
 					<td class="ss-table-td" [class.ss-table-td__different-price]="differentNextFinalPrice"
 						[style.max-width]="col.width">
-						<snab-text>
+						<snab-text snab-tooltip
+								   [tooltipText]="'Рекомендованная цена + СНД.'"
+								   [position]="TooltipPosition.Top"
+								   [theme]="TooltipTheme.Dark">
 							{{
 								tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value |
 									numWithSpaces:2

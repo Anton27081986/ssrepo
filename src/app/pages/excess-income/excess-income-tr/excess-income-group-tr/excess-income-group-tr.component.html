@@ -18,6 +18,10 @@
 							(click)="$event.stopPropagation(); $event.preventDefault()"
 						>
 							<snab-input
+								snab-tooltip
+								[tooltipText]="'СНД, %'"
+								[position]="TooltipPosition.Top"
+								[theme]="TooltipTheme.Dark"
 								fieldCtrl
 								formControlName="sndCurrentControl"
 								[onlyPositiveValue]="true"
@@ -48,6 +52,10 @@
 							(click)="$event.stopPropagation(); $event.preventDefault()"
 						>
 							<snab-input
+								snab-tooltip
+								[tooltipText]="'СНД, %'"
+								[position]="TooltipPosition.Top"
+								[theme]="TooltipTheme.Dark"
 								fieldCtrl
 								formControlName="sndNextControl"
 								[onlyPositiveValue]="true"
