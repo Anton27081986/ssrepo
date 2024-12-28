@@ -6,4 +6,5 @@ export interface ISalesHistoryTableItem {
 	quantity: number;
 	sum: number;
 	currency: string;
+	status: string;
 }
