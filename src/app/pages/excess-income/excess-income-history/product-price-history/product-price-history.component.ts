@@ -4,7 +4,6 @@ import {
 	Component,
 	Inject,
 	inject,
-	WritableSignal,
 } from '@angular/core';
 import { CardModule } from '@app/shared/components/card/card.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
@@ -89,7 +88,7 @@ export class ProductPriceHistoryComponent {
 
 			this.excessIncomeApiService
 				.getTovHistory(
-					`${this.client.id}:${this.contractor.id}:${this.tovGroup.id}:${this.tov.id}`,
+					`${this.client.id}:${this.contractor ? this.contractor.id + ':' : ''}${this.tovGroup.id}:${this.tov.id}`,
 					this.pageSize,
 					this.offset,
 				)
@@ -116,10 +115,10 @@ export class ProductPriceHistoryComponent {
 
 			tableItem.author =
 				{ text: x.user.name ?? '-', pseudoLink: x.user.id!.toString() } ?? '-';
-			tableItem.newExcessIncomePercent = x.changes[0].toValue?.toString() ?? '-';
-			tableItem.oldExcessIncomePercent = x.changes[0].fromValue?.toString() ?? '-';
+			tableItem.newExcessIncomePercent = x.changes[0]?.toValue?.toString() ?? '-';
+			tableItem.oldExcessIncomePercent = x.changes[0]?.fromValue?.toString() ?? '-';
 			tableItem.periodType = x.action ?? '-';
-			tableItem.property = x.changes[0].propertyName ?? '-';
+			tableItem.property = x.changes[0]?.propertyName ?? '-';
 			tableItem.date = x.createdTime
 				? `${new Date(Date.parse(x.createdTime)).toLocaleString('ru-RU', {
 						year: 'numeric',

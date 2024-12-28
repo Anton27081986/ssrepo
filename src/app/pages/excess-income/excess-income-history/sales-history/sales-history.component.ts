@@ -30,8 +30,8 @@ import { catchError } from 'rxjs/operators';
 import {ExcessIncomeTov} from "@app/core/models/excess-income/excess-income-tov-from-backend";
 
 interface IDialogData {
-	clientId?: number;
-	tov: ExcessIncomeTov;
+	clientId?: number | null;
+	tovId?: number;
 }
 
 @UntilDestroy()
@@ -76,7 +76,7 @@ export class SalesHistoryComponent {
 	}
 
 	private getHistory() {
-		if (this.data.clientId && this.data.tov) {
+		if (this.data.tovId) {
 			this.tableState = TableState.Loading;
 
 			this.excessIncomeApiService

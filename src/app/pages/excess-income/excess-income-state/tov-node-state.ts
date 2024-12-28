@@ -281,7 +281,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.service
 			.updateSndTovComment({
 				clientId: this.tov.client.id,
-				contractorId: this.tov.contractor.id,
+				contractorId: this.tov.contractor?.id || null,
 				tovId: this.tov.tov.id,
 				comment: comment,
 				currencyId: this.currencySignal().id,
