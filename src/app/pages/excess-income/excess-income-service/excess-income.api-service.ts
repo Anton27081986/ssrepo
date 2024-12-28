@@ -121,7 +121,7 @@ export class ExcessIncomeApiService {
 	public getCommentsHistory(
 		clientId: number,
 		tovId: number,
-		contractorId: number,
+		contractorId: number | null,
 		limit: number,
 		offset: number,
 	): Observable<IResponse<ExccessIncomeCommentsHistory>> {
@@ -138,7 +138,7 @@ export class ExcessIncomeApiService {
 	}
 
 	public getSalesHistory(
-		clientId: number,
+		clientId: number | undefined | null,
 		tovId: number,
 		limit: number,
 		offset: number,

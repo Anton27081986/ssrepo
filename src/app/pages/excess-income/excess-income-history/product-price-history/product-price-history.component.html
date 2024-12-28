@@ -18,7 +18,7 @@
 				</div>
 				<div class="description-item">
 					<ss-text size="3">Контрагент:</ss-text>
-					@if (client?.linkToDetail) {
+					@if (contractor?.linkToDetail) {
 						<a [href]="contractor?.linkToDetail">{{ contractor?.name || '-' }}</a>
 					} @else {
 						<ss-text size="3">{{ contractor?.name || '-' }}</ss-text>
