@@ -13,8 +13,8 @@ import {
 	ExcessIncomeBaseNodeState,
 } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
 import { signal, WritableSignal } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription, tap, distinctUntilChanged } from 'rxjs';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 
@@ -88,10 +88,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 		this.currentParams.controls.excessIncomePercent.valueChanges
 			.pipe(
-				distinctUntilChanged(),
 				untilDestroyed(this),
 				tap(control => {
-					if (this.blockValueChangeForm$.value) {
+					if (this.blockValueChangeForm$.value || this.canEditSnd) {
 						return;
 					}
 					if (this.currentParams.controls.price.value && control) {
@@ -110,10 +109,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 		this.currentParams.controls.fixPrice.valueChanges
 			.pipe(
-				distinctUntilChanged(),
 				untilDestroyed(this),
 				tap(control => {
-					if (this.blockValueChangeForm$.value) {
+					if (this.blockValueChangeForm$.value || this.canEditSnd) {
 						return;
 					}
 					this.currentParams.controls.finalPrice.setValue(control);
@@ -123,10 +121,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 		this.nextParams.controls.excessIncomePercent.valueChanges
 			.pipe(
-				distinctUntilChanged(),
 				untilDestroyed(this),
 				tap(val => {
-					if (this.blockValueChangeForm$.value) {
+					if (this.blockValueChangeForm$.value || this.canEditSnd) {
 						return;
 					}
 					if (this.nextParams.controls.price.value && val) {
@@ -142,10 +139,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 		this.nextParams.controls.fixPrice.valueChanges
 			.pipe(
-				distinctUntilChanged(),
 				untilDestroyed(this),
 				tap(val => {
-					if (this.blockValueChangeForm$.value) {
+					if (this.blockValueChangeForm$.value || this.canEditSnd) {
 						return;
 					}
 					this.nextParams.controls.finalPrice.setValue(val);
@@ -154,7 +150,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			.subscribe();
 	}
 
-	updateFromState(tov: ExcessIncomeTovFromBackend) {
+	public updateFromState(tov: ExcessIncomeTovFromBackend) {
 		this.currentParams.controls.price.setValue(tov.currentParams.price, { emitEvent: false });
 
 		this.currentParams.controls.excessIncomePercent.setValue(
@@ -269,7 +265,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			});
 	}
 
-	updateState(tov: ExcessIncomeTovFromBackend) {
+	public updateState(tov: ExcessIncomeTovFromBackend) {
 		this.blockValueChangeForm$.next(true);
 		this.updateFromState(tov);
 		this.tovSubject$.next(tov);
@@ -339,7 +335,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		return this.mapExcessIncomeTov(formGroup, item);
 	}
 
-	mapExcessIncomeTov(
+	public mapExcessIncomeTov(
 		formGroup: FormGroup<ExcessIncomeParamsFormTov>,
 		item: ExcessIncomeTovFromBackend,
 	) {
@@ -358,7 +354,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		};
 	}
 
-	focusOutControl($event: FocusEvent) {
+	public focusOutControl($event: FocusEvent) {
 		const relatedTarget = $event.relatedTarget as HTMLElement;
 		this.blockValueChangeForm$.next(true);
 		if (
@@ -369,7 +365,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			this.blockValueChangeForm$.next(false);
 			return;
 		}
-
+		console.log('focusOutControl');
 		this.updateFromState(this.tovSubject$.value);
 
 		this.blockValueChangeForm$.next(false);
