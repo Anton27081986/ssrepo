@@ -76,9 +76,13 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		this.modalService
 			.open(SalesHistoryComponent, {
 				data: {
-					clientId: this.tovNode().tovSignal().client.id,
-					contractorId: this.tovNode().tovSignal().contractor ? this.tovNode().tovSignal().contractor.id : null,
-					tovId: this.tovNode().tovSignal().tov.id,
+					clientId: this.tovNode().tovSignal().client
+						? this.tovNode().tovSignal().client.id
+						: null,
+					contractorId: this.tovNode().tovSignal().contractor
+						? this.tovNode().tovSignal().contractor.id
+						: null,
+					tov: this.tovNode().tovSignal(),
 				},
 			})
 			.afterClosed()
@@ -91,7 +95,9 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 			.open(CommentsHistoryComponent, {
 				data: {
 					clientId: this.tovNode().tovSignal().client.id,
-					contractorId: this.tovNode().tovSignal().contractor ? this.tovNode().tovSignal().contractor.id : null,
+					contractorId: this.tovNode().tovSignal().contractor
+						? this.tovNode().tovSignal().contractor.id
+						: null,
 					tovGroupId: this.tovNode().tovSignal().tovSubgroup.id,
 					tovId: this.tovNode().tovSignal().tov.id,
 				},
