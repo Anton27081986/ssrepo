@@ -5,10 +5,12 @@ import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-lay
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
-import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
-import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
-import { CompletedWorkActPermissionsGuard } from '@app/core/guards/completed-work-act-permissions.guard';
-import { ExcessIncomePermissionsGuard } from '@app/core/guards/excess-income-permission.guard';
+import {
+	completedWorkActPermissionsGuard,
+	excessIncomePermissionsGuard,
+	procurementsPermissionsGuard,
+	proposalsPermissionsGuard,
+} from '@app/core/guards';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -40,7 +42,7 @@ const routes: Routes = [
 					},
 					{
 						path: 'raw-material-accounting',
-						canActivate: [ProcurementsPermissionsGuard],
+						canActivate: [procurementsPermissionsGuard],
 						loadChildren: () =>
 							import(
 								'./pages/raw-material-accounting/raw-material-accounting.module'
@@ -48,7 +50,7 @@ const routes: Routes = [
 					},
 					{
 						path: 'completed-work-acts',
-						canActivate: [CompletedWorkActPermissionsGuard],
+						canActivate: [completedWorkActPermissionsGuard],
 						loadChildren: () =>
 							import('./pages/completed-work-acts/completed-work-acts.module').then(
 								m => m.CompletedWorkActsModule,
@@ -95,7 +97,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FullWidthWithoutFooterLayoutComponent,
-		canActivate: [AuthGuard, ProposalsPermissionsGuard],
+		canActivate: [AuthGuard, proposalsPermissionsGuard],
 		data: {
 			animation: 'animation',
 		},
@@ -128,7 +130,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FullWidthWithoutFooterLayoutComponent,
-		canActivate: [AuthGuard, ExcessIncomePermissionsGuard],
+		canActivate: [AuthGuard, excessIncomePermissionsGuard],
 		data: {
 			animation: 'animation',
 		},
