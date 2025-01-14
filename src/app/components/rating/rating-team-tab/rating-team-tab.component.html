@@ -1,5 +1,6 @@
 <div class="rating-team-tab" [tooltip]="team().name" [theme]="TooltipTheme.DEFAULT"
 	 [position]="TooltipPosition.DEFAULT" *ngIf="team()" [class.rating-team-tab--active]="active()">
+	<div *ngIf="isTeam()" class="rating-team-tab__indicator"></div>
 	<div class="rating-team-tab__left">
 		<ss-icon *ngIf="team().place <= 3" [name]="'cup'" class="rating-team-tab__{{ team().place }}"></ss-icon>
 		<span>{{ team().shortName }}</span>

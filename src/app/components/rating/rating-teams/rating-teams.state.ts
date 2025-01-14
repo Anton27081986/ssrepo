@@ -59,7 +59,7 @@ export class RatingTeamsStateService {
 
 		this.rating$ = combineLatest([this.week$, this.userId$]).pipe(
 			tap(() => this.isLoading$.next(true)),
-			debounceTime(2000),
+			debounceTime(1000),
 			switchMap(([week, userId]) => {
 				if (!week || !userId) {
 					return NEVER;
