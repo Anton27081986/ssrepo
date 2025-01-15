@@ -46,8 +46,7 @@
 					</div>
 					<div class="message-content-blockquote-message" [innerHTML]="message.replyToMessage.text"></div>
 				</div>
-				<div class="message-content-text" [innerHTML]="message.text">
-				</div>
+				<div class="message-content-text" [innerHTML]="message.text | bypassSecurityTrustHtml"></div>
 				<div *ngIf="message.attachments?.length" class="files">
 					<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
 				</div>

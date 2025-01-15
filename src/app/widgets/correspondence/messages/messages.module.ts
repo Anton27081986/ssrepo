@@ -13,6 +13,7 @@ import { TabsModule } from '@app/shared/components/tabs/tabs.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
+import { BypassSecurityTrustHtmlPipe } from '@app/core/pipes/bypass-security-trust-html.pipe';
 
 @NgModule({
 	declarations: [MessagesComponent],
@@ -35,6 +36,7 @@ import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-m
 		PipesModule,
 		TooltipMenuModule,
 		DatePipe,
+		BypassSecurityTrustHtmlPipe,
 	],
 })
 export class MessagesModule {}
