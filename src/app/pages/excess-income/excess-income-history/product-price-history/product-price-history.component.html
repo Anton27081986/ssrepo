@@ -56,9 +56,9 @@
 							  (controlClick)="openModalInfoUser($event)"
 					>
 					</ss-table>
-					<div class="footer">
-						<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="pageIndexChange($event)"></ss-pagination>
-					</div>
+<!--					<div class="footer">-->
+<!--						<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="pageIndexChange($event)"></ss-pagination>-->
+<!--					</div>-->
 				}
 				@case (TableState.Loading) {
 					<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>

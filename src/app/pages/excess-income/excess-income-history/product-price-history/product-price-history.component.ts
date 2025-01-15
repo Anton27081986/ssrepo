@@ -134,7 +134,7 @@ export class ProductPriceHistoryComponent {
 			});
 		});
 
-		return items;
+		return items.slice(0, 10);
 	}
 
 	protected openModalInfoUser(user: { row: ITableItem; icon: string }) {
