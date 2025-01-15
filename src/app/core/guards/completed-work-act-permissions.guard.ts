@@ -1,30 +1,26 @@
-import { CanActivate, Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { map, Observable } from 'rxjs';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
-import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import { map } from 'rxjs';
+import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 
-@Injectable({ providedIn: 'root' })
-export class CompletedWorkActPermissionsGuard implements CanActivate {
-	public constructor(
-		private readonly router: Router,
-		private readonly permissionsFacadeService: PermissionsFacadeService,
-	) {}
+export const completedWorkActPermissionsGuard: CanActivateFn = () => {
+	const router = inject(Router);
+	const permissionsFacadeService = inject(PermissionsFacadeService);
 
-	public canActivate(): Observable<boolean> {
-		return this.permissionsFacadeService.completedWorkActsPermissions$.pipe(
-			filterTruthy(),
-			map(permissions => {
-				const checkPermission = permissions.find(
-					item => item === Permissions.COMPLETED_WORK_ACTS,
-				);
-
-				if (checkPermission) {
+	return permissionsFacadeService
+		.checkModulePermissions(
+			ModulesWithPermissionsEnum.CompletedWorkActs,
+			Permissions.COMPLETED_WORK_ACTS,
+		)
+		.pipe(
+			map(isAllowAccess => {
+				if (isAllowAccess) {
 					return true;
 				}
 
-				this.router.navigate(['not-permission'], {
+				router.navigate(['not-permission'], {
 					queryParams: {
 						redirectUrl: 'completed-work-acts',
 					},
@@ -33,5 +29,4 @@ export class CompletedWorkActPermissionsGuard implements CanActivate {
 				return false;
 			}),
 		);
-	}
-}
+};

@@ -15,10 +15,21 @@
 	user-select: none;
 	background-color: #0000000A;
 	border: 1px solid #0000000A;
+	position: relative;
 
 	&--active {
 		border: 1px solid #4770FF4D;
 		background-color: #4770FF4D;
+	}
+
+	&__indicator {
+		position: absolute;
+		width: 6px;
+		height: 6px;
+		background-color: #416CFF;
+		border-radius: 50%;
+		top: 4px;
+		right: 4px;
 	}
 
 	&:hover {

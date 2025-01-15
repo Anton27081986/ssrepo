@@ -88,7 +88,7 @@ export class ProductPriceHistoryComponent {
 
 			this.excessIncomeApiService
 				.getTovHistory(
-					`${this.client.id}:${this.contractor ? this.contractor.id + ':' : ''}${this.tovGroup.id}:${this.tov.id}`,
+					`${this.client.id}:${this.contractor ? `${this.contractor.id}:` : ''}${this.tovGroup.id}:${this.tov.id}`,
 					this.pageSize,
 					this.offset,
 				)
@@ -110,25 +110,31 @@ export class ProductPriceHistoryComponent {
 	}
 
 	private mapHistoryToTableItems(history: IChangeTrackerItemDto[]) {
-		return history.map(x => {
-			const tableItem: IGroupPriceHistoryTableItem = {} as IGroupPriceHistoryTableItem;
+		const items: IGroupPriceHistoryTableItem[] = [];
 
-			tableItem.author =
-				{ text: x.user.name ?? '-', pseudoLink: x.user.id!.toString() } ?? '-';
-			tableItem.newExcessIncomePercent = x.changes[0]?.toValue?.toString() ?? '-';
-			tableItem.oldExcessIncomePercent = x.changes[0]?.fromValue?.toString() ?? '-';
-			tableItem.periodType = x.action ?? '-';
-			tableItem.property = x.changes[0]?.propertyName ?? '-';
-			tableItem.date = x.createdTime
-				? `${new Date(Date.parse(x.createdTime)).toLocaleString('ru-RU', {
-						year: 'numeric',
-						month: 'numeric',
-						day: 'numeric',
-					})}`
-				: '-';
+		history.forEach(x => {
+			x.changes.forEach(change => {
+				const tableItem: IGroupPriceHistoryTableItem = {} as IGroupPriceHistoryTableItem;
 
-			return tableItem;
+				tableItem.author =
+					{ text: x.user.name ?? '-', pseudoLink: x.user.id!.toString() } ?? '-';
+				tableItem.newExcessIncomePercent = change?.toValue?.toString() ?? '-';
+				tableItem.oldExcessIncomePercent = change?.fromValue?.toString() ?? '-';
+				tableItem.periodType = x.action ?? '-';
+				tableItem.property = change?.propertyName ?? '-';
+				tableItem.date = x.createdTime
+					? `${new Date(Date.parse(x.createdTime)).toLocaleString('ru-RU', {
+							year: 'numeric',
+							month: 'numeric',
+							day: 'numeric',
+						})}`
+					: '-';
+
+				items.push(tableItem);
+			});
 		});
+
+		return items.slice(0, 10);
 	}
 
 	protected openModalInfoUser(user: { row: ITableItem; icon: string }) {
