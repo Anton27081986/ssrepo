@@ -23,7 +23,9 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	public blockValueChangeForm$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	public tovSignal: WritableSignal<ExcessIncomeTov> = signal(this.createFormGroup(this.tov));
 	public currencySignal: WritableSignal<IDictionaryItemDto> = signal(this.currency);
-	public tovCommentSignal: WritableSignal<string> = signal(this.tov.comment);
+	public tovCommentSignal: WritableSignal<string | null> = signal(
+		this.tov.comment.trim() ? this.tov.comment.trim() : null,
+	);
 	public state: ExcessIncomeState;
 
 	public formGroup: FormGroup<ExcessIncomeParamsFormTov> = this.tovSignal().paramsGroup;
@@ -261,7 +263,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
 				this.updateState(value);
-				this.tovCommentSignal.set(value.comment);
+				this.tovCommentSignal.set(value.comment.trim() ? value.comment : null);
 			});
 	}
 
@@ -284,7 +286,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
-				this.tovCommentSignal.set(value.comment);
+				this.tovCommentSignal.set(value.comment.trim() ? value.comment : null);
 			});
 	}
 
