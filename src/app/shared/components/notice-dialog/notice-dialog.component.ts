@@ -35,7 +35,9 @@ export class NoticeDialogComponent {
 		this.text = data.text;
 		this.type = data.type;
 		this.buttonCancel = data.buttonCancel;
-		this.buttonOk = data.buttonOk!;
+		if (data.buttonOk) {
+			this.buttonOk = data.buttonOk;
+		}
 	}
 
 	close(result: boolean) {
