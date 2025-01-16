@@ -204,16 +204,25 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 		this.formGroup.controls.sndCurrentControl.updateValueAndValidity();
 	}
 
-	public updateSnd($event: MouseEvent) {
+	updateSnd($event: MouseEvent, isCurrent: boolean) {
 		$event.stopPropagation();
 		$event.preventDefault();
+		let excessIncomePercent: number | null = null;
 
+		isCurrent
+			? (excessIncomePercent = this.getSndCurrentControl.value)
+			: (excessIncomePercent = this.getSndNextControl.value);
+
+		this.update(isCurrent, excessIncomePercent);
+	}
+
+	public update(isCurrent: boolean, excessIncomePercent: number | null) {
 		this.service
 			.updateSndTovGroups(this.groupSignal().client.id, {
 				contractorId: this.contractorId,
 				tovGroupId: this.groupSignal().tovSubgroup.id,
-				currentExcessIncomePercent: this.getSndCurrentControl.value,
-				nextExcessIncomePercent: this.getSndNextControl.value,
+				isCurrent: isCurrent,
+				excessIncomePercent: excessIncomePercent,
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(item => {

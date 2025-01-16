@@ -34,7 +34,7 @@
 									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
 									 [icon]="IconType.Check"
 									 [size]="Size.Small"
-									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
+									 [type]="ButtonType.Primary" (click)="group().updateSnd($event,true)"
 									 *ngIf="group().validSndControlCurrent$ | async">
 
 						</snab-button>
@@ -68,7 +68,7 @@
 									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
 									 [icon]="IconType.Check"
 									 [size]="Size.Small"
-									 [type]="ButtonType.Primary" (click)="group().updateSnd($event)"
+									 [type]="ButtonType.Primary" (click)="group().updateSnd($event,false)"
 									 *ngIf="group().validSndControlNext$ | async"></snab-button>
 					</div>
 				</td>
