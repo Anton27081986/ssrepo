@@ -2,9 +2,8 @@ import {
 	ExcessIncomeFromBackendGroup,
 	ExcessIncomeGroup,
 	ExcessIncomeParamsFormGroup,
-	IdName,
 } from '@app/core/models/excess-income/excess-income-from-backend-group';
-import { BehaviorSubject, debounceTime, map, NEVER, scan, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, debounceTime, map, NEVER, Observable, scan, switchMap, tap } from 'rxjs';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
@@ -16,14 +15,16 @@ import {
 	ExcessIncomeBaseNodeState,
 } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { effect, signal, WritableSignal } from '@angular/core';
+import { signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @UntilDestroy()
 export class GroupNodeState extends ExcessIncomeBaseNodeState {
 	public groupSignal: WritableSignal<ExcessIncomeGroup> = signal(
-		this.mapExcessIncomeGroup(this.group),
+		this.createFormGroup(this.group),
 	);
+
+	public formGroup: FormGroup<ExcessIncomeParamsFormGroup> = this.groupSignal().paramsGroup;
 
 	readonly event$: BehaviorSubject<ExcessIncomeGroupEventEnum> =
 		new BehaviorSubject<ExcessIncomeGroupEventEnum>(
@@ -35,17 +36,30 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 	}
 
 	get getSndNextControl() {
-		return this.groupSignal().paramsGroup.controls.sndNextControl;
+		return this.formGroup.controls.sndNextControl;
 	}
 
 	get getSndCurrentControl() {
-		return this.groupSignal().paramsGroup.controls.sndCurrentControl;
+		return this.formGroup.controls.sndCurrentControl;
 	}
+
+	public validSndControlCurrent$: Observable<boolean> =
+		this.getSndCurrentControl.statusChanges.pipe(
+			map(status => {
+				return status === 'VALID';
+			}),
+		);
+
+	public validSndControlNext$: Observable<boolean> = this.getSndNextControl.statusChanges.pipe(
+		map(status => {
+			return status === 'VALID';
+		}),
+	);
 
 	public tov$: BehaviorSubject<TovNodeState[]> = new BehaviorSubject<TovNodeState[]>([]);
 
-	private mapExcessIncomeGroup(item: ExcessIncomeFromBackendGroup): ExcessIncomeGroup {
-		const formGroup: FormGroup<ExcessIncomeParamsFormGroup> = new FormBuilder().group({
+	private createFormGroup(item: ExcessIncomeFromBackendGroup): ExcessIncomeGroup {
+		this.formGroup = new FormBuilder().group({
 			sndCurrentControl: [
 				item.currentExcessIncomePercent,
 				compareValues(item.currentExcessIncomePercent),
@@ -56,6 +70,13 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 			],
 		});
 
+		return this.mapExcessIncomeGroup(item, this.formGroup);
+	}
+
+	private mapExcessIncomeGroup(
+		item: ExcessIncomeFromBackendGroup,
+		formGroup: FormGroup<ExcessIncomeParamsFormGroup>,
+	): ExcessIncomeGroup {
 		return {
 			client: item.client,
 			contractor: item.contractor,
@@ -71,11 +92,16 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 		private readonly group: ExcessIncomeFromBackendGroup,
 		private readonly permissions: string[],
 		clientId: number,
-		contractorId: number | null,
+		private readonly contractorId: number | null,
 		private readonly service: ExcessIncomeService,
 		private readonly state: ExcessIncomeState,
 	) {
 		super();
+
+		if (this.canEdit) {
+			this.getSndNextControl.disable();
+			this.getSndCurrentControl.disable();
+		}
 
 		this.state.currencyControl.valueChanges.pipe(filterTruthy()).subscribe(value => {
 			this.event$.next(ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency);
@@ -106,7 +132,15 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 
 		this.event$
 			.pipe(
-				tap(() => this.isLoader$.next(true)),
+				tap(event => {
+					this.isLoader$.next(true);
+					if (
+						event === ExcessIncomeGroupEventEnum.excessIncomeGroupEventUpdate ||
+						event === ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency
+					) {
+						this.tov$.next([]);
+					}
+				}),
 				debounceTime(2000),
 				untilDestroyed(this),
 				switchMap(event => {
@@ -125,18 +159,19 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 						this.paginationControl.setValue(0, { emitEvent: false });
 					}
 
-					return this.getTov(clientId, contractorId);
+					return this.getTov(clientId, this.contractorId);
 				}),
 				map(res => {
 					this.total$.next(res.data.total);
-
 					return res.data.items.map(item => {
 						return new TovNodeState(
 							item,
 							res.permissions,
 							service,
+							this.contractorId,
 							state,
 							this.state.currencyControl.value!,
+							this,
 						);
 					});
 				}),
@@ -147,7 +182,6 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 					) {
 						return [...acc, ...value];
 					}
-
 					return value;
 				}),
 			)
@@ -157,34 +191,53 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 			});
 	}
 
-	public updateSnd($event: MouseEvent) {
+	updateFormState(group: ExcessIncomeFromBackendGroup) {
+		this.formGroup.controls.sndNextControl.setValue(group.nextExcessIncomePercent);
+		this.formGroup.controls.sndNextControl.setValidators(
+			compareValues(group.nextExcessIncomePercent),
+		);
+		this.formGroup.controls.sndCurrentControl.setValue(group.currentExcessIncomePercent);
+		this.formGroup.controls.sndCurrentControl.setValidators(
+			compareValues(group.currentExcessIncomePercent),
+		);
+		this.formGroup.controls.sndNextControl.updateValueAndValidity();
+		this.formGroup.controls.sndCurrentControl.updateValueAndValidity();
+	}
+
+	updateSnd($event: MouseEvent, isCurrent: boolean) {
 		$event.stopPropagation();
 		$event.preventDefault();
+		let excessIncomePercent: number | null = null;
 
+		isCurrent
+			? (excessIncomePercent = this.getSndCurrentControl.value)
+			: (excessIncomePercent = this.getSndNextControl.value);
+
+		this.update(isCurrent, excessIncomePercent);
+	}
+
+	public update(isCurrent: boolean, excessIncomePercent: number | null) {
 		this.service
 			.updateSndTovGroups(this.groupSignal().client.id, {
-				contractorId: this.groupSignal().contractor.id,
+				contractorId: this.contractorId,
 				tovGroupId: this.groupSignal().tovSubgroup.id,
-				currentExcessIncomePercent: this.getSndCurrentControl.value,
-				nextExcessIncomePercent: this.getSndNextControl.value,
+				isCurrent: isCurrent,
+				excessIncomePercent: excessIncomePercent,
 			})
-			.pipe(
-				untilDestroyed(this),
-				map(item => {
-					return this.mapExcessIncomeGroup(item);
-				}),
-			)
+			.pipe(untilDestroyed(this))
 			.subscribe(item => {
-				this.groupSignal.set(item);
+				this.updateFormState(item);
+				this.groupSignal.set(this.mapExcessIncomeGroup(item, this.formGroup));
+				this.event$.next(ExcessIncomeGroupEventEnum.excessIncomeGroupEventUpdate);
 			});
 	}
 
 	private getTov(clientId: number, contractorId: number | null) {
 		return this.service.getTov({
-			limit: 10,
+			limit: this.limit,
 			offset: this.paginationControl.value!,
-			clientId,
-			contractorId,
+			clientId: clientId,
+			contractorId: contractorId,
 			tovSubGroupId: this.group.tovSubgroup.id,
 			currencyId: this.state.currencyControl.value?.id!,
 			tovsIds: this.state.filters$.value.tov,

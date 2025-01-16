@@ -3,7 +3,7 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
-import { TextType } from '@front-components/components';
+import { TextType, TextWeight } from '@front-components/components';
 
 @Component({
 	selector: 'tr[excess-income-contractor-tr]',
@@ -20,4 +20,5 @@ export class ExcessIncomeContractorTrComponent {
 	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 	protected readonly Text = Text;
 	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
 }

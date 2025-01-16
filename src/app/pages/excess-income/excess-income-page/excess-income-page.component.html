@@ -1,7 +1,7 @@
 <div class="app-excess-income-page__header">
 	<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">Управление СНД</snab-text>
 	<div class="app-excess-income-page__header-filter">
-		<snab-button (click)="saveManual()" [type]="ButtonType.Outline" [size]="Size.Large"
+		<snab-button [type]="ButtonType.Outline" [size]="Size.Large"
 					 [iconPosition]="IconPosition.OnlyIcon"
 					 [icon]="IconType.FileNotFound"></snab-button>
 		<ss-select-v2 [size]="'small'" [formControl]="currencyControl" [placeholder]="'Выберите валюту'"
@@ -14,13 +14,13 @@
 	</div>
 </div>
 <div class="app-excess-income-page__body">
-	<ss-table-v2 [scroll]="false">
+	<ss-table-v2 [sticky]="false">
 		<ng-container *ngIf="isLoader$ | async; else content">
 			<ss-loader></ss-loader>
 		</ng-container>
 		<ng-template #content>
-			<ng-container *ngIf="clientsNode() as clients">
-				<ng-container *ngFor="let client of clients">
+			<ng-container *ngIf="clientsNode().length;else empty">
+				<ng-container *ngFor="let client of clientsNode()">
 					<tr excess-income-client-tr [client]="client" (click)="expended(client)"></tr>
 
 					<ng-container *ngIf="client.expended$ | async">
@@ -33,8 +33,8 @@
 									<tr excess-income-group-tr (click)="expended(group)" [group]="group"></tr>
 
 									<ng-container *ngIf="group.expended$ | async">
-											<tr *ngFor="let tov of group.tov$ | async" excess-income-tov-tr
-												[tovNode]="tov"></tr>
+										<tr *ngFor="let tov of group.tov$ | async" excess-income-tov-tr
+											[tovNode]="tov"></tr>
 										<ng-container *ngIf="group.isLoader$ | async">
 											<tr loader-tr [countCol]="13"></tr>
 										</ng-container>
@@ -55,7 +55,29 @@
 					</ng-container>
 				</ng-container>
 			</ng-container>
+			<ng-template #empty>
+				<tr class="app-excess-income-page__no-content">
+					<td colspan="13">
+						<ss-empty-placeholder>
+							<snab-label [type]="LabelType.Info" [size]="Size.Large"
+										[iconPosition]="IconPosition.OnlyIcon"
+										[icon]="IconType.FieldError"></snab-label>
+							<snab-text [weight]="TextWeight.Semibold" [type]="TextType.Title">По вашему запросу ничего
+								не
+								найдено
+							</snab-text>
+							<snab-text [weight]="TextWeight.Medium" [type]="TextType.Caption">Попробуйте изменить
+								параметры
+								поиска
+							</snab-text>
+						</ss-empty-placeholder>
+					</td>
+				</tr>
+			</ng-template>
 		</ng-template>
+		<ng-container *ngIf="isLoaderTr$ | async">
+			<tr loader-tr [countCol]="13"></tr>
+		</ng-container>
 		<tr [countCol]="13" pagination-tr [total]="total()"
 			[limit]="limit"
 			[formControl]="paginationControl"></tr>

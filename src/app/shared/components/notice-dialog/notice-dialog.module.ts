@@ -6,10 +6,19 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { NgIf } from '@angular/common';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { IconModule } from '@app/shared/components/icon/icon.module';
+import { ButtonComponent } from '@front-components/components';
 
 @NgModule({
 	declarations: [NoticeDialogComponent],
 	exports: [NoticeDialogComponent],
-	imports: [CardModule, HeadlineModule, TextModule, ButtonModule, NgIf, IconModule],
+	imports: [
+		CardModule,
+		HeadlineModule,
+		TextModule,
+		ButtonModule,
+		NgIf,
+		IconModule,
+		ButtonComponent,
+	],
 })
 export class NoticeDialogModule {}

@@ -11,13 +11,22 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { ITrTableBaseColumn } from '@app/core/store';
 import { ExcessIncomeUpdateTovGroupState } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-state';
-import { numberInputTextMask } from '@app/core/utils/mask';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExcessIncomeEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
+import {
+	ButtonType,
+	IconPosition,
+	IconType,
+	LabelType,
+	Size,
+	TextType,
+} from '@front-components/components';
+import { ModalService } from '@app/core/modal/modal.service';
+import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
+import { NotificationType } from '@front-components/components/lib/models/enums';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
-import { ButtonType, IconType, Size } from '@front-components/components';
 
 export interface ExcessIncomeUpdateSndClientPopoverData {
 	client: ExcessIncomeClient;
@@ -29,6 +38,7 @@ export enum ExcessIncomeSndClientRowItemField {
 	tovGroup = 'tovGroup',
 	snd = 'snd',
 }
+
 @UntilDestroy()
 @Component({
 	selector: 'app-excess-income-update-snd-client-popover',
@@ -49,16 +59,13 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 
 	protected tovGroups$ = this.state.tovGroups$;
 
-	get getIsDisabledButton(): boolean {
-		return this.tovGroups$.value.length === 0;
-	}
-
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly stateColumn: ColumnsStateService,
 		private readonly searchService: SearchFacadeService,
-		private readonly state: ExcessIncomeUpdateTovGroupState,
+		protected readonly state: ExcessIncomeUpdateTovGroupState,
 		private readonly excessIncomeService: ExcessIncomeService,
+		private readonly modalService: ModalService,
 		private readonly toastService: NotificationToastService,
 		@Inject(DIALOG_DATA) protected readonly data: ExcessIncomeUpdateSndClientPopoverData,
 	) {
@@ -70,7 +77,6 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 					if (val) {
 						return this.searchService.getTovGroupsByClient(val, this.client.id);
 					}
-
 					return NEVER;
 				}),
 				map(res => res.items),
@@ -80,38 +86,80 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 	}
 
 	protected close() {
+		if (this.tovGroups$.value.length) {
+			this.modalService
+				.open(NoticeDialogComponent, {
+					data: {
+						header: 'Вы уверены, что хотите удалить запись?',
+						text: 'После удаления ее невозможно будет вернуть',
+						type: 'Error',
+						buttonOk: 'Удалить',
+						buttonCancel: 'Отмена',
+					},
+				})
+				.afterClosed()
+				.pipe(untilDestroyed(this))
+				.subscribe(status => {
+					if (status) {
+						this.modalRef.close();
+						this.state.tovGroups$.next([]);
+					}
+				});
+			return;
+		}
+
 		this.modalRef.close();
 		this.state.tovGroups$.next([]);
 	}
 
 	submit() {
-		const isValid = this.tovGroups$.value.find(item => item.excessIncomePercent.valid);
-
-		if (isValid) {
-			this.excessIncomeService
-				.updateSndClient(this.client.id, {
-					isCurrent: this.data.isCurrent,
-					items: this.tovGroups$.value.map(item => {
-						return {
-							tovGroupId: item.id,
-							excessIncomePercent: Number(item.excessIncomePercent.value) ?? 0,
-						};
-					}),
+		const isNotValid = this.tovGroups$.value.find(item => !item.excessIncomePercent.valid);
+		if (isNotValid) {
+			this.modalService
+				.open(NoticeDialogComponent, {
+					data: {
+						header: 'Вы уверены, что хотите применить изменения?',
+						text: 'Поля у некоторых товарных подгрупп отсутствуют и будут обнулены',
+						type: 'Warning',
+						buttonOk: 'Применить',
+						buttonCancel: 'Нет',
+					},
 				})
-				.pipe(
-					tap(() =>
-						this.data.state.event$.next(
-							ExcessIncomeEventEnum.excessIncomeClientUpdated,
-						),
-					),
-					untilDestroyed(this),
-				)
-				.subscribe(() => {
-					this.close();
+				.afterClosed()
+				.subscribe(status => {
+					if (status) {
+						this.updateSnd();
+					} else {
+						return;
+					}
 				});
 		} else {
-			this.toastService.addToast('Поле СНД,% заполнено неверно', 'error');
+			this.updateSnd();
 		}
+	}
+
+	public updateSnd() {
+		this.excessIncomeService
+			.updateSndClient(this.client.id, {
+				isCurrent: this.data.isCurrent,
+				items: this.tovGroups$.value.map(item => {
+					return {
+						tovGroupId: item.id,
+						excessIncomePercent: Number(item.excessIncomePercent.value) ?? 0,
+					};
+				}),
+			})
+			.pipe(
+				tap(() =>
+					this.data.state.event$.next(ExcessIncomeEventEnum.excessIncomeClientUpdated),
+				),
+				untilDestroyed(this),
+			)
+			.subscribe(() => {
+				this.modalRef.close();
+				this.state.tovGroups$.next([]);
+				this.toastService.addToast('СНД,% успешно установлены', 'ok');
+			});
 	}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
@@ -132,7 +180,7 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 					title: 'СНД,%',
 					order: 2,
 					show: true,
-					width: null,
+					width: '140px',
 					display: true,
 					rowspan: 1,
 					colspan: 1,
@@ -140,9 +188,10 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 			],
 		},
 	];
-
-	protected readonly numberInputTextMask = numberInputTextMask;
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
 	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly LabelType = LabelType;
 }

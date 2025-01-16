@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { merge, Observable, of, switchMap, tap } from 'rxjs';
+import { map, merge, Observable, of, switchMap, tap } from 'rxjs';
 import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-service/excess-income.api-service';
 import { IResponse } from '@app/core/utils/response';
@@ -23,7 +23,7 @@ export class ExcessIncomeService {
 
 	public getClients(
 		request: ExcessIncomeClientRequest,
-	): Observable<IResponse<ExcessIncomeClient>> {
+	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
 		return this.apiService.getClients(request);
 	}
 

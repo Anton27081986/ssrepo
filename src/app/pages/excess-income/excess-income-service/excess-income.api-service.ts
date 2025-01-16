@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { environment } from '@environments/environment.development';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ExcessIncomeFromBackendGroup } from '@app/core/models/excess-income/excess-income-from-backend-group';
@@ -18,6 +18,7 @@ import { ExcessIncomeTovGroupHistory } from '@app/core/models/excess-income/exce
 import { ExccessIncomeCommentsHistory } from '@app/core/models/excess-income/exccess-income-comments-history';
 import { ExcessIncomeSalesHistory } from '@app/core/models/excess-income/excess-income-sales-history';
 import { ExcessIncomeData } from '@app/core/models/excess-income/excess-income-data';
+import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -27,8 +28,8 @@ export class ExcessIncomeApiService {
 
 	public getClients(
 		request: ExcessIncomeClientRequest,
-	): Observable<IResponse<ExcessIncomeClient>> {
-		return this.http.post<IResponse<ExcessIncomeClient>>(
+	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
+		return this.http.post<IResponse<ExcessIncomeData<ExcessIncomeClient>>>(
 			`${environment.apiUrl}/api/company/Snd/search`,
 			request,
 		);
@@ -76,7 +77,7 @@ export class ExcessIncomeApiService {
 	}
 
 	public updateSndTovComment(request: ExcessIncomeUpdateTovCommentRequest) {
-		return this.http.post<ExcessIncomeTovFromBackend>(
+		return this.http.post<{ comment: string }>(
 			`${environment.apiUrl}/api/company/Snd/comments`,
 			request,
 		);
@@ -100,26 +101,27 @@ export class ExcessIncomeApiService {
 	}
 
 	public getTovHistory(
-		clientId: number,
-		tovId: number,
+		objectId: string,
 		limit: number,
 		offset: number,
-	): Observable<ExcessIncomeTovGroupHistory> {
-		return this.http.post<ExcessIncomeTovGroupHistory>(
-			`${environment.apiUrl}/api/company/Snd/history`,
-			{
-				clientId,
-				tovId,
-				limit,
-				offset,
-			},
+	): Observable<IResponse<IChangeTrackerItemDto>> {
+		let params = new HttpParams();
+
+		params = params.set('ObjectId', objectId);
+		params = params.set('Type', '3');
+		params = params.set('limit', limit);
+		params = params.set('offset', offset);
+
+		return this.http.get<IResponse<IChangeTrackerItemDto>>(
+			`${environment.apiUrl}/api/change-tracker/history`,
+			{ params },
 		);
 	}
 
 	public getCommentsHistory(
 		clientId: number,
 		tovId: number,
-		contractorId: number,
+		contractorId: number | null,
 		limit: number,
 		offset: number,
 	): Observable<IResponse<ExccessIncomeCommentsHistory>> {
@@ -136,7 +138,7 @@ export class ExcessIncomeApiService {
 	}
 
 	public getSalesHistory(
-		clientId: number,
+		clientId: number | undefined | null,
 		tovId: number,
 		limit: number,
 		offset: number,

@@ -28,7 +28,7 @@ import { ExccessIncomeCommentsHistory } from '@app/core/models/excess-income/exc
 import { ICommentHistoryTableItem } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history-table-item';
 
 interface IDialogData {
-	clientId?: number;
+	clientId: number;
 	contractorId?: number;
 	tovGroupId?: number;
 	tovId?: number;
@@ -76,14 +76,14 @@ export class CommentsHistoryComponent {
 	}
 
 	private getHistory() {
-		if (this.data.clientId && this.data.tovGroupId && this.data.contractorId) {
+		if (this.data.tovId) {
 			this.tableState = TableState.Loading;
 
 			this.excessIncomeApiService
 				.getCommentsHistory(
 					this.data.clientId,
-					this.data.tovGroupId,
-					this.data.contractorId,
+					this.data.tovId,
+					this.data.contractorId || null,
 					this.pageSize,
 					this.offset,
 				)

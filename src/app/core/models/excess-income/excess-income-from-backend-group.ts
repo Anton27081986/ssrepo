@@ -12,6 +12,7 @@ export interface ExcessIncomeFromBackendGroup {
 export interface IdName {
 	id: number;
 	name: string;
+	linkToDetail: string;
 }
 
 export interface ExcessIncomeGroup {

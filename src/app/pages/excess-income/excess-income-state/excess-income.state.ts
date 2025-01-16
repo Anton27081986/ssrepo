@@ -8,6 +8,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { IResponse } from '@app/core/utils/response';
 import { ExcessIncomeEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
+import { ExcessIncomeData } from '@app/core/models/excess-income/excess-income-data';
 
 export interface ExcessIncomeCriteria {
 	client: number[];
@@ -25,6 +26,8 @@ export class ExcessIncomeState {
 		new BehaviorSubject<ExcessIncomeEventEnum>(ExcessIncomeEventEnum.excessIncomeDefault);
 
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	public isLoaderTr$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	public dropDownVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -56,8 +59,12 @@ export class ExcessIncomeState {
 		});
 
 		this.clientNode$ = this.event$.pipe(
-			tap(() => {
+			tap(event => {
 				this.dropDownVisible$.next(false);
+				if (event === ExcessIncomeEventEnum.excessIncomeChangeOffset) {
+					this.isLoaderTr$.next(true);
+					return;
+				}
 				this.isLoader$.next(true);
 			}),
 			debounceTime(2000),
@@ -79,7 +86,13 @@ export class ExcessIncomeState {
 			}),
 			map(clients => {
 				return clients.map(
-					item => new ClientNodeState(item, this.excessIncomeService, this),
+					item =>
+						new ClientNodeState(
+							item.data,
+							this.excessIncomeService,
+							this,
+							item.permissions,
+						),
 				);
 			}),
 			scan((acc, value) => {
@@ -91,6 +104,7 @@ export class ExcessIncomeState {
 			}),
 			tap(() => {
 				this.isLoader$.next(false);
+				this.isLoaderTr$.next(false);
 				this.dropDownVisible$.next(true);
 			}),
 		);
@@ -99,7 +113,7 @@ export class ExcessIncomeState {
 	private getClients(
 		filters: ExcessIncomeCriteria,
 		offset: number,
-	): Observable<IResponse<ExcessIncomeClient>> {
+	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
 		return this.excessIncomeService.getClients({
 			limit: this.limit,
 			offset,
@@ -108,17 +122,6 @@ export class ExcessIncomeState {
 			tovSubgroupsIds: filters.tovGroups,
 			tovsIds: filters.tov,
 		});
-	}
-
-	public clearFilters() {
-		this.filters$.next({
-			client: [],
-			contractors: [],
-			tovGroups: [],
-			tov: [],
-		});
-
-		this.event$.next(ExcessIncomeEventEnum.excessIncomeChangeFilter);
 	}
 
 	public applyFilters(filters: ExcessIncomeCriteria) {

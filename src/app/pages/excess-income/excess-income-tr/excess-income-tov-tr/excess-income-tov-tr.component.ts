@@ -1,12 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	computed,
-	effect,
-	input,
-	InputSignal,
-	OnDestroy,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal, OnDestroy } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
@@ -23,10 +15,12 @@ import {
 	InputType,
 	Size,
 	TextType,
+	TextWeight,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
-import { PriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/price-history/price-history.component';
+import { ProductPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/product-price-history/product-price-history.component';
+import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
 
 @UntilDestroy()
 @Component({
@@ -44,9 +38,25 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		protected readonly columnsStateService: ColumnsStateService,
 	) {}
 
-	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
+	get differentCurrentFinalPrice(): boolean {
+		return (
+			this.tovNode().currentParams.controls.finalPrice.value !==
+			this.tovNode().tovSignal().currentParams.finalPrice
+		);
+	}
 
-	protected readonly numberInputTextMask = numberInputTextMask;
+	get differentNextFinalPrice(): boolean {
+		return (
+			this.tovNode().tovSignal().nextParams.finalPrice !==
+			this.tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value
+		);
+	}
+
+	get canEditComment(): boolean {
+		return this.tovNode().canEditComment;
+	}
+
+	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 
 	ngOnDestroy() {
 		this.tovNode().subscription.unsubscribe();
@@ -54,11 +64,8 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 
 	protected openPriceHistory() {
 		this.modalService
-			.open(PriceHistoryComponent, {
-				data: {
-					title: 'История изменения цены ТП',
-					objectId: `${this.tovNode().tovSignal().client.id}:${this.tovNode().tovSignal().contractor.id}:${this.tovNode().tovSignal().tovSubgroup.id}:${this.tovNode().tovSignal().tov.id}`,
-				},
+			.open(ProductPriceHistoryComponent, {
+				data: { tov: this.tovNode().tovSignal() },
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
@@ -69,9 +76,13 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		this.modalService
 			.open(SalesHistoryComponent, {
 				data: {
-					clientId: this.tovNode().tovSignal().client.id,
-					contractorId: this.tovNode().tovSignal().contractor.id,
-					tovId: this.tovNode().tovSignal().tov.id,
+					clientId: this.tovNode().tovSignal().client
+						? this.tovNode().tovSignal().client.id
+						: null,
+					contractorId: this.tovNode().tovSignal().contractor
+						? this.tovNode().tovSignal().contractor.id
+						: null,
+					tov: this.tovNode().tovSignal(),
 				},
 			})
 			.afterClosed()
@@ -84,13 +95,22 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 			.open(CommentsHistoryComponent, {
 				data: {
 					clientId: this.tovNode().tovSignal().client.id,
-					contractorId: this.tovNode().tovSignal().contractor.id,
+					contractorId: this.tovNode().tovSignal().contractor
+						? this.tovNode().tovSignal().contractor.id
+						: null,
 					tovGroupId: this.tovNode().tovSignal().tovSubgroup.id,
+					tovId: this.tovNode().tovSignal().tov.id,
 				},
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
 			.subscribe();
+	}
+
+	protected openModalEditComment() {
+		this.modalService.open(ExcessIncomeEditCommentPopoverComponent, {
+			data: { tovNode: this.tovNode() },
+		});
 	}
 
 	protected readonly TextType = TextType;
@@ -101,4 +121,5 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 	protected readonly Size = Size;
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TextWeight = TextWeight;
 }

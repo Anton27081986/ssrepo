@@ -25,7 +25,6 @@ export class ExcessIncomeUpdateTovGroupState {
 					name: value.name!,
 					excessIncomePercent: new FormControl<number | null>(null, [
 						Validators.required,
-						Validators.min(0.01),
 					]),
 				});
 				this.tovGroupControl.setValue(null);

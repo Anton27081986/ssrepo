@@ -1,6 +1,6 @@
 export interface ExcessIncomeUpdateGroupRequest {
-	contractorId: number;
+	contractorId: number | null;
 	tovGroupId: number;
-	currentExcessIncomePercent: number | null;
-	nextExcessIncomePercent: number | null;
+	isCurrent: boolean;
+	excessIncomePercent: number | null;
 }

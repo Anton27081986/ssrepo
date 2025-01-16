@@ -1,7 +1,7 @@
 <div class="wrapper">
 	<ss-card class="excess-income-update-snd-client-popover" [padding]="'0'">
 		<div class="excess-income-update-snd-client-popover__header">
-			<snab-text>Установить СНД,% для всех ТПГ Клиента {{ client.name }}</snab-text>
+			<snab-text [type]="TextType.Title">Установить СНД,% для всех ТПГ Клиента {{ client.name }}</snab-text>
 			<snab-icon [icon]="IconType.ClearLarge" (click)="close()"></snab-icon>
 		</div>
 		<ss-divider></ss-divider>
@@ -11,21 +11,30 @@
 				[formControl]="tovGroupControl" [queryControl]="queryControl"
 				[options]="options()">
 			</ss-search-input-v2>
-			<div class="excess-income-update-snd-client-popover__body__content" *ngIf="tovGroups$ | async as group">
-				<ss-table-v2 *ngIf="group.length;else empty">
-					<tr *ngFor="let tovGroup of group" excess-income-update-tov-group-tr [tovGroup]="tovGroup"></tr>
-				</ss-table-v2>
-				<ng-template #empty>
-					<ss-empty-placeholder>
-						<snab-text>Выберите ТПГ из списка</snab-text>
-					</ss-empty-placeholder>
-				</ng-template>
-			</div>
+			<ng-container *ngIf="tovGroups$ | async as group">
+				<div class="excess-income-update-snd-client-popover__content">
+					<ss-table-v2 *ngIf="group.length;else empty">
+						<tr *ngFor="let tovGroup of group" excess-income-update-tov-group-tr [tovGroup]="tovGroup"></tr>
+					</ss-table-v2>
+					<ng-template #empty>
+						<div class="excess-income-update-snd-client-popover__no-content">
+							<ss-empty-placeholder>
+								<snab-label [type]="LabelType.Info" [size]="Size.Large"
+											[iconPosition]="IconPosition.OnlyIcon"
+											[icon]="IconType.Telescope"></snab-label>
+								<snab-text [type]="TextType.Title">Выберите ТПГ из списка</snab-text>
+							</ss-empty-placeholder>
+						</div>
+					</ng-template>
+				</div>
+			</ng-container>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="excess-income-update-snd-client-popover__footer">
-			<snab-button [type]="ButtonType.Secondary" (click)="close()" [text]="'Отмена'"></snab-button>
-			<snab-button [type]="ButtonType.Primary" (click)="submit()" [text]="'Применить'"></snab-button>
+			<snab-button [size]="Size.Large" [type]="ButtonType.Secondary" (click)="close()"
+						 [text]="'Отмена'"></snab-button>
+			<snab-button [disabled]="(state.tovGroups$ | async)?.length === 0" [size]="Size.Large"
+						 [type]="ButtonType.Primary" (click)="submit()" [text]="'Применить'"></snab-button>
 		</div>
 	</ss-card>
 </div>

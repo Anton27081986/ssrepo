@@ -6,6 +6,7 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
+import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 
 export enum TypeReportEnum {
 	took = 0,
@@ -28,6 +29,7 @@ export class ClientProposalsPageComponent {
 
 	get canLoadFile(): boolean {
 		return this.proposalsPermission.hasPermission(
+			ModulesWithPermissionsEnum.Proposals,
 			Permissions.CLIENT_PROPOSALS_CAN_DOWNLOADREPORTS,
 		);
 	}

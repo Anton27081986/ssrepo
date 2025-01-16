@@ -20,7 +20,6 @@ import { SelectV2Component } from '@app/shared/components/inputs/select-v2/selec
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { SearchInputV2Component } from '@app/shared/components/inputs/search-input-v2/search-input-v2.component';
 import { ExcessIncomeUpdateTovGroupTrComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-tr/excess-income-update-tov-group-tr.component';
-import { InputV2Component } from '@app/shared/components/inputs/input-v2/input-v2.component';
 import { MaskitoDirective } from '@maskito/angular';
 import { SsDividerModule } from '@app/shared/components/ss-divider/ss-divider.module';
 import { TextareaModule } from '@app/shared/components/textarea/textarea.module';
@@ -30,8 +29,14 @@ import {
 	ButtonComponent,
 	CardComponent,
 	ClickOutsideDirective,
+	DividerComponent,
+	DropdownButtonComponent,
+	DropdownItemComponent,
+	FieldCtrlDirective,
+	FormFieldComponent,
 	IconComponent,
 	InputComponent,
+	LabelComponent,
 	LinkComponent,
 	TextComponent,
 	TooltipDirective,
@@ -41,6 +46,11 @@ import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { NzTableCellDirective, NzThMeasureDirective } from 'ng-zorro-antd/table';
 import { LoaderTrComponent } from '@app/shared/components/loader-tr/loader-tr.component';
 import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
+import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
+import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
+import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
+import { FormControlInputWithFuncEditModule } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.module';
+import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 
 @NgModule({
 	declarations: [
@@ -51,6 +61,7 @@ import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagi
 		ExcessIncomeGroupTrComponent,
 		ExcessIncomeUpdateSndClientPopoverComponent,
 		ExcessIncomeUpdateTovGroupTrComponent,
+		ExcessIncomeEditCommentPopoverComponent,
 	],
 	imports: [
 		ExcessIncomeRoutingModule,
@@ -67,7 +78,6 @@ import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagi
 		SelectV2Component,
 		SearchInputModule,
 		SearchInputV2Component,
-		InputV2Component,
 		MaskitoDirective,
 		SsDividerModule,
 		TextareaModule,
@@ -87,6 +97,16 @@ import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagi
 		TooltipDirective,
 		PaginationTrComponent,
 		ClickOutsideDirective,
+		LabelComponent,
+		CaptionModule,
+		TooltipMenuModule,
+		DividerComponent,
+		FormControlInputWithFuncEditModule,
+		FormFieldComponent,
+		FieldCtrlDirective,
+		DropdownButtonComponent,
+		DropdownItemComponent,
+		TooltipModule,
 	],
 })
 export class ExcessIncomeModule {}

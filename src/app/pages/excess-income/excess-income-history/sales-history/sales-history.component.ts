@@ -27,10 +27,11 @@ import { EmptyDataPageModule } from '@app/shared/components/empty-data-page/empt
 import { ExcessIncomeSalesHistory } from '@app/core/models/excess-income/excess-income-sales-history';
 import { ISalesHistoryTableItem } from '@app/pages/excess-income/excess-income-history/sales-history/sales-history-table-item';
 import { catchError } from 'rxjs/operators';
+import { ExcessIncomeTov } from '@app/core/models/excess-income/excess-income-tov-from-backend';
 
 interface IDialogData {
-	clientId?: number;
-	tovId?: number;
+	clientId?: number | null;
+	tov: ExcessIncomeTov;
 }
 
 @UntilDestroy()
@@ -75,11 +76,16 @@ export class SalesHistoryComponent {
 	}
 
 	private getHistory() {
-		if (this.data.clientId && this.data.tovId) {
+		if (this.data.tov.tov.id) {
 			this.tableState = TableState.Loading;
 
 			this.excessIncomeApiService
-				.getSalesHistory(this.data.clientId, this.data.tovId, this.pageSize, this.offset)
+				.getSalesHistory(
+					this.data.clientId,
+					this.data.tov.tov.id,
+					this.pageSize,
+					this.offset,
+				)
 				.pipe(
 					untilDestroyed(this),
 					catchError((err: unknown) => {
@@ -109,14 +115,15 @@ export class SalesHistoryComponent {
 		return history.map(x => {
 			const tableItem: ISalesHistoryTableItem = {} as ISalesHistoryTableItem;
 
-			tableItem.code = { text: x.id ?? '-', link: x.detailLink } ?? '-';
+			tableItem.code = { text: x.id ?? '-', url: x.detailLink } ?? '-';
 			tableItem.contractor = x.contractor.linkToDetail
-				? { text: x.contractor.name ?? '-', link: x.contractor.linkToDetail }
+				? { text: x.contractor.name ?? '-', url: x.contractor.linkToDetail }
 				: '-';
 			tableItem.price = x.price ?? '-';
 			tableItem.quantity = x.quantity ?? '-';
 			tableItem.sum = x.sum ?? '-';
 			tableItem.currency = x.currency ?? '-';
+			tableItem.status = x.status.name ?? '-';
 			tableItem.date = x.shipDate
 				? `${new Date(Date.parse(x.shipDate)).toLocaleString('ru-RU', {
 						year: 'numeric',

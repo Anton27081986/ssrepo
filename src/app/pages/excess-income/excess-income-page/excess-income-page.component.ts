@@ -14,8 +14,10 @@ import { BehaviorSubject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import {
 	ButtonType,
+	collapseHeight,
 	IconPosition,
 	IconType,
+	LabelType,
 	Size,
 	TextType,
 	TextWeight,
@@ -28,6 +30,7 @@ import { state } from '@angular/animations';
 	templateUrl: './excess-income-page.component.html',
 	styleUrls: ['./excess-income-page.component.scss'],
 	providers: [ExcessIncomeState],
+	animations: [collapseHeight],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExcessIncomePageComponent {
@@ -70,14 +73,14 @@ export class ExcessIncomePageComponent {
 			name: 'tovGroups',
 			type: 'search-select',
 			searchType: 'tovGroups',
-			label: 'Товарная подгруппа',
+			label: 'Товарная группа',
 			placeholder: 'Выберите товарную подгруппу',
 		},
 		{
 			name: 'tov',
 			type: 'search-select',
 			searchType: 'tovs',
-			label: 'Товарная подгруппа',
+			label: 'Товарная позиция',
 			placeholder: 'Выберите товарную позицию',
 		},
 	];
@@ -107,6 +110,7 @@ export class ExcessIncomePageComponent {
 	}
 
 	public isLoader$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoader$;
+	public isLoaderTr$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoaderTr$;
 
 	protected readonly paginationControl: FormControl<number | null> =
 		this.excessIncomeStateService.paginationControl;
@@ -123,8 +127,6 @@ export class ExcessIncomePageComponent {
 	public expended(node: ClientNodeState | ContractorNodeState | GroupNodeState) {
 		node.expended$.next(!node.expended$.value);
 	}
-
-	saveManual() {}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
 		{
@@ -170,19 +172,9 @@ export class ExcessIncomePageComponent {
 					colspan: 1,
 				},
 				{
-					id: ExcessIncomeClientRowItemField.comments,
-					title: 'Комментарий',
-					order: 5,
-					show: true,
-					display: true,
-					width: null,
-					rowspan: 2,
-					colspan: 1,
-				},
-				{
 					id: ExcessIncomeClientRowItemField.current,
 					title: 'Текущая',
-					order: 6,
+					order: 5,
 					show: true,
 					display: false,
 					width: null,
@@ -192,7 +184,7 @@ export class ExcessIncomePageComponent {
 				{
 					id: ExcessIncomeClientRowItemField.next,
 					title: 'Следующая',
-					order: 7,
+					order: 6,
 					show: true,
 					display: false,
 					width: null,
@@ -208,17 +200,17 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 1,
 					show: true,
-					width: '145px',
+					width: '65px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
 				},
 				{
 					id: ExcessIncomeClientRowItemField.sndCurrent,
-					title: 'СНД',
+					title: 'СНД, %',
 					order: 2,
 					show: true,
-					width: '145px',
+					width: '135px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -228,7 +220,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена фикс',
 					order: 3,
 					show: true,
-					width: '145px',
+					width: '135px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -238,7 +230,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена*',
 					order: 4,
 					show: true,
-					width: '100px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -248,17 +240,17 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 5,
 					show: true,
-					width: '145px',
+					width: '65px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
 				},
 				{
 					id: ExcessIncomeClientRowItemField.sndNext,
-					title: 'СНД',
+					title: 'СНД, %',
 					order: 6,
 					show: true,
-					width: '145px',
+					width: '135px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -268,7 +260,7 @@ export class ExcessIncomePageComponent {
 					title: 'Цена фикс',
 					order: 7,
 					show: true,
-					width: '145px',
+					width: '135px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -279,19 +271,18 @@ export class ExcessIncomePageComponent {
 					order: 8,
 					show: true,
 					display: true,
-					width: '100px',
+					width: '120px',
 					colspan: 1,
 					rowspan: 1,
 				},
 			],
 		},
 	];
-
 	protected readonly Size = Size;
 	protected readonly ButtonType = ButtonType;
 	protected readonly TextType = TextType;
-	protected readonly IconType = IconType;
-	protected readonly IconPosition = IconPosition;
 	protected readonly TextWeight = TextWeight;
-	protected readonly state = state;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
+	protected readonly LabelType = LabelType;
 }

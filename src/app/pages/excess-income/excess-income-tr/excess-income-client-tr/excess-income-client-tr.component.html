@@ -1,14 +1,17 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display" [style.width]="col.width">
+			<td class="ss-table-td" *ngIf="col.display">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-					<snab-link (click)="routerService.toClientCard(client().client.id)" [text]="client().client.name"
-							   [type]="TextType.Body"></snab-link>
+					<snab-link (click)="goToClientCard()"
+							   [text]="client().client.name"
+							   [type]="TextType.Caption"></snab-link>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
 					<div class="ss-table-td__content">
-						<snab-button snab-tooltip [tooltipText]="'Установить СНД для ТПГ Клиента'" [position]="TooltipPosition.Bottom"
+						<snab-button *ngIf="client().canEdit" snab-tooltip
+									 [tooltipText]="'Установить СНД для ТПГ Клиента'"
+									 [position]="TooltipPosition.Bottom"
 									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
 									 [type]="ButtonType.Primary"
 									 [iconPosition]="IconPosition.OnlyIcon"
@@ -18,7 +21,9 @@
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
 					<div class="ss-table-td__content">
-						<snab-button snab-tooltip [tooltipText]="'Установить СНД для ТПГ Клиента'" [position]="TooltipPosition.Bottom"
+						<snab-button *ngIf="client().canEdit" snab-tooltip
+									 [tooltipText]="'Установить СНД для ТПГ Клиента'"
+									 [position]="TooltipPosition.Bottom"
 									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
 									 [type]="ButtonType.Primary"
 									 [iconPosition]="IconPosition.OnlyIcon"

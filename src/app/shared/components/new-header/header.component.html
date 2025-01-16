@@ -10,6 +10,16 @@
 
 			<app-notification></app-notification>
 
+			@if (aiPermission()) {
+				<snab-button
+					[type]="ButtonType.Outline"
+					[size]="Size.Large"
+					[icon]="IconType.Comments"
+					[iconPosition]="IconPosition.OnlyIcon"
+					(click)="openChatBot()"
+				></snab-button>
+			}
+
 			<ng-container *ngIf="(userProfile$ | async) as userProfile;">
 				<ss-avatar [size]="'small'" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
 						   [position]="TooltipPosition.DEFAULT" [src]="userProfile?.avatarUrl!" nz-dropdown nzTrigger="click"

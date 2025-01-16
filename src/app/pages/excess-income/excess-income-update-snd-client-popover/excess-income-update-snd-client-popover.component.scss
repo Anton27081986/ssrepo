@@ -23,13 +23,24 @@
 	&__body {
 		display: flex;
 		flex-direction: column;
-		height: 400px;
 		padding: 12px;
 		gap: 12px;
+	}
+
+	&__content {
+		height: 400px;
+		overflow: auto;
 
 		ss-table-v2 {
 			height: 301px;
 		}
+	}
+
+	&__no-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 400px;
 	}
 
 	&__footer {
@@ -38,4 +49,8 @@
 		padding: 16px;
 		gap: 16px;
 	}
+}
+
+snab-button {
+	width: 145px;
 }
