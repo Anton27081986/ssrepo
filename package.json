@@ -32,7 +32,7 @@
 		"@maskito/kit": "^3.1.2",
 		"@microsoft/signalr": "^8.0.0",
 		"@ngneat/until-destroy": "^10.0.0",
-		"@front-components/components": "^0.0.30",
+		"@front-components/components": "^0.0.31",
 		"angular": "^1.8.3",
 		"angular-moment": "^1.3.0",
 		"animations": "^0.0.0",
