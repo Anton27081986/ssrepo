@@ -12,6 +12,7 @@ export class DateRangeComponent {
 	@Input() public label: string | undefined;
 	@Input() public placeholder: string | undefined;
 	@Input() public error: string | undefined;
+	@Input() public size: string = 'large';
 	@Output() public select = new EventEmitter<string>();
 
 	@Input() public value: any = '';
