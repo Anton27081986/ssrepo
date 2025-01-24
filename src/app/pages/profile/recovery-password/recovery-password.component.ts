@@ -1,11 +1,27 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NzIconDirective} from "ng-zorro-antd/icon";
+import {NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent} from "ng-zorro-antd/form";
+import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
+import {NzButtonComponent} from "ng-zorro-antd/button";
 
 @Component({
 	selector: 'app-recovery-password',
 	templateUrl: './recovery-password.component.html',
 	styleUrls: ['./recovery-password.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		NzIconDirective,
+		NzFormItemComponent,
+		NzFormLabelComponent,
+		NzFormControlComponent,
+		NzInputGroupComponent,
+		ReactiveFormsModule,
+		NzFormDirective,
+		NzInputDirective,
+		NzButtonComponent
+	],
+	standalone: true
 })
 export class RecoveryPasswordComponent implements OnInit {
 	public recoveryForm!: FormGroup;

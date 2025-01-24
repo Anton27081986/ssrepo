@@ -7,12 +7,20 @@ import {
 import { combineLatest, map, Observable, switchMap } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { INewsDto } from '@app/core/models/client-proposails/news';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IClientProposalsNewsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-table-item';
 import { ClientProposalsTabBase } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tab-base';
 import { ClientProposalsNewsLineTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.state';
 import { IDevelopmentDto } from '@app/core/models/client-proposails/development';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {
+	ClientProposalsTabsCanvasComponent
+} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -20,6 +28,17 @@ import { toSignal } from '@angular/core/rxjs-interop';
 	templateUrl: './client-proposals-news-line-tab.component.html',
 	styleUrls: ['./client-proposals-news-line-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CardComponent,
+		ClientProposalsTabsCanvasComponent,
+		NgIf,
+		TextComponent,
+		TableComponent,
+		AsyncPipe,
+		EmptyDataPageComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class ClientProposalsNewsLineTabComponent {
 	protected news: Signal<IResponse<INewsDto> | null> = toSignal(this.stateService.news$, {

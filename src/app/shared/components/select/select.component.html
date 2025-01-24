@@ -1,4 +1,6 @@
-<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
+@if (label) {
+	<ss-caption size="1">{{ label }}</ss-caption>
+}
 <select (change)="onClick($event.currentTarget)"
 		[disabled]="disabled"
 	[ngClass]="error ? size + ' error' : size"

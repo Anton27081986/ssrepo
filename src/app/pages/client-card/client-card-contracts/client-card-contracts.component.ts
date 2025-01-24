@@ -1,12 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { IContractsTableItem } from '@app/pages/client-card/client-card-contracts/contracts-table-item';
 import { ContractsFacadeService } from '@app/core/facades/contracts-facade.service';
 import { IContractsItemDto } from '@app/core/models/company/contracts-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {NgIf} from "@angular/common";
+import {NzPaginationComponent} from "ng-zorro-antd/pagination";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +22,19 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 	templateUrl: './client-card-contracts.component.html',
 	styleUrls: ['./client-card-contracts.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CardComponent,
+		LoaderComponent,
+		HeadlineComponent,
+		IconComponent,
+		NgIf,
+		TableComponent,
+		NzPaginationComponent,
+		EmptyPlaceholderComponent,
+		TextComponent,
+		FiltersComponent
+	],
+	standalone: true
 })
 export class ClientCardContractsComponent implements OnInit {
 	// table

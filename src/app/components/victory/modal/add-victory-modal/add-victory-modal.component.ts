@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { FormBuilder, FormControl, FormGroup, MaxValidator, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, MaxValidator, ReactiveFormsModule, Validators} from '@angular/forms';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -12,6 +12,16 @@ import { AddVictoryModalResultComponent } from '@app/components/victory/modal/ad
 import { ModalService } from '@app/core/modal/modal.service';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
+import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AttachmentComponent} from "@app/shared/components/attachment/attachment.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
@@ -19,6 +29,22 @@ import { filterTruthy } from '@app/core/facades/client-proposals-facade.service'
 	templateUrl: './add-victory-modal.component.html',
 	styleUrls: ['./add-victory-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		HeadlineComponent,
+		IconComponent,
+		SsDividerComponent,
+		ReactiveFormsModule,
+		TextareaComponent,
+		ChipsUserSearchComponent,
+		ChipsSearchComponent,
+		CaptionComponent,
+		NgIf,
+		AsyncPipe,
+		AttachmentComponent,
+		NgForOf,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class AddVictoryModalComponent {
 	protected formGroup: FormGroup<AddVictoryForm>;

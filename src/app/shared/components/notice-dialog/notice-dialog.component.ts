@@ -1,7 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { ButtonType, Size } from '@front-components/components';
+import {ButtonComponent, ButtonType, Size} from '@front-components/components';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 interface NoticeDialogData {
 	header: string;
@@ -15,6 +19,14 @@ interface NoticeDialogData {
 	selector: 'ss-dialog',
 	templateUrl: './notice-dialog.component.html',
 	styleUrls: ['./notice-dialog.component.scss'],
+	imports: [
+		CardComponent,
+		IconComponent,
+		HeadlineComponent,
+		TextComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class NoticeDialogComponent {
 	public header: string | undefined;

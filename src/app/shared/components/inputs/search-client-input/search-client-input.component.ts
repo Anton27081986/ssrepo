@@ -13,6 +13,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe} from "@angular/common";
 
 export type searchType =
 	| 'user'
@@ -42,6 +44,11 @@ export interface SearchInputItem {
 			multi: true,
 		},
 	],
+	imports: [
+		CaptionComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class SearchClientInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

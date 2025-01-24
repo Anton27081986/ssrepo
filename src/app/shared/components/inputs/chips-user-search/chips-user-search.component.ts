@@ -2,12 +2,27 @@ import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@ang
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-chips-user-search',
 	templateUrl: './chips-user-search.component.html',
 	styleUrls: ['./chips-user-search.component.scss'],
+	imports: [
+		CaptionComponent,
+		AvatarComponent,
+		NgClass,
+		TextComponent,
+		IconComponent,
+		NgForOf,
+		NgIf
+	],
+	standalone: true
 })
 export class ChipsUserSearchComponent {
 	@Input() public size: 'large' | 'medium' = 'medium';

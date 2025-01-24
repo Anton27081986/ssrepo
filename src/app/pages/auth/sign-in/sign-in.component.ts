@@ -1,12 +1,17 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { first, of, tap } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {PasswordComponent} from "@app/shared/components/_deprecated/password/password.component";
+import {LinkComponent} from "@app/shared/components/link/link.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +19,16 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	templateUrl: './sign-in.component.html',
 	styleUrls: ['./sign-in.component.scss'],
 	changeDetection: ChangeDetectionStrategy.Default,
+	imports: [
+		HeadlineComponent,
+		ReactiveFormsModule,
+		InputComponent,
+		PasswordComponent,
+		LinkComponent,
+		RouterLink,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class SignInComponent implements OnInit {
 	protected loginForm!: FormGroup<{

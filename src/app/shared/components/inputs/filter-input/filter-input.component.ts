@@ -8,12 +8,21 @@ import {
 	Self,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {NgIf} from "@angular/common";
 
 @Component({
 	selector: 'ss-filter-input',
 	templateUrl: './filter-input.component.html',
 	styleUrls: ['./filter-input.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CaptionComponent,
+		IconComponent,
+		NgIf
+	],
+	standalone: true
 })
 export class FilterInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

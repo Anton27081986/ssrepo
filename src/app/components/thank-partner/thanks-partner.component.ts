@@ -2,16 +2,44 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { filter, map, of, switchMap, tap } from 'rxjs';
 import { formatDate } from '@angular/common';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
-import { FormControl } from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
 import { catchError } from 'rxjs/operators';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {
+	ThanksPartnerCardComponent
+} from "@app/components/thank-partner/thanks-partner-card/thanks-parther-card.component";
+import {MapperPipe} from "@app/core/pipes/mapper.pipe";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 
 @Component({
 	selector: 'app-thanks-partner',
 	templateUrl: './thanks-partner.component.html',
 	styleUrls: ['./thanks-partner.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CardComponent,
+		TextComponent,
+		DateTimePickerComponent,
+		ButtonComponent,
+		IconComponent,
+		ReactiveFormsModule,
+		SsDividerComponent,
+		LoaderComponent,
+		ThanksPartnerCardComponent,
+		MapperPipe,
+		EmptyPlaceholderComponent,
+		HeadlineComponent
+	],
+	standalone: true
 })
 export class ThanksPartnerComponent {
 	private readonly apiService = inject(ThanksPartnerApiService);

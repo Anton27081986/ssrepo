@@ -4,12 +4,19 @@ import { map } from 'rxjs';
 import { BannersApiService } from '@app/core/api/banners-api.service';
 import { IBannerDto } from '@app/core/models/banners/banner-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-slider',
 	templateUrl: './slider.component.html',
 	styleUrls: ['./slider.component.scss'],
+	imports: [
+		LoaderComponent,
+		EmptyDataPageComponent
+	],
+	standalone: true
 })
 export class SliderComponent implements OnInit {
 	@ViewChild(NzCarouselComponent, { static: false }) public myCarousel:

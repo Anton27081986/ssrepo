@@ -4,12 +4,38 @@ import { IAddressBookSearchUser } from '@app/core/models/address-book-search-use
 import { AddressBookApiService } from '@app/core/api/address-book-api.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {AddressBookCardComponent} from "@app/widgets/address-book/address-book-card/address-book-card.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-address-book',
 	templateUrl: './address-book.component.html',
 	styleUrls: ['./address-book.component.scss'],
+	imports: [
+		CardComponent,
+		TextComponent,
+		InputComponent,
+		ButtonComponent,
+		IconComponent,
+		SsDividerComponent,
+		NgIf,
+		AddressBookCardComponent,
+		NgForOf,
+		EmptyPlaceholderComponent,
+		HeadlineComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class AddressBookComponent implements OnInit {
 	public isFavoriteMode: boolean = true;

@@ -1,10 +1,17 @@
 import { Component, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-password',
 	templateUrl: './password.component.html',
 	styleUrls: ['./password.component.scss'],
+	imports: [
+		CaptionComponent,
+		IconComponent
+	],
+	standalone: true
 })
 export class PasswordComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

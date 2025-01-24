@@ -3,10 +3,13 @@ import { ChangeDetectionStrategy, Component, computed, effect, Signal } from '@a
 import { RatingTeamsStateService } from '@app/components/rating/rating-teams/rating-teams.state';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormControl } from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { IRankTypeListDto } from '@app/core/models/awards/rank-type-list-dto';
 import { RatingTeamUsersComponent } from '@app/components/rating/rating-team-users/rating-team-users.component';
 import { RatingTeamUsersState } from '@app/components/rating/rating-team-users/rating-team-users.state';
+import {NgIf} from "@angular/common";
+import {TabsControlComponent} from "@app/components/rating/tabs-control/tabs-control.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +17,13 @@ import { RatingTeamUsersState } from '@app/components/rating/rating-team-users/r
 	templateUrl: './rating-teams.component.html',
 	styleUrls: ['./rating-teams.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		NgIf,
+		TabsControlComponent,
+		LoaderComponent,
+		ReactiveFormsModule
+	],
+	standalone: true
 })
 export class RatingTeamsComponent {
 	protected readonly rating: Signal<IRankTypeListDto | null> = toSignal(

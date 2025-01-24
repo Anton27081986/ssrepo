@@ -3,7 +3,8 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
-import { TextType, TextWeight } from '@front-components/components';
+import {LinkComponent, TextComponent, TextType, TextWeight} from '@front-components/components';
+import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 
 @Component({
 	selector: 'tr[excess-income-contractor-tr]',
@@ -11,6 +12,17 @@ import { TextType, TextWeight } from '@front-components/components';
 	styleUrls: ['./excess-income-contractor-tr.component.scss'],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		NgForOf,
+		AsyncPipe,
+		NgSwitch,
+		NgIf,
+		NgSwitchCase,
+		LinkComponent,
+		TextComponent,
+		NgSwitchDefault
+	],
+	standalone: true
 })
 export class ExcessIncomeContractorTrComponent {
 	public contractor: InputSignal<ContractorNodeState> = input.required<ContractorNodeState>();

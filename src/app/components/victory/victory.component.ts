@@ -7,6 +7,17 @@ import { AddVictoryModalComponent } from '@app/components/victory/modal/add-vict
 import { VictoryService } from '@app/components/victory/victory.service';
 import { VictoryState } from '@app/components/victory/victory.state';
 import { TableState } from '@app/shared/components/table/table-state';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {UserCardWidgetComponent} from "@app/components/user-card-widget/user-card-widget.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -15,6 +26,21 @@ import { TableState } from '@app/shared/components/table/table-state';
 	styleUrls: ['./victory.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [VictoryState],
+	imports: [
+		CardComponent,
+		LoaderComponent,
+		NgIf,
+		TextComponent,
+		ButtonComponent,
+		IconComponent,
+		SsDividerComponent,
+		AsyncPipe,
+		UserCardWidgetComponent,
+		EmptyPlaceholderComponent,
+		HeadlineComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class VictoryComponent {
 	public total!: number;

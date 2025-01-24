@@ -18,6 +18,7 @@ import {
 	styleUrls: ['ss-divider.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true
 })
 export class SsDividerComponent {
 	@Input() public size: number | null = null;

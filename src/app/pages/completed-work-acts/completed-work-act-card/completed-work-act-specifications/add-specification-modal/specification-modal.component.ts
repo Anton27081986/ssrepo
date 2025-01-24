@@ -3,7 +3,7 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -11,12 +11,32 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-specification-modal',
 	templateUrl: './specification-modal.component.html',
 	styleUrls: ['./specification-modal.component.scss'],
+	imports: [
+		CardComponent,
+		TextComponent,
+		IconComponent,
+		ReactiveFormsModule,
+		SearchInputComponent,
+		TextareaComponent,
+		InputComponent,
+		NumericInputComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';

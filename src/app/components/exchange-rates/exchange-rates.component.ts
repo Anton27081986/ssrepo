@@ -4,12 +4,16 @@ import { IExchangeRates } from '@app/core/models/exchange-rates';
 import { CurrencyApiService } from '@app/core/api/currency-api.service';
 import { ExchangeRatesImports } from '@app/components/exchange-rates/exchange-rates.imports';
 import { ExchangeRatesLinks } from '@app/components/exchange-rates/constants/exchange-rates-links';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 
 @Component({
 	selector: 'app-exchange-rates',
 	templateUrl: './exchange-rates.component.html',
 	styleUrls: ['./exchange-rates.component.scss'],
-	imports: [ExchangeRatesImports],
+	imports: [ExchangeRatesImports, CardComponent, TextComponent, SsDividerComponent, HeadlineComponent],
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

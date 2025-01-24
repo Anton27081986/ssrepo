@@ -10,6 +10,8 @@
 		   #input
 	/>
 	<ss-text class="value" size="2">{{ (input.value | date: 'dd.MM.yyyy') }}</ss-text>
-	<ss-text *ngIf="!input.value" class="value" size="2">{{ placeholder }}</ss-text>
+	@if (!input.value) {
+		<ss-text class="value" size="2">{{ placeholder }}</ss-text>
+	}
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>

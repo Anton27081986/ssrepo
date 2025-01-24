@@ -9,12 +9,19 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
 	selector: 'ss-pagination',
 	templateUrl: './pagination.component.html',
 	styleUrls: ['./pagination.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		IconComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class PaginationComponent implements OnInit, OnChanges {
 	@Input({ required: true }) public total: number = 0;

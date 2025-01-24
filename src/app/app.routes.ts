@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
@@ -11,8 +10,9 @@ import {
 	procurementsPermissionsGuard,
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
+import {MainPageComponent} from "@app/pages/main-page/main-page.component";
 
-const routes: Routes = [
+export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
 	{
 		path: '',
@@ -24,8 +24,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				loadChildren: () =>
-					import('@app/pages/main-page/main-page.module').then(m => m.MainPageModule),
+				component: MainPageComponent
 			},
 			{
 				path: '',
@@ -79,13 +78,6 @@ const routes: Routes = [
 				path: 'client-card',
 				loadChildren: () =>
 					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
-			},
-			{
-				path: 'client-request-samples',
-				loadChildren: () =>
-					import('@app/pages/samples-page/samples-page.module').then(
-						m => m.SamplesPageModule,
-					),
 			},
 			{
 				path: 'invite',
@@ -168,22 +160,5 @@ const routes: Routes = [
 		},
 		loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
 	},
-	{
-		path: 'sandbox',
-		data: {
-			animation: 'animation',
-		},
-		loadChildren: () => import('./pages/sandbox/sandbox.module').then(m => m.SandboxModule),
-	},
 	{ path: '**', redirectTo: '' },
 ];
-
-@NgModule({
-	imports: [
-		RouterModule.forRoot(routes, {
-			preloadingStrategy: PreloadAllModules,
-		}),
-	],
-	exports: [RouterModule],
-})
-export class AppRoutingModule {}

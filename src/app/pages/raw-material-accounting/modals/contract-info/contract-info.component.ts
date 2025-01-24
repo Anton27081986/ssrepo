@@ -4,7 +4,7 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import {
 	fromPickerDateToIso,
@@ -13,6 +13,17 @@ import {
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
 import { Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 
 interface IDialogData {
 	id?: string | null;
@@ -23,6 +34,22 @@ interface IDialogData {
 	selector: 'ss-contract-info',
 	templateUrl: './contract-info.component.html',
 	styleUrls: ['./contract-info.component.scss'],
+	imports: [
+		CardComponent,
+		NgIf,
+		HeadlineComponent,
+		IconComponent,
+		TextComponent,
+		ReactiveFormsModule,
+		InputComponent,
+		DateRangeComponent,
+		SearchInputComponent,
+		TextareaComponent,
+		ButtonComponent,
+		LoaderComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class ContractInfoComponent {
 	public isLoading$: Observable<boolean>;

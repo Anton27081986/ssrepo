@@ -5,12 +5,20 @@ import {
 	Input,
 	OnInit,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { NzModalService } from 'ng-zorro-antd/modal';
+import {NzModalComponent, NzModalContentDirective, NzModalFooterDirective, NzModalService} from 'ng-zorro-antd/modal';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
+import {FilterInputComponent} from "@app/shared/components/inputs/filter-input/filter-input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {NgForOf, NgIf, NgStyle, NgSwitch, NgSwitchCase} from "@angular/common";
+import {NzIconDirective} from "ng-zorro-antd/icon";
+import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
+import {NzRadioComponent, NzRadioGroupComponent} from "ng-zorro-antd/radio";
+import {NzButtonComponent} from "ng-zorro-antd/button";
 
 @UntilDestroy()
 @Component({
@@ -18,6 +26,26 @@ import { IUserDto } from '@app/core/models/notifications/user-dto';
 	templateUrl: './friendly-accounts-page.component.html',
 	styleUrls: ['./friendly-accounts-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		FilterInputComponent,
+		ButtonComponent,
+		CardComponent,
+		NgIf,
+		NgForOf,
+		NzIconDirective,
+		NgSwitch,
+		NgSwitchCase,
+		NzModalComponent,
+		NzModalContentDirective,
+		ChipsUserSearchComponent,
+		NzRadioGroupComponent,
+		FormsModule,
+		NzRadioComponent,
+		NzModalFooterDirective,
+		NgStyle,
+		NzButtonComponent
+	],
+	standalone: true
 })
 export class FriendlyAccountsPageComponent implements OnInit {
 	public searchForm!: FormGroup;

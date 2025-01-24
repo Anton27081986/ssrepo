@@ -4,12 +4,28 @@ import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-account
 import { FriendlyAccountsStoreService } from '@app/core/states/friendly-accounts-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { untilDestroyed } from '@ngneat/until-destroy';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {NzIconDirective} from "ng-zorro-antd/icon";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @Component({
 	selector: 'app-invite',
 	templateUrl: './invite.component.html',
 	styleUrls: ['./invite.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CardComponent,
+		HeadlineComponent,
+		NgIf,
+		NzIconDirective,
+		AsyncPipe,
+		NgSwitch,
+		NgSwitchCase,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class InviteComponent implements OnInit {
 	public acceptClick: boolean = false;

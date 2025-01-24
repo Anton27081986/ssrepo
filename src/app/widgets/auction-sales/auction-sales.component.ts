@@ -1,17 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 import { TableState } from '@app/shared/components/table/table-state';
 import { BehaviorSubject } from 'rxjs';
 import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-auction-sales',
 	templateUrl: './auction-sales.component.html',
 	styleUrls: ['./auction-sales.component.scss'],
+	imports: [
+		CardComponent,
+		LoaderComponent,
+		HeadlineComponent,
+		CaptionComponent,
+		NgIf,
+		TableComponent,
+		AsyncPipe,
+		EmptyPlaceholderComponent,
+		IconComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class AuctionSalesComponent implements OnInit {
 	public pageIndex = 1;

@@ -15,6 +15,16 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {ProfileCardComponent} from "@app/components/profile-card/profile-card.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {RouterLink} from "@angular/router";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
 
 @UntilDestroy()
 @Component({
@@ -22,6 +32,21 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 	templateUrl: './profile-popup.component.html',
 	styleUrls: ['./profile-popup.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		AsyncPipe,
+		NgIf,
+		ProfileCardComponent,
+		ButtonComponent,
+		IconComponent,
+		RouterLink,
+		SsDividerComponent,
+		AvatarComponent,
+		TextComponent,
+		CaptionComponent,
+		SearchInputComponent,
+		NgForOf
+	],
+	standalone: true
 })
 export class ProfilePopupComponent implements OnInit, OnDestroy {
 	public accountsFriends$!: Observable<any>;

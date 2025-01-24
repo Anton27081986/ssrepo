@@ -18,6 +18,16 @@ import { ITab } from '@app/shared/components/tabs/tab';
 import { IBirthdayUserDto } from '@app/core/models/auth/birthday-user-dto';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { BirthdayImports } from '@app/components/birthday/birthday.imports';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {UserCardComponent} from "@app/components/user-card/user-card.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 
 @Component({
 	selector: 'app-birthday',
@@ -25,7 +35,7 @@ import { BirthdayImports } from '@app/components/birthday/birthday.imports';
 	styleUrls: ['./birthday.component.scss'],
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [BirthdayImports],
+	imports: [BirthdayImports, CardComponent, TextComponent, ButtonComponent, IconComponent, TabsComponent, SsDividerComponent, LoaderComponent, UserCardComponent, EmptyPlaceholderComponent, HeadlineComponent],
 })
 export class BirthdayComponent {
 	private readonly birthdaysApiService = inject(BirthdaysApiService);

@@ -15,14 +15,14 @@
 	</div>
 	<div class="user-card-widget__actions-block">
 		<div class="user-card-widget__actions">
-			<app-like *ngIf="!isExtendedMode" [likedUsers]="widget.likedUsers" [type]="(typeLike$ | async)!"
+			<app-like *ngIf="!isExtendedMode" [likedUsers]="widget.likedUsers || []" [type]="(typeLike$ | async)!"
 					  [count]="widget.likesCount!" (click)="changeLike()"></app-like>
 			<div class="user-card-widget__isExtendedMode">
 				<app-choice-like (close)="isChoiceLike.next(false)" *ngIf="isChoiceLike |async"
 								 (stateLike)="getLike($event)"></app-choice-like>
 				<app-like
 					*ngIf="isExtendedMode"
-					[likedUsers]="widget.likedUsers"
+					[likedUsers]="widget.likedUsers || []"
 					[type]="(typeLike$ | async)!"
 					[count]="widget.likesCount!"
 					(click)="openChoiceLike()">

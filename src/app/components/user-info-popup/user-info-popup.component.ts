@@ -1,16 +1,32 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, Inject } from '@angular/core';
+import {Component, forwardRef, Inject} from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
+import {AsyncPipe, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {UserCardComponent} from "@app/components/user-card/user-card.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-user-info-popup',
 	templateUrl: './user-info-popup.component.html',
 	styleUrls: ['./user-info-popup.component.scss'],
+	imports: [
+		AsyncPipe,
+		NgIf,
+		HeadlineComponent,
+		SsDividerComponent,
+		forwardRef(()=>UserCardComponent),
+		IconComponent,
+		TextComponent
+	],
+	standalone: true
 })
 export class UserInfoPopupComponent {
 	protected $user: Observable<IUserProfile>;

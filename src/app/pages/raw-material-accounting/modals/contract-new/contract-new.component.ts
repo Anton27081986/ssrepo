@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
 import {
@@ -13,12 +13,36 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { ConfirmationModalComponent } from '@app/components/modal/confirmation-modal/confirmation-modal.component';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {SelectComponent} from "@app/shared/components/select/select.component";
+import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {DatepickerInputComponent} from "@app/shared/components/inputs/datepicker-input/datepicker-input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-contract-new',
 	templateUrl: './contract-new.component.html',
 	styleUrls: ['./contract-new.component.scss'],
+	imports: [
+		CardComponent,
+		HeadlineComponent,
+		IconComponent,
+		ReactiveFormsModule,
+		InputComponent,
+		SearchInputComponent,
+		SelectComponent,
+		DateRangeComponent,
+		TextareaComponent,
+		DatepickerInputComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class ContractNewComponent {
 	public newContractForm!: FormGroup;

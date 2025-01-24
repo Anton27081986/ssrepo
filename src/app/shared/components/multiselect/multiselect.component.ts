@@ -9,6 +9,9 @@ import {
 } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 export type SearchType = 'user' | 'client' | 'tovs' | 'contractor' | 'contract' | 'tovGroups';
 
@@ -17,6 +20,12 @@ export type SearchType = 'user' | 'client' | 'tovs' | 'contractor' | 'contract' 
 	selector: 'ss-multiselect',
 	templateUrl: './multiselect.component.html',
 	styleUrls: ['./multiselect.component.scss'],
+	imports: [
+		CaptionComponent,
+		TextComponent,
+		IconComponent
+	],
+	standalone: true
 })
 export class MultiselectComponent {
 	@Input() public label: string | undefined;

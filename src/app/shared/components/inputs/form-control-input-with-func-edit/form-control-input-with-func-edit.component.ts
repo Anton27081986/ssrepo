@@ -7,7 +7,11 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @Component({
 	selector: 'ss-form-control-input-with-func-edit',
@@ -20,6 +24,14 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 			multi: true,
 		},
 	],
+	imports: [
+		CaptionComponent,
+		IconComponent,
+		NgIf,
+		TextComponent,
+		ReactiveFormsModule
+	],
+	standalone: true
 })
 export class FormControlInputWithFuncEditComponent implements ControlValueAccessor, OnChanges {
 	@Input() public size: 'large' | 'medium' | 'small' | 'big' = 'medium';

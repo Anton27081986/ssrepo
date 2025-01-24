@@ -1,19 +1,41 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { ISamplesTableItem } from '@app/pages/client-card/client-request-samples/samples-table-item';
 import { TableState } from '@app/shared/components/table/table-state';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { RequestSamplesFacadeService } from '@app/core/facades/request-samples-facade.service';
 import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {NzPaginationComponent} from "ng-zorro-antd/pagination";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-client-request-samples',
 	templateUrl: './client-request-samples.component.html',
 	styleUrls: ['./client-request-samples.component.scss'],
+	imports: [
+		CardComponent,
+		LoaderComponent,
+		NgIf,
+		HeadlineComponent,
+		AsyncPipe,
+		IconComponent,
+		TableComponent,
+		NzPaginationComponent,
+		EmptyPlaceholderComponent,
+		TextComponent,
+		FiltersComponent
+	],
+	standalone: true
 })
 export class ClientRequestSamplesComponent implements OnInit {
 	public samples$: Observable<ISampleItemDto | null>;

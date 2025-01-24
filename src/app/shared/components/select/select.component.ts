@@ -1,9 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {NgClass} from "@angular/common";
 
 @Component({
 	selector: 'ss-select',
 	templateUrl: './select.component.html',
 	styleUrls: ['./select.component.scss'],
+	imports: [
+		CaptionComponent,
+		NgClass
+	],
+	standalone: true
 })
 export class SelectComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

@@ -1,10 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {NgIf, NgTemplateOutlet} from "@angular/common";
 
 @Component({
 	selector: 'app-client-proposals-tabs-canvas',
 	templateUrl: './client-proposals-tabs-canvas.component.html',
 	styleUrls: ['./client-proposals-tabs-canvas.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		LoaderComponent,
+		NgTemplateOutlet,
+		NgIf
+	],
+	standalone: true
 })
 export class ClientProposalsTabsCanvasComponent {
 	@Input() headerTemplateRef: TemplateRef<any> | null = null;

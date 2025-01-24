@@ -15,6 +15,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 	selector: 'ss-icon',
 	templateUrl: './icon.component.html',
 	styleUrls: ['./icon.component.scss'],
+	standalone: true
 })
 export class IconComponent implements OnInit, OnChanges, AfterViewInit {
 	@Input() public name: string = '';

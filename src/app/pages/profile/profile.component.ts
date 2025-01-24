@@ -3,6 +3,11 @@ import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {RouterLink, RouterOutlet} from "@angular/router";
+import {NzIconDirective} from "ng-zorro-antd/icon";
+import {NgIf} from "@angular/common";
+import {NzSwitchComponent} from "ng-zorro-antd/switch";
+import {FormsModule} from "@angular/forms";
 
 @UntilDestroy()
 @Component({
@@ -10,6 +15,15 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	templateUrl: './profile.component.html',
 	styleUrls: ['./profile.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		RouterLink,
+		NzIconDirective,
+		NgIf,
+		NzSwitchComponent,
+		FormsModule,
+		RouterOutlet
+	],
+	standalone: true
 })
 export class ProfileComponent implements OnInit {
 	public switchValue!: boolean;

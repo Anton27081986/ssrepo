@@ -12,7 +12,7 @@
 							   [user]="user"></app-user-card>
 			</div>
 			<div class="victory-modal__actions">
-				<app-like *ngIf="!(isExtendedMode$ | async)" [likedUsers]="victory.likedUsers"
+				<app-like *ngIf="!(isExtendedMode$ | async)" [likedUsers]="victory.likedUsers || []"
 						  [type]="(typeLike$ | async)!" [count]="victory.likesCount!"
 						  (click)="changeLike(victory.isUserLiked!)"></app-like>
 				<div class="victory-modal__isExtendedMode">
@@ -20,7 +20,7 @@
 									 (stateLike)="getLike(victory.isUserLiked!,$event)"></app-choice-like>
 					<app-like
 						*ngIf="isExtendedMode$ | async"
-						[likedUsers]="victory.likedUsers"
+						[likedUsers]="victory.likedUsers || []"
 						[type]="(typeLike$ | async)!"
 						[count]="victory.likesCount!"
 						(click)="openChoiceLike(victory)">

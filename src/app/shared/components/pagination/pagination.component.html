@@ -1,37 +1,46 @@
-<div class="ss-pagination" *ngIf="countAllTabs > 1">
-	<ul class="ss-pagination__tabs">
-		<li
-			class="ss-pagination__tab"
-			(click)="back()"
-			[class.ss-pagination__tab--disabled]="!disabledLeft"
-		>
-			<ss-icon width="5" height="9" name="arrowRight" class="ss-pagination__tab--left-arrow"></ss-icon>
-		</li>
-		<li
-			class="ss-pagination__tab"
-			*ngIf="viewFirstWaiting"
-			(click)="changePageIndex(1)"
-			[class.ss-pagination__tab--active]="pageIndex === 1">
-			{{ 1 }}
-		</li>
-		<div *ngIf="viewFirstWaiting" class="ss-pagination__tab">...</div>
-		<li
-			class="ss-pagination__tab"
-			(click)="changePageIndex(tab)"
-			*ngFor="let tab of arrTabs | async"
-			[class.ss-pagination__tab--active]="pageIndex === tab">
-			{{ tab }}
-		</li>
-		<div *ngIf="viewLastWaiting" class="ss-pagination__tab">...</div>
-		<li
-			class="ss-pagination__tab"
-			*ngIf="viewLastWaiting"
-			(click)="changePageIndex(countAllTabs)"
-			[class.ss-pagination__tab--active]="pageIndex === countAllTabs">
-			{{ countAllTabs }}
-		</li>
-		<li class="ss-pagination__tab" [class.ss-pagination__tab--disabled]="!disabledRight" (click)="next()">
-			<ss-icon width="5" height="9" name="arrowRight" class="left-arrow"></ss-icon>
-		</li>
-	</ul>
-</div>
+@if (countAllTabs > 1) {
+	<div class="ss-pagination">
+		<ul class="ss-pagination__tabs">
+			<li
+				class="ss-pagination__tab"
+				(click)="back()"
+				[class.ss-pagination__tab--disabled]="!disabledLeft"
+			>
+				<ss-icon width="5" height="9" name="arrowRight" class="ss-pagination__tab--left-arrow"></ss-icon>
+			</li>
+			@if (viewFirstWaiting) {
+				<li
+					class="ss-pagination__tab"
+					(click)="changePageIndex(1)"
+					[class.ss-pagination__tab--active]="pageIndex === 1">
+					{{ 1 }}
+				</li>
+			}
+			@if (viewFirstWaiting) {
+				<div class="ss-pagination__tab">...</div>
+			}
+			@for (tab of (arrTabs | async); track tab) {
+				<li
+					class="ss-pagination__tab"
+					(click)="changePageIndex(tab)"
+					[class.ss-pagination__tab--active]="pageIndex === tab">
+					{{ tab }}
+				</li>
+			}
+			@if (viewLastWaiting) {
+				<div class="ss-pagination__tab">...</div>
+			}
+			@if (viewLastWaiting) {
+				<li
+					class="ss-pagination__tab"
+					(click)="changePageIndex(countAllTabs)"
+					[class.ss-pagination__tab--active]="pageIndex === countAllTabs">
+					{{ countAllTabs }}
+				</li>
+			}
+			<li class="ss-pagination__tab" [class.ss-pagination__tab--disabled]="!disabledRight" (click)="next()">
+				<ss-icon width="5" height="9" name="arrowRight" class="left-arrow"></ss-icon>
+			</li>
+		</ul>
+	</div>
+}

@@ -2,11 +2,21 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { ClientProposalsTradeListTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.state';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {
+	ClientProposalsTabsCanvasComponent
+} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +24,19 @@ import { toSignal } from '@angular/core/rxjs-interop';
 	templateUrl: './client-proposals-trade-list-tab.component.html',
 	styleUrls: ['./client-proposals-trade-list-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		ClientProposalsTabsCanvasComponent,
+		CardComponent,
+		NgIf,
+		TextComponent,
+		SearchInputComponent,
+		DateRangeComponent,
+		TableComponent,
+		EmptyDataPageComponent,
+		PaginationComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class ClientProposalsTradeListTabComponent {
 	public isFiltersVisible: boolean = false;

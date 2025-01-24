@@ -12,6 +12,12 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn, ITrTableBaseColumn } from '@app/core/store';
 import { ClientProposalsRowItemField } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
+import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {NgForOf, NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet} from "@angular/common";
+import {ClientProposalsModule} from "@app/pages/client-proposals-page/client-proposals.module";
 
 export enum StateTableProposals {
 	default = 0,
@@ -27,6 +33,19 @@ export enum StateTableProposals {
 	templateUrl: './client-proposals-table-vgp.component.html',
 	styleUrls: ['./client-proposals-table-vgp.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		TableV2Component,
+		IconComponent,
+		HeadlineComponent,
+		LoaderComponent,
+		NgForOf,
+		NgIf,
+		NgSwitch,
+		NgSwitchCase,
+		NgTemplateOutlet,
+		ClientProposalsModule
+	],
+	standalone: true
 })
 export class ClientProposalsTableVgpComponent {
 	public readonly clientOffers: InputSignal<ResponseProposals<IClientOffersDto> | null> =

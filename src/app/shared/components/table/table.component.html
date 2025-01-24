@@ -1,38 +1,58 @@
-<div class="header" [ngClass]="{'scroll': scroll}" *ngIf="head" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
-	<div class="header__cell" [ngStyle]="{ 'padding': padding }" *ngFor="let headItem of head">
-		<ng-container *ngIf="!headItem.tooltip; else tooltip">
-			<div>{{ headItem.title }}</div>
-		</ng-container>
-		<ng-template #tooltip>
-			<div class="header__cell__pointer" [tooltip]="headItem.tooltip!" [theme]="TooltipTheme.MAIN">{{ headItem.title }}</div>
-		</ng-template>
+@if	(head) {
+	<div class="header" [ngClass]="{'scroll': scroll}" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+		@for (headItem of head; track headItem) {
+			<div class="header__cell" [ngStyle]="{ 'padding': padding }">
+				@if	(!headItem.tooltip) {
+					<div>{{ headItem.title }}</div>
+				} @else {
+					<div class="header__cell__pointer" [tooltip]="headItem.tooltip!" [theme]="TooltipTheme.MAIN">{{ headItem.title }}</div>
+				}
+			</div>
+		}
 	</div>
-</div>
+}
 <div class="body" #bodyEl>
-	<div class="body__row" *ngFor="let item of items" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
-		<div class="body__cell"
-			 [ngStyle]="{ 'padding': padding }"
-			 *ngFor="let headItem of head"
-			 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}"
-			 #cell>
-			<ng-container [ngSwitch]="true">
-				<span *ngSwitchCase="!!item[headItem.field]?.pseudoLink" class="icon" (click)="onControlClick(item, item[headItem.field].pseudoLink)">{{ item[headItem.field].text }}</span>
-				<ss-icon *ngSwitchCase="!!item[headItem.field]?.icon" [name]="item[headItem.field].icon"
-						 (click)="onControlClick(item, item[headItem.field].icon)"></ss-icon>
-				<a *ngSwitchCase="!!item[headItem.field]?.url"
-				   href="{{ item[headItem.field].url }}"
-				   [target]="item[headItem.field].url?.includes(environment.apiUrl || '') ? '_self' : '_blank'">
-					<span class="text-{{ size }}">{{ item[headItem.field].text }}</span>
-				</a>
-				<span *ngSwitchCase="Array.isArray(item[headItem.field])">
-					<a class="text-{{ size }}" *ngFor="let link of item[headItem.field]" href="{{ link.url }}" target="_blank">
-						{{ link.text }}
-					</a>
-				</span>
-				<span *ngSwitchCase="headItem.isNumber" class="text-{{ size }}">{{ item[headItem.field] | numWithSpaces }}</span>
-				<span *ngSwitchDefault class="text-{{ size }}">{{ item[headItem.field] }}</span>
-			</ng-container>
-			<ss-icon class="maximise" name="maximise" *ngIf="(cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
+	@for (item of items; track item) {
+		<div class="body__row" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
+			@for (headItem of head; track headItem) {
+				<div class="body__cell"
+					 [ngStyle]="{ 'padding': padding }"
+					 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}"
+					 #cell>
+					@switch (true) {
+						@case (!!item[headItem.field].pseudoLink) {
+							<span class="icon" (click)="onControlClick(item, item[headItem.field].pseudoLink)">{{ item[headItem.field].text }}</span>
+						}
+						@case (!!item[headItem.field]?.icon) {
+							<ss-icon [name]="item[headItem.field].icon"
+									 (click)="onControlClick(item, item[headItem.field].icon)">
+							</ss-icon>
+						}
+						@case (!!item[headItem.field].url) {
+							<a href="{{ item[headItem.field].url }}" [target]="item[headItem.field].url?.includes(environment.apiUrl || '') ? '_self' : '_blank'">
+								<span class="text-{{ size }}">{{ item[headItem.field].text }}</span>
+							</a>
+						}
+						@case (Array.isArray(item[headItem.field])) {
+							@for (link of item[headItem.field]; track link) {
+								<a class="text-{{ size }}" href="{{ link.url }}" target="_blank">
+									{{ link.text }}
+								</a>
+							}
+						}
+						@case (headItem.isNumber) {
+							<span class="text-{{ size }}">{{ item[headItem.field] | numWithSpaces }}</span>
+						}
+						@default {
+							<span class="text-{{ size }}">{{ item[headItem.field] }}</span>
+						}
+					}
+
+					@if ((cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon) {
+						<ss-icon class="maximise" name="maximise" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
+					}
+				</div>
+			}
 		</div>
-	</div>
+	}
 </div>

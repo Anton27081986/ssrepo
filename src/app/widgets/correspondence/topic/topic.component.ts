@@ -1,11 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
 import { Observable } from 'rxjs';
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
 	selector: 'ss-topic',
 	templateUrl: './topic.component.html',
 	styleUrls: ['./topic.component.scss'],
+	imports: [
+		SearchInputComponent,
+		IconComponent,
+		HeadlineComponent,
+		TextComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class TopicComponent implements OnInit {
 	public topics$: Observable<Array<{ subject: string; messageCount: number }>>;

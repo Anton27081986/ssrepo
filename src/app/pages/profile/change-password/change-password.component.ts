@@ -1,11 +1,29 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent} from "ng-zorro-antd/form";
+import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
+import {NzIconDirective} from "ng-zorro-antd/icon";
+import {RouterLink} from "@angular/router";
+import {NzButtonComponent} from "ng-zorro-antd/button";
 
 @Component({
 	selector: 'app-change-password',
 	templateUrl: './change-password.component.html',
 	styleUrls: ['./change-password.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		ReactiveFormsModule,
+		NzFormItemComponent,
+		NzFormLabelComponent,
+		NzFormControlComponent,
+		NzInputGroupComponent,
+		NzIconDirective,
+		RouterLink,
+		NzButtonComponent,
+		NzFormDirective,
+		NzInputDirective
+	],
+	standalone: true
 })
 export class ChangePasswordComponent implements OnInit {
 	public myPasswordForm!: FormGroup;

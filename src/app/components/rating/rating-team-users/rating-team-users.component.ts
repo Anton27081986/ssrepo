@@ -5,6 +5,16 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { IRankItemDto } from '@app/core/models/awards/rank-item-dto';
 import { IRatingTeamsResponse } from '@app/core/utils/response';
 import { RatingTeamsStateService } from '@app/components/rating/rating-teams/rating-teams.state';
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {
+	RatingTeamUsersCardComponent
+} from "@app/components/rating/rating-team-users-card/rating-team-users-card.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -12,6 +22,18 @@ import { RatingTeamsStateService } from '@app/components/rating/rating-teams/rat
 	templateUrl: './rating-team-users.component.html',
 	styleUrls: ['./rating-team-users.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		TextComponent,
+		LoaderComponent,
+		NgIf,
+		RatingTeamUsersCardComponent,
+		NgForOf,
+		EmptyPlaceholderComponent,
+		IconComponent,
+		HeadlineComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class RatingTeamUsersComponent {
 	protected usersTeamResponse: Signal<IRatingTeamsResponse<IRankItemDto> | null> = toSignal(

@@ -2,11 +2,19 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { ISamples } from '@app/core/models/client-proposails/samples';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IClientProposalsSamplesTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-table-item';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { ClientProposalsSamplesTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.state';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {
+	ClientProposalsTabsCanvasComponent
+} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +22,18 @@ import { toSignal } from '@angular/core/rxjs-interop';
 	templateUrl: './client-proposals-samples-tab.component.html',
 	styleUrls: ['./client-proposals-samples-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CardComponent,
+		ClientProposalsTabsCanvasComponent,
+		NgIf,
+		TextComponent,
+		AsyncPipe,
+		TableComponent,
+		EmptyDataPageComponent,
+		PaginationComponent,
+		NumWithSpacesPipe
+	],
+	standalone: true
 })
 export class ClientProposalsSamplesTabComponent {
 	protected samples: Signal<IResponseProposalsTrips<ISamples> | null> = toSignal(

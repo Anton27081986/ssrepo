@@ -4,23 +4,26 @@ import { rotateAnimation } from '@app/core/animations';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { numberInputTextMask } from '@app/core/utils/mask';
 import { ModalService } from '@app/core/modal/modal.service';
 import { SalesHistoryComponent } from '@app/pages/excess-income/excess-income-history/sales-history/sales-history.component';
 import { CommentsHistoryComponent } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history.component';
 import {
-	ButtonType,
+	ButtonComponent,
+	ButtonType, DropdownButtonComponent, DropdownItemComponent, FieldCtrlDirective, FormFieldComponent,
 	IconPosition,
-	IconType,
-	InputType,
-	Size,
+	IconType, InputComponent,
+	InputType, LinkComponent,
+	Size, TextComponent,
 	TextType,
-	TextWeight,
+	TextWeight, TooltipDirective,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
 import { ProductPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/product-price-history/product-price-history.component';
 import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
+import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import {ReactiveFormsModule} from "@angular/forms";
+import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -29,6 +32,24 @@ import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-incom
 	styleUrls: ['./excess-income-tov-tr.component.scss'],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		LinkComponent,
+		ButtonComponent,
+		DropdownButtonComponent,
+		DropdownItemComponent,
+		TextComponent,
+		FormFieldComponent,
+		InputComponent,
+		TooltipDirective,
+		NumWithSpacesPipe,
+		ReactiveFormsModule,
+		AsyncPipe,
+		NgSwitch,
+		NgSwitchCase,
+		NgIf,
+		FieldCtrlDirective
+	],
+	standalone: true
 })
 export class ExcessIncomeTovTrComponent implements OnDestroy {
 	public tovNode: InputSignal<TovNodeState> = input.required<TovNodeState>();

@@ -4,7 +4,7 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject, map, Observable, of, tap, combineLatest } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {
 	ClientProposalsFacadeService,
@@ -19,6 +19,24 @@ import { NotificationToastService } from '@app/core/services/notification-toast.
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
 import { rotateAnimation } from '@app/core/animations';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {
+	MultiselectAutocompleteV2Component
+} from "@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.component";
+import {MultiselectV2Component} from "@app/shared/components/multiselect-v2/multiselect-v2.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {NoticeComponent} from "@app/components/notice/notice.component";
+import {AsyncPipe, NgIf} from "@angular/common";
+import {FilePickerComponent} from "@app/shared/components/file-picker/file-picker.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {
+	ClientProposalsTableVgpComponent
+} from "@app/pages/client-proposals-page/client-proposals/client-proposals-table-vgp/client-proposals-table-vgp.component";
+import {
+	SettingsViewColumnComponent
+} from "@app/pages/client-proposals-page/settings-view-column/settings-view-column.component";
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -35,6 +53,24 @@ export interface IClientProposalsCriteriaForm {
 	providers: [ColumnsStateService, CheckFileListStateService],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		HeadlineComponent,
+		ReactiveFormsModule,
+		MultiselectAutocompleteV2Component,
+		MultiselectV2Component,
+		ButtonComponent,
+		NoticeComponent,
+		AsyncPipe,
+		NgIf,
+		FilePickerComponent,
+		TooltipDirective,
+		NzDropDownDirective,
+		IconComponent,
+		ClientProposalsTableVgpComponent,
+		NzDropdownMenuComponent,
+		SettingsViewColumnComponent
+	],
+	standalone: true
 })
 export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 	selector: 'ss-tag',
 	templateUrl: './tag.component.html',
 	styleUrls: ['./tag.component.scss'],
+	standalone: true
 })
 export class TagComponent {
 	@Input()

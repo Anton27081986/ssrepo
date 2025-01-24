@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, OnInit, Signal } from '@angular/core';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RatingTeamsStateService } from '@app/components/rating/rating-teams/rating-teams.state';
 import { IWeekItemDto } from '@app/core/models/awards/week-item-dto';
@@ -12,6 +12,16 @@ import { filterTruthy } from '@app/core/facades/client-proposals-facade.service'
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { RatingService } from '@app/components/rating/rating.service';
 import { TypeReport } from '@app/core/api/rating-api.service';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {NgIf} from "@angular/common";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {RatingTeamsComponent} from "@app/components/rating/rating-teams/rating-teams.component";
+import {RatingTeamUsersComponent} from "@app/components/rating/rating-team-users/rating-team-users.component";
+import {SearchUserInputComponent} from "@app/shared/components/inputs/search-user-input/search-user-input.component";
 
 export interface RatingCriteriaForm {
 	week: FormControl<IDictionaryItemDto | null>;
@@ -25,6 +35,20 @@ export interface RatingCriteriaForm {
 	styleUrls: ['./rating.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [RatingTeamsStateService, RatingTeamUsersState],
+	imports: [
+		CardComponent,
+		TextComponent,
+		NgIf,
+		TooltipDirective,
+		IconComponent,
+		SelectV2Component,
+		ReactiveFormsModule,
+		SsDividerComponent,
+		RatingTeamsComponent,
+		RatingTeamUsersComponent,
+		SearchUserInputComponent
+	],
+	standalone: true
 })
 export class RatingComponent implements OnInit {
 	public weeks: Signal<IWeekItemDto[]> = toSignal(this.ratingState.weeks$, {

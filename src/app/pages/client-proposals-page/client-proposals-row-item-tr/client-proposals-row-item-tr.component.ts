@@ -21,6 +21,10 @@ import { BehaviorSubject } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
+import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 export enum ClientProposalsRowItemField {
 	vgp = 'vgp',
@@ -41,6 +45,18 @@ export enum ClientProposalsRowItemField {
 	selector: 'tr[app-client-proposals-row-item-tr]',
 	styleUrls: ['client-proposals-row-item-tr.component.scss'],
 	templateUrl: './client-proposals-row-item-tr.component.html',
+	imports: [
+		NgForOf,
+		AsyncPipe,
+		NgSwitch,
+		NgIf,
+		NgSwitchCase,
+		NumWithSpacesPipe,
+		TooltipDirective,
+		IconComponent,
+		NgSwitchDefault
+	],
+	standalone: true
 })
 export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly ClientTprRowItemField = ClientProposalsRowItemField;

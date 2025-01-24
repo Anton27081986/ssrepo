@@ -4,6 +4,12 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { SSForm } from '@app/core/models/form';
 import { dateFromLessDateTo } from '@app/core/validators/date-from-less-date-to';
 import { ModalTransportNoticeImports } from '@app/components/modal/modal-transport-notice/modal-transport-notice.imports';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 interface INoteForm {
 	dateFrom: Date | null;
@@ -17,7 +23,7 @@ interface INoteForm {
 	styleUrls: ['./modal-transport-notice.component.scss'],
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [ModalTransportNoticeImports],
+	imports: [ModalTransportNoticeImports, CardComponent, TextComponent, IconComponent, SsDividerComponent, TextareaComponent, ButtonComponent],
 })
 export class ModalTransportNoticeComponent {
 	private readonly modalRef = inject(ModalRef);

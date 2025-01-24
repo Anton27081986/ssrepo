@@ -14,15 +14,15 @@ import {
 } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { rotateAnimation } from '@app/core/animations';
-import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { NgClass } from '@angular/common';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
-import { IconModule } from '@app/shared/components/icon/icon.module';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-search-input-v2',
 	standalone: true,
-	imports: [CaptionModule, NgClass, MapperPipe, ReactiveFormsModule, IconModule],
+	imports: [NgClass, MapperPipe, ReactiveFormsModule, CaptionComponent, IconComponent],
 	templateUrl: './search-input-v2.component.html',
 	styleUrl: './search-input-v2.component.scss',
 	providers: [

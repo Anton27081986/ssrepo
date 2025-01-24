@@ -1,10 +1,17 @@
 import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-input',
 	templateUrl: './input.component.html',
 	styleUrls: ['./input.component.scss'],
+	imports: [
+		IconComponent,
+		CaptionComponent
+	],
+	standalone: true
 })
 export class InputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

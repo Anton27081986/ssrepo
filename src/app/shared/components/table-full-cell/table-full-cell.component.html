@@ -2,26 +2,39 @@
 	<ss-card class="dialog" padding="16px 16px 16px 16px" (click)="$event.stopPropagation()">
 		<div class="header">
 			<ss-icon width="16" class="close-icon" name="close" (click)="close()"></ss-icon>
-			<ss-headline *ngIf="title" size="h6">{{ title }}</ss-headline>
+			@if (title) {
+				<ss-headline size="h6">{{ title }}</ss-headline>
+			}
 		</div>
-		<ss-text class="body" size="2" *ngIf="cell">
-			<ng-container [ngSwitch]="true">
-				<a *ngSwitchCase="!!cell?.url" href="{{ cell.url }}" target="_blank">
-					{{ cell.text }}
-				</a>
-				<p class="column" *ngSwitchCase="Array.isArray(cell)">
-					<ng-container *ngFor="let item of cell">
-						<a *ngIf="item?.url; else noLink" href="{{ item.url }}" target="_blank">
-							{{ item.text }}
+		@if (cell) {
+			<ss-text class="body" size="2">
+				@switch (true) {
+					@case (!!cell?.url) {
+						<a href="{{ cell.url }}" target="_blank">
+							{{ cell.text }}
 						</a>
-						<ng-template #noLink>
-							<span>{{ item.text }}</span>
-						</ng-template>
-					</ng-container>
-				</p>
-				<span *ngSwitchCase="!!cell?.pseudoLink">{{ cell.text }}</span>
-				<span *ngSwitchDefault>{{ cell }}</span>
-			</ng-container>
-		</ss-text>
+					}
+					@case (Array.isArray(cell)) {
+						<p class="column">
+							@for (item of cell; track item) {
+								@if (item?.url) {
+									<a href="{{ item.url }}" target="_blank">
+										{{ item.text }}
+									</a>
+								} @else {
+									<span>{{ item.text }}</span>
+								}
+							}
+						</p>
+					}
+					@case (!!cell?.pseudoLink) {
+						<span>{{ cell['text'] }}</span>
+					}
+					@default {
+						<span>{{ cell }}</span>
+					}
+				}
+			</ss-text>
+		}
 	</ss-card>
 </div>

@@ -1,11 +1,20 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
+import {SsMenuItemComponent} from "@app/shared/components/ss-menu/ss-menu-item/ss-menu-item.component";
+import {NgForOf, NgIf, NgStyle} from "@angular/common";
 
 @Component({
 	selector: 'ss-menu',
 	templateUrl: 'ss-menu.component.html',
 	styleUrls: ['ss-menu.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		SsMenuItemComponent,
+		NgStyle,
+		NgIf,
+		NgForOf
+	],
+	standalone: true
 })
 export class SsMenuComponent {
 	@Input() menuItems: IMenuItemDto[] | undefined | null = null;

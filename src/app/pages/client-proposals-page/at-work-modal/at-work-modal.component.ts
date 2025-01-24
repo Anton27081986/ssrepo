@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
@@ -7,7 +7,15 @@ import { DialogComponent } from '@app/shared/components/dialog/dialog.component'
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { ICreateOfferItem } from '@app/core/models/client-proposails/create-offer-item';
-import { switchMap } from 'rxjs/operators';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
+import {NgForOf} from "@angular/common";
+import {
+	AtWorkRowItemTrComponent
+} from "@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 interface IOfferData {
 	items: IClientOffersDto[];
@@ -19,6 +27,16 @@ interface IOfferData {
 	selector: 'ss-at-work-modal',
 	styleUrls: ['at-work-modal.component.scss'],
 	templateUrl: './at-work-modal.component.html',
+	imports: [
+		CardComponent,
+		HeadlineComponent,
+		IconComponent,
+		TableV2Component,
+		NgForOf,
+		AtWorkRowItemTrComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class AtWorkModalComponent {
 	protected items: ICreateOfferItem[] = [];

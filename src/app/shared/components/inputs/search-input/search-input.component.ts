@@ -13,6 +13,8 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { BehaviorSubject } from 'rxjs';
 import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe} from "@angular/common";
 
 export type searchType =
 	| 'user'
@@ -43,6 +45,11 @@ export type searchType =
 	selector: 'ss-search-input',
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss'],
+	imports: [
+		CaptionComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class SearchInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

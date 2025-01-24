@@ -1,6 +1,7 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { LikeStateEnum } from '@app/shared/components/like/like.component';
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
@@ -8,6 +9,10 @@ import { LikeStateEnum } from '@app/shared/components/like/like.component';
 	templateUrl: './choice-like.component.html',
 	styleUrls: ['./choice-like.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		IconComponent
+	],
+	standalone: true
 })
 export class ChoiceLikeComponent {
 	@Output() stateLike: EventEmitter<LikeStateEnum> = new EventEmitter<LikeStateEnum>();

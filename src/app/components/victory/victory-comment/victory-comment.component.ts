@@ -7,6 +7,12 @@ import { Subscription } from 'rxjs';
 import { IUserProfile } from '@app/core/models/auth/user-profile';
 import { VictoryState } from '@app/components/victory/victory.state';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {UserCardComponent} from "@app/components/user-card/user-card.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {DatePipe} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +20,15 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 	templateUrl: './victory-comment.component.html',
 	styleUrls: ['./victory-comment.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		UserCardComponent,
+		IconComponent,
+		TooltipDirective,
+		TextComponent,
+		SsDividerComponent,
+		DatePipe
+	],
+	standalone: true
 })
 export class VictoryCommentComponent {
 	@Input() comment: ICommentsItemDto | null = null;

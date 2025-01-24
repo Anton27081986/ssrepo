@@ -7,6 +7,14 @@ import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.s
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 
 export enum TypeReportEnum {
 	took = 0,
@@ -18,6 +26,17 @@ export enum TypeReportEnum {
 	selector: 'app-client-proposals-page',
 	templateUrl: './client-proposals-page.component.html',
 	styleUrls: ['./client-proposals-page.component.scss'],
+	imports: [
+		HeadlineComponent,
+		NgIf,
+		TextComponent,
+		TooltipMenuComponent,
+		CaptionComponent,
+		IconComponent,
+		SearchInputComponent,
+		TooltipDirective
+	],
+	standalone: true
 })
 export class ClientProposalsPageComponent {
 	constructor(

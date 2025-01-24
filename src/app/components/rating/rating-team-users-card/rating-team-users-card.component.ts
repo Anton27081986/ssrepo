@@ -12,6 +12,17 @@ import { TypeCup } from '@app/components/rating/rating-team-tab/rating-team-tab.
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ModalService } from '@app/core/modal/modal.service';
 import { RateTypeEnum } from '@app/core/models/awards/rate-type';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {UserCardComponent} from "@app/components/user-card/user-card.component";
+import {ProjectsUsersCardComponent} from "@app/components/rating/projects-users-card/projects-users-card.component";
+import {
+	DistributorsUsersCardComponent
+} from "@app/components/rating/distributors-users-card/distributors-users-card.component";
+import {TeamUsersCardComponent} from "@app/components/rating/team-users-card/team-users-card.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
@@ -19,6 +30,20 @@ import { RateTypeEnum } from '@app/core/models/awards/rate-type';
 	templateUrl: './rating-team-users-card.component.html',
 	styleUrls: ['./rating-team-users-card.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CardComponent,
+		NgSwitch,
+		NgSwitchCase,
+		UserCardComponent,
+		ProjectsUsersCardComponent,
+		DistributorsUsersCardComponent,
+		TeamUsersCardComponent,
+		NgIf,
+		TooltipDirective,
+		TextComponent,
+		IconComponent
+	],
+	standalone: true
 })
 export class RatingTeamUsersCardComponent {
 	public teamUsers: InputSignal<IRankItemDto> = input.required<IRankItemDto>();

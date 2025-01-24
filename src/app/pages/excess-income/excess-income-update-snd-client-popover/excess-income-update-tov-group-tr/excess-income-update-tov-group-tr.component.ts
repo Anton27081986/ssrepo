@@ -6,13 +6,16 @@ import { numberInputTextMask } from '@app/core/utils/mask';
 import { ExcessIncomeUpdateClientTovGroupItem } from '@app/core/models/excess-income/excess-income-update-client-tov-group-item';
 import { ExcessIncomeUpdateTovGroupState } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-state';
 import {
-	ButtonType,
+	ButtonComponent,
+	ButtonType, FieldCtrlDirective, FormFieldComponent,
 	IconPosition,
-	IconType,
+	IconType, InputComponent,
 	InputType,
-	Size,
+	Size, TextComponent,
 	TextType,
 } from '@front-components/components';
+import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
 	selector: 'tr[excess-income-update-tov-group-tr]',
@@ -20,6 +23,20 @@ import {
 	styleUrls: ['./excess-income-update-tov-group-tr.component.scss'],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		NgForOf,
+		AsyncPipe,
+		NgSwitch,
+		TextComponent,
+		NgSwitchCase,
+		NgIf,
+		FormFieldComponent,
+		InputComponent,
+		ReactiveFormsModule,
+		ButtonComponent,
+		FieldCtrlDirective
+	],
+	standalone: true
 })
 export class ExcessIncomeUpdateTovGroupTrComponent {
 	public tovGroup = input.required<ExcessIncomeUpdateClientTovGroupItem>();

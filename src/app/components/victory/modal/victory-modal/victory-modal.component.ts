@@ -13,7 +13,20 @@ import { VictoryService } from '@app/components/victory/victory.service';
 import { VictoryEventEnum, VictoryRootService } from '@app/components/victory/victory-root.service';
 import { VictoryState } from '@app/components/victory/victory.state';
 import { Awards } from '@app/core/api/awards';
-import { LikeStateEnum } from '@app/shared/components/like/like.component';
+import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {UserCardComponent} from "@app/components/user-card/user-card.component";
+import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
+import {VictoryCommentComponent} from "@app/components/victory/victory-comment/victory-comment.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {
+	FormControlInputWithFuncEditComponent
+} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 export interface VictoryModal {
 	victory: IWinsItemDto;
@@ -26,6 +39,23 @@ export interface VictoryModal {
 	templateUrl: './victory-modal.component.html',
 	styleUrls: ['./victory-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		AsyncPipe,
+		NgIf,
+		TextComponent,
+		IconComponent,
+		SsDividerComponent,
+		UserCardComponent,
+		LikeComponent,
+		ChoiceLikeComponent,
+		VictoryCommentComponent,
+		NgForOf,
+		EmptyPlaceholderComponent,
+		HeadlineComponent,
+		FormControlInputWithFuncEditComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class VictoryModalComponent {
 	protected victory$: Observable<IWinsItemDto>;

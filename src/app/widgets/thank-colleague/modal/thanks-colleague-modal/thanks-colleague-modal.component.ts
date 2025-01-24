@@ -14,7 +14,20 @@ import { VictoryState } from '@app/components/victory/victory.state';
 import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import { LikeStateEnum } from '@app/shared/components/like/like.component';
+import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
+import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
+import {VictoryCommentComponent} from "@app/components/victory/victory-comment/victory-comment.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {
+	FormControlInputWithFuncEditComponent
+} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 export interface ThankColleagueModal {
 	thank: IThanksColleagueItem;
@@ -27,6 +40,23 @@ export interface ThankColleagueModal {
 	templateUrl: './thanks-colleague-modal.component.html',
 	styleUrls: ['./thanks-colleague-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		NgIf,
+		TextComponent,
+		IconComponent,
+		SsDividerComponent,
+		AvatarComponent,
+		LikeComponent,
+		ChoiceLikeComponent,
+		AsyncPipe,
+		VictoryCommentComponent,
+		NgForOf,
+		EmptyPlaceholderComponent,
+		HeadlineComponent,
+		FormControlInputWithFuncEditComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class ThanksColleagueModalComponent {
 	protected readonly TooltipPosition = TooltipPosition;

@@ -6,12 +6,15 @@ import {
 	OnInit,
 } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+import {ControlValueAccessor, FormsModule, NgControl} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime, distinctUntilChanged, map, of, Subject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { IResponse } from '@app/core/utils/response';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {NzFormControlComponent} from "ng-zorro-antd/form";
+import {NzOptionComponent, NzSelectComponent} from "ng-zorro-antd/select";
 
 @UntilDestroy()
 @Component({
@@ -19,6 +22,14 @@ import { IResponse } from '@app/core/utils/response';
 	templateUrl: './autocomplete-select-field.component.html',
 	styleUrls: ['./autocomplete-select-field.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CaptionComponent,
+		NzFormControlComponent,
+		NzSelectComponent,
+		FormsModule,
+		NzOptionComponent
+	],
+	standalone: true
 })
 export class AutocompleteSelectFieldComponent implements ControlValueAccessor, OnInit {
 	@Input() public url: string | undefined;

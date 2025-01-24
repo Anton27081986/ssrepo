@@ -10,6 +10,13 @@ import { ModalTransportNoticeComponent } from '@app/components/modal/modal-trans
 import { TransportImports } from '@app/components/transport/transport.imports';
 import { IRouteDto } from '@app/core/models/company/route-dto';
 import { fadeInDown } from '@app/core/animations';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {NoticeComponent} from "@app/components/notice/notice.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {TagComponent} from "@app/shared/components/tag/tag.component";
 
 const NO_TIME = '--:--';
 
@@ -21,7 +28,7 @@ const NO_TIME = '--:--';
 	standalone: true,
 	animations: [fadeInDown],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [TransportImports],
+	imports: [TransportImports, CardComponent, TextComponent, ButtonComponent, IconComponent, NoticeComponent, SsDividerComponent, TagComponent],
 })
 export class TransportComponent {
 	private readonly apiService = inject(TransportApiService);
@@ -51,8 +58,8 @@ export class TransportComponent {
 	);
 
 	public noticeText(transport: ITransportDto): string {
-		return `В период с ${dateTimeFromIsoString(transport.transportNotify!.dateFrom)} 
-		до ${dateTimeFromIsoString(transport.transportNotify!.dateTo)} 
+		return `В период с ${dateTimeFromIsoString(transport.transportNotify!.dateFrom)}
+		до ${dateTimeFromIsoString(transport.transportNotify!.dateTo)}
 		${transport.transportNotify!.note}`;
 	}
 

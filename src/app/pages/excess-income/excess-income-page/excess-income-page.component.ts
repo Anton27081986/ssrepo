@@ -3,26 +3,47 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { ITrTableBaseColumn } from '@app/core/store';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
+import {
+	ExcessIncomeClientRowItemField,
+	ExcessIncomeClientTrComponent
+} from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { BehaviorSubject } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {
+	ButtonComponent,
 	ButtonType,
 	collapseHeight,
 	IconPosition,
-	IconType,
+	IconType, LabelComponent,
 	LabelType,
-	Size,
+	Size, TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-components/components';
 import { state } from '@angular/animations';
+import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
+import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {
+	ExcessIncomeContractorTrComponent
+} from "@app/pages/excess-income/excess-income-tr/excess-income-contractor-tr/excess-income-contractor-tr.component";
+import {
+	ExcessIncomeGroupTrComponent
+} from "@app/pages/excess-income/excess-income-tr/excess-income-group-tr/excess-income-group-tr.component";
+import {
+	ExcessIncomeTovTrComponent
+} from "@app/pages/excess-income/excess-income-tr/excess-income-tov-tr/excess-income-tov-tr.component";
+import {LoaderTrComponent} from "@app/shared/components/loader-tr/loader-tr.component";
+import {PaginationTrComponent} from "@app/shared/components/pagination-tr/pagination-tr.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 
 @UntilDestroy()
 @Component({
@@ -32,6 +53,28 @@ import { state } from '@angular/animations';
 	providers: [ExcessIncomeState],
 	animations: [collapseHeight],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		TextComponent,
+		ButtonComponent,
+		SelectV2Component,
+		DropdownButtonComponent,
+		ReactiveFormsModule,
+		FiltersComponent,
+		AsyncPipe,
+		TableV2Component,
+		LoaderComponent,
+		NgIf,
+		NgForOf,
+		ExcessIncomeClientTrComponent,
+		ExcessIncomeContractorTrComponent,
+		ExcessIncomeGroupTrComponent,
+		ExcessIncomeTovTrComponent,
+		LoaderTrComponent,
+		PaginationTrComponent,
+		EmptyPlaceholderComponent,
+		LabelComponent
+	],
+	standalone: true
 })
 export class ExcessIncomePageComponent {
 	protected clientsNode: Signal<ClientNodeState[]> = toSignal(
