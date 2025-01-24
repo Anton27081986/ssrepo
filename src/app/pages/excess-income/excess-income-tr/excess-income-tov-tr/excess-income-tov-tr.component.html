@@ -18,9 +18,9 @@
 													(click)="$event.stopPropagation(); openSalesHistory()"></snab-dropdown-item>
 								<snab-dropdown-item [textContent]="'История изменения цены ТП'"
 													(click)="$event.stopPropagation(); openPriceHistory()"></snab-dropdown-item>
-								<snab-dropdown-item [textContent]="'История изменения комментарий'"
+								<snab-dropdown-item [textContent]="'История изменения комментария'"
 													(click)="$event.stopPropagation(); openCommentsHistory()"></snab-dropdown-item>
-								<snab-dropdown-item *ngIf="canEditComment" [textContent]="'Изменить комментария'"
+								<snab-dropdown-item *ngIf="canEditComment" [textContent]="'Изменить комментарий'"
 													(click)="$event.stopPropagation(); openModalEditComment()"></snab-dropdown-item>
 							</snab-dropdown-button>
 						</div>
