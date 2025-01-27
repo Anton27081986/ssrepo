@@ -332,6 +332,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		});
 
 		this.blockValueChangeForm$.next(false);
+
 		return this.mapExcessIncomeTov(formGroup, item);
 	}
 
