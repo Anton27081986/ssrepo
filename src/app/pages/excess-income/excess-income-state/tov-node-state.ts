@@ -296,7 +296,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				excessIncomePercent: [
 					{
 						value: item.currentParams.excessIncomePercent,
-						disabled: this.canEditSnd,
+						disabled: this.canEditSnd || item.currentParams.price === null,
 					},
 					compareValues(item.currentParams.excessIncomePercent),
 				],
@@ -315,7 +315,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				excessIncomePercent: [
 					{
 						value: item.nextParams.excessIncomePercent,
-						disabled: this.canEditSnd,
+						disabled: this.canEditSnd || item.nextParams.price === null,
 					},
 					compareValues(item.nextParams.excessIncomePercent),
 				],

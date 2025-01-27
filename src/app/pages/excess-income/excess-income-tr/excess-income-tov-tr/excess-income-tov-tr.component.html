@@ -30,7 +30,9 @@
 
 			<ng-container formGroupName="currentParams">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
-					<td class="ss-table-td" [style.min-width]="col.width">
+					<td class="ss-table-td" snab-tooltip [tooltipText]="tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
+						[position]="TooltipPosition.Top"
+						[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
 						<div class="ss-table-td__content">
 							<snab-text snab-tooltip
 									   [tooltipText]="'Рекомендованная цена.'"
@@ -127,7 +129,9 @@
 
 			<ng-container formGroupName="nextParams">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
-					<td class="ss-table-td" [style.min-width]="col.width">
+					<td class="ss-table-td" snab-tooltip [tooltipText]="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
+						[position]="TooltipPosition.Top"
+						[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
 						<snab-text snab-tooltip
 								   [tooltipText]="'Рекомендованная цена.'"
 								   [position]="TooltipPosition.Top"
