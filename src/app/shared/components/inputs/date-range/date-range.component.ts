@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
 import {FormControl, FormGroup, NgControl, ReactiveFormsModule} from '@angular/forms';
-import {DatePipe, formatDate, NgClass} from '@angular/common';
+import {CommonModule, DatePipe, formatDate, NgClass} from '@angular/common';
 import { EMPTY_FUNCTION } from '@app/core/constants/empty';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
@@ -13,6 +13,7 @@ import {MatDateRangeInput, MatDateRangePicker, MatEndDate} from "@angular/materi
 	templateUrl: './date-range.component.html',
 	styleUrls: ['./date-range.component.scss'],
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		NgClass,
 		TextComponent,

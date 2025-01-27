@@ -4,7 +4,7 @@ import { map } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgClass, NgForOf, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 
@@ -14,6 +14,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 	templateUrl: './chips-user-search.component.html',
 	styleUrls: ['./chips-user-search.component.scss'],
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		AvatarComponent,
 		NgClass,

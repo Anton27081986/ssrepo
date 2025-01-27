@@ -23,7 +23,7 @@ import { ProductPriceHistoryComponent } from '@app/pages/excess-income/excess-in
 import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
 import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 import {ReactiveFormsModule} from "@angular/forms";
-import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -33,6 +33,7 @@ import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		LinkComponent,
 		ButtonComponent,
 		DropdownButtonComponent,

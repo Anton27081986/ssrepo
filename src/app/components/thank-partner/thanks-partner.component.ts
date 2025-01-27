@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { filter, map, of, switchMap, tap } from 'rxjs';
-import { formatDate } from '@angular/common';
+import {CommonModule, formatDate} from '@angular/common';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -26,6 +26,7 @@ import {HeadlineComponent} from "@app/shared/components/typography/headline/head
 	styleUrls: ['./thanks-partner.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		DateTimePickerComponent,

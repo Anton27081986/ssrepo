@@ -19,7 +19,7 @@ import {SearchInputComponent} from "@app/shared/components/inputs/search-input/s
 import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
 import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -27,6 +27,7 @@ import {NgForOf, NgIf} from "@angular/common";
 	templateUrl: './completed-work-act-edit.component.html',
 	styleUrls: ['./completed-work-act-edit.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		ButtonComponent,

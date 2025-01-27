@@ -5,7 +5,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {TagV2Component} from "@app/shared/components/tag-v2/tag-v2.component";
@@ -26,6 +26,7 @@ import {
 	templateUrl: './completed-work-act-card.component.html',
 	styleUrls: ['./completed-work-act-card.component.scss'],
 	imports: [
+		CommonModule,
 		NgIf,
 		IconComponent,
 		TextComponent,

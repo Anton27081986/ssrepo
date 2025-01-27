@@ -23,6 +23,7 @@ import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-
 import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
 import {DatepickerInputComponent} from "@app/shared/components/inputs/datepicker-input/datepicker-input.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CommonModule} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -30,6 +31,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 	templateUrl: './contract-new.component.html',
 	styleUrls: ['./contract-new.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		HeadlineComponent,
 		IconComponent,

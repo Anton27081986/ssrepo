@@ -7,7 +7,7 @@ import { IRatingTeamsResponse } from '@app/core/utils/response';
 import { RatingTeamsStateService } from '@app/components/rating/rating-teams/rating-teams.state';
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {
 	RatingTeamUsersCardComponent
 } from "@app/components/rating/rating-team-users-card/rating-team-users-card.component";
@@ -23,6 +23,7 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 	styleUrls: ['./rating-team-users.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		TextComponent,
 		LoaderComponent,
 		NgIf,

@@ -4,7 +4,7 @@ import { IUserDto } from '@app/core/models/awards/user-dto';
 import { ModalService } from '@app/core/modal/modal.service';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @UntilDestroy()
@@ -13,6 +13,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	templateUrl: './user-card.component.html',
 	styleUrls: ['./user-card.component.scss'],
 	imports: [
+		CommonModule,
 		AvatarComponent,
 		NgIf,
 		TextComponent

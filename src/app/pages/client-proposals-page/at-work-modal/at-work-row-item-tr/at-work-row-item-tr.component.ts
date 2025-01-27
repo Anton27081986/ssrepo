@@ -16,7 +16,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {SelectComponent} from "@app/shared/components/select/select.component";
 import {InputComponent} from "@app/shared/components/inputs/input/input.component";
@@ -37,6 +37,7 @@ export enum AtWorkRowItemField {
 	styleUrls: ['at-work-row-item-tr.component.scss'],
 	templateUrl: './at-work-row-item-tr.component.html',
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		NgSwitch,

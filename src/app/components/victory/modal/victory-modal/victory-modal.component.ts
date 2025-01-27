@@ -14,7 +14,7 @@ import { VictoryEventEnum, VictoryRootService } from '@app/components/victory/vi
 import { VictoryState } from '@app/components/victory/victory.state';
 import { Awards } from '@app/core/api/awards';
 import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
@@ -40,6 +40,7 @@ export interface VictoryModal {
 	styleUrls: ['./victory-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		AsyncPipe,
 		NgIf,
 		TextComponent,

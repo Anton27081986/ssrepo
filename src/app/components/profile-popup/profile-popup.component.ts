@@ -15,7 +15,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {ProfileCardComponent} from "@app/components/profile-card/profile-card.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
@@ -33,6 +33,7 @@ import {SearchInputComponent} from "@app/shared/components/inputs/search-input/s
 	styleUrls: ['./profile-popup.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		AsyncPipe,
 		NgIf,
 		ProfileCardComponent,

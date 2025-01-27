@@ -9,7 +9,7 @@ import { VictoryState } from '@app/components/victory/victory.state';
 import { TableState } from '@app/shared/components/table/table-state';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
@@ -25,8 +25,8 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 	templateUrl: './victory.component.html',
 	styleUrls: ['./victory.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [VictoryState],
 	imports: [
+		CommonModule,
 		CardComponent,
 		LoaderComponent,
 		NgIf,

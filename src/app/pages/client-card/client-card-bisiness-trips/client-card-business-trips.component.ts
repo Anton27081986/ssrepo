@@ -10,7 +10,7 @@ import { BusinessTripsFacadeService } from '@app/core/facades/business-trips-fac
 import { IClientBusinessTripsTableItem } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips-table-item';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
@@ -23,6 +23,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	styleUrls: ['./client-card-business-trips.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		LoaderComponent,
 		NgIf,

@@ -12,7 +12,7 @@ import { ITab } from '@app/shared/components/tabs/tab';
 import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
 import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {AsyncPipe, DatePipe, NgClass} from "@angular/common";
+import {AsyncPipe, CommonModule, DatePipe, NgClass} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
@@ -28,6 +28,7 @@ import {FileSizePipe} from "@app/core/pipes/size.pipe";
 	templateUrl: './messages.component.html',
 	styleUrls: ['./messages.component.scss'],
 	imports: [
+		CommonModule,
 		TabsComponent,
 		SearchInputComponent,
 		AvatarComponent,

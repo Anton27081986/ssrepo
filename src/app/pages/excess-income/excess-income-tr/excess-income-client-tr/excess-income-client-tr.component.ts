@@ -17,7 +17,7 @@ import {
 	TooltipTheme,
 } from '@front-components/components';
 import { RouterService, routes } from '@app/core/services/router.service';
-import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -45,6 +45,7 @@ export enum ExcessIncomeClientRowItemField {
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		NgSwitch,

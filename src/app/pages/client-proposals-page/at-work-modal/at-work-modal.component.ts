@@ -11,7 +11,7 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
-import {NgForOf} from "@angular/common";
+import {CommonModule, NgForOf} from "@angular/common";
 import {
 	AtWorkRowItemTrComponent
 } from "@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component";
@@ -28,6 +28,7 @@ interface IOfferData {
 	styleUrls: ['at-work-modal.component.scss'],
 	templateUrl: './at-work-modal.component.html',
 	imports: [
+		CommonModule,
 		CardComponent,
 		HeadlineComponent,
 		IconComponent,

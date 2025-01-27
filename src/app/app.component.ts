@@ -43,21 +43,7 @@ import {CommonModule} from "@angular/common";
 	imports: [
 		CommonModule,
 		RouterOutlet,
-		NotificationToastComponent,
-		UserCardComponent,
-		EmptyLayoutComponent,
-		BrowserModule,
-		FormsModule,
-		BrowserAnimationsModule,
-		NzCardModule,
-		ReactiveFormsModule,
-		NzFormModule,
-		NzInputModule,
-		NzButtonModule,
-		NzIconModule,
-		MatDatepickerModule,
-		MatNativeDateModule,
-		NotificationToastComponent,
+		NotificationToastComponent
 	],
 	standalone: true
 })

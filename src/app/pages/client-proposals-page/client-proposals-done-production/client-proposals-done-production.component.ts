@@ -9,7 +9,7 @@ import {
 } from '@app/core/facades/client-proposals-facade.service';
 import { Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
 
@@ -19,6 +19,7 @@ import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/emp
 	templateUrl: './client-proposals-done-production.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgIf,
 		AsyncPipe,
 		TextComponent,

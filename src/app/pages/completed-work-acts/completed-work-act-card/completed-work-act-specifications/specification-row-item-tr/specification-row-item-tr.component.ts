@@ -8,7 +8,7 @@ import { SpecificationModalComponent } from '@app/pages/completed-work-acts/comp
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 
@@ -35,6 +35,7 @@ export enum SpecificationRowItemField {
 	styleUrls: ['specification-row-item-tr.component.scss'],
 	templateUrl: './specification-row-item-tr.component.html',
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		NgSwitch,

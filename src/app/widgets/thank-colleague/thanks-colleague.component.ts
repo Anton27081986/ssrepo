@@ -15,7 +15,7 @@ import {
 } from "@app/widgets/thank-colleague/thanks-colleague-card/thanks-colleague-card.component";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 
 @Component({
 	selector: 'app-thanks-colleague',
@@ -23,6 +23,7 @@ import {NgForOf, NgIf} from "@angular/common";
 	styleUrls: ['./thanks-colleague.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		ButtonComponent,

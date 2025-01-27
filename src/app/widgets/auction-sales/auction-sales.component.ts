@@ -10,7 +10,7 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
@@ -21,6 +21,7 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 	templateUrl: './auction-sales.component.html',
 	styleUrls: ['./auction-sales.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		LoaderComponent,
 		HeadlineComponent,

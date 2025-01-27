@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ITab } from '@app/shared/components/tabs/tab';
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgClass, NgForOf, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @UntilDestroy()
@@ -10,6 +10,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	templateUrl: './tabs.component.html',
 	styleUrls: ['./tabs.component.scss'],
 	imports: [
+		CommonModule,
 		NgClass,
 		NgForOf,
 		NgIf,

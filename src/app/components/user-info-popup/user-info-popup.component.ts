@@ -5,7 +5,7 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
 import {UserCardComponent} from "@app/components/user-card/user-card.component";
@@ -18,6 +18,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	templateUrl: './user-info-popup.component.html',
 	styleUrls: ['./user-info-popup.component.scss'],
 	imports: [
+		CommonModule,
 		AsyncPipe,
 		NgIf,
 		HeadlineComponent,

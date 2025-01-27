@@ -14,7 +14,7 @@ import { AddContractDto } from '@app/core/models/raw-material-accounting/add-con
 import { Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
@@ -35,6 +35,7 @@ interface IDialogData {
 	templateUrl: './contract-info.component.html',
 	styleUrls: ['./contract-info.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		NgIf,
 		HeadlineComponent,

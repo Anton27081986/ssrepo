@@ -26,7 +26,7 @@ import {
 import {MultiselectV2Component} from "@app/shared/components/multiselect-v2/multiselect-v2.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {NoticeComponent} from "@app/components/notice/notice.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {FilePickerComponent} from "@app/shared/components/file-picker/file-picker.component";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 import {NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
@@ -50,10 +50,10 @@ export interface IClientProposalsCriteriaForm {
 	selector: 'app-client-proposals-card',
 	templateUrl: './client-proposals-card.component.html',
 	styleUrls: ['./client-proposals-card.component.scss'],
-	providers: [ColumnsStateService, CheckFileListStateService],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		ReactiveFormsModule,
 		MultiselectAutocompleteV2Component,

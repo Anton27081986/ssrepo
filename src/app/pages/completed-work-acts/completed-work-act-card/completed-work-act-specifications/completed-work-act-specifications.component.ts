@@ -9,7 +9,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 import {TagV2Component} from "@app/shared/components/tag-v2/tag-v2.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
-import {NgForOf} from "@angular/common";
+import {CommonModule, NgForOf} from "@angular/common";
 import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
 import {
 	SpecificationRowItemTrComponent
@@ -20,6 +20,7 @@ import {
 	templateUrl: './completed-work-act-specifications.component.html',
 	styleUrls: ['./completed-work-act-specifications.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		TagV2Component,

@@ -10,7 +10,7 @@ import { QueryType } from '@app/widgets/history/models/query-type';
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {TagComponent} from "@app/shared/components/tag/tag.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
 import {
 	ClientCardContractorsComponent
@@ -24,6 +24,7 @@ import {CorrespondenceComponent} from "@app/widgets/correspondence/correspondenc
 	templateUrl: './client-card.component.html',
 	styleUrls: ['./client-card.component.scss'],
 	imports: [
+		CommonModule,
 		IconComponent,
 		HeadlineComponent,
 		TagComponent,
@@ -32,7 +33,8 @@ import {CorrespondenceComponent} from "@app/widgets/correspondence/correspondenc
 		RouterOutlet,
 		ClientCardContractorsComponent,
 		HistoryComponent,
-		CorrespondenceComponent
+		CorrespondenceComponent,
+		NgIf
 	],
 	standalone: true
 })

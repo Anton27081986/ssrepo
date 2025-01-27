@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import {AsyncPipe, NgForOf, NgStyle} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgStyle} from "@angular/common";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 
 @Component({
@@ -18,6 +18,7 @@ import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive
 	// encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		NgStyle,

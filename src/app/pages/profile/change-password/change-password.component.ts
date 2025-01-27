@@ -5,6 +5,7 @@ import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {RouterLink} from "@angular/router";
 import {NzButtonComponent} from "ng-zorro-antd/button";
+import {CommonModule} from "@angular/common";
 
 @Component({
 	selector: 'app-change-password',
@@ -12,6 +13,7 @@ import {NzButtonComponent} from "ng-zorro-antd/button";
 	styleUrls: ['./change-password.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		ReactiveFormsModule,
 		NzFormItemComponent,
 		NzFormLabelComponent,

@@ -11,7 +11,7 @@ import {
 	ClientProposalsTabsCanvasComponent
 } from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
 import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
@@ -25,6 +25,7 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 	styleUrls: ['./client-proposals-trade-list-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		ClientProposalsTabsCanvasComponent,
 		CardComponent,
 		NgIf,

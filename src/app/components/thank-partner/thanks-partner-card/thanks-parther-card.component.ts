@@ -5,7 +5,7 @@ import {
 	IPartnerThanksItemDto,
 } from '@app/core/models/awards/partner-thanks-item-dto';
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {UserCardComponent} from "@app/components/user-card/user-card.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 
@@ -16,6 +16,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 	styleUrls: ['./thanks-partner-card.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		NgIf,
 		UserCardComponent,

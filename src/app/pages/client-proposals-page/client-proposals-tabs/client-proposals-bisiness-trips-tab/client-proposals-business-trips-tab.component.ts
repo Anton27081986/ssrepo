@@ -11,7 +11,7 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 import {
 	ClientProposalsTabsCanvasComponent
 } from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
@@ -25,6 +25,7 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 	styleUrls: ['./client-proposals-business-trips-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		ClientProposalsTabsCanvasComponent,
 		NgIf,

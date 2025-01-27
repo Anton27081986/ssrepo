@@ -25,7 +25,7 @@ import {
 	TooltipTheme,
 } from '@front-components/components';
 import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
-import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 
 @UntilDestroy()
@@ -36,6 +36,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		ReactiveFormsModule,

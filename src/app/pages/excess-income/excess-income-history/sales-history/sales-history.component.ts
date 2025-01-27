@@ -12,7 +12,7 @@ import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-s
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { TableState } from '@app/shared/components/table/table-state';
-import { NgIf } from '@angular/common';
+import {CommonModule, NgIf} from '@angular/common';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeSalesHistory } from '@app/core/models/excess-income/excess-income-sales-history';
@@ -36,6 +36,7 @@ interface IDialogData {
 	selector: 'app-excess-income-group-sales-history',
 	standalone: true,
 	imports: [
+		CommonModule,
 		HistoryComponent,
 		NgIf,
 		CardComponent,

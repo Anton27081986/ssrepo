@@ -9,7 +9,7 @@ import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.com
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ThanksColleagueModalComponent } from '@app/widgets/thank-colleague/modal/thanks-colleague-modal/thanks-colleague-modal.component';
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {DatePipe, NgIf} from "@angular/common";
+import {CommonModule, DatePipe, NgIf} from "@angular/common";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
@@ -22,6 +22,7 @@ import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive
 	templateUrl: './thanks-colleague-card.component.html',
 	styleUrls: ['./thanks-colleague-card.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		NgIf,
 		AvatarComponent,

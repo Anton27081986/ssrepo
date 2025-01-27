@@ -18,7 +18,7 @@ import {SearchInputComponent} from "@app/shared/components/inputs/search-input/s
 import {NotificationComponent} from "@app/components/notification/notification.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
 import {ProfilePopupComponent} from "@app/components/profile-popup/profile-popup.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule} from "@angular/common";
 import {NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 
@@ -28,6 +28,7 @@ import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive
 	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		IconComponent,
 		MainMenuComponent,
 		SearchInputComponent,

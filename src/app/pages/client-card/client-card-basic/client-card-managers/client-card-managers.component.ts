@@ -13,7 +13,7 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
 import {TagComponent} from "@app/shared/components/tag/tag.component";
@@ -33,6 +33,7 @@ enum OperationStatuses {
 	templateUrl: './client-card-managers.component.html',
 	styleUrls: ['./client-card-managers.component.scss'],
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		TextComponent,
 		LoaderComponent,

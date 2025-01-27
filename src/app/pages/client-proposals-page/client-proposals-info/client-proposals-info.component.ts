@@ -18,7 +18,7 @@ import { ClientProposalsContractorsTabState } from '@app/pages/client-proposals-
 import { ClientProposalsDevelopmentTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.state';
 import { ClientProposalsNewsLineTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.state';
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, NgIf, NgTemplateOutlet} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf, NgTemplateOutlet} from "@angular/common";
 import {AccordionComponent} from "@app/shared/components/accordion/accordion.component";
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {
@@ -34,17 +34,9 @@ import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
 	selector: 'app-client-proposals-info',
 	templateUrl: './client-proposals-info.component.html',
 	styleUrls: ['./client-proposals-info.component.scss'],
-	providers: [
-		ClientProposalsFacadeService,
-		ClientProposalsBusinessTripsTabState,
-		ClientProposalsTradeListTabState,
-		ClientProposalsSamplesTabState,
-		ClientProposalsContractorsTabState,
-		ClientProposalsDevelopmentTabState,
-		ClientProposalsNewsLineTabState,
-	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		SearchClientInputComponent,
 		AsyncPipe,

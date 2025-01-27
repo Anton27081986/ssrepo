@@ -8,7 +8,7 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 
 interface FileData {
@@ -28,6 +28,7 @@ export enum IFileType {
 	styleUrls: ['client-proposals-view-files-popover.component.scss'],
 	templateUrl: './client-proposals-view-files-popover.component.html',
 	imports: [
+		CommonModule,
 		IconComponent,
 		AsyncPipe,
 		NgForOf,

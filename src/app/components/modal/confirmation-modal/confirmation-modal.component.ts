@@ -4,7 +4,7 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
@@ -18,6 +18,7 @@ interface DialogData {
 	templateUrl: './confirmation-modal.component.html',
 	styleUrls: ['./confirmation-modal.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		IconComponent,
 		HeadlineComponent,

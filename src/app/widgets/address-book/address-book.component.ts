@@ -10,7 +10,7 @@ import {InputComponent} from "@app/shared/components/inputs/input/input.componen
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {AddressBookCardComponent} from "@app/widgets/address-book/address-book-card/address-book-card.component";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
@@ -22,6 +22,7 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 	templateUrl: './address-book.component.html',
 	styleUrls: ['./address-book.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		InputComponent,

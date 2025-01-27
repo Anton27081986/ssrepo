@@ -21,7 +21,7 @@ import {
 import { ChatBotFacadeService, ChatBotStates } from '@app/core/facades/chat-bot-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {DatePipe, NgClass, NgOptimizedImage} from '@angular/common';
+import {CommonModule, DatePipe, NgClass, NgOptimizedImage} from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
@@ -36,6 +36,7 @@ import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 	styleUrls: ['./chat-bot.component.scss'],
 	standalone: true,
 	imports: [
+		CommonModule,
 		CardComponent,
 		IconComponent,
 		TextComponent,

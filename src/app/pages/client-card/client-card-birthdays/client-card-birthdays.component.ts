@@ -5,7 +5,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { BirthdaysContractorsFacadeService } from '@app/core/facades/birthdays-contractors-facade.service';
-import {AsyncPipe, DatePipe, formatDate, NgForOf} from '@angular/common';
+import {AsyncPipe, CommonModule, DatePipe, formatDate, NgForOf} from '@angular/common';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { fromPickerDateToIso } from '@app/shared/pipe/from-picker-date-to-iso';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -24,6 +24,7 @@ import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 	styleUrls: ['./client-card-birthdays.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		HeadlineComponent,
 		DateRangeComponent,

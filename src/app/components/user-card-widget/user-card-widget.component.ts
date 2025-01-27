@@ -20,7 +20,7 @@ import { VictoryService } from '@app/components/victory/victory.service';
 import { IObjectType } from '@app/core/models/awards/object-type';
 import { Awards } from '@app/core/api/awards';
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {AsyncPipe, DatePipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, DatePipe, NgIf} from "@angular/common";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {UserCardComponent} from "@app/components/user-card/user-card.component";
@@ -34,6 +34,7 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 	templateUrl: './user-card-widget.component.html',
 	styleUrls: ['./user-card-widget.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		AsyncPipe,
 		NgIf,

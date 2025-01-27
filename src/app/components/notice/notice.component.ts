@@ -2,13 +2,14 @@ import { booleanAttribute, Component, EventEmitter, Input, OnInit, Output } from
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 
 @Component({
 	selector: 'app-notice',
 	templateUrl: './notice.component.html',
 	styleUrls: ['./notice.component.scss'],
 	imports: [
+		CommonModule,
 		NzIconDirective,
 		TextComponent,
 		IconComponent,

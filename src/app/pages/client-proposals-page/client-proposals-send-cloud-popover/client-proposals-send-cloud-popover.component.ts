@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule} from "@angular/common";
 import {CdkCopyToClipboard} from "@angular/cdk/clipboard";
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 
@@ -18,6 +18,7 @@ interface UrlData {
 	styleUrls: ['client-proposals-send-cloud-popover.component.scss'],
 	templateUrl: './client-proposals-send-cloud-popover.component.html',
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		IconComponent,
 		InputComponent,

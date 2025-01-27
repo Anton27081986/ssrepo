@@ -21,7 +21,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
-import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
@@ -46,6 +46,7 @@ export enum ClientProposalsRowItemField {
 	styleUrls: ['client-proposals-row-item-tr.component.scss'],
 	templateUrl: './client-proposals-row-item-tr.component.html',
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		NgSwitch,

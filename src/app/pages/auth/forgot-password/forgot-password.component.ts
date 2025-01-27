@@ -4,7 +4,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {InputComponent} from "@app/shared/components/inputs/input/input.component";
@@ -17,6 +17,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss'],
 	imports: [
+		CommonModule,
 		NgIf,
 		HeadlineComponent,
 		TextComponent,

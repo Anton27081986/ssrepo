@@ -8,7 +8,7 @@ import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/compl
 import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {MapperPipe} from "@app/core/pipes/mapper.pipe";
 import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
@@ -19,6 +19,7 @@ import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 	templateUrl: './completed-work-acts.component.html',
 	styleUrls: ['./completed-work-acts.component.scss'],
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		DropdownButtonComponent,
 		FiltersComponent,

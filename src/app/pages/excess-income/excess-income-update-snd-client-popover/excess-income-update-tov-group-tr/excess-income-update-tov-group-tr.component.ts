@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { rotateAnimation } from '@app/core/animations';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { ExcessIncomeSndClientRowItemField } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-snd-client-popover.component';
-import { numberInputTextMask } from '@app/core/utils/mask';
 import { ExcessIncomeUpdateClientTovGroupItem } from '@app/core/models/excess-income/excess-income-update-client-tov-group-item';
 import { ExcessIncomeUpdateTovGroupState } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-state';
 import {
@@ -14,7 +13,7 @@ import {
 	Size, TextComponent,
 	TextType,
 } from '@front-components/components';
-import {AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 
 @Component({
@@ -24,6 +23,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgForOf,
 		AsyncPipe,
 		NgSwitch,

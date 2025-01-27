@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
@@ -16,6 +16,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 	styleUrls: ['./invite.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		HeadlineComponent,
 		NgIf,

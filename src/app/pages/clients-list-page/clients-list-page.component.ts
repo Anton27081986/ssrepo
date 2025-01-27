@@ -8,7 +8,7 @@ import { UserProfileStoreService } from '@app/core/states/user-profile-store.ser
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
@@ -39,6 +39,7 @@ export enum TableState {
 	styleUrls: ['./clients-list-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		ButtonComponent,
 		IconComponent,

@@ -6,7 +6,7 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 
 @Component({
@@ -14,6 +14,7 @@ import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive
 	templateUrl: './address-book-card.component.html',
 	styleUrls: ['./address-book-card.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		AvatarComponent,
 		TextComponent,

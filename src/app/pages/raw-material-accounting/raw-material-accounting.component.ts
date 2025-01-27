@@ -19,7 +19,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -27,6 +27,7 @@ import {AsyncPipe} from "@angular/common";
 	templateUrl: './raw-material-accounting.component.html',
 	styleUrls: ['./raw-material-accounting.component.scss'],
 	imports: [
+		CommonModule,
 		LoaderComponent,
 		FiltersComponent,
 		CardComponent,

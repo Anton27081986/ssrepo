@@ -15,7 +15,7 @@ import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 
 export interface SearchInputItem {
 	id: number | null;
@@ -36,6 +36,7 @@ export interface SearchInputItem {
 		},
 	],
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		NgIf,
 		AsyncPipe,

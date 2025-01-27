@@ -4,6 +4,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CommonModule} from "@angular/common";
 
 @Component({
 	selector: 'app-not-permission-page',
@@ -11,6 +12,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 	styleUrls: ['./not-permission-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		TextComponent,
 		ButtonComponent,

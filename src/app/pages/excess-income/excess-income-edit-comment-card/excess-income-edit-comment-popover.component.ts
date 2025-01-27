@@ -13,7 +13,6 @@ import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-n
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { FormControl, Validators } from '@angular/forms';
-import { F } from '@angular/cdk/keycodes';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {
 	FormControlInputWithFuncEditComponent

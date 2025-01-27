@@ -14,7 +14,7 @@ import { RatingService } from '@app/components/rating/rating.service';
 import { TypeReport } from '@app/core/api/rating-api.service';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
@@ -34,8 +34,8 @@ export interface RatingCriteriaForm {
 	templateUrl: './rating.component.html',
 	styleUrls: ['./rating.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [RatingTeamsStateService, RatingTeamUsersState],
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		NgIf,

@@ -26,10 +26,9 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { state } from '@angular/animations';
 import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
 import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {
@@ -50,10 +49,10 @@ import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholde
 	selector: 'app-excess-income-page',
 	templateUrl: './excess-income-page.component.html',
 	styleUrls: ['./excess-income-page.component.scss'],
-	providers: [ExcessIncomeState],
 	animations: [collapseHeight],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		TextComponent,
 		ButtonComponent,
 		SelectV2Component,

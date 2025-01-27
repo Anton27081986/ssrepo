@@ -14,7 +14,7 @@ import {
 	ReactiveFormsModule,
 } from '@angular/forms';
 import { rotateAnimation } from '@app/core/animations';
-import { AsyncPipe, JsonPipe, NgClass, NgIf } from '@angular/common';
+import {AsyncPipe, CommonModule, JsonPipe, NgClass, NgIf} from '@angular/common';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { filter, map, combineLatest, startWith } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -26,8 +26,8 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 	selector: 'ss-select-v2',
 	standalone: true,
 	imports: [
+		CommonModule,
 		AsyncPipe,
-		NgIf,
 		MapperPipe,
 		ReactiveFormsModule,
 		NgClass,

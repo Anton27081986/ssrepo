@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 
 @Component({
 	selector: 'ss-menu-item',
@@ -10,6 +10,7 @@ import {NgForOf, NgIf} from "@angular/common";
 	// encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		TextComponent,
 		NgIf,
 		NgForOf

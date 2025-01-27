@@ -5,13 +5,14 @@ import {SearchInputComponent} from "@app/shared/components/inputs/search-input/s
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule} from "@angular/common";
 
 @Component({
 	selector: 'ss-topic',
 	templateUrl: './topic.component.html',
 	styleUrls: ['./topic.component.scss'],
 	imports: [
+		CommonModule,
 		SearchInputComponent,
 		IconComponent,
 		HeadlineComponent,

@@ -15,7 +15,7 @@ import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
@@ -41,6 +41,7 @@ export interface ThankColleagueModal {
 	styleUrls: ['./thanks-colleague-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgIf,
 		TextComponent,
 		IconComponent,

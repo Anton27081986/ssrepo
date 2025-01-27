@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef } from '@angular/core';
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {NgIf, NgTemplateOutlet} from "@angular/common";
+import {CommonModule, NgIf, NgTemplateOutlet} from "@angular/common";
 
 @Component({
 	selector: 'app-client-proposals-tabs-canvas',
@@ -8,6 +8,7 @@ import {NgIf, NgTemplateOutlet} from "@angular/common";
 	styleUrls: ['./client-proposals-tabs-canvas.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		LoaderComponent,
 		NgTemplateOutlet,
 		NgIf

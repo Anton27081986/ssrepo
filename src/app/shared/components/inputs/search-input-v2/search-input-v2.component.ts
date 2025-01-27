@@ -14,7 +14,7 @@ import {
 } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { rotateAnimation } from '@app/core/animations';
-import { NgClass } from '@angular/common';
+import {CommonModule, NgClass} from '@angular/common';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
@@ -22,7 +22,8 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 @Component({
 	selector: 'ss-search-input-v2',
 	standalone: true,
-	imports: [NgClass, MapperPipe, ReactiveFormsModule, CaptionComponent, IconComponent],
+	imports: [
+		CommonModule, NgClass, MapperPipe, ReactiveFormsModule, CaptionComponent, IconComponent],
 	templateUrl: './search-input-v2.component.html',
 	styleUrl: './search-input-v2.component.scss',
 	providers: [

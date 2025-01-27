@@ -8,7 +8,7 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
@@ -27,6 +27,7 @@ export enum TypeReportEnum {
 	templateUrl: './client-proposals-page.component.html',
 	styleUrls: ['./client-proposals-page.component.scss'],
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		NgIf,
 		TextComponent,

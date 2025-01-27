@@ -4,6 +4,7 @@ import {NzIconDirective} from "ng-zorro-antd/icon";
 import {NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent} from "ng-zorro-antd/form";
 import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
 import {NzButtonComponent} from "ng-zorro-antd/button";
+import {CommonModule} from "@angular/common";
 
 @Component({
 	selector: 'app-recovery-password',
@@ -11,6 +12,7 @@ import {NzButtonComponent} from "ng-zorro-antd/button";
 	styleUrls: ['./recovery-password.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NzIconDirective,
 		NzFormItemComponent,
 		NzFormLabelComponent,

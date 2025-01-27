@@ -3,7 +3,7 @@ import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
@@ -20,6 +20,7 @@ export enum TypeCup {
 	styleUrls: ['./rating-team-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		TooltipDirective,
 		NgIf,
 		IconComponent,

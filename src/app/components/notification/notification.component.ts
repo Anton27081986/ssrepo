@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {NzAvatarComponent} from "ng-zorro-antd/avatar";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {NzDropDownADirective, NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
-import {NgClass, NgIf} from "@angular/common";
+import {CommonModule, NgClass, NgIf} from "@angular/common";
 import {NzMenuDirective} from "ng-zorro-antd/menu";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {NzButtonComponent} from "ng-zorro-antd/button";
@@ -16,6 +16,7 @@ import {NzListComponent, NzListItemComponent} from "ng-zorro-antd/list";
 	styleUrls: ['./notification.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NzAvatarComponent,
 		IconComponent,
 		NzDropDownADirective,

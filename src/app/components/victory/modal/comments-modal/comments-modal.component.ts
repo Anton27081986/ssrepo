@@ -1,14 +1,30 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
-import { ApiService } from '@app/shared/services/api/api.service';
+import {NzFormDirective, NzFormItemComponent} from "ng-zorro-antd/form";
+import {NzIconDirective} from "ng-zorro-antd/icon";
+import {CommonModule, DatePipe, NgClass, NgIf} from "@angular/common";
+import {NzAutosizeDirective, NzInputDirective} from "ng-zorro-antd/input";
 
 @Component({
 	selector: 'app-comments-modal',
 	templateUrl: './comments-modal.component.html',
 	styleUrls: ['./comments-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		NzFormDirective,
+		ReactiveFormsModule,
+		NzIconDirective,
+		NgClass,
+		DatePipe,
+		NgIf,
+		NzFormItemComponent,
+		NzInputDirective,
+		NzAutosizeDirective
+	],
+	standalone: true
 })
 export class CommentsModalComponent implements OnInit {
 	readonly nzModalData: any = inject(NZ_MODAL_DATA);
@@ -25,7 +41,6 @@ export class CommentsModalComponent implements OnInit {
 	attachVisible = false;
 
 	constructor(
-		private readonly apiService: ApiService,
 		private readonly modal: NzModalRef,
 		private readonly formBuilder: FormBuilder,
 	) {}

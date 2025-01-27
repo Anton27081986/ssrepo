@@ -10,7 +10,7 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 import { Observable } from 'rxjs';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {NzPaginationComponent} from "ng-zorro-antd/pagination";
@@ -24,6 +24,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	styleUrls: ['./client-card-return-requests.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		LoaderComponent,
 		NgIf,

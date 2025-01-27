@@ -37,7 +37,7 @@ import {
 } from 'ckeditor5';
 import {InputComponent} from "@app/shared/components/inputs/input/input.component";
 import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
-import {AsyncPipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgClass, NgForOf, NgIf} from "@angular/common";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
@@ -52,6 +52,7 @@ import {CardDropdownComponent} from "@app/shared/components/card-dropdown/card-d
 	templateUrl: './mail.component.html',
 	styleUrls: ['./mail.component.scss'],
 	imports: [
+		CommonModule,
 		InputComponent,
 		ChipsUserSearchComponent,
 		AsyncPipe,

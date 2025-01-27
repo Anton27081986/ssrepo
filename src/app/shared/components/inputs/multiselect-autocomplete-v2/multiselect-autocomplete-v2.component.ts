@@ -16,7 +16,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rotateAnimation } from '@app/core/animations';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, CommonModule} from "@angular/common";
 import {
 	MultiselectChipsV2Component
 } from "@app/shared/components/multiselect-v2/multiselect-chips-v2/multiselect-chips-v2.component";
@@ -41,6 +41,7 @@ import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.c
 		},
 	],
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		AsyncPipe,
 		ReactiveFormsModule,

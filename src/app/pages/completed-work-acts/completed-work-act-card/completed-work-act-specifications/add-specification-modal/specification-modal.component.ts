@@ -19,6 +19,7 @@ import {TextareaComponent} from "@app/shared/components/textarea/textarea.compon
 import {InputComponent} from "@app/shared/components/inputs/input/input.component";
 import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CommonModule} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -26,6 +27,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 	templateUrl: './specification-modal.component.html',
 	styleUrls: ['./specification-modal.component.scss'],
 	imports: [
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		IconComponent,

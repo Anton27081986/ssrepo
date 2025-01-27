@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {NgClass} from "@angular/common";
+import {CommonModule, NgClass} from "@angular/common";
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 
 @Component({
@@ -15,6 +15,7 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 		},
 	],
 	imports: [
+		CommonModule,
 		NgClass,
 		CaptionComponent
 	],

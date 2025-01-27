@@ -11,7 +11,7 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
@@ -31,6 +31,7 @@ import {ReplacePipe} from "@app/shared/pipe/replace.pipe";
 	templateUrl: './client-card-info.component.html',
 	styleUrls: ['./client-card-info.component.scss'],
 	imports: [
+		CommonModule,
 		LoaderComponent,
 		AsyncPipe,
 		NgIf,

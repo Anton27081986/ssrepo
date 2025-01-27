@@ -3,7 +3,7 @@ import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-fa
 import { TableState } from '@app/shared/components/table/table-state';
 import { Observable } from 'rxjs';
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {TopicComponent} from "@app/widgets/correspondence/topic/topic.component";
 import {MessagesComponent} from "@app/widgets/correspondence/messages/messages.component";
 import {MailComponent} from "@app/widgets/correspondence/mail/mail.component";
@@ -14,6 +14,7 @@ import {CardDropdownComponent} from "@app/shared/components/card-dropdown/card-d
 	templateUrl: './correspondence.component.html',
 	styleUrls: ['./correspondence.component.scss'],
 	imports: [
+		CommonModule,
 		LoaderComponent,
 		NgIf,
 		AsyncPipe,

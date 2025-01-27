@@ -11,7 +11,7 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
@@ -23,6 +23,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	styleUrls: ['./client-card-lost-products.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		LoaderComponent,
 		HeadlineComponent,

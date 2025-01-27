@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, forwardRef, input } from '@angular/
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 import {RatingTeamTabComponent} from "@app/components/rating/rating-team-tab/rating-team-tab.component";
-import {NgForOf} from "@angular/common";
+import {CommonModule, NgForOf} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -19,6 +19,7 @@ import {NgForOf} from "@angular/common";
 		},
 	],
 	imports: [
+		CommonModule,
 		RatingTeamTabComponent,
 		NgForOf
 	],

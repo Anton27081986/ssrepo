@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import {CarouselModule, OwlOptions} from 'ngx-owl-carousel-o';
 
 @Component({
 	selector: 'app-carousel',
 	templateUrl: './carousel.component.html',
 	styleUrls: ['./carousel.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CarouselModule
+	],
+	standalone: true
 })
 export class CarouselComponent {
 	public customOptions: OwlOptions = {

@@ -10,7 +10,7 @@ import {
 import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @Component({
@@ -25,6 +25,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 		},
 	],
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		IconComponent,
 		NgIf,

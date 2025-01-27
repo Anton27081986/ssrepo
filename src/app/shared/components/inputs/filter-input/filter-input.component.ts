@@ -10,7 +10,7 @@ import {
 import { NgControl } from '@angular/forms';
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 
 @Component({
 	selector: 'ss-filter-input',
@@ -18,6 +18,7 @@ import {NgIf} from "@angular/common";
 	styleUrls: ['./filter-input.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CaptionComponent,
 		IconComponent,
 		NgIf

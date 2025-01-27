@@ -19,7 +19,7 @@ import {TextareaComponent} from "@app/shared/components/textarea/textarea.compon
 import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
 import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
 import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 import {AttachmentComponent} from "@app/shared/components/attachment/attachment.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
@@ -30,6 +30,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 	styleUrls: ['./add-victory-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		IconComponent,
 		SsDividerComponent,

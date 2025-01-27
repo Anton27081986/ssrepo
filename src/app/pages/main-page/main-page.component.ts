@@ -13,7 +13,7 @@ import {AddressBookComponent} from "@app/widgets/address-book/address-book.compo
 import {BirthdayComponent} from "@app/components/birthday/birthday.component";
 import {TransportComponent} from "@app/components/transport/transport.component";
 import {RatingComponent} from "@app/components/rating/rating.component";
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {UserCardComponent} from "@app/components/user-card/user-card.component";
 
 @UntilDestroy()
@@ -23,6 +23,7 @@ import {UserCardComponent} from "@app/components/user-card/user-card.component";
 	styleUrls: ['./main-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		UserCardComponent,
 		SliderComponent,
 		AuctionSalesComponent,

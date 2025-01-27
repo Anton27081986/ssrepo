@@ -1,12 +1,13 @@
 import { Component, TemplateRef } from '@angular/core';
 import { TooltipPosition, TooltipTheme } from './tooltip.enums';
-import {NgClass, NgTemplateOutlet} from "@angular/common";
+import {CommonModule, NgClass, NgTemplateOutlet} from "@angular/common";
 
 @Component({
 	selector: 'ss-tooltip',
 	templateUrl: './tooltip.component.html',
 	styleUrls: ['./tooltip.component.scss'],
 	imports: [
+		CommonModule,
 		NgClass,
 		NgTemplateOutlet
 	],

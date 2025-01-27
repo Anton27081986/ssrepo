@@ -14,7 +14,7 @@ import {ITableItem, TableComponent} from '@app/shared/components/table/table.com
 import { TableState } from '@app/shared/components/table/table-state';
 import { IGroupPriceHistoryTableItem } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history-table-item';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { NgIf } from '@angular/common';
+import {CommonModule, NgIf} from '@angular/common';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
@@ -35,6 +35,7 @@ interface IDialogData {
 	selector: 'app-excess-income-group-price-history',
 	standalone: true,
 	imports: [
+		CommonModule,
 		HistoryComponent,
 		NgIf,
 		CardComponent,

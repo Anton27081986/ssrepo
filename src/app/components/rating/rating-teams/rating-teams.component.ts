@@ -7,7 +7,7 @@ import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { IRankTypeListDto } from '@app/core/models/awards/rank-type-list-dto';
 import { RatingTeamUsersComponent } from '@app/components/rating/rating-team-users/rating-team-users.component';
 import { RatingTeamUsersState } from '@app/components/rating/rating-team-users/rating-team-users.state';
-import {NgIf} from "@angular/common";
+import {CommonModule, NgIf} from "@angular/common";
 import {TabsControlComponent} from "@app/components/rating/tabs-control/tabs-control.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 
@@ -18,6 +18,7 @@ import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 	styleUrls: ['./rating-teams.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		NgIf,
 		TabsControlComponent,
 		LoaderComponent,

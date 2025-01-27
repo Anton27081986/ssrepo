@@ -8,7 +8,7 @@ import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.servic
 import {NzFormControlComponent, NzFormDirective, NzFormItemComponent} from "ng-zorro-antd/form";
 import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
 import {NzIconDirective} from "ng-zorro-antd/icon";
-import {NgForOf, NgIf} from "@angular/common";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -17,6 +17,7 @@ import {NgForOf, NgIf} from "@angular/common";
 	styleUrls: ['./my-menu.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		ReactiveFormsModule,
 		NzFormItemComponent,
 		NzFormControlComponent,

@@ -13,7 +13,7 @@ import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/to
 import { ModalService } from '@app/core/modal/modal.service';
 import { RateTypeEnum } from '@app/core/models/awards/rate-type';
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import {CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {UserCardComponent} from "@app/components/user-card/user-card.component";
 import {ProjectsUsersCardComponent} from "@app/components/rating/projects-users-card/projects-users-card.component";
 import {
@@ -31,6 +31,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 	styleUrls: ['./rating-team-users-card.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
+		CommonModule,
 		CardComponent,
 		NgSwitch,
 		NgSwitchCase,
