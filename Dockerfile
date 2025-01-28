@@ -3,7 +3,7 @@ FROM node:23.6.1-alpine AS build
 WORKDIR /usr/src/app
 COPY . .
 RUN npm install -g npm@11.0.0
-RUN npm install --force
+RUN npm install --include=optional
 ARG PROJECT_ENV=development
 RUN npm run build:$PROJECT_ENV
 
