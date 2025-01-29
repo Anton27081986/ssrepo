@@ -1,102 +1,21 @@
-<ss-card padding="0">
-	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
-	<div class="header">
-		<ss-headline size="h6" weight="semi-bold">История изменений</ss-headline>
-	</div>
-	<div class="content">
-		<div class="history-item" *ngFor="let item of historyItems; trackBy: trackByHistoryItems">
-			<div class="history-item-line">
-				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Автор:</ss-text>
-				<ss-text size="3" weight="regular">{{ item.user.name }}, {{item.createdTime }}</ss-text>
-			</div>
-			<div class="history-item-line">
-				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Действие:</ss-text>
-				<ss-text size="3" weight="regular">{{ item.action }}</ss-text>
-			</div>
-
-			<div class="history-item-table" *ngIf="item.changes.length === 1">
-				<table>
-						<thead>
-							<tr>
-								<th>
-									<ss-text class="history-item-line-title" size="3" weight="semi-bold">Поле</ss-text>
-								</th>
-								<th>
-									<ss-text class="history-item-line-title" size="3" weight="semi-bold">Старое значение</ss-text>
-								</th>
-								<th>
-									<ss-text class="history-item-line-title" size="3" weight="semi-bold">Новое значение</ss-text>
-								</th>
-							</tr>
-						</thead>
-					<tbody>
-					<tr *ngFor="let change of item.changes">
-						<td>
-							<ss-text size="3" weight="regular">{{change.propertyName}}</ss-text>
-						</td>
-						<td>
-							<ss-text size="3" weight="regular">{{change.fromValue?? '-'}}</ss-text>
-						</td>
-						<td>
-							<ss-text size="3" weight="regular">{{change.toValue?? '-'}}</ss-text>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-
-			<div class="history-item-line" *ngIf="item.changes.length>1">
-				<ss-accordion [title]="'Изменения полей'">
-					<table >
-						<thead>
-						<tr>
-							<th>
-								<ss-text class="history-item-line-title" size="3" weight="semi-bold">Поле</ss-text>
-							</th>
-							<th>
-								<ss-text class="history-item-line-title" size="3" weight="semi-bold">Старое значение</ss-text>
-							</th>
-							<th>
-								<ss-text class="history-item-line-title" size="3" weight="semi-bold">Новое значение</ss-text>
-							</th>
-						</tr>
-						</thead>
-						<tbody>
-						<tr *ngFor="let change of item.changes">
-							<td>
-								<ss-text size="3" weight="regular">{{change.propertyName}}</ss-text>
-							</td>
-							<td>
-								<ss-text size="3" weight="regular">{{change.fromValue?? '-'}}</ss-text>
-							</td>
-							<td>
-								<ss-text size="3" weight="regular">{{change.toValue?? '-'}}</ss-text>
-							</td>
-						</tr>
-						</tbody>
-					</table>
-				</ss-accordion>
-			</div>
-
-			<div class="history-item-line">
-				<ss-text class="history-item-line-title" size="3" weight="semi-bold">Комментарий:</ss-text>
-				<ss-text *ngIf="item.comments" [innerHTML]="item.comments" size="3" weight="regular"></ss-text>
-				<ss-text *ngIf="!item.comments" size="3" weight="regular">{{'-'}}</ss-text>
-			</div>
-		</div>
-	</div>
-	<div class="pagination">
-		<nz-pagination
-			[nzTotal]="total"
-			[nzPageIndex]="pageIndex"
-			[nzPageSize]="pageSize"
-			(nzPageIndexChange)="nzPageIndexChange($event)"
-			(nzPageSizeChange)="pageSize = $event"
-			[nzResponsive]="true"
-			[nzHideOnSinglePage]="true"
-		>
-		</nz-pagination>
-	</div>
-</ss-card>
-
-
+@switch (view()) {
+    @case (viewMode.List) {
+        <app-history-list-view
+            [historyItems]="mutableHistoryItems()"
+            [loading]="loading()"
+            [pageSize]="pageSize()"
+            [pageTotal]="pageTotal()"
+            [(pageIndex)]="pageIndex"
+            />
+    }
+    @default {
+        <app-history-table-view
+            [historyItems]="mutableHistoryItems()"
+            [loading]="loading()"
+            [pageSize]="pageSize()"
+            [pageTotal]="pageTotal()"
+            [(pageIndex)]="pageIndex"
+			[tableHead]="tableHead()"
+        />
+    }
+}

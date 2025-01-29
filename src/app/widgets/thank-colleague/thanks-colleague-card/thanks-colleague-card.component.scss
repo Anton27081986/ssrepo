@@ -1,0 +1,68 @@
+:host {
+	height: 225px;
+}
+
+.thanks-colleague-card {
+	height: 100%;
+	display: flex !important;
+	flex-direction: column;
+	gap: 12px;
+
+	&__header {
+		display: flex;
+		gap: 12px;
+
+		&__avatars {
+			display: flex;
+			position: relative;
+			gap: 12px;
+
+			&__arrow {
+				position: absolute;
+				left: 38px;
+				transform: rotateZ(180deg);
+				color: #8C8C8C;
+			}
+		}
+
+		&__persons {
+			display: flex;
+			flex-direction: column;
+			flex-grow: 1;
+		}
+	}
+
+	&__content {
+		overflow-y: auto;
+		flex-grow: 1;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+
+		&__controls {
+			display: flex;
+			gap: 6px;
+
+			&__like {
+				position: relative;
+			}
+
+			&__comment {
+				 width: 62px;
+				 height: 36px;
+				 border: 1px solid #E4E8EA;
+				 border-radius: 8px;
+				 display: flex;
+				 gap: 8px;
+				 flex-wrap: nowrap;
+				 background-color: #F2F3F7;
+				 justify-content: center;
+				 align-items: center;
+				 cursor: pointer;
+			 }
+		}
+	}
+}

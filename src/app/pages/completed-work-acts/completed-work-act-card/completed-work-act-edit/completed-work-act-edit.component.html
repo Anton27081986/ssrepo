@@ -1,0 +1,153 @@
+<ss-card padding="0">
+	<div class="header">
+		<ss-text size="1">Общая информация</ss-text>
+		<div class="header__controls">
+			<ss-button size="small" type="muted" (click)="switchMode()">
+				Отмена
+			</ss-button>
+			<ss-button size="small" type="primary" (click)="onSave()">
+				Сохранить
+			</ss-button>
+		</div>
+	</div>
+	<form [formGroup]="editActForm" class="content">
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Номер акта (внешний)</ss-text>
+				<ss-input maxlength="50" formControlName="externalActNumber" size="small" placeholder="Введите значение"
+					[error]="editActForm.controls.externalActNumber.touched && editActForm.controls.externalActNumber.errors?.required ? 'Обязательное поле' : undefined">
+				</ss-input>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Номер акта (внутренний)</ss-text>
+				<ss-input maxlength="50" formControlName="internalActNumber" size="small" placeholder="Введите значение"
+					[error]="editActForm.controls.internalActNumber.touched && editActForm.controls.internalActNumber.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата акта (внешний)</ss-text>
+				<ss-date-time-picker
+					[showTime]="false" formControlName="externalActDate"
+					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата акта (внутренний)</ss-text>
+				<ss-date-time-picker
+					[showTime]="false" formControlName="internalActDate"
+					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Заявитель</ss-text>
+				<ss-search-input searchType="user" size="small"
+					[selectedItem]="act()?.applicantUser"
+					(select)="onApplicantUserSelect($event.id)"
+					(click)="editActForm.controls.applicantUserId.setErrors(null)"
+					[error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
+				</ss-search-input>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
+
+                <ss-select-v2
+                    [size]="'small'"
+                    [options]="buUnits()"
+                    [formControlName]="'buUnit'"
+                    [errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
+                />
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Плательщик</ss-text>
+				<ss-search-input searchType="payer-contractor" size="small"
+					[selectedItem]="act()?.payerContractor"
+					(select)="editActForm.controls.payerContractorId.setValue($event.id)"
+					(click)="editActForm.controls.payerContractorId.setErrors(null)"
+					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+				</ss-search-input>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Поставщик услуг</ss-text>
+				<ss-search-input searchType="contractor" size="small"
+					[selectedItem]="act()?.providerContractor"
+					(select)="onProviderContractorSelect($event.id)"
+					(click)="editActForm.controls.providerContractorId.setErrors(null)"
+					[error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+				</ss-search-input>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Договор</ss-text>
+
+				<ss-select-v2
+					[size]="'small'"
+					[options]="contracts()"
+					[formControlName]="'contract'"
+					[errorText]="editActForm.controls.contract.touched && !editActForm.controls.contract.value ? 'Обязательное поле' : ''"
+				/>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Заявки на оплату</ss-text>
+				<ss-chips-search searchType="fin-doc-orders" size="small" placeholder="Введите значение"
+					[selectedItems]="finDocOrders"
+					(getSelected)="setFinDocOrdersIds($event)">
+				</ss-chips-search>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<ss-text size="4">Валюта</ss-text>
+
+				<ss-select-v2
+					[size]="'small'"
+					[options]="currencies()"
+					[formControlName]="'currency'"
+					[errorText]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : ''"
+				/>
+			</div>
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
+				<div class="content__column__item__files-header">
+					<ss-text size="4">Документы </ss-text>
+					<label class="upload-file" for="upload-file">
+						Добавить документ
+					</label>
+					<input type="file" id="upload-file"
+						 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
+						 multiple
+						 (change)="addFiles($event)"
+					/>
+				</div>
+				<div class="content__column__item__files-list">
+					<div class="content__column__item__files-list__item" *ngFor="let doc of documents()">
+						<div class="content__column__item__files-list__item__img">
+							<ss-icon height="16" width="16" name="doc"></ss-icon>
+						</div>
+						<div class="content__column__item__files-list__item__description">
+							<ss-text size="3">{{ doc.fileName }}</ss-text>
+							<ss-text class="size" size="3">{{ doc.size }}Б</ss-text>
+						</div>
+						<div class="content__column__item__files-list__item__controls">
+							<ss-icon name="trash" (click)="deleteFile(doc.id)"></ss-icon>
+						</div>
+					</div>
+					<ng-container *ngIf="newDocuments">
+						<div class="content__column__item__files-list__item" *ngFor="let ndoc of newDocuments">
+							<div class="content__column__item__files-list__item__img">
+								<ss-icon height="16" width="16" name="doc"></ss-icon>
+							</div>
+							<div class="content__column__item__files-list__item__description">
+								<ss-text size="3">{{ ndoc.name }}</ss-text>
+								<ss-text class="size" size="3">{{ ndoc.size }}</ss-text>
+							</div>
+							<div class="content__column__item__files-list__item__controls">
+								<ss-icon name="trash" (click)="removeFileFromUploadList(ndoc.name)"></ss-icon>
+							</div>
+						</div>
+					</ng-container>
+				</div>
+			</div>
+		</div>
+	</form>
+</ss-card>

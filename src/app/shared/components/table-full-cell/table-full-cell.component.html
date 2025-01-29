@@ -19,6 +19,7 @@
 						</ng-template>
 					</ng-container>
 				</p>
+				<span *ngSwitchCase="!!cell?.pseudoLink">{{ cell.text }}</span>
 				<span *ngSwitchDefault>{{ cell }}</span>
 			</ng-container>
 		</ss-text>

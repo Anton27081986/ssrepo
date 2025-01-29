@@ -1,15 +1,17 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
 	<input [type]="type"
-		[placeholder]="placeholder"
-		[value]="value"
-		[disabled]="disabled"
-		[maxLength]="maxlength"
-		(input)="onChange($any($event.target).value)"
-		(blur)="onTouched()"
-		class="{{ error ? size + ' error' : size }}"
-		#input
+		   [placeholder]="placeholder"
+		   [value]="value"
+		   [class.input-padding-disabled]="disabled"
+		   [disabled]="disabled"
+		   [maxLength]="maxlength"
+		   (input)="onChange($any($event.target).value)"
+		   (blur)="onTouched()"
+		   class="{{ error ? size + ' error' : size }}"
+		   #input
 	/>
-	<ss-icon *ngIf="input.value && !disabled" height="12" name="close" (click)="input.value = ''; onChange('')"></ss-icon>
+	<ss-icon *ngIf="input.value && !disabled" height="12" name="close"
+			 (click)="input.value = ''; writeValue('')"></ss-icon>
 </div>
-<ss-caption class="error">{{ error }}</ss-caption>
+<ss-caption size="2" color="error">{{ error }}</ss-caption>

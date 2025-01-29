@@ -20,7 +20,7 @@
 	</div>
 
 	<div *ngIf="!isEditing; else changeMain" class="manager">
-		<ss-avatar [src]="basicManager?.avatarUrl!" size="m" [isSquare]="false"></ss-avatar>
+		<ss-avatar [size]="'large'" [type]="'rectangle'" [src]="basicManager?.avatarUrl!" (click)="openModalInfoUser(basicManager?.id)"></ss-avatar>
 
 		<div class="manager-info">
 			<div class="manager-name">
@@ -38,7 +38,10 @@
 			<div class="manager-info-content">
 				<ss-text size="3">{{ basicManager?.department }}</ss-text>
 				<ss-text size="3" weight="semi-bold" (click)="callLocalUser(basicManager?.id)" class="local-call">
-					<ss-icon name="phone"></ss-icon>{{ basicManager?.phoneLocal || 'Нет' }}
+					<a [href]="basicManager?.linkToCall" target="_blank">
+						<ss-icon name="phone"></ss-icon>
+						{{ basicManager?.phoneLocal || 'Нет' }}
+					</a>
 					<ss-caption size="2" class="appointed" *ngIf="basicManager?.introducedAtSM">Назначен {{ basicManager?.introducedAtSM | date: 'dd.MM.yyyy'}}</ss-caption>
 				</ss-text>
 			</div>
@@ -79,7 +82,7 @@
 	</div>
 	<div class="search-by-manager" *ngIf="isEditing && canAddManagers">
 		<ss-search-input class="search"
-		                 searchType="technologist"
+		                 searchType="user-dictionary"
 		                 placeholder="Введите ФИО"
 						 size="small"
 		                 [clear]="true"
@@ -89,7 +92,7 @@
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<ng-container *ngFor="let manager of (managers$ | async)">
 			<div class="managers-list-item" *ngIf="!manager.isDismissed && !manager.isBase">
-				<ss-avatar size="xs" [src]="manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
+				<ss-avatar [src]="manager?.avatarUrl || ''" (click)="openModalInfoUser(manager?.id)"></ss-avatar>
 				<div class="managers-list-item-info">
 					<ss-text size="3" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
 					<ss-caption size="2">{{ manager?.position }}</ss-caption>
@@ -101,7 +104,7 @@
 		<div class="managers-list" [ngClass]="isEditing ? 'edit' : ''">
 			<ng-container *ngFor="let manager of changedData.managersList">
 				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === operationStatuses.Delete}">
-					<ss-avatar size="xs" [src]="manager?.manager?.avatarUrl || ''" [isSquare]="true"></ss-avatar>
+					<ss-avatar [src]="manager?.manager?.avatarUrl || ''" (click)="openModalInfoUser(manager?.manager?.id)"></ss-avatar>
 					<div class="managers-list-item-info">
 						<ss-text size="3" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
 						<ss-caption size="2">{{ manager.manager.position }}</ss-caption>

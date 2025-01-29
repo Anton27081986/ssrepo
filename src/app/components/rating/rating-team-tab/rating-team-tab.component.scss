@@ -1,0 +1,63 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../../styles/colors' as *;
+
+.rating-team-tab {
+	height: 36px;
+	min-width: 136px;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+	border-radius: 8px;
+	cursor: pointer;
+	padding: 12px;
+	user-select: none;
+	background-color: #0000000A;
+	border: 1px solid #0000000A;
+	position: relative;
+
+	&--active {
+		border: 1px solid #4770FF4D;
+		background-color: #4770FF4D;
+	}
+
+	&__indicator {
+		position: absolute;
+		width: 6px;
+		height: 6px;
+		background-color: #416CFF;
+		border-radius: 50%;
+		top: 4px;
+		right: 4px;
+	}
+
+	&:hover {
+		border: 1px solid #C5CBD5;
+		transform: scale(1.01);
+		box-shadow: 0 4px 20px 0 #C5CBD5;
+		transition: 0.3s;
+	}
+
+	&__1 {
+		color: #F7B535;
+	}
+
+	&__2 {
+		color: #878E9A;
+	}
+
+	&__3 {
+		color: #C65C2E;
+	}
+
+	&__left {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__right {
+		display: flex;
+	}
+}

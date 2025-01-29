@@ -25,21 +25,21 @@ select {
 	}
 }
 
-ss-caption {
-	color: $lite-text;
+::ng-deep ss-caption.error span {
+	color: #E9033A !important;
 }
 
 select.error {
-	border: 1px solid #EE1C25;
-	background-color: #FF9196;
+	border: 1px solid $error;
+	background-color: $lite-error;
+
+	option:before {
+		background-color: $island !important;
+	}
 }
 
 select.small {
 	height: 36px;
-}
-
-ss-caption.error {
-	color: $error;
 }
 
 :host-context(.dark) select {

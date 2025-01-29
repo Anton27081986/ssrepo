@@ -1,4 +1,13 @@
-import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+	AfterViewChecked,
+	Component,
+	ElementRef,
+	input,
+	Input,
+	InputSignal,
+	OnInit,
+	ViewChild,
+} from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import {
 	ClientProposalsTypeDocuments,
@@ -7,7 +16,7 @@ import {
 } from '@app/core/models/client-proposails/client-offers';
 import { IStoreTableBaseColumn } from '@app/core/store';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ClientProposalsViewFilesPopoverComponent } from '@app/pages/client-proposals-page/client-proposals-view-files-popover/client-proposals-view-files-popover.component';
@@ -35,7 +44,7 @@ export enum ClientProposalsRowItemField {
 })
 export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly ClientTprRowItemField = ClientProposalsRowItemField;
-	@Input({ required: true }) item: IClientOffersDto | undefined;
+	public item: InputSignal<IClientOffersDto> = input.required<IClientOffersDto>();
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected advantagesTpr: string[] = [];
@@ -59,16 +68,16 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 
 	ngOnInit() {
 		if (this.item) {
-			if (this.item.promotionalMaterials) {
-				this.rims$.next(this.item.promotionalMaterials.filter(item => item !== null));
+			if (this.item().promotionalMaterials) {
+				this.rims$.next(this.item().promotionalMaterials.filter(item => item !== null));
 			}
 
-			if (this.item.documents) {
-				this.documents$.next(this.item.documents.filter(item => item !== null));
+			if (this.item().documents) {
+				this.documents$.next(this.item().documents.filter(item => item !== null));
 			}
 
-			if (this.item.advantages) {
-				this.advantagesTpr = this.item.advantages.map(item => {
+			if (this.item().advantages) {
+				this.advantagesTpr = this.item().advantages.map(item => {
 					return item.name;
 				});
 			}
@@ -76,7 +85,9 @@ export class ClientProposalsRowItemTrComponent implements OnInit, AfterViewCheck
 	}
 
 	ngAfterViewChecked() {
-		this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		if (this.content) {
+			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+		}
 	}
 
 	showText(text: string[], title?: string) {

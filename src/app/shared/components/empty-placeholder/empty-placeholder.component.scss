@@ -4,9 +4,9 @@
 	display: flex;
 	flex-direction: column;
 	border-radius: 16px;
-	padding-top: 40px;
-	padding-bottom: 40px;
 	align-items: center;
+	padding: 40px;
+	gap: 6px;
 }
 
 :host-context(.dark) .placeholder{

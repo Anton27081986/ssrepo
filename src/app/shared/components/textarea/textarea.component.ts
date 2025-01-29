@@ -15,6 +15,7 @@ export class TextareaComponent {
 	@Input() public rows: string | undefined;
 	@Input() public placeholder: string = '';
 	@Input() public error: string | undefined;
+	@Input() public maxLength: number | undefined;
 
 	@Input() public value: any = '';
 

@@ -17,9 +17,8 @@ import { IconsProviderModule } from '@app/icons-provider.module';
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { PagesModule } from '@app/pages/pages.module';
 import { ComponentsModule } from '@app/components/components.module';
-import { HeaderModule } from '@app/shared/components/header/header.module';
 import { FooterModule } from '@app/shared/components/footer/footer.module';
-import { NewHeaderModule } from '@app/shared/components/new-header/new-header.module';
+import { HeaderModule } from '@app/shared/components/new-header/header.module';
 import { FullLayoutComponent } from './full-layout.component';
 
 @NgModule({
@@ -45,9 +44,8 @@ import { FullLayoutComponent } from './full-layout.component';
 		NzCarouselModule,
 		PagesModule,
 		ComponentsModule,
-		HeaderModule,
 		FooterModule,
-		NewHeaderModule,
+		HeaderModule,
 	],
 	exports: [],
 })

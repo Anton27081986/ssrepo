@@ -41,6 +41,10 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 			font-weight: 600;
+
+			&__pointer {
+				cursor: pointer;
+			}
 		}
 
 		&__cell:last-child {
@@ -55,6 +59,18 @@
 	.body {
 		overflow-y: auto;
 		background-color: $island;
+
+		.highlight {
+			background-color: $error !important;
+		}
+
+		.icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: $main;
+			cursor: pointer;
+		}
 
 		&__row {
 			display: grid;
@@ -82,6 +98,10 @@
 				bottom: 4px;
 				cursor: pointer;
 			}
+		}
+
+		&__cell.number {
+			text-align: end;
 		}
 
 		&__cell:last-child {

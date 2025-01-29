@@ -1,0 +1,85 @@
+<div class="app-excess-income-page__header">
+	<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">Управление СНД</snab-text>
+	<div class="app-excess-income-page__header-filter">
+		<snab-button [type]="ButtonType.Outline" [size]="Size.Large"
+					 [iconPosition]="IconPosition.OnlyIcon"
+					 [icon]="IconType.FileNotFound"></snab-button>
+		<ss-select-v2 [size]="'small'" [formControl]="currencyControl" [placeholder]="'Выберите валюту'"
+					  [label]="'Валюта'"
+					  [options]="currency()"></ss-select-v2>
+		<ss-dropdown-button [isDropdownVisible]="(excessIncomeStateService.dropDownVisible$ | async)!" title="Фильтры">
+			<ss-filters [isFiltersVisible]="true" [isDropdown]="true" [(filters)]="filters"
+						(applyFilter)="getFilteredExcessIncome(true);"></ss-filters>
+		</ss-dropdown-button>
+	</div>
+</div>
+<div class="app-excess-income-page__body">
+	<ss-table-v2 [sticky]="false">
+		<ng-container *ngIf="isLoader$ | async; else content">
+			<ss-loader></ss-loader>
+		</ng-container>
+		<ng-template #content>
+			<ng-container *ngIf="clientsNode().length;else empty">
+				<ng-container *ngFor="let client of clientsNode()">
+					<tr excess-income-client-tr [client]="client" (click)="expended(client)"></tr>
+
+					<ng-container *ngIf="client.expended$ | async">
+						<ng-container *ngFor="let contractor of client.contractors$ | async">
+							<tr excess-income-contractor-tr *ngIf="contractor.contractor"
+								(click)="expended(contractor)" [contractor]="contractor"></tr>
+
+							<ng-container *ngIf="contractor.expended$ | async">
+								<ng-container *ngFor="let group of contractor.groups$ | async">
+									<tr excess-income-group-tr (click)="expended(group)" [group]="group"></tr>
+
+									<ng-container *ngIf="group.expended$ | async">
+										<tr *ngFor="let tov of group.tov$ | async" excess-income-tov-tr
+											[tovNode]="tov"></tr>
+										<ng-container *ngIf="group.isLoader$ | async">
+											<tr loader-tr [countCol]="13"></tr>
+										</ng-container>
+
+										<tr [countCol]="13" pagination-tr [total]="(group.total$ | async)!"
+											[limit]="group.limit"
+											[formControl]="group.paginationControl"></tr>
+									</ng-container>
+								</ng-container>
+								<ng-container *ngIf="contractor.isLoader$ | async">
+									<tr loader-tr [countCol]="13"></tr>
+								</ng-container>
+								<tr [countCol]="13" pagination-tr [total]="(contractor.total$ | async)!"
+									[limit]="contractor.limit"
+									[formControl]="contractor.paginationControl"></tr>
+							</ng-container>
+						</ng-container>
+					</ng-container>
+				</ng-container>
+			</ng-container>
+			<ng-template #empty>
+				<tr class="app-excess-income-page__no-content">
+					<td colspan="13">
+						<ss-empty-placeholder>
+							<snab-label [type]="LabelType.Info" [size]="Size.Large"
+										[iconPosition]="IconPosition.OnlyIcon"
+										[icon]="IconType.FieldError"></snab-label>
+							<snab-text [weight]="TextWeight.Semibold" [type]="TextType.Title">По вашему запросу ничего
+								не
+								найдено
+							</snab-text>
+							<snab-text [weight]="TextWeight.Medium" [type]="TextType.Caption">Попробуйте изменить
+								параметры
+								поиска
+							</snab-text>
+						</ss-empty-placeholder>
+					</td>
+				</tr>
+			</ng-template>
+		</ng-template>
+		<ng-container *ngIf="isLoaderTr$ | async">
+			<tr loader-tr [countCol]="13"></tr>
+		</ng-container>
+		<tr [countCol]="13" pagination-tr [total]="total()"
+			[limit]="limit"
+			[formControl]="paginationControl"></tr>
+	</ss-table-v2>
+</div>

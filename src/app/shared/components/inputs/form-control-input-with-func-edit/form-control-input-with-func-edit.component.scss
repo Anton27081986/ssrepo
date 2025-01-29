@@ -1,0 +1,124 @@
+@use '../../../../../styles/colors' as *;
+
+textarea {
+	display: flex;
+	align-items: center;
+	padding: 6px 44px 6px 20px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+	user-select: none;
+	min-height: 52px;
+	max-height: 100px;
+	resize: none;
+}
+
+textarea::-webkit-outer-spin-button,
+textarea::-webkit-inner-spin-button {
+	 -webkit-appearance: none;
+ }
+
+.textarea {
+	position: relative;
+
+	ss-icon {
+		position: absolute;
+		right: 22px;
+		top: 16px;
+		cursor: pointer;
+	}
+}
+
+textarea.large ~ ss-icon {
+	top: 20px;
+}
+
+textarea.small ~ ss-icon {
+	top: 12px;
+}
+
+textarea::placeholder {
+	color: $lite-text;
+}
+
+textarea:focus {
+	border-color: $additional-outline;
+}
+
+textarea.big {
+	height: 98px;
+	font-weight: 400;
+}
+
+textarea.medium {
+	height: 41px;
+	font-weight: 400;
+}
+
+textarea.large {
+	height: 52px;
+	font-weight: 600;
+}
+
+textarea.small {
+	height: 36px;
+	font-weight: 400;
+}
+
+textarea.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+textarea.error:focus {
+	border: 1px solid $additional-outline;
+	background-color: $island;
+}
+
+ss-caption {
+	color: $lite-text;
+}
+
+:host-context(.dark) input {
+	background-color: $dark-island;
+}
+
+.input-edit {
+	padding: 4px 20px 4px 4px;
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 6px;
+	border: 1px solid $island-outline;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	border-bottom: none;
+	align-items: center;
+	justify-content: space-between;
+
+	&__left {
+		width: 38px;
+		height: 38px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__middle {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__text {
+		width: 305px;
+		height: 40px;
+		overflow: hidden;
+		font-size: 12px;
+		text-overflow: ellipsis;
+	}
+
+}

@@ -18,6 +18,8 @@
 	border: 1px solid $border-color;
 	border-radius: 16px;
 	padding: 16px;
+	position: relative;
+	z-index: 1000;
 
 	&__header {
 		display: flex;

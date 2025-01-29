@@ -1,66 +1,79 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewContainerRef } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { filter, map, of, switchMap, tap } from 'rxjs';
 import { formatDate } from '@angular/common';
-import { ModalInfoComponent } from '@app/components/modal/modal-info/modal-info.component';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
+import { FormControl } from '@angular/forms';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
+import { catchError } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-thanks-partner',
 	templateUrl: './thanks-partner.component.html',
 	styleUrls: ['./thanks-partner.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ThanksPartnerComponent implements OnInit {
-	public thankYouList$!: Observable<any>;
-	public date: any;
-	public dateToday: any;
-	private yesterday: any;
+export class ThanksPartnerComponent {
+	private readonly apiService = inject(ThanksPartnerApiService);
 
-	public pageSize = 6;
-	public pageIndex = 1;
-	protected thankYouUrl$!: Observable<any>;
+	protected dateCtrl: FormControl<string | null> = new FormControl<string>(this.getDate());
+	protected loading = signal(false);
 
-	public constructor(
-		private readonly apiService: ThanksPartnerApiService,
-		public modalCreate: NzModalService,
-		private readonly viewContainerRef: ViewContainerRef,
-	) {}
+	public thankYouList = toSignal(
+		this.dateCtrl.valueChanges.pipe(
+			filter(Boolean),
+			tap(() => this.loading.set(true)),
+			switchMap(date => {
+				return this.apiService.getPartnerThanks(date).pipe(
+					map(items => {
+						return {
+							addNewThanksLink: items.addNewThanksLink,
+							totalCount: items.totalCount,
+							weekCount: items.weekCount,
+							items: items.items ? items.items.slice(0, 8) : [],
+							total: items.total,
+						};
+					}),
+					tap(() => this.loading.set(false)),
+					catchError(() => {
+						this.loading.set(false);
 
-	public ngOnInit(): any {
-		this.yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
-		this.dateToday = formatDate(this.yesterday, 'yyyy-MM-dd', 'ru-RU');
+						return of({} as IPartnerThanksListDto);
+					}),
+				);
+			}),
+		),
+		{ initialValue: {} as IPartnerThanksListDto },
+	);
 
-		this.thankYouUrl$ = this.apiService.getPartnerThanks(this.dateToday);
+	public thankToUrl(url?: string): void {
+		if (!url) {
+			return;
+		}
 
-		this.thankYouList$ = this.apiService
-			.getPartnerThanks(this.dateToday)
-			.pipe(map(({ items }) => items.slice(0, 9)));
+		const link = document.createElement('a');
+
+		link.href = url;
+		link.click();
 	}
 
-	public showModalOpenOut(item: any): void {
-		this.modalCreate
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: 'Информация о пользователе',
-				nzNoAnimation: false,
-				nzWidth: '365px',
-				nzContent: ModalInfoComponent,
-				nzViewContainerRef: this.viewContainerRef,
-				nzData: {
-					data: item,
-				},
-			})
-			.afterClose.pipe(untilDestroyed(this))
-			.subscribe();
+	public isAddCardItemPaddings(count: number): boolean {
+		return count > 4;
 	}
 
-	public onChange(result: Date): void {
-		this.thankYouList$ = this.apiService
-			.getPartnerThanks(formatDate(result, 'yyyy-MM-dd', 'ru-RU'))
-			.pipe(map(({ items }) => items.slice(0, 9)));
+	private getDate(): string {
+		const date = new Date();
+
+		// Устанавливаем на вчерашний день
+		date.setDate(date.getDate() - 1);
+
+		// Если вчера было воскресенье (0), отнимаем 2 дня, если понедельник (1), отнимаем 3 дня
+		if (date.getDay() === 0) {
+			date.setDate(date.getDate() - 2);
+		} else if (date.getDay() === 1) {
+			date.setDate(date.getDate() - 3);
+		}
+
+		return formatDate(date, 'yyyy-MM-dd', 'ru-RU');
 	}
 }

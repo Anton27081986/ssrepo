@@ -16,6 +16,7 @@ import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TableFullCellModule } from '@app/shared/components/table-full-cell/table-full-cell.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import { PipesModule } from '@app/core/pipes/pipes.module';
 
 @NgModule({
 	declarations: [TableComponent],
@@ -36,6 +37,7 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 		HeadlineModule,
 
 		TooltipModule,
+		PipesModule,
 	],
 })
 export class TableModule {}

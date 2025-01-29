@@ -1,0 +1,12 @@
+<div class="wrapper" (click)="close()">
+	<div class="add-victory-modal-result" (click)="$event.stopPropagation()">
+		<div class="add-victory-modal-result__header">
+			<ss-headline [size]="'h6'">Делитесь Вашими победами, ведь успех заразителен!</ss-headline>
+		</div>
+		<ss-divider></ss-divider>
+		<div class="add-victory-modal-result__body">
+			<ss-text [weight]="'semi-bold'" [size]="'0'">Спасибо!</ss-text>
+			<ss-text [size]="'1'">Ваша победа уже добавлена на главный экран</ss-text>
+		</div>
+	</div>
+</div>

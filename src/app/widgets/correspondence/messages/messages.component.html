@@ -10,7 +10,7 @@
 <div *ngIf="selectedTab && selectedTab.name === 'messages'" class="messages-list">
 	<div *ngIf="(messages$ | async)?.total; else noMessages" class="content" (scrollend)="loadMoreMessages()" #messages>
 		<div class="message" *ngFor="let message of (messages$ | async)?.items" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
-			<ss-avatar size="s" [src]="message.author?.avatarUrl || ''"></ss-avatar>
+			<ss-avatar [size]="'small'" [src]="message.author?.avatarUrl || ''"></ss-avatar>
 			<div class="message-content">
 				<div class="message-content-header">
 					<ss-text size="1" weight="semi-bold">{{ message.author?.name }}</ss-text>
@@ -46,8 +46,7 @@
 					</div>
 					<div class="message-content-blockquote-message" [innerHTML]="message.replyToMessage.text"></div>
 				</div>
-				<div class="message-content-text" [innerHTML]="message.text">
-				</div>
+				<div class="message-content-text" [innerHTML]="message.text | bypassSecurityTrustHtml"></div>
 				<div *ngIf="message.attachments?.length" class="files">
 					<ss-attachment *ngFor="let file of message.attachments" title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
 				</div>

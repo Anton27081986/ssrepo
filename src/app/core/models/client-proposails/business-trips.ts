@@ -35,6 +35,10 @@ export interface IBusinessTripsDto {
 	 */
 	beginDate: string;
 	endDate: string;
+	expensesList: Array<{
+		currency: string;
+		value: number;
+	}>;
 }
 
 export interface idName {

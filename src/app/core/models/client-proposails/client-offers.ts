@@ -35,8 +35,8 @@ export interface IClientOffersDto {
 	productionName: string;
 	tovGroupId: number;
 	tovGroupName: string;
-	productionGroupId: number;
-	productionGroupName: string;
+	tovSubGroupId: number;
+	tovSubGroupName: string;
 	tovProductionId: number;
 	newProductName: string;
 	saleClientsCount: number;
@@ -55,6 +55,9 @@ export interface IClientOffersDto {
 export interface IRequestGetClientOffer {
 	clientId: number;
 	productionIds: number[];
+	TovGroups: number[];
+	TprFlags: number[];
+	TovSubGroups: number[];
 }
 
 export enum ClientProposalsTypeDocuments {

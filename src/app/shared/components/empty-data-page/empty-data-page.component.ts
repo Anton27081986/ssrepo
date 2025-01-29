@@ -13,4 +13,7 @@ export class EmptyDataPageComponent {
 	@HostBinding('style.height')
 	@Input()
 	public height = '100px';
+
+	@Input()
+	public isNotFound = false;
 }

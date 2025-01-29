@@ -1,0 +1,118 @@
+@use 'src/styles/colors.scss' as *;
+
+:host {
+	width: 100%;
+}
+
+.multiselect-v2 {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	user-select: none;
+	z-index: 999;
+	gap: 6px;
+
+	&__input {
+		height: 46px;
+		padding: 8px 12px;
+		border-radius: 8px;
+		border: 1px solid $island-outline;
+		display: flex;
+		align-items: center;
+		justify-content: right;
+		position: relative;
+		gap: 10px;
+
+		&--isExpanded {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-bottom: none;
+		}
+	}
+
+	&__select {
+		position: absolute;
+		max-height: 300px;
+		overflow: auto;
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		border-bottom-left-radius: 16px;
+		border-bottom-right-radius: 16px;
+		border: 1px solid $island-outline;
+		width: 100%;
+		top: 75px;
+		padding: 12px 0;
+		z-index: 999;
+	}
+
+	input {
+		border: none;
+		width: 100%;
+
+		&:focus-visible {
+			outline-color: #FFFFFF;
+		}
+	}
+
+	&__options {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__chips {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-items: left;
+		gap: 4px;
+		width: 100%;
+	}
+
+	&__option {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 10px;
+	}
+
+	&__selected {
+		display: flex;
+		flex-wrap: nowrap;
+		background-color: #FFFFFF;
+		border: 1px solid grey;
+		border-radius: 16px;
+		padding: 12px;
+	}
+
+	&__count-chips {
+		padding: 4px;
+		display: flex;
+		align-items: center;
+		background-color: #335DF2;
+		color: #FFFFFF;
+		border-radius: 8px;
+		width: 20px;
+		height: 20px;
+		justify-content: center;
+	}
+}
+
+.multiselect-option {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 10px;
+	padding: 0 12px;
+
+	input {
+		width: auto;
+	}
+}
+
+.layout {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	z-index: 888;
+	left: 0;
+	top: 0;
+	cursor: default;
+}

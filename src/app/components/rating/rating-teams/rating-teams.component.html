@@ -1,0 +1,11 @@
+<div class="rating-teams">
+	<ng-container *ngIf="!isLoading()">
+		<ss-tabs-control [rankTypeId]="rating()?.rankTypeId!" [formControl]="walkerControl" [items]="teams()"></ss-tabs-control>
+	</ng-container>
+	<ng-container *ngIf="isLoading()">
+		<ss-loader></ss-loader>
+	</ng-container>
+</div>
+
+
+

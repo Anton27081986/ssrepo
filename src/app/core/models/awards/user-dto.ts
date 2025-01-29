@@ -25,7 +25,7 @@ export interface IUserDto {
 	/**
 	 * ФИО
 	 */
-	name?: string | null;
+	name: string;
 	/**
 	 * Фамилия
 	 */

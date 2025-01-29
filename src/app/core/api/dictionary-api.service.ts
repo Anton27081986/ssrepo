@@ -50,10 +50,49 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список плательщиков */
+	public getPayerContractors(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/PayerContractors`,
+			{
+				params,
+			},
+		);
+	}
+
 	/** Список статусов */
 	public getStatuses(): Observable<IResponse<{ id: number; name: string }>> {
 		return this.http.get<IResponse<{ id: number; name: string }>>(
 			`${environment.apiUrl}/api/company/dictionary/clientStatuses`,
+		);
+	}
+
+	/** Список статусов учета законтрактованного сырья */
+	public getProcurementsStatuses(): Observable<IResponse<{ id: number; name: string }>> {
+		return this.http.get<IResponse<{ id: number; name: string }>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contractStatuses`,
+		);
+	}
+
+	/** Список договоров учета законтрактованного сырья из КИСП*/
+	public getProcurementsContractDetails(
+		ContractorId: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (ContractorId !== null && ContractorId !== undefined) {
+			params = params.set('ContractorId', ContractorId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contracts`,
+			{ params },
 		);
 	}
 
@@ -67,6 +106,20 @@ export class DictionaryApiService {
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/dictionary/tovs`,
+			{ params },
+		);
+	}
+
+	/** Список договоров */
+	public getContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/procurements/dictionary/contractDetails`,
 			{ params },
 		);
 	}
@@ -86,7 +139,195 @@ export class DictionaryApiService {
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/technologists`,
+			{ params },
+		);
+	}
+
+	/** Список комментариев ТПР */
+	public getTprRejectReasons(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/tprRejectsReasons`,
+		);
+	}
+
+	public getDictionaryUsers(
+		clientId: number,
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (clientId) {
+			params = params.set('clientId', clientId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/dictionary/users/search`,
+			{ params },
+		);
+	}
+
+	public getServices(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Services`,
+			{ params },
+		);
+	}
+
+	public getCostArticles(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/CostArticles`,
+			{ params },
+		);
+	}
+
+	public getFaObjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/FaObjects`,
+			{ params },
+		);
+	}
+
+	public getProjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Projects`,
+			{ params },
+		);
+	}
+
+	public getDepts(query?: string, userId?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (userId) {
+			params = params.set('userId', userId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Depts`,
+			{ params },
+		);
+	}
+
+	public getSections(query?: string, deptId?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (deptId) {
+			params = params.set('deptId', deptId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/MfsSections`,
+			{ params },
+		);
+	}
+
+	public getBuUnits(
+		query?: string,
+		applicantUserId?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		if (applicantUserId) {
+			params = params.set('ApplicantUserId', applicantUserId);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/BuUnits`,
+			{ params },
+		);
+	}
+
+	public getTovUnits(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/TovUnits`,
+			{ params },
+		);
+	}
+
+	public getCompletedActContracts(id?: number): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (id) {
+			params = params.set('providerContractorId', id);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/Contracts`,
+			{ params },
+		);
+	}
+
+	public getFinDocOrders(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/FinDocOrders`,
+			{ params },
+		);
+	}
+
+	public getTovGroupsByClient(
+		query: string,
+		clientId: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/tovGroups`,
 			{ params },
 		);
 	}

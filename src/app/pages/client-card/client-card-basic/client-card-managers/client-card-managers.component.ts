@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { concat, concatMap, forkJoin, from, Observable, tap } from 'rxjs';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -7,7 +7,8 @@ import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IUserProfile } from '@app/core/models/user-profile';
-import { catchError } from 'rxjs/operators';
+import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
+import { ModalService } from '@app/core/modal/modal.service';
 
 enum OperationStatuses {
 	Add,
@@ -45,6 +46,8 @@ export class ClientCardManagersComponent implements OnInit {
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NzMessageService,
 		private readonly userFacadeService: UserFacadeService,
+		private readonly cdr: ChangeDetectorRef,
+		private readonly modalService: ModalService,
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 		this.isLoading$ = this.clientCardListFacade.isManagersLoading$;
@@ -131,7 +134,22 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public selectManager($event: any) {
 		if ($event.id) {
-			this.changedData.managersList.push({ manager: $event, status: OperationStatuses.Add });
+			this.clientCardListFacade
+				.getUserById($event.id)
+				.pipe(untilDestroyed(this))
+				.subscribe(user => {
+					this.changedData.managersList.push({
+						manager: user,
+						status: OperationStatuses.Add,
+					});
+					this.cdr.detectChanges();
+				});
+		}
+	}
+
+	protected openModalInfoUser(id: number | undefined) {
+		if (id) {
+			this.modalService.open(UserInfoPopupComponent, { data: id });
 		}
 	}
 }

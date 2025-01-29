@@ -1,10 +1,15 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
-import { map } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { filter, map, Observable, of, repeat, Subject, switchMap, tap } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TransportApiService } from '@app/core/api/transport-api.service';
 import { ITransportDto } from '@app/core/models/company/transport-dto';
+import { ModalService } from '@app/core/modal/modal.service';
+import { dateTimeFromIsoString } from '@app/core/utils/date';
+import { ModalTransportNoticeComponent } from '@app/components/modal/modal-transport-notice/modal-transport-notice.component';
+import { TransportImports } from '@app/components/transport/transport.imports';
+import { IRouteDto } from '@app/core/models/company/route-dto';
+import { fadeInDown } from '@app/core/animations';
 
 const NO_TIME = '--:--';
 
@@ -13,76 +18,118 @@ const NO_TIME = '--:--';
 	selector: 'app-transport',
 	templateUrl: './transport.component.html',
 	styleUrls: ['./transport.component.scss'],
+	standalone: true,
+	animations: [fadeInDown],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [TransportImports],
 })
-export class TransportComponent implements OnInit {
-	protected transport: ITransportDto | undefined;
-	public constructor(
-		private readonly apiService: TransportApiService,
-		public modalCreateService: NzModalService,
-		private readonly viewContainerRef: ViewContainerRef,
-	) {}
+export class TransportComponent {
+	private readonly apiService = inject(TransportApiService);
+	private readonly modalService = inject(ModalService);
 
-	public ngOnInit() {
-		this.apiService
-			.getTransport()
-			.pipe(
-				map(transport => {
+	private readonly transportRefresh$ = new Subject<void>();
+
+	protected nearestDepartureTimeForBuses: Map<number, string> = new Map();
+	protected transport$: Observable<ITransportDto> = this.apiService.getTransport().pipe(
+		map(transport => {
+			return {
+				...transport,
+				transportList: transport.transportList?.map(bus => {
 					return {
-						...transport,
-						transportList: transport.transportList?.map(bus => {
-							return {
-								...bus,
-								departureTime: new Array(
-									6 - (bus.departureTime ? bus.departureTime.length : 0),
-								)
-									.fill(NO_TIME)
-									.concat(bus.departureTime),
-							};
-						}),
+						...bus,
+						departureTime: new Array(
+							6 - (bus.departureTime ? bus.departureTime.length : 0),
+						)
+							.fill(NO_TIME)
+							.concat(bus.departureTime),
 					};
 				}),
-				untilDestroyed(this),
-			)
-			.subscribe(
-				transport => {
-					this.transport = transport;
-				},
-				(error: unknown) => {
-					console.error('Расписание не загружено', error);
-				},
-			);
+			};
+		}),
+		tap(transportList => this.nearestDepartureTime(transportList)),
+		repeat({ delay: () => this.transportRefresh$ }),
+	);
+
+	public noticeText(transport: ITransportDto): string {
+		return `В период с ${dateTimeFromIsoString(transport.transportNotify!.dateFrom)} 
+		до ${dateTimeFromIsoString(transport.transportNotify!.dateTo)} 
+		${transport.transportNotify!.note}`;
 	}
 
-	public isPast(time: string): boolean {
+	public currentTimeClass(
+		time: string,
+		busID: number,
+		nearestDepartureTimeForBuses: Map<number, string>,
+	): string {
 		if (time === NO_TIME) {
-			return true;
+			return 'gone';
 		}
 
-		const formattedTime = time.split(':');
-		const calculatedTime = new Date().setHours(
-			Number.parseInt(formattedTime[0], 10),
-			Number.parseInt(formattedTime[1], 10),
-		);
+		const [hours, minutes] = time.split(':').map(Number);
+		const calculatedTime = new Date().setHours(hours, minutes);
 
-		return calculatedTime < Date.now();
+		if (calculatedTime < Date.now()) {
+			return 'gone';
+		}
+
+		if (nearestDepartureTimeForBuses.get(busID) === time) {
+			return 'nearest';
+		}
+
+		return 'next';
+	}
+
+	public nearestDepartureTime(transport: ITransportDto): void {
+		const now = new Date();
+		const [hoursNow, minutesNow] = [now.getHours(), now.getMinutes()];
+
+		this.nearestDepartureTimeForBuses.clear();
+
+		transport.transportList?.forEach(bus => {
+			if (bus.departureTime) {
+				this.getNearestTime(hoursNow, minutesNow, bus);
+			}
+		});
+	}
+
+	public getNearestTime(hoursNow: number, minutesNow: number, bus: IRouteDto): void {
+		for (const departure of bus.departureTime as string[]) {
+			if (departure === NO_TIME) {
+				continue;
+			}
+
+			const [hoursDeparture, minutesDeparture] = departure.split(':').map(Number);
+
+			if (
+				hoursNow < hoursDeparture ||
+				(hoursNow === hoursDeparture && minutesNow < minutesDeparture)
+			) {
+				this.nearestDepartureTimeForBuses.set(bus.id, departure);
+
+				return;
+			}
+		}
 	}
 
 	public showModalNotice(): void {
-		this.modalCreateService
-			.create({
-				nzClosable: true,
-				nzFooter: null,
-				nzTitle: `Изменение расписания корпоративного транспорта`,
-				nzNoAnimation: false,
-				nzWidth: '560px',
-				nzContent: ModalTransportNoticeComponent,
-				nzViewContainerRef: this.viewContainerRef,
-			})
-			.afterClose.pipe(untilDestroyed(this))
-			.subscribe((res: { dTo: string; dFrom: string; note: string }) => {
-				if (this.transport && res) {
-					this.transport.transportNotify = { ...this.transport?.transportNotify, ...res };
-				}
+		this.modalService
+			.open(ModalTransportNoticeComponent, {})
+			.afterClosed()
+			.pipe(
+				filter(Boolean),
+
+				switchMap(transportNotify =>
+					this.apiService
+						.sendTransportNote(transportNotify)
+						.pipe(catchError(() => of(null))),
+				),
+
+				filter(Boolean),
+
+				untilDestroyed(this),
+			)
+			.subscribe(() => {
+				this.transportRefresh$.next();
 			});
 	}
 }

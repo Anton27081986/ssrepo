@@ -10,11 +10,21 @@ ss-caption {
 	color: $lite-text;
 }
 
+.calendar-button-wrapper {
+	display: flex;
+	align-items: center;
+
+	&__icon {
+		margin-left: 10px;
+	}
+}
+
 .calendar-button {
 	display: flex;
 	align-items: center;
-	padding: 11px 12px;
+	padding: 12px;
 	width: 100%;
+	min-width: 240px;
 	border-radius: 8px;
 	border: 1px solid $island-outline;
 	background-color: $island;
@@ -31,6 +41,10 @@ ss-caption {
 			background-color: $island-outline;
 		}
 	}
+}
+
+.calendar-icon {
+	color: $main;
 }
 
 ::ng-deep .mat-calendar {
@@ -84,4 +98,21 @@ ss-caption {
 }
 ::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::after {
 	border-bottom: none;
+}
+
+.calendar-button.error {
+	border: 1px solid $error;
+	background-color: $lite-error;
+}
+.calendar-button.error:focus {
+	border: 1px solid $additional-outline;
+	background-color: $island;
+}
+
+.calendar-button.medium {
+	padding: 8px !important;
+}
+
+.calendar-button.small {
+	padding: 6px !important;
 }

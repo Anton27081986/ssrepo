@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { LikeStateEnum } from '@app/shared/components/like/like.component';
 import { IUserDto } from './user-dto';
 
 /**
@@ -18,7 +19,7 @@ export interface IWinsItemDto {
 	/**
 	 * Айди задачи
 	 */
-	id?: number;
+	id: number;
 	user?: IUserDto;
 	/**
 	 * Описание достижения
@@ -35,7 +36,7 @@ export interface IWinsItemDto {
 	/**
 	 * Медаль и ее место если есть
 	 */
-	award?: number | null;
+	award?: LikeStateEnum;
 	/**
 	 * Количество комментариев
 	 */
@@ -43,7 +44,7 @@ export interface IWinsItemDto {
 	/**
 	 * Список других участников для групповой победы
 	 */
-	groupWinUsers?: IUserDto[] | null;
+	groupWinUsers: IUserDto[] | null;
 	/**
 	 * Флаг что пользователь уже лайкнул
 	 */
@@ -52,4 +53,6 @@ export interface IWinsItemDto {
 	 * Ссылка на детали победы
 	 */
 	detailUrl?: string | null;
+
+	likedUsers: IUserDto[] | null;
 }

@@ -1,0 +1,132 @@
+<div class="wrapper" (click)="close()">
+	<ss-card *ngIf="contract" class="dialog" padding="0" (click)="$event.stopPropagation()">
+		<div class="header">
+			<ss-headline size="h5">Контракт  №{{ contract.contractNumber }}</ss-headline>
+			<ss-icon class="close-icon" name="close" (click)="close()"></ss-icon>
+		</div>
+		<form [formGroup]="editForm" class="body">
+			<div class="body__column">
+				<div class="body__column__item">
+					<ss-text size="4">Контракт, №:</ss-text>
+					<ss-text size="3">{{ contract.contractNumber }}</ss-text>
+				</div>
+				<div class="body__column__item">
+					<ss-text size="4">Контрагент:</ss-text>
+					<ss-text size="3">{{ contract.contractor.name }}</ss-text>
+				</div>
+				<div class="body__column__item">
+					<ss-text size="4">Договор:</ss-text>
+					<ss-text size="3">{{ contract.contractDetail.name }}</ss-text>
+				</div>
+				<div *ngIf="!isEditMode; else quantityTotalEdit" class="body__column__item">
+					<ss-text size="4">Количество, кг (всего):</ss-text>
+					<ss-text size="3">{{ contract.quantityTotal || '-' }}</ss-text>
+				</div>
+				<ng-template #quantityTotalEdit>
+					<div class="body__column__item">
+						<ss-input
+							size="small"
+							label="Количество, кг (всего):"
+							type="number"
+							formControlName="quantityTotal"
+							[value]="contract.quantityTotal"
+							[error]="editForm.controls['quantityTotal'].touched && editForm.controls['quantityTotal'].errors ? 'Некорректные данные' : undefined"
+						></ss-input>
+					</div>
+				</ng-template>
+				<div class="body__column__item">
+					<ss-text size="4">Количество, кг (поступило):</ss-text>
+					<ss-text size="3">{{ contract.quantityReceived || '-' }}</ss-text>
+				</div>
+				<div class="body__column__item">
+					<ss-text size="4">Количество, кг (осталось):</ss-text>
+					<ss-text size="3">{{ contract.quantityRemaining || '-' }}</ss-text>
+				</div>
+				<div *ngIf="!isEditMode; else priceEdit" class="body__column__item">
+					<ss-text size="4">Цена:</ss-text>
+					<ss-text size="3">{{ contract.price }}</ss-text>
+				</div>
+				<ng-template #priceEdit>
+					<div class="body__column__item">
+						<ss-input
+							size="small"
+							label="Цена:"
+							type="number"
+							formControlName="price"
+							[value]="contract.price"
+							[error]="editForm.controls['price'].touched && editForm.controls['price'].errors ? 'Некорректные данные' : undefined"
+						></ss-input>
+					</div>
+				</ng-template>
+				<div *ngIf="!isEditMode; else periodEdit" class="body__column__item">
+					<ss-text size="4">Период контракта:</ss-text>
+					<ss-text size="3">{{ contract.periodStartDate }} - {{ contract.periodEndDate }}</ss-text>
+				</div>
+				<ng-template #periodEdit>
+					<div class="body__column__item">
+						<ss-date-range formControlName="period" label="Период контракта:" value="{{ contract.periodStartDate }}-{{ contract.periodEndDate }}" (select)="editForm.controls['period'].setValue($event)"></ss-date-range>
+					</div>
+				</ng-template>
+			</div>
+			<div class="body__column">
+                <div *ngIf="!isEditMode; else tradePositionEdit" class="body__column__item">
+					<ss-text size="4">Товарная позиция:</ss-text>
+					<ss-text size="3">{{ contract.tov ? contract.tov.name : '-' }}</ss-text>
+				</div>
+                <ng-template #tradePositionEdit>
+                    <div class="body__column__item">
+                        <ss-search-input
+                            searchType="tovs"
+                            size="small"
+                            label="Товарная позиция"
+                            placeholder="Введите товарную позицию"
+                            [selectedItem]="editForm.controls['tradePosition'].value"
+                            (select)="selectSearchItem($event, editForm.controls['tradePosition'])"
+                            (blurEvent)="selectSearchItem($event, editForm.controls['tradePosition'])"
+                            [error]="editForm.controls['tradePosition'].touched && editForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
+                        ></ss-search-input>
+                    </div>
+                </ng-template>
+				<div class="body__column__item">
+					<ss-text size="4">Условия оплаты:</ss-text>
+					<ss-text size="3">{{ contract.paymentConditions }}</ss-text>
+				</div>
+				<div class="body__column__item">
+					<ss-text size="4">Условия отгрузки:</ss-text>
+					<ss-text size="3">{{ contract.deliveryConditions }}</ss-text>
+				</div>
+				<div class="body__column__item">
+					<ss-text size="4">Напоминание:</ss-text>
+					<ss-text size="3">{{  contract.notificationDate }}</ss-text>
+				</div>
+				<div class="body__column__item">
+					<ss-text size="4">Статус:</ss-text>
+					<ss-text size="3">{{  contract.status.name }}</ss-text>
+				</div>
+				<div *ngIf="contract.status.id === 3" class="body__column__item">
+					<ss-text size="4">Комментарий:</ss-text>
+					<ss-text size="3">{{  contract.reasonCompletion }}</ss-text>
+				</div>
+				<div *ngIf="isEditMode && contract.status.id !== 3" class="body__column__item">
+					<ss-text size="3">
+						<input type="checkbox" formControlName="isComplete" #cancelContract />
+						Завершить контракт
+					</ss-text>
+					<ss-textarea *ngIf="isEditMode && cancelContract.checked"
+						label="Комментарий:"
+						placeholder="Введите данные"
+						formControlName="reasonCompletion"
+						[error]="editForm.controls['reasonCompletion'].touched && editForm.controls['reasonCompletion'].errors?.required ? 'Некорректные данные' : undefined"
+						(click)="editForm.controls['reasonCompletion'].setErrors(null)"
+					></ss-textarea>
+				</div>
+			</div>
+		</form>
+		<div class="footer" *ngIf="canEdit && contract.status.id !== 3">
+			<ss-button *ngIf="!isEditMode" size="small" (click)="switchMode(true)">Редактировать</ss-button>
+			<ss-button *ngIf="isEditMode" size="small" (click)="saveContract()">Сохранить</ss-button>
+			<ss-button *ngIf="isEditMode" size="small" type="muted" (click)="switchMode(false)">Отменить</ss-button>
+		</div>
+		<ss-loader *ngIf="isLoading$ | async"></ss-loader>
+	</ss-card>
+</div>

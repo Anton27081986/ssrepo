@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { environment } from '@environments/environment.development';
 
 export interface IChangeTrackerWithObjectId {
-	objectId: number;
+	objectId: string;
 	type: number;
 	item: IChangeTrackerItemDto;
 }
@@ -20,7 +20,7 @@ export class SignalService {
 
 	public historyChange$ = this.historyChanged.asObservable();
 
-	public startConnection(token: string, objectId: number, type: number) {
+	public startConnection(token: string, objectId: string, type: number) {
 		this.hubConnection = new HubConnectionBuilder()
 			.withUrl(`${environment.apiUrl}/api/change-tracker/hubs`, {
 				accessTokenFactory: () => token,
@@ -45,7 +45,7 @@ export class SignalService {
 	private registerOnServerEvents(): void {
 		this.hubConnection?.on(
 			'OnHistoryChanged',
-			(objectId: number, type: number, item: IChangeTrackerItemDto) => {
+			(objectId: string, type: number, item: IChangeTrackerItemDto) => {
 				const change: IChangeTrackerWithObjectId = {
 					item,
 					objectId,
@@ -57,7 +57,7 @@ export class SignalService {
 		);
 	}
 
-	private subscribeToChanges(objectId: number, type: number): void {
+	private subscribeToChanges(objectId: string, type: number): void {
 		this.hubConnection
 			?.invoke('Subscribe', objectId, type)
 			.catch(err => console.error(`Ошибка подписки: ${err}`));

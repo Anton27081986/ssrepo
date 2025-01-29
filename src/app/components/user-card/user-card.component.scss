@@ -1,0 +1,35 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../styles/colors' as *;
+
+.user-card {
+	display: flex;
+	gap: 12px;
+	flex-wrap: nowrap;
+	align-items: center;
+	cursor: pointer;
+
+	&__info {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+
+	&__description {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+	}
+
+	&__item {
+		font-size: 10px;
+		font-weight: 500;
+		line-height: 11px;
+	}
+
+
+	:host-context(.dark) .user-card__item {
+		color: $dark-text;
+	}
+}

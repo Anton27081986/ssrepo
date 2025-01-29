@@ -13,10 +13,16 @@ const routes: Routes = [
 	{
 		path: '',
 		component: ClientProposalsPageComponent,
+		data: {
+			animation: 'animation',
+		},
 	},
 	{
 		path: ':clientId',
 		component: ClientProposalsInfoComponent,
+		data: {
+			animation: 'animation',
+		},
 		children: [
 			{
 				path: 'business-trips',

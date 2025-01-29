@@ -7,10 +7,12 @@
 	width: 100%;
 
 	.table-wrapper {
-		height: 70vh;
-		overflow-y: auto;
 		scrollbar-color: $lite-text;
-		border-radius: 16px;
+
+		&__scroll {
+			overflow-y: auto;
+			max-height: 70vh;
+		}
 
 		&::-webkit-scrollbar {
 			width: 6px;
@@ -27,45 +29,27 @@
 
 			&__thead {
 				width: 100%;
-				position: sticky;
 				top: -1px;
-				z-index: 100;
-				background-color: #F2F3F7;
+				z-index: 1;
+				background-color: #E2E5EA;
 				color: $text;
+
+				&__sticky {
+					position: sticky;
+				}
 
 				tr {
 					min-width: 100%;
 
 					th {
-						text-align: left;
-						border: 1px solid $island-outline;
-						font-size: 10px;
-						font-weight: 700;
+						text-align: center;
+						font-size: 12px;
+						font-weight: 500;
 						line-height: 19px;
-						letter-spacing: -0.01em;
 						padding: 8px;
+						border: 1px solid #C5CBD5;
 					}
 				}
-
-				tbody tr:last-child td:first-child {
-					border-bottom-left-radius: 16px;
-				}
-
-				tbody tr:last-child td:last-child {
-					border-bottom-right-radius: 16px;
-				}
-
-				tbody {
-				}
-
-				tr:first-child {
-					border-bottom-left-radius: 16px;
-				}
-
-				tr:last-child {
-					border-bottom-right-radius: 16px;
-				}
-
 			}
 
 			}

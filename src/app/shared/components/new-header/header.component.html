@@ -1,0 +1,33 @@
+<div class="header">
+	<div class="header__content">
+		<div class="header__content-left">
+			<ss-icon class="header__logo" [routerLink]="AppRoutes.root" name="logo"></ss-icon>
+			<app-main-menu [menu]="listMenu$ | async"></app-main-menu>
+		</div>
+		<div class="header__content-right">
+			<ss-search-input (select)="getSearchGlobal($event)" [size]="'small'"
+							 [searchType]="'global'"></ss-search-input>
+
+			<app-notification></app-notification>
+
+			@if (aiPermission()) {
+				<snab-button
+					[type]="ButtonType.Outline"
+					[size]="Size.Large"
+					[icon]="IconType.Comments"
+					[iconPosition]="IconPosition.OnlyIcon"
+					(click)="openChatBot()"
+				></snab-button>
+			}
+
+			<ng-container *ngIf="(userProfile$ | async) as userProfile;">
+				<ss-avatar [size]="'small'" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
+						   [position]="TooltipPosition.DEFAULT" [src]="userProfile?.avatarUrl!" nz-dropdown nzTrigger="click"
+						   [nzDropdownMenu]="profilePopup"></ss-avatar>
+			</ng-container>
+		</div>
+	</div>
+</div>
+<nz-dropdown-menu #profilePopup="nzDropdownMenu">
+	<app-profile-popup></app-profile-popup>
+</nz-dropdown-menu>

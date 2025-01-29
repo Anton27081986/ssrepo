@@ -1,0 +1,23 @@
+@use '../../../../../assets/scss/mixins' as *;
+@use '../../../../../assets/scss/variables' as *;
+@use '../../../../../styles/colors' as *;
+
+.ss-table-td {
+	border: 1px solid $border-table;
+	padding: 8px 12px;
+	position: relative;
+
+	&__content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 6px;
+
+	}
+}
+
+snab-input {
+	width: 100px;
+}
+
+

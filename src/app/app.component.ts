@@ -7,12 +7,26 @@ import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
 import { IconsService } from '@app/core/services/icons.service';
+import { animate, query, style, transition, trigger } from '@angular/animations';
+import { RouterOutlet } from '@angular/router';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
+	animations: [
+		trigger('routeAnimations', [
+			transition('* <=> *', [
+				// Скрываем новый экран до начала анимации
+				query(':enter', [style({ opacity: 0 })], { optional: true }),
+				// Анимируем уходящий экран
+				query(':leave', [animate('500ms', style({ opacity: 0 }))], { optional: true }),
+				// Анимируем входящий экран
+				query(':enter', [animate('500ms', style({ opacity: 1 }))], { optional: true }),
+			]),
+		]),
+	],
 })
 export class AppComponent implements OnInit {
 	public title!: string;
@@ -27,19 +41,11 @@ export class AppComponent implements OnInit {
 		this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
 	}
 
-	public ngOnInit(): void {
-		this.profileService
-			.getTheme()
-			.pipe(
-				tap(value => {
-					if (value.isDarkTheme) {
-						this.themeService.setDarkTheme().then();
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
+	public prepareRoute(outlet: RouterOutlet) {
+		return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+	}
 
+	public ngOnInit(): void {
 		this.profileService.isDarkTheme$
 			.pipe(
 				tap(switchValue => {

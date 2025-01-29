@@ -1,0 +1,52 @@
+@if (label()) {
+    <ss-caption size="1">{{ label() }}</ss-caption>
+}
+
+<div class="input" (clickOutside)="onBlur()">
+    <div>
+        <input
+            type="text"
+            [ngClass]="size() | mapper : getControlClasses : errorText(): autocomplete()"
+            [placeholder]="placeholder()"
+            [formControl]="selectCtrl"
+            [readOnly]="!autocomplete()"
+        />
+
+        <ss-icon
+            class="toggle-btn"
+            height="12"
+            name="chevron"
+            [@rotate]="isExpanded()"
+            (click)="options().length && toggle()"
+        />
+
+        @if (autocomplete() && selectCtrl.value) {
+            <ss-icon
+                class="clear-btn"
+                height="12"
+                name="close"
+                (click)="clear()"
+            />
+        }
+    </div>
+
+
+    @if (isExpanded() && mutableFilteredOptions().length) {
+        <div class="search-result">
+            @for (item of mutableFilteredOptions(); track item.id) {
+                <ss-caption
+                    class="search-result-item"
+                    (click)="setItem(item)"
+                >
+                    {{ item.name }}
+                </ss-caption>
+            }
+        </div>
+    }
+
+    @if  (!isExpanded()) {
+        <ss-caption size="2" class="error" color="error">{{ errorText() }}</ss-caption>
+    }
+</div>
+
+

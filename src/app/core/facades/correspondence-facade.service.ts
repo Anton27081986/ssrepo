@@ -6,6 +6,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
+import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
+import { environment } from '@environments/environment';
 
 @UntilDestroy()
 @Injectable({
@@ -116,6 +118,7 @@ export class CorrespondenceFacadeService {
 					if (!this.selectedTopicSubject.value) {
 						this.totalMessagesSubject.next(res.total);
 					}
+
 					this.isLoadingSubject.next(false);
 				});
 		}
@@ -141,7 +144,7 @@ export class CorrespondenceFacadeService {
 	}
 
 	public selectSubject(subject: string | null) {
-		this.isLoadingSubject.next(true)
+		this.isLoadingSubject.next(true);
 		this.selectedTopicSubject.next(subject);
 		this.messagesSubject.next({ items: [], total: 0 });
 		this.loadMessages();
@@ -204,7 +207,7 @@ export class CorrespondenceFacadeService {
 			this.notificationsApiService
 				.sendMessage({
 					objectId: this.objectIdSubject.value,
-					type: 0,
+					type: CorrespondenceTypeEnum.ClientCard,
 					subject,
 					text,
 					toUserIds,
@@ -212,14 +215,23 @@ export class CorrespondenceFacadeService {
 					isPrivate,
 					replyToMessageId: this.repliedMessageSubject.value?.message.id,
 					fileIds: this.messageFilesSubject.value?.map(file => file.id!) || [],
+					sourceUrl: this.getLinkForEmail(CorrespondenceTypeEnum.ClientCard),
 				})
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.messageFilesSubject.next(null);
 					this.messagesSubject.next({ items: [], total: 0 });
 
-					this.loadSubjects(subject);
+					this.loadSubjects();
+					this.selectSubject(subject);
 				});
+		}
+	}
+
+	protected getLinkForEmail(type: CorrespondenceTypeEnum) {
+		switch (type) {
+			case CorrespondenceTypeEnum.ClientCard:
+				return `${environment.apiUrl}/client-card/${this.objectIdSubject.value}`;
 		}
 	}
 }

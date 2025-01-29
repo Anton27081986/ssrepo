@@ -1,0 +1,201 @@
+@use '../../../../../styles/colors' as *;
+
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.datepicker-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.date {
+    width: 80%;
+    flex-grow: 1;
+
+    ::ng-deep .mat-mdc-form-field-icon-suffix > .mat-icon {
+        text-align: center;
+        vertical-align: top;
+    }
+
+    &__input:read-only {
+        cursor: pointer;
+    }
+
+    &__open-icon {
+        width: 20px;
+        height: 21px;
+        font-size: 20px;
+        color: #8C8C8C;
+    }
+
+    &__open-icon.mat-icon {
+        padding: 10px;
+    }
+
+    &__clear-icon.mat-icon {
+        padding: 8px;
+    }
+}
+
+.time {
+    width: 20%;
+    min-width: 101px;
+    flex-grow: 1;
+
+    &__icon {
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+    }
+}
+
+
+.custom-form-field {
+    --mdc-outlined-text-field-outline-color: #F2F2F2 !important;
+    --mdc-outlined-text-field-focus-outline-color: #F2F2F2 !important;
+    --mdc-outlined-text-field-hover-outline-color: #F2F2F2 !important;
+    --mdc-outlined-text-field-focus-outline-width: 1px !important;
+    --mdc-outlined-text-field-outline-width: 0 !important;
+}
+
+//mat-datepicker input/calendar styles
+::ng-deep {
+    .mdc-text-field--outlined {
+        --mdc-outlined-text-field-focus-outline-width: 0 !important;
+        --mdc-outlined-text-field-outline-width: 0 !important;
+    }
+
+    .mat-form-field-outline, .no-border-field .mat-form-field-underline {
+        display: none; /* Убираем рамку */
+    }
+
+    .mdc-icon-button {
+        transform: scale(0.8);
+    }
+
+    .mat-datepicker-input, .mat-mdc-input-element, .mat-calendar, .mdc-button__label {
+        font-family: 'Inter', serif !important;
+        font-size: 13px !important;
+        line-height: 16px !important;
+        letter-spacing: -0.01em !important;
+        min-height: 18px;
+    }
+
+    .mat-datepicker-input::placeholder {
+        font-family: 'Inter', serif !important;
+        font-size: 14px !important;
+        line-height: 16px !important;
+        letter-spacing: -0.01em !important;
+        min-height: 18px;
+        color: var(--mdc-outlined-text-field-input-text-color) !important;
+    }
+
+    .mat-mdc-form-field-flex {
+        height: 36px; /* Высота всего поля */
+    }
+
+    .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+        height: 32px;
+        max-height: 32px;
+        min-height: 32px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .mat-icon-button:hover {
+        padding: 5px;
+    }
+
+
+    .mat-input.mat-input-element::placeholder {
+        font-size: 18px !important; /* Установите желаемый размер шрифта */
+    }
+
+    .mat-input-element::placeholder {
+        font-size: 18px !important;
+    }
+
+    .mat-datepicker-content .mat-calendar {
+        width: 225px !important;
+        height: 288px !important;
+    }
+
+    .mat-mdc-icon-button:hover .mat-mdc-button-persistent-ripple::before {
+        opacity: 1;
+        background-color: transparent !important;
+    }
+
+    .mat-mdc-button-persistent-ripple::before {
+        background-color: transparent !important;
+    }
+
+    .mat-mdc-button-persistent-ripple, .mat-mdc-button-ripple {
+        display: none !important;
+    }
+}
+
+// mat-calendar cells colors
+::ng-deep {
+    .mat-calendar-body-selected {
+        background-color: #416CFF !important;
+        color: white !important;
+    }
+
+    .mat-calendar-body-cell:not(.mat-calendar-body-active) .mat-calendar-body-cell-content {
+        background-color: #00000005 !important;
+        color: $text !important;
+        border: 1px solid #F2F2F2;
+    }
+
+    .mat-calendar-body-cell.mat-calendar-body-disabled .mat-calendar-body-cell-content {
+        background-color: #00000005 !important;
+        color: #BFBFBF !important;
+        border: none;
+    }
+
+    .mat-calendar-body-cell-content {
+        border-radius: 5px !important;
+    }
+
+    .mat-calendar-body-cell:hover:not(.mat-calendar-body-disabled) .mat-calendar-body-cell-content {
+        background-color: #EDF1FF !important;
+        border: 1px solid #4770FF4D;
+        color: #416CFF !important;
+    }
+
+    .mat-datepicker-content {
+        border-radius: 8px !important;
+    }
+
+    .mat-mdc-form-field-has-icon-suffix .mat-mdc-text-field-wrapper {
+        background-color: $island !important;
+        border-radius: 8px;
+        border: 1px solid $island-outline;
+    }
+
+	.error .mat-mdc-text-field-wrapper {
+		background-color: $lite-error !important;
+		border-radius: 8px;
+		border: 1px solid $error;
+	}
+
+    .mat-mdc-form-field:not(.mat-form-field-disabled) .mat-mdc-floating-label.mdc-floating-label {
+        color: $text !important;
+    }
+
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__trailing,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__leading,
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline .mdc-notched-outline__notch,
+    .mdc-text-field--outlined.mdc-text-field--disabled .mdc-notched-outline__trailing,
+    .mdc-text-field--outlined.mdc-text-field--disabled .mdc-notched-outline__leading,
+    .mdc-text-field--outlined.mdc-text-field--disabled .mdc-notched-outline__notch{
+        border-width: 0 !important;
+    }
+}
+
+ss-caption.error {
+	color: $error;
+}

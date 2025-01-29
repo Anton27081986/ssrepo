@@ -1,0 +1,12 @@
+<div class="wrapper">
+	<ss-card class="notice-dialog" padding="16px">
+		<ss-icon [name]="'notice' + type"></ss-icon>
+		<ss-headline size="h6" weight="semi-bold" *ngIf="header">{{ header }}</ss-headline>
+		<ss-text size="3" *ngIf="text">{{ text }}</ss-text>
+		<div class="notice-dialog__footer">
+			<snab-button [size]="Size.Large" *ngIf="buttonCancel" [type]="ButtonType.Outline" [text]="buttonCancel" (click)="close(false)"></snab-button>
+			<snab-button [size]="Size.Large" *ngIf="buttonOk" [text]="buttonOk" (click)="close(true)"></snab-button>
+		</div>
+	</ss-card>
+</div>
+

@@ -10,6 +10,8 @@
  * Do not edit the class manually.
  */
 
+import { IUserDto } from '@app/core/models/awards/user-dto';
+
 /**
  * Айтем лидера
  */
@@ -21,35 +23,7 @@ export interface IPartnerThanksItemDto {
 	/**
 	 * Ссылка на аватарку пользователя
 	 */
-	avatarUrl?: string | null;
-	/**
-	 * ФИО
-	 */
-	name?: string | null;
-	/**
-	 * Фамилия
-	 */
-	lastName?: string | null;
-	/**
-	 * Имя
-	 */
-	firstName?: string | null;
-	/**
-	 * Отчество
-	 */
-	surName?: string | null;
-	/**
-	 * Подразделение
-	 */
-	department?: string | null;
-	/**
-	 * Должность
-	 */
-	position?: string | null;
-	/**
-	 * На испытательном сроке
-	 */
-	onProbation?: boolean;
+	user: IUserDto;
 	/**
 	 * Количество спасибо партнеру
 	 */
@@ -57,5 +31,11 @@ export interface IPartnerThanksItemDto {
 	/**
 	 * Место в рейтинге
 	 */
-	place?: number;
+	place?: IPartnerPlaceEmblem;
+}
+
+export enum IPartnerPlaceEmblem {
+	gold = 1,
+	silver = 2,
+	cooper = 3,
 }

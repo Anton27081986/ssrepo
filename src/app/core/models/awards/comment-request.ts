@@ -18,8 +18,8 @@ export interface ICommentRequest {
 	/**
 	 * Айди объекта
 	 */
-	objectId?: number;
-	type?: IObjectType;
+	objectId: number;
+	type: IObjectType;
 	/**
 	 * Айди награды доступно только для Ген Директора
 	 */
@@ -29,4 +29,3 @@ export interface ICommentRequest {
 	 */
 	note?: string | null;
 }
-export namespace ICommentRequest {}

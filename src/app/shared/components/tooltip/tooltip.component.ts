@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, TemplateRef } from '@angular/core';
 import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 
 @Component({
@@ -13,4 +13,5 @@ export class TooltipComponent {
 	public left = 0;
 	public top = 0;
 	public visible = false;
+	public elemRef: TemplateRef<any> | null = null;
 }

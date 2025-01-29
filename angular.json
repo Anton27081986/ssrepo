@@ -39,6 +39,8 @@
 							"node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
                             "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
 							"src/styles.scss",
+							"node_modules/@front-components/components/lib/styles/custom-variables.scss",
+							"node_modules/@front-components/components/lib/styles/mixins/text.scss",
                             {
                                 "input": "src/styles/default.less",
                                 "bundleName": "default",

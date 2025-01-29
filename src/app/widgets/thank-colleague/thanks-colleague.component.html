@@ -1,0 +1,25 @@
+<ss-card class="thanks-colleague" padding="0">
+	<div class="header">
+		<ss-text size="1">Спасибо коллеге</ss-text>
+		<ss-button size="small" (click)="openAddThanks()">
+			<ss-icon [width]="'12'" [height]="'12'" [name]="'plus'"></ss-icon>Поблагодарить коллегу
+		</ss-button>
+	</div>
+	<ss-divider></ss-divider>
+	<div class="content">
+		<div class="content__scroll" (scrollend)="loadMoreThanks()" #thanks>
+			@if (isLoading()){
+				<ss-loader></ss-loader>
+			}
+			<ng-container *ngIf="thanksList()?.length !== 0; else noThanks">
+				<app-thanks-colleague-card *ngFor="let thank of thanksList()" [thankColleague]="thank" [isExtendedMode]="facade.isExtendedMode"></app-thanks-colleague-card>
+			</ng-container>
+			<ng-template #noThanks>
+				<ss-empty-placeholder>
+					<ss-icon name="empty"></ss-icon>
+					<ss-headline size="h3">Нет данных</ss-headline>
+				</ss-empty-placeholder>
+			</ng-template>
+		</div>
+	</div>
+</ss-card>

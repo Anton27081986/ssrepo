@@ -2,19 +2,17 @@ import { Injectable } from '@angular/core';
 import { ClientApiService } from '@app/core/api/client-api.service';
 import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { environment } from '@environments/environment.development';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { IClientsFilter } from '@app/core/models/clients-filter';
 import { IResponse } from '@app/core/utils/response';
 import { DictionaryApiService } from '@app/core/api/dictionary-api.service';
-import {IDictionaryItemDto} from "@app/core/models/company/dictionary-item-dto";
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class ClientsListFacadeService {
-
 	public statusOptions = [
 		{ id: 1, name: 'Новый' },
 		{ id: 2, name: 'Архивный' },

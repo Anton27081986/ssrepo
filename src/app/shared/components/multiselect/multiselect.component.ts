@@ -10,7 +10,7 @@ import {
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
-export type SearchType = 'user' | 'client' | 'tovs' | 'contractor';
+export type SearchType = 'user' | 'client' | 'tovs' | 'contractor' | 'contract' | 'tovGroups';
 
 @UntilDestroy()
 @Component({
@@ -35,6 +35,7 @@ export class MultiselectComponent {
 		e.stopPropagation();
 		this.isOptionsVisible = !this.isOptionsVisible;
 		this.changeDetector.detectChanges();
+
 		if (this.isOptionsVisible) {
 			this.optionsEl.nativeElement.scrollIntoView(false);
 		}

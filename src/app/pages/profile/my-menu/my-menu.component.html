@@ -57,7 +57,7 @@
 			<div class="category">
 				<div class="item" *ngFor="let favorite of favorIteMenu; index as i; trackBy: trackBy">
 					<span>{{ favorite.name }}</span>
-					<span nz-icon nzType="ss:close" (click)="deleteItemToFavoriteMenu(favorite, i);"></span>
+					<span (click)="deleteItemToFavoriteMenu(favorite, i);"></span>
 				</div>
 			</div>
 		</div>

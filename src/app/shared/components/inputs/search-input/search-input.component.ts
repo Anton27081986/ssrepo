@@ -1,17 +1,41 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
+import { BehaviorSubject } from 'rxjs';
+import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
 
 export type searchType =
 	| 'user'
+	| 'user-dictionary'
 	| 'subsector'
 	| 'tovs'
 	| 'region'
 	| 'contractor'
+	| 'payer-contractor'
 	| 'client'
 	| 'technologist'
+	| 'contract'
+	| 'global'
+	| 'products'
+	| 'services'
+	| 'cost-article'
+	| 'fa-objects'
+	| 'projects'
+	| 'depts'
+	| 'mfs-sections'
+	| 'bu-units'
+	| 'tov-units'
+	| 'tovGroups'
 	| undefined;
 
 @UntilDestroy()
@@ -35,23 +59,48 @@ export class SearchInputComponent {
 	@Input() onlyActive: boolean = false;
 
 	@Output() public select = new EventEmitter<any>();
+	@Output() public blurEvent = new EventEmitter<null>();
 
-	public found: IDictionaryItemDto[] = [];
+	@ViewChild('options') public options!: ElementRef;
+
+	public found$: BehaviorSubject<IDictionaryItemDto[]> = new BehaviorSubject<
+		IDictionaryItemDto[]
+	>([]);
 
 	public constructor(
 		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
 	) {}
 
-	protected onChange(query: string) {
-		if (query.length > 2) {
+	private showHiddenOptions() {
+		if (this.options) {
+			this.options.nativeElement.scrollIntoView(false);
+		}
+	}
+
+	protected onChange(value: string) {
+		const query = value.trim();
+
+		if (
+			query.length > 2 ||
+			(query.length && (this.searchType === 'tov-units' || this.searchType === 'bu-units'))
+		) {
 			switch (this.searchType) {
 				case 'user':
 					this.searchFacade
 						.getUsers(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'user-dictionary':
+					this.searchFacade
+						.getDictionaryUsers(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -60,7 +109,7 @@ export class SearchInputComponent {
 						.getSubSectors(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -69,28 +118,34 @@ export class SearchInputComponent {
 						.getRegions(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
 				case 'contractor':
-					if (query) {
-						this.searchFacade
-							.getContractor(query)
-							.pipe(untilDestroyed(this))
-							.subscribe(res => {
-								this.found = res.items;
-								this.ref.detectChanges();
-							});
-					}
-
+					this.searchFacade
+						.getContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'payer-contractor':
+					this.searchFacade
+						.getPayerContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
 					break;
 				case 'tovs':
 					this.searchFacade
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -99,8 +154,9 @@ export class SearchInputComponent {
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res;
+							this.found$.next(res.items);
 							this.ref.detectChanges();
+							this.showHiddenOptions();
 						});
 					break;
 				case 'client':
@@ -108,11 +164,125 @@ export class SearchInputComponent {
 						.getClients(query, this.onlyActive)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found = res.items;
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contract':
+					this.searchFacade
+						.getContracts(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'global':
+					this.searchFacade
+						.globalSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(this.mapIDictionaryItemDto(res.items));
+						});
+					break;
+				case 'products':
+					this.searchFacade
+						.getProductSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'services':
+					this.searchFacade
+						.getDictionaryServices(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'cost-article':
+					this.searchFacade
+						.getDictionaryCostArticles(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'fa-objects':
+					this.searchFacade
+						.getDictionaryFaObjects(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'projects':
+					this.searchFacade
+						.getDictionaryProjects(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'depts':
+					this.searchFacade
+						.getDictionaryDepts(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'mfs-sections':
+					this.searchFacade
+						.getDictionarySections(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'bu-units':
+					this.searchFacade
+						.getDictionaryBuUnits(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tov-units':
+					this.searchFacade
+						.getDictionaryTovUnits(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
 			}
 		}
+	}
+
+	public onBlur(): void {
+		if (!this.value.trim()) {
+			this.blurEvent.emit(null);
+		}
+	}
+
+	public mapIDictionaryItemDto(items: IGlobalSearchDto[]): IDictionaryItemDto[] {
+		return items.map(item => {
+			return {
+				id: 0,
+				name: item.title,
+				linkToDetail: item.linkToDetail,
+			};
+		});
 	}
 }

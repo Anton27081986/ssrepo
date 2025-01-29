@@ -13,12 +13,17 @@ input {
 	font-size: 14px;
 	line-height: 17px;
 	letter-spacing: -0.01em;
+	user-select: none;
 }
 
 input::-webkit-outer-spin-button,
  input::-webkit-inner-spin-button {
 	 -webkit-appearance: none;
  }
+
+.input-padding-disabled {
+	padding: 0 20px;
+}
 
 .input {
 	position: relative;
@@ -73,10 +78,6 @@ input.error:focus {
 
 ss-caption {
 	color: $lite-text;
-}
-
-ss-caption.error {
-	color: $error;
 }
 
 :host-context(.dark) input {

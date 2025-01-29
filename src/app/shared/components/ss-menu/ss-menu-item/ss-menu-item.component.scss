@@ -1,0 +1,9 @@
+.main-menu-item {
+	display: flex;
+	padding: 4px;
+	align-items: center;
+	&__link {
+		cursor: pointer;
+		font-size: 11px
+	}
+}

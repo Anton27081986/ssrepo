@@ -95,6 +95,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public onEditing(status: boolean) {
 		this.isEditing = status;
+
 		if (!status) {
 			this.clientCardListFacade.refreshClientCard();
 		}

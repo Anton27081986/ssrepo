@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { take } from 'rxjs';
-import { SocialLinksApiService } from '@app/core/api/social-links-api.service';
+import { UntilDestroy } from '@ngneat/until-destroy';
 
 @UntilDestroy()
 @Component({
@@ -11,18 +9,6 @@ import { SocialLinksApiService } from '@app/core/api/social-links-api.service';
 	styleUrls: ['./footer.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
 	protected readonly AppRoutes = AppRoutes;
-	public listIcon!: any;
-
-	public constructor(private readonly apiService: SocialLinksApiService) {}
-
-	public ngOnInit(): any {
-		this.apiService
-			.getSocialLink()
-			.pipe(take(1), untilDestroyed(this))
-			.subscribe(item => {
-				this.listIcon = item.items;
-			});
-	}
 }

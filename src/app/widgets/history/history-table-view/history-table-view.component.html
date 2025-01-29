@@ -1,0 +1,22 @@
+<div class="content">
+    @if (loading()) {
+        <ss-loader></ss-loader>
+    } @else {
+        <div class="table">
+            <ss-table
+                [head]="tableHead()"
+                [items]="historyItems()">
+            </ss-table>
+        </div>
+
+        <div class="pagination">
+            <ss-pagination
+                [total]="pageTotal()"
+                [pageIndex]="pageIndex()"
+                [pageSize]="pageSize()"
+                (changeIndex)="indexChanged($event)"
+            >
+            </ss-pagination>
+        </div>
+    }
+</div>

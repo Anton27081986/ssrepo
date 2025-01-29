@@ -2,22 +2,26 @@
 <div class="input">
 	<input type="text"
 		   [attr.value]="value"
-   	[placeholder]="placeholder"
-   	[value]="selectedItem?.name || ''"
-	[disabled]="disabled"
-	(input)="onChange($any($event.target).value)"
-	class="{{ error ? size + ' error' : size }}"
-	#input
+		   [placeholder]="placeholder"
+		   [value]="selectedItem?.name || ''"
+		   [disabled]="disabled"
+		   (input)="onChange($any($event.target).value)"
+           (blur)="onBlur()"
+		   (focusout)="input.value = selectedItem ? selectedItem.name || '' : ''"
+		   class="{{ error ? size + ' error' : size }}"
+		   #input
 	/>
-	<div class="search-result" *ngIf="found.length">
+	<div class="search-result" *ngIf="(found$ | async)?.length" #options>
 		<div class="separator"></div>
-		<ss-caption class="search-result-item" *ngFor="let item of found"
-		(click)="
+		<ss-caption class="search-result-item" *ngFor="let item of found$ | async"
+					(click)="
 			clear ? input.value = '' : input.value = item.name!;
-			found = [];
+			found$.next([]);
 			select.emit(item);
-		">{{ item.name }}</ss-caption>
+		">
+			<div [innerHTML]="item.name"></div>
+		</ss-caption>
 	</div>
 </div>
-<ss-caption class="error">{{ error }}</ss-caption>
-<div *ngIf="found.length" class="overflow" (click)="found = []"></div>
+<ss-caption size="2" class="error" color="error">{{ error }}</ss-caption>
+<div *ngIf="(found$ | async)?.length" class="overflow" (click)="found$.next([])"></div>

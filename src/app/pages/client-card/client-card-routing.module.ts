@@ -6,18 +6,10 @@ import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-
 import { ClientCardBirthdaysComponent } from '@app/pages/client-card/client-card-birthdays/client-card-birthdays.component';
 import { ClientRequestSamplesComponent } from '@app/pages/client-card/client-request-samples/client-request-samples.component';
 import { ClientCardNewProductsComponent } from '@app/pages/client-card/client-card-new-products/client-card-new-products.component';
-import {
-	ClientCardReturnRequestsComponent
-} from "@app/pages/client-card/client-card-return-requests/client-card-return-requests.component";
-import {
-	ClientCardLostProductsComponent
-} from "@app/pages/client-card/client-card-lost-products/client-card-lost-products.component";
-import {
-	ClientCardContractsComponent
-} from "@app/pages/client-card/client-card-contracts/client-card-contracts.component";
-import {
-	ClientCardBusinessTripsComponent
-} from "@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component";
+import { ClientCardReturnRequestsComponent } from '@app/pages/client-card/client-card-return-requests/client-card-return-requests.component';
+import { ClientCardLostProductsComponent } from '@app/pages/client-card/client-card-lost-products/client-card-lost-products.component';
+import { ClientCardContractsComponent } from '@app/pages/client-card/client-card-contracts/client-card-contracts.component';
+import { ClientCardBusinessTripsComponent } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component';
 
 const routes: Routes = [
 	{

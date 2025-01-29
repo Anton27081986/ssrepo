@@ -6,8 +6,7 @@ import {
 	ClientProposalsTypeDocuments,
 	IFilesProposals,
 } from '@app/core/models/client-proposails/client-offers';
-import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals-table-vgp/check-file-list-state.service';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 
 interface FileData {
 	files: IFilesProposals[];
@@ -30,6 +29,7 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 	protected readonly files$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<
 		IFilesProposals[]
 	>([]);
+
 	protected readonly type: ClientProposalsTypeDocuments = ClientProposalsTypeDocuments.rim;
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -52,11 +52,13 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 
 	ngOnInit() {
 		let files;
+
 		if (this.data.checkListService.checkFiles$.value.length) {
 			files = this.data.files.map(file => {
 				const findFile = this.data.checkListService.checkFiles$.value.find(
 					checkFiles => file.uniqId === checkFiles.uniqId,
 				);
+
 				file.checked = !!findFile;
 
 				return file;
@@ -84,5 +86,6 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 				return '';
 		}
 	}
+
 	protected readonly ClientProposalsTypeDocuments = ClientProposalsTypeDocuments;
 }

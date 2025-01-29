@@ -10,6 +10,8 @@
  * Do not edit the class manually.
  */
 
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+
 /**
  * Модель банера
  */
@@ -30,4 +32,6 @@ export interface IDevelopmentDto {
 	 *  Дата
 	 */
 	reportDate: string;
+	sale: string;
+	status: IDictionaryItemDto;
 }

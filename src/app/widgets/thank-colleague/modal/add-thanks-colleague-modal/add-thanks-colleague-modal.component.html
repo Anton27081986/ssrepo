@@ -1,0 +1,22 @@
+<div class="wrapper" (click)="close()">
+	<div class="add-victory-modal" (click)="$event.stopPropagation()">
+		<div class="add-victory-modal__header">
+			<ss-headline size="h6">Поблагодарить коллегу</ss-headline>
+			<ss-icon style="cursor: pointer;" name="close" (click)="close()"></ss-icon>
+		</div>
+		<ss-divider></ss-divider>
+		<div class="add-victory-modal__body">
+			<form [formGroup]="formGroup" class="add-victory-modal__form">
+				<div class="add-victory-modal__form-item">
+					<ss-chips-user-search placeholder="Введите ФИО" [selectedItems]="toUsers" label="Cотрудник"></ss-chips-user-search>
+				</div>
+				<div class="add-victory-modal__form-item">
+					<ss-textarea formControlName="note" size="large" label="Описание" placeholder="Введите текст"></ss-textarea>
+				</div>
+			</form>
+			<div class="add-victory-modal__footer">
+				<ss-button size="small" (click)="submit()">Сказать спасибо</ss-button>
+			</div>
+		</div>
+	</div>
+</div>

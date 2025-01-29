@@ -18,17 +18,17 @@ export interface IRankTypeListDto {
 	/**
 	 * Средняя оценка по всем рейтингам
 	 */
-	averageAll?: number;
+	averageAll: number;
 	/**
 	 * Количество участников во всех рейтингах
 	 */
-	membersTotal?: number;
+	membersTotal: number;
 	/**
 	 * Выбранный по умолчанию тип рейтинга
 	 */
-	rankTypeId?: number;
+	rankTypeId: number;
 	/**
 	 * Список элементов
 	 */
-	items?: IRankTypeItemDto[] | null;
+	items: IRankTypeItemDto[];
 }

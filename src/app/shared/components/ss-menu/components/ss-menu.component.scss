@@ -1,0 +1,43 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../styles/colors' as *;
+
+.main-menu {
+	position: absolute;
+	z-index: 10000;
+	background: $white;
+	border-radius: 16px;
+	padding: 16px;
+	left: 18%;
+	top: 176%;
+	box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.11);
+
+	&__content {
+		position: relative;
+		min-width: 350px;
+		min-height: 50px;
+		cursor: default;
+		column-count: 2;
+	}
+
+	&__link {
+		cursor: pointer;
+	}
+}
+ // Временное решение пока я не придумаю как прикрутить туда popup
+.layout {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	z-index: 5000;
+	left: 0;
+	top: 0;
+	cursor: default;
+}
+
+:host-context(.dark) .main-menu {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}
+
+

@@ -1,0 +1,28 @@
+<div class="rating-team-users">
+	<ss-text *ngIf="teamName()">{{ teamName() }}</ss-text>
+	<div class="rating-team-users__users">
+		<ng-container *ngIf="isLoading()">
+			<ss-loader></ss-loader>
+		</ng-container>
+		<ng-container *ngIf="!isLoading()">
+			<ng-container *ngIf="total() > 0;else noData">
+				<app-rating-team-users-card [teamUsers]="user" *ngFor="let user of users()"></app-rating-team-users-card>
+			</ng-container>
+			<ng-template #noData>
+				<ss-empty-placeholder class="empty">
+					<ss-icon name="empty"></ss-icon>
+					<ss-headline size="h4">Нет данных</ss-headline>
+				</ss-empty-placeholder>
+			</ng-template>
+		</ng-container>
+	</div>
+	<ss-pagination
+		[total]="total()"
+		[pageIndex]="pageIndex"
+		[pageSize]="pageSize"
+		(changeIndex)="nzPageIndexChange($event)"
+	>
+	</ss-pagination>
+</div>
+
+
