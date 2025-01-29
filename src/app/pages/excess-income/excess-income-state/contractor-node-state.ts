@@ -39,6 +39,8 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 				this.event$.next(
 					ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventExpended,
 				);
+			} else {
+				this.paginationControl.setValue(0, { emitEvent: false });
 			}
 		});
 

@@ -148,14 +148,15 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 						return NEVER;
 					}
 
+					if (!this.expended$.value) {
+						this.paginationControl.setValue(0, { emitEvent: false });
+						return NEVER;
+					}
+
 					if (
 						event === ExcessIncomeGroupEventEnum.excessIncomeGroupEventUpdate ||
 						event === ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency
 					) {
-						if (!this.expended$.value) {
-							return NEVER;
-						}
-
 						this.paginationControl.setValue(0, { emitEvent: false });
 					}
 
