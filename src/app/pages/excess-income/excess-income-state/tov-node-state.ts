@@ -213,6 +213,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		} else {
 			excessIncomePercentValue = this.nextParams.controls.excessIncomePercent.value;
 		}
+
 		this.updateTov(isCurrent, excessIncomePercentValue, null);
 	}
 
