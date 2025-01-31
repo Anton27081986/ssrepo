@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IAddressBookSearchUser } from '@app/core/models/address-book-search-user';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
@@ -8,6 +7,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {CommonModule, NgIf} from "@angular/common";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
 
 @Component({
 	selector: 'ss-address-book-card',

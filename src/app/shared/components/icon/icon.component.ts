@@ -8,8 +8,8 @@ import {
 	SimpleChanges,
 	ViewChild,
 } from '@angular/core';
-import { AppIcons } from '@app/core/icons';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {AppIcons} from "@app/core/icons";
 
 @Component({
 	selector: 'ss-icon',

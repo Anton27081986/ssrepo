@@ -16,7 +16,6 @@ import { ExcessIncomeTovGroupHistoryItem } from '@app/core/models/excess-income/
 import { IGroupPriceHistoryTableItem } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history-table-item';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {CommonModule, NgIf} from '@angular/common';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
@@ -25,6 +24,7 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
 
 interface IDialogData {
 	clientId?: number;

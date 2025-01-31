@@ -22,7 +22,7 @@
 			<p>Запрос на создание дружественной связи подтвержден</p>
 		</div>
 		<div>
-			<span class="accept-icon" nz-icon [nzType]="'ss:accept'"></span>
+			<ss-icon class="accept-icon" [name]="'accept'"></ss-icon>
 		</div>
 	</div>
 	<div class="text" *ngIf="!acceptClick && cancelClick">
@@ -30,7 +30,7 @@
 			<p>Запрос на создание дружественной связи отклонен</p>
 		</div>
 		<div>
-			<span class="cancel-icon" nz-icon [nzType]="'ss:cancel'"></span>
+			<ss-icon class="cancel-icon" [name]="'cancel'"></ss-icon>
 		</div>
 	</div>
 	<div>
@@ -52,15 +52,15 @@
 				</div>
 				<ng-container [ngSwitch]="user?.equType">
 					<div class="connection-type" *ngSwitchCase="1">
-						<span class="connect-icon" nz-icon [nzType]="'ss:oneConnectIn'"></span>
+						<ss-icon class="connect-icon" [name]="'oneConnectIn'"></ss-icon>
 						<span>Односторонняя связь (от имени друга)</span>
 					</div>
 					<div class="connection-type" *ngSwitchCase="2">
-						<span class="connect-icon" nz-icon [nzType]="'ss:oneConnectOut'"></span>
+						<ss-icon class="connect-icon" [name]="'oneConnectOut'"></ss-icon>
 						<span>Односторонняя связь (от моего имени)</span>
 					</div>
 					<div class="connection-type" *ngSwitchCase="3">
-						<span class="connect-icon" nz-icon [nzType]="'ss:twoWayConnect'"></span>
+						<ss-icon class="connect-icon" [name]="'twoWayConnect'"></ss-icon>
 						<span>Двусторонняя связь</span>
 					</div>
 				</ng-container>

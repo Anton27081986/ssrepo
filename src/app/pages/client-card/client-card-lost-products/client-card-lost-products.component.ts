@@ -12,9 +12,9 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {CommonModule, NgIf} from "@angular/common";
-import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -29,15 +29,15 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 		HeadlineComponent,
 		TableComponent,
 		NgIf,
-		NzPaginationComponent,
 		EmptyPlaceholderComponent,
-		TextComponent
+		TextComponent,
+		PaginationComponent
 	],
 	standalone: true
 })
 export class ClientCardLostProductsComponent implements OnInit {
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public tableItems: ITableItem[] = [];

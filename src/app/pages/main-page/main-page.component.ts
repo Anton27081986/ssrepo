@@ -3,18 +3,18 @@ import { first } from 'rxjs';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { environment } from '@environments/environment';
-import {SliderComponent} from "@app/widgets/slider/slider.component";
+import {BannerComponent} from "@app/widgets/banner/banner.component";
 import {AuctionSalesComponent} from "@app/widgets/auction-sales/auction-sales.component";
-import {VictoryComponent} from "@app/components/victory/victory.component";
 import {ThanksColleagueComponent} from "@app/widgets/thank-colleague/thanks-colleague.component";
-import {ThanksPartnerComponent} from "@app/components/thank-partner/thanks-partner.component";
-import {ExchangeRatesComponent} from "@app/components/exchange-rates/exchange-rates.component";
 import {AddressBookComponent} from "@app/widgets/address-book/address-book.component";
-import {BirthdayComponent} from "@app/components/birthday/birthday.component";
-import {TransportComponent} from "@app/components/transport/transport.component";
-import {RatingComponent} from "@app/components/rating/rating.component";
+import {BirthdayComponent} from "@app/widgets/birthday/birthday.component";
 import {CommonModule, NgIf} from "@angular/common";
-import {UserCardComponent} from "@app/components/user-card/user-card.component";
+import {ExchangeRatesComponent} from "@app/widgets/exchange-rates/exchange-rates.component";
+import {RatingComponent} from "@app/widgets/rating/rating.component";
+import {VictoryComponent} from "@app/widgets/victory/victory.component";
+import {ThanksPartnerComponent} from "@app/widgets/thank-partner/thanks-partner.component";
+import {TransportComponent} from "@app/widgets/transport/transport.component";
+import {UserCardComponent} from "@app/shared/components/user-card/user-card.component";
 
 @UntilDestroy()
 @Component({
@@ -25,7 +25,7 @@ import {UserCardComponent} from "@app/components/user-card/user-card.component";
 	imports: [
 		CommonModule,
 		UserCardComponent,
-		SliderComponent,
+		BannerComponent,
 		AuctionSalesComponent,
 		VictoryComponent,
 		ThanksColleagueComponent,
@@ -35,7 +35,8 @@ import {UserCardComponent} from "@app/components/user-card/user-card.component";
 		BirthdayComponent,
 		TransportComponent,
 		RatingComponent,
-		NgIf
+		NgIf,
+		RatingComponent
 	],
 	standalone: true
 })

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NotificationToastService, IToast } from '@app/core/services/notification-toast.service';
 import { Observable } from 'rxjs';
-import {NoticeComponent} from "@app/components/notice/notice.component";
 import {AsyncPipe} from "@angular/common";
+import {NoticeComponent} from "@app/shared/components/notice/notice.component";
 
 @Component({
 	selector: 'ss-notification-toast',

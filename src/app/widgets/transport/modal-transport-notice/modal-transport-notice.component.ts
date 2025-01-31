@@ -1,0 +1,48 @@
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ModalRef } from '@app/core/modal/modal.ref';
+import { SSForm } from '@app/core/models/form';
+import { dateFromLessDateTo } from '@app/core/validators/date-from-less-date-to';
+import {
+	ModalTransportNoticeImports
+} from "@app/widgets/transport/modal-transport-notice/modal-transport-notice.imports";
+
+interface INoteForm {
+	dateFrom: Date | null;
+	dateTo: Date | null;
+	note: string;
+}
+
+@Component({
+	selector: 'app-modal-transport-notice',
+	templateUrl: './modal-transport-notice.component.html',
+	styleUrls: ['./modal-transport-notice.component.scss'],
+	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: ModalTransportNoticeImports,
+})
+export class ModalTransportNoticeComponent {
+	private readonly modalRef = inject(ModalRef);
+	protected noteForm = new FormGroup<SSForm<INoteForm>>(
+		{
+			dateFrom: new FormControl<string>('', {
+				nonNullable: true,
+				validators: Validators.required,
+			}),
+			dateTo: new FormControl<string>('', {
+				nonNullable: true,
+				validators: Validators.required,
+			}),
+			note: new FormControl<string>('', [Validators.required]),
+		},
+		{ validators: dateFromLessDateTo('dateFrom', 'dateTo') },
+	);
+
+	public saveAndCloseModal(): void {
+		this.modalRef.close(this.noteForm.value);
+	}
+
+	public close(): void {
+		this.modalRef.close();
+	}
+}

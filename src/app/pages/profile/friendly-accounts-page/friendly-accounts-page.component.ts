@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {NzModalComponent, NzModalContentDirective, NzModalFooterDirective, NzModalService} from 'ng-zorro-antd/modal';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
@@ -15,10 +14,9 @@ import {FilterInputComponent} from "@app/shared/components/inputs/filter-input/f
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {CardComponent} from "@app/shared/components/card/card.component";
 import {CommonModule, NgForOf, NgIf, NgStyle, NgSwitch, NgSwitchCase} from "@angular/common";
-import {NzIconDirective} from "ng-zorro-antd/icon";
 import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
-import {NzRadioComponent, NzRadioGroupComponent} from "ng-zorro-antd/radio";
-import {NzButtonComponent} from "ng-zorro-antd/button";
+import {ModalService} from "@app/core/modal/modal.service";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
@@ -33,18 +31,12 @@ import {NzButtonComponent} from "ng-zorro-antd/button";
 		CardComponent,
 		NgIf,
 		NgForOf,
-		NzIconDirective,
 		NgSwitch,
 		NgSwitchCase,
-		NzModalComponent,
-		NzModalContentDirective,
 		ChipsUserSearchComponent,
-		NzRadioGroupComponent,
 		FormsModule,
-		NzRadioComponent,
-		NzModalFooterDirective,
 		NgStyle,
-		NzButtonComponent
+		IconComponent,
 	],
 	standalone: true
 })
@@ -66,7 +58,7 @@ export class FriendlyAccountsPageComponent implements OnInit {
 	public constructor(
 		protected readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,
 		private readonly formBuilder: FormBuilder,
-		public modal: NzModalService,
+		public modal: ModalService,
 		private readonly cd: ChangeDetectorRef,
 	) {
 		this.friendlyAccountsFacadeService.friendlyAccounts$

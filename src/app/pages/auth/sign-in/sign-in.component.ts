@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { first, of, tap } from 'rxjs';
@@ -12,6 +12,7 @@ import {InputComponent} from "@app/shared/components/inputs/input/input.componen
 import {PasswordComponent} from "@app/shared/components/_deprecated/password/password.component";
 import {LinkComponent} from "@app/shared/components/link/link.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CommonModule} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -20,8 +21,10 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 	styleUrls: ['./sign-in.component.scss'],
 	changeDetection: ChangeDetectionStrategy.Default,
 	imports: [
+		CommonModule,
 		HeadlineComponent,
 		ReactiveFormsModule,
+		FormsModule,
 		InputComponent,
 		PasswordComponent,
 		LinkComponent,
@@ -80,7 +83,7 @@ export class SignInComponent implements OnInit {
 					return this.profileService.getTheme().pipe(
 						tap(value => {
 							if (value.isDarkTheme) {
-								this.themeService.setDarkTheme().then();
+								this.themeService.setDarkTheme();
 							}
 						}),
 						catchError(() => {

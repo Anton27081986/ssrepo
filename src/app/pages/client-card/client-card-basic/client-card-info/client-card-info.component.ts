@@ -6,7 +6,6 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -24,6 +23,7 @@ import {SearchInputComponent} from "@app/shared/components/inputs/search-input/s
 import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {ReplacePipe} from "@app/shared/pipe/replace.pipe";
+import {NotificationToastService} from "@app/core/services/notification-toast.service";
 
 @UntilDestroy()
 @Component({
@@ -82,7 +82,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly notificationService: NzMessageService,
+		private readonly notificationService: NotificationToastService,
 		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.client$ = this.clientCardListFacade.client$;
@@ -159,7 +159,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 		this.infoForm.controls.comment.setValue(null);
 
-		this.notificationService.success('Сохранено');
+		this.notificationService.addToast('Сохранено', 'ok');
 		this.isEditing = false;
 	}
 

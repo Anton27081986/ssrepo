@@ -10,7 +10,6 @@ import {
 	fromPickerRangeDateToIso,
 } from '@app/shared/pipe/from-picker-date-to-iso';
 import { ModalService } from '@app/core/modal/modal.service';
-import { ConfirmationModalComponent } from '@app/components/modal/confirmation-modal/confirmation-modal.component';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import {CardComponent} from "@app/shared/components/card/card.component";
@@ -24,6 +23,7 @@ import {TextareaComponent} from "@app/shared/components/textarea/textarea.compon
 import {DatepickerInputComponent} from "@app/shared/components/inputs/datepicker-input/datepicker-input.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {CommonModule} from "@angular/common";
+import {ConfirmationModalComponent} from "@app/shared/components/confirmation-modal/confirmation-modal.component";
 
 @UntilDestroy()
 @Component({

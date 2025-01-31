@@ -5,10 +5,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
-import {NzFormControlComponent, NzFormDirective, NzFormItemComponent} from "ng-zorro-antd/form";
-import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
-import {NzIconDirective} from "ng-zorro-antd/icon";
 import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
@@ -19,14 +17,9 @@ import {CommonModule, NgForOf, NgIf} from "@angular/common";
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
-		NzFormItemComponent,
-		NzFormControlComponent,
-		NzInputGroupComponent,
-		NzInputDirective,
-		NzIconDirective,
 		NgIf,
 		NgForOf,
-		NzFormDirective
+		IconComponent,
 	],
 	standalone: true
 })

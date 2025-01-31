@@ -15,7 +15,6 @@ import { TableState } from '@app/shared/components/table/table-state';
 import { IGroupPriceHistoryTableItem } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history-table-item';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {CommonModule, NgIf} from '@angular/common';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { ExcessIncomeTov } from '@app/core/models/excess-income/excess-income-tov-from-backend';
@@ -25,6 +24,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
 
 interface IDialogData {
 	tov: ExcessIncomeTov;

@@ -1,0 +1,76 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../../styles/colors' as *;
+
+:host ss-card {
+	border: none;
+}
+
+.profile-popup {
+	position: absolute;
+	width: 360px;
+	box-shadow: 4px 4px 10px #00000014;
+	background-color: $white;
+	border-radius: 16px;
+	z-index: 1000;
+	right: 0;
+	padding: 16px;
+	top: 8px;
+
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__manager-buttons {
+		display: flex;
+		gap: 12px;
+		justify-content: space-between;
+	}
+
+	&__return-in-personal-user {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+	}
+
+	&__return-personal-info {
+		display: flex;
+		gap: 10px;
+	}
+
+	&__list-friends {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		max-height: calc(100vh - 400px);
+		overflow-y: auto;
+	}
+
+	&__list-friend-description {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		justify-content: space-between;
+	}
+
+	&__accordion {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__caption {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+:host-context(.dark) .profile-popup {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}
+
+
+

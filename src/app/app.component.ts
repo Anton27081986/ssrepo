@@ -1,26 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import {BrowserModule, Title} from '@angular/platform-browser';
+import { Title} from '@angular/platform-browser';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUser } from '@auth/models/user';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
-import { IconsService } from '@app/core/services/icons.service';
 import { animate, query, style, transition, trigger } from '@angular/animations';
 import { RouterOutlet } from '@angular/router';
 import {NotificationToastComponent} from "@app/widgets/notification-toast/notification-toast.component";
-import {UserCardComponent} from "@app/components/user-card/user-card.component";
-import {EmptyLayoutComponent} from "@app/shared/layouts/empty-layout/empty-layout.component";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {NzCardModule} from "ng-zorro-antd/card";
-import {NzFormModule} from "ng-zorro-antd/form";
-import {NzInputModule} from "ng-zorro-antd/input";
-import {NzButtonModule} from "ng-zorro-antd/button";
-import {NzIconModule} from "ng-zorro-antd/icon";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
 import {CommonModule} from "@angular/common";
 
 @UntilDestroy()
@@ -55,7 +43,6 @@ export class AppComponent implements OnInit {
 		private readonly titleService: Title,
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
-		private readonly iconsService: IconsService,
 	) {
 		this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
 	}
@@ -73,14 +60,14 @@ export class AppComponent implements OnInit {
 							.updateTheme(true)
 							.pipe(untilDestroyed(this))
 							.subscribe(_ => {
-								this.themeService.setDarkTheme().then();
+								this.themeService.setDarkTheme();
 							});
 					} else {
 						this.profileService
 							.updateTheme(false)
 							.pipe(untilDestroyed(this))
 							.subscribe(_ => {
-								this.themeService.setDefaultTheme().then();
+								this.themeService.setDefaultTheme();
 							});
 					}
 				}),
