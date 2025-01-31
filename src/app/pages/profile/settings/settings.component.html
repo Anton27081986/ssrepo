@@ -7,11 +7,11 @@
 			<div class="personal">
 				<div class="img">
 					<ng-container>
-						<img src="{{ profileData?.avatarUrl }}" alt="user" />
+						<img ngSrc="{{ profileData?.avatarUrl }}" alt="user" />
 					</ng-container>
 				</div>
 				<div class="m-t-8">
-					<button nz-button class="download-button" [nzType]="'primary'">Сменить</button>
+					<snab-button [type]="ButtonType.Primary" text="Сменить"></snab-button>
 				</div>
 			</div>
 		</div>
@@ -87,7 +87,7 @@
 		</div>
 
 		<ng-template #prefixUser>
-			<i nz-icon nzType="user"></i>
+			<snab-icon [icon]="IconType.Profile"></snab-icon>
 		</ng-template>
 
 	</div>

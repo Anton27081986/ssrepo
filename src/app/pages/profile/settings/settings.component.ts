@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { Observable } from 'rxjs';
-import {AsyncPipe, CommonModule, DatePipe} from "@angular/common";
-import {NzButtonComponent} from "ng-zorro-antd/button";
-import {NzIconDirective} from "ng-zorro-antd/icon";
+import {AsyncPipe, CommonModule, DatePipe, NgOptimizedImage} from "@angular/common";
+import {ButtonComponent, ButtonType, IconComponent, IconType} from "@front-components/components";
 
 @Component({
 	selector: 'app-settings',
@@ -15,9 +14,10 @@ import {NzIconDirective} from "ng-zorro-antd/icon";
 	imports: [
 		CommonModule,
 		AsyncPipe,
-		NzButtonComponent,
 		DatePipe,
-		NzIconDirective
+		ButtonComponent,
+		IconComponent,
+		NgOptimizedImage
 	],
 	standalone: true
 })
@@ -39,4 +39,7 @@ export class SettingsComponent implements OnInit {
 
 		this.userProfile$ = this.userStateService.userProfile$;
 	}
+
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
 }

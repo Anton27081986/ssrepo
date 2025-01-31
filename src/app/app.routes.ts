@@ -17,7 +17,6 @@ import {ChangePasswordComponent} from "@app/pages/profile/change-password/change
 import {MyMenuComponent} from "@app/pages/profile/my-menu/my-menu.component";
 import {OrderWidgetsComponent} from "@app/pages/profile/order-widgets/order-widgets.component";
 import {NotificationsComponent} from "@app/pages/profile/notifications/notifications.component";
-import {RecoveryPasswordComponent} from "@app/pages/profile/recovery-password/recovery-password.component";
 import {
 	FriendlyAccountsPageComponent
 } from "@app/pages/profile/friendly-accounts-page/friendly-accounts-page.component";
@@ -131,11 +130,11 @@ export const routes: Routes = [
 								component: NotificationsComponent,
 								title: 'Основная информация',
 							},
-							{
-								path: 'recovery-password',
-								component: RecoveryPasswordComponent,
-								title: 'Основная информация',
-							},
+							// {
+							// 	path: 'recovery-password',
+							// 	component: RecoveryPasswordComponent,
+							// 	title: 'Основная информация',
+							// },
 						]
 					},
 					{

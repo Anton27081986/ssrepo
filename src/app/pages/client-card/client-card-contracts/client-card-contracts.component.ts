@@ -12,9 +12,9 @@ import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {CommonModule, NgIf} from "@angular/common";
-import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -30,16 +30,16 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 		IconComponent,
 		NgIf,
 		TableComponent,
-		NzPaginationComponent,
 		EmptyPlaceholderComponent,
 		TextComponent,
-		FiltersComponent
+		FiltersComponent,
+		PaginationComponent
 	],
 	standalone: true
 })
 export class ClientCardContractsComponent implements OnInit {
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;

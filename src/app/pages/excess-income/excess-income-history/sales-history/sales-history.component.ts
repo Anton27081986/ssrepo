@@ -13,7 +13,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import {CommonModule, NgIf} from '@angular/common';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ExcessIncomeSalesHistory } from '@app/core/models/excess-income/excess-income-sales-history';
 import { ISalesHistoryTableItem } from '@app/pages/excess-income/excess-income-history/sales-history/sales-history-table-item';
@@ -25,6 +24,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
 
 interface IDialogData {
 	clientId?: number | null;

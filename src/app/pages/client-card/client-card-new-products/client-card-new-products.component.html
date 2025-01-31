@@ -24,15 +24,7 @@
 				</ss-table>
 			</div>
 			<div class="new-products-content-pagination pagination">
-				<nz-pagination
-					[nzTotal]="total"
-					[nzPageIndex]="pageIndex"
-					[nzPageSize]="pageSize"
-					(nzPageIndexChange)="nzPageIndexChange($event)"
-					(nzPageSizeChange)="pageSize = $event"
-					[nzResponsive]="true"
-					[nzHideOnSinglePage]="true">
-				</nz-pagination>
+				<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 			</div>
 		</div>
 		<div class="new-products-content" *ngIf="tableState === TableState.Empty">

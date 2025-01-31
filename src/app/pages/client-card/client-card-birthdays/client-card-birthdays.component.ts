@@ -15,7 +15,7 @@ import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-
 import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {TagComponent} from "@app/shared/components/tag/tag.component";
-import {NzPaginationComponent} from "ng-zorro-antd/pagination";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -34,7 +34,7 @@ import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 		TextComponent,
 		TagComponent,
 		DatePipe,
-		NzPaginationComponent
+		PaginationComponent
 	],
 	standalone: true
 })

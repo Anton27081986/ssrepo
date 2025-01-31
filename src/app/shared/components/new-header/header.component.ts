@@ -13,14 +13,14 @@ import {ModalService} from "@app/core/modal/modal.service";
 import {ChatBotComponent} from "@app/widgets/chat-bot/chat-bot.component";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {MainMenuComponent} from "@app/components/main-menu/main-menu.component";
 import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {NotificationComponent} from "@app/components/notification/notification.component";
 import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {ProfilePopupComponent} from "@app/components/profile-popup/profile-popup.component";
 import {AsyncPipe, CommonModule} from "@angular/common";
-import {NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {MainMenuComponent} from "@app/shared/components/main-menu/main-menu.component";
+import {NotificationComponent} from "@app/shared/components/notification/notification.component";
+import {ProfilePopupComponent} from "@app/shared/components/profile-popup/profile-popup.component";
+import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
 
 @Component({
 	selector: 'app-header',
@@ -37,10 +37,9 @@ import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive
 		AvatarComponent,
 		ProfilePopupComponent,
 		AsyncPipe,
-		NzDropDownDirective,
-		NzDropdownMenuComponent,
 		TooltipDirective,
-		RouterLink
+		RouterLink,
+		DropdownButtonComponent
 	],
 	standalone: true
 })

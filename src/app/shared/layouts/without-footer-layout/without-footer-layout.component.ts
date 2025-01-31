@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {HeaderComponent} from "@app/shared/components/new-header/header.component";
 import {RouterOutlet} from "@angular/router";
-import {NzContentComponent, NzLayoutComponent} from "ng-zorro-antd/layout";
 
 @Component({
 	selector: 'app-without-footer-layout',
@@ -10,9 +9,7 @@ import {NzContentComponent, NzLayoutComponent} from "ng-zorro-antd/layout";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		HeaderComponent,
-		RouterOutlet,
-		NzContentComponent,
-		NzLayoutComponent
+		RouterOutlet
 	],
 	standalone: true
 })

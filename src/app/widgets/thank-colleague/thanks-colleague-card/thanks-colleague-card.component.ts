@@ -1,10 +1,8 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { IObjectType } from '@app/core/models/awards/object-type';
-import { VictoryService } from '@app/components/victory/victory.service';
 import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ThanksColleagueModalComponent } from '@app/widgets/thank-colleague/modal/thanks-colleague-modal/thanks-colleague-modal.component';
@@ -15,6 +13,8 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {VictoryService} from "@app/widgets/victory/victory.service";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
 
 @UntilDestroy()
 @Component({

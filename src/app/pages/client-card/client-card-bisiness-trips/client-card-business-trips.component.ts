@@ -12,9 +12,9 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {NzPaginationComponent} from "ng-zorro-antd/pagination";
 import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -30,9 +30,9 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 		HeadlineComponent,
 		AsyncPipe,
 		TableComponent,
-		NzPaginationComponent,
 		EmptyPlaceholderComponent,
-		TextComponent
+		TextComponent,
+		PaginationComponent
 	],
 	standalone: true
 })
@@ -40,7 +40,7 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 	public businessTrips$: Observable<IResponse<IBusinessTripsDto>>;
 
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;

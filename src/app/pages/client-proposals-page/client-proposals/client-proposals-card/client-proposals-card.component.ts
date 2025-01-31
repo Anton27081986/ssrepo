@@ -1,6 +1,5 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject, map, Observable, of, tap, combineLatest } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
@@ -25,11 +24,9 @@ import {
 } from "@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.component";
 import {MultiselectV2Component} from "@app/shared/components/multiselect-v2/multiselect-v2.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {NoticeComponent} from "@app/components/notice/notice.component";
 import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {FilePickerComponent} from "@app/shared/components/file-picker/file-picker.component";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
-import {NzDropDownDirective, NzDropdownMenuComponent} from "ng-zorro-antd/dropdown";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {
 	ClientProposalsTableVgpComponent
@@ -37,6 +34,8 @@ import {
 import {
 	SettingsViewColumnComponent
 } from "@app/pages/client-proposals-page/settings-view-column/settings-view-column.component";
+import {NoticeComponent} from "@app/shared/components/notice/notice.component";
+import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -59,16 +58,15 @@ export interface IClientProposalsCriteriaForm {
 		MultiselectAutocompleteV2Component,
 		MultiselectV2Component,
 		ButtonComponent,
-		NoticeComponent,
 		AsyncPipe,
 		NgIf,
 		FilePickerComponent,
 		TooltipDirective,
-		NzDropDownDirective,
 		IconComponent,
 		ClientProposalsTableVgpComponent,
-		NzDropdownMenuComponent,
-		SettingsViewColumnComponent
+		SettingsViewColumnComponent,
+		NoticeComponent,
+		DropdownButtonComponent
 	],
 	standalone: true
 })

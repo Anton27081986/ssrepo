@@ -74,11 +74,10 @@
 				<ss-button *ngIf="offers.length > 0 && (canTakeWork | async)" size="small" type="warning"
 						   (click)="openAtWorkModal(offers)">Взять в работу
 				</ss-button>
-				<ss-button *ngIf="offers.length > 0" size="small" [type]="'outline'" nz-dropdown nzTrigger="click"
-						   [nzDropdownMenu]="settingsColumn">
-					Отображение столбцов
-					<ss-icon [@rotate]="expandedPopoverCheckColumn$ | async" (click)="expandedColumnPopover()" height="12" name="chevron" class="ss-file-picker__icon-toggle"></ss-icon>
-				</ss-button>
+				<ss-dropdown-button *ngIf="offers.length > 0" [title]="'Отображение столбцов'">
+					<ss-settings-view-column></ss-settings-view-column>
+
+				</ss-dropdown-button>
 			</div>
 		</ng-container>
 	</div>
@@ -89,6 +88,3 @@
 									[clientOffers]="clientOffers$ | async"></app-client-proposals-table-vgp>
 </div>
 
-<nz-dropdown-menu #settingsColumn="nzDropdownMenu">
-	<ss-settings-view-column></ss-settings-view-column>
-</nz-dropdown-menu>
