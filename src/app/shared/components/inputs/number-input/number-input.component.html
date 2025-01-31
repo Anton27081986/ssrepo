@@ -11,10 +11,14 @@
         [maxLength]="maxlength()"
         (input)="onInput($event)"
     />
-<div class="input__icon" *ngIf="!disabled()">
-	<ss-icon (click)="valueUp()" [name]="'chevron'"></ss-icon>
-	<ss-icon *ngIf="(value$ | async)" (click)="valueDown()" [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'"></ss-icon>
-</div>
+	@if (!disabled()) {
+		<div class="input__icon">
+			<ss-icon (click)="valueUp()" [name]="'chevron'"></ss-icon>
+			@if (value$ | async) {
+				<ss-icon (click)="valueDown()" [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'"></ss-icon>
+			}
+		</div>
+	}
 
 </div>
 

@@ -1,0 +1,43 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../../styles/colors' as *;
+
+.profile-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	&__info {
+		display: flex;
+		gap: 12px;
+		align-items: center;
+	}
+
+	&__block-info {
+		display: flex;
+		flex-direction: column;
+		min-width: 148px;
+	}
+	&__description {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__contacts {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	&__item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&__item-description {
+		display: flex;
+		gap: 4px;
+	}
+}
+

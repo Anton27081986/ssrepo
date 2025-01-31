@@ -11,10 +11,20 @@ import {
 } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rotateAnimation } from '@app/core/animations';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe, CommonModule} from "@angular/common";
+import {
+	MultiselectChipsV2Component
+} from "@app/shared/components/multiselect-v2/multiselect-chips-v2/multiselect-chips-v2.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {
+	MultiselectOptionV2Component
+} from "@app/shared/components/multiselect-v2/multiselect-option-v2/multiselect-option-v2.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
 
 @UntilDestroy()
 @Component({
@@ -30,6 +40,17 @@ import { rotateAnimation } from '@app/core/animations';
 			multi: true,
 		},
 	],
+	imports: [
+		CommonModule,
+		CaptionComponent,
+		AsyncPipe,
+		ReactiveFormsModule,
+		MultiselectChipsV2Component,
+		IconComponent,
+		MultiselectOptionV2Component,
+		SsDividerComponent
+	],
+	standalone: true
 })
 export class MultiselectAutocompleteV2Component implements OnChanges, OnInit, ControlValueAccessor {
 	@Input() public label: string | undefined;

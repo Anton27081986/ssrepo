@@ -1,9 +1,23 @@
 import { Component, Input } from '@angular/core';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CommonModule, NgClass} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-card-dropdown',
 	templateUrl: './card-dropdown.component.html',
 	styleUrls: ['./card-dropdown.component.scss'],
+	imports: [
+		CommonModule,
+		CardComponent,
+		ButtonComponent,
+		NgClass,
+		TextComponent,
+		IconComponent
+	],
+	standalone: true
 })
 export class CardDropdownComponent {
 	@Input() public title!: string;

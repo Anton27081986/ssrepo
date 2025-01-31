@@ -4,11 +4,22 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IUserProfile } from '@app/core/models/user-profile';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {AsyncPipe, CommonModule, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
+import {TagComponent} from "@app/shared/components/tag/tag.component";
+import {SelectComponent} from "@app/shared/components/select/select.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
+import {NotificationToastService} from "@app/core/services/notification-toast.service";
 
 enum OperationStatuses {
 	Add,
@@ -21,6 +32,25 @@ enum OperationStatuses {
 	selector: 'ss-client-card-managers',
 	templateUrl: './client-card-managers.component.html',
 	styleUrls: ['./client-card-managers.component.scss'],
+	imports: [
+		CommonModule,
+		CaptionComponent,
+		TextComponent,
+		LoaderComponent,
+		HeadlineComponent,
+		AsyncPipe,
+		NgIf,
+		IconComponent,
+		AvatarComponent,
+		TagComponent,
+		DatePipe,
+		SelectComponent,
+		SearchInputComponent,
+		NgForOf,
+		NgClass,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class ClientCardManagersComponent implements OnInit {
 	public managers$: Observable<IManagerItemDto[] | null>;
@@ -44,7 +74,7 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly notificationService: NzMessageService,
+		private readonly notificationService: NotificationToastService,
 		private readonly userFacadeService: UserFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly modalService: ModalService,
@@ -124,7 +154,7 @@ export class ClientCardManagersComponent implements OnInit {
 
 		this.clientCardListFacade.getManagers();
 
-		this.notificationService.success('Сохранено');
+		this.notificationService.addToast('Сохранено', 'ok');
 		this.isEditing = false;
 	}
 

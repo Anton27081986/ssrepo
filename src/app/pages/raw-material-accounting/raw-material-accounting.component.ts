@@ -1,21 +1,47 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { Observable } from 'rxjs';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ContractInfoComponent } from '@app/pages/raw-material-accounting/modals/contract-info/contract-info.component';
 import { ContractNewComponent } from '@app/pages/raw-material-accounting/modals/contract-new/contract-new.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {AsyncPipe, CommonModule} from "@angular/common";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-raw-material-accounting',
 	templateUrl: './raw-material-accounting.component.html',
 	styleUrls: ['./raw-material-accounting.component.scss'],
+	imports: [
+		CommonModule,
+		LoaderComponent,
+		FiltersComponent,
+		CardComponent,
+		EmptyDataPageComponent,
+		PaginationComponent,
+		TableComponent,
+		IconComponent,
+		ButtonComponent,
+		CaptionComponent,
+		TooltipMenuComponent,
+		HeadlineComponent,
+		AsyncPipe
+	],
+	standalone: true,
 })
 export class RawMaterialAccountingComponent implements OnInit {
 	public isLoading$: Observable<boolean>;

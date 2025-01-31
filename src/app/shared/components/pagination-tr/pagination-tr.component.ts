@@ -18,8 +18,6 @@ import {
 	TextType,
 } from '@front-components/components';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { NgIf } from '@angular/common';
-import { TextModule } from '@app/shared/components/typography/text/text.module';
 
 @UntilDestroy()
 @Component({
@@ -29,7 +27,7 @@ import { TextModule } from '@app/shared/components/typography/text/text.module';
 	standalone: true,
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [TextComponent, NgIf, TextModule, ButtonComponent],
+	imports: [TextComponent, ButtonComponent],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,

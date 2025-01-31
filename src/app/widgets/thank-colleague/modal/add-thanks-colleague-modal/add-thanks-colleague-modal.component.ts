@@ -1,21 +1,34 @@
 import { Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { IUserDto } from '@app/core/models/awards/user-dto';
-import { VictoryEventEnum } from '@app/components/victory/victory-root.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { AddVictoryModalResultComponent } from '@app/components/victory/modal/add-victory-modal-result/add-victory-modal-result.component';
-import { ModalService } from '@app/core/modal/modal.service';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { ThankColleagueFacadeService } from '@app/core/facades/thanks-colleague-facade.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-add-thanks-colleague-modal',
 	templateUrl: './add-thanks-colleague-modal.component.html',
 	styleUrls: ['./add-thanks-colleague-modal.component.scss'],
+	imports: [
+		HeadlineComponent,
+		IconComponent,
+		SsDividerComponent,
+		ReactiveFormsModule,
+		ChipsUserSearchComponent,
+		TextareaComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class AddThanksColleagueModalComponent {
 	protected formGroup: FormGroup<AddVictoryForm>;

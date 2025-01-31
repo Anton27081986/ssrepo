@@ -1,13 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { INewProductsTableItem } from '@app/pages/client-card/client-card-new-products/new-products-table-item';
 import { NewProductsFacadeService } from '@app/core/facades/new-products-facade.service';
 import { INewProductsItemDto } from '@app/core/models/company/new-products-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -15,12 +23,27 @@ import { Observable } from 'rxjs';
 	templateUrl: './client-card-new-products.component.html',
 	styleUrls: ['./client-card-new-products.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		CardComponent,
+		LoaderComponent,
+		NgIf,
+		HeadlineComponent,
+		IconComponent,
+		AsyncPipe,
+		TableComponent,
+		EmptyPlaceholderComponent,
+		TextComponent,
+		FiltersComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class ClientCardNewProductsComponent implements OnInit {
 	public newProducts$: Observable<INewProductsItemDto | null>;
 
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;

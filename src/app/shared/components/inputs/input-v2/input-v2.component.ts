@@ -10,9 +10,7 @@ import {
 	signal,
 	WritableSignal,
 } from '@angular/core';
-import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { IconModule } from '@app/shared/components/icon/icon.module';
-import { NgClass, NgIf } from '@angular/common';
+import {CommonModule, NgClass, NgIf} from '@angular/common';
 import {
 	ControlValueAccessor,
 	FormControl,
@@ -23,11 +21,14 @@ import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { IInputIcon } from '@app/shared/components/inputs/input-v2/models/input-icon';
 import { InputIconTypeEnum } from '@app/shared/components/inputs/input-v2/models/input-icon-type';
 import { ICON_PADDING } from '@app/shared/components/inputs/input-v2/constants/icon-padding';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-input-v2',
 	standalone: true,
-	imports: [CaptionModule, IconModule, NgIf, ReactiveFormsModule, MapperPipe, NgClass],
+	imports: [
+		CommonModule, NgIf, ReactiveFormsModule, MapperPipe, NgClass, CaptionComponent, IconComponent],
 	templateUrl: './input-v2.component.html',
 	styleUrl: './input-v2.component.scss',
 	providers: [

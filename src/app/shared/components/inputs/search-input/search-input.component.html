@@ -11,17 +11,23 @@
 		   class="{{ error ? size + ' error' : size }}"
 		   #input
 	/>
-	<div class="search-result" *ngIf="(found$ | async)?.length" #options>
-		<div class="separator"></div>
-		<ss-caption class="search-result-item" *ngFor="let item of found$ | async"
-					(click)="
-			clear ? input.value = '' : input.value = item.name!;
-			found$.next([]);
-			select.emit(item);
-		">
-			<div [innerHTML]="item.name"></div>
-		</ss-caption>
-	</div>
+	@if ((found$ | async)?.length) {
+		<div class="search-result" #options>
+			<div class="separator"></div>
+			@for (item of found$ | async; track item.id) {
+				<ss-caption class="search-result-item"
+							(click)="
+					clear ? input.value = '' : input.value = item.name!;
+					found$.next([]);
+					select.emit(item);
+				">
+					<div [innerHTML]="item.name"></div>
+				</ss-caption>
+			}
+		</div>
+	}
 </div>
 <ss-caption size="2" class="error" color="error">{{ error }}</ss-caption>
-<div *ngIf="(found$ | async)?.length" class="overflow" (click)="found$.next([])"></div>
+@if ((found$ | async)?.length) {
+	<div class="overflow" (click)="found$.next([])"></div>
+}

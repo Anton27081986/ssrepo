@@ -16,6 +16,11 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {SelectComponent} from "@app/shared/components/select/select.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
 
 export enum AtWorkRowItemField {
 	tovProductName = 'tovProductName',
@@ -31,6 +36,20 @@ export enum AtWorkRowItemField {
 	selector: 'tr[ss-at-work-row-item-tr]',
 	styleUrls: ['at-work-row-item-tr.component.scss'],
 	templateUrl: './at-work-row-item-tr.component.html',
+	imports: [
+		CommonModule,
+		NgForOf,
+		AsyncPipe,
+		NgSwitch,
+		NgIf,
+		NgSwitchCase,
+		TextComponent,
+		SelectComponent,
+		InputComponent,
+		SearchInputComponent,
+		NgSwitchDefault
+	],
+	standalone: true
 })
 export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly AtWorkRowItemField = AtWorkRowItemField;

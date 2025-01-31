@@ -6,18 +6,19 @@ import {
 	signal,
 	WritableSignal,
 } from '@angular/core';
-import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
-import { IconModule } from '@app/shared/components/icon/icon.module';
-import { AsyncPipe, NgClass, NgIf } from '@angular/common';
+import {AsyncPipe, CommonModule, NgClass} from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { ICON_PADDING } from '@app/shared/components/inputs/input-v2/constants/icon-padding';
 import { BehaviorSubject } from 'rxjs';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-number-input-v2',
 	standalone: true,
-	imports: [CaptionModule, IconModule, NgIf, ReactiveFormsModule, MapperPipe, NgClass, AsyncPipe],
+	imports: [
+		CommonModule,ReactiveFormsModule, MapperPipe, NgClass, AsyncPipe, CaptionComponent, IconComponent],
 	templateUrl: './number-input.component.html',
 	styleUrl: './number-input.component.scss',
 	host: {

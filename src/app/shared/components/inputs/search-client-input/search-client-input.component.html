@@ -8,9 +8,13 @@
 		   (input)="onInputValueChange($event)"
 		   #input
 	/>
-	<div class="search-result" *ngIf="(found$ | async)?.length">
-		<div class="separator"></div>
-		<ss-caption class="search-result-item" *ngFor="let item of found$ | async" (click)="setItem(item)">{{ item.name }}
-		</ss-caption>
-	</div>
+	@if ((found$ | async)?.length) {
+		<div class="search-result">
+			<div class="separator"></div>
+			@for (item of found$ | async; track item.id) {
+				<ss-caption class="search-result-item" (click)="setItem(item)">{{ item.name }}
+				</ss-caption>
+			}
+		</div>
+	}
 </div>

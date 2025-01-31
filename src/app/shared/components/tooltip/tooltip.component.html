@@ -1,17 +1,19 @@
-<div class="tooltip"
-	 [ngClass]="['tooltip--'+position, 'tooltip--'+theme]"
-	 [class.tooltip--visible]="visible"
-	 [style.left]="left + 'px'"
-	 *ngIf="tooltip"
-	 [style.top]="top + 'px'">
-	{{ tooltip }}
-</div>
+@if (tooltip) {
+	<div class="tooltip"
+		 [ngClass]="['tooltip--'+position, 'tooltip--'+theme]"
+		 [class.tooltip--visible]="visible"
+		 [style.left]="left + 'px'"
+		 [style.top]="top + 'px'">
+		{{ tooltip }}
+	</div>
+}
 
-<div class="tooltip"
-	 [ngClass]="['tooltip--'+position, 'tooltip--'+theme]"
-	 [class.tooltip--visible]="visible"
-	 [style.left]="left + 'px'"
-	 *ngIf="elemRef"
-	 [style.top]="top + 'px'">
-	<ng-container *ngTemplateOutlet="elemRef"></ng-container>
-</div>
+@if (elemRef) {
+	<div class="tooltip"
+		 [ngClass]="['tooltip--'+position, 'tooltip--'+theme]"
+		 [class.tooltip--visible]="visible"
+		 [style.left]="left + 'px'"
+		 [style.top]="top + 'px'">
+		<ng-container *ngTemplateOutlet="elemRef"></ng-container>
+	</div>
+}

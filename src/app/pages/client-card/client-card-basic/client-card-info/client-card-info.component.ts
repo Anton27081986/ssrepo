@@ -4,18 +4,53 @@ import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {SelectComponent} from "@app/shared/components/select/select.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {ReplacePipe} from "@app/shared/pipe/replace.pipe";
+import {NotificationToastService} from "@app/core/services/notification-toast.service";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-client-card-info',
 	templateUrl: './client-card-info.component.html',
 	styleUrls: ['./client-card-info.component.scss'],
+	imports: [
+		CommonModule,
+		LoaderComponent,
+		AsyncPipe,
+		NgIf,
+		HeadlineComponent,
+		IconComponent,
+		TooltipDirective,
+		TooltipMenuComponent,
+		CaptionComponent,
+		ReactiveFormsModule,
+		TextComponent,
+		InputComponent,
+		SelectComponent,
+		NgForOf,
+		SearchInputComponent,
+		TextareaComponent,
+		ButtonComponent,
+		ReplacePipe
+	],
+	standalone: true
 })
 export class ClientCardInfoComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;
@@ -47,7 +82,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly notificationService: NzMessageService,
+		private readonly notificationService: NotificationToastService,
 		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.client$ = this.clientCardListFacade.client$;
@@ -124,7 +159,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 		this.infoForm.controls.comment.setValue(null);
 
-		this.notificationService.success('Сохранено');
+		this.notificationService.addToast('Сохранено', 'ok');
 		this.isEditing = false;
 	}
 

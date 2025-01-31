@@ -1,15 +1,33 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
+import {CommonModule, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-forgot-password',
 	templateUrl: './forgot-password.component.html',
 	styleUrls: ['./forgot-password.component.scss'],
+	imports: [
+		CommonModule,
+		NgIf,
+		HeadlineComponent,
+		TextComponent,
+		ReactiveFormsModule,
+		InputComponent,
+		ButtonComponent,
+		IconComponent,
+		RouterLink
+	],
+	standalone: true
 })
 export class ForgotPasswordComponent implements OnInit {
 	public loginForm!: FormGroup;

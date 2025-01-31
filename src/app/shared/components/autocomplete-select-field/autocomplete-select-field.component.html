@@ -9,11 +9,11 @@
 		[nzLoading]="isLoading"
 		[(ngModel)]="selectedValue"
 		(ngModelChange)="onValueChange($event)"
-		(nzOnSearch)="search($event)">
-		<nz-option *ngFor="let option of selectOptions"
-				   [nzLabel]="option.name!"
-				   [nzValue]="option.id!">
-		</nz-option>
+		(nzOnSearch)="search($event)"
+	>
+		@for (option of selectOptions; track $index) {
+			<nz-option [nzLabel]="option.name!" [nzValue]="option.id!"></nz-option>
+		}
 	</nz-select>
 </nz-form-control>
 

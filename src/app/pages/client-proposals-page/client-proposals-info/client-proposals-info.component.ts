@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router, RouterOutlet } from '@angular/router';
-import { FormControl } from '@angular/forms';
+import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
-import { SearchInputItem } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
+import {
+	SearchClientInputComponent,
+	SearchInputItem
+} from '@app/shared/components/inputs/search-client-input/search-client-input.component';
 import { Observable, Subscription, take } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
@@ -14,22 +17,40 @@ import { ClientProposalsSamplesTabState } from '@app/pages/client-proposals-page
 import { ClientProposalsContractorsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.state';
 import { ClientProposalsDevelopmentTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.state';
 import { ClientProposalsNewsLineTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.state';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {AsyncPipe, CommonModule, NgIf, NgTemplateOutlet} from "@angular/common";
+import {AccordionComponent} from "@app/shared/components/accordion/accordion.component";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {
+	ClientProposalsCardComponent
+} from "@app/pages/client-proposals-page/client-proposals/client-proposals-card/client-proposals-card.component";
+import {
+	ClientProposalsDoneProductionComponent
+} from "@app/pages/client-proposals-page/client-proposals-done-production/client-proposals-done-production.component";
+import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-client-proposals-info',
 	templateUrl: './client-proposals-info.component.html',
 	styleUrls: ['./client-proposals-info.component.scss'],
-	providers: [
-		ClientProposalsFacadeService,
-		ClientProposalsBusinessTripsTabState,
-		ClientProposalsTradeListTabState,
-		ClientProposalsSamplesTabState,
-		ClientProposalsContractorsTabState,
-		ClientProposalsDevelopmentTabState,
-		ClientProposalsNewsLineTabState,
-	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		HeadlineComponent,
+		SearchClientInputComponent,
+		AsyncPipe,
+		AccordionComponent,
+		NgTemplateOutlet,
+		CardComponent,
+		ClientProposalsCardComponent,
+		NgIf,
+		ReactiveFormsModule,
+		ClientProposalsDoneProductionComponent,
+		TabsComponent,
+		RouterOutlet
+	],
+	standalone: true
 })
 export class ClientProposalsInfoComponent {
 	protected clientId: number | null = null;

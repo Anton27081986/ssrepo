@@ -19,7 +19,7 @@
 	<div class="thanks-colleague-card__footer">
 		<div class="thanks-colleague-card__footer__controls">
 			<app-like
-				*ngIf="!isExtendedMode" [likedUsers]="thankColleague.likedUsers"
+				*ngIf="!isExtendedMode" [likedUsers]="thankColleague.likedUsers || []"
 				[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.default : thankColleague.award || LikeStateEnum.usual"
 				[count]="thankColleague.likesCount || 0"
 				(click)="changeLike(thankColleague)">
@@ -32,7 +32,7 @@
 				</app-choice-like>
 				<app-like
 					*ngIf="isExtendedMode"
-					[likedUsers]="thankColleague.likedUsers"
+					[likedUsers]="thankColleague.likedUsers || []"
 					[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.usual : thankColleague.award || LikeStateEnum.usual"
 					[count]="thankColleague.likesCount || 0"
 					(click)="thankColleague.isUserLiked ? changeLike(thankColleague, thankColleague.award) : isChoiceLike = true">

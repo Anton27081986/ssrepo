@@ -13,6 +13,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rotateAnimation } from '@app/core/animations';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
+import {
+	MultiselectChipsV2Component
+} from "@app/shared/components/multiselect-v2/multiselect-chips-v2/multiselect-chips-v2.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {
+	MultiselectOptionV2Component
+} from "@app/shared/components/multiselect-v2/multiselect-option-v2/multiselect-option-v2.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
 
 @UntilDestroy()
 @Component({
@@ -28,6 +39,19 @@ import { rotateAnimation } from '@app/core/animations';
 			multi: true,
 		},
 	],
+	imports: [
+		CommonModule,
+		CaptionComponent,
+		NgIf,
+		MultiselectChipsV2Component,
+		AsyncPipe,
+		TextComponent,
+		IconComponent,
+		MultiselectOptionV2Component,
+		SsDividerComponent,
+		NgForOf
+	],
+	standalone: true
 })
 export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAccessor {
 	@Input() public label: string | undefined;

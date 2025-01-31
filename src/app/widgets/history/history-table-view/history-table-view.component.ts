@@ -1,14 +1,17 @@
 import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import { ITableHead, ITableItem } from '@app/shared/components/table/table.component';
-import { LoaderModule } from '@app/shared/components/loader/loader.module';
-import { TableModule } from '@app/shared/components/table/table.module';
-import { ComponentsModule } from '@app/components/components.module';
+import {ITableHead, ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @Component({
 	selector: 'app-history-table-view',
 	standalone: true,
-	imports: [LoaderModule, TableModule, ComponentsModule],
+	imports: [
+		LoaderComponent,
+		TableComponent,
+		PaginationComponent
+	],
 	templateUrl: './history-table-view.component.html',
 	styleUrl: './history-table-view.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,

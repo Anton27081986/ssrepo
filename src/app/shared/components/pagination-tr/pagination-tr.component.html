@@ -1,6 +1,8 @@
-<td *ngIf="viewPagination" class="pagination-tr" [colSpan]="countCol()">
-	<div class="pagination-tr__content">
-		<snab-button (click)="nextOffset()" text="показать еще {{  remainder() }}" [type]="ButtonType.Primary"
-					 [size]="Size.Large"></snab-button>
-	</div>
-</td>
+@if (viewPagination) {
+	<td class="pagination-tr" [colSpan]="countCol()">
+		<div class="pagination-tr__content">
+			<snab-button (click)="nextOffset()" text="показать еще {{  remainder() }}" [type]="ButtonType.Primary"
+						 [size]="Size.Large"></snab-button>
+		</div>
+	</td>
+}

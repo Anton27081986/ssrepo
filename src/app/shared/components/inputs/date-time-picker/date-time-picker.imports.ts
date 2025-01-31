@@ -4,10 +4,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MaskitoDirective } from '@maskito/angular';
-import { IconModule } from '@app/shared/components/icon/icon.module';
-import { NgClass } from '@angular/common';
+import {CommonModule, NgClass} from '@angular/common';
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 export const DateTimePickerImports = [
+	CommonModule,
 	FormsModule,
 	ReactiveFormsModule,
 	MatDatepickerModule,
@@ -15,6 +16,6 @@ export const DateTimePickerImports = [
 	MatIconModule,
 	MatInputModule,
 	MaskitoDirective,
-	IconModule,
+	IconComponent,
 	NgClass,
 ];

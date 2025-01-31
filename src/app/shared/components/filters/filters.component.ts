@@ -1,7 +1,17 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { searchType } from '@app/shared/components/inputs/search-input/search-input.component';
+import {SearchInputComponent, searchType} from '@app/shared/components/inputs/search-input/search-input.component';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
+import {MultiselectComponent} from "@app/shared/components/multiselect/multiselect.component";
+import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
+import {ToggleComponent} from "@app/shared/components/toggle/toggle.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
 
 export interface IFilter {
 	name: string;
@@ -29,6 +39,21 @@ export interface IFilterOption extends IDictionaryItemDto {
 	selector: 'ss-filters',
 	templateUrl: './filters.component.html',
 	styleUrls: ['./filters.component.scss'],
+	imports: [
+		HeadlineComponent,
+		IconComponent,
+		ReactiveFormsModule,
+		CaptionComponent,
+		InputComponent,
+		DateRangeComponent,
+		MultiselectComponent,
+		ChipsSearchComponent,
+		ToggleComponent,
+		SearchInputComponent,
+		ButtonComponent,
+		NumericInputComponent
+	],
+	standalone: true
 })
 export class FiltersComponent implements OnInit {
 	@Input() public isFiltersVisible!: boolean;

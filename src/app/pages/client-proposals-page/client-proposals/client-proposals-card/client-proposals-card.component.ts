@@ -1,10 +1,9 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ColumnsStateService } from '@app/core/columns.state.service';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
 import { BehaviorSubject, map, Observable, of, tap, combineLatest } from 'rxjs';
 import { IClientOffersDto } from '@app/core/models/client-proposails/client-offers';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {
 	ClientProposalsFacadeService,
@@ -19,6 +18,24 @@ import { NotificationToastService } from '@app/core/services/notification-toast.
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
 import { rotateAnimation } from '@app/core/animations';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {
+	MultiselectAutocompleteV2Component
+} from "@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.component";
+import {MultiselectV2Component} from "@app/shared/components/multiselect-v2/multiselect-v2.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
+import {FilePickerComponent} from "@app/shared/components/file-picker/file-picker.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {
+	ClientProposalsTableVgpComponent
+} from "@app/pages/client-proposals-page/client-proposals/client-proposals-table-vgp/client-proposals-table-vgp.component";
+import {
+	SettingsViewColumnComponent
+} from "@app/pages/client-proposals-page/settings-view-column/settings-view-column.component";
+import {NoticeComponent} from "@app/shared/components/notice/notice.component";
+import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -32,9 +49,26 @@ export interface IClientProposalsCriteriaForm {
 	selector: 'app-client-proposals-card',
 	templateUrl: './client-proposals-card.component.html',
 	styleUrls: ['./client-proposals-card.component.scss'],
-	providers: [ColumnsStateService, CheckFileListStateService],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		HeadlineComponent,
+		ReactiveFormsModule,
+		MultiselectAutocompleteV2Component,
+		MultiselectV2Component,
+		ButtonComponent,
+		AsyncPipe,
+		NgIf,
+		FilePickerComponent,
+		TooltipDirective,
+		IconComponent,
+		ClientProposalsTableVgpComponent,
+		SettingsViewColumnComponent,
+		NoticeComponent,
+		DropdownButtonComponent
+	],
+	standalone: true
 })
 export class ClientProposalsCardComponent {
 	protected waitingForLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

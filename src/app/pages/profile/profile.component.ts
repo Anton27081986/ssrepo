@@ -3,6 +3,11 @@ import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
+import {NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {ToggleComponent} from "@app/shared/components/toggle/toggle.component";
 
 @UntilDestroy()
 @Component({
@@ -10,6 +15,16 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	templateUrl: './profile.component.html',
 	styleUrls: ['./profile.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		RouterLink,
+		NgIf,
+		FormsModule,
+		RouterOutlet,
+		IconComponent,
+		ToggleComponent,
+		RouterLinkActive
+	],
+	standalone: true
 })
 export class ProfileComponent implements OnInit {
 	public switchValue!: boolean;
@@ -34,7 +49,7 @@ export class ProfileComponent implements OnInit {
 	}
 
 	public toggleTheme(): void {
-		this.themeService.toggleTheme().then();
+		this.themeService.toggleTheme();
 
 		if (this.switchValue) {
 			this.profileService.changeTheme(1);

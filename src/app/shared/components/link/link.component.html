@@ -1,10 +1,11 @@
-<a *ngIf="href; else text" [href]="href">
+@if (href) {
+	<a [href]="href">
+		<ss-caption size="1">
+			<ng-content></ng-content>
+		</ss-caption>
+	</a>
+} @else {
 	<ss-caption size="1">
 		<ng-content></ng-content>
 	</ss-caption>
-</a>
-<ng-template #text>
-	<ss-caption size="1">
-		<ng-content></ng-content>
-	</ss-caption>
-</ng-template>
+}

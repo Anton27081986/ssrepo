@@ -29,14 +29,7 @@
 					[items]="tableItems">
 				</ss-table>
 				<div class="pagination" style="justify-content: flex-end">
-					<nz-pagination
-						[nzTotal]="total"
-						[nzPageIndex]="pageIndex"
-						[nzPageSize]="pageSize"
-						(nzPageIndexChange)="nzPageIndexChange($event)"
-						(nzPageSizeChange)="pageSize = $event"
-						[nzResponsive]="true">
-					</nz-pagination>
+					<ss-pagination [total]="total" [pageIndex]="pageIndex" [pageSize]="pageSize" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 				</div>
 			</ng-container>
 			<ng-container *ngIf="tableState === TableState.Empty">
@@ -76,16 +69,7 @@
 			</div>
 		</ss-card>
 		<div class="pagination" style="justify-content: center">
-			<nz-pagination
-				[nzTotal]="total"
-				[nzPageIndex]="pageIndex"
-				[nzPageSize]="pageSize"
-				(nzPageIndexChange)="nzPageIndexChange($event)"
-				(nzPageSizeChange)="pageSize = $event"
-				[nzResponsive]="true"
-				[nzHideOnSinglePage]="true"
-			>
-			</nz-pagination>
+			<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 		</div>
 	</div>
 

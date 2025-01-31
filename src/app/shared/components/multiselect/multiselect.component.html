@@ -1,20 +1,33 @@
-<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
+@if (label) {
+	<ss-caption size="1">{{ label }}</ss-caption>
+}
 <div class="input {{ size }}">
 	<div class="selected" (click)="changeState($event)">
-		<ss-text class="placeholder" *ngIf="placeholder && !getSelectedOptions()?.length" size="2">{{ placeholder }}</ss-text>
-		<div class="chips" *ngFor="let option of getSelectedOptions()">
-			<ss-text size="3">{{ option.name }}</ss-text>
-			<ss-icon height="8" width="8" name="close" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
-		</div>
+		@if (placeholder && !getSelectedOptions()?.length) {
+			<ss-text class="placeholder" size="2">{{ placeholder }}</ss-text>
+		}
+		@for (option of getSelectedOptions(); track option.id) {
+			<div class="chips">
+				<ss-text size="3">{{ option.name }}</ss-text>
+				<ss-icon height="8" width="8" name="close" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
+			</div>
+		}
 	</div>
-	<div class="options" *ngIf="isOptionsVisible" #optionsEl>
-		<div class="option" *ngFor="let option of options" (click)="onSelect(option.id!)">
-			<ss-icon *ngIf="option.checked; else empty" height="16" name="checkbox"></ss-icon>
-			<ng-template #empty>
-				<div class="checkbox"></div>
-			</ng-template>
-			{{ option.name }}
+	@if (isOptionsVisible) {
+		<div class="options" #optionsEl>
+			@for (option of options; track option.id) {
+				<div class="option" (click)="onSelect(option.id!)">
+					@if (option.checked) {
+						<ss-icon height="16" name="checkbox"></ss-icon>
+					} @else {
+						<div class="checkbox"></div>
+					}
+					{{ option.name }}
+				</div>
+			}
 		</div>
-	</div>
+	}
 </div>
-<div *ngIf="isOptionsVisible" class="overflow" (click)="changeState($event)"></div>
+@if (isOptionsVisible) {
+	<div class="overflow" (click)="changeState($event)"></div>
+}

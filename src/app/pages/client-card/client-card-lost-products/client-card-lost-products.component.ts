@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { ILostProductsTableItem } from '@app/pages/client-card/client-card-lost-products/lost-products-table-item';
@@ -8,6 +8,13 @@ import { ILostProductsFilter } from '@app/core/models/lost-products-filter';
 import { LostProductsFacadeService } from '@app/core/facades/lost-products-facade.service';
 import { ILostProductsItemDto } from '@app/core/models/company/lost-products-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {CommonModule, NgIf} from "@angular/common";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -15,10 +22,22 @@ import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.s
 	templateUrl: './client-card-lost-products.component.html',
 	styleUrls: ['./client-card-lost-products.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		CardComponent,
+		LoaderComponent,
+		HeadlineComponent,
+		TableComponent,
+		NgIf,
+		EmptyPlaceholderComponent,
+		TextComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class ClientCardLostProductsComponent implements OnInit {
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public tableItems: ITableItem[] = [];

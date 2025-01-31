@@ -1,0 +1,43 @@
+<ss-card class="user-card-widget" [padding]="'16px'" *ngIf="widget$ | async as widget">
+	<ss-icon class="user-card-widget__members" [tooltip]="getGroupWinsUser(widget.groupWinUsers)"
+			 [theme]="TooltipTheme.DEFAULT"
+			 [position]="TooltipPosition.DEFAULT" *ngIf="widget.groupWinUsers" name="iconMembers"></ss-icon>
+
+	<div class="user-card-widget__card">
+		<app-user-card [size]="'large'" [viewPopupInfo]="true" [user]="widget.user!"></app-user-card>
+		<div class="user-card-widget__actions">
+			<ss-icon class="user-card-widget__share" [tooltip]="'Развернуть'" [theme]="TooltipTheme.DEFAULT"
+					 [position]="TooltipPosition.DEFAULT" (click)="goToUrlVictory(widget.detailUrl!)" [name]="'externalLinkIcon'"></ss-icon>
+		</div>
+	</div>
+	<div class="user-card-widget__description">
+		<ss-text [size]="'3'">{{ widget.note }}</ss-text>
+	</div>
+	<div class="user-card-widget__actions-block">
+		<div class="user-card-widget__actions">
+			<app-like *ngIf="!isExtendedMode" [likedUsers]="widget.likedUsers || []" [type]="(typeLike$ | async)!"
+					  [count]="widget.likesCount!" (click)="changeLike()"></app-like>
+			<div class="user-card-widget__isExtendedMode">
+				<app-choice-like (close)="isChoiceLike.next(false)" *ngIf="isChoiceLike |async"
+								 (stateLike)="getLike($event)"></app-choice-like>
+				<app-like
+					*ngIf="isExtendedMode"
+					[likedUsers]="widget.likedUsers || []"
+					[type]="(typeLike$ | async)!"
+					[count]="widget.likesCount!"
+					(click)="openChoiceLike()">
+				</app-like>
+			</div>
+
+			<div class="user-card-widget__card-action" (click)="openPopoverInfo()">
+				<ss-icon [tooltip]="'Оставить комментарий'" [theme]="TooltipTheme.DEFAULT"
+						 [position]="TooltipPosition.DEFAULT" [width]="'15'" [height]="'15'" name="comment"></ss-icon>
+				<ss-text [size]="'3'">{{ widget.commentsCount }}</ss-text>
+			</div>
+		</div>
+		<ss-caption class="user-card-widget__created" [size]="'2'">{{ widget.createdDate | date: 'HH:mm, dd.MM.yyyy' }}</ss-caption>
+	</div>
+
+</ss-card>
+
+

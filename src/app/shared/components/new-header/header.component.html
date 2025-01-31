@@ -20,14 +20,12 @@
 				></snab-button>
 			}
 
-			<ng-container *ngIf="(userProfile$ | async) as userProfile;">
-				<ss-avatar [size]="'small'" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
-						   [position]="TooltipPosition.DEFAULT" [src]="userProfile?.avatarUrl!" nz-dropdown nzTrigger="click"
-						   [nzDropdownMenu]="profilePopup"></ss-avatar>
-			</ng-container>
+			@if((userProfile$ | async); as userProfile) {
+				<ss-dropdown-button title="P" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
+									[position]="TooltipPosition.DEFAULT">
+					<app-profile-popup></app-profile-popup>
+				</ss-dropdown-button>
+			}
 		</div>
 	</div>
 </div>
-<nz-dropdown-menu #profilePopup="nzDropdownMenu">
-	<app-profile-popup></app-profile-popup>
-</nz-dropdown-menu>

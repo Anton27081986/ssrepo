@@ -2,11 +2,21 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
 import { Currency, IResponseProposalsTrips } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IClientProposalsBusinessTripsTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-table-item';
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ClientProposalsBusinessTripsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.state';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {
+	ClientProposalsTabsCanvasComponent
+} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -14,6 +24,21 @@ import { ClientProposalsBusinessTripsTabState } from '@app/pages/client-proposal
 	templateUrl: './client-proposals-business-trips-tab.component.html',
 	styleUrls: ['./client-proposals-business-trips-tab.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		CardComponent,
+		ClientProposalsTabsCanvasComponent,
+		NgIf,
+		TextComponent,
+		TableComponent,
+		AsyncPipe,
+		EmptyDataPageComponent,
+		TooltipDirective,
+		NumWithSpacesPipe,
+		PaginationComponent,
+		NgForOf
+	],
+	standalone: true
 })
 export class ClientProposalsBusinessTripsTabComponent {
 	protected trips: Signal<IResponseProposalsTrips<IBusinessTripsDto> | null> = toSignal(

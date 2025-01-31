@@ -13,28 +13,28 @@ import {
 	NG_VALUE_ACCESSOR,
 	ReactiveFormsModule,
 } from '@angular/forms';
-import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { rotateAnimation } from '@app/core/animations';
-import { AsyncPipe, JsonPipe, NgClass, NgIf } from '@angular/common';
-import { IconModule } from '@app/shared/components/icon/icon.module';
+import {AsyncPipe, CommonModule, JsonPipe, NgClass, NgIf} from '@angular/common';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { filter, map, combineLatest, startWith } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ClickOutsideDirective } from '@app/core/directives/click-outside.directive';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-select-v2',
 	standalone: true,
 	imports: [
-		CaptionModule,
+		CommonModule,
 		AsyncPipe,
-		IconModule,
-		NgIf,
 		MapperPipe,
 		ReactiveFormsModule,
 		NgClass,
 		JsonPipe,
 		ClickOutsideDirective,
+		CaptionComponent,
+		IconComponent,
 	],
 	templateUrl: './select-v2.component.html',
 	styleUrls: ['./select-v2.component.scss'],

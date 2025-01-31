@@ -24,7 +24,7 @@
 			</div>
 			<div class="victory-modal__actions">
 				<app-like
-					*ngIf="!isExtendedMode" [likedUsers]="thank.likedUsers"
+					*ngIf="!isExtendedMode" [likedUsers]="thank.likedUsers || []"
 					[type]="thank.isUserLiked && !thank.award ? LikeStateEnum.default : thank.award || LikeStateEnum.usual"
 					[count]="thank.likesCount || 0"
 					(click)="changeLike(thank)">
@@ -37,7 +37,7 @@
 					</app-choice-like>
 					<app-like
 						*ngIf="isExtendedMode"
-						[likedUsers]="thank.likedUsers"
+						[likedUsers]="thank.likedUsers || []"
 						[type]="thank.isUserLiked && !thank.award ? LikeStateEnum.usual : thank.award || LikeStateEnum.usual"
 						[count]="thank.likesCount || 0"
 						(click)="thank.isUserLiked ? changeLike(thank, thank.award) : isChoiceLike = true">

@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
 import { PasswordValidator } from '@auth/reset-password/ password-validator';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PasswordComponent} from "@app/shared/components/_deprecated/password/password.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
@@ -12,6 +16,14 @@ import { PasswordValidator } from '@auth/reset-password/ password-validator';
 	templateUrl: './reset-password.component.html',
 	styleUrls: ['./reset-password.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		HeadlineComponent,
+		TextComponent,
+		ReactiveFormsModule,
+		PasswordComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class ResetPasswordComponent implements OnInit {
 	public resetPassForm!: FormGroup;

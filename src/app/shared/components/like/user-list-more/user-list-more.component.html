@@ -1,13 +1,15 @@
-<div class="user-list-more" *ngIf="users.length">
-	<ss-text [size]="'4'">Нравится {{ count }} людям: </ss-text>
-	<div class="user-list-more__items">
-		<ng-container *ngFor="let user of users">
-			<ss-avatar class="user-list-more__item" [size]="'small'" [type]="'round'" [src]="user.avatarUrl!"></ss-avatar>
-		</ng-container>
-		<ng-container *ngIf="count > viewCount">
-			<div class="user-list-more__all-count">
-				<ss-text [weight]="'semi-bold'" [size]="'4'">+{{ this.remainder | async }}</ss-text>
-			</div>
-		</ng-container>
+@if (users.length) {
+	<div class="user-list-more">
+		<ss-text [size]="'4'">Нравится {{ count }} людям: </ss-text>
+		<div class="user-list-more__items">
+			@for (user of users; track user.id) {
+				<ss-avatar class="user-list-more__item" [size]="'small'" [type]="'round'" [src]="user.avatarUrl!"></ss-avatar>
+			}
+			@if (count > viewCount) {
+				<div class="user-list-more__all-count">
+					<ss-text [weight]="'semi-bold'" [size]="'4'">+{{ this.remainder | async }}</ss-text>
+				</div>
+			}
+		</div>
 	</div>
-</div>
+}

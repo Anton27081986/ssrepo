@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Title } from '@angular/platform-browser';
+import { Title} from '@angular/platform-browser';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUser } from '@auth/models/user';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
-import { IconsService } from '@app/core/services/icons.service';
 import { animate, query, style, transition, trigger } from '@angular/animations';
 import { RouterOutlet } from '@angular/router';
+import {NotificationToastComponent} from "@app/widgets/notification-toast/notification-toast.component";
+import {CommonModule} from "@angular/common";
 
 @UntilDestroy()
 @Component({
@@ -19,14 +20,20 @@ import { RouterOutlet } from '@angular/router';
 		trigger('routeAnimations', [
 			transition('* <=> *', [
 				// Скрываем новый экран до начала анимации
-				query(':enter', [style({ opacity: 0 })], { optional: true }),
+				query(':enter', [style({opacity: 0})], {optional: true}),
 				// Анимируем уходящий экран
-				query(':leave', [animate('500ms', style({ opacity: 0 }))], { optional: true }),
+				query(':leave', [animate('500ms', style({opacity: 0}))], {optional: true}),
 				// Анимируем входящий экран
-				query(':enter', [animate('500ms', style({ opacity: 1 }))], { optional: true }),
+				query(':enter', [animate('500ms', style({opacity: 1}))], {optional: true}),
 			]),
 		]),
 	],
+	imports: [
+		CommonModule,
+		RouterOutlet,
+		NotificationToastComponent
+	],
+	standalone: true
 })
 export class AppComponent implements OnInit {
 	public title!: string;
@@ -36,7 +43,6 @@ export class AppComponent implements OnInit {
 		private readonly titleService: Title,
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
-		private readonly iconsService: IconsService,
 	) {
 		this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
 	}
@@ -54,14 +60,14 @@ export class AppComponent implements OnInit {
 							.updateTheme(true)
 							.pipe(untilDestroyed(this))
 							.subscribe(_ => {
-								this.themeService.setDarkTheme().then();
+								this.themeService.setDarkTheme();
 							});
 					} else {
 						this.profileService
 							.updateTheme(false)
 							.pipe(untilDestroyed(this))
 							.subscribe(_ => {
-								this.themeService.setDefaultTheme().then();
+								this.themeService.setDefaultTheme();
 							});
 					}
 				}),

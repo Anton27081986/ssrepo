@@ -12,6 +12,7 @@ import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core'
 		'[class.scrollable-block--padding]': 'paddingInline',
 		'[class.scrollable-block--not-auto-size]': 'disableAutoSize',
 	},
+	standalone: true
 })
 export class ScrollableBlockComponent {
 	@Input() horizontalScroll: boolean = false;

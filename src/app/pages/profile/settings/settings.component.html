@@ -1,73 +1,95 @@
 <div class="title">
   <h1>Основная информация</h1>
 </div>
+@if (userProfile$ | async; as profileData) {
+	<div class="settings">
+		<div class="photo">
+			<div class="personal">
+				<div class="img">
+					<ng-container>
+						<img ngSrc="{{ profileData?.avatarUrl }}" alt="user" />
+					</ng-container>
+				</div>
+				<div class="m-t-8">
+					<snab-button [type]="ButtonType.Primary" text="Сменить"></snab-button>
+				</div>
+			</div>
+		</div>
+		<div class="feilds">
+			<div class="group row">
+				@if (profileData?.firstName) {
+					<div class="field col-12">
+						<div class="label">Имя пользователя</div>
+						<div class="text">{{ profileData?.firstName }} {{ profileData?.lastName }} {{ profileData?.surName }}</div>
+					</div>
+				}
+				@if (profileData?.id) {
+					<div class="field col-6">
+						<div class="label">Код</div>
+						<div class="text">{{ profileData?.id }}</div>
+					</div>
+				}
+				@if (profileData?.birthDate) {
+					<div class="field col-6">
+						<div class="label">Дата рождения</div>
+						<div class="text">{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}</div>
+					</div>
+				}
+			</div>
 
-<div class="settings" *ngIf = "userProfile$ | async as profileData">
-  <div class="photo">
-      <div class="personal">
-        <div class="img">
-          <ng-container>
-            <img src="{{ profileData?.avatarUrl }}" alt="user" />
-          </ng-container>
-          </div>
-          <div class="m-t-8">
-            <button nz-button class="download-button" [nzType]="'primary'">Сменить</button>
-          </div>
-      </div>
-  </div>
-  <div class="feilds">
-    <div class="group row">
-      <div class="field col-12" *ngIf="profileData?.firstName">
-        <div class="label">Имя пользователя</div>
-        <div class="text">{{ profileData?.firstName }} {{ profileData?.lastName }} {{ profileData?.surName }}</div>
-      </div>
-      <div class="field col-6" *ngIf="profileData?.id">
-        <div class="label">Код</div>
-        <div class="text">{{ profileData?.id }}</div>
-      </div>
-      <div class="field col-6" *ngIf="profileData?.birthDate">
-        <div class="label">Дата рождения</div>
-        <div class="text">{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}</div>
-      </div>
-    </div>
+			<div class="group row">
+				@if (profileData?.position) {
+					<div class="field col-12">
+						<div class="label">Должность</div>
+						<div class="text">{{ profileData?.position }}</div>
+					</div>
+				}
+				@if (profileData?.department) {
+					<div class="field col-12">
+						<div class="label">Подразделение</div>
+						<div class="text">{{ profileData?.department }}</div>
+					</div>
+				}
+				@if (false) {
+					<div class="field col-6">
+						<div class="label">Корпус/комната</div>
+						<div class="text"></div>
+					</div>
+				}
+			</div>
 
-    <div class="group row">
-        <div class="field col-12" *ngIf="profileData?.position">
-          <div class="label">Должность</div>
-          <div class="text">{{ profileData?.position }}</div>
-        </div>
-        <div class="field col-12" *ngIf="profileData?.department">
-          <div class="label">Подразделение</div>
-          <div class="text">{{ profileData?.department }}</div>
-        </div>
-        <div class="field col-6" *ngIf="false">
-          <div class="label">Корпус/комната</div>
-          <div class="text"></div>
-        </div>
-      </div>
+			<div class="group row">
+				@if (profileData?.email) {
+					<div class="field col-6">
+						<div class="label">Логин</div>
+						<div class="text">{{ profileData?.email }}</div>
+					</div>
+				}
+				@if (profileData?.phoneLocal) {
+					<div class="field col-6">
+						<div class="label">Внутренний телефон</div>
+						<div class="text">{{ profileData?.phoneLocal }}</div>
+					</div>
+				}
+				@if (profileData?.email) {
+					<div class="field col-6">
+						<div class="label">E-mail</div>
+						<div class="text">{{ profileData?.email }}</div>
+					</div>
+				}
+				@if (profileData?.phone) {
+					<div class="field col-6">
+						<div class="label">Телефон</div>
+						<div class="text">{{ profileData?.phone }}</div>
+					</div>
+				}
+			</div>
+		</div>
 
-    <div class="group row">
-          <div class="field col-6" *ngIf="profileData?.email">
-            <div class="label">Логин</div>
-            <div class="text">{{ profileData?.email }}</div>
-          </div>
-          <div class="field col-6" *ngIf="profileData?.phoneLocal">
-            <div class="label">Внутренний телефон</div>
-            <div class="text">{{ profileData?.phoneLocal }}</div>
-          </div>
-          <div class="field col-6" *ngIf="profileData?.email">
-            <div class="label">E-mail</div>
-            <div class="text">{{ profileData?.email }}</div>
-          </div>
-          <div class="field col-6" *ngIf="profileData?.phone">
-            <div class="label">Телефон</div>
-            <div class="text">{{ profileData?.phone }}</div>
-          </div>
-        </div>
-  </div>
+		<ng-template #prefixUser>
+			<snab-icon [icon]="IconType.Profile"></snab-icon>
+		</ng-template>
 
-  <ng-template #prefixUser>
-    <i nz-icon nzType="user"></i>
-  </ng-template>
+	</div>
+}
 
-</div>

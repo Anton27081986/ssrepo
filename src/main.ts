@@ -1,7 +1,10 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import {bootstrapApplication} from "@angular/platform-browser";
+import {appConfig} from "@app/app.config";
+import {AppComponent} from "@app/app.component";
+import {registerLocaleData} from "@angular/common";
+import ru from '@angular/common/locales/ru';
 
-import { AppModule } from '@app/app.module';
+registerLocaleData(ru);
 
-platformBrowserDynamic()
-	.bootstrapModule(AppModule)
+bootstrapApplication(AppComponent, appConfig)
 	.catch(err => console.error(err));

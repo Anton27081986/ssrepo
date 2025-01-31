@@ -1,14 +1,20 @@
 <div class="multiselect-chips-v2">
-	<ng-container *ngFor="let chip of getChips()">
+	@for (chip of getChips(); track chip.id) {
 		<div class="multiselect-chips-v2__chip">
-		<span *ngIf="chip" class="multiselect-chips-v2__text" [tooltip]="chip.name" [theme]="TooltipTheme.DEFAULT"
-			  [position]="TooltipPosition.DEFAULT">{{ chip.name }}</span>
-			<ss-icon *ngIf="!readOnly" [name]="'close'" (click)="deleteChipEmit(chip!); $event.stopPropagation()"></ss-icon>
+			@if (chip) {
+				<span class="multiselect-chips-v2__text" [tooltip]="chip.name" [theme]="TooltipTheme.DEFAULT"
+					  [position]="TooltipPosition.DEFAULT">{{ chip.name }}</span>
+				@if (!readOnly) {
+					<ss-icon [name]="'close'" (click)="deleteChipEmit(chip!); $event.stopPropagation()"></ss-icon>
+				}
+			}
 		</div>
-	</ng-container>
+	}
 
-	<div class="multiselect-chips-v2__chip-ellipsis" *ngIf="ellipsis">
-		...
-	</div>
+	@if (ellipsis) {
+		<div class="multiselect-chips-v2__chip-ellipsis">
+			...
+		</div>
+	}
 </div>
 

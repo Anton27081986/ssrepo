@@ -9,6 +9,10 @@ import {
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {CommonModule, NgClass} from "@angular/common";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 export type searchType =
 	| 'user'
@@ -31,6 +35,14 @@ export type searchType =
 	selector: 'ss-chips-search',
 	templateUrl: './chips-search.component.html',
 	styleUrls: ['./chips-search.component.scss'],
+	imports: [
+		CommonModule,
+		CaptionComponent,
+		NgClass,
+		IconComponent,
+		TextComponent
+	],
+	standalone: true
 })
 export class ChipsSearchComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

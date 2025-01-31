@@ -14,16 +14,19 @@ import { numberInputTextMask } from '@app/core/utils/mask';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
-	ButtonType,
+	ButtonComponent,
+	ButtonType, FieldCtrlDirective, FormFieldComponent,
 	IconPosition,
-	IconType,
-	InputType,
+	IconType, InputComponent,
+	InputType, LinkComponent,
 	Size,
-	TextType,
+	TextType, TooltipDirective,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
 import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @UntilDestroy()
 @Component({
@@ -32,6 +35,23 @@ import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-inco
 	styleUrls: ['./excess-income-group-tr.component.scss'],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		NgForOf,
+		AsyncPipe,
+		ReactiveFormsModule,
+		NgSwitch,
+		NgIf,
+		LinkComponent,
+		NgSwitchCase,
+		FormFieldComponent,
+		InputComponent,
+		TooltipDirective,
+		FieldCtrlDirective,
+		ButtonComponent,
+		NgSwitchDefault
+	],
+	standalone: true
 })
 export class ExcessIncomeGroupTrComponent {
 	public group: InputSignal<GroupNodeState> = input.required<GroupNodeState>();

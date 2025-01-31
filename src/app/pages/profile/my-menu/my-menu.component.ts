@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
@@ -12,6 +14,14 @@ import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.servic
 	templateUrl: './my-menu.component.html',
 	styleUrls: ['./my-menu.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		ReactiveFormsModule,
+		NgIf,
+		NgForOf,
+		IconComponent,
+	],
+	standalone: true
 })
 export class MyMenuComponent implements OnInit {
 	public myMenuForm!: FormGroup;

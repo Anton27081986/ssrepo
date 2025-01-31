@@ -26,15 +26,7 @@
 	</div>
 
 	<div class="pagination">
-		<nz-pagination
-			[nzTotal]="total"
-			[nzPageIndex]="pageIndex"
-			[nzPageSize]="pageSize"
-			(nzPageIndexChange)="nzPageIndexChange($event)"
-			(nzPageSizeChange)="pageSize = $event"
-			[nzResponsive]="true"
-		>
-		</nz-pagination>
+		<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 	</div>
 
 </ss-card>

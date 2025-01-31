@@ -5,10 +5,17 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { BirthdaysContractorsFacadeService } from '@app/core/facades/birthdays-contractors-facade.service';
-import { formatDate } from '@angular/common';
+import {AsyncPipe, CommonModule, DatePipe, formatDate, NgForOf} from '@angular/common';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { fromPickerDateToIso } from '@app/shared/pipe/from-picker-date-to-iso';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {TagComponent} from "@app/shared/components/tag/tag.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -16,6 +23,20 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 	templateUrl: './client-card-birthdays.component.html',
 	styleUrls: ['./client-card-birthdays.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		CardComponent,
+		HeadlineComponent,
+		DateRangeComponent,
+		SearchInputComponent,
+		AsyncPipe,
+		NgForOf,
+		TextComponent,
+		TagComponent,
+		DatePipe,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class ClientCardBirthdaysComponent implements OnInit {
 	public pageSize = 6;

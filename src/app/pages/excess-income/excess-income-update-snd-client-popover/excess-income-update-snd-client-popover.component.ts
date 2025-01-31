@@ -3,8 +3,8 @@ import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income
 import { rotateAnimation } from '@app/core/animations';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { map, NEVER, Observable, switchMap, tap } from 'rxjs';
+import { FormControl, ReactiveFormsModule} from '@angular/forms';
+import { map, NEVER, switchMap, tap } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -16,17 +16,27 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ExcessIncomeEventEnum } from '@app/core/models/excess-income/excess-income-root-enum';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
 import {
-	ButtonType,
+	ButtonComponent,
+	ButtonType, IconComponent,
 	IconPosition,
-	IconType,
+	IconType, LabelComponent,
 	LabelType,
-	Size,
+	Size, TextComponent,
 	TextType,
 } from '@front-components/components';
 import { ModalService } from '@app/core/modal/modal.service';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { NotificationType } from '@front-components/components/lib/models/enums';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {SearchInputV2Component} from "@app/shared/components/inputs/search-input-v2/search-input-v2.component";
+import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {
+	ExcessIncomeUpdateTovGroupTrComponent
+} from "@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-tr/excess-income-update-tov-group-tr.component";
 
 export interface ExcessIncomeUpdateSndClientPopoverData {
 	client: ExcessIncomeClient;
@@ -44,9 +54,26 @@ export enum ExcessIncomeSndClientRowItemField {
 	selector: 'app-excess-income-update-snd-client-popover',
 	templateUrl: './excess-income-update-snd-client-popover.component.html',
 	styleUrls: ['./excess-income-update-snd-client-popover.component.scss'],
-	providers: [ColumnsStateService],
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		CardComponent,
+		TextComponent,
+		IconComponent,
+		SsDividerComponent,
+		SearchInputV2Component,
+		ReactiveFormsModule,
+		TableV2Component,
+		NgIf,
+		NgForOf,
+		EmptyPlaceholderComponent,
+		ExcessIncomeUpdateTovGroupTrComponent,
+		LabelComponent,
+		ButtonComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class ExcessIncomeUpdateSndClientPopoverComponent {
 	protected client: ExcessIncomeClient;

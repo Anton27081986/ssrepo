@@ -14,6 +14,8 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
 
 export interface SearchInputItem {
 	id: number | null;
@@ -33,6 +35,14 @@ export interface SearchInputItem {
 			multi: true,
 		},
 	],
+	imports: [
+		CommonModule,
+		CaptionComponent,
+		NgIf,
+		AsyncPipe,
+		NgForOf
+	],
+	standalone: true
 })
 export class SearchUserInputComponent implements ControlValueAccessor {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';

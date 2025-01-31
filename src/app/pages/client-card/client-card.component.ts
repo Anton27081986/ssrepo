@@ -1,18 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterOutlet} from '@angular/router';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
 import { ITab } from '@app/shared/components/tabs/tab';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { QueryType } from '@app/widgets/history/models/query-type';
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TagComponent} from "@app/shared/components/tag/tag.component";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
+import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
+import {
+	ClientCardContractorsComponent
+} from "@app/pages/client-card/client-card-basic/client-card-contractors/client-card-contractors.component";
+import {HistoryComponent} from "@app/widgets/history/history.component";
+import {CorrespondenceComponent} from "@app/widgets/correspondence/correspondence.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'app-client-card',
 	templateUrl: './client-card.component.html',
 	styleUrls: ['./client-card.component.scss'],
+	imports: [
+		CommonModule,
+		IconComponent,
+		HeadlineComponent,
+		TagComponent,
+		AsyncPipe,
+		TabsComponent,
+		RouterOutlet,
+		ClientCardContractorsComponent,
+		HistoryComponent,
+		CorrespondenceComponent,
+		NgIf
+	],
+	standalone: true
 })
 export class ClientCardComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;

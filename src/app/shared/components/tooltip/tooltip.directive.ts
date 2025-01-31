@@ -16,6 +16,7 @@ import { TooltipPosition, TooltipTheme } from './tooltip.enums';
 
 @Directive({
 	selector: '[tooltip]',
+	standalone: true
 })
 export class TooltipDirective implements OnDestroy {
 	@Input() public tooltip: string | null = null;

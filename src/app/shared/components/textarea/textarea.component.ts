@@ -1,11 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input, Optional, Self } from '@angular/core';
 import { NgControl } from '@angular/forms';
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 @Component({
 	selector: 'ss-textarea',
 	templateUrl: './textarea.component.html',
 	styleUrls: ['./textarea.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CaptionComponent,
+		IconComponent
+	],
+	standalone: true
 })
 export class TextareaComponent {
 	@Input() public size: 'large' | 'medium' = 'medium';

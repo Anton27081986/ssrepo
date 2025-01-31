@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
@@ -35,12 +35,40 @@ import {
 	Undo,
 	type EditorConfig,
 } from 'ckeditor5';
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
+import {AsyncPipe, CommonModule, NgClass, NgForOf, NgIf} from "@angular/common";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {AttachmentComponent} from "@app/shared/components/attachment/attachment.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {CardDropdownComponent} from "@app/shared/components/card-dropdown/card-dropdown.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-mail',
 	templateUrl: './mail.component.html',
 	styleUrls: ['./mail.component.scss'],
+	imports: [
+		CommonModule,
+		InputComponent,
+		ChipsUserSearchComponent,
+		AsyncPipe,
+		NgIf,
+		IconComponent,
+		TextComponent,
+		NgClass,
+		CKEditorModule,
+		CaptionComponent,
+		AttachmentComponent,
+		NgForOf,
+		ReactiveFormsModule,
+		ButtonComponent,
+		CardDropdownComponent
+	],
+	standalone: true
 })
 export class MailComponent implements OnInit, AfterViewInit {
 	public isLayoutReady = false;

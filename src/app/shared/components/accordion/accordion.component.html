@@ -7,7 +7,9 @@
 			>
 		</ss-icon>
 	</div>
-	<div class="accordion-content" *ngIf="isExpanded" [class.open]="isExpanded">
-		<ng-content></ng-content>
-	</div>
+	@if (isExpanded) {
+		<div class="accordion-content" [class.open]="isExpanded">
+			<ng-content></ng-content>
+		</div>
+	}
 </div>

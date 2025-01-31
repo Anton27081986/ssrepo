@@ -1,13 +1,21 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { SaleRequestsFacadeService } from '@app/core/facades/sale-requests-facade.service';
 import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { ISaleTableItem } from '@app/pages/client-card/client-sale-requests/sale-table-item';
 import { TableState } from '@app/shared/components/table/table-state';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 @UntilDestroy()
 @Component({
@@ -15,12 +23,27 @@ import { Observable } from 'rxjs';
 	templateUrl: './client-sale-requests.component.html',
 	styleUrls: ['./client-sale-requests.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		CardComponent,
+		LoaderComponent,
+		NgIf,
+		HeadlineComponent,
+		AsyncPipe,
+		IconComponent,
+		TableComponent,
+		EmptyPlaceholderComponent,
+		TextComponent,
+		FiltersComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class ClientSaleRequestsComponent implements OnInit {
 	public sales$: Observable<ISaleRequestsDto | null>;
 
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;

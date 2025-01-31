@@ -1,10 +1,20 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 
 export interface IClientTableItem {
 	code: { text: string; url: string };
@@ -28,10 +38,27 @@ export enum TableState {
 	templateUrl: './clients-list-page.component.html',
 	styleUrls: ['./clients-list-page.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		HeadlineComponent,
+		ButtonComponent,
+		IconComponent,
+		TableComponent,
+		NgIf,
+		EmptyPlaceholderComponent,
+		TextComponent,
+		CardComponent,
+		FiltersComponent,
+		LoaderComponent,
+		NgForOf,
+		CaptionComponent,
+		PaginationComponent
+	],
+	standalone: true
 })
 export class ClientsListPageComponent implements OnInit {
 	// table
-	public total: number | undefined;
+	public total: number = 0;
 	public pageSize = 20;
 	public pageIndex = 1;
 	public offset = 0;

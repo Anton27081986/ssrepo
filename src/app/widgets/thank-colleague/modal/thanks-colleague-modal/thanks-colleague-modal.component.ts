@@ -8,13 +8,26 @@ import { IResponse } from '@app/core/utils/response';
 import { ICommentsItemDto } from '@app/core/models/awards/comments-item-dto';
 import { IObjectType } from '@app/core/models/awards/object-type';
 import { FormControl, Validators } from '@angular/forms';
-import { VictoryService } from '@app/components/victory/victory.service';
-import { VictoryEventEnum, VictoryRootService } from '@app/components/victory/victory-root.service';
-import { VictoryState } from '@app/components/victory/victory.state';
 import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
-import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import { LikeStateEnum } from '@app/shared/components/like/like.component';
+import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
+import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
+import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
+import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {
+	FormControlInputWithFuncEditComponent
+} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {VictoryCommentComponent} from "@app/widgets/victory/victory-comment/victory-comment.component";
+import {VictoryService} from "@app/widgets/victory/victory.service";
+import {VictoryEventEnum, VictoryRootService} from "@app/widgets/victory/victory-root.service";
+import {VictoryState} from "@app/widgets/victory/victory.state";
+import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
 
 export interface ThankColleagueModal {
 	thank: IThanksColleagueItem;
@@ -27,6 +40,24 @@ export interface ThankColleagueModal {
 	templateUrl: './thanks-colleague-modal.component.html',
 	styleUrls: ['./thanks-colleague-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	imports: [
+		CommonModule,
+		NgIf,
+		TextComponent,
+		IconComponent,
+		SsDividerComponent,
+		AvatarComponent,
+		LikeComponent,
+		ChoiceLikeComponent,
+		AsyncPipe,
+		VictoryCommentComponent,
+		NgForOf,
+		EmptyPlaceholderComponent,
+		HeadlineComponent,
+		FormControlInputWithFuncEditComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class ThanksColleagueModalComponent {
 	protected readonly TooltipPosition = TooltipPosition;

@@ -3,14 +3,30 @@ import { Observable } from 'rxjs';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IContractorItemDto } from '@app/core/models/company/contractor-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { TableState } from '@app/shared/components/table/table-state';
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-client-card-contractors',
 	templateUrl: './client-card-contractors.component.html',
 	styleUrls: ['./client-card-contractors.component.scss'],
+	imports: [
+		CommonModule,
+		LoaderComponent,
+		NgIf,
+		AsyncPipe,
+		CardComponent,
+		HeadlineComponent,
+		TextComponent,
+		TableComponent
+	],
+	standalone: true
 })
 export class ClientCardContractorsComponent implements OnInit {
 	public contractors$: Observable<IContractorItemDto[] | null>;

@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 	selector: 'ss-caption',
 	templateUrl: './caption.component.html',
 	styleUrls: ['./caption.component.scss'],
+	standalone: true
 })
 export class CaptionComponent {
 	@Input() public size: '1' | '2' = '1';

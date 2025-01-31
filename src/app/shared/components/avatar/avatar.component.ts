@@ -1,10 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
 	selector: 'ss-avatar',
 	templateUrl: './avatar.component.html',
 	styleUrls: ['./avatar.component.scss'],
+	imports: [
+		IconComponent,
+		AsyncPipe
+	],
+	standalone: true
 })
 export class AvatarComponent implements OnInit {
 	@Input() public src: string | null = null;

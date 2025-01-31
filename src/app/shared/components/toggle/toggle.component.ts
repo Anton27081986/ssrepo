@@ -1,5 +1,7 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {CommonModule, NgClass} from "@angular/common";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 
 @Component({
 	selector: 'ss-toggle',
@@ -12,6 +14,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 			multi: true,
 		},
 	],
+	imports: [
+		CommonModule,
+		NgClass,
+		CaptionComponent
+	],
+	standalone: true
 })
 export class ToggleComponent implements ControlValueAccessor {
 	@Input()

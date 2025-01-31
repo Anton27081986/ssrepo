@@ -5,26 +5,26 @@
 <div class="my-menu">
 	<p>Добавляйте в панель быстрого доступа наиболее удобные для вас пункты меню. Перетащите из левой колонки в правую чтобы они отображались в избранном в шапке</p>
 
-	<form [formGroup]="myMenuForm" nz-form nzLayout="vertical" class="settings-form m-t-35">
-		<div class="filter">
-			<nz-form-item>
-				<nz-form-control>
-					<nz-input-group [nzSuffix]="suffixIconSearch">
-						<input type="email" nz-input
-									 placeholder="Поиск по общему меню"
-									 (input)="filterItems($event)"
-						/>
-					</nz-input-group>
-				</nz-form-control>
-			</nz-form-item>
+<!--	<form [formGroup]="myMenuForm" nz-form nzLayout="vertical" class="settings-form m-t-35">-->
+<!--		<div class="filter">-->
+<!--			<nz-form-item>-->
+<!--				<nz-form-control>-->
+<!--					<nz-input-group [nzSuffix]="suffixIconSearch">-->
+<!--						<input type="email" nz-input-->
+<!--									 placeholder="Поиск по общему меню"-->
+<!--									 (input)="filterItems($event)"-->
+<!--						/>-->
+<!--					</nz-input-group>-->
+<!--				</nz-form-control>-->
+<!--			</nz-form-item>-->
 
-			<div class="favorite-title">
-				<span class="icon" nz-icon nzType="ss:star"></span>
-				<span class="text">Выбранные пункты Избранного</span>
-			</div>
+<!--			<div class="favorite-title">-->
+<!--				<span class="icon" nz-icon nzType="ss:star"></span>-->
+<!--				<span class="text">Выбранные пункты Избранного</span>-->
+<!--			</div>-->
 
-		</div>
-	</form>
+<!--		</div>-->
+<!--	</form>-->
 
 	<div class="select">
 		<div class="groups from">
@@ -32,12 +32,12 @@
 				<div class="category" *ngFor="let menu of listMenu; trackBy: trackBy">
 					<div class="title">
 						<span>{{ menu.name }}</span>
-						<span nz-icon nzType="ss:arrowBottom"></span>
+						<ss-icon name="arrowBottom"></ss-icon>
 					</div>
 					<div class="items" *ngFor="let item of menu.items; trackBy: trackBy">
 						<div class="item">
 							<span>{{ item.name }}</span>
-							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></span>
+							<ss-icon name="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></ss-icon>
 						</div>
 					</div>
 				</div>
@@ -47,7 +47,7 @@
 					<div class="items" *ngFor="let item of filterListMenu; trackBy: trackBy">
 						<div class="item">
 							<span>{{ item.name }}</span>
-							<span nz-icon nzType="ss:arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></span>
+							<ss-icon name="arrowRightH" (click)="addItemToFavorite(item);" *ngIf="item.link"></ss-icon>
 						</div>
 					</div>
 				</div>
@@ -64,11 +64,11 @@
 	</div>
 
 	<ng-template #suffixIconSearch>
-		<span class="search" nz-icon nzType="ss:search"></span>
+		<ss-icon class="search" name="search"></ss-icon>
 	</ng-template>
 
 	<ng-template #prefixUser>
-		<i class="star" nz-icon nzType="ss:star"></i>
+		<ss-icon class="star" name="ss:star"></ss-icon>
 	</ng-template>
 </div>
 

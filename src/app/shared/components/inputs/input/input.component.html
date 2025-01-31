@@ -11,7 +11,8 @@
 		   class="{{ error ? size + ' error' : size }}"
 		   #input
 	/>
-	<ss-icon *ngIf="input.value && !disabled" height="12" name="close"
-			 (click)="input.value = ''; writeValue('')"></ss-icon>
+	@if (input.value && !disabled) {
+		<ss-icon height="12" name="close" (click)="input.value = ''; writeValue('')"></ss-icon>
+	}
 </div>
 <ss-caption size="2" color="error">{{ error }}</ss-caption>

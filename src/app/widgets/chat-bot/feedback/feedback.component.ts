@@ -24,6 +24,7 @@ import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service'
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {CommonModule} from "@angular/common";
 
 interface DialogData {
 	likeType: ChatBotLikeTypeEnum;
@@ -37,6 +38,7 @@ interface DialogData {
 	styleUrls: ['./feedback.component.scss'],
 	standalone: true,
 	imports: [
+		CommonModule,
 		CardComponent,
 		AvatarComponent,
 		ButtonComponent,

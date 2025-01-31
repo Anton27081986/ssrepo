@@ -9,6 +9,8 @@ import {
 	ChangeDetectorRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
 
 @Component({
 	selector: 'ss-numeric-input',
@@ -22,6 +24,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 			multi: true,
 		},
 	],
+	imports: [
+		CaptionComponent,
+		IconComponent,
+		CaptionComponent
+	],
+	standalone: true
 })
 export class NumericInputComponent implements ControlValueAccessor, OnInit {
 	@Input() public size: 'large' | 'medium' = 'medium';
