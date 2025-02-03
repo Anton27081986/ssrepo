@@ -8,7 +8,7 @@ module.exports = {
 		es6: true,
 		node: true,
 	},
-	extends: ['eslint-config-airbnb-base', 'plugin:prettier/recommended'],
+	extends: ['plugin:prettier/recommended'],
 	parser: '@babel/eslint-parser',
 	parserOptions: {
 		ecmaFeatures: {
@@ -105,7 +105,6 @@ module.exports = {
 				'plugin:@typescript-eslint/recommended',
 				'plugin:@angular-eslint/recommended',
 				'plugin:@angular-eslint/template/process-inline-templates',
-				'plugin:rxjs/recommended',
 				'prettier',
 			],
 			settings: {
@@ -219,19 +218,6 @@ module.exports = {
 					{ blankLine: 'any', prev: '*', next: 'class' },
 					{ blankLine: 'any', prev: 'class', next: '*' },
 					{ blankLine: 'any', prev: 'directive', next: 'directive' },
-				],
-				'rxjs/no-compat': 'error',
-				'rxjs/no-connectable': 'error',
-				'rxjs/no-ignored-observable': 'error',
-				'rxjs/no-topromise': 'error',
-				'rxjs-angular/prefer-takeuntil': [
-					'error',
-					{
-						alias: ['untilDestroyed'],
-						checkComplete: true,
-						checkDecorators: ['Component', 'UntilDestroy'],
-						checkDestroy: false,
-					},
 				],
 				'unicorn/prefer-string-slice': 'error',
 				'unicorn/no-array-push-push': 'error',
