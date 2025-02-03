@@ -39,7 +39,7 @@
 								<snab-text snab-tooltip
 										   [tooltipText]="'Рекомендованная цена.'"
 										   [position]="TooltipPosition.Top"
-										   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value }}
+										   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value | numWithSpaces:2 }}
 								</snab-text>
 							</div>
 						</td>
@@ -142,7 +142,7 @@
 							<snab-text snab-tooltip
 									   [tooltipText]="'Рекомендованная цена.'"
 									   [position]="TooltipPosition.Top"
-									   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value }}
+									   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value | numWithSpaces:2 }}
 							</snab-text>
 						</td>
 					</ng-container>
