@@ -14,13 +14,13 @@ import {
 	ReactiveFormsModule,
 } from '@angular/forms';
 import { rotateAnimation } from '@app/core/animations';
-import {AsyncPipe, CommonModule, JsonPipe, NgClass, NgIf} from '@angular/common';
+import { AsyncPipe, CommonModule, JsonPipe, NgClass, NgIf } from '@angular/common';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { filter, map, combineLatest, startWith } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { ClickOutsideDirective } from '@app/core/directives/click-outside.directive';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-select-v2',
@@ -87,21 +87,15 @@ export class SelectV2Component implements ControlValueAccessor {
 	private onTouched!: () => void;
 
 	public constructor() {
-		effect(
-			() => {
-				this.mutableFilteredOptions.set(this.options());
-			},
-			{ allowSignalWrites: true },
-		);
+		effect(() => {
+			this.mutableFilteredOptions.set(this.options());
+		});
 
-		effect(
-			() => {
-				if (this.autocomplete()) {
-					this.mutableFilteredOptions.set(this.filteredOptions());
-				}
-			},
-			{ allowSignalWrites: true },
-		);
+		effect(() => {
+			if (this.autocomplete()) {
+				this.mutableFilteredOptions.set(this.filteredOptions());
+			}
+		});
 	}
 
 	public registerOnChange(fn: (value: IDictionaryItemDto | null) => void): void {

@@ -1,11 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import {ButtonComponent, ButtonType, Size} from '@front-components/components';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import { ButtonComponent, ButtonType, Size } from '@front-components/components';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { NgIf } from '@angular/common';
 
 interface NoticeDialogData {
 	header: string;
@@ -24,9 +25,10 @@ interface NoticeDialogData {
 		IconComponent,
 		HeadlineComponent,
 		TextComponent,
-		ButtonComponent
+		ButtonComponent,
+		NgIf,
 	],
-	standalone: true
+	standalone: true,
 })
 export class NoticeDialogComponent {
 	public header: string | undefined;

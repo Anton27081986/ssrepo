@@ -25,43 +25,45 @@
 	}
 
 	.table {
-	width: 100%;
+		width: 100%;
+		border-spacing: 0px;
+		border-collapse: collapse;
 
-			&__thead {
-				width: 100%;
-				top: -1px;
-				z-index: 1;
-				background-color: #E2E5EA;
-				color: $text;
+		&__thead {
+			width: 100%;
+			top: -1px;
+			z-index: 1;
+			background-color: #E2E5EA;
+			color: $text;
 
-				&__sticky {
-					position: sticky;
-				}
-
-				tr {
-					min-width: 100%;
-
-					th {
-						text-align: center;
-						font-size: 12px;
-						font-weight: 500;
-						line-height: 19px;
-						padding: 8px;
-						border: 1px solid #C5CBD5;
-					}
-				}
+			&__sticky {
+				position: sticky;
 			}
 
-			}
+			tr {
+				min-width: 100%;
 
-		.empty-space {
-			flex-grow: 1;
+				th {
+					text-align: center;
+					font-size: 12px;
+					font-weight: 500;
+					line-height: 19px;
+					padding: 8px;
+					border: 1px solid #C5CBD5;
+				}
+			}
 		}
+
+	}
+
+	.empty-space {
+		flex-grow: 1;
+	}
 }
 
-:host-context(.dark) :host  table thead {
-		background-color: $dark-island !important;
-		color: $island;
+:host-context(.dark) :host table thead {
+	background-color: $dark-island !important;
+	color: $island;
 }
 
 :host-context(.dark) .table-wrapper {
