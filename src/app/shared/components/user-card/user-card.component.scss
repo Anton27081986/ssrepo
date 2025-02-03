@@ -1,6 +1,6 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 @use 'src/assets/scss/_variables.scss' as *;
-@use '../../../styles/colors' as *;
+@use '../../../../styles/colors' as *;
 
 .user-card {
 	display: flex;
