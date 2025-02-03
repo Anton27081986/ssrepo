@@ -10,78 +10,44 @@ import {
 	procurementsPermissionsGuard,
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
-import {MainPageComponent} from "@app/pages/main-page/main-page.component";
-import {ProfileComponent} from "@app/pages/profile/profile.component";
-import {SettingsComponent} from "@app/pages/profile/settings/settings.component";
-import {ChangePasswordComponent} from "@app/pages/profile/change-password/change-password.component";
-import {MyMenuComponent} from "@app/pages/profile/my-menu/my-menu.component";
-import {OrderWidgetsComponent} from "@app/pages/profile/order-widgets/order-widgets.component";
-import {NotificationsComponent} from "@app/pages/profile/notifications/notifications.component";
-import {
-	FriendlyAccountsPageComponent
-} from "@app/pages/profile/friendly-accounts-page/friendly-accounts-page.component";
-import {RawMaterialAccountingComponent} from "@app/pages/raw-material-accounting/raw-material-accounting.component";
-import {CompletedWorkActsComponent} from "@app/pages/completed-work-acts/completed-work-acts.component";
-import {
-	CompletedWorkActCardComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-card.component";
-import {ClientsListPageComponent} from "@app/pages/clients-list-page/clients-list-page.component";
-import {ClientCardComponent} from "@app/pages/client-card/client-card.component";
-import {ClientCardBasicComponent} from "@app/pages/client-card/client-card-basic/client-card-basic.component";
-import {ClientSaleRequestsComponent} from "@app/pages/client-card/client-sale-requests/client-sale-requests.component";
-import {
-	ClientRequestSamplesComponent
-} from "@app/pages/client-card/client-request-samples/client-request-samples.component";
-import {
-	ClientCardNewProductsComponent
-} from "@app/pages/client-card/client-card-new-products/client-card-new-products.component";
-import {
-	ClientCardReturnRequestsComponent
-} from "@app/pages/client-card/client-card-return-requests/client-card-return-requests.component";
-import {
-	ClientCardLostProductsComponent
-} from "@app/pages/client-card/client-card-lost-products/client-card-lost-products.component";
-import {
-	ClientCardContractsComponent
-} from "@app/pages/client-card/client-card-contracts/client-card-contracts.component";
-import {
-	ClientCardBusinessTripsComponent
-} from "@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component";
-import {
-	ClientCardBirthdaysComponent
-} from "@app/pages/client-card/client-card-birthdays/client-card-birthdays.component";
-import {InviteComponent} from "@app/pages/invite/invite.component";
-import {
-	ClientProposalsPageComponent
-} from "@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component";
-import {
-	ClientProposalsInfoComponent
-} from "@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component";
-import {
-	ClientProposalsBusinessTripsTabComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component";
-import {
-	ClientProposalsDevelopmentTabComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.component";
-import {
-	ClientProposalsNewsLineTabComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.component";
-import {
-	ClientProposalsTradeListTabComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.component";
-import {
-	ClientProposalsSamplesTabComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.component";
-import {
-	ClientProposalsContractorsTabComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.component";
-import {ExcessIncomePageComponent} from "@app/pages/excess-income/excess-income-page/excess-income-page.component";
-import {NotPermissionPageComponent} from "@app/pages/not-permission-page/not-permission-page.component";
-import {AuthComponent} from "@auth/auth.component";
-import {AppRoutes} from "@app/common/routes";
-import {SignInComponent} from "@auth/sign-in/sign-in.component";
-import {ForgotPasswordComponent} from "@auth/forgot-password/forgot-password.component";
-import {ResetPasswordComponent} from "@auth/reset-password/reset-password.component";
+import { MainPageComponent } from '@app/pages/main-page/main-page.component';
+import { ProfileComponent } from '@app/pages/profile/profile.component';
+import { SettingsComponent } from '@app/pages/profile/settings/settings.component';
+import { ChangePasswordComponent } from '@app/pages/profile/change-password/change-password.component';
+import { MyMenuComponent } from '@app/pages/profile/my-menu/my-menu.component';
+import { OrderWidgetsComponent } from '@app/pages/profile/order-widgets/order-widgets.component';
+import { NotificationsComponent } from '@app/pages/profile/notifications/notifications.component';
+import { FriendlyAccountsPageComponent } from '@app/pages/profile/friendly-accounts-page/friendly-accounts-page.component';
+import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounting/raw-material-accounting.component';
+import { CompletedWorkActsComponent } from '@app/pages/completed-work-acts/completed-work-acts.component';
+import { CompletedWorkActCardComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-card.component';
+import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page.component';
+import { ClientCardComponent } from '@app/pages/client-card/client-card.component';
+import { ClientCardBasicComponent } from '@app/pages/client-card/client-card-basic/client-card-basic.component';
+import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-requests/client-sale-requests.component';
+import { ClientRequestSamplesComponent } from '@app/pages/client-card/client-request-samples/client-request-samples.component';
+import { ClientCardNewProductsComponent } from '@app/pages/client-card/client-card-new-products/client-card-new-products.component';
+import { ClientCardReturnRequestsComponent } from '@app/pages/client-card/client-card-return-requests/client-card-return-requests.component';
+import { ClientCardLostProductsComponent } from '@app/pages/client-card/client-card-lost-products/client-card-lost-products.component';
+import { ClientCardContractsComponent } from '@app/pages/client-card/client-card-contracts/client-card-contracts.component';
+import { ClientCardBusinessTripsComponent } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component';
+import { ClientCardBirthdaysComponent } from '@app/pages/client-card/client-card-birthdays/client-card-birthdays.component';
+import { InviteComponent } from '@app/pages/invite/invite.component';
+import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
+import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
+import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component';
+import { ClientProposalsDevelopmentTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.component';
+import { ClientProposalsNewsLineTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.component';
+import { ClientProposalsTradeListTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.component';
+import { ClientProposalsSamplesTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.component';
+import { ClientProposalsContractorsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.component';
+import { ExcessIncomePageComponent } from '@app/pages/excess-income/excess-income-page/excess-income-page.component';
+import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
+import { AuthComponent } from '@auth/auth.component';
+import { AppRoutes } from '@app/common/routes';
+import { SignInComponent } from '@auth/sign-in/sign-in.component';
+import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -95,7 +61,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: '',
-				component: MainPageComponent
+				component: MainPageComponent,
 			},
 			{
 				path: '',
@@ -109,7 +75,11 @@ export const routes: Routes = [
 						canActivate: [AuthGuard],
 						component: ProfileComponent,
 						children: [
-							{ path: 'settings', component: SettingsComponent, title: 'Основная информация' },
+							{
+								path: 'settings',
+								component: SettingsComponent,
+								title: 'Основная информация',
+							},
 							{
 								path: 'change-password',
 								component: ChangePasswordComponent,
@@ -119,7 +89,11 @@ export const routes: Routes = [
 								path: 'friendly-accounts',
 								component: FriendlyAccountsPageComponent,
 							},
-							{ path: 'my-menu', component: MyMenuComponent, title: 'Основная информация' },
+							{
+								path: 'my-menu',
+								component: MyMenuComponent,
+								title: 'Основная информация',
+							},
 							{
 								path: 'order-widgets',
 								component: OrderWidgetsComponent,
@@ -135,7 +109,7 @@ export const routes: Routes = [
 							// 	component: RecoveryPasswordComponent,
 							// 	title: 'Основная информация',
 							// },
-						]
+						],
 					},
 					{
 						path: 'raw-material-accounting',
@@ -149,7 +123,7 @@ export const routes: Routes = [
 								path: '',
 								component: RawMaterialAccountingComponent,
 							},
-						]
+						],
 					},
 					{
 						path: 'completed-work-acts',
@@ -166,7 +140,7 @@ export const routes: Routes = [
 								path: ':id',
 								component: CompletedWorkActCardComponent,
 							},
-						]
+						],
 					},
 				],
 			},
@@ -182,7 +156,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'clients-list',
-				component: ClientsListPageComponent
+				component: ClientsListPageComponent,
 			},
 			{
 				path: 'client-card',
@@ -225,7 +199,7 @@ export const routes: Routes = [
 						component: ClientCardBirthdaysComponent,
 					},
 					{ path: '**', redirectTo: 'basic' },
-				]
+				],
 			},
 			{
 				path: 'invite',
@@ -246,39 +220,40 @@ export const routes: Routes = [
 				component: ClientProposalsPageComponent,
 				children: [
 					{
-					path: ':clientId',
-					component: ClientProposalsInfoComponent,
-					data: {
-						animation: 'animation',
+						path: ':clientId',
+						component: ClientProposalsInfoComponent,
+						data: {
+							animation: 'animation',
+						},
+						children: [
+							{
+								path: 'business-trips',
+								component: ClientProposalsBusinessTripsTabComponent,
+							},
+							{
+								path: 'development',
+								component: ClientProposalsDevelopmentTabComponent,
+							},
+							{
+								path: 'news-line',
+								component: ClientProposalsNewsLineTabComponent,
+							},
+							{
+								path: 'trade-list',
+								component: ClientProposalsTradeListTabComponent,
+							},
+							{
+								path: 'samples',
+								component: ClientProposalsSamplesTabComponent,
+							},
+							{
+								path: 'contractors',
+								component: ClientProposalsContractorsTabComponent,
+							},
+							{ path: '**', redirectTo: 'contractors' },
+						],
 					},
-					children: [
-						{
-							path: 'business-trips',
-							component: ClientProposalsBusinessTripsTabComponent,
-						},
-						{
-							path: 'development',
-							component: ClientProposalsDevelopmentTabComponent,
-						},
-						{
-							path: 'news-line',
-							component: ClientProposalsNewsLineTabComponent,
-						},
-						{
-							path: 'trade-list',
-							component: ClientProposalsTradeListTabComponent,
-						},
-						{
-							path: 'samples',
-							component: ClientProposalsSamplesTabComponent,
-						},
-						{
-							path: 'contractors',
-							component: ClientProposalsContractorsTabComponent,
-						},
-						{ path: '**', redirectTo: 'contractors' },
-					],
-				}]
+				],
 			},
 		],
 	},
@@ -301,14 +276,14 @@ export const routes: Routes = [
 	{
 		path: '',
 		component: FullWidthWithoutFooterLayoutComponent,
-		canActivate: [AuthGuard, excessIncomePermissionsGuard],
+		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
 				path: 'excess-income-page',
-				component: ExcessIncomePageComponent
+				component: ExcessIncomePageComponent,
 			},
 		],
 	},
@@ -322,7 +297,7 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'not-permission',
-				component: NotPermissionPageComponent
+				component: NotPermissionPageComponent,
 			},
 		],
 	},
@@ -341,7 +316,7 @@ export const routes: Routes = [
 			},
 			{ path: AppRoutes.resetPassword, component: ResetPasswordComponent, pathMatch: 'full' },
 			{ path: '**', redirectTo: AppRoutes.signIn },
-		]
+		],
 	},
 	{ path: '**', redirectTo: '' },
 ];

@@ -29,8 +29,10 @@
                             "src/assets"
                         ],
                         "styles": [
-							"src/styles.scss"
-                        ],
+							"src/styles.scss",
+							"node_modules/@front-components/components/lib/styles/custom-variables.scss",
+							"node_modules/@front-components/components/lib/styles/mixins/text.scss"
+						],
                         "scripts": []
                     },
                     "configurations": {
