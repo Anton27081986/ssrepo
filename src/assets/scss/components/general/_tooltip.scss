@@ -1,0 +1,19 @@
+.ant-tooltip {
+	z-index: 1;
+}
+
+.ant-tooltip-inner {
+    border: 1px solid #b4c4ff;
+    background-color: #d9e1ff !important;
+    border-radius: 8px !important;
+    color: $blue !important;
+	z-index: 1;
+}
+
+.ant-tooltip-arrow {
+    display: none !important;
+}
+
+.ant-tooltip-arrow-content::before {
+    background: #d9e1ff !important;
+}
