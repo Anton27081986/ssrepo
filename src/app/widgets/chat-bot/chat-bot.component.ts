@@ -1,7 +1,6 @@
 import { Component, ElementRef, Signal, ViewChild } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import {
-	AvatarComponent,
 	ButtonComponent,
 	ButtonType,
 	CardComponent,
@@ -41,7 +40,6 @@ import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 		IconComponent,
 		TextComponent,
 		ButtonComponent,
-		AvatarComponent,
 		NgClass,
 		ReactiveFormsModule,
 		FormFieldComponent,
@@ -130,7 +128,6 @@ export class ChatBotComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
-	protected readonly ExtendedSize = ExtendedSize;
 	protected readonly ChatBotMessageTypeEnum = ChatBotMessageTypeEnum;
 	protected readonly Colors = Colors;
 	protected readonly Size = Size;

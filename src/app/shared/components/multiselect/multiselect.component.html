@@ -3,7 +3,7 @@
 }
 <div class="input {{ size }}">
 	<div class="selected" (click)="changeState($event)">
-		@if (placeholder && !getSelectedOptions()?.length) {
+		@if (placeholder && !getSelectedOptions().length) {
 			<ss-text class="placeholder" size="2">{{ placeholder }}</ss-text>
 		}
 		@for (option of getSelectedOptions(); track option.id) {

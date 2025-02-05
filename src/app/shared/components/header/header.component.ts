@@ -14,7 +14,6 @@ import {ChatBotComponent} from "@app/widgets/chat-bot/chat-bot.component";
 import {toSignal} from "@angular/core/rxjs-interop";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
 import {AsyncPipe, CommonModule} from "@angular/common";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 import {MainMenuComponent} from "@app/shared/components/main-menu/main-menu.component";
@@ -34,7 +33,6 @@ import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-b
 		SearchInputComponent,
 		NotificationComponent,
 		ButtonComponent,
-		AvatarComponent,
 		ProfilePopupComponent,
 		AsyncPipe,
 		TooltipDirective,

@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
-import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
-import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
+import { FullLayoutComponent } from '@app/shared/layouts/new-layout/full-layout.component';
 import {
 	completedWorkActPermissionsGuard,
-	excessIncomePermissionsGuard,
 	procurementsPermissionsGuard,
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
@@ -53,7 +51,7 @@ export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
 	{
 		path: '',
-		component: NewLayoutComponent,
+		component: FullLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
@@ -64,83 +62,74 @@ export const routes: Routes = [
 				component: MainPageComponent,
 			},
 			{
-				path: '',
-				component: EmptyLayoutComponent,
-				data: {
-					animation: 'animation',
-				},
+				path: 'profile',
+				canActivate: [AuthGuard],
+				component: ProfileComponent,
 				children: [
 					{
-						path: 'profile',
-						canActivate: [AuthGuard],
-						component: ProfileComponent,
-						children: [
-							{
-								path: 'settings',
-								component: SettingsComponent,
-								title: 'Основная информация',
-							},
-							{
-								path: 'change-password',
-								component: ChangePasswordComponent,
-								title: 'Основная информация',
-							},
-							{
-								path: 'friendly-accounts',
-								component: FriendlyAccountsPageComponent,
-							},
-							{
-								path: 'my-menu',
-								component: MyMenuComponent,
-								title: 'Основная информация',
-							},
-							{
-								path: 'order-widgets',
-								component: OrderWidgetsComponent,
-								title: 'Основная информация',
-							},
-							{
-								path: 'notifications',
-								component: NotificationsComponent,
-								title: 'Основная информация',
-							},
-							// {
-							// 	path: 'recovery-password',
-							// 	component: RecoveryPasswordComponent,
-							// 	title: 'Основная информация',
-							// },
-						],
+						path: 'settings',
+						component: SettingsComponent,
+						title: 'Основная информация',
 					},
 					{
-						path: 'raw-material-accounting',
-						canActivate: [procurementsPermissionsGuard],
-						children: [
-							{
-								path: ':id',
-								component: RawMaterialAccountingComponent,
-							},
-							{
-								path: '',
-								component: RawMaterialAccountingComponent,
-							},
-						],
+						path: 'change-password',
+						component: ChangePasswordComponent,
+						title: 'Основная информация',
 					},
 					{
-						path: 'completed-work-acts',
-						canActivate: [completedWorkActPermissionsGuard],
-						children: [
-							{
-								path: '',
-								component: CompletedWorkActsComponent,
-								data: {
-									animation: 'animation',
-								},
-							},
-							{
-								path: ':id',
-								component: CompletedWorkActCardComponent,
-							},
-						],
+						path: 'friendly-accounts',
+						component: FriendlyAccountsPageComponent,
+					},
+					{
+						path: 'my-menu',
+						component: MyMenuComponent,
+						title: 'Основная информация',
+					},
+					{
+						path: 'order-widgets',
+						component: OrderWidgetsComponent,
+						title: 'Основная информация',
+					},
+					{
+						path: 'notifications',
+						component: NotificationsComponent,
+						title: 'Основная информация',
+					},
+					// {
+					// 	path: 'recovery-password',
+					// 	component: RecoveryPasswordComponent,
+					// 	title: 'Основная информация',
+					// },
+				],
+			},
+			{
+				path: 'raw-material-accounting',
+				canActivate: [procurementsPermissionsGuard],
+				children: [
+					{
+						path: ':id',
+						component: RawMaterialAccountingComponent,
+					},
+					{
+						path: '',
+						component: RawMaterialAccountingComponent,
+					},
+				],
+			},
+			{
+				path: 'completed-work-acts',
+				canActivate: [completedWorkActPermissionsGuard],
+				children: [
+					{
+						path: '',
+						component: CompletedWorkActsComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+					{
+						path: ':id',
+						component: CompletedWorkActCardComponent,
 					},
 				],
 			},
@@ -160,45 +149,50 @@ export const routes: Routes = [
 			},
 			{
 				path: 'client-card',
-				component: ClientCardComponent,
 				children: [
 					{
-						path: 'basic',
-						component: ClientCardBasicComponent,
+						path: ':id',
+						component: ClientCardComponent,
+						children: [
+							{
+								path: 'basic',
+								component: ClientCardBasicComponent,
+							},
+							{
+								path: 'sales',
+								component: ClientSaleRequestsComponent,
+							},
+							{
+								path: 'samples',
+								component: ClientRequestSamplesComponent,
+							},
+							{
+								path: 'gntpr',
+								component: ClientCardNewProductsComponent,
+							},
+							{
+								path: 'refund',
+								component: ClientCardReturnRequestsComponent,
+							},
+							{
+								path: 'pkp',
+								component: ClientCardLostProductsComponent,
+							},
+							{
+								path: 'contracts',
+								component: ClientCardContractsComponent,
+							},
+							{
+								path: 'business-trips',
+								component: ClientCardBusinessTripsComponent,
+							},
+							{
+								path: 'birthdays',
+								component: ClientCardBirthdaysComponent,
+							},
+							{ path: '**', redirectTo: 'basic' },
+						],
 					},
-					{
-						path: 'sales',
-						component: ClientSaleRequestsComponent,
-					},
-					{
-						path: 'samples',
-						component: ClientRequestSamplesComponent,
-					},
-					{
-						path: 'gntpr',
-						component: ClientCardNewProductsComponent,
-					},
-					{
-						path: 'refund',
-						component: ClientCardReturnRequestsComponent,
-					},
-					{
-						path: 'pkp',
-						component: ClientCardLostProductsComponent,
-					},
-					{
-						path: 'contracts',
-						component: ClientCardContractsComponent,
-					},
-					{
-						path: 'business-trips',
-						component: ClientCardBusinessTripsComponent,
-					},
-					{
-						path: 'birthdays',
-						component: ClientCardBirthdaysComponent,
-					},
-					{ path: '**', redirectTo: 'basic' },
 				],
 			},
 			{

@@ -14,7 +14,7 @@ import {
 	ReactiveFormsModule,
 } from '@angular/forms';
 import { rotateAnimation } from '@app/core/animations';
-import { AsyncPipe, CommonModule, JsonPipe, NgClass, NgIf } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { filter, map, combineLatest, startWith } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -27,11 +27,9 @@ import { IconComponent } from '@app/shared/components/icon/icon.component';
 	standalone: true,
 	imports: [
 		CommonModule,
-		AsyncPipe,
 		MapperPipe,
 		ReactiveFormsModule,
 		NgClass,
-		JsonPipe,
 		ClickOutsideDirective,
 		CaptionComponent,
 		IconComponent,

@@ -23,7 +23,7 @@
 						@case (!!item[headItem.field].pseudoLink) {
 							<span class="icon" (click)="onControlClick(item, item[headItem.field].pseudoLink)">{{ item[headItem.field].text }}</span>
 						}
-						@case (!!item[headItem.field]?.icon) {
+						@case (!!item[headItem.field].icon) {
 							<ss-icon [name]="item[headItem.field].icon"
 									 (click)="onControlClick(item, item[headItem.field].icon)">
 							</ss-icon>
@@ -48,7 +48,7 @@
 						}
 					}
 
-					@if ((cell.clientWidth < cell.scrollWidth) && !item[headItem.field]?.icon) {
+					@if ((cell.clientWidth < cell.scrollWidth) && !item[headItem.field].icon) {
 						<ss-icon class="maximise" name="maximise" (click)="$event.stopPropagation(); showText(item[headItem.field], headItem.title)"></ss-icon>
 					}
 				</div>

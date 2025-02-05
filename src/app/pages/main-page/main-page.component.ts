@@ -14,7 +14,6 @@ import {RatingComponent} from "@app/widgets/rating/rating.component";
 import {VictoryComponent} from "@app/widgets/victory/victory.component";
 import {ThanksPartnerComponent} from "@app/widgets/thank-partner/thanks-partner.component";
 import {TransportComponent} from "@app/widgets/transport/transport.component";
-import {UserCardComponent} from "@app/shared/components/user-card/user-card.component";
 
 @UntilDestroy()
 @Component({
@@ -24,7 +23,6 @@ import {UserCardComponent} from "@app/shared/components/user-card/user-card.comp
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,
-		UserCardComponent,
 		BannerComponent,
 		AuctionSalesComponent,
 		VictoryComponent,

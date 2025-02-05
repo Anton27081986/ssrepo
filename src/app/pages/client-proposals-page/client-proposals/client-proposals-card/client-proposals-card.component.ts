@@ -27,7 +27,6 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
 import {FilePickerComponent} from "@app/shared/components/file-picker/file-picker.component";
 import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {
 	ClientProposalsTableVgpComponent
 } from "@app/pages/client-proposals-page/client-proposals/client-proposals-table-vgp/client-proposals-table-vgp.component";
@@ -62,7 +61,6 @@ export interface IClientProposalsCriteriaForm {
 		NgIf,
 		FilePickerComponent,
 		TooltipDirective,
-		IconComponent,
 		ClientProposalsTableVgpComponent,
 		SettingsViewColumnComponent,
 		NoticeComponent,
