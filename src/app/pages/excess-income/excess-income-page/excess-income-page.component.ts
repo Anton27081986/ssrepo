@@ -73,7 +73,7 @@ export class ExcessIncomePageComponent {
 			name: 'tovGroups',
 			type: 'search-select',
 			searchType: 'tovGroups',
-			label: 'Товарная группа',
+			label: 'Товарная подгруппа',
 			placeholder: 'Выберите товарную подгруппу',
 		},
 		{
