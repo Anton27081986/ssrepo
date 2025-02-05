@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { HistoryComponent } from '@app/widgets/history/history.component';
 import { ExcessIncomeApiService } from '@app/pages/excess-income/excess-income-service/excess-income.api-service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
@@ -36,7 +35,6 @@ interface IDialogData {
 	standalone: true,
 	imports: [
 		CommonModule,
-		HistoryComponent,
 		NgIf,
 		CardComponent,
 		HeadlineComponent,

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {HeaderComponent} from "@app/shared/components/new-header/header.component";
-import {RouterOutlet} from "@angular/router";
+import { HeaderComponent } from "@app/shared/components/header/header.component";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
 	templateUrl: './full-width-without-footer-layout.component.html',

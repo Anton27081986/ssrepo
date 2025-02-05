@@ -14,7 +14,6 @@ import {
 	ButtonComponent,
 	ButtonType,
 	Size,
-	TextComponent,
 	TextType,
 } from '@front-components/components';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -27,7 +26,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 	standalone: true,
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [TextComponent, ButtonComponent],
+	imports: [ ButtonComponent ],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,

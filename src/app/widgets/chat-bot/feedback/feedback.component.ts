@@ -3,15 +3,11 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
 import {
-	AvatarComponent,
 	ButtonComponent,
 	ButtonType,
 	CardComponent,
 	FieldCtrlDirective,
-	FormFieldComponent,
-	IconComponent,
-	IconPosition,
-	IconType,
+	FormFieldComponent, IconPosition, IconType,
 	InputComponent,
 	LabelComponent,
 	LabelType,
@@ -24,7 +20,6 @@ import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service'
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {CommonModule} from "@angular/common";
 
 interface DialogData {
 	likeType: ChatBotLikeTypeEnum;
@@ -38,9 +33,7 @@ interface DialogData {
 	styleUrls: ['./feedback.component.scss'],
 	standalone: true,
 	imports: [
-		CommonModule,
 		CardComponent,
-		AvatarComponent,
 		ButtonComponent,
 		TextComponent,
 		FieldCtrlDirective,
@@ -48,7 +41,6 @@ interface DialogData {
 		FormsModule,
 		InputComponent,
 		ReactiveFormsModule,
-		IconComponent,
 		LabelComponent,
 	],
 })
@@ -96,10 +88,10 @@ export class ChatBotFeedbackComponent {
 	}
 
 	protected readonly Size = Size;
-	protected readonly IconPosition = IconPosition;
-	protected readonly IconType = IconType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly TextType = TextType;
 	protected readonly ButtonType = ButtonType;
 	protected readonly LabelType = LabelType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
 }

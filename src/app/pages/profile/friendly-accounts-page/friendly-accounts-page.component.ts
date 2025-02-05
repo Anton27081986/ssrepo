@@ -13,8 +13,7 @@ import { IUserDto } from '@app/core/models/notifications/user-dto';
 import {FilterInputComponent} from "@app/shared/components/inputs/filter-input/filter-input.component";
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {CardComponent} from "@app/shared/components/card/card.component";
-import {CommonModule, NgForOf, NgIf, NgStyle, NgSwitch, NgSwitchCase} from "@angular/common";
-import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
+import {CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {ModalService} from "@app/core/modal/modal.service";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 
@@ -33,9 +32,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 		NgForOf,
 		NgSwitch,
 		NgSwitchCase,
-		ChipsUserSearchComponent,
 		FormsModule,
-		NgStyle,
 		IconComponent,
 	],
 	standalone: true

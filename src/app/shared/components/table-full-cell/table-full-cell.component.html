@@ -9,7 +9,7 @@
 		@if (cell) {
 			<ss-text class="body" size="2">
 				@switch (true) {
-					@case (!!cell?.url) {
+					@case (!!cell.url) {
 						<a href="{{ cell.url }}" target="_blank">
 							{{ cell.text }}
 						</a>
@@ -27,7 +27,7 @@
 							}
 						</p>
 					}
-					@case (!!cell?.pseudoLink) {
+					@case (!!cell.pseudoLink) {
 						<span>{{ cell['text'] }}</span>
 					}
 					@default {

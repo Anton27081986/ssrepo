@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
 
 @Component({
@@ -10,8 +9,7 @@ import {CommonModule} from "@angular/common";
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,
-		ReactiveFormsModule,
-		RouterLink,
+		ReactiveFormsModule
 	],
 	standalone: true
 })

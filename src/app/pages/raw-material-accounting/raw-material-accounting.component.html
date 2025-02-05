@@ -43,7 +43,7 @@
 						   (changeIndex)="pageIndexChange($event)"></ss-pagination>
 		</div>
 	}
-	@if (!tableItems || tableItems?.length === 0) {
+	@if (!tableItems || tableItems.length === 0) {
 		<div class="no-data">
 			<ss-empty-data-page width="458" height="458" [isNotFound]="tableItems?.length === 0"></ss-empty-data-page>
 		</div>

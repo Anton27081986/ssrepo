@@ -14,10 +14,10 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { environment } from '@environments/environment';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import {CommonModule, NgClass, NgStyle} from "@angular/common";
-import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import { CommonModule, NgClass, NgStyle } from "@angular/common";
+import { TooltipDirective } from "@app/shared/components/tooltip/tooltip.directive";
+import { IconComponent } from "@app/shared/components/icon/icon.component";
+import { NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 
 export type Cell = { text: string; pseudoLink: string } & { icon: string } & {
 	text: string;
