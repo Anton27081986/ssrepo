@@ -18,7 +18,7 @@
 													(click)="$event.stopPropagation(); openSalesHistory()"></snab-dropdown-item>
 								<snab-dropdown-item [textContent]="'История изменения цены ТП'"
 													(click)="$event.stopPropagation(); openPriceHistory()"></snab-dropdown-item>
-								<snab-dropdown-item [textContent]="'История изменения комментарий'"
+								<snab-dropdown-item [textContent]="'История изменения комментария'"
 													(click)="$event.stopPropagation(); openCommentsHistory()"></snab-dropdown-item>
 								<snab-dropdown-item *ngIf="canEditComment" [textContent]="'Изменить комментарий'"
 													(click)="$event.stopPropagation(); openModalEditComment()"></snab-dropdown-item>
@@ -30,7 +30,9 @@
 
 			<ng-container formGroupName="currentParams">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
-					<td class="ss-table-td" [style.min-width]="col.width">
+					<td class="ss-table-td" snab-tooltip [tooltipText]="tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
+						[position]="TooltipPosition.Top"
+						[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
 						<div class="ss-table-td__content">
 							<snab-text snab-tooltip
 									   [tooltipText]="'Рекомендованная цена.'"
@@ -73,38 +75,38 @@
 					</td>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">
-					<td class="ss-table-td" [style.min-width]="col.width">
-						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-							<snab-form-field
-								[size]="Size.Default"
-								[showValidation]="false"
-								(click)="$event.stopPropagation(); $event.preventDefault()"
-							>
-								<snab-input
-									snab-tooltip
-									[tooltipText]="'Фиксированная цена'"
-									[position]="TooltipPosition.Top"
-									[theme]="TooltipTheme.Dark"
-									fieldCtrl
-									formControlName="fixPrice"
-									[onlyPositiveValue]="true"
-									[type]="InputType.Number"
-									[showClearButton]="false"
-									[step]="0.01"
-								/>
-							</snab-form-field>
+<!--				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">-->
+<!--					<td class="ss-table-td" [style.min-width]="col.width">-->
+<!--						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">-->
+<!--							<snab-form-field-->
+<!--								[size]="Size.Default"-->
+<!--								[showValidation]="false"-->
+<!--								(click)="$event.stopPropagation(); $event.preventDefault()"-->
+<!--							>-->
+<!--								<snab-input-->
+<!--									snab-tooltip-->
+<!--									[tooltipText]="'Фиксированная цена'"-->
+<!--									[position]="TooltipPosition.Top"-->
+<!--									[theme]="TooltipTheme.Dark"-->
+<!--									fieldCtrl-->
+<!--									formControlName="fixPrice"-->
+<!--									[onlyPositiveValue]="true"-->
+<!--									[type]="InputType.Number"-->
+<!--									[showClearButton]="false"-->
+<!--									[step]="0.01"-->
+<!--								/>-->
+<!--							</snab-form-field>-->
 
-							<snab-text>{{ tovNode().currentParams.controls.fixPriceCurrency.value }}</snab-text>
+<!--							<snab-text>{{ tovNode().currentParams.controls.fixPriceCurrency.value }}</snab-text>-->
 
-							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
-										 [iconPosition]="IconPosition.OnlyIcon"
-										 (click)="tovNode().updateFixPrice(true);$event.stopPropagation()"
-										 *ngIf="tovNode().validFixPriceControlCurrent$ | async"></snab-button>
-						</div>
-					</td>
-				</ng-container>
+<!--							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"-->
+<!--										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"-->
+<!--										 [iconPosition]="IconPosition.OnlyIcon"-->
+<!--										 (click)="tovNode().updateFixPrice(true);$event.stopPropagation()"-->
+<!--										 *ngIf="tovNode().validFixPriceControlCurrent$ | async"></snab-button>-->
+<!--						</div>-->
+<!--					</td>-->
+<!--				</ng-container>-->
 
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
 					<td class="ss-table-td" [class.ss-table-td__different-price]="differentCurrentFinalPrice"
@@ -127,7 +129,9 @@
 
 			<ng-container formGroupName="nextParams">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
-					<td class="ss-table-td" [style.min-width]="col.width">
+					<td class="ss-table-td" snab-tooltip [tooltipText]="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
+						[position]="TooltipPosition.Top"
+						[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
 						<snab-text snab-tooltip
 								   [tooltipText]="'Рекомендованная цена.'"
 								   [position]="TooltipPosition.Top"
@@ -169,38 +173,38 @@
 					</td>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">
-					<td class="ss-table-td" [style.min-width]="col.width">
-						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-							<snab-form-field
-								[size]="Size.Default"
-								[showValidation]="false"
-								(click)="$event.stopPropagation(); $event.preventDefault()"
-							>
-								<snab-input
-									snab-tooltip
-									[tooltipText]="'Фиксированная цена'"
-									[position]="TooltipPosition.Top"
-									[theme]="TooltipTheme.Dark"
-									fieldCtrl
-									formControlName="fixPrice"
-									[onlyPositiveValue]="true"
-									[type]="InputType.Number"
-									[showClearButton]="false"
-									[step]="0.01"
-								/>
-							</snab-form-field>
+<!--				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">-->
+<!--					<td class="ss-table-td" [style.min-width]="col.width">-->
+<!--						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">-->
+<!--							<snab-form-field-->
+<!--								[size]="Size.Default"-->
+<!--								[showValidation]="false"-->
+<!--								(click)="$event.stopPropagation(); $event.preventDefault()"-->
+<!--							>-->
+<!--								<snab-input-->
+<!--									snab-tooltip-->
+<!--									[tooltipText]="'Фиксированная цена'"-->
+<!--									[position]="TooltipPosition.Top"-->
+<!--									[theme]="TooltipTheme.Dark"-->
+<!--									fieldCtrl-->
+<!--									formControlName="fixPrice"-->
+<!--									[onlyPositiveValue]="true"-->
+<!--									[type]="InputType.Number"-->
+<!--									[showClearButton]="false"-->
+<!--									[step]="0.01"-->
+<!--								/>-->
+<!--							</snab-form-field>-->
 
-							<snab-text>{{ tovNode().nextParams.controls.fixPriceCurrency.value }}</snab-text>
+<!--							<snab-text>{{ tovNode().nextParams.controls.fixPriceCurrency.value }}</snab-text>-->
 
-							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Top"
-										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
-										 [iconPosition]="IconPosition.OnlyIcon"
-										 (click)="tovNode().updateFixPrice(false);$event.stopPropagation()"
-										 *ngIf="tovNode().validFixPriceControlNext$ | async"></snab-button>
-						</div>
-					</td>
-				</ng-container>
+<!--							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Top"-->
+<!--										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"-->
+<!--										 [iconPosition]="IconPosition.OnlyIcon"-->
+<!--										 (click)="tovNode().updateFixPrice(false);$event.stopPropagation()"-->
+<!--										 *ngIf="tovNode().validFixPriceControlNext$ | async"></snab-button>-->
+<!--						</div>-->
+<!--					</td>-->
+<!--				</ng-container>-->
 
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
 					<td class="ss-table-td" [class.ss-table-td__different-price]="differentNextFinalPrice"

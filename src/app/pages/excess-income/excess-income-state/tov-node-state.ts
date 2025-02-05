@@ -209,10 +209,8 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	public updateSnd(isCurrent: boolean) {
 		let excessIncomePercentValue;
 		if (isCurrent) {
-			this.resetSndCurrentParent();
 			excessIncomePercentValue = this.currentParams.controls.excessIncomePercent.value;
 		} else {
-			this.resetSndNextParent();
 			excessIncomePercentValue = this.nextParams.controls.excessIncomePercent.value;
 		}
 		this.updateTov(isCurrent, excessIncomePercentValue, null);
@@ -260,6 +258,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(value => {
+				isCurrent ? this.resetSndCurrentParent() : this.resetSndNextParent();
 				this.updateState(value);
 				this.tovCommentSignal.set(value.comment);
 			});
@@ -296,7 +295,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				excessIncomePercent: [
 					{
 						value: item.currentParams.excessIncomePercent,
-						disabled: this.canEditSnd,
+						disabled: this.canEditSnd || item.currentParams.price === null,
 					},
 					compareValues(item.currentParams.excessIncomePercent),
 				],
@@ -315,7 +314,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 				excessIncomePercent: [
 					{
 						value: item.nextParams.excessIncomePercent,
-						disabled: this.canEditSnd,
+						disabled: this.canEditSnd || item.nextParams.price === null,
 					},
 					compareValues(item.nextParams.excessIncomePercent),
 				],
@@ -332,6 +331,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		});
 
 		this.blockValueChangeForm$.next(false);
+
 		return this.mapExcessIncomeTov(formGroup, item);
 	}
 

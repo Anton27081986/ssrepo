@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IBirthdaysListDto } from '@app/core/models/auth/birthdays-list-dto';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @Injectable({
 	providedIn: 'root',
@@ -20,14 +21,29 @@ export class BirthdaysApiService {
 	/** Birthdays contractor */
 	public getBirthdayContractor(
 		clientId?: number,
+		contractor?: IDictionaryItemDto,
+		dateFrom?: string,
+		dateTo?: string,
 		pageSize?: number,
 		offset?: number,
 	): Observable<any> {
+		const params = contractor
+			? new HttpParams()
+					.set('clientId', clientId!)
+					.set('contractorId', contractor.id!)
+					.set('dateFrom', dateFrom!)
+					.set('dateTo', dateTo!)
+					.set('pageSize', pageSize!)
+					.set('offset', offset!)
+			: new HttpParams()
+					.set('clientId', clientId!)
+					.set('dateFrom', dateFrom!)
+					.set('dateTo', dateTo!)
+					.set('pageSize', pageSize!)
+					.set('offset', offset!);
+
 		return this.http.get<any>(`${environment.apiUrl}/api/company/BirthDays`, {
-			params: new HttpParams()
-				.set('clientId', clientId!)
-				.set('pageSize', pageSize!)
-				.set('offset', offset!),
+			params,
 		});
 	}
 

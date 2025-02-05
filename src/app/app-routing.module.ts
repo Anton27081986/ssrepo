@@ -130,7 +130,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: FullWidthWithoutFooterLayoutComponent,
-		canActivate: [AuthGuard, excessIncomePermissionsGuard],
+		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
 		},
