@@ -22,7 +22,6 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { state } from '@angular/animations';
 
 @UntilDestroy()
 @Component({
@@ -200,7 +199,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 1,
 					show: true,
-					width: '65px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -240,7 +239,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 4,
 					show: true,
-					width: '65px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
