@@ -83,6 +83,27 @@ export class ChipsSearchComponent {
 							this.ref.detectChanges();
 						});
 					break;
+				case 'contractor-company':
+					if (query) {
+						this.searchFacade
+							.getContractorsCompany(query)
+							.pipe(untilDestroyed(this))
+							.subscribe(res => {
+								this.found = res.items;
+								this.ref.detectChanges();
+							});
+					}
+
+					break;
+				case 'client-company':
+					this.searchFacade
+						.getClientsCompany(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
 				case 'contractor':
 					if (query) {
 						this.searchFacade
@@ -93,7 +114,6 @@ export class ChipsSearchComponent {
 								this.ref.detectChanges();
 							});
 					}
-
 					break;
 				case 'tovs':
 					this.searchFacade

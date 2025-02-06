@@ -57,14 +57,14 @@ export class ExcessIncomePageComponent {
 		{
 			name: 'client',
 			type: 'search-select',
-			searchType: 'client',
+			searchType: 'client-company',
 			label: 'Клиент',
 			placeholder: 'Выберите клиента',
 		},
 		{
 			name: 'contractors',
 			type: 'search-select',
-			searchType: 'contractor',
+			searchType: 'contractor-company',
 			label: 'Контрагент',
 			placeholder: 'Выберите контрагента',
 		},
