@@ -22,7 +22,6 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { state } from '@angular/animations';
 
 @UntilDestroy()
 @Component({
@@ -58,14 +57,14 @@ export class ExcessIncomePageComponent {
 		{
 			name: 'client',
 			type: 'search-select',
-			searchType: 'client',
+			searchType: 'client-company',
 			label: 'Клиент',
 			placeholder: 'Выберите клиента',
 		},
 		{
 			name: 'contractors',
 			type: 'search-select',
-			searchType: 'contractor',
+			searchType: 'contractor-company',
 			label: 'Контрагент',
 			placeholder: 'Выберите контрагента',
 		},
@@ -73,7 +72,7 @@ export class ExcessIncomePageComponent {
 			name: 'tovGroups',
 			type: 'search-select',
 			searchType: 'tovGroups',
-			label: 'Товарная группа',
+			label: 'Товарная подгруппа',
 			placeholder: 'Выберите товарную подгруппу',
 		},
 		{
@@ -200,7 +199,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 1,
 					show: true,
-					width: '65px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -240,7 +239,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 4,
 					show: true,
-					width: '65px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
