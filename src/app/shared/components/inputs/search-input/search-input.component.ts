@@ -24,6 +24,7 @@ export type searchType =
 	| 'region'
 	| 'contractor'
 	| 'payer-contractor'
+	| 'contractor-company'
 	| 'client'
 	| 'technologist'
 	| 'contract'
@@ -31,6 +32,7 @@ export type searchType =
 	| 'products'
 	| 'services'
 	| 'cost-article'
+	| 'client-company'
 	| 'fa-objects'
 	| 'projects'
 	| 'depts'
@@ -123,6 +125,27 @@ export class SearchInputComponent {
 				case 'region':
 					this.searchFacade
 						.getRegions(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contractor-company':
+					if (query) {
+						this.searchFacade
+							.getContractorsCompany(query)
+							.pipe(untilDestroyed(this))
+							.subscribe(res => {
+								this.found$.next(res.items);
+								this.ref.detectChanges();
+							});
+					}
+
+					break;
+				case 'client-company':
+					this.searchFacade
+						.getClientsCompany(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);

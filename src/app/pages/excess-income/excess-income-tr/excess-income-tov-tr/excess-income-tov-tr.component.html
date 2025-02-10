@@ -1,226 +1,226 @@
-@for (cols of columnsStateService.colsTr$ | async; track $index) {
-	@for (col of cols.cols; track $index) {
-		@if (col.display) {
-			<ng-container [formGroup]="tovNode().tovSignal().paramsGroup" [ngSwitch]="col.id">
+<ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
+	<ng-container *ngFor="let col of cols.cols">
+		<ng-container [formGroup]="tovNode().tovSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
 
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
-					<td class="ss-table-td" [style.min-width]="col.width">
-						<div class="ss-table-td__content ss-table-td__content--space">
-							<snab-link [text]="tovNode().tovSignal().tov.name"
-									   [url]=" tovNode().tovSignal().tov.linkToDetail"
-									   [type]="TextType.Caption"></snab-link>
-							<div class="ss-table-td__content--actions">
-								<snab-button [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon"
-											 snab-tooltip
-											 [tooltipText]="tovNode().tovCommentSignal()"
-											 [position]="TooltipPosition.Top"
-											 [theme]="TooltipTheme.Dark"></snab-button>
-								<snab-dropdown-button [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.More">
-									<snab-dropdown-item [textContent]="'История продаж ТП'"
-														(click)="$event.stopPropagation(); openSalesHistory()"></snab-dropdown-item>
-									<snab-dropdown-item [textContent]="'История изменения цены ТП'"
-														(click)="$event.stopPropagation(); openPriceHistory()"></snab-dropdown-item>
-									<snab-dropdown-item [textContent]="'История изменения комментария'"
-														(click)="$event.stopPropagation(); openCommentsHistory()"></snab-dropdown-item>
-									<snab-dropdown-item *ngIf="canEditComment" [textContent]="'Изменить комментарий'"
-														(click)="$event.stopPropagation(); openModalEditComment()"></snab-dropdown-item>
-								</snab-dropdown-button>
-							</div>
+			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
+				<td class="ss-table-td" [style.min-width]="col.width">
+					<div class="ss-table-td__content ss-table-td__content--space">
+						<snab-link [text]="tovNode().tovSignal().tov.name"
+								   [url]=" tovNode().tovSignal().tov.linkToDetail"
+								   [type]="TextType.Caption"></snab-link>
+						<div class="ss-table-td__content--actions">
+							<snab-button [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon" snab-tooltip
+										 [tooltipText]="tovNode().tovCommentSignal()"
+										 [position]="TooltipPosition.Top"
+										 [theme]="TooltipTheme.Dark"></snab-button>
+							<snab-dropdown-button [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.More">
+								<snab-dropdown-item [textContent]="'История продаж ТП'"
+													(click)="$event.stopPropagation(); openSalesHistory()"></snab-dropdown-item>
+								<snab-dropdown-item [textContent]="'История изменения цены ТП'"
+													(click)="$event.stopPropagation(); openPriceHistory()"></snab-dropdown-item>
+								<snab-dropdown-item [textContent]="'История изменения комментария'"
+													(click)="$event.stopPropagation(); openCommentsHistory()"></snab-dropdown-item>
+								<snab-dropdown-item *ngIf="canEditComment" [textContent]="'Изменить комментарий'"
+													(click)="$event.stopPropagation(); openModalEditComment()"></snab-dropdown-item>
+							</snab-dropdown-button>
 						</div>
-					</td>
-				</ng-container>
-				<ng-container formGroupName="currentParams">
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
-						<td class="ss-table-td" [style.min-width]="col.width">
-							<div class="ss-table-td__content" snab-tooltip
-								 [tooltipText]="tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
-								 [position]="TooltipPosition.Top"
-								 [theme]="TooltipTheme.Dark">
-								<snab-text snab-tooltip
-										   [tooltipText]="'Рекомендованная цена.'"
-										   [position]="TooltipPosition.Top"
-										   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value | numWithSpaces:2 }}
-								</snab-text>
-							</div>
-						</td>
-					</ng-container>
+					</div>
+				</td>
+			</ng-container>
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
-						<td class="ss-table-td" [style.max-width]="col.width">
-							<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-								<snab-form-field
-									[size]="Size.Default"
-									[showValidation]="false"
-									(click)="$event.stopPropagation(); $event.preventDefault()"
-								>
-									<snab-input
-										snab-tooltip
-										[tooltipText]="'СНД, %'"
-										[position]="TooltipPosition.Top"
-										[theme]="TooltipTheme.Dark"
-										fieldCtrl
-										formControlName="excessIncomePercent"
-										[onlyPositiveValue]="true"
-										[type]="InputType.Number"
-										[showClearButton]="false"
-										[step]="0.01"
-									/>
-								</snab-form-field>
-
-								<snab-button snab-tooltip [tooltipText]="'Сохранить'"
-											 [position]="TooltipPosition.Bottom"
-											 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary"
-											 [icon]="IconType.Save"
-											 [iconPosition]="IconPosition.OnlyIcon"
-											 (click)="tovNode().updateSnd(true);$event.stopPropagation()"
-											 *ngIf="tovNode().validSndControlCurrent$ | async">
-								</snab-button>
-							</div>
-						</td>
-					</ng-container>
-
-					<!--						<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">-->
-					<!--							<td class="ss-table-td" [style.min-width]="col.width">-->
-					<!--								<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">-->
-					<!--									<snab-form-field-->
-					<!--										[size]="Size.Default"-->
-					<!--										[showValidation]="false"-->
-					<!--										(click)="$event.stopPropagation(); $event.preventDefault()"-->
-					<!--									>-->
-					<!--										<snab-input-->
-					<!--											snab-tooltip-->
-					<!--											[tooltipText]="'Фиксированная цена'"-->
-					<!--											[position]="TooltipPosition.Top"-->
-					<!--											[theme]="TooltipTheme.Dark"-->
-					<!--											fieldCtrl-->
-					<!--											formControlName="fixPrice"-->
-					<!--											[onlyPositiveValue]="true"-->
-					<!--											[type]="InputType.Number"-->
-					<!--											[showClearButton]="false"-->
-					<!--											[step]="0.01"-->
-					<!--										/>-->
-					<!--									</snab-form-field>-->
-
-					<!--									<snab-text>{{ tovNode().currentParams.controls.fixPriceCurrency.value }}</snab-text>-->
-
-					<!--									<snab-button snab-tooltip [tooltipText]="'Сохранить'"-->
-					<!--												 [position]="TooltipPosition.Bottom"-->
-					<!--												 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary"-->
-					<!--												 [icon]="IconType.Save"-->
-					<!--												 [iconPosition]="IconPosition.OnlyIcon"-->
-					<!--												 (click)="tovNode().updateFixPrice(true);$event.stopPropagation()"-->
-					<!--												 *ngIf="tovNode().validFixPriceControlCurrent$ | async"></snab-button>-->
-					<!--								</div>-->
-					<!--							</td>-->
-					<!--						</ng-container>-->
-
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
-						<td class="ss-table-td" [class.ss-table-td__different-price]="differentCurrentFinalPrice"
-							[style.max-width]="col.width">
-							<div class="ss-table-td__content">
-								<snab-text snab-tooltip
-										   [tooltipText]="'Рекомендованная цена + СНД.'"
-										   [position]="TooltipPosition.Top"
-										   [theme]="TooltipTheme.Dark">
-									{{
-										tovNode().currentParams.controls.finalPrice.value
-											| numWithSpaces:2
-									}}
-								</snab-text>
-							</div>
-						</td>
-					</ng-container>
-
-				</ng-container>
-
-				<ng-container formGroupName="nextParams">
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
-						<td class="ss-table-td" snab-tooltip
-							[tooltipText]="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
-							[position]="TooltipPosition.Top"
-							[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
+			<ng-container formGroupName="currentParams">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCurrent">
+					<td class="ss-table-td" snab-tooltip
+						[tooltipText]="tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value
+						? null : 'Цена прайса на ТП не установлена.'"
+						[position]="TooltipPosition.Top"
+						[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
+						<div class="ss-table-td__content">
 							<snab-text snab-tooltip
 									   [tooltipText]="'Рекомендованная цена.'"
 									   [position]="TooltipPosition.Top"
-									   [theme]="TooltipTheme.Dark"> {{ tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value | numWithSpaces:2 }}
+									   [theme]="TooltipTheme.Dark"> {{
+									tovNode().tovSignal().paramsGroup.controls.currentParams.controls.price.value |
+										numWithSpaces:2
+								}}
 							</snab-text>
-						</td>
-					</ng-container>
+						</div>
+					</td>
+				</ng-container>
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
-						<td class="ss-table-td" [style.max-width]="col.width">
-							<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
-								<snab-form-field
-									[size]="Size.Default"
-									[showValidation]="false"
-									(click)="$event.stopPropagation(); $event.preventDefault()"
-								>
-									<snab-input
-										snab-tooltip
-										[tooltipText]="'СНД, %'"
-										[position]="TooltipPosition.Top"
-										[theme]="TooltipTheme.Dark"
-										fieldCtrl
-										formControlName="excessIncomePercent"
-										[onlyPositiveValue]="true"
-										[type]="InputType.Number"
-										[showClearButton]="false"
-										[step]="0.01"
-									/>
-								</snab-form-field>
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+					<td class="ss-table-td" [style.max-width]="col.width">
+						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
+							<snab-form-field
+								[size]="Size.Default"
+								[showValidation]="false"
+								(click)="$event.stopPropagation(); $event.preventDefault()"
+							>
+								<snab-input
+									snab-tooltip
+									[tooltipText]="'СНД, %'"
+									[position]="TooltipPosition.Top"
+									[theme]="TooltipTheme.Dark"
+									fieldCtrl
+									formControlName="excessIncomePercent"
+									[onlyPositiveValue]="true"
+									[type]="InputType.Number"
+									[showClearButton]="false"
+									[step]="0.01"
+								/>
+							</snab-form-field>
+
+							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
+										 [iconPosition]="IconPosition.OnlyIcon"
+										 (click)="tovNode().updateSnd(true);$event.stopPropagation()"
+										 *ngIf="tovNode().validSndControlCurrent$ | async">
+							</snab-button>
+						</div>
+					</td>
+				</ng-container>
+
+				<!--				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixCurrent">-->
+				<!--					<td class="ss-table-td" [style.min-width]="col.width">-->
+				<!--						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">-->
+				<!--							<snab-form-field-->
+				<!--								[size]="Size.Default"-->
+				<!--								[showValidation]="false"-->
+				<!--								(click)="$event.stopPropagation(); $event.preventDefault()"-->
+				<!--							>-->
+				<!--								<snab-input-->
+				<!--									snab-tooltip-->
+				<!--									[tooltipText]="'Фиксированная цена'"-->
+				<!--									[position]="TooltipPosition.Top"-->
+				<!--									[theme]="TooltipTheme.Dark"-->
+				<!--									fieldCtrl-->
+				<!--									formControlName="fixPrice"-->
+				<!--									[onlyPositiveValue]="true"-->
+				<!--									[type]="InputType.Number"-->
+				<!--									[showClearButton]="false"-->
+				<!--									[step]="0.01"-->
+				<!--								/>-->
+				<!--							</snab-form-field>-->
+
+				<!--							<snab-text>{{ tovNode().currentParams.controls.fixPriceCurrency.value }}</snab-text>-->
+
+				<!--							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"-->
+				<!--										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"-->
+				<!--										 [iconPosition]="IconPosition.OnlyIcon"-->
+				<!--										 (click)="tovNode().updateFixPrice(true);$event.stopPropagation()"-->
+				<!--										 *ngIf="tovNode().validFixPriceControlCurrent$ | async"></snab-button>-->
+				<!--						</div>-->
+				<!--					</td>-->
+				<!--				</ng-container>-->
+
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateCurrent">
+					<td class="ss-table-td" [class.ss-table-td__different-price]="differentCurrentFinalPrice"
+						[style.max-width]="col.width">
+						<div class="ss-table-td__content">
+							<snab-text *ngIf="tovNode().currentParams.controls.finalPrice.value" snab-tooltip
+									   [tooltipText]="'Рекомендованная цена + СНД.'"
+									   [position]="TooltipPosition.Top"
+									   [theme]="TooltipTheme.Dark">
+								{{
+									tovNode().currentParams.controls.finalPrice.value
+										| numWithSpaces:2
+								}}
+							</snab-text>
+						</div>
+					</td>
+				</ng-container>
+
+			</ng-container>
+
+			<ng-container formGroupName="nextParams">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceNext">
+					<td class="ss-table-td" snab-tooltip
+						[tooltipText]="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value ? null : 'Цена прайса на ТП не установлена.'"
+						[position]="TooltipPosition.Top"
+						[theme]="TooltipTheme.Dark" [style.min-width]="col.width">
+						<snab-text snab-tooltip
+								   [tooltipText]="'Рекомендованная цена.'"
+								   [position]="TooltipPosition.Top"
+								   [theme]="TooltipTheme.Dark"> {{
+								tovNode().tovSignal().paramsGroup.controls.nextParams.controls.price.value |
+									numWithSpaces:2
+							}}
+						</snab-text>
+					</td>
+				</ng-container>
+
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+					<td class="ss-table-td" [style.max-width]="col.width">
+						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">
+							<snab-form-field
+								[size]="Size.Default"
+								[showValidation]="false"
+								(click)="$event.stopPropagation(); $event.preventDefault()"
+							>
+								<snab-input
+									snab-tooltip
+									[tooltipText]="'СНД, %'"
+									[position]="TooltipPosition.Top"
+									[theme]="TooltipTheme.Dark"
+									fieldCtrl
+									formControlName="excessIncomePercent"
+									[onlyPositiveValue]="true"
+									[type]="InputType.Number"
+									[showClearButton]="false"
+									[step]="0.01"
+								/>
+							</snab-form-field>
 
 
-								<snab-button snab-tooltip [tooltipText]="'Сохранить'"
-											 [position]="TooltipPosition.Bottom"
-											 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary"
-											 [icon]="IconType.Save"
-											 [iconPosition]="IconPosition.OnlyIcon"
-											 (click)="tovNode().updateSnd(false);$event.stopPropagation()"
-											 *ngIf="tovNode().validSndControlNext$ | async">>
-								</snab-button>
-							</div>
-						</td>
-					</ng-container>
+							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
+										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
+										 [iconPosition]="IconPosition.OnlyIcon"
+										 (click)="tovNode().updateSnd(false);$event.stopPropagation()"
+										 *ngIf="tovNode().validSndControlNext$ | async">>
+							</snab-button>
+						</div>
+					</td>
+				</ng-container>
 
-					<!--						<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">-->
-					<!--							<td class="ss-table-td" [style.min-width]="col.width">-->
-					<!--								<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">-->
-					<!--									<snab-form-field-->
-					<!--										[size]="Size.Default"-->
-					<!--										[showValidation]="false"-->
-					<!--										(click)="$event.stopPropagation(); $event.preventDefault()"-->
-					<!--									>-->
-					<!--										<snab-input-->
-					<!--											snab-tooltip-->
-					<!--											[tooltipText]="'Фиксированная цена'"-->
-					<!--											[position]="TooltipPosition.Top"-->
-					<!--											[theme]="TooltipTheme.Dark"-->
-					<!--											fieldCtrl-->
-					<!--											formControlName="fixPrice"-->
-					<!--											[onlyPositiveValue]="true"-->
-					<!--											[type]="InputType.Number"-->
-					<!--											[showClearButton]="false"-->
-					<!--											[step]="0.01"-->
-					<!--										/>-->
-					<!--									</snab-form-field>-->
+				<!--				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceFixNext">-->
+				<!--					<td class="ss-table-td" [style.min-width]="col.width">-->
+				<!--						<div class="ss-table-td__content" (focusout)="tovNode().focusOutControl($event)">-->
+				<!--							<snab-form-field-->
+				<!--								[size]="Size.Default"-->
+				<!--								[showValidation]="false"-->
+				<!--								(click)="$event.stopPropagation(); $event.preventDefault()"-->
+				<!--							>-->
+				<!--								<snab-input-->
+				<!--									snab-tooltip-->
+				<!--									[tooltipText]="'Фиксированная цена'"-->
+				<!--									[position]="TooltipPosition.Top"-->
+				<!--									[theme]="TooltipTheme.Dark"-->
+				<!--									fieldCtrl-->
+				<!--									formControlName="fixPrice"-->
+				<!--									[onlyPositiveValue]="true"-->
+				<!--									[type]="InputType.Number"-->
+				<!--									[showClearButton]="false"-->
+				<!--									[step]="0.01"-->
+				<!--								/>-->
+				<!--							</snab-form-field>-->
 
-					<!--									<snab-text>{{ tovNode().nextParams.controls.fixPriceCurrency.value }}</snab-text>-->
+				<!--							<snab-text>{{ tovNode().nextParams.controls.fixPriceCurrency.value }}</snab-text>-->
 
-					<!--									<snab-button snab-tooltip [tooltipText]="'Сохранить'"-->
-					<!--												 [position]="TooltipPosition.Top"-->
-					<!--												 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary"-->
-					<!--												 [icon]="IconType.Save"-->
-					<!--												 [iconPosition]="IconPosition.OnlyIcon"-->
-					<!--												 (click)="tovNode().updateFixPrice(false);$event.stopPropagation()"-->
-					<!--												 *ngIf="tovNode().validFixPriceControlNext$ | async"></snab-button>-->
-					<!--								</div>-->
-					<!--							</td>-->
-					<!--						</ng-container>-->
+				<!--							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Top"-->
+				<!--										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"-->
+				<!--										 [iconPosition]="IconPosition.OnlyIcon"-->
+				<!--										 (click)="tovNode().updateFixPrice(false);$event.stopPropagation()"-->
+				<!--										 *ngIf="tovNode().validFixPriceControlNext$ | async"></snab-button>-->
+				<!--						</div>-->
+				<!--					</td>-->
+				<!--				</ng-container>-->
 
-					<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
-						<td class="ss-table-td" [class.ss-table-td__different-price]="differentNextFinalPrice"
-							[style.max-width]="col.width">
+				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.priceCalculateNext">
+					<td class="ss-table-td" [class.ss-table-td__different-price]="differentNextFinalPrice"
+						[style.max-width]="col.width">
+						<div class="ss-table-td__content">
 							<snab-text snab-tooltip
+									   *ngIf="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value"
 									   [tooltipText]="'Рекомендованная цена + СНД.'"
 									   [position]="TooltipPosition.Top"
 									   [theme]="TooltipTheme.Dark">
@@ -229,17 +229,16 @@
 										numWithSpaces:2
 								}}
 							</snab-text>
-						</td>
-					</ng-container>
-				</ng-container>
-
-				<ng-container *ngSwitchDefault>
-					<td class="ss-table-td">
-						&nbsp;
+						</div>
 					</td>
 				</ng-container>
 			</ng-container>
-		}
 
-	}
-}
+			<ng-container *ngSwitchDefault>
+				<td class="ss-table-td">
+					&nbsp;
+				</td>
+			</ng-container>
+		</ng-container>
+	</ng-container>
+</ng-container>

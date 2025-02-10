@@ -53,6 +53,14 @@ export class SearchFacadeService {
 		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
+	public getClientsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.clientApiService.getClientsCompany(query);
+	}
+
+	public getContractorsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.clientApiService.getContractorsCompany(query);
+	}
+
 	public getProductions(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.searchProductions(query);
 	}
