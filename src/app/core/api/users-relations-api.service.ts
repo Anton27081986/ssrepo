@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { IFriendAccountDto } from '@app/core/models/friend-account-dto';
 
 @Injectable({
