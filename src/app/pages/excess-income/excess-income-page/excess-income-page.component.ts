@@ -22,7 +22,6 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { state } from '@angular/animations';
 
 @UntilDestroy()
 @Component({
@@ -58,14 +57,14 @@ export class ExcessIncomePageComponent {
 		{
 			name: 'client',
 			type: 'search-select',
-			searchType: 'client',
+			searchType: 'client-company',
 			label: 'Клиент',
 			placeholder: 'Выберите клиента',
 		},
 		{
 			name: 'contractors',
 			type: 'search-select',
-			searchType: 'contractor',
+			searchType: 'contractor-company',
 			label: 'Контрагент',
 			placeholder: 'Выберите контрагента',
 		},
@@ -126,6 +125,17 @@ export class ExcessIncomePageComponent {
 
 	public expended(node: ClientNodeState | ContractorNodeState | GroupNodeState) {
 		node.expended$.next(!node.expended$.value);
+	}
+
+	protected downloadInstr() {
+		let instructionFileLink =
+			'https://erp.ssnab.ru/api/static/general/2024/10/22/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83' +
+			'%D0%BA%D1%86%D0%B8%D1%8F_%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82_%D1%81_%D0%BA%D0%BB%D0%B8%D0%B5%D' +
+			'0%BD%D1%82%D0%BE%D0%BC_c659ff6b-5fb7-4d31-ba64-9a37d15b3ada.docx';
+		const link = document.createElement('a');
+
+		link.href = instructionFileLink;
+		link.click();
 	}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
@@ -200,7 +210,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 1,
 					show: true,
-					width: '65px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,
@@ -240,7 +250,7 @@ export class ExcessIncomePageComponent {
 					title: 'Прайс',
 					order: 4,
 					show: true,
-					width: '65px',
+					width: '120px',
 					display: true,
 					colspan: 1,
 					rowspan: 1,

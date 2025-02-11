@@ -220,12 +220,16 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.groupNodeState.getSndCurrentControl.setValue(null);
 		this.groupNodeState.getSndCurrentControl.setValidators(compareValues(null));
 		this.groupNodeState.getSndCurrentControl.updateValueAndValidity();
+		const oldGroup = this.groupNodeState.groupSignal();
+		oldGroup.currentExcessIncomePercent = null;
 	}
 
 	resetSndNextParent() {
 		this.groupNodeState.getSndNextControl.setValue(null);
 		this.groupNodeState.getSndNextControl.setValidators(compareValues(null));
 		this.groupNodeState.getSndNextControl.updateValueAndValidity();
+		const oldGroup = this.groupNodeState.groupSignal();
+		oldGroup.nextExcessIncomePercent = null;
 	}
 
 	public updateFixPrice(isCurrent: boolean) {

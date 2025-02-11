@@ -89,7 +89,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 	}
 
 	constructor(
-		private readonly group: ExcessIncomeFromBackendGroup,
+		public readonly group: ExcessIncomeFromBackendGroup,
 		private readonly permissions: string[],
 		clientId: number,
 		private readonly contractorId: number | null,
