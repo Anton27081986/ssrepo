@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { IBusinessTripsFilter } from '@app/core/models/business-trips-filter';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
 import { IResponse } from '@app/core/utils/response';

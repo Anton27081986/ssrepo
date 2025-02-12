@@ -1,0 +1,67 @@
+<table>
+	<thead>
+	<tr>
+		<th rowspan="2">Клиент</th>
+		<th rowspan="2">Контрагент</th>
+		<th rowspan="2">Отпр</th>
+		<th rowspan="2">Комментарий</th>
+		<th rowspan="2">Название ТПГ</th>
+		<th rowspan="2">Название ТПР</th>
+		<th colspan="4">Текущая</th>
+		<th colspan="4">Следующая</th>
+		<th rowspan="2">Действие</th>
+	</tr>
+	<tr>
+		<th>Прайс</th>
+		<th>Снд</th>
+		<th>Цена фикс</th>
+		<th>Цена*</th>
+		<th>Прайс</th>
+		<th>Снд</th>
+		<th>Цена фикс</th>
+		<th>Цена*</th>
+	</tr>
+	</thead>
+	<tbody>
+	<ng-container *ngFor="let client of clients()">
+		<tr excess-income-client-tr [client]="client"></tr>
+		<ng-container *ngIf="client.expended$ | async">
+			<ng-container *ngFor="let contractor of client.contractors$ | async">
+				<tr excess-income-contractor-tr [contractor]="contractor"></tr>
+				<ng-container *ngIf="contractor.expended$ | async">
+					<ng-container *ngFor="let group of contractor.groups$ | async">
+						<tr excess-income-group-tr [group]="group"></tr>
+						<ng-container *ngIf="group.expended$ | async">
+							<ng-container *ngFor="let tov of group.tov$ | async">
+								<tr excess-income-tov-tr [tov]="tov"></tr>
+							</ng-container>
+							<tr>
+								<td class="ss-table-td" colspan="17">
+									<ss-dynamic-pagination
+										[total]="(group.total$ | async)!"
+										[limit]="20"
+										[offset]="(group.offset$ | async)!"
+										(changeOffset)="group.pageOffsetChange($event)"
+									>
+									</ss-dynamic-pagination>
+								</td>
+							</tr>
+						</ng-container>
+					</ng-container>
+					<tr>
+						<td class="ss-table-td" colspan="17">
+							<ss-dynamic-pagination
+								[total]="(contractor.total$ | async)!"
+								[limit]="20"
+								[offset]="(contractor.offset$ | async)!"
+								(changeOffset)="contractor.pageOffsetChange($event)"
+							>
+							</ss-dynamic-pagination>
+						</td>
+					</tr>
+				</ng-container>
+			</ng-container>
+		</ng-container>
+	</ng-container>
+	</tbody>
+</table>

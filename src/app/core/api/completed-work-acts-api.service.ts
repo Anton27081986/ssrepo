@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
