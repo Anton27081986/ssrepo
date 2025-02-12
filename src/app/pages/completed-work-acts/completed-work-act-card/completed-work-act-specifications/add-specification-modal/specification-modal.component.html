@@ -1,5 +1,5 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="specification" padding="0" (click)="$event.stopPropagation()">
+<div class="wrapper" (mousedown)="close()">
+	<ss-card class="specification" padding="0" (mousedown)="$event.stopPropagation()">
 		<div class="header">
 			<ss-text size="2">{{ spec ? 'Редактировать' : 'Добавить'}} спецификацию затрат</ss-text>
 			<ss-icon name="close" (click)="close()"></ss-icon>

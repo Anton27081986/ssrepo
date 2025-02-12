@@ -5,6 +5,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
+import {Permissions} from "@app/core/constants/permissions.constants";
 
 @Component({
 	selector: 'ss-completed-work-act-card',
@@ -18,6 +19,10 @@ export class CompletedWorkActCardComponent {
 
 	protected isEdit: Signal<boolean> = toSignal(this.completedWorkActsFacade.isEditMode$, {
 		initialValue: false,
+	});
+
+	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
+		initialValue: [],
 	});
 
 	public constructor(
@@ -52,4 +57,6 @@ export class CompletedWorkActCardComponent {
 	public toActsList() {
 		this.router.navigate([`/completed-work-acts`]);
 	}
+
+	protected readonly Permissions = Permissions;
 }
