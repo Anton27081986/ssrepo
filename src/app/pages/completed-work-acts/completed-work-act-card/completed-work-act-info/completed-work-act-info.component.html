@@ -2,7 +2,7 @@
 	<div class="header">
 		<ss-text size="1">Общая информация</ss-text>
 		<div *ngIf="act()?.state?.id !== 0" class="header__controls">
-			<ss-button size="small" type="muted" (click)="switchMode()">
+			<ss-button *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT)" size="small" type="muted" (click)="switchMode()">
 				<ss-icon width="24" height="24" name="edit"></ss-icon>
 			</ss-button>
 		</div>
