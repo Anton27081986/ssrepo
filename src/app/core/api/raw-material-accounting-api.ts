@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment';
+import { environment } from '@environments/environment.development';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
 import { IResponse } from '@app/core/utils/response';

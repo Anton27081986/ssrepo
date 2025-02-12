@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { IAddressBookUser } from '@app/core/models/address-book-user';
-import { environment } from '@environments/environment';
+import { environment } from '@environments/environment.development';
 
 @Injectable({
 	providedIn: 'root',

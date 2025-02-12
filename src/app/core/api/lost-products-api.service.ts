@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment';
+import { environment } from '@environments/environment.development';
 import { ILostProductsFilter } from '@app/core/models/lost-products-filter';
 import { ILostProductsItemDto } from '@app/core/models/company/lost-products-item-dto';
 
