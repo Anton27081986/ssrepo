@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 
 export interface IChangeTrackerWithObjectId {
 	objectId: string;
