@@ -1,0 +1,56 @@
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.excess-income-update-snd-client-popover {
+	display: flex;
+	flex-direction: column;
+	width: 580px;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: nowrap;
+		padding: 16px;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		padding: 12px;
+		gap: 12px;
+	}
+
+	&__content {
+		height: 400px;
+		overflow: auto;
+
+		ss-table-v2 {
+			height: 301px;
+		}
+	}
+
+	&__no-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 400px;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		padding: 16px;
+		gap: 16px;
+	}
+}
+
+snab-button {
+	width: 145px;
+}

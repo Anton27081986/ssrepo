@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { IClientDataDto } from '@app/core/models/company/client-dto';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
@@ -82,9 +82,35 @@ export class ClientApiService {
 		);
 	}
 
+	getClientsCompany(searchTerm: string) {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/clients`,
+			{
+				params,
+			},
+		);
+	}
+
+	getContractorsCompany(searchTerm: string) {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/Contractors`,
+			{
+				params,
+			},
+		);
+	}
+
 	public getClientsDictionary(
 		searchTerm: string,
-		onlyActive: boolean
+		onlyActive: boolean,
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 

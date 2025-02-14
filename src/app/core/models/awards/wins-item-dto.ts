@@ -9,8 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { LikeStateEnum } from '@app/shared/components/like/like.component';
 import { IUserDto } from './user-dto';
-import {LikeStateEnum} from "@app/shared/components/like/like.component";
 
 /**
  * Модель элемента списка

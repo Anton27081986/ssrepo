@@ -20,14 +20,15 @@ import { IRankTypeListDto } from '@app/core/models/awards/rank-type-list-dto';
 import { RatingService } from '@app/components/rating/rating.service';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 import { FormControl } from '@angular/forms';
-import { RatingTeamUsersState } from '@app/components/rating/rating-team-users/rating-team-users.state';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class RatingTeamsStateService {
-	public weekId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+	public week$: BehaviorSubject<IDictionaryItemDto | null> =
+		new BehaviorSubject<IDictionaryItemDto | null>(null);
 
 	public userId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
 
@@ -56,15 +57,15 @@ export class RatingTeamsStateService {
 			this.reportAvailable$.next(item.reportAvailable);
 		});
 
-		this.rating$ = combineLatest([this.weekId$, this.userId$]).pipe(
+		this.rating$ = combineLatest([this.week$, this.userId$]).pipe(
 			tap(() => this.isLoading$.next(true)),
-			debounceTime(2000),
-			switchMap(([weekId, userId]) => {
-				if (!weekId || !userId) {
+			debounceTime(1000),
+			switchMap(([week, userId]) => {
+				if (!week || !userId) {
 					return NEVER;
 				}
 
-				return this.ratingService.getRatingTypes(weekId, userId);
+				return this.ratingService.getRatingTypes(week.id, userId);
 			}),
 			tap(() => this.isLoading$.next(false)),
 			shareReplay({

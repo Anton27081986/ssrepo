@@ -30,6 +30,7 @@ export class ClientProposalsTradeListTabComponent {
 
 	protected linkToModule: Signal<string | null> = computed(() => {
 		const tradeList = this.tradeList();
+
 		if (tradeList) {
 			return tradeList.linkToModule;
 		}
@@ -39,6 +40,7 @@ export class ClientProposalsTradeListTabComponent {
 
 	protected total: Signal<number> = computed(() => {
 		const tradeList = this.tradeList();
+
 		if (tradeList) {
 			return tradeList.total;
 		}

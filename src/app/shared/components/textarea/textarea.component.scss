@@ -3,7 +3,7 @@
 textarea {
 	display: flex;
 	align-items: center;
-	padding: 16px 12px 0 12px;
+	padding: 8px 28px 8px 8px;
 	width: 100%;
 	border-radius: 8px;
 	border: 1px solid $island-outline;
@@ -21,7 +21,7 @@ textarea {
 
 	ss-icon {
 		position: absolute;
-		right: 22px;
+		right: 10px;
 		top: 16px;
 		cursor: pointer;
 	}

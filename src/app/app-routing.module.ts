@@ -3,10 +3,14 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@app/core/guards/auth.guard';
 import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-layout.component';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
-import { LayoutClientProposalsComponent } from '@app/shared/layouts/layout-client-proposals/layout-client-proposals.component';
+import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
-import { ProposalsPermissionsGuard } from '@app/core/guards/proposals-permissions.guard';
-import { ProcurementsPermissionsGuard } from '@app/core/guards/procurements-permissions.guard';
+import {
+	completedWorkActPermissionsGuard,
+	excessIncomePermissionsGuard,
+	procurementsPermissionsGuard,
+	proposalsPermissionsGuard,
+} from '@app/core/guards';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -31,12 +35,6 @@ const routes: Routes = [
 				},
 				children: [
 					{
-						path: 'partners',
-						// canActivate: [AuthGuards],
-						loadChildren: () =>
-							import('./pages/partners/partners.module').then(m => m.PartnersModule),
-					},
-					{
 						path: 'profile',
 						canActivate: [AuthGuard],
 						loadChildren: () =>
@@ -44,11 +42,19 @@ const routes: Routes = [
 					},
 					{
 						path: 'raw-material-accounting',
-						canActivate: [ProcurementsPermissionsGuard],
+						canActivate: [procurementsPermissionsGuard],
 						loadChildren: () =>
 							import(
 								'./pages/raw-material-accounting/raw-material-accounting.module'
 							).then(m => m.RawMaterialAccountingModule),
+					},
+					{
+						path: 'completed-work-acts',
+						canActivate: [completedWorkActPermissionsGuard],
+						loadChildren: () =>
+							import('./pages/completed-work-acts/completed-work-acts.module').then(
+								m => m.CompletedWorkActsModule,
+							),
 					},
 				],
 			},
@@ -90,8 +96,8 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
-		canActivate: [AuthGuard, ProposalsPermissionsGuard],
+		component: FullWidthWithoutFooterLayoutComponent,
+		canActivate: [AuthGuard, proposalsPermissionsGuard],
 		data: {
 			animation: 'animation',
 		},
@@ -107,14 +113,30 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: NewLayoutComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
+		data: {
+			animation: 'animation',
+		},
+		children: [
+			{
+				path: 'production-plan',
+				loadChildren: () =>
+					import('./pages/production-plan/production-plan.routing').then(
+						r => r.productionPlanRoutes,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
-				path: 'excess-income',
+				path: 'excess-income-page',
 				loadChildren: () =>
 					import('@app/pages/excess-income/excess-income.module').then(
 						m => m.ExcessIncomeModule,
@@ -124,7 +146,7 @@ const routes: Routes = [
 	},
 	{
 		path: '',
-		component: LayoutClientProposalsComponent,
+		component: FullWidthWithoutFooterLayoutComponent,
 		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',

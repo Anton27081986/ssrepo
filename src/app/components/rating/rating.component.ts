@@ -12,11 +12,9 @@ import { filterTruthy } from '@app/core/facades/client-proposals-facade.service'
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { RatingService } from '@app/components/rating/rating.service';
 import { TypeReport } from '@app/core/api/rating-api.service';
-import { switchMap } from 'rxjs';
-import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 
 export interface RatingCriteriaForm {
-	weekId: FormControl<number | null>;
+	week: FormControl<IDictionaryItemDto | null>;
 	userId: FormControl<number | null>;
 }
 
@@ -67,7 +65,7 @@ export class RatingComponent implements OnInit {
 
 	ngOnInit() {
 		this.ratingState.weeks$.pipe(filterTruthy(), untilDestroyed(this)).subscribe(item => {
-			this.form.controls.weekId.setValue(item[0].id);
+			this.form.controls.week.setValue({ id: item[0].id, name: item[0].name! });
 		});
 
 		this.ratingState.currentUser$.pipe(filterTruthy(), untilDestroyed(this)).subscribe(user => {
@@ -77,14 +75,14 @@ export class RatingComponent implements OnInit {
 		this.form.controls.userId.valueChanges
 			.pipe(filterTruthy(), untilDestroyed(this))
 			.subscribe(this.ratingState.userId$);
-		this.form.controls.weekId.valueChanges
+		this.form.controls.week.valueChanges
 			.pipe(filterTruthy(), untilDestroyed(this))
-			.subscribe(this.ratingState.weekId$);
+			.subscribe(this.ratingState.week$);
 	}
 
 	private buildForm(): FormGroup<RatingCriteriaForm> {
 		return new FormGroup<RatingCriteriaForm>({
-			weekId: new FormControl<number | null>(
+			week: new FormControl<IDictionaryItemDto | null>(
 				{ value: null, disabled: false },
 				Validators.required,
 			),
@@ -97,6 +95,7 @@ export class RatingComponent implements OnInit {
 
 	protected redirectUrl(type: TypeReport) {
 		const value = this.ratingState.walkerControl.value;
+
 		if (value && value.reportAvailable) {
 			this.ratingService
 				.getRatingReport(type, value)

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { first } from 'rxjs';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { environment } from '@environments/environment';
 
 @UntilDestroy()
 @Component({
@@ -12,6 +13,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class MainPageComponent implements OnInit {
 	public loading = false;
+	public backUrl: boolean = environment.production;
 
 	public constructor(private readonly userStateService: UserProfileStoreService) {}
 

@@ -1,0 +1,124 @@
+@use 'src/styles/colors.scss' as *;
+
+.header {
+	display: flex;
+	padding: 10px 16px;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid $island-outline;
+
+	&__controls {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		ss-button {
+			::ng-deep button {
+				padding: 4px !important;
+				min-width: 36px;
+			}
+		}
+	}
+}
+
+.content {
+	display: grid;
+	padding: 16px;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 24px;
+
+	&__column {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		&__item {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			&__comment {
+				display: -webkit-box;
+				max-height: 72px;
+				-webkit-line-clamp: 4;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			&__files-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				position: relative;
+
+				.upload-file {
+					background-color: #F2F3F7;
+					border-color: #E4E8EA;
+					color: #6D7885;
+					cursor: pointer;
+					padding: 6px 8px;
+					border-radius: 8px;
+				}
+
+				#upload-file {
+					opacity: 0;
+					position: absolute;
+					z-index: -1;
+					right: 0;
+				}
+			}
+
+			&__files-list {
+				display: flex;
+				flex-direction: column;
+				overflow-y: auto;
+				overflow-x: hidden;
+				max-width: 15vw;
+				max-height: 210px;
+
+				&__item {
+					padding: 8px 0;
+					border-bottom: 1px solid $island-outline;
+					display: flex;
+					gap: 8px;
+					align-items: center;
+
+					&__img {
+						display: flex;
+						flex-shrink: 0;
+						width: 32px;
+						height: 32px;
+						align-items: center;
+						justify-content: center;
+						border-radius: 4px;
+						background-color: #EDF1FF;
+					}
+
+					&__description {
+						flex-grow: 1;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+
+						::ng-deep .size p {
+							color: #8C8C8C;
+						}
+					}
+
+					&__controls {
+						display: flex;
+						flex-direction: column;
+						gap: 8px;
+					}
+				}
+
+				&__item:last-child {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}

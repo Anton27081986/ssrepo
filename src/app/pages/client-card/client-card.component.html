@@ -16,7 +16,7 @@
 <div class="footer">
 	<div class="contractors">
 		<ss-client-card-contractors></ss-client-card-contractors>
-		<ss-history [objectId]="(client$ | async)?.id!"></ss-history>
+        <ss-history [objectId]="(client$ | async)?.id?.toString()!" [queryType]="queryType.UserCard"></ss-history>
 	</div>
 	<ss-correspondence [objectId]="(client$ | async)?.id!"></ss-correspondence>
 </div>

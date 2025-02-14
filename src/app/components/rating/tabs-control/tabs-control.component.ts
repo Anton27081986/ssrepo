@@ -22,6 +22,8 @@ export class TabsControlComponent implements ControlValueAccessor {
 
 	public target: IRankTypeItemDto | null = null;
 
+	public rankTypeId = input.required<number>();
+
 	private OnChange!: (value: IRankTypeItemDto) => void;
 	private OnTouched!: (value: IRankTypeItemDto) => void;
 

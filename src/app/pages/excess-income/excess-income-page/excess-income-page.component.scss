@@ -1,3 +1,42 @@
+:host {
+	display: flex;
+	flex-direction: column;
+	gap: 38px;
+}
+
 .app-excess-income-page {
 
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: nowrap;
+		align-items: end;
+	}
+
+	&__header-filter {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: end;
+		gap: 16px;
+	}
+
+	ss-select-v2 {
+		width: 117px
+	}
+
+	&__no-content {
+		height: 80vh;
+	}
+}
+
+ss-loader {
+	min-height: 70vh;
+}
+
+ss-loader {
+	min-height: 70vh;
+}
+
+tr {
+	position: relative;
 }

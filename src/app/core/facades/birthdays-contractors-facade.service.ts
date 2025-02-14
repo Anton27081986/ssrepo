@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { BirthdaysApiService } from '@app/core/api/birthdays-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {IDictionaryItemDto} from "@app/core/models/company/dictionary-item-dto";
 
 @UntilDestroy()
 @Injectable({
@@ -14,9 +15,16 @@ export class BirthdaysContractorsFacadeService {
 
 	public constructor(private readonly birthdaysContractorsApiService: BirthdaysApiService) {}
 
-	public getBirthdaysContractorsList(clientId?: number, pageSize?: number, offset?: number) {
+	public getBirthdaysContractorsList(
+		clientId?: number,
+		contractor?: IDictionaryItemDto,
+		dateFrom?: string,
+		dateTo?: string,
+		pageSize?: number,
+		offset?: number,
+	) {
 		this.birthdaysContractorsApiService
-			.getBirthdayContractor(clientId, pageSize, offset)
+			.getBirthdayContractor(clientId, contractor, dateFrom, dateTo, pageSize, offset)
 			.pipe(
 				tap(contractors => {
 					this.birthdaysContractorsSubject.next(contractors);

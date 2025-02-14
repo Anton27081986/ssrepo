@@ -23,6 +23,7 @@ export class RatingTeamUsersComponent {
 
 	protected users: Signal<IRankItemDto[]> = computed(() => {
 		const usersTeamsResponse = this.usersTeamResponse();
+
 		if (usersTeamsResponse) {
 			return usersTeamsResponse.items;
 		}
@@ -32,6 +33,7 @@ export class RatingTeamUsersComponent {
 
 	protected total: Signal<number> = computed(() => {
 		const usersTeamsResponse = this.usersTeamResponse();
+
 		if (usersTeamsResponse) {
 			return usersTeamsResponse.total;
 		}
@@ -41,6 +43,7 @@ export class RatingTeamUsersComponent {
 
 	protected teamName: Signal<string | null> = computed(() => {
 		const usersTeamsResponse = this.usersTeamResponse();
+
 		if (usersTeamsResponse) {
 			return usersTeamsResponse.teamName;
 		}

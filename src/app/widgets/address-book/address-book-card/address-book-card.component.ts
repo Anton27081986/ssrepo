@@ -1,9 +1,4 @@
-import {
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IAddressBookSearchUser } from '@app/core/models/address-book-search-user';
 import { UserInfoPopupComponent } from '@app/components/user-info-popup/user-info-popup.component';
 import { ModalService } from '@app/core/modal/modal.service';

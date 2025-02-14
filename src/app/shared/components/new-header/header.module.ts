@@ -9,10 +9,11 @@ import { FlyMenuDirective } from '@app/shared/components/new-header/fly-menu.dir
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
 import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
-import { HeaderComponent } from './header.component';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
 import { ButtonModule } from '@app/shared/components/buttons/button/button-module';
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
+import { ButtonComponent } from '@front-components/components';
+import { HeaderComponent } from './header.component';
 
 @NgModule({
 	declarations: [HeaderComponent, FlyMenuDirective],
@@ -30,6 +31,7 @@ import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 		SearchInputModule,
 		ButtonModule,
 		TooltipModule,
+		ButtonComponent,
 	],
 	exports: [HeaderComponent, FlyMenuDirective],
 })

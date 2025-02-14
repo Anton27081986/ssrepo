@@ -1,0 +1,33 @@
+<ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
+	<ng-container *ngFor="let col of cols.cols">
+		<ng-container [ngSwitch]="col.id">
+			<td class="ss-table-td" *ngIf="col.display">
+				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.tovGroup">
+					<snab-text [type]="TextType.Body">{{ tovGroup().name }}</snab-text>
+				</ng-container>
+				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.snd">
+					<div class="ss-table-td__content">
+						<snab-form-field
+							[size]="Size.Default"
+							[showValidation]="false"
+							(click)="$event.stopPropagation(); $event.preventDefault()"
+						>
+							<snab-input
+								fieldCtrl
+								[formControl]="tovGroup().excessIncomePercent"
+								[onlyPositiveValue]="true"
+								[type]="InputType.Number"
+								[showClearButton]="false"
+								[step]="0.01"
+							/>
+						</snab-form-field>
+						<snab-button [type]="ButtonType.Primary" [iconPosition]="IconPosition.OnlyIcon"
+									 [icon]="IconType.Trash" [size]="Size.Large"
+									 (click)="delTovGroupsState(tovGroup().id)"></snab-button>
+					</div>
+				</ng-container>
+			</td>
+		</ng-container>
+	</ng-container>
+</ng-container>
+

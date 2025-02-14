@@ -17,11 +17,17 @@
 	gap: 12px;
 	width: 410px;
 
+	&__footer {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 10px;
+	}
+
 	::ng-deep ss-text p {
 		text-align: center
 	}
 
-	ss-button {
-		width: 100%;
+	snab-button {
+		width: 145px;
 	}
 }

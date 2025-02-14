@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
 import {
@@ -45,6 +45,7 @@ export class ContractNewComponent {
 			paymentConditions: new FormControl<string>(''),
 			deliveryConditions: new FormControl<string>(''),
 			notificationDate: new FormControl<string>(''),
+			tradePosition: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 		});
 
 		this.contractDetails$ = this.facadeService.contractDetails$;
@@ -77,6 +78,7 @@ export class ContractNewComponent {
 				: null,
 			periodStartDate: dates[0],
 			periodEndDate: dates[1],
+			tovId: this.newContractForm.value.tradePosition.id,
 		};
 
 		this.facadeService
@@ -87,8 +89,13 @@ export class ContractNewComponent {
 			});
 	}
 
-	onContractorSelect(id: string) {
+	onContractorSelect(id: number) {
 		this.facadeService.getContractDetails(id);
+	}
+
+	selectSearchItem(item: IDictionaryItemDto | null, ctrl: AbstractControl) {
+		ctrl.setValue(item);
+		ctrl.markAsTouched();
 	}
 
 	close() {

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
 import { ProfileService } from '@app/pages/profile/profile.service';

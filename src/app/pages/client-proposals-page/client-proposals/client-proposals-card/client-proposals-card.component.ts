@@ -226,6 +226,7 @@ export class ClientProposalsCardComponent {
 					tap(value => {
 						this.offersItems$.next(value.items);
 						this.defaultStateTable$.next(false);
+
 						if (value.total) {
 							this.canTakeWork.pipe(untilDestroyed(this)).subscribe(bol => {
 								if (bol) {

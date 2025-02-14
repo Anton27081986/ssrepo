@@ -12,7 +12,7 @@ input {
 }
 
 .input {
-	min-height: 41px;
+	min-height: 36px;
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
@@ -74,7 +74,6 @@ input {
 
 		.variants-item {
 			padding: 10px 20px;
-			height: 40px;
 			cursor: pointer;
 		}
 
@@ -106,7 +105,11 @@ input.large {
 	font-weight: 600;
 }
 
-input.error {
+input.small {
+	padding: 0 12px !important;
+}
+
+.input.error {
 	border: 1px solid $error;
 	background-color: $lite-error;
 }

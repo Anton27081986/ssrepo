@@ -25,6 +25,7 @@ export class ClientProposalsContractorsTabComponent {
 
 	protected linkToModule: Signal<string | null> = computed(() => {
 		const contractors = this.contractors();
+
 		if (contractors) {
 			return contractors.linkToModule;
 		}
@@ -34,6 +35,7 @@ export class ClientProposalsContractorsTabComponent {
 
 	protected total: Signal<number> = computed(() => {
 		const contractors = this.contractors();
+
 		if (contractors) {
 			return contractors.total;
 		}

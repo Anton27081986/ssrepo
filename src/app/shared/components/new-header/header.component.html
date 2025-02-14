@@ -10,6 +10,16 @@
 
 			<app-notification></app-notification>
 
+			@if (aiPermission()) {
+				<snab-button
+					[type]="ButtonType.Outline"
+					[size]="Size.Large"
+					[icon]="IconType.Comments"
+					[iconPosition]="IconPosition.OnlyIcon"
+					(click)="openChatBot()"
+				></snab-button>
+			}
+
 			<ng-container *ngIf="(userProfile$ | async) as userProfile;">
 				<ss-avatar [size]="'small'" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
 						   [position]="TooltipPosition.DEFAULT" [src]="userProfile?.avatarUrl!" nz-dropdown nzTrigger="click"
@@ -21,20 +31,3 @@
 <nz-dropdown-menu #profilePopup="nzDropdownMenu">
 	<app-profile-popup></app-profile-popup>
 </nz-dropdown-menu>
-
-
-<!--<div class="new-container" *ngIf="route === '/'">-->
-<!--	<div class="back">-->
-<!--		<div class="content" *ngIf="backUrl; else devUrl">-->
-<!--			<a href="https://cisp.ssnab.ru/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к-->
-<!--				старому интерфейсу</a>-->
-<!--		</div>-->
-
-<!--		<ng-template #devUrl>-->
-<!--			<div class="content">-->
-<!--				<a href="https://ssnab.it/index/ErpActivation?command=Update&STATE=Comment" class="src">Вернуться к-->
-<!--					старому интерфейсу</a>-->
-<!--			</div>-->
-<!--		</ng-template>-->
-<!--	</div>-->
-<!--</div>-->

@@ -49,12 +49,12 @@ export class RatingTeamUsersState {
 			debounceTime(2000),
 			filterTruthy(),
 			switchMap(([walker, offset]) => {
-				if (!this.ratingTeamsStateService.weekId$.value) {
+				if (!this.ratingTeamsStateService.week$.value) {
 					return NEVER;
 				}
 
 				return this.service.getRatings(
-					this.ratingTeamsStateService.weekId$.value,
+					this.ratingTeamsStateService.week$.value.id,
 					walker.id,
 					this.limit,
 					offset,

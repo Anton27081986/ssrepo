@@ -1,47 +1,137 @@
-@use 'src/styles/colors.scss' as *;
+@use '../../../../../styles/colors' as *;
 
-:host {
-	width: 100%;
+input {
+    display: flex;
+    align-items: center;
+    padding: 0 25px 0 20px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid $island-outline;
+    background-color: $island;
+    outline: none;
+    font-family: 'Inter', serif;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: -0.01em;
+    text-overflow: ellipsis;
 }
 
-select {
-	display: flex;
-	align-items: center;
-	padding: 5px 12px;
-	width: 100%;
-	border-radius: 8px;
-	border: 1px solid $island-outline;
-	background-color: $island;
-	outline: none;
-	font-family: 'Inter', serif;
-	font-size: 14px;
-	line-height: 17px;
-	letter-spacing: -0.01em;
-	height: 41px;
+.input {
+    position: relative;
 
-	::ng-deep option {
-		display: flex;
-		flex-direction: column;
-	}
+    .toggle-btn {
+        position: absolute;
+        right: 8px;
+        top: 13px;
+        cursor: pointer;
+    }
+
+    .clear-btn {
+        position: absolute;
+        right: 28px;
+        top: 13px;
+        cursor: pointer;
+    }
+
+    .search-result {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        top: 102%;
+        background-color: $island;
+        max-height: 162px;
+        overflow-y: auto;
+        border: 1px solid $island-outline;
+        border-radius: 8px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+
+        .separator {
+            position: sticky;
+            height: 3px;
+            top: 0;
+            border-bottom: 1px solid $island-outline;
+        }
+
+        .search-result-item {
+            padding: 12px 20px;
+            cursor: pointer;
+        }
+
+        .search-result-item:hover {
+            background-color: #F2F3F7;
+        }
+    }
 }
 
-::ng-deep ss-caption.error span {
-	color: #E9033A !important;
+input.autocomplete {
+    padding-right: 48px;
 }
 
-select.error {
-	border: 1px solid $error;
-	background-color: $lite-error;
-
-	option:before {
-		background-color: $island !important;
-	}
+input.large ~ ss-icon {
+    top: 20px;
 }
 
-select.small {
-	height: 36px;
+input.small ~ ss-icon {
+    top: 10px;
 }
 
-:host-context(.dark) select {
-	background-color: $dark-island;
+input::placeholder {
+    color: $lite-text;
+}
+
+input:focus {
+    border-color: $additional-outline;
+}
+
+input.small {
+    height: 36px;
+    font-weight: 400;
+}
+
+input.medium {
+    height: 41px;
+    font-weight: 400;
+}
+
+input.large {
+    height: 52px;
+    font-weight: 600;
+}
+
+input.error {
+    border: 1px solid $error;
+    background-color: $lite-error;
+}
+
+ss-caption {
+    color: $lite-text;
+}
+
+ss-caption.error {
+    color: $error;
+}
+
+:host-context(.dark) {
+    input {
+        background-color: $dark-island;
+    }
+
+    .search-result {
+        background-color: $dark-island !important;
+        color: $dark-text !important;
+    }
+
+    .ss-caption {
+        background-color: $dark-island !important;
+        color: $dark-text !important;
+    }
+
+    ::ng-deep {
+        .search-result {
+            background-color: $dark-island !important;
+            color: $dark-text !important;
+        }
+    }
 }

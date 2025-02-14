@@ -99,6 +99,11 @@
 					position: relative;
 					width: 318px;
 					cursor: pointer;
+
+					a {
+						display: flex;
+						align-items: center;
+					}
 				}
 			}
 		}

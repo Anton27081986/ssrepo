@@ -1,13 +1,6 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	computed,
-	input,
-	InputSignal,
-	Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 export enum TypeCup {
@@ -26,6 +19,7 @@ export enum TypeCup {
 export class RatingTeamTabComponent {
 	public team: InputSignal<IRankTypeItemDto> = input.required<IRankTypeItemDto>();
 	public active: InputSignal<boolean> = input.required<boolean>();
+	public isTeam: InputSignal<boolean> = input.required<boolean>();
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
 }

@@ -1,16 +1,32 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="textarea">
-	<textarea
-		   [placeholder]="placeholder"
-		   [value]="value"
-		   [disabled]="disabled"
-		   [cols]="cols"
-		   [rows]="rows"
-		   (input)="onChange($any($event.target).value)"
-		   (blur)="onTouched()"
-		   class="{{ error ? size + ' error' : size }}"
-		   #textarea>
-	</textarea>
-	<ss-icon class="close" *ngIf="textarea.value && !disabled" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>
+	@if (maxLength) {
+		<textarea
+			[placeholder]="placeholder"
+			[value]="value"
+			[disabled]="disabled"
+			[cols]="cols"
+			[rows]="rows"
+			[maxLength]="maxLength"
+			(input)="onChange($any($event.target).value)"
+			(blur)="onTouched()"
+			class="{{ error ? size + ' error' : size }}"
+			#textarea>
+		</textarea>
+		<ss-icon class="close" *ngIf="textarea.value && !disabled" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>
+	} @else {
+		<textarea
+			[placeholder]="placeholder"
+			[value]="value"
+			[disabled]="disabled"
+			[cols]="cols"
+			[rows]="rows"
+			(input)="onChange($any($event.target).value)"
+			(blur)="onTouched()"
+			class="{{ error ? size + ' error' : size }}"
+			#textarea>
+		</textarea>
+		<ss-icon class="close" *ngIf="textarea.value && !disabled" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>
+	}
 </div>
 <ss-caption class="error" color="error">{{ error }}</ss-caption>

@@ -1,6 +1,6 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="calendar-button-wrapper">
-    <div class="calendar-button" [ngClass]="{'error': error}" (click)="picker.open()">
+    <div class="calendar-button" [ngClass]="{'error': error}" [className]="size" (click)="picker.open()">
         <div
             *ngIf="formRange.controls.startDate.value || formRange.controls.endDate.value; else noDates"
             class="calendar-button-text"
@@ -16,7 +16,7 @@
             <div class="calendar-button-text">{{ placeholder }}</div>
         </ng-template>
 
-        <ss-icon height="16" name="calendar"></ss-icon>
+        <ss-icon height="16" name="calendar" class="calendar-icon"></ss-icon>
     </div>
 
     <ss-icon

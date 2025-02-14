@@ -1,0 +1,118 @@
+@use 'src/styles/colors.scss' as *;
+
+.header {
+	display: flex;
+	padding: 10px 16px;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid $island-outline;
+
+	&__controls {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		ss-button {
+			::ng-deep button {
+				padding: 4px !important;
+				min-width: 36px;
+			}
+		}
+	}
+}
+
+.content {
+	display: grid;
+	padding: 16px;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 16px;
+
+	&__column {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+
+		&__item {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			&__comment {
+				display: -webkit-box;
+				max-height: 72px;
+				-webkit-line-clamp: 4;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			&__links {
+				display: flex;
+				gap: 4px;
+
+				&__item {
+					color: $main;
+					font-family: Inter;
+					font-size: 12px;
+					font-weight: 600;
+					line-height: 14.4px;
+					letter-spacing: -0.01em;
+					display: inline;
+				}
+
+				&__item:after {
+					content: ',';
+				}
+
+				&__item:last-child:after {
+					content: '';
+				}
+			}
+
+			&__files-list {
+				display: flex;
+				flex-direction: column;
+				overflow-y: auto;
+				overflow-x: hidden;
+				max-width: 15vw;
+				max-height: 164px;
+
+				&__item {
+					padding: 8px 0;
+					border-bottom: 1px solid $island-outline;
+					display: flex;
+					gap: 8px;
+					align-items: center;
+
+					&__img {
+						display: flex;
+						flex-shrink: 0;
+						width: 32px;
+						height: 32px;
+						align-items: center;
+						justify-content: center;
+						border-radius: 4px;
+						background-color: #EDF1FF;
+					}
+
+					&__description {
+						flex-grow: 1;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+
+						::ng-deep .size p {
+							color: #8C8C8C;
+						}
+					}
+				}
+
+				&__item:last-child {
+					border-bottom: none;
+				}
+			}
+		}
+	}
+}

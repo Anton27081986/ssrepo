@@ -31,26 +31,25 @@ export class BirthdayComponent {
 	private readonly birthdaysApiService = inject(BirthdaysApiService);
 
 	public readonly dateBirthCtrl = new FormControl<string>(
-		formatDate(new Date(), 'dd.MM.yyyy', 'ru-RU'),
+		formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU'),
 		{
 			nonNullable: true,
 		},
 	);
 
-	public loading$ = signal(false);
+	public loading = signal(false);
 
-	public birthDays$: Signal<IDayDto[]> = toSignal(
+	public birthDays: Signal<IDayDto[]> = toSignal(
 		this.dateBirthCtrl.valueChanges.pipe(
-			startWith(formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU')),
 			filter(Boolean),
-			tap(() => this.loading$.set(true)),
+			tap(() => this.loading.set(true)),
 			switchMap(date =>
 				this.birthdaysApiService.getBirthday(date).pipe(
-					tap(birthdaysList => this.reminderLink$.set(birthdaysList.reminderLink || '')),
+					tap(birthdaysList => this.reminderLink.set(birthdaysList.reminderLink || '')),
 					map(({ days }) => days || []),
-					tap(() => this.loading$.set(false)),
+					tap(() => this.loading.set(false)),
 					catchError(() => {
-						this.loading$.set(false);
+						this.loading.set(false);
 
 						return of([]);
 					}),
@@ -60,12 +59,12 @@ export class BirthdayComponent {
 		{ initialValue: [] as IDayDto[] },
 	);
 
-	public reminderLink$ = signal('');
-	public selectedTabName$ = signal('');
+	public reminderLink = signal('');
+	public selectedTabName = signal('');
 
-	public selectedTabContent$ = computed(() => {
+	public selectedTabContent = computed(() => {
 		const users =
-			this.birthDays$().find(day => day.name === this.selectedTabName$())?.items || [];
+			this.birthDays().find(day => day.name === this.selectedTabName())?.items || [];
 
 		return users.map(user => this.toIUserDto(user));
 	});
@@ -73,19 +72,17 @@ export class BirthdayComponent {
 	public constructor() {
 		effect(
 			() =>
-				this.selectedTabName$.set(
-					this.birthDays$().length ? this.birthDays$()[0].name! : '',
-				),
+				this.selectedTabName.set(this.birthDays().length ? this.birthDays()[0].name! : ''),
 			{ allowSignalWrites: true },
 		);
 	}
 
 	public addNotice(): void {
-		window.open(this.reminderLink$(), '_blank');
+		window.open(this.reminderLink(), '_blank');
 	}
 
 	public selectTab(name: string): void {
-		this.selectedTabName$.set(name);
+		this.selectedTabName.set(name);
 	}
 
 	protected toTabsItemsFormat(birthDays: IDayDto[], shortYear: (date: string) => string): ITab[] {

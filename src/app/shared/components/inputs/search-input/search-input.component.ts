@@ -21,11 +21,23 @@ export type searchType =
 	| 'tovs'
 	| 'region'
 	| 'contractor'
+	| 'payer-contractor'
+	| 'contractor-company'
 	| 'client'
 	| 'technologist'
 	| 'contract'
 	| 'global'
 	| 'products'
+	| 'services'
+	| 'cost-article'
+	| 'client-company'
+	| 'fa-objects'
+	| 'projects'
+	| 'depts'
+	| 'mfs-sections'
+	| 'bu-units'
+	| 'tov-units'
+	| 'tovGroups'
 	| undefined;
 
 @UntilDestroy()
@@ -49,6 +61,7 @@ export class SearchInputComponent {
 	@Input() onlyActive: boolean = false;
 
 	@Output() public select = new EventEmitter<any>();
+	@Output() public blurEvent = new EventEmitter<null>();
 
 	@ViewChild('options') public options!: ElementRef;
 
@@ -67,8 +80,13 @@ export class SearchInputComponent {
 		}
 	}
 
-	protected onChange(query: string) {
-		if (query.length > 2) {
+	protected onChange(value: string) {
+		const query = value.trim();
+
+		if (
+			query.length > 2 ||
+			(query.length && (this.searchType === 'tov-units' || this.searchType === 'bu-units'))
+		) {
 			switch (this.searchType) {
 				case 'user':
 					this.searchFacade
@@ -106,10 +124,10 @@ export class SearchInputComponent {
 							this.ref.detectChanges();
 						});
 					break;
-				case 'contractor':
+				case 'contractor-company':
 					if (query) {
 						this.searchFacade
-							.getContractor(query)
+							.getContractorsCompany(query)
 							.pipe(untilDestroyed(this))
 							.subscribe(res => {
 								this.found$.next(res.items);
@@ -118,12 +136,39 @@ export class SearchInputComponent {
 					}
 
 					break;
+				case 'client-company':
+					this.searchFacade
+						.getClientsCompany(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contractor':
+					this.searchFacade
+						.getContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'payer-contractor':
+					this.searchFacade
+						.getPayerContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
 				case 'tovs':
 					this.searchFacade
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found$.next(res);
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
 					break;
@@ -132,7 +177,7 @@ export class SearchInputComponent {
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
-							this.found$.next(res);
+							this.found$.next(res.items);
 							this.ref.detectChanges();
 							this.showHiddenOptions();
 						});
@@ -172,7 +217,85 @@ export class SearchInputComponent {
 							this.ref.detectChanges();
 						});
 					break;
+				case 'services':
+					this.searchFacade
+						.getDictionaryServices(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'cost-article':
+					this.searchFacade
+						.getDictionaryCostArticles(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'fa-objects':
+					this.searchFacade
+						.getDictionaryFaObjects(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'projects':
+					this.searchFacade
+						.getDictionaryProjects(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'depts':
+					this.searchFacade
+						.getDictionaryDepts(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'mfs-sections':
+					this.searchFacade
+						.getDictionarySections(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'bu-units':
+					this.searchFacade
+						.getDictionaryBuUnits(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tov-units':
+					this.searchFacade
+						.getDictionaryTovUnits(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
 			}
+		}
+	}
+
+	public onBlur(): void {
+		if (!this.value.trim()) {
+			this.blurEvent.emit(null);
 		}
 	}
 

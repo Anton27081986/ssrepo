@@ -9,12 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { TypeCup } from '@app/components/rating/rating-team-tab/rating-team-tab.component';
 import { IProjectDto } from './project-dto';
 import { IDistributorDto } from './distributor-dto';
 import { ITeamDto } from './team-dto';
 import { IUserDto } from './user-dto';
 import { RateTypeEnum } from './rate-type';
-import { TypeCup } from '@app/components/rating/rating-team-tab/rating-team-tab.component';
 
 /**
  * Элемент списка рейтинга

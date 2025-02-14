@@ -3,7 +3,7 @@ import { MessagesComponent } from '@app/widgets/correspondence/messages/messages
 import { CardModule } from '@app/shared/components/card/card.module';
 import { HeadlineModule } from '@app/shared/components/typography/headline/headline.module';
 import { TextModule } from '@app/shared/components/typography/text/text.module';
-import {AsyncPipe, DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass, NgForOf, NgIf } from '@angular/common';
 import { AvatarModule } from '@app/shared/components/avatar/avatar.module';
 import { IconModule } from '@app/shared/components/icon/icon.module';
 import { SearchInputModule } from '@app/shared/components/inputs/search-input/search-input.module';
@@ -13,28 +13,30 @@ import { TabsModule } from '@app/shared/components/tabs/tabs.module';
 import { CaptionModule } from '@app/shared/components/typography/caption/caption.module';
 import { PipesModule } from '@app/core/pipes/pipes.module';
 import { TooltipMenuModule } from '@app/shared/components/tooltip-menu/tooltip-menu.module';
+import { BypassSecurityTrustHtmlPipe } from '@app/core/pipes/bypass-security-trust-html.pipe';
 
 @NgModule({
 	declarations: [MessagesComponent],
 	exports: [MessagesComponent],
-    imports: [
-        CardModule,
-        HeadlineModule,
-        TextModule,
-        AsyncPipe,
-        NgIf,
-        NgForOf,
-        AvatarModule,
-        IconModule,
-        SearchInputModule,
-        NgClass,
-        AttachmentModule,
-        TooltipModule,
-        TabsModule,
-        CaptionModule,
-        PipesModule,
-        TooltipMenuModule,
-        DatePipe,
-    ],
+	imports: [
+		CardModule,
+		HeadlineModule,
+		TextModule,
+		AsyncPipe,
+		NgIf,
+		NgForOf,
+		AvatarModule,
+		IconModule,
+		SearchInputModule,
+		NgClass,
+		AttachmentModule,
+		TooltipModule,
+		TabsModule,
+		CaptionModule,
+		PipesModule,
+		TooltipMenuModule,
+		DatePipe,
+		BypassSecurityTrustHtmlPipe,
+	],
 })
 export class MessagesModule {}

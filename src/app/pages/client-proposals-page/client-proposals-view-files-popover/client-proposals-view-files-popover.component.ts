@@ -29,6 +29,7 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 	protected readonly files$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<
 		IFilesProposals[]
 	>([]);
+
 	protected readonly type: ClientProposalsTypeDocuments = ClientProposalsTypeDocuments.rim;
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -51,11 +52,13 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 
 	ngOnInit() {
 		let files;
+
 		if (this.data.checkListService.checkFiles$.value.length) {
 			files = this.data.files.map(file => {
 				const findFile = this.data.checkListService.checkFiles$.value.find(
 					checkFiles => file.uniqId === checkFiles.uniqId,
 				);
+
 				file.checked = !!findFile;
 
 				return file;
@@ -83,5 +86,6 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 				return '';
 		}
 	}
+
 	protected readonly ClientProposalsTypeDocuments = ClientProposalsTypeDocuments;
 }

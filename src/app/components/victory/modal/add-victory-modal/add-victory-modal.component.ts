@@ -96,6 +96,7 @@ export class AddVictoryModalComponent {
 		if (userIds.length) {
 			this.formGroup.controls.userIds.setValue(userIds);
 		}
+
 		if (this.formGroup.valid) {
 			this.subscription.add(
 				this.apiService

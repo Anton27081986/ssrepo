@@ -4,7 +4,7 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import {
 	fromPickerDateToIso,
@@ -12,6 +12,7 @@ import {
 } from '@app/shared/pipe/from-picker-date-to-iso';
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
 import { Observable } from 'rxjs';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 
 interface IDialogData {
 	id?: string | null;
@@ -51,6 +52,7 @@ export class ContractInfoComponent {
 			period: new FormControl<string>('', Validators.required),
 			isComplete: new FormControl<boolean>(false),
 			reasonCompletion: new FormControl<string>(''),
+			tradePosition: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 		});
 
 		this.facadeService.selectedContract$.pipe(untilDestroyed(this)).subscribe(contract => {
@@ -58,13 +60,16 @@ export class ContractInfoComponent {
 				this.contract = contract.data;
 				this.canEdit = contract.permissions.includes(Permissions.CLIENT_PROCUREMENTS_EDIT);
 
-				this.contract.notificationDate = new Date(
-					Date.parse(contract.data.notificationDate),
-				).toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				});
+				if (typeof contract.data.notificationDate === 'string') {
+					this.contract.notificationDate = new Date(
+						Date.parse(contract.data.notificationDate),
+					).toLocaleString('ru-RU', {
+						year: 'numeric',
+						month: 'numeric',
+						day: 'numeric',
+					});
+				}
+
 				this.contract.periodStartDate = new Date(
 					Date.parse(contract.data.periodStartDate),
 				).toLocaleString('ru-RU', {
@@ -89,6 +94,7 @@ export class ContractInfoComponent {
 					contract.data.reasonCompletion || '',
 				);
 				this.editForm.controls.isComplete.setValue(contract.data.isComplete || false);
+				this.editForm.controls.tradePosition.setValue(contract.data.tov);
 			}
 		});
 
@@ -124,11 +130,14 @@ export class ContractInfoComponent {
 		const newContract: AddContractDto = {
 			...this.contract,
 			...this.editForm.value,
-			notificationDate: fromPickerDateToIso(this.contract!.notificationDate),
+			notificationDate: this.contract!.notificationDate
+				? fromPickerDateToIso(this.contract!.notificationDate)
+				: null,
 			periodStartDate: dates[0],
 			periodEndDate: dates[1],
 			contractorId: this.contract!.contractor.id,
 			contractDetailId: this.contract!.contractDetail.id,
+			tovId: this.editForm.value.tradePosition.id,
 		};
 
 		if (this.contract?.id) {
@@ -139,6 +148,11 @@ export class ContractInfoComponent {
 					this.modalRef.close(true);
 				});
 		}
+	}
+
+	selectSearchItem(item: IDictionaryItemDto | null, ctrl: AbstractControl) {
+		ctrl.setValue(item);
+		ctrl.markAsTouched();
 	}
 
 	switchMode(status: boolean) {

@@ -9,7 +9,7 @@ import { AddVictoryModalResultComponent } from '@app/components/victory/modal/ad
 import { ModalService } from '@app/core/modal/modal.service';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { ThankColleagueFacadeService } from '@app/core/facades/thanks-colleague-facade.service';
-import {NotificationToastService} from "@app/core/services/notification-toast.service";
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
 
 @UntilDestroy()
 @Component({
@@ -53,7 +53,10 @@ export class AddThanksColleagueModalComponent {
 				.addThanksForColleague(this.formGroup.value)
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
-					this.notificationService.addToast('Благодарность уже добавлена на главный экран', 'ok')
+					this.notificationService.addToast(
+						'Благодарность уже добавлена на главный экран',
+						'ok',
+					);
 					this.facade.resetThanks();
 					this.close();
 				});

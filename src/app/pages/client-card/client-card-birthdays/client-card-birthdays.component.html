@@ -1,13 +1,17 @@
-<ss-card padding="0" radius="16px 0 16px 16px">
+<ss-card padding="0" radius="0 0 16px 16px">
 	<div class="header">
-		<ss-headline size="h6" weight="semi-bold">Дни рождения в период {{ periodDate }}</ss-headline>
+		<div class="header__title">
+			<ss-headline size="h6" weight="semi-bold">Дни рождения в период </ss-headline>
+			<ss-date-range size="small" [placeholder]="firstDate + ' | ' + lastDate" (select)="onDateRange($event)"></ss-date-range>
+		</div>
+		<ss-search-input
+			size="small"
+			searchType="contractor"
+			placeholder="Поиск по контрагенту"
+			data="{{ clientId }}"
+			(select)="onContractor($event)" (input)="onContractor()"></ss-search-input>
 	</div>
 
-	<div class="panel">
-		<div class="search">
-			<ss-search-input size="small" searchType="contractor" placeholder="Поиск по контрагенту" data="{{ clientId }}" (select)="filterbirthdaysContractors($event)" (input)="clearFilter($any($event.target).value)"></ss-search-input>
-		</div>
-	</div>
 	<div class="card-list">
 		<ng-container *ngFor="let birthdays of (birthdaysContractors$ | async)?.items; trackBy: trackBy">
 			<ss-card padding="12">

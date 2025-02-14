@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
 import { IResponse } from '@app/core/utils/response';
@@ -75,7 +75,10 @@ export class RawMaterialAccountingApiService {
 	}
 
 	/** Редактировать договор */
-	public editContract(id: number, contract: AddContractDto): Observable<IRawMaterialAccountingContract> {
+	public editContract(
+		id: number,
+		contract: AddContractDto,
+	): Observable<IRawMaterialAccountingContract> {
 		return this.http.put<IRawMaterialAccountingContract>(
 			`${environment.apiUrl}/api/procurements/contracts/${id}`,
 			contract,

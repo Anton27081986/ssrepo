@@ -1,0 +1,31 @@
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.excess-income-edit-comment-popover {
+	display: flex;
+	flex-direction: column;
+	width: 500px;
+
+	&__header {
+		padding: 8px;
+	}
+
+	&__body {
+		padding: 16px;
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 10px;
+		padding: 8px;
+	}
+}
+

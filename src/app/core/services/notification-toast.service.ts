@@ -24,7 +24,7 @@ export class NotificationToastService {
 			});
 
 			if (tokenToast) {
-				return
+				return;
 			}
 		}
 

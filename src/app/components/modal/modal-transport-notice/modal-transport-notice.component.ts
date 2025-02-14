@@ -4,7 +4,6 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { SSForm } from '@app/core/models/form';
 import { dateFromLessDateTo } from '@app/core/validators/date-from-less-date-to';
 import { ModalTransportNoticeImports } from '@app/components/modal/modal-transport-notice/modal-transport-notice.imports';
-import { ITransportNotifyDto } from '@app/core/models/company/transport-notify-dto';
 
 interface INoteForm {
 	dateFrom: Date | null;
@@ -24,11 +23,11 @@ export class ModalTransportNoticeComponent {
 	private readonly modalRef = inject(ModalRef);
 	protected noteForm = new FormGroup<SSForm<INoteForm>>(
 		{
-			dateFrom: new FormControl<Date | null>(null, {
+			dateFrom: new FormControl<string>('', {
 				nonNullable: true,
 				validators: Validators.required,
 			}),
-			dateTo: new FormControl<Date | null>(null, {
+			dateTo: new FormControl<string>('', {
 				nonNullable: true,
 				validators: Validators.required,
 			}),
@@ -38,16 +37,10 @@ export class ModalTransportNoticeComponent {
 	);
 
 	public saveAndCloseModal(): void {
-		const transportNotify: ITransportNotifyDto = {
-			dateFrom: new Date(this.noteForm.controls.dateFrom?.value).toISOString(),
-			dateTo: new Date(this.noteForm.controls.dateTo?.value).toISOString(),
-			note: this.noteForm.controls.note?.value?.toString(),
-		};
-
-		this.modalRef.close(transportNotify);
+		this.modalRef.close(this.noteForm.value);
 	}
 
-	public close() {
+	public close(): void {
 		this.modalRef.close();
 	}
 }

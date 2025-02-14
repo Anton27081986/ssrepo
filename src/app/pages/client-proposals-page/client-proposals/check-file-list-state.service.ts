@@ -10,7 +10,8 @@ export class CheckFileListStateService {
 
 	changeArrFile(newFile: IFilesProposals) {
 		let savedFiles = this.checkFiles$.value;
-		let checkFile = savedFiles.find(file => file.uniqId === newFile.uniqId);
+		const checkFile = savedFiles.find(file => file.uniqId === newFile.uniqId);
+
 		if (newFile.checked && !checkFile) {
 			savedFiles.push(newFile);
 		} else {

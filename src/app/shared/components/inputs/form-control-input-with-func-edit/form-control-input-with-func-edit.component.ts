@@ -22,7 +22,7 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 	],
 })
 export class FormControlInputWithFuncEditComponent implements ControlValueAccessor, OnChanges {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
+	@Input() public size: 'large' | 'medium' | 'small' | 'big' = 'medium';
 	@Input() public disabled: boolean = false;
 	@Input() public funcEdit: boolean = false;
 	@Input() public label: string | undefined;
@@ -35,14 +35,13 @@ export class FormControlInputWithFuncEditComponent implements ControlValueAccess
 	protected oldValue: string | null = null;
 
 	private OnChange!: (value: string) => void;
-	private OnTouched!: (value: string) => void;
+	private readonly OnTouched!: (value: string) => void;
 
 	/**
 	 * Write form value to the DOM element (model => view)
 	 */
 	public writeValue(value: string): void {
 		this.control.setValue(value);
-		this.OnChange(value);
 	}
 
 	ngOnChanges(changes: SimpleChanges) {

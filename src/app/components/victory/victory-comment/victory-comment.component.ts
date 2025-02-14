@@ -27,6 +27,7 @@ export class VictoryCommentComponent {
 		private readonly victoryState: VictoryState,
 	) {
 		const profile = JSON.parse(localStorage.getItem('userProfile')!) as IUserProfile;
+
 		this.authUserId = profile.id!;
 	}
 
