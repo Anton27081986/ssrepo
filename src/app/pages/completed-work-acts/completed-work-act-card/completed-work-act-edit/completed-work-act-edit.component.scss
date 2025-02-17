@@ -24,7 +24,7 @@
 .content {
 	display: grid;
 	padding: 16px;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	gap: 24px;
 
 	&__column {
@@ -73,7 +73,7 @@
 				flex-direction: column;
 				overflow-y: auto;
 				overflow-x: hidden;
-				max-width: 15vw;
+				mix-width: 15vw;
 				max-height: 210px;
 
 				&__item {
