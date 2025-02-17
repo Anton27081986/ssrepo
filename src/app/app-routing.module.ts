@@ -5,12 +5,7 @@ import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-lay
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
-import {
-	completedWorkActPermissionsGuard,
-	excessIncomePermissionsGuard,
-	procurementsPermissionsGuard,
-	proposalsPermissionsGuard,
-} from '@app/core/guards';
+import { procurementsPermissionsGuard, proposalsPermissionsGuard } from '@app/core/guards';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -50,7 +45,6 @@ const routes: Routes = [
 					},
 					{
 						path: 'completed-work-acts',
-						canActivate: [completedWorkActPermissionsGuard],
 						loadChildren: () =>
 							import('./pages/completed-work-acts/completed-work-acts.module').then(
 								m => m.CompletedWorkActsModule,
