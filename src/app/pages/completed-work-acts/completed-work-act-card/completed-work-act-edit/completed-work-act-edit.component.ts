@@ -71,7 +71,7 @@ export class CompletedWorkActEditComponent {
 
 	protected newDocuments: File[] = [];
 
-	protected finDocOrders: IDictionaryItemDto[] = [];
+	protected finDocOrders: IFilterOption[] = [];
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
@@ -172,16 +172,13 @@ export class CompletedWorkActEditComponent {
 
 		const updatedAct: IUpdateAct = {
 			...actForm,
-			finDocOrderIds: actForm.finDocOrderIds?.reduce<number[]>(
-				(prev, current: IDictionaryItemDto | number) => {
-					if (typeof current === 'number') {
-						return [...prev, current];
-					}
-
+			finDocOrderIds: this.finDocOrders?.reduce<number[]>((prev, current: IFilterOption) => {
+				if (current.checked) {
 					return [...prev, current.id];
-				},
-				[],
-			),
+				}
+
+				return prev;
+			}, []),
 			buUnitId: buUnit?.id,
 			contractId: actForm.contract?.id,
 			currencyId: actForm.currency?.id,
