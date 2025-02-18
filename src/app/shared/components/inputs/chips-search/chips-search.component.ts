@@ -103,6 +103,15 @@ export class ChipsSearchComponent {
 							this.ref.detectChanges();
 						});
 					break;
+				case 'tov-company':
+					this.searchFacade
+						.getTovCompany(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
 				case 'contractor':
 					if (query) {
 						this.searchFacade
