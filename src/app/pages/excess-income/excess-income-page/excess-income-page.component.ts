@@ -78,7 +78,7 @@ export class ExcessIncomePageComponent {
 		{
 			name: 'tov',
 			type: 'search-select',
-			searchType: 'tovs',
+			searchType: 'tov-company',
 			label: 'Товарная позиция',
 			placeholder: 'Выберите товарную позицию',
 		},
