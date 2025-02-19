@@ -57,6 +57,10 @@ export class SearchFacadeService {
 		return this.clientApiService.getClientsCompany(query);
 	}
 
+	public getTovCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.clientApiService.getTovCompany(query);
+	}
+
 	public getContractorsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getContractorsCompany(query);
 	}

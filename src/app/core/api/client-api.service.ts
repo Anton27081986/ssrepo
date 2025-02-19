@@ -95,6 +95,19 @@ export class ClientApiService {
 		);
 	}
 
+	getTovCompany(searchTerm: string) {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/tovs`,
+			{
+				params,
+			},
+		);
+	}
+
 	getContractorsCompany(searchTerm: string) {
 		let params = new HttpParams();
 
