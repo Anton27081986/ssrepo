@@ -10,8 +10,6 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { IFile } from '@app/core/models/files/file';
 import { forkJoin } from 'rxjs';
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 @UntilDestroy()
 @Component({
@@ -27,7 +25,7 @@ export class CompletedWorkActEditComponent {
 		internalActNumber: FormControl<string | null>;
 		externalActDate: FormControl<string | null>;
 		internalActDate: FormControl<string | null>;
-		finDocOrderIds: FormControl<IFilterOption[] | null>;
+		finDocOrderIds: FormControl<number[] | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnit: FormControl<IDictionaryItemDto | null>;
 		payerContractorId: FormControl<number | null>;
@@ -65,13 +63,9 @@ export class CompletedWorkActEditComponent {
 		initialValue: [],
 	});
 
-	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
-		initialValue: [],
-	});
-
 	protected newDocuments: File[] = [];
 
-	protected finDocOrders: IFilterOption[] = [];
+	protected finDocOrders: IDictionaryItemDto[] = [];
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
@@ -83,7 +77,7 @@ export class CompletedWorkActEditComponent {
 			internalActNumber: new FormControl<string | null>('', [Validators.required]),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
-			finDocOrderIds: new FormControl<IFilterOption[]>([]),
+			finDocOrderIds: new FormControl<number[] | null>(null),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnit: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
@@ -99,9 +93,7 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
 				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
 				this.editActForm.controls.finDocOrderIds.setValue(
-					act.finDocOrders.map(doc => {
-						return { ...doc, checked: true };
-					}),
+					act.finDocOrders.map(doc => doc.id),
 				);
 				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id || null);
 				this.editActForm.controls.buUnit.setValue(act.buUnit);
@@ -110,25 +102,19 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.contract.setValue(act.contract || null);
 				this.editActForm.controls.currency.setValue(act.currency);
 
+				this.finDocOrders = this.act()?.finDocOrders || [];
+
 				this.finDocOrders = act.finDocOrders || [];
-
-				if (act.providerContractor.id) {
-					this.completedWorkActsFacade.getFinDocs(
-						act.providerContractor.id,
-						this.editActForm.controls.externalActDate.value,
-					);
-				}
 			}
-		});
-
-		this.completedWorkActsFacade.finDocs$.pipe(untilDestroyed(this)).subscribe(docs => {
-			this.finDocOrders = docs;
-			this.ref.detectChanges();
 		});
 	}
 
 	protected switchMode() {
 		this.completedWorkActsFacade.switchMode(true);
+	}
+
+	protected setFinDocOrdersIds(docs: IDictionaryItemDto[]) {
+		this.editActForm.controls.finDocOrderIds.setValue(docs.map(item => item.id));
 	}
 
 	protected onSave() {
@@ -172,13 +158,6 @@ export class CompletedWorkActEditComponent {
 
 		const updatedAct: IUpdateAct = {
 			...actForm,
-			finDocOrderIds: this.finDocOrders?.reduce<number[]>((prev, current: IFilterOption) => {
-				if (current.checked) {
-					return [...prev, current.id];
-				}
-
-				return prev;
-			}, []),
 			buUnitId: buUnit?.id,
 			contractId: actForm.contract?.id,
 			currencyId: actForm.currency?.id,
@@ -228,12 +207,6 @@ export class CompletedWorkActEditComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.editActForm.controls.contract.setValue(null);
-					this.editActForm.controls.finDocOrderIds.setValue([]);
-					this.finDocOrders = [];
-					this.completedWorkActsFacade.getFinDocs(
-						id,
-						this.editActForm.controls.externalActDate.value,
-					);
 					this.ref.detectChanges();
 				});
 		}
@@ -262,6 +235,4 @@ export class CompletedWorkActEditComponent {
 	protected deleteFile(fileId: string) {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
-
-	protected readonly Permissions = Permissions;
 }

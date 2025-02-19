@@ -1,7 +1,7 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { CompletedWorkActsApiService } from '@app/core/api/completed-work-acts-api.service';
-import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -14,9 +14,6 @@ import { NotificationToastService } from '@app/core/services/notification-toast.
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IFile } from '@app/core/models/files/file';
 import { catchError } from 'rxjs/operators';
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { PermissionsApiService } from '@app/core/api/permissions-api.service';
-import { Router } from '@angular/router';
 
 @UntilDestroy()
 @Injectable({
@@ -57,20 +54,11 @@ export class CompletedWorkActsFacadeService {
 	private readonly isEditMode = new BehaviorSubject<boolean>(false);
 	public isEditMode$ = this.isEditMode.asObservable();
 
-	private readonly permissions = new BehaviorSubject<string[]>([]);
-	public permissions$ = this.permissions.asObservable();
-
-	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
-	public finDocs$ = this.finDocs.asObservable();
-
 	public constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
 		private readonly noticeService: NotificationToastService,
 		private readonly searchFacade: SearchFacadeService,
-		private readonly permissionsApiService: PermissionsApiService,
-		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
 	) {
 		this.filters
 			.pipe(
@@ -92,7 +80,6 @@ export class CompletedWorkActsFacadeService {
 		this.getActStates();
 		this.getCurrencies();
 		this.getBuUnits();
-		this.getPermissions();
 	}
 
 	public applyFilters(filters: ICompletedActsFilter) {
@@ -104,30 +91,12 @@ export class CompletedWorkActsFacadeService {
 		this.actsApiService
 			.getWorkAct(id)
 			.pipe(
-				switchMap(({ data, permissions }) => {
-					if (data.id) {
-					}
-
-					this.permissions.next(permissions);
-					this.act.next(data);
-					this.actAttachment.next(data.documents);
-
-					if (!permissions.includes(Permissions.COMPLETED_WORK_ACTS_ACCESS)) {
-						this.router.navigate(['completed-work-acts']).then(() => {
-							this.notificationService.addToast(
-								`Доступ к акту ${id} ограничен`,
-								'warning',
-							);
-						});
-					} else {
-						this.router.navigate([`completed-work-acts/${id}`]);
-					}
-
-					this.getContracts(data.providerContractor?.id)
+				switchMap(act => {
+					this.act.next(act);
+					this.actAttachment.next(act.documents);
+					this.getContracts(act.providerContractor?.id)
 						.pipe(untilDestroyed(this))
 						.subscribe();
-
-					this.finDocs.next(data.finDocOrders);
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -221,18 +190,6 @@ export class CompletedWorkActsFacadeService {
 		);
 	}
 
-	public getFinDocs(providerContractorId: number, externalActDate: string | null) {
-		this.searchFacade
-			.getFinDocOrders(providerContractorId, externalActDate)
-			.pipe(
-				tap(res => {
-					this.finDocs.next(res.items);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
-	}
-
 	public toArchiveAct() {
 		if (this.act.value) {
 			const id = this.act.value.id;
@@ -293,19 +250,5 @@ export class CompletedWorkActsFacadeService {
 
 	public addFileToAct(actId: number, fileId: string) {
 		return this.actsApiService.addDocumentToAct(actId, fileId);
-	}
-
-	public getPermissions() {
-		this.permissionsApiService
-			.getPermissionClient(Permissions.COMPLETED_WORK_ACTS)
-			.pipe(
-				tap(res => {
-					if (res.items) {
-						this.permissions.next(res.items);
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
 	}
 }

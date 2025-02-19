@@ -76,8 +76,8 @@ export class CompletedWorkActsApiService {
 		);
 	}
 
-	public getWorkAct(id: string): Observable<{ data: ICompletedWorkAct, permissions: string[] }> {
-		return this.http.get<{ data: ICompletedWorkAct, permissions: string[] }>(
+	public getWorkAct(id: string): Observable<ICompletedWorkAct> {
+		return this.http.get<ICompletedWorkAct>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${id}`,
 		);
 	}

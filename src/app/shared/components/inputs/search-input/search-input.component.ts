@@ -50,7 +50,6 @@ export type searchType =
 export class SearchInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
-	@Input() public readonly: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public value: string = '';
 	@Input() public data: string | undefined;

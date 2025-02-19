@@ -137,7 +137,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						},
 						{
 							id: SpecificationRowItemField.amount,
-							title: 'Сумма 1С',
+							title: 'Сумма',
 							order: 10,
 							show: true,
 							colspan: 1,

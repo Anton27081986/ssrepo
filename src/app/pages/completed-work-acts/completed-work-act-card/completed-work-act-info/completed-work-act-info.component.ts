@@ -2,7 +2,6 @@ import { Component, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import { Permissions } from '@app/core/constants/permissions.constants';
 
 @Component({
 	selector: 'ss-completed-work-act-info',
@@ -12,10 +11,6 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 export class CompletedWorkActInfoComponent {
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
-	});
-
-	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
-		initialValue: [],
 	});
 
 	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {}
@@ -34,6 +29,4 @@ export class CompletedWorkActInfoComponent {
 		link.click();
 		document.body.removeChild(link);
 	}
-
-	protected readonly Permissions = Permissions;
 }

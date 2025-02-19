@@ -14,9 +14,6 @@ const routes: Routes = [
 	{
 		path: ':id',
 		component: CompletedWorkActCardComponent,
-		data: {
-			animation: 'animation',
-		},
 	},
 ];
 

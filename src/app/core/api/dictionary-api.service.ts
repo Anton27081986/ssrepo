@@ -303,22 +303,15 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getFinDocOrders(
-		providerContractorId: number,
-		externalActDate: string | null,
-	): Observable<IResponse<IDictionaryItemDto>> {
+	public getFinDocOrders(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
-		if (providerContractorId) {
-			params = params.set('providerContractorId', providerContractorId);
-		}
-
-		if (externalActDate) {
-			params = params.set('externalActDate', externalActDate);
+		if (query) {
+			params = params.set('query', query);
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/dictionary/FinDocOrdersByProvider`,
+			`${environment.apiUrl}/api/company/dictionary/FinDocOrders`,
 			{ params },
 		);
 	}
