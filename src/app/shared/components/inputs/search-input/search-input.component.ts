@@ -19,6 +19,7 @@ export type searchType =
 	| 'user-dictionary'
 	| 'subsector'
 	| 'tovs'
+	| 'tov-company'
 	| 'region'
 	| 'contractor'
 	| 'payer-contractor'
