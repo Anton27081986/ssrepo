@@ -19,19 +19,19 @@
 			<ss-button type="muted" size="small" (click)="openHistoryModal(act.id)">История</ss-button>
 			<ss-dropdown-button [closeOnClick]="true" *ngIf="!isEdit()" title="Действия">
 				@if (act.state.id === 0) {
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_RESTORE)" class="header__controls__dropdown-item" (click)="restoreAct()">
+					<div class="header__controls__dropdown-item" (click)="restoreAct()">
 						<ss-icon name="refresh"></ss-icon>
 						<ss-text size="3">Восстановить</ss-text>
 					</div>
 				}
 				@if (act.state.id === 1) {
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_PULL_ACT)" class="header__controls__dropdown-item" (click)="pullAct()">
+					<div class="header__controls__dropdown-item" (click)="pullAct()">
 						<ss-icon name="clipboard"></ss-icon>
 						<ss-text size="3">Провести</ss-text>
 					</div>
 				}
 				@if (act.state.id === 1 || act.state.id === 2) {
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_DELETE)" class="header__controls__dropdown-item" (click)="toArchiveAct()">
+					<div class="header__controls__dropdown-item" (click)="toArchiveAct()">
 						<ss-icon name="trash"></ss-icon>
 						<ss-text size="3">Удалить</ss-text>
 					</div>

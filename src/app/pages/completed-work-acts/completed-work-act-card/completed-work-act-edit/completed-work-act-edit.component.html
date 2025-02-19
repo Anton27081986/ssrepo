@@ -37,12 +37,12 @@
 			</div>
 		</div>
 		<div class="content__column">
-			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)">
+			<div class="content__column__item">
 				<ss-text size="4">Заявитель</ss-text>
 				<ss-search-input searchType="user" size="small"
 					[selectedItem]="act()?.applicantUser"
 					(select)="onApplicantUserSelect($event.id)"
-					(click)="editActForm.controls.applicantUserId.setErrors({required: true})"
+					(click)="editActForm.controls.applicantUserId.setErrors(null)"
 					[error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="content__column">
-			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)">
+			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-search-input searchType="contractor" size="small"
 					[selectedItem]="act()?.providerContractor"
@@ -86,13 +86,16 @@
 					[errorText]="editActForm.controls.contract.touched && !editActForm.controls.contract.value ? 'Обязательное поле' : ''"
 				/>
 			</div>
-			<div class="content__column__item content__column__findocs">
+			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
-				<ss-multiselect-v2
-					[formControlName]="'finDocOrderIds'"
-					[options]="finDocOrders"></ss-multiselect-v2>
+				<ss-chips-search searchType="fin-doc-orders" size="small" placeholder="Введите значение"
+					[selectedItems]="finDocOrders"
+					(getSelected)="setFinDocOrdersIds($event)">
+				</ss-chips-search>
 			</div>
-			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)">
+		</div>
+		<div class="content__column">
+			<div class="content__column__item">
 				<ss-text size="4">Валюта</ss-text>
 
 				<ss-select-v2
@@ -107,16 +110,14 @@
 			<div class="content__column__item">
 				<div class="content__column__item__files-header">
 					<ss-text size="4">Документы </ss-text>
-					<ng-container *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT)">
-						<label class="upload-file" for="upload-file">
-							Добавить документ
-						</label>
-						<input type="file" id="upload-file"
-							 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
-							 multiple
-							 (change)="addFiles($event)"
-						/>
-					</ng-container>
+					<label class="upload-file" for="upload-file">
+						Добавить документ
+					</label>
+					<input type="file" id="upload-file"
+						 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
+						 multiple
+						 (change)="addFiles($event)"
+					/>
 				</div>
 				<div class="content__column__item__files-list">
 					<div class="content__column__item__files-list__item" *ngFor="let doc of documents()">
@@ -127,7 +128,7 @@
 							<ss-text size="3">{{ doc.fileName }}</ss-text>
 							<ss-text class="size" size="3">{{ doc.size }}Б</ss-text>
 						</div>
-						<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT)" class="content__column__item__files-list__item__controls">
+						<div class="content__column__item__files-list__item__controls">
 							<ss-icon name="trash" (click)="deleteFile(doc.id)"></ss-icon>
 						</div>
 					</div>

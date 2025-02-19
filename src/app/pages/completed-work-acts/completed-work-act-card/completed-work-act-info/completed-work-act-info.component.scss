@@ -47,10 +47,7 @@
 
 			&__links {
 				display: flex;
-				flex-wrap: wrap;
 				gap: 4px;
-				overflow-y: auto;
-				max-height: 72px;
 
 				&__item {
 					color: $main;

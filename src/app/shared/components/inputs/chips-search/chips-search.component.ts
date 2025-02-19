@@ -21,6 +21,7 @@ export type searchType =
 	| 'technologist'
 	| 'productions'
 	| 'productionsTpr'
+	| 'fin-doc-orders'
 	| string
 	| 'tovGroups'
 	| undefined;
@@ -171,6 +172,15 @@ export class ChipsSearchComponent {
 				case 'productionsTpr':
 					this.searchFacade
 						.getProductSearch(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'fin-doc-orders':
+					this.searchFacade
+						.getFinDocOrders(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;

@@ -52,7 +52,7 @@ export class SpecificationModalComponent {
 	) {
 		this.addSpecificationForm = new FormGroup({
 			serviceId: new FormControl<number | null>(null, [Validators.required]),
-			comment: new FormControl<string | null>(null, [Validators.required]),
+			comment: new FormControl<string | null>(null),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
 			costId: new FormControl<number | null>(null, [Validators.required]),
@@ -193,22 +193,6 @@ export class SpecificationModalComponent {
 	}
 
 	protected updateSpecification() {
-		if (!this.addSpecificationForm.controls.serviceId.value) {
-			this.addSpecificationForm.controls.serviceId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.costId.value) {
-			this.addSpecificationForm.controls.costId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.deptId.value) {
-			this.addSpecificationForm.controls.deptId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.userId.value) {
-			this.addSpecificationForm.controls.userId.setErrors({ required: true });
-		}
-
 		this.addSpecificationForm.markAllAsTouched();
 
 		if (this.addSpecificationForm.invalid) {

@@ -5,7 +5,6 @@
 		   [placeholder]="placeholder"
 		   [value]="selectedItem?.name || ''"
 		   [disabled]="disabled"
-		   [readOnly]="readonly"
 		   (input)="onChange($any($event.target).value)"
            (blur)="onBlur()"
 		   (focusout)="input.value = selectedItem ? selectedItem.name || '' : ''"

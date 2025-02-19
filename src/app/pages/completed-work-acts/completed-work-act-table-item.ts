@@ -1,5 +1,5 @@
 export interface ICompletedWorkActTableItem {
-	code: { text: string; pseudoLink: string };
+	code: { text: string; url: string };
 	state: string;
 	externalActNumber: string;
 	externalActDate: string;

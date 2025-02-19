@@ -6,9 +6,6 @@ import { IResponse } from '@app/core/utils/response';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { Router } from '@angular/router';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -108,11 +105,7 @@ export class CompletedWorkActsComponent {
 		},
 	];
 
-	public constructor(
-		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
-	) {
+	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {
 		this.getFilteredActs();
 	}
 
@@ -127,17 +120,13 @@ export class CompletedWorkActsComponent {
 		initialValue: true,
 	});
 
-	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
-		initialValue: [],
-	});
-
 	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
 		const actTableItems = acts.items.map(x => {
 			const tableItem: ICompletedWorkActTableItem = {} as ICompletedWorkActTableItem;
 
 			tableItem.code = {
 				text: x.id.toString() ?? '-',
-				pseudoLink: `${x.id}`,
+				url: x.id !== undefined ? `./completed-work-acts/${x.id}` : '-',
 			};
 
 			tableItem.state = x.state.name ?? '-';
@@ -246,11 +235,5 @@ export class CompletedWorkActsComponent {
 		this.pageIndex = $event;
 
 		this.getFilteredActs();
-	}
-
-	public openAct(item: { row: ITableItem; icon: string }) {
-		if (item.row.code.text) {
-			this.completedWorkActsFacade.getAct(item.row.code.text);
-		}
 	}
 }

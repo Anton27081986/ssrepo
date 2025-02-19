@@ -145,8 +145,8 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getCompletedActContracts(id);
 	}
 
-	public getFinDocOrders(providerContractorId: number, externalActDate: string | null) {
-		return this.dictionaryApiService.getFinDocOrders(providerContractorId, externalActDate);
+	public getFinDocOrders(query: string) {
+		return this.dictionaryApiService.getFinDocOrders(query);
 	}
 
 	public getDictionaryUsers(query?: string): Observable<IResponse<IDictionaryItemDto>> {
