@@ -28,21 +28,16 @@
 										<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
 											{{ message.text }}
 										</snab-text>
-										<snab-text class="chat__content__body__messages__my-message__time" [type]="TextType.Caption" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+										<snab-text class="chat__content__body__messages__my-message__time"  [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
 											{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
 										</snab-text>
 									</div>
 								}
 								@if (message.messageType === ChatBotMessageTypeEnum.Bot) {
-									<div class="chat__content__body__messages__bot-message">
-										<div class="chat__content__body__messages__message chat__body__messages__bot-message__text">
-											<div [innerHTML]="message.text | mdToHtml"></div>
-										</div>
+									<div class="chat__content__body__messages__message chat__content__body__messages__bot-message">
+										<div class="chat__content__body__messages__bot-message__text" [innerHTML]="message.text | mdToHtml"></div>
 										@if (message.likeType === null && message.id) {
 											<div class="chat__content__body__messages__bot-message__controls">
-												<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
-													{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
-												</snab-text>
 												<div class="chat__content__body__messages__bot-message__controls__buttons">
 													<snab-icon
 														[icon]="IconType.Like"
@@ -58,6 +53,9 @@
 										}
 										@if (message.likeType !== null && message.id) {
 											<div class="chat__content__body__messages__bot-message__controls">
+												<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+													{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
+												</snab-text>
 												<div class="chat__content__body__messages__bot-message__controls__icons">
 													<snab-icon
 														[icon]="message.likeType === ChatBotLikeTypeEnum.Like ? IconType.LikeFilled: IconType.Like"
