@@ -90,7 +90,9 @@ export class ChatBotFacadeService {
 	}
 
 	public sendMessage(question: string | null): void {
+
 		if (!this.activeSubsector.value && this.user) {
+			this.state.next(ChatBotStates.Error);
 			this.messages.next([
 				{
 					id: null,
@@ -102,11 +104,13 @@ export class ChatBotFacadeService {
 				},
 				...this.messages.value,
 			]);
+			this.state.next(ChatBotStates.Ready);
 
 			return;
 		}
 
 		if (!question) {
+			this.state.next(ChatBotStates.Error);
 			this.messages.next([
 				{
 					id: null,
@@ -118,13 +122,13 @@ export class ChatBotFacadeService {
 				},
 				...this.messages.value,
 			]);
+			this.state.next(ChatBotStates.Ready);
 
 			return;
 		}
 
 		if (this.activeSubsector.value && this.user) {
 			this.state.next(ChatBotStates.Generating);
-
 			const myMessage: IChatBotMessage = {
 				id: null,
 				text: question,
