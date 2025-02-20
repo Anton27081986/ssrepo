@@ -22,7 +22,7 @@ export enum ChatBotStates {
 	providedIn: 'root',
 })
 export class ChatBotFacadeService {
-	private readonly isOpened = new BehaviorSubject<boolean>(true);
+	private readonly isOpened = new BehaviorSubject<boolean>(false);
 	public isOpened$ = this.isOpened.asObservable();
 
 	private readonly messages = new BehaviorSubject<IChatBotMessage[]>([]);
