@@ -14,25 +14,27 @@ import { ButtonModule } from '@app/shared/components/buttons/button/button-modul
 import { TooltipModule } from '@app/shared/components/tooltip/tooltip.module';
 import { ButtonComponent } from '@front-components/components';
 import { HeaderComponent } from './header.component';
+import {ChatBotComponent} from "@app/widgets/chat-bot/chat-bot.component";
 
 @NgModule({
 	declarations: [HeaderComponent, FlyMenuDirective],
-	imports: [
-		CommonModule,
-		NzLayoutModule,
-		RouterLink,
-		ComponentsModule,
-		NzDropDownModule,
-		NgOptimizedImage,
-		NzIconModule,
-		IconModule,
-		TextModule,
-		AvatarModule,
-		SearchInputModule,
-		ButtonModule,
-		TooltipModule,
-		ButtonComponent,
-	],
+    imports: [
+        CommonModule,
+        NzLayoutModule,
+        RouterLink,
+        ComponentsModule,
+        NzDropDownModule,
+        NgOptimizedImage,
+        NzIconModule,
+        IconModule,
+        TextModule,
+        AvatarModule,
+        SearchInputModule,
+        ButtonModule,
+        TooltipModule,
+        ButtonComponent,
+        ChatBotComponent,
+    ],
 	exports: [HeaderComponent, FlyMenuDirective],
 })
 export class HeaderModule {}

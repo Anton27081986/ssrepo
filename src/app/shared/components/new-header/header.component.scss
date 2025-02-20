@@ -46,6 +46,12 @@
 		display: flex;
 		gap: 12px;
 		align-items: center;
+
+		.bot-button {
+			::ng-deep button {
+				padding: 9px;
+			}
+		}
 	}
 }
 
