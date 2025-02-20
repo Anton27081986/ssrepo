@@ -103,12 +103,16 @@ export class ChatBotComponent {
 
 		this.botFacade.getMessages(this.pageSize, 0);
 
-		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe(() => {
+		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe((state) => {
 			if (this.messagesElement) {
 				setTimeout(() => {
 					this.messagesElement.nativeElement.scrollTop =
 						this.messagesElement.nativeElement.scrollHeight;
 				}, 1);
+			}
+
+			if (state === 'Generating') {
+				this.questionForm.controls.question.setValue(null);
 			}
 		});
 
@@ -138,9 +142,13 @@ export class ChatBotComponent {
 		this.botFacade.setActiveSubsector(subsector);
 	}
 
-	public sendMessage(): void {
+	public sendMessage(event?: KeyboardEvent): void {
+		if (event && event.key !== 'Enter') {
+			return;
+		}
+
+		event?.preventDefault();
 		this.botFacade.sendMessage(this.questionForm.controls.question.value);
-		this.questionForm.controls.question.setValue(null);
 	}
 
 	public openFeedBack(message: IChatBotMessage, likeType: ChatBotLikeTypeEnum): void {
