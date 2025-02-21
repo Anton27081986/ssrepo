@@ -42,7 +42,7 @@
 				<ss-search-input searchType="user" size="small"
 					[selectedItem]="act()?.applicantUser"
 					(select)="onApplicantUserSelect($event.id)"
-					(click)="editActForm.controls.applicantUserId.setErrors({required: true})"
+					(click)="editActForm.controls.applicantUserId.setErrors(null)"
 					[error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
