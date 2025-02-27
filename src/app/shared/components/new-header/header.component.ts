@@ -9,7 +9,6 @@ import { UserProfileStoreService } from '@app/core/states/user-profile-store.ser
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
-import { ModalService } from '@app/core/modal/modal.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service';
 
@@ -26,10 +25,6 @@ export class HeaderComponent implements OnInit {
 	public statusBurger = false;
 
 	public aiPermission: Signal<boolean> = toSignal(this.mainMenuFacade.aiPermission$, {
-		initialValue: false,
-	});
-
-	public isBotOpened: Signal<boolean> = toSignal(this.chatBotFacade.isOpened$, {
 		initialValue: false,
 	});
 
