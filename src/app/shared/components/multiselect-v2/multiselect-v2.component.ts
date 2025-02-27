@@ -143,6 +143,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 		this.options.forEach(opt => (opt.checked = false));
 		this.viewOptions$.next(this.options);
 		this.selectedOptions$.next([]);
+		this.updateStateControl();
 	}
 
 	protected close() {
