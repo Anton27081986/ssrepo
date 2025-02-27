@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -10,38 +10,14 @@ import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 import { IFile } from '@app/core/models/files/file';
 import { forkJoin } from 'rxjs';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
-import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import { Permissions } from '@app/core/constants/permissions.constants';
+import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-completed-work-act-edit',
 	templateUrl: './completed-work-act-edit.component.html',
 	styleUrls: ['./completed-work-act-edit.component.scss'],
-	imports: [
-		CommonModule,
-		CardComponent,
-		TextComponent,
-		ButtonComponent,
-		ReactiveFormsModule,
-		InputComponent,
-		DateTimePickerComponent,
-		SearchInputComponent,
-		SelectV2Component,
-		ChipsSearchComponent,
-		IconComponent,
-		NgForOf,
-		NgIf
-	],
-	standalone: true
 })
 export class CompletedWorkActEditComponent {
 	@Input() specification: ICompletedWorkActSpecification | null = null;
@@ -51,7 +27,7 @@ export class CompletedWorkActEditComponent {
 		internalActNumber: FormControl<string | null>;
 		externalActDate: FormControl<string | null>;
 		internalActDate: FormControl<string | null>;
-		finDocOrderIds: FormControl<number[] | null>;
+		finDocOrderIds: FormControl<IFilterOption[] | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnit: FormControl<IDictionaryItemDto | null>;
 		payerContractorId: FormControl<number | null>;
@@ -89,9 +65,13 @@ export class CompletedWorkActEditComponent {
 		initialValue: [],
 	});
 
+	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
+		initialValue: [],
+	});
+
 	protected newDocuments: File[] = [];
 
-	protected finDocOrders: IDictionaryItemDto[] = [];
+	protected finDocOrders: IFilterOption[] = [];
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
@@ -103,7 +83,7 @@ export class CompletedWorkActEditComponent {
 			internalActNumber: new FormControl<string | null>('', [Validators.required]),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
-			finDocOrderIds: new FormControl<number[] | null>(null),
+			finDocOrderIds: new FormControl<IFilterOption[]>([]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnit: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
@@ -119,7 +99,9 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
 				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
 				this.editActForm.controls.finDocOrderIds.setValue(
-					act.finDocOrders.map(doc => doc.id),
+					act.finDocOrders.map(doc => {
+						return { ...doc, checked: true };
+					}),
 				);
 				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id || null);
 				this.editActForm.controls.buUnit.setValue(act.buUnit);
@@ -128,19 +110,25 @@ export class CompletedWorkActEditComponent {
 				this.editActForm.controls.contract.setValue(act.contract || null);
 				this.editActForm.controls.currency.setValue(act.currency);
 
-				this.finDocOrders = this.act()?.finDocOrders || [];
-
 				this.finDocOrders = act.finDocOrders || [];
+
+				if (act.providerContractor.id) {
+					this.completedWorkActsFacade.getFinDocs(
+						act.providerContractor.id,
+						this.editActForm.controls.externalActDate.value,
+					);
+				}
 			}
+		});
+
+		this.completedWorkActsFacade.finDocs$.pipe(untilDestroyed(this)).subscribe(docs => {
+			this.finDocOrders = docs;
+			this.ref.detectChanges();
 		});
 	}
 
 	protected switchMode() {
 		this.completedWorkActsFacade.switchMode(true);
-	}
-
-	protected setFinDocOrdersIds(docs: IDictionaryItemDto[]) {
-		this.editActForm.controls.finDocOrderIds.setValue(docs.map(item => item.id));
 	}
 
 	protected onSave() {
@@ -184,6 +172,13 @@ export class CompletedWorkActEditComponent {
 
 		const updatedAct: IUpdateAct = {
 			...actForm,
+			finDocOrderIds: this.finDocOrders?.reduce<number[]>((prev, current: IFilterOption) => {
+				if (current.checked) {
+					return [...prev, current.id];
+				}
+
+				return prev;
+			}, []),
 			buUnitId: buUnit?.id,
 			contractId: actForm.contract?.id,
 			currencyId: actForm.currency?.id,
@@ -233,6 +228,12 @@ export class CompletedWorkActEditComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.editActForm.controls.contract.setValue(null);
+					this.editActForm.controls.finDocOrderIds.setValue([]);
+					this.finDocOrders = [];
+					this.completedWorkActsFacade.getFinDocs(
+						id,
+						this.editActForm.controls.externalActDate.value,
+					);
 					this.ref.detectChanges();
 				});
 		}
@@ -261,4 +262,6 @@ export class CompletedWorkActEditComponent {
 	protected deleteFile(fileId: string) {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
+
+	protected readonly Permissions = Permissions;
 }

@@ -3,34 +3,17 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import { ITableItem } from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {MapperPipe} from "@app/core/pipes/mapper.pipe";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import { IFilter } from '@app/shared/components/filters/filters.component';
+import { Permissions } from '@app/core/constants/permissions.constants';
+import { Router } from '@angular/router';
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
 
 @Component({
 	selector: 'ss-completed-work-acts',
 	templateUrl: './completed-work-acts.component.html',
 	styleUrls: ['./completed-work-acts.component.scss'],
-	imports: [
-		CommonModule,
-		HeadlineComponent,
-		DropdownButtonComponent,
-		FiltersComponent,
-		TableComponent,
-		NgIf,
-		MapperPipe,
-		PaginationComponent,
-		EmptyDataPageComponent,
-		LoaderComponent
-	],
-	standalone: true
 })
 export class CompletedWorkActsComponent {
 	public pageSize = 20;
@@ -125,7 +108,11 @@ export class CompletedWorkActsComponent {
 		},
 	];
 
-	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {
+	public constructor(
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly notificationService: NotificationToastService,
+		private readonly router: Router,
+	) {
 		this.getFilteredActs();
 	}
 
@@ -140,13 +127,17 @@ export class CompletedWorkActsComponent {
 		initialValue: true,
 	});
 
+	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
+		initialValue: [],
+	});
+
 	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
 		const actTableItems = acts.items.map(x => {
 			const tableItem: ICompletedWorkActTableItem = {} as ICompletedWorkActTableItem;
 
 			tableItem.code = {
 				text: x.id.toString() ?? '-',
-				url: x.id !== undefined ? `./completed-work-acts/${x.id}` : '-',
+				pseudoLink: `${x.id}`,
 			};
 
 			tableItem.state = x.state.name ?? '-';
@@ -255,5 +246,11 @@ export class CompletedWorkActsComponent {
 		this.pageIndex = $event;
 
 		this.getFilteredActs();
+	}
+
+	public openAct(item: { row: ITableItem; icon: string }) {
+		if (item.row.code.text) {
+			this.completedWorkActsFacade.getAct(item.row.code.text);
+		}
 	}
 }

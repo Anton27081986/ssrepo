@@ -25,6 +25,7 @@
 					{title: 'Сумма', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
 					]"
 			[items]="acts | mapper : getTableItems"
+			(controlClick)="openAct($event)"
 		>
 		</ss-table>
 		<ss-pagination

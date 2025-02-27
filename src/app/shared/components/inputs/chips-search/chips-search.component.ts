@@ -25,7 +25,6 @@ export type searchType =
 	| 'technologist'
 	| 'productions'
 	| 'productionsTpr'
-	| 'fin-doc-orders'
 	| string
 	| 'tovGroups'
 	| undefined;
@@ -95,6 +94,36 @@ export class ChipsSearchComponent {
 							this.ref.detectChanges();
 						});
 					break;
+				case 'contractor-company':
+					if (query) {
+						this.searchFacade
+							.getContractorsCompany(query)
+							.pipe(untilDestroyed(this))
+							.subscribe(res => {
+								this.found = res.items;
+								this.ref.detectChanges();
+							});
+					}
+
+					break;
+				case 'client-company':
+					this.searchFacade
+						.getClientsCompany(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tov-company':
+					this.searchFacade
+						.getTovCompany(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
 				case 'contractor':
 					if (query) {
 						this.searchFacade
@@ -155,15 +184,6 @@ export class ChipsSearchComponent {
 				case 'productionsTpr':
 					this.searchFacade
 						.getProductSearch(query)
-						.pipe(untilDestroyed(this))
-						.subscribe(res => {
-							this.found = res.items;
-							this.ref.detectChanges();
-						});
-					break;
-				case 'fin-doc-orders':
-					this.searchFacade
-						.getFinDocOrders(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found = res.items;

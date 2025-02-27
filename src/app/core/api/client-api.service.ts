@@ -82,6 +82,45 @@ export class ClientApiService {
 		);
 	}
 
+	getClientsCompany(searchTerm: string) {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/clients`,
+			{
+				params,
+			},
+		);
+	}
+
+	getTovCompany(searchTerm: string) {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/tovs`,
+			{
+				params,
+			},
+		);
+	}
+
+	getContractorsCompany(searchTerm: string) {
+		let params = new HttpParams();
+
+		params = params.set('query', searchTerm);
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Snd/Contractors`,
+			{
+				params,
+			},
+		);
+	}
+
 	public getClientsDictionary(
 		searchTerm: string,
 		onlyActive: boolean,

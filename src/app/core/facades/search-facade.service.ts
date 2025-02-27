@@ -53,6 +53,18 @@ export class SearchFacadeService {
 		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
+	public getClientsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.clientApiService.getClientsCompany(query);
+	}
+
+	public getTovCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.clientApiService.getTovCompany(query);
+	}
+
+	public getContractorsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.clientApiService.getContractorsCompany(query);
+	}
+
 	public getProductions(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.searchProductions(query);
 	}
@@ -133,8 +145,8 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getCompletedActContracts(id);
 	}
 
-	public getFinDocOrders(query: string) {
-		return this.dictionaryApiService.getFinDocOrders(query);
+	public getFinDocOrders(providerContractorId: number, externalActDate: string | null) {
+		return this.dictionaryApiService.getFinDocOrders(providerContractorId, externalActDate);
 	}
 
 	public getDictionaryUsers(query?: string): Observable<IResponse<IDictionaryItemDto>> {

@@ -22,6 +22,9 @@ export enum ChatBotStates {
 	providedIn: 'root',
 })
 export class ChatBotFacadeService {
+	private readonly isOpened = new BehaviorSubject<boolean>(false);
+	public isOpened$ = this.isOpened.asObservable();
+
 	private readonly messages = new BehaviorSubject<IChatBotMessage[]>([]);
 	public messages$ = this.messages.asObservable();
 
@@ -50,6 +53,10 @@ export class ChatBotFacadeService {
 		this.getSubsectors();
 	}
 
+	public toggleBot() {
+		this.isOpened.next(!this.isOpened.value);
+	}
+
 	public getSubsectors(): void {
 		this.botApiService
 			.getSubsectors()
@@ -70,21 +77,7 @@ export class ChatBotFacadeService {
 				})
 				.pipe(untilDestroyed(this))
 				.subscribe(messages => {
-					if (!messages.items.length) {
-						this.messages.next([
-							{
-								id: null,
-								text: 'Выберите категорию запроса ниже',
-								likeType: null,
-								messageType: ChatBotMessageTypeEnum.Bot,
-								createdAt: '',
-								topicId: '',
-							},
-							...this.messages.value,
-						]);
-					} else {
-						this.messages.next([...this.messages.value, ...messages.items]);
-					}
+					this.messages.next([...messages.items, ...this.messages.value]);
 
 					this.totalMessages = messages.total;
 					this.state.next(ChatBotStates.Ready);
@@ -97,7 +90,9 @@ export class ChatBotFacadeService {
 	}
 
 	public sendMessage(question: string | null): void {
+
 		if (!this.activeSubsector.value && this.user) {
+			this.state.next(ChatBotStates.Error);
 			this.messages.next([
 				{
 					id: null,
@@ -109,11 +104,13 @@ export class ChatBotFacadeService {
 				},
 				...this.messages.value,
 			]);
+			this.state.next(ChatBotStates.Ready);
 
 			return;
 		}
 
 		if (!question) {
+			this.state.next(ChatBotStates.Error);
 			this.messages.next([
 				{
 					id: null,
@@ -125,13 +122,13 @@ export class ChatBotFacadeService {
 				},
 				...this.messages.value,
 			]);
+			this.state.next(ChatBotStates.Ready);
 
 			return;
 		}
 
 		if (this.activeSubsector.value && this.user) {
 			this.state.next(ChatBotStates.Generating);
-
 			const myMessage: IChatBotMessage = {
 				id: null,
 				text: question,
@@ -153,6 +150,7 @@ export class ChatBotFacadeService {
 					untilDestroyed(this),
 					catchError((err: unknown) => {
 						this.messages.next([
+							...this.messages.value,
 							{
 								id: null,
 								text: 'Что-то пошло не так:( Попробуйте еще раз',
@@ -161,7 +159,6 @@ export class ChatBotFacadeService {
 								createdAt: '',
 								topicId: '',
 							},
-							...this.messages.value,
 						]);
 						this.state.next(ChatBotStates.Ready);
 						throw err;

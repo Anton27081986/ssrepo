@@ -1,5 +1,5 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="specification" padding="0" (click)="$event.stopPropagation()">
+<div class="wrapper" (mousedown)="close()">
+	<ss-card class="specification" padding="0" (mousedown)="$event.stopPropagation()">
 		<div class="header">
 			<ss-text size="2">{{ spec ? 'Редактировать' : 'Добавить'}} спецификацию затрат</ss-text>
 			<ss-icon name="close" (click)="close()"></ss-icon>
@@ -11,7 +11,8 @@
 					(select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)"
 					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
-				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"></ss-textarea>
+				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"
+							 [error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
 				<ss-input formControlName="quantity" label="Количество" type="number"
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
@@ -56,7 +57,7 @@
 					(click)="addSpecificationForm.controls.sectionId.setErrors(null)"
 					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
-				<ss-numeric-input formControlName="amount" label="Сумма"
+				<ss-numeric-input formControlName="amount" label="Сумма 1С"
 					[error]="addSpecificationForm.controls.amount.touched && addSpecificationForm.controls.amount.errors?.required ? 'Обязательное поле' : undefined">>
 				</ss-numeric-input>
 			</div>

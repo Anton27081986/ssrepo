@@ -3,145 +3,185 @@
 :host {
 	position: fixed;
 	width: 100vw;
-	height: 100vh;
-	top: 0;
+	height: 0;
+	top: 53px;
 	left: 0;
 }
 
+.chat-wrapper.opened {
+	height: calc(100vh - 54px);
+}
+
 .chat-wrapper {
-	position: relative;
-	display: flex;
-	justify-content: flex-end;
 	width: 100%;
-	height: 100%;
-	padding-right: calc(6.25% + 52px);
-	padding-top: 52px;
-	background-color: #0000002f;
+	display: flex;
+	justify-content: center;
+	background-color: $island;
+	height: 0;
+	overflow: hidden;
+	transition: height 0.5s;
 }
 
 .chat {
-	display: block;
-	width: 507px;
-	background-color: $island;
-	height: fit-content;
-	border-radius: 16px;
+	position: relative;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	padding-bottom: 32px;
+	align-items: center;
+	gap: 16px;
+	flex-grow: 1;
 
 	&__header {
+		width: 768px;
 		display: flex;
-		align-items: center;
 		gap: 8px;
-
-		&__title {
-			flex-grow: 1;
-			display: flex;
-		}
+		flex-direction: row-reverse;
 	}
 
-	&__body {
-		display: flex;
-		height: 498px;
-		flex-direction: column;
+	&__content {
 		width: 100%;
-		gap: 12px;
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
 
-		&__messages {
+		&__title {
 			display: flex;
-			overflow-y: auto;
-			flex-direction: column-reverse;
-			width: 100%;
-			gap: 24px;
-			flex-grow: 1;
+			min-height: 40vh;
+			width: 768px;
+			text-align: center;
+			overflow: hidden;
+			align-self: center;
 
-			&__message {
-				display: flex;
-				flex-direction: column;
-				gap: 8px;
-				padding: 8px;
-				max-width: 376px;
-				border-radius: 6px;
-				overflow-wrap: break-word;
-			}
-
-			&__my-message {
-				background-color: #F2F2F2;
+			::ng-deep p {
 				align-self: flex-end;
-				margin-right: 16px;
-
-				&__time {
-					align-self: flex-end;
-				}
+				line-height: 1 !important;
 			}
+		}
 
-			&__bot-message {
+		&__body {
+			display: flex;
+			flex-grow: 1;
+			align-items: center;
+			flex-direction: column;
+			width: 100%;
+			gap: 12px;
+			position: relative;
+
+			&__messages {
 				display: flex;
-				flex-direction: column;
-				gap: 8px;
-				max-width: 376px;
+				flex-direction: column-reverse;
+				width: 768px;
+				gap: 24px;
+				flex-grow: 1;
+				min-height: calc(100vh - 264px);
 
-				&__text {
-					background-color: #EDF1FF;
+				&__message {
+					display: flex;
+					flex-direction: column;
+					gap: 8px;
+					padding: 12px;
+					border-radius: 6px;
+					overflow-wrap: break-word;
+				}
 
-					&__title {
-						align-self: flex-start;
-					}
+				&__my-message {
+					max-width: 376px;
+					background-color: #F2F2F2;
+					align-self: flex-end;
 
 					&__time {
 						align-self: flex-end;
 					}
 				}
 
-				&__controls {
+				&__bot-message {
 					display: flex;
-					gap: 12px;
-					align-items: center;
-					align-self: flex-end;
+					flex-direction: column;
+					max-width: 768px;
 
-					&__buttons {
-						display: flex;
-						gap: 6px;
-						align-items: center;
-						cursor: pointer;
+					::ng-deep p {
+						font-family: 'Inter', serif;
+						letter-spacing: -0.01em;
+						margin: 0;
+						font-size: 12px;
+						line-height: 18px;
+					}
 
-						&__dislike {
-							transform: rotateZ(180deg);
+					::ng-deep li {
+						margin-left: 12px;
+						font-family: 'Inter', serif;
+						letter-spacing: -0.01em;
+						font-size: 12px;
+						line-height: 18px;
+					}
+
+					&__text {
+
+						&__title {
+							align-self: flex-start;
+						}
+
+						&__time {
+							align-self: flex-end;
 						}
 					}
 
-					&__icons {
+					&__controls {
 						display: flex;
-						gap: 6px;
+						gap: 12px;
 						align-items: center;
 
-						&__dislike {
-							transform: rotateZ(180deg);
+						&__buttons {
+							display: flex;
+							gap: 6px;
+							align-items: center;
+							cursor: pointer;
+
+							&__dislike {
+								transform: rotateZ(180deg);
+							}
+						}
+
+						&__icons {
+							display: flex;
+							gap: 6px;
+							align-items: center;
+
+							&__dislike {
+								transform: rotateZ(180deg);
+							}
 						}
 					}
 				}
 			}
-		}
 
-		&__loader {
-			position: relative;
-			height: 100%;
-			max-height: 56px;
-			overflow-y: hidden;
-			width: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
-			snab-text {
-				position: absolute;
-				z-index: 999999;
-				bottom: -5px;
+			&__loader {
+				width: 30px;
+				aspect-ratio: 2;
+				--_g: no-repeat radial-gradient(circle closest-side,#737373 90%, #0000);
+				background:
+					var(--_g) 0%   50%,
+					var(--_g) 50%  50%,
+					var(--_g) 100% 50%;
+				background-size: calc(100%/3) 50%;
+				animation: loader 1s infinite linear;
 			}
 		}
 	}
 
 	&__footer {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+
+		&__avatar {
+			position: absolute;
+			bottom: 0;
+			left: -160px;
+			width: 152px;
+		}
 
 		&__subsectors {
 			display: flex;
@@ -161,13 +201,75 @@
 		}
 
 		&__form {
+			position: relative;
 			display: flex;
+			width: 100%;
 			gap: 8px;
 			align-items: center;
 
 			&__input {
-				flex-grow: 1;
+				width: 768px;
+				display: grid;
+				min-height: 64px;
+				max-height: 220px;
+				overflow: hidden;
+				overflow-wrap: anywhere;
+			}
+
+			&__input::after {
+				content: attr(data-replicated-value) " ";
+				white-space: pre-wrap;
+				visibility: hidden;
+			}
+
+			&__input > textarea {
+				resize: none;
+				max-height: 220px;
+				overflow-y: auto;
+				overflow-wrap: anywhere;
+				overflow-x: hidden;
+				width: 100%;
+				height: auto;
+				padding: 6px 44px 6px 12px;
+				border-radius: 8px;
+				border: 1px solid $island-outline;
+				background-color: $island;
+				outline: none;
+				font-family: 'Inter', serif;
+				font-size: 14px;
+				line-height: 17px;
+				letter-spacing: -0.01em;
+			}
+			&__input > textarea,
+			&__input::after {
+				font: inherit;
+				grid-area: 1 / 1 / 2 / 2;
+			}
+
+			&__input > textarea::placeholder {
+				color: $lite-text;
+			}
+
+			&__input > textarea:focus {
+				border-color: $additional-outline;
+			}
+
+			&__input > textarea::-webkit-resizer {
+				border: none;
+			}
+
+			&__button {
+				position: absolute;
+				right: 12px;
+				bottom: 6px;
 			}
 		}
 	}
+}
+
+@keyframes loader {
+	20%{background-position:0%   0%, 50%  50%,100%  50%}
+	40%{background-position:0% 100%, 50%   0%,100%  50%}
+	60%{background-position:0%  50%, 50% 100%,100%   0%}
+	80%{background-position:0%  50%, 50%  50%,100% 100%}
 }

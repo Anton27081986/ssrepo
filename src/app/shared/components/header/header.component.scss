@@ -1,3 +1,5 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
 @use '../../../../styles/colors' as *;
 
 .header {
@@ -5,8 +7,7 @@
 	position: sticky;
 	top: 0;
 	z-index: 1000;
-	background-color: white;
-	user-select: none;
+	background-color: $white;
 	border-bottom: 1px solid #E4E8EA;
 
 	&__content {
@@ -44,6 +45,12 @@
 		display: flex;
 		gap: 12px;
 		align-items: center;
+
+		.bot-button {
+			::ng-deep button {
+				padding: 9px;
+			}
+		}
 	}
 }
 

@@ -21,9 +21,11 @@ export type searchType =
 	| 'user-dictionary'
 	| 'subsector'
 	| 'tovs'
+	| 'tov-company'
 	| 'region'
 	| 'contractor'
 	| 'payer-contractor'
+	| 'contractor-company'
 	| 'client'
 	| 'technologist'
 	| 'contract'
@@ -31,6 +33,7 @@ export type searchType =
 	| 'products'
 	| 'services'
 	| 'cost-article'
+	| 'client-company'
 	| 'fa-objects'
 	| 'projects'
 	| 'depts'
@@ -54,6 +57,7 @@ export type searchType =
 export class SearchInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
 	@Input() public disabled: boolean = false;
+	@Input() public readonly: boolean = false;
 	@Input() public label: string | undefined;
 	@Input() public value: string = '';
 	@Input() public data: string | undefined;
@@ -123,6 +127,27 @@ export class SearchInputComponent {
 				case 'region':
 					this.searchFacade
 						.getRegions(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contractor-company':
+					if (query) {
+						this.searchFacade
+							.getContractorsCompany(query)
+							.pipe(untilDestroyed(this))
+							.subscribe(res => {
+								this.found$.next(res.items);
+								this.ref.detectChanges();
+							});
+					}
+
+					break;
+				case 'client-company':
+					this.searchFacade
+						.getClientsCompany(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);

@@ -1,6 +1,6 @@
-import { Component, ElementRef, Signal, ViewChild } from '@angular/core';
-import { ModalRef } from '@app/core/modal/modal.ref';
+import { ChangeDetectorRef, Component, ElementRef, Signal, ViewChild } from '@angular/core';
 import {
+	AvatarComponent,
 	ButtonComponent,
 	ButtonType,
 	CardComponent,
@@ -13,6 +13,7 @@ import {
 	IconType,
 	InputComponent,
 	Size,
+	TextareaComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
@@ -20,40 +21,51 @@ import {
 import { ChatBotFacadeService, ChatBotStates } from '@app/core/facades/chat-bot-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {CommonModule, DatePipe, NgClass, NgOptimizedImage} from '@angular/common';
+import { DatePipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
+import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ChatBotFeedbackComponent } from '@app/widgets/chat-bot/feedback/feedback.component';
 import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import { MdToHtmlPipe } from '@app/core/pipes/md-to-html.pipe';
+import { ScrollViewport } from 'ngx-scrollbar';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-chat-bot',
 	templateUrl: './chat-bot.component.html',
 	styleUrls: ['./chat-bot.component.scss'],
 	standalone: true,
 	imports: [
-		CommonModule,
 		CardComponent,
 		IconComponent,
 		TextComponent,
 		ButtonComponent,
+		AvatarComponent,
 		NgClass,
 		ReactiveFormsModule,
 		FormFieldComponent,
 		FieldCtrlDirective,
 		InputComponent,
+		LoaderModule,
 		DatePipe,
 		NgOptimizedImage,
-		LoaderComponent,
+		TextareaComponent,
+		MdToHtmlPipe,
+		ScrollViewport,
 	],
 })
 export class ChatBotComponent {
 	protected questionForm!: FormGroup<{
 		question: FormControl<string | null>;
 	}>;
+
+	public isOpened: Signal<boolean> = toSignal(this.botFacade.isOpened$, {
+		initialValue: false,
+	});
 
 	public messages: Signal<IChatBotMessage[]> = toSignal(this.botFacade.messages$, {
 		initialValue: [],
@@ -81,15 +93,35 @@ export class ChatBotComponent {
 	public offset = 10;
 
 	constructor(
-		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
 		private readonly botFacade: ChatBotFacadeService,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
 		this.questionForm = new FormGroup({
 			question: new FormControl<string>('', [Validators.required]),
 		});
 
 		this.botFacade.getMessages(this.pageSize, 0);
+
+		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe((state) => {
+			if (this.messagesElement) {
+				setTimeout(() => {
+					this.messagesElement.nativeElement.scrollTop =
+						this.messagesElement.nativeElement.scrollHeight;
+				}, 1);
+			}
+
+			if (state === 'Generating') {
+				this.questionForm.controls.question.setValue(null);
+			}
+		});
+
+		this.botFacade.isOpened$.pipe(untilDestroyed(this)).subscribe(status => {
+			if (status && this.messagesElement) {
+				this.messagesElement.nativeElement.scrollTop =
+					this.messagesElement.nativeElement.scrollHeight;
+			}
+		});
 	}
 
 	protected loadMoreMessages() {
@@ -110,17 +142,28 @@ export class ChatBotComponent {
 		this.botFacade.setActiveSubsector(subsector);
 	}
 
-	public sendMessage(): void {
+	public sendMessage(event?: KeyboardEvent): void {
+		if (event && event.key !== 'Enter') {
+			return;
+		}
+
+		event?.preventDefault();
 		this.botFacade.sendMessage(this.questionForm.controls.question.value);
 	}
 
 	public openFeedBack(message: IChatBotMessage, likeType: ChatBotLikeTypeEnum): void {
-		this.modalService.open(ChatBotFeedbackComponent, { data: { message, likeType } });
+		this.modalService
+			.open(ChatBotFeedbackComponent, { data: { message, likeType } })
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.changeDetectorRef.detectChanges();
+			});
 	}
 
 	public close() {
-		this.modalRef.close();
-		this.botFacade.clearStorage();
+		this.botFacade.toggleBot();
+		this.questionForm.controls.question.setValue(null);
 	}
 
 	protected readonly IconType = IconType;
@@ -128,6 +171,7 @@ export class ChatBotComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
+	protected readonly ExtendedSize = ExtendedSize;
 	protected readonly ChatBotMessageTypeEnum = ChatBotMessageTypeEnum;
 	protected readonly Colors = Colors;
 	protected readonly Size = Size;
