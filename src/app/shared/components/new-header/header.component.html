@@ -15,9 +15,8 @@
 					<ss-icon name="bot"
 							 (click)="openChatBot()"></ss-icon>
 				</ss-button>
-			}
-
 			<app-chat-bot></app-chat-bot>
+			}
 
 			<ng-container *ngIf="(userProfile$ | async) as userProfile;">
 				<ss-avatar [size]="'small'" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
