@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, ElementRef, Signal, ViewChild} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Signal, ViewChild } from '@angular/core';
 import {
 	AvatarComponent,
 	ButtonComponent,
@@ -31,8 +31,9 @@ import { ChatBotFeedbackComponent } from '@app/widgets/chat-bot/feedback/feedbac
 import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
 import { MdToHtmlPipe } from '@app/core/pipes/md-to-html.pipe';
 import { ScrollViewport } from 'ngx-scrollbar';
-import { untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-chat-bot',
 	templateUrl: './chat-bot.component.html',
@@ -101,6 +102,26 @@ export class ChatBotComponent {
 		});
 
 		this.botFacade.getMessages(this.pageSize, 0);
+
+		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe((state) => {
+			if (this.messagesElement) {
+				setTimeout(() => {
+					this.messagesElement.nativeElement.scrollTop =
+						this.messagesElement.nativeElement.scrollHeight;
+				}, 1);
+			}
+
+			if (state === 'Generating') {
+				this.questionForm.controls.question.setValue(null);
+			}
+		});
+
+		this.botFacade.isOpened$.pipe(untilDestroyed(this)).subscribe(status => {
+			if (status && this.messagesElement) {
+				this.messagesElement.nativeElement.scrollTop =
+					this.messagesElement.nativeElement.scrollHeight;
+			}
+		});
 	}
 
 	protected loadMoreMessages() {
@@ -121,11 +142,13 @@ export class ChatBotComponent {
 		this.botFacade.setActiveSubsector(subsector);
 	}
 
-	public sendMessage(): void {
+	public sendMessage(event?: KeyboardEvent): void {
+		if (event && event.key !== 'Enter') {
+			return;
+		}
+
+		event?.preventDefault();
 		this.botFacade.sendMessage(this.questionForm.controls.question.value);
-		this.questionForm.controls.question.setValue(null);
-		this.messagesElement.nativeElement.scrollTop =
-			this.messagesElement.nativeElement.scrollHeight;
 	}
 
 	public openFeedBack(message: IChatBotMessage, likeType: ChatBotLikeTypeEnum): void {
@@ -134,7 +157,8 @@ export class ChatBotComponent {
 			.afterClosed()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.changeDetectorRef.detectChanges();});
+				this.changeDetectorRef.detectChanges();
+			});
 	}
 
 	public close() {

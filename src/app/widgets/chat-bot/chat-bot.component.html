@@ -1,4 +1,4 @@
-<div class="chat-wrapper" [class]="{'opened': isOpened()}" (click)="$event.stopPropagation()">
+<div class="chat-wrapper" [class]="{'opened': isOpened()}">
 	<div class="chat">
 		<div class="chat__header">
 			<snab-button
@@ -9,14 +9,14 @@
 				(click)="close()">
 			</snab-button>
 		</div>
-		<div class="chat__content">
+		<div class="chat__content" (scrollend)="loadMoreMessages()" #messagesEl>
 			@if (!messages().length) {
 				<snab-text class="chat__content__title" [type]="TextType.Headline" [weight]="TextWeight.Medium">
 					Добрый день, я&nbsp;нейропомощник. Выберите категорию ниже и&nbsp;введите Ваш запрос.
 				</snab-text>
 			} @else {
 				<div class="chat__content__body">
-						<div class="chat__content__body__messages" (scrollend)="loadMoreMessages()" #messagesEl>
+						<div class="chat__content__body__messages">
 							@if (state()===ChatBotStates.Generating) {
 								<div class="chat__content__body__messages__bot-message">
 									<span class="chat__content__body__loader"></span>
@@ -28,7 +28,7 @@
 										<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
 											{{ message.text }}
 										</snab-text>
-										<snab-text class="chat__content__body__messages__my-message__time"  [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+										<snab-text class="chat__content__body__messages__my-message__time" [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
 											{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
 										</snab-text>
 									</div>
@@ -38,6 +38,9 @@
 										<div class="chat__content__body__messages__bot-message__text" [innerHTML]="message.text | mdToHtml"></div>
 										@if (message.likeType === null && message.id) {
 											<div class="chat__content__body__messages__bot-message__controls">
+												<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
+													{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
+												</snab-text>
 												<div class="chat__content__body__messages__bot-message__controls__buttons">
 													<snab-icon
 														[icon]="IconType.Like"
@@ -94,7 +97,7 @@
 				<img ngSrc="assets/images/profile/bot.png" class="chat__footer__avatar" alt="bot" height="152"
 					 width="152" />
 				<div class="chat__footer__form__input">
-					<textarea formControlName="question" [placeholder]="activeSubsector() ? 'Ввведите запрос...' : 'Выберите категорию запроса...'" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+					<textarea formControlName="question" [placeholder]="activeSubsector() ? 'Ввведите запрос...' : 'Выберите категорию запроса...'" onInput="this.parentNode.dataset.replicatedValue = this.value" (keydown)="sendMessage($event)"></textarea>
 				</div>
 				<snab-button
 					class="chat__footer__form__button"
