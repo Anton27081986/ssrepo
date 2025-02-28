@@ -1,5 +1,4 @@
-import { Component, ElementRef, Signal, ViewChild } from '@angular/core';
-import { ModalRef } from '@app/core/modal/modal.ref';
+import {ChangeDetectorRef, Component, ElementRef, Signal, ViewChild} from '@angular/core';
 import {
 	AvatarComponent,
 	ButtonComponent,
@@ -14,6 +13,7 @@ import {
 	IconType,
 	InputComponent,
 	Size,
+	TextareaComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
@@ -21,7 +21,7 @@ import {
 import { ChatBotFacadeService, ChatBotStates } from '@app/core/facades/chat-bot-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {DatePipe, NgClass, NgOptimizedImage} from '@angular/common';
+import { DatePipe, NgClass, NgOptimizedImage } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
@@ -29,6 +29,9 @@ import { LoaderModule } from '@app/shared/components/loader/loader.module';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ChatBotFeedbackComponent } from '@app/widgets/chat-bot/feedback/feedback.component';
 import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
+import { MdToHtmlPipe } from '@app/core/pipes/md-to-html.pipe';
+import { ScrollViewport } from 'ngx-scrollbar';
+import { untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
 	selector: 'app-chat-bot',
@@ -49,12 +52,19 @@ import { ChatBotLikeTypeEnum } from '@app/core/models/chat-bot/like-type-enum';
 		LoaderModule,
 		DatePipe,
 		NgOptimizedImage,
+		TextareaComponent,
+		MdToHtmlPipe,
+		ScrollViewport,
 	],
 })
 export class ChatBotComponent {
 	protected questionForm!: FormGroup<{
 		question: FormControl<string | null>;
 	}>;
+
+	public isOpened: Signal<boolean> = toSignal(this.botFacade.isOpened$, {
+		initialValue: false,
+	});
 
 	public messages: Signal<IChatBotMessage[]> = toSignal(this.botFacade.messages$, {
 		initialValue: [],
@@ -82,9 +92,9 @@ export class ChatBotComponent {
 	public offset = 10;
 
 	constructor(
-		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
 		private readonly botFacade: ChatBotFacadeService,
+		private readonly changeDetectorRef: ChangeDetectorRef,
 	) {
 		this.questionForm = new FormGroup({
 			question: new FormControl<string>('', [Validators.required]),
@@ -113,15 +123,23 @@ export class ChatBotComponent {
 
 	public sendMessage(): void {
 		this.botFacade.sendMessage(this.questionForm.controls.question.value);
+		this.questionForm.controls.question.setValue(null);
+		this.messagesElement.nativeElement.scrollTop =
+			this.messagesElement.nativeElement.scrollHeight;
 	}
 
 	public openFeedBack(message: IChatBotMessage, likeType: ChatBotLikeTypeEnum): void {
-		this.modalService.open(ChatBotFeedbackComponent, { data: { message, likeType } });
+		this.modalService
+			.open(ChatBotFeedbackComponent, { data: { message, likeType } })
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.changeDetectorRef.detectChanges();});
 	}
 
 	public close() {
-		this.modalRef.close();
-		this.botFacade.clearStorage();
+		this.botFacade.toggleBot();
+		this.questionForm.controls.question.setValue(null);
 	}
 
 	protected readonly IconType = IconType;

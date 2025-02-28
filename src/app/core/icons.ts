@@ -1048,4 +1048,8 @@ export class AppIcons {
 		<path d="M9.74375 6.3667L3.83125 12.2792L0.875 9.32308" stroke="#8C8C8C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 		<path d="M15.9282 6.3667L10.0157 12.2792L8.44531 10.7089" stroke="#416CFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 		</svg>`;
+
+	public static bot = `<svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<path d="M7.99967 4.33464C8.73605 4.33464 9.33301 3.73768 9.33301 3.0013C9.33301 2.26492 8.73605 1.66797 7.99967 1.66797C7.26329 1.66797 6.66634 2.26492 6.66634 3.0013C6.66634 3.73768 7.26329 4.33464 7.99967 4.33464ZM7.99967 4.33464V7.0013M5.99967 12.3346V11.0013M9.99967 11.0013V12.3346M3.99967 7.0013H11.9997C13.4724 7.0013 14.6663 8.19521 14.6663 9.66797V13.668C14.6663 15.1407 13.4724 16.3346 11.9997 16.3346H3.99967C2.52692 16.3346 1.33301 15.1407 1.33301 13.668V9.66797C1.33301 8.19521 2.52692 7.0013 3.99967 7.0013Z" stroke="#8F97A5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+		</svg>`;
 }

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit, Signal} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Signal } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
 import { Observable } from 'rxjs';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
@@ -8,10 +8,10 @@ import { Router } from '@angular/router';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import {ButtonType, IconPosition, IconType, Size} from "@front-components/components";
-import {ModalService} from "@app/core/modal/modal.service";
-import {ChatBotComponent} from "@app/widgets/chat-bot/chat-bot.component";
-import {toSignal} from "@angular/core/rxjs-interop";
+import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
+import { ModalService } from '@app/core/modal/modal.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service';
 
 @Component({
 	selector: 'app-header',
@@ -29,13 +29,17 @@ export class HeaderComponent implements OnInit {
 		initialValue: false,
 	});
 
+	public isBotOpened: Signal<boolean> = toSignal(this.chatBotFacade.isOpened$, {
+		initialValue: false,
+	});
+
 	protected readonly AppRoutes = AppRoutes;
 	public route: string | undefined;
 	public constructor(
 		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly userStateService: UserProfileStoreService,
 		public readonly _router: Router,
-		private readonly modalService: ModalService,
+		public readonly chatBotFacade: ChatBotFacadeService,
 	) {}
 
 	public ngOnInit(): any {
@@ -56,7 +60,7 @@ export class HeaderComponent implements OnInit {
 	}
 
 	public openChatBot(): void {
-		this.modalService.open(ChatBotComponent);
+		this.chatBotFacade.toggleBot();
 	}
 
 	protected readonly TooltipPosition = TooltipPosition;
