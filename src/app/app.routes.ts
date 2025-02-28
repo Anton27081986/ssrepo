@@ -4,7 +4,6 @@ import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { FullLayoutComponent } from '@app/shared/layouts/new-layout/full-layout.component';
 import {
-	completedWorkActPermissionsGuard,
 	procurementsPermissionsGuard,
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
@@ -118,7 +117,6 @@ export const routes: Routes = [
 			},
 			{
 				path: 'completed-work-acts',
-				canActivate: [completedWorkActPermissionsGuard],
 				children: [
 					{
 						path: '',

@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {CardComponent} from "@app/shared/components/card/card.component";
+import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
 
 @Component({
 	selector: 'ss-dropdown-button',
@@ -10,13 +11,20 @@ import {CardComponent} from "@app/shared/components/card/card.component";
 	imports: [
 		ButtonComponent,
 		IconComponent,
-		CardComponent
+		CardComponent,
+		AvatarComponent
 	],
 	standalone: true
 })
 export class DropdownButtonComponent implements OnChanges {
 	@Input()
 	public title: string | undefined;
+
+	@Input()
+	public isAvatar: boolean = false;
+
+	@Input()
+	public avatar: string | undefined;
 
 	@Input()
 	public closeOnClick: boolean = false;

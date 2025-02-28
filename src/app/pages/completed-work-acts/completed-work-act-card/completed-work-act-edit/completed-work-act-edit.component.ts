@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, Input, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -12,12 +12,38 @@ import { IFile } from '@app/core/models/files/file';
 import { forkJoin } from 'rxjs';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
+import {CommonModule, NgForOf, NgIf} from "@angular/common";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {MultiselectV2Component} from "@app/shared/components/multiselect-v2/multiselect-v2.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-completed-work-act-edit',
 	templateUrl: './completed-work-act-edit.component.html',
 	styleUrls: ['./completed-work-act-edit.component.scss'],
+	imports: [
+		CommonModule,
+		TextComponent,
+		CardComponent,
+		ButtonComponent,
+		ReactiveFormsModule,
+		InputComponent,
+		DateTimePickerComponent,
+		SearchInputComponent,
+		SelectV2Component,
+		NgIf,
+		IconComponent,
+		NgForOf,
+		MultiselectV2Component
+	],
+	standalone: true
 })
 export class CompletedWorkActEditComponent {
 	@Input() specification: ICompletedWorkActSpecification | null = null;
