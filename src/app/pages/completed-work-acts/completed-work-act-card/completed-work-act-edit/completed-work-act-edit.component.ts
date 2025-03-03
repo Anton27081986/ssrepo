@@ -194,29 +194,34 @@ export class CompletedWorkActEditComponent {
 			);
 		}
 
-		const { buUnit, ...actForm } = this.editActForm.value;
+		const selectedFinDocIds = new Set(
+			(this.editActForm.value.finDocOrderIds || []).map(finDoc =>
+				typeof finDoc === 'number' ? finDoc : finDoc.id,
+			),
+		);
+
+		const updatedFinDocOrders = this.finDocOrders.map(order => ({
+			...order,
+			checked: selectedFinDocIds.has(order.id),
+		}));
+
+		this.editActForm.controls.finDocOrderIds.setValue(
+			updatedFinDocOrders.filter(order => order.checked),
+		);
 
 		const updatedAct: IUpdateAct = {
-			...actForm,
-			finDocOrderIds: this.finDocOrders?.reduce<number[]>((prev, current: IFilterOption) => {
-				if (current.checked) {
-					return [...prev, current.id];
-				}
-
-				return prev;
-			}, []),
-			buUnitId: buUnit?.id,
-			contractId: actForm.contract?.id,
-			currencyId: actForm.currency?.id,
+			...this.editActForm.value,
+			finDocOrderIds: updatedFinDocOrders
+				.filter(order => order.checked)
+				.map(order => order.id),
+			buUnitId: this.editActForm.value.buUnit?.id,
+			contractId: this.editActForm.value.contract?.id,
+			currencyId: this.editActForm.value.currency?.id,
 			documentIds: this.documents().map(file => file.id) || [],
 		};
 
 		if (this.newDocuments.length) {
-			forkJoin(
-				this.newDocuments.map(file => {
-					return this.completedWorkActsFacade.uploadFile(file);
-				}),
-			)
+			forkJoin(this.newDocuments.map(file => this.completedWorkActsFacade.uploadFile(file)))
 				.pipe(untilDestroyed(this))
 				.subscribe(files => {
 					updatedAct.documentIds = updatedAct.documentIds.concat(
@@ -287,6 +292,18 @@ export class CompletedWorkActEditComponent {
 
 	protected deleteFile(fileId: string) {
 		this.completedWorkActsFacade.deleteFile(fileId);
+	}
+
+	protected onInputChange(event: any): void {
+		if (!event.target.value) {
+			const act = this.act();
+
+			if (act) {
+				act.applicantUser = undefined;
+			}
+
+			this.editActForm.controls.applicantUserId.setValue(null);
+		}
 	}
 
 	protected readonly Permissions = Permissions;

@@ -50,7 +50,6 @@ export class ChatBotFacadeService {
 			.subscribe(user => {
 				this.user = user;
 			});
-		this.getSubsectors();
 	}
 
 	public toggleBot() {

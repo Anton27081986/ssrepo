@@ -30,12 +30,14 @@ export class MainMenuFacadeService {
 	public init() {
 		this.authenticationService.user$
 			.pipe(
-				tap(user => {
+				tap(() => {
 					this.permissionsApiService
 						.getPermissionClient('AiAssistant')
 						.pipe(untilDestroyed(this))
-						.subscribe((permissions) => {
-							this.aiPermission.next(permissions.items.includes('AiAssistant.Access'))
+						.subscribe(permissions => {
+							this.aiPermission.next(
+								permissions.items.includes('AiAssistant.Access'),
+							);
 						});
 				}),
 				filter(x => x !== null),
