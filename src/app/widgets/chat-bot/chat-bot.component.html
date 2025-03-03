@@ -94,8 +94,8 @@
 				}
 			</div>
 			<form [formGroup]="questionForm" class="chat__footer__form">
-				<img ngSrc="assets/images/profile/bot.png" class="chat__footer__avatar" alt="bot" height="152"
-					 width="152" />
+				<img ngSrc="assets/images/profile/bot.png" class="chat__footer__avatar" alt="bot" height="205"
+					 width="226" />
 				<div class="chat__footer__form__input">
 					<textarea formControlName="question" [placeholder]="activeSubsector() ? 'Ввведите запрос...' : 'Выберите категорию запроса...'" onInput="this.parentNode.dataset.replicatedValue = this.value" (keydown)="sendMessage($event)"></textarea>
 				</div>
