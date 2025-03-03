@@ -49,10 +49,6 @@ export class HeaderComponent implements OnInit {
 		initialValue: false,
 	});
 
-	public isBotOpened: Signal<boolean> = toSignal(this.chatBotFacade.isOpened$, {
-		initialValue: false,
-	});
-
 	protected readonly AppRoutes = AppRoutes;
 	public route: string | undefined;
 	public constructor(

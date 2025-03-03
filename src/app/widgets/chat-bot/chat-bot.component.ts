@@ -97,9 +97,10 @@ export class ChatBotComponent {
 			question: new FormControl<string>('', [Validators.required]),
 		});
 
+		this.botFacade.getSubsectors();
 		this.botFacade.getMessages(this.pageSize, 0);
 
-		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe((state) => {
+		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe(state => {
 			if (this.messagesElement) {
 				setTimeout(() => {
 					this.messagesElement.nativeElement.scrollTop =
