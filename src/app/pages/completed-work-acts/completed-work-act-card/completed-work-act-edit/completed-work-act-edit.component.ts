@@ -268,5 +268,17 @@ export class CompletedWorkActEditComponent {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 
+	onInputChange(event: any) {
+		if (!event.target.value) {
+			const act = this.act();
+
+			if (act) {
+				act.applicantUser = undefined;
+			}
+
+			this.editActForm.controls.applicantUserId.setValue(null);
+		}
+	}
+
 	protected readonly Permissions = Permissions;
 }
