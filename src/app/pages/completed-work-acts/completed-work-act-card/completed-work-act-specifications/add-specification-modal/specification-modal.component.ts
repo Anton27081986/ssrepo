@@ -3,7 +3,7 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -61,7 +61,7 @@ export class SpecificationModalComponent {
 			deptId: new FormControl<number | null>(null, [Validators.required]),
 			sectionId: new FormControl<number | null>(null),
 			userId: new FormControl<number | null>(null, [Validators.required]),
-			amount: new FormControl<number | null>(null, [Validators.required]),
+			amount: new FormControl<number | null>(null, [Validators.required, this.amountValidator]),
 		});
 
 		if (spec) {
@@ -115,6 +115,15 @@ export class SpecificationModalComponent {
 
 			this.spec = newObjSpec;
 		});
+	}
+
+	protected amountValidator(control: FormControl): ValidationErrors | null {
+		const value = control.value;
+		if (value && !/^\d*\.?\d*$/.test(value)) {
+
+			return { invalidAmount: true };
+		}
+		return null;
 	}
 
 	protected getMyDept() {
