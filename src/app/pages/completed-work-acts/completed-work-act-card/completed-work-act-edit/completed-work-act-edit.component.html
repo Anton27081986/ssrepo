@@ -39,7 +39,7 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Заявитель</ss-text>
-				@if (!permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
 					<ss-search-input searchType="user" size="small"
 									 [selectedItem]="act()?.applicantUser"
 									 (select)="onApplicantUserSelect($event.id)"
@@ -75,7 +75,7 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
-				@if (!permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
 					<ss-search-input searchType="contractor" size="small"
 									 [selectedItem]="act()?.providerContractor"
 									 (select)="onProviderContractorSelect($event.id)"
