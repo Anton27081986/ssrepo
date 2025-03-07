@@ -58,7 +58,12 @@
 					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 				<ss-numeric-input formControlName="amount" label="Сумма 1С"
-					[error]="addSpecificationForm.controls.amount.touched && addSpecificationForm.controls.amount.errors?.required ? 'Обязательное поле' : undefined">>
+					[error]="addSpecificationForm.controls.amount.touched
+							&& addSpecificationForm.controls.amount.errors?.required
+							? 'Обязательное поле'
+							: amountValidator(addSpecificationForm.controls.amount)
+							? 'Некорректное значение'
+							: undefined">
 				</ss-numeric-input>
 			</div>
 		</form>
