@@ -8,8 +8,10 @@
 			<div class="content__column">
 				<ss-search-input searchType="services" label="Услуга" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.service : undefined"
-					(select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)"
-					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined">
+					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined"
+				    (focusout)="resetValueControl($event, addSpecificationForm.controls.serviceId, 'service')"
+				    (input)="resetValueControl($event, addSpecificationForm.controls.serviceId, 'service')"
+					(select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)">
 				</ss-search-input>
 				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"
 							 [error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
@@ -24,8 +26,10 @@
 				</ss-search-input>
 				<ss-search-input searchType="cost-article" label="Статья" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.cost : undefined"
-					(select)="addSpecificationForm.controls.costId.setValue($event.id); addSpecificationForm.controls.costId.setErrors(null)"
-					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined">
+					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined"
+				    (focusout)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
+				    (input)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
+					(select)="addSpecificationForm.controls.costId.setValue($event.id); addSpecificationForm.controls.costId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="fa-objects" label="Объект ОС/НМА" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.faObject : undefined"
@@ -53,6 +57,8 @@
 				</ss-search-input>
 				<ss-search-input searchType="mfs-sections" label="Производственный участок" placeholder="Выберите из списка"
 					[selectedItem]="mySection"
+				    (focusout)="resetValueControlMySection($event, addSpecificationForm.controls.sectionId)"
+				    (input)="resetValueControlMySection($event, addSpecificationForm.controls.sectionId)"
 					(select)="addSpecificationForm.controls.sectionId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.sectionId.setErrors(null)"
 					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined">
