@@ -20,6 +20,7 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
+
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
@@ -59,7 +60,7 @@ export class SpecificationModalComponent {
 			faObjectId: new FormControl<number | null>(null),
 			projectId: new FormControl<number | null>(null),
 			deptId: new FormControl<number | null>(null, [Validators.required]),
-			sectionId: new FormControl<number | null>(null),
+			sectionId: new FormControl<number | null>(null, [Validators.required]),
 			userId: new FormControl<number | null>(null, [Validators.required]),
 			amount: new FormControl<number | null>(null, [Validators.required, this.amountValidator]),
 		});
@@ -101,20 +102,26 @@ export class SpecificationModalComponent {
 					}
 				});
 		}
+	}
 
-		this.addSpecificationForm.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
-			let newObjSpec = { ...this.spec };
+	protected resetValueControlMySection(event: any, control: AbstractControl): void {
+		control.markAsTouched();
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.mySection = undefined;
+		}
+	}
 
-			if (!value.serviceId) {
-				newObjSpec = { ...this.spec, service: undefined };
-			}
-
-			if (!value.costId) {
-				newObjSpec = { ...this.spec, cost: undefined };
-			}
-
-			this.spec = newObjSpec;
-		});
+	protected resetValueControl(
+		event: Event,
+		control: AbstractControl,
+		fieldName: keyof ICompletedWorkActSpecification,
+	): void {
+		control.markAsTouched();
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.spec = { ...this.spec, [fieldName]: undefined };
+		}
 	}
 
 	protected amountValidator(control: FormControl): ValidationErrors | null {
