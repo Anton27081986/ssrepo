@@ -50,8 +50,8 @@
 					<div class="ss-table-td__content hc-table-td__content--number">{{ item().faAsset?.name || '-' }}</div>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="specificationRowItemField.controls">
-					<div class="ss-table-td__content hc-table-td__content--controls">
+				<ng-container  *ngSwitchCase="specificationRowItemField.controls">
+					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT)" class="ss-table-td__content hc-table-td__content--controls">
 						<ss-icon name="edit" (click)="onEditSpecification(item())"></ss-icon>
 						<ss-icon name="trash" (click)="onDeleteSpecification(item().id)"></ss-icon>
 					</div>
