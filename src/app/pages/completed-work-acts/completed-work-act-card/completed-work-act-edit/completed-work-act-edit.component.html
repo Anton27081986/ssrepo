@@ -37,9 +37,10 @@
 			</div>
 		</div>
 		<div class="content__column">
-			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)">
+			<div class="content__column__item">
 				<ss-text size="4">Заявитель</ss-text>
 				<ss-search-input searchType="user" size="small"
+				    [disabled]="!permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)"
 					[selectedItem]="act()?.applicantUser"
 					(select)="onApplicantUserSelect($event.id)"
 					(click)="editActForm.controls.applicantUserId.setErrors(null)"
@@ -68,9 +69,10 @@
 			</div>
 		</div>
 		<div class="content__column">
-			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)">
+			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-search-input searchType="contractor" size="small"
+				    [disabled]="!permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)"
 					[selectedItem]="act()?.providerContractor"
 					(select)="onProviderContractorSelect($event.id)"
 					(click)="editActForm.controls.providerContractorId.setErrors(null)"
