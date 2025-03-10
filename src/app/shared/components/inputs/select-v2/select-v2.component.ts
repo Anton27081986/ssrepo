@@ -159,7 +159,6 @@ export class SelectV2Component implements ControlValueAccessor {
 
 	private updateValue(item: IDictionaryItemDto | null): void {
 		this.onChange(item);
-		this.onTouched();
 		this.hideOptions();
 	}
 
