@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, Signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
@@ -19,7 +19,7 @@ import { IFilterOption } from '@app/shared/components/filters/filters.component'
 	templateUrl: './completed-work-act-edit.component.html',
 	styleUrls: ['./completed-work-act-edit.component.scss'],
 })
-export class CompletedWorkActEditComponent {
+export class CompletedWorkActEditComponent implements OnInit {
 	@Input() specification: ICompletedWorkActSpecification | null = null;
 
 	protected editActForm!: FormGroup<{
@@ -120,9 +120,11 @@ export class CompletedWorkActEditComponent {
 				}
 			}
 		});
+	}
 
+	public ngOnInit() {
 		this.completedWorkActsFacade.finDocs$.pipe(untilDestroyed(this)).subscribe(docs => {
-			this.finDocOrders = docs;
+			this.finDocOrders = docs || [];
 			this.ref.detectChanges();
 		});
 	}

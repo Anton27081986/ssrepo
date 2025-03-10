@@ -39,6 +39,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly actStates = new BehaviorSubject<IDictionaryItemDto[] | null>(null);
 	public actStates$ = this.actStates.asObservable();
 
+	private readonly services = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public services$ = this.services.asObservable();
+
 	private readonly specifications = new BehaviorSubject<ICompletedWorkActSpecification[]>([]);
 	public specifications$ = this.specifications.asObservable();
 
@@ -93,6 +96,7 @@ export class CompletedWorkActsFacadeService {
 		this.getCurrencies();
 		this.getBuUnits();
 		this.getPermissions();
+		this.getServices();
 	}
 
 	public applyFilters(filters: ICompletedActsFilter) {
@@ -182,6 +186,17 @@ export class CompletedWorkActsFacadeService {
 			.pipe(
 				tap(states => {
 					this.actStates.next(states.items);
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+	}
+
+	public getServices() {
+		this.searchFacade.getDictionaryServices()
+			.pipe(
+				tap(services => {
+					this.services.next(services.items);
 				}),
 				untilDestroyed(this),
 			)

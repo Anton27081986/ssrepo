@@ -3,7 +3,13 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	FormGroup,
+	ValidationErrors,
+	Validators,
+} from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -20,13 +26,19 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
-
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
 
+	protected services: Signal<IDictionaryItemDto[]> = toSignal(
+		this.completedWorkActsFacade.services$,
+		{
+			initialValue: [],
+		},
+	);
+
 	protected addSpecificationForm!: FormGroup<{
-		serviceId: FormControl<number | null>;
+		service: FormControl<IDictionaryItemDto | null>;
 		comment: FormControl<string | null>;
 		quantity: FormControl<number | null>;
 		tovUnitId: FormControl<number | null>;
@@ -45,14 +57,14 @@ export class SpecificationModalComponent {
 	protected defaultTovUnits: IDictionaryItemDto | undefined;
 
 	constructor(
-		@Inject(DIALOG_DATA) protected spec: ICompletedWorkActSpecification,
+		@Inject(DIALOG_DATA) protected readonly spec: ICompletedWorkActSpecification,
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
 		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.addSpecificationForm = new FormGroup({
-			serviceId: new FormControl<number | null>(null, [Validators.required]),
+			service: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			comment: new FormControl<string | null>(null, [Validators.required]),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
@@ -60,13 +72,16 @@ export class SpecificationModalComponent {
 			faObjectId: new FormControl<number | null>(null),
 			projectId: new FormControl<number | null>(null),
 			deptId: new FormControl<number | null>(null, [Validators.required]),
-			sectionId: new FormControl<number | null>(null, [Validators.required]),
+			sectionId: new FormControl<number | null>(null),
 			userId: new FormControl<number | null>(null, [Validators.required]),
-			amount: new FormControl<number | null>(null, [Validators.required, this.amountValidator]),
+			amount: new FormControl<number | null>(null, [
+				Validators.required,
+				this.amountValidator,
+			]),
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id || null);
+			this.addSpecificationForm.controls.service.setValue(spec.service || null);
 			this.addSpecificationForm.controls.comment.setValue(spec.comment || null);
 			this.addSpecificationForm.controls.quantity.setValue(spec.quantity || null);
 			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id || null);
@@ -106,6 +121,7 @@ export class SpecificationModalComponent {
 
 	protected resetValueControlMySection(event: any, control: AbstractControl): void {
 		control.markAsTouched();
+
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
 			this.mySection = undefined;
@@ -118,6 +134,7 @@ export class SpecificationModalComponent {
 		fieldName: keyof ICompletedWorkActSpecification,
 	): void {
 		control.markAsTouched();
+
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
 			this.spec = { ...this.spec, [fieldName]: undefined };
@@ -126,10 +143,11 @@ export class SpecificationModalComponent {
 
 	protected amountValidator(control: FormControl): ValidationErrors | null {
 		const value = control.value;
-		if (value && !/^\d*\.?\d*$/.test(value)) {
 
+		if (value && !/^\d*\.?\d*$/.test(value)) {
 			return { invalidAmount: true };
 		}
+
 		return null;
 	}
 
@@ -198,7 +216,6 @@ export class SpecificationModalComponent {
 	}
 
 	protected setErrorsControl(): void {
-		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.serviceId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.costId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.deptId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.userId);
@@ -230,8 +247,16 @@ export class SpecificationModalComponent {
 			return;
 		}
 
+		if (!this.addSpecificationForm.controls.service.value?.id) {
+			return;
+		}
+
 		this.completedWorkActsFacade
-			.updateSpecification({ ...this.addSpecificationForm.value, id: this.spec.id })
+			.updateSpecification({
+				...this.addSpecificationForm.value,
+				serviceId: this.addSpecificationForm.controls.service.value.id,
+				id: this.spec.id,
+			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();
