@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IWinsListDto } from '@app/core/models/awards/wins-list-dto';
 import { IResponse } from '@app/core/utils/response';

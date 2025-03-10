@@ -122,7 +122,6 @@ export class ChipsSearchComponent {
 								this.ref.detectChanges();
 							});
 					}
-
 					break;
 				case 'tovs':
 					this.searchFacade
