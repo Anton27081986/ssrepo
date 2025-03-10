@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ISaleRequestsFilter } from '@app/core/models/sale-requests-filter';
 import { ISaleRequestsDto } from '@app/core/models/company/sale-requests';

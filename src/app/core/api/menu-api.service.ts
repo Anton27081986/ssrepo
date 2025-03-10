@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { IMenuListDto } from '@app/core/models/company/menu-list-dto';
 import { IFavoriteMenuListDto } from '@app/core/models/company/favorite-menu-list-dto';

@@ -7,6 +7,7 @@
 		<form [formGroup]="addSpecificationForm" class="content">
 			<div class="content__column">
 				<ss-select-v2
+					[label]="'Услуга'"
 					[placeholder]="'Выберите услугу'"
 					[options]="services()"
 					[formControlName]="'service'"

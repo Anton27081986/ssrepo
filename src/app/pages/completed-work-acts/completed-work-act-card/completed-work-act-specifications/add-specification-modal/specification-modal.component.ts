@@ -26,7 +26,6 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
-
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
@@ -231,8 +230,15 @@ export class SpecificationModalComponent {
 			return;
 		}
 
+		if (!this.addSpecificationForm.controls.service.value?.id) {
+			return;
+		}
+
 		this.completedWorkActsFacade
-			.addSpecificationToAct(this.addSpecificationForm.value)
+			.addSpecificationToAct({
+				...this.addSpecificationForm.value,
+				serviceId: this.addSpecificationForm.controls.service.value.id,
+			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();
