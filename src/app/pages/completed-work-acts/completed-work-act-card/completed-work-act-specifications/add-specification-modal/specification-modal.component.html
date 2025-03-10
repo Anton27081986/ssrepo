@@ -6,13 +6,12 @@
 		</div>
 		<form [formGroup]="addSpecificationForm" class="content">
 			<div class="content__column">
-				<ss-search-input searchType="services" label="Услуга" placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.service : undefined"
-					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined"
-				    (focusout)="resetValueControl($event, addSpecificationForm.controls.serviceId, 'service')"
-				    (input)="resetValueControl($event, addSpecificationForm.controls.serviceId, 'service')"
-					(select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)">
-				</ss-search-input>
+				<ss-select-v2
+					[placeholder]="'Выберите услугу'"
+					[options]="services()"
+					[formControlName]="'service'"
+					[errorText]="addSpecificationForm.controls.service.touched && addSpecificationForm.controls.service.errors?.required ? 'Обязательное поле' : ''"
+				/>
 				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"
 							 [error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
 				<ss-input formControlName="quantity" label="Количество" type="number"
