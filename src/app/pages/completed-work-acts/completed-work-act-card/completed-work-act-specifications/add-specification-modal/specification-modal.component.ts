@@ -57,7 +57,7 @@ export class SpecificationModalComponent {
 	protected defaultTovUnits: IDictionaryItemDto | undefined;
 
 	constructor(
-		@Inject(DIALOG_DATA) protected readonly spec: ICompletedWorkActSpecification,
+		@Inject(DIALOG_DATA) protected spec: ICompletedWorkActSpecification,
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
