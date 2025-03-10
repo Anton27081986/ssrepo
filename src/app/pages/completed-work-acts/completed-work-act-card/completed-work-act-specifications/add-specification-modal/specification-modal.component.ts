@@ -3,7 +3,7 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -20,6 +20,7 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
+
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
@@ -44,7 +45,7 @@ export class SpecificationModalComponent {
 	protected defaultTovUnits: IDictionaryItemDto | undefined;
 
 	constructor(
-		@Inject(DIALOG_DATA) protected readonly spec: ICompletedWorkActSpecification,
+		@Inject(DIALOG_DATA) protected spec: ICompletedWorkActSpecification,
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
@@ -59,9 +60,9 @@ export class SpecificationModalComponent {
 			faObjectId: new FormControl<number | null>(null),
 			projectId: new FormControl<number | null>(null),
 			deptId: new FormControl<number | null>(null, [Validators.required]),
-			sectionId: new FormControl<number | null>(null),
+			sectionId: new FormControl<number | null>(null, [Validators.required]),
 			userId: new FormControl<number | null>(null, [Validators.required]),
-			amount: new FormControl<number | null>(null, [Validators.required]),
+			amount: new FormControl<number | null>(null, [Validators.required, this.amountValidator]),
 		});
 
 		if (spec) {
@@ -101,6 +102,35 @@ export class SpecificationModalComponent {
 					}
 				});
 		}
+	}
+
+	protected resetValueControlMySection(event: any, control: AbstractControl): void {
+		control.markAsTouched();
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.mySection = undefined;
+		}
+	}
+
+	protected resetValueControl(
+		event: Event,
+		control: AbstractControl,
+		fieldName: keyof ICompletedWorkActSpecification,
+	): void {
+		control.markAsTouched();
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.spec = { ...this.spec, [fieldName]: undefined };
+		}
+	}
+
+	protected amountValidator(control: FormControl): ValidationErrors | null {
+		const value = control.value;
+		if (value && !/^\d*\.?\d*$/.test(value)) {
+
+			return { invalidAmount: true };
+		}
+		return null;
 	}
 
 	protected getMyDept() {
@@ -161,22 +191,21 @@ export class SpecificationModalComponent {
 			});
 	}
 
+	private setErrorsIfNotControlValue(control: AbstractControl): void {
+		if (!control.value) {
+			control.setErrors({ required: true });
+		}
+	}
+
+	protected setErrorsControl(): void {
+		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.serviceId);
+		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.costId);
+		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.deptId);
+		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.userId);
+	}
+
 	protected addSpecification() {
-		if (!this.addSpecificationForm.controls.serviceId.value) {
-			this.addSpecificationForm.controls.serviceId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.costId.value) {
-			this.addSpecificationForm.controls.costId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.deptId.value) {
-			this.addSpecificationForm.controls.deptId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.userId.value) {
-			this.addSpecificationForm.controls.userId.setErrors({ required: true });
-		}
+		this.setErrorsControl();
 
 		this.addSpecificationForm.markAllAsTouched();
 
@@ -193,21 +222,7 @@ export class SpecificationModalComponent {
 	}
 
 	protected updateSpecification() {
-		if (!this.addSpecificationForm.controls.serviceId.value) {
-			this.addSpecificationForm.controls.serviceId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.costId.value) {
-			this.addSpecificationForm.controls.costId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.deptId.value) {
-			this.addSpecificationForm.controls.deptId.setErrors({ required: true });
-		}
-
-		if (!this.addSpecificationForm.controls.userId.value) {
-			this.addSpecificationForm.controls.userId.setErrors({ required: true });
-		}
+		this.setErrorsControl();
 
 		this.addSpecificationForm.markAllAsTouched();
 
