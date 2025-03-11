@@ -6,7 +6,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import {
 	AbstractControl,
 	FormControl,
-	FormGroup,
+	FormGroup, ReactiveFormsModule,
 	ValidationErrors,
 	Validators,
 } from '@angular/forms';
@@ -17,12 +17,34 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
+import {CardComponent} from "@app/shared/components/card/card.component";
+import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import {InputComponent} from "@app/shared/components/inputs/input/input.component";
+import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
+import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-specification-modal',
 	templateUrl: './specification-modal.component.html',
 	styleUrls: ['./specification-modal.component.scss'],
+	imports: [
+		CardComponent,
+		TextComponent,
+		IconComponent,
+		ReactiveFormsModule,
+		SelectV2Component,
+		TextareaComponent,
+		InputComponent,
+		SearchInputComponent,
+		NumericInputComponent,
+		ButtonComponent
+	],
+	standalone: true
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
@@ -216,7 +238,6 @@ export class SpecificationModalComponent {
 	}
 
 	protected setErrorsControl(): void {
-		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.serviceId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.costId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.deptId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.userId);

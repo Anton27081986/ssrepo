@@ -19,6 +19,9 @@ import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import {IconComponent} from "@app/shared/components/icon/icon.component";
 
 export enum SpecificationRowItemField {
 	service = 'service',
@@ -42,6 +45,18 @@ export enum SpecificationRowItemField {
 	selector: 'tr[ss-specification-row-item-tr]',
 	styleUrls: ['specification-row-item-tr.component.scss'],
 	templateUrl: './specification-row-item-tr.component.html',
+	imports: [
+		CommonModule,
+		NgForOf,
+		AsyncPipe,
+		NgSwitch,
+		NgIf,
+		NgSwitchCase,
+		NumWithSpacesPipe,
+		IconComponent,
+		NgSwitchDefault
+	],
+	standalone: true
 })
 export class SpecificationRowItemTrComponent implements OnInit {
 	protected readonly Permissions = Permissions;
