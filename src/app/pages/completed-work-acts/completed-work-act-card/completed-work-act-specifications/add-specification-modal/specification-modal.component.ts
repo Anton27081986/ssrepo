@@ -3,7 +3,13 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	FormGroup,
+	ValidationErrors,
+	Validators,
+} from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -11,32 +17,12 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-specification-modal',
 	templateUrl: './specification-modal.component.html',
 	styleUrls: ['./specification-modal.component.scss'],
-	imports: [
-		CardComponent,
-		TextComponent,
-		IconComponent,
-		ReactiveFormsModule,
-		SearchInputComponent,
-		TextareaComponent,
-		InputComponent,
-		ButtonComponent,
-		NumericInputComponent
-	],
-	standalone: true
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
@@ -44,8 +30,15 @@ export class SpecificationModalComponent {
 		initialValue: null,
 	});
 
+	protected services: Signal<IDictionaryItemDto[]> = toSignal(
+		this.completedWorkActsFacade.services$,
+		{
+			initialValue: [],
+		},
+	);
+
 	protected addSpecificationForm!: FormGroup<{
-		serviceId: FormControl<number | null>;
+		service: FormControl<IDictionaryItemDto | null>;
 		comment: FormControl<string | null>;
 		quantity: FormControl<number | null>;
 		tovUnitId: FormControl<number | null>;
@@ -71,7 +64,7 @@ export class SpecificationModalComponent {
 		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.addSpecificationForm = new FormGroup({
-			serviceId: new FormControl<number | null>(null, [Validators.required]),
+			service: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			comment: new FormControl<string | null>(null, [Validators.required]),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
@@ -81,11 +74,14 @@ export class SpecificationModalComponent {
 			deptId: new FormControl<number | null>(null, [Validators.required]),
 			sectionId: new FormControl<number | null>(null),
 			userId: new FormControl<number | null>(null, [Validators.required]),
-			amount: new FormControl<number | null>(null, [Validators.required]),
+			amount: new FormControl<number | null>(null, [
+				Validators.required,
+				this.amountValidator,
+			]),
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id || null);
+			this.addSpecificationForm.controls.service.setValue(spec.service || null);
 			this.addSpecificationForm.controls.comment.setValue(spec.comment || null);
 			this.addSpecificationForm.controls.quantity.setValue(spec.quantity || null);
 			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id || null);
@@ -121,20 +117,38 @@ export class SpecificationModalComponent {
 					}
 				});
 		}
+	}
 
-		this.addSpecificationForm.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
-			let newObjSpec = { ...this.spec };
+	protected resetValueControlMySection(event: any, control: AbstractControl): void {
+		control.markAsTouched();
 
-			if (!value.serviceId) {
-				newObjSpec = { ...this.spec, service: undefined };
-			}
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.mySection = undefined;
+		}
+	}
 
-			if (!value.costId) {
-				newObjSpec = { ...this.spec, cost: undefined };
-			}
+	protected resetValueControl(
+		event: Event,
+		control: AbstractControl,
+		fieldName: keyof ICompletedWorkActSpecification,
+	): void {
+		control.markAsTouched();
 
-			this.spec = newObjSpec;
-		});
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.spec = { ...this.spec, [fieldName]: undefined };
+		}
+	}
+
+	protected amountValidator(control: FormControl): ValidationErrors | null {
+		const value = control.value;
+
+		if (value && !/^\d*\.?\d*$/.test(value)) {
+			return { invalidAmount: true };
+		}
+
+		return null;
 	}
 
 	protected getMyDept() {
@@ -217,8 +231,15 @@ export class SpecificationModalComponent {
 			return;
 		}
 
+		if (!this.addSpecificationForm.controls.service.value?.id) {
+			return;
+		}
+
 		this.completedWorkActsFacade
-			.addSpecificationToAct(this.addSpecificationForm.value)
+			.addSpecificationToAct({
+				...this.addSpecificationForm.value,
+				serviceId: this.addSpecificationForm.controls.service.value.id,
+			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();
@@ -234,8 +255,16 @@ export class SpecificationModalComponent {
 			return;
 		}
 
+		if (!this.addSpecificationForm.controls.service.value?.id) {
+			return;
+		}
+
 		this.completedWorkActsFacade
-			.updateSpecification({ ...this.addSpecificationForm.value, id: this.spec.id })
+			.updateSpecification({
+				...this.addSpecificationForm.value,
+				serviceId: this.addSpecificationForm.controls.service.value.id,
+				id: this.spec.id,
+			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();
