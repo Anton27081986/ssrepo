@@ -3,7 +3,14 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	FormGroup,
+	ValidationErrors,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -11,14 +18,14 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { NumericInputComponent } from '@app/shared/components/_deprecated/numeric-input/numeric-input.component';
 
 @UntilDestroy()
 @Component({
@@ -34,12 +41,13 @@ import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-
 		TextareaComponent,
 		InputComponent,
 		ButtonComponent,
-		NumericInputComponent
+		NumericInputComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
+
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
@@ -81,7 +89,10 @@ export class SpecificationModalComponent {
 			deptId: new FormControl<number | null>(null, [Validators.required]),
 			sectionId: new FormControl<number | null>(null),
 			userId: new FormControl<number | null>(null, [Validators.required]),
-			amount: new FormControl<number | null>(null, [Validators.required]),
+			amount: new FormControl<number | null>(null, [
+				Validators.required,
+				this.amountValidator,
+			]),
 		});
 
 		if (spec) {
@@ -121,20 +132,34 @@ export class SpecificationModalComponent {
 					}
 				});
 		}
+	}
 
-		this.addSpecificationForm.valueChanges.pipe(untilDestroyed(this)).subscribe(value => {
-			let newObjSpec = { ...this.spec };
+	protected resetValueControlMySection(event: any, control: AbstractControl): void {
+		control.markAsTouched();
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.mySection = undefined;
+		}
+	}
 
-			if (!value.serviceId) {
-				newObjSpec = { ...this.spec, service: undefined };
-			}
+	protected resetValueControl(
+		event: Event,
+		control: AbstractControl,
+		fieldName: keyof ICompletedWorkActSpecification,
+	): void {
+		control.markAsTouched();
+		if (!(event.target as HTMLInputElement).value) {
+			control.setValue(null);
+			this.spec = { ...this.spec, [fieldName]: undefined };
+		}
+	}
 
-			if (!value.costId) {
-				newObjSpec = { ...this.spec, cost: undefined };
-			}
-
-			this.spec = newObjSpec;
-		});
+	protected amountValidator(control: FormControl): ValidationErrors | null {
+		const value = control.value;
+		if (value && !/^\d*\.?\d*$/.test(value)) {
+			return { invalidAmount: true };
+		}
+		return null;
 	}
 
 	protected getMyDept() {
