@@ -45,6 +45,10 @@ import { AppRoutes } from '@app/common/routes';
 import { SignInComponent } from '@auth/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
+import {MPReservationOrdersComponent} from "@app/pages/mp-reservation-orders/mp-reservation-orders.component";
+import {
+	MpReservationOrderCardComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-order-card.component";
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -190,6 +194,25 @@ export const routes: Routes = [
 							},
 							{ path: '**', redirectTo: 'basic' },
 						],
+					},
+				],
+			},
+			{
+				path: 'mp-reservation-orders',
+				children: [
+					{
+						path: '',
+						component: MPReservationOrdersComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+					{
+						path: ':id',
+						component: MpReservationOrderCardComponent,
+						data: {
+							animation: 'animation',
+						},
 					},
 				],
 			},
