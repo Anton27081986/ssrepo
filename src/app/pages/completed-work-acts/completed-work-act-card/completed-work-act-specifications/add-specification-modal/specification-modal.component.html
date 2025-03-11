@@ -57,8 +57,6 @@
 				</ss-search-input>
 				<ss-search-input searchType="mfs-sections" label="Производственный участок" placeholder="Выберите из списка"
 					[selectedItem]="mySection"
-				    (focusout)="resetValueControlMySection($event, addSpecificationForm.controls.sectionId)"
-				    (input)="resetValueControlMySection($event, addSpecificationForm.controls.sectionId)"
 					(select)="addSpecificationForm.controls.sectionId.setValue($event.id)"
 					(click)="addSpecificationForm.controls.sectionId.setErrors(null)"
 					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined">

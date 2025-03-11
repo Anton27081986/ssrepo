@@ -44,7 +44,7 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 		NumericInputComponent,
 		ButtonComponent
 	],
-	standalone: true
+	standalone: true,
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
