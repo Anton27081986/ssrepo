@@ -30,15 +30,8 @@ export class SpecificationModalComponent {
 		initialValue: null,
 	});
 
-	protected services: Signal<IDictionaryItemDto[]> = toSignal(
-		this.completedWorkActsFacade.services$,
-		{
-			initialValue: [],
-		},
-	);
-
 	protected addSpecificationForm!: FormGroup<{
-		service: FormControl<IDictionaryItemDto | null>;
+		serviceId: FormControl<number | null>;
 		comment: FormControl<string | null>;
 		quantity: FormControl<number | null>;
 		tovUnitId: FormControl<number | null>;
@@ -64,7 +57,7 @@ export class SpecificationModalComponent {
 		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.addSpecificationForm = new FormGroup({
-			service: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			serviceId: new FormControl<number | null>(null, [Validators.required]),
 			comment: new FormControl<string | null>(null, [Validators.required]),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
@@ -81,7 +74,7 @@ export class SpecificationModalComponent {
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.service.setValue(spec.service || null);
+			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id || null);
 			this.addSpecificationForm.controls.comment.setValue(spec.comment || null);
 			this.addSpecificationForm.controls.quantity.setValue(spec.quantity || null);
 			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id || null);
@@ -121,7 +114,6 @@ export class SpecificationModalComponent {
 
 	protected resetValueControlMySection(event: any, control: AbstractControl): void {
 		control.markAsTouched();
-
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
 			this.mySection = undefined;
@@ -134,7 +126,6 @@ export class SpecificationModalComponent {
 		fieldName: keyof ICompletedWorkActSpecification,
 	): void {
 		control.markAsTouched();
-
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
 			this.spec = { ...this.spec, [fieldName]: undefined };
@@ -143,11 +134,9 @@ export class SpecificationModalComponent {
 
 	protected amountValidator(control: FormControl): ValidationErrors | null {
 		const value = control.value;
-
 		if (value && !/^\d*\.?\d*$/.test(value)) {
 			return { invalidAmount: true };
 		}
-
 		return null;
 	}
 
@@ -216,6 +205,7 @@ export class SpecificationModalComponent {
 	}
 
 	protected setErrorsControl(): void {
+		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.serviceId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.costId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.deptId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.userId);
@@ -247,16 +237,8 @@ export class SpecificationModalComponent {
 			return;
 		}
 
-		if (!this.addSpecificationForm.controls.service.value?.id) {
-			return;
-		}
-
 		this.completedWorkActsFacade
-			.updateSpecification({
-				...this.addSpecificationForm.value,
-				serviceId: this.addSpecificationForm.controls.service.value.id,
-				id: this.spec.id,
-			})
+			.updateSpecification({ ...this.addSpecificationForm.value, id: this.spec.id })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();
