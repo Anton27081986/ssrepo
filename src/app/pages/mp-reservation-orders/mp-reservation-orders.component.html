@@ -1,1 +1,67 @@
-<p>mp-reservation-orders</p>
+<div class="app-mp-reservation-orders__header">
+	<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">Реестр по обеспечению и персонификации заказов
+		МП
+	</snab-text>
+	<div class="app-mp-reservation-orders__header-filter">
+		<snab-button [type]="ButtonType.Outline" [size]="Size.Large"
+					 [iconPosition]="IconPosition.OnlyIcon"
+					 [icon]="IconType.FileNotFound" (click)="downloadInstr()">
+		</snab-button>
+		<ss-dropdown-button title="Фильтры">
+			<ss-filters [isFiltersVisible]="true" [(filters)]="filters"
+						(applyFilter)="getFilteredOrders(true);">
+			</ss-filters>
+		</ss-dropdown-button>
+	</div>
+</div>
+<div class="app-mp-reservation-orders__body   ">
+	<ss-table-v2 class="table">
+		<thead class="table__thead table__thead__sticky">
+		<tr>
+			<th>
+				<input type="checkbox"/>
+			</th>
+			<th>Код заказа</th>
+			<th>Заявка на продажу/перемещение</th>
+			<th>Статус</th>
+			<th>Дата заказа</th>
+			<th>Заказчик</th>
+			<th>ТП</th>
+			<th>Кол-во</th>
+			<th>Ед. изм.</th>
+			<th>Обеспечение</th>
+			<th>МУТМЗ</th>
+			<th>Остатки</th>
+			<th>Дата производства</th>
+			<th>Дата обеспечения</th>
+			<th>История изменений по заявке</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td>
+				<input type="checkbox"/>
+			</td>
+			<td><a href="#">12345</a></td>
+			<td><a href="#">Перемещение</a></td>
+			<td>В обработке</td>
+			<td>2025-03-11</td>
+			<td><a href="#">Иванов И.И.</a></td>
+			<td><a href="#">ТП-1</a></td>
+			<td>10</td>
+			<td>шт</td>
+			<td>Да</td>
+			<td><a href="#">123</a></td>
+			<td><a href="#">5</a></td>
+			<td>2025-03-15</td>
+			<td>2025-03-20</td>
+			<td><a href="#">История</a></td>
+		</tr>
+		</tbody>
+	</ss-table-v2>
+	<div class="pagination" style="justify-content: center">
+		<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+					   (changeIndex)="ordersTableIndexChange($event)"></ss-pagination>
+	</div>
+</div>
+
