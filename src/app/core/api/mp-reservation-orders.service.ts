@@ -17,7 +17,7 @@ export class MpReservationOrdersApiService {
 
 	public getOrders(filter: MpReservationFilter) {
 	//TODO Переделать метод для получения Orders с бека
-		return this.http.post<IResponse<IClientItemDto>>(
+		return this.http.post<IResponse<MpReservationFilter>>(
 			`${environment.apiUrl}/api/company/clients`,
 			filter,
 		);
