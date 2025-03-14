@@ -29,7 +29,7 @@
 </div>
 <mat-form-field class="date-range">
     <mat-date-range-input [rangePicker]="picker" [formGroup]="formRange">
-        <input matStartDate formControlName="startDate" />
+        <input matStartDate formControlName="startDate" (dateChange)="dateChanged()"/>
 
         <input matEndDate formControlName="endDate" (dateChange)="dateChanged()" />
     </mat-date-range-input>
