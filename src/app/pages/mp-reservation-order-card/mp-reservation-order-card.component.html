@@ -1,1 +1,88 @@
-<p>mp-reservation-order-card</p>
+@if (id()) {
+    <div class="navigation">
+        <snab-text
+                class="navigation__link"
+                [color]="Colors.Secondary"
+                (click)="router.navigate(['mp-reservation-orders'])"
+        >
+            Реестр объектов интеллектуальной собственности /
+        </snab-text>
+        <snab-text>Заказ №{{ id() }}</snab-text>
+    </div>
+    <div class="header">
+        <div class="header__title">
+            <snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">Заказ № {{ id() }}</snab-text>
+            <snab-label text="Обработка ТМЗ" [size]="Size.Large" [type]="LabelType.Clear"></snab-label>
+        </div>
+        <div class="header__controls">
+            <snab-button text="История изменений" [type]="ButtonType.Secondary" [size]="Size.Large"></snab-button>
+            <snab-button text="Действия" [size]="Size.Large"></snab-button>
+        </div>
+
+    </div>
+    <div class="content">
+        <ss-card class="content__properties" padding="0">
+            <div class="content__properties__header">
+                <snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Характеристики заказа</snab-text>
+            </div>
+            <div class="content__properties__body">
+                <div class="content__properties__body__item">
+                    <snab-text [weight]="TextWeight.Semibold">Код заявки</snab-text>
+                    <snab-link [type]="TextType.Body" text="11223344"></snab-link>
+                </div>
+                <div class="content__properties__body__item">
+                    <snab-text [weight]="TextWeight.Semibold">Количество и ед. изм.</snab-text>
+                    <snab-text>10 кг</snab-text>
+                </div>
+                <div class="content__properties__body__item">
+                    <snab-text [weight]="TextWeight.Semibold">Дата заказа</snab-text>
+                    <snab-text>01.07.2024</snab-text>
+                </div>
+                <div class="content__properties__body__item">
+                    <snab-text [weight]="TextWeight.Semibold">Заказчик</snab-text>
+                    <snab-link [type]="TextType.Body" text="Петров А.А."></snab-link>
+                </div>
+                <div class="content__properties__body__item">
+                    <snab-text [weight]="TextWeight.Semibold">ТП</snab-text>
+                    <snab-text>Ароматизатор пищевой
+                        «Масло сливочное 11.03.222 S»
+                        DEL'AR® (9кн) (К)</snab-text>
+                </div>
+                <div class="content__properties__body__item">
+                    <snab-text [weight]="TextWeight.Semibold">МУТМЗ</snab-text>
+                    <snab-text>Бородулин А.С.</snab-text>
+                </div>
+            </div>
+        </ss-card>
+        <ss-card class="content__procuring" padding="0">
+            <div class="content__procuring__header">
+                <snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Обеспечение</snab-text>
+            </div>
+            <div class="content__procuring__body">
+                <div class="content__procuring__body__chart">
+                    <div  class="content__procuring__body__chart__quantity">
+                        <snab-text>Остатки: </snab-text>
+                        <snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">15</snab-text>
+                    </div>
+                </div>
+                <div class="content__procuring__body__table">
+                    <ss-table [head]="[
+						{title: 'Дата производства', field: 'date-made'},
+						{title: 'Дата обеспечения', field: 'date-procuring'}]"></ss-table>
+                </div>
+            </div>
+        </ss-card>
+        <ss-card class="content__additional" padding="0">
+            <div class="content__additional__header">
+                <snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Дополнительно</snab-text>
+            </div>
+            <div class="content__additional__body">
+                <snab-text [weight]="TextWeight.Semibold">Комментарий</snab-text>
+                <snab-text>афывафывфывафыва
+                    фывафывафывафыва
+                    фывафывафывафыва</snab-text>
+            </div>
+        </ss-card>
+    </div>
+    <ss-correspondence [objectId]="id()"></ss-correspondence>
+}
