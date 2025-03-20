@@ -42,6 +42,8 @@
 
 		&__sticky {
 			position: sticky;
+			top: 52px;
+			z-index: 1;
 		}
 
 		tr {
