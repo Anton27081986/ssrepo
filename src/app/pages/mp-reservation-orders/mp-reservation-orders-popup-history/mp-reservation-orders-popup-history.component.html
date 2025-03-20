@@ -1,0 +1,25 @@
+<div class="wrapper" (click)="close()">
+    <ss-card padding="0" (click)="$event.stopPropagation()">
+        <div class="header">
+            <ss-headline size="h6">История изменений по заказу</ss-headline>
+
+            <ss-icon width="16" name="close" (click)="close()"></ss-icon>
+        </div>
+
+        <div class="body">
+            <ss-history
+                class="content"
+                [objectId]="orderId.toString()"
+                [queryType]="queryType.OrderCard"
+                [view]="viewMode.Table"
+				[tableHead]="[
+					{title: 'Автор', field: 'userName'},
+					{title: 'Действие',  field: 'action'},
+					{title: 'Сопроводительный текст к действию',  field: 'comments'},
+					{title: 'Кому', field: 'destination'},
+					{title: 'Дата', field: 'createdTime'},
+				]"
+            ></ss-history>
+        </div>
+    </ss-card>
+</div>

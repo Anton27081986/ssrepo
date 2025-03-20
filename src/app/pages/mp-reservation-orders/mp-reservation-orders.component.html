@@ -121,7 +121,7 @@
 					<snab-text [type]="TextType.Body">{{ orderMok.provisionDate }}</snab-text>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="'История'"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="'История'" (click)="openPopupHistoryOrder(orderMok.orderCode)"></snab-link>
 				</td>
 			</tr>
 			</tbody>

@@ -27,6 +27,12 @@ import {
 	MpReservationOrdersPopupDateProvisionComponent
 } from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component";
 import {Router} from "@angular/router";
+import {
+	CompletedWorkActHistoryComponent
+} from "@app/pages/completed-work-acts/completed-work-act-history/completed-work-act-history.component";
+import {
+	MpReservationOrdersPopupHistoryComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -243,6 +249,10 @@ export class MPReservationOrdersComponent {
 
 	public goToOrderCard(orderId: string):void {
 		this.router.navigate(['mp-reservation-orders', orderId]);
+	}
+
+	public openPopupHistoryOrder(orderId: string): void {
+		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
 	}
 
 }
