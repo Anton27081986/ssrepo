@@ -6,7 +6,7 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 import {TextComponent} from "@app/shared/components/typography/text/text.component";
 import {IconComponent} from "@app/shared/components/icon/icon.component";
 import {MatFormField} from "@angular/material/form-field";
-import {MatDateRangeInput, MatDateRangePicker, MatEndDate} from "@angular/material/datepicker";
+import {MatDateRangeInput, MatDateRangePicker, MatEndDate, MatStartDate} from "@angular/material/datepicker";
 
 @Component({
 	selector: 'ss-date-range',
@@ -23,9 +23,10 @@ import {MatDateRangeInput, MatDateRangePicker, MatEndDate} from "@angular/materi
 		MatDateRangePicker,
 		ReactiveFormsModule,
 		DatePipe,
-		MatEndDate
+		MatEndDate,
+		MatStartDate,
 	],
-	standalone: true
+	standalone: true,
 })
 export class DateRangeComponent {
 	@Input() public label: string | undefined;

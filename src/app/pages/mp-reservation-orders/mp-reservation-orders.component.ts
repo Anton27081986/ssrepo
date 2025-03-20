@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
 	IconPosition,
 	IconType,
+	LinkComponent,
 	Size,
 	TextComponent,
 	TextType,
@@ -12,13 +13,20 @@ import {
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
 import { FiltersComponent, IFilter } from '@app/shared/components/filters/filters.component';
 import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
-import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
+import { IResponse } from '@app/core/utils/response';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { IMpReservationOrders } from '@app/core/models/mp-reservation-orders/mp-reservation-orders';
+import {ModalService} from "@app/core/modal/modal.service";
+import {
+	MpReservationOrdersPopupDateProvisionComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -35,6 +43,9 @@ import { PaginationComponent } from '@app/shared/components/pagination/paginatio
 		FiltersComponent,
 		PaginationTrComponent,
 		PaginationComponent,
+		LinkComponent,
+		NgForOf,
+		NgIf,
 	],
 	standalone: true,
 })
@@ -46,10 +57,27 @@ export class MPReservationOrdersComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	public total: number = 0;
-	public pageSize = 20;
+	public pageSize = 10;
 	public offset = 0;
 	public pageIndex = 1;
+
+	public selectedOrders: Set<string> = new Set<string>();
+
+	public ordersMok = Array.from({ length: 50 }, (_, index) => ({
+		orderCode: `123${index + 1}`,
+		requestNumber: `REQ-${1000 + index}`,
+		status: index % 2 === 0 ? 'В обработке' : 'Завершен',
+		orderDate: `2025-03-${(index % 30) + 1}`,
+		customer: `Заказчик ${index + 1}`,
+		tp: `Товар ${index + 1}`,
+		quantity: Math.floor(Math.random() * 10) + 1,
+		unit: 'шт',
+		provision: index % 2 === 0 ? 'Да' : 'Нет',
+		mutmz: `${200 + index}`,
+		stock: `${Math.floor(Math.random() * 50)}`,
+		productionDate: `2025-03-${(index % 30) + 1}`,
+		provisionDate: `2025-03-${(index % 30) + 5}`,
+	}));
 
 	public filters: IFilter[] = [
 		{
@@ -100,7 +128,16 @@ export class MPReservationOrdersComponent {
 
 	constructor(
 		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly modalService: ModalService,
+		private readonly router: Router
 	) {}
+
+	public orders: Signal<IResponse<IMpReservationOrders> | null> = toSignal(
+		this.mpReservationOrdersFacadeService.orders$,
+		{
+			initialValue: null,
+		},
+	);
 
 	protected downloadInstr() {
 		//TODO поменять ссылку на нужную инструкцию
@@ -173,4 +210,39 @@ export class MPReservationOrdersComponent {
 
 		this.getFilteredOrders();
 	}
+
+	public onCheckboxChange(event: Event, orderCode: string): void {
+		const checkbox = event.target as HTMLInputElement;
+
+		if (checkbox.checked) {
+			this.selectedOrders.add(orderCode);
+		} else {
+			this.selectedOrders.delete(orderCode);
+		}
+	}
+	public isAllSelected(): boolean {
+		return (
+			this.ordersMok.length > 0 &&
+			this.ordersMok.every(order => this.selectedOrders.has(order.orderCode))
+		);
+	}
+
+	public toggleSelectAll(event: Event): void {
+		const checkbox = event.target as HTMLInputElement;
+		if (checkbox.checked) {
+			this.ordersMok.forEach(order => this.selectedOrders.add(order.orderCode));
+		} else {
+			this.ordersMok.forEach(order => this.selectedOrders.delete(order.orderCode));
+		}
+	}
+
+	public openPopupDateProvision(): void {
+		//TODO уточнить логику по определению заказов и даты для них.
+		this.modalService.open(MpReservationOrdersPopupDateProvisionComponent, { data: this.selectedOrders });
+	}
+
+	public goToOrderCard(orderId: string):void {
+		this.router.navigate(['mp-reservation-orders', orderId]);
+	}
+
 }
