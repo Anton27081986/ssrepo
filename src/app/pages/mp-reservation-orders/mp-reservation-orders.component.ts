@@ -28,11 +28,11 @@ import {
 } from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component";
 import {Router} from "@angular/router";
 import {
-	CompletedWorkActHistoryComponent
-} from "@app/pages/completed-work-acts/completed-work-act-history/completed-work-act-history.component";
-import {
 	MpReservationOrdersPopupHistoryComponent
 } from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
+import {
+	MpReservationOrdersPopupRemnantsDetailsComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component";
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -79,7 +79,7 @@ export class MPReservationOrdersComponent {
 		quantity: Math.floor(Math.random() * 10) + 1,
 		unit: 'шт',
 		provision: index % 2 === 0 ? 'Да' : 'Нет',
-		mutmz: `${200 + index}`,
+		mutmz: `Иванов А.А.`,
 		stock: `${Math.floor(Math.random() * 50)}`,
 		productionDate: `2025-03-${(index % 30) + 1}`,
 		provisionDate: `2025-03-${(index % 30) + 5}`,
@@ -253,6 +253,10 @@ export class MPReservationOrdersComponent {
 
 	public openPopupHistoryOrder(orderId: string): void {
 		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
+	}
+
+	public openPopupRemnantDetailsOrder(orderId: string): void {
+		this.modalService.open(MpReservationOrdersPopupRemnantsDetailsComponent, { data: orderId });
 	}
 
 }
