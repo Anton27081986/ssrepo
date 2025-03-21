@@ -1,0 +1,21 @@
+<div class="wrapper" (click)="close()">
+    <ss-card padding="0" (click)="$event.stopPropagation()">
+        <div class="header">
+            <ss-headline size="h6">Остатки. Детали</ss-headline>
+            <ss-icon width="16" name="close" (click)="close()"></ss-icon>
+        </div>
+        <div class="body">
+            <ss-history
+                class="content"
+                [objectId]="orderId.toString()"
+                [queryType]="queryType.OrderCard"
+                [view]="viewMode.Table"
+				[tableHead]="[
+					{title: 'Количество', field: 'quantity'},
+					{title: 'Склад',  field: 'storageName'},
+					{title: 'Оборотная ведомость по ТП',  field: 'linkStatement'},
+				]"
+            ></ss-history>
+        </div>
+    </ss-card>
+</div>

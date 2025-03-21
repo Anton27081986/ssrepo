@@ -109,7 +109,7 @@
 					<snab-text [type]="TextType.Body">{{ orderMok.provision }}</snab-text>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.mutmz"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="orderMok.mutmz" (click)="openPopupRemnantDetailsOrder(orderMok.orderCode)"></snab-link>
 				</td>
 				<td>
 					<snab-link [type]="TextType.Body" [text]="orderMok.stock"></snab-link>
