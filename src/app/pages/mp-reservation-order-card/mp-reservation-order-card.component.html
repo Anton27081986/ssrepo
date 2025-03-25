@@ -1,4 +1,4 @@
-@if (id()) {
+@if (order()) {
     <div class="navigation">
         <snab-text
                 class="navigation__link"
@@ -7,11 +7,11 @@
         >
             Реестр объектов интеллектуальной собственности /
         </snab-text>
-        <snab-text>Заказ №{{ id() }}</snab-text>
+        <snab-text>Заказ №{{ order()!.id }}</snab-text>
     </div>
     <div class="header">
         <div class="header__title">
-            <snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">Заказ № {{ id() }}</snab-text>
+            <snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">Заказ № {{ order()!.id }}</snab-text>
             <snab-label text="Обработка ТМЗ" [size]="Size.Large" [type]="LabelType.Clear"></snab-label>
         </div>
         <div class="header__controls">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="content__properties__body__item">
                     <snab-text [weight]="TextWeight.Semibold">Количество и ед. изм.</snab-text>
-                    <snab-text>10 кг</snab-text>
+                    <snab-text>{{ order()!.amount }} {{ order()!.tovUnits }}</snab-text>
                 </div>
                 <div class="content__properties__body__item">
                     <snab-text [weight]="TextWeight.Semibold">Дата заказа</snab-text>
@@ -60,6 +60,7 @@
             </div>
             <div class="content__procuring__body">
                 <div class="content__procuring__body__chart">
+                    <ss-chart-line [data]="chartData()"></ss-chart-line>
                     <div  class="content__procuring__body__chart__quantity">
                         <snab-text>Остатки: </snab-text>
                         <snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">15</snab-text>
@@ -84,5 +85,5 @@
             </div>
         </ss-card>
     </div>
-    <ss-correspondence [objectId]="id()"></ss-correspondence>
+    <ss-correspondence [objectId]="order()!.id"></ss-correspondence>
 }

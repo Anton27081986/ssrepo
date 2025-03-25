@@ -1,0 +1,10 @@
+<div class="chart-line">
+    @for (item of data(); track $index) {
+        <div
+            [style.width.%]="(100 / width()) * item.value"
+            [style.background-color]="item.color"
+            [tooltip]="item.label + ': ' + item.value || ''"
+        >
+        </div>
+    }
+</div>
