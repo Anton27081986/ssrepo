@@ -26,7 +26,6 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
-
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
 		initialValue: null,
 	});
