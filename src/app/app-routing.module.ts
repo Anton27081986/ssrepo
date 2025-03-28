@@ -43,13 +43,6 @@ const routes: Routes = [
 								'./pages/raw-material-accounting/raw-material-accounting.module'
 							).then(m => m.RawMaterialAccountingModule),
 					},
-					{
-						path: 'completed-work-acts',
-						loadChildren: () =>
-							import('./pages/completed-work-acts/completed-work-acts.module').then(
-								m => m.CompletedWorkActsModule,
-							),
-					},
 				],
 			},
 		],
@@ -101,6 +94,23 @@ const routes: Routes = [
 				loadChildren: () =>
 					import('@app/pages/client-proposals-page/client-proposals.module').then(
 						m => m.ClientProposalsModule,
+					),
+			},
+		],
+	},
+	{
+		path: '',
+		component: FullWidthWithoutFooterLayoutComponent,
+		canActivate: [AuthGuard],
+		data: {
+			animation: 'animation',
+		},
+		children: [
+			{
+				path: 'completed-work-acts',
+				loadChildren: () =>
+					import('./pages/completed-work-acts/completed-work-acts.module').then(
+						m => m.CompletedWorkActsModule,
 					),
 			},
 		],

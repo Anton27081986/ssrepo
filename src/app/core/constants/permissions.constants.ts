@@ -19,6 +19,8 @@ export const Permissions = {
 	COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT: 'CompletedWorkAct.EditActApplicant',
 	COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER: 'CompletedWorkAct.EditActProvider',
 	COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY: 'CompletedWorkAct.EditActCurrency',
+	COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD: 'CompletedWorkAct.EditActDateUpload',
+	COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT: 'CompletedWorkAct.EditActComment',
 	COMPLETED_WORK_ACTS_EDIT_DOCUMENT: 'CompletedWorkAct.EditDocument',
 	COMPLETED_WORK_ACTS_PULL_ACT: 'CompletedWorkAct.PullAct',
 	COMPLETED_WORK_ACTS_DELETE: 'CompletedWorkAct.Delete',

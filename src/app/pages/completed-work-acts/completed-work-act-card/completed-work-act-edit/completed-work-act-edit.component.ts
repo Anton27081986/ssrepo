@@ -27,6 +27,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 		internalActNumber: FormControl<string | null>;
 		externalActDate: FormControl<string | null>;
 		internalActDate: FormControl<string | null>;
+		dateUpload: FormControl<string | null>;
 		finDocOrderIds: FormControl<IFilterOption[] | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnit: FormControl<IDictionaryItemDto | null>;
@@ -34,6 +35,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 		providerContractorId: FormControl<number | null>;
 		contract: FormControl<IDictionaryItemDto | null>;
 		currency: FormControl<IDictionaryItemDto | null>;
+		comment: FormControl<string | null>;
 	}>;
 
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
@@ -83,6 +85,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 			internalActNumber: new FormControl<string | null>('', [Validators.required]),
 			externalActDate: new FormControl<string | null>(null, [Validators.required]),
 			internalActDate: new FormControl<string | null>(null, [Validators.required]),
+			dateUpload: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<IFilterOption[]>([]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnit: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
@@ -90,6 +93,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 			providerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			contract: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			currency: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			comment: new FormControl<string | null>(''),
 		});
 
 		this.completedWorkActsFacade.act$.pipe(untilDestroyed(this)).subscribe(act => {
@@ -98,6 +102,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 				this.editActForm.controls.internalActNumber.setValue(act.internalActNumber);
 				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
 				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
+				this.editActForm.controls.dateUpload.setValue(act.internalActDate);
 				this.editActForm.controls.finDocOrderIds.setValue(
 					act.finDocOrders.map(doc => {
 						return { ...doc, checked: true };
@@ -109,6 +114,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
 				this.editActForm.controls.contract.setValue(act.contract || null);
 				this.editActForm.controls.currency.setValue(act.currency);
+				this.editActForm.controls.comment.setValue(act.comment);
 
 				this.finDocOrders = act.finDocOrders || [];
 
@@ -270,7 +276,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 
-	onInputChange(event: any) {
+	protected onInputChange(event: any) {
 		if (!event.target.value) {
 			const act = this.act();
 
