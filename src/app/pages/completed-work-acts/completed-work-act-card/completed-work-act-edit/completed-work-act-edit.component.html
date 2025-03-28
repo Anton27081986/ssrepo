@@ -38,16 +38,6 @@
 					<ss-text size="3" weight="regular">{{ act()?.dateUpload | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
 				}
 			</div>
-			<div class="content__column__item">
-				<ss-text size="4">Дата КИСП</ss-text>
-				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD)) {
-					<ss-date-time-picker
-						[showTime]="false" formControlName="dateUpload"
-						[error]="editActForm.controls.dateUpload.touched && editActForm.controls.dateUpload.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
-				} @else {
-					<ss-text weight="regular">{{act()?.dateUpload | date:'dd.MM.yyyy':'':'ru'}}</ss-text>
-				}
-			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
