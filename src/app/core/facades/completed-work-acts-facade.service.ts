@@ -136,6 +136,10 @@ export class CompletedWorkActsFacadeService {
 					this.specificationsTotalAmount.next(specifications.totalAmount);
 				}),
 				untilDestroyed(this),
+				catchError((err: unknown) => {
+					this.router.navigate([`completed-work-acts`]);
+					throw err;
+				}),
 			)
 			.subscribe();
 	}

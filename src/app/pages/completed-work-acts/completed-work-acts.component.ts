@@ -180,7 +180,7 @@ export class CompletedWorkActsComponent {
 
 			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
-			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
+			tableItem.buUnit = x.buUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
 				text: x.providerContractor?.name ?? '-',

@@ -14,26 +14,29 @@
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Номер Поставщика</ss-text>
-				<ss-input maxlength="50" formControlName="externalActNumber" size="small" placeholder="Введите значение"
-					[error]="editActForm.controls.externalActNumber.touched && editActForm.controls.externalActNumber.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-input>
+				<ss-text size="3" weight="regular">{{ act()?.externalActNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Номер БУ</ss-text>
-				<ss-input maxlength="50" formControlName="internalActNumber" size="small" placeholder="Введите значение"
-					[error]="editActForm.controls.internalActNumber.touched && editActForm.controls.internalActNumber.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
+				<ss-text size="3" weight="regular">{{ act()?.internalActNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата оказания услуги</ss-text>
-				<ss-date-time-picker
-					[showTime]="false" formControlName="externalActDate"
-					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				<ss-text size="3" weight="regular">{{ act()?.externalActDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата БУ</ss-text>
-				<ss-date-time-picker
-					[showTime]="false" formControlName="internalActDate"
-					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				<ss-text size="3" weight="regular">{{ act()?.internalActDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата КИСП</ss-text>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD)) {
+					<ss-date-time-picker
+						[showTime]="false" formControlName="dateUpload"
+						[error]="editActForm.controls.dateUpload.touched && editActForm.controls.dateUpload.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				} @else {
+					<ss-text size="3" weight="regular">{{ act()?.dateUpload | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+				}
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата КИСП</ss-text>
@@ -58,18 +61,22 @@
 						 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
 					</ss-search-input>
 				} @else {
-					<ss-text weight="regular">{{act()?.applicantUser?.name}}</ss-text>
+					<ss-text size="3" weight="regular">{{ act()?.applicantUser?.name }}</ss-text>
 				}
 
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-                <ss-select-v2
-                    [size]="'small'"
-                    [options]="buUnits()"
-                    [formControlName]="'buUnit'"
-                    [errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
-                />
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_BU_UNIT)) {
+					<ss-select-v2
+						[size]="'small'"
+						[options]="buUnits()"
+						[formControlName]="'buUnit'"
+						[errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
+					/>
+				} @else {
+					<ss-text size="3" weight="regular">{{ act()?.buUnit?.name }}</ss-text>
+				}
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Плательщик</ss-text>
@@ -87,7 +94,7 @@
 						[maxLength]="50"
 						formControlName="comment"></ss-textarea>
 				} @else {
-					<ss-text weight="regular">{{act()?.comment}}</ss-text>
+					<ss-text size="3" weight="regular">{{ act()?.comment }}</ss-text>
 				}
 			</div>
 		</div>
@@ -102,7 +109,7 @@
 						 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 					</ss-search-input>
 				} @else {
-					<ss-text weight="regular">{{act()?.providerContractor?.name}}</ss-text>
+					<ss-text size="3" weight="regular">{{ act()?.providerContractor?.name }}</ss-text>
 				}
 			</div>
 			<div class="content__column__item">

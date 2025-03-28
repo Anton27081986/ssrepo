@@ -23,10 +23,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 	@Input() specification: ICompletedWorkActSpecification | null = null;
 
 	protected editActForm!: FormGroup<{
-		externalActNumber: FormControl<string | null>;
-		internalActNumber: FormControl<string | null>;
-		externalActDate: FormControl<string | null>;
-		internalActDate: FormControl<string | null>;
 		dateUpload: FormControl<string | null>;
 		finDocOrderIds: FormControl<IFilterOption[] | null>;
 		applicantUserId: FormControl<number | null>;
@@ -81,10 +77,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 		private readonly ref: ChangeDetectorRef,
 	) {
 		this.editActForm = new FormGroup({
-			externalActNumber: new FormControl<string | null>('', [Validators.required]),
-			internalActNumber: new FormControl<string | null>('', [Validators.required]),
-			externalActDate: new FormControl<string | null>(null, [Validators.required]),
-			internalActDate: new FormControl<string | null>(null, [Validators.required]),
 			dateUpload: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<IFilterOption[]>([]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
@@ -98,10 +90,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 		this.completedWorkActsFacade.act$.pipe(untilDestroyed(this)).subscribe(act => {
 			if (act) {
-				this.editActForm.controls.externalActNumber.setValue(act.externalActNumber);
-				this.editActForm.controls.internalActNumber.setValue(act.internalActNumber);
-				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
-				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
 				this.editActForm.controls.dateUpload.setValue(act.internalActDate);
 				this.editActForm.controls.finDocOrderIds.setValue(
 					act.finDocOrders.map(doc => {
@@ -121,7 +109,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 				if (act.providerContractor.id) {
 					this.completedWorkActsFacade.getFinDocs(
 						act.providerContractor.id,
-						this.editActForm.controls.externalActDate.value,
+						act.externalActDate,
 					);
 				}
 			}
@@ -164,15 +152,9 @@ export class CompletedWorkActEditComponent implements OnInit {
 			return;
 		}
 
-		if (this.editActForm.controls.externalActDate.value?.length === 10) {
-			this.editActForm.controls.externalActDate.setValue(
-				`${this.editActForm.controls.externalActDate.value}T00:00:00.000Z`,
-			);
-		}
-
-		if (this.editActForm.controls.internalActDate.value?.length === 10) {
-			this.editActForm.controls.internalActDate.setValue(
-				`${this.editActForm.controls.internalActDate.value}T00:00:00.000Z`,
+		if (this.editActForm.controls.dateUpload.value?.length === 10) {
+			this.editActForm.controls.dateUpload.setValue(
+				`${this.editActForm.controls.dateUpload.value}T00:00:00.000Z`,
 			);
 		}
 
@@ -245,7 +227,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.finDocOrders = [];
 					this.completedWorkActsFacade.getFinDocs(
 						id,
-						this.editActForm.controls.externalActDate.value,
+						this.act()?.externalActDate || null,
 					);
 					this.ref.detectChanges();
 				});
