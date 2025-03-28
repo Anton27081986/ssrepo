@@ -5,6 +5,7 @@ export interface ICompletedWorkActTableItem {
 	externalActDate: string;
 	internalActNumber: string;
 	internalActDate: string;
+	uploadActDate: string;
 	payerBuUnit: string;
 	providerContractor: { text: string; url: string };
 	applicantUser: string;

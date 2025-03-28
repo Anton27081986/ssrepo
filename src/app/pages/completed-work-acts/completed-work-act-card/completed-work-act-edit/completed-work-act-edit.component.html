@@ -13,27 +13,37 @@
 	<form [formGroup]="editActForm" class="content">
 		<div class="content__column">
 			<div class="content__column__item">
-				<ss-text size="4">Номер акта (внешний)</ss-text>
+				<ss-text size="4">Номер Поставщика</ss-text>
 				<ss-input maxlength="50" formControlName="externalActNumber" size="small" placeholder="Введите значение"
 					[error]="editActForm.controls.externalActNumber.touched && editActForm.controls.externalActNumber.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Номер акта (внутренний)</ss-text>
+				<ss-text size="4">Номер БУ</ss-text>
 				<ss-input maxlength="50" formControlName="internalActNumber" size="small" placeholder="Введите значение"
 					[error]="editActForm.controls.internalActNumber.touched && editActForm.controls.internalActNumber.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Дата акта (внешний)</ss-text>
+				<ss-text size="4">Дата оказания услуги</ss-text>
 				<ss-date-time-picker
 					[showTime]="false" formControlName="externalActDate"
 					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Дата акта (внутренний)</ss-text>
+				<ss-text size="4">Дата БУ</ss-text>
 				<ss-date-time-picker
 					[showTime]="false" formControlName="internalActDate"
 					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата КИСП</ss-text>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD)) {
+					<ss-date-time-picker
+						[showTime]="false" formControlName="dateUpload"
+						[error]="editActForm.controls.dateUpload.touched && editActForm.controls.dateUpload.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				} @else {
+					<ss-text weight="regular">{{act()?.dateUpload | date:'dd.MM.yyyy':'':'ru'}}</ss-text>
+				}
 			</div>
 		</div>
 		<div class="content__column">
@@ -41,11 +51,11 @@
 				<ss-text size="4">Заявитель</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
 					<ss-search-input searchType="user" size="small"
-									 [selectedItem]="act()?.applicantUser"
-									 (select)="onApplicantUserSelect($event.id)"
-									 (click)="editActForm.controls.applicantUserId.setErrors(null)"
-									 (input)="onInputChange($event)"
-									 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
+						 [selectedItem]="act()?.applicantUser"
+						 (select)="onApplicantUserSelect($event.id)"
+						 (click)="editActForm.controls.applicantUserId.setErrors(null)"
+						 (input)="onInputChange($event)"
+						 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
 					</ss-search-input>
 				} @else {
 					<ss-text weight="regular">{{act()?.applicantUser?.name}}</ss-text>
@@ -54,7 +64,6 @@
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-
                 <ss-select-v2
                     [size]="'small'"
                     [options]="buUnits()"
@@ -71,16 +80,26 @@
 					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-search-input>
 			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Комментарий</ss-text>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT)) {
+					<ss-textarea
+						[maxLength]="50"
+						formControlName="comment"></ss-textarea>
+				} @else {
+					<ss-text weight="regular">{{act()?.comment}}</ss-text>
+				}
+			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
 					<ss-search-input searchType="contractor" size="small"
-									 [selectedItem]="act()?.providerContractor"
-									 (select)="onProviderContractorSelect($event.id)"
-									 (click)="editActForm.controls.providerContractorId.setErrors(null)"
-									 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+						 [selectedItem]="act()?.providerContractor"
+						 (select)="onProviderContractorSelect($event.id)"
+						 (click)="editActForm.controls.providerContractorId.setErrors(null)"
+						 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 					</ss-search-input>
 				} @else {
 					<ss-text weight="regular">{{act()?.providerContractor?.name}}</ss-text>
@@ -99,6 +118,7 @@
 			<div class="content__column__item content__column__findocs">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<ss-multiselect-v2
+					[placeholder]="finDocOrders.length ? 'Выберите заявки' : 'Заявки отсутствуют'"
 					[formControlName]="'finDocOrderIds'"
 					[options]="finDocOrders"></ss-multiselect-v2>
 			</div>
