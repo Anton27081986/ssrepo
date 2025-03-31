@@ -90,7 +90,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 		this.completedWorkActsFacade.act$.pipe(untilDestroyed(this)).subscribe(act => {
 			if (act) {
-				this.editActForm.controls.dateUpload.setValue(act.internalActDate);
+				this.editActForm.controls.dateUpload.setValue(act.dateUpload);
 				this.editActForm.controls.finDocOrderIds.setValue(
 					act.finDocOrders.map(doc => {
 						return { ...doc, checked: true };
@@ -104,8 +104,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 				this.editActForm.controls.currency.setValue(act.currency);
 				this.editActForm.controls.comment.setValue(act.comment);
 
-				this.finDocOrders = act.finDocOrders || [];
-
 				if (act.providerContractor.id) {
 					this.completedWorkActsFacade.getFinDocs(
 						act.providerContractor.id,
@@ -118,8 +116,24 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 	public ngOnInit() {
 		this.completedWorkActsFacade.finDocs$.pipe(untilDestroyed(this)).subscribe(docs => {
-			this.finDocOrders = docs || [];
-			this.ref.detectChanges();
+			if (docs) {
+				const checked = this.act()?.finDocOrders || [];
+
+				this.finDocOrders = docs.reduce(
+					(previousValue: IFilterOption[], currentValue: IFilterOption) => {
+						const selected = checked.find(item => item.id === currentValue.id);
+
+						if (selected) {
+							return [...previousValue, { ...currentValue, checked: true }];
+						}
+
+						return [...previousValue, currentValue];
+					},
+					[],
+				);
+
+				this.ref.detectChanges();
+			}
 		});
 	}
 
