@@ -27,7 +27,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 		finDocOrderIds: FormControl<IFilterOption[] | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnit: FormControl<IDictionaryItemDto | null>;
-		payerContractorId: FormControl<number | null>;
 		providerContractorId: FormControl<number | null>;
 		contract: FormControl<IDictionaryItemDto | null>;
 		currency: FormControl<IDictionaryItemDto | null>;
@@ -81,7 +80,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 			finDocOrderIds: new FormControl<IFilterOption[]>([]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnit: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			providerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			contract: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			currency: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
@@ -98,7 +96,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 				);
 				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id || null);
 				this.editActForm.controls.buUnit.setValue(act.buUnit);
-				this.editActForm.controls.payerContractorId.setValue(act.payerContractor?.id);
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
 				this.editActForm.controls.contract.setValue(act.contract || null);
 				this.editActForm.controls.currency.setValue(act.currency);

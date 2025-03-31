@@ -69,15 +69,6 @@
 				}
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Плательщик</ss-text>
-				<ss-search-input searchType="payer-contractor" size="small"
-					[selectedItem]="act()?.payerContractor"
-					(select)="editActForm.controls.payerContractorId.setValue($event.id)"
-					(click)="editActForm.controls.payerContractorId.setErrors(null)"
-					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-search-input>
-			</div>
-			<div class="content__column__item">
 				<ss-text size="4">Комментарий</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT)) {
 					<ss-textarea
