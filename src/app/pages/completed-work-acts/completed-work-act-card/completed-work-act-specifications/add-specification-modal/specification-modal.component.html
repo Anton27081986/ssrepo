@@ -7,14 +7,15 @@
 		<form [formGroup]="addSpecificationForm" class="content">
 			<div class="content__column">
 				<ss-search-input searchType="services" label="Услуга" placeholder="Выберите из списка"
-								 [selectedItem]="spec ? spec.service : undefined"
-								 [error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined"
-								 (focusout)="resetValueControl($event, addSpecificationForm.controls.serviceId, 'service')"
-								 (input)="resetValueControl($event, addSpecificationForm.controls.serviceId, 'service')"
-								 (select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)">
+					 [selectedItem]="spec ? spec.service : undefined"
+					 [error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined"
+					 (focusout)="addSpecificationForm.controls.serviceId.markAsTouched()"
+					 (input)="addSpecificationForm.controls.serviceId.markAsTouched()"
+					 (select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)">
 				</ss-search-input>
-				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"
-							 [error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
+				<ss-textarea
+					[maxLength]="500" formControlName="comment" label="Комментарий"
+					[error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
 				<ss-input formControlName="quantity" label="Количество" type="number"
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
@@ -27,8 +28,8 @@
 				<ss-search-input searchType="cost-article" label="Статья" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.cost : undefined"
 					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined"
-				    (focusout)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
-				    (input)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
+				    (focusout)="addSpecificationForm.controls.costId.markAsTouched()"
+				    (input)="addSpecificationForm.controls.costId.markAsTouched()"
 					(select)="addSpecificationForm.controls.costId.setValue($event.id); addSpecificationForm.controls.costId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="fa-objects" label="Объект ОС/НМА" placeholder="Выберите из списка"
