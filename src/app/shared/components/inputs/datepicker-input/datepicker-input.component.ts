@@ -8,33 +8,41 @@ import {
 	Self,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {DatePipe} from "@angular/common";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { DatePipe } from '@angular/common';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
 
 @Component({
 	selector: 'ss-datepicker-input',
 	templateUrl: './datepicker-input.component.html',
 	styleUrls: ['./datepicker-input.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		TextComponent,
-		DatePipe,
-		CaptionComponent
-	],
-	standalone: true
+	imports: [TextComponent, DatePipe, CaptionComponent],
+	standalone: true,
 })
 export class DatepickerInputComponent {
-	@Input() public size: 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string | null = '01.02.2024-08.02.2024';
-	@Input() public error: string | undefined;
-	@Output() protected datepicker = new EventEmitter();
+	@Input()
+	public size: 'medium' | 'small' = 'medium';
 
-	@Input() public value: any = '';
+	@Input()
+	public disabled = false;
 
-	public constructor(
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder: string | null = '01.02.2024-08.02.2024';
+
+	@Input()
+	public error: string | undefined;
+
+	@Output()
+	protected datepicker = new EventEmitter();
+
+	@Input()
+	public value: any = '';
+
+	constructor(
 		// Retrieve the dependency only from the local injector,
 		// not from parent or ancestors.
 		@Self()

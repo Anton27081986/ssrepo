@@ -1,18 +1,24 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { first, of, tap } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {PasswordComponent} from "@app/shared/components/_deprecated/password/password.component";
-import {LinkComponent} from "@app/shared/components/link/link.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {CommonModule} from "@angular/common";
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { PasswordComponent } from '@app/shared/components/_deprecated/password/password.component';
+import { LinkComponent } from '@app/shared/components/link/link.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CommonModule } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -29,9 +35,9 @@ import {CommonModule} from "@angular/common";
 		PasswordComponent,
 		LinkComponent,
 		RouterLink,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class SignInComponent implements OnInit {
 	protected loginForm!: FormGroup<{
@@ -43,7 +49,7 @@ export class SignInComponent implements OnInit {
 
 	public password?: string;
 
-	public constructor(
+	constructor(
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
 		private readonly authenticationService: AuthenticationService,
@@ -71,7 +77,7 @@ export class SignInComponent implements OnInit {
 			)
 			.pipe(
 				first(),
-				switchMap(_ => {
+				switchMap((_) => {
 					return this.authenticationService.authImages().pipe(
 						tap(() => console.warn('authImages Ok')),
 						catchError(() => {
@@ -79,9 +85,9 @@ export class SignInComponent implements OnInit {
 						}),
 					);
 				}),
-				switchMap(_ => {
+				switchMap((_) => {
 					return this.profileService.getTheme().pipe(
-						tap(value => {
+						tap((value) => {
 							if (value.isDarkTheme) {
 								this.themeService.setDarkTheme();
 							}
@@ -95,7 +101,8 @@ export class SignInComponent implements OnInit {
 			)
 			.subscribe({
 				next: () => {
-					const returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+					const returnUrl =
+						this.route.snapshot.queryParams.returnUrl || '/';
 
 					setTimeout(() => {
 						this.router.navigateByUrl(returnUrl);
@@ -104,7 +111,9 @@ export class SignInComponent implements OnInit {
 				error: (err: unknown) => {
 					this.loading = false;
 					console.error('HTTP Error', err);
-					this.loginForm.setErrors({ unauthorized: 'Неверный логин или пароль' });
+					this.loginForm.setErrors({
+						unauthorized: 'Неверный логин или пароль',
+					});
 				},
 			});
 	}

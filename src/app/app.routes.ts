@@ -220,11 +220,13 @@ export const routes: Routes = [
 						children: [
 							{
 								path: 'business-trips',
-								component: ClientProposalsBusinessTripsTabComponent,
+								component:
+									ClientProposalsBusinessTripsTabComponent,
 							},
 							{
 								path: 'development',
-								component: ClientProposalsDevelopmentTabComponent,
+								component:
+									ClientProposalsDevelopmentTabComponent,
 							},
 							{
 								path: 'news-line',
@@ -240,7 +242,8 @@ export const routes: Routes = [
 							},
 							{
 								path: 'contractors',
-								component: ClientProposalsContractorsTabComponent,
+								component:
+									ClientProposalsContractorsTabComponent,
 							},
 							{ path: '**', redirectTo: 'contractors' },
 						],
@@ -258,10 +261,10 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'production-plan',
-				loadChildren: () =>
-					import('./pages/production-plan/production-plan.routing').then(
-						r => r.productionPlanRoutes,
-					),
+				loadChildren: async () =>
+					import(
+						'./pages/production-plan/production-plan.routing'
+					).then((r) => r.productionPlanRoutes),
 			},
 		],
 	},
@@ -300,13 +303,21 @@ export const routes: Routes = [
 		},
 		component: AuthComponent,
 		children: [
-			{ path: AppRoutes.signIn, component: SignInComponent, pathMatch: 'full' },
+			{
+				path: AppRoutes.signIn,
+				component: SignInComponent,
+				pathMatch: 'full',
+			},
 			{
 				path: AppRoutes.forgotPassword,
 				component: ForgotPasswordComponent,
 				pathMatch: 'full',
 			},
-			{ path: AppRoutes.resetPassword, component: ResetPasswordComponent, pathMatch: 'full' },
+			{
+				path: AppRoutes.resetPassword,
+				component: ResetPasswordComponent,
+				pathMatch: 'full',
+			},
 			{ path: '**', redirectTo: AppRoutes.signIn },
 		],
 	},

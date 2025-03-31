@@ -3,13 +3,16 @@ import { WinsApiService } from '@app/core/api/wins-api.service';
 import { merge, of, switchMap, tap } from 'rxjs';
 import { ICommentRequest } from '@app/core/models/awards/comment-request';
 import { ILikeRequest } from '@app/core/models/awards/like-request';
-import {VictoryLikeEventEnum, VictoryRootService} from "@app/widgets/victory/victory-root.service";
+import {
+	VictoryLikeEventEnum,
+	VictoryRootService,
+} from '@app/widgets/victory/victory-root.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class VictoryService {
-	public constructor(
+	constructor(
 		private readonly apiService: WinsApiService,
 		private readonly victoryRootService: VictoryRootService,
 	) {}

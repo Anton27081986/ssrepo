@@ -3,8 +3,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { Observable } from 'rxjs';
-import {AsyncPipe, CommonModule, DatePipe, NgOptimizedImage} from "@angular/common";
-import {ButtonComponent, ButtonType, IconComponent, IconType} from "@front-components/components";
+import {
+	AsyncPipe,
+	CommonModule,
+	DatePipe,
+	NgOptimizedImage,
+} from '@angular/common';
+import {
+	ButtonComponent,
+	ButtonType,
+	IconComponent,
+	IconType,
+} from '@front-components/components';
 
 @Component({
 	selector: 'app-settings',
@@ -17,15 +27,17 @@ import {ButtonComponent, ButtonType, IconComponent, IconType} from "@front-compo
 		DatePipe,
 		ButtonComponent,
 		IconComponent,
-		NgOptimizedImage
+		NgOptimizedImage,
 	],
-	standalone: true
+	standalone: true,
 })
 export class SettingsComponent implements OnInit {
 	public settingsForm!: FormGroup;
 	public userProfile$!: Observable<IUserProfile | null>;
 
-	public constructor(
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
+	constructor(
 		private readonly formBuilder: FormBuilder,
 		private readonly userStateService: UserProfileStoreService,
 	) {}
@@ -39,7 +51,4 @@ export class SettingsComponent implements OnInit {
 
 		this.userProfile$ = this.userStateService.userProfile$;
 	}
-
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconType = IconType;
 }

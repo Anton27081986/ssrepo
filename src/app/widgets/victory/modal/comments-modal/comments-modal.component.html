@@ -1,6 +1,6 @@
 <div class="comments-modal">
     <div>
-      <form nz-form [formGroup]="loginForm" nzLayout="vertical" class="form" (ngSubmit)="onSubmit()">
+      <form nz-form nzLayout="vertical" class="form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
         <div class="comments-modal">
           <div class="card list">
@@ -53,7 +53,7 @@
             </div>
 
 
-            <div class="comments" *ngIf="commentVisible">
+            <div *ngIf="commentVisible" class="comments">
               <div class="title">Комментарии:</div>
               <div class="card list">
                 <div class="personal">
@@ -135,7 +135,7 @@
                 <span class="field-tile">Оставить комментарий:</span>
                 <div class="textarea">
                   <textarea nz-input placeholder="Поделитесь своим мнением" [nzAutosize]="{ minRows: 4, maxRows: 7 }"></textarea>
-                  <div class="icon-bg attach" *ngIf="attachVisible">
+                  <div *ngIf="attachVisible" class="icon-bg attach">
                     <span class="attach-icon icon" nz-icon [nzType]="'ss:attach'"></span>
                   </div>
                 </div>

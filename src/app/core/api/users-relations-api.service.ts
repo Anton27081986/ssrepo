@@ -9,7 +9,7 @@ import { IFriendAccountDto } from '@app/core/models/friend-account-dto';
 	providedIn: 'root',
 })
 export class UsersRelationsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public getRelationsTypes(): Observable<IResponse<IFriendAccountDto>> {
 		return this.http.get<IResponse<IFriendAccountDto>>(
@@ -24,7 +24,9 @@ export class UsersRelationsApiService {
 		});
 	}
 
-	public getRelationsUser(token: string): Observable<IResponse<IFriendAccountDto>> {
+	public getRelationsUser(
+		token: string,
+	): Observable<IResponse<IFriendAccountDto>> {
 		return this.http.get<IResponse<IFriendAccountDto>>(
 			`${environment.apiUrl}/api/auth/UsersRelations/User`,
 			{
@@ -33,16 +35,25 @@ export class UsersRelationsApiService {
 		);
 	}
 
-	public confirmRelationsUsers(token: string, isConfirm: boolean): Observable<any> {
-		return this.http.post<any>(`${environment.apiUrl}/api/auth/UsersRelations/Confirm`, {
-			token,
-			isConfirm,
-		});
+	public confirmRelationsUsers(
+		token: string,
+		isConfirm: boolean,
+	): Observable<any> {
+		return this.http.post<any>(
+			`${environment.apiUrl}/api/auth/UsersRelations/Confirm`,
+			{
+				token,
+				isConfirm,
+			},
+		);
 	}
 
 	public removeRelationsUsersById(deleteUserId: number) {
-		return this.http.delete<any[]>(`${environment.apiUrl}/api/auth/users/friends/`, {
-			params: new HttpParams().set('deleteUserId', deleteUserId),
-		});
+		return this.http.delete<any[]>(
+			`${environment.apiUrl}/api/auth/users/friends/`,
+			{
+				params: new HttpParams().set('deleteUserId', deleteUserId),
+			},
+		);
 	}
 }

@@ -32,12 +32,12 @@
 	.header {
 		display: grid;
 		grid-auto-columns: 1fr;
-		border: 1px solid #E4E8EA;
+		border: 1px solid #e4e8ea;
 		border-radius: 16px 16px 0 0;
-		background-color: #F2F3F7;
+		background-color: #f2f3f7;
 
 		&__cell {
-			border-right: 1px solid #E4E8EA;
+			border-right: 1px solid #e4e8ea;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			font-weight: 600;
@@ -75,9 +75,9 @@
 		&__row {
 			display: grid;
 			grid-auto-columns: 1fr;
-			border-left: 1px solid #E4E8EA;
-			border-right: 1px solid #E4E8EA;
-			border-bottom: 1px solid #E4E8EA;
+			border-left: 1px solid #e4e8ea;
+			border-right: 1px solid #e4e8ea;
+			border-bottom: 1px solid #e4e8ea;
 		}
 
 		&__row:last-child {
@@ -86,7 +86,7 @@
 
 		&__cell {
 			position: relative;
-			border-right: 1px solid #E4E8EA;
+			border-right: 1px solid #e4e8ea;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -114,7 +114,7 @@
 	background-color: $dark-island !important;
 
 	.header {
-		background-color: #24292D;
+		background-color: #24292d;
 		color: $island;
 	}
 
@@ -123,7 +123,7 @@
 		color: $island !important;
 
 		.highlight {
-			background-color: #FF5A5A !important;
+			background-color: #ff5a5a !important;
 		}
 	}
 }

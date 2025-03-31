@@ -17,7 +17,7 @@
 		</div>
 		<div class="header__controls">
 			<ss-button type="muted" size="small" (click)="openHistoryModal(act.id)">История</ss-button>
-			<ss-dropdown-button [closeOnClick]="true" *ngIf="!isEdit()" title="Действия">
+			<ss-dropdown-button *ngIf="!isEdit()" title="Действия" [closeOnClick]="true">
 				@if (act.state.id === 0) {
 					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_RESTORE)" class="header__controls__dropdown-item" (click)="restoreAct()">
 						<ss-icon name="refresh"></ss-icon>

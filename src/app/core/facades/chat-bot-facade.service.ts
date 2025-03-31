@@ -31,23 +31,28 @@ export class ChatBotFacadeService {
 	private readonly subsectors = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public subsectors$ = this.subsectors.asObservable();
 
-	private readonly activeSubsector = new BehaviorSubject<IDictionaryItemDto | null>(null);
+	private readonly activeSubsector =
+		new BehaviorSubject<IDictionaryItemDto | null>(null);
+
 	public activeSubsector$ = this.activeSubsector.asObservable();
 
-	private readonly state = new BehaviorSubject<ChatBotStates>(ChatBotStates.Ready);
+	private readonly state = new BehaviorSubject<ChatBotStates>(
+		ChatBotStates.Ready,
+	);
+
 	public state$ = this.state.asObservable();
 
 	private user: IUserProfile | null = null;
-	private totalMessages: number = 0;
+	private totalMessages = 0;
 
-	public constructor(
+	constructor(
 		private readonly botApiService: ChatBotApiService,
 		private readonly usesFacadeService: UserFacadeService,
 	) {
 		this.usesFacadeService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
-			.subscribe(user => {
+			.subscribe((user) => {
 				this.user = user;
 			});
 	}
@@ -60,7 +65,7 @@ export class ChatBotFacadeService {
 		this.botApiService
 			.getSubsectors()
 			.pipe(untilDestroyed(this))
-			.subscribe(res => {
+			.subscribe((res) => {
 				this.subsectors.next(res.items);
 			});
 	}
@@ -75,8 +80,11 @@ export class ChatBotFacadeService {
 					offset,
 				})
 				.pipe(untilDestroyed(this))
-				.subscribe(messages => {
-					this.messages.next([...messages.items, ...this.messages.value]);
+				.subscribe((messages) => {
+					this.messages.next([
+						...messages.items,
+						...this.messages.value,
+					]);
 
 					this.totalMessages = messages.total;
 					this.state.next(ChatBotStates.Ready);
@@ -84,12 +92,13 @@ export class ChatBotFacadeService {
 		}
 	}
 
-	public setActiveSubsector(activeSubsector: IDictionaryItemDto | null): void {
+	public setActiveSubsector(
+		activeSubsector: IDictionaryItemDto | null,
+	): void {
 		this.activeSubsector.next(activeSubsector);
 	}
 
 	public sendMessage(question: string | null): void {
-
 		if (!this.activeSubsector.value && this.user) {
 			this.state.next(ChatBotStates.Error);
 			this.messages.next([
@@ -163,7 +172,7 @@ export class ChatBotFacadeService {
 						throw err;
 					}),
 				)
-				.subscribe(res => {
+				.subscribe((res) => {
 					myMessage.id = res.id;
 					myMessage.createdAt = res.createdAt;
 					this.messages.next([res, ...this.messages.value]);

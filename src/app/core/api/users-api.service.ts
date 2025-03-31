@@ -10,18 +10,23 @@ import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 	providedIn: 'root',
 })
 export class UsersApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Поиск пользователей по ФИО */
 	public getUsersByFIO(title: string): Observable<any> {
-		return this.http.get<any>(`${environment.apiUrl}/api/auth/users/search`, {
-			params: new HttpParams().set('query', title),
-		});
+		return this.http.get<any>(
+			`${environment.apiUrl}/api/auth/users/search`,
+			{
+				params: new HttpParams().set('query', title),
+			},
+		);
 	}
 
 	/** Получить прочие настройки пользователя */
 	public getSettings(): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings`);
+		return this.http.get<any[]>(
+			`${environment.apiUrl}/api/company/settings`,
+		);
 	}
 
 	public getCurrentUserFriendsAccounts() {
@@ -32,17 +37,24 @@ export class UsersApiService {
 
 	/** Получение пользователя по id */
 	public getUserById(id: number): Observable<IUserProfile> {
-		return this.http.get<IUserProfile>(`${environment.apiUrl}/api/auth/users/${id}`);
+		return this.http.get<IUserProfile>(
+			`${environment.apiUrl}/api/auth/users/${id}`,
+		);
 	}
 
 	public getListLikedUsers(id: number, type: number): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/awards/likes/${id}`, {
-			params: new HttpParams().set('Type', type),
-		});
+		return this.http.get<any[]>(
+			`${environment.apiUrl}/api/awards/likes/${id}`,
+			{
+				params: new HttpParams().set('Type', type),
+			},
+		);
 	}
 
 	/** Получить профиль текущего пользователя */
 	public getProfile(): Observable<IUserProfile> {
-		return this.http.get<IUserProfile>(`${environment.apiUrl}/api/auth/Profile`);
+		return this.http.get<IUserProfile>(
+			`${environment.apiUrl}/api/auth/Profile`,
+		);
 	}
 }

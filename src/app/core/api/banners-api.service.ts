@@ -8,9 +8,11 @@ import { IBannersListDto } from '@app/core/models/banners/banners-list-dto';
 	providedIn: 'root',
 })
 export class BannersApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public getBanners(): Observable<IBannersListDto> {
-		return this.http.get<IBannersListDto>(`${environment.apiUrl}/api/company/banners`);
+		return this.http.get<IBannersListDto>(
+			`${environment.apiUrl}/api/company/banners`,
+		);
 	}
 }

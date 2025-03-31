@@ -1,17 +1,19 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CommonModule} from "@angular/common";
+import {
+	FormBuilder,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-change-password',
 	templateUrl: './change-password.component.html',
 	styleUrls: ['./change-password.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CommonModule,
-		ReactiveFormsModule
-	],
-	standalone: true
+	imports: [CommonModule, ReactiveFormsModule],
+	standalone: true,
 })
 export class ChangePasswordComponent implements OnInit {
 	public myPasswordForm!: FormGroup;
@@ -25,7 +27,7 @@ export class ChangePasswordComponent implements OnInit {
 	public passwordVisibleRepeat = false;
 	public passwordRepeat?: string;
 
-	public constructor(private readonly formBuilder: FormBuilder) {}
+	constructor(private readonly formBuilder: FormBuilder) {}
 
 	public ngOnInit() {
 		this.myPasswordForm = this.formBuilder.group({

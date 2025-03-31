@@ -4,20 +4,19 @@ import { IStoreTableBaseColumn, ITrTableBaseColumn } from '@app/core/store';
 
 @Injectable({ providedIn: 'root' })
 export class ColumnsStateService {
-	public readonly colsTr$: BehaviorSubject<ITrTableBaseColumn[]> = new BehaviorSubject<
-		ITrTableBaseColumn[]
-	>([]);
+	public readonly colsTr$: BehaviorSubject<ITrTableBaseColumn[]> =
+		new BehaviorSubject<ITrTableBaseColumn[]>([]);
 
 	public readonly visibleCols$: Observable<ITrTableBaseColumn[]>;
 
 	constructor() {
 		this.visibleCols$ = this.colsTr$.pipe(
-			map(col => {
+			map((col) => {
 				const newCol: ITrTableBaseColumn[] = [];
 
-				col.forEach(item => {
+				col.forEach((item) => {
 					const filter = item.cols
-						.filter(col => {
+						.filter((col) => {
 							return col.show;
 						})
 						.sort(function (a, b) {

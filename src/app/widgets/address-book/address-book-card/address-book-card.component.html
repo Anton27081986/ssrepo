@@ -1,5 +1,5 @@
 <ss-card class="book-card" padding="16px">
-	<ss-avatar [src]="user.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(user.id)"></ss-avatar>
+	<ss-avatar size="medium" type="rectangle" [src]="user.avatarUrl || ''" (click)="openModalInfoUser(user.id)"></ss-avatar>
 	<div class="info">
 		<ss-text size="2">{{ user.lastName }} {{ user.firstName }} {{ user.surName }}</ss-text>
 		<ss-text size="4">{{ user.position }}</ss-text>
@@ -11,10 +11,10 @@
 			<ss-icon width="14" height="14" name="favorite" (click)="onToggleFavorite()"></ss-icon>
 		</ng-template>
 		<div class="controls__links">
-			<a [href]="user.linkToCall" target="_blank" [tooltip]="user.phoneLocal || null">
+			<a target="_blank" [href]="user.linkToCall" [tooltip]="user.phoneLocal || null">
 				<ss-icon width="16" height="16" name="phone"></ss-icon>
 			</a>
-			<a [href]="'mailto:' + user.email" target="_blank" [tooltip]="user.email || null">
+			<a target="_blank" [href]="'mailto:' + user.email" [tooltip]="user.email || null">
 				<ss-icon width="16" height="16" name="mail"></ss-icon>
 			</a>
 		</div>

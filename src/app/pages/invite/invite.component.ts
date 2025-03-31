@@ -4,11 +4,17 @@ import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-account
 import { FriendlyAccountsStoreService } from '@app/core/states/friendly-accounts-store.service';
 import { ActivatedRoute } from '@angular/router';
 import { untilDestroyed } from '@ngneat/until-destroy';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import {
+	AsyncPipe,
+	CommonModule,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+} from '@angular/common';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'app-invite',
@@ -24,19 +30,19 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 		NgSwitch,
 		NgSwitchCase,
 		ButtonComponent,
-		IconComponent
+		IconComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class InviteComponent implements OnInit {
-	public acceptClick: boolean = false;
-	public cancelClick: boolean = false;
+	public acceptClick = false;
+	public cancelClick = false;
 
 	public friendsAccount$!: Observable<any>;
 
 	private tokenAccept!: string;
 
-	public constructor(
+	constructor(
 		private readonly profileFacadeService: FriendlyAccountsFacadeService,
 		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService,
 		private readonly activateRoute: ActivatedRoute,
@@ -45,20 +51,28 @@ export class InviteComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tokenAccept = this.activateRoute.snapshot.queryParams.token;
 
-		this.friendsAccount$ = this.profileFacadeService.getUserForAccet(this.tokenAccept);
+		this.friendsAccount$ = this.profileFacadeService.getUserForAccet(
+			this.tokenAccept,
+		);
 	}
 
 	public acceptAddUser() {
 		this.acceptClick = true;
-		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(this.tokenAccept, true);
+		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(
+			this.tokenAccept,
+			true,
+		);
 
-		this.friendsAccount$.pipe(untilDestroyed(this)).subscribe(item => {
+		this.friendsAccount$.pipe(untilDestroyed(this)).subscribe((item) => {
 			this.friendlyAccountsStoreService.addFriendlyAccount(item);
 		});
 	}
 
 	public cancelAddUser() {
 		this.cancelClick = true;
-		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(this.tokenAccept, false);
+		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(
+			this.tokenAccept,
+			false,
+		);
 	}
 }

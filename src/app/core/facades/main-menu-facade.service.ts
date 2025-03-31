@@ -17,7 +17,7 @@ export class MainMenuFacadeService {
 	public readonly aiPermission = new BehaviorSubject<boolean>(false);
 	public aiPermission$ = this.aiPermission.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly authenticationService: AuthenticationService,
 		private readonly menuApiService: MenuApiService,
 		private readonly mainMenuStoreService: MainMenuStoreService,
@@ -34,13 +34,15 @@ export class MainMenuFacadeService {
 					this.permissionsApiService
 						.getPermissionClient('AiAssistant')
 						.pipe(untilDestroyed(this))
-						.subscribe(permissions => {
+						.subscribe((permissions) => {
 							this.aiPermission.next(
-								permissions.items.includes('AiAssistant.Access'),
+								permissions.items.includes(
+									'AiAssistant.Access',
+								),
 							);
 						});
 				}),
-				filter(x => x !== null),
+				filter((x) => x !== null),
 				switchMap(() => {
 					const favoriteMenu$ = this.menuApiService.getFavoriteMenu();
 					const mainMenu$ = this.menuApiService.getMenu();
@@ -63,8 +65,13 @@ export class MainMenuFacadeService {
 
 					throw new Error('null значения');
 				}),
-				tap(fullMenu => {
-					fullMenu.map(menu => (menu.toggle$ = new BehaviorSubject<boolean>(false)));
+				tap((fullMenu) => {
+					fullMenu.map(
+						(menu) =>
+							(menu.toggle$ = new BehaviorSubject<boolean>(
+								false,
+							)),
+					);
 					this.mainMenuStoreService.setMainMenu(fullMenu);
 				}),
 				untilDestroyed(this),
@@ -88,7 +95,7 @@ export class MainMenuFacadeService {
 		this.menuApiService
 			.addItemToFavoriteMenu(item!.id!)
 			.pipe(untilDestroyed(this))
-			.subscribe(_ => {
+			.subscribe((_) => {
 				this.mainMenuStoreService.addFavoriteMenu(item);
 			});
 	}
@@ -97,7 +104,7 @@ export class MainMenuFacadeService {
 		return this.menuApiService
 			.deleteItemToFavoriteMenu(item!.id!)
 			.pipe(untilDestroyed(this))
-			.subscribe(_ => {
+			.subscribe((_) => {
 				this.mainMenuStoreService.deleteFavoriteMenu(item, index);
 			});
 	}

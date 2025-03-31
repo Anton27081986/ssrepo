@@ -7,15 +7,17 @@ import { IResponse } from '@app/core/utils/response';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ISendMessageBody } from '@app/core/models/chat-bot/send-message-body';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {ISendFeedbackBody} from "@app/core/models/chat-bot/send-feedback-body";
+import { ISendFeedbackBody } from '@app/core/models/chat-bot/send-feedback-body';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class ChatBotApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getMessages(params: IGetMessagesParams): Observable<IResponse<IChatBotMessage>> {
+	public getMessages(
+		params: IGetMessagesParams,
+	): Observable<IResponse<IChatBotMessage>> {
 		return this.http.get<IResponse<IChatBotMessage>>(
 			`${environment.apiUrl}/api/ai-assistant/messages`,
 			{

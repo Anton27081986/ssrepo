@@ -16,7 +16,9 @@ export class BusinessTripsFacadeService {
 	private readonly filtersChanged: Subject<IBusinessTripsFilter> =
 		new Subject<ILostProductsFilter>();
 
-	private readonly businessTrips = new BehaviorSubject<IResponse<IBusinessTripsDto>>({
+	private readonly businessTrips = new BehaviorSubject<
+		IResponse<IBusinessTripsDto>
+	>({
 		items: [],
 		total: 0,
 		linkToModule: '',
@@ -24,13 +26,17 @@ export class BusinessTripsFacadeService {
 
 	public businessTrips$ = this.businessTrips.asObservable();
 
-	public constructor(private readonly businessTripsApiService: BusinessTripsApiService) {
+	constructor(
+		private readonly businessTripsApiService: BusinessTripsApiService,
+	) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
-					return this.businessTripsApiService.getBusinessTrips(filter);
+				switchMap((filter) => {
+					return this.businessTripsApiService.getBusinessTrips(
+						filter,
+					);
 				}),
-				tap(trips => {
+				tap((trips) => {
 					this.businessTrips.next(trips);
 				}),
 				untilDestroyed(this),

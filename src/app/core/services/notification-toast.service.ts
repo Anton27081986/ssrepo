@@ -15,11 +15,12 @@ export interface IToast {
 })
 export class NotificationToastService {
 	private readonly NotificationsStorage = new BehaviorSubject<IToast[]>([]);
-	public notificationsStorage$: Observable<IToast[]> = this.NotificationsStorage.asObservable();
+	public notificationsStorage$: Observable<IToast[]> =
+		this.NotificationsStorage.asObservable();
 
 	public addToast(message: string, type: ToastType, status?: number): void {
 		if (status && status === 401) {
-			const tokenToast = this.NotificationsStorage.value.find(toast => {
+			const tokenToast = this.NotificationsStorage.value.find((toast) => {
 				return toast.status === 401;
 			});
 
@@ -42,7 +43,7 @@ export class NotificationToastService {
 
 	public deleteToast(id: number) {
 		this.NotificationsStorage.next(
-			this.NotificationsStorage.value.filter(toast => toast.id !== id),
+			this.NotificationsStorage.value.filter((toast) => toast.id !== id),
 		);
 	}
 }

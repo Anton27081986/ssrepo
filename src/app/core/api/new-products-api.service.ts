@@ -9,9 +9,11 @@ import { INewProductsItemDto } from '@app/core/models/company/new-products-item-
 	providedIn: 'root',
 })
 export class NewProductsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getNewProducts(filter: INewProductsFilter): Observable<INewProductsItemDto> {
+	public getNewProducts(
+		filter: INewProductsFilter,
+	): Observable<INewProductsItemDto> {
 		let params = new HttpParams();
 
 		if (filter.СlientId !== null && filter.СlientId !== undefined) {
@@ -30,8 +32,11 @@ export class NewProductsApiService {
 			params = params.set('offset', filter.offset);
 		}
 
-		return this.http.get<INewProductsItemDto>(`${environment.apiUrl}/api/company/newProducts`, {
-			params,
-		});
+		return this.http.get<INewProductsItemDto>(
+			`${environment.apiUrl}/api/company/newProducts`,
+			{
+				params,
+			},
+		);
 	}
 }

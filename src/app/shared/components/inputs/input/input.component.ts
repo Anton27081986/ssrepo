@@ -1,31 +1,51 @@
-import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Optional,
+	Output,
+	Self,
+} from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-input',
 	templateUrl: './input.component.html',
 	styleUrls: ['./input.component.scss'],
-	imports: [
-		IconComponent,
-		CaptionComponent
-	],
-	standalone: true
+	imports: [IconComponent, CaptionComponent],
+	standalone: true,
 })
 export class InputComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public type: 'text' | 'email' | 'number' = 'text';
-	@Input() public error: string | undefined;
-	@Input() public maxlength: string = '256';
-	@Input() public value: any = '';
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
 
-	@Output() clear: EventEmitter<any> = new EventEmitter();
+	@Input()
+	public disabled = false;
 
-	public constructor(
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public type: 'text' | 'email' | 'number' = 'text';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public maxlength = '256';
+
+	@Input()
+	public value: any = '';
+
+	@Output()
+	clear: EventEmitter<any> = new EventEmitter();
+
+	constructor(
 		// Retrieve the dependency only from the local injector,
 		// not from parent or ancestors.
 		@Self()

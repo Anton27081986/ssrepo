@@ -13,8 +13,8 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { BehaviorSubject } from 'rxjs';
 import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe} from "@angular/common";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe } from '@angular/common';
 
 export type searchType =
 	| 'user'
@@ -48,37 +48,63 @@ export type searchType =
 	selector: 'ss-search-input',
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss'],
-	imports: [
-		CaptionComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [CaptionComponent, AsyncPipe],
+	standalone: true,
 })
 export class SearchInputComponent {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public readonly: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public value: string = '';
-	@Input() public data: string | undefined;
-	@Input() public clear: boolean = false;
-	@Input() public placeholder: string = 'Поиск';
-	@Input() public error: string | undefined;
-	@Input() public searchType: searchType;
-	@Input() public clientId: number | undefined;
-	@Input() selectedItem: IFilterOption | undefined;
-	@Input() onlyActive: boolean = false;
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
 
-	@Output() public select = new EventEmitter<any>();
-	@Output() public blurEvent = new EventEmitter<null>();
+	@Input()
+	public disabled = false;
 
-	@ViewChild('options') public options!: ElementRef;
+	@Input()
+	public readonly = false;
+
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public value = '';
+
+	@Input()
+	public data: string | undefined;
+
+	@Input()
+	public clear = false;
+
+	@Input()
+	public placeholder = 'Поиск';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public searchType: searchType;
+
+	@Input()
+	public clientId: number | undefined;
+
+	@Input()
+	selectedItem: IFilterOption | undefined;
+
+	@Input()
+	onlyActive = false;
+
+	@Output()
+	public select = new EventEmitter<any>();
+
+	@Output()
+	public blurEvent = new EventEmitter<null>();
+
+	@ViewChild('options')
+	public options!: ElementRef;
 
 	public found$: BehaviorSubject<IDictionaryItemDto[]> = new BehaviorSubject<
 		IDictionaryItemDto[]
 	>([]);
 
-	public constructor(
+	constructor(
 		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
 	) {}
@@ -94,14 +120,16 @@ export class SearchInputComponent {
 
 		if (
 			query.length > 2 ||
-			(query.length && (this.searchType === 'tov-units' || this.searchType === 'bu-units'))
+			(query.length &&
+				(this.searchType === 'tov-units' ||
+					this.searchType === 'bu-units'))
 		) {
 			switch (this.searchType) {
 				case 'user':
 					this.searchFacade
 						.getUsers(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -110,7 +138,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryUsers(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -119,7 +147,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getSubSectors(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -128,7 +156,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getRegions(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -138,7 +166,7 @@ export class SearchInputComponent {
 						this.searchFacade
 							.getContractorsCompany(query)
 							.pipe(untilDestroyed(this))
-							.subscribe(res => {
+							.subscribe((res) => {
 								this.found$.next(res.items);
 								this.ref.detectChanges();
 							});
@@ -149,7 +177,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getClientsCompany(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -158,7 +186,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getContractor(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -167,7 +195,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getPayerContractor(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -176,7 +204,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -185,7 +213,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 							this.showHiddenOptions();
@@ -195,7 +223,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getClients(query, this.onlyActive)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -204,7 +232,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getContracts(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -213,15 +241,17 @@ export class SearchInputComponent {
 					this.searchFacade
 						.globalSearch(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
-							this.found$.next(this.mapIDictionaryItemDto(res.items));
+						.subscribe((res) => {
+							this.found$.next(
+								this.mapIDictionaryItemDto(res.items),
+							);
 						});
 					break;
 				case 'products':
 					this.searchFacade
 						.getProductSearch(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -230,7 +260,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryServices(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -239,7 +269,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryCostArticles(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -248,7 +278,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryFaObjects(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -257,7 +287,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryProjects(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -266,7 +296,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryDepts(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -275,7 +305,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionarySections(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -284,7 +314,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryBuUnits(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -293,7 +323,7 @@ export class SearchInputComponent {
 					this.searchFacade
 						.getDictionaryTovUnits(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found$.next(res.items);
 							this.ref.detectChanges();
 						});
@@ -308,8 +338,10 @@ export class SearchInputComponent {
 		}
 	}
 
-	public mapIDictionaryItemDto(items: IGlobalSearchDto[]): IDictionaryItemDto[] {
-		return items.map(item => {
+	public mapIDictionaryItemDto(
+		items: IGlobalSearchDto[],
+	): IDictionaryItemDto[] {
+		return items.map((item) => {
 			return {
 				id: 0,
 				name: item.title,

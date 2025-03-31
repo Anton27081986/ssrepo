@@ -3,16 +3,16 @@
 		<ul class="ss-pagination__tabs">
 			<li
 				class="ss-pagination__tab"
-				(click)="back()"
 				[class.ss-pagination__tab--disabled]="!disabledLeft"
+				(click)="back()"
 			>
 				<ss-icon width="5" height="9" name="arrowRight" class="ss-pagination__tab--left-arrow"></ss-icon>
 			</li>
 			@if (viewFirstWaiting) {
 				<li
 					class="ss-pagination__tab"
-					(click)="changePageIndex(1)"
-					[class.ss-pagination__tab--active]="pageIndex === 1">
+					[class.ss-pagination__tab--active]="pageIndex === 1"
+					(click)="changePageIndex(1)">
 					{{ 1 }}
 				</li>
 			}
@@ -22,8 +22,8 @@
 			@for (tab of (arrTabs | async); track tab) {
 				<li
 					class="ss-pagination__tab"
-					(click)="changePageIndex(tab)"
-					[class.ss-pagination__tab--active]="pageIndex === tab">
+					[class.ss-pagination__tab--active]="pageIndex === tab"
+					(click)="changePageIndex(tab)">
 					{{ tab }}
 				</li>
 			}
@@ -33,8 +33,8 @@
 			@if (viewLastWaiting) {
 				<li
 					class="ss-pagination__tab"
-					(click)="changePageIndex(countAllTabs)"
-					[class.ss-pagination__tab--active]="pageIndex === countAllTabs">
+					[class.ss-pagination__tab--active]="pageIndex === countAllTabs"
+					(click)="changePageIndex(countAllTabs)">
 					{{ countAllTabs }}
 				</li>
 			}

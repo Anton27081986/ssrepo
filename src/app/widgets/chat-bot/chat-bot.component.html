@@ -9,7 +9,7 @@
 				(click)="close()">
 			</snab-button>
 		</div>
-		<div class="chat__content" (scrollend)="loadMoreMessages()" #messagesEl>
+		<div #messagesEl class="chat__content" (scrollend)="loadMoreMessages()">
 			@if (!messages().length) {
 				<snab-text class="chat__content__title" [type]="TextType.Headline" [weight]="TextWeight.Medium">
 					Добрый день, я&nbsp;нейропомощник. Выберите категорию ниже и&nbsp;введите Ваш запрос.
@@ -93,11 +93,11 @@
 					</div>
 				}
 			</div>
-			<form [formGroup]="questionForm" class="chat__footer__form">
+			<form class="chat__footer__form" [formGroup]="questionForm">
 				<img ngSrc="assets/images/profile/bot.png" class="chat__footer__avatar" alt="bot" height="205"
 					 width="226" />
 				<div class="chat__footer__form__input">
-					<textarea formControlName="question" [placeholder]="activeSubsector() ? 'Ввведите запрос...' : 'Выберите категорию запроса...'" onInput="this.parentNode.dataset.replicatedValue = this.value" (keydown)="sendMessage($event)"></textarea>
+					<textarea formControlName="question" onInput="this.parentNode.dataset.replicatedValue = this.value" [placeholder]="activeSubsector() ? 'Ввведите запрос...' : 'Выберите категорию запроса...'" (keydown)="sendMessage($event)"></textarea>
 				</div>
 				<snab-button
 					class="chat__footer__form__button"

@@ -1,5 +1,5 @@
 <ss-caption size="1">{{ label }}</ss-caption>
-<div class="input-edit" *ngIf="funcEdit">
+<div *ngIf="funcEdit" class="input-edit">
 	<div class="input-edit__left">
 		<ss-icon [name]="'editNew'"></ss-icon>
 	</div>
@@ -8,18 +8,18 @@
 		<span class="input-edit__text">{{ oldValue }}</span>
 	</div>
 	<div class="input-edit__right">
-		<ss-icon (click)="close()" [name]="'close'"></ss-icon>
+		<ss-icon [name]="'close'" (click)="close()"></ss-icon>
 	</div>
 </div>
 
 <div class="textarea">
 	<textarea
+		#input
+		class="{{ error ? size + ' error' : size }}"
+		maxlength="1000"
 		[attr.disabled]="disabled"
 		[placeholder]="placeholder"
 		[formControl]="control"
-		maxlength="1000"
-		class="{{ error ? size + ' error' : size }}"
-		#input
 	></textarea>
 	<ss-icon *ngIf="input.value && !disabled" height="12" name="close"
 			 (click)="clear()"></ss-icon>

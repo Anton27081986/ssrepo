@@ -7,7 +7,7 @@
 				</a>
 			} @else {
 				<div class="main-menu__item">
-					<ss-text (click)="toggleMenu(item)" [size]="'3'" [color]="'gray'">
+					<ss-text [size]="'3'" [color]="'gray'" (click)="toggleMenu(item)">
 						{{ item.name }}
 					</ss-text>
 					@if ((item.toggle$ | async) && item.items?.length) {

@@ -1,4 +1,10 @@
-import { animate, query, style, transition, trigger } from '@angular/animations';
+import {
+	animate,
+	query,
+	style,
+	transition,
+	trigger,
+} from '@angular/animations';
 
 const shakeAnimation = [
 	style({ transform: 'rotate(0)' }),
@@ -10,6 +16,8 @@ const shakeAnimation = [
 
 export const queryShake = [
 	trigger('queryShake', [
-		transition('* => *', [query('.mat-row', shakeAnimation, { optional: true })]),
+		transition('* => *', [
+			query('.mat-row', shakeAnimation, { optional: true }),
+		]),
 	]),
 ];

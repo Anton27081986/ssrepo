@@ -14,10 +14,12 @@ import {
 	standalone: true,
 })
 export class ClickOutsideDirective implements OnInit, OnDestroy {
-	@Output() public clickOutside = new EventEmitter<void>();
+	@Output()
+	public clickOutside = new EventEmitter<void>();
+
 	private documentClickListener!: () => void;
 
-	public constructor(
+	constructor(
 		private readonly elementRef: ElementRef,
 		private readonly renderer: Renderer2,
 		private readonly ngZone: NgZone,

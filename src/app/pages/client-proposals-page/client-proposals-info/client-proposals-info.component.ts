@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	Signal,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router, RouterOutlet } from '@angular/router';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ITab } from '@app/shared/components/tabs/tab';
 import {
 	SearchClientInputComponent,
-	SearchInputItem
+	SearchInputItem,
 } from '@app/shared/components/inputs/search-client-input/search-client-input.component';
 import { Observable, Subscription, take } from 'rxjs';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
@@ -17,17 +22,18 @@ import { ClientProposalsSamplesTabState } from '@app/pages/client-proposals-page
 import { ClientProposalsContractorsTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.state';
 import { ClientProposalsDevelopmentTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.state';
 import { ClientProposalsNewsLineTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.state';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, CommonModule, NgIf, NgTemplateOutlet} from "@angular/common";
-import {AccordionComponent} from "@app/shared/components/accordion/accordion.component";
-import {CardComponent} from "@app/shared/components/card/card.component";
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
 import {
-	ClientProposalsCardComponent
-} from "@app/pages/client-proposals-page/client-proposals/client-proposals-card/client-proposals-card.component";
-import {
-	ClientProposalsDoneProductionComponent
-} from "@app/pages/client-proposals-page/client-proposals-done-production/client-proposals-done-production.component";
-import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
+	AsyncPipe,
+	CommonModule,
+	NgIf,
+	NgTemplateOutlet,
+} from '@angular/common';
+import { AccordionComponent } from '@app/shared/components/accordion/accordion.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { ClientProposalsCardComponent } from '@app/pages/client-proposals-page/client-proposals/client-proposals-card/client-proposals-card.component';
+import { ClientProposalsDoneProductionComponent } from '@app/pages/client-proposals-page/client-proposals-done-production/client-proposals-done-production.component';
+import { TabsComponent } from '@app/shared/components/tabs/tabs.component';
 
 @UntilDestroy()
 @Component({
@@ -48,9 +54,9 @@ import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
 		ReactiveFormsModule,
 		ClientProposalsDoneProductionComponent,
 		TabsComponent,
-		RouterOutlet
+		RouterOutlet,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientProposalsInfoComponent {
 	protected clientId: number | null = null;
@@ -59,7 +65,8 @@ export class ClientProposalsInfoComponent {
 
 	protected readonly searchControl = new FormControl<number>(0);
 
-	public blockForProposals$ = this.clientProposalsFacadeService.blockForProposalSubject$;
+	public blockForProposals$ =
+		this.clientProposalsFacadeService.blockForProposalSubject$;
 
 	public clientId$: Observable<number>;
 
@@ -106,12 +113,16 @@ export class ClientProposalsInfoComponent {
 			},
 		];
 
-		if (this.permissions().includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
-			tabs.forEach(tab => {
+		if (
+			this.permissions().includes(
+				Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ,
+			)
+		) {
+			tabs.forEach((tab) => {
 				tab.isVisible = true;
 			});
 		} else {
-			tabs.forEach(tab => {
+			tabs.forEach((tab) => {
 				if (tab.name !== 'contractors') {
 					tab.isVisible = false;
 				}
@@ -121,26 +132,33 @@ export class ClientProposalsInfoComponent {
 		return tabs;
 	});
 
-	protected mainInfoTab: ITab | undefined = this.tabs().find(tab => tab.name === 'contractors');
+	protected mainInfoTab: ITab | undefined = this.tabs().find(
+		(tab) => tab.name === 'contractors',
+	);
 
 	protected selectedTab: ITab = this.mainInfoTab!;
 
+	protected readonly Permissions = Permissions;
 	constructor(
 		private readonly _router: Router,
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 	) {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
 		this.subscription.add(
-			this.clientId$.subscribe(id => {
+			this.clientId$.subscribe((id) => {
 				this.clientId = id;
 				this.searchControl.setValue(id);
 			}),
 		);
 		this.clientProposalsFacadeService.proposalsPermissions$
 			.pipe(untilDestroyed(this))
-			.subscribe(item => {
+			.subscribe((item) => {
 				if (item.length) {
-					if (item.includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)) {
+					if (
+						item.includes(
+							Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ,
+						)
+					) {
 						const url = this._router.url.split('/');
 
 						this.selectTab(url[url.length - 1]);
@@ -160,7 +178,9 @@ export class ClientProposalsInfoComponent {
 			const arrUrl = this._router.url.split('/');
 
 			this._router
-				.navigate([`/client-proposals-page/${client.id}/${arrUrl[arrUrl.length - 1]}`])
+				.navigate([
+					`/client-proposals-page/${client.id}/${arrUrl[arrUrl.length - 1]}`,
+				])
 				.then();
 		}
 	}
@@ -168,12 +188,11 @@ export class ClientProposalsInfoComponent {
 	public selectTab(page: string) {
 		if (this.clientId) {
 			this.selectedTab =
-				this.tabs().find(tab => tab.name === page && tab.isVisible) || this.mainInfoTab!;
+				this.tabs().find((tab) => tab.name === page && tab.isVisible) ||
+				this.mainInfoTab!;
 			this._router.navigate([
 				`/client-proposals-page/${this.clientId}/${this.selectedTab.name}`,
 			]);
 		}
 	}
-
-	protected readonly Permissions = Permissions;
 }

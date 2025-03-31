@@ -1,9 +1,16 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	Output,
+	ViewChild,
+} from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {CommonModule, NgClass} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { CommonModule, NgClass } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @UntilDestroy()
 @Component({
@@ -15,25 +22,38 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 		CaptionComponent,
 		NgClass,
 		TextComponent,
-		IconComponent
+		IconComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ChipsSearchV2Component {
-	@Input() public size: 'large' | 'medium' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public error: string | undefined;
-	@Input() public selectedItems: any[] = [];
+	@Input()
+	public size: 'large' | 'medium' = 'medium';
 
-	@Output() public getSelected = new EventEmitter<any>();
+	@Input()
+	public disabled = false;
 
-	@ViewChild('input') public input!: ElementRef;
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public selectedItems: any[] = [];
+
+	@Output()
+	public getSelected = new EventEmitter<any>();
+
+	@ViewChild('input')
+	public input!: ElementRef;
 
 	protected found: any[] = [];
 
-	public constructor() {}
+	constructor() {}
 
 	protected onAddItemToList(item: any) {
 		this.selectedItems.push(item);

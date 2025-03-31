@@ -48,7 +48,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-text size="3">
-					<a class="content__column__item__links__item" [href]="act()?.providerContractor?.linkToDetail || ''" target="_blank">
+					<a class="content__column__item__links__item" target="_blank" [href]="act()?.providerContractor?.linkToDetail || ''">
 						{{ act()?.providerContractor?.name }}
 					</a>
 				</ss-text>
@@ -64,7 +64,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<div class="content__column__item__links">
-					<a class="content__column__item__links__item" *ngFor="let docOrder of act()?.finDocOrders" [href]="docOrder.linkToDetail || ''" target="_blank">
+					<a *ngFor="let docOrder of act()?.finDocOrders" class="content__column__item__links__item" target="_blank" [href]="docOrder.linkToDetail || ''">
 						{{ docOrder.name }}
 					</a>
 				</div>
@@ -92,7 +92,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Документы</ss-text>
 				<div class="content__column__item__files-list">
-					<div class="content__column__item__files-list__item" *ngFor="let doc of act()?.documents">
+					<div *ngFor="let doc of act()?.documents" class="content__column__item__files-list__item">
 						<div class="content__column__item__files-list__item__img" (click)="downloadFile(doc.directUrl!, doc.fileName)">
 							<ss-icon height="16" width="16" name="doc"></ss-icon>
 						</div>

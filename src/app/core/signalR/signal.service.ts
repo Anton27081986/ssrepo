@@ -39,7 +39,7 @@ export class SignalService {
 				this.subscribeToChanges(objectId, type);
 				console.info('Вызвали Subscribe');
 			})
-			.catch(err => console.error(`Ошибка соединения: ${err}`));
+			.catch((err) => console.error(`Ошибка соединения: ${err}`));
 	}
 
 	private registerOnServerEvents(): void {
@@ -60,7 +60,7 @@ export class SignalService {
 	private subscribeToChanges(objectId: string, type: number): void {
 		this.hubConnection
 			?.invoke('Subscribe', objectId, type)
-			.catch(err => console.error(`Ошибка подписки: ${err}`));
+			.catch((err) => console.error(`Ошибка подписки: ${err}`));
 	}
 
 	public disconnect(): void {
@@ -70,7 +70,9 @@ export class SignalService {
 				.then(() => {
 					console.info('Отлючились от хаба');
 				})
-				.catch(err => console.error(`Ошибка отключения от хаба: ${err}`));
+				.catch((err) =>
+					console.error(`Ошибка отключения от хаба: ${err}`),
+				);
 			this.hubConnection = undefined;
 		}
 	}

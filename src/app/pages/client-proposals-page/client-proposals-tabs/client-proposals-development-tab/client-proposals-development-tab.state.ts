@@ -1,6 +1,13 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	combineLatest,
+	map,
+	Observable,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import {
 	ClientProposalsFacadeService,
@@ -17,10 +24,16 @@ export class ClientProposalsDevelopmentTabState {
 	public pageSize = 4;
 	public pageIndex = 1;
 	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	public isCompleting$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false,
+	);
 
-	constructor(private readonly clientProposalsFacadeService: ClientProposalsFacadeService) {
+	public isCompleting$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
+
+	constructor(
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+	) {
 		this.developments$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
 			this.offset$,
@@ -38,7 +51,7 @@ export class ClientProposalsDevelopmentTabState {
 					isCompleting,
 				});
 			}),
-			switchMap(item => {
+			switchMap((item) => {
 				return item;
 			}),
 			tap(() => this.isLoader$.next(false)),

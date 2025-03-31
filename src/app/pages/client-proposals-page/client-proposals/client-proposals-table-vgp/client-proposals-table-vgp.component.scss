@@ -12,7 +12,7 @@
 	}
 
 	&__content {
-	    max-height: 80vh;
+		max-height: 80vh;
 		min-height: 450px;
 		overflow: hidden;
 		display: flex;
@@ -32,7 +32,7 @@
 		justify-content: center;
 
 		&--description {
-			color: #6D7885;
+			color: #6d7885;
 		}
 	}
 
@@ -60,7 +60,7 @@
 		&:hover {
 			background-color: #00000005;
 			span {
-				color: #416CFF;
+				color: #416cff;
 			}
 		}
 	}

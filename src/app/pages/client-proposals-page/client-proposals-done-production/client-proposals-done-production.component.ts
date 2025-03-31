@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { IClientProposalsTableItem } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-table-item';
 import {
 	ClientProposalsFacadeService,
@@ -9,9 +12,9 @@ import {
 } from '@app/core/facades/client-proposals-facade.service';
 import { Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
 
 @Component({
 	selector: 'app-client-proposals-done-production',
@@ -24,9 +27,9 @@ import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/emp
 		AsyncPipe,
 		TextComponent,
 		TableComponent,
-		EmptyDataPageComponent
+		EmptyDataPageComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientProposalsDoneProductionComponent {
 	protected doneProductions$: Observable<{
@@ -38,12 +41,16 @@ export class ClientProposalsDoneProductionComponent {
 		private readonly _activatedRoute: ActivatedRoute,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 	) {
-		this.doneProductions$ = this.clientProposalsFacadeService.doneProductions$;
+		this.doneProductions$ =
+			this.clientProposalsFacadeService.doneProductions$;
 	}
 
-	protected getTableItems(production: IResponse<ProposalsProduction>): ITableItem[] {
-		const productionTableItem = production.items.map(x => {
-			const tableItem: IClientProposalsTableItem = {} as IClientProposalsTableItem;
+	protected getTableItems(
+		production: IResponse<ProposalsProduction>,
+	): ITableItem[] {
+		const productionTableItem = production.items.map((x) => {
+			const tableItem: IClientProposalsTableItem =
+				{} as IClientProposalsTableItem;
 
 			tableItem.name = x.name;
 			tableItem.quantity = x.quantity;

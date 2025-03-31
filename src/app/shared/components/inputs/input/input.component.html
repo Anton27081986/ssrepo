@@ -1,6 +1,8 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input [type]="type"
+	<input #input
+		   class="{{ error ? size + ' error' : size }}"
+		   [type]="type"
 		   [placeholder]="placeholder"
 		   [value]="value"
 		   [class.input-padding-disabled]="disabled"
@@ -8,8 +10,6 @@
 		   [maxLength]="maxlength"
 		   (input)="onChange($any($event.target).value)"
 		   (blur)="onTouched()"
-		   class="{{ error ? size + ' error' : size }}"
-		   #input
 	/>
 	@if (input.value && !disabled) {
 		<ss-icon height="12" name="close" (click)="input.value = ''; writeValue('')"></ss-icon>

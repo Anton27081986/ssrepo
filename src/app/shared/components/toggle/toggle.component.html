@@ -1,7 +1,7 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="toggle-switch">
 	<label
-		(click)="toggleChecked()"
-		[ngClass]="{ 'checked' : isChecked, 'disabled': disabled }">
+		[ngClass]="{ 'checked' : isChecked, 'disabled': disabled }"
+		(click)="toggleChecked()">
 	</label>
 </div>

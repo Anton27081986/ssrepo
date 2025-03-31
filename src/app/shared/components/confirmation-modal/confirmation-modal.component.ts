@@ -1,12 +1,12 @@
 import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 
 interface DialogData {
 	text: string;
@@ -24,9 +24,9 @@ interface DialogData {
 		HeadlineComponent,
 		NgIf,
 		TextComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ConfirmationModalComponent {
 	public text: string | undefined;

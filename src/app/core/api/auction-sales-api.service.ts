@@ -8,12 +8,20 @@ import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 	providedIn: 'root',
 })
 export class AuctionSalesApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Sale */
-	public getAuctions(Limit: number, Offset: number): Observable<IAuctionSalesDto> {
-		return this.http.get<IAuctionSalesDto>(`${environment.apiUrl}/api/sales/widget`, {
-			params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
-		});
+	public getAuctions(
+		Limit: number,
+		Offset: number,
+	): Observable<IAuctionSalesDto> {
+		return this.http.get<IAuctionSalesDto>(
+			`${environment.apiUrl}/api/sales/widget`,
+			{
+				params: new HttpParams()
+					.set('Offset', Offset)
+					.set('Limit', Limit),
+			},
+		);
 	}
 }

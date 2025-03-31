@@ -2,7 +2,7 @@
 	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
 	<div class="new-products">
 		<div class="new-products-header">
-			<a *ngIf="(newProducts$ | async)?.linkToModule; else noLink" [href]="(newProducts$ | async)?.linkToModule" target="_blank">
+			<a *ngIf="(newProducts$ | async)?.linkToModule; else noLink" target="_blank" [href]="(newProducts$ | async)?.linkToModule">
 				<ss-headline class="new-products-header-title" size="h6">ЖНТПР</ss-headline>
 			</a>
 			<ng-template #noLink>
@@ -10,7 +10,7 @@
 			</ng-template>
 			<ss-icon *ngIf="!isFiltersVisible" class="new-products-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 		</div>
-		<div class="new-products-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+		<div *ngIf="tableState === TableState.Full || tableState === TableState.Loading" class="new-products-content">
 			<div class="new-products-content-table">
 				<ss-table
 					[head]="[
@@ -27,7 +27,7 @@
 				<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 			</div>
 		</div>
-		<div class="new-products-content" *ngIf="tableState === TableState.Empty">
+		<div *ngIf="tableState === TableState.Empty" class="new-products-content">
 			<ss-empty-placeholder>
 				<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
 				<div class="placeholder-subtitle">
@@ -36,6 +36,6 @@
 			</ss-empty-placeholder>
 		</div>
 	</div>
-	<div class="separator" *ngIf="isFiltersVisible"></div>
-	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales(true)" [(filters)]="filters"></ss-filters>
+	<div *ngIf="isFiltersVisible" class="separator"></div>
+	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredSales(true)"></ss-filters>
 </ss-card>

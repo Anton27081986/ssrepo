@@ -3,14 +3,14 @@
 	<div class="header">
 		<ss-headline size="h6" weight="semi-bold">Менеджеры</ss-headline>
 		<ng-container>
-			<ss-icon name="edit"
-					 *ngIf="!isEditing && canAddManagers; else closeButton"
+			<ss-icon *ngIf="!isEditing && canAddManagers; else closeButton"
+					 name="edit"
 					 (click)="onEditing(true)">
 			</ss-icon>
 		</ng-container>
 		<ng-template #closeButton>
-			<ss-icon name="close"
-					 *ngIf="canAddManagers"
+			<ss-icon *ngIf="canAddManagers"
+					 name="close"
 					 (click)="onEditing(false)">
 			</ss-icon>
 		</ng-template>
@@ -37,12 +37,12 @@
 			</div>
 			<div class="manager-info-content">
 				<ss-text size="3">{{ basicManager?.department }}</ss-text>
-				<ss-text size="3" weight="semi-bold" (click)="callLocalUser(basicManager?.id)" class="local-call">
-					<a [href]="basicManager?.linkToCall" target="_blank">
+				<ss-text size="3" weight="semi-bold" class="local-call" (click)="callLocalUser(basicManager?.id)">
+					<a target="_blank" [href]="basicManager?.linkToCall">
 						<ss-icon name="phone"></ss-icon>
 						{{ basicManager?.phoneLocal || 'Нет' }}
 					</a>
-					<ss-caption size="2" class="appointed" *ngIf="basicManager?.introducedAtSM">Назначен {{ basicManager?.introducedAtSM | date: 'dd.MM.yyyy'}}</ss-caption>
+					<ss-caption *ngIf="basicManager?.introducedAtSM" size="2" class="appointed">Назначен {{ basicManager?.introducedAtSM | date: 'dd.MM.yyyy'}}</ss-caption>
 				</ss-text>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 				<ss-icon name="flag"></ss-icon>
 			</div>
 
-			<ss-select size="small" (onChange)="onBasicManagerChange($event)" *ngIf="canAppointMainManager">
+			<ss-select *ngIf="canAppointMainManager" size="small" (onChange)="onBasicManagerChange($event)">
 				<option *ngIf="!(managers$ | async)?.length" [value]="0">
 					<ss-text size="2" weight="semi-bold">Выберите менеджера</ss-text>
 				</option>
@@ -80,7 +80,7 @@
 			Состав менеджеров
 		</ss-headline>
 	</div>
-	<div class="search-by-manager" *ngIf="isEditing && canAddManagers">
+	<div *ngIf="isEditing && canAddManagers" class="search-by-manager">
 		<ss-search-input class="search"
 		                 searchType="user-dictionary"
 		                 placeholder="Введите ФИО"
@@ -91,7 +91,7 @@
 	</div>
 	<div *ngIf="!isEditing; else changeList" class="managers-list">
 		<ng-container *ngFor="let manager of (managers$ | async)">
-			<div class="managers-list-item" *ngIf="!manager.isDismissed && !manager.isBase">
+			<div *ngIf="!manager.isDismissed && !manager.isBase" class="managers-list-item">
 				<ss-avatar [src]="manager?.avatarUrl || ''" (click)="openModalInfoUser(manager?.id)"></ss-avatar>
 				<div class="managers-list-item-info">
 					<ss-text size="3" weight="semi-bold">{{ manager?.lastName }} {{ manager?.firstName }} {{ manager?.surName }}</ss-text>
@@ -103,15 +103,15 @@
 	<ng-template #changeList>
 		<div class="managers-list" [ngClass]="isEditing ? 'edit' : ''">
 			<ng-container *ngFor="let manager of changedData.managersList">
-				<div class="managers-list-item" *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" [ngClass]="{'deleted': manager.status === operationStatuses.Delete}">
+				<div *ngIf="!manager.manager.isDismissed && !manager.manager.isBase" class="managers-list-item" [ngClass]="{'deleted': manager.status === operationStatuses.Delete}">
 					<ss-avatar [src]="manager?.manager?.avatarUrl || ''" (click)="openModalInfoUser(manager?.manager?.id)"></ss-avatar>
 					<div class="managers-list-item-info">
 						<ss-text size="3" weight="semi-bold">{{ manager.manager.lastName }} {{ manager.manager.firstName }} {{ manager.manager.surName }}</ss-text>
 						<ss-caption size="2">{{ manager.manager.position }}</ss-caption>
 					</div>
-					<ss-icon name="delete"
-					         (click)="manager.status = operationStatuses.Delete"
-					         *ngIf="canRemoveManagers">
+					<ss-icon *ngIf="canRemoveManagers"
+					         name="delete"
+					         (click)="manager.status = operationStatuses.Delete">
 					</ss-icon>
 				</div>
 			</ng-container>

@@ -9,9 +9,11 @@ import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
 	providedIn: 'root',
 })
 export class RequestSamplesApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getRequestSamples(filter: IRequestSamplesFilter): Observable<ISampleItemDto> {
+	public getRequestSamples(
+		filter: IRequestSamplesFilter,
+	): Observable<ISampleItemDto> {
 		let params = new HttpParams();
 
 		if (filter.clientId !== null && filter.clientId !== undefined) {
@@ -34,8 +36,11 @@ export class RequestSamplesApiService {
 			params = params.set('offset', filter.offset);
 		}
 
-		return this.http.get<ISampleItemDto>(`${environment.apiUrl}/api/company/RequestSamples`, {
-			params,
-		});
+		return this.http.get<ISampleItemDto>(
+			`${environment.apiUrl}/api/company/RequestSamples`,
+			{
+				params,
+			},
+		);
 	}
 }

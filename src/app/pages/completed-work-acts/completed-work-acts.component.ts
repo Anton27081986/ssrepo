@@ -3,19 +3,25 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { Router } from '@angular/router';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {MapperPipe} from "@app/core/pipes/mapper.pipe";
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
+import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -31,9 +37,9 @@ import {MapperPipe} from "@app/core/pipes/mapper.pipe";
 		PaginationComponent,
 		EmptyDataPageComponent,
 		LoaderComponent,
-		MapperPipe
+		MapperPipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class CompletedWorkActsComponent {
 	public pageSize = 20;
@@ -128,14 +134,6 @@ export class CompletedWorkActsComponent {
 		},
 	];
 
-	public constructor(
-		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
-	) {
-		this.getFilteredActs();
-	}
-
 	public acts: Signal<IResponse<ICompletedWorkAct> | null> = toSignal(
 		this.completedWorkActsFacade.acts$,
 		{
@@ -143,17 +141,32 @@ export class CompletedWorkActsComponent {
 		},
 	);
 
-	public isLoader: Signal<boolean> = toSignal(this.completedWorkActsFacade.isLoader$, {
-		initialValue: true,
-	});
+	public isLoader: Signal<boolean> = toSignal(
+		this.completedWorkActsFacade.isLoader$,
+		{
+			initialValue: true,
+		},
+	);
 
-	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
-		initialValue: [],
-	});
+	public permissions: Signal<string[]> = toSignal(
+		this.completedWorkActsFacade.permissions$,
+		{
+			initialValue: [],
+		},
+	);
+
+	constructor(
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly notificationService: NotificationToastService,
+		private readonly router: Router,
+	) {
+		this.getFilteredActs();
+	}
 
 	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
-		const actTableItems = acts.items.map(x => {
-			const tableItem: ICompletedWorkActTableItem = {} as ICompletedWorkActTableItem;
+		const actTableItems = acts.items.map((x) => {
+			const tableItem: ICompletedWorkActTableItem =
+				{} as ICompletedWorkActTableItem;
 
 			tableItem.code = {
 				text: x.id.toString() ?? '-',
@@ -162,23 +175,21 @@ export class CompletedWorkActsComponent {
 
 			tableItem.state = x.state.name ?? '-';
 
-			tableItem.externalActDate = `${new Date(Date.parse(x.externalActDate)).toLocaleString(
-				'ru-RU',
-				{
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				},
-			)}`;
+			tableItem.externalActDate = `${new Date(
+				Date.parse(x.externalActDate),
+			).toLocaleString('ru-RU', {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+			})}`;
 
-			tableItem.internalActDate = `${new Date(Date.parse(x.internalActDate)).toLocaleString(
-				'ru-RU',
-				{
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				},
-			)}`;
+			tableItem.internalActDate = `${new Date(
+				Date.parse(x.internalActDate),
+			).toLocaleString('ru-RU', {
+				year: 'numeric',
+				month: 'numeric',
+				day: 'numeric',
+			})}`;
 
 			tableItem.externalActNumber = x.externalActNumber ?? '-';
 
@@ -214,7 +225,8 @@ export class CompletedWorkActsComponent {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'date-range':
@@ -240,11 +252,12 @@ export class CompletedWorkActsComponent {
 				case 'search':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				default:
 					preparedFilter[filter.name] =

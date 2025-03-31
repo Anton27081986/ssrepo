@@ -1,26 +1,32 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	OnInit,
+	SimpleChanges,
+} from '@angular/core';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { BehaviorSubject } from 'rxjs';
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {AsyncPipe} from "@angular/common";
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { AvatarComponent } from '@app/shared/components/avatar/avatar.component';
+import { AsyncPipe } from '@angular/common';
 
 @UntilDestroy()
 @Component({
 	selector: 'app-user-list-more',
 	templateUrl: './user-list-more.component.html',
 	styleUrls: ['./user-list-more.component.scss'],
-	imports: [
-		TextComponent,
-		AvatarComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [TextComponent, AvatarComponent, AsyncPipe],
+	standalone: true,
 })
 export class UserListMoreComponent implements OnInit, OnChanges {
-	@Input() users: IUserDto[] = [];
-	@Input() count: number = 0;
+	@Input()
+	users: IUserDto[] = [];
+
+	@Input()
+	count = 0;
+
 	public readonly viewCount: number = 5;
 	public remainder: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 

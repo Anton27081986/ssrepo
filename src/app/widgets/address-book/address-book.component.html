@@ -2,7 +2,7 @@
 	<div class="header">
 		<ss-text size="1">Адресная книга</ss-text>
 		<div class="header__controls">
-			<ss-input size="small" (input)="loadSearchUsers($event)" (clear)="clearSearch()" placeholder="Поиск по сотрудникам"></ss-input>
+			<ss-input size="small" placeholder="Поиск по сотрудникам" (input)="loadSearchUsers($event)" (clear)="clearSearch()"></ss-input>
 			<ss-button size="small" [type]="isFavoriteMode ? 'primary' : 'outline'" (click)="toggleMode()">
 				<ss-icon width="14" height="14" name="favorite"></ss-icon>
 				Избранное
@@ -14,7 +14,7 @@
 
 	<div class="content">
 		<ng-container *ngIf="isFavoriteMode; else searched">
-			<div class="card-list" *ngIf="addresses.length > 0; else noData">
+			<div *ngIf="addresses.length > 0; else noData" class="card-list">
 				<ss-address-book-card *ngFor="let user of addresses" [user]="user" (toggleFavorite)="toggleFavorite($event)"></ss-address-book-card>
 			</div>
 
@@ -28,7 +28,7 @@
 		</ng-container>
 
 		<ng-template #searched>
-			<div class="card-list" *ngIf="searchedUsers.length > 0; else noResult">
+			<div *ngIf="searchedUsers.length > 0; else noResult" class="card-list">
 				<ss-address-book-card *ngFor="let user of searchedUsers" [user]="user" (toggleFavorite)="toggleFavorite($event)"></ss-address-book-card>
 			</div>
 

@@ -20,7 +20,7 @@
 		display: flex;
 		flex-wrap: nowrap;
 		justify-content: end;
-		gap: 4px
+		gap: 4px;
 	}
 
 	&__card-comment {
@@ -36,8 +36,8 @@
 		width: 55px;
 		height: 36px;
 		cursor: pointer;
-		border: 1px solid #0000001A;
-		background-color: #F2F3F7;
+		border: 1px solid #0000001a;
+		background-color: #f2f3f7;
 		border-radius: 8px;
 		justify-content: center;
 	}
@@ -45,7 +45,7 @@
 	&__tab {
 		width: 24px;
 		height: 24px;
-		background-color: #0000000A;
+		background-color: #0000000a;
 		border-radius: 8px;
 		display: flex;
 		justify-content: center;
@@ -53,18 +53,18 @@
 		user-select: none;
 
 		&--gold {
-			background-color: #F7B535;
-			color: #FFFFFF;
+			background-color: #f7b535;
+			color: #ffffff;
 		}
 
 		&--silver {
-			background-color: #878E9A;
-			color: #FFFFFF;
+			background-color: #878e9a;
+			color: #ffffff;
 		}
 
 		&--cooper {
-			background-color: #C65C2E;
-			color: #FFFFFF;
+			background-color: #c65c2e;
+			color: #ffffff;
 		}
 	}
 }

@@ -4,7 +4,7 @@
 		<div class="lost-products-header">
 			<ss-headline class="lost-products-header-title" size="h6">ПКП (Потерянные клиент/продукты)</ss-headline>
 		</div>
-		<div class="lost-products-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+		<div *ngIf="tableState === TableState.Full || tableState === TableState.Loading" class="lost-products-content">
 			<div class="lost-products-content-table">
 				<ss-table
 					[head]="[
@@ -22,7 +22,7 @@
 				<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 			</div>
 		</div>
-		<div class="lost-products-content" *ngIf="tableState === TableState.Empty">
+		<div *ngIf="tableState === TableState.Empty" class="lost-products-content">
 			<ss-empty-placeholder>
 				<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
 				<div class="placeholder-subtitle">

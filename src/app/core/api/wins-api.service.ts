@@ -14,13 +14,18 @@ import { IWinsItemDto } from '@app/core/models/awards/wins-item-dto';
 	providedIn: 'root',
 })
 export class WinsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Wins список побед без групп */
 	public getWins(Limit: number, Offset: number): Observable<IWinsListDto> {
-		return this.http.get<IWinsListDto>(`${environment.apiUrl}/api/awards/wins`, {
-			params: new HttpParams().set('Offset', Offset).set('Limit', Limit),
-		});
+		return this.http.get<IWinsListDto>(
+			`${environment.apiUrl}/api/awards/wins`,
+			{
+				params: new HttpParams()
+					.set('Offset', Offset)
+					.set('Limit', Limit),
+			},
+		);
 	}
 
 	/** Добавить победу */
@@ -39,16 +44,21 @@ export class WinsApiService {
 	}
 
 	public addCommentWins(request: ICommentRequest): Observable<any> {
-		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments`, {
-			objectId: request.objectId,
-			type: request.type,
-			awardId: null,
-			note: request.note,
-			fileIds: [],
-		});
+		return this.http.post<any[]>(
+			`${environment.apiUrl}/api/awards/comments`,
+			{
+				objectId: request.objectId,
+				type: request.type,
+				awardId: null,
+				note: request.note,
+				fileIds: [],
+			},
+		);
 	}
 
-	public getProductSearch(q: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getProductSearch(
+		q: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/awards/wins/products`,
 			{
@@ -57,7 +67,9 @@ export class WinsApiService {
 		);
 	}
 
-	public getCommentsWins(request: ICommentRequest): Observable<IResponse<ICommentsItemDto>> {
+	public getCommentsWins(
+		request: ICommentRequest,
+	): Observable<IResponse<ICommentsItemDto>> {
 		return this.http.get<IResponse<ICommentsItemDto>>(
 			`${environment.apiUrl}/api/awards/comments/${request.objectId}`,
 			{
@@ -70,7 +82,9 @@ export class WinsApiService {
 	}
 
 	public getWin(id: number): Observable<IWinsItemDto> {
-		return this.http.get<IWinsItemDto>(`${environment.apiUrl}/api/awards/wins/${id}`);
+		return this.http.get<IWinsItemDto>(
+			`${environment.apiUrl}/api/awards/wins/${id}`,
+		);
 	}
 
 	public updateCommentWins(
@@ -91,14 +105,19 @@ export class WinsApiService {
 
 	/** Получение продукта по id */
 	public getProductById(id: number): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/awards/wins/products/${id}`);
+		return this.http.get<any[]>(
+			`${environment.apiUrl}/api/awards/wins/products/${id}`,
+		);
 	}
 
 	/** Удаление комментария по id */
 	public removeVictoryCommentsById(id: number): Observable<any> {
-		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
-			params: new HttpParams().set('id', id),
-		});
+		return this.http.post<any[]>(
+			`${environment.apiUrl}/api/awards/comments/${id}`,
+			{
+				params: new HttpParams().set('id', id),
+			},
+		);
 	}
 
 	public addLikeVictory(request: ILikeRequest): Observable<any> {
@@ -110,8 +129,13 @@ export class WinsApiService {
 	}
 
 	public removeLikeVictory(request: ILikeRequest): Observable<any> {
-		return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
-			params: new HttpParams().set('ObjectId', request.objectId).set('type', request.type),
-		});
+		return this.http.delete<any[]>(
+			`${environment.apiUrl}/api/awards/likes`,
+			{
+				params: new HttpParams()
+					.set('ObjectId', request.objectId)
+					.set('type', request.type),
+			},
+		);
 	}
 }

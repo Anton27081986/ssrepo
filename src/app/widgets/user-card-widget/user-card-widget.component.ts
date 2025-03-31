@@ -1,7 +1,8 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	Component,
-	EventEmitter, forwardRef,
+	EventEmitter,
+	forwardRef,
 	Input,
 	OnChanges,
 	OnInit,
@@ -10,23 +11,29 @@ import {
 } from '@angular/core';
 import { IWinsItemDto } from '@app/core/models/awards/wins-item-dto';
 import { ModalService } from '@app/core/modal/modal.service';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { LikeComponent, LikeStateEnum } from '@app/shared/components/like/like.component';
+import {
+	LikeComponent,
+	LikeStateEnum,
+} from '@app/shared/components/like/like.component';
 import { IUserProfile } from '@app/core/models/auth/user-profile';
 import { IObjectType } from '@app/core/models/awards/object-type';
 import { Awards } from '@app/core/api/awards';
-import { CardComponent} from "@app/shared/components/card/card.component";
-import { AsyncPipe, CommonModule, DatePipe, NgIf} from "@angular/common";
-import { TooltipDirective } from "@app/shared/components/tooltip/tooltip.directive";
-import { IconComponent } from "@app/shared/components/icon/icon.component";
-import { TextComponent } from "@app/shared/components/typography/text/text.component";
-import { ChoiceLikeComponent } from "@app/shared/components/choice-like/choice-like.component";
-import { CaptionComponent } from "@app/shared/components/typography/caption/caption.component";
-import { VictoryModalComponent } from "@app/widgets/victory/modal/victory-modal/victory-modal.component";
-import { VictoryService } from "@app/widgets/victory/victory.service";
-import {UserCardComponent} from "@app/shared/components/user-card/user-card.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { AsyncPipe, CommonModule, DatePipe, NgIf } from '@angular/common';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { ChoiceLikeComponent } from '@app/shared/components/choice-like/choice-like.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { VictoryModalComponent } from '@app/widgets/victory/modal/victory-modal/victory-modal.component';
+import { VictoryService } from '@app/widgets/victory/victory.service';
+import { UserCardComponent } from '@app/shared/components/user-card/user-card.component';
 
 @UntilDestroy()
 @Component({
@@ -45,32 +52,42 @@ import {UserCardComponent} from "@app/shared/components/user-card/user-card.comp
 		ChoiceLikeComponent,
 		CaptionComponent,
 		DatePipe,
-	    forwardRef(()=>UserCardComponent)
+		forwardRef(() => UserCardComponent),
 	],
-	standalone: true
+	standalone: true,
 })
 export class UserCardWidgetComponent implements OnInit, OnChanges {
-	@Input() widget: IWinsItemDto | null = null;
-	@Input() isExtendedMode: boolean = false;
+	@Input()
+	widget: IWinsItemDto | null = null;
+
+	@Input()
+	isExtendedMode = false;
+
 	@Output()
-	getPopoverInfo: EventEmitter<IWinsItemDto> = new EventEmitter<IWinsItemDto>();
+	getPopoverInfo: EventEmitter<IWinsItemDto> =
+		new EventEmitter<IWinsItemDto>();
 
 	protected readonly widget$: BehaviorSubject<IWinsItemDto | null> =
 		new BehaviorSubject<IWinsItemDto | null>(null);
 
 	protected readonly authUserId: number | null = null;
-	protected isChoiceLike: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected isChoiceLike: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	private readonly subscription: Subscription = new Subscription();
 
 	protected readonly typeLike$: BehaviorSubject<LikeStateEnum> =
 		new BehaviorSubject<LikeStateEnum>(LikeStateEnum.default);
 
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly victoryService: VictoryService,
 	) {
-		const profile = JSON.parse(localStorage.getItem('userProfile')!) as IUserProfile;
+		const profile = JSON.parse(
+			localStorage.getItem('userProfile')!,
+		) as IUserProfile;
 
 		this.authUserId = profile.id!;
 	}
@@ -99,7 +116,7 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 
 	protected getGroupWinsUser(users: IUserDto[] | null): string {
 		if (users) {
-			const usersName: string[] = users.map(user => user.name);
+			const usersName: string[] = users.map((user) => user.name);
 
 			return usersName.join(', ');
 		}
@@ -110,7 +127,10 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 	protected openPopoverInfo() {
 		if (this.widget) {
 			this.modalService.open(VictoryModalComponent, {
-				data: { victory: this.widget, isExtendedMode: this.isExtendedMode },
+				data: {
+					victory: this.widget,
+					isExtendedMode: this.isExtendedMode,
+				},
 			});
 		}
 	}
@@ -136,10 +156,12 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 					if (this.widget) {
 						this.widget.isUserLiked = false;
 						this.subscription.add(
-							this.victoryService.getWin(this.widget?.id!).subscribe(widget => {
-								this.widget$.next(widget);
-								this.getStateLike(widget);
-							}),
+							this.victoryService
+								.getWin(this.widget?.id!)
+								.subscribe((widget) => {
+									this.widget$.next(widget);
+									this.getStateLike(widget);
+								}),
 						);
 					}
 				}),
@@ -157,10 +179,12 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 				.subscribe(() => {
 					if (this.widget) {
 						this.subscription.add(
-							this.victoryService.getWin(this.widget?.id!).subscribe(widget => {
-								this.widget$.next(widget);
-								this.getStateLike(widget);
-							}),
+							this.victoryService
+								.getWin(this.widget?.id!)
+								.subscribe((widget) => {
+									this.widget$.next(widget);
+									this.getStateLike(widget);
+								}),
 						);
 					}
 				}),
@@ -201,7 +225,4 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 				this.changeLike(Awards.Silver);
 		}
 	}
-
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly TooltipTheme = TooltipTheme;
 }

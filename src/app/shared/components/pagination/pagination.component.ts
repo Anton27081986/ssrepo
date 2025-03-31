@@ -9,32 +9,40 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {AsyncPipe} from "@angular/common";
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
 	selector: 'ss-pagination',
 	templateUrl: './pagination.component.html',
 	styleUrls: ['./pagination.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		IconComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [IconComponent, AsyncPipe],
+	standalone: true,
 })
 export class PaginationComponent implements OnInit, OnChanges {
-	@Input({ required: true }) public total: number = 0;
-	@Input({ required: true }) public pageIndex: number = 1;
-	@Input({ required: true }) public pageSize: number = 0;
-	@Output() public changeIndex: EventEmitter<number> = new EventEmitter<number>();
-	protected arrTabs: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-	protected countViewTabs: number = 5;
-	protected countAllTabs: number = 0;
-	protected viewFirstWaiting: boolean = false;
-	protected viewLastWaiting: boolean = false;
-	protected disabledLeft: boolean = false;
-	protected disabledRight: boolean = false;
+	@Input({ required: true })
+	public total = 0;
+
+	@Input({ required: true })
+	public pageIndex = 1;
+
+	@Input({ required: true })
+	public pageSize = 0;
+
+	@Output()
+	public changeIndex: EventEmitter<number> = new EventEmitter<number>();
+
+	protected arrTabs: BehaviorSubject<number[]> = new BehaviorSubject<
+		number[]
+	>([]);
+
+	protected countViewTabs = 5;
+	protected countAllTabs = 0;
+	protected viewFirstWaiting = false;
+	protected viewLastWaiting = false;
+	protected disabledLeft = false;
+	protected disabledRight = false;
 
 	ngOnInit() {
 		this.countAllTabs = Math.ceil(this.total / this.pageSize);
@@ -53,18 +61,24 @@ export class PaginationComponent implements OnInit, OnChanges {
 			const arr: number[] = this.buildArrTabs(1, this.countAllTabs - 1);
 
 			if (Math.ceil(this.countAllTabs / 3) > 2) {
-				const lastPath = arr.slice(this.countAllTabs - 3, this.countAllTabs);
+				const lastPath = arr.slice(
+					this.countAllTabs - 3,
+					this.countAllTabs,
+				);
 				const firstPath = arr.slice(0, 3);
 
 				this.viewFirstWaiting = false;
 				this.viewLastWaiting = false;
 
-				const findFirstPath = firstPath.find(item => item === walker);
+				const findFirstPath = firstPath.find((item) => item === walker);
 
 				if (findFirstPath) {
 					this.viewLastWaiting = true;
 					this.arrTabs.next(
-						this.buildArrTabs(firstPath[0], firstPath[firstPath.length - 1] + 1),
+						this.buildArrTabs(
+							firstPath[0],
+							firstPath[firstPath.length - 1] + 1,
+						),
 					);
 				} else {
 					this.viewFirstWaiting = true;
@@ -72,12 +86,15 @@ export class PaginationComponent implements OnInit, OnChanges {
 					this.arrTabs.next(this.buildArrTabs(walker, walker));
 				}
 
-				const findLastPath = lastPath.find(item => item === walker);
+				const findLastPath = lastPath.find((item) => item === walker);
 
 				if (findLastPath) {
 					this.viewLastWaiting = false;
 					this.arrTabs.next(
-						this.buildArrTabs(lastPath[0] - 1, lastPath[firstPath.length - 1]),
+						this.buildArrTabs(
+							lastPath[0] - 1,
+							lastPath[firstPath.length - 1],
+						),
 					);
 				} else if (!findFirstPath) {
 					this.viewLastWaiting = true;

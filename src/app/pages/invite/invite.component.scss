@@ -5,7 +5,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: center no-repeat url("../../../assets/images/background/login.svg");
+	background: center no-repeat
+		url('../../../assets/images/background/login.svg');
 }
 
 .invite {
@@ -14,7 +15,7 @@
 	height: auto;
 	border-radius: 16px;
 	border: 1px solid $border-color;
-	padding: 16px 16px 45px 16px!important;
+	padding: 16px 16px 45px 16px !important;
 
 	display: flex;
 	flex-wrap: wrap;
@@ -49,9 +50,9 @@
 	.personality {
 		width: 300px;
 		border: 1px solid $border-color;
-		padding: 11px 8px 14px 14px!important;
+		padding: 11px 8px 14px 14px !important;
 		margin-top: 3px;
-		background-color: #FBFBFB;
+		background-color: #fbfbfb;
 
 		.personal {
 			position: relative;
@@ -108,7 +109,6 @@
 				}
 			}
 		}
-
 	}
 
 	.connection-type {
@@ -126,7 +126,6 @@
 		margin-top: 24px;
 		flex: auto;
 		max-width: 300px;
-
 
 		ss-button:last-child {
 			margin-top: 14px;
@@ -158,6 +157,6 @@
 	}
 }
 
-.connect-icon+span {
+.connect-icon + span {
 	margin-left: 4px;
 }

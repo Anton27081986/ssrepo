@@ -6,11 +6,15 @@ import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 	providedIn: 'root',
 })
 export class FriendlyAccountsStoreService {
-	private readonly friendly = new BehaviorSubject<IFriendAccountDto[] | null>(null);
+	private readonly friendly = new BehaviorSubject<IFriendAccountDto[] | null>(
+		null,
+	);
 
 	public friendlyAccounts$ = this.friendly.asObservable();
 
-	public setFriendsAccountsForCurrentUser(newFriendlyAccounts: IFriendAccountDto[]) {
+	public setFriendsAccountsForCurrentUser(
+		newFriendlyAccounts: IFriendAccountDto[],
+	) {
 		this.friendly.next(newFriendlyAccounts);
 	}
 

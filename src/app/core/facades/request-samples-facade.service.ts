@@ -16,13 +16,17 @@ export class RequestSamplesFacadeService {
 	private readonly samples = new BehaviorSubject<ISampleItemDto>({});
 	public samples$ = this.samples.asObservable();
 
-	public constructor(private readonly requestSamplesApiService: RequestSamplesApiService) {
+	constructor(
+		private readonly requestSamplesApiService: RequestSamplesApiService,
+	) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
-					return this.requestSamplesApiService.getRequestSamples(filter);
+				switchMap((filter) => {
+					return this.requestSamplesApiService.getRequestSamples(
+						filter,
+					);
 				}),
-				tap(sales => {
+				tap((sales) => {
 					this.samples.next(sales);
 				}),
 				untilDestroyed(this),

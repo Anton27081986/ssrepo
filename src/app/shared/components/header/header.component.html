@@ -1,12 +1,12 @@
 <div class="header">
 	<div class="header__content">
 		<div class="header__content-left">
-			<ss-icon class="header__logo" [routerLink]="AppRoutes.root" name="logo"></ss-icon>
+			<ss-icon class="header__logo" name="logo" [routerLink]="AppRoutes.root"></ss-icon>
 			<app-main-menu [menu]="listMenu$ | async"></app-main-menu>
 		</div>
 		<div class="header__content-right">
-			<ss-search-input (select)="getSearchGlobal($event)" [size]="'small'"
-							 [searchType]="'global'"></ss-search-input>
+			<ss-search-input [size]="'small'" [searchType]="'global'"
+							 (select)="getSearchGlobal($event)"></ss-search-input>
 
 			<app-notification></app-notification>
 

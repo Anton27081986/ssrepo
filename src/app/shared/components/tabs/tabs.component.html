@@ -3,8 +3,8 @@
     [class.tabs__border] = "tabsBorder"
 >
     <ng-container *ngFor="let tab of tabs; trackBy: trackBy">
-        <div class="tab"
-             *ngIf="tab.isVisible"
+        <div *ngIf="tab.isVisible"
+             class="tab"
              [ngClass]="{'selected': tab.name === selectedTab.name }"
              [class.selected__small]="tab.name === selectedTab.name && size === 'small'"
              [class.selected__medium]="tab.name === selectedTab.name && size === 'medium'"

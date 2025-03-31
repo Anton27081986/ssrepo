@@ -47,13 +47,21 @@ export class ClientProposalsFacadeService {
 
 	public clientId$: Observable<number>;
 
-	public isAlterFilter$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	public alterFilterDefenitionNote$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+	public isAlterFilter$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
-	private readonly tprRejectsReasonsSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public alterFilterDefenitionNote$: BehaviorSubject<string> =
+		new BehaviorSubject<string>('');
+
+	private readonly tprRejectsReasonsSubject = new BehaviorSubject<
+		IDictionaryItemDto[]
+	>([]);
+
 	public tprRejectsReasons$ = this.tprRejectsReasonsSubject.asObservable();
 
-	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(false);
+	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(
+		false,
+	);
 
 	public doneProductions$: Observable<{
 		data: IResponse<ProposalsProduction>;
@@ -61,14 +69,6 @@ export class ClientProposalsFacadeService {
 	}>;
 
 	public readonly proposalsPermissions$: Observable<string[]>;
-
-	get canTakeWork(): Observable<boolean> {
-		return this.proposalsPermissions$.pipe(
-			map(permission => {
-				return permission.includes(Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK);
-			}),
-		);
-	}
 
 	constructor(
 		private readonly clientProposalsApiService: ClientProposalsApiService,
@@ -78,14 +78,14 @@ export class ClientProposalsFacadeService {
 	) {
 		this.clientId$ = activatedRoute.paramMap.pipe(
 			filterTruthy(),
-			map(params => {
+			map((params) => {
 				return Number(params.get('clientId'));
 			}),
 		);
 
 		this.doneProductions$ = this.clientId$.pipe(
 			filterTruthy(),
-			switchMap(id => {
+			switchMap((id) => {
 				return this.getDoneProductionsByClientId(id);
 			}),
 			shareReplay({
@@ -95,7 +95,7 @@ export class ClientProposalsFacadeService {
 		);
 
 		this.proposalsPermissions$ = this.doneProductions$.pipe(
-			map(productions => {
+			map((productions) => {
 				return productions.permissions;
 			}),
 		);
@@ -103,20 +103,33 @@ export class ClientProposalsFacadeService {
 		this.getTprRejectReasons()
 			.pipe(
 				untilDestroyed(this),
-				tap(val => {
+				tap((val) => {
 					this.tprRejectsReasonsSubject.next(val.items);
 				}),
 			)
 			.subscribe();
 	}
 
-	public getDoneProductionsByClientId(
-		clientId: number,
-	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
+	get canTakeWork(): Observable<boolean> {
+		return this.proposalsPermissions$.pipe(
+			map((permission) => {
+				return permission.includes(
+					Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK,
+				);
+			}),
+		);
+	}
+
+	public getDoneProductionsByClientId(clientId: number): Observable<{
+		data: IResponse<ProposalsProduction>;
+		permissions: string[];
+	}> {
 		return this.clientProposalsApiService.getDoneProductions(clientId);
 	}
 
-	public getNewsByClientId(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {
+	public getNewsByClientId(
+		params: IRequestGetProposals,
+	): Observable<IResponse<INewsDto>> {
 		return this.clientProposalsApiService.getNews(params);
 	}
 
@@ -126,7 +139,9 @@ export class ClientProposalsFacadeService {
 		return this.clientProposalsApiService.getSamples(params);
 	}
 
-	public getTradeList(params: IRequestGetTradeList): Observable<IResponse<ITradeList>> {
+	public getTradeList(
+		params: IRequestGetTradeList,
+	): Observable<IResponse<ITradeList>> {
 		return this.clientProposalsApiService.getTradeList(params);
 	}
 
@@ -136,11 +151,15 @@ export class ClientProposalsFacadeService {
 		return this.clientProposalsApiService.getTrips(params);
 	}
 
-	public getContractors(params: IRequestGetProposals): Observable<IResponse<IContractorsDto>> {
+	public getContractors(
+		params: IRequestGetProposals,
+	): Observable<IResponse<IContractorsDto>> {
 		return this.clientProposalsApiService.getContractors(params);
 	}
 
-	public getDevelopment(params: IRequestGetDevelopment): Observable<IResponse<IDevelopmentDto>> {
+	public getDevelopment(
+		params: IRequestGetDevelopment,
+	): Observable<IResponse<IDevelopmentDto>> {
 		return this.clientProposalsApiService.getCommitteeDevelopments(params);
 	}
 
@@ -148,19 +167,19 @@ export class ClientProposalsFacadeService {
 		params: IRequestGetClientOffer,
 	): Observable<ResponseProposals<IClientOffersDto>> {
 		return this.clientProposalsApiService.getClientOffers(params).pipe(
-			map(items => {
+			map((items) => {
 				const data = items.items;
 
-				data.forEach(item => {
+				data.forEach((item) => {
 					if (item.documents) {
-						item.documents.forEach(doc => {
+						item.documents.forEach((doc) => {
 							doc.checked = false;
 							doc.uniqId = this.generateRandomString(10);
 						});
 					}
 
 					if (item.promotionalMaterials) {
-						item.promotionalMaterials.forEach(doc => {
+						item.promotionalMaterials.forEach((doc) => {
 							doc.checked = false;
 							doc.uniqId = this.generateRandomString(10);
 						});
@@ -168,7 +187,9 @@ export class ClientProposalsFacadeService {
 				});
 
 				this.isAlterFilter$.next(items.isAlterFilter);
-				this.alterFilterDefenitionNote$.next(items.alterFilterDefenitionNote!);
+				this.alterFilterDefenitionNote$.next(
+					items.alterFilterDefenitionNote!,
+				);
 
 				return {
 					total: items.total,
@@ -199,17 +220,23 @@ export class ClientProposalsFacadeService {
 
 	public generateRandomString(length: number) {
 		let result = '';
-		const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		const characters =
+			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 		const charactersLength = characters.length;
 
 		for (let i = 0; i < length; i++) {
-			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+			result += characters.charAt(
+				Math.floor(Math.random() * charactersLength),
+			);
 		}
 
 		return result;
 	}
 
-	public saveInCloud(files: IFilesProposals[], sendEmail: boolean): Observable<SaveInCloud> {
+	public saveInCloud(
+		files: IFilesProposals[],
+		sendEmail: boolean,
+	): Observable<SaveInCloud> {
 		return this.clientProposalsApiService.saveInCloud(files, sendEmail);
 	}
 
@@ -226,6 +253,12 @@ export class ClientProposalsFacadeService {
 	}
 }
 
-export function filterTruthy<TValue>(): OperatorFunction<TValue | null | undefined, TValue> {
-	return filter(src => !!src) as OperatorFunction<TValue | null | undefined, TValue>;
+export function filterTruthy<TValue>(): OperatorFunction<
+	TValue | null | undefined,
+	TValue
+> {
+	return filter((src) => !!src) as OperatorFunction<
+		TValue | null | undefined,
+		TValue
+	>;
 }

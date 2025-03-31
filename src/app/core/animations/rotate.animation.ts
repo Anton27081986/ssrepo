@@ -11,6 +11,9 @@ export const rotateAnimation: AnimationTriggerMetadata = trigger(
 			easeBackward: 'ease-out',
 		},
 		{ 'transform-origin': 'center', transform: 'none' },
-		{ 'transform-origin': 'center', transform: 'rotate3d(0, 0, 1, 180deg)' },
+		{
+			'transform-origin': 'center',
+			transform: 'rotate3d(0, 0, 1, 180deg)',
+		},
 	),
 );

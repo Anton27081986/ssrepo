@@ -3,9 +3,9 @@
 </div>
 <form class="login-form" [formGroup]="loginForm">
 	<fieldset class="login-form-inputs">
-		<ss-input size="small" formControlName="login" placeholder="Логин" error="{{ loginForm.getError('unauthorized') ? ' ' : null }}"></ss-input>
-		<ss-password size="small" formControlName="password" placeholder="Пароль" error="{{ loginForm.getError('unauthorized') }}"></ss-password>
+		<ss-input error="{{ loginForm.getError('unauthorized') ? ' ' : null }}" size="small" formControlName="login" placeholder="Логин"></ss-input>
+		<ss-password error="{{ loginForm.getError('unauthorized') }}" size="small" formControlName="password" placeholder="Пароль"></ss-password>
 		<ss-link [routerLink]="['/auth/forgot-password']">Восстановить пароль</ss-link>
 	</fieldset>
-	<ss-button size="small" type="primary" (click)="onSubmit()" [disabled]="loading">Войти</ss-button>
+	<ss-button size="small" type="primary" [disabled]="loading" (click)="onSubmit()">Войти</ss-button>
 </form>

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	InputSignal,
+} from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
 import { rotateAnimation } from '@app/core/animations';
@@ -10,14 +15,24 @@ import {
 	ButtonType,
 	Colors,
 	IconPosition,
-	IconType, LinkComponent,
+	IconType,
+	LinkComponent,
 	Size,
-	TextType, TooltipDirective,
+	TextType,
+	TooltipDirective,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
 import { RouterService, routes } from '@app/core/services/router.service';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
 
 export enum ExcessIncomeClientRowItemField {
 	client = 'client',
@@ -54,37 +69,46 @@ export enum ExcessIncomeClientRowItemField {
 		LinkComponent,
 		ButtonComponent,
 		TooltipDirective,
-		NgSwitchDefault
+		NgSwitchDefault,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ExcessIncomeClientTrComponent {
-	public client: InputSignal<ClientNodeState> = input.required<ClientNodeState>();
+	public client: InputSignal<ClientNodeState> =
+		input.required<ClientNodeState>();
 
+	protected readonly ExcessIncomeClientRowItemField =
+		ExcessIncomeClientRowItemField;
+
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
 		private readonly state: ExcessIncomeState,
 	) {}
 
-	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
-
+	protected readonly TextType = TextType;
 	openUpdateClientPriceModal(isCurrent: boolean) {
 		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
-			data: { client: this.client().client, isCurrent: isCurrent, state: this.state },
+			data: {
+				client: this.client().client,
+				isCurrent,
+				state: this.state,
+			},
 		});
 	}
 
+	protected readonly Colors = Colors;
 	goToClientCard() {
-		window.open(routes.clientCard.toDetail(this.client().client.id).join('/'), '_target');
+		window.open(
+			routes.clientCard.toDetail(this.client().client.id).join('/'),
+			'_target',
+		);
 	}
 
-	protected readonly IconType = IconType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly ButtonType = ButtonType;
-	protected readonly Size = Size;
-	protected readonly TextType = TextType;
-	protected readonly Colors = Colors;
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
 }

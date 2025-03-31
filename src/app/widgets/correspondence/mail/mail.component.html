@@ -12,7 +12,7 @@
 			<ss-chips-user-search label="Кому:" size="medium" [selectedItems]="toUsers"></ss-chips-user-search>
 			<ss-chips-user-search label="Копия:" size="medium" [selectedItems]="toUsersCopy"></ss-chips-user-search>
 		</div>
-		<div class="reply" *ngIf="repliedMessage$ | async">
+		<div *ngIf="repliedMessage$ | async" class="reply">
 			<ss-icon width="28" height="28" name="reply"></ss-icon>
 			<div class="reply-message">
 				<ss-text size="2" weight="semi-bold" class="reply-author">В ответ: {{ (repliedMessage$ | async)?.message?.author?.name }}</ss-text>
@@ -21,17 +21,17 @@
 			<ss-icon width="12" height="12" name="close" class="close-reply" (click)="closeReply()"></ss-icon>
 		</div>
 		<div class="editor" [ngClass]="{'error': mailForm.controls.text.hasError('required') && mailForm.controls.text.touched}">
-			<div class="editor-container editor-container_classic-editor" #editorContainerElement>
+			<div #editorContainerElement class="editor-container editor-container_classic-editor">
 				<div class="editor-container__editor">
 					<div #editorElement>
-						<ckeditor [editor]="Editor" [config]="config" *ngIf="isLayoutReady" formControlName="text" />
+						<ckeditor *ngIf="isLayoutReady" formControlName="text" [editor]="Editor" [config]="config" />
 					</div>
 				</div>
 			</div>
-			<ss-caption class="error" size="1" *ngIf="mailForm.controls.text.hasError('required') && mailForm.controls.text.touched">Поле обязательно для заполнения</ss-caption>
+			<ss-caption *ngIf="mailForm.controls.text.hasError('required') && mailForm.controls.text.touched" class="error" size="1">Поле обязательно для заполнения</ss-caption>
 		</div>
 		<div *ngIf="(messageFiles$ | async)?.length" class="files">
-			<ss-attachment *ngFor="let file of (messageFiles$ | async)" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
+			<ss-attachment *ngFor="let file of (messageFiles$ | async)" title="{{file.fileName}}" size="{{file.size}}" [readonly]="false" (delete)="deleteFile(file.id!)"></ss-attachment>
 		</div>
 		<div class="controls">
 			<ss-caption>

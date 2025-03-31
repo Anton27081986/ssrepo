@@ -9,9 +9,11 @@ import { ILostProductsItemDto } from '@app/core/models/company/lost-products-ite
 	providedIn: 'root',
 })
 export class LostProductsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getLostProducts(filter: ILostProductsFilter): Observable<ILostProductsItemDto> {
+	public getLostProducts(
+		filter: ILostProductsFilter,
+	): Observable<ILostProductsItemDto> {
 		let params = new HttpParams();
 
 		if (filter.clientId !== null && filter.clientId !== undefined) {

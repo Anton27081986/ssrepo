@@ -9,7 +9,10 @@ import { IAddSpecification } from '@app/core/models/completed-work-acts/add-spec
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
 import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
-import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import {
+	FileBucketsEnum,
+	FilesApiService,
+} from '@app/core/api/files.api.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IFile } from '@app/core/models/files/file';
@@ -23,11 +26,17 @@ import { Router } from '@angular/router';
 	providedIn: 'root',
 })
 export class CompletedWorkActsFacadeService {
-	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false,
+	);
 
-	private readonly filters: Subject<ICompletedActsFilter> = new Subject<ICompletedActsFilter>();
+	private readonly filters: Subject<ICompletedActsFilter> =
+		new Subject<ICompletedActsFilter>();
 
-	private readonly acts = new BehaviorSubject<IResponse<ICompletedWorkAct>>({} as IResponse<any>);
+	private readonly acts = new BehaviorSubject<IResponse<ICompletedWorkAct>>(
+		{} as IResponse<any>,
+	);
+
 	public acts$ = this.acts.asObservable();
 
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
@@ -36,13 +45,19 @@ export class CompletedWorkActsFacadeService {
 	private readonly actAttachment = new BehaviorSubject<IFile[]>([]);
 	public actAttachment$ = this.actAttachment.asObservable();
 
-	private readonly actStates = new BehaviorSubject<IDictionaryItemDto[] | null>(null);
+	private readonly actStates = new BehaviorSubject<
+		IDictionaryItemDto[] | null
+	>(null);
+
 	public actStates$ = this.actStates.asObservable();
 
 	private readonly services = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public services$ = this.services.asObservable();
 
-	private readonly specifications = new BehaviorSubject<ICompletedWorkActSpecification[]>([]);
+	private readonly specifications = new BehaviorSubject<
+		ICompletedWorkActSpecification[]
+	>([]);
+
 	public specifications$ = this.specifications.asObservable();
 
 	private readonly currencies = new BehaviorSubject<IDictionaryItemDto[]>([]);
@@ -54,8 +69,12 @@ export class CompletedWorkActsFacadeService {
 	private readonly contracts = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public contracts$ = this.contracts.asObservable();
 
-	private readonly specificationsTotalAmount = new BehaviorSubject<number | null>(null);
-	public specificationsTotalAmount$ = this.specificationsTotalAmount.asObservable();
+	private readonly specificationsTotalAmount = new BehaviorSubject<
+		number | null
+	>(null);
+
+	public specificationsTotalAmount$ =
+		this.specificationsTotalAmount.asObservable();
 
 	private readonly isEditMode = new BehaviorSubject<boolean>(false);
 	public isEditMode$ = this.isEditMode.asObservable();
@@ -66,7 +85,7 @@ export class CompletedWorkActsFacadeService {
 	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public finDocs$ = this.finDocs.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
 		private readonly noticeService: NotificationToastService,
@@ -77,10 +96,10 @@ export class CompletedWorkActsFacadeService {
 	) {
 		this.filters
 			.pipe(
-				switchMap(filters => {
+				switchMap((filters) => {
 					return this.actsApiService.getWorkActsList(filters);
 				}),
-				tap(acts => {
+				tap((acts) => {
 					this.acts.next(acts);
 					this.isLoader$.next(false);
 				}),
@@ -116,13 +135,19 @@ export class CompletedWorkActsFacadeService {
 					this.act.next(data);
 					this.actAttachment.next(data.documents);
 
-					if (!permissions.includes(Permissions.COMPLETED_WORK_ACTS_ACCESS)) {
-						this.router.navigate(['completed-work-acts']).then(() => {
-							this.notificationService.addToast(
-								`Доступ к акту ${id} ограничен`,
-								'warning',
-							);
-						});
+					if (
+						!permissions.includes(
+							Permissions.COMPLETED_WORK_ACTS_ACCESS,
+						)
+					) {
+						this.router
+							.navigate(['completed-work-acts'])
+							.then(() => {
+								this.notificationService.addToast(
+									`Доступ к акту ${id} ограничен`,
+									'warning',
+								);
+							});
 					} else {
 						this.router.navigate([`completed-work-acts/${id}`]);
 					}
@@ -135,9 +160,11 @@ export class CompletedWorkActsFacadeService {
 
 					return this.actsApiService.getSpecifications(id);
 				}),
-				tap(specifications => {
+				tap((specifications) => {
 					this.specifications.next(specifications.items);
-					this.specificationsTotalAmount.next(specifications.totalAmount);
+					this.specificationsTotalAmount.next(
+						specifications.totalAmount,
+					);
 				}),
 				untilDestroyed(this),
 			)
@@ -154,21 +181,25 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public addSpecificationToAct(body: IAddSpecification) {
-		return this.actsApiService.addSpecification(this.act.value!.id, body).pipe(
-			untilDestroyed(this),
-			tap(() => {
-				this.getAct(this.act.value!.id.toString());
-			}),
-		);
+		return this.actsApiService
+			.addSpecification(this.act.value!.id, body)
+			.pipe(
+				untilDestroyed(this),
+				tap(() => {
+					this.getAct(this.act.value!.id.toString());
+				}),
+			);
 	}
 
 	public updateSpecification(body: IAddSpecification) {
-		return this.actsApiService.updateSpecification(this.act.value!.id, body).pipe(
-			untilDestroyed(this),
-			tap(() => {
-				this.getAct(this.act.value!.id.toString());
-			}),
-		);
+		return this.actsApiService
+			.updateSpecification(this.act.value!.id, body)
+			.pipe(
+				untilDestroyed(this),
+				tap(() => {
+					this.getAct(this.act.value!.id.toString());
+				}),
+			);
 	}
 
 	public deleteSpecification(specId: number) {
@@ -184,7 +215,7 @@ export class CompletedWorkActsFacadeService {
 		this.actsApiService
 			.getActStates()
 			.pipe(
-				tap(states => {
+				tap((states) => {
 					this.actStates.next(states.items);
 				}),
 				untilDestroyed(this),
@@ -193,9 +224,10 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public getServices() {
-		this.searchFacade.getDictionaryServices()
+		this.searchFacade
+			.getDictionaryServices()
 			.pipe(
-				tap(services => {
+				tap((services) => {
 					this.services.next(services.items);
 				}),
 				untilDestroyed(this),
@@ -207,7 +239,7 @@ export class CompletedWorkActsFacadeService {
 		this.actsApiService
 			.getCurrencies()
 			.pipe(
-				tap(states => {
+				tap((states) => {
 					this.currencies.next(states.items);
 				}),
 				untilDestroyed(this),
@@ -219,7 +251,7 @@ export class CompletedWorkActsFacadeService {
 		this.actsApiService
 			.getBuUnits()
 			.pipe(
-				tap(states => {
+				tap((states) => {
 					this.buUnits.next(states.items);
 				}),
 				untilDestroyed(this),
@@ -229,18 +261,21 @@ export class CompletedWorkActsFacadeService {
 
 	public getContracts(id?: number) {
 		return this.searchFacade.getDictionaryCompletedActContracts(id).pipe(
-			tap(res => {
+			tap((res) => {
 				this.contracts.next(res.items);
 			}),
 			untilDestroyed(this),
 		);
 	}
 
-	public getFinDocs(providerContractorId: number, externalActDate: string | null) {
+	public getFinDocs(
+		providerContractorId: number,
+		externalActDate: string | null,
+	) {
 		this.searchFacade
 			.getFinDocOrders(providerContractorId, externalActDate)
 			.pipe(
-				tap(res => {
+				tap((res) => {
 					this.finDocs.next(res.items);
 				}),
 				untilDestroyed(this),
@@ -299,11 +334,16 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public uploadFile(file: File) {
-		return this.filesApiService.uploadFile(FileBucketsEnum.Attachments, file);
+		return this.filesApiService.uploadFile(
+			FileBucketsEnum.Attachments,
+			file,
+		);
 	}
 
 	public deleteFile(id: string) {
-		this.actAttachment.next(this.actAttachment.value.filter(file => file.id !== id));
+		this.actAttachment.next(
+			this.actAttachment.value.filter((file) => file.id !== id),
+		);
 	}
 
 	public addFileToAct(actId: number, fileId: string) {
@@ -314,7 +354,7 @@ export class CompletedWorkActsFacadeService {
 		this.permissionsApiService
 			.getPermissionClient(Permissions.COMPLETED_WORK_ACTS)
 			.pipe(
-				tap(res => {
+				tap((res) => {
 					if (res.items) {
 						this.permissions.next(res.items);
 					}

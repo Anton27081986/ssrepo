@@ -5,10 +5,10 @@
 			<ss-date-range size="small" [placeholder]="firstDate + ' | ' + lastDate" (select)="onDateRange($event)"></ss-date-range>
 		</div>
 		<ss-search-input
+			data="{{ clientId }}"
 			size="small"
 			searchType="contractor"
 			placeholder="Поиск по контрагенту"
-			data="{{ clientId }}"
 			(select)="onContractor($event)" (input)="onContractor()"></ss-search-input>
 	</div>
 
@@ -16,9 +16,9 @@
 		<ng-container *ngFor="let birthdays of (birthdaysContractors$ | async)?.items; trackBy: trackBy">
 			<ss-card padding="12">
 				<a href="{{ birthdays?.detailLink }}" class="contacts" target="_blank" rel="noreferrer">
-					<ss-text [size]="'2'" weight="semi-bold">{{ birthdays?.name }}</ss-text>
-					<ss-text [size]="'3'" weight="medium">{{ birthdays?.position }}</ss-text>
-					<ss-text [size]="'3'" weight="semi-bold">{{ birthdays?.contractor?.name }}</ss-text>
+					<ss-text weight="semi-bold" [size]="'2'">{{ birthdays?.name }}</ss-text>
+					<ss-text weight="medium" [size]="'3'">{{ birthdays?.position }}</ss-text>
+					<ss-text weight="semi-bold" [size]="'3'">{{ birthdays?.contractor?.name }}</ss-text>
 					<ss-tag class="station">{{ birthdays?.birthDate | date:'dd MMMM yyyy':'':'ru' }}</ss-tag>
 				</a>
 			</ss-card>

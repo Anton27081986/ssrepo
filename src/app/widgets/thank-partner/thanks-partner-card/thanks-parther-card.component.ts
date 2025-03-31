@@ -4,10 +4,10 @@ import {
 	IPartnerPlaceEmblem,
 	IPartnerThanksItemDto,
 } from '@app/core/models/awards/partner-thanks-item-dto';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {UserCardComponent} from "@app/shared/components/user-card/user-card.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { CommonModule, NgIf, NgSwitch, NgSwitchCase } from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { UserCardComponent } from '@app/shared/components/user-card/user-card.component';
 
 @UntilDestroy()
 @Component({
@@ -22,11 +22,13 @@ import {UserCardComponent} from "@app/shared/components/user-card/user-card.comp
 		UserCardComponent,
 		NgSwitch,
 		IconComponent,
-		NgSwitchCase
+		NgSwitchCase,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ThanksPartnerCardComponent {
-	@Input() thanksPartner: IPartnerThanksItemDto | null = null;
+	@Input()
+	thanksPartner: IPartnerThanksItemDto | null = null;
+
 	protected IPartnerPlaceEmblem = IPartnerPlaceEmblem;
 }

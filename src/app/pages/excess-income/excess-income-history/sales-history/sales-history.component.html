@@ -3,7 +3,7 @@
         <div class="header">
             <ss-headline size="h6">История продаж ТП (
 				@if (data.tov && data.tov.tov.linkToDetail) {
-					<a [href]="data.tov.tov.linkToDetail" target="_blank">{{ data.tov.tov.name }}</a>
+					<a target="_blank" [href]="data.tov.tov.linkToDetail">{{ data.tov.tov.name }}</a>
 				} @else if (data.tov && data.tov.tov.name) {
 					{{ data.tov.tov.name }}
 				})
