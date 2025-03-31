@@ -3,7 +3,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { Observable } from 'rxjs';
-import { ProfileCardImports } from "@app/shared/components/profile-card/profile-card.imports";
+import { ProfileCardImports } from '@app/shared/components/profile-card/profile-card.imports';
 
 @UntilDestroy()
 @Component({
@@ -12,7 +12,7 @@ import { ProfileCardImports } from "@app/shared/components/profile-card/profile-
 	styleUrls: ['./profile-card.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: ProfileCardImports,
-	standalone: true
+	standalone: true,
 })
 export class ProfileCardComponent {
 	protected readonly profile$: Observable<IUserProfile | null>;

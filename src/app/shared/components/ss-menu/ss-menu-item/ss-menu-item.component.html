@@ -1,7 +1,7 @@
 <ng-container *ngIf="menuItems">
 	<div class="main-menu-item">
-		<ss-text class="main-menu-item__link" size="3" *ngIf="!menuItems.link">{{ menuItems.name }}</ss-text>
-		<a *ngIf="menuItems.link" class="main-menu-item__link" href="{{menuItems.link}}">{{ menuItems.name }}</a>
+		<ss-text *ngIf="!menuItems.link" class="main-menu-item__link" size="3">{{ menuItems.name }}</ss-text>
+		<a *ngIf="menuItems.link" href="{{menuItems.link}}" class="main-menu-item__link">{{ menuItems.name }}</a>
 	</div>
 	<ng-container *ngIf="menuItems.items?.length">
 		<ng-container *ngFor="let item of menuItems.items">

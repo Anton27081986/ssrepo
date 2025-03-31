@@ -37,7 +37,10 @@ const users = [
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
-	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+	intercept(
+		request: HttpRequest<any>,
+		next: HttpHandler,
+	): Observable<HttpEvent<any>> {
 		const { url, method, headers, body } = request;
 
 		return handleRoute();
@@ -60,7 +63,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
 		function authenticate() {
 			const { username, password } = body;
-			const user = users.find(x => x.username === username && x.password === password);
+			const user = users.find(
+				(x) => x.username === username && x.password === password,
+			);
 
 			if (!user) {
 				return error('Username or password is incorrect');
@@ -94,7 +99,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 				return unauthorized();
 			}
 
-			const user = users.find(x => x.id === idFromUrl());
+			const user = users.find((x) => x.id === idFromUrl());
 
 			return ok(user);
 		}
@@ -106,11 +111,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 		}
 
 		function unauthorized() {
-			return throwError(() => ({ status: 401, error: { message: 'unauthorized' } })).pipe(
-				materialize(),
-				delay(500),
-				dematerialize(),
-			); // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648);
+			return throwError(() => ({
+				status: 401,
+				error: { message: 'unauthorized' },
+			})).pipe(materialize(), delay(500), dematerialize()); // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648);
 		}
 
 		function error(message: string) {
@@ -136,9 +140,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 				return;
 			}
 
-			const id = parseInt(headers.get('Authorization')!.split('.')[1], 10);
+			const id = parseInt(
+				headers.get('Authorization')!.split('.')[1],
+				10,
+			);
 
-			return users.find(x => x.id === id);
+			return users.find((x) => x.id === id);
 		}
 
 		function idFromUrl() {

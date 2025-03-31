@@ -34,7 +34,7 @@
 
 		ss-icon {
 			padding: 9px;
-			background-color: #7C3FFF;
+			background-color: #7c3fff;
 			border-radius: 8px;
 			color: $island;
 		}
@@ -65,14 +65,13 @@
 	}
 
 	.item.all {
-
 		ss-icon {
-			background-color: #4770FF;
+			background-color: #4770ff;
 		}
 	}
 
 	.item:hover {
-		background-color:  $background;
+		background-color: $background;
 	}
 }
 

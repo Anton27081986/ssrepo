@@ -1,21 +1,27 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { ISamplesTableItem } from '@app/pages/client-card/client-request-samples/samples-table-item';
 import { TableState } from '@app/shared/components/table/table-state';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { RequestSamplesFacadeService } from '@app/core/facades/request-samples-facade.service';
 import { ISampleItemDto } from '@app/core/models/company/sample-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -34,15 +40,15 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		EmptyPlaceholderComponent,
 		TextComponent,
 		FiltersComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientRequestSamplesComponent implements OnInit {
 	public samples$: Observable<ISampleItemDto | null>;
 
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;
@@ -51,7 +57,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	public tableState: TableState = TableState.Empty;
 
 	public filters: IFilter[] = [
@@ -71,7 +77,8 @@ export class ClientRequestSamplesComponent implements OnInit {
 		},
 	];
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly requestSamplesFacade: RequestSamplesFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
@@ -82,36 +89,40 @@ export class ClientRequestSamplesComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		this.requestSamplesFacade.samples$.pipe(untilDestroyed(this)).subscribe(response => {
-			if (!response.items || response.items.length === 0) {
-				this.tableState = TableState.Empty;
-			} else {
-				this.items = this.mapClientsToTableItems(response);
-
-				if (response.total! > 6) {
-					this.total = (response.total ?? 0) + this.pageSize;
+		this.requestSamplesFacade.samples$
+			.pipe(untilDestroyed(this))
+			.subscribe((response) => {
+				if (!response.items || response.items.length === 0) {
+					this.tableState = TableState.Empty;
 				} else {
-					this.total = response.total ?? 0;
+					this.items = this.mapClientsToTableItems(response);
+
+					if (response.total! > 6) {
+						this.total = (response.total ?? 0) + this.pageSize;
+					} else {
+						this.total = response.total ?? 0;
+					}
+
+					this.tableItems = <ITableItem[]>(<unknown>this.items);
+					this.tableState = TableState.Full;
 				}
 
-				this.tableItems = <ITableItem[]>(<unknown>this.items);
-				this.tableState = TableState.Full;
-			}
+				this.cdr.detectChanges();
+			});
 
-			this.cdr.detectChanges();
-		});
-
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
-				this.getFilteredSales();
-			}
-		});
+		this.clientCardListFacade.client$
+			.pipe(untilDestroyed(this))
+			.subscribe((client) => {
+				if (client.id) {
+					this.clientId = client.id;
+					this.getFilteredSales();
+				}
+			});
 	}
 
 	private mapClientsToTableItems(sales: ISampleItemDto) {
 		return (
-			sales.items?.map(x => {
+			sales.items?.map((x) => {
 				const tableItem: ISamplesTableItem = {} as ISamplesTableItem;
 
 				tableItem.code = {
@@ -120,11 +131,14 @@ export class ClientRequestSamplesComponent implements OnInit {
 				};
 				tableItem.status = x.status.name ?? '-';
 				tableItem.orderDate = x.orderDate
-					? new Date(Date.parse(x.orderDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
+					? new Date(Date.parse(x.orderDate)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+							},
+						)
 					: '-';
 				tableItem.managerName = x.manager.name ?? '-';
 				tableItem.tovName = x.tov.name ?? '-';
@@ -155,17 +169,19 @@ export class ClientRequestSamplesComponent implements OnInit {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				case 'search':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
@@ -194,6 +210,4 @@ export class ClientRequestSamplesComponent implements OnInit {
 
 		this.getFilteredSales();
 	}
-
-	protected readonly TableState = TableState;
 }

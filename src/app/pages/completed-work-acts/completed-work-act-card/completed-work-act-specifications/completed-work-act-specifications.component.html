@@ -10,7 +10,7 @@
 	</div>
 	<div class="content">
 		<ss-table-v2>
-			<tr ss-specification-row-item-tr *ngFor="let item of specifications()" [item]="item"></tr>
+			<tr *ngFor="let item of specifications()" ss-specification-row-item-tr [item]="item"></tr>
 		</ss-table-v2>
 	</div>
 </ss-card>

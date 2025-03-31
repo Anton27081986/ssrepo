@@ -9,9 +9,8 @@ import { ResetPasswordDto } from '@auth/models/reset-password.dto';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-	private readonly userSubject: BehaviorSubject<IUser> = new BehaviorSubject<IUser>(
-		JSON.parse(localStorage.getItem('user')!),
-	);
+	private readonly userSubject: BehaviorSubject<IUser> =
+		new BehaviorSubject<IUser>(JSON.parse(localStorage.getItem('user')!));
 
 	public user$: Observable<IUser | null> = this.userSubject.asObservable();
 
@@ -19,12 +18,11 @@ export class AuthenticationService {
 		.set('Accept', 'application/json')
 		.set('Content-Type', 'application/json');
 
-	private readonly params = new HttpParams({ fromString: `ReturnUrl=${environment.apiUrl}` }).set(
-		'ReturnUrl',
-		environment.apiUrl,
-	);
+	private readonly params = new HttpParams({
+		fromString: `ReturnUrl=${environment.apiUrl}`,
+	}).set('ReturnUrl', environment.apiUrl);
 
-	public constructor(
+	constructor(
 		private readonly router: Router,
 		private readonly http: HttpClient,
 		private readonly localStorageService: LocalStorageService,
@@ -48,7 +46,7 @@ export class AuthenticationService {
 				},
 			)
 			.pipe(
-				map(user => {
+				map((user) => {
 					// store user details and jwt token in local storage to keep user logged in between page refreshes
 					localStorage.setItem('user', JSON.stringify(user));
 					this.userSubject.next(user);
@@ -72,7 +70,7 @@ export class AuthenticationService {
 				},
 			)
 			.pipe(
-				map(user => {
+				map((user) => {
 					// store user details and jwt token in local storage to keep user logged in between page refreshes
 					localStorage.setItem('user', JSON.stringify(user));
 
@@ -106,12 +104,18 @@ export class AuthenticationService {
 	}
 
 	public resetPasswordRequest(login: string) {
-		return this.http.post<any>(`${environment.apiUrl}/api/auth/resetPasswordRequest`, {
-			login,
-		});
+		return this.http.post<any>(
+			`${environment.apiUrl}/api/auth/resetPasswordRequest`,
+			{
+				login,
+			},
+		);
 	}
 
 	public resetPassword(body: ResetPasswordDto) {
-		return this.http.post<any>(`${environment.apiUrl}/api/auth/resetPassword`, body);
+		return this.http.post<any>(
+			`${environment.apiUrl}/api/auth/resetPassword`,
+			body,
+		);
 	}
 }

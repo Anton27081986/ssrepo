@@ -13,8 +13,8 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe} from "@angular/common";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe } from '@angular/common';
 
 export type searchType =
 	| 'user'
@@ -44,23 +44,27 @@ export interface SearchInputItem {
 			multi: true,
 		},
 	],
-	imports: [
-		CaptionComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [CaptionComponent, AsyncPipe],
+	standalone: true,
 })
 export class SearchClientInputComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public label: string | undefined;
-	@Input() onlyActive: boolean = false;
-	@Input() disabled: boolean = false;
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
 
-	@Output() public select = new EventEmitter<SearchInputItem | null>();
+	@Input()
+	public label: string | undefined;
 
-	private readonly entityId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(
-		null,
-	);
+	@Input()
+	onlyActive = false;
+
+	@Input()
+	disabled = false;
+
+	@Output()
+	public select = new EventEmitter<SearchInputItem | null>();
+
+	private readonly entityId$: BehaviorSubject<number | null> =
+		new BehaviorSubject<number | null>(null);
 
 	protected query: string | null | undefined = '';
 
@@ -68,7 +72,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 		IDictionaryItemDto[]
 	>([]);
 
-	public constructor(
+	constructor(
 		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
 	) {
@@ -76,10 +80,10 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 			.pipe(
 				untilDestroyed(this),
 				filterTruthy(),
-				switchMap(id => {
+				switchMap((id) => {
 					return this.getEntity(id);
 				}),
-				tap(entity => {
+				tap((entity) => {
 					if (entity && entity.title) {
 						this.query = entity.title;
 					} else {
@@ -92,7 +96,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 
 	private getEntity(value: number): Observable<SearchInputItem | null> {
 		return this.searchFacade.getClientIdDictionary(value).pipe(
-			map(res => {
+			map((res) => {
 				if (res.items.length && res.items[0].id && res.items[0].name) {
 					return { id: res.items[0].id, title: res.items[0].name };
 				}
@@ -131,7 +135,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 			this.searchFacade
 				.getClients(query, this.onlyActive)
 				.pipe(untilDestroyed(this))
-				.subscribe(res => {
+				.subscribe((res) => {
 					this.found$.next(res.items);
 					this.ref.detectChanges();
 				});

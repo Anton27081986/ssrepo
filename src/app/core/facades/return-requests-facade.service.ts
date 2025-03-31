@@ -16,13 +16,17 @@ export class ReturnRequestsFacadeService {
 	private readonly requests = new BehaviorSubject<IReturnRequestsItemDto>({});
 	public requests$ = this.requests.asObservable();
 
-	public constructor(private readonly returnRequestsApiService: ReturnRequestsApiService) {
+	constructor(
+		private readonly returnRequestsApiService: ReturnRequestsApiService,
+	) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
-					return this.returnRequestsApiService.getReturnRequests(filter);
+				switchMap((filter) => {
+					return this.returnRequestsApiService.getReturnRequests(
+						filter,
+					);
 				}),
-				tap(sales => {
+				tap((sales) => {
 					this.requests.next(sales);
 				}),
 				untilDestroyed(this),

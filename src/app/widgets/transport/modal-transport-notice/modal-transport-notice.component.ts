@@ -3,9 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { SSForm } from '@app/core/models/form';
 import { dateFromLessDateTo } from '@app/core/validators/date-from-less-date-to';
-import {
-	ModalTransportNoticeImports
-} from "@app/widgets/transport/modal-transport-notice/modal-transport-notice.imports";
+import { ModalTransportNoticeImports } from '@app/widgets/transport/modal-transport-notice/modal-transport-notice.imports';
 
 interface INoteForm {
 	dateFrom: Date | null;

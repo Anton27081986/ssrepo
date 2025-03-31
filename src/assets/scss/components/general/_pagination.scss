@@ -1,94 +1,96 @@
 .pagination {
-    margin-top: 27px;
-    display: flex;
+	margin-top: 27px;
+	display: flex;
 
-    svg {
-        font-size: 10px;
+	svg {
+		font-size: 10px;
 
-        path {
-            fill-opacity: 1;
-        }
-    }
+		path {
+			fill-opacity: 1;
+		}
+	}
 
-    // Пагинация
-    .ant-list-pagination {
-        display: flex;
-    }
+	// Пагинация
+	.ant-list-pagination {
+		display: flex;
+	}
 
-    .ant-pagination-item:hover {
-        border-color: $border-color !important;
-    }
+	.ant-pagination-item:hover {
+		border-color: $border-color !important;
+	}
 
-    .ant-pagination-item:hover a {
-        color: $blue;
-        border-radius: $border-radius !important;
-    }
+	.ant-pagination-item:hover a {
+		color: $blue;
+		border-radius: $border-radius !important;
+	}
 
-    .ant-pagination-item-active:hover a {
-        color: $white;
-    }
+	.ant-pagination-item-active:hover a {
+		color: $white;
+	}
 
-    .ant-pagination ul,
-    .ant-pagination ol {
-        margin-left: 0;
-    }
+	.ant-pagination ul,
+	.ant-pagination ol {
+		margin-left: 0;
+	}
 
-    .ant-table-pagination.ant-pagination {
-        margin: 21px 0 !important;
-    }
+	.ant-table-pagination.ant-pagination {
+		margin: 21px 0 !important;
+	}
 
-    .ant-pagination-prev,
-    .ant-pagination-next {
-        display: none;
-    }
+	.ant-pagination-prev,
+	.ant-pagination-next {
+		display: none;
+	}
 
-    .ant-pagination-item, .ant-pagination.mini .ant-pagination-item:not(.ant-pagination-item-active) {
-        font-size: 16px;
-        line-height: 39px;
-        font-weight: 600;
-        background: $white;
-        border-color: $border-color;
-        border-radius: 10px;
-        height: 40px;
-        width: 40px;
-        margin-right: 8px;
-    }
+	.ant-pagination-item,
+	.ant-pagination.mini .ant-pagination-item:not(.ant-pagination-item-active) {
+		font-size: 16px;
+		line-height: 39px;
+		font-weight: 600;
+		background: $white;
+		border-color: $border-color;
+		border-radius: 10px;
+		height: 40px;
+		width: 40px;
+		margin-right: 8px;
+	}
 
-    .ant-pagination-item a {
-        color: $black;
-    }
+	.ant-pagination-item a {
+		color: $black;
+	}
 
-    .ant-pagination-item-active, .ant-pagination.mini .ant-pagination-item {
-        font-size: 16px;
-        line-height: 40px!important;
-        font-weight: 600;
-        background: $blue;
-        border-color: $border-color;
-        border-radius: 10px;
-        height: 40px!important;
-        width: 40px;
-        margin-right: 8px;
-    }
+	.ant-pagination-item-active,
+	.ant-pagination.mini .ant-pagination-item {
+		font-size: 16px;
+		line-height: 40px !important;
+		font-weight: 600;
+		background: $blue;
+		border-color: $border-color;
+		border-radius: 10px;
+		height: 40px !important;
+		width: 40px;
+		margin-right: 8px;
+	}
 
-    .ant-pagination-item-active a {
-        color: $white;
-    }
+	.ant-pagination-item-active a {
+		color: $white;
+	}
 
-    .ant-table-pagination.ant-pagination {
-        margin: 21px 0 !important;
-    }
+	.ant-table-pagination.ant-pagination {
+		margin: 21px 0 !important;
+	}
 
-    .ant-pagination.mini .ant-pagination-item {
-        min-width: 44px;
-        height: 44px;
+	.ant-pagination.mini .ant-pagination-item {
+		min-width: 44px;
+		height: 44px;
 		line-height: 44px;
-    }
+	}
 
-    .ant-pagination-item:last-child {
-        width: auto;
-    }
+	.ant-pagination-item:last-child {
+		width: auto;
+	}
 
-    .ant-pagination-item:nth-last-child(-n + 2) {
-        display: none;
-    }
+	.ant-pagination-item:nth-last-child(-n + 2) {
+		display: none;
+	}
 }

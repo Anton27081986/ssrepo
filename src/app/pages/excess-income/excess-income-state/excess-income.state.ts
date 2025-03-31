@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, debounceTime, map, Observable, scan, switchMap, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	debounceTime,
+	map,
+	Observable,
+	scan,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
@@ -23,17 +31,25 @@ export interface ExcessIncomeCriteria {
 })
 export class ExcessIncomeState {
 	readonly event$: BehaviorSubject<ExcessIncomeEventEnum> =
-		new BehaviorSubject<ExcessIncomeEventEnum>(ExcessIncomeEventEnum.excessIncomeDefault);
+		new BehaviorSubject<ExcessIncomeEventEnum>(
+			ExcessIncomeEventEnum.excessIncomeDefault,
+		);
 
-	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false,
+	);
 
-	public isLoaderTr$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isLoaderTr$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false,
+	);
 
-	public dropDownVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public dropDownVisible$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	public readonly currency$: Observable<IDictionaryItemDto[]>;
 
-	public readonly total$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public readonly total$: BehaviorSubject<number> =
+		new BehaviorSubject<number>(0);
 
 	public readonly filters$: BehaviorSubject<ExcessIncomeCriteria> =
 		new BehaviorSubject<ExcessIncomeCriteria>({
@@ -43,32 +59,39 @@ export class ExcessIncomeState {
 			tov: [],
 		});
 
-	public readonly currencyControl: FormControl<IDictionaryItemDto | null> = new FormControl(null);
+	public readonly currencyControl: FormControl<IDictionaryItemDto | null> =
+		new FormControl(null);
 
-	public readonly paginationControl: FormControl<number | null> = new FormControl<number>(0);
+	public readonly paginationControl: FormControl<number | null> =
+		new FormControl<number>(0);
 
 	public clientNode$: Observable<ClientNodeState[]>;
 
 	public limit = 20;
 
 	constructor(private readonly excessIncomeService: ExcessIncomeService) {
-		this.currency$ = this.excessIncomeService.getCurrency().pipe(map(item => item.items));
+		this.currency$ = this.excessIncomeService
+			.getCurrency()
+			.pipe(map((item) => item.items));
 
-		this.paginationControl.valueChanges.subscribe(value => {
+		this.paginationControl.valueChanges.subscribe((value) => {
 			this.event$.next(ExcessIncomeEventEnum.excessIncomeChangeOffset);
 		});
 
 		this.clientNode$ = this.event$.pipe(
-			tap(event => {
+			tap((event) => {
 				this.dropDownVisible$.next(false);
+
 				if (event === ExcessIncomeEventEnum.excessIncomeChangeOffset) {
 					this.isLoaderTr$.next(true);
+
 					return;
 				}
+
 				this.isLoader$.next(true);
 			}),
 			debounceTime(2000),
-			switchMap(event => {
+			switchMap((event) => {
 				if (
 					event === ExcessIncomeEventEnum.excessIncomeClientUpdated ||
 					event === ExcessIncomeEventEnum.excessIncomeChangeFilter
@@ -76,17 +99,20 @@ export class ExcessIncomeState {
 					this.paginationControl.setValue(0, { emitEvent: false });
 				}
 
-				return this.getClients(this.filters$.value, this.paginationControl.value!).pipe(
-					map(res => {
+				return this.getClients(
+					this.filters$.value,
+					this.paginationControl.value!,
+				).pipe(
+					map((res) => {
 						this.total$.next(res.total);
 
 						return res.items;
 					}),
 				);
 			}),
-			map(clients => {
+			map((clients) => {
 				return clients.map(
-					item =>
+					(item) =>
 						new ClientNodeState(
 							item.data,
 							this.excessIncomeService,
@@ -96,7 +122,10 @@ export class ExcessIncomeState {
 				);
 			}),
 			scan((acc, value) => {
-				if (this.event$.value === ExcessIncomeEventEnum.excessIncomeChangeOffset) {
+				if (
+					this.event$.value ===
+					ExcessIncomeEventEnum.excessIncomeChangeOffset
+				) {
 					return [...acc, ...value];
 				}
 

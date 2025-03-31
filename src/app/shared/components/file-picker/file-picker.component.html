@@ -2,12 +2,12 @@
 	<div class="ss-file-picker-header">
 		<ss-text size="3" weight="medium">{{ "Выбранные документы" }}</ss-text>
 		<div class="ss-file-picker__icon">
-			<ss-icon (click)="dropAll()" height="12" name="basket"
-					 [class.accordion-header__icon-toggle--expanded]="isExpanded">
+			<ss-icon height="12" name="basket" [class.accordion-header__icon-toggle--expanded]="isExpanded"
+					 (click)="dropAll()">
 			</ss-icon>
 			<span class="count">{{ (checkListFile.checkFiles$ | async)?.length }}</span>
-			<ss-icon (click)="toggle()" height="12" name="chevron" class="ss-file-picker__icon-toggle"
-					[@rotate]="isExpanded">
+			<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle" [@rotate]="isExpanded"
+					(click)="toggle()">
 			</ss-icon>
 		</div>
 	</div>
@@ -15,7 +15,7 @@
 		@for (file of checkListFile.checkFiles$ | async; track file.id) {
 			<div class="ss-file-picker__content-item">
 					<ss-caption size="2">{{ file.name}}</ss-caption>
-					<ss-icon (click)="dropFile(file); $event.stopPropagation()" height="12" name="close" class="ss-file-picker__icon-basket"></ss-icon>
+					<ss-icon height="12" name="close" class="ss-file-picker__icon-basket" (click)="dropFile(file); $event.stopPropagation()"></ss-icon>
 			</div>
 		}
 	</div>

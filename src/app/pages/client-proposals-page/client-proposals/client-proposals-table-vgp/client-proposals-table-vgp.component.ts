@@ -12,14 +12,21 @@ import { ColumnsStateService } from '@app/core/columns.state.service';
 import { ITrTableBaseColumn } from '@app/core/store';
 import {
 	ClientProposalsRowItemField,
-	ClientProposalsRowItemTrComponent
+	ClientProposalsRowItemTrComponent,
 } from '@app/pages/client-proposals-page/client-proposals-row-item-tr/client-proposals-row-item-tr.component';
 import { ResponseProposals } from '@app/core/utils/response-proposals';
-import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgTemplateOutlet} from "@angular/common";
+import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import {
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgTemplateOutlet,
+} from '@angular/common';
 
 export enum StateTableProposals {
 	default = 0,
@@ -48,7 +55,7 @@ export enum StateTableProposals {
 		NgTemplateOutlet,
 		ClientProposalsRowItemTrComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientProposalsTableVgpComponent {
 	public readonly clientOffers: InputSignal<ResponseProposals<IClientOffersDto> | null> =
@@ -56,7 +63,8 @@ export class ClientProposalsTableVgpComponent {
 
 	public readonly isLoading: InputSignal<boolean> = input.required<boolean>();
 
-	public readonly defaultStateTable: InputSignal<boolean> = input.required<boolean>();
+	public readonly defaultStateTable: InputSignal<boolean> =
+		input.required<boolean>();
 
 	public readonly tableState: Signal<StateTableProposals> = computed(() => {
 		if (this.isLoading()) {
@@ -85,14 +93,6 @@ export class ClientProposalsTableVgpComponent {
 
 		return StateTableProposals.default;
 	});
-
-	public constructor(protected readonly _columnState: ColumnsStateService) {
-		this._columnState.colsTr$.next(this.defaultCols);
-	}
-
-	public goToUrlProposals(linkToDetail: string) {
-		window.open(linkToDetail, '_blank');
-	}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
 		{
@@ -178,7 +178,8 @@ export class ClientProposalsTableVgpComponent {
 					order: 8,
 					show: true,
 					width: '100px',
-					toolTip: 'Цена прайса, руб - Склад Союзснаб, прайс Союзснаб, предоплата',
+					toolTip:
+						'Цена прайса, руб - Склад Союзснаб, прайс Союзснаб, предоплата',
 					colspan: 1,
 					rowspan: 1,
 					display: true,
@@ -218,4 +219,11 @@ export class ClientProposalsTableVgpComponent {
 	];
 
 	protected readonly StateTableProposals = StateTableProposals;
+	constructor(protected readonly _columnState: ColumnsStateService) {
+		this._columnState.colsTr$.next(this.defaultCols);
+	}
+
+	public goToUrlProposals(linkToDetail: string) {
+		window.open(linkToDetail, '_blank');
+	}
 }

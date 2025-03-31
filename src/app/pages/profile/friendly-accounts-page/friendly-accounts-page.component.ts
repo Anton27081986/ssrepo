@@ -5,17 +5,23 @@ import {
 	Input,
 	OnInit,
 } from '@angular/core';
-import {FormBuilder, FormGroup, FormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
-import {FilterInputComponent} from "@app/shared/components/inputs/filter-input/filter-input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
-import {ModalService} from "@app/core/modal/modal.service";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { FilterInputComponent } from '@app/shared/components/inputs/filter-input/filter-input.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import {
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+} from '@angular/common';
+import { ModalService } from '@app/core/modal/modal.service';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @UntilDestroy()
 @Component({
@@ -35,7 +41,7 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 		FormsModule,
 		IconComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class FriendlyAccountsPageComponent implements OnInit {
 	public searchForm!: FormGroup;
@@ -44,15 +50,16 @@ export class FriendlyAccountsPageComponent implements OnInit {
 	public valid = false;
 
 	protected isModalVisible = false;
-	public radioValue: string = '1';
+	public radioValue = '1';
 
 	public filterFriendsAccount: IFriendAccountDto[] | null | undefined = [];
 	public friendsAccount: IFriendAccountDto[] | undefined | null;
 	public friendsAccountDefault: IFriendAccountDto[] | undefined | null;
 
-	@Input() public toUsers: IUserDto[] = [];
+	@Input()
+	public toUsers: IUserDto[] = [];
 
-	public constructor(
+	constructor(
 		protected readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,
 		private readonly formBuilder: FormBuilder,
 		public modal: ModalService,
@@ -60,7 +67,7 @@ export class FriendlyAccountsPageComponent implements OnInit {
 	) {
 		this.friendlyAccountsFacadeService.friendlyAccounts$
 			.pipe(untilDestroyed(this))
-			.subscribe(accounts => {
+			.subscribe((accounts) => {
 				this.friendsAccount = accounts;
 				this.friendsAccountDefault = accounts;
 				this.cd.detectChanges();
@@ -80,7 +87,8 @@ export class FriendlyAccountsPageComponent implements OnInit {
 				if (
 					(element.firstName + element.lastName + element.surName)
 						.toLowerCase()
-						.indexOf(String($event.target.value).toLowerCase()) !== -1
+						.indexOf(String($event.target.value).toLowerCase()) !==
+					-1
 				) {
 					this.filterFriendsAccount?.push(element);
 				}
@@ -112,7 +120,7 @@ export class FriendlyAccountsPageComponent implements OnInit {
 		if (this.addForm.valid) {
 			this.submitted = true;
 
-			const userList = this.toUsers.map(user => user.id!);
+			const userList = this.toUsers.map((user) => user.id!);
 
 			this.friendlyAccountsFacadeService.addUsersInListFriendlyLogins(
 				userList,

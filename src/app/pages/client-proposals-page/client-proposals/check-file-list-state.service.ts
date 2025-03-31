@@ -4,18 +4,19 @@ import { IFilesProposals } from '@app/core/models/client-proposails/client-offer
 
 @Injectable({ providedIn: 'root' })
 export class CheckFileListStateService {
-	public checkFiles$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<IFilesProposals[]>(
-		[],
-	);
+	public checkFiles$: BehaviorSubject<IFilesProposals[]> =
+		new BehaviorSubject<IFilesProposals[]>([]);
 
 	changeArrFile(newFile: IFilesProposals) {
 		let savedFiles = this.checkFiles$.value;
-		const checkFile = savedFiles.find(file => file.uniqId === newFile.uniqId);
+		const checkFile = savedFiles.find(
+			(file) => file.uniqId === newFile.uniqId,
+		);
 
 		if (newFile.checked && !checkFile) {
 			savedFiles.push(newFile);
 		} else {
-			savedFiles = savedFiles.map(file => {
+			savedFiles = savedFiles.map((file) => {
 				if (file.uniqId === newFile.uniqId) {
 					file.checked = false;
 				}
@@ -24,15 +25,19 @@ export class CheckFileListStateService {
 			});
 		}
 
-		this.checkFiles$.next(savedFiles.filter(x => x.checked));
+		this.checkFiles$.next(savedFiles.filter((x) => x.checked));
 	}
 
 	dropFile(dropFile: IFilesProposals) {
 		const files = this.checkFiles$.value;
-		const walkerFile = files.find(file => file.uniqId === dropFile.uniqId);
+		const walkerFile = files.find(
+			(file) => file.uniqId === dropFile.uniqId,
+		);
 
 		if (walkerFile) {
-			const newFileArr = files.filter(item => item.uniqId !== walkerFile.uniqId);
+			const newFileArr = files.filter(
+				(item) => item.uniqId !== walkerFile.uniqId,
+			);
 
 			this.checkFiles$.next(newFileArr);
 		}

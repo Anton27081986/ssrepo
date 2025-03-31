@@ -8,9 +8,14 @@ import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tr
 	providedIn: 'root',
 })
 export class ChangeTrackerApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getHistoryOfObject(objectId: string, type: number, limit: number, offset: number) {
+	public getHistoryOfObject(
+		objectId: string,
+		type: number,
+		limit: number,
+		offset: number,
+	) {
 		let params = new HttpParams();
 
 		params = params.set('objectId', objectId);

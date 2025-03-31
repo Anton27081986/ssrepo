@@ -5,6 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	templateUrl: './people-like-modal.component.html',
 	styleUrls: ['./people-like-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true
+	standalone: true,
 })
 export class PeopleLikeModalComponent {}

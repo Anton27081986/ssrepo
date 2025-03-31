@@ -7,9 +7,9 @@ import {
 	IFilesProposals,
 } from '@app/core/models/client-proposails/client-offers';
 import { CheckFileListStateService } from '@app/pages/client-proposals-page/client-proposals/check-file-list-state.service';
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 interface FileData {
 	files: IFilesProposals[];
@@ -33,16 +33,20 @@ export enum IFileType {
 		AsyncPipe,
 		NgForOf,
 		FormsModule,
-		NgIf
+		NgIf,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientProposalsViewFilesPopoverComponent implements OnInit {
-	protected readonly files$: BehaviorSubject<IFilesProposals[]> = new BehaviorSubject<
-		IFilesProposals[]
-	>([]);
+	protected readonly files$: BehaviorSubject<IFilesProposals[]> =
+		new BehaviorSubject<IFilesProposals[]>([]);
 
-	protected readonly type: ClientProposalsTypeDocuments = ClientProposalsTypeDocuments.rim;
+	protected readonly type: ClientProposalsTypeDocuments =
+		ClientProposalsTypeDocuments.rim;
+
+	protected readonly ClientProposalsTypeDocuments =
+		ClientProposalsTypeDocuments;
+
 	constructor(
 		private readonly modalRef: ModalRef,
 		@Inject(DIALOG_DATA) protected readonly data: FileData,
@@ -55,7 +59,7 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 	}
 
 	onToggle(uniqId: string) {
-		const file = this.files$.value.find(x => x.uniqId === uniqId);
+		const file = this.files$.value.find((x) => x.uniqId === uniqId);
 
 		if (file) {
 			this.data.checkListService.changeArrFile(file);
@@ -66,17 +70,18 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 		let files;
 
 		if (this.data.checkListService.checkFiles$.value.length) {
-			files = this.data.files.map(file => {
-				const findFile = this.data.checkListService.checkFiles$.value.find(
-					checkFiles => file.uniqId === checkFiles.uniqId,
-				);
+			files = this.data.files.map((file) => {
+				const findFile =
+					this.data.checkListService.checkFiles$.value.find(
+						(checkFiles) => file.uniqId === checkFiles.uniqId,
+					);
 
 				file.checked = !!findFile;
 
 				return file;
 			});
 		} else {
-			files = this.data.files.map(file => {
+			files = this.data.files.map((file) => {
 				file.checked = false;
 
 				return file;
@@ -98,6 +103,4 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 				return '';
 		}
 	}
-
-	protected readonly ClientProposalsTypeDocuments = ClientProposalsTypeDocuments;
 }

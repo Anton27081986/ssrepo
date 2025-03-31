@@ -1,22 +1,27 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	signal,
+} from '@angular/core';
 import { filter, map, of, switchMap, tap } from 'rxjs';
-import {CommonModule, formatDate} from '@angular/common';
+import { CommonModule, formatDate } from '@angular/common';
 import { ThanksPartnerApiService } from '@app/core/api/thanks-partner-api.service';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
 import { catchError } from 'rxjs/operators';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {MapperPipe} from "@app/core/pipes/mapper.pipe";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {ThanksPartnerCardComponent} from "@app/widgets/thank-partner/thanks-partner-card/thanks-parther-card.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { MapperPipe } from '@app/core/pipes/mapper.pipe';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { ThanksPartnerCardComponent } from '@app/widgets/thank-partner/thanks-partner-card/thanks-parther-card.component';
 
 @Component({
 	selector: 'app-thanks-partner',
@@ -36,23 +41,26 @@ import {ThanksPartnerCardComponent} from "@app/widgets/thank-partner/thanks-part
 		ThanksPartnerCardComponent,
 		MapperPipe,
 		EmptyPlaceholderComponent,
-		HeadlineComponent
+		HeadlineComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ThanksPartnerComponent {
 	private readonly apiService = inject(ThanksPartnerApiService);
 
-	protected dateCtrl: FormControl<string | null> = new FormControl<string>(this.getDate());
+	protected dateCtrl: FormControl<string | null> = new FormControl<string>(
+		this.getDate(),
+	);
+
 	protected loading = signal(false);
 
 	public thankYouList = toSignal(
 		this.dateCtrl.valueChanges.pipe(
 			filter(Boolean),
 			tap(() => this.loading.set(true)),
-			switchMap(date => {
+			switchMap((date) => {
 				return this.apiService.getPartnerThanks(date).pipe(
-					map(items => {
+					map((items) => {
 						return {
 							addNewThanksLink: items.addNewThanksLink,
 							totalCount: items.totalCount,

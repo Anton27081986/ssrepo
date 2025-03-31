@@ -1,5 +1,13 @@
 import { ExcessIncomeContractor } from '@app/core/models/excess-income/excess-income-contractors-Item';
-import { BehaviorSubject, map, NEVER, switchMap, tap, debounceTime, scan } from 'rxjs';
+import {
+	BehaviorSubject,
+	map,
+	NEVER,
+	switchMap,
+	tap,
+	debounceTime,
+	scan,
+} from 'rxjs';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { ExcessIncomeService } from '@app/pages/excess-income/excess-income-service/excess-income.service';
 import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/excess-income.state';
@@ -15,7 +23,9 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		);
 
 	public contractor: ExcessIncomeContractor | null;
-	public groups$: BehaviorSubject<GroupNodeState[]> = new BehaviorSubject<GroupNodeState[]>([]);
+	public groups$: BehaviorSubject<GroupNodeState[]> = new BehaviorSubject<
+		GroupNodeState[]
+	>([]);
 
 	public clientId: number;
 
@@ -34,7 +44,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 			this.expended$.next(true);
 		}
 
-		this.expended$.pipe(untilDestroyed(this)).subscribe(value => {
+		this.expended$.pipe(untilDestroyed(this)).subscribe((value) => {
 			if (value) {
 				this.event$.next(
 					ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventExpended,
@@ -47,7 +57,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		this.paginationControl.valueChanges
 			.pipe(
 				untilDestroyed(this),
-				tap(val => {
+				tap((val) => {
 					if (val) {
 						this.event$.next(
 							ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventChangeOffset,
@@ -62,7 +72,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 				tap(() => this.isLoader$.next(true)),
 				debounceTime(2000),
 				untilDestroyed(this),
-				switchMap(event => {
+				switchMap((event) => {
 					if (
 						event ===
 						ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventDefault
@@ -74,15 +84,17 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 						limit: this.limit,
 						offset: this.paginationControl.value!,
 						clientId: this.clientId,
-						contractorId: this.contractor ? this.contractor.id : null,
+						contractorId: this.contractor
+							? this.contractor.id
+							: null,
 						tovSubgroupsIds: this.state.filters$.value.tovGroups,
 						tovIds: this.state.filters$.value.tov,
 					});
 				}),
-				map(groups => {
+				map((groups) => {
 					this.total$.next(groups.data.total);
 
-					return groups.data.items.map(item => {
+					return groups.data.items.map((item) => {
 						return new GroupNodeState(
 							item,
 							groups.permissions,
@@ -104,7 +116,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 					return value;
 				}),
 			)
-			.subscribe(items => {
+			.subscribe((items) => {
 				this.groups$.next(items);
 				this.isLoader$.next(false);
 			});

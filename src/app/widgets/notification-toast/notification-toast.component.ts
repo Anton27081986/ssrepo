@@ -1,22 +1,24 @@
 import { Component } from '@angular/core';
-import { NotificationToastService, IToast } from '@app/core/services/notification-toast.service';
+import {
+	NotificationToastService,
+	IToast,
+} from '@app/core/services/notification-toast.service';
 import { Observable } from 'rxjs';
-import {AsyncPipe} from "@angular/common";
-import {NoticeComponent} from "@app/shared/components/notice/notice.component";
+import { AsyncPipe } from '@angular/common';
+import { NoticeComponent } from '@app/shared/components/notice/notice.component';
 
 @Component({
 	selector: 'ss-notification-toast',
 	templateUrl: './notification-toast.component.html',
 	styleUrls: ['./notification-toast.component.scss'],
-	imports: [
-		NoticeComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [NoticeComponent, AsyncPipe],
+	standalone: true,
 })
 export class NotificationToastComponent {
 	public toasts$: Observable<IToast[]>;
-	constructor(private readonly notificationToastService: NotificationToastService) {
+	constructor(
+		private readonly notificationToastService: NotificationToastService,
+	) {
 		this.toasts$ = this.notificationToastService.notificationsStorage$;
 	}
 

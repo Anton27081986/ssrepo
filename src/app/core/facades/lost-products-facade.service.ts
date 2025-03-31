@@ -13,16 +13,21 @@ export class LostProductsFacadeService {
 	private readonly filtersChanged: Subject<ILostProductsFilter> =
 		new Subject<ILostProductsFilter>();
 
-	private readonly lostProducts = new BehaviorSubject<ILostProductsItemDto>({});
+	private readonly lostProducts = new BehaviorSubject<ILostProductsItemDto>(
+		{},
+	);
+
 	public lostProducts$ = this.lostProducts.asObservable();
 
-	public constructor(private readonly lostProductsApiService: LostProductsApiService) {
+	constructor(
+		private readonly lostProductsApiService: LostProductsApiService,
+	) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
+				switchMap((filter) => {
 					return this.lostProductsApiService.getLostProducts(filter);
 				}),
-				tap(sales => {
+				tap((sales) => {
 					this.lostProducts.next(sales);
 				}),
 				untilDestroyed(this),

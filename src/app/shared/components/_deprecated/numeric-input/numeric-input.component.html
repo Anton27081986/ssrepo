@@ -2,11 +2,11 @@
 <div class="input">
 	<input
 		#input
+		class="{{ error ? size + ' error' : size }}"
 		type="text"
 		[placeholder]="placeholder"
 		[disabled]="disabled"
 		(blur)="onTouched()"
-		class="{{ error ? size + ' error' : size }}"
 	/>
 	@if (value && !disabled) {
 		<ss-icon name="close" height="12" (click)="clear()">

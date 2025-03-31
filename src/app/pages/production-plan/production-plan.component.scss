@@ -1,29 +1,29 @@
 :host {
-    box-sizing: content-box;
-    max-width: 100%;
+	box-sizing: content-box;
+	max-width: 100%;
 }
 
 .production-plan-wrapper {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: 24px;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	gap: 24px;
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 
-        &__controls {
-            display: flex;
-            gap: 16px;
-            align-items: center;
-        }
-    }
+		&__controls {
+			display: flex;
+			gap: 16px;
+			align-items: center;
+		}
+	}
 
-    .tabs {
-        &__content {
-            border-top: none;
-        }
-    }
+	.tabs {
+		&__content {
+			border-top: none;
+		}
+	}
 }

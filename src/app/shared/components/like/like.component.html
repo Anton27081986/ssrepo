@@ -1,5 +1,5 @@
-<div [tooltip]="null" [elemRef]="count && toolTipRef ? toolTipRef: null" [theme]="TooltipTheme.DEFAULT"
-	 [position]="TooltipPosition.DEFAULT" class="like">
+<div class="like" [tooltip]="null" [elemRef]="count && toolTipRef ? toolTipRef: null"
+	 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
 	@switch (type) {
 		@case (LikeStateEnum.copper) {
 			<ss-icon width="15" height="15" name="likeCopper"></ss-icon>

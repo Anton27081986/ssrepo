@@ -1,7 +1,7 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display">
+			<td *ngIf="col.display" class="ss-table-td">
 				<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
 				<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
 				<!--				</ng-container>-->

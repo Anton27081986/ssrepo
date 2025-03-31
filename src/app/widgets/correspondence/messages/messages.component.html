@@ -12,7 +12,7 @@
 	<div class="messages-list">
 
 		@if ((messages$ | async)?.total) {
-			<div class="content" (scrollend)="loadMoreMessages()" #messages>
+			<div #messages class="content" (scrollend)="loadMoreMessages()">
 				@for (message of (messages$ | async)?.items; track message.id) {
 					<div class="message" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
 						<ss-avatar [size]="'small'" [src]="message.author?.avatarUrl || ''"></ss-avatar>

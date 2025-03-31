@@ -19,15 +19,25 @@ export enum TypeReport {
 	providedIn: 'root',
 })
 export class RatingApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getRatingTypes(weekId: number, userId: number): Observable<IRankTypeListDto> {
-		return this.http.get<IRankTypeListDto>(`${environment.apiUrl}/api/awards/rank/types`, {
-			params: new HttpParams().set('weekId', weekId).set('userId', userId),
-		});
+	public getRatingTypes(
+		weekId: number,
+		userId: number,
+	): Observable<IRankTypeListDto> {
+		return this.http.get<IRankTypeListDto>(
+			`${environment.apiUrl}/api/awards/rank/types`,
+			{
+				params: new HttpParams()
+					.set('weekId', weekId)
+					.set('userId', userId),
+			},
+		);
 	}
 
-	public getCommentsWins(request: ICommentRequest): Observable<IResponse<ICommentsItemDto>> {
+	public getCommentsWins(
+		request: ICommentRequest,
+	): Observable<IResponse<ICommentsItemDto>> {
 		return this.http.get<IResponse<ICommentsItemDto>>(
 			`${environment.apiUrl}/api/awards/comments/${request.objectId}`,
 			{
@@ -47,7 +57,10 @@ export class RatingApiService {
 	}
 
 	public getReport(type: TypeReport, rank: IRankTypeItemDto) {
-		return this.http.post<string>(`${environment.apiUrl}/api/awards/rank/report/${type}`, rank);
+		return this.http.post<string>(
+			`${environment.apiUrl}/api/awards/rank/report/${type}`,
+			rank,
+		);
 	}
 
 	/** Список пользователей в выбранном рейтинге */

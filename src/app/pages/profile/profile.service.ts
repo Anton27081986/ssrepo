@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class ProfileService {
 	public isDarkTheme$ = new Subject<number>();
 
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Получение темы */
 	public getTheme(): Observable<any> {
@@ -18,9 +18,12 @@ export class ProfileService {
 
 	/** Установка темы */
 	public updateTheme(value: boolean): Observable<any> {
-		return this.http.put<any[]>(`${environment.apiUrl}/api/company/settings`, {
-			isDarkTheme: value,
-		});
+		return this.http.put<any[]>(
+			`${environment.apiUrl}/api/company/settings`,
+			{
+				isDarkTheme: value,
+			},
+		);
 	}
 
 	public changeTheme(value: number) {

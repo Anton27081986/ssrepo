@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, input, InputSignal, OnDestroy } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	InputSignal,
+	OnDestroy,
+} from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
@@ -9,21 +15,35 @@ import { SalesHistoryComponent } from '@app/pages/excess-income/excess-income-hi
 import { CommentsHistoryComponent } from '@app/pages/excess-income/excess-income-history/comments-history/comments-history.component';
 import {
 	ButtonComponent,
-	ButtonType, DropdownButtonComponent, DropdownItemComponent, FieldCtrlDirective, FormFieldComponent,
+	ButtonType,
+	DropdownButtonComponent,
+	DropdownItemComponent,
+	FieldCtrlDirective,
+	FormFieldComponent,
 	IconPosition,
-	IconType, InputComponent,
-	InputType, LinkComponent,
-	Size, TextComponent,
+	IconType,
+	InputComponent,
+	InputType,
+	LinkComponent,
+	Size,
+	TextComponent,
 	TextType,
-	TextWeight, TooltipDirective,
+	TextWeight,
+	TooltipDirective,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
 import { ProductPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/product-price-history/product-price-history.component';
 import { ExcessIncomeEditCommentPopoverComponent } from '@app/pages/excess-income/excess-income-edit-comment-card/excess-income-edit-comment-popover.component';
-import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
-import {ReactiveFormsModule} from "@angular/forms";
-import {AsyncPipe, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import {
+	AsyncPipe,
+	CommonModule,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+} from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -48,18 +68,26 @@ import {AsyncPipe, CommonModule, NgIf, NgSwitch, NgSwitchCase} from "@angular/co
 		NgSwitch,
 		NgSwitchCase,
 		NgIf,
-		FieldCtrlDirective
+		FieldCtrlDirective,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ExcessIncomeTovTrComponent implements OnDestroy {
 	public tovNode: InputSignal<TovNodeState> = input.required<TovNodeState>();
 
+	protected readonly ExcessIncomeClientRowItemField =
+		ExcessIncomeClientRowItemField;
+
+	protected readonly TextType = TextType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
 	constructor(
 		private readonly modalService: ModalService,
 		protected readonly columnsStateService: ColumnsStateService,
 	) {}
 
+	protected readonly InputType = InputType;
 	get differentCurrentFinalPrice(): boolean {
 		return (
 			this.tovNode().currentParams.controls.finalPrice.value !==
@@ -70,20 +98,21 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 	get differentNextFinalPrice(): boolean {
 		return (
 			this.tovNode().tovSignal().nextParams.finalPrice !==
-			this.tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value
+			this.tovNode().tovSignal().paramsGroup.controls.nextParams.controls
+				.finalPrice.value
 		);
 	}
 
+	protected readonly Size = Size;
 	get canEditComment(): boolean {
 		return this.tovNode().canEditComment;
 	}
-
-	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 
 	ngOnDestroy() {
 		this.tovNode().subscription.unsubscribe();
 	}
 
+	protected readonly TooltipTheme = TooltipTheme;
 	protected openPriceHistory() {
 		this.modalService
 			.open(ProductPriceHistoryComponent, {
@@ -135,13 +164,6 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		});
 	}
 
-	protected readonly TextType = TextType;
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconType = IconType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly InputType = InputType;
-	protected readonly Size = Size;
-	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly TextWeight = TextWeight;
 }

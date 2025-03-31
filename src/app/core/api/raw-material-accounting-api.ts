@@ -11,12 +11,13 @@ import { AddContractDto } from '@app/core/models/raw-material-accounting/add-con
 	providedIn: 'root',
 })
 export class RawMaterialAccountingApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Получить список договоров */
-	public getContracts(
-		filter: IRawMaterialAccountingFilter,
-	): Observable<{ data: IResponse<IRawMaterialAccountingContract>; permissions: string[] }> {
+	public getContracts(filter: IRawMaterialAccountingFilter): Observable<{
+		data: IResponse<IRawMaterialAccountingContract>;
+		permissions: string[];
+	}> {
 		let params = new HttpParams();
 
 		if (filter.limit !== null && filter.limit !== undefined) {
@@ -36,7 +37,7 @@ export class RawMaterialAccountingApiService {
 		}
 
 		if (filter.UserIds) {
-			filter.UserIds.forEach(param => {
+			filter.UserIds.forEach((param) => {
 				params = params.append('UserIds', param);
 			});
 		}
@@ -46,7 +47,7 @@ export class RawMaterialAccountingApiService {
 		}
 
 		if (filter.statuses) {
-			filter.statuses.forEach(param => {
+			filter.statuses.forEach((param) => {
 				params = params.append('Statuses', param);
 			});
 		}
@@ -58,16 +59,20 @@ export class RawMaterialAccountingApiService {
 	}
 
 	/** Получить договоров по идентификатору */
-	public getContractById(
-		id: string,
-	): Observable<{ data: IRawMaterialAccountingContract; permissions: string[] }> {
-		return this.http.get<{ data: IRawMaterialAccountingContract; permissions: string[] }>(
-			`${environment.apiUrl}/api/procurements/contracts/${id}`,
-		);
+	public getContractById(id: string): Observable<{
+		data: IRawMaterialAccountingContract;
+		permissions: string[];
+	}> {
+		return this.http.get<{
+			data: IRawMaterialAccountingContract;
+			permissions: string[];
+		}>(`${environment.apiUrl}/api/procurements/contracts/${id}`);
 	}
 
 	/** Добавить договор */
-	public addContract(contract: AddContractDto): Observable<IRawMaterialAccountingContract> {
+	public addContract(
+		contract: AddContractDto,
+	): Observable<IRawMaterialAccountingContract> {
 		return this.http.post<IRawMaterialAccountingContract>(
 			`${environment.apiUrl}/api/procurements/contracts`,
 			contract,

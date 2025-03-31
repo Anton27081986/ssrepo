@@ -6,12 +6,14 @@ import { CallPhoneService } from '@app/core/services/call-phone.service';
 @NgModule({
 	declarations: [],
 	imports: [CommonModule],
-	providers: [ LocalStorageService, CallPhoneService],
+	providers: [LocalStorageService, CallPhoneService],
 })
 export class CoreModule {
-	public constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+	constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
 		if (parentModule) {
-			throw new Error('CoreModule is already loaded. Import it in the AppModule only');
+			throw new Error(
+				'CoreModule is already loaded. Import it in the AppModule only',
+			);
 		}
 	}
 }

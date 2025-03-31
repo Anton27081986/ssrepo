@@ -10,7 +10,10 @@ import { ICreateThanksColleagueRequest } from '@app/core/models/thanks-colleague
 	providedIn: 'root',
 })
 export class ThankColleagueFacadeService {
-	private readonly thanksForColleagues = new BehaviorSubject<IThanksColleagueItem[]>([]);
+	private readonly thanksForColleagues = new BehaviorSubject<
+		IThanksColleagueItem[]
+	>([]);
+
 	public thanksForColleagues$: Observable<IThanksColleagueItem[]> =
 		this.thanksForColleagues.asObservable();
 
@@ -22,7 +25,7 @@ export class ThankColleagueFacadeService {
 	public pageSize = 12;
 	public total = 0;
 
-	public constructor(private readonly apiService: ThanksColleagueApiService) {
+	constructor(private readonly apiService: ThanksColleagueApiService) {
 		this.loadThanksForColleagues();
 	}
 
@@ -32,7 +35,7 @@ export class ThankColleagueFacadeService {
 			.getThanksColleagueList(this.pageSize, this.offset)
 			.pipe(
 				untilDestroyed(this),
-				tap(response => {
+				tap((response) => {
 					this.thanksForColleagues.next([
 						...this.thanksForColleagues.value,
 						...response.items,

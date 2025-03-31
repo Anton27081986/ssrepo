@@ -23,7 +23,7 @@ export class ThemeService {
 		}
 	}
 
-	public toggleTheme(){
+	public toggleTheme() {
 		this.currentTheme = this.reverseTheme(this.currentTheme);
 	}
 

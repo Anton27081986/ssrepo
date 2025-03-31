@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 	providedIn: 'root',
 })
 export class CallPhoneApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public callByIpPhone(linkToCall: string): Observable<any> {
 		return this.http.get<any>(linkToCall);

@@ -1,11 +1,16 @@
-import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	model,
+} from '@angular/core';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AccordionComponent} from "@app/shared/components/accordion/accordion.component";
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { AccordionComponent } from '@app/shared/components/accordion/accordion.component';
 
 @Component({
 	selector: 'app-history-list-view',

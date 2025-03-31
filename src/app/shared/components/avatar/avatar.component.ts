@@ -1,28 +1,38 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {AsyncPipe} from "@angular/common";
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
 	selector: 'ss-avatar',
 	templateUrl: './avatar.component.html',
 	styleUrls: ['./avatar.component.scss'],
-	imports: [
-		IconComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [IconComponent, AsyncPipe],
+	standalone: true,
 })
 export class AvatarComponent implements OnInit {
-	@Input() public src: string | null = null;
-	@Input() public size: 'smallest' | 'small' | 'medium' | 'large' | 'big' = 'medium';
-	@Input() public type: 'square' | 'rectangle' | 'round' = 'square';
+	@Input()
+	public src: string | null = null;
+
+	@Input()
+	public size: 'smallest' | 'small' | 'medium' | 'large' | 'big' = 'medium';
+
+	@Input()
+	public type: 'square' | 'rectangle' | 'round' = 'square';
 
 	protected noImage = false;
 
-	protected width: BehaviorSubject<string> = new BehaviorSubject<string>('36');
-	protected height: BehaviorSubject<string> = new BehaviorSubject<string>('36');
-	protected radius: BehaviorSubject<string> = new BehaviorSubject<string>('none');
+	protected width: BehaviorSubject<string> = new BehaviorSubject<string>(
+		'36',
+	);
+
+	protected height: BehaviorSubject<string> = new BehaviorSubject<string>(
+		'36',
+	);
+
+	protected radius: BehaviorSubject<string> = new BehaviorSubject<string>(
+		'none',
+	);
 
 	protected onImageError() {
 		this.noImage = true;

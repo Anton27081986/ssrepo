@@ -10,7 +10,10 @@ import {
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { SpecificationModalComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/add-specification-modal/specification-modal.component';
@@ -19,9 +22,17 @@ import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import {
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 export enum SpecificationRowItemField {
 	service = 'service',
@@ -54,25 +65,33 @@ export enum SpecificationRowItemField {
 		NgSwitchCase,
 		NumWithSpacesPipe,
 		IconComponent,
-		NgSwitchDefault
+		NgSwitchDefault,
 	],
-	standalone: true
+	standalone: true,
 })
 export class SpecificationRowItemTrComponent implements OnInit {
 	protected readonly Permissions = Permissions;
 	protected readonly specificationRowItemField = SpecificationRowItemField;
 	public item: InputSignal<ICompletedWorkActSpecification> =
 		input.required<ICompletedWorkActSpecification>();
-	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
-		initialValue: [],
-	});
 
-	@Input() defaultCols: IStoreTableBaseColumn[] = [];
+	public permissions: Signal<string[]> = toSignal(
+		this.completedWorkActsFacade.permissions$,
+		{
+			initialValue: [],
+		},
+	);
+
+	@Input()
+	defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected advantagesTpr: string[] = [];
 
-	@ViewChild('content') public content!: ElementRef;
+	@ViewChild('content')
+	public content!: ElementRef;
 
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		public readonly columnsStateService: ColumnsStateService,
@@ -193,9 +212,6 @@ export class SpecificationRowItemTrComponent implements OnInit {
 		this.modalService.open(SpecificationModalComponent, { data: spec });
 	}
 
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
-
 	protected onDeleteSpecification(id: number): void {
 		this.modalService
 			.open(DialogComponent, {
@@ -206,7 +222,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
-			.subscribe(status => {
+			.subscribe((status) => {
 				if (status) {
 					this.completedWorkActsFacade.deleteSpecification(id);
 				}

@@ -1,12 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 import { MainMenuFacadeService } from '@app/core/facades/main-menu-facade.service';
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @UntilDestroy()
 @Component({
@@ -14,14 +19,8 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 	templateUrl: './my-menu.component.html',
 	styleUrls: ['./my-menu.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CommonModule,
-		ReactiveFormsModule,
-		NgIf,
-		NgForOf,
-		IconComponent,
-	],
-	standalone: true
+	imports: [CommonModule, ReactiveFormsModule, NgIf, NgForOf, IconComponent],
+	standalone: true,
 })
 export class MyMenuComponent implements OnInit {
 	public myMenuForm!: FormGroup;
@@ -30,7 +29,7 @@ export class MyMenuComponent implements OnInit {
 	public userProfile$?: Observable<IUserProfile | null>;
 	public filterListMenu: IMenuItemDto[] = [];
 
-	public constructor(
+	constructor(
 		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly formBuilder: FormBuilder,
 		private readonly cd: ChangeDetectorRef,
@@ -47,7 +46,7 @@ export class MyMenuComponent implements OnInit {
 		this.mainMenuFacade
 			.getFavoriteItems()
 			.pipe(untilDestroyed(this))
-			.subscribe(item => {
+			.subscribe((item) => {
 				if (item !== null) {
 					this.favorIteMenu = item![0]?.items;
 				}
@@ -58,7 +57,7 @@ export class MyMenuComponent implements OnInit {
 		this.mainMenuFacade
 			.getMainMenu()
 			.pipe(untilDestroyed(this))
-			.subscribe(item => {
+			.subscribe((item) => {
 				if (item !== null) {
 					this.listMenu = item!.slice(1);
 				}
@@ -86,12 +85,14 @@ export class MyMenuComponent implements OnInit {
 	public filterItems($event: any) {
 		if ($event.target.value.length > 2) {
 			this.filterListMenu = [];
-			this.listMenu?.forEach(element => {
-				element.items?.forEach(item => {
+			this.listMenu?.forEach((element) => {
+				element.items?.forEach((item) => {
 					if (
 						item
 							.name!.toLowerCase()
-							.indexOf(String($event.target.value).toLowerCase()) !== -1
+							.indexOf(
+								String($event.target.value).toLowerCase(),
+							) !== -1
 					) {
 						this.filterListMenu.push(item);
 					}

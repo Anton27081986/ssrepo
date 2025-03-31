@@ -30,9 +30,9 @@ $tone-blue: $blue !default;
 $tone-blue-light: rgba($blue, 0.1) !default;
 
 $tone-loop: (
-    'red' $tone-red $tone-red-light,
-    'green' $tone-green $tone-green-light,
-    'blue' $tone-blue $tone-blue-light
+	'red' $tone-red $tone-red-light,
+	'green' $tone-green $tone-green-light,
+	'blue' $tone-blue $tone-blue-light
 );
 
 // State Colors
@@ -60,15 +60,15 @@ $side-nav-folded: 80px;
 $layout-content-gutter: 25px;
 $layout-content-gutter-sm: 15px;
 $footer-height: 65px;
-$content-height: $header-height + $footer-height + $layout-content-gutter + $layout-content-gutter +
-    2px;
+$content-height: $header-height + $footer-height + $layout-content-gutter +
+	$layout-content-gutter + 2px;
 
 $theme-color-loop: (
-    is-primary $brand-primary,
-    is-secondary $brand-secondary,
-    is-success $brand-success,
-    is-danger $brand-danger,
-    is-custom $custom-1
+	is-primary $brand-primary,
+	is-secondary $brand-secondary,
+	is-success $brand-success,
+	is-danger $brand-danger,
+	is-custom $custom-1
 );
 
 // Links
@@ -96,21 +96,21 @@ $enable-print-styles: true !default;
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 $grid-breakpoints: (
-    xs: 0,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
+	xs: 0,
+	sm: 576px,
+	md: 768px,
+	lg: 992px,
+	xl: 1200px,
 ) !default;
 
 // Grid containers
 //
 // Define the maximum width of `.container` for different screen sizes.
 $container-max-widths: (
-    sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1320px,
+	sm: 540px,
+	md: 720px,
+	lg: 960px,
+	xl: 1320px,
 ) !default;
 
 // Grid columns
@@ -119,34 +119,34 @@ $container-max-widths: (
 $grid-columns: 12 !default;
 $grid-gutter-width-base: 18px !default;
 $grid-gutter-widths: (
-    xs: $grid-gutter-width-base,
-    sm: $grid-gutter-width-base,
-    md: $grid-gutter-width-base,
-    lg: $grid-gutter-width-base,
-    xl: $grid-gutter-width-base,
+	xs: $grid-gutter-width-base,
+	sm: $grid-gutter-width-base,
+	md: $grid-gutter-width-base,
+	lg: $grid-gutter-width-base,
+	xl: $grid-gutter-width-base,
 ) !default;
 
 // Spacing
 $spacer: 1rem !default;
 $spacers: () !default;
 $spacers: map-merge(
-    (
-        0: 0,
-        1: (
-            $spacer * 0.25,
-        ),
-        2: (
-            $spacer * 0.5,
-        ),
-        3: $spacer,
-        4: (
-            $spacer * 1.5,
-        ),
-        5: (
-            $spacer * 3,
-        ),
-    ),
-    $spacers
+	(
+		0: 0,
+		1: (
+			$spacer * 0.25,
+		),
+		2: (
+			$spacer * 0.5,
+		),
+		3: $spacer,
+		4: (
+			$spacer * 1.5,
+		),
+		5: (
+			$spacer * 3,
+		),
+	),
+	$spacers
 );
 
 // Fonts
@@ -213,8 +213,8 @@ $btn-line-height: 1.25 !default;
 $btn-size: 3rem !default;
 $btn-font-weight: $font-weight-normal !default;
 $btn-box-shadow:
-    inset 0 1px 0 rgba($white, 0.15),
-    0 1px 1px rgba($black, 0.075) !default;
+	inset 0 1px 0 rgba($white, 0.15),
+	0 1px 1px rgba($black, 0.075) !default;
 $btn-focus-box-shadow: 0 0 0 2px rgba($brand-primary, 0.25) !default;
 $btn-active-box-shadow: inset 0 3px 5px rgba($black, 0.125) !default;
 
@@ -301,10 +301,12 @@ $alert-border-radius: $border-radius !default;
 $alert-text-color: $body-color !default;
 
 $alert-loop: (
-    ant-alert-success $state-success-bg $state-success-text $state-success-border,
-    ant-alert-info $state-info-bg $state-info-text $state-info-border,
-    ant-alert-warning $state-warning-bg $state-warning-text $state-warning-border,
-    ant-alert-error $state-danger-bg $state-danger-text $state-danger-border
+	ant-alert-success $state-success-bg $state-success-text
+		$state-success-border,
+	ant-alert-info $state-info-bg $state-info-text $state-info-border,
+	ant-alert-warning $state-warning-bg $state-warning-text
+		$state-warning-border,
+	ant-alert-error $state-danger-bg $state-danger-text $state-danger-border
 );
 
 // Forms
@@ -321,9 +323,15 @@ $input-font-size: $font-size-base !default;
 $input-padding-x-lg: 1.25rem !default;
 $input-padding-y-lg: 0.85rem !default;
 $input-font-size-lg: 1rem !default;
-$input-height: (($font-size-base * $input-line-height) + ($input-padding-y * 2)) !default;
-$input-height-sm: (($font-size-base * $input-line-height) + ($input-padding-y-sm * 2)) !default;
-$input-height-lg: (($font-size-base * $input-line-height) + ($input-padding-y-lg * 2.28)) !default;
+$input-height: (
+	($font-size-base * $input-line-height) + ($input-padding-y * 2)
+) !default;
+$input-height-sm: (
+	($font-size-base * $input-line-height) + ($input-padding-y-sm * 2)
+) !default;
+$input-height-lg: (
+	($font-size-base * $input-line-height) + ($input-padding-y-lg * 2.28)
+) !default;
 $input-bg: $white !default;
 $input-bg-disabled: $gray-lighter !default;
 
@@ -338,7 +346,8 @@ $input-border-radius-sm: $border-radius-sm !default;
 
 $input-bg-focus: $input-bg !default;
 $input-border-focus: lighten($brand-primary, 25%) !default;
-$input-box-shadow-focus: $input-box-shadow, rgba($input-border-focus, 0.6) !default;
+$input-box-shadow-focus:
+	$input-box-shadow, rgba($input-border-focus, 0.6) !default;
 $input-color-focus: $input-color !default;
 
 $input-color-placeholder: rgba(#72849a, 0.4) !default;
@@ -387,21 +396,32 @@ $upload-list-hover: $gray-lightest !default;
 $rate-font-size: 1.25rem !default;
 $rate-color: $brand-warning !default;
 
-$select-height: (($font-size-base * $input-line-height) + ($input-padding-y * 2)) + 0.125rem !default;
-$select-height-sm: (($font-size-base * $input-line-height) + ($input-padding-y-sm * 2)) + 0.125rem !default;
-$select-height-lg: (($font-size-base * $input-line-height) + ($input-padding-y-lg * 2)) + 0.3125rem !default;
+$select-height: (
+		($font-size-base * $input-line-height) + ($input-padding-y * 2)
+	) +
+	0.125rem !default;
+$select-height-sm: (
+		($font-size-base * $input-line-height) + ($input-padding-y-sm * 2)
+	) +
+	0.125rem !default;
+$select-height-lg: (
+		($font-size-base * $input-line-height) + ($input-padding-y-lg * 2)
+	) +
+	0.3125rem !default;
 $select-tag-color: #f5f5f5;
 $select-tag-margin-y: 0.5rem !default;
 $select-tag-margin-x: 0.5rem !default;
 $select-tag-height: (
-    ($font-size-base * $input-line-height) + ($input-padding-y * 2) - ($select-tag-margin-y * 2)
+	($font-size-base * $input-line-height) + ($input-padding-y * 2) -
+		($select-tag-margin-y * 2)
 ) !default;
 $select-tag-height-sm: (
-    ($font-size-base * $input-line-height) + ($input-padding-y-sm * 2.2) -
-        ($select-tag-margin-y * 2)
+	($font-size-base * $input-line-height) + ($input-padding-y-sm * 2.2) -
+		($select-tag-margin-y * 2)
 ) !default;
 $select-tag-height-lg: (
-    ($font-size-base * $input-line-height) + ($input-padding-y-lg * 2) - ($select-tag-margin-y * 2)
+	($font-size-base * $input-line-height) + ($input-padding-y-lg * 2) -
+		($select-tag-margin-y * 2)
 ) !default;
 $select-item-min-height: 2rem !default;
 $select-tag-line-height: 1.4375rem !default;

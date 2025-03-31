@@ -12,7 +12,8 @@
 		gap: 6px;
 	}
 
-	&__tab, &__waiting {
+	&__tab,
+	&__waiting {
 		cursor: pointer;
 	}
 
@@ -56,4 +57,3 @@
 		color: $island;
 	}
 }
-

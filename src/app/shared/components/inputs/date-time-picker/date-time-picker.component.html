@@ -1,6 +1,6 @@
 <form class="datepicker-wrapper" [formGroup]="form">
     @if (showDate) {
-        <mat-form-field class="custom-form-field date" [ngClass]="{'error': error}" appearance="outline">
+        <mat-form-field class="custom-form-field date" appearance="outline" [ngClass]="{'error': error}">
             <input
                 matInput
                 formControlName="date"
@@ -14,7 +14,7 @@
 
             <mat-datepicker #datepicker></mat-datepicker>
 
-            <mat-icon matSuffix (click)="datepicker.open()" class="date__open-icon">
+            <mat-icon matSuffix class="date__open-icon" (click)="datepicker.open()">
                 <ss-icon name="calendar"></ss-icon>
             </mat-icon>
 

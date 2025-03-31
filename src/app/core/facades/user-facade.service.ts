@@ -8,7 +8,7 @@ import { UserProfileStoreService } from '@app/core/states/user-profile-store.ser
 	providedIn: 'root',
 })
 export class UserFacadeService {
-	public constructor(
+	constructor(
 		private readonly authenticationService: AuthenticationService,
 		private readonly menuApiService: MenuApiService,
 		private readonly mainMenuStoreService: MainMenuStoreService,

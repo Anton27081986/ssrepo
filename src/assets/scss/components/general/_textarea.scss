@@ -1,37 +1,37 @@
 textarea.ant-input {
-    border-radius: 16px !important;
+	border-radius: 16px !important;
 }
 
 textarea.ant-input.ant-input-stepperless {
-    background-color: white !important;
-    padding-left: 20px !important;
-    font-size: 14px;
-    min-height: 80px;
-    padding-top: 8px;
+	background-color: white !important;
+	padding-left: 20px !important;
+	font-size: 14px;
+	min-height: 80px;
+	padding-top: 8px;
 }
 
 .textarea {
-    position: relative;
+	position: relative;
 
-    .attach {
-        border-radius: 12px;
-        width: 32px;
-        height: 32px;
-        background-color: $blue;
-        bottom: 13px;
-        right: 12px;
-        position: absolute;
-    }
+	.attach {
+		border-radius: 12px;
+		width: 32px;
+		height: 32px;
+		background-color: $blue;
+		bottom: 13px;
+		right: 12px;
+		position: absolute;
+	}
 }
 
 .attach-icon {
-    path {
-        stroke: $white;
-    }
+	path {
+		stroke: $white;
+	}
 }
 
 .checkbox-group {
-    margin-top: 19px;
+	margin-top: 19px;
 }
 
 // .ant-modal textarea.ant-input.ant-input-stepperless

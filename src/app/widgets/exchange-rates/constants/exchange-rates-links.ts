@@ -1,5 +1,4 @@
-import {ILink} from "@app/widgets/exchange-rates/models/link";
-
+import { ILink } from '@app/widgets/exchange-rates/models/link';
 
 export const ExchangeRatesLinks: ILink[] = [
 	{

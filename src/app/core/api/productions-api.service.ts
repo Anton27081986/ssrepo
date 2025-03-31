@@ -11,7 +11,9 @@ import { Injectable } from '@angular/core';
 export class ProductionsApiService {
 	constructor(private readonly http: HttpClient) {}
 
-	public searchProductions(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public searchProductions(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Productions`,
 			{

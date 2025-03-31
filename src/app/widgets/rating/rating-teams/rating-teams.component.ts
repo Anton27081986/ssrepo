@@ -1,14 +1,20 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component, computed, effect, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	effect,
+	Signal,
+} from '@angular/core';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {FormControl, ReactiveFormsModule} from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IRankTypeListDto } from '@app/core/models/awards/rank-type-list-dto';
-import {CommonModule, NgIf} from "@angular/common";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {TabsControlComponent} from "@app/widgets/rating/tabs-control/tabs-control.component";
-import {RatingTeamsStateService} from "@app/widgets/rating/rating-teams/rating-teams.state";
-import {RatingTeamUsersState} from "@app/widgets/rating/rating-team-users/rating-team-users.state";
+import { CommonModule, NgIf } from '@angular/common';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { TabsControlComponent } from '@app/widgets/rating/tabs-control/tabs-control.component';
+import { RatingTeamsStateService } from '@app/widgets/rating/rating-teams/rating-teams.state';
+import { RatingTeamUsersState } from '@app/widgets/rating/rating-team-users/rating-team-users.state';
 
 @UntilDestroy()
 @Component({
@@ -21,9 +27,9 @@ import {RatingTeamUsersState} from "@app/widgets/rating/rating-team-users/rating
 		NgIf,
 		TabsControlComponent,
 		LoaderComponent,
-		ReactiveFormsModule
+		ReactiveFormsModule,
 	],
-	standalone: true
+	standalone: true,
 })
 export class RatingTeamsComponent {
 	protected readonly rating: Signal<IRankTypeListDto | null> = toSignal(
@@ -43,11 +49,15 @@ export class RatingTeamsComponent {
 		return [];
 	});
 
-	public walkerControl: FormControl<IRankTypeItemDto> = this.ratingState.walkerControl;
+	public walkerControl: FormControl<IRankTypeItemDto> =
+		this.ratingState.walkerControl;
 
-	protected isLoading: Signal<boolean> = toSignal(this.ratingState.isLoading$, {
-		requireSync: true,
-	});
+	protected isLoading: Signal<boolean> = toSignal(
+		this.ratingState.isLoading$,
+		{
+			requireSync: true,
+		},
+	);
 
 	constructor(
 		private readonly ratingState: RatingTeamsStateService,
@@ -57,7 +67,9 @@ export class RatingTeamsComponent {
 			const rating = this.rating();
 
 			if (rating) {
-				const findWalkerInItems = rating.items.find(item => item.id === rating.rankTypeId);
+				const findWalkerInItems = rating.items.find(
+					(item) => item.id === rating.rankTypeId,
+				);
 
 				if (findWalkerInItems) {
 					this.walkerControl.setValue(findWalkerInItems);
@@ -67,8 +79,10 @@ export class RatingTeamsComponent {
 			}
 		});
 
-		this.walkerControl.valueChanges.pipe(untilDestroyed(this)).subscribe(val => {
-			this.ratingUsersState.offset$.next(0);
-		});
+		this.walkerControl.valueChanges
+			.pipe(untilDestroyed(this))
+			.subscribe((val) => {
+				this.ratingUsersState.offset$.next(0);
+			});
 	}
 }

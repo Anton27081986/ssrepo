@@ -43,9 +43,11 @@ export class BirthdayComponent {
 		this.dateBirthCtrl.valueChanges.pipe(
 			filter(Boolean),
 			tap(() => this.loading.set(true)),
-			switchMap(date =>
+			switchMap((date) =>
 				this.birthdaysApiService.getBirthday(date).pipe(
-					tap(birthdaysList => this.reminderLink.set(birthdaysList.reminderLink || '')),
+					tap((birthdaysList) =>
+						this.reminderLink.set(birthdaysList.reminderLink || ''),
+					),
 					map(({ days }) => days || []),
 					tap(() => this.loading.set(false)),
 					catchError(() => {
@@ -64,15 +66,18 @@ export class BirthdayComponent {
 
 	public selectedTabContent = computed(() => {
 		const users =
-			this.birthDays().find(day => day.name === this.selectedTabName())?.items || [];
+			this.birthDays().find((day) => day.name === this.selectedTabName())
+				?.items || [];
 
-		return users.map(user => this.toIUserDto(user));
+		return users.map((user) => this.toIUserDto(user));
 	});
 
-	public constructor() {
+	constructor() {
 		effect(
 			() =>
-				this.selectedTabName.set(this.birthDays().length ? this.birthDays()[0].name! : ''),
+				this.selectedTabName.set(
+					this.birthDays().length ? this.birthDays()[0].name! : '',
+				),
 			{ allowSignalWrites: true },
 		);
 	}
@@ -85,15 +90,21 @@ export class BirthdayComponent {
 		this.selectedTabName.set(name);
 	}
 
-	protected toTabsItemsFormat(birthDays: IDayDto[], shortYear: (date: string) => string): ITab[] {
-		return birthDays.map(item => ({
+	protected toTabsItemsFormat(
+		birthDays: IDayDto[],
+		shortYear: (date: string) => string,
+	): ITab[] {
+		return birthDays.map((item) => ({
 			name: item.name,
 			label: shortYear(item.name!),
 			isVisible: true,
 		})) as ITab[];
 	}
 
-	protected toITabFormat(name: string, shortYear: (date: string) => string): ITab {
+	protected toITabFormat(
+		name: string,
+		shortYear: (date: string) => string,
+	): ITab {
 		return {
 			name,
 			label: shortYear(name),

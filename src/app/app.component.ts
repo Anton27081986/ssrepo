@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
-import { Title} from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUser } from '@auth/models/user';
 import { ProfileService } from '@app/pages/profile/profile.service';
 import { ThemeService } from '@app/shared/theme/theme.service';
 import { tap } from 'rxjs';
-import { animate, query, style, transition, trigger } from '@angular/animations';
+import {
+	animate,
+	query,
+	style,
+	transition,
+	trigger,
+} from '@angular/animations';
 import { RouterOutlet } from '@angular/router';
-import {NotificationToastComponent} from "@app/widgets/notification-toast/notification-toast.component";
-import {CommonModule} from "@angular/common";
+import { NotificationToastComponent } from '@app/widgets/notification-toast/notification-toast.component';
+import { CommonModule } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -20,53 +26,59 @@ import {CommonModule} from "@angular/common";
 		trigger('routeAnimations', [
 			transition('* <=> *', [
 				// Скрываем новый экран до начала анимации
-				query(':enter', [style({opacity: 0})], {optional: true}),
+				query(':enter', [style({ opacity: 0 })], { optional: true }),
 				// Анимируем уходящий экран
-				query(':leave', [animate('500ms', style({opacity: 0}))], {optional: true}),
+				query(':leave', [animate('500ms', style({ opacity: 0 }))], {
+					optional: true,
+				}),
 				// Анимируем входящий экран
-				query(':enter', [animate('500ms', style({opacity: 1}))], {optional: true}),
+				query(':enter', [animate('500ms', style({ opacity: 1 }))], {
+					optional: true,
+				}),
 			]),
 		]),
 	],
-	imports: [
-		CommonModule,
-		RouterOutlet,
-		NotificationToastComponent
-	],
-	standalone: true
+	imports: [CommonModule, RouterOutlet, NotificationToastComponent],
+	standalone: true,
 })
 export class AppComponent implements OnInit {
 	public title!: string;
 	public user?: IUser | null;
 
-	public constructor(
+	constructor(
 		private readonly titleService: Title,
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
 	) {
-		this.titleService.setTitle(`${environment.tabTitle} ${environment.applicationTitle}`);
+		this.titleService.setTitle(
+			`${environment.tabTitle} ${environment.applicationTitle}`,
+		);
 	}
 
 	public prepareRoute(outlet: RouterOutlet) {
-		return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
+		return (
+			outlet &&
+			outlet.activatedRouteData &&
+			outlet.activatedRouteData.animation
+		);
 	}
 
 	public ngOnInit(): void {
 		this.profileService.isDarkTheme$
 			.pipe(
-				tap(switchValue => {
+				tap((switchValue) => {
 					if (switchValue) {
 						this.profileService
 							.updateTheme(true)
 							.pipe(untilDestroyed(this))
-							.subscribe(_ => {
+							.subscribe((_) => {
 								this.themeService.setDarkTheme();
 							});
 					} else {
 						this.profileService
 							.updateTheme(false)
 							.pipe(untilDestroyed(this))
-							.subscribe(_ => {
+							.subscribe((_) => {
 								this.themeService.setDefaultTheme();
 							});
 					}

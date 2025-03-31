@@ -1,18 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'src/styles/colors.scss';
-@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import "./../node_modules/@front-components/components/lib/styles/custom-variables";
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import './../node_modules/@front-components/components/lib/styles/custom-variables';
 @import './../node_modules/ckeditor5/dist/ckeditor5.css';
 
 @font-face {
 	font-family: 'Inter';
-	src: url("./assets/fonts/inter/Inter.ttf");
+	src: url('./assets/fonts/inter/Inter.ttf');
 }
 
 body {
 	font-family: 'Inter', sans-serif;
 	background-color: $background !important;
-	color: #0E0F10;
+	color: #0e0f10;
 }
 
 * {

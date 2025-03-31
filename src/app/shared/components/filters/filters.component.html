@@ -6,12 +6,12 @@
 				<ss-icon height="18" width="18" name="logout" class="filter-button" (click)="toggleFilters()"></ss-icon>
 			}
 		</div>
-		<form [formGroup]="filtersForm" class="filters-form">
+		<form class="filters-form" [formGroup]="filtersForm">
 			<div class="filters-form-header">
 				<ss-caption class="filters-form-header-button" size="2" (click)="resetForm()">
 					Очистить все
 				</ss-caption>
-				<ss-icon (click)="resetForm()" height="8" width="8" name="close"></ss-icon>
+				<ss-icon height="8" width="8" name="close" (click)="resetForm()"></ss-icon>
 			</div>
 			@for (filter of filters; track $index) {
 				<div class="filters-form-item">

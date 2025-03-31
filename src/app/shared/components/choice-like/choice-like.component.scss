@@ -7,20 +7,20 @@
 	flex-wrap: nowrap;
 	gap: 10px;
 	position: absolute;
-	background-color: #FFFFFF;
+	background-color: #ffffff;
 	border-radius: 16px;
 	padding: 12px;
 	bottom: 40px;
 	right: -20px;
 	z-index: 10001;
-	border: 1px solid #BCC3CE;
+	border: 1px solid #bcc3ce;
 
 	&__item {
 		cursor: pointer;
 		padding: 4px;
 
 		&:hover {
-			background-color: #BCC3CE;
+			background-color: #bcc3ce;
 			padding: 4px;
 			border-radius: 16px;
 		}

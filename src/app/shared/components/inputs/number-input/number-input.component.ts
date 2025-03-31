@@ -6,19 +6,30 @@ import {
 	signal,
 	WritableSignal,
 } from '@angular/core';
-import {AsyncPipe, CommonModule, NgClass} from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, CommonModule, NgClass } from '@angular/common';
+import {
+	ControlValueAccessor,
+	NG_VALUE_ACCESSOR,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { ICON_PADDING } from '@app/shared/components/inputs/input-v2/constants/icon-padding';
 import { BehaviorSubject } from 'rxjs';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-number-input-v2',
 	standalone: true,
 	imports: [
-		CommonModule,ReactiveFormsModule, MapperPipe, NgClass, AsyncPipe, CaptionComponent, IconComponent],
+		CommonModule,
+		ReactiveFormsModule,
+		MapperPipe,
+		NgClass,
+		AsyncPipe,
+		CaptionComponent,
+		IconComponent,
+	],
 	templateUrl: './number-input.component.html',
 	styleUrl: './number-input.component.scss',
 	host: {
@@ -41,7 +52,10 @@ export class NumberInputComponent implements ControlValueAccessor {
 	public step = input<number>(0.01);
 	public showClearButton = input<boolean>(true);
 	public errorText = input<string>('');
-	public value$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+	public value$: BehaviorSubject<number | null> = new BehaviorSubject<
+		number | null
+	>(null);
+
 	protected disabled: WritableSignal<boolean> = signal(false);
 
 	private onChange!: (value: number | null) => void;
@@ -89,13 +103,17 @@ export class NumberInputComponent implements ControlValueAccessor {
 	}
 
 	valueUp() {
-		const result = Number(((this.value$.value ?? 0) + this.step()).toFixed(2));
+		const result = Number(
+			((this.value$.value ?? 0) + this.step()).toFixed(2),
+		);
 
 		this.updateControl(result);
 	}
 
 	valueDown() {
-		const result = Number(((this.value$.value ?? 0) - this.step()).toFixed(2));
+		const result = Number(
+			((this.value$.value ?? 0) - this.step()).toFixed(2),
+		);
 
 		this.updateControl(result < 0 ? 0 : result);
 	}

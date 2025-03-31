@@ -9,7 +9,7 @@ import { environment } from '@environments/environment';
 	providedIn: 'root',
 })
 export class AddressBookApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public getAddressBookUsers(
 		limit: number,
@@ -34,10 +34,15 @@ export class AddressBookApiService {
 	}
 
 	public addToAddressBook(userId: number): Observable<any> {
-		return this.http.post(`${environment.apiUrl}/api/auth/AddressBook/${userId}`, { userId });
+		return this.http.post(
+			`${environment.apiUrl}/api/auth/AddressBook/${userId}`,
+			{ userId },
+		);
 	}
 
 	public deleteFromAddressBook(userId: number): Observable<any> {
-		return this.http.delete(`${environment.apiUrl}/api/auth/AddressBook/${userId}`);
+		return this.http.delete(
+			`${environment.apiUrl}/api/auth/AddressBook/${userId}`,
+		);
 	}
 }

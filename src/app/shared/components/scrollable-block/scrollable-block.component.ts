@@ -1,4 +1,9 @@
-import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core';
+import {
+	Component,
+	HostBinding,
+	Input,
+	ViewEncapsulation,
+} from '@angular/core';
 
 @Component({
 	selector: 'app-scrollable-block',
@@ -12,11 +17,18 @@ import { Component, HostBinding, Input, ViewEncapsulation } from '@angular/core'
 		'[class.scrollable-block--padding]': 'paddingInline',
 		'[class.scrollable-block--not-auto-size]': 'disableAutoSize',
 	},
-	standalone: true
+	standalone: true,
 })
 export class ScrollableBlockComponent {
-	@Input() horizontalScroll: boolean = false;
-	@Input() verticalScroll: boolean = true;
-	@Input() paddingInline: boolean = false;
-	@Input() disableAutoSize: boolean = false;
+	@Input()
+	horizontalScroll = false;
+
+	@Input()
+	verticalScroll = true;
+
+	@Input()
+	paddingInline = false;
+
+	@Input()
+	disableAutoSize = false;
 }

@@ -1,7 +1,7 @@
 <div class="clients-proposals-page">
 	<div class="clients-proposals-page__header">
 		<ss-headline size="h3">Контакт с клиентом: рекомендации по ВГП</ss-headline>
-		<div class="clients-proposals-page__download-reports" *ngIf="canLoadFile">
+		<div *ngIf="canLoadFile" class="clients-proposals-page__download-reports">
 			<ss-text [size]="'1'">Отчеты по пользователю</ss-text>
 			<div class="clients-proposals-page__reports">
 				<ss-tooltip-menu icon="box">
@@ -16,8 +16,8 @@
 		</div>
 			<div class="clients-proposals-page__instructions">
 					<ss-icon [tooltip]="'Инструкция по контакту с клиентом'" [theme]="TooltipTheme.MAIN"
-							 [position]="TooltipPosition.DEFAULT" (click)="downloadInstruction(clientProposalsFacadeService.instructionFileLink)" [width]="'20'"
-							 [height]="'20'" [name]="'download'"></ss-icon>
+							 [position]="TooltipPosition.DEFAULT" [width]="'20'" [height]="'20'"
+							 [name]="'download'" (click)="downloadInstruction(clientProposalsFacadeService.instructionFileLink)"></ss-icon>
 			</div>
 	</div>
 	<div class="clients-proposals-page__content">
@@ -25,7 +25,7 @@
 			<img src="../../../../assets/images/client-proposals-main-page/client-proposals-main-page.png" alt="" />
 			<ss-headline size="h4">Найдите клиента в поиске</ss-headline>
 		</div>
-		<ss-search-input [onlyActive]="true" class="clients-proposals-page__search-input" [searchType]="'client'"
+		<ss-search-input class="clients-proposals-page__search-input" [onlyActive]="true" [searchType]="'client'"
 						 (select)="getSearchClient($event)"></ss-search-input>
 	</div>
 </div>

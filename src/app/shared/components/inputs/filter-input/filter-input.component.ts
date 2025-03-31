@@ -8,33 +8,37 @@ import {
 	Self,
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CommonModule, NgIf} from "@angular/common";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
 	selector: 'ss-filter-input',
 	templateUrl: './filter-input.component.html',
 	styleUrls: ['./filter-input.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CommonModule,
-		CaptionComponent,
-		IconComponent,
-		NgIf
-	],
-	standalone: true
+	imports: [CommonModule, CaptionComponent, IconComponent, NgIf],
+	standalone: true,
 })
 export class FilterInputComponent {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public error: string | undefined;
-	@Output() protected search = new EventEmitter();
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
+
+	@Input()
+	public disabled = false;
+
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public error: string | undefined;
+
+	@Output()
+	protected search = new EventEmitter();
 
 	public value: any = '';
 
-	public constructor(
+	constructor(
 		// Retrieve the dependency only from the local injector,
 		// not from parent or ancestors.
 		@Self()

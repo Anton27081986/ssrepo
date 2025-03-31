@@ -1,22 +1,28 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	Signal,
+} from '@angular/core';
 import { IResponse } from '@app/core/utils/response';
 import { ITradeList } from '@app/core/models/client-proposails/trade-list';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { IClientProposalsTradeListTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { ClientProposalsTradeListTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.state';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-	ClientProposalsTabsCanvasComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { ClientProposalsTabsCanvasComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { DateRangeComponent } from '@app/shared/components/inputs/date-range/date-range.component';
+import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -35,12 +41,12 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		TableComponent,
 		EmptyDataPageComponent,
 		PaginationComponent,
-		AsyncPipe
+		AsyncPipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientProposalsTradeListTabComponent {
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	protected isLoader$ = this.clientProposalsTradeListState.isLoader$;
 	protected pageIndex = this.clientProposalsTradeListState.pageIndex;
 	protected pageSize = this.clientProposalsTradeListState.pageSize;
@@ -88,10 +94,12 @@ export class ClientProposalsTradeListTabComponent {
 		},
 	];
 
-	constructor(private readonly clientProposalsTradeListState: ClientProposalsTradeListTabState) {}
+	constructor(
+		private readonly clientProposalsTradeListState: ClientProposalsTradeListTabState,
+	) {}
 
 	protected getTableItems(production: IResponse<ITradeList>): ITableItem[] {
-		const productionTableItem = production.items.map(x => {
+		const productionTableItem = production.items.map((x) => {
 			const tableItem: IClientProposalsTradeListTableItem =
 				{} as IClientProposalsTradeListTableItem;
 
@@ -126,7 +134,9 @@ export class ClientProposalsTradeListTabComponent {
 		if ($event === 1) {
 			this.clientProposalsTradeListState.offset$.next(0);
 		} else {
-			this.clientProposalsTradeListState.offset$.next(this.pageSize * $event - this.pageSize);
+			this.clientProposalsTradeListState.offset$.next(
+				this.pageSize * $event - this.pageSize,
+			);
 		}
 
 		this.pageIndex = $event;
@@ -134,13 +144,18 @@ export class ClientProposalsTradeListTabComponent {
 
 	public onDateRangeFilter(dates: any) {
 		const from =
-			dates && typeof dates === 'string' ? dates.split('-')[0].split('.') : undefined;
+			dates && typeof dates === 'string'
+				? dates.split('-')[0].split('.')
+				: undefined;
 
 		const preparedFrom = from
 			? `${[from[2], from[1], parseInt(from[0], 10)].join('-')}T00:00:00.000Z`
 			: undefined;
 
-		const to = dates && typeof dates === 'string' ? dates.split('-')[1].split('.') : undefined;
+		const to =
+			dates && typeof dates === 'string'
+				? dates.split('-')[1].split('.')
+				: undefined;
 		const preparedTo = to
 			? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
 			: undefined;

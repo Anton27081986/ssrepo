@@ -7,10 +7,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 	providedIn: 'root',
 })
 export class LikesApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Добавить like */
-	public setLike(objectId: number, type?: number, awardId?: number): Observable<any> {
+	public setLike(
+		objectId: number,
+		type?: number,
+		awardId?: number,
+	): Observable<any> {
 		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
 			objectId,
 			type,
@@ -20,8 +24,13 @@ export class LikesApiService {
 
 	/** Удалить like */
 	public deleteLike(objectId: number, type: number): Observable<any> {
-		return this.http.delete<any[]>(`${environment.apiUrl}/api/awards/likes`, {
-			params: new HttpParams().set('objectId', objectId).set('type', type),
-		});
+		return this.http.delete<any[]>(
+			`${environment.apiUrl}/api/awards/likes`,
+			{
+				params: new HttpParams()
+					.set('objectId', objectId)
+					.set('type', type),
+			},
+		);
 	}
 }

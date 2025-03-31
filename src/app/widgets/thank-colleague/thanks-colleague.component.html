@@ -7,7 +7,7 @@
 	</div>
 	<ss-divider></ss-divider>
 	<div class="content">
-		<div class="content__scroll" (scrollend)="loadMoreThanks()" #thanks>
+		<div #thanks class="content__scroll" (scrollend)="loadMoreThanks()">
 			@if (isLoading()){
 				<ss-loader></ss-loader>
 			}

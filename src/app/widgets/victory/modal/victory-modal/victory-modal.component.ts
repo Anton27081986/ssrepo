@@ -4,29 +4,36 @@ import { ModalRef } from '@app/core/modal/modal.ref';
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IWinsItemDto } from '@app/core/models/awards/wins-item-dto';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { IResponse } from '@app/core/utils/response';
 import { ICommentsItemDto } from '@app/core/models/awards/comments-item-dto';
 import { IObjectType } from '@app/core/models/awards/object-type';
 import { FormControl, Validators } from '@angular/forms';
 import { Awards } from '@app/core/api/awards';
-import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {
-	FormControlInputWithFuncEditComponent
-} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {VictoryCommentComponent} from "@app/widgets/victory/victory-comment/victory-comment.component";
-import {VictoryService} from "@app/widgets/victory/victory.service";
-import {VictoryEventEnum, VictoryRootService} from "@app/widgets/victory/victory-root.service";
-import {VictoryState} from "@app/widgets/victory/victory.state";
-import {UserCardComponent} from "@app/shared/components/user-card/user-card.component";
+	LikeComponent,
+	LikeStateEnum,
+} from '@app/shared/components/like/like.component';
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { ChoiceLikeComponent } from '@app/shared/components/choice-like/choice-like.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { FormControlInputWithFuncEditComponent } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { VictoryCommentComponent } from '@app/widgets/victory/victory-comment/victory-comment.component';
+import { VictoryService } from '@app/widgets/victory/victory.service';
+import {
+	VictoryEventEnum,
+	VictoryRootService,
+} from '@app/widgets/victory/victory-root.service';
+import { VictoryState } from '@app/widgets/victory/victory.state';
+import { UserCardComponent } from '@app/shared/components/user-card/user-card.component';
 
 export interface VictoryModal {
 	victory: IWinsItemDto;
@@ -54,20 +61,21 @@ export interface VictoryModal {
 		EmptyPlaceholderComponent,
 		HeadlineComponent,
 		FormControlInputWithFuncEditComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class VictoryModalComponent {
 	protected victory$: Observable<IWinsItemDto>;
 
-	protected readonly isExtendedMode$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
+	protected readonly isExtendedMode$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	protected readonly comments$: Observable<IResponse<ICommentsItemDto>>;
 	protected readonly subscription: Subscription = new Subscription();
-	protected readonly funcEdit$: Observable<boolean> = this.victoryState.activeFuncCommentEdit$;
+	protected readonly funcEdit$: Observable<boolean> =
+		this.victoryState.activeFuncCommentEdit$;
+
 	protected readonly updateComment$: BehaviorSubject<ICommentsItemDto | null> =
 		new BehaviorSubject<ICommentsItemDto | null>(null);
 
@@ -75,10 +83,15 @@ export class VictoryModalComponent {
 		new BehaviorSubject<LikeStateEnum>(LikeStateEnum.default);
 
 	protected readonly authUserId: number | null = null;
-	protected isChoiceLike: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected isChoiceLike: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
-	protected notes: FormControl<string | null> = new FormControl(null, [Validators.required]);
+	protected notes: FormControl<string | null> = new FormControl(null, [
+		Validators.required,
+	]);
 
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
 	constructor(
 		private readonly modalRef: ModalRef,
 		@Inject(DIALOG_DATA) private readonly data: VictoryModal,
@@ -92,11 +105,13 @@ export class VictoryModalComponent {
 			objectId: this.data.victory.id,
 			type: IObjectType.WINS,
 		});
-		this.victory$ = this.victoryService.getWinModal(this.data.victory.id).pipe(
-			tap(victory => {
-				this.getStateLike(victory);
-			}),
-		);
+		this.victory$ = this.victoryService
+			.getWinModal(this.data.victory.id)
+			.pipe(
+				tap((victory) => {
+					this.getStateLike(victory);
+				}),
+			);
 	}
 
 	protected close() {
@@ -105,7 +120,10 @@ export class VictoryModalComponent {
 	}
 
 	protected addOrUpdateComment(id: number) {
-		if (!this.victoryState.activeFuncCommentEdit$.value && this.notes.valid) {
+		if (
+			!this.victoryState.activeFuncCommentEdit$.value &&
+			this.notes.valid
+		) {
 			this.subscription.add(
 				this.victoryService
 					.addComments({
@@ -177,7 +195,9 @@ export class VictoryModalComponent {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryUpdated });
+				this.victoryRootService.event$.next({
+					type: VictoryEventEnum.victoryUpdated,
+				});
 			});
 	}
 
@@ -190,7 +210,9 @@ export class VictoryModalComponent {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.victoryRootService.event$.next({ type: VictoryEventEnum.victoryUpdated });
+				this.victoryRootService.event$.next({
+					type: VictoryEventEnum.victoryUpdated,
+				});
 			});
 	}
 
@@ -226,7 +248,4 @@ export class VictoryModalComponent {
 			this.typeLike$.next(LikeStateEnum.default);
 		}
 	}
-
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly TooltipTheme = TooltipTheme;
 }

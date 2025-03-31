@@ -1,80 +1,80 @@
 @use 'src/assets/scss/_mixins.scss' as *;
 
 body {
-    font-family: $font-family-inter;
-    background-color: $gray;
-    color: $body-color;
+	font-family: $font-family-inter;
+	background-color: $gray;
+	color: $body-color;
 
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box;
-    }
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
 
-    a {
-        color: $link-color;
-    }
+	a {
+		color: $link-color;
+	}
 
-    a {
-        color: $link-color;
+	a {
+		color: $link-color;
 
-        &:active,
-        &:hover {
-            color: $link-hover-color;
-        }
+		&:active,
+		&:hover {
+			color: $link-hover-color;
+		}
 
-        &:focus {
-            text-decoration: none;
-        }
+		&:focus {
+			text-decoration: none;
+		}
 
-        &.text-gray,
-        &.text-muted {
-            &:hover {
-                color: $gray-dark !important;
-            }
-        }
+		&.text-gray,
+		&.text-muted {
+			&:hover {
+				color: $gray-dark !important;
+			}
+		}
 
-        &.text-dark {
-            &:hover {
-                color: $link-hover-color !important;
-            }
-        }
+		&.text-dark {
+			&:hover {
+				color: $link-hover-color !important;
+			}
+		}
 
-        &.file {
-            &:hover {
-                background-color: #f9fbfd;
-            }
-        }
-    }
+		&.file {
+			&:hover {
+				background-color: #f9fbfd;
+			}
+		}
+	}
 
-    hr {
-        border: 0;
-        border-top: 1px solid $border-color;
-        margin-top: 0;
-        margin-bottom: 0;
-    }
+	hr {
+		border: 0;
+		border-top: 1px solid $border-color;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
 
-    .ant-menu-horizontal {
-        border-bottom: unset;
-    }
+	.ant-menu-horizontal {
+		border-bottom: unset;
+	}
 
-    .ant-menu-item a:hover {
-        color: #4770ff !important;
-    }
+	.ant-menu-item a:hover {
+		color: #4770ff !important;
+	}
 
-    .ant-menu.ant-menu-root {
-        border: unset;
-    }
+	.ant-menu.ant-menu-root {
+		border: unset;
+	}
 
-    .ant-list-split .ant-list-item {
-        border-bottom: unset;
-    }
+	.ant-list-split .ant-list-item {
+		border-bottom: unset;
+	}
 
-    .ant-list-item {
-        padding: unset;
-    }
+	.ant-list-item {
+		padding: unset;
+	}
 }
 
 .anticon {
-    fill-opacity: 0;
+	fill-opacity: 0;
 }

@@ -52,7 +52,7 @@
 }
 
 :host-context(.dark) .accordion {
-	background-color: $dark-island!important;
+	background-color: $dark-island !important;
 
 	::ng-deep svg {
 		stroke: $dark-text;

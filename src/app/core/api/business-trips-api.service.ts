@@ -10,7 +10,7 @@ import { IResponse } from '@app/core/utils/response';
 	providedIn: 'root',
 })
 export class BusinessTripsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public getBusinessTrips(
 		filter: IBusinessTripsFilter,

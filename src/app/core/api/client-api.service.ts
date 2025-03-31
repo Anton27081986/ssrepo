@@ -15,7 +15,7 @@ import { IClientEditRequest } from '@app/core/models/company/client-edit-request
 	providedIn: 'root',
 })
 export class ClientApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public getClients(filter: IClientsFilter) {
 		return this.http.post<IResponse<IClientItemDto>>(
@@ -25,7 +25,9 @@ export class ClientApiService {
 	}
 
 	public getClientCardById(id: number): Observable<IClientDataDto> {
-		return this.http.get<IClientDataDto>(`${environment.apiUrl}/api/company/clients/${id}`);
+		return this.http.get<IClientDataDto>(
+			`${environment.apiUrl}/api/company/clients/${id}`,
+		);
 	}
 
 	public getManagers(id: number): Observable<IManagerItemDto[]> {
@@ -40,7 +42,10 @@ export class ClientApiService {
 		);
 	}
 
-	public getContractors(id: number, isActiveOnly: boolean): Observable<IContractorItemDto[]> {
+	public getContractors(
+		id: number,
+		isActiveOnly: boolean,
+	): Observable<IContractorItemDto[]> {
 		return this.http.get<IContractorItemDto[]>(
 			`${environment.apiUrl}/api/company/clients/${id}/contractors`,
 			{
@@ -49,7 +54,9 @@ export class ClientApiService {
 		);
 	}
 
-	public getRegions(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getRegions(
+		searchTerm: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/regions`,
 			{
@@ -73,7 +80,9 @@ export class ClientApiService {
 		);
 	}
 
-	public getSubSectors(searchTerm: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getSubSectors(
+		searchTerm: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/subsectors`,
 			{
@@ -139,7 +148,9 @@ export class ClientApiService {
 		);
 	}
 
-	public getClientIdDictionary(id: number): Observable<IResponse<IDictionaryItemDto>> {
+	public getClientIdDictionary(
+		id: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/clients/${id}`,
 		);
