@@ -57,7 +57,7 @@ export class SpecificationModalComponent {
 		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.addSpecificationForm = new FormGroup({
-			service: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			serviceId: new FormControl<number | null>(null, [Validators.required]),
 			comment: new FormControl<string | null>(null, [Validators.required]),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
