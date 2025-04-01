@@ -10,20 +10,24 @@
 	<div class="content">
 		<div class="content__column">
 			<div class="content__column__item">
-				<ss-text size="4">Номер акта (внешний)</ss-text>
+				<ss-text size="4">Номер Поставщика</ss-text>
 				<ss-text size="3">{{ act()?.externalActNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Номер акта (внутренний)</ss-text>
+				<ss-text size="4">Номер БУ</ss-text>
 				<ss-text size="3">{{ act()?.internalActNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Дата акта (внешний)</ss-text>
+				<ss-text size="4">Дата оказания услуги</ss-text>
 				<ss-text size="3">{{ act()?.externalActDate | date: 'dd.MM.yyyy' }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Дата акта (внутренний)</ss-text>
+				<ss-text size="4">Дата БУ</ss-text>
 				<ss-text size="3">{{ act()?.internalActDate | date: 'dd.MM.yyyy' }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата КИСП</ss-text>
+				<ss-text size="3">{{ act()?.dateUpload | date: 'dd.MM.yyyy' }}</ss-text>
 			</div>
 		</div>
 		<div class="content__column">
@@ -42,6 +46,10 @@
 			<div class="content__column__item">
 				<ss-text size="4">БЕ Плательщика</ss-text>
 				<ss-text size="3">{{ act()?.payerBuUnit?.name }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Комментарий</ss-text>
+				<ss-text size="3">{{ act()?.comment }}</ss-text>
 			</div>
 		</div>
 		<div class="content__column">

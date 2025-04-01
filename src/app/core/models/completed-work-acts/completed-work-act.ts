@@ -24,4 +24,6 @@ export interface ICompletedWorkAct {
 	providerContractorLinkUrl: string;
 	totalAmount: number;
 	contractId: number;
+	dateUpload: string;
+	comment: string;
 }

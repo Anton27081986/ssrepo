@@ -6,9 +6,7 @@ import { IResponse } from '@app/core/utils/response';
 import { ITableItem } from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { Router } from '@angular/router';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -16,6 +14,8 @@ import { NotificationToastService } from '@app/core/services/notification-toast.
 	styleUrls: ['./completed-work-acts.component.scss'],
 })
 export class CompletedWorkActsComponent {
+	private readonly filtersKey: string = 'work-acts-filters';
+
 	public pageSize = 20;
 	public pageIndex = 1;
 	public offset = 0;
@@ -110,9 +110,16 @@ export class CompletedWorkActsComponent {
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
+		private readonly localStorageService: LocalStorageService,
 	) {
+		const savedFilters = this.localStorageService.getItem<IFilter[]>(
+			this.filtersKey,
+		);
+
+		if (savedFilters) {
+			this.filters = savedFilters;
+		}
+
 		this.getFilteredActs();
 	}
 
@@ -160,10 +167,20 @@ export class CompletedWorkActsComponent {
 				},
 			)}`;
 
+			tableItem.uploadActDate = `${new Date(Date.parse(x.dateUpload)).toLocaleString(
+				'ru-RU',
+				{
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				},
+			)}`;
+
 			tableItem.externalActNumber = x.externalActNumber ?? '-';
 
 			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
+			tableItem.buUnit = x.buUnit?.name ?? '-';
 			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
@@ -231,6 +248,8 @@ export class CompletedWorkActsComponent {
 						filter.value?.toString().replace(',', '.') || null;
 			}
 		}
+
+		this.localStorageService.setItem(this.filtersKey, this.filters);
 
 		this.completedWorkActsFacade.applyFilters(preparedFilter);
 	}

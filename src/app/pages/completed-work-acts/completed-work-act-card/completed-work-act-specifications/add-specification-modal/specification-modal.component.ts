@@ -57,7 +57,7 @@ export class SpecificationModalComponent {
 		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.addSpecificationForm = new FormGroup({
-			serviceId: new FormControl<number | null>(null, [Validators.required]),
+			service: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			comment: new FormControl<string | null>(null, [Validators.required]),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
@@ -114,29 +114,20 @@ export class SpecificationModalComponent {
 
 	protected resetValueControlMySection(event: any, control: AbstractControl): void {
 		control.markAsTouched();
+
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
 			this.mySection = undefined;
 		}
 	}
 
-	protected resetValueControl(
-		event: Event,
-		control: AbstractControl,
-		fieldName: keyof ICompletedWorkActSpecification,
-	): void {
-		control.markAsTouched();
-		if (!(event.target as HTMLInputElement).value) {
-			control.setValue(null);
-			this.spec = { ...this.spec, [fieldName]: undefined };
-		}
-	}
-
 	protected amountValidator(control: FormControl): ValidationErrors | null {
 		const value = control.value;
+
 		if (value && !/^\d*\.?\d*$/.test(value)) {
 			return { invalidAmount: true };
 		}
+
 		return null;
 	}
 
