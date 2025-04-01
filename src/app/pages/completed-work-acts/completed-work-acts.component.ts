@@ -181,6 +181,7 @@ export class CompletedWorkActsComponent {
 			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
 			tableItem.buUnit = x.buUnit?.name ?? '-';
+			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
 				text: x.providerContractor?.name ?? '-',
