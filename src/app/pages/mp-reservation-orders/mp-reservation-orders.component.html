@@ -3,6 +3,8 @@
 		МП
 	</snab-text>
 	<div class="app-mp-reservation-orders__header-filter">
+		<snab-button text="Добавить заказ" [size]="Size.Large" (click)="openPopupAddOrder()"
+		></snab-button>
 		<snab-button text="Назначить дату обеспечения" [size]="Size.Large"
 					 [disabled]="!selectedOrders.size"
 					 (click)="openPopupDateProvision()"
@@ -11,16 +13,16 @@
 					 [iconPosition]="IconPosition.OnlyIcon"
 					 [icon]="IconType.FileNotFound" (click)="downloadInstr()">
 		</snab-button>
-		<ss-dropdown-button title="Фильтры">
-			<ss-filters [isFiltersVisible]="true" [(filters)]="filters"
+		<ss-dropdown-button [isDropdownVisible]="!isLoader()" title="Фильтры">
+			<ss-filters [isFiltersVisible]="!isLoader()" [(filters)]="filters"
 						(applyFilter)="getFilteredOrders(true);">
 			</ss-filters>
 		</ss-dropdown-button>
 	</div>
 </div>
 <div class="app-mp-reservation-orders__body">
-	<ng-container *ngIf="orders() as order">
-		<ss-table-v2 class="table">
+	<ng-container *ngIf="orders() as orderList">
+		<table class="table">
 			<thead class="table__thead table__thead__sticky">
 			<tr>
 				<th>
@@ -30,10 +32,6 @@
 				</th>
 				<th>
 					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Код заказа</snab-text>
-				</th>
-				<th>
-					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Заявка на продажу/перемещение
-					</snab-text>
 				</th>
 				<th>
 					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Статус</snab-text>
@@ -46,6 +44,9 @@
 				</th>
 				<th>
 					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">ТП</snab-text>
+				</th>
+				<th>
+					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Клиент</snab-text>
 				</th>
 				<th>
 					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Кол-во</snab-text>
@@ -75,59 +76,74 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr *ngFor="let orderMok of ordersMok">
+			<tr *ngFor="let order of orders()?.items">
 				<td>
 					<input type="checkbox"
-						   [checked]="selectedOrders.has(orderMok.orderCode)"
-						   (change)="onCheckboxChange($event, orderMok.orderCode)"/>
+						   [checked]="selectedOrders?.has(order.id)"
+						   (change)="onCheckboxChange($event, order.id)"/>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.orderCode" (click)="goToOrderCard(orderMok.orderCode)"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="order.id.toString()"
+							   (click)="goToOrderCard(order.id)">{{order.id}}</snab-link>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.requestNumber"></snab-link>
+					<snab-text [type]="TextType.Body" [weight]="TextWeight.Semibold">{{ order.status?.name }}
+					</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body" [weight]="TextWeight.Semibold">{{ orderMok.status }}</snab-text>
+					<snab-text [type]="TextType.Body">{{ order.dateCreated | date: 'dd.MM.yyyy' }}</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ orderMok.orderDate }}</snab-text>
+					<snab-link [type]="TextType.Body" [text]="order.author.name"></snab-link>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.customer"></snab-link>
+					<snab-link snab-tooltip
+							   [type]="TextType.Body"
+							   [text]="order.tov?.name!"
+							   [tooltipText]="order.tov.name"></snab-link>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.tp"></snab-link>
+					<snab-text [type]="TextType.Body">{{ order.client?.name }}</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ orderMok.quantity }}</snab-text>
+					<snab-text [type]="TextType.Body">{{ order.totalAmount }}</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ orderMok.unit }}</snab-text>
+					<snab-text [type]="TextType.Body">{{ order.tovUnit }}</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ orderMok.provision }}</snab-text>
+					<ss-chart-line [data]="getChartData(order.provision)"></ss-chart-line>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.mutmz" (click)="openPopupRemnantDetailsOrder(orderMok.orderCode)"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="order.manager?.name!"></snab-link>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="orderMok.stock"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="order.stockBalance.toString()"
+							   (click)="openPopupRemnantDetailsOrder(order.id)"></snab-link>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ orderMok.productionDate }}</snab-text>
+					<snab-text [type]="TextType.Body">
+						<ng-container *ngFor="let prodDate of order.provision?.provisionDetails">
+							{{ prodDate.productionDate  | date: 'dd.MM.yyyy' }}
+						</ng-container>
+					</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ orderMok.provisionDate }}</snab-text>
+					<snab-text [type]="TextType.Body">
+						<ng-container *ngFor="let provDate of order.provision?.provisionDetails">
+							{{ provDate.provisionDate  | date: 'dd.MM.yyyy' }}
+						</ng-container>
+					</snab-text>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="'История'" (click)="openPopupHistoryOrder(orderMok.orderCode)"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="'История'"
+							   (click)="openPopupHistoryOrder(order.id)"></snab-link>
 				</td>
 			</tr>
 			</tbody>
-		</ss-table-v2>
+		</table>
 		<div class="pagination">
-			<ss-pagination [total]="order.total" [pageSize]="pageSize" [pageIndex]="pageIndex"
+			<ss-pagination [total]="orderList.total" [pageSize]="pageSize" [pageIndex]="pageIndex"
 						   (changeIndex)="ordersTableIndexChange($event)"></ss-pagination>
 		</div>
 	</ng-container>

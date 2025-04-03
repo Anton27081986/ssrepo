@@ -1,4 +1,4 @@
-import { IDictionaryItemDto } from "@front-components/components";
+import { IDictionaryItemDto } from '@front-components/components';
 
 export interface IMpReservationOrder {
 	id: number;
@@ -6,15 +6,34 @@ export interface IMpReservationOrder {
 	code: number;
 	status: IDictionaryItemDto;
 	author: IDictionaryItemDto;
-	amount: number;
-	tovUnits: string;
+	totalAmount: number;
+	tovUnit: string;
 	dateFrom: string;
 	dateTo: string;
-	createdDate: string;
-	provision: {
-		provided: number
-		provisionAvailable: number
-		manufacturing: number
-		provisionUnavailable: number
-	};
+	dateCreated: string;
+	tov: IDictionaryItemDto;
+	client: IDictionaryItemDto;
+	provision: IProvisionType;
+	manager: IDictionaryItemDto;
+	stockBalance: number;
+	orderRequests: IOrderRequests[];
+}
+
+export interface IProvisionType {
+	provided: number;
+	manufacturing: number;
+	provisionAvailable: number;
+	provisionUnavailable: number;
+	provisionDetails?: IProvisionDetailsTypes[];
+}
+
+export interface IProvisionDetailsTypes {
+	productionDate?: string;
+	provisionDate?: string;
+	manufacturingAmount?: number;
+}
+
+export interface IOrderRequests {
+	requestedProvisionDate: string;
+	amount: number;
 }

@@ -2,18 +2,19 @@ import { Component, Signal } from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
+	CheckboxComponent,
 	IconPosition,
 	IconType,
 	LinkComponent,
 	Size,
 	TextComponent,
 	TextType,
-	TextWeight,
+	TextWeight, TooltipDirective,
 } from '@front-components/components';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
-import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
 import { FiltersComponent, IFilter } from '@app/shared/components/filters/filters.component';
 import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
@@ -21,18 +22,20 @@ import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservati
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { IResponse } from '@app/core/utils/response';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { IMpReservationOrders } from '@app/core/models/mp-reservation-orders/mp-reservation-orders';
-import {ModalService} from "@app/core/modal/modal.service";
+import { ModalService } from '@app/core/modal/modal.service';
+import { MpReservationOrdersPopupDateProvisionComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component';
+import { Router } from '@angular/router';
+import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
+import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
 import {
-	MpReservationOrdersPopupDateProvisionComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component";
-import {Router} from "@angular/router";
+	IMpReservationOrder,
+	IProvisionType,
+} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import {
-	MpReservationOrdersPopupHistoryComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
-import {
-	MpReservationOrdersPopupRemnantsDetailsComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component";
+	ChartLineComponent,
+	ChartLineItem,
+} from '@app/shared/components/chart-line/chart-line.component';
+import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -52,6 +55,12 @@ import {
 		LinkComponent,
 		NgForOf,
 		NgIf,
+		DatePipe,
+		ChartLineComponent,
+		CheckboxComponent,
+		LinkComponent,
+		LinkComponent,
+		TooltipDirective,
 	],
 	standalone: true,
 })
@@ -67,67 +76,61 @@ export class MPReservationOrdersComponent {
 	public offset = 0;
 	public pageIndex = 1;
 
-	public selectedOrders: Set<string> = new Set<string>();
+	public selectedOrders: Set<number> = new Set<number>();
 
-	public ordersMok = Array.from({ length: 50 }, (_, index) => ({
-		orderCode: `123${index + 1}`,
-		requestNumber: `REQ-${1000 + index}`,
-		status: index % 2 === 0 ? 'В обработке' : 'Завершен',
-		orderDate: `2025-03-${(index % 30) + 1}`,
-		customer: `Заказчик ${index + 1}`,
-		tp: `Товар ${index + 1}`,
-		quantity: Math.floor(Math.random() * 10) + 1,
-		unit: 'шт',
-		provision: index % 2 === 0 ? 'Да' : 'Нет',
-		mutmz: `Иванов А.А.`,
-		stock: `${Math.floor(Math.random() * 50)}`,
-		productionDate: `2025-03-${(index % 30) + 1}`,
-		provisionDate: `2025-03-${(index % 30) + 5}`,
-	}));
+	public orders: Signal<IResponse<IMpReservationOrder> | null> = toSignal(
+		this.mpReservationOrdersFacadeService.orders$,
+		{
+			initialValue: null,
+		},
+	);
+	public isLoader: Signal<boolean> = toSignal(this.mpReservationOrdersFacadeService.isLoader$, {
+		initialValue: true,
+	});
 
 	public filters: IFilter[] = [
 		{
-			name: 'code',
+			name: 'id',
 			type: 'number',
 			label: 'Код',
 			placeholder: 'Введите код',
 		},
 		{
-			name: 'applicationCode',
-			type: 'number',
-			label: 'Заявка на продажу/перемещение',
-			placeholder: 'Введите код заявки',
-		},
-		{
-			name: 'customerId',
+			name: 'authorId',
 			type: 'search-select',
 			searchType: 'user',
 			label: 'Заказчик',
 			placeholder: '',
 		},
 		{
-			name: 'tov',
+			name: 'tovId',
 			type: 'search-select',
 			searchType: 'tov-company',
 			label: 'Товарная позиция',
 			placeholder: '',
 		},
 		{
-			name: 'mutmz',
+			name: 'managerId',
 			type: 'search-select',
 			label: 'МУТМЗ',
 			placeholder: '',
 		},
 		{
-			name: 'status',
+			name: 'statusId',
 			type: 'search-select',
 			label: 'Статус',
 			placeholder: '',
 		},
 		{
-			name: 'date',
+			name: 'dateCreatedFrom-dateCreatedTo',
 			type: 'date-range',
 			label: 'Дата создания',
+			placeholder: '',
+		},
+		{
+			name: 'clientId',
+			type: 'search-select',
+			label: 'Клиент',
 			placeholder: '',
 		},
 	];
@@ -135,15 +138,10 @@ export class MPReservationOrdersComponent {
 	constructor(
 		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
 		private readonly modalService: ModalService,
-		private readonly router: Router
-	) {}
-
-	public orders: Signal<IResponse<IMpReservationOrders> | null> = toSignal(
-		this.mpReservationOrdersFacadeService.orders$,
-		{
-			initialValue: null,
-		},
-	);
+		private readonly router: Router,
+	) {
+		this.getFilteredOrders();
+	}
 
 	protected downloadInstr() {
 		//TODO поменять ссылку на нужную инструкцию
@@ -171,7 +169,7 @@ export class MPReservationOrdersComponent {
 			switch (filter.type) {
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id) // Массив значений (например, список заказчиков или статусов)
+						? filter.value.map(item => item.id)
 						: null;
 					break;
 
@@ -217,46 +215,79 @@ export class MPReservationOrdersComponent {
 		this.getFilteredOrders();
 	}
 
-	public onCheckboxChange(event: Event, orderCode: string): void {
+	public onCheckboxChange(event: Event, orderId: number): void {
 		const checkbox = event.target as HTMLInputElement;
 
 		if (checkbox.checked) {
-			this.selectedOrders.add(orderCode);
+			this.selectedOrders.add(orderId);
 		} else {
-			this.selectedOrders.delete(orderCode);
+			this.selectedOrders.delete(orderId);
 		}
 	}
 	public isAllSelected(): boolean {
 		return (
-			this.ordersMok.length > 0 &&
-			this.ordersMok.every(order => this.selectedOrders.has(order.orderCode))
+			(this.orders()?.items || []).length > 0 &&
+			(this.orders()?.items || []).every(order => this.selectedOrders.has(order.id))
 		);
 	}
 
 	public toggleSelectAll(event: Event): void {
 		const checkbox = event.target as HTMLInputElement;
 		if (checkbox.checked) {
-			this.ordersMok.forEach(order => this.selectedOrders.add(order.orderCode));
+			this.orders()?.items.forEach(order => this.selectedOrders.add(order.id));
 		} else {
-			this.ordersMok.forEach(order => this.selectedOrders.delete(order.orderCode));
+			this.orders()?.items.forEach(order => this.selectedOrders.delete(order.id));
 		}
 	}
 
 	public openPopupDateProvision(): void {
 		//TODO уточнить логику по определению заказов и даты для них.
-		this.modalService.open(MpReservationOrdersPopupDateProvisionComponent, { data: this.selectedOrders });
+		this.modalService.open(MpReservationOrdersPopupDateProvisionComponent, {
+			data: this.selectedOrders,
+		});
 	}
 
-	public goToOrderCard(orderId: string):void {
+	public goToOrderCard(orderId: number): void {
 		this.router.navigate(['mp-reservation-orders', orderId]);
 	}
 
-	public openPopupHistoryOrder(orderId: string): void {
+	public openPopupHistoryOrder(orderId: number): void {
 		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
 	}
 
-	public openPopupRemnantDetailsOrder(orderId: string): void {
+	public openPopupAddOrder(): void {
+		this.modalService.open(MpReservationOrdersPopupAddOrderComponent);
+	}
+
+	public openPopupRemnantDetailsOrder(orderId: number): void {
 		this.modalService.open(MpReservationOrdersPopupRemnantsDetailsComponent, { data: orderId });
 	}
 
+	public getChartData(provision: IProvisionType): ChartLineItem[] {
+		if (!provision) {
+			return [];
+		}
+		return [
+			{
+				label: 'В производстве',
+				value: provision.manufacturing,
+				color: '#AF60FF',
+			},
+			{
+				label: 'Не может быть обеспечено',
+				value: provision.provisionUnavailable,
+				color: '#E51414',
+			},
+			{
+				label: 'Моя бронь',
+				value: provision.provided,
+				color: '#BD9E67',
+			},
+			{
+				label: 'Свободно',
+				value: provision.provisionAvailable,
+				color: '#20B878',
+			},
+		];
+	}
 }

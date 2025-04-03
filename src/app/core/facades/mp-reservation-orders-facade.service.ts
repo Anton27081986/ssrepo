@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
 import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-reservation-orders-filter';
-import {BehaviorSubject, Observable, Subject, switchMap, tap} from 'rxjs';
+import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
-import { IMpReservationOrders } from '@app/core/models/mp-reservation-orders/mp-reservation-orders';
-import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-order";
+import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { catchError } from 'rxjs/operators';
+import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 
 @UntilDestroy()
 @Injectable({
@@ -14,10 +15,12 @@ import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-r
 export class MpReservationOrdersFacadeService {
 	private readonly filtersChanged$: Subject<MpReservationFilter> =
 		new Subject<MpReservationFilter>();
-	private readonly orders = new BehaviorSubject<IResponse<IMpReservationOrders>>(
-		{} as IResponse<any>,
-	);
+	private readonly orders = new BehaviorSubject<IResponse<IMpReservationOrder>>({
+		items: [],
+		total: 0,
+	} as unknown as IResponse<any>);
 	public orders$ = this.orders.asObservable();
+	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	private readonly activeOrder = new BehaviorSubject<IMpReservationOrder | null>(null);
 	public activeOrder$ = this.activeOrder.asObservable();
@@ -30,24 +33,52 @@ export class MpReservationOrdersFacadeService {
 				switchMap(filter => {
 					return this.mpReservationOrdersApiService.getOrders(filter);
 				}),
-				tap(orders => this.orders.next(orders)),
+				tap(orders => {
+					this.orders.next(orders.data);
+					this.isLoader$.next(false);
+				}),
+				tap(orders => console.log(orders)),
 				untilDestroyed(this),
+				catchError((err: unknown) => {
+					this.isLoader$.next(false);
+					throw err;
+				}),
 			)
 			.subscribe();
 	}
 
 	public applyFiltersOrders(filters: MpReservationFilter): void {
+		this.isLoader$.next(true);
 		this.filtersChanged$.next(filters);
 	}
 
-	public getPersonificationById(
-		id: string,
-	): void {
+	public getPersonificationById(id: string): void {
 		this.mpReservationOrdersApiService
 			.getPersonificationById(id)
 			.pipe(untilDestroyed(this))
 			.subscribe(res => {
 				this.activeOrder.next(res.data);
 			});
+	}
+
+	public createOrder(body: IMpReservationAddOrder): void {
+		console.log('Form is create');
+		this.mpReservationOrdersApiService
+			.createOrderPersonification(body)
+			.pipe(
+				untilDestroyed(this),
+				tap(response => {
+					const currentOrders = this.orders.getValue();
+					const updatedItems = currentOrders.items
+						? [...currentOrders.items, ...response]
+						: [...response];
+					this.orders.next({
+						...currentOrders,
+						items: updatedItems,
+						total: updatedItems.length,
+					});
+				}),
+			)
+			.subscribe(res => {});
 	}
 }

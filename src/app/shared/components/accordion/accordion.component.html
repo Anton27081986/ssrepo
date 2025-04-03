@@ -1,14 +1,23 @@
 <div class="accordion">
 	<div class="accordion-header" (click)="toggle()">
 		<ss-text size="1" weight="semi-bold">{{ title }}</ss-text>
-		<ss-icon name="chevron" class="accordion-header__icon-toggle"
-				 [class.accordion-header__icon-toggle--expanded]="isExpanded"
-				 [class.accordion-header--border-none]="isExpanded">
-			>
-		</ss-icon>
+		<div class="accordion-header__icons">
+			<ss-icon name="chevron"
+					 class="accordion-header__icon-toggle"
+					 [class.accordion-header__icon-toggle--expanded]="isExpanded">
+			</ss-icon>
+			@if (isMpReservationOrders) {
+				<div class="accordion-header__icon-order">
+					<snab-button class="accordion-header__icon-order-item" [size]="Size.Small" [type]="ButtonType.Primary" [iconPosition]="IconPosition.OnlyIcon"
+								 [icon]="IconType.AddSmall" (click)="addRowInPosition($event)"></snab-button>
+					<snab-button class="accordion-header__icon-order-item" [size]="Size.Small" [type]="ButtonType.Primary" [iconPosition]="IconPosition.OnlyIcon"
+								 [icon]="IconType.Trash" (click)="removeRowInPosition($event)"></snab-button>
+				</div>
+			}
+		</div>
 	</div>
 	@if (isExpanded) {
-		<div class="accordion-content" [class.open]="isExpanded">
+		<div class="accordion-content" [ngClass]="{'accordion-content-table': isMpReservationOrders}" [class.open]="isExpanded">
 			<ng-content></ng-content>
 		</div>
 	}

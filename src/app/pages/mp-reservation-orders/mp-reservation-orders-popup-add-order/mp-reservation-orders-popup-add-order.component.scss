@@ -1,0 +1,103 @@
+@use 'src/styles/colors.scss' as *;
+
+.add-orders-form {
+	width: 965px;
+	max-height: 836px;
+}
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.header {
+	display: flex;
+	padding: 16px;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid $island-outline;
+}
+
+.author-label {
+	padding: 34px 0 0 34px;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	padding: 34px;
+
+	&__row {
+		display: inline-block;
+		width: 100%;
+		margin-bottom: 30px;
+
+		&-item-tov {
+			display: inline-block;
+			width: 51%;
+			margin-right: 20px;
+		}
+
+		&-item-client {
+			display: inline-block;
+			width: 30%;
+			margin-right: 20px;
+		}
+
+		&-item-add-button {
+			display: inline-block;
+			width: 14%;
+		}
+	}
+
+	&__table-list {
+		display: flex;
+		flex-direction: column;
+		padding-right: 10px;
+		gap: 20px;
+		max-height: 476px;
+		overflow-y: auto;
+	}
+}
+
+.table-container {
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.details-table {
+	width: 100%;
+	border-collapse: collapse;
+
+	th, td {
+		padding: 8px;
+		text-align: left;
+		border-bottom: 1px solid $island-outline;
+	}
+
+	th {
+		background-color: #EEF2FF;
+		font-weight: bold;
+	}
+
+	td {
+		text-align: center;
+	}
+}
+
+.footer {
+	display: flex;
+	padding: 34px;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 16px;
+}
+
+.accordion .accordion-header__icons ss-icon {
+	cursor: pointer;
+}
+

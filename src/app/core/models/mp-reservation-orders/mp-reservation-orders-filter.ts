@@ -1,10 +1,12 @@
-export interface MpReservationFilter{
-	code: number;
-	applicationCode: number;
-	customerId: number;
-	tov: number;
-	mutmz: number;
-	status: number;
-	dateFrom?: string;
-	dateTo?: string;
+export interface MpReservationFilter {
+	id: number;
+	authorId: number;
+	tovId: number;
+	managerId: number;
+	statusId: number;
+	dateCreatedFrom: string;
+	dateCreatedTo: string;
+	clientId: number;
+	limit: number;
+	offset: number;
 }
