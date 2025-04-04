@@ -1,4 +1,4 @@
-<div class="chart-line">
+<div class="chart-line" [class]="size()">
     @for (item of data(); track $index) {
         <div
             [style.width.%]="(100 / width()) * item.value"

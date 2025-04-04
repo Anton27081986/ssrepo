@@ -3,9 +3,10 @@
 :host {
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding: 20px 0;
   gap: 24px;
+  width: 1695px;
+  margin: 0 auto;
 }
 
 .navigation {
@@ -40,11 +41,18 @@
   gap: 24px;
 
   &__properties {
-    max-width: 468px;
+    max-width: 442px;
 
     &__header {
       padding: 16px;
       border-bottom: 1px solid $island-outline;
+    }
+
+    &__amount {
+      padding: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
     }
 
     &__body {
@@ -57,32 +65,31 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
-
-        &__title {}
       }
-
-    }
-  }
-
-  &__procuring {
-    max-width: 928px;
-
-    &__header {
-      padding: 16px;
-      border-bottom: 1px solid $island-outline;
     }
 
-    &__body {
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+    &__comment {
+      padding: 0 16px 16px 16px;
     }
   }
 
   &__additional {
-    max-width: 242px;
+    max-width: 276px;
+    max-height: 376px;
+
+    &__header {
+      padding: 16px;
+      border-bottom: 1px solid $island-outline;
+    }
+
+    &__body {
+      padding: 16px;
+      overflow-y: hidden;
+    }
+  }
+
+  &__procuring {
+    flex-grow: 1;
 
     &__header {
       padding: 16px;
@@ -92,8 +99,27 @@
     &__body {
       padding: 16px;
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 20px;
+
+      &__chart {
+        width: 310px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+
+        &__quantity {
+          display: flex;
+          gap: 4px;
+          align-items: baseline;
+        }
+
+        &__more {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+      }
     }
   }
 }

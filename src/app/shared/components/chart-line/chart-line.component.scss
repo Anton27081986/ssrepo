@@ -3,5 +3,16 @@
 .chart-line {
 	display: flex;
 	width: 100%;
+}
+
+.small {
 	height: 6px;
+}
+
+.medium {
+	height: 12px;
+}
+
+.large {
+	height: 20px;
 }

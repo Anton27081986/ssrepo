@@ -1,0 +1,23 @@
+<div class="wrapper" (click)="close()">
+	<ss-card class="card-wrapper" padding="0" (click)="$event.stopPropagation()">
+		<div class="body">
+			<snab-icon class="body__icon" [icon]="IconType.Save" [width]="'36'" [height]="'36'"/>
+			<snab-text
+					   [weight]="TextWeight.Medium"
+					   [type]="TextType.Title">Изменения не будут сохранены
+			</snab-text>
+			<snab-text class="body__description"
+					   [weight]="TextWeight.Regular"
+					   [type]="TextType.Body">Вы уверены, что хотите совершить действие?
+			</snab-text>
+		</div>
+		<div class="footer-controls">
+			<snab-button class="footer-controls__cancel" text="Отмена"
+						 [type]="ButtonType.Secondary"
+						 [size]="Size.Large"
+						 (click)="close()"
+			></snab-button>
+			<snab-button class="footer-controls__no-save"  text="Не сохранять" [size]="Size.Large"></snab-button>
+		</div>
+	</ss-card>
+</div>

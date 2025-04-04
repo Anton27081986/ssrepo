@@ -1,0 +1,49 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ModalRef } from '@app/core/modal/modal.ref';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	ButtonComponent,
+	ButtonType,
+	IconComponent,
+	IconType,
+	Size,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-components/components';
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+
+@Component({
+	selector: 'app-mp-reservation-orders-popup-date-provision',
+	standalone: true,
+	imports: [
+		CardComponent,
+		HeadlineComponent,
+		IconComponent,
+		DateTimePickerComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		TextComponent,
+		ButtonComponent,
+		TextareaComponent,
+	],
+	templateUrl: './mp-reservation-orders-card-popup-cancel-action.component.html',
+	styleUrl: './mp-reservation-orders-card-popup-cancel-action.component.scss',
+	changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class MpReservationOrdersCardPopupCancelActionComponent {
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Size = Size;
+	protected readonly IconType = IconType;
+	protected readonly ButtonType = ButtonType;
+
+	public constructor(private readonly modalRef: ModalRef) {}
+
+	protected close() {
+		this.modalRef.close();
+	}
+}

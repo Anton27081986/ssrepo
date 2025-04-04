@@ -1,0 +1,23 @@
+<div class="wrapper" (click)="close()">
+	<ss-card class="card-wrapper" padding="0" (click)="$event.stopPropagation()">
+		<div class="header">
+			<ss-headline size="h6">Отклонение заказа</ss-headline>
+			<ss-icon width="16" name="close" (click)="close()"></ss-icon>
+		</div>
+		<div class="body">
+			<snab-text class="body__description"
+					   [weight]="TextWeight.Medium"
+					   [type]="TextType.Caption">Коментарий
+			</snab-text>
+			<ss-textarea size="medium" rows="4" placeholder="Введите текст" formControlName="comment"></ss-textarea>
+		</div>
+		<div class="footer-controls">
+			<snab-button class="footer-controls__cancel" text="Отмена"
+						 [type]="ButtonType.Secondary"
+						 [size]="Size.Large"
+						 (click)="close()"
+			></snab-button>
+			<snab-button text="Отклонить" [size]="Size.Large"></snab-button>
+		</div>
+	</ss-card>
+</div>
