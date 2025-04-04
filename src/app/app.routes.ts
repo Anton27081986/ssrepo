@@ -198,25 +198,6 @@ export const routes: Routes = [
 				],
 			},
 			{
-				path: 'mp-reservation-orders',
-				children: [
-					{
-						path: '',
-						component: MPReservationOrdersComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-					{
-						path: ':id',
-						component: MpReservationOrderCardComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-				],
-			},
-			{
 				path: 'invite',
 				component: InviteComponent,
 			},
@@ -285,6 +266,25 @@ export const routes: Routes = [
 					import('./pages/production-plan/production-plan.routing').then(
 						r => r.productionPlanRoutes,
 					),
+			},
+			{
+				path: 'mp-reservation-orders',
+				children: [
+					{
+						path: '',
+						component: MPReservationOrdersComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+					{
+						path: ':id',
+						component: MpReservationOrderCardComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+				],
 			},
 		],
 	},

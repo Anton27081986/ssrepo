@@ -7,6 +7,12 @@ export interface ChartLineItem {
 	color?: string;
 }
 
+export enum ChartLineSize {
+	small = 'small',
+	medium = 'medium',
+	large = 'large',
+};
+
 @Component({
 	selector: 'ss-chart-line',
 	templateUrl: './chart-line.component.html',
@@ -18,6 +24,7 @@ export interface ChartLineItem {
 })
 export class ChartLineComponent {
 	public data = input<ChartLineItem[]>([]);
+	public size = input<ChartLineSize>(ChartLineSize.small);
 
 	public width = signal(0);
 

@@ -1,20 +1,20 @@
-import { IDictionaryItemDto } from '@front-components/components';
+import { IDictionaryItemDto } from "@front-components/components";
 
 export interface IMpReservationOrder {
 	id: number;
 	note: string;
-	code: number;
+    code: number;
 	status: IDictionaryItemDto;
 	author: IDictionaryItemDto;
 	totalAmount: number;
 	tovUnit: string;
+	client: IDictionaryItemDto;
+	manager: IDictionaryItemDto | null;
 	dateFrom: string;
 	dateTo: string;
 	dateCreated: string;
 	tov: IDictionaryItemDto;
-	client: IDictionaryItemDto;
 	provision: IProvisionType;
-	manager: IDictionaryItemDto;
 	stockBalance: number;
 	orderRequests: IOrderRequests[];
 }

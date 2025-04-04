@@ -1,0 +1,31 @@
+<div class="wrapper" (click)="close()">
+	<ss-card class="card-wrapper" padding="0" (click)="$event.stopPropagation()">
+		<div class="header">
+			<ss-headline size="h6">Изменить дату обеспечения</ss-headline>
+			<ss-icon width="16" name="close" (click)="close()"></ss-icon>
+		</div>
+		<div class="body">
+			<snab-text class="body__description"
+					   [weight]="TextWeight.Semibold"
+					   [type]="TextType.Title">Дата производства
+			</snab-text>
+			<snab-text class="body__description"
+					   [weight]="TextWeight.Medium"
+					   [type]="TextType.Body">Дата производства
+			</snab-text>
+			<snab-text class="body__description"
+					   [weight]="TextWeight.Semibold"
+					   [type]="TextType.Title">Дата обеспечения
+			</snab-text>
+			<ss-date-time-picker [showTime]="false" formControlName="date"></ss-date-time-picker>
+		</div>
+		<div class="footer-controls">
+			<snab-button class="footer-controls__cancel" text="Отмена"
+						 [type]="ButtonType.Secondary"
+						 [size]="Size.Large"
+						 (click)="close()"
+			></snab-button>
+			<snab-button text="Изменить" [size]="Size.Large"></snab-button>
+		</div>
+	</ss-card>
+</div>

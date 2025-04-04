@@ -3,9 +3,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-reservation-orders-filter';
 import { IResponse } from '@app/core/utils/response';
 import { environment } from '@environments/environment';
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
-import {IMpReservationAddOrder} from "@app/core/models/mp-reservation-orders/mp-reservation-add-order";
+import { IMpReservationAddOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-add-order";
 
 @Injectable({
 	providedIn: 'root',
@@ -64,9 +64,9 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public getPersonificationById(id: string): Observable<{ data: IMpReservationOrder }> {
-		return this.http.get<{ data: IMpReservationOrder }>(
-			`${environment.apiUrl}/api/manufacturing/personification/${id}`,
+	public getPersonificationById(id: string): Observable<{data: IMpReservationOrder}> {
+		return this.http.get<{data: IMpReservationOrder}>(
+			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`,
 		);
 	}
 
