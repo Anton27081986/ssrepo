@@ -7,6 +7,7 @@ import { ITableItem } from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -112,9 +113,7 @@ export class CompletedWorkActsComponent {
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly localStorageService: LocalStorageService,
 	) {
-		const savedFilters = this.localStorageService.getItem<IFilter[]>(
-			this.filtersKey,
-		);
+		const savedFilters = this.localStorageService.getItem<IFilter[]>(this.filtersKey);
 
 		if (savedFilters) {
 			this.filters = savedFilters;
@@ -272,4 +271,16 @@ export class CompletedWorkActsComponent {
 			this.completedWorkActsFacade.getAct(item.row.code.text);
 		}
 	}
+
+	public downloadInstruction() {
+		const link = document.createElement('a');
+
+		link.href = this.completedWorkActsFacade.linkToInstruction;
+		link.click();
+	}
+
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
 }

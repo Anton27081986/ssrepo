@@ -17,12 +17,17 @@ import { catchError } from 'rxjs/operators';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class CompletedWorkActsFacadeService {
+	public linkToInstruction = environment.production
+		? 'https://erp.ssnab.ru/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_a390d5da-6462-4fc0-b8a2-aeb21a9c3e36.docx'
+		: 'https://erp-dev.ssnab.it/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_01b6e1dd-456d-4a1f-affd-891754889406.docx';
+
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	private readonly filters: Subject<ICompletedActsFilter> = new Subject<ICompletedActsFilter>();
