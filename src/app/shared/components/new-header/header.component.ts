@@ -9,7 +9,6 @@ import { UserProfileStoreService } from '@app/core/states/user-profile-store.ser
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service';
 
 @Component({
@@ -22,11 +21,6 @@ export class HeaderComponent implements OnInit {
 	public listMenu$?: Observable<IMenuItemDto[] | null>;
 	public userProfile$?: Observable<IUserProfile | null>;
 	public profilePopup$?: Observable<boolean | null>;
-	public statusBurger = false;
-
-	public aiPermission: Signal<boolean> = toSignal(this.mainMenuFacade.aiPermission$, {
-		initialValue: false,
-	});
 
 	protected readonly AppRoutes = AppRoutes;
 	public route: string | undefined;

@@ -7,22 +7,18 @@ import { BehaviorSubject, filter, forkJoin, map, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
-import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class MainMenuFacadeService {
-	public readonly aiPermission = new BehaviorSubject<boolean>(false);
-	public aiPermission$ = this.aiPermission.asObservable();
 
 	public constructor(
 		private readonly authenticationService: AuthenticationService,
 		private readonly menuApiService: MenuApiService,
 		private readonly mainMenuStoreService: MainMenuStoreService,
 		private readonly userProfileStoreService: UserProfileStoreService,
-		private readonly permissionsApiService: PermissionsApiService,
 	) {
 		this.init();
 	}
@@ -30,16 +26,6 @@ export class MainMenuFacadeService {
 	public init() {
 		this.authenticationService.user$
 			.pipe(
-				tap(() => {
-					this.permissionsApiService
-						.getPermissionClient('AiAssistant')
-						.pipe(untilDestroyed(this))
-						.subscribe(permissions => {
-							this.aiPermission.next(
-								permissions.items.includes('AiAssistant.Access'),
-							);
-						});
-				}),
 				filter(x => x !== null),
 				switchMap(() => {
 					const favoriteMenu$ = this.menuApiService.getFavoriteMenu();
