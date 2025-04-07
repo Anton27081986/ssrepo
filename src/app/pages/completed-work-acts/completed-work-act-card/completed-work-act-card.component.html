@@ -16,6 +16,12 @@
 			}
 		</div>
 		<div class="header__controls">
+			<snab-button [tooltip]="'Скачать инструкцию'"
+						 [icon]="IconType.Doc"
+						 [iconPosition]="IconPosition.OnlyIcon"
+						 [size]="Size.Large" [type]="ButtonType.Outline"
+						 (click)="downloadInstruction()">
+			</snab-button>
 			<ss-button type="muted" size="small" (click)="openHistoryModal(act.id)">История</ss-button>
 			<ss-dropdown-button [closeOnClick]="true" *ngIf="!isEdit()" title="Действия">
 				@if (act.state.id === 0) {

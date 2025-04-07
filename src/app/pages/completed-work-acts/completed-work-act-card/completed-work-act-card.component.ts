@@ -5,7 +5,8 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {Permissions} from "@app/core/constants/permissions.constants";
+import { Permissions } from '@app/core/constants/permissions.constants';
+import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
 
 @Component({
 	selector: 'ss-completed-work-act-card',
@@ -58,5 +59,16 @@ export class CompletedWorkActCardComponent {
 		this.router.navigate([`/completed-work-acts`]);
 	}
 
+	public downloadInstruction() {
+		const link = document.createElement('a');
+
+		link.href = this.completedWorkActsFacade.linkToInstruction;
+		link.click();
+	}
+
 	protected readonly Permissions = Permissions;
+	protected readonly IconPosition = IconPosition;
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
 }
