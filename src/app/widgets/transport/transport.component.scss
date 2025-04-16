@@ -1,107 +1,105 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 .transport {
-    height: 100%;
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    gap: 40px;
+	height: 100%;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	gap: 40px;
 
-    ss-card {
-        flex-grow: 1;
-    }
+	ss-card {
+		flex-grow: 1;
+	}
 
-    .header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 16px;
-    }
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 16px;
+	}
 
-    .content {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        padding: 16px 0 16px;
+	.content {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 16px 0 16px;
 
-        .notice {
-            padding: 0 16px 16px;
-            transition: max-height 0.3s ease;
-        }
+		.notice {
+			padding: 0 16px 16px;
+			transition: max-height 0.3s ease;
+		}
 
-        .bus-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            padding: 0 16px;
+		.bus-list {
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+			padding: 0 16px;
 
-            .bus {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+			.bus {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
 
-                gap: 16px;
+				gap: 16px;
 
-                .direction {
-                    display: grid;
-                    grid-template-columns: 1fr 131px 1fr;
-                    align-items: center;
-                    gap: 16px;
+				.direction {
+					display: grid;
+					grid-template-columns: 1fr 131px 1fr;
+					align-items: center;
+					gap: 16px;
 
-                    .station {
-                        flex-grow: 1;
-                        font-size: 13px;
+					.station {
+						flex-grow: 1;
+						font-size: 13px;
 
-                        ::ng-deep p {
-                            border-color: transparent;
-                        }
-                    }
+						::ng-deep p {
+							border-color: transparent;
+						}
+					}
 
-                    .direction-icon {
-                        font-size: 36px;
-                    }
-                }
+					.direction-icon {
+						font-size: 36px;
+					}
+				}
 
-                .schedule {
-                    display: flex;
-                    gap: 16px;
-                    flex-wrap: nowrap;
+				.schedule {
+					display: flex;
+					gap: 16px;
+					flex-wrap: nowrap;
 
-                    .item {
-                        height: 32px;
-                        display: flex;
-                        flex-grow: 1;
-                        align-items: center;
-                        justify-content: center;
-                        gap: 12px;
-                        font-size: 13px;
-                        border-radius: 10px;
-                        background-color: $white;
-                    }
+					.item {
+						height: 32px;
+						display: flex;
+						flex-grow: 1;
+						align-items: center;
+						justify-content: center;
+						gap: 12px;
+						font-size: 13px;
+						border-radius: 10px;
+						background-color: $white;
+					}
 
-                    .gone {
-                        color: #A9AFB3;
-                        background-color: $card-action-bg;
-                    }
+					.gone {
+						color: #a9afb3;
+						background-color: $card-action-bg;
+					}
 
-                    .nearest {
-                        color: #5F656F;
-                        background-color: #9FA9B933;
-                    }
+					.nearest {
+						color: #5f656f;
+						background-color: #9fa9b933;
+					}
 
-                    .next {
-                        color: #4D4D4D;
-                        background-color: #00000005;
-                    }
+					.next {
+						color: #4d4d4d;
+						background-color: #00000005;
+					}
 
-                    .next:not(.next ~ .next) {
-                        color: #2D8418;
-                        background-color: #D5EDCA;
-                    }
-                }
-
-            }
-        }
-    }
+					.next:not(.next ~ .next) {
+						color: #2d8418;
+						background-color: #d5edca;
+					}
+				}
+			}
+		}
+	}
 }
-

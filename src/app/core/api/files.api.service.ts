@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IFile } from '../models/files/file';
 
@@ -14,7 +14,7 @@ export enum FileBucketsEnum {
 	providedIn: 'root',
 })
 export class FilesApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public uploadFile(bucketId: number, file: File): Observable<IFile> {
 		const formData = new FormData();
@@ -28,6 +28,8 @@ export class FilesApiService {
 	}
 
 	public deleteFile(id: string): Observable<IFile> {
-		return this.http.delete<IFile>(`${environment.apiUrl}/api/files/fileStorage/${id}`);
+		return this.http.delete<IFile>(
+			`${environment.apiUrl}/api/files/fileStorage/${id}`,
+		);
 	}
 }

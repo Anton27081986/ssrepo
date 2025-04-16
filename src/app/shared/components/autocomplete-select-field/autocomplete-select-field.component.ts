@@ -6,15 +6,15 @@ import {
 	OnInit,
 } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {ControlValueAccessor, FormsModule, NgControl} from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { debounceTime, distinctUntilChanged, map, of, Subject } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { IResponse } from '@app/core/utils/response';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {NzFormControlComponent} from "ng-zorro-antd/form";
-import {NzOptionComponent, NzSelectComponent} from "ng-zorro-antd/select";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { NzFormControlComponent } from 'ng-zorro-antd/form';
+import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 
 @UntilDestroy()
 @Component({
@@ -27,23 +27,40 @@ import {NzOptionComponent, NzSelectComponent} from "ng-zorro-antd/select";
 		NzFormControlComponent,
 		NzSelectComponent,
 		FormsModule,
-		NzOptionComponent
+		NzOptionComponent,
 	],
-	standalone: true
+	standalone: true,
 })
-export class AutocompleteSelectFieldComponent implements ControlValueAccessor, OnInit {
-	@Input() public url: string | undefined;
-	@Input() public label: string = '';
-	@Input() public placeholder: string = '';
-	@Input() public selectOptions: IDictionaryItemDto[] = [];
-	@Input() public needSearch: boolean = true;
-	@Input() public isDisabled: boolean = false;
-	@Input() public isLoading: boolean = false;
+export class AutocompleteSelectFieldComponent
+	implements ControlValueAccessor, OnInit
+{
+	@Input()
+	public url: string | undefined;
+
+	@Input()
+	public label = '';
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public selectOptions: IDictionaryItemDto[] = [];
+
+	@Input()
+	public needSearch = true;
+
+	@Input()
+	public isDisabled = false;
+
+	@Input()
+	public isLoading = false;
+
 	public selectedValue?: number;
 
-	private readonly searchFieldChanged: Subject<string> = new Subject<string>();
+	private readonly searchFieldChanged: Subject<string> =
+		new Subject<string>();
 
-	public constructor(
+	constructor(
 		private readonly httpClient: HttpClient,
 		private readonly ngControl: NgControl,
 		private readonly cdr: ChangeDetectorRef,
@@ -66,7 +83,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 			? this.searchFieldChanged.pipe(
 					debounceTime(300),
 					distinctUntilChanged(),
-					switchMap(term => this.requestToServer(term)),
+					switchMap((term) => this.requestToServer(term)),
 				)
 			: this.requestToServer('');
 
@@ -79,7 +96,7 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 				}),
 				untilDestroyed(this),
 			)
-			.subscribe(options => {
+			.subscribe((options) => {
 				this.selectOptions = options;
 				this.cdr.detectChanges();
 			});
@@ -91,12 +108,12 @@ export class AutocompleteSelectFieldComponent implements ControlValueAccessor, O
 				.get<IResponse<IDictionaryItemDto>>(this.url!, {
 					params: new HttpParams().set('query', searchTerm),
 				})
-				.pipe(map(response => response.items));
+				.pipe(map((response) => response.items));
 		}
 
 		return this.httpClient
 			.get<IResponse<IDictionaryItemDto>>(this.url!)
-			.pipe(map(response => response.items));
+			.pipe(map((response) => response.items));
 	}
 
 	public search(searchTerm: string) {

@@ -1,31 +1,26 @@
 <div class="header">
 	<div class="header__content">
 		<div class="header__content-left">
-			<ss-icon class="header__logo" [routerLink]="AppRoutes.root" name="logo"></ss-icon>
+			<ss-icon class="header__logo" name="logo" [routerLink]="AppRoutes.root"></ss-icon>
 			<app-main-menu [menu]="listMenu$ | async"></app-main-menu>
 		</div>
 		<div class="header__content-right">
-			<ss-search-input (select)="getSearchGlobal($event)" [size]="'small'"
-							 [searchType]="'global'"></ss-search-input>
+			<ss-search-input [size]="'small'" [searchType]="'global'"
+							 (select)="getSearchGlobal($event)"></ss-search-input>
 
 			<app-notification></app-notification>
 
 			@if (aiPermission()) {
-				<snab-button
-					[type]="ButtonType.Outline"
-					[size]="Size.Large"
-					[icon]="IconType.Comments"
-					[iconPosition]="IconPosition.OnlyIcon"
-					(click)="openChatBot()"
-				></snab-button>
+				<ss-button class="bot-button" size="small" type="outline">
+					<ss-icon name="bot"
+							 (click)="openChatBot()"></ss-icon>
+				</ss-button>
+			<app-chat-bot></app-chat-bot>
 			}
 
-			@if((userProfile$ | async); as userProfile) {
-				<ss-dropdown-button title="P" [tooltip]="'Мой профиль'" [theme]="TooltipTheme.DEFAULT"
-									[position]="TooltipPosition.DEFAULT">
-					<app-profile-popup></app-profile-popup>
-				</ss-dropdown-button>
-			}
+			<ss-dropdown-button [avatar]="(userProfile$ | async)?.avatarUrl" [isAvatar]="true">
+				<app-profile-popup></app-profile-popup>
+			</ss-dropdown-button>
 		</div>
 	</div>
 </div>

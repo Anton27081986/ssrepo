@@ -2,6 +2,8 @@
 <div class="textarea">
 	@if (maxLength) {
 		<textarea
+			#textarea
+			class="{{ error ? size + ' error' : size }}"
 			[placeholder]="placeholder"
 			[value]="value"
 			[disabled]="disabled"
@@ -9,24 +11,22 @@
 			[rows]="rows"
 			[maxLength]="maxLength"
 			(input)="onChange($any($event.target).value)"
-			(blur)="onTouched()"
-			class="{{ error ? size + ' error' : size }}"
-			#textarea>
+			(blur)="onTouched()">
 		</textarea>
 		@if (textarea.value && !disabled) {
 			<ss-icon class="close" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>
 		}
 	} @else {
 		<textarea
+			#textarea
+			class="{{ error ? size + ' error' : size }}"
 			[placeholder]="placeholder"
 			[value]="value"
 			[disabled]="disabled"
 			[cols]="cols"
 			[rows]="rows"
 			(input)="onChange($any($event.target).value)"
-			(blur)="onTouched()"
-			class="{{ error ? size + ' error' : size }}"
-			#textarea>
+			(blur)="onTouched()">
 		</textarea>
 		@if (textarea.value && !disabled) {
 			<ss-icon class="close" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>

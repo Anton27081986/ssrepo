@@ -10,7 +10,7 @@
 			</ss-button>
 		</div>
 	</div>
-	<form [formGroup]="editActForm" class="content">
+	<form class="content" [formGroup]="editActForm">
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Номер акта (внешний)</ss-text>
@@ -26,25 +26,31 @@
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внешний)</ss-text>
 				<ss-date-time-picker
-					[showTime]="false" formControlName="externalActDate"
+					formControlName="externalActDate" [showTime]="false"
 					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата акта (внутренний)</ss-text>
 				<ss-date-time-picker
-					[showTime]="false" formControlName="internalActDate"
+					formControlName="internalActDate" [showTime]="false"
 					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Заявитель</ss-text>
-				<ss-search-input searchType="user" size="small"
-					[selectedItem]="act()?.applicantUser"
-					(select)="onApplicantUserSelect($event.id)"
-					(click)="editActForm.controls.applicantUserId.setErrors(null)"
-					[error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-search-input>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
+					<ss-search-input searchType="user" size="small"
+									 [selectedItem]="act()?.applicantUser"
+									 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined"
+									 (select)="onApplicantUserSelect($event.id)"
+									 (click)="editActForm.controls.applicantUserId.setErrors(null)"
+									 (input)="onInputChange($event)">
+					</ss-search-input>
+				} @else {
+					<ss-text weight="regular">{{act()?.applicantUser?.name}}</ss-text>
+				}
+
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
@@ -60,21 +66,25 @@
 				<ss-text size="4">Плательщик</ss-text>
 				<ss-search-input searchType="payer-contractor" size="small"
 					[selectedItem]="act()?.payerContractor"
+					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined"
 					(select)="editActForm.controls.payerContractorId.setValue($event.id)"
-					(click)="editActForm.controls.payerContractorId.setErrors(null)"
-					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+					(click)="editActForm.controls.payerContractorId.setErrors(null)">
 				</ss-search-input>
 			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
-				<ss-search-input searchType="contractor" size="small"
-					[selectedItem]="act()?.providerContractor"
-					(select)="onProviderContractorSelect($event.id)"
-					(click)="editActForm.controls.providerContractorId.setErrors(null)"
-					[error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-search-input>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
+					<ss-search-input searchType="contractor" size="small"
+									 [selectedItem]="act()?.providerContractor"
+									 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined"
+									 (select)="onProviderContractorSelect($event.id)"
+									 (click)="editActForm.controls.providerContractorId.setErrors(null)">
+					</ss-search-input>
+				} @else {
+					<ss-text weight="regular">{{act()?.providerContractor?.name}}</ss-text>
+				}
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
@@ -86,16 +96,13 @@
 					[errorText]="editActForm.controls.contract.touched && !editActForm.controls.contract.value ? 'Обязательное поле' : ''"
 				/>
 			</div>
-			<div class="content__column__item">
+			<div class="content__column__item content__column__findocs">
 				<ss-text size="4">Заявки на оплату</ss-text>
-				<ss-chips-search searchType="fin-doc-orders" size="small" placeholder="Введите значение"
-					[selectedItems]="finDocOrders"
-					(getSelected)="setFinDocOrdersIds($event)">
-				</ss-chips-search>
+				<ss-multiselect-v2
+					[formControlName]="'finDocOrderIds'"
+					[options]="finDocOrders"></ss-multiselect-v2>
 			</div>
-		</div>
-		<div class="content__column">
-			<div class="content__column__item">
+			<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)" class="content__column__item">
 				<ss-text size="4">Валюта</ss-text>
 
 				<ss-select-v2
@@ -110,17 +117,19 @@
 			<div class="content__column__item">
 				<div class="content__column__item__files-header">
 					<ss-text size="4">Документы </ss-text>
-					<label class="upload-file" for="upload-file">
-						Добавить документ
-					</label>
-					<input type="file" id="upload-file"
-						 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
-						 multiple
-						 (change)="addFiles($event)"
-					/>
+					<ng-container *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT)">
+						<label class="upload-file" for="upload-file">
+							Добавить документ
+						</label>
+						<input type="file" id="upload-file"
+							 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
+							 multiple
+							 (change)="addFiles($event)"
+						/>
+					</ng-container>
 				</div>
 				<div class="content__column__item__files-list">
-					<div class="content__column__item__files-list__item" *ngFor="let doc of documents()">
+					<div *ngFor="let doc of documents()" class="content__column__item__files-list__item">
 						<div class="content__column__item__files-list__item__img">
 							<ss-icon height="16" width="16" name="doc"></ss-icon>
 						</div>
@@ -128,12 +137,12 @@
 							<ss-text size="3">{{ doc.fileName }}</ss-text>
 							<ss-text class="size" size="3">{{ doc.size }}Б</ss-text>
 						</div>
-						<div class="content__column__item__files-list__item__controls">
+						<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT)" class="content__column__item__files-list__item__controls">
 							<ss-icon name="trash" (click)="deleteFile(doc.id)"></ss-icon>
 						</div>
 					</div>
 					<ng-container *ngIf="newDocuments">
-						<div class="content__column__item__files-list__item" *ngFor="let ndoc of newDocuments">
+						<div *ngFor="let ndoc of newDocuments" class="content__column__item__files-list__item">
 							<div class="content__column__item__files-list__item__img">
 								<ss-icon height="16" width="16" name="doc"></ss-icon>
 							</div>

@@ -8,15 +8,19 @@ import {
 	WritableSignal,
 } from '@angular/core';
 import { rotateAnimation } from '@app/core/animations';
-import {ButtonComponent, ButtonType, DividerComponent, TextComponent, TextType} from '@front-components/components';
+import {
+	ButtonComponent,
+	ButtonType,
+	DividerComponent,
+	TextComponent,
+	TextType,
+} from '@front-components/components';
 import { TovNodeState } from '@app/pages/excess-income/excess-income-state/tov-node-state';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { FormControl, Validators } from '@angular/forms';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {
-	FormControlInputWithFuncEditComponent
-} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { FormControlInputWithFuncEditComponent } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component';
 
 @UntilDestroy()
 @Component({
@@ -30,9 +34,9 @@ import {
 		TextComponent,
 		DividerComponent,
 		FormControlInputWithFuncEditComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ExcessIncomeEditCommentPopoverComponent {
 	public tovNode: WritableSignal<TovNodeState> = signal(this.data.tovNode);

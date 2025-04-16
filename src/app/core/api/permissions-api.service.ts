@@ -9,10 +9,12 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 	providedIn: 'root',
 })
 export class PermissionsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Получить доступ к входу на страницу */
-	public getPermissionClient(entity: string): Observable<{ items: string[] }> {
+	public getPermissionClient(
+		entity: string,
+	): Observable<{ items: string[] }> {
 		return this.http.get<{ items: string[] }>(
 			`${environment.apiUrl}/api/auth/permission/permissions`,
 			{

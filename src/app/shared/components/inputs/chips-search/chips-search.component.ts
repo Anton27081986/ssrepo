@@ -9,10 +9,10 @@ import {
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {CommonModule, NgClass} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { CommonModule, NgClass } from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 export type searchType =
 	| 'user'
@@ -25,7 +25,6 @@ export type searchType =
 	| 'technologist'
 	| 'productions'
 	| 'productionsTpr'
-	| 'fin-doc-orders'
 	| string
 	| 'tovGroups'
 	| undefined;
@@ -40,26 +39,41 @@ export type searchType =
 		CaptionComponent,
 		NgClass,
 		IconComponent,
-		TextComponent
+		TextComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ChipsSearchComponent {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string = 'Введите ФИО';
-	@Input() public error: string | undefined;
-	@Input() public selectedItems: any[] = [];
-	@Input() public searchType: searchType = 'user';
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
 
-	@Output() public getSelected = new EventEmitter<any>();
+	@Input()
+	public disabled = false;
 
-	@ViewChild('input') public input!: ElementRef;
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder = 'Введите ФИО';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public selectedItems: any[] = [];
+
+	@Input()
+	public searchType: searchType = 'user';
+
+	@Output()
+	public getSelected = new EventEmitter<any>();
+
+	@ViewChild('input')
+	public input!: ElementRef;
 
 	protected found: any[] = [];
 
-	public constructor(
+	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		public readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
@@ -72,7 +86,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getUsers(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -81,7 +95,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getSubSectors(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -90,7 +104,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getRegions(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -100,7 +114,7 @@ export class ChipsSearchComponent {
 						this.searchFacade
 							.getContractorsCompany(query)
 							.pipe(untilDestroyed(this))
-							.subscribe(res => {
+							.subscribe((res) => {
 								this.found = res.items;
 								this.ref.detectChanges();
 							});
@@ -111,7 +125,16 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getClientsCompany(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tov-company':
+					this.searchFacade
+						.getTovCompany(query)
+						.pipe(untilDestroyed(this))
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -121,17 +144,18 @@ export class ChipsSearchComponent {
 						this.searchFacade
 							.getContractor(query)
 							.pipe(untilDestroyed(this))
-							.subscribe(res => {
+							.subscribe((res) => {
 								this.found = res.items;
 								this.ref.detectChanges();
 							});
 					}
+
 					break;
 				case 'tovs':
 					this.searchFacade
 						.getTovs(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -140,7 +164,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getTechnologist(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -149,7 +173,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getClients(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -158,7 +182,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getProductions(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -167,7 +191,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getTovGroups(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});
@@ -176,16 +200,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getProductSearch(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
-							this.found = res.items;
-							this.ref.detectChanges();
-						});
-					break;
-				case 'fin-doc-orders':
-					this.searchFacade
-						.getFinDocOrders(query)
-						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});

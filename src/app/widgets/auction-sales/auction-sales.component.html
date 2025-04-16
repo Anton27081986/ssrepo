@@ -7,9 +7,9 @@
 	</div>
 	<div class="content">
 		<ss-table
+			*ngIf="listAuction?.total! > 0; else empty"
 			size="3"
 			[padding]="'5px 9px'"
-			*ngIf="listAuction?.total! > 0; else empty"
 			[head]="[
 				{title: 'ТП', field: 'tovName', sizeRatio: 4},
 				{title: 'Доступность', field: 'source'},

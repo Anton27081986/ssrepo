@@ -1,32 +1,51 @@
-import { ChangeDetectionStrategy, Component, Input, Optional, Self } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	Optional,
+	Self,
+} from '@angular/core';
 import { NgControl } from '@angular/forms';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-textarea',
 	templateUrl: './textarea.component.html',
 	styleUrls: ['./textarea.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CaptionComponent,
-		IconComponent
-	],
-	standalone: true
+	imports: [CaptionComponent, IconComponent],
+	standalone: true,
 })
 export class TextareaComponent {
-	@Input() public size: 'large' | 'medium' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public cols: string | undefined;
-	@Input() public rows: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public error: string | undefined;
-	@Input() public maxLength: number | undefined;
+	@Input()
+	public size: 'large' | 'medium' = 'medium';
 
-	@Input() public value: any = '';
+	@Input()
+	public disabled = false;
 
-	public constructor(
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public cols: string | undefined;
+
+	@Input()
+	public rows: string | undefined;
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public maxLength: number | undefined;
+
+	@Input()
+	public value: any = '';
+
+	constructor(
 		// Retrieve the dependency only from the local injector,
 		// not from parent or ancestors.
 		@Self()

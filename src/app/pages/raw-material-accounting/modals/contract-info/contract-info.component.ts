@@ -4,7 +4,13 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
-import {AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import {
 	fromPickerDateToIso,
@@ -13,17 +19,17 @@ import {
 import { AddContractDto } from '@app/core/models/raw-material-accounting/add-contract-dto';
 import { Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { DateRangeComponent } from '@app/shared/components/inputs/date-range/date-range.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
 
 interface IDialogData {
 	id?: string | null;
@@ -48,15 +54,15 @@ interface IDialogData {
 		TextareaComponent,
 		ButtonComponent,
 		LoaderComponent,
-		AsyncPipe
+		AsyncPipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ContractInfoComponent {
 	public isLoading$: Observable<boolean>;
 	public contract: IRawMaterialAccountingContract | null = null;
-	public canEdit: boolean = false;
-	public isEditMode: boolean = false;
+	public canEdit = false;
+	public isEditMode = false;
 
 	public editForm!: FormGroup;
 	constructor(
@@ -80,51 +86,63 @@ export class ContractInfoComponent {
 			period: new FormControl<string>('', Validators.required),
 			isComplete: new FormControl<boolean>(false),
 			reasonCompletion: new FormControl<string>(''),
-			tradePosition: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			tradePosition: new FormControl<IDictionaryItemDto | null>(null, [
+				Validators.required,
+			]),
 		});
 
-		this.facadeService.selectedContract$.pipe(untilDestroyed(this)).subscribe(contract => {
-			if (contract) {
-				this.contract = contract.data;
-				this.canEdit = contract.permissions.includes(Permissions.CLIENT_PROCUREMENTS_EDIT);
+		this.facadeService.selectedContract$
+			.pipe(untilDestroyed(this))
+			.subscribe((contract) => {
+				if (contract) {
+					this.contract = contract.data;
+					this.canEdit = contract.permissions.includes(
+						Permissions.CLIENT_PROCUREMENTS_EDIT,
+					);
 
-				if (typeof contract.data.notificationDate === 'string') {
-					this.contract.notificationDate = new Date(
-						Date.parse(contract.data.notificationDate),
+					if (typeof contract.data.notificationDate === 'string') {
+						this.contract.notificationDate = new Date(
+							Date.parse(contract.data.notificationDate),
+						).toLocaleString('ru-RU', {
+							year: 'numeric',
+							month: 'numeric',
+							day: 'numeric',
+						});
+					}
+
+					this.contract.periodStartDate = new Date(
+						Date.parse(contract.data.periodStartDate),
 					).toLocaleString('ru-RU', {
 						year: 'numeric',
 						month: 'numeric',
 						day: 'numeric',
 					});
+					this.contract.periodEndDate = new Date(
+						Date.parse(contract.data.periodEndDate),
+					).toLocaleString('ru-RU', {
+						year: 'numeric',
+						month: 'numeric',
+						day: 'numeric',
+					});
+
+					this.editForm.controls.quantityTotal.setValue(
+						contract.data.quantityTotal,
+					);
+					this.editForm.controls.price.setValue(contract.data.price);
+					this.editForm.controls.period.setValue(
+						`${this.contract.periodStartDate}-${this.contract.periodEndDate}`,
+					);
+					this.editForm.controls.reasonCompletion.setValue(
+						contract.data.reasonCompletion || '',
+					);
+					this.editForm.controls.isComplete.setValue(
+						contract.data.isComplete || false,
+					);
+					this.editForm.controls.tradePosition.setValue(
+						contract.data.tov,
+					);
 				}
-
-				this.contract.periodStartDate = new Date(
-					Date.parse(contract.data.periodStartDate),
-				).toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				});
-				this.contract.periodEndDate = new Date(
-					Date.parse(contract.data.periodEndDate),
-				).toLocaleString('ru-RU', {
-					year: 'numeric',
-					month: 'numeric',
-					day: 'numeric',
-				});
-
-				this.editForm.controls.quantityTotal.setValue(contract.data.quantityTotal);
-				this.editForm.controls.price.setValue(contract.data.price);
-				this.editForm.controls.period.setValue(
-					`${this.contract.periodStartDate}-${this.contract.periodEndDate}`,
-				);
-				this.editForm.controls.reasonCompletion.setValue(
-					contract.data.reasonCompletion || '',
-				);
-				this.editForm.controls.isComplete.setValue(contract.data.isComplete || false);
-				this.editForm.controls.tradePosition.setValue(contract.data.tov);
-			}
-		});
+			});
 
 		if (data.id) {
 			this.facadeService.selectContract(data.id);
@@ -138,12 +156,15 @@ export class ContractInfoComponent {
 			this.editForm.controls.isComplete.value &&
 			!this.editForm.controls.reasonCompletion.value
 		) {
-			this.editForm.controls.reasonCompletion.setErrors({ required: true });
+			this.editForm.controls.reasonCompletion.setErrors({
+				required: true,
+			});
 		}
 
 		if (
 			this.contract?.quantityReceived &&
-			parseFloat(this.editForm.controls.quantityTotal.value) < this.contract?.quantityReceived
+			parseFloat(this.editForm.controls.quantityTotal.value) <
+				this.contract?.quantityReceived
 		) {
 			this.editForm.controls.quantityTotal.setErrors({ error: true });
 		}

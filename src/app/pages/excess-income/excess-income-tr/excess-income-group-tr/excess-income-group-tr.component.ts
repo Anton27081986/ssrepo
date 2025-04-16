@@ -15,18 +15,31 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
 	ButtonComponent,
-	ButtonType, FieldCtrlDirective, FormFieldComponent,
+	ButtonType,
+	FieldCtrlDirective,
+	FormFieldComponent,
 	IconPosition,
-	IconType, InputComponent,
-	InputType, LinkComponent,
+	IconType,
+	InputComponent,
+	InputType,
+	LinkComponent,
 	Size,
-	TextType, TooltipDirective,
+	TextType,
+	TooltipDirective,
 	TooltipPosition,
 	TooltipTheme,
 } from '@front-components/components';
 import { GroupPriceHistoryComponent } from '@app/pages/excess-income/excess-income-history/group-price-history/group-price-history.component';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {ReactiveFormsModule} from "@angular/forms";
+import {
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @UntilDestroy()
 @Component({
@@ -49,18 +62,27 @@ import {ReactiveFormsModule} from "@angular/forms";
 		TooltipDirective,
 		FieldCtrlDirective,
 		ButtonComponent,
-		NgSwitchDefault
+		NgSwitchDefault,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ExcessIncomeGroupTrComponent {
-	public group: InputSignal<GroupNodeState> = input.required<GroupNodeState>();
+	public group: InputSignal<GroupNodeState> =
+		input.required<GroupNodeState>();
 
+	protected readonly ExcessIncomeClientRowItemField =
+		ExcessIncomeClientRowItemField;
+
+	protected readonly numberInputTextMask = numberInputTextMask;
+	protected readonly Size = Size;
+	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
 	) {}
 
+	protected readonly ButtonType = ButtonType;
 	public openPriceHistory() {
 		this.modalService
 			.open(GroupPriceHistoryComponent, {
@@ -77,12 +99,6 @@ export class ExcessIncomeGroupTrComponent {
 			.subscribe();
 	}
 
-	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
-	protected readonly numberInputTextMask = numberInputTextMask;
-	protected readonly Size = Size;
-	protected readonly IconType = IconType;
-	protected readonly TextType = TextType;
-	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
 	protected readonly InputType = InputType;
 	protected readonly TooltipTheme = TooltipTheme;

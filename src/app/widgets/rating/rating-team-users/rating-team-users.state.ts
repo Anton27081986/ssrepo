@@ -12,8 +12,8 @@ import { filterTruthy } from '@app/core/facades/client-proposals-facade.service'
 import { IRankItemDto } from '@app/core/models/awards/rank-item-dto';
 import { IRatingTeamsResponse } from '@app/core/utils/response';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {RatingService} from "@app/widgets/rating/rating.service";
-import {RatingTeamsStateService} from "@app/widgets/rating/rating-teams/rating-teams.state";
+import { RatingService } from '@app/widgets/rating/rating.service';
+import { RatingTeamsStateService } from '@app/widgets/rating/rating-teams/rating-teams.state';
 
 @UntilDestroy()
 @Injectable({
@@ -22,23 +22,27 @@ import {RatingTeamsStateService} from "@app/widgets/rating/rating-teams/rating-t
 export class RatingTeamUsersState {
 	public teamUsers$: Observable<IRatingTeamsResponse<IRankItemDto>>;
 
-	public readonly offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public readonly offset$: BehaviorSubject<number> =
+		new BehaviorSubject<number>(0);
 
-	public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public readonly isLoading$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
-	public limit: number = 8;
+	public limit = 8;
 	public pageSize = 6;
 	public pageIndex = 1;
 
-	public constructor(
+	constructor(
 		private readonly service: RatingService,
 		private readonly ratingTeamsStateService: RatingTeamsStateService,
 	) {
-		this.ratingTeamsStateService.isLoading$.pipe(untilDestroyed(this)).subscribe(val => {
-			if (val) {
-				this.isLoading$.next(true);
-			}
-		});
+		this.ratingTeamsStateService.isLoading$
+			.pipe(untilDestroyed(this))
+			.subscribe((val) => {
+				if (val) {
+					this.isLoading$.next(true);
+				}
+			});
 
 		this.teamUsers$ = combineLatest([
 			this.ratingTeamsStateService.walkerControl.valueChanges,

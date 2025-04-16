@@ -3,17 +3,17 @@ import { first } from 'rxjs';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { environment } from '@environments/environment';
-import {BannerComponent} from "@app/widgets/banner/banner.component";
-import {AuctionSalesComponent} from "@app/widgets/auction-sales/auction-sales.component";
-import {ThanksColleagueComponent} from "@app/widgets/thank-colleague/thanks-colleague.component";
-import {AddressBookComponent} from "@app/widgets/address-book/address-book.component";
-import {BirthdayComponent} from "@app/widgets/birthday/birthday.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {ExchangeRatesComponent} from "@app/widgets/exchange-rates/exchange-rates.component";
-import {RatingComponent} from "@app/widgets/rating/rating.component";
-import {VictoryComponent} from "@app/widgets/victory/victory.component";
-import {ThanksPartnerComponent} from "@app/widgets/thank-partner/thanks-partner.component";
-import {TransportComponent} from "@app/widgets/transport/transport.component";
+import { BannerComponent } from '@app/widgets/banner/banner.component';
+import { AuctionSalesComponent } from '@app/widgets/auction-sales/auction-sales.component';
+import { ThanksColleagueComponent } from '@app/widgets/thank-colleague/thanks-colleague.component';
+import { AddressBookComponent } from '@app/widgets/address-book/address-book.component';
+import { BirthdayComponent } from '@app/widgets/birthday/birthday.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { ExchangeRatesComponent } from '@app/widgets/exchange-rates/exchange-rates.component';
+import { RatingComponent } from '@app/widgets/rating/rating.component';
+import { VictoryComponent } from '@app/widgets/victory/victory.component';
+import { ThanksPartnerComponent } from '@app/widgets/thank-partner/thanks-partner.component';
+import { TransportComponent } from '@app/widgets/transport/transport.component';
 
 @UntilDestroy()
 @Component({
@@ -34,15 +34,15 @@ import {TransportComponent} from "@app/widgets/transport/transport.component";
 		TransportComponent,
 		RatingComponent,
 		NgIf,
-		RatingComponent
+		RatingComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class MainPageComponent implements OnInit {
 	public loading = false;
 	public backUrl: boolean = environment.production;
 
-	public constructor(private readonly userStateService: UserProfileStoreService) {}
+	constructor(private readonly userStateService: UserProfileStoreService) {}
 
 	public ngOnInit() {
 		this.loading = true;

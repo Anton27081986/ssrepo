@@ -2,54 +2,54 @@
 @use 'src/assets/scss/_variables.scss' as *;
 
 .settings {
-    ::ng-deep .ant-form-vertical .ant-form-item-label > label {
-        font-size: 12px;
-    }
+	::ng-deep .ant-form-vertical .ant-form-item-label > label {
+		font-size: 12px;
+	}
 
-    ::ng-deep .ant-input[disabled] {
-        color: #000000;
-    }
+	::ng-deep .ant-input[disabled] {
+		color: #000000;
+	}
 
-    display: flex;
+	display: flex;
 
-    .photo {
-        margin-top: 26px;
+	.photo {
+		margin-top: 26px;
 
-        .img {
-            width: 110px;
-            overflow: hidden;
-            flex: none;
-            border-radius: 16px;
+		.img {
+			width: 110px;
+			overflow: hidden;
+			flex: none;
+			border-radius: 16px;
 
-            img {
-                width: 110px;
-            }
-        }
-    }
-    .feilds {
-        width: 100%;
-        height: auto;
-        margin-left: 46px;
-        margin-top: 23px;
+			img {
+				width: 110px;
+			}
+		}
+	}
+	.feilds {
+		width: 100%;
+		height: auto;
+		margin-left: 46px;
+		margin-top: 23px;
 
-        .group {
-            margin-bottom: 23.5px;
+		.group {
+			margin-bottom: 23.5px;
 
-            .field {
-                margin-bottom: 15px;
-                padding-left: 16px;
-                padding-right: 16px;
+			.field {
+				margin-bottom: 15px;
+				padding-left: 16px;
+				padding-right: 16px;
 
-                .label {
-                    font-size: 12px;
-                }
-                .text {
-                    font-size: 14px;
-                    font-weight: bold;
-                    border-bottom: 1px solid $border-color;
-                    padding: 9px 0 6px 0;
-                }
-            }
-        }
-    }
+				.label {
+					font-size: 12px;
+				}
+				.text {
+					font-size: 14px;
+					font-weight: bold;
+					border-bottom: 1px solid $border-color;
+					padding: 9px 0 6px 0;
+				}
+			}
+		}
+	}
 }

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	Inject,
+	Signal,
+} from '@angular/core';
 import { ExcessIncomeClient } from '@app/core/models/excess-income/excess-income-client';
 import { rotateAnimation } from '@app/core/animations';
 import { ModalRef } from '@app/core/modal/modal.ref';
@@ -88,109 +93,6 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 
 	protected tovGroups$ = this.state.tovGroups$;
 
-	constructor(
-		private readonly modalRef: ModalRef,
-		private readonly stateColumn: ColumnsStateService,
-		private readonly searchService: SearchFacadeService,
-		protected readonly state: ExcessIncomeUpdateTovGroupState,
-		private readonly excessIncomeService: ExcessIncomeService,
-		private readonly modalService: ModalService,
-		private readonly toastService: NotificationToastService,
-		@Inject(DIALOG_DATA) protected readonly data: ExcessIncomeUpdateSndClientPopoverData,
-	) {
-		this.client = this.data.client;
-		this.stateColumn.colsTr$.next(this.defaultCols);
-		this.options = toSignal(
-			this.queryControl.valueChanges.pipe(
-				switchMap(val => {
-					if (val) {
-						return this.searchService.getTovGroupsByClient(val, this.client.id);
-					}
-					return NEVER;
-				}),
-				map(res => res.items),
-			),
-			{ initialValue: [] },
-		);
-	}
-
-	protected close() {
-		if (this.tovGroups$.value.length) {
-			this.modalService
-				.open(NoticeDialogComponent, {
-					data: {
-						header: 'Вы уверены, что хотите удалить запись?',
-						text: 'После удаления ее невозможно будет вернуть',
-						type: 'Error',
-						buttonOk: 'Удалить',
-						buttonCancel: 'Отмена',
-					},
-				})
-				.afterClosed()
-				.pipe(untilDestroyed(this))
-				.subscribe(status => {
-					if (status) {
-						this.modalRef.close();
-						this.state.tovGroups$.next([]);
-					}
-				});
-			return;
-		}
-
-		this.modalRef.close();
-		this.state.tovGroups$.next([]);
-	}
-
-	submit() {
-		const isNotValid = this.tovGroups$.value.find(item => !item.excessIncomePercent.valid);
-		if (isNotValid) {
-			this.modalService
-				.open(NoticeDialogComponent, {
-					data: {
-						header: 'Вы уверены, что хотите применить изменения?',
-						text: 'Поля у некоторых товарных подгрупп отсутствуют и будут обнулены',
-						type: 'Warning',
-						buttonOk: 'Применить',
-						buttonCancel: 'Нет',
-					},
-				})
-				.afterClosed()
-				.subscribe(status => {
-					if (status) {
-						this.updateSnd();
-					} else {
-						return;
-					}
-				});
-		} else {
-			this.updateSnd();
-		}
-	}
-
-	public updateSnd() {
-		this.excessIncomeService
-			.updateSndClient(this.client.id, {
-				isCurrent: this.data.isCurrent,
-				items: this.tovGroups$.value.map(item => {
-					return {
-						tovGroupId: item.id,
-						excessIncomePercent: Number(item.excessIncomePercent.value) ?? 0,
-					};
-				}),
-			})
-			.pipe(
-				tap(() =>
-					this.data.state.event$.next(ExcessIncomeEventEnum.excessIncomeClientUpdated),
-				),
-				untilDestroyed(this),
-			)
-			.subscribe(() => {
-				this.modalRef.close();
-				this.state.tovGroups$.next([]);
-				this.toastService.addToast('СНД,% успешно установлены', 'ok');
-			});
-	}
-
 	protected defaultCols: ITrTableBaseColumn[] = [
 		{
 			cols: [
@@ -217,10 +119,125 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 			],
 		},
 	];
+
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
+	constructor(
+		private readonly modalRef: ModalRef,
+		private readonly stateColumn: ColumnsStateService,
+		private readonly searchService: SearchFacadeService,
+		protected readonly state: ExcessIncomeUpdateTovGroupState,
+		private readonly excessIncomeService: ExcessIncomeService,
+		private readonly modalService: ModalService,
+		private readonly toastService: NotificationToastService,
+		@Inject(DIALOG_DATA)
+		protected readonly data: ExcessIncomeUpdateSndClientPopoverData,
+	) {
+		this.client = this.data.client;
+		this.stateColumn.colsTr$.next(this.defaultCols);
+		this.options = toSignal(
+			this.queryControl.valueChanges.pipe(
+				switchMap((val) => {
+					if (val) {
+						return this.searchService.getTovGroupsByClient(
+							val,
+							this.client.id,
+						);
+					}
+
+					return NEVER;
+				}),
+				map((res) => res.items),
+			),
+			{ initialValue: [] },
+		);
+	}
+
+	protected close() {
+		if (this.tovGroups$.value.length) {
+			this.modalService
+				.open(NoticeDialogComponent, {
+					data: {
+						header: 'Вы уверены, что хотите удалить запись?',
+						text: 'После удаления ее невозможно будет вернуть',
+						type: 'Error',
+						buttonOk: 'Удалить',
+						buttonCancel: 'Отмена',
+					},
+				})
+				.afterClosed()
+				.pipe(untilDestroyed(this))
+				.subscribe((status) => {
+					if (status) {
+						this.modalRef.close();
+						this.state.tovGroups$.next([]);
+					}
+				});
+
+			return;
+		}
+
+		this.modalRef.close();
+		this.state.tovGroups$.next([]);
+	}
+
 	protected readonly IconPosition = IconPosition;
+	submit() {
+		const isNotValid = this.tovGroups$.value.find(
+			(item) => !item.excessIncomePercent.valid,
+		);
+
+		if (isNotValid) {
+			this.modalService
+				.open(NoticeDialogComponent, {
+					data: {
+						header: 'Вы уверены, что хотите применить изменения?',
+						text: 'Поля у некоторых товарных подгрупп отсутствуют и будут обнулены',
+						type: 'Warning',
+						buttonOk: 'Применить',
+						buttonCancel: 'Нет',
+					},
+				})
+				.afterClosed()
+				.subscribe((status) => {
+					if (status) {
+						this.updateSnd();
+					} else {
+						return;
+					}
+				});
+		} else {
+			this.updateSnd();
+		}
+	}
+
 	protected readonly LabelType = LabelType;
+	public updateSnd() {
+		this.excessIncomeService
+			.updateSndClient(this.client.id, {
+				isCurrent: this.data.isCurrent,
+				items: this.tovGroups$.value.map((item) => {
+					return {
+						tovGroupId: item.id,
+						excessIncomePercent:
+							Number(item.excessIncomePercent.value) ?? 0,
+					};
+				}),
+			})
+			.pipe(
+				tap(() =>
+					this.data.state.event$.next(
+						ExcessIncomeEventEnum.excessIncomeClientUpdated,
+					),
+				),
+				untilDestroyed(this),
+			)
+			.subscribe(() => {
+				this.modalRef.close();
+				this.state.tovGroups$.next([]);
+				this.toastService.addToast('СНД,% успешно установлены', 'ok');
+			});
+	}
 }

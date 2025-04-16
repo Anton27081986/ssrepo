@@ -1,7 +1,7 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display">
+			<td *ngIf="col.display" class="ss-table-td">
 				<ng-container *ngSwitchCase="ExcessIncomeSndClientRowItemField.tovGroup">
 					<snab-text [type]="TextType.Body">{{ tovGroup().name }}</snab-text>
 				</ng-container>

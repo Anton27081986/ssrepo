@@ -1,30 +1,30 @@
 <div class="multiselect-v2">
 	<ss-caption *ngIf="label" size="1">{{ label }}</ss-caption>
 	<div class="multiselect-v2__input" [class.multiselect-v2__input--isExpanded]="isExpanded">
-		<div class="multiselect-v2__chips" *ngIf="(selectedOptions$ | async)?.length">
+		<div *ngIf="(selectedOptions$ | async)?.length" class="multiselect-v2__chips">
 			<ss-multiselect-chips-v2 [readOnly]="(readOnly$ | async)!" [ellipsis]="(chipsEllipsis$ | async)!" [chips]="(selectedOptions$ | async)!"
 									 (delChipEmit)="delSelectedOption($event)"></ss-multiselect-chips-v2>
 		</div>
-		<div class="multiselect-v2__chips" *ngIf="!(selectedOptions$ | async)?.length">
+		<div *ngIf="!(selectedOptions$ | async)?.length" class="multiselect-v2__chips">
 			<ss-text [size]="'3'" [color]="'gray'">{{ placeholder}}</ss-text>
 		</div>
-		<div class="multiselect-v2__count-chips"
-			 *ngIf="(this.selectedOptions$ | async)?.length"> {{ (this.selectedOptions$ | async)?.length }}
+		<div *ngIf="(this.selectedOptions$ | async)?.length"
+			 class="multiselect-v2__count-chips"> {{ (this.selectedOptions$ | async)?.length }}
 		</div>
 		<ss-icon *ngIf="(this.selectedOptions$ | async)?.length && !(this.readOnly$ | async)" [name]="'basket'" (click)="clear()"></ss-icon>
 		<ss-icon *ngIf="(this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length"
-				 (click)="toggle()" height="12" name="chevron"
-				 class="multiselect-v2__icon-toggle"
-				 [@rotate]="isExpanded">
+				 height="12" name="chevron" class="multiselect-v2__icon-toggle"
+				 [@rotate]="isExpanded"
+				 (click)="toggle()">
 		</ss-icon>
 	</div>
-	<div class="multiselect-v2__select"
-		 *ngIf="isExpanded && (selectedOptions$ | async)?.length || isExpanded && (viewOptions$ | async)">
+	<div *ngIf="isExpanded && (selectedOptions$ | async)?.length || isExpanded && (viewOptions$ | async)"
+		 class="multiselect-v2__select">
 		<ng-container *ngIf="selectedOptions$ | async as options">
-			<ss-multiselect-option-v2 [disabled]="(readOnly$ | async)!" *ngFor="let selectedOpt of options" [option]="selectedOpt" (click)="delSelectedOption(selectedOpt)"></ss-multiselect-option-v2>
+			<ss-multiselect-option-v2 *ngFor="let selectedOpt of options" [disabled]="(readOnly$ | async)!" [option]="selectedOpt" (click)="delSelectedOption(selectedOpt)"></ss-multiselect-option-v2>
 			<ss-divider *ngIf="options.length"></ss-divider>
 		</ng-container>
-		<ss-multiselect-option-v2 [disabled]="(readOnly$ | async)!" *ngFor="let opt of viewOptions$ | async" [option]="opt" (click)="addStateOptions(opt)"></ss-multiselect-option-v2>
+		<ss-multiselect-option-v2 *ngFor="let opt of viewOptions$ | async" [disabled]="(readOnly$ | async)!" [option]="opt" (click)="addStateOptions(opt)"></ss-multiselect-option-v2>
 	</div>
 </div>
 

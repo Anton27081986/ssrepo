@@ -1,8 +1,17 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import {
+	FileBucketsEnum,
+	FilesApiService,
+} from '@app/core/api/files.api.service';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { WinsApiService } from '@app/core/api/wins-api.service';
@@ -10,20 +19,21 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
-import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {AttachmentComponent} from "@app/shared/components/attachment/attachment.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {VictoryEventEnum, VictoryRootService} from "@app/widgets/victory/victory-root.service";
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+import { ChipsUserSearchComponent } from '@app/shared/components/inputs/chips-user-search/chips-user-search.component';
+import { ChipsSearchComponent } from '@app/shared/components/inputs/chips-search/chips-search.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
+import { AttachmentComponent } from '@app/shared/components/attachment/attachment.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import {
-	AddVictoryModalResultComponent
-} from "@app/widgets/victory/modal/add-victory-modal-result/add-victory-modal-result.component";
+	VictoryEventEnum,
+	VictoryRootService,
+} from '@app/widgets/victory/victory-root.service';
+import { AddVictoryModalResultComponent } from '@app/widgets/victory/modal/add-victory-modal-result/add-victory-modal-result.component';
 
 @UntilDestroy()
 @Component({
@@ -45,9 +55,9 @@ import {
 		AsyncPipe,
 		AttachmentComponent,
 		NgForOf,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class AddVictoryModalComponent {
 	protected formGroup: FormGroup<AddVictoryForm>;
@@ -55,7 +65,9 @@ export class AddVictoryModalComponent {
 	public toUsers: IUserDto[] = [];
 	protected subscription: Subscription = new Subscription();
 
-	protected readonly victoryFiles = new BehaviorSubject<IAttachmentDto[] | null>(null);
+	protected readonly victoryFiles = new BehaviorSubject<
+		IAttachmentDto[] | null
+	>(null);
 
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -66,7 +78,10 @@ export class AddVictoryModalComponent {
 		private readonly modalService: ModalService,
 	) {
 		this.formGroup = this._formBuilder.group<AddVictoryForm>({
-			text: this._formBuilder.nonNullable.control('', Validators.required),
+			text: this._formBuilder.nonNullable.control(
+				'',
+				Validators.required,
+			),
 			userIds: this._formBuilder.nonNullable.control([]),
 			productIds: this._formBuilder.nonNullable.control([]),
 		});
@@ -77,7 +92,7 @@ export class AddVictoryModalComponent {
 	}
 
 	public getProducts(products: IDictionaryItemDto[]) {
-		const productIds = products.map(prod => prod.id);
+		const productIds = products.map((prod) => prod.id);
 
 		this.formGroup.controls.productIds.setValue(productIds);
 	}
@@ -88,7 +103,11 @@ export class AddVictoryModalComponent {
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				if (this.victoryFiles.value) {
-					this.victoryFiles.next(this.victoryFiles.value.filter(file => file.id !== id));
+					this.victoryFiles.next(
+						this.victoryFiles.value.filter(
+							(file) => file.id !== id,
+						),
+					);
 				}
 			});
 	}
@@ -101,16 +120,18 @@ export class AddVictoryModalComponent {
 			return;
 		}
 
-		Array.from(fileList).forEach(file => {
+		Array.from(fileList).forEach((file) => {
 			const reader = new FileReader();
 
 			reader.onload = () => {
 				this.filesApiService
 					.uploadFile(FileBucketsEnum.Attachments, file)
 					.pipe(filterTruthy())
-					.subscribe(file => {
+					.subscribe((file) => {
 						this.victoryFiles.next(
-							this.victoryFiles.value ? [...this.victoryFiles.value, file] : [file],
+							this.victoryFiles.value
+								? [...this.victoryFiles.value, file]
+								: [file],
 						);
 					});
 			};
@@ -120,7 +141,7 @@ export class AddVictoryModalComponent {
 	}
 
 	submit() {
-		const userIds = this.toUsers.map(user => user.id!);
+		const userIds = this.toUsers.map((user) => user.id!);
 
 		if (userIds.length) {
 			this.formGroup.controls.userIds.setValue(userIds);
@@ -133,7 +154,9 @@ export class AddVictoryModalComponent {
 						this.formGroup.get('text')?.value!,
 						this.formGroup.get('userIds')?.value!,
 						this.formGroup.get('productIds')?.value!,
-						this.victoryFiles.value ? this.victoryFiles.value.map(item => item.id) : [],
+						this.victoryFiles.value
+							? this.victoryFiles.value.map((item) => item.id)
+							: [],
 					)
 					.subscribe(() => {
 						this.modalRef.close();

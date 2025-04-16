@@ -55,15 +55,15 @@
 						display: inline;
 						padding: 4px 8px;
 						font-size: 12px;
-						background-color: #CDE4FF;
-						border: 1px solid #B4D2FF;
+						background-color: #cde4ff;
+						border: 1px solid #b4d2ff;
 						font-weight: 600;
 					}
 				}
 
 				ss-text {
 					::ng-deep p::first-letter {
-						text-transform: uppercase!important;
+						text-transform: uppercase !important;
 					}
 				}
 

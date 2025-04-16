@@ -1,12 +1,12 @@
 <div class="settings">
   <div class="left-menu">
     <div class="group">
-      <div class="item" [routerLink]="'settings'" routerLinkActive="active-link">
+      <div class="item" routerLinkActive="active-link" [routerLink]="'settings'">
 		<ss-icon class="icon left-icon" [name]="'settings'"></ss-icon>
         <span class="title">Настройки профиля</span>
         <ss-icon class="icon right-icon" [name]="'arrowRight'"></ss-icon>
       </div>
-      <div class="item" [routerLink]="'change-password'" routerLinkActive="active-link" *ngIf="false">
+      <div *ngIf="false" class="item" routerLinkActive="active-link" [routerLink]="'change-password'">
 		  <ss-icon class="icon left-icon" [name]="'password'"></ss-icon>
         <span class="title">Изменить пароль</span>
 		  <ss-icon class="icon right-icon" [name]="'arrowRight'"></ss-icon>
@@ -18,19 +18,19 @@
       </div>
     </div>
     <div class="group">
-      <div class="item" [routerLink]="'my-menu'" *ngIf="true">
+      <div *ngIf="true" class="item" [routerLink]="'my-menu'">
 		  <ss-icon class="icon left-icon" [name]="'star'"></ss-icon>
         <span class="title">Настроить пункты моего меню</span>
 		  <ss-icon class="icon right-icon" [name]="'arrowRight'"></ss-icon>
       </div>
 <!--      [routerLink]="'order-widgets'"-->
-      <div class="item" *ngIf="false">
+      <div *ngIf="false" class="item">
 		  <ss-icon class="icon left-icon" [name]="'sort'"></ss-icon>
         <span class="title">Упорядочить виджеты</span>
 		  <ss-icon class="icon right-icon" [name]="'arrowRight'"></ss-icon>
       </div>
 <!--      [routerLink]="'notifications'"-->
-      <div class="item" *ngIf="false">
+      <div *ngIf="false" class="item">
 		<ss-icon class="icon left-icon" [name]="'iconRemind'"></ss-icon>
         <span class="title">Уведомления</span>
 		  <ss-icon class="icon right-icon" [name]="'ss:arrowRight'"></ss-icon>

@@ -51,25 +51,25 @@ button.small {
 
 button.primary {
 	background-color: $main;
-	border-color:  $main-outline;
+	border-color: $main-outline;
 	color: $dark-text;
 }
 
 button.warning {
-	background-color: #F5B50233;
-	border-color:  #F5B50233;
-	color: #936D01;
+	background-color: #f5b50233;
+	border-color: #f5b50233;
+	color: #936d01;
 }
 
 button.secondary {
 	background-color: $additional;
-	border-color:  $additional-outline;
+	border-color: $additional-outline;
 	color: $main;
 }
 
 button.muted {
-	background-color: #F2F3F7;
-	border-color:  #E4E8EA;
+	background-color: #f2f3f7;
+	border-color: #e4e8ea;
 	color: $lite-text;
 }
 

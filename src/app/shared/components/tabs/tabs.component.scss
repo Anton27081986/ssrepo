@@ -1,7 +1,6 @@
 @use 'src/styles/colors.scss' as *;
 
 :host {
-
 	.tabs {
 		display: flex;
 		border-radius: 16px 16px 0 0;
@@ -38,7 +37,7 @@
 		}
 
 		.icon.error {
-			background-color: #FF5A5A;
+			background-color: #ff5a5a;
 		}
 	}
 
@@ -55,10 +54,10 @@
 	}
 
 	::ng-deep .selected p {
-		color: $main!important;
+		color: $main !important;
 	}
 
 	:host-context(.dark) .tabs {
-		background-color: $dark-island!important;
+		background-color: $dark-island !important;
 	}
 }

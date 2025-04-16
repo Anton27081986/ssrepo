@@ -1,25 +1,25 @@
 .header {
-    width: 100%;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	width: 100%;
+	padding: 16px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
-    &__status {
-        display: flex;
-        align-items: center;
-        gap: 10px
-    }
+	&__status {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+	}
 
-    &__controls {
-        display: flex;
-        gap: 16px;
-        align-items: center;
-    }
+	&__controls {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
 
-    &__filters {
-        display: flex;
-        gap: 16px;
-        align-items: center;
-    }
+	&__filters {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+	}
 }

@@ -1,69 +1,79 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="specification" padding="0" (click)="$event.stopPropagation()">
+<div class="wrapper" (mousedown)="close()">
+	<ss-card class="specification" padding="0" (mousedown)="$event.stopPropagation()">
 		<div class="header">
 			<ss-text size="2">{{ spec ? 'Редактировать' : 'Добавить'}} спецификацию затрат</ss-text>
 			<ss-icon name="close" (click)="close()"></ss-icon>
 		</div>
-		<form [formGroup]="addSpecificationForm" class="content">
+		<form class="content" [formGroup]="addSpecificationForm">
 			<div class="content__column">
-				<ss-search-input searchType="services" label="Услуга" placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.service : undefined"
-					(select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)"
-					[error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-search-input>
-				<ss-textarea [maxLength]="500" formControlName="comment" label="Комментарий"></ss-textarea>
+				<ss-select-v2
+					[label]="'Услуга'"
+					[placeholder]="'Выберите услугу'"
+					[options]="services()"
+					[formControlName]="'service'"
+					[errorText]="addSpecificationForm.controls.service.touched && addSpecificationForm.controls.service.errors?.required ? 'Обязательное поле' : ''"
+				/>
+				<ss-textarea formControlName="comment" label="Комментарий" [maxLength]="500"
+							 [error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
 				<ss-input formControlName="quantity" label="Количество" type="number"
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
 				<ss-search-input searchType="tov-units" label="Единицы измерения" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.tovUnit : defaultTovUnits"
+					[error]="addSpecificationForm.controls.tovUnitId.touched && addSpecificationForm.controls.tovUnitId.errors?.required ? 'Обязательное поле' : undefined"
 					(select)="addSpecificationForm.controls.tovUnitId.setValue($event.id)"
-					(click)="addSpecificationForm.controls.tovUnitId.setErrors(null)"
-					[error]="addSpecificationForm.controls.tovUnitId.touched && addSpecificationForm.controls.tovUnitId.errors?.required ? 'Обязательное поле' : undefined">
+					(click)="addSpecificationForm.controls.tovUnitId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="cost-article" label="Статья" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.cost : undefined"
-					(select)="addSpecificationForm.controls.costId.setValue($event.id); addSpecificationForm.controls.costId.setErrors(null)"
-					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined">
+					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined"
+				    (focusout)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
+				    (input)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
+					(select)="addSpecificationForm.controls.costId.setValue($event.id); addSpecificationForm.controls.costId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="fa-objects" label="Объект ОС/НМА" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.faObject : undefined"
+					[error]="addSpecificationForm.controls.faObjectId.touched && addSpecificationForm.controls.faObjectId.errors?.required ? 'Обязательное поле' : undefined"
 					(select)="addSpecificationForm.controls.faObjectId.setValue($event.id)"
-					(click)="addSpecificationForm.controls.faObjectId.setErrors(null)"
-					[error]="addSpecificationForm.controls.faObjectId.touched && addSpecificationForm.controls.faObjectId.errors?.required ? 'Обязательное поле' : undefined">
+					(click)="addSpecificationForm.controls.faObjectId.setErrors(null)">
 				</ss-search-input>
 			</div>
 			<div class="content__column">
 				<ss-search-input searchType="projects" label="Проект" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.project : undefined"
+					[error]="addSpecificationForm.controls.projectId.touched && addSpecificationForm.controls.projectId.errors?.required ? 'Обязательное поле' : undefined"
 					(select)="addSpecificationForm.controls.projectId.setValue($event.id)"
-					(click)="addSpecificationForm.controls.projectId.setErrors(null)"
-					[error]="addSpecificationForm.controls.projectId.touched && addSpecificationForm.controls.projectId.errors?.required ? 'Обязательное поле' : undefined">
+					(click)="addSpecificationForm.controls.projectId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="user" label="Сотрудник" placeholder="Выберите из списка"
 					 [selectedItem]="spec ? spec.user : user"
-					 (select)="onUserSelect($event)"
-					 [error]="addSpecificationForm.controls.userId.touched && addSpecificationForm.controls.userId.errors?.required ? 'Обязательное поле' : undefined">
+					 [error]="addSpecificationForm.controls.userId.touched && addSpecificationForm.controls.userId.errors?.required ? 'Обязательное поле' : undefined"
+					 (select)="onUserSelect($event)">
 				</ss-search-input>
 				<ss-search-input searchType="depts" label="Отдел" placeholder="Выберите из списка"
 					[selectedItem]="myDept"
-					(select)="addSpecificationForm.controls.deptId.setValue($event.id); addSpecificationForm.controls.deptId.setErrors(null)"
-					[error]="addSpecificationForm.controls.deptId.touched && addSpecificationForm.controls.deptId.errors?.required ? 'Обязательное поле' : undefined">
+					[error]="addSpecificationForm.controls.deptId.touched && addSpecificationForm.controls.deptId.errors?.required ? 'Обязательное поле' : undefined"
+					(select)="addSpecificationForm.controls.deptId.setValue($event.id); addSpecificationForm.controls.deptId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="mfs-sections" label="Производственный участок" placeholder="Выберите из списка"
 					[selectedItem]="mySection"
+					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined"
 					(select)="addSpecificationForm.controls.sectionId.setValue($event.id)"
-					(click)="addSpecificationForm.controls.sectionId.setErrors(null)"
-					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined">
+					(click)="addSpecificationForm.controls.sectionId.setErrors(null)">
 				</ss-search-input>
-				<ss-numeric-input formControlName="amount" label="Сумма"
-					[error]="addSpecificationForm.controls.amount.touched && addSpecificationForm.controls.amount.errors?.required ? 'Обязательное поле' : undefined">>
+				<ss-numeric-input formControlName="amount" label="Сумма 1С"
+					[error]="addSpecificationForm.controls.amount.touched
+							&& addSpecificationForm.controls.amount.errors?.required
+							? 'Обязательное поле'
+							: amountValidator(addSpecificationForm.controls.amount)
+							? 'Некорректное значение'
+							: undefined">
 				</ss-numeric-input>
 			</div>
 		</form>
 		<div class="footer">
 			<ss-button type="muted" size="small" (click)="close()">Отмена</ss-button>
-			@if(spec) {
+			@if(spec?.id) {
 				<ss-button type="primary" size="small" (click)="updateSpecification()">Сохранить изменения</ss-button>
 			} @else {
 				<ss-button type="primary" size="small" (click)="addSpecification()">Добавить новую спецификацию</ss-button>

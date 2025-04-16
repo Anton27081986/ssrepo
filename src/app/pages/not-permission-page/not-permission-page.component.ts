@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {CommonModule} from "@angular/common";
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
 	selector: 'app-not-permission-page',
@@ -16,9 +16,9 @@ import {CommonModule} from "@angular/common";
 		HeadlineComponent,
 		TextComponent,
 		ButtonComponent,
-		RouterLink
+		RouterLink,
 	],
-	standalone: true
+	standalone: true,
 })
 export class NotPermissionPageComponent {
 	protected readonly AppRoutes = AppRoutes;
@@ -28,7 +28,9 @@ export class NotPermissionPageComponent {
 		private readonly activatedRoute: ActivatedRoute,
 	) {
 		if (this.activatedRoute.snapshot.queryParams.redirectUrl) {
-			this.router.navigate([this.activatedRoute.snapshot.queryParams.redirectUrl]);
+			this.router.navigate([
+				this.activatedRoute.snapshot.queryParams.redirectUrl,
+			]);
 		}
 	}
 }

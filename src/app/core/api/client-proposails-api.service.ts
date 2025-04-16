@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-import { environment } from '@environments/environment.development';
+import {
+	HttpClient,
+	HttpHeaders,
+	HttpParams,
+	HttpResponse,
+} from '@angular/common/http';
+import { environment } from '@environments/environment';
 import { map, Observable, retryWhen, switchMap, throwError, timer } from 'rxjs';
 import { ProposalsProduction } from '@app/core/models/client-proposails/proposals-production';
 import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
@@ -46,17 +51,23 @@ export interface ILoadFileStatus {
 })
 export class ClientProposalsApiService {
 	// заготовка для таблиц в аккордионе
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getDoneProductions(
-		clientId: number,
-	): Observable<{ data: IResponse<ProposalsProduction>; permissions: string[] }> {
-		return this.http.get<{ data: IResponse<ProposalsProduction>; permissions: string[] }>(
+	public getDoneProductions(clientId: number): Observable<{
+		data: IResponse<ProposalsProduction>;
+		permissions: string[];
+	}> {
+		return this.http.get<{
+			data: IResponse<ProposalsProduction>;
+			permissions: string[];
+		}>(
 			`${environment.apiUrl}/api/company/ClientProposals/doneProductions/${clientId}`,
 		);
 	}
 
-	public getNews(params: IRequestGetProposals): Observable<IResponse<INewsDto>> {
+	public getNews(
+		params: IRequestGetProposals,
+	): Observable<IResponse<INewsDto>> {
 		return this.http.get<IResponse<INewsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/news`,
 			{
@@ -77,7 +88,10 @@ export class ClientProposalsApiService {
 			.set('Offset', params.offset);
 
 		if (params.onlyCurrentYear) {
-			httpParams = httpParams.set('OnlyCurrentYear', params.onlyCurrentYear);
+			httpParams = httpParams.set(
+				'OnlyCurrentYear',
+				params.onlyCurrentYear,
+			);
 		}
 
 		return this.http.get<IResponseProposalsTrips<IBusinessTripsDto>>(
@@ -88,7 +102,9 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getTradeList(params: IRequestGetTradeList): Observable<IResponse<ITradeList>> {
+	public getTradeList(
+		params: IRequestGetTradeList,
+	): Observable<IResponse<ITradeList>> {
 		let httpParams = new HttpParams()
 			.set('clientId', params.clientId)
 			.set('Limit', params.limit)
@@ -122,7 +138,9 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getContractors(params: IRequestGetProposals): Observable<IResponse<IContractorsDto>> {
+	public getContractors(
+		params: IRequestGetProposals,
+	): Observable<IResponse<IContractorsDto>> {
 		return this.http.get<IResponse<IContractorsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/contractors`,
 			{
@@ -135,7 +153,9 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public getSamples(params: IRequestGetProposals): Observable<IResponseProposalsTrips<ISamples>> {
+	public getSamples(
+		params: IRequestGetProposals,
+	): Observable<IResponseProposalsTrips<ISamples>> {
 		return this.http.get<IResponseProposalsTrips<ISamples>>(
 			`${environment.apiUrl}/api/company/ClientProposals/samples`,
 			{
@@ -209,8 +229,11 @@ export class ClientProposalsApiService {
 		);
 	}
 
-	public saveInCloud(files: IFilesProposals[], sendEmail: boolean): Observable<SaveInCloud> {
-		const request: IFile[] = files.map(file => {
+	public saveInCloud(
+		files: IFilesProposals[],
+		sendEmail: boolean,
+	): Observable<SaveInCloud> {
+		const request: IFile[] = files.map((file) => {
 			return {
 				id: file.id,
 				type: file.type,
@@ -220,17 +243,23 @@ export class ClientProposalsApiService {
 
 		const dataRequest: IShareFile = { files: request, sendEmail };
 
-		return this.http.post<SaveInCloud>(`${environment.apiUrl}/api/files/share`, dataRequest);
+		return this.http.post<SaveInCloud>(
+			`${environment.apiUrl}/api/files/share`,
+			dataRequest,
+		);
 	}
 
 	public getFiles(url: string): Observable<Blob> {
 		return this.http
-			.get<Blob>(url, { observe: 'response', responseType: 'blob' as 'json' })
+			.get<Blob>(url, {
+				observe: 'response',
+				responseType: 'blob' as 'json',
+			})
 			.pipe(
-				map(response => this.handleResponse(response)),
-				retryWhen(errors =>
+				map((response) => this.handleResponse(response)),
+				retryWhen((errors) =>
 					errors.pipe(
-						switchMap(error => {
+						switchMap((error) => {
 							if (error.status !== 200) {
 								console.log('Retrying request...');
 
@@ -253,11 +282,17 @@ export class ClientProposalsApiService {
 	}
 
 	public downloadReport(type: TypeReportEnum): Observable<Blob> {
-		return this.http.get<Blob>(`${environment.apiUrl}/api/company/ClientProposals/reports`, {
-			responseType: 'blob' as 'json',
-			headers: new HttpHeaders().append('Content-Type', 'application/json'),
-			params: new HttpParams().set('report', type),
-		});
+		return this.http.get<Blob>(
+			`${environment.apiUrl}/api/company/ClientProposals/reports`,
+			{
+				responseType: 'blob' as 'json',
+				headers: new HttpHeaders().append(
+					'Content-Type',
+					'application/json',
+				),
+				params: new HttpParams().set('report', type),
+			},
+		);
 	}
 
 	private handleResponse(response: HttpResponse<Blob>): Blob {

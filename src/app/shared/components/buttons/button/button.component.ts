@@ -4,10 +4,11 @@ import { Component, Input } from '@angular/core';
 	selector: 'ss-button',
 	templateUrl: './button.component.html',
 	styleUrls: ['./button.component.scss'],
-	standalone: true
+	standalone: true,
 })
 export class ButtonComponent {
-	@Input() public type:
+	@Input()
+	public type:
 		| 'primary'
 		| 'secondary'
 		| 'muted'
@@ -17,6 +18,9 @@ export class ButtonComponent {
 		| 'warning'
 		| 'outline' = 'primary';
 
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
+
+	@Input()
+	public disabled = false;
 }

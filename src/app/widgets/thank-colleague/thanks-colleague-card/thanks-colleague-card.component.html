@@ -1,8 +1,8 @@
 <ss-card *ngIf="thankColleague" class="thanks-colleague-card" padding="16px">
 	<div class="thanks-colleague-card__header">
 		<div class="thanks-colleague-card__header__avatars">
-			<ss-avatar [src]="thankColleague.fromUser.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thankColleague.fromUser.id)"></ss-avatar>
-			<ss-avatar [src]="thankColleague.toUser.avatarUrl || ''" size="medium" type="rectangle" (click)="openModalInfoUser(thankColleague.toUser.id)"></ss-avatar>
+			<ss-avatar size="medium" type="rectangle" [src]="thankColleague.fromUser.avatarUrl || ''" (click)="openModalInfoUser(thankColleague.fromUser.id)"></ss-avatar>
+			<ss-avatar size="medium" type="rectangle" [src]="thankColleague.toUser.avatarUrl || ''" (click)="openModalInfoUser(thankColleague.toUser.id)"></ss-avatar>
 			<ss-icon class="thanks-colleague-card__header__avatars__arrow" name="arrow"></ss-icon>
 		</div>
 		<div class="thanks-colleague-card__header__persons">
@@ -26,8 +26,8 @@
 			</app-like>
 			<div class="thanks-colleague-card__footer__controls__like">
 				<app-choice-like
-					(close)="isChoiceLike = false"
 					*ngIf="isChoiceLike"
+					(close)="isChoiceLike = false"
 					(stateLike)="changeLike(thankColleague, $event)">
 				</app-choice-like>
 				<app-like
@@ -41,11 +41,11 @@
 
 			<div class="thanks-colleague-card__footer__controls__comment" (click)="openPopoverInfo(thankColleague)">
 				<ss-icon
+					name="comment"
 					[tooltip]="'Оставить комментарий'"
 					[theme]="TooltipTheme.DEFAULT"
 					[position]="TooltipPosition.DEFAULT"
-					[width]="'15'"
-					[height]="'15'" name="comment">
+					[width]="'15'" [height]="'15'">
 				</ss-icon>
 				<ss-text [size]="'3'">{{ thankColleague.commentsCount }}</ss-text>
 			</div>

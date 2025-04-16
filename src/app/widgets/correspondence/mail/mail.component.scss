@@ -24,7 +24,7 @@
 		display: flex;
 		gap: 4px;
 		align-items: center;
-		color: #6D7885;
+		color: #6d7885;
 
 		.reply-author {
 			color: $text;
@@ -32,8 +32,8 @@
 
 		.reply-message {
 			padding: 4px 12px;
-			border-left: 4px solid #6D7885;
-			background-color: #F2F3F7;
+			border-left: 4px solid #6d7885;
+			background-color: #f2f3f7;
 			border-radius: 0 8px 8px 0;
 			flex-grow: 1;
 
@@ -122,7 +122,6 @@
 		gap: 28px;
 
 		::ng-deep ss-caption {
-
 			.caption-1 {
 				display: flex;
 				align-items: center;
@@ -164,7 +163,7 @@
 
 ::ng-deep {
 	ss-mail {
-		 ss-card-dropdown {
+		ss-card-dropdown {
 			.content {
 				border: none !important;
 			}
@@ -178,8 +177,9 @@
 	}
 
 	::ng-deep {
-		.ck-toolbar, .ck-content {
-			background-color: $dark-island!important;
+		.ck-toolbar,
+		.ck-content {
+			background-color: $dark-island !important;
 		}
 	}
 }

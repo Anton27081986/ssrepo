@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {CommonModule, NgClass} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CommonModule, NgClass } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-card-dropdown',
@@ -15,13 +15,16 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 		ButtonComponent,
 		NgClass,
 		TextComponent,
-		IconComponent
+		IconComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class CardDropdownComponent {
-	@Input() public title!: string;
-	@Input() public titleSize: '1' | '2' | '3' = '1';
+	@Input()
+	public title!: string;
+
+	@Input()
+	public titleSize: '1' | '2' | '3' = '1';
 
 	protected isHidden = false;
 	public onHideButton() {

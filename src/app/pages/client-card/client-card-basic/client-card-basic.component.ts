@@ -2,13 +2,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { Observable } from 'rxjs';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {
-	ClientCardManagersComponent
-} from "@app/pages/client-card/client-card-basic/client-card-managers/client-card-managers.component";
-import {
-	ClientCardInfoComponent
-} from "@app/pages/client-card/client-card-basic/client-card-info/client-card-info.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { ClientCardManagersComponent } from '@app/pages/client-card/client-card-basic/client-card-managers/client-card-managers.component';
+import { ClientCardInfoComponent } from '@app/pages/client-card/client-card-basic/client-card-info/client-card-info.component';
 
 @Component({
 	selector: 'app-client-card-basic',
@@ -18,14 +14,16 @@ import {
 	imports: [
 		CardComponent,
 		ClientCardManagersComponent,
-		ClientCardInfoComponent
+		ClientCardInfoComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardBasicComponent {
 	public client$: Observable<IClientDto | null>;
 
-	public constructor(public readonly clientCardListFacade: ClientsCardFacadeService) {
+	constructor(
+		public readonly clientCardListFacade: ClientsCardFacadeService,
+	) {
 		this.client$ = this.clientCardListFacade.client$;
 	}
 }

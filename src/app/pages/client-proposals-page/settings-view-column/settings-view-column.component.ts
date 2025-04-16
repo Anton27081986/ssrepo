@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
 
 @Component({
 	selector: 'ss-settings-view-column',
@@ -15,9 +15,9 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 		AsyncPipe,
 		IconComponent,
 		NgIf,
-		TextComponent
+		TextComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class SettingsViewColumnComponent {
 	constructor(protected readonly state: ColumnsStateService) {}

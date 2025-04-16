@@ -1,3 +1,5 @@
+@use '../../../../assets/scss/mixins' as *;
+@use '../../../../assets/scss/variables' as *;
 @use '../../../../styles/colors' as *;
 
 .header {
@@ -5,9 +7,8 @@
 	position: sticky;
 	top: 0;
 	z-index: 1000;
-	background-color: white;
-	user-select: none;
-	border-bottom: 1px solid #E4E8EA;
+	background-color: $white;
+	border-bottom: 1px solid #e4e8ea;
 
 	&__content {
 		display: flex;
@@ -19,7 +20,7 @@
 	}
 
 	&__logo {
-		color: #4770FF;
+		color: #4770ff;
 		cursor: pointer;
 	}
 
@@ -44,11 +45,17 @@
 		display: flex;
 		gap: 12px;
 		align-items: center;
+
+		.bot-button {
+			::ng-deep button {
+				padding: 9px;
+			}
+		}
 	}
 }
 
 .profile {
-	border: 1px solid #E4E8EA;
+	border: 1px solid #e4e8ea;
 	border-radius: 8px;
 	min-width: 142px;
 	height: 36px;

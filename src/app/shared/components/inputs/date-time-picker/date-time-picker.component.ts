@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, effect, forwardRef, Input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	effect,
+	forwardRef,
+	Input,
+} from '@angular/core';
 import {
 	AbstractControl,
 	ControlValueAccessor,
@@ -15,7 +21,7 @@ import { SSForm } from '@app/core/models/form';
 import { DateTimePickerImports } from '@app/shared/components/inputs/date-time-picker/date-time-picker.imports';
 import { dateInputTextMask } from '@app/core/utils/mask';
 import { getTime } from '@app/core/utils/date';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
 
 @Component({
 	selector: 'ss-date-time-picker',
@@ -34,12 +40,33 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DateTimePickerComponent implements ControlValueAccessor {
-	@Input() public showDate = true;
-	@Input() public showTime = true;
-	@Input() public clearDate = false;
-	@Input() public readonly = false;
-	@Input() public error: string | undefined;
+	@Input()
+	public showDate = true;
 
+	@Input()
+	public showTime = true;
+
+	@Input()
+	public clearDate = false;
+
+	@Input()
+	public readonly = false;
+
+	@Input()
+	public error: string | undefined;
+
+	public form = new FormGroup<SSForm<IDatetime>>({
+		date: new FormControl<Date | null>(null),
+		time: new FormControl<string | null>(null),
+	});
+
+	public date$ = toSignal(this.dateCtrl.valueChanges, {
+		initialValue: null,
+	});
+
+	public time$ = toSignal(this.timeCtrl.valueChanges, { initialValue: null });
+	protected readonly dateInputTextMask = dateInputTextMask;
+	private onChange = EMPTY_FUNCTION;
 	@Input()
 	public get value(): string | null {
 		return null;
@@ -54,23 +81,9 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 		}
 	}
 
-	public form = new FormGroup<SSForm<IDatetime>>({
-		date: new FormControl<Date | null>(null),
-		time: new FormControl<string | null>(null),
-	});
-
-	public date$ = toSignal(this.dateCtrl.valueChanges, {
-		initialValue: null,
-	});
-
-	public time$ = toSignal(this.timeCtrl.valueChanges, { initialValue: null });
-
-	protected readonly dateInputTextMask = dateInputTextMask;
-
-	private onChange = EMPTY_FUNCTION;
 	private onTouched = EMPTY_FUNCTION;
 
-	public constructor() {
+	constructor() {
 		effect(() => {
 			if (this.showDate) {
 				this.dateChanges(this.date$());
@@ -123,7 +136,9 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 			}
 		}
 
-		date ? this.dateTimeChange(this.setTime(date, this.time$())) : this.dateTimeChange('');
+		date
+			? this.dateTimeChange(this.setTime(date, this.time$()))
+			: this.dateTimeChange('');
 	}
 
 	private timeChanges(time: string | null): void {
@@ -138,7 +153,9 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 
 	private setTime(date: Date, time: string | null): string {
 		// eslint-disable-next-line prefer-const
-		let [hours, minutes] = (time || TIME_FORMAT_DELIMITED).split(':').map(Number);
+		let [hours, minutes] = (time || TIME_FORMAT_DELIMITED)
+			.split(':')
+			.map(Number);
 
 		const dateCopy = new Date(date);
 

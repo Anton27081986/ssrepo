@@ -1,25 +1,31 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RawMaterialAccountingFacadeService } from '@app/core/facades/raw-material-accounting-facade';
 import { Observable } from 'rxjs';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { ContractInfoComponent } from '@app/pages/raw-material-accounting/modals/contract-info/contract-info.component';
 import { ContractNewComponent } from '@app/pages/raw-material-accounting/modals/contract-new/contract-new.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IRawMaterialAccountingContract } from '@app/core/models/raw-material-accounting/contract';
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, CommonModule} from "@angular/common";
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { TooltipMenuComponent } from '@app/shared/components/tooltip-menu/tooltip-menu.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @UntilDestroy()
 @Component({
@@ -39,20 +45,20 @@ import {AsyncPipe, CommonModule} from "@angular/common";
 		CaptionComponent,
 		TooltipMenuComponent,
 		HeadlineComponent,
-		AsyncPipe
+		AsyncPipe,
 	],
 	standalone: true,
 })
 export class RawMaterialAccountingComponent implements OnInit {
 	public isLoading$: Observable<boolean>;
-	public isFiltersVisible: boolean = false;
-	public canAdd: boolean = false;
+	public isFiltersVisible = false;
+	public canAdd = false;
 	private selectedContract: IRawMaterialAccountingContract | undefined;
 
 	public tableItems: ITableItem[] | null = null;
 	public pageIndex = 1;
 	public pageSize = 10;
-	public total: number = 0;
+	public total = 0;
 	public offset = 0;
 
 	public filters: IFilter[] = [
@@ -100,71 +106,95 @@ export class RawMaterialAccountingComponent implements OnInit {
 	) {
 		this.isLoading$ = this.facadeService.isContractsLoading$;
 
-		this.activatedRoute.paramMap.pipe(untilDestroyed(this)).subscribe(params => {
-			const id = params.get('id');
+		this.activatedRoute.paramMap
+			.pipe(untilDestroyed(this))
+			.subscribe((params) => {
+				const id = params.get('id');
 
-			if (id) {
-				this.openContractModal(id);
-			}
-		});
+				if (id) {
+					this.openContractModal(id);
+				}
+			});
 
-		this.facadeService.contracts$.pipe(untilDestroyed(this)).subscribe(contracts => {
-			if (contracts?.items) {
-				this.tableItems = contracts.items.map(x => {
-					const tableItem: any = {};
+		this.facadeService.contracts$
+			.pipe(untilDestroyed(this))
+			.subscribe((contracts) => {
+				if (contracts?.items) {
+					this.tableItems = contracts.items.map((x) => {
+						const tableItem: any = {};
 
-					tableItem.id = x.id ? x.id : null;
-					tableItem.contract = x.contractDetail.name ? x.contractDetail.name : '-';
-					tableItem.contractId = x.contractDetail.id ? x.contractDetail.id : '-';
-					tableItem.contractor = x.contractor.linkToDetail
-						? { text: x.contractor.name, url: x.contractor.linkToDetail }
-						: '-';
-					tableItem.contractNumber = x.contractNumber
-						? {
-								text: x.contractNumber,
-								pseudoLink: x.id,
-							}
-						: null;
-					tableItem.quantityTotal = x.quantityTotal ? x.quantityTotal : '-';
-					tableItem.quantityReceived = x.quantityReceived ? x.quantityReceived : '-';
-					tableItem.quantityRemaining = x.quantityRemaining ? x.quantityRemaining : '-';
-					tableItem.period = `${new Date(Date.parse(x.periodStartDate)).toLocaleString(
-						'ru-RU',
-						{
+						tableItem.id = x.id ? x.id : null;
+						tableItem.contract = x.contractDetail.name
+							? x.contractDetail.name
+							: '-';
+						tableItem.contractId = x.contractDetail.id
+							? x.contractDetail.id
+							: '-';
+						tableItem.contractor = x.contractor.linkToDetail
+							? {
+									text: x.contractor.name,
+									url: x.contractor.linkToDetail,
+								}
+							: '-';
+						tableItem.contractNumber = x.contractNumber
+							? {
+									text: x.contractNumber,
+									pseudoLink: x.id,
+								}
+							: null;
+						tableItem.quantityTotal = x.quantityTotal
+							? x.quantityTotal
+							: '-';
+						tableItem.quantityReceived = x.quantityReceived
+							? x.quantityReceived
+							: '-';
+						tableItem.quantityRemaining = x.quantityRemaining
+							? x.quantityRemaining
+							: '-';
+						tableItem.period = `${new Date(
+							Date.parse(x.periodStartDate),
+						).toLocaleString('ru-RU', {
 							year: 'numeric',
 							month: 'numeric',
 							day: 'numeric',
-						},
-					)} - ${new Date(Date.parse(x.periodEndDate)).toLocaleString('ru-RU', {
-						year: 'numeric',
-						month: 'numeric',
-						day: 'numeric',
-					})}`;
-					tableItem.user = x.user.name ? x.user.name : '-';
-					tableItem.status = x.status ? x.status.name : '-';
-					tableItem.tov = x.tov ? x.tov.name : '-';
+						})} - ${new Date(
+							Date.parse(x.periodEndDate),
+						).toLocaleString('ru-RU', {
+							year: 'numeric',
+							month: 'numeric',
+							day: 'numeric',
+						})}`;
+						tableItem.user = x.user.name ? x.user.name : '-';
+						tableItem.status = x.status ? x.status.name : '-';
+						tableItem.tov = x.tov ? x.tov.name : '-';
 
-					return tableItem;
-				});
+						return tableItem;
+					});
 
-				this.total = contracts?.total | 0;
-				this.cdr.detectChanges();
-			}
-		});
+					this.total = contracts?.total | 0;
+					this.cdr.detectChanges();
+				}
+			});
 
-		this.facadeService.statuses$.pipe(untilDestroyed(this)).subscribe(statuses => {
-			const statusesFilter = this.filters.find(filter => filter.name === 'statuses');
+		this.facadeService.statuses$
+			.pipe(untilDestroyed(this))
+			.subscribe((statuses) => {
+				const statusesFilter = this.filters.find(
+					(filter) => filter.name === 'statuses',
+				);
 
-			if (statusesFilter && statuses.items) {
-				statusesFilter.options = statuses.items;
-			}
-		});
+				if (statusesFilter && statuses.items) {
+					statusesFilter.options = statuses.items;
+				}
+			});
 
-		this.facadeService.selectedContract$.pipe(untilDestroyed(this)).subscribe(contract => {
-			if (contract) {
-				this.selectedContract = contract.data;
-			}
-		});
+		this.facadeService.selectedContract$
+			.pipe(untilDestroyed(this))
+			.subscribe((contract) => {
+				if (contract) {
+					this.selectedContract = contract.data;
+				}
+			});
 	}
 
 	ngOnInit() {
@@ -172,10 +202,14 @@ export class RawMaterialAccountingComponent implements OnInit {
 			limit: this.pageSize,
 			offset: this.offset,
 		});
-		this.facadeService.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
-			this.canAdd = permissions.includes(Permissions.CLIENT_PROCUREMENTS_ADD);
-			this.cdr.detectChanges();
-		});
+		this.facadeService.permissions$
+			.pipe(untilDestroyed(this))
+			.subscribe((permissions) => {
+				this.canAdd = permissions.includes(
+					Permissions.CLIENT_PROCUREMENTS_ADD,
+				);
+				this.cdr.detectChanges();
+			});
 	}
 
 	public toggleFilters() {
@@ -193,7 +227,8 @@ export class RawMaterialAccountingComponent implements OnInit {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'date-range':
@@ -217,11 +252,12 @@ export class RawMaterialAccountingComponent implements OnInit {
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				case 'search':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
@@ -254,7 +290,11 @@ export class RawMaterialAccountingComponent implements OnInit {
 	public showContract(contract: { row: ITableItem; icon: string }) {
 		if (contract.row.id) {
 			// eslint-disable-next-line no-restricted-globals
-			history.pushState(null, document.title, `${window.location.href}/${contract.row.id}`);
+			history.pushState(
+				null,
+				document.title,
+				`${window.location.href}/${contract.row.id}`,
+			);
 			this.openContractModal(contract.row.id);
 		}
 	}
@@ -268,7 +308,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
-			.subscribe(isEdited => {
+			.subscribe((isEdited) => {
 				if (isEdited) {
 					this.getFilteredContracts(false);
 				}
@@ -286,7 +326,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 			.open(ContractNewComponent)
 			.afterClosed()
 			.pipe(untilDestroyed(this))
-			.subscribe(isAdded => {
+			.subscribe((isAdded) => {
 				if (isAdded) {
 					this.getFilteredContracts(true);
 				}

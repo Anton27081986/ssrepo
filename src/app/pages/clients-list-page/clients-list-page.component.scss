@@ -42,7 +42,6 @@
 	}
 }
 
-
 .container {
 	padding-top: 20px;
 	display: flex;
@@ -90,7 +89,7 @@
 			gap: 7px;
 		}
 
-		.mobile-item:last-child .separator{
+		.mobile-item:last-child .separator {
 			display: none;
 		}
 
@@ -102,7 +101,6 @@
 		}
 	}
 }
-
 
 @media screen and (max-width: 760px) {
 	.container {

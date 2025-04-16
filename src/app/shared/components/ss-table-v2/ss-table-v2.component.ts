@@ -7,9 +7,12 @@ import {
 	Output,
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import {AsyncPipe, CommonModule, NgForOf, NgStyle} from "@angular/common";
-import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
+import { AsyncPipe, CommonModule, NgForOf, NgStyle } from '@angular/common';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
 
 @Component({
 	selector: 'ss-table-v2',
@@ -17,28 +20,33 @@ import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive
 	styleUrls: ['ss-table-v2.component.scss'],
 	// encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CommonModule,
-		NgForOf,
-		AsyncPipe,
-		NgStyle,
-		TooltipDirective
-	],
-	standalone: true
+	imports: [CommonModule, NgForOf, AsyncPipe, NgStyle, TooltipDirective],
+	standalone: true,
 })
 export class TableV2Component {
-	@HostBinding('class.ss-table-v2') protected readonly addHostClass = true;
-	@Input() public padding: string = '12px';
+	@HostBinding('class.ss-table-v2')
+	protected readonly addHostClass = true;
 
-	@Input() public mini: boolean = false;
-	@Input() public shadowed: boolean = false;
-	@Input() public bordered: boolean = false;
-	@Input() public sticky: boolean = true;
+	@Input()
+	public padding = '12px';
 
-	@Output() protected readonly changeSortByOn: EventEmitter<string> = new EventEmitter<string>();
+	@Input()
+	public mini = false;
 
-	constructor(protected readonly stateColumn: ColumnsStateService) {}
+	@Input()
+	public shadowed = false;
+
+	@Input()
+	public bordered = false;
+
+	@Input()
+	public sticky = true;
+
+	@Output()
+	protected readonly changeSortByOn: EventEmitter<string> =
+		new EventEmitter<string>();
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
+	constructor(protected readonly stateColumn: ColumnsStateService) {}
 }

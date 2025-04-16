@@ -7,11 +7,16 @@ import {
 	Output,
 	SimpleChanges,
 } from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
+import {
+	ControlValueAccessor,
+	FormControl,
+	NG_VALUE_ACCESSOR,
+	ReactiveFormsModule,
+} from '@angular/forms';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
 
 @Component({
 	selector: 'ss-form-control-input-with-func-edit',
@@ -20,7 +25,9 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
-			useExisting: forwardRef(() => FormControlInputWithFuncEditComponent),
+			useExisting: forwardRef(
+				() => FormControlInputWithFuncEditComponent,
+			),
 			multi: true,
 		},
 	],
@@ -30,21 +37,45 @@ import {TextComponent} from "@app/shared/components/typography/text/text.compone
 		IconComponent,
 		NgIf,
 		TextComponent,
-		ReactiveFormsModule
+		ReactiveFormsModule,
 	],
-	standalone: true
+	standalone: true,
 })
-export class FormControlInputWithFuncEditComponent implements ControlValueAccessor, OnChanges {
-	@Input() public size: 'large' | 'medium' | 'small' | 'big' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public funcEdit: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public type: 'text' | 'email' | 'number' = 'text';
-	@Input() public error: string | undefined;
-	@Input() public maxlength: string = '256';
-	@Input() public control: FormControl<string | null> = new FormControl<string | null>(null);
-	@Output() public cancelEditing: EventEmitter<any> = new EventEmitter<any>();
+export class FormControlInputWithFuncEditComponent
+	implements ControlValueAccessor, OnChanges
+{
+	@Input()
+	public size: 'large' | 'medium' | 'small' | 'big' = 'medium';
+
+	@Input()
+	public disabled = false;
+
+	@Input()
+	public funcEdit = false;
+
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public type: 'text' | 'email' | 'number' = 'text';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public maxlength = '256';
+
+	@Input()
+	public control: FormControl<string | null> = new FormControl<string | null>(
+		null,
+	);
+
+	@Output()
+	public cancelEditing: EventEmitter<any> = new EventEmitter<any>();
+
 	protected oldValue: string | null = null;
 
 	private OnChange!: (value: string) => void;

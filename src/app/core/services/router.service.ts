@@ -27,24 +27,26 @@ export const routes = {
 	providedIn: 'root',
 })
 export class RouterService {
-	constructor(private _router: Router) {}
+	constructor(private readonly _router: Router) {}
 
-	public toRedirectUrl(redirectUrl: string): Promise<boolean> {
+	public async toRedirectUrl(redirectUrl: string): Promise<boolean> {
 		// Ставим где то на верху в authService  и по параметру редирект на нужную страницу
 		const tree = this._router.parseUrl(redirectUrl);
+
 		if (tree.queryParams.hasOwnProperty(GlobalQueryParams.ClientId)) {
 			const id = tree.queryParams[GlobalQueryParams.ClientId];
+
 			return this.toClientCard().then();
 		}
 
 		return this._router.navigateByUrl(redirectUrl);
 	}
 
-	public toClientCard(): Promise<boolean> {
+	public async toClientCard(): Promise<boolean> {
 		return this._router.navigate(routes.clientCard.index);
 	}
 
-	public toClientCardDetail(clientId: number): Promise<boolean> {
+	public async toClientCardDetail(clientId: number): Promise<boolean> {
 		return this._router.navigate(routes.clientCard.toDetail(clientId));
 	}
 }

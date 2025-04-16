@@ -34,7 +34,7 @@ input {
 		display: flex;
 		align-items: center;
 		gap: 4px;
-		background-color: #EEF2FF;
+		background-color: #eef2ff;
 		padding: 4px;
 		border-radius: 8px;
 
@@ -79,7 +79,7 @@ input {
 		}
 
 		.variants-item:hover {
-			background-color: #F2F3F7;
+			background-color: #f2f3f7;
 		}
 	}
 }
@@ -120,12 +120,14 @@ ss-caption.error {
 }
 
 :host-context(.dark) {
-	.input, input, {
+	.input,
+	input {
 		background-color: $dark-island;
 	}
 
-	.variants-wrapper, .variants {
-		background-color: $dark-island!important;
+	.variants-wrapper,
+	.variants {
+		background-color: $dark-island !important;
 	}
 
 	.variants-item {
@@ -135,11 +137,11 @@ ss-caption.error {
 	}
 
 	.variants-item:hover {
-		background-color: #2A3235 !important;
+		background-color: #2a3235 !important;
 	}
 
 	.chips {
-		background-color: #2A3235;
+		background-color: #2a3235;
 	}
 }
 

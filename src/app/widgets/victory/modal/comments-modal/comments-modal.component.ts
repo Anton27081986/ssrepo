@@ -1,11 +1,21 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	OnInit,
+} from '@angular/core';
+import {
+	FormBuilder,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
-import {NzFormDirective, NzFormItemComponent} from "ng-zorro-antd/form";
-import {NzIconDirective} from "ng-zorro-antd/icon";
-import {CommonModule, DatePipe, NgClass, NgIf} from "@angular/common";
-import {NzAutosizeDirective, NzInputDirective} from "ng-zorro-antd/input";
+import { NzFormDirective, NzFormItemComponent } from 'ng-zorro-antd/form';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { CommonModule, DatePipe, NgClass, NgIf } from '@angular/common';
+import { NzAutosizeDirective, NzInputDirective } from 'ng-zorro-antd/input';
 
 @Component({
 	selector: 'app-comments-modal',
@@ -22,9 +32,9 @@ import {NzAutosizeDirective, NzInputDirective} from "ng-zorro-antd/input";
 		NgIf,
 		NzFormItemComponent,
 		NzInputDirective,
-		NzAutosizeDirective
+		NzAutosizeDirective,
 	],
-	standalone: true
+	standalone: true,
 })
 export class CommentsModalComponent implements OnInit {
 	readonly nzModalData: any = inject(NZ_MODAL_DATA);

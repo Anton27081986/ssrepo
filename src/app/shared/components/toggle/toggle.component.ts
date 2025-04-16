@@ -1,7 +1,7 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {CommonModule, NgClass} from "@angular/common";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import { CommonModule, NgClass } from '@angular/common';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
 
 @Component({
 	selector: 'ss-toggle',
@@ -14,18 +14,22 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 			multi: true,
 		},
 	],
-	imports: [
-		CommonModule,
-		NgClass,
-		CaptionComponent
-	],
-	standalone: true
+	imports: [CommonModule, NgClass, CaptionComponent],
+	standalone: true,
 })
 export class ToggleComponent implements ControlValueAccessor {
 	@Input()
 	public disabled: boolean;
 
-	@Input() public label: string | undefined;
+	@Input()
+	public label: string | undefined;
+
+	protected isChecked: boolean | undefined;
+	public onChange: any = () => {};
+	public onTouch: any = () => {};
+	constructor() {
+		this.disabled = false;
+	}
 
 	@Input()
 	public set value(isChecked: boolean) {
@@ -34,15 +38,6 @@ export class ToggleComponent implements ControlValueAccessor {
 			this.onChange(isChecked);
 		}
 	}
-
-	protected isChecked: boolean | undefined;
-
-	constructor() {
-		this.disabled = false;
-	}
-
-	public onChange: any = () => {};
-	public onTouch: any = () => {};
 
 	public writeValue(value: any): void {
 		this.value = value;

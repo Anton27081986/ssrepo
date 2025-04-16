@@ -3,7 +3,7 @@
 		<div class="title">
 			<ss-headline size="h3">Справочник клиентов</ss-headline>
 		</div>
-		<div class="filter-button" *ngIf="!isFiltersVisible">
+		<div *ngIf="!isFiltersVisible" class="filter-button">
 			<ss-button size="small"
 					   type="outline"
 					   (click)="toggleFilters()">
@@ -50,7 +50,7 @@
 	</div>
 	<div class="content mobile m-b-20">
 		<ss-card>
-			<div class="mobile-item" *ngFor="let item of items">
+			<div *ngFor="let item of items" class="mobile-item">
 				<div class="mobile-info">
 					<ss-caption size="1">
 						<b> Код: </b>

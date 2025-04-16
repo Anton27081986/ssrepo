@@ -1,20 +1,31 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { IContractsTableItem } from '@app/pages/client-card/client-card-contracts/contracts-table-item';
 import { ContractsFacadeService } from '@app/core/facades/contracts-facade.service';
 import { IContractsItemDto } from '@app/core/models/company/contracts-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -33,13 +44,13 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		EmptyPlaceholderComponent,
 		TextComponent,
 		FiltersComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardContractsComponent implements OnInit {
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;
@@ -48,7 +59,7 @@ export class ClientCardContractsComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	public tableState: TableState = TableState.Empty;
 
 	public filters: IFilter[] = [
@@ -71,7 +82,8 @@ export class ClientCardContractsComponent implements OnInit {
 		},
 	];
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly contractsFacadeService: ContractsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
@@ -80,46 +92,57 @@ export class ClientCardContractsComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		this.contractsFacadeService.contracts$.pipe(untilDestroyed(this)).subscribe(response => {
-			if (!response.items || response.items.length === 0) {
-				this.tableState = TableState.Empty;
-			} else {
-				this.items = this.mapClientsToTableItems(response);
-
-				if (response.total! > 6) {
-					this.total = (response.total ?? 0) + this.pageSize;
+		this.contractsFacadeService.contracts$
+			.pipe(untilDestroyed(this))
+			.subscribe((response) => {
+				if (!response.items || response.items.length === 0) {
+					this.tableState = TableState.Empty;
 				} else {
-					this.total = response.total ?? 0;
+					this.items = this.mapClientsToTableItems(response);
+
+					if (response.total! > 6) {
+						this.total = (response.total ?? 0) + this.pageSize;
+					} else {
+						this.total = response.total ?? 0;
+					}
+
+					this.tableItems = <ITableItem[]>(<unknown>this.items);
+					this.tableState = TableState.Full;
 				}
 
-				this.tableItems = <ITableItem[]>(<unknown>this.items);
-				this.tableState = TableState.Full;
-			}
+				this.cdr.detectChanges();
+			});
 
-			this.cdr.detectChanges();
-		});
-
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
-				this.getFilteredSales();
-			}
-		});
+		this.clientCardListFacade.client$
+			.pipe(untilDestroyed(this))
+			.subscribe((client) => {
+				if (client.id) {
+					this.clientId = client.id;
+					this.getFilteredSales();
+				}
+			});
 	}
 
 	private mapClientsToTableItems(sales: IContractsItemDto) {
 		return (
-			sales.items?.map(x => {
-				const tableItem: IContractsTableItem = {} as IContractsTableItem;
+			sales.items?.map((x) => {
+				const tableItem: IContractsTableItem =
+					{} as IContractsTableItem;
 
-				tableItem.code = { text: x.id.toString() ?? '-', url: x.detailLink ?? '' };
+				tableItem.code = {
+					text: x.id.toString() ?? '-',
+					url: x.detailLink ?? '',
+				};
 				tableItem.contractor = x.contractor.name ?? '-';
 				tableItem.beginDate = x.beginDate
-					? new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
+					? new Date(Date.parse(x.beginDate)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+							},
+						)
 					: '-';
 				tableItem.endDate = x.endDate
 					? new Date(Date.parse(x.endDate)).toLocaleString('ru-RU', {
@@ -128,7 +151,8 @@ export class ClientCardContractsComponent implements OnInit {
 							day: 'numeric',
 						})
 					: '-';
-				tableItem.prolongationDate = x.prolongationDays?.toString() ?? '-';
+				tableItem.prolongationDate =
+					x.prolongationDays?.toString() ?? '-';
 
 				tableItem.highlight = x.isSoonExpire ?? false;
 
@@ -153,17 +177,19 @@ export class ClientCardContractsComponent implements OnInit {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				case 'search':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
@@ -192,6 +218,4 @@ export class ClientCardContractsComponent implements OnInit {
 
 		this.getFilteredSales();
 	}
-
-	protected readonly TableState = TableState;
 }

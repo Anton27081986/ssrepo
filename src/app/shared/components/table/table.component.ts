@@ -13,11 +13,14 @@ import {
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { environment } from '@environments/environment';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import { CommonModule, NgClass, NgStyle } from "@angular/common";
-import { TooltipDirective } from "@app/shared/components/tooltip/tooltip.directive";
-import { IconComponent } from "@app/shared/components/icon/icon.component";
-import { NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
+import { CommonModule, NgClass, NgStyle } from '@angular/common';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 
 export type Cell = { text: string; pseudoLink: string } & { icon: string } & {
 	text: string;
@@ -50,29 +53,44 @@ export interface ITableHead {
 		NgStyle,
 		TooltipDirective,
 		IconComponent,
-		NumWithSpacesPipe
+		NumWithSpacesPipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class TableComponent implements AfterViewInit, AfterViewChecked {
 	@HostBinding('style.padding')
 	@Input()
 	public head: ITableHead[] = [];
 
-	@Input() public items: ITableItem[] | undefined | null;
-	@Input() public padding: string = '12px';
-	@Input() public size: '1' | '2' | '3' | '4' = '3';
+	@Input()
+	public items: ITableItem[] | undefined | null;
 
-	@Output() public controlClick = new EventEmitter<{ row: ITableItem; icon: string }>();
+	@Input()
+	public padding = '12px';
+
+	@Input()
+	public size: '1' | '2' | '3' | '4' = '3';
+
+	@Output()
+	public controlClick = new EventEmitter<{
+		row: ITableItem;
+		icon: string;
+	}>();
 
 	protected gridTemplateColumns = '';
-	protected scroll: boolean = false;
+	protected scroll = false;
 
 	protected readonly Array = Array;
 
-	@ViewChild('headerEl') public headerEl!: ElementRef;
-	@ViewChild('bodyEl') public bodyEl!: ElementRef;
+	@ViewChild('headerEl')
+	public headerEl!: ElementRef;
 
+	@ViewChild('bodyEl')
+	public bodyEl!: ElementRef;
+
+	protected readonly environment = environment;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TooltipTheme = TooltipTheme;
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly modalService: ModalService,
@@ -80,7 +98,7 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 
 	ngAfterViewInit() {
 		this.gridTemplateColumns = this.head
-			.map(el => (el.sizeRatio ? `${el.sizeRatio}fr` : '1fr'))
+			.map((el) => (el.sizeRatio ? `${el.sizeRatio}fr` : '1fr'))
 			.join(' ');
 		this.changeDetectorRef.detectChanges();
 	}
@@ -88,7 +106,8 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 	ngAfterViewChecked() {
 		setTimeout(() => {
 			this.scroll =
-				this.bodyEl.nativeElement.clientHeight < this.bodyEl.nativeElement.scrollHeight;
+				this.bodyEl.nativeElement.clientHeight <
+				this.bodyEl.nativeElement.scrollHeight;
 			this.changeDetectorRef.detectChanges();
 		}, 1);
 	}
@@ -105,8 +124,4 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 	onControlClick(row: ITableItem, icon: string) {
 		this.controlClick.emit({ row, icon });
 	}
-
-	protected readonly environment = environment;
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly TooltipTheme = TooltipTheme;
 }

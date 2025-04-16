@@ -6,7 +6,7 @@
 		</div>
 		<ss-divider></ss-divider>
 		<div class="add-victory-modal__body">
-			<form [formGroup]="formGroup" class="add-victory-modal__form">
+			<form class="add-victory-modal__form" [formGroup]="formGroup">
 				<div class="add-victory-modal__form-item">
 					<ss-textarea formControlName="text" [size]="'large'" [label]="'Описание'" [placeholder]="'Введите текст победы'"></ss-textarea>
 				</div>
@@ -16,8 +16,8 @@
 				</div>
 				<ss-divider></ss-divider>
 				<div class="add-victory-modal__form-item">
-					<ss-chips-search size="medium" [label]="'ТПР'" [placeholder]="'Введите ТПР'" (getSelected)="getProducts($event)"
-									 [searchType]="'productions'"></ss-chips-search>
+					<ss-chips-search size="medium" [label]="'ТПР'" [placeholder]="'Введите ТПР'" [searchType]="'productions'"
+									 (getSelected)="getProducts($event)"></ss-chips-search>
 				</div>
 				<div class="upload-file">
 					<label for="upload-file">
@@ -31,7 +31,7 @@
 					/>
 				</div>
 				<div *ngIf="(victoryFiles | async)?.length" class="files">
-					<ss-attachment *ngFor="let file of (victoryFiles | async)" title="{{file.fileName}}" size="{{file.size}}" (delete)="deleteFile(file.id!)" [readonly]="false"></ss-attachment>
+					<ss-attachment *ngFor="let file of (victoryFiles | async)" title="{{file.fileName}}" size="{{file.size}}" [readonly]="false" (delete)="deleteFile(file.id!)"></ss-attachment>
 				</div>
 			</form>
 			<ss-divider></ss-divider>

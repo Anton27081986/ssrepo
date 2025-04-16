@@ -27,11 +27,17 @@ enum Animation {
 export const fadeAnimations: AnimationType<typeof Animation, 'fade'> = {
 	[Animation.FadeIn]: animation([
 		style({ opacity: 0 }),
-		animate(DURATION, keyframes([style({ opacity: 0 }), style({ opacity: 1 })])),
+		animate(
+			DURATION,
+			keyframes([style({ opacity: 0 }), style({ opacity: 1 })]),
+		),
 	]),
 	[Animation.FadeOut]: animation([
 		style({ opacity: 1 }),
-		animate(DURATION, keyframes([style({ opacity: 1 }), style({ opacity: 0 })])),
+		animate(
+			DURATION,
+			keyframes([style({ opacity: 1 }), style({ opacity: 0 })]),
+		),
 	]),
 	[Animation.FadeInUp]: animation([
 		style({ opacity: 0 }),

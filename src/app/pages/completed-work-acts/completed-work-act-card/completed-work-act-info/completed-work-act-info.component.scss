@@ -47,7 +47,10 @@
 
 			&__links {
 				display: flex;
+				flex-wrap: wrap;
 				gap: 4px;
+				overflow-y: auto;
+				max-height: 72px;
 
 				&__item {
 					color: $main;
@@ -91,7 +94,7 @@
 						align-items: center;
 						justify-content: center;
 						border-radius: 4px;
-						background-color: #EDF1FF;
+						background-color: #edf1ff;
 					}
 
 					&__description {
@@ -104,7 +107,7 @@
 						white-space: nowrap;
 
 						::ng-deep .size p {
-							color: #8C8C8C;
+							color: #8c8c8c;
 						}
 					}
 				}

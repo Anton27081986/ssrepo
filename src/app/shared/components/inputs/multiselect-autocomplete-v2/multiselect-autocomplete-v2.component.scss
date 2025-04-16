@@ -43,14 +43,13 @@
 		gap: 10px;
 	}
 
-
 	&__select {
 		position: absolute;
 		max-height: 300px;
 		overflow: auto;
 		display: flex;
 		flex-direction: column;
-		background-color: #FFFFFF;
+		background-color: #ffffff;
 		border-bottom-left-radius: 16px;
 		border-bottom-right-radius: 16px;
 		border: 1px solid $island-outline;
@@ -65,11 +64,11 @@
 		width: 100%;
 
 		&:disabled {
-			background-color: #FFFFFF;
+			background-color: #ffffff;
 		}
 
 		&:focus-visible {
-			outline-color: #FFFFFF;
+			outline-color: #ffffff;
 		}
 	}
 
@@ -95,7 +94,7 @@
 	&__selected {
 		display: flex;
 		flex-wrap: nowrap;
-		background-color: #FFFFFF;
+		background-color: #ffffff;
 		border: 1px solid grey;
 		border-radius: 16px;
 		padding: 12px;
@@ -105,8 +104,8 @@
 		padding: 4px;
 		display: flex;
 		align-items: center;
-		background-color: #335DF2;
-		color: #FFFFFF;
+		background-color: #335df2;
+		color: #ffffff;
 		border-radius: 8px;
 		width: 20px;
 		height: 20px;
@@ -124,5 +123,3 @@
 		width: auto;
 	}
 }
-
-

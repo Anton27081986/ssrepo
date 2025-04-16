@@ -11,14 +11,14 @@
 		}
 	</div>
 }
-<div class="body" #bodyEl>
+<div #bodyEl class="body">
 	@for (item of items; track item) {
 		<div class="body__row" [ngStyle]="{ 'grid-template-columns': gridTemplateColumns }">
 			@for (headItem of head; track headItem) {
-				<div class="body__cell"
+				<div #cell
+					 class="body__cell"
 					 [ngStyle]="{ 'padding': padding }"
-					 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}"
-					 #cell>
+					 [ngClass]="{'highlight': item.highlight, 'overflow': cell.clientWidth < cell.scrollWidth, 'icon': !!item[headItem.field].icon, 'number': headItem.isNumber}">
 					@switch (true) {
 						@case (!!item[headItem.field].pseudoLink) {
 							<span class="icon" (click)="onControlClick(item, item[headItem.field].pseudoLink)">{{ item[headItem.field].text }}</span>

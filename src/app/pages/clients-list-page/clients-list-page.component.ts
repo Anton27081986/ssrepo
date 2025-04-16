@@ -1,20 +1,31 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientsListFacadeService } from '@app/core/facades/clients-list-facade.service';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 export interface IClientTableItem {
 	code: { text: string; url: string };
@@ -52,13 +63,13 @@ export enum TableState {
 		LoaderComponent,
 		NgForOf,
 		CaptionComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientsListPageComponent implements OnInit {
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 20;
 	public pageIndex = 1;
 	public offset = 0;
@@ -66,7 +77,7 @@ export class ClientsListPageComponent implements OnInit {
 	public items: IClientTableItem[] = [];
 
 	// state
-	public isFiltersVisible: boolean = true;
+	public isFiltersVisible = true;
 	public tableState: TableState = TableState.Loading;
 
 	public filters: IFilter[] = [
@@ -132,7 +143,8 @@ export class ClientsListPageComponent implements OnInit {
 		},
 	];
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly userService: UserProfileStoreService,
@@ -141,102 +153,125 @@ export class ClientsListPageComponent implements OnInit {
 	public ngOnInit(): void {
 		this.tableState = TableState.Loading;
 
-		this.userService.userProfile$.pipe(untilDestroyed(this)).subscribe(user => {
-			const managersFilter = this.filters.find(
-				coreFilter => coreFilter.name === 'managerIds',
-			);
+		this.userService.userProfile$
+			.pipe(untilDestroyed(this))
+			.subscribe((user) => {
+				const managersFilter = this.filters.find(
+					(coreFilter) => coreFilter.name === 'managerIds',
+				);
 
-			if (managersFilter && user) {
-				managersFilter.options = [{ id: user.id, name: user.name, checked: true }];
-				managersFilter.value = managersFilter.options;
-			}
-
-			const statusesFilter = this.filters.find(coreFilter => coreFilter.name === 'statuses');
-
-			if (statusesFilter) {
-				statusesFilter.options = [
-					{ id: 1, name: 'Новый', checked: true },
-					{ id: 6, name: 'Действующий', checked: true },
-				];
-				statusesFilter.value = statusesFilter.options;
-			}
-
-			this.getFilteredClients();
-		});
-
-		this.clientsListFacade.clients$.pipe(untilDestroyed(this)).subscribe(response => {
-			if (!response.items || response.items.length === 0) {
-				this.tableState = TableState.Empty;
-			} else {
-				this.items = this.mapClientsToTableItems(response.items);
-
-				if (response.total! > 6) {
-					this.total = (response.total ?? 0) + this.pageSize;
-				} else {
-					this.total = response.total ?? 0;
+				if (managersFilter && user) {
+					managersFilter.options = [
+						{ id: user.id, name: user.name, checked: true },
+					];
+					managersFilter.value = managersFilter.options;
 				}
 
-				this.tableItems = <ITableItem[]>(<unknown>this.items);
-				this.tableState = TableState.Full;
-			}
+				const statusesFilter = this.filters.find(
+					(coreFilter) => coreFilter.name === 'statuses',
+				);
 
-			this.cdr.detectChanges();
-		});
+				if (statusesFilter) {
+					statusesFilter.options = [
+						{ id: 1, name: 'Новый', checked: true },
+						{ id: 6, name: 'Действующий', checked: true },
+					];
+					statusesFilter.value = statusesFilter.options;
+				}
 
-		this.clientsListFacade.categories$.pipe(untilDestroyed(this)).subscribe(categories => {
-			const categoriesFilter = this.filters.find(filter => filter.name === 'categoryIds');
+				this.getFilteredClients();
+			});
 
-			if (categoriesFilter && categories.items) {
-				categoriesFilter.options = categoriesFilter.options
-					? [
-							...categoriesFilter.options,
-							...categories.items.filter(
-								filter =>
-									!categoriesFilter.options?.find(
-										savedFilter => savedFilter.id === filter.id,
-									),
-							),
-						]
-					: categories.items;
-			}
-		});
+		this.clientsListFacade.clients$
+			.pipe(untilDestroyed(this))
+			.subscribe((response) => {
+				if (!response.items || response.items.length === 0) {
+					this.tableState = TableState.Empty;
+				} else {
+					this.items = this.mapClientsToTableItems(response.items);
 
-		this.clientsListFacade.statuses$.pipe(untilDestroyed(this)).subscribe(statuses => {
-			const statusesFilter = this.filters.find(filter => filter.name === 'statuses');
+					if (response.total! > 6) {
+						this.total = (response.total ?? 0) + this.pageSize;
+					} else {
+						this.total = response.total ?? 0;
+					}
 
-			if (statusesFilter && statuses.items) {
-				statusesFilter.options = statusesFilter.options
-					? [
-							...statusesFilter.options,
-							...statuses.items.filter(
-								filter =>
-									!statusesFilter.options?.find(
-										savedFilter => savedFilter.id === filter.id,
-									),
-							),
-						]
-					: statuses.items;
-			}
-		});
+					this.tableItems = <ITableItem[]>(<unknown>this.items);
+					this.tableState = TableState.Full;
+				}
+
+				this.cdr.detectChanges();
+			});
+
+		this.clientsListFacade.categories$
+			.pipe(untilDestroyed(this))
+			.subscribe((categories) => {
+				const categoriesFilter = this.filters.find(
+					(filter) => filter.name === 'categoryIds',
+				);
+
+				if (categoriesFilter && categories.items) {
+					categoriesFilter.options = categoriesFilter.options
+						? [
+								...categoriesFilter.options,
+								...categories.items.filter(
+									(filter) =>
+										!categoriesFilter.options?.find(
+											(savedFilter) =>
+												savedFilter.id === filter.id,
+										),
+								),
+							]
+						: categories.items;
+				}
+			});
+
+		this.clientsListFacade.statuses$
+			.pipe(untilDestroyed(this))
+			.subscribe((statuses) => {
+				const statusesFilter = this.filters.find(
+					(filter) => filter.name === 'statuses',
+				);
+
+				if (statusesFilter && statuses.items) {
+					statusesFilter.options = statusesFilter.options
+						? [
+								...statusesFilter.options,
+								...statuses.items.filter(
+									(filter) =>
+										!statusesFilter.options?.find(
+											(savedFilter) =>
+												savedFilter.id === filter.id,
+										),
+								),
+							]
+						: statuses.items;
+				}
+			});
 	}
 
 	private mapClientsToTableItems(clients: IClientItemDto[]) {
-		return clients.map(x => {
+		return clients.map((x) => {
 			const tableItem: IClientTableItem = {} as IClientTableItem;
 
 			tableItem.code = {
-				text: x.code !== undefined ? x.code.toString().replace('.', ',') : '-',
+				text:
+					x.code !== undefined
+						? x.code.toString().replace('.', ',')
+						: '-',
 				url: x.id !== undefined ? `./client-card/${x.id}` : '-',
 			};
 			tableItem.category = x.category?.name ?? '-';
 			tableItem.clientName = x.name ?? '-';
 			tableItem.contractors = x.contractors
-				? x.contractors.map(c => {
+				? x.contractors.map((c) => {
 						return { text: c.name, url: c.linkToDetail };
 					})
 				: [];
 
-			tableItem.managers = x.managers ? x.managers.map(c => c.name).join(', ') : '-';
+			tableItem.managers = x.managers
+				? x.managers.map((c) => c.name).join(', ')
+				: '-';
 			tableItem.status = x.status?.name ?? '-';
 
 			tableItem.withoutManager = x.isBaseManagerFired ? 'Да' : 'Нет';
@@ -260,13 +295,14 @@ export class ClientsListPageComponent implements OnInit {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
@@ -294,6 +330,4 @@ export class ClientsListPageComponent implements OnInit {
 
 		this.getFilteredClients();
 	}
-
-	protected readonly TableState = TableState;
 }

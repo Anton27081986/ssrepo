@@ -10,7 +10,7 @@ import {
 	signal,
 	WritableSignal,
 } from '@angular/core';
-import {CommonModule, NgClass, NgIf} from '@angular/common';
+import { CommonModule, NgClass, NgIf } from '@angular/common';
 import {
 	ControlValueAccessor,
 	FormControl,
@@ -21,14 +21,21 @@ import { MapperPipe } from '@app/core/pipes/mapper.pipe';
 import { IInputIcon } from '@app/shared/components/inputs/input-v2/models/input-icon';
 import { InputIconTypeEnum } from '@app/shared/components/inputs/input-v2/models/input-icon-type';
 import { ICON_PADDING } from '@app/shared/components/inputs/input-v2/constants/icon-padding';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-input-v2',
 	standalone: true,
 	imports: [
-		CommonModule, NgIf, ReactiveFormsModule, MapperPipe, NgClass, CaptionComponent, IconComponent],
+		CommonModule,
+		NgIf,
+		ReactiveFormsModule,
+		MapperPipe,
+		NgClass,
+		CaptionComponent,
+		IconComponent,
+	],
 	templateUrl: './input-v2.component.html',
 	styleUrl: './input-v2.component.scss',
 	providers: [
@@ -50,10 +57,13 @@ export class InputV2Component implements ControlValueAccessor {
 	public errorText = input<string>('');
 
 	public inputCtrl = new FormControl<string>('');
-	public passwordIcon: WritableSignal<'eyeSlash' | 'eye'> = signal('eyeSlash');
+	public passwordIcon: WritableSignal<'eyeSlash' | 'eye'> =
+		signal('eyeSlash');
+
 	public mutableType = signal(this.type());
 
-	@Output() focused: EventEmitter<boolean> = new EventEmitter<boolean>(false);
+	@Output()
+	focused: EventEmitter<boolean> = new EventEmitter<boolean>(false);
 
 	public icons: WritableSignal<IInputIcon[]> = signal([
 		{
@@ -71,10 +81,13 @@ export class InputV2Component implements ControlValueAccessor {
 	]);
 
 	public filteredIcons = computed(() => {
-		return this.icons().filter(icon => icon.visible);
+		return this.icons().filter((icon) => icon.visible);
 	});
 
-	public constructor() {
+	private onChange!: (value: string) => void;
+	private onTouched!: () => void;
+	protected readonly onfocus = onfocus;
+	constructor() {
 		effect(
 			() => {
 				this.mutableType.set(this.type());
@@ -85,7 +98,11 @@ export class InputV2Component implements ControlValueAccessor {
 		effect(
 			() => {
 				if (this.type() === 'password') {
-					this.updateIconsVisibility(InputIconTypeEnum.Password, 'visible', true);
+					this.updateIconsVisibility(
+						InputIconTypeEnum.Password,
+						'visible',
+						true,
+					);
 				}
 			},
 			{ allowSignalWrites: true },
@@ -104,9 +121,6 @@ export class InputV2Component implements ControlValueAccessor {
 			{ allowSignalWrites: true },
 		);
 	}
-
-	private onChange!: (value: string) => void;
-	private onTouched!: () => void;
 
 	public writeValue(value: string): void {
 		this.inputCtrl.setValue(value);
@@ -151,7 +165,11 @@ export class InputV2Component implements ControlValueAccessor {
 		const value = inputElement.value;
 
 		if (this.showClearButton()) {
-			this.updateIconsVisibility(InputIconTypeEnum.Close, 'visible', !!value);
+			this.updateIconsVisibility(
+				InputIconTypeEnum.Close,
+				'visible',
+				!!value,
+			);
 		}
 
 		this.onChange(value);
@@ -174,10 +192,10 @@ export class InputV2Component implements ControlValueAccessor {
 		property: keyof IInputIcon,
 		value: unknown,
 	): void {
-		this.icons.update(items =>
-			items.map(item => (item.type === type ? { ...item, [property]: value } : item)),
+		this.icons.update((items) =>
+			items.map((item) =>
+				item.type === type ? { ...item, [property]: value } : item,
+			),
 		);
 	}
-
-	protected readonly onfocus = onfocus;
 }

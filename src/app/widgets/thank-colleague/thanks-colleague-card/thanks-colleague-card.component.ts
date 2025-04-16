@@ -3,18 +3,24 @@ import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
 import { ModalService } from '@app/core/modal/modal.service';
 import { IObjectType } from '@app/core/models/awards/object-type';
-import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	LikeComponent,
+	LikeStateEnum,
+} from '@app/shared/components/like/like.component';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { ThanksColleagueModalComponent } from '@app/widgets/thank-colleague/modal/thanks-colleague-modal/thanks-colleague-modal.component';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {CommonModule, DatePipe, NgIf} from "@angular/common";
-import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
-import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
-import {VictoryService} from "@app/widgets/victory/victory.service";
-import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { CommonModule, DatePipe, NgIf } from '@angular/common';
+import { AvatarComponent } from '@app/shared/components/avatar/avatar.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { ChoiceLikeComponent } from '@app/shared/components/choice-like/choice-like.component';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
+import { VictoryService } from '@app/widgets/victory/victory.service';
+import { UserInfoPopupComponent } from '@app/shared/components/user-info-popup/user-info-popup.component';
 
 @UntilDestroy()
 @Component({
@@ -31,13 +37,16 @@ import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/use
 		LikeComponent,
 		ChoiceLikeComponent,
 		TooltipDirective,
-		DatePipe
+		DatePipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ThanksColleagueCardComponent {
-	@Input() thankColleague: IThanksColleagueItem | null = null;
-	@Input() isExtendedMode: boolean = false;
+	@Input()
+	thankColleague: IThanksColleagueItem | null = null;
+
+	@Input()
+	isExtendedMode = false;
 
 	protected isChoiceLike = false;
 
@@ -74,7 +83,8 @@ export class ThanksColleagueCardComponent {
 						thank.isUserLiked = false;
 						thank.likesCount! -= 1;
 						thank.award =
-							thank.award === this.LikeStateEnum.default || this.isExtendedMode
+							thank.award === this.LikeStateEnum.default ||
+							this.isExtendedMode
 								? this.LikeStateEnum.usual
 								: thank.award;
 						this.cdr.detectChanges();

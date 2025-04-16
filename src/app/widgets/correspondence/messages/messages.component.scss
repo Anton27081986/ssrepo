@@ -63,7 +63,7 @@
 
 			.message-content {
 				width: 100%;
-				background-color: #F1F4F7;
+				background-color: #f1f4f7;
 				display: flex;
 				flex-direction: column;
 				gap: 8px;
@@ -76,7 +76,7 @@
 					align-items: center;
 
 					::ng-deep p {
-						color: #335DFF !important;
+						color: #335dff !important;
 					}
 
 					.message-content-header-controls {
@@ -88,8 +88,8 @@
 
 				.message-content-blockquote {
 					padding: 4px 12px;
-					border-left: 4px solid #4770FF;
-					background-color: #E5EBFF;
+					border-left: 4px solid #4770ff;
+					background-color: #e5ebff;
 					border-radius: 0 8px 8px 0;
 
 					.message-content-blockquote-message {
@@ -118,18 +118,17 @@
 			align-self: flex-end;
 
 			.message-content {
-				background-color: #F2F8EB;
+				background-color: #f2f8eb;
 
 				.message-content-header {
-
 					::ng-deep p {
-						color: #2D8418 !important;
+						color: #2d8418 !important;
 					}
 				}
 
 				.message-content-blockquote {
-					border-left: 4px solid #5D9A37;
-					background-color: #E1F0D4;
+					border-left: 4px solid #5d9a37;
+					background-color: #e1f0d4;
 				}
 			}
 		}
@@ -167,7 +166,7 @@
 					font-weight: 500;
 					font-size: 8px !important;
 					letter-spacing: -0.01em;
-					color: #6D7885;
+					color: #6d7885;
 				}
 			}
 		}
@@ -182,7 +181,6 @@
 	}
 }
 
-
 @keyframes blink {
 	50% {
 		opacity: 0;
@@ -195,12 +193,12 @@
 	}
 
 	.message-content {
-		background-color: $dark-island!important;
+		background-color: $dark-island !important;
 		border: 1px solid $dark-island-outline;
 	}
 
 	.message {
-		border-right: unset!important;
+		border-right: unset !important;
 	}
 
 	.message-content-blockquote {
@@ -208,9 +206,8 @@
 
 		.message-content-blockquote-message {
 			::ng-deep p {
-				color: $text!important;
+				color: $text !important;
 			}
 		}
 	}
 }
-

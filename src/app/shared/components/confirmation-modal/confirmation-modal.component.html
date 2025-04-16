@@ -4,7 +4,7 @@
 			<ss-icon width="16" class="close-icon" name="close" (click)="close()"></ss-icon>
 			<ss-headline *ngIf="title" size="h6">{{ title }}</ss-headline>
 		</div>
-		<ss-text class="body" size="2" *ngIf="text">
+		<ss-text *ngIf="text" class="body" size="2">
 			{{ text }}
 		</ss-text>
 		<div class="footer">
