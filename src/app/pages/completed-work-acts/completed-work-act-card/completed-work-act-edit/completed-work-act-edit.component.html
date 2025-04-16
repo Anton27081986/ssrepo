@@ -10,30 +10,33 @@
 			</ss-button>
 		</div>
 	</div>
-	<form class="content" [formGroup]="editActForm">
+	<form [formGroup]="editActForm" class="content">
 		<div class="content__column">
 			<div class="content__column__item">
-				<ss-text size="4">Номер акта (внешний)</ss-text>
-				<ss-input maxlength="50" formControlName="externalActNumber" size="small" placeholder="Введите значение"
-					[error]="editActForm.controls.externalActNumber.touched && editActForm.controls.externalActNumber.errors?.required ? 'Обязательное поле' : undefined">
-				</ss-input>
+				<ss-text size="4">Номер Поставщика</ss-text>
+				<ss-text size="3" weight="regular">{{ act()?.externalActNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Номер акта (внутренний)</ss-text>
-				<ss-input maxlength="50" formControlName="internalActNumber" size="small" placeholder="Введите значение"
-					[error]="editActForm.controls.internalActNumber.touched && editActForm.controls.internalActNumber.errors?.required ? 'Обязательное поле' : undefined"></ss-input>
+				<ss-text size="4">Номер БУ</ss-text>
+				<ss-text size="3" weight="regular">{{ act()?.internalActNumber }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Дата акта (внешний)</ss-text>
-				<ss-date-time-picker
-					formControlName="externalActDate" [showTime]="false"
-					[error]="editActForm.controls.externalActDate.touched && editActForm.controls.externalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				<ss-text size="4">Дата оказания услуги</ss-text>
+				<ss-text size="3" weight="regular">{{ act()?.externalActDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Дата акта (внутренний)</ss-text>
-				<ss-date-time-picker
-					formControlName="internalActDate" [showTime]="false"
-					[error]="editActForm.controls.internalActDate.touched && editActForm.controls.internalActDate.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				<ss-text size="4">Дата БУ</ss-text>
+				<ss-text size="3" weight="regular">{{ act()?.internalActDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Дата КИСП</ss-text>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD)) {
+					<ss-date-time-picker
+						[showTime]="false" formControlName="dateUpload"
+						[error]="editActForm.controls.dateUpload.touched && editActForm.controls.dateUpload.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+				} @else {
+					<ss-text size="3" weight="regular">{{ act()?.dateUpload | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+				}
 			</div>
 		</div>
 		<div class="content__column">
@@ -41,35 +44,39 @@
 				<ss-text size="4">Заявитель</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
 					<ss-search-input searchType="user" size="small"
-									 [selectedItem]="act()?.applicantUser"
-									 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined"
-									 (select)="onApplicantUserSelect($event.id)"
-									 (click)="editActForm.controls.applicantUserId.setErrors(null)"
-									 (input)="onInputChange($event)">
+						 [selectedItem]="act()?.applicantUser"
+						 (select)="onApplicantUserSelect($event.id)"
+						 (click)="editActForm.controls.applicantUserId.setErrors(null)"
+						 (input)="onInputChange($event)"
+						 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
 					</ss-search-input>
 				} @else {
-					<ss-text weight="regular">{{act()?.applicantUser?.name}}</ss-text>
+					<ss-text size="3" weight="regular">{{ act()?.applicantUser?.name }}</ss-text>
 				}
 
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-
-                <ss-select-v2
-                    [size]="'small'"
-                    [options]="buUnits()"
-                    [formControlName]="'buUnit'"
-                    [errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
-                />
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_BU_UNIT)) {
+					<ss-select-v2
+						[size]="'small'"
+						[options]="buUnits()"
+						[formControlName]="'buUnit'"
+						[errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
+					/>
+				} @else {
+					<ss-text size="3" weight="regular">{{ act()?.buUnit?.name }}</ss-text>
+				}
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Плательщик</ss-text>
-				<ss-search-input searchType="payer-contractor" size="small"
-					[selectedItem]="act()?.payerContractor"
-					[error]="editActForm.controls.payerContractorId.touched && editActForm.controls.payerContractorId.errors?.required ? 'Обязательное поле' : undefined"
-					(select)="editActForm.controls.payerContractorId.setValue($event.id)"
-					(click)="editActForm.controls.payerContractorId.setErrors(null)">
-				</ss-search-input>
+				<ss-text size="4">Комментарий</ss-text>
+				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT)) {
+					<ss-textarea
+						[maxLength]="50"
+						formControlName="comment"></ss-textarea>
+				} @else {
+					<ss-text size="3" weight="regular">{{ act()?.comment }}</ss-text>
+				}
 			</div>
 		</div>
 		<div class="content__column">
@@ -77,13 +84,13 @@
 				<ss-text size="4">Поставщик услуг</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
 					<ss-search-input searchType="contractor" size="small"
-									 [selectedItem]="act()?.providerContractor"
-									 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined"
-									 (select)="onProviderContractorSelect($event.id)"
-									 (click)="editActForm.controls.providerContractorId.setErrors(null)">
+						 [selectedItem]="act()?.providerContractor"
+						 (select)="onProviderContractorSelect($event.id)"
+						 (click)="editActForm.controls.providerContractorId.setErrors(null)"
+						 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
 					</ss-search-input>
 				} @else {
-					<ss-text weight="regular">{{act()?.providerContractor?.name}}</ss-text>
+					<ss-text size="3" weight="regular">{{ act()?.providerContractor?.name }}</ss-text>
 				}
 			</div>
 			<div class="content__column__item">
@@ -99,10 +106,11 @@
 			<div class="content__column__item content__column__findocs">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<ss-multiselect-v2
+					[placeholder]="finDocOrders.length ? 'Выберите заявки' : 'Заявки отсутствуют'"
 					[formControlName]="'finDocOrderIds'"
 					[options]="finDocOrders"></ss-multiselect-v2>
 			</div>
-			<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)" class="content__column__item">
+			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)">
 				<ss-text size="4">Валюта</ss-text>
 
 				<ss-select-v2
@@ -129,7 +137,7 @@
 					</ng-container>
 				</div>
 				<div class="content__column__item__files-list">
-					<div *ngFor="let doc of documents()" class="content__column__item__files-list__item">
+					<div class="content__column__item__files-list__item" *ngFor="let doc of documents()">
 						<div class="content__column__item__files-list__item__img">
 							<ss-icon height="16" width="16" name="doc"></ss-icon>
 						</div>
@@ -142,7 +150,7 @@
 						</div>
 					</div>
 					<ng-container *ngIf="newDocuments">
-						<div *ngFor="let ndoc of newDocuments" class="content__column__item__files-list__item">
+						<div class="content__column__item__files-list__item" *ngFor="let ndoc of newDocuments">
 							<div class="content__column__item__files-list__item__img">
 								<ss-icon height="16" width="16" name="doc"></ss-icon>
 							</div>

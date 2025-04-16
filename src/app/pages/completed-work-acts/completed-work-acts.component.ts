@@ -3,45 +3,20 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
-import {
-	ITableItem,
-	TableComponent,
-} from '@app/shared/components/table/table.component';
+import { ITableItem } from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
-import {
-	FiltersComponent,
-	IFilter,
-} from '@app/shared/components/filters/filters.component';
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { Router } from '@angular/router';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
-import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
-import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
-import { CommonModule, NgIf } from '@angular/common';
-import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
-import { LoaderComponent } from '@app/shared/components/loader/loader.component';
-import { MapperPipe } from '@app/core/pipes/mapper.pipe';
+import { IFilter } from '@app/shared/components/filters/filters.component';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
 
 @Component({
 	selector: 'ss-completed-work-acts',
 	templateUrl: './completed-work-acts.component.html',
 	styleUrls: ['./completed-work-acts.component.scss'],
-	imports: [
-		CommonModule,
-		HeadlineComponent,
-		DropdownButtonComponent,
-		FiltersComponent,
-		NgIf,
-		TableComponent,
-		PaginationComponent,
-		EmptyDataPageComponent,
-		LoaderComponent,
-		MapperPipe,
-	],
-	standalone: true,
 })
 export class CompletedWorkActsComponent {
+	private readonly filtersKey: string = 'work-acts-filters';
+
 	public pageSize = 20;
 	public pageIndex = 1;
 	public offset = 0;
@@ -134,6 +109,19 @@ export class CompletedWorkActsComponent {
 		},
 	];
 
+	public constructor(
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly localStorageService: LocalStorageService,
+	) {
+		const savedFilters = this.localStorageService.getItem<IFilter[]>(this.filtersKey);
+
+		if (savedFilters) {
+			this.filters = savedFilters;
+		}
+
+		this.getFilteredActs();
+	}
+
 	public acts: Signal<IResponse<ICompletedWorkAct> | null> = toSignal(
 		this.completedWorkActsFacade.acts$,
 		{
@@ -141,32 +129,17 @@ export class CompletedWorkActsComponent {
 		},
 	);
 
-	public isLoader: Signal<boolean> = toSignal(
-		this.completedWorkActsFacade.isLoader$,
-		{
-			initialValue: true,
-		},
-	);
+	public isLoader: Signal<boolean> = toSignal(this.completedWorkActsFacade.isLoader$, {
+		initialValue: true,
+	});
 
-	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
-		{
-			initialValue: [],
-		},
-	);
-
-	constructor(
-		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
-	) {
-		this.getFilteredActs();
-	}
+	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
+		initialValue: [],
+	});
 
 	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
-		const actTableItems = acts.items.map((x) => {
-			const tableItem: ICompletedWorkActTableItem =
-				{} as ICompletedWorkActTableItem;
+		const actTableItems = acts.items.map(x => {
+			const tableItem: ICompletedWorkActTableItem = {} as ICompletedWorkActTableItem;
 
 			tableItem.code = {
 				text: x.id.toString() ?? '-',
@@ -175,26 +148,38 @@ export class CompletedWorkActsComponent {
 
 			tableItem.state = x.state.name ?? '-';
 
-			tableItem.externalActDate = `${new Date(
-				Date.parse(x.externalActDate),
-			).toLocaleString('ru-RU', {
-				year: 'numeric',
-				month: 'numeric',
-				day: 'numeric',
-			})}`;
+			tableItem.externalActDate = `${new Date(Date.parse(x.externalActDate)).toLocaleString(
+				'ru-RU',
+				{
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				},
+			)}`;
 
-			tableItem.internalActDate = `${new Date(
-				Date.parse(x.internalActDate),
-			).toLocaleString('ru-RU', {
-				year: 'numeric',
-				month: 'numeric',
-				day: 'numeric',
-			})}`;
+			tableItem.internalActDate = `${new Date(Date.parse(x.internalActDate)).toLocaleString(
+				'ru-RU',
+				{
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				},
+			)}`;
+
+			tableItem.uploadActDate = `${new Date(Date.parse(x.dateUpload)).toLocaleString(
+				'ru-RU',
+				{
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				},
+			)}`;
 
 			tableItem.externalActNumber = x.externalActNumber ?? '-';
 
 			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
+			tableItem.buUnit = x.buUnit?.name ?? '-';
 			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
@@ -225,8 +210,7 @@ export class CompletedWorkActsComponent {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] =
-				filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'date-range':
@@ -252,18 +236,19 @@ export class CompletedWorkActsComponent {
 				case 'search':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map((item) => item.id)
+						? filter.value.map(item => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] =
-						filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
 					break;
 				default:
 					preparedFilter[filter.name] =
 						filter.value?.toString().replace(',', '.') || null;
 			}
 		}
+
+		this.localStorageService.setItem(this.filtersKey, this.filters);
 
 		this.completedWorkActsFacade.applyFilters(preparedFilter);
 	}
@@ -286,4 +271,16 @@ export class CompletedWorkActsComponent {
 			this.completedWorkActsFacade.getAct(item.row.code.text);
 		}
 	}
+
+	public downloadInstruction() {
+		const link = document.createElement('a');
+
+		link.href = this.completedWorkActsFacade.linkToInstruction;
+		link.click();
+	}
+
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
 }
