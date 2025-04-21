@@ -1,15 +1,15 @@
 <ss-card class="invite">
-	<div class="header" *ngIf="!cancelClick && !acceptClick">
+	<div *ngIf="!cancelClick && !acceptClick" class="header">
 		<ss-headline size="h3" weight="semi-bold">Подтверждение</ss-headline>
 	</div>
-	<div class="header" *ngIf="acceptClick && !cancelClick">
+	<div *ngIf="acceptClick && !cancelClick" class="header">
 		<ss-headline size="h3" weight="semi-bold">Подтверждено</ss-headline>
 	</div>
-	<div class="header" *ngIf="!acceptClick && cancelClick">
+	<div *ngIf="!acceptClick && cancelClick" class="header">
 		<ss-headline size="h3" weight="semi-bold">Отклонено</ss-headline>
 	</div>
 
-	<div class="text" *ngIf="!cancelClick && !acceptClick">
+	<div *ngIf="!cancelClick && !acceptClick" class="text">
 		<div>
 			<p>
 Вам пришел запрос на установление дружественной связи <br /> для совместной работы
@@ -17,7 +17,7 @@
 		</div>
 	</div>
 
-	<div class="text" *ngIf="acceptClick && !cancelClick">
+	<div *ngIf="acceptClick && !cancelClick" class="text">
 		<div>
 			<p>Запрос на создание дружественной связи подтвержден</p>
 		</div>
@@ -25,7 +25,7 @@
 			<ss-icon class="accept-icon" [name]="'accept'"></ss-icon>
 		</div>
 	</div>
-	<div class="text" *ngIf="!acceptClick && cancelClick">
+	<div *ngIf="!acceptClick && cancelClick" class="text">
 		<div>
 			<p>Запрос на создание дружественной связи отклонен</p>
 		</div>
@@ -51,15 +51,15 @@
 					</div>
 				</div>
 				<ng-container [ngSwitch]="user?.equType">
-					<div class="connection-type" *ngSwitchCase="1">
+					<div *ngSwitchCase="1" class="connection-type">
 						<ss-icon class="connect-icon" [name]="'oneConnectIn'"></ss-icon>
 						<span>Односторонняя связь (от имени друга)</span>
 					</div>
-					<div class="connection-type" *ngSwitchCase="2">
+					<div *ngSwitchCase="2" class="connection-type">
 						<ss-icon class="connect-icon" [name]="'oneConnectOut'"></ss-icon>
 						<span>Односторонняя связь (от моего имени)</span>
 					</div>
-					<div class="connection-type" *ngSwitchCase="3">
+					<div *ngSwitchCase="3" class="connection-type">
 						<ss-icon class="connect-icon" [name]="'twoWayConnect'"></ss-icon>
 						<span>Двусторонняя связь</span>
 					</div>
@@ -68,7 +68,7 @@
 		</ng-container>
 
 	</div>
-	<div class="buttons" *ngIf="!cancelClick && !acceptClick; else back">
+	<div *ngIf="!cancelClick && !acceptClick; else back" class="buttons">
 		<ss-button size="large" type="primary" (click)="acceptAddUser()">Подтвердить</ss-button>
 		<ss-button size="large" type="secondary" (click)="cancelAddUser()">Отклонить</ss-button>
 	</div>

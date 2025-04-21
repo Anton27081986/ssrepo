@@ -1,7 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { ButtonComponent, ButtonType, Size } from '@front-components/components';
+import {
+	ButtonComponent,
+	ButtonType,
+	Size,
+} from '@front-components/components';
 import { CardComponent } from '@app/shared/components/card/card.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
@@ -34,9 +38,11 @@ export class NoticeDialogComponent {
 	public header: string | undefined;
 	public text: string | undefined;
 	public type: 'Default' | 'Warning' | 'Error' = 'Default';
-	protected buttonOk: string = 'Понятно';
+	protected buttonOk = 'Понятно';
 	protected buttonCancel: string | undefined;
 
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
 	constructor(
 		private readonly modalRef: ModalRef,
 		@Inject(DIALOG_DATA) private readonly data: NoticeDialogData,
@@ -49,6 +55,7 @@ export class NoticeDialogComponent {
 		this.text = data.text;
 		this.type = data.type;
 		this.buttonCancel = data.buttonCancel;
+
 		if (data.buttonOk) {
 			this.buttonOk = data.buttonOk;
 		}
@@ -57,7 +64,4 @@ export class NoticeDialogComponent {
 	close(result: boolean) {
 		this.modalRef.close(result);
 	}
-
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
 }

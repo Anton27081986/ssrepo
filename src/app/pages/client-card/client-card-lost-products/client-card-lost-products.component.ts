@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { IFilter } from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { ILostProductsTableItem } from '@app/pages/client-card/client-card-lost-products/lost-products-table-item';
@@ -8,13 +16,13 @@ import { ILostProductsFilter } from '@app/core/models/lost-products-filter';
 import { LostProductsFacadeService } from '@app/core/facades/lost-products-facade.service';
 import { ILostProductsItemDto } from '@app/core/models/company/lost-products-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {CommonModule, NgIf} from "@angular/common";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { CommonModule, NgIf } from '@angular/common';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -31,20 +39,20 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		NgIf,
 		EmptyPlaceholderComponent,
 		TextComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardLostProductsComponent implements OnInit {
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public tableItems: ITableItem[] = [];
 	public items: ILostProductsTableItem[] = [];
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	public tableState: TableState = TableState.Loading;
 	public filter: ILostProductsFilter = {
 		offset: 0,
@@ -53,7 +61,8 @@ export class ClientCardLostProductsComponent implements OnInit {
 
 	public filters: IFilter[] = [];
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly lostProductsFacadeService: LostProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
@@ -64,7 +73,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 
 		this.lostProductsFacadeService.lostProducts$
 			.pipe(untilDestroyed(this))
-			.subscribe(response => {
+			.subscribe((response) => {
 				if (!response.items || response.items.length === 0) {
 					this.tableState = TableState.Empty;
 				} else {
@@ -83,26 +92,32 @@ export class ClientCardLostProductsComponent implements OnInit {
 				this.cdr.detectChanges();
 			});
 
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.filter.clientId = client.id;
-				this.lostProductsFacadeService.applyFilters(this.filter);
-			}
-		});
+		this.clientCardListFacade.client$
+			.pipe(untilDestroyed(this))
+			.subscribe((client) => {
+				if (client.id) {
+					this.filter.clientId = client.id;
+					this.lostProductsFacadeService.applyFilters(this.filter);
+				}
+			});
 	}
 
 	private mapClientsToTableItems(sales: ILostProductsItemDto) {
 		return (
-			sales.items?.map(x => {
-				const tableItem: ILostProductsTableItem = {} as ILostProductsTableItem;
+			sales.items?.map((x) => {
+				const tableItem: ILostProductsTableItem =
+					{} as ILostProductsTableItem;
 
 				tableItem.tov = x.tov.name.toString() ?? '-';
 				tableItem.fixationDate = x.fixationDate
-					? new Date(Date.parse(x.fixationDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
+					? new Date(Date.parse(x.fixationDate)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+							},
+						)
 					: '-';
 				tableItem.shipDate = x.shipDate
 					? new Date(Date.parse(x.shipDate)).toLocaleString('ru-RU', {
@@ -137,6 +152,4 @@ export class ClientCardLostProductsComponent implements OnInit {
 
 		this.lostProductsFacadeService.applyFilters(this.filter);
 	}
-
-	protected readonly TableState = TableState;
 }

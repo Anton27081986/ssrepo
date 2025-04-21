@@ -6,7 +6,9 @@ import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 	providedIn: 'root',
 })
 export class MainMenuStoreService {
-	private readonly mainMenuSubject = new BehaviorSubject<IMenuItemDto[] | null>(null);
+	private readonly mainMenuSubject = new BehaviorSubject<
+		IMenuItemDto[] | null
+	>(null);
 
 	public getMainMenu(): Observable<IMenuItemDto[] | null> {
 		return this.mainMenuSubject.asObservable();

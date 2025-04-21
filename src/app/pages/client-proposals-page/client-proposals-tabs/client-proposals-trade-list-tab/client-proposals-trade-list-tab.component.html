@@ -7,7 +7,7 @@
 	>
 	</app-client-proposals-tabs-canvas>
 		<ng-template #header>
-			<a *ngIf="linkToModule();else text" class="app-client-proposals-trade-list-tab__link" href="{{ linkToModule() }}" target="_blank">
+			<a *ngIf="linkToModule();else text" href="{{ linkToModule() }}" class="app-client-proposals-trade-list-tab__link" target="_blank">
 				Товарная ведомость по клиенту
 			</a>
 			<ng-template #text>
@@ -15,7 +15,7 @@
 			</ng-template>
 			 <div class="app-client-proposals-trade-list-tab__filters">
 				 <ss-search-input size="medium" searchType="tovs" placeholder="Введите товарную позицию" (select)="onTovFilter($event)"></ss-search-input>
-				 <ss-date-range placeholder="Выберите даты" (select)="onDateRangeFilter($event)" #range></ss-date-range>
+				 <ss-date-range #range placeholder="Выберите даты" (select)="onDateRangeFilter($event)"></ss-date-range>
 			 </div>
 		</ng-template>
 		<ng-template #body>

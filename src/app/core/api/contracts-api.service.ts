@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { IContractsFilter } from '@app/core/models/contracts-filter';
 import { IContractsItemDto } from '@app/core/models/company/contracts-item-dto';
 
@@ -9,9 +9,11 @@ import { IContractsItemDto } from '@app/core/models/company/contracts-item-dto';
 	providedIn: 'root',
 })
 export class ContractsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getContracts(filter: IContractsFilter): Observable<IContractsItemDto> {
+	public getContracts(
+		filter: IContractsFilter,
+	): Observable<IContractsItemDto> {
 		let params = new HttpParams();
 
 		if (filter.clientId !== null && filter.clientId !== undefined) {
@@ -34,8 +36,11 @@ export class ContractsApiService {
 			params = params.set('WithArchive', filter.WithArchive);
 		}
 
-		return this.http.get<IContractsItemDto>(`${environment.apiUrl}/api/company/contracts`, {
-			params,
-		});
+		return this.http.get<IContractsItemDto>(
+			`${environment.apiUrl}/api/company/contracts`,
+			{
+				params,
+			},
+		);
 	}
 }

@@ -1,68 +1,68 @@
 :host {
-    display: flex;
-    gap: 24px;
+	display: flex;
+	gap: 24px;
 }
 
 .birthday {
-    width: 100%;
-    padding: 0 24px 0 0;
+	width: 100%;
+	padding: 0 24px 0 0;
 
-    .header {
-        display: flex;
-        justify-content: space-between;
-        padding: 16px;
+	.header {
+		display: flex;
+		justify-content: space-between;
+		padding: 16px;
 
-        .title {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-    }
+		.title {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
 
-    .actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 16px 16px;
-    }
+	.actions {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 16px 16px;
+	}
 
-    .calendar {
-        width: 145px;
-    }
+	.calendar {
+		width: 145px;
+	}
 
-    .content {
-        padding: 16px 0;
+	.content {
+		padding: 16px 0;
 
-        .card-list {
-            display: grid;
-            padding: 0 0 0 16px;
-            grid-template-columns: repeat(2, 50%);
-            grid-row-gap: 16px;
-            grid-auto-rows: min-content;
-            max-height: 494px;
-            min-height: 494px;
-            overflow-y: auto;
+		.card-list {
+			display: grid;
+			padding: 0 0 0 16px;
+			grid-template-columns: repeat(2, 50%);
+			grid-row-gap: 16px;
+			grid-auto-rows: min-content;
+			max-height: 494px;
+			min-height: 494px;
+			overflow-y: auto;
 
-            &__item {
-                padding: 0 16px 0 0;
-            }
+			&__item {
+				padding: 0 16px 0 0;
+			}
 
-            &__empty {
-                position: relative;
-                display: flex;
-                align-items: baseline;
-                justify-content: center;
-                max-height: 494px;
-                min-height: 494px;
+			&__empty {
+				position: relative;
+				display: flex;
+				align-items: baseline;
+				justify-content: center;
+				max-height: 494px;
+				min-height: 494px;
 
-                &_icon {
-                    margin-bottom: 30px;
-                }
+				&_icon {
+					margin-bottom: 30px;
+				}
 
-                &_title {
-                    margin-bottom: 10px;
-                }
-            }
-        }
-    }
+				&_title {
+					margin-bottom: 10px;
+				}
+			}
+		}
+	}
 }

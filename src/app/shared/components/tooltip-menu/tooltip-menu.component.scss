@@ -21,7 +21,8 @@
 		box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
 		transform: translateX(15%);
 
-		::ng-deep ss-caption,a {
+		::ng-deep ss-caption,
+		a {
 			cursor: pointer;
 			padding: 4px 8px;
 
@@ -37,7 +38,8 @@
 			}
 		}
 
-		::ng-deep ss-caption:hover,a:hover {
+		::ng-deep ss-caption:hover,
+		a:hover {
 			background-color: $background !important;
 		}
 	}

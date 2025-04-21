@@ -1,7 +1,16 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	InputSignal,
+} from '@angular/core';
 import { rotateAnimation } from '@app/core/animations';
-import { TextComponent, TextType, TextWeight } from '@front-components/components';
+import {
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-components/components';
 
 @UntilDestroy()
 @Component({

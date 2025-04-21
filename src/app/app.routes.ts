@@ -4,7 +4,6 @@ import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { FullLayoutComponent } from '@app/shared/layouts/new-layout/full-layout.component';
 import {
-	completedWorkActPermissionsGuard,
 	procurementsPermissionsGuard,
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
@@ -118,7 +117,6 @@ export const routes: Routes = [
 			},
 			{
 				path: 'completed-work-acts',
-				canActivate: [completedWorkActPermissionsGuard],
 				children: [
 					{
 						path: '',
@@ -222,11 +220,13 @@ export const routes: Routes = [
 						children: [
 							{
 								path: 'business-trips',
-								component: ClientProposalsBusinessTripsTabComponent,
+								component:
+									ClientProposalsBusinessTripsTabComponent,
 							},
 							{
 								path: 'development',
-								component: ClientProposalsDevelopmentTabComponent,
+								component:
+									ClientProposalsDevelopmentTabComponent,
 							},
 							{
 								path: 'news-line',
@@ -242,7 +242,8 @@ export const routes: Routes = [
 							},
 							{
 								path: 'contractors',
-								component: ClientProposalsContractorsTabComponent,
+								component:
+									ClientProposalsContractorsTabComponent,
 							},
 							{ path: '**', redirectTo: 'contractors' },
 						],
@@ -260,10 +261,10 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'production-plan',
-				loadChildren: () =>
-					import('./pages/production-plan/production-plan.routing').then(
-						r => r.productionPlanRoutes,
-					),
+				loadChildren: async () =>
+					import(
+						'./pages/production-plan/production-plan.routing'
+					).then((r) => r.productionPlanRoutes),
 			},
 		],
 	},
@@ -302,13 +303,21 @@ export const routes: Routes = [
 		},
 		component: AuthComponent,
 		children: [
-			{ path: AppRoutes.signIn, component: SignInComponent, pathMatch: 'full' },
+			{
+				path: AppRoutes.signIn,
+				component: SignInComponent,
+				pathMatch: 'full',
+			},
 			{
 				path: AppRoutes.forgotPassword,
 				component: ForgotPasswordComponent,
 				pathMatch: 'full',
 			},
-			{ path: AppRoutes.resetPassword, component: ResetPasswordComponent, pathMatch: 'full' },
+			{
+				path: AppRoutes.resetPassword,
+				component: ResetPasswordComponent,
+				pathMatch: 'full',
+			},
 			{ path: '**', redirectTo: AppRoutes.signIn },
 		],
 	},

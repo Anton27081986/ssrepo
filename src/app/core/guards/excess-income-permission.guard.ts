@@ -15,7 +15,7 @@ export const excessIncomePermissionsGuard: CanActivateFn = () => {
 			Permissions.EXCESS_INCOME_READ,
 		)
 		.pipe(
-			map(isAllowAccess => {
+			map((isAllowAccess) => {
 				if (isAllowAccess) {
 					return true;
 				}

@@ -22,11 +22,11 @@
                 @if (transport?.transportNotify) {
                     <div class="notice">
                         <app-notice
+                            @fadeInDown
                             isLabeled="false"
                             type="warning"
                             title="Изменение в расписании корпоративного транспорта"
                             [text]="transport | mapper : noticeText"
-                            @fadeInDown
                         >
                         </app-notice>
                     </div>

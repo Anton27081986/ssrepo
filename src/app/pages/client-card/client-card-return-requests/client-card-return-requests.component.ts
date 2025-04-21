@@ -1,21 +1,32 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { IReturnRequestsTableItem } from '@app/pages/client-card/client-card-return-requests/return-requests-table-item';
 import { ReturnRequestsFacadeService } from '@app/core/facades/return-requests-facade.service';
 import { IReturnRequestsItemDto } from '@app/core/models/company/return-requests-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -35,15 +46,15 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		EmptyPlaceholderComponent,
 		TextComponent,
 		FiltersComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardReturnRequestsComponent implements OnInit {
 	public requests$: Observable<IReturnRequestsItemDto | null>;
 
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;
@@ -52,7 +63,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	public tableState: TableState = TableState.Loading;
 
 	public filters: IFilter[] = [
@@ -72,7 +83,8 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		},
 	];
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly returnRequestsFacadeService: ReturnRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
@@ -85,7 +97,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 
 		this.returnRequestsFacadeService.requests$
 			.pipe(untilDestroyed(this))
-			.subscribe(response => {
+			.subscribe((response) => {
 				if (!response.items || response.items.length === 0) {
 					this.tableState = TableState.Empty;
 				} else {
@@ -104,35 +116,41 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 				this.cdr.detectChanges();
 			});
 
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
-				this.getFilteredSales();
-			}
-		});
+		this.clientCardListFacade.client$
+			.pipe(untilDestroyed(this))
+			.subscribe((client) => {
+				if (client.id) {
+					this.clientId = client.id;
+					this.getFilteredSales();
+				}
+			});
 	}
 
 	private mapClientsToTableItems(sales: IReturnRequestsItemDto) {
 		return (
-			sales.items?.map(x => {
-				const tableItem: IReturnRequestsTableItem = {} as IReturnRequestsTableItem;
+			sales.items?.map((x) => {
+				const tableItem: IReturnRequestsTableItem =
+					{} as IReturnRequestsTableItem;
 
 				tableItem.code = {
 					text: x.id.toString() ?? '-',
 					url: x.detailLink ?? '',
 				};
 				tableItem.createDate = x.createDate
-					? new Date(Date.parse(x.createDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})
+					? new Date(Date.parse(x.createDate)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+							},
+						)
 					: '-';
 				tableItem.status = x.status.name ?? '-';
 				tableItem.author = x.author.name ?? '-';
 				tableItem.type = x.type.name ?? '-';
 				tableItem.contractor = x.contractor.name ?? '-';
-				tableItem.tov = x.tov.map(t => t.name).join(', ') ?? '-';
+				tableItem.tov = x.tov.map((t) => t.name).join(', ') ?? '-';
 
 				return tableItem;
 			}) || []
@@ -155,17 +173,19 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				case 'search':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
@@ -194,6 +214,4 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 
 		this.getFilteredSales();
 	}
-
-	protected readonly TableState = TableState;
 }

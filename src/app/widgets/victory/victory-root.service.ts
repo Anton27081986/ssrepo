@@ -23,5 +23,6 @@ interface VictoryLikeEvent {
 @Injectable({ providedIn: 'root' })
 export class VictoryRootService {
 	readonly event$: Subject<VictoryEvent> = new Subject<VictoryEvent>();
-	readonly eventLike$: Subject<VictoryLikeEvent> = new Subject<VictoryLikeEvent>();
+	readonly eventLike$: Subject<VictoryLikeEvent> =
+		new Subject<VictoryLikeEvent>();
 }

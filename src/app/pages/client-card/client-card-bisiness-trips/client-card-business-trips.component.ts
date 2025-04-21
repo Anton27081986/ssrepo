@@ -1,20 +1,28 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { IBusinessTripsDto } from '@app/core/models/client-proposails/business-trips';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { BusinessTripsFacadeService } from '@app/core/facades/business-trips-facade.service';
 import { IClientBusinessTripsTableItem } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips-table-item';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -32,15 +40,15 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		TableComponent,
 		EmptyPlaceholderComponent,
 		TextComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardBusinessTripsComponent implements OnInit {
 	public businessTrips$: Observable<IResponse<IBusinessTripsDto>>;
 
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;
@@ -49,10 +57,11 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	public tableState: TableState = TableState.Empty;
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly businessTripsFacadeService: BusinessTripsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
@@ -65,7 +74,7 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 
 		this.businessTripsFacadeService.businessTrips$
 			.pipe(untilDestroyed(this))
-			.subscribe(response => {
+			.subscribe((response) => {
 				if (!response.items || response.items.length === 0) {
 					this.tableState = TableState.Empty;
 				} else {
@@ -83,18 +92,20 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 
 				this.cdr.detectChanges();
 			});
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
+		this.clientCardListFacade.client$
+			.pipe(untilDestroyed(this))
+			.subscribe((client) => {
+				if (client.id) {
+					this.clientId = client.id;
 
-				this.getFilteredSales();
-			}
-		});
+					this.getFilteredSales();
+				}
+			});
 	}
 
 	private mapClientsToTableItems(trips: IBusinessTripsDto[]) {
 		return (
-			trips?.map(x => {
+			trips?.map((x) => {
 				const tableItem: IClientBusinessTripsTableItem =
 					{} as IClientBusinessTripsTableItem;
 
@@ -103,18 +114,25 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 					url: x.linkToDetail ?? '',
 				};
 				tableItem.date = x.beginDate
-					? `${new Date(Date.parse(x.beginDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})} - ${new Date(Date.parse(x.endDate)).toLocaleString('ru-RU', {
-							year: 'numeric',
-							month: 'numeric',
-							day: 'numeric',
-						})}`
+					? `${new Date(Date.parse(x.beginDate)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+							},
+						)} - ${new Date(Date.parse(x.endDate)).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: 'numeric',
+								day: 'numeric',
+							},
+						)}`
 					: '-';
 				tableItem.task = x.goal.name;
-				tableItem.members = x.members?.map(c => c.name).join(', ') ?? '-';
+				tableItem.members =
+					x.members?.map((c) => c.name).join(', ') ?? '-';
 
 				return tableItem;
 			}) || []
@@ -145,6 +163,4 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 
 		this.getFilteredSales();
 	}
-
-	protected readonly TableState = TableState;
 }

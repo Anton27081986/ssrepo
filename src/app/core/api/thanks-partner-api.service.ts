@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-list-dto';
 
@@ -8,7 +8,7 @@ import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-li
 	providedIn: 'root',
 })
 export class ThanksPartnerApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Спасибо партнеру */
 	public getPartnerThanks(date: string): Observable<IPartnerThanksListDto> {

@@ -19,39 +19,43 @@ export class ClientsListFacadeService {
 		{ id: 6, name: 'Действующий' },
 	];
 
-	private readonly filtersChanged: Subject<IClientsFilter> = new Subject<IClientsFilter>();
+	private readonly filtersChanged: Subject<IClientsFilter> =
+		new Subject<IClientsFilter>();
 
-	private readonly clients = new BehaviorSubject<IResponse<IClientItemDto>>({} as IResponse<any>);
-	public clients$ = this.clients.asObservable();
-
-	private readonly categories = new BehaviorSubject<IResponse<{ id: number; name: string }>>(
+	private readonly clients = new BehaviorSubject<IResponse<IClientItemDto>>(
 		{} as IResponse<any>,
 	);
+
+	public clients$ = this.clients.asObservable();
+
+	private readonly categories = new BehaviorSubject<
+		IResponse<{ id: number; name: string }>
+	>({} as IResponse<any>);
 
 	public categories$ = this.categories.asObservable();
 
-	private readonly contractors = new BehaviorSubject<IResponse<IDictionaryItemDto>>(
-		{} as IResponse<any>,
-	);
+	private readonly contractors = new BehaviorSubject<
+		IResponse<IDictionaryItemDto>
+	>({} as IResponse<any>);
 
 	public contractors$ = this.contractors.asObservable();
 
-	private readonly statuses = new BehaviorSubject<IResponse<IDictionaryItemDto>>(
-		{} as IResponse<any>,
-	);
+	private readonly statuses = new BehaviorSubject<
+		IResponse<IDictionaryItemDto>
+	>({} as IResponse<any>);
 
 	public statuses$ = this.statuses.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
 	) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
+				switchMap((filter) => {
 					return this.clientApiService.getClients(filter);
 				}),
-				tap(clients => {
+				tap((clients) => {
 					this.clients.next(clients);
 				}),
 				untilDestroyed(this),
@@ -61,7 +65,7 @@ export class ClientsListFacadeService {
 		this.dictionaryApiService
 			.getCategories()
 			.pipe(
-				tap(categories => {
+				tap((categories) => {
 					this.categories.next(categories);
 				}),
 				untilDestroyed(this),
@@ -71,7 +75,7 @@ export class ClientsListFacadeService {
 		this.dictionaryApiService
 			.getStatuses()
 			.pipe(
-				tap(statuses => {
+				tap((statuses) => {
 					this.statuses.next(statuses);
 				}),
 				untilDestroyed(this),

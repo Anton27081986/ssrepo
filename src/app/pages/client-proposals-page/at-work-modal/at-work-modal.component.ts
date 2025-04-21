@@ -7,15 +7,13 @@ import { DialogComponent } from '@app/shared/components/dialog/dialog.component'
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import { ICreateOfferItem } from '@app/core/models/client-proposails/create-offer-item';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TableV2Component} from "@app/shared/components/ss-table-v2/ss-table-v2.component";
-import {CommonModule, NgForOf} from "@angular/common";
-import {
-	AtWorkRowItemTrComponent
-} from "@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
+import { CommonModule, NgForOf } from '@angular/common';
+import { AtWorkRowItemTrComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-row-item-tr/at-work-row-item-tr.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 
 interface IOfferData {
 	items: IClientOffersDto[];
@@ -35,9 +33,9 @@ interface IOfferData {
 		TableV2Component,
 		NgForOf,
 		AtWorkRowItemTrComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class AtWorkModalComponent {
 	protected items: ICreateOfferItem[] = [];
@@ -50,7 +48,7 @@ export class AtWorkModalComponent {
 		@Inject(DIALOG_DATA) private readonly data: IOfferData,
 	) {
 		if (data) {
-			this.items = this.data.items.map(item => {
+			this.items = this.data.items.map((item) => {
 				return {
 					tovProductId: item.tovProductionId,
 					tovSubGroupId: item.tovSubGroupId,
@@ -71,7 +69,7 @@ export class AtWorkModalComponent {
 	protected createTask() {
 		let invalidForm: boolean | undefined;
 
-		this.items.forEach(item => {
+		this.items.forEach((item) => {
 			if (item.atWork) {
 				item.errors.potencial = !item.potencial;
 				item.errors.objective = !item.objective;
@@ -95,7 +93,7 @@ export class AtWorkModalComponent {
 		this.clientProposalsFacadeService
 			.saveOffer({
 				clientId: this.clientId,
-				items: this.items.map(item => {
+				items: this.items.map((item) => {
 					return item.atWork
 						? {
 								tovProductId: item.tovProductId,
@@ -129,7 +127,7 @@ export class AtWorkModalComponent {
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
-			.subscribe(status => {
+			.subscribe((status) => {
 				if (status) {
 					this.modalRef.close();
 				}

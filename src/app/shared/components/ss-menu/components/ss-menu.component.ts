@@ -1,25 +1,22 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
-import {SsMenuItemComponent} from "@app/shared/components/ss-menu/ss-menu-item/ss-menu-item.component";
-import {CommonModule, NgForOf, NgIf, NgStyle} from "@angular/common";
+import { SsMenuItemComponent } from '@app/shared/components/ss-menu/ss-menu-item/ss-menu-item.component';
+import { CommonModule, NgForOf, NgIf, NgStyle } from '@angular/common';
 
 @Component({
 	selector: 'ss-menu',
 	templateUrl: 'ss-menu.component.html',
 	styleUrls: ['ss-menu.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CommonModule,
-		SsMenuItemComponent,
-		NgStyle,
-		NgIf,
-		NgForOf
-	],
-	standalone: true
+	imports: [CommonModule, SsMenuItemComponent, NgStyle, NgIf, NgForOf],
+	standalone: true,
 })
 export class SsMenuComponent {
-	@Input() menuItems: IMenuItemDto[] | undefined | null = null;
-	@Input() parent: IMenuItemDto | null = null;
+	@Input()
+	menuItems: IMenuItemDto[] | undefined | null = null;
+
+	@Input()
+	parent: IMenuItemDto | null = null;
 
 	close() {
 		this.parent?.toggle$?.next(false);

@@ -2,12 +2,13 @@ import { Component, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {CommonModule, DatePipe, NgForOf, NgIf} from "@angular/common";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import { Permissions } from '@app/core/constants/permissions.constants';
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 
 @Component({
 	selector: 'ss-completed-work-act-info',
@@ -21,17 +22,30 @@ import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 		ButtonComponent,
 		IconComponent,
 		DatePipe,
+		NumWithSpacesPipe,
 		NgForOf,
-		NumWithSpacesPipe
 	],
-	standalone: true
+	standalone: true,
 })
 export class CompletedWorkActInfoComponent {
-	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
-		initialValue: null,
-	});
+	protected act: Signal<ICompletedWorkAct | null> = toSignal(
+		this.completedWorkActsFacade.act$,
+		{
+			initialValue: null,
+		},
+	);
 
-	public constructor(private readonly completedWorkActsFacade: CompletedWorkActsFacadeService) {}
+	public permissions: Signal<string[]> = toSignal(
+		this.completedWorkActsFacade.permissions$,
+		{
+			initialValue: [],
+		},
+	);
+
+	protected readonly Permissions = Permissions;
+	constructor(
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+	) {}
 
 	protected switchMode() {
 		this.completedWorkActsFacade.switchMode();

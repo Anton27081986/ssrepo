@@ -4,7 +4,7 @@
 			<ss-headline size="h5">Контракт  №{{ contract.contractNumber }}</ss-headline>
 			<ss-icon class="close-icon" name="close" (click)="close()"></ss-icon>
 		</div>
-		<form [formGroup]="editForm" class="body">
+		<form class="body" [formGroup]="editForm">
 			<div class="body__column">
 				<div class="body__column__item">
 					<ss-text size="4">Контракт, №:</ss-text>
@@ -64,7 +64,7 @@
 				</div>
 				<ng-template #periodEdit>
 					<div class="body__column__item">
-						<ss-date-range formControlName="period" label="Период контракта:" value="{{ contract.periodStartDate }}-{{ contract.periodEndDate }}" (select)="editForm.controls['period'].setValue($event)"></ss-date-range>
+						<ss-date-range value="{{ contract.periodStartDate }}-{{ contract.periodEndDate }}" formControlName="period" label="Период контракта:" (select)="editForm.controls['period'].setValue($event)"></ss-date-range>
 					</div>
 				</ng-template>
 			</div>
@@ -81,9 +81,9 @@
                             label="Товарная позиция"
                             placeholder="Введите товарную позицию"
                             [selectedItem]="editForm.controls['tradePosition'].value"
+                            [error]="editForm.controls['tradePosition'].touched && editForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
                             (select)="selectSearchItem($event, editForm.controls['tradePosition'])"
                             (blurEvent)="selectSearchItem($event, editForm.controls['tradePosition'])"
-                            [error]="editForm.controls['tradePosition'].touched && editForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
                         ></ss-search-input>
                     </div>
                 </ng-template>
@@ -109,7 +109,7 @@
 				</div>
 				<div *ngIf="isEditMode && contract.status.id !== 3" class="body__column__item">
 					<ss-text size="3">
-						<input type="checkbox" formControlName="isComplete" #cancelContract />
+						<input #cancelContract type="checkbox" formControlName="isComplete" />
 						Завершить контракт
 					</ss-text>
 					<ss-textarea *ngIf="isEditMode && cancelContract.checked"
@@ -122,7 +122,7 @@
 				</div>
 			</div>
 		</form>
-		<div class="footer" *ngIf="canEdit && contract.status.id !== 3">
+		<div *ngIf="canEdit && contract.status.id !== 3" class="footer">
 			<ss-button *ngIf="!isEditMode" size="small" (click)="switchMode(true)">Редактировать</ss-button>
 			<ss-button *ngIf="isEditMode" size="small" (click)="saveContract()">Сохранить</ss-button>
 			<ss-button *ngIf="isEditMode" size="small" type="muted" (click)="switchMode(false)">Отменить</ss-button>

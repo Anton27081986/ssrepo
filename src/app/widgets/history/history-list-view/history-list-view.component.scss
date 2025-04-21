@@ -28,7 +28,7 @@
 
 		.history-item {
 			width: 100%;
-			background-color: #F2F3F7;
+			background-color: #f2f3f7;
 			border-radius: 8px;
 			padding: 12px;
 			display: flex;
@@ -46,11 +46,8 @@
 			}
 
 			&-table {
-				margin-top:12px;
+				margin-top: 12px;
 				margin-bottom: 12px;
-
-
-
 			}
 		}
 	}
@@ -66,17 +63,16 @@
 		border-spacing: 0;
 
 		thead {
-			tr{
+			tr {
 				th {
 					width: 33.3%;
-					background-color: #e1e3ec ;
+					background-color: #e1e3ec;
 					padding: 8px;
 					border: 1px solid $island-outline;
 					text-align: left;
 					color: $text;
 				}
 			}
-
 		}
 
 		tr {
@@ -106,24 +102,21 @@
 	}
 }
 
-
 :host-context(.dark) {
-
 	table {
-		background-color: $dark-island!important;
+		background-color: $dark-island !important;
 	}
 
 	thead tr th {
-		background-color: $dark-island!important;
+		background-color: $dark-island !important;
 	}
 
 	.history-item {
-		background-color: $dark-island!important;
+		background-color: $dark-island !important;
 		border: 1px solid $dark-island-outline;
 	}
 
 	.content {
-		background-color: $dark-island!important;
+		background-color: $dark-island !important;
 	}
 }
-

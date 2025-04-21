@@ -18,11 +18,14 @@ import {
 	styleUrls: ['ss-divider.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true
+	standalone: true,
 })
 export class SsDividerComponent {
-	@Input() public size: number | null = null;
-	@Input() public direction: 'vertical' | 'horizontal' = 'horizontal';
+	@Input()
+	public size: number | null = null;
+
+	@Input()
+	public direction: 'vertical' | 'horizontal' = 'horizontal';
 
 	@HostBinding('style')
 	public get style(): { [key: string]: string } {

@@ -58,7 +58,7 @@ input {
 		}
 
 		.search-result-item:hover {
-			background-color: #F2F3F7;
+			background-color: #f2f3f7;
 		}
 	}
 }
@@ -112,19 +112,19 @@ ss-caption.error {
 		background-color: $dark-island;
 	}
 	.search-result {
-		background-color: $dark-island!important;
-		color: $dark-text!important;
+		background-color: $dark-island !important;
+		color: $dark-text !important;
 	}
 
 	.ss-caption {
-		background-color: $dark-island!important;
-		color: $dark-text!important;
+		background-color: $dark-island !important;
+		color: $dark-text !important;
 	}
 
 	::ng-deep {
 		.search-result {
-			background-color: $dark-island!important;
-			color: $dark-text!important;
+			background-color: $dark-island !important;
+			color: $dark-text !important;
 		}
 	}
 }

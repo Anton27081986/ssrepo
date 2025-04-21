@@ -19,7 +19,7 @@ import { IRankTypeListDto } from '@app/core/models/awards/rank-type-list-dto';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 import { FormControl } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {RatingService} from "@app/widgets/rating/rating.service";
+import { RatingService } from '@app/widgets/rating/rating.service';
 
 @UntilDestroy()
 @Injectable({
@@ -29,7 +29,9 @@ export class RatingTeamsStateService {
 	public week$: BehaviorSubject<IDictionaryItemDto | null> =
 		new BehaviorSubject<IDictionaryItemDto | null>(null);
 
-	public userId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
+	public userId$: BehaviorSubject<number | null> = new BehaviorSubject<
+		number | null
+	>(null);
 
 	public readonly currentUser$: Observable<IUserProfile> =
 		this.userProfileStore.userProfile$.pipe(filterTruthy());
@@ -38,23 +40,25 @@ export class RatingTeamsStateService {
 
 	public weeks$: Observable<IWeekItemDto[]>;
 
-	public readonly isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public readonly isLoading$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
-	public readonly reportAvailable$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
+	public readonly reportAvailable$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	public walkerControl: FormControl<IRankTypeItemDto> = new FormControl();
 
-	public constructor(
+	constructor(
 		private readonly userProfileStore: UserProfileStoreService,
 		private readonly ratingService: RatingService,
 	) {
 		this.weeks$ = this.loadLastFiveWeeks();
 
-		this.walkerControl.valueChanges.pipe(untilDestroyed(this)).subscribe(item => {
-			this.reportAvailable$.next(item.reportAvailable);
-		});
+		this.walkerControl.valueChanges
+			.pipe(untilDestroyed(this))
+			.subscribe((item) => {
+				this.reportAvailable$.next(item.reportAvailable);
+			});
 
 		this.rating$ = combineLatest([this.week$, this.userId$]).pipe(
 			tap(() => this.isLoading$.next(true)),

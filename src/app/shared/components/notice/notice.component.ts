@@ -1,26 +1,28 @@
-import { booleanAttribute, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CommonModule, NgIf} from "@angular/common";
+import {
+	booleanAttribute,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-notice',
 	templateUrl: './notice.component.html',
 	styleUrls: ['./notice.component.scss'],
-	imports: [
-		CommonModule,
-		TextComponent,
-		IconComponent,
-		NgIf
-	],
-	standalone: true
+	imports: [CommonModule, TextComponent, IconComponent, NgIf],
+	standalone: true,
 })
 export class NoticeComponent implements OnInit {
 	@Input()
 	public type: 'ok' | 'error' | 'warning' = 'ok';
 
 	@Input({ transform: booleanAttribute })
-	public isLabeled: boolean = true;
+	public isLabeled = true;
 
 	@Input()
 	public title: string | undefined;

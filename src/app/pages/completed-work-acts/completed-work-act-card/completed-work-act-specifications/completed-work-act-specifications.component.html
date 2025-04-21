@@ -6,11 +6,11 @@
 				Итоговая сумма: <ss-text size="3">{{specificationsTotalAmount() | numWithSpaces }} р.</ss-text>
 			</ss-tag-v2>
 		</div>
-		<ss-button type="muted" size="small" (click)="onAddSpecification()">Добавить спецификацию</ss-button>
+		<ss-button *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT)" type="muted" size="small" (click)="onAddSpecification()">Добавить спецификацию</ss-button>
 	</div>
 	<div class="content">
 		<ss-table-v2>
-			<tr ss-specification-row-item-tr *ngFor="let item of specifications()" [item]="item"></tr>
+			<tr *ngFor="let item of specifications()" ss-specification-row-item-tr [item]="item"></tr>
 		</ss-table-v2>
 	</div>
 </ss-card>

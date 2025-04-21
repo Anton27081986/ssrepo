@@ -1,6 +1,6 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
-		<ng-container [formGroup]="tovNode().tovSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
+		<ng-container *ngIf="col.display" [formGroup]="tovNode().tovSignal().paramsGroup" [ngSwitch]="col.id">
 
 			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameTov">
 				<td class="ss-table-td" [style.min-width]="col.width">
@@ -9,7 +9,7 @@
 								   [url]=" tovNode().tovSignal().tov.linkToDetail"
 								   [type]="TextType.Caption"></snab-link>
 						<div class="ss-table-td__content--actions">
-							<snab-button [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon" snab-tooltip
+							<snab-button snab-tooltip [icon]="IconType.Comments" [iconPosition]="IconPosition.OnlyIcon"
 										 [tooltipText]="tovNode().tovCommentSignal()"
 										 [position]="TooltipPosition.Top"
 										 [theme]="TooltipTheme.Dark"></snab-button>
@@ -58,11 +58,11 @@
 							>
 								<snab-input
 									snab-tooltip
+									fieldCtrl
+									formControlName="excessIncomePercent"
 									[tooltipText]="'СНД, %'"
 									[position]="TooltipPosition.Top"
 									[theme]="TooltipTheme.Dark"
-									fieldCtrl
-									formControlName="excessIncomePercent"
 									[onlyPositiveValue]="true"
 									[type]="InputType.Number"
 									[showClearButton]="false"
@@ -70,11 +70,11 @@
 								/>
 							</snab-form-field>
 
-							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
+							<snab-button *ngIf="tovNode().validSndControlCurrent$ | async" snab-tooltip [tooltipText]="'Сохранить'"
+										 [position]="TooltipPosition.Bottom" [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary"
+										 [icon]="IconType.Save"
 										 [iconPosition]="IconPosition.OnlyIcon"
-										 (click)="tovNode().updateSnd(true);$event.stopPropagation()"
-										 *ngIf="tovNode().validSndControlCurrent$ | async">
+										 (click)="tovNode().updateSnd(true);$event.stopPropagation()">
 							</snab-button>
 						</div>
 					</td>
@@ -159,11 +159,11 @@
 							>
 								<snab-input
 									snab-tooltip
+									fieldCtrl
+									formControlName="excessIncomePercent"
 									[tooltipText]="'СНД, %'"
 									[position]="TooltipPosition.Top"
 									[theme]="TooltipTheme.Dark"
-									fieldCtrl
-									formControlName="excessIncomePercent"
 									[onlyPositiveValue]="true"
 									[type]="InputType.Number"
 									[showClearButton]="false"
@@ -172,11 +172,11 @@
 							</snab-form-field>
 
 
-							<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-										 [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary" [icon]="IconType.Save"
+							<snab-button *ngIf="tovNode().validSndControlNext$ | async" snab-tooltip [tooltipText]="'Сохранить'"
+										 [position]="TooltipPosition.Bottom" [theme]="TooltipTheme.Dark" [type]="ButtonType.Primary"
+										 [icon]="IconType.Save"
 										 [iconPosition]="IconPosition.OnlyIcon"
-										 (click)="tovNode().updateSnd(false);$event.stopPropagation()"
-										 *ngIf="tovNode().validSndControlNext$ | async">>
+										 (click)="tovNode().updateSnd(false);$event.stopPropagation()">>
 							</snab-button>
 						</div>
 					</td>
@@ -219,8 +219,8 @@
 					<td class="ss-table-td" [class.ss-table-td__different-price]="differentNextFinalPrice"
 						[style.max-width]="col.width">
 						<div class="ss-table-td__content">
-							<snab-text snab-tooltip
-									   *ngIf="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value"
+							<snab-text *ngIf="tovNode().tovSignal().paramsGroup.controls.nextParams.controls.finalPrice.value"
+									   snab-tooltip
 									   [tooltipText]="'Рекомендованная цена + СНД.'"
 									   [position]="TooltipPosition.Top"
 									   [theme]="TooltipTheme.Dark">

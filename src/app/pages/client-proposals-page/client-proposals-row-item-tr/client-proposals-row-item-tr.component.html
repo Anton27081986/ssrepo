@@ -1,21 +1,21 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display">
+			<td *ngIf="col.display" class="ss-table-td">
 				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
-					<a class="ss-table-td__content" href="{{ item().productionUrl }}" target="_blank"> {{ item().productionName }}</a>
+					<a href="{{ item().productionUrl }}" class="ss-table-td__content" target="_blank"> {{ item().productionName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
-					<a class="ss-table-td__content" href="{{ item().tovGroupUrl }}" target="_blank"> {{ item().tovGroupName }}</a>
+					<a href="{{ item().tovGroupUrl }}" class="ss-table-td__content" target="_blank"> {{ item().tovGroupName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
-					<a class="ss-table-td__content" href="{{ item().productionGroupUrl }}" target="_blank"> {{ item().tovSubGroupName }}</a>
+					<a href="{{ item().productionGroupUrl }}" class="ss-table-td__content" target="_blank"> {{ item().tovSubGroupName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
-					<a class="ss-table-td__content" href="{{item().newProductUrl }}" target="_blank"> {{ item().newProductName }}</a>
+					<a href="{{item().newProductUrl }}" class="ss-table-td__content" target="_blank"> {{ item().newProductName }}</a>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
@@ -33,9 +33,9 @@
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
 					<div class="ss-table-td__canvas">
 						<ng-container *ngFor="let price of item().prices">
-							<div *ngIf="price" [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
-								 [position]="TooltipPosition.DEFAULT" class="ss-table-td__content ss-table-td__content--number"
-								 style="cursor: pointer">
+							<div *ngIf="price" class="ss-table-td__content ss-table-td__content--number" style="cursor: pointer"
+								 [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
+								 [position]="TooltipPosition.DEFAULT">
 								{{ price.price | numWithSpaces:2 }}
 							</div>
 						</ng-container>
@@ -44,15 +44,15 @@
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
 					<div class="ss-table-td__td limit">
-						<div #content class="hc-table-td__content" *ngIf="advantagesTpr">{{ advantagesTpr }}</div>
+						<div *ngIf="advantagesTpr" #content class="hc-table-td__content">{{ advantagesTpr }}</div>
 					</div>
-					<ss-icon class="ss-table-td__maximise maximise" name="maximise" *ngIf="viewMaximise$ | async"
+					<ss-icon *ngIf="viewMaximise$ | async" class="ss-table-td__maximise maximise" name="maximise"
 							 (click)="showText(advantagesTpr, 'Преимущества ТПР')"></ss-icon>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
 					<div class="ss-table-td__td">
-					<a class="ss-table-td__content" *ngIf="(rims$ | async)?.length else empty"
+					<a *ngIf="(rims$ | async)?.length else empty" class="ss-table-td__content"
 					   (click)="openPopoverRimsView()">Показать рим</a>
 					<ng-template #empty>
 						<div class="ss-table-td__content"> -</div>
@@ -62,7 +62,7 @@
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.documents">
 					<div class="ss-table-td__td">
-					<div class="ss-table-td__content" *ngIf="(documents$ | async)?.length else  empty"
+					<div *ngIf="(documents$ | async)?.length else  empty" class="ss-table-td__content"
 						 (click)="openPopoverDocumentView()">
 						<span class="ss-table-td__open-doc">Показать документы</span>
 					</div>

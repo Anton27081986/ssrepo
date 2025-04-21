@@ -2,7 +2,7 @@
 	<div class="header">
 		<ss-text size="1">Общая информация</ss-text>
 		<div *ngIf="act()?.state?.id !== 0" class="header__controls">
-			<ss-button size="small" type="muted" (click)="switchMode()">
+			<ss-button *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT)" size="small" type="muted" (click)="switchMode()">
 				<ss-icon width="24" height="24" name="edit"></ss-icon>
 			</ss-button>
 		</div>
@@ -48,7 +48,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
 				<ss-text size="3">
-					<a class="content__column__item__links__item" [href]="act()?.providerContractor?.linkToDetail || ''" target="_blank">
+					<a class="content__column__item__links__item" target="_blank" [href]="act()?.providerContractor?.linkToDetail || ''">
 						{{ act()?.providerContractor?.name }}
 					</a>
 				</ss-text>
@@ -64,7 +64,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<div class="content__column__item__links">
-					<a class="content__column__item__links__item" *ngFor="let docOrder of act()?.finDocOrders" [href]="docOrder.linkToDetail || ''" target="_blank">
+					<a *ngFor="let docOrder of act()?.finDocOrders" class="content__column__item__links__item" target="_blank" [href]="docOrder.linkToDetail || ''">
 						{{ docOrder.name }}
 					</a>
 				</div>
@@ -92,7 +92,7 @@
 			<div class="content__column__item">
 				<ss-text size="4">Документы</ss-text>
 				<div class="content__column__item__files-list">
-					<div class="content__column__item__files-list__item" *ngFor="let doc of act()?.documents">
+					<div *ngFor="let doc of act()?.documents" class="content__column__item__files-list__item">
 						<div class="content__column__item__files-list__item__img" (click)="downloadFile(doc.directUrl!, doc.fileName)">
 							<ss-icon height="16" width="16" name="doc"></ss-icon>
 						</div>

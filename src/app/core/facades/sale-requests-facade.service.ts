@@ -16,13 +16,13 @@ export class SaleRequestsFacadeService {
 	private readonly sales = new BehaviorSubject<ISaleRequestsDto>({});
 	public sales$ = this.sales.asObservable();
 
-	public constructor(private readonly salesApiService: SaleRequestsApiService) {
+	constructor(private readonly salesApiService: SaleRequestsApiService) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
+				switchMap((filter) => {
 					return this.salesApiService.getSaleRequests(filter);
 				}),
-				tap(sales => {
+				tap((sales) => {
 					this.sales.next(sales);
 				}),
 				untilDestroyed(this),

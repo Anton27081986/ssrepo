@@ -6,11 +6,12 @@ body {
 	}
 
 	.ant-radio-inner::after {
-		background-color: $main!important;
+		background-color: $main !important;
 	}
 
-	.ant-radio-wrapper:hover .ant-radio, .ant-radio:hover .ant-radio-inner, .ant-radio-input:focus + .ant-radio-inner {
-		border-color: $main!important;
+	.ant-radio-wrapper:hover .ant-radio,
+	.ant-radio:hover .ant-radio-inner,
+	.ant-radio-input:focus + .ant-radio-inner {
+		border-color: $main !important;
 	}
 }
-

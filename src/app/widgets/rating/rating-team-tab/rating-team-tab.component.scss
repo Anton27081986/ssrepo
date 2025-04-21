@@ -13,42 +13,42 @@
 	cursor: pointer;
 	padding: 12px;
 	user-select: none;
-	background-color: #0000000A;
-	border: 1px solid #0000000A;
+	background-color: #0000000a;
+	border: 1px solid #0000000a;
 	position: relative;
 
 	&--active {
-		border: 1px solid #4770FF4D;
-		background-color: #4770FF4D;
+		border: 1px solid #4770ff4d;
+		background-color: #4770ff4d;
 	}
 
 	&__indicator {
 		position: absolute;
 		width: 6px;
 		height: 6px;
-		background-color: #416CFF;
+		background-color: #416cff;
 		border-radius: 50%;
 		top: 4px;
 		right: 4px;
 	}
 
 	&:hover {
-		border: 1px solid #C5CBD5;
+		border: 1px solid #c5cbd5;
 		transform: scale(1.01);
-		box-shadow: 0 4px 20px 0 #C5CBD5;
+		box-shadow: 0 4px 20px 0 #c5cbd5;
 		transition: 0.3s;
 	}
 
 	&__1 {
-		color: #F7B535;
+		color: #f7b535;
 	}
 
 	&__2 {
-		color: #878E9A;
+		color: #878e9a;
 	}
 
 	&__3 {
-		color: #C65C2E;
+		color: #c65c2e;
 	}
 
 	&__left {

@@ -29,32 +29,48 @@ export class ClientsCardFacadeService {
 	private readonly clientSubject = new BehaviorSubject<IClientDto>({});
 	public client$ = this.clientSubject.asObservable();
 
-	private readonly managersSubject = new BehaviorSubject<IManagerItemDto[]>([]);
+	private readonly managersSubject = new BehaviorSubject<IManagerItemDto[]>(
+		[],
+	);
+
 	public managers$ = this.managersSubject.asObservable();
 
-	private readonly contractorsSubject = new BehaviorSubject<IContractorItemDto[]>([]);
+	private readonly contractorsSubject = new BehaviorSubject<
+		IContractorItemDto[]
+	>([]);
+
 	public contractors$ = this.contractorsSubject.asObservable();
 
-	private readonly clientCardPermissionsSubject = new BehaviorSubject<string[]>([
-		this.notInitPermission,
-	]);
+	private readonly clientCardPermissionsSubject = new BehaviorSubject<
+		string[]
+	>([this.notInitPermission]);
 
 	public permissions$ = this.clientCardPermissionsSubject.asObservable();
 
-	private readonly clientStatusesSubject = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	private readonly clientStatusesSubject = new BehaviorSubject<
+		IDictionaryItemDto[]
+	>([]);
+
 	public statuses$ = this.clientStatusesSubject.asObservable();
 
 	// Загрузка
-	private readonly isContractorsLoadingSubject = new BehaviorSubject<boolean>(true);
-	public isContractorsLoading$ = this.isContractorsLoadingSubject.asObservable();
+	private readonly isContractorsLoadingSubject = new BehaviorSubject<boolean>(
+		true,
+	);
 
-	private readonly isManagersLoadingSubject = new BehaviorSubject<boolean>(true);
+	public isContractorsLoading$ =
+		this.isContractorsLoadingSubject.asObservable();
+
+	private readonly isManagersLoadingSubject = new BehaviorSubject<boolean>(
+		true,
+	);
+
 	public isManagersLoading$ = this.isManagersLoadingSubject.asObservable();
 
 	private readonly isInfoLoadingSubject = new BehaviorSubject<boolean>(true);
 	public isInfoLoading$ = this.isInfoLoadingSubject.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly callPhoneService: CallPhoneService,
 		private readonly usersApiService: UsersApiService,
@@ -71,9 +87,11 @@ export class ClientsCardFacadeService {
 			this.clientApiService
 				.getClientCardById(id)
 				.pipe(
-					tap(client => {
+					tap((client) => {
 						this.clientSubject.next(client.data);
-						this.clientCardPermissionsSubject.next(client.permissions);
+						this.clientCardPermissionsSubject.next(
+							client.permissions,
+						);
 						this.isInfoLoadingSubject.next(false);
 					}),
 					untilDestroyed(this),
@@ -95,7 +113,7 @@ export class ClientsCardFacadeService {
 			this.clientApiService
 				.getManagers(this.clientIdSubject.value!)
 				.pipe(
-					tap(managers => {
+					tap((managers) => {
 						this.managersSubject.next(managers);
 						this.isManagersLoadingSubject.next(false);
 					}),
@@ -109,7 +127,7 @@ export class ClientsCardFacadeService {
 		this.clientApiService
 			.getClientStatuses()
 			.pipe(
-				tap(statuses => {
+				tap((statuses) => {
 					this.clientStatusesSubject.next(statuses.items);
 				}),
 				untilDestroyed(this),
@@ -122,7 +140,7 @@ export class ClientsCardFacadeService {
 		this.clientApiService
 			.getContractors(id, isActiveOnly)
 			.pipe(
-				tap(contractors => {
+				tap((contractors) => {
 					this.contractorsSubject.next(contractors);
 					this.isContractorsLoadingSubject.next(false);
 				}),
@@ -132,15 +150,24 @@ export class ClientsCardFacadeService {
 	}
 
 	public setBasicManager(managerId?: number) {
-		return this.clientApiService.setBasicManager(this.clientIdSubject.value, managerId);
+		return this.clientApiService.setBasicManager(
+			this.clientIdSubject.value,
+			managerId,
+		);
 	}
 
 	public addManager(managerId?: number) {
-		return this.clientApiService.addManager(this.clientIdSubject.value, managerId);
+		return this.clientApiService.addManager(
+			this.clientIdSubject.value,
+			managerId,
+		);
 	}
 
 	public deleteManager(managerId?: number) {
-		return this.clientApiService.deleteManager(this.clientIdSubject.value, managerId);
+		return this.clientApiService.deleteManager(
+			this.clientIdSubject.value,
+			managerId,
+		);
 	}
 
 	public saveInfo(body: IClientEditRequest) {

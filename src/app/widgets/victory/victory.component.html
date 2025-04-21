@@ -19,7 +19,7 @@
 			<ng-container *ngIf="victoryList$ | async as list">
 				<ng-container *ngIf="list.total > 0">
 					<div class="victory__content">
-						<app-user-card-widget [isExtendedMode]="list.isExtendedMode" *ngFor="let item of list.items" [widget]="item"></app-user-card-widget>
+						<app-user-card-widget *ngFor="let item of list.items" [isExtendedMode]="list.isExtendedMode" [widget]="item"></app-user-card-widget>
 					</div>
 				</ng-container>
 				<ng-container *ngIf="list.total === 0">
@@ -29,8 +29,8 @@
 					</ss-empty-placeholder>
 				</ng-container>
 				<ss-pagination
-					class="victory__pagination"
 					*ngIf="list.total"
+					class="victory__pagination"
 					[total]="list.total"
 					[pageIndex]="pageIndex"
 					[pageSize]="pageSize"

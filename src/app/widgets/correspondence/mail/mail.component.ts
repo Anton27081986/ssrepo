@@ -1,6 +1,16 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	AfterViewInit,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { Observable } from 'rxjs';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
@@ -35,16 +45,22 @@ import {
 	Undo,
 	type EditorConfig,
 } from 'ckeditor5';
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
-import {AsyncPipe, CommonModule, NgClass, NgForOf, NgIf} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AttachmentComponent} from "@app/shared/components/attachment/attachment.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {CardDropdownComponent} from "@app/shared/components/card-dropdown/card-dropdown.component";
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { ChipsUserSearchComponent } from '@app/shared/components/inputs/chips-user-search/chips-user-search.component';
+import {
+	AsyncPipe,
+	CommonModule,
+	NgClass,
+	NgForOf,
+	NgIf,
+} from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AttachmentComponent } from '@app/shared/components/attachment/attachment.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CardDropdownComponent } from '@app/shared/components/card-dropdown/card-dropdown.component';
 
 @UntilDestroy()
 @Component({
@@ -66,9 +82,9 @@ import {CardDropdownComponent} from "@app/shared/components/card-dropdown/card-d
 		NgForOf,
 		ReactiveFormsModule,
 		ButtonComponent,
-		CardDropdownComponent
+		CardDropdownComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class MailComponent implements OnInit, AfterViewInit {
 	public isLayoutReady = false;
@@ -80,7 +96,10 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	public topic$: Observable<string | null>;
 
-	public repliedMessage$: Observable<{ message: IMessageItemDto; toUsers: IUserDto[] } | null>;
+	public repliedMessage$: Observable<{
+		message: IMessageItemDto;
+		toUsers: IUserDto[];
+	} | null>;
 
 	public messageFiles$: Observable<IAttachmentDto[] | null>;
 
@@ -92,7 +111,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 
 	private modal: ModalRef | undefined;
 
-	public constructor(
+	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 		private readonly modalService: ModalService,
@@ -109,7 +128,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			isPrivate: new FormControl<boolean>(false),
 		});
 
-		this.topic$.pipe(untilDestroyed(this)).subscribe(subject => {
+		this.topic$.pipe(untilDestroyed(this)).subscribe((subject) => {
 			if (this.mailForm.controls.text.value && !this.modal) {
 				this.modal = this.modalService.open(DialogComponent, {
 					data: {
@@ -121,7 +140,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 				this.modal
 					.afterClosed()
 					.pipe(untilDestroyed(this))
-					.subscribe(res => {
+					.subscribe((res) => {
 						if (res) {
 							this.resetForm();
 							this.mailForm.controls.subject.setValue(subject);
@@ -138,15 +157,19 @@ export class MailComponent implements OnInit, AfterViewInit {
 			}
 		});
 
-		this.repliedMessage$.pipe(untilDestroyed(this)).subscribe(replyObject => {
-			if (replyObject?.message) {
-				this.mailForm.controls.subject.setValue(replyObject.message.subject!);
-			}
+		this.repliedMessage$
+			.pipe(untilDestroyed(this))
+			.subscribe((replyObject) => {
+				if (replyObject?.message) {
+					this.mailForm.controls.subject.setValue(
+						replyObject.message.subject!,
+					);
+				}
 
-			if (replyObject?.toUsers.length) {
-				this.toUsers = replyObject.toUsers;
-			}
-		});
+				if (replyObject?.toUsers.length) {
+					this.toUsers = replyObject.toUsers;
+				}
+			});
 	}
 
 	public ngAfterViewInit(): void {
@@ -238,7 +261,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			return;
 		}
 
-		Array.from(fileList).forEach(file => {
+		Array.from(fileList).forEach((file) => {
 			const reader = new FileReader();
 
 			reader.onload = () => {
@@ -254,7 +277,10 @@ export class MailComponent implements OnInit, AfterViewInit {
 	}
 
 	public onSendMessage() {
-		if (!this.mailForm.controls.subject.value || !this.mailForm.controls.text.value) {
+		if (
+			!this.mailForm.controls.subject.value ||
+			!this.mailForm.controls.text.value
+		) {
 			this.mailForm.markAllAsTouched();
 
 			return;
@@ -274,7 +300,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			dialog
 				.afterClosed()
 				.pipe(untilDestroyed(this))
-				.subscribe(res => {
+				.subscribe((res) => {
 					if (res) {
 						this.sendMessage();
 					}
@@ -288,8 +314,8 @@ export class MailComponent implements OnInit, AfterViewInit {
 		this.notificationsFacadeService.sendMessage(
 			this.mailForm.controls.subject.value!,
 			this.mailForm.controls.text.value!,
-			this.toUsers.map(user => user.id!),
-			this.toUsersCopy.map(user => user.id!),
+			this.toUsers.map((user) => user.id!),
+			this.toUsersCopy.map((user) => user.id!),
 			this.mailForm.controls.isPrivate.value!,
 		);
 

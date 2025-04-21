@@ -61,12 +61,19 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 			filter(([objectId]) => !!objectId),
 			switchMap(([objectId, queryType, pageIndex, pageSize]) =>
 				this.historyFacadeService
-					.getHistory(objectId, queryType, pageSize, (pageIndex - 1) * pageSize)
+					.getHistory(
+						objectId,
+						queryType,
+						pageSize,
+						(pageIndex - 1) * pageSize,
+					)
 					.pipe(
-						tap(response => this.pageTotal.set(response.total || 0)),
+						tap((response) =>
+							this.pageTotal.set(response.total || 0),
+						),
 
-						map(response =>
-							response.items.map(historyItem => {
+						map((response) =>
+							response.items.map((historyItem) => {
 								historyItem.createdTime = formatDate(
 									new Date(historyItem.createdTime),
 									'dd.MM.yyyy HH:mm',
@@ -91,16 +98,18 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 		},
 	);
 
-	public mutableHistoryItems: WritableSignal<IChangeTrackerItemDto[]> = signal(
-		this.historyItems(),
-	);
+	public mutableHistoryItems: WritableSignal<IChangeTrackerItemDto[]> =
+		signal(this.historyItems());
 
-	public constructor() {
+	constructor() {
 		this.signalHistoryService.historyChange$
 			.pipe(
-				tap(change => {
+				tap((change) => {
 					if (this.objectId() === change.objectId) {
-						this.mutableHistoryItems.set([change.item, ...this.mutableHistoryItems()]);
+						this.mutableHistoryItems.set([
+							change.item,
+							...this.mutableHistoryItems(),
+						]);
 					}
 				}),
 				untilDestroyed(this),

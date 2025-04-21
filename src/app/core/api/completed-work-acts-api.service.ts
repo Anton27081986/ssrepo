@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
@@ -14,7 +14,7 @@ import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 	providedIn: 'root',
 })
 export class CompletedWorkActsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 	public getWorkActsList(
 		filters: ICompletedActsFilter,
 	): Observable<IResponse<ICompletedWorkAct>> {
@@ -45,16 +45,25 @@ export class CompletedWorkActsApiService {
 		}
 
 		if (filters.State !== null && filters.State !== undefined) {
-			filters.State.forEach(state => {
+			filters.State.forEach((state) => {
 				params = params.append('State', state);
 			});
 		}
 
-		if (filters.ProviderContractorId !== null && filters.ProviderContractorId !== undefined) {
-			params = params.set('ProviderContractorId', filters.ProviderContractorId);
+		if (
+			filters.ProviderContractorId !== null &&
+			filters.ProviderContractorId !== undefined
+		) {
+			params = params.set(
+				'ProviderContractorId',
+				filters.ProviderContractorId,
+			);
 		}
 
-		if (filters.ApplicantUserId !== null && filters.ApplicantUserId !== undefined) {
+		if (
+			filters.ApplicantUserId !== null &&
+			filters.ApplicantUserId !== undefined
+		) {
 			params = params.set('ApplicantUserId', filters.ApplicantUserId);
 		}
 
@@ -76,23 +85,33 @@ export class CompletedWorkActsApiService {
 		);
 	}
 
-	public getWorkAct(id: string): Observable<ICompletedWorkAct> {
-		return this.http.get<ICompletedWorkAct>(
-			`${environment.apiUrl}/api/company/CompletedWorkActs/${id}`,
-		);
+	public getWorkAct(
+		id: string,
+	): Observable<{ data: ICompletedWorkAct; permissions: string[] }> {
+		return this.http.get<{
+			data: ICompletedWorkAct;
+			permissions: string[];
+		}>(`${environment.apiUrl}/api/company/CompletedWorkActs/${id}`);
 	}
 
-	public updateAct(actId: number, body: IUpdateAct): Observable<ICompletedWorkAct> {
+	public updateAct(
+		actId: number,
+		body: IUpdateAct,
+	): Observable<ICompletedWorkAct> {
 		return this.http.put<ICompletedWorkAct>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}`,
 			body,
 		);
 	}
 
-	public getSpecifications(
-		id: string,
-	): Observable<{ totalAmount: number; items: ICompletedWorkActSpecification[] }> {
-		return this.http.get<{ totalAmount: number; items: ICompletedWorkActSpecification[] }>(
+	public getSpecifications(id: string): Observable<{
+		totalAmount: number;
+		items: ICompletedWorkActSpecification[];
+	}> {
+		return this.http.get<{
+			totalAmount: number;
+			items: ICompletedWorkActSpecification[];
+		}>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${id}/CostDetails`,
 		);
 	}
@@ -174,15 +193,25 @@ export class CompletedWorkActsApiService {
 		);
 	}
 
-	public addDocumentToAct(actId: number, documentId: string): Observable<string> {
+	public addDocumentToAct(
+		actId: number,
+		documentId: string,
+	): Observable<string> {
 		return this.http.post<string>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document`,
 			`"${documentId}"`,
-			{ headers: new HttpHeaders({ 'Content-Type': 'application/json' }) },
+			{
+				headers: new HttpHeaders({
+					'Content-Type': 'application/json',
+				}),
+			},
 		);
 	}
 
-	public removeDocumentFromAct(actId: number, documentId: string): Observable<string> {
+	public removeDocumentFromAct(
+		actId: number,
+		documentId: string,
+	): Observable<string> {
 		return this.http.delete<string>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document/${documentId}`,
 		);

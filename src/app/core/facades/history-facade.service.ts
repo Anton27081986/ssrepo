@@ -7,9 +7,21 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 	providedIn: 'root',
 })
 export class HistoryFacadeService {
-	public constructor(private readonly changeTrackerApiService: ChangeTrackerApiService) {}
+	constructor(
+		private readonly changeTrackerApiService: ChangeTrackerApiService,
+	) {}
 
-	public getHistory(objectId: string, type: number, limit: number, offset: number) {
-		return this.changeTrackerApiService.getHistoryOfObject(objectId, type, limit, offset);
+	public getHistory(
+		objectId: string,
+		type: number,
+		limit: number,
+		offset: number,
+	) {
+		return this.changeTrackerApiService.getHistoryOfObject(
+			objectId,
+			type,
+			limit,
+			offset,
+		);
 	}
 }

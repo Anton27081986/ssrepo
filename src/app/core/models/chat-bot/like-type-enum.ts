@@ -1,4 +1,4 @@
 export enum ChatBotLikeTypeEnum {
-	Dislike ,
-	Like
+	Dislike,
+	Like,
 }

@@ -21,8 +21,8 @@ textarea {
 
 textarea::-webkit-outer-spin-button,
 textarea::-webkit-inner-spin-button {
-	 -webkit-appearance: none;
- }
+	-webkit-appearance: none;
+}
 
 .textarea {
 	position: relative;
@@ -120,5 +120,4 @@ ss-caption {
 		font-size: 12px;
 		text-overflow: ellipsis;
 	}
-
 }

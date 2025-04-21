@@ -3,7 +3,7 @@
 		<ss-headline size="h6">Предложение</ss-headline>
 	</div>
 	<div class="client-proposals-card__controls">
-		<form [formGroup]="form" class="client-proposals-card__form">
+		<form class="client-proposals-card__form" [formGroup]="form">
 			<ss-multiselect-autocomplete-v2
 				[readOnly]="blockForProposals$ | async"
 				[label]="'Выберите ВГП'"
@@ -32,15 +32,15 @@
 				[placeholder]="'Признак ТПР'"
 				[options]="(productionOptionsSign$ | async)!">
 			</ss-multiselect-v2>
-			<ss-button [tooltip]="getTooltipButton()" [theme]="TooltipTheme.DEFAULT"
-					   [position]="TooltipPosition.DEFAULT" [disabled]="isDisabledButton" (click)="submit()"
-					   size="medium" [type]="'primary'">Посмотреть
+			<ss-button size="medium" [tooltip]="getTooltipButton()"
+					   [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT" [disabled]="isDisabledButton"
+					   [type]="'primary'" (click)="submit()">Посмотреть
 			</ss-button>
 		</form>
 	</div>
-	<app-notice [size]="'small'" [isLabeled]="false" *ngIf="isAlterFilter$ | async" [type]="'warning'"
+	<app-notice *ngIf="isAlterFilter$ | async" [size]="'small'" [isLabeled]="false" [type]="'warning'"
 				[text]="(alterFilterDefenitionNote$ | async)!"></app-notice>
-	<div class="client-proposals-card__functional" *ngIf="offersItems$ | async as offers">
+	<div *ngIf="offersItems$ | async as offers" class="client-proposals-card__functional">
 		<ng-container *ngIf="offers.length > 0">
 			<div class="client-proposals-card__functional-left">
 				<ng-container *ngIf="(this.checkListStateService.checkFiles$ | async)?.length">
@@ -58,13 +58,13 @@
 								fill="#4770FF" />
 						</svg>
 					</ng-container>
-					<ss-button [disabled]="(waitingForLoading$ | async)!"
-							   *ngIf="(this.checkListStateService.checkFiles$ | async)?.length || (waitingForLoading$ | async)"
-							   size="small" [type]="'primary'" (click)="saveFiles()">Скачать
+					<ss-button *ngIf="(this.checkListStateService.checkFiles$ | async)?.length || (waitingForLoading$ | async)"
+							   size="small"
+							   [disabled]="(waitingForLoading$ | async)!" [type]="'primary'" (click)="saveFiles()">Скачать
 					</ss-button>
 
-					<ss-button size="small" [type]="'primary'"
-							   *ngIf="(this.checkListStateService.checkFiles$ | async)?.length"
+					<ss-button *ngIf="(this.checkListStateService.checkFiles$ | async)?.length" size="small"
+							   [type]="'primary'"
 							   (click)="saveInCloud()">Сохранить в
 						облако
 					</ss-button>

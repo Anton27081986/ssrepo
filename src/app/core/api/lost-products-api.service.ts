@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { ILostProductsFilter } from '@app/core/models/lost-products-filter';
 import { ILostProductsItemDto } from '@app/core/models/company/lost-products-item-dto';
 
@@ -9,9 +9,11 @@ import { ILostProductsItemDto } from '@app/core/models/company/lost-products-ite
 	providedIn: 'root',
 })
 export class LostProductsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
-	public getLostProducts(filter: ILostProductsFilter): Observable<ILostProductsItemDto> {
+	public getLostProducts(
+		filter: ILostProductsFilter,
+	): Observable<ILostProductsItemDto> {
 		let params = new HttpParams();
 
 		if (filter.clientId !== null && filter.clientId !== undefined) {

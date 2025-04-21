@@ -5,7 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 	providedIn: 'root',
 })
 export class VictoryState {
-	public readonly activeFuncCommentEdit$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
+	public readonly activeFuncCommentEdit$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 }

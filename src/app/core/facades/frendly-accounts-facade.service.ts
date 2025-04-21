@@ -13,12 +13,13 @@ import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 export class FriendlyAccountsFacadeService {
 	public friendlyAccounts$: Observable<IFriendAccountDto[] | null>;
 
-	public constructor(
+	constructor(
 		private readonly usersApiService: UsersApiService,
 		private readonly usersRelationsApiService: UsersRelationsApiService,
 		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService,
 	) {
-		this.friendlyAccounts$ = this.friendlyAccountsStoreService.friendlyAccounts$;
+		this.friendlyAccounts$ =
+			this.friendlyAccountsStoreService.friendlyAccounts$;
 
 		this.setFriendsAccountsForCurrentUser();
 	}
@@ -30,8 +31,10 @@ export class FriendlyAccountsFacadeService {
 				map(({ items }) => items),
 				untilDestroyed(this),
 			)
-			.subscribe(accounts => {
-				this.friendlyAccountsStoreService.setFriendsAccountsForCurrentUser(accounts);
+			.subscribe((accounts) => {
+				this.friendlyAccountsStoreService.setFriendsAccountsForCurrentUser(
+					accounts,
+				);
 			});
 	}
 
@@ -39,7 +42,7 @@ export class FriendlyAccountsFacadeService {
 		this.usersRelationsApiService
 			.addRelationsUsers(usersIds, type)
 			.pipe(
-				tap(item => {
+				tap((item) => {
 					this.friendlyAccountsStoreService.addFriendlyAccount(item);
 				}),
 				untilDestroyed(this),
@@ -47,7 +50,10 @@ export class FriendlyAccountsFacadeService {
 			.subscribe();
 	}
 
-	public acceptAddUsersInListFriendlyLogins(token: string, isConfirm: boolean) {
+	public acceptAddUsersInListFriendlyLogins(
+		token: string,
+		isConfirm: boolean,
+	) {
 		this.usersRelationsApiService
 			.confirmRelationsUsers(token, isConfirm)
 			.pipe(untilDestroyed(this))
@@ -55,7 +61,9 @@ export class FriendlyAccountsFacadeService {
 	}
 
 	public getUserForAccet(token: string) {
-		return this.usersRelationsApiService.getRelationsUser(token).pipe(untilDestroyed(this));
+		return this.usersRelationsApiService
+			.getRelationsUser(token)
+			.pipe(untilDestroyed(this));
 	}
 
 	public removeRelationsUsersById(id: number, index: number) {

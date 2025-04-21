@@ -17,8 +17,8 @@
 
     @for (icon of filteredIcons(); track icon) {
         <ss-icon
-            [name]="icon.iconName"
             height="12"
+            [name]="icon.iconName"
             [style.right.px]="$index | mapper : iconPaddingCalc"
             (click)="icon.action()" />
     }

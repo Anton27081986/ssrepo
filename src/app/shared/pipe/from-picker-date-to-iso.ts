@@ -13,7 +13,9 @@ export function fromPickerDateToIso(date: string) {
 function toIsoDate(date: string) {
 	const parsed = date.split('.');
 	const replaced = new Date([parsed[1], parsed[0], parsed[2]].join('.'));
-	const utcDate = new Date(replaced.getTime() - replaced.getTimezoneOffset() * 60 * 1000);
+	const utcDate = new Date(
+		replaced.getTime() - replaced.getTimezoneOffset() * 60 * 1000,
+	);
 
 	return utcDate.toISOString();
 }

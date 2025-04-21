@@ -97,7 +97,7 @@
 					<ss-text class="history-item-line-title" size="3" weight="semi-bold">Комментарий:</ss-text>
 
 					@if (item.comments) {
-						<ss-text [innerHTML]="item.comments" size="3" weight="regular"></ss-text>
+						<ss-text size="3" weight="regular" [innerHTML]="item.comments"></ss-text>
 					} @else {
 						<ss-text size="3" weight="regular">{{'-'}}</ss-text>
 					}

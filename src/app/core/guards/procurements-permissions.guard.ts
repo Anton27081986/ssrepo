@@ -15,7 +15,7 @@ export const procurementsPermissionsGuard: CanActivateFn = () => {
 			Permissions.CLIENT_PROCUREMENTS_URL_READ,
 		)
 		.pipe(
-			map(isAllowAccess => {
+			map((isAllowAccess) => {
 				if (isAllowAccess) {
 					return true;
 				}

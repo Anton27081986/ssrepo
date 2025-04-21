@@ -1,4 +1,4 @@
-@import "src/styles/colors";
+@import 'src/styles/colors';
 
 :host {
 	width: 100vw;
@@ -6,7 +6,8 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background: center no-repeat url("../../../assets/images/background/login.svg");
+	background: center no-repeat
+		url('../../../assets/images/background/login.svg');
 }
 
 .login {

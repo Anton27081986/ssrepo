@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '@environments/environment.development';
+import { environment } from '@environments/environment';
 import { ISendMessageRequest } from '@app/core/models/notifications/send-message-request';
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
@@ -11,7 +11,7 @@ import { IResponse } from '@app/core/utils/response';
 	providedIn: 'root',
 })
 export class NotificationsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Получить список тем */
 	public getSubjects(
@@ -68,11 +68,17 @@ export class NotificationsApiService {
 
 	/** Отправить сообщение */
 	public sendMessage(body: ISendMessageRequest): Observable<any> {
-		return this.http.post<any>(`${environment.apiUrl}/api/notifications/messages`, body);
+		return this.http.post<any>(
+			`${environment.apiUrl}/api/notifications/messages`,
+			body,
+		);
 	}
 
 	/** Изменить сообщение */
-	public patchMessage(id: string, body: ISendMessageRequest): Observable<IMessageItemDto> {
+	public patchMessage(
+		id: string,
+		body: ISendMessageRequest,
+	): Observable<IMessageItemDto> {
 		return this.http.put<IMessageItemDto>(
 			`${environment.apiUrl}/api/notifications/messages/${id}/edit`,
 			body,

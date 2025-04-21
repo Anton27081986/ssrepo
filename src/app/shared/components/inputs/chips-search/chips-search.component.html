@@ -7,13 +7,13 @@
 				<ss-icon height="10" width="10" name="close" (click)="onRemoveItemFromList($index)"></ss-icon>
 			</div>
 		}
-		<input type="text"
+		<input #input
+			   class="{{ error ? size + ' error' : size }}"
+			   type="text"
 			   [placeholder]="placeholder"
 			   [disabled]="disabled"
-			   class="{{ error ? size + ' error' : size }}"
 			   (input)="onInputChange(input.value)"
 			   (keydown.enter)="dontSend($event)"
-			   #input
 		/>
 	</div>
 	@if (found.length) {

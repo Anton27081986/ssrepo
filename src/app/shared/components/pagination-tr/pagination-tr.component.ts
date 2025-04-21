@@ -26,7 +26,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 	standalone: true,
 	animations: [rotateAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [ ButtonComponent ],
+	imports: [ButtonComponent],
 	providers: [
 		{
 			provide: NG_VALUE_ACCESSOR,
@@ -51,8 +51,14 @@ export class PaginationTrComponent implements ControlValueAccessor {
 	private OnChange!: (value: number) => void;
 	private OnTouched!: (value: number) => void;
 
+	protected readonly TextType = TextType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
 	get viewPagination(): boolean {
-		return this.total() > this.limit() && this.total() > this.offset() + this.limit();
+		return (
+			this.total() > this.limit() &&
+			this.total() > this.offset() + this.limit()
+		);
 	}
 
 	writeValue(offset: number | null) {
@@ -73,8 +79,4 @@ export class PaginationTrComponent implements ControlValueAccessor {
 		this.OnChange(this.offset() + this.limit());
 		this.offset.set(this.offset() + this.limit());
 	}
-
-	protected readonly TextType = TextType;
-	protected readonly ButtonType = ButtonType;
-	protected readonly Size = Size;
 }

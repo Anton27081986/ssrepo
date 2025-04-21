@@ -1,10 +1,28 @@
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	InputSignal,
+} from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { rotateAnimation } from '@app/core/animations';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { ExcessIncomeClientRowItemField } from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
-import {LinkComponent, TextComponent, TextType, TextWeight} from '@front-components/components';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {
+	LinkComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-components/components';
+import {
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
 
 @Component({
 	selector: 'tr[excess-income-contractor-tr]',
@@ -21,17 +39,19 @@ import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitch
 		NgSwitchCase,
 		LinkComponent,
 		TextComponent,
-		NgSwitchDefault
+		NgSwitchDefault,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ExcessIncomeContractorTrComponent {
-	public contractor: InputSignal<ContractorNodeState> = input.required<ContractorNodeState>();
+	public contractor: InputSignal<ContractorNodeState> =
+		input.required<ContractorNodeState>();
 
-	constructor(protected readonly columnsStateService: ColumnsStateService) {}
+	protected readonly ExcessIncomeClientRowItemField =
+		ExcessIncomeClientRowItemField;
 
-	protected readonly ExcessIncomeClientRowItemField = ExcessIncomeClientRowItemField;
 	protected readonly Text = Text;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
+	constructor(protected readonly columnsStateService: ColumnsStateService) {}
 }

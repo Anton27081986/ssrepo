@@ -1,6 +1,6 @@
 <ss-card padding="0" [ngClass]="{'non-active': isHidden}">
-	<ss-button class="hide-button" [ngClass]="{active: isHidden}" type="tertiary" size="medium" (click)="onHideButton()">
-		<ss-text [size]="titleSize" weight="semi-bold"> {{ title }} </ss-text>
+	<ss-button class="hide-button" type="tertiary" size="medium" [ngClass]="{active: isHidden}" (click)="onHideButton()">
+		<ss-text weight="semi-bold" [size]="titleSize"> {{ title }} </ss-text>
 		<ss-icon height="14" width="14" name="close" class="hide-button-icon"></ss-icon>
 	</ss-button>
 	<div class="content">

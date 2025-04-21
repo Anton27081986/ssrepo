@@ -24,7 +24,7 @@
 .content {
 	display: grid;
 	padding: 16px;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(4, 1fr);
 	gap: 24px;
 
 	&__column {
@@ -52,9 +52,9 @@
 				position: relative;
 
 				.upload-file {
-					background-color: #F2F3F7;
-					border-color: #E4E8EA;
-					color: #6D7885;
+					background-color: #f2f3f7;
+					border-color: #e4e8ea;
+					color: #6d7885;
 					cursor: pointer;
 					padding: 6px 8px;
 					border-radius: 8px;
@@ -73,7 +73,7 @@
 				flex-direction: column;
 				overflow-y: auto;
 				overflow-x: hidden;
-				max-width: 15vw;
+				mix-width: 15vw;
 				max-height: 210px;
 
 				&__item {
@@ -91,7 +91,7 @@
 						align-items: center;
 						justify-content: center;
 						border-radius: 4px;
-						background-color: #EDF1FF;
+						background-color: #edf1ff;
 					}
 
 					&__description {
@@ -104,7 +104,7 @@
 						white-space: nowrap;
 
 						::ng-deep .size p {
-							color: #8C8C8C;
+							color: #8c8c8c;
 						}
 					}
 
