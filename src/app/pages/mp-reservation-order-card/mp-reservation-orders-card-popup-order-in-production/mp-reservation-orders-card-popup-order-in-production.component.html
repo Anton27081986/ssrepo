@@ -1,0 +1,105 @@
+<div class="wrapper" (mousedown)="close()">
+	<snab-card class="in-production-form"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   [footerRef]="footer"
+			   (mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+					Размещение в производстве
+				</snab-text>
+				<snab-button [type]="ButtonType.Flat"
+							 [size]="Size.Large"
+							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+			</div>
+		</ng-template>
+
+		<ng-template #body>
+			<form [formGroup]="inProductionForm" class="content">
+				<div class="content-header">
+					<div class="content-text">
+						<div class="content-row">
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
+								Менеджер продаж: {{ inProductionForm.controls.manager.value }}
+							</snab-text>
+						</div>
+						<div class="content-row">
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
+								Количество: {{ inProductionForm.controls.quantity.value }}
+							</snab-text>
+						</div>
+					</div>
+					<div class="content-button">
+						<snab-button
+							text="Добавить даты"
+							[size]="Size.Large"
+							(click)="addDatesRow()"
+							style="margin-left: auto;"
+						></snab-button>
+					</div>
+				</div>
+				<table class="dates-table">
+					<thead>
+					<tr>
+						<th>Дата производства</th>
+						<th>Дата обеспечения</th>
+						<th>Кол-во (факт)</th>
+						<th>Действия</th>
+					</tr>
+					</thead>
+					<tbody formArrayName="dates">
+					<tr *ngFor="let row of dates.controls; let i = index" [formGroupName]="i">
+						<td>
+							<ss-date-time-picker
+								[showTime]="false"
+								type="number"
+								formControlName="productionDate"
+							></ss-date-time-picker>
+						</td>
+						<td>
+							<ss-date-time-picker
+								[showTime]="false"
+								type="number"
+								formControlName="provisionDate"
+							></ss-date-time-picker>
+						</td>
+						<td>
+							<snab-form-field [size]="Size.Large">
+								<snab-input
+									fieldCtrl
+									formControlName="fact"
+									placeholder="Кол-во"
+								></snab-input>
+							</snab-form-field>
+						</td>
+						<td class="row-basket">
+							<snab-button
+								[type]="ButtonType.Flat"
+								[size]="Size.Large"
+								[icon]="IconType.Trash"
+								(click)="removeDatesRow(i)"
+							></snab-button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<snab-button
+					[type]="ButtonType.Secondary"
+					[size]="Size.Large"
+					text="Отмена"
+					(click)="openPopupCancelAction()"
+				></snab-button>
+				<snab-button
+					[size]="Size.Large"
+					text="Разместить"
+					(click)="placeOrder()"
+				></snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
+</div>

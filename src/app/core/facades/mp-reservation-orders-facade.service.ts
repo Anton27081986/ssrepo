@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
 import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-reservation-orders-filter';
-import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
+import {BehaviorSubject, forkJoin, Subject, switchMap, tap} from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
@@ -39,7 +39,6 @@ export class MpReservationOrdersFacadeService {
 					this.orders.next(orders.data);
 					this.isLoader$.next(false);
 				}),
-				tap(orders => console.log(orders)),
 				untilDestroyed(this),
 				catchError((err: unknown) => {
 					this.isLoader$.next(false);
@@ -71,16 +70,15 @@ export class MpReservationOrdersFacadeService {
 	}
 
 	public createOrder(body: IMpReservationAddOrder): void {
-		console.log('Form is create');
 		this.mpReservationOrdersApiService
 			.createOrderPersonification(body)
 			.pipe(
 				untilDestroyed(this),
-				tap(response => {
+				tap(newOrders => {
 					const currentOrders = this.orders.getValue();
 					const updatedItems = currentOrders.items
-						? [...currentOrders.items, ...response]
-						: [...response];
+						? [...currentOrders.items, ...newOrders]
+						: [...newOrders];
 					this.orders.next({
 						...currentOrders,
 						items: updatedItems,
@@ -89,5 +87,46 @@ export class MpReservationOrdersFacadeService {
 				}),
 			)
 			.subscribe(res => {});
+	}
+
+	public updateProvisionDates(orderIds: number[], provisionDate: string): void {
+		forkJoin(
+			orderIds.map(id =>
+				this.mpReservationOrdersApiService.updateProvisionDate(id, provisionDate)
+			)
+		).pipe(
+			tap(() => {
+				const currentOrders = this.orders.getValue();
+				const updatedOrders = currentOrders.items.map(order => {
+					if (!orderIds.includes(order.id)) return order;
+
+					const provisionDetails = order.provision.provisionDetails || [];
+					const updatedDetails = provisionDetails.map(detail => {
+						const detailTime = new Date(detail.provisionDate!).getTime();
+						const minTime = Math.min(...provisionDetails.map(detail => new Date(detail.provisionDate!).getTime()));
+						const allEqual = provisionDetails.every(detail => new Date(detail.provisionDate!).getTime() === minTime);
+
+						return {
+							...detail,
+							provisionDate: (allEqual || detailTime === minTime) ? provisionDate : detail.provisionDate
+						};
+					});
+
+					return {
+						...order,
+						provision: {
+							...order.provision,
+							provisionDetails: updatedDetails
+						}
+					};
+				});
+
+				this.orders.next({
+					...currentOrders,
+					items: updatedOrders
+				});
+			}),
+			untilDestroyed(this)
+		).subscribe();
 	}
 }

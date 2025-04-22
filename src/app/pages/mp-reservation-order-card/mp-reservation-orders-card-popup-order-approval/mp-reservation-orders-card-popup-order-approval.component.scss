@@ -1,8 +1,8 @@
 @use 'src/styles/colors.scss' as *;
 
-.set-provision-date-form {
-	width: 449px;
-	max-height: 310px;
+.approve-orders-form {
+	width: 965px;
+	max-height: 836px;
 	display: flex;
 	flex-direction: column;
 	background: lighten($island-outline, 40%);
@@ -28,12 +28,27 @@
 	display: flex;
 	flex-direction: column;
 	padding: var(--padding-l);
-	gap: 16px;
+	overflow: auto;
+	max-height: 560px;
 }
 
-.footer {
-	display: flex;
-	padding: var(--padding-l);
-	justify-content: flex-end;
-	gap: 20px;
+.orders-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 24px;
+	text-align: center;
+
+	thead {
+		background-color: lighten($island-outline, 40%);
+	}
+
+	th {
+		background-color: #EEF2FF;
+	}
+
+	th, td {
+		padding: 8px;
+		border-bottom: 1px solid $island-outline;
+		vertical-align: middle;
+	}
 }

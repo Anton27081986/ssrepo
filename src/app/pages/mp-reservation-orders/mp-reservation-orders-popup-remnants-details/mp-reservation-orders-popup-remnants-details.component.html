@@ -1,21 +1,48 @@
-<div class="wrapper" (click)="close()">
-    <ss-card padding="0" (click)="$event.stopPropagation()">
-        <div class="header">
-            <ss-headline size="h6">Остатки. Детали</ss-headline>
-            <ss-icon width="16" name="close" (click)="close()"></ss-icon>
-        </div>
-        <div class="body">
-            <ss-history
-                class="content"
-                [objectId]="orderId.toString()"
-                [queryType]="queryType.OrderCard"
-                [view]="viewMode.Table"
-				[tableHead]="[
-					{title: 'Количество', field: 'quantity'},
-					{title: 'Склад',  field: 'storageName'},
-					{title: 'Оборотная ведомость по ТП',  field: 'linkStatement'},
-				]"
-            ></ss-history>
-        </div>
-    </ss-card>
+<div class="wrapper" (mousedown)="close()">
+	<snab-card
+		class="remnants-details-popup"
+		[headerRef]="header"
+		[bodyRef]="body"
+		(mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+					Остатки. Детали
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					(click)="close()"
+				></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="content">
+				<table class="remnants-table">
+					<thead>
+					<tr>
+						<th>Количество</th>
+						<th>Склад</th>
+						<th>Оборотная ведомость по ТП</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr *ngFor="let remnant of remnants">
+						<td>{{ remnant.quantity }}</td>
+						<td>{{ remnant.warehouse }}</td>
+						<td>
+							<snab-link
+								class="link"
+								[type]="TextType.Body"
+								[text]="remnant.linkText"
+								(click)="onLinkClick(remnant)"
+							></snab-link>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</ng-template>
+	</snab-card>
 </div>

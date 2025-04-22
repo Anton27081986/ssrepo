@@ -1,23 +1,49 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="card-wrapper" padding="0" (click)="$event.stopPropagation()">
-		<div class="header">
-			<ss-headline size="h6">Назначить дату обеспечения для группы</ss-headline>
-			<ss-icon width="16" name="close" (click)="close()"></ss-icon>
-		</div>
-		<div class="body">
-			<snab-text class="body__description"
-					   [weight]="TextWeight.Medium"
-					   [type]="TextType.Caption">Дата обеспечения
-			</snab-text>
-			<ss-date-time-picker [showTime]="false" formControlName="dateFrom"></ss-date-time-picker>
-		</div>
-		<div class="footer-controls">
-			<snab-button class="footer-controls__cancel" text="Отмена"
-						 [type]="ButtonType.Secondary"
-						 [size]="Size.Large"
-						 (click)="close()"
-			></snab-button>
-			<snab-button text="Назначить" [size]="Size.Large"></snab-button>
-		</div>
-	</ss-card>
+<div class="wrapper" (mousedown)="close()">
+	<snab-card
+		class="set-provision-date-form"
+		[headerRef]="header"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+					Назначить дату обеспечения для группы
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					(click)="close()"
+				></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<form [formGroup]="provisionForm" class="content">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
+					Дата обеспечения
+				</snab-text>
+				<ss-date-time-picker
+					formControlName="provisionDate"
+					[showTime]="false"
+					placeholder="ДД.ММ.ГГГГ"
+				></ss-date-time-picker>
+			</form>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<snab-button
+					[type]="ButtonType.Secondary"
+					[size]="Size.Large"
+					text="Отмена"
+					(click)="close()"
+				></snab-button>
+				<snab-button
+					[size]="Size.Large"
+					text="Назначить"
+					(click)="onSetProvisionDate()"
+				></snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
 </div>

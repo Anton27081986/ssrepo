@@ -1,49 +1,91 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
+import {FormGroup, FormControl, FormArray, Validators, ReactiveFormsModule} from '@angular/forms';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { CardComponent } from '@app/shared/components/card/card.component';
-import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
-import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModalService } from '@app/core/modal/modal.service';
 import {
 	ButtonComponent,
 	ButtonType,
+	IconType,
+	IconPosition,
+	InputComponent,
 	Size,
 	TextComponent,
 	TextType,
 	TextWeight,
+	CardComponent,
+	FormFieldComponent,
 } from '@front-components/components';
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { NgIf, NgForOf } from '@angular/common';
 
+@UntilDestroy()
 @Component({
-	selector: 'app-mp-reservation-orders-popup-date-provision',
-	standalone: true,
-	imports: [
-		CardComponent,
-		HeadlineComponent,
-		IconComponent,
-		DateTimePickerComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		TextComponent,
-		ButtonComponent,
-		TextareaComponent,
-		DateRangeComponent,
-	],
+	selector: 'mp-reservation-orders-popup-change-provision-date',
 	templateUrl: './mp-reservation-orders-card-popup-change-provision-date.component.html',
 	styleUrl: './mp-reservation-orders-card-popup-change-provision-date.component.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
+	imports: [
+		NgIf,
+		NgForOf,
+		CardComponent,
+		ButtonComponent,
+		ButtonComponent,
+		TextComponent,
+		TextComponent,
+		InputComponent,
+		CardComponent,
+		DateTimePickerComponent,
+		FormFieldComponent,
+		CardComponent,
+		ReactiveFormsModule,
+	],
 })
 export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
 
-	public constructor(private readonly modalRef: ModalRef) {}
+	public provisionDateForm: FormGroup<{
+		rows: FormArray<
+			FormGroup<{
+				provisionDate: FormControl<string | null>;
+			}>
+		>;
+	}>;
 
-	protected close() {
+	constructor(
+		private readonly modalRef: ModalRef,
+		private readonly modalService: ModalService,
+	) {
+		this.provisionDateForm = new FormGroup({
+			rows: new FormArray([this.createRow()]),
+		});
+	}
+
+	public get rows(): FormArray {
+		return this.provisionDateForm.get('rows') as FormArray;
+	}
+
+	private createRow(): FormGroup {
+		return new FormGroup({
+			provisionDate: new FormControl<string | null>(null, [Validators.required]),
+		});
+	}
+
+	public close(): void {
 		this.modalRef.close();
+	}
+
+	public confirmChange(): void {
+		if (this.provisionDateForm.valid) {
+			console.log('Изменяем даты обеспечения:', this.provisionDateForm.value);
+			this.modalRef.close();
+		} else {
+			console.warn('Форма невалидна');
+		}
 	}
 }

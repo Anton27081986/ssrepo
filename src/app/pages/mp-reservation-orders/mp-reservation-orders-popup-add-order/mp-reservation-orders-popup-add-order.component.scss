@@ -3,6 +3,8 @@
 .add-orders-form {
 	width: 965px;
 	max-height: 836px;
+	background: lighten($island-outline, 40%);
+	border-radius: var(--radius-xl-3);
 }
 
 .wrapper {
@@ -16,36 +18,33 @@
 
 .header {
 	display: flex;
-	padding: 16px;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 1px solid $island-outline;
 }
 
 .author-label {
-	padding: 34px 0 0 34px;
+	padding: 16px 0 0 16px;
 }
 
 .content {
 	display: flex;
 	flex-direction: column;
-	padding: 34px;
+	padding: var(--padding-l);
 
 	&__row {
-		display: inline-block;
+		display: flex;
 		width: 100%;
-		margin-bottom: 30px;
+		gap: var(--gap-xl);
+		align-items: flex-end;
 
 		&-item-tov {
 			display: inline-block;
 			width: 51%;
-			margin-right: 20px;
 		}
 
 		&-item-client {
 			display: inline-block;
 			width: 30%;
-			margin-right: 20px;
 		}
 
 		&-item-add-button {
@@ -57,10 +56,11 @@
 	&__table-list {
 		display: flex;
 		flex-direction: column;
-		padding-right: 10px;
-		gap: 20px;
+		padding-right: var(--padding-s);
+		gap: var(--gap-xl);
 		max-height: 476px;
 		overflow-y: auto;
+		margin-top: 30px;
 	}
 }
 
@@ -74,7 +74,7 @@
 	border-collapse: collapse;
 
 	th, td {
-		padding: 8px;
+		padding: var(--padding-xs);
 		text-align: left;
 		border-bottom: 1px solid $island-outline;
 	}
@@ -91,13 +91,9 @@
 
 .footer {
 	display: flex;
-	padding: 34px;
+	padding: var(--padding-l);
 	justify-content: flex-end;
 	align-items: center;
-	gap: 16px;
-}
-
-.accordion .accordion-header__icons ss-icon {
-	cursor: pointer;
+	gap: var(--gap-l);
 }
 

@@ -4,7 +4,7 @@ import {
 	ButtonType,
 	CheckboxComponent,
 	IconPosition,
-	IconType,
+	IconType, LabelComponent, LabelType,
 	LinkComponent,
 	Size,
 	TextComponent,
@@ -29,13 +29,18 @@ import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservat
 import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
 import {
 	IMpReservationOrder,
-	IProvisionType,
 } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import {
 	ChartLineComponent,
 	ChartLineItem,
 } from '@app/shared/components/chart-line/chart-line.component';
 import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
+import {
+	MpReservationOrdersPopupTotalAmountComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component";
+import {
+	MpReservationOrdersPopupChangeQueueComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component";
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -61,6 +66,7 @@ import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reserva
 		LinkComponent,
 		LinkComponent,
 		TooltipDirective,
+		LabelComponent,
 	],
 	standalone: true,
 })
@@ -71,6 +77,7 @@ export class MPReservationOrdersComponent {
 	protected readonly Size = Size;
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
+	protected readonly LabelType = LabelType;
 
 	public pageSize = 10;
 	public offset = 0;
@@ -241,7 +248,6 @@ export class MPReservationOrdersComponent {
 	}
 
 	public openPopupDateProvision(): void {
-		//TODO уточнить логику по определению заказов и даты для них.
 		this.modalService.open(MpReservationOrdersPopupDateProvisionComponent, {
 			data: this.selectedOrders,
 		});
@@ -263,31 +269,11 @@ export class MPReservationOrdersComponent {
 		this.modalService.open(MpReservationOrdersPopupRemnantsDetailsComponent, { data: orderId });
 	}
 
-	public getChartData(provision: IProvisionType): ChartLineItem[] {
-		if (!provision) {
-			return [];
-		}
-		return [
-			{
-				label: 'В производстве',
-				value: provision.manufacturing,
-				color: '#AF60FF',
-			},
-			{
-				label: 'Не может быть обеспечено',
-				value: provision.provisionUnavailable,
-				color: '#E51414',
-			},
-			{
-				label: 'Моя бронь',
-				value: provision.provided,
-				color: '#BD9E67',
-			},
-			{
-				label: 'Свободно',
-				value: provision.provisionAvailable,
-				color: '#20B878',
-			},
-		];
+	public openPopupTotalAmount(): void {
+		this.modalService.open(MpReservationOrdersPopupTotalAmountComponent);
+	}
+
+	public openPopupChangeQueueOrders(): void {
+		this.modalService.open(MpReservationOrdersPopupChangeQueueComponent);
 	}
 }
