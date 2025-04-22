@@ -4,28 +4,21 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	ButtonComponent,
 	ButtonType,
-	CardComponent,
 	IconType,
 	IconPosition,
 	Size,
 	TextComponent,
 	TextType,
-	TextWeight, LinkComponent,
+	TextWeight,
+	CardComponent
 } from '@front-components/components';
 import { NgForOf } from '@angular/common';
 
-interface IRemnantDetail {
-	quantity: number;
-	warehouse: string;
-	linkText: string;
-	linkUrl?: string;
-}
-
 @UntilDestroy()
 @Component({
-	selector: 'mp-reservation-orders-popup-remnants-details',
-	templateUrl: './mp-reservation-orders-popup-remnants-details.component.html',
-	styleUrls: ['./mp-reservation-orders-popup-remnants-details.component.scss'],
+	selector: 'mp-reservation-orders-popup-total-amount',
+	templateUrl: './mp-reservation-orders-popup-total-amount.component.html',
+	styleUrls: ['./mp-reservation-orders-popup-total-amount.component.scss'],
 	standalone: true,
 	imports: [
 		NgForOf,
@@ -34,11 +27,10 @@ interface IRemnantDetail {
 		ButtonComponent,
 		ButtonComponent,
 		TextComponent,
-		TextComponent,
-		LinkComponent,
+		TextComponent
 	],
 })
-export class MpReservationOrdersPopupRemnantsDetailsComponent {
+export class MpReservationOrdersPopupTotalAmountComponent {
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
 	protected readonly TextType = TextType;
@@ -50,26 +42,12 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 		private readonly modalRef: ModalRef,
 	) {}
 
-	public remnants: IRemnantDetail[] = [
-		{
-			quantity: 10,
-			warehouse: 'ССП Сосннаб',
-			linkText: 'Ссылка',
-			linkUrl: '#',
-		},
-		{
-			quantity: 24,
-			warehouse: 'ССП Готовая продукция',
-			linkText: 'Ссылка',
-			linkUrl: '#',
-		},
+	public totalAmounts = [
+		{ quantity: 100, desiredDate: '24.07.2024' },
+		{ quantity: 200, desiredDate: '28.07.2024' },
 	];
 
 	public close(): void {
 		this.modalRef.close();
-	}
-
-	public onLinkClick(link: IRemnantDetail): void {
-		console.log('Переходим по ссылке:', link.linkUrl);
 	}
 }

@@ -1,0 +1,40 @@
+<div class="wrapper" (mousedown)="close()">
+	<snab-card class="total-amount-form"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   (mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Title"
+						   [weight]="TextWeight.Medium">
+					Сроки и объёмы
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					(click)="close()"
+				></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="content">
+				<table class="dates-table">
+					<thead>
+					<tr>
+						<th>Кол-во</th>
+						<th>Желаемая дата</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr *ngFor="let row of totalAmounts">
+						<td>{{ row.quantity }}</td>
+						<td>{{ row.desiredDate }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</ng-template>
+	</snab-card>
+</div>
+

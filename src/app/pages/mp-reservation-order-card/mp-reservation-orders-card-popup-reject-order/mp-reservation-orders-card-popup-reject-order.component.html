@@ -1,0 +1,45 @@
+<div class="wrapper" (click)="close()">
+	<form [formGroup]="declineForm" (click)="$event.stopPropagation()">
+	<snab-card class="card-wrapper"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   [footerRef]="footer">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Отклонение заказа</snab-text>
+				<snab-button [type]="ButtonType.Flat"
+							 [size]="Size.Small"
+							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="body">
+				<div class="input">
+					<snab-form-field
+						[label]="'Коментарий'"
+						[size]="Size.Large"
+						[showValidation]="true"
+					>
+						<snab-textarea
+							fieldCtrl
+							formControlName="comment"
+							[rows]="4"
+							[maxLength]="500">
+						</snab-textarea>
+					</snab-form-field>
+				</div>
+			</div>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer-controls">
+				<snab-button class="footer-controls__cancel" text="Отмена"
+							 [type]="ButtonType.Secondary"
+							 [size]="Size.Large"
+							 (click)="close()"
+				></snab-button>
+				<snab-button text="Отклонить" [size]="Size.Large"></snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
+	</form>
+</div>

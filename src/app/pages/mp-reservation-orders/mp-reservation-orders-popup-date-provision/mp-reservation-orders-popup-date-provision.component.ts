@@ -1,46 +1,79 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import {Component, Inject} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { CardComponent } from '@app/shared/components/card/card.component';
-import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
-import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	ButtonComponent,
 	ButtonType,
+	CardComponent,
+	IconType,
+	IconPosition,
+	InputComponent,
 	Size,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-components/components';
+import { NgForOf, NgIf } from '@angular/common';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import {MpReservationOrdersFacadeService} from "@app/core/facades/mp-reservation-orders-facade.service";
+import {DIALOG_DATA} from "@app/core/modal/modal-tokens";
 
+@UntilDestroy()
 @Component({
-	selector: 'app-mp-reservation-orders-popup-date-provision',
+	selector: 'mp-reservation-orders-popup-date-provision',
+	templateUrl: './mp-reservation-orders-popup-date-provision.component.html',
+	styleUrls: ['./mp-reservation-orders-popup-date-provision.component.scss'],
 	standalone: true,
 	imports: [
+		NgForOf,
+		NgIf,
 		CardComponent,
-		HeadlineComponent,
-		IconComponent,
 		DateTimePickerComponent,
-		FormsModule,
-		ReactiveFormsModule,
-		TextComponent,
+		InputComponent,
 		ButtonComponent,
+		ButtonComponent,
+		TextComponent,
+		TextComponent,
+		ReactiveFormsModule,
 	],
-	templateUrl: './mp-reservation-orders-popup-date-provision.component.html',
-	styleUrl: './mp-reservation-orders-popup-date-provision.component.scss',
-	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MpReservationOrdersPopupDateProvisionComponent {
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
 
-	public constructor(private readonly modalRef: ModalRef) {}
+	public provisionForm: FormGroup<{
+		provisionDate: FormControl<string | null>;
+	}>;
 
-	protected close() {
+	constructor(
+		@Inject(DIALOG_DATA) private readonly orderIds: Set<number>,
+		private readonly modalRef: ModalRef,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+	) {
+		this.provisionForm = new FormGroup({
+			provisionDate: new FormControl<string | null>(null, [Validators.required]),
+		});
+	}
+
+	public close(): void {
+		this.modalRef.close();
+	}
+
+	public onSetProvisionDate(): void {
+		if (this.provisionForm.invalid) {
+			this.provisionForm.markAllAsTouched();
+			return;
+		}
+		const date = this.provisionForm.value.provisionDate!;
+		this.mpReservationOrdersFacadeService.updateProvisionDates(
+			Array.from(this.orderIds),
+			date
+		);
 		this.modalRef.close();
 	}
 }

@@ -1,8 +1,8 @@
 @use 'src/styles/colors.scss' as *;
 
-.remnants-details-popup {
-	width: 730px;
-	max-height: 460px;
+.in-production-form {
+	width: 965px;
+	max-height: 836px;
 	display: flex;
 	flex-direction: column;
 	background: lighten($island-outline, 40%);
@@ -32,7 +32,26 @@
 	max-height: 560px;
 }
 
-.remnants-table {
+.content-text {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.content-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.content-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+	gap: 16px;
+}
+
+.dates-table {
 	width: 100%;
 	border-collapse: collapse;
 	text-align: center;
@@ -45,15 +64,21 @@
 		background-color: #eef2ff;
 	}
 
-	th, td {
+	th,
+	td {
 		padding: 8px;
 		border-bottom: 1px solid $island-outline;
 		vertical-align: middle;
 	}
-
-	.link {
-		color: #3366cc; // пример цвета ссылки
-		cursor: pointer;
-	}
 }
 
+.row-basket {
+	text-align: center;
+}
+
+.footer {
+	display: flex;
+	padding: var(--padding-l);
+	justify-content: flex-end;
+	gap: 20px;
+}

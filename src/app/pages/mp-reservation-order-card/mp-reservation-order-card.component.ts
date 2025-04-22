@@ -21,13 +21,17 @@ import { toSignal } from "@angular/core/rxjs-interop";
 import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-order";
 import {ChartLineComponent, ChartLineItem, ChartLineSize} from "@app/shared/components/chart-line/chart-line.component";
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject order/mp-reservation-orders-card-popup-reject order.component';
+import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
-import {
-	MpReservationOrdersCardPopupCancelActionComponent
-} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component";
 import {DatePipe} from "@angular/common";
+import {
+	MpReservationOrdersCardPopupOrderApprovalComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
+import {
+	MpReservationOrdersCardPopupOrderInProductionComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-in-production/mp-reservation-orders-card-popup-order-in-production.component";
+import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice-dialog.component";
 
 @Component({
 	selector: 'app-mp-reservation-order-card',
@@ -58,6 +62,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 	protected readonly LabelType = LabelType;
 	protected readonly Permissions = Permissions;
 	protected readonly IconType = IconType;
+	protected readonly ChartLineSize = ChartLineSize;
 
 	public order: Signal<IMpReservationOrder | null> = toSignal(this.mpReservationOrdersFacadeService.activeOrder$, {
 		initialValue: null,
@@ -116,13 +121,28 @@ export class MpReservationOrderCardComponent implements OnInit {
 		this.modalService.open(MpReservationOrdersCardPopupRejectOrderComponent, { data: this.order()?.id });
 	}
 
+	public openPopupOrderApproval(): void {
+		this.modalService.open(MpReservationOrdersCardPopupOrderApprovalComponent);
+	}
+
+	public openPopupOrderInProduction(): void {
+		this.modalService.open(MpReservationOrdersCardPopupOrderInProductionComponent);
+	}
+
 	public openPopupProvisionDate(): void {
 		this.modalService.open(MpReservationOrdersCardPopupChangeProvisionDateComponent);
 	}
 
 	public openPopupCancelAction(): void {
-		this.modalService.open(MpReservationOrdersCardPopupCancelActionComponent);
+		this.modalService
+			.open(NoticeDialogComponent, {
+				data: {
+					header: 'Изменения не будут сохранены',
+					text: 'Вы уверены, что хотите совершить действие',
+					type: 'Warning',
+					buttonOk: 'Отмена',
+					buttonCancel: 'Не сохранять',
+				},
+			})
 	}
-
-	protected readonly ChartLineSize = ChartLineSize;
 }

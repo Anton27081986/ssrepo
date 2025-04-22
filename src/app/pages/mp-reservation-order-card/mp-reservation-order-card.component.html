@@ -18,11 +18,11 @@
             <snab-button text="История изменений" [type]="ButtonType.Secondary" [size]="Size.Large"></snab-button>
 			<snab-dropdown-button [text]="'Действия'" [size]="Size.Large">
 				<snab-dropdown-item [textContent]="'Согласовать заказ по обеспечению'"
-									(click)="$event.stopPropagation(); "></snab-dropdown-item>
+									(click)="$event.stopPropagation(); openPopupOrderApproval()"></snab-dropdown-item>
 				<snab-dropdown-item [textContent]="'Отклонить заказ по обеспечению'"
 									(click)="$event.stopPropagation(); openPopupRejectOrder();"></snab-dropdown-item>
 				<snab-dropdown-item [textContent]="'Разместить в производстве заказ по обеспечению'"
-									(click)="$event.stopPropagation();"></snab-dropdown-item>
+									(click)="$event.stopPropagation(); openPopupOrderInProduction()"></snab-dropdown-item>
 				<snab-dropdown-item [textContent]="'Изменить дату обеспечения'"
 									(click)="$event.stopPropagation(); openPopupProvisionDate()"></snab-dropdown-item>
 				<snab-dropdown-item [textContent]="'Удалить заказ по обеспечению'"

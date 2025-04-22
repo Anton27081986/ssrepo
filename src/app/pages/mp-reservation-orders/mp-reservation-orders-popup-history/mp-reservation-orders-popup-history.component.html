@@ -1,25 +1,45 @@
-<div class="wrapper" (click)="close()">
-    <ss-card padding="0" (click)="$event.stopPropagation()">
-        <div class="header">
-            <ss-headline size="h6">История изменений по заказу</ss-headline>
-
-            <ss-icon width="16" name="close" (click)="close()"></ss-icon>
-        </div>
-
-        <div class="body">
-            <ss-history
-                class="content"
-                [objectId]="orderId.toString()"
-                [queryType]="queryType.OrderCard"
-                [view]="viewMode.Table"
-				[tableHead]="[
-					{title: 'Автор', field: 'userName'},
-					{title: 'Действие',  field: 'action'},
-					{title: 'Сопроводительный текст к действию',  field: 'comments'},
-					{title: 'Кому', field: 'destination'},
-					{title: 'Дата', field: 'createdTime'},
-				]"
-            ></ss-history>
-        </div>
-    </ss-card>
+<div class="wrapper" (mousedown)="close()">
+	<snab-card
+		class="history-popup"
+		[headerRef]="header"
+		[bodyRef]="body"
+		(mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+					История изменений по заказу
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					(click)="close()"
+				></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="content">
+				<table class="history-table">
+					<thead>
+					<tr>
+						<th>Автор</th>
+						<th>Действие</th>
+						<th>Сопроводительный текст к действию</th>
+						<th>Кому</th>
+						<th>Дата</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr *ngFor="let entry of historyEntries">
+						<td>{{ entry.author }}</td>
+						<td>{{ entry.action }}</td>
+						<td>{{ entry.comment }}</td>
+						<td>{{ entry.toWhom }}</td>
+						<td>{{ entry.date }}</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</ng-template>
+	</snab-card>
 </div>

@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { CardComponent } from '@app/shared/components/card/card.component';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,11 +12,12 @@ import {
 	TextComponent,
 	TextType,
 	TextWeight,
+	CardComponent
 } from '@front-components/components';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 
 @Component({
-	selector: 'app-mp-reservation-orders-popup-date-provision',
+	selector: 'app-mp-reservation-orders-card-popup-cancel-action',
 	standalone: true,
 	imports: [
 		CardComponent,

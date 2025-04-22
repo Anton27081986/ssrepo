@@ -1,31 +1,64 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="card-wrapper" padding="0" (click)="$event.stopPropagation()">
-		<div class="header">
-			<ss-headline size="h6">Изменить дату обеспечения</ss-headline>
-			<ss-icon width="16" name="close" (click)="close()"></ss-icon>
-		</div>
-		<div class="body">
-			<snab-text class="body__description"
-					   [weight]="TextWeight.Semibold"
-					   [type]="TextType.Title">Дата производства
-			</snab-text>
-			<snab-text class="body__description"
-					   [weight]="TextWeight.Medium"
-					   [type]="TextType.Body">Дата производства
-			</snab-text>
-			<snab-text class="body__description"
-					   [weight]="TextWeight.Semibold"
-					   [type]="TextType.Title">Дата обеспечения
-			</snab-text>
-			<ss-date-time-picker [showTime]="false" formControlName="date"></ss-date-time-picker>
-		</div>
-		<div class="footer-controls">
-			<snab-button class="footer-controls__cancel" text="Отмена"
-						 [type]="ButtonType.Secondary"
-						 [size]="Size.Large"
-						 (click)="close()"
-			></snab-button>
-			<snab-button text="Изменить" [size]="Size.Large"></snab-button>
-		</div>
-	</ss-card>
+<div class="wrapper" (mousedown)="close()">
+	<snab-card class="change-provision-date-form"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   [footerRef]="footer"
+			   (mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+					Изменить дату обеспечения
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					(click)="close()"
+				></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<form [formGroup]="provisionDateForm" class="content">
+				<table class="date-table">
+					<thead>
+					<tr>
+						<th>Дата производства</th>
+						<th>Дата обеспечения</th>
+					</tr>
+					</thead>
+					<tbody formArrayName="rows">
+					<tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+						<td>
+							<snab-text
+								[type]="TextType.Body"
+							>12.07.2024
+							</snab-text>
+						</td>
+						<td>
+							<ss-date-time-picker
+								[showTime]="false"
+								formControlName="provisionDate"
+							></ss-date-time-picker>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<snab-button
+					[type]="ButtonType.Secondary"
+					[size]="Size.Large"
+					text="Отмена"
+					(click)="close()"
+				></snab-button>
+				<snab-button
+					[size]="Size.Large"
+					text="Изменить"
+					(click)="confirmChange()"
+				></snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
 </div>

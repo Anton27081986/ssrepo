@@ -1,0 +1,139 @@
+<div class="wrapper" (mousedown)="close()">
+	<snab-card class="change-queue-form"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   [footerRef]="footer"
+			   (mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+					Изменить очередь заказов
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					(click)="close()">
+				</snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="content">
+				<form [formGroup]="filterQueueOrdersForm" class="search-row">
+					<div class="search-row__input">
+						<ss-search-input class="search-row__input__field"
+										 label="ТП"
+										 size="large"
+										 searchType="tovs"
+										 [placeholder]="'Выберите товарную позицию'"/>
+						<snab-button
+							text="Найти заказы"
+							[size]="Size.Large"
+							(click)="findQueueOrders()">
+						</snab-button>
+					</div>
+					<div class="search-row__status">
+						<snab-form-field
+							[label]="'Статус'"
+							[size]="Size.Large">
+							<snab-select
+								fieldCtrl
+								formControlName="status"
+								[options]="statusOptions"
+								[placeholder]="'Введите статус'"
+							/>
+						</snab-form-field>
+					</div>
+				</form>
+				<div class="table-container">
+					<table class="orders-table">
+						<thead>
+						<tr>
+							<th></th>
+							<th>Код заказа</th>
+							<th>Статус</th>
+							<th>Дата заказа</th>
+							<th>Заказчик</th>
+							<th>Клиент</th>
+							<th>Кол-во</th>
+							<th>Обеспечение</th>
+							<th>Дата производства</th>
+							<th>Дата обеспечения</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr *ngFor="let order of filteredOrdersQueue">
+							<td>::</td>
+							<td>{{ order.orderId }}</td>
+							<td>{{ order.status }}</td>
+							<td>{{ order.dateOrder }}</td>
+							<td>{{ order.author }}</td>
+							<td>{{ order.client }}</td>
+							<td>{{ order.quantity }}</td>
+							<td class="table-td-provision">
+								<ng-container *ngIf="order.provision?.provisionAvailable">
+									<snab-label class="table-td-provision__label" snab-tooltip
+												[type]="LabelType.Success"
+												[size]="Size.Default"
+												[text]="order.provision.provisionAvailable.toString()"
+												[tooltipText]="'Свободно'"></snab-label>
+								</ng-container>
+								<ng-container *ngIf="order.provision?.provided">
+									<snab-label class="table-td-provision__label" snab-tooltip
+												[type]="LabelType.Warning"
+												[size]="Size.Default"
+												[text]="order.provision.provided.toString()"
+												[tooltipText]="'Моя бронь'"></snab-label>
+								</ng-container>
+								<ng-container *ngIf="order.provision?.provisionUnavailable">
+									<snab-label class="table-td-provision__label" snab-tooltip
+												[type]="LabelType.Danger"
+												[size]="Size.Default"
+												[text]="order.provision.provisionUnavailable.toString()"
+												[tooltipText]="'Не может быть обеспечено'"></snab-label>
+								</ng-container>
+								<ng-container *ngIf="order.provision?.manufacturing">
+									<snab-label class="table-td-provision__label" snab-tooltip
+												[type]="LabelType.Info"
+												[size]="Size.Default"
+												[text]="order.provision.manufacturing.toString()"
+												[tooltipText]="'В производстве'"></snab-label>
+								</ng-container>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">
+									<ng-container *ngFor="let prodDate of order.provision?.provisionDetails">
+										{{ prodDate.productionDate  | date: 'dd.MM.yyyy' }}
+									</ng-container>
+								</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">
+									<ng-container *ngFor="let provDate of order.provision?.provisionDetails">
+										{{ provDate.provisionDate  | date: 'dd.MM.yyyy' }}
+									</ng-container>
+								</snab-text>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<snab-button
+					[type]="ButtonType.Secondary"
+					[size]="Size.Large"
+					text="Отмена"
+					(click)="close()">
+				</snab-button>
+				<snab-button
+					[size]="Size.Large"
+					text="Сохранить"
+					(click)="applyChanges()">
+				</snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
+</div>

@@ -1,66 +1,68 @@
 <div class="wrapper" (mousedown)="close()">
-	<ss-card class="add-orders-form" padding="0" (mousedown)="$event.stopPropagation()">
-		<div class="header">
-			<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
-				Создать заказ
-			</snab-text>
-			<ss-icon name="close" (click)="close()"></ss-icon>
-		</div>
-		<div class="author-label">
-			<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
-				Автор: Иванов И.И.
-			</snab-text>
-		</div>
-
-		<form [formGroup]="addOrdersForm" class="content">
-			<div class="content__row">
-				<div class="content__row-item-tov">
-					<ss-select-v2
-						[label]="'Товарная позиция'"
-						[placeholder]="'Выберите товарную позицию'"
-						formControlName="tov"
-						[errorText]="
-              addOrdersForm.controls.tov.touched &&
-              addOrdersForm.controls.tov.errors?.required ? 'Обязательное поле' : ''
-            "
-					></ss-select-v2>
-				</div>
-				<div class="content__row-item-client">
-					<ss-select-v2
-						[label]="'Клиент'"
-						[placeholder]="'Выберите клиента'"
-						formControlName="client"
-						[errorText]="
-              addOrdersForm.controls.client.touched &&
-              addOrdersForm.controls.client.errors?.required ? 'Обязательное поле' : ''
-            "
-					></ss-select-v2>
-				</div>
-				<div class="content__row-item-add-button">
-					<snab-button text="Добавить ТП" [size]="Size.Large" (click)="addPosition()"></snab-button>
-				</div>
+	<snab-card class="add-orders-form"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   [footerRef]="footer"
+			   (mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+					Создать заказ
+				</snab-text>
+				<snab-button [type]="ButtonType.Flat"
+							 [size]="Size.Large"
+							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
 			</div>
-			<div formArrayName="positions" class="content__table-list">
-				<div *ngFor="let position of positions.controls; let posIndex = index" [formGroupName]="posIndex">
-					<ss-accordion [isExpanded]="true"
-								  [title]="tovValue?.name ?? 'Товарная позиция'"
-								  [isMpReservationOrders]="true"
-								  (addRowPosition)="addDetailRow(posIndex)"
-								  (removePosition)="removePosition(posIndex)">
-						<ng-template [ngTemplateOutlet]="accordionContent"
-									 [ngTemplateOutletContext]="{ position: position, posIndex: posIndex }">
-						</ng-template>
-					</ss-accordion>
-				</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="author-label">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
+					Автор: Иванов И.И.
+				</snab-text>
 			</div>
-		</form>
-
-		<div class="footer">
-			<snab-button [type]="ButtonType.Secondary" [size]="Size.Large" text="Отмена"
-						 (click)="close()"></snab-button>
-			<snab-button [size]="Size.Large" text="Создать заказ" (click)="createOrder()"></snab-button>
-		</div>
-	</ss-card>
+			<form [formGroup]="addOrdersForm" class="content">
+				<div class="content__row">
+					<div class="content__row-item-tov">
+							<ss-search-input
+								searchType="tovs"
+								label="ТП"
+								[placeholder]="'Выберите товарную позицию'"
+							(select)="onTovSelect($event)"/>
+					</div>
+					<div class="content__row-item-client">
+							<ss-search-input
+								searchType="client"
+								label="Клиент"
+								[placeholder]="'Выберите клиента'"
+							(select)="onClientSelect($event)"/>
+					</div>
+					<div class="content__row-item-add-button">
+						<snab-button text="Добавить ТП" [size]="Size.Large" (click)="addPosition()"></snab-button>
+					</div>
+				</div>
+				<div formArrayName="positions" class="content__table-list">
+					<div *ngFor="let position of positions.controls; let posIndex = index" [formGroupName]="posIndex">
+						<ss-accordion [isExpanded]="true"
+									  [title]="accordionTitle"
+									  [isMpReservationOrders]="true"
+									  (addRowPosition)="addDetailRow(posIndex)"
+									  (removePosition)="removePosition(posIndex)">
+							<ng-template [ngTemplateOutlet]="accordionContent"
+										 [ngTemplateOutletContext]="{ position: position, posIndex: posIndex }">
+							</ng-template>
+						</ss-accordion>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<snab-button [type]="ButtonType.Secondary" [size]="Size.Large" text="Отмена"
+							 (click)="close()"></snab-button>
+				<snab-button [size]="Size.Large" text="Создать заказ" (click)="createOrder()"></snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
 </div>
 
 <ng-template #accordionContent let-position="position" let-posIndex="posIndex">
@@ -79,14 +81,20 @@
 					<tr *ngFor="let detail of getDetails(position).controls; let detailIndex = index"
 						[formGroupName]="detailIndex">
 						<td>
-							<ss-input type="number" placeholder="Введите количество"
-									  formControlName="quantity"></ss-input>
+							<snab-form-field [size]="Size.Large">
+								<snab-input fieldCtrl
+											placeholder="Введите количество"
+											formControlName="quantity"></snab-input>
+							</snab-form-field>
 						</td>
 						<td>
 							<ss-date-time-picker [showTime]="false" formControlName="date"></ss-date-time-picker>
 						</td>
 						<td>
-							<ss-icon name="basket" (click)="removeDetailRow(posIndex, detailIndex)"></ss-icon>
+							<snab-button [type]="ButtonType.Flat"
+										 [size]="Size.Large"
+										 [icon]="IconType.Trash"
+										 (click)="removeDetailRow(posIndex, detailIndex)"></snab-button>
 						</td>
 					</tr>
 					</tbody>

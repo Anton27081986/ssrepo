@@ -3,6 +3,8 @@
 		МП
 	</snab-text>
 	<div class="app-mp-reservation-orders__header-filter">
+		<snab-button text="Порядок заказов" [size]="Size.Large" (click)="openPopupChangeQueueOrders()"
+		></snab-button>
 		<snab-button text="Добавить заказ" [size]="Size.Large" (click)="openPopupAddOrder()"
 		></snab-button>
 		<snab-button text="Назначить дату обеспечения" [size]="Size.Large"
@@ -84,7 +86,8 @@
 				</td>
 				<td>
 					<snab-link [type]="TextType.Body" [text]="order.id.toString()"
-							   (click)="goToOrderCard(order.id)">{{order.id}}</snab-link>
+							   (click)="goToOrderCard(order.id)">{{ order.id }}
+					</snab-link>
 				</td>
 				<td>
 					<snab-text [type]="TextType.Body" [weight]="TextWeight.Semibold">{{ order.status?.name }}
@@ -94,7 +97,7 @@
 					<snab-text [type]="TextType.Body">{{ order.dateCreated | date: 'dd.MM.yyyy' }}</snab-text>
 				</td>
 				<td>
-					<snab-link [type]="TextType.Body" [text]="order.author.name"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="order.author?.name!"></snab-link>
 				</td>
 				<td>
 					<snab-link snab-tooltip
@@ -106,13 +109,42 @@
 					<snab-text [type]="TextType.Body">{{ order.client?.name }}</snab-text>
 				</td>
 				<td>
-					<snab-text [type]="TextType.Body">{{ order.totalAmount }}</snab-text>
+					<snab-link [type]="TextType.Body"
+							   [text]="order.totalAmount.toString()"
+							   (click)="openPopupTotalAmount()"></snab-link>
 				</td>
 				<td>
 					<snab-text [type]="TextType.Body">{{ order.tovUnit }}</snab-text>
 				</td>
-				<td>
-					<ss-chart-line [data]="getChartData(order.provision)"></ss-chart-line>
+				<td class="table-td-provision">
+					<ng-container *ngIf="order.provision?.provisionAvailable">
+						<snab-label class="table-td-provision__label" snab-tooltip
+									[type]="LabelType.Success"
+									[size]="Size.Default"
+									[text]="order.provision.provisionAvailable.toString()"
+									[tooltipText]="'Свободно'"></snab-label>
+					</ng-container>
+					<ng-container *ngIf="order.provision?.provided">
+						<snab-label class="table-td-provision__label" snab-tooltip
+									[type]="LabelType.Warning"
+									[size]="Size.Default"
+									[text]="order.provision.provided.toString()"
+									[tooltipText]="'Моя бронь'"></snab-label>
+					</ng-container>
+					<ng-container *ngIf="order.provision?.provisionUnavailable">
+						<snab-label class="table-td-provision__label" snab-tooltip
+									[type]="LabelType.Danger"
+									[size]="Size.Default"
+									[text]="order.provision.provisionUnavailable.toString()"
+									[tooltipText]="'Не может быть обеспечено'"></snab-label>
+					</ng-container>
+					<ng-container *ngIf="order.provision?.manufacturing">
+						<snab-label class="table-td-provision__label" snab-tooltip
+									[type]="LabelType.Info"
+									[size]="Size.Default"
+									[text]="order.provision.manufacturing.toString()"
+									[tooltipText]="'В производстве'"></snab-label>
+					</ng-container>
 				</td>
 				<td>
 					<snab-link [type]="TextType.Body" [text]="order.manager?.name!"></snab-link>

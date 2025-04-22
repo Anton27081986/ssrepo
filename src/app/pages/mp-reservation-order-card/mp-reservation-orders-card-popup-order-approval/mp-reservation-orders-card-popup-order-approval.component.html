@@ -1,0 +1,71 @@
+<div class="wrapper" (mousedown)="close()">
+	<snab-card class="approve-orders-form"
+			   [headerRef]="header"
+			   [bodyRef]="body"
+			   (mousedown)="$event.stopPropagation()">
+		<ng-template #header>
+			<div class="header">
+				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+					Согласование заказа
+				</snab-text>
+				<snab-button [type]="ButtonType.Flat"
+							 [size]="Size.Large"
+							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<form [formGroup]="approvalForm" class="content">
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+					Товарная позиция: {{ approvalForm.controls.tov.value?.name ?? '...' }}
+				</snab-text>
+				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+					Количество и ед.: {{ approvalForm.controls.quantity.value ?? '...' }} кг.
+				</snab-text>
+
+				<table class="orders-table">
+					<thead>
+					<tr>
+						<th>Склад</th>
+						<th>Кол-во в производстве</th>
+						<th>Количество на складе</th>
+						<th>Количество (факт)</th>
+						<th>Действие</th>
+					</tr>
+					</thead>
+					<tbody formArrayName="warehouses">
+					<tr *ngFor="let warehouse of warehouses.controls; let i = index" [formGroupName]="i">
+						<td>
+							<snab-text [type]="TextType.Body"> {{ warehouse.get('warehouseName')?.value }}
+							</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">
+								{{ warehouse.get('inProduction')?.value }}
+							</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">
+								{{ warehouse.get('inStock')?.value }}
+							</snab-text>
+						</td>
+						<td>
+							<snab-form-field [size]="Size.Large">
+								<snab-input
+									fieldCtrl
+									formControlName="fact"
+									placeholder="Введите кол-во"
+								></snab-input>
+							</snab-form-field>
+						</td>
+						<td>
+							<snab-button text="Создать накладную на перемещение"
+										 [size]="Size.Large">
+							</snab-button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</form>
+		</ng-template>
+	</snab-card>
+</div>

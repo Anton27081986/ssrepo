@@ -1,8 +1,8 @@
 @use 'src/styles/colors.scss' as *;
 
-.set-provision-date-form {
-	width: 449px;
-	max-height: 310px;
+.total-amount-form {
+	width: 259px;
+	max-height: 836px;
 	display: flex;
 	flex-direction: column;
 	background: lighten($island-outline, 40%);
@@ -28,12 +28,28 @@
 	display: flex;
 	flex-direction: column;
 	padding: var(--padding-l);
-	gap: 16px;
+	overflow: auto;
+	max-height: 560px;
 }
 
-.footer {
-	display: flex;
-	padding: var(--padding-l);
-	justify-content: flex-end;
-	gap: 20px;
+.dates-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+
+	thead {
+		background-color: lighten($island-outline, 40%);
+	}
+
+	th {
+		background-color: #eef2ff;
+	}
+
+	th,
+	td {
+		padding: 8px;
+		border-bottom: 1px solid $island-outline;
+		vertical-align: middle;
+	}
 }
+

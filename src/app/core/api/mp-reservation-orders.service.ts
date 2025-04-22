@@ -5,7 +5,7 @@ import { IResponse } from '@app/core/utils/response';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
-import { IMpReservationAddOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-add-order";
+import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 
 @Injectable({
 	providedIn: 'root',
@@ -64,16 +64,25 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public getPersonificationById(id: string): Observable<{data: IMpReservationOrder}> {
-		return this.http.get<{data: IMpReservationOrder}>(
+	public getPersonificationById(id: string): Observable<{ data: IMpReservationOrder }> {
+		return this.http.get<{ data: IMpReservationOrder }>(
 			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`,
 		);
 	}
 
-	public createOrderPersonification (body: IMpReservationAddOrder): Observable<IMpReservationOrder[]> {
+	public createOrderPersonification(
+		body: IMpReservationAddOrder,
+	): Observable<IMpReservationOrder[]> {
 		return this.http.post<IMpReservationOrder[]>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification`,
-			body
-		)
+			body,
+		);
+	}
+
+	public updateProvisionDate(orderId: number, provisionDate: string): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate`,
+			{ provisionDate },
+		);
 	}
 }
