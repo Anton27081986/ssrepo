@@ -1,0 +1,47 @@
+<div class="wrapper" (click)="close()">
+    <snab-card
+        class="manager"
+        [headerRef]="header"
+        [bodyRef]="body"
+        [footerRef]="footer"
+        (click)="$event.stopPropagation()">
+    </snab-card>
+</div>
+
+<ng-template #header>
+    <div class="manager__header">
+        <ss-headline size="h6">Согласование уточнений</ss-headline>
+        <snab-button
+            [type]="ButtonType.Flat"
+            [size]="Size.Default"
+            [icon]="IconType.ClearLarge"
+            [iconPosition]="IconPosition.OnlyIcon"
+            (click)="close()">
+        </snab-button>
+    </div>
+</ng-template>
+
+<ng-template #body>
+    <form class="manager__body">
+        <div class="manager__body__info">
+            <div class="manager__body__info__item">
+                <snab-text [weight]="TextWeight.Semibold">ТП:</snab-text>
+                <snab-text>{{ tov?.name }}</snab-text>
+            </div>
+        </div>
+        <ss-table-v2>
+            <tr mp-reservation-orders-card-popup-approve-details-change-tr *ngFor="let item of items" [item]="item"></tr>
+        </ss-table-v2>
+    </form>
+</ng-template>
+
+<ng-template #footer>
+    <div class="manager__footer">
+        <snab-button text="Отклонить"
+                     [type]="ButtonType.Secondary"
+                     [size]="Size.Large"
+                     (click)="close()"
+        ></snab-button>
+        <snab-button text="Согласовать" [size]="Size.Large"></snab-button>
+    </div>
+</ng-template>
