@@ -1,0 +1,26 @@
+<ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
+	<ng-container *ngFor="let col of cols.cols">
+		<ng-container [ngSwitch]="col.id">
+			<td class="ss-table-td" *ngIf="col.display">
+
+                <ng-container *ngSwitchCase="ChangeProvisionDetailsTrRowItemField.productionDate">
+                    <div class="hc-table-td__content">{{ item.productionDate | date : 'dd.MM.yyyy' }}</div>
+                </ng-container>
+
+                <ng-container *ngSwitchCase="ChangeProvisionDetailsTrRowItemField.provisionDate">
+                    <div class="hc-table-td__content">{{ item.provisionDate | date : 'dd.MM.yyyy' }}</div>
+                </ng-container>
+
+				<ng-container *ngSwitchCase="ChangeProvisionDetailsTrRowItemField.manufacturingAmount">
+					<div class="hc-table-td__content">
+						{{ item.manufacturingAmount }}
+					</div>
+				</ng-container>
+
+				<ng-container *ngSwitchDefault>
+					<div class="hc-table-td__content hc-table-td__content--center">-</div>
+				</ng-container>
+			</td>
+		</ng-container>
+	</ng-container>
+</ng-container>

@@ -1,0 +1,41 @@
+@use 'src/assets/scss/_mixins.scss' as *;
+@use 'src/assets/scss/_variables.scss' as *;
+@use 'src/styles/colors.scss' as *;
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.details {
+	background-color: var(--always-light-primary);
+	height: fit-content;
+	border-radius: var(--radius-xl-3);
+	min-width: 714px;
+
+	&__header {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	&__body {
+		display: flex;
+		width: 100%;
+		flex-grow: 1;
+		overflow-y: auto;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: flex-end;
+		gap: var(--gap-l);
+	}
+}

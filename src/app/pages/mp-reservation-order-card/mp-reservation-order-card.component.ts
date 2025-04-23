@@ -20,18 +20,29 @@ import { MpReservationOrdersFacadeService } from "@app/core/facades/mp-reservati
 import { toSignal } from "@angular/core/rxjs-interop";
 import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-order";
 import {ChartLineComponent, ChartLineItem, ChartLineSize} from "@app/shared/components/chart-line/chart-line.component";
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
+import { Permissions } from '@app/core/constants/permissions.constants';import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
-import {DatePipe} from "@angular/common";
+import {DatePipe} from "@angular/common"
 import {
-	MpReservationOrdersCardPopupOrderApprovalComponent
-} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
+	MpReservationOrdersCardPopupQualificationComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.component";
+import {
+	MpReservationOrdersCardPopupChangeProvisionDetailsComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-details/mp-reservation-orders-card-popup-change-provision-details.component";
+import {
+	MpReservationOrdersCardPopupChangeManagerComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-manager/mp-reservation-orders-card-popup-change-manager.component";
+import {
+	MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.component";
 import {
 	MpReservationOrdersCardPopupOrderInProductionComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-in-production/mp-reservation-orders-card-popup-order-in-production.component";
 import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice-dialog.component";
+import {
+	MpReservationOrdersCardPopupOrderApprovalComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
 
 @Component({
 	selector: 'app-mp-reservation-order-card',
@@ -144,5 +155,46 @@ export class MpReservationOrderCardComponent implements OnInit {
 					buttonCancel: 'Не сохранять',
 				},
 			})
+	}
+
+	public openPopupQualification(): void {
+		this.modalService.open(MpReservationOrdersCardPopupQualificationComponent, {
+			data: {
+				items: this.order()?.orderRequests,
+				tov: this.order()?.tov,
+				id: this.order()?.id
+			}
+		});
+	}
+
+	public openPopupChangeProvisionDetails(): void {
+		this.modalService.open(MpReservationOrdersCardPopupChangeProvisionDetailsComponent, {
+			data: {
+				items: this.order()?.provision.provisionDetails,
+				tov: this.order()?.tov,
+				id: this.order()?.id
+			}
+		});
+	}
+
+	public openPopupApproveDetailsChange(): void {
+		this.modalService.open(MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent, {
+			data: {
+				items: this.order()?.provision.provisionDetails,
+				tov: this.order()?.tov,
+				id: this.order()?.id
+			}
+		});
+	}
+
+	public openPopupChangeManager(): void {
+		this.modalService.open(MpReservationOrdersCardPopupChangeManagerComponent, {
+			data: {
+				items: this.order()?.provision.provisionDetails,
+				tov: this.order()?.tov,
+				id: this.order()?.id,
+				manager: this.order()?.manager
+			}
+		});
 	}
 }
