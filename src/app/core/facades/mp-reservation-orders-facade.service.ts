@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
 import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-reservation-orders-filter';
-import {BehaviorSubject, forkJoin, Subject, switchMap, tap} from 'rxjs';
+import { BehaviorSubject, forkJoin, Subject, switchMap, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
@@ -51,22 +51,6 @@ export class MpReservationOrdersFacadeService {
 	public applyFiltersOrders(filters: MpReservationFilter): void {
 		this.isLoader$.next(true);
 		this.filtersChanged$.next(filters);
-	}
-
-	public getPersonificationById(id: string): void {
-		this.mpReservationOrdersApiService
-			.getPersonificationById(id)
-			.pipe(
-				untilDestroyed(this),
-				catchError(
-				(err: unknown)=> {
-					this.router.navigate(['mp-reservation-orders']);
-					throw err
-				})
-			)
-			.subscribe(res => {
-				this.activeOrder.next(res.data);
-			});
 	}
 
 	public createOrder(body: IMpReservationAddOrder): void {

@@ -1,5 +1,5 @@
-import {Component, effect, OnInit, Signal, signal, WritableSignal} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, effect, OnInit, Signal, signal, WritableSignal } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import {
 	ButtonComponent,
 	ButtonType,
@@ -15,8 +15,7 @@ import {
 } from "@front-components/components";
 import { CorrespondenceComponent } from "@app/widgets/correspondence/correspondence.component";
 import { CardComponent } from "@app/shared/components/card/card.component";
-import {ITableItem, TableComponent} from "@app/shared/components/table/table.component";
-import { MpReservationOrdersFacadeService } from "@app/core/facades/mp-reservation-orders-facade.service";
+import { ITableItem, TableComponent } from "@app/shared/components/table/table.component";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-order";
 import {ChartLineComponent, ChartLineItem, ChartLineSize} from "@app/shared/components/chart-line/chart-line.component";
@@ -43,6 +42,7 @@ import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice
 import {
 	MpReservationOrdersCardPopupOrderApprovalComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
+import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservation-order-card-facade.service";
 
 @Component({
 	selector: 'app-mp-reservation-order-card',
@@ -86,7 +86,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 	public procuring: WritableSignal<ITableItem[]> = signal([])
 
 	constructor(
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrderCardFacadeService,
 		private readonly modalService: ModalService,
 		private readonly activatedRoute: ActivatedRoute,
 		protected readonly router: Router) {
