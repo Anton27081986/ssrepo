@@ -3,16 +3,39 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
-import { ITableItem } from '@app/shared/components/table/table.component';
+import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
-import { IFilter } from '@app/shared/components/filters/filters.component';
+import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
-import { ButtonType, IconPosition, IconType, Size } from '@front-components/components';
+import {ButtonComponent, ButtonType, IconPosition, IconType, Size} from '@front-components/components';
+import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
+import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
+import {CommonModule, NgIf} from "@angular/common";
+import {MapperPipe} from "@app/core/pipes/mapper.pipe";
+import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
+import {LoaderComponent} from "@app/shared/components/loader/loader.component";
 
 @Component({
 	selector: 'ss-completed-work-acts',
 	templateUrl: './completed-work-acts.component.html',
 	styleUrls: ['./completed-work-acts.component.scss'],
+	imports: [
+		CommonModule,
+		HeadlineComponent,
+		ButtonComponent,
+		TooltipDirective,
+		DropdownButtonComponent,
+		FiltersComponent,
+		NgIf,
+		TableComponent,
+		MapperPipe,
+		PaginationComponent,
+		EmptyDataPageComponent,
+		LoaderComponent
+	],
+	standalone: true
 })
 export class CompletedWorkActsComponent {
 	private readonly filtersKey: string = 'work-acts-filters';

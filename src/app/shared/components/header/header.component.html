@@ -10,13 +10,11 @@
 
 			<app-notification></app-notification>
 
-			@if (aiPermission()) {
-				<ss-button class="bot-button" size="small" type="outline">
-					<ss-icon name="bot"
-							 (click)="openChatBot()"></ss-icon>
-				</ss-button>
+            <ss-button class="bot-button" size="small" type="outline">
+                <ss-icon name="bot"
+                         (click)="openChatBot()"></ss-icon>
+            </ss-button>
 			<app-chat-bot></app-chat-bot>
-			}
 
 			<ss-dropdown-button [avatar]="(userProfile$ | async)?.avatarUrl" [isAvatar]="true">
 				<app-profile-popup></app-profile-popup>
