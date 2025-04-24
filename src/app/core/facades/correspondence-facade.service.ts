@@ -14,10 +14,11 @@ import { environment } from '@environments/environment';
 	providedIn: 'root',
 })
 export class CorrespondenceFacadeService {
-	// Идентификатор объекта переписки
-	private readonly objectIdSubject = new BehaviorSubject<number | null>(null);
+	// Тип переписки
+	private type: CorrespondenceTypeEnum = CorrespondenceTypeEnum.Clients;
 
-	public objectId$ = this.objectIdSubject.asObservable();
+	// Идентификатор объекта переписки
+	private objectId:number | null = null;
 
 	// Темы
 	private readonly topicsSubject = new BehaviorSubject<
@@ -75,9 +76,13 @@ export class CorrespondenceFacadeService {
 		private readonly filesApiService: FilesApiService,
 	) {}
 
+	public setType(type: CorrespondenceTypeEnum) {
+		this.type = type;
+	}
+
 	public setObjectId(objectId: number | undefined) {
-		if (objectId && this.objectIdSubject.value !== objectId) {
-			this.objectIdSubject.next(objectId);
+		if (objectId && this.objectId !== objectId) {
+			this.objectId = objectId;
 			this.loadSubjects();
 			this.loadMessages();
 			this.loadFiles();
@@ -85,9 +90,9 @@ export class CorrespondenceFacadeService {
 	}
 
 	public loadSubjects(Query?: string) {
-		if (this.objectIdSubject.value) {
+		if (this.objectId) {
 			this.notificationsApiService
-				.getSubjects(this.objectIdSubject.value, Query)
+				.getSubjects(this.type, this.objectId, Query)
 				.pipe(untilDestroyed(this))
 				.subscribe(x => {
 					this.topicsSubject.next(x);
@@ -96,10 +101,11 @@ export class CorrespondenceFacadeService {
 	}
 
 	public loadMessages(limit = 10, offset = 0, Query: string | undefined = undefined) {
-		if (this.objectIdSubject.value) {
+		if (this.objectId) {
 			this.notificationsApiService
 				.getMessages(
-					this.objectIdSubject.value,
+					this.type,
+					this.objectId,
 					this.selectedTopicSubject.value,
 					limit,
 					offset,
@@ -130,9 +136,9 @@ export class CorrespondenceFacadeService {
 	}
 
 	public loadFiles() {
-		if (this.objectIdSubject.value) {
+		if (this.objectId) {
 			this.notificationsApiService
-				.getFiles(this.objectIdSubject.value, this.selectedTopicSubject.value)
+				.getFiles(this.type, this.objectId, this.selectedTopicSubject.value)
 				.pipe(
 					tap(x => {
 						this.filesSubject.next(x);
@@ -144,11 +150,13 @@ export class CorrespondenceFacadeService {
 	}
 
 	public selectSubject(subject: string | null) {
-		this.isLoadingSubject.next(true);
-		this.selectedTopicSubject.next(subject);
-		this.messagesSubject.next({ items: [], total: 0 });
-		this.loadMessages();
-		this.loadFiles();
+		if (this.selectedTopicSubject.value !== subject) {
+			this.isLoadingSubject.next(true);
+			this.selectedTopicSubject.next(subject);
+			this.messagesSubject.next({ items: [], total: 0 });
+			this.loadMessages();
+			this.loadFiles();
+		}
 	}
 
 	public setMessageVisibility(id: string, isPrivate: boolean) {
@@ -203,11 +211,11 @@ export class CorrespondenceFacadeService {
 		copyUserIds: number[],
 		isPrivate: boolean,
 	) {
-		if (this.objectIdSubject.value) {
+		if (this.objectId) {
 			this.notificationsApiService
 				.sendMessage({
-					objectId: this.objectIdSubject.value,
-					type: CorrespondenceTypeEnum.ClientCard,
+					type: this.type,
+					objectId: this.objectId,
 					subject,
 					text,
 					toUserIds,
@@ -215,7 +223,7 @@ export class CorrespondenceFacadeService {
 					isPrivate,
 					replyToMessageId: this.repliedMessageSubject.value?.message.id,
 					fileIds: this.messageFilesSubject.value?.map(file => file.id!) || [],
-					sourceUrl: this.getLinkForEmail(CorrespondenceTypeEnum.ClientCard),
+					sourceUrl: this.getLinkForEmail(this.type),
 				})
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
@@ -230,8 +238,10 @@ export class CorrespondenceFacadeService {
 
 	protected getLinkForEmail(type: CorrespondenceTypeEnum) {
 		switch (type) {
-			case CorrespondenceTypeEnum.ClientCard:
-				return `${environment.apiUrl}/client-card/${this.objectIdSubject.value}`;
+			case CorrespondenceTypeEnum.Clients:
+				return `${environment.apiUrl}/client-card/${this.objectId}`;
+			case CorrespondenceTypeEnum.Personifications:
+				return `${environment.apiUrl}/mp-reservation-orders/${this.objectId}`;
 		}
 	}
 }

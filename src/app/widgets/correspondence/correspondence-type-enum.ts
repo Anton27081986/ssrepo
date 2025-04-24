@@ -1,3 +1,4 @@
 export enum CorrespondenceTypeEnum {
-	ClientCard,
+	Clients,
+	Personifications
 }

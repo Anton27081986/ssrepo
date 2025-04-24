@@ -21,14 +21,9 @@ import {AsyncPipe, CommonModule} from "@angular/common";
 	],
 	standalone: true
 })
-export class TopicComponent implements OnInit {
+export class TopicComponent {
 	public topics$: Observable<Array<{ subject: string; messageCount: number }>>;
 	public totalMessages$: Observable<number>;
-
-	ngOnInit() {
-		this.facadeService.loadMessages();
-		this.facadeService.loadFiles();
-	}
 
 	constructor(private readonly facadeService: CorrespondenceFacadeService) {
 		this.topics$ = this.facadeService.topics$;
