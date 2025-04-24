@@ -4,7 +4,7 @@ import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-r
 import { IResponse } from '@app/core/utils/response';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 
 @Injectable({
@@ -83,6 +83,34 @@ export class MpReservationOrdersApiService {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate`,
 			{ provisionDate },
+		);
+	}
+
+	public rejectPersonification(orderId: number, reason: string): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/reject`,
+			{ reason },
+		);
+	}
+
+	public createDetails(orderId: number, body: IProvisionDetailsTypes): Observable<void> {
+		return this.http.post<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
+			body,
+		);
+	}
+
+	public changeDetails(orderId: number, body: IProvisionDetailsTypes): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
+			body,
+		);
+	}
+
+	public changeManager(orderId: number, authorId: number): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/author`,
+			{ authorId },
 		);
 	}
 }

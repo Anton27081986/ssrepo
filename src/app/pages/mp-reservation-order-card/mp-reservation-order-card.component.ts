@@ -18,10 +18,11 @@ import { CardComponent } from "@app/shared/components/card/card.component";
 import { ITableItem, TableComponent } from "@app/shared/components/table/table.component";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-order";
-import { Permissions } from '@app/core/constants/permissions.constants';import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
+import { Permissions } from '@app/core/constants/permissions.constants';
+import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
-import {DatePipe} from "@angular/common"
+import { DatePipe } from "@angular/common"
 import {
 	MpReservationOrdersCardPopupQualificationComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.component";
@@ -37,11 +38,13 @@ import {
 import {
 	MpReservationOrdersCardPopupOrderInProductionComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-in-production/mp-reservation-orders-card-popup-order-in-production.component";
-import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice-dialog.component";
+import { NoticeDialogComponent } from "@app/shared/components/notice-dialog/notice-dialog.component";
 import {
 	MpReservationOrdersCardPopupOrderApprovalComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
-import {TagV2Component} from "@app/shared/components/tag-v2/tag-v2.component";
+import { TagV2Component } from "@app/shared/components/tag-v2/tag-v2.component";
+import { MpReservationOrderCardFacadeService } from "@app/core/facades/mp-reservation-order-card-facade.service";
+import { CorrespondenceTypeEnum } from "@app/widgets/correspondence/correspondence-type-enum";
 
 @Component({
 	selector: 'app-mp-reservation-order-card',
