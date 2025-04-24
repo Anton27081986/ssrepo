@@ -103,7 +103,6 @@
                         <snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">Остатки: </snab-text>
                         <snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">15</snab-text>
                     </div>
-                    <ss-chart-line [size]="ChartLineSize.large" [data]="chartData()"></ss-chart-line>
                     <div class="content__procuring__body__chart__more">
                         <snab-text
                             [weight]="TextWeight.Semibold"
@@ -126,5 +125,5 @@
             </div>
         </ss-card>
     </div>
-    <ss-correspondence [objectId]="order()!.id"></ss-correspondence>
+    <ss-correspondence [type]="CorrespondenceTypeEnum.Personifications" [objectId]="order()!.id"></ss-correspondence>
 }

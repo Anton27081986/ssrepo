@@ -18,7 +18,6 @@ import { CardComponent } from "@app/shared/components/card/card.component";
 import { ITableItem, TableComponent } from "@app/shared/components/table/table.component";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { IMpReservationOrder } from "@app/core/models/mp-reservation-orders/mp-reservation-order";
-import {ChartLineComponent, ChartLineItem, ChartLineSize} from "@app/shared/components/chart-line/chart-line.component";
 import { Permissions } from '@app/core/constants/permissions.constants';import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
@@ -42,6 +41,7 @@ import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice
 import {
 	MpReservationOrdersCardPopupOrderApprovalComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
+import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
 import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservation-order-card-facade.service";
 
 @Component({
@@ -57,7 +57,6 @@ import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservat
 		CardComponent,
 		LinkComponent,
 		TableComponent,
-		ChartLineComponent,
 		DropdownButtonComponent,
 		DropdownItemComponent,
 		DatePipe
@@ -73,13 +72,10 @@ export class MpReservationOrderCardComponent implements OnInit {
 	protected readonly LabelType = LabelType;
 	protected readonly Permissions = Permissions;
 	protected readonly IconType = IconType;
-	protected readonly ChartLineSize = ChartLineSize;
 
 	public order: Signal<IMpReservationOrder | null> = toSignal(this.mpReservationOrdersFacadeService.activeOrder$, {
 		initialValue: null,
 	});
-
-	public chartData: WritableSignal<ChartLineItem[]> = signal([])
 
 	public volumes: WritableSignal<ITableItem[]> = signal([])
 
@@ -93,13 +89,6 @@ export class MpReservationOrderCardComponent implements OnInit {
 
 		effect(() => {
 			if (this.order()?.provision) {
-				this.chartData.set([
-					{ label: 'В производстве', value: this.order()!.provision.manufacturing, color: Colors.InfoHeavy },
-					{ label: 'Не может быть обеспечено', value: this.order()!.provision.provisionUnavailable, color: Colors.DangerHeavy },
-					{ label: 'Моя бронь', value: this.order()!.provision.provided, color: Colors.WarningLight },
-					{ label: 'Свободно', value: this.order()!.provision.provisionAvailable, color: Colors.PositiveHeavy },
-				]);
-
 				this.volumes.set(this.order()!.orderRequests.map((item)=>{
 					return {
 						amount: item.amount.toString(),
@@ -197,4 +186,6 @@ export class MpReservationOrderCardComponent implements OnInit {
 			}
 		});
 	}
+
+	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 }

@@ -9,7 +9,8 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { IConversationType } from './conversation-type';
+
+import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
 
 /**
  * Модель отправки сообщения
@@ -19,7 +20,7 @@ export interface ISendMessageRequest {
 	 * Айди оьъекта переписки
 	 */
 	objectId?: number;
-	type?: IConversationType;
+	type?: CorrespondenceTypeEnum;
 	/**
 	 * Тема сообщения
 	 */

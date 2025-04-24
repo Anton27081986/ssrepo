@@ -6,6 +6,7 @@ import { ISendMessageRequest } from '@app/core/models/notifications/send-message
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { IResponse } from '@app/core/utils/response';
+import { CorrespondenceTypeEnum } from "@app/widgets/correspondence/correspondence-type-enum";
 
 @Injectable({
 	providedIn: 'root',
@@ -15,10 +16,15 @@ export class NotificationsApiService {
 
 	/** Получить список тем */
 	public getSubjects(
+		type: CorrespondenceTypeEnum,
 		ObjectId: number,
 		Query?: string,
 	): Observable<Array<{ subject: string; messageCount: number }>> {
 		let params = new HttpParams({ fromObject: { ObjectId } });
+
+		if (type) {
+			params = params.set('Type', type);
+		}
 
 		if (Query) {
 			params = params.append('Query', Query);
@@ -34,6 +40,7 @@ export class NotificationsApiService {
 
 	/** Получить список сообщений */
 	public getMessages(
+		type: CorrespondenceTypeEnum,
 		ObjectId: number,
 		subject: string | null,
 		limit?: number,
@@ -41,6 +48,10 @@ export class NotificationsApiService {
 		Query?: string | undefined,
 	): Observable<IResponse<IMessageItemDto>> {
 		let params = new HttpParams({ fromObject: { ObjectId } });
+
+		if (type) {
+			params = params.set('Type', type);
+		}
 
 		if (subject) {
 			params = params.set('subject', subject);
@@ -67,7 +78,18 @@ export class NotificationsApiService {
 	}
 
 	/** Отправить сообщение */
-	public sendMessage(body: ISendMessageRequest): Observable<any> {
+	public sendMessage(body: {
+		sourceUrl: string;
+		copyUserIds: number[];
+		toUserIds: number[];
+		fileIds: string[];
+		subject: string;
+		replyToMessageId: string | null | undefined;
+		text: string;
+		isPrivate: boolean;
+		type: CorrespondenceTypeEnum;
+		objectId: number | null
+	}): Observable<any> {
 		return this.http.post<any>(`${environment.apiUrl}/api/notifications/messages`, body);
 	}
 
@@ -81,10 +103,15 @@ export class NotificationsApiService {
 
 	/** Получить список файлов */
 	public getFiles(
+		type: CorrespondenceTypeEnum,
 		ObjectId: number,
 		subject: string | null,
 	): Observable<IResponse<IAttachmentDto>> {
 		let params = new HttpParams({ fromObject: { ObjectId } });
+
+		if (type) {
+			params = params.set('Type', type);
+		}
 
 		if (subject) {
 			params = params.set('subject', subject);
