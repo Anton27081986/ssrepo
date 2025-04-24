@@ -10,7 +10,7 @@
 			</ss-button>
 		</div>
 	</div>
-	<form [formGroup]="editActForm" class="content">
+	<form class="content" [formGroup]="editActForm">
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Номер Поставщика</ss-text>
@@ -32,7 +32,7 @@
 				<ss-text size="4">Дата КИСП</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD)) {
 					<ss-date-time-picker
-						[showTime]="false" formControlName="dateUpload"
+						formControlName="dateUpload" [showTime]="false"
 						[error]="editActForm.controls.dateUpload.touched && editActForm.controls.dateUpload.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
 				} @else {
 					<ss-text size="3" weight="regular">{{ act()?.dateUpload | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
@@ -45,10 +45,10 @@
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
 					<ss-search-input searchType="user" size="small"
 						 [selectedItem]="act()?.applicantUser"
+						 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined"
 						 (select)="onApplicantUserSelect($event.id)"
 						 (click)="editActForm.controls.applicantUserId.setErrors(null)"
-						 (input)="onInputChange($event)"
-						 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined">
+						 (input)="onInputChange($event)">
 					</ss-search-input>
 				} @else {
 					<ss-text size="3" weight="regular">{{ act()?.applicantUser?.name }}</ss-text>
@@ -72,8 +72,8 @@
 				<ss-text size="4">Комментарий</ss-text>
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT)) {
 					<ss-textarea
-						[maxLength]="50"
-						formControlName="comment"></ss-textarea>
+						formControlName="comment"
+						[maxLength]="50"></ss-textarea>
 				} @else {
 					<ss-text size="3" weight="regular">{{ act()?.comment }}</ss-text>
 				}
@@ -85,9 +85,9 @@
 				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
 					<ss-search-input searchType="contractor" size="small"
 						 [selectedItem]="act()?.providerContractor"
+						 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined"
 						 (select)="onProviderContractorSelect($event.id)"
-						 (click)="editActForm.controls.providerContractorId.setErrors(null)"
-						 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined">
+						 (click)="editActForm.controls.providerContractorId.setErrors(null)">
 					</ss-search-input>
 				} @else {
 					<ss-text size="3" weight="regular">{{ act()?.providerContractor?.name }}</ss-text>
@@ -110,7 +110,7 @@
 					[formControlName]="'finDocOrderIds'"
 					[options]="finDocOrders"></ss-multiselect-v2>
 			</div>
-			<div class="content__column__item" *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)">
+			<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)" class="content__column__item">
 				<ss-text size="4">Валюта</ss-text>
 
 				<ss-select-v2
@@ -137,7 +137,7 @@
 					</ng-container>
 				</div>
 				<div class="content__column__item__files-list">
-					<div class="content__column__item__files-list__item" *ngFor="let doc of documents()">
+					<div *ngFor="let doc of documents()" class="content__column__item__files-list__item">
 						<div class="content__column__item__files-list__item__img">
 							<ss-icon height="16" width="16" name="doc"></ss-icon>
 						</div>
@@ -150,7 +150,7 @@
 						</div>
 					</div>
 					<ng-container *ngIf="newDocuments">
-						<div class="content__column__item__files-list__item" *ngFor="let ndoc of newDocuments">
+						<div *ngFor="let ndoc of newDocuments" class="content__column__item__files-list__item">
 							<div class="content__column__item__files-list__item__img">
 								<ss-icon height="16" width="16" name="doc"></ss-icon>
 							</div>
