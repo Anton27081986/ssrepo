@@ -108,6 +108,11 @@
         flex-direction: column;
         gap: 40px;
 
+        &__tags {
+          display: flex;
+          gap: var(--gap-micro);
+        }
+
         &__quantity {
           display: flex;
           gap: 4px;

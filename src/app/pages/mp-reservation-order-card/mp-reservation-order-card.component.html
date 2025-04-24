@@ -103,6 +103,24 @@
                         <snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">Остатки: </snab-text>
                         <snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">15</snab-text>
                     </div>
+                    <div class="content__procuring__body__chart__tags">
+                        <ss-tag-v2 state="warning">
+                            <snab-icon [color]="Colors.WarningLight" [icon]="IconType.Unlock"></snab-icon>
+                            {{ order()!.provision?.provided || '-' }}
+                        </ss-tag-v2>
+                        <ss-tag-v2 state="success">
+                            <snab-icon [color]="Colors.PositiveHeavy" [icon]="IconType.Check"></snab-icon>
+                            {{ order()!.provision?.provisionAvailable || '-' }}
+                        </ss-tag-v2>
+                        <ss-tag-v2 state="info">
+                            <snab-icon [color]="Colors.InfoHeavy" [icon]="IconType.Refresh"></snab-icon>
+                            {{ order()!.provision?.manufacturing || '-' }}
+                        </ss-tag-v2>
+                        <ss-tag-v2 state="danger">
+                            <snab-icon [color]="Colors.DangerHeavy" [icon]="IconType.Error"></snab-icon>
+                            {{ order()!.provision?.provisionUnavailable || '-' }}
+                        </ss-tag-v2>
+                    </div>
                     <div class="content__procuring__body__chart__more">
                         <snab-text
                             [weight]="TextWeight.Semibold"

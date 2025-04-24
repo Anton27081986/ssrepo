@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {
 	ButtonComponent,
 	ButtonType,
-	Colors, DropdownButtonComponent, DropdownItemComponent,
+	Colors, DropdownButtonComponent, DropdownItemComponent, IconComponent,
 	IconType,
 	LabelComponent,
 	LabelType,
@@ -41,8 +41,7 @@ import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice
 import {
 	MpReservationOrdersCardPopupOrderApprovalComponent
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component";
-import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
-import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservation-order-card-facade.service";
+import {TagV2Component} from "@app/shared/components/tag-v2/tag-v2.component";
 
 @Component({
 	selector: 'app-mp-reservation-order-card',
@@ -59,7 +58,9 @@ import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservat
 		TableComponent,
 		DropdownButtonComponent,
 		DropdownItemComponent,
-		DatePipe
+		DatePipe,
+		TagV2Component,
+		IconComponent
 	],
 	standalone: true,
 })
