@@ -13,7 +13,7 @@ import {
 	ButtonComponent,
 	ButtonType,
 	CardComponent, FieldCtrlDirective,
-	FormFieldComponent,
+	FormFieldComponent, IconPosition,
 	IconType,
 	Size,
 	TextareaComponent,
@@ -21,7 +21,15 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
+import {ModalService} from "@app/core/modal/modal.service";
+import {
+	MpReservationOrdersCardPopupCancelActionComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component";
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservation-order-card-facade.service";
+import {Router} from "@angular/router";
 
+@UntilDestroy()
 @Component({
 	selector: 'app-mp-reservation-orders-card-popup-reject-order',
 	standalone: true,
@@ -51,16 +59,41 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 	protected readonly IconType = IconType;
 
 	public declineForm: FormGroup<{
-		comment: FormControl<string | null>;
+		reason: FormControl<string | null>;
 	}>;
 
-	public constructor(private readonly modalRef: ModalRef) {
+	public constructor(private readonly modalRef: ModalRef, private readonly modalService: ModalService, private readonly facade: MpReservationOrderCardFacadeService,
+					   protected readonly router: Router) {
 		this.declineForm = new FormGroup({
-			comment: new FormControl<string | null>(null, [Validators.required]),
+			reason: new FormControl<string | null>(null, [Validators.required]),
 		});
 	}
 
-	protected close() {
-		this.modalRef.close();
+	public rejectOrder() {
+		this.declineForm.markAllAsTouched();
+
+		if (this.declineForm.controls.reason.value) {
+			this.facade
+				.rejectOrder(this.declineForm.controls.reason.value!)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.modalRef.close();
+					this.router.navigate(['mp-reservation-orders']);
+				})
+		}
 	}
+
+	protected close() {
+		this.modalService
+			.open(MpReservationOrdersCardPopupCancelActionComponent)
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe((result) => {
+				if (result) {
+					this.modalRef.close();
+				}
+			})
+	}
+
+	protected readonly IconPosition = IconPosition;
 }

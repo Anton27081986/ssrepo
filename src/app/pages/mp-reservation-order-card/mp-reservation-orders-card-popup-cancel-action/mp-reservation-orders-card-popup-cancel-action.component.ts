@@ -43,7 +43,7 @@ export class MpReservationOrdersCardPopupCancelActionComponent {
 
 	public constructor(private readonly modalRef: ModalRef) {}
 
-	protected close() {
-		this.modalRef.close();
+	protected close(result: boolean = false) {
+		this.modalRef.close(result);
 	}
 }

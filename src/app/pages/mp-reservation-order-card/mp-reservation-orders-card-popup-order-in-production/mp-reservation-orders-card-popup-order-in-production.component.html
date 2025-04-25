@@ -11,7 +11,9 @@
 				</snab-text>
 				<snab-button [type]="ButtonType.Flat"
 							 [size]="Size.Large"
-							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+							 [icon]="IconType.ClearLarge"
+                             [iconPosition]="IconPosition.OnlyIcon"
+                             (click)="close()"></snab-button>
 			</div>
 		</ng-template>
 
@@ -55,6 +57,10 @@
 								[showTime]="false"
 								type="number"
 								formControlName="productionDate"
+                                [error]="(inProductionForm.controls['dates']!.controls[i].controls?.productionDate?.errors &&
+                                !inProductionForm.controls['dates']!.controls[i].controls?.productionDate?.untouched)
+                                ? 'Неверно заполнено поле'
+                                : ''"
 							></ss-date-time-picker>
 						</td>
 						<td>
@@ -62,6 +68,10 @@
 								[showTime]="false"
 								type="number"
 								formControlName="provisionDate"
+                                [error]="(inProductionForm.controls['dates']!.controls[i].controls?.provisionDate?.errors &&
+                                !inProductionForm.controls['dates']!.controls[i].controls?.provisionDate?.untouched)
+                                ? 'Неверно заполнено поле'
+                                : ''"
 							></ss-date-time-picker>
 						</td>
 						<td>
