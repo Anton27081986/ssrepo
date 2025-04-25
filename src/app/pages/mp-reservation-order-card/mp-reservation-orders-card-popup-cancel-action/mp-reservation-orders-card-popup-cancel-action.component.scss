@@ -8,18 +8,18 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(0,0,0,0.8);
 }
 
 .card-wrapper {
 	display: flex;
 	width: 342px;
-	height: 180px;
+	min-height: 180px;
 	flex-direction: column;
 	position: relative;
 	z-index: 7000;
-	background: lighten($island-outline, 40%);
+	background: $island;
 	border-radius: var(--radius-xl-3);
+	box-shadow: var(--small-shadow2);
 
 	.body {
 		display: flex;
@@ -45,16 +45,12 @@
 	}
 
 	.footer-controls {
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--padding-m);
 
-		&__cancel {
-			margin-right: 12px;
-			width: 50%;
-		}
-
-		&__no-save {
-			width: 50%;
+		&__button {
+			width: 100%;
 		}
 	}
 }

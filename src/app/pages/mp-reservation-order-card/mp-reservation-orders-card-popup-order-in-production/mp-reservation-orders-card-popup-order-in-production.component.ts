@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -24,6 +24,9 @@ import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time
 import { NgForOf, NgIf } from '@angular/common';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice-dialog.component";
+import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservation-order-card-facade.service";
+import {forkJoin} from "rxjs";
+import {IProvisionDetailsTypes} from "@app/core/models/mp-reservation-orders/mp-reservation-order";
 
 @UntilDestroy()
 @Component({
@@ -70,6 +73,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
+		private readonly facade: MpReservationOrderCardFacadeService
 	) {
 		this.inProductionForm = new FormGroup({
 			manager: new FormControl<string>('Борисова А.В.'), // Для примера, если нужно выводить менеджера
@@ -85,15 +89,27 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		this.addDatesRow();
 	}
 
-	public get dates(): FormArray {
-		return this.inProductionForm.get('dates') as FormArray;
+	public get dates(): FormArray<
+		FormGroup<{
+			productionDate: FormControl<string | null>;
+			provisionDate: FormControl<string | null>;
+			fact: FormControl<number | null>;
+		}>
+	> {
+		return this.inProductionForm.get('dates') as FormArray<
+			FormGroup<{
+				productionDate: FormControl<string | null>;
+				provisionDate: FormControl<string | null>;
+				fact: FormControl<number | null>;
+			}>
+		>;
 	}
 
 	private createDatesGroup(): FormGroup {
 		return new FormGroup({
-			productionDate: new FormControl<string | null>(null),
-			provisionDate: new FormControl<string | null>(null),
-			fact: new FormControl<number | null>(200), // Для примера
+			productionDate: new FormControl<string | null>(null, [Validators.required]),
+			provisionDate: new FormControl<string | null>(null, [Validators.required]),
+			fact: new FormControl<number | null>(null, [Validators.required]), // Для примера
 		});
 	}
 
@@ -110,11 +126,16 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	}
 
 	public placeOrder(): void {
+		this.inProductionForm.markAllAsTouched();
 		if (this.inProductionForm.valid) {
-			console.log('Размещение в производстве:', this.inProductionForm.value);
-			this.modalRef.close();
-		} else {
-			console.warn('Форма невалидна');
+			forkJoin(
+				this.dates.controls.map((form)=> {
+					return this.facade.addDetails(form.value as IProvisionDetailsTypes);
+				})
+			).pipe(untilDestroyed(this)).subscribe(()=>{
+				this.facade.reloadOrder();
+				this.modalRef.close();
+			})
 		}
 	}
 
@@ -128,10 +149,13 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 					buttonOk: 'Отмена',
 					buttonCancel: 'Не сохранять',
 				},
-			})
+			}).afterClosed().pipe(untilDestroyed(this)).subscribe(status => {
+				if (!status) {
+					this.modalRef.close()
+				}
+		})
 	}
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly InputType = InputType;
 }

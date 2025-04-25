@@ -18,7 +18,7 @@
 	flex-direction: column;
 	position: relative;
 	z-index: 7000;
-	background: lighten($island-outline, 40%);
+	background: $island;
 	border-radius: var(--radius-xl-3);
 
 	.header {
@@ -36,7 +36,6 @@
 		display: flex;
 		width: 100%;
 		flex-grow: 1;
-		overflow-y: auto;
 		flex-direction: column;
 
 		.content {

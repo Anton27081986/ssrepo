@@ -8,8 +8,10 @@
 			<div class="header">
 				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">Отклонение заказа</snab-text>
 				<snab-button [type]="ButtonType.Flat"
-							 [size]="Size.Small"
-							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+							 [size]="Size.Default"
+							 [icon]="IconType.ClearLarge"
+                             [iconPosition]="IconPosition.OnlyIcon"
+                             (click)="close()"></snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>
@@ -18,11 +20,10 @@
 					<snab-form-field
 						[label]="'Коментарий'"
 						[size]="Size.Large"
-						[showValidation]="true"
 					>
 						<snab-textarea
 							fieldCtrl
-							formControlName="comment"
+							formControlName="reason"
 							[rows]="4"
 							[maxLength]="500">
 						</snab-textarea>
@@ -37,7 +38,7 @@
 							 [size]="Size.Large"
 							 (click)="close()"
 				></snab-button>
-				<snab-button text="Отклонить" [size]="Size.Large"></snab-button>
+				<snab-button text="Отклонить" [size]="Size.Large" (click)="rejectOrder()"></snab-button>
 			</div>
 		</ng-template>
 	</snab-card>
