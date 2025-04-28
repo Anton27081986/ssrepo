@@ -80,6 +80,21 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список статусов персонификации */
+	public getPersonificationStatuses(
+		query?: string,
+	): Observable<IResponse<{ id: number; name: string }>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+		return this.http.get<IResponse<{ id: number; name: string }>>(
+			`${environment.apiUrl}/api/manufacturing/dictionary/personificationstatuses`,
+			{ params },
+		);
+	}
+
 	/** Список договоров учета законтрактованного сырья из КИСП*/
 	public getProcurementsContractDetails(
 		ContractorId: number,

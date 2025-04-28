@@ -4,12 +4,15 @@ import {
 	ButtonType,
 	CheckboxComponent,
 	IconPosition,
-	IconType, LabelComponent, LabelType,
+	IconType,
+	LabelComponent,
+	LabelType,
 	LinkComponent,
 	Size,
 	TextComponent,
 	TextType,
-	TextWeight, TooltipDirective,
+	TextWeight,
+	TooltipDirective,
 } from '@front-components/components';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -27,20 +30,14 @@ import { MpReservationOrdersPopupDateProvisionComponent } from '@app/pages/mp-re
 import { Router } from '@angular/router';
 import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
-import {
-	IMpReservationOrder,
-} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import {
 	ChartLineComponent,
-	ChartLineItem,
 } from '@app/shared/components/chart-line/chart-line.component';
 import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
-import {
-	MpReservationOrdersPopupTotalAmountComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component";
-import {
-	MpReservationOrdersPopupChangeQueueComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component";
+import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
+import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
+import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -112,19 +109,21 @@ export class MPReservationOrdersComponent {
 		{
 			name: 'tovId',
 			type: 'search-select',
-			searchType: 'tov-company',
+			searchType: 'tovs',
 			label: 'Товарная позиция',
 			placeholder: '',
 		},
 		{
 			name: 'managerId',
 			type: 'search-select',
+			searchType: 'user-dictionary',
 			label: 'МУТМЗ',
 			placeholder: '',
 		},
 		{
 			name: 'statusId',
 			type: 'search-select',
+			searchType: 'personificationStatuses',
 			label: 'Статус',
 			placeholder: '',
 		},
@@ -137,6 +136,7 @@ export class MPReservationOrdersComponent {
 		{
 			name: 'clientId',
 			type: 'search-select',
+			searchType: 'client',
 			label: 'Клиент',
 			placeholder: '',
 		},
@@ -166,7 +166,7 @@ export class MPReservationOrdersComponent {
 		}
 
 		const preparedFilter: any = {
-			limit: isNewFilter ? 20 : this.pageSize,
+			limit: isNewFilter ? 10 : this.pageSize,
 			offset: isNewFilter ? 0 : this.offset,
 		};
 
@@ -209,7 +209,7 @@ export class MPReservationOrdersComponent {
 		this.mpReservationOrdersFacadeService.applyFiltersOrders(preparedFilter);
 	}
 
-	public ordersTableIndexChange($event: number) {
+	public ordersTableIndexChange($event: number): void {
 		if ($event === 1) {
 			this.offset = 0;
 		} else {
@@ -231,6 +231,7 @@ export class MPReservationOrdersComponent {
 			this.selectedOrders.delete(orderId);
 		}
 	}
+
 	public isAllSelected(): boolean {
 		return (
 			(this.orders()?.items || []).length > 0 &&
@@ -262,7 +263,18 @@ export class MPReservationOrdersComponent {
 	}
 
 	public openPopupAddOrder(): void {
-		this.modalService.open(MpReservationOrdersPopupAddOrderComponent);
+		this.modalService
+			.open(MpReservationOrdersPopupAddOrderComponent)
+			.afterClosed()
+			.subscribe((createdOrders: IMpReservationAddOrder | undefined) => {
+				if (createdOrders?.items.length) {
+					const totalBefore = this.orders()?.total ?? 0;
+					const totalAfter = totalBefore + createdOrders.items.length;
+					const lastPageIndex = Math.ceil(totalAfter / this.pageSize);
+
+					this.ordersTableIndexChange(lastPageIndex);
+				}
+			});
 	}
 
 	public openPopupRemnantDetailsOrder(orderId: number): void {

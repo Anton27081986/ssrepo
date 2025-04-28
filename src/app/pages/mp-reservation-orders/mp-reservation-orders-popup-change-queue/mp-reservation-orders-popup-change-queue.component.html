@@ -2,7 +2,6 @@
 	<snab-card class="change-queue-form"
 			   [headerRef]="header"
 			   [bodyRef]="body"
-			   [footerRef]="footer"
 			   (mousedown)="$event.stopPropagation()">
 		<ng-template #header>
 			<div class="header">
@@ -13,19 +12,21 @@
 					[type]="ButtonType.Flat"
 					[size]="Size.Large"
 					[icon]="IconType.ClearLarge"
+					[iconPosition]="IconPosition.OnlyIcon"
 					(click)="close()">
 				</snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>
 			<div class="content">
-				<form [formGroup]="filterQueueOrdersForm" class="search-row">
+				<div class="search-row">
 					<div class="search-row__input">
 						<ss-search-input class="search-row__input__field"
 										 label="ТП"
 										 size="large"
 										 searchType="tovs"
-										 [placeholder]="'Выберите товарную позицию'"/>
+										 [placeholder]="'Выберите товарную позицию'"
+										 (select)="onTovFilter($event)"/>
 						<snab-button
 							text="Найти заказы"
 							[size]="Size.Large"
@@ -38,13 +39,14 @@
 							[size]="Size.Large">
 							<snab-select
 								fieldCtrl
-								formControlName="status"
-								[options]="statusOptions"
+								[formControl]="status"
+								[options]="statusOptions()"
 								[placeholder]="'Введите статус'"
 							/>
 						</snab-form-field>
 					</div>
-				</form>
+
+				</div>
 				<div class="table-container">
 					<table class="orders-table">
 						<thead>
@@ -72,32 +74,37 @@
 							<td>{{ order.quantity }}</td>
 							<td class="table-td-provision">
 								<ng-container *ngIf="order.provision?.provisionAvailable">
-									<snab-label class="table-td-provision__label" snab-tooltip
+									<snab-label class="table-td-provision__label"
 												[type]="LabelType.Success"
 												[size]="Size.Default"
 												[text]="order.provision.provisionAvailable.toString()"
-												[tooltipText]="'Свободно'"></snab-label>
+												[tooltip]="'Свободно'"
+												[theme]="TooltipTheme.MAIN">
+									</snab-label>
 								</ng-container>
 								<ng-container *ngIf="order.provision?.provided">
 									<snab-label class="table-td-provision__label" snab-tooltip
 												[type]="LabelType.Warning"
 												[size]="Size.Default"
 												[text]="order.provision.provided.toString()"
-												[tooltipText]="'Моя бронь'"></snab-label>
+												[tooltip]="'Моя бронь'"
+												[theme]="TooltipTheme.MAIN"></snab-label>
 								</ng-container>
 								<ng-container *ngIf="order.provision?.provisionUnavailable">
 									<snab-label class="table-td-provision__label" snab-tooltip
 												[type]="LabelType.Danger"
 												[size]="Size.Default"
 												[text]="order.provision.provisionUnavailable.toString()"
-												[tooltipText]="'Не может быть обеспечено'"></snab-label>
+												[tooltip]="'Не может быть обеспечено'"
+												[theme]="TooltipTheme.MAIN"></snab-label>
 								</ng-container>
 								<ng-container *ngIf="order.provision?.manufacturing">
 									<snab-label class="table-td-provision__label" snab-tooltip
 												[type]="LabelType.Info"
 												[size]="Size.Default"
 												[text]="order.provision.manufacturing.toString()"
-												[tooltipText]="'В производстве'"></snab-label>
+												[tooltip]="'В производстве'"
+												[theme]="TooltipTheme.MAIN"></snab-label>
 								</ng-container>
 							</td>
 							<td>
@@ -118,21 +125,6 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
-		</ng-template>
-		<ng-template #footer>
-			<div class="footer">
-				<snab-button
-					[type]="ButtonType.Secondary"
-					[size]="Size.Large"
-					text="Отмена"
-					(click)="close()">
-				</snab-button>
-				<snab-button
-					[size]="Size.Large"
-					text="Сохранить"
-					(click)="applyChanges()">
-				</snab-button>
 			</div>
 		</ng-template>
 	</snab-card>

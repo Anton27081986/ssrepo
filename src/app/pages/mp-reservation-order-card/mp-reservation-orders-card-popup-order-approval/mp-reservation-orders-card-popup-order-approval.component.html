@@ -10,7 +10,10 @@
 				</snab-text>
 				<snab-button [type]="ButtonType.Flat"
 							 [size]="Size.Large"
-							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+							 [icon]="IconType.ClearLarge"
+							 [iconPosition]="IconPosition.OnlyIcon"
+							 (click)="close()">
+				</snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>

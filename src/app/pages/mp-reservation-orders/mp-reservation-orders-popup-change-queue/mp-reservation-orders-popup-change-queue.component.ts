@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { Component, Signal } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
@@ -7,7 +7,7 @@ import {
 	ButtonType,
 	CardComponent,
 	FieldCtrlDirective,
-	FormFieldComponent,
+	FormFieldComponent, IconPosition,
 	IconType,
 	InputComponent,
 	LabelComponent,
@@ -17,21 +17,21 @@ import {
 	TextComponent,
 	TextType,
 	TextWeight,
-	TooltipDirective,
 } from '@front-components/components';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
+import { AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
 import {
 	FormControl,
-	FormGroup,
 	FormsModule,
 	ReactiveFormsModule,
-	Validators,
 } from '@angular/forms';
-import { IDictionaryItemDto } from '@front-components/components';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { IProvisionType } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
+import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface IQueueOrderRow {
 	orderId: string;
@@ -57,17 +57,19 @@ interface IQueueOrderRow {
 		CardComponent,
 		ButtonComponent,
 		TextComponent,
-		SelectV2Component,
 		InputComponent,
 		FormsModule,
 		FieldCtrlDirective,
 		FormFieldComponent,
 		ReactiveFormsModule,
-		SelectComponent,
 		LabelComponent,
 		TooltipDirective,
 		DatePipe,
 		SearchInputComponent,
+		TooltipDirective,
+		JsonPipe,
+		AsyncPipe,
+		SelectComponent,
 	],
 })
 export class MpReservationOrdersPopupChangeQueueComponent {
@@ -77,21 +79,24 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly IconType = IconType;
 	protected readonly LabelType = LabelType;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly IconPosition = IconPosition;
 
-	public tovValue: string = 'Пример ТП';
-	public statusValue: string = 'В очереди';
+	protected statusOptions: Signal<IDictionaryItemDto[]> = toSignal(
+		this.mpReservationOrdersFacadeService.personificationStatuses$,
+		{
+			initialValue: [],
+		},
+	);
 
-	public readonly statusOptions: IDictionaryItemDto[] = [
-		{ id: 0, name: 'Все' },
-		{ id: 1, name: 'Готов' },
-		{ id: 2, name: 'В очереди' },
-	];
+	public filterTov: IDictionaryItemDto | null = null;
+	public filterStatus: IDictionaryItemDto | null = null;
+	public status = new FormControl<IDictionaryItemDto | null>(null);
 
-	// Массив данных очереди заказов для таблицы (заглушка)
 	public ordersQueue: IQueueOrderRow[] = [
 		{
 			orderId: '1001',
-			status: 'Готов',
+			status: 'Обработка ТМЗ',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
 			client: 'Петров П.П.',
@@ -114,7 +119,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		},
 		{
 			orderId: '1002',
-			status: 'В очереди',
+			status: 'В производстве',
 			dateOrder: '02.01.2023 10:30',
 			author: 'Сидоров С.С.',
 			client: 'Козлов К.К.',
@@ -137,7 +142,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		},
 		{
 			orderId: '1001',
-			status: 'В очереди',
+			status: 'В производстве',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
 			client: 'Петров П.П.',
@@ -297,30 +302,28 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '06.01.2023',
 		},
 	];
-
-	protected filterQueueOrdersForm: FormGroup<{
-		tov: FormControl<IDictionaryItemDto | null>;
-		status: FormControl<IDictionaryItemDto | null>;
-	}>;
 
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
 	) {
-		this.filterQueueOrdersForm = new FormGroup({
-			tov: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			status: new FormControl<IDictionaryItemDto | null>(this.statusOptions[0], [
-				Validators.required,
-			]),
-		});
+		this.status.valueChanges
+			.pipe(untilDestroyed(this))
+			.subscribe(value => (this.filterStatus = value));
 	}
 
 	public get filteredOrdersQueue(): IQueueOrderRow[] {
-		const status = this.filterQueueOrdersForm.controls.status.value;
-		if (!status || status.name === 'Все') {
-			return this.ordersQueue;
-		}
-		return this.ordersQueue.filter(item => item.status === status.name);
+		return this.ordersQueue.filter(order => {
+			if (this.filterStatus) {
+				return order.status === this.filterStatus.name;
+			}
+			return true;
+		});
+	}
+
+	public onTovFilter(item: IDictionaryItemDto): void {
+		this.filterTov = item;
 	}
 
 	public close(): void {
@@ -340,11 +343,6 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	}
 
 	public findQueueOrders(): void {
-		console.log('Поиск заказов по ТП:', this.tovValue, 'и статусу:', this.statusValue);
-	}
-
-	public applyChanges(): void {
-		console.log('Применяем изменения очереди заказов...');
-		this.close();
+		console.log('Поиск заказов по ТП:', this.filterTov, 'и статусу:', this.filterStatus);
 	}
 }

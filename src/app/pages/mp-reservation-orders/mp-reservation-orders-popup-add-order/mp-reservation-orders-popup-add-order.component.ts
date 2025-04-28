@@ -18,7 +18,7 @@ import {
 	CardComponent,
 	DropdownButtonComponent,
 	FieldCtrlDirective,
-	FormFieldComponent,
+	FormFieldComponent, IconPosition,
 	IconType,
 	InputComponent,
 	SelectComponent,
@@ -39,6 +39,8 @@ import {
 	IOrderItemsTypes,
 } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
+import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 
 @UntilDestroy()
 @Component({
@@ -64,6 +66,7 @@ import { SearchInputComponent } from '@app/shared/components/inputs/search-input
 		SelectComponent,
 		FieldCtrlDirective,
 		SearchInputComponent,
+		TooltipDirective,
 	],
 	standalone: true,
 })
@@ -73,11 +76,14 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
+	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly length = length;
 
 	protected addOrdersForm: FormGroup<{
 		positions: FormArray<
 			FormGroup<{
+				headerTitle: FormControl<string>;
+				headerTovName: FormControl<string>;
 				details: FormArray<
 					FormGroup<{
 						quantity: FormControl<number | null>;
@@ -99,6 +105,8 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		this.addOrdersForm = new FormGroup({
 			positions: new FormArray<
 				FormGroup<{
+					headerTitle: FormControl<string>;
+					headerTovName: FormControl<string>;
 					details: FormArray<
 						FormGroup<{
 							quantity: FormControl<number | null>;
@@ -112,11 +120,9 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	public get accordionTitle(): string {
 		const tovName = this.selectedTov?.name ?? '';
-		const clientName = this.selectedClient?.name ?? '';
-
-		const tovNameShort = tovName.length > 50 ? `${tovName.slice(0, 50)}...` : tovName;
-
-		return clientName ? `${tovNameShort},   ${clientName}` : tovNameShort;
+		const client = this.selectedClient?.name ?? '';
+		const short = tovName.length > 50 ? `${tovName.slice(0, 50)}...` : tovName;
+		return client ? `${short},\u00A0\u00A0\u00A0\u00A0${client}` : short;
 	}
 
 	// Геттер для доступа к FormArray позиций
@@ -124,9 +130,12 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		return this.addOrdersForm.get('positions') as FormArray;
 	}
 
-	// Создаем новый FormGroup для позиции (новый accordion)
 	private createPositionGroup(): FormGroup {
+		const fullTitle = this.accordionTitle;
+		const tovName = this.selectedTov?.name ?? '';
 		return new FormGroup({
+			headerTitle: new FormControl<string>(fullTitle),
+			headerTovName: new FormControl<string>(tovName),
 			details: new FormArray([this.createDetailGroup()]),
 		});
 	}
@@ -209,6 +218,8 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		};
 
 		this.mpReservationOrdersFacadeService.createOrder(orderData);
-		this.modalRef.close();
+		this.modalRef.close(orderData);
 	}
+
+	protected readonly IconPosition = IconPosition;
 }

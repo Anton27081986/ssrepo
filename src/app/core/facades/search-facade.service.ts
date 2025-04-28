@@ -81,6 +81,10 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getTovs(query);
 	}
 
+	public getPersonificationStatuses(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getPersonificationStatuses(query);
+	}
+
 	public getTovGroups(query: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.getTpgSearch(query);
 	}
@@ -197,6 +201,9 @@ export class SearchFacadeService {
 
 			case SearchTypeEnum.Tovs:
 				return this.getTovs(query).pipe(map(data => data.items));
+
+			case SearchTypeEnum.PersonificationStatuses:
+				return this.getPersonificationStatuses(query).pipe(map(data => data.items));
 
 			case SearchTypeEnum.Technologist:
 				return this.getTechnologist(query).pipe(map(data => data.items));
