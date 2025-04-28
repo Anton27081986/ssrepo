@@ -13,8 +13,8 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { BehaviorSubject } from 'rxjs';
 import { IGlobalSearchDto } from '@app/core/models/company/global-search-dto';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe} from "@angular/common";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe } from '@angular/common';
 
 export type searchType =
 	| 'user'
@@ -41,6 +41,7 @@ export type searchType =
 	| 'bu-units'
 	| 'tov-units'
 	| 'tovGroups'
+	| 'personificationStatuses'
 	| undefined;
 
 @UntilDestroy()
@@ -48,11 +49,8 @@ export type searchType =
 	selector: 'ss-search-input',
 	templateUrl: './search-input.component.html',
 	styleUrls: ['./search-input.component.scss'],
-	imports: [
-		CaptionComponent,
-		AsyncPipe
-	],
-	standalone: true
+	imports: [CaptionComponent, AsyncPipe],
+	standalone: true,
 })
 export class SearchInputComponent {
 	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
@@ -175,6 +173,15 @@ export class SearchInputComponent {
 				case 'tovs':
 					this.searchFacade
 						.getTovs(query)
+						.pipe(untilDestroyed(this))
+						.subscribe(res => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'personificationStatuses':
+					this.searchFacade
+						.getPersonificationStatuses(query)
 						.pipe(untilDestroyed(this))
 						.subscribe(res => {
 							this.found$.next(res.items);

@@ -11,7 +11,10 @@
 				</snab-text>
 				<snab-button [type]="ButtonType.Flat"
 							 [size]="Size.Large"
-							 [icon]="IconType.ClearLarge" (click)="close()"></snab-button>
+							 [icon]="IconType.ClearLarge"
+							 [iconPosition]="IconPosition.OnlyIcon"
+							 (click)="close()">
+				</snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>
@@ -23,17 +26,17 @@
 			<form [formGroup]="addOrdersForm" class="content">
 				<div class="content__row">
 					<div class="content__row-item-tov">
-							<ss-search-input
-								searchType="tovs"
-								label="ТП"
-								[placeholder]="'Выберите товарную позицию'"
+						<ss-search-input
+							searchType="tovs"
+							label="ТП"
+							[placeholder]="'Выберите товарную позицию'"
 							(select)="onTovSelect($event)"/>
 					</div>
 					<div class="content__row-item-client">
-							<ss-search-input
-								searchType="client"
-								label="Клиент"
-								[placeholder]="'Выберите клиента'"
+						<ss-search-input
+							searchType="client"
+							label="Клиент"
+							[placeholder]="'Выберите клиента'"
 							(select)="onClientSelect($event)"/>
 					</div>
 					<div class="content__row-item-add-button">
@@ -43,10 +46,19 @@
 				<div formArrayName="positions" class="content__table-list">
 					<div *ngFor="let position of positions.controls; let posIndex = index" [formGroupName]="posIndex">
 						<ss-accordion [isExpanded]="true"
-									  [title]="accordionTitle"
+									  [headerRef]="title"
 									  [isMpReservationOrders]="true"
 									  (addRowPosition)="addDetailRow(posIndex)"
 									  (removePosition)="removePosition(posIndex)">
+							<ng-template #title>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Medium"
+									[tooltip]="position.get('headerTovName')?.value ?? ''"
+									[theme]="TooltipTheme.MAIN">
+									{{ position.get('headerTitle')?.value }}
+								</snab-text>
+							</ng-template>
 							<ng-template [ngTemplateOutlet]="accordionContent"
 										 [ngTemplateOutletContext]="{ position: position, posIndex: posIndex }">
 							</ng-template>

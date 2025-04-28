@@ -6,8 +6,10 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
-import { Router } from "@angular/router";
-import { catchError } from "rxjs/operators";
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 
 @UntilDestroy()
 @Injectable({
@@ -20,6 +22,13 @@ export class MpReservationOrdersFacadeService {
 		items: [],
 		total: 0,
 	} as unknown as IResponse<any>);
+	private lastUsedFilters: MpReservationFilter = {
+		limit: 10,
+		offset: 0,
+	};
+
+	private readonly personificationStatuses = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	public personificationStatuses$ = this.personificationStatuses.asObservable();
 	public orders$ = this.orders.asObservable();
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -28,7 +37,8 @@ export class MpReservationOrdersFacadeService {
 
 	public constructor(
 		private readonly mpReservationOrdersApiService: MpReservationOrdersApiService,
-		protected readonly router: Router
+		protected readonly router: Router,
+		private readonly searchFacade: SearchFacadeService,
 	) {
 		this.filtersChanged$
 			.pipe(
@@ -46,9 +56,15 @@ export class MpReservationOrdersFacadeService {
 				}),
 			)
 			.subscribe();
+
+		this.searchFacade
+			.getPersonificationStatuses()
+			.pipe(untilDestroyed(this))
+			.subscribe(value => this.personificationStatuses.next(value.items));
 	}
 
 	public applyFiltersOrders(filters: MpReservationFilter): void {
+		this.lastUsedFilters = { ...filters };
 		this.isLoader$.next(true);
 		this.filtersChanged$.next(filters);
 	}
@@ -57,60 +73,74 @@ export class MpReservationOrdersFacadeService {
 		this.mpReservationOrdersApiService
 			.createOrderPersonification(body)
 			.pipe(
-				untilDestroyed(this),
 				tap(newOrders => {
-					const currentOrders = this.orders.getValue();
-					const updatedItems = currentOrders.items
-						? [...currentOrders.items, ...newOrders]
-						: [...newOrders];
-					this.orders.next({
-						...currentOrders,
-						items: updatedItems,
-						total: updatedItems.length,
+					const current = this.orders.getValue();
+					const totalBefore = current.total;
+					const totalAfter = totalBefore + newOrders.length;
+					const { limit = newOrders.length } = this.lastUsedFilters;
+					const lastPageIndex = Math.ceil(totalAfter / limit);
+					const lastOffset = limit * (lastPageIndex - 1);
+
+					this.applyFiltersOrders({
+						...this.lastUsedFilters,
+						offset: lastOffset,
+						limit: limit,
 					});
 				}),
+				untilDestroyed(this),
 			)
-			.subscribe(res => {});
+			.subscribe();
 	}
 
 	public updateProvisionDates(orderIds: number[], provisionDate: string): void {
 		forkJoin(
 			orderIds.map(id =>
-				this.mpReservationOrdersApiService.updateProvisionDate(id, provisionDate)
-			)
-		).pipe(
-			tap(() => {
-				const currentOrders = this.orders.getValue();
-				const updatedOrders = currentOrders.items.map(order => {
-					if (!orderIds.includes(order.id)) return order;
+				this.mpReservationOrdersApiService.updateProvisionDate(id, provisionDate),
+			),
+		)
+			.pipe(
+				tap(() => {
+					const currentOrders = this.orders.getValue();
+					const updatedOrders = currentOrders.items.map(order => {
+						if (!orderIds.includes(order.id)) return order;
 
-					const provisionDetails = order.provision.provisionDetails || [];
-					const updatedDetails = provisionDetails.map(detail => {
-						const detailTime = new Date(detail.provisionDate!).getTime();
-						const minTime = Math.min(...provisionDetails.map(detail => new Date(detail.provisionDate!).getTime()));
-						const allEqual = provisionDetails.every(detail => new Date(detail.provisionDate!).getTime() === minTime);
+						const provisionDetails = order.provision.provisionDetails || [];
+						const updatedDetails = provisionDetails.map(detail => {
+							const detailTime = new Date(detail.provisionDate!).getTime();
+							const minTime = Math.min(
+								...provisionDetails.map(detail =>
+									new Date(detail.provisionDate!).getTime(),
+								),
+							);
+							const allEqual = provisionDetails.every(
+								detail => new Date(detail.provisionDate!).getTime() === minTime,
+							);
+
+							return {
+								...detail,
+								provisionDate:
+									allEqual || detailTime === minTime
+										? provisionDate
+										: detail.provisionDate,
+							};
+						});
 
 						return {
-							...detail,
-							provisionDate: (allEqual || detailTime === minTime) ? provisionDate : detail.provisionDate
+							...order,
+							provision: {
+								...order.provision,
+								provisionDetails: updatedDetails,
+							},
 						};
 					});
 
-					return {
-						...order,
-						provision: {
-							...order.provision,
-							provisionDetails: updatedDetails
-						}
-					};
-				});
-
-				this.orders.next({
-					...currentOrders,
-					items: updatedOrders
-				});
-			}),
-			untilDestroyed(this)
-		).subscribe();
+					this.orders.next({
+						...currentOrders,
+						items: updatedOrders,
+					});
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
 	}
 }

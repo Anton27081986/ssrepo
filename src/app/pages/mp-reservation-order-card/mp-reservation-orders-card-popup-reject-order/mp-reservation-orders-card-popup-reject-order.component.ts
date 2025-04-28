@@ -57,6 +57,7 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 	protected readonly Size = Size;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
 
 	public declineForm: FormGroup<{
 		reason: FormControl<string | null>;
@@ -94,6 +95,4 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 				}
 			})
 	}
-
-	protected readonly IconPosition = IconPosition;
 }
