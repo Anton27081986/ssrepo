@@ -7,9 +7,10 @@ import {
 	ButtonType,
 	CardComponent,
 	FieldCtrlDirective,
-	FormFieldComponent, IconPosition,
-	IconType,
+	FormFieldComponent,
+	IconPosition,
 	InputComponent,
+	IconType,
 	LabelComponent,
 	LabelType,
 	SelectComponent,
@@ -19,11 +20,7 @@ import {
 	TextWeight,
 } from '@front-components/components';
 import { AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
-import {
-	FormControl,
-	FormsModule,
-	ReactiveFormsModule,
-} from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { IProvisionType } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
@@ -32,6 +29,8 @@ import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directi
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { DraggableOrderRowDirective } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.directive';
+import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
 
 interface IQueueOrderRow {
 	orderId: string;
@@ -70,6 +69,7 @@ interface IQueueOrderRow {
 		JsonPipe,
 		AsyncPipe,
 		SelectComponent,
+		DraggableOrderRowDirective,
 	],
 })
 export class MpReservationOrdersPopupChangeQueueComponent {
@@ -95,7 +95,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 	public ordersQueue: IQueueOrderRow[] = [
 		{
-			orderId: '1001',
+			orderId: '1',
 			status: 'Обработка ТМЗ',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
@@ -118,7 +118,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '06.01.2023',
 		},
 		{
-			orderId: '1002',
+			orderId: '2',
 			status: 'В производстве',
 			dateOrder: '02.01.2023 10:30',
 			author: 'Сидоров С.С.',
@@ -141,7 +141,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '07.01.2023',
 		},
 		{
-			orderId: '1001',
+			orderId: '3',
 			status: 'В производстве',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
@@ -164,7 +164,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '06.01.2023',
 		},
 		{
-			orderId: '1002',
+			orderId: '4',
 			status: 'В очереди',
 			dateOrder: '02.01.2023 10:30',
 			author: 'Сидоров С.С.',
@@ -187,7 +187,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '07.01.2023',
 		},
 		{
-			orderId: '1001',
+			orderId: '5',
 			status: 'В очереди',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
@@ -210,7 +210,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '06.01.2023',
 		},
 		{
-			orderId: '1002',
+			orderId: '6',
 			status: 'В очереди',
 			dateOrder: '02.01.2023 10:30',
 			author: 'Сидоров С.С.',
@@ -233,7 +233,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '07.01.2023',
 		},
 		{
-			orderId: '1001',
+			orderId: '7',
 			status: 'В очереди',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
@@ -256,7 +256,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '06.01.2023',
 		},
 		{
-			orderId: '1002',
+			orderId: '8',
 			status: 'В очереди',
 			dateOrder: '02.01.2023 10:30',
 			author: 'Сидоров С.С.',
@@ -279,7 +279,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			dateProvision: '07.01.2023',
 		},
 		{
-			orderId: '1001',
+			orderId: '9',
 			status: 'В очереди',
 			dateOrder: '01.01.2023 10:00',
 			author: 'Иванов И.И.',
@@ -344,5 +344,17 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 	public findQueueOrders(): void {
 		console.log('Поиск заказов по ТП:', this.filterTov, 'и статусу:', this.filterStatus);
+	}
+
+	public onOrderReorder(event: IOrderReorderRequest): void {
+		const { orderId, toIndex } = event;
+		const fromIndex = this.ordersQueue.findIndex(o => o.orderId === orderId);
+
+		if (fromIndex < 0 || fromIndex === toIndex) {
+			return;
+		}
+
+		const [movedItem] = this.ordersQueue.splice(fromIndex, 1);
+		this.ordersQueue.splice(toIndex, 0, movedItem);
 	}
 }

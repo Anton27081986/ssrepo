@@ -64,8 +64,19 @@
 						</tr>
 						</thead>
 						<tbody>
-						<tr *ngFor="let order of filteredOrdersQueue">
-							<td>::</td>
+						<tr
+							*ngFor="let order of filteredOrdersQueue; let i = index"
+							ssDraggableOrderRow
+							[order]="order"
+							[index]="i"
+							(reorder)="onOrderReorder($event)"
+						>
+							<td><snab-button
+								[type]="ButtonType.Flat"
+								[icon]="IconType.Drag"
+								[iconPosition]="IconPosition.OnlyIcon"
+								[size]="Size.Large">
+							</snab-button></td>
 							<td>{{ order.orderId }}</td>
 							<td>{{ order.status }}</td>
 							<td>{{ order.dateOrder }}</td>

@@ -30,14 +30,18 @@
 							searchType="tovs"
 							label="ТП"
 							[placeholder]="'Выберите товарную позицию'"
-							(select)="onTovSelect($event)"/>
+							[error]="addOrdersForm.controls.tov.touched && addOrdersForm.controls.tov.errors?.required ? 'Обязательное поле' : undefined"
+							(select)="onTovSelect($event)"
+							(click)="addOrdersForm.controls.tov.setErrors(null)"/>
 					</div>
 					<div class="content__row-item-client">
 						<ss-search-input
 							searchType="client"
 							label="Клиент"
 							[placeholder]="'Выберите клиента'"
-							(select)="onClientSelect($event)"/>
+							[error]="addOrdersForm.controls.client.touched && addOrdersForm.controls.client.errors?.required ? 'Обязательное поле' : undefined"
+							(select)="onClientSelect($event)"
+							(click)="addOrdersForm.controls.client.setErrors(null)"/>
 					</div>
 					<div class="content__row-item-add-button">
 						<snab-button text="Добавить ТП" [size]="Size.Large" (click)="addPosition()"></snab-button>
@@ -96,11 +100,17 @@
 							<snab-form-field [size]="Size.Large">
 								<snab-input fieldCtrl
 											placeholder="Введите количество"
-											formControlName="quantity"></snab-input>
+											formControlName="quantity"
+											[type]="InputType.Number"
+											[onlyPositiveValue]="true"></snab-input>
 							</snab-form-field>
 						</td>
 						<td>
-							<ss-date-time-picker [showTime]="false" formControlName="date"></ss-date-time-picker>
+							<ss-date-time-picker formControlName="date"
+												 [showTime]="false"
+												 [error]="detail.get('date')?.touched && detail.get('date')?.errors?.required ? 'Обязательное поле' : undefined"
+												 (click)="detail.get('date')?.setErrors(null)">
+							</ss-date-time-picker>
 						</td>
 						<td>
 							<snab-button [type]="ButtonType.Flat"
