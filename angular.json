@@ -28,7 +28,13 @@
 						"styles": [
 							"src/styles.scss",
 							"node_modules/@front-components/components/lib/styles/custom-variables.scss",
-							"node_modules/@front-components/components/lib/styles/mixins/text.scss"
+							"node_modules/@front-components/components/lib/styles/mixins/text.scss",
+							"node_modules/@front-library/components/lib/shared/styles/_variables/_alias.scss",
+							"node_modules/@front-library/components/lib/shared/styles/_variables/_brand.scss",
+							"node_modules/@front-library/components/lib/shared/styles/custom-variables.scss",
+							"node_modules/@front-library/components/lib/shared/styles/mixins/text.scss",
+							"node_modules/@front-library/components/lib/shared/styles/overlay.scss",
+							"node_modules/@front-library/components/lib/shared/styles/table.scss"
 						],
 						"scripts": []
 					},

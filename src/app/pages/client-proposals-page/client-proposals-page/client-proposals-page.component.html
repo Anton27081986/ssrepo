@@ -14,11 +14,12 @@
 				</ss-tooltip-menu>
 			</div>
 		</div>
-			<div class="clients-proposals-page__instructions">
-					<ss-icon [tooltip]="'Инструкция по контакту с клиентом'" [theme]="TooltipTheme.MAIN"
-							 [position]="TooltipPosition.DEFAULT" [width]="'20'" [height]="'20'"
-							 [name]="'download'" (click)="downloadInstruction(clientProposalsFacadeService.instructionFileLink)"></ss-icon>
-			</div>
+		<div class="clients-proposals-page__instructions">
+			<ss-icon [tooltip]="'Инструкция по контакту с клиентом'" [theme]="TooltipTheme.MAIN"
+					 [position]="TooltipPosition.DEFAULT" [width]="'20'" [height]="'20'"
+					 [name]="'download'"
+					 (click)="downloadInstruction(clientProposalsFacadeService.instructionFileLink)"></ss-icon>
+		</div>
 	</div>
 	<div class="clients-proposals-page__content">
 		<div class="clients-proposals-page__img">

@@ -45,6 +45,9 @@ import { AppRoutes } from '@app/common/routes';
 import { SignInComponent } from '@auth/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
+import { ProductionPlanComponent } from '@app/pages/production-plan/production-plan.component';
+import { OperationalPlanComponent } from '@app/pages/production-plan/operational-plan/operational-plan.component';
+import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -254,17 +257,21 @@ export const routes: Routes = [
 	},
 	{
 		path: '',
-		component: FullWidthWithoutFooterLayoutComponent,
+		component: FrontLibraryLayoutComponent,
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
 				path: 'production-plan',
-				loadChildren: async () =>
-					import(
-						'./pages/production-plan/production-plan.routing'
-					).then((r) => r.productionPlanRoutes),
+				component: ProductionPlanComponent,
+				children: [
+					{
+						path: 'operational-plan',
+						component: OperationalPlanComponent,
+					},
+					{ path: '**', redirectTo: 'operational-plan' },
+				],
 			},
 		],
 	},
