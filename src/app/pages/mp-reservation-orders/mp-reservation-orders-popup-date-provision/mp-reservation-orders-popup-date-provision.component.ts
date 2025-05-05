@@ -1,5 +1,11 @@
-import {Component, Inject} from '@angular/core';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import {
+	AbstractControl,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
@@ -16,8 +22,8 @@ import {
 } from '@front-components/components';
 import { NgForOf, NgIf } from '@angular/common';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
-import {MpReservationOrdersFacadeService} from "@app/core/facades/mp-reservation-orders-facade.service";
-import {DIALOG_DATA} from "@app/core/modal/modal-tokens";
+import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
+import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 
 @UntilDestroy()
 @Component({
@@ -64,16 +70,23 @@ export class MpReservationOrdersPopupDateProvisionComponent {
 		this.modalRef.close();
 	}
 
+	private setErrorsIfNotControlValue(control: AbstractControl): void {
+		if (!control.value) {
+			control.setErrors({ required: true });
+		}
+	}
+
+	protected setErrorsControl(): void {
+		this.setErrorsIfNotControlValue(this.provisionForm.controls.provisionDate);
+	}
 	public onSetProvisionDate(): void {
+		this.setErrorsControl();
+		this.provisionForm.markAllAsTouched();
 		if (this.provisionForm.invalid) {
-			this.provisionForm.markAllAsTouched();
 			return;
 		}
 		const date = this.provisionForm.value.provisionDate!;
-		this.mpReservationOrdersFacadeService.updateProvisionDates(
-			Array.from(this.orderIds),
-			date
-		);
+		this.mpReservationOrdersFacadeService.updateProvisionDates(Array.from(this.orderIds), date);
 		this.modalRef.close();
 	}
 }

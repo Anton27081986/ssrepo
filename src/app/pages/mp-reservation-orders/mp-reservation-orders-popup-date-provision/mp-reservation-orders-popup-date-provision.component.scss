@@ -2,7 +2,8 @@
 
 .set-provision-date-form {
 	width: 449px;
-	max-height: 310px;
+	min-height: 310px;
+	max-height: 328px;
 	display: flex;
 	flex-direction: column;
 	background: lighten($island-outline, 40%);

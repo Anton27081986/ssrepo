@@ -27,7 +27,8 @@
 				<ss-date-time-picker
 					formControlName="provisionDate"
 					[showTime]="false"
-					placeholder="ДД.ММ.ГГГГ"
+					[error]="provisionForm.get('provisionDate')?.touched && provisionForm.get('provisionDate')?.errors?.required ? 'Обязательное поле' : undefined"
+					(click)="provisionForm.get('provisionDate')?.setErrors(null)"
 				></ss-date-time-picker>
 			</form>
 		</ng-template>
