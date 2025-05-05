@@ -20,6 +20,7 @@ import { IconPosition } from '@front-components/components';
 import { RouterOutlet } from '@angular/router';
 import { environment } from '@environments/environment';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
+import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 
 @Component({
 	selector: 'app-plan-days',
@@ -61,9 +62,12 @@ export class ProductionPlanComponent {
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
-	private ProductionPlanPopupService: OperationPlanPopupService = inject(
+	private operationPlanPopupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService,
 	);
+
+	private productionPlanService: OperationPlanService =
+		inject(OperationPlanService);
 
 	protected changeTabIndex(index: number) {
 		if (index === 1) {
@@ -84,9 +88,25 @@ export class ProductionPlanComponent {
 	}
 
 	protected addSemiManufactures() {
-		this.ProductionPlanPopupService.addSemiManufactures();
+		this.operationPlanPopupService.addSemiManufactures();
 	}
-	protected download1C() {}
-	protected report() {}
-	protected downloadExel() {}
+	protected upload1C() {
+		this.productionPlanService.upload1C(202519);
+	}
+
+	protected downloadReport() {
+		this.productionPlanService.downloadReport();
+	}
+
+	protected downloadExel() {
+		this.productionPlanService.downloadExel().subscribe((blob) => {
+			const fileURL = window.URL.createObjectURL(blob);
+			const link = document.createElement('a');
+
+			link.href = fileURL;
+			link.click();
+
+			window.URL.revokeObjectURL(fileURL);
+		});
+	}
 }
