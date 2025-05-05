@@ -1,1 +1,44 @@
-<ss-lib-button [text]="'Привет'"></ss-lib-button>
+<div class="production-plan">
+	<div class="production-plan__header">
+		<div class="production-plan__title">
+			<ss-lib-text
+				[type]="TextType.HeadingXs"
+				[weight]="TextWeight.Medium"
+			>
+				Планирование производства
+			</ss-lib-text>
+		</div>
+
+		<div class="production-plan__tabs">
+			<ss-lib-tabs [tabs]="tabs" [(activeTabIndex)]="activeTabIndex" (changeIndexEmit)="changeTabIndex($event)"
+						 [actionsRef]="actions"></ss-lib-tabs>
+
+			<ng-template #actions>
+				<ss-lib-button [popoverTriggerFor]="listActions" [iconPosition]="IconPosition.End"
+							   [style.width]="'121px'" [type]="ButtonType.Secondary"
+							   [size]="ExtraSize.md" [text]="'Действия'" [icon]="IconType.ChevronDown"></ss-lib-button>
+				<ss-lib-button (click)="addSemiManufactures()" [style.width]="'220px'" [size]="ExtraSize.md"
+							   [text]="'Добавить полуфубрикат'"
+							   [icon]="IconType.Plus"></ss-lib-button>
+
+				<ss-lib-dropdown-list #listActions>
+					<ss-lib-dropdown-item
+						[label]="'Выгрузить 1С'"
+						(click)="download1C()"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Сводный отчет'"
+						(click)="report()"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Выгрузить Exel'"
+						(click)="downloadExel()"
+					/>
+				</ss-lib-dropdown-list>
+			</ng-template>
+		</div>
+	</div>
+	<div class="production-plan__body">
+		<router-outlet></router-outlet>
+	</div>
+</div>

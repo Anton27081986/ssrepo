@@ -1,0 +1,22 @@
+<ss-lib-modal
+	[badgeProps]="{
+						icon: IconType.Plus,
+						size: ExtraSize.lg,
+						shape: Shape.Square
+					}"
+	[titleHeader]="'Добавление полуфабриката'"
+	[descriptionHeader]="'Добавьте полуфабрикат(ы) в планирование на неделю.'"
+	[contentRef]="contentRef"
+	[actionsRef]="actionRef"
+	(closeEmit)="close()"
+>
+</ss-lib-modal>
+
+<ng-template #contentRef></ng-template>
+
+<ng-template #actionRef>
+	<div class="add-manufactures-popup__actions">
+		<ss-lib-button [style.width]="'430px'" (click)="close()" [type]="ButtonType.Secondary" [text]="'Отменить'"></ss-lib-button>
+		<ss-lib-button [style.width]="'430px'" (click)="add()" [text]="'Добавить'"></ss-lib-button>
+	</div>
+</ng-template>
