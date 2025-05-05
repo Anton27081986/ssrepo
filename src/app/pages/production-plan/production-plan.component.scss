@@ -1,29 +1,24 @@
-:host {
-	box-sizing: content-box;
-	max-width: 100%;
-}
+.production-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 0;
 
-.production-plan-wrapper {
-	display: flex;
-	width: 100%;
-	flex-direction: column;
-	gap: 24px;
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
 
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+  &__title {
+    padding: 0 24px;
+  }
 
-		&__controls {
-			display: flex;
-			gap: 16px;
-			align-items: center;
-		}
-	}
+  &__tabs {
+    height: 100%;
+  }
 
-	.tabs {
-		&__content {
-			border-top: none;
-		}
-	}
+  &__body {
+    padding: 0 24px;
+  }
 }
