@@ -1,4 +1,4 @@
-@import 'src/styles/colors';
+@use 'src/styles/colors.scss' as *;
 
 :host {
 	display: flex;

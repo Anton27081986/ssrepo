@@ -64,3 +64,10 @@
 		background-color: $island-outline;
 	}
 }
+
+
+.placeholder {
+	&-headline {
+		margin-bottom: 15px !important;
+	}
+}
