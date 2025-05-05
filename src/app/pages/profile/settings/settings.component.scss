@@ -1,13 +1,9 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
+@use '../../../../styles/colors' as *;
+
 
 .settings {
 	::ng-deep .ant-form-vertical .ant-form-item-label > label {
 		font-size: 12px;
-	}
-
-	::ng-deep .ant-input[disabled] {
-		color: #000000;
 	}
 
 	display: flex;
@@ -24,6 +20,10 @@
 			img {
 				width: 110px;
 			}
+		}
+
+		.personal-btn {
+			margin-top: 8px !important
 		}
 	}
 	.feilds {

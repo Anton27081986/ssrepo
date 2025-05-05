@@ -1,10 +1,9 @@
-@use '../../../assets/scss/variables' as *;
 
 :host {
   display: flex;
   justify-content: center;
   overflow: hidden;
-  border-radius: $border-radius-sm;
+  border-radius: 1rem;
 }
 
 .carousel-item {

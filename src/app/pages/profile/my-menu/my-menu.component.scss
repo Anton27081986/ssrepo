@@ -1,4 +1,4 @@
-@use 'src/assets/scss/_app.scss' as *;
+@use '../../../../styles/colors' as *;
 
 .my-menu {
 	p {
@@ -11,15 +11,6 @@
 		width: 375px;
 	}
 
-	::ng-deep .anticon.search {
-		svg {
-			font-size: 21px;
-
-			path {
-				stroke: #b5b6be;
-			}
-		}
-	}
 
 	.filter {
 		display: flex;
@@ -74,16 +65,6 @@
 				font-size: 16px;
 				font-weight: bold;
 
-				::ng-deep .anticon {
-					svg {
-						font-size: 13px;
-
-						path {
-							stroke: $black;
-						}
-					}
-				}
-
 				.title {
 					display: flex;
 					justify-content: space-between;
@@ -93,12 +74,6 @@
 					display: flex;
 					justify-content: space-between;
 					margin-top: 12px;
-
-					::ng-deep .anticon {
-						svg {
-							font-size: 22px;
-						}
-					}
 
 					span {
 						font-size: 14px;

@@ -76,7 +76,7 @@
 		</form>
 		<div class="footer">
 			<ss-button type="muted" size="small" (click)="close()">Отмена</ss-button>
-			@if(spec?.id) {
+			@if(spec.id) {
 				<ss-button type="primary" size="small" (click)="updateSpecification()">Сохранить изменения</ss-button>
 			} @else {
 				<ss-button type="primary" size="small" (click)="addSpecification()">Добавить новую спецификацию</ss-button>
