@@ -23,20 +23,42 @@
 				<table class="history-table">
 					<thead>
 					<tr>
-						<th>Автор</th>
-						<th>Действие</th>
-						<th>Сопроводительный текст к действию</th>
-						<th>Кому</th>
-						<th>Дата</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Автор</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Действие</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Сопроводительный текст к
+								действию
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Кому</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата</snab-text>
+						</th>
 					</tr>
 					</thead>
 					<tbody>
 					<tr *ngFor="let entry of historyEntries">
-						<td>{{ entry.author }}</td>
-						<td>{{ entry.action }}</td>
-						<td>{{ entry.comment }}</td>
-						<td>{{ entry.toWhom }}</td>
-						<td>{{ entry.date }}</td>
+						<td>
+							<snab-text [type]="TextType.Body">{{ entry.author }}</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">{{ entry.action }}</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">{{ entry.comment }}</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">{{ entry.toWhom }}</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">{{ entry.date | date: 'dd.MM.yyyy' }}</snab-text>
+						</td>
 					</tr>
 					</tbody>
 				</table>

@@ -52,15 +52,37 @@
 						<thead>
 						<tr>
 							<th></th>
-							<th>Код заказа</th>
-							<th>Статус</th>
-							<th>Дата заказа</th>
-							<th>Заказчик</th>
-							<th>Клиент</th>
-							<th>Кол-во</th>
-							<th>Обеспечение</th>
-							<th>Дата производства</th>
-							<th>Дата обеспечения</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Код заказа</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Статус</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата заказа
+								</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Заказчик</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Клиент</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Кол-во</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Обеспечение
+								</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата производства
+								</snab-text>
+							</th>
+							<th>
+								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата обеспечения
+								</snab-text>
+							</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -71,18 +93,32 @@
 							[index]="i"
 							(reorder)="onOrderReorder($event)"
 						>
-							<td><snab-button
-								[type]="ButtonType.Flat"
-								[icon]="IconType.Drag"
-								[iconPosition]="IconPosition.OnlyIcon"
-								[size]="Size.Large">
-							</snab-button></td>
-							<td>{{ order.orderId }}</td>
-							<td>{{ order.status }}</td>
-							<td>{{ order.dateOrder }}</td>
-							<td>{{ order.author }}</td>
-							<td>{{ order.client }}</td>
-							<td>{{ order.quantity }}</td>
+							<td>
+								<snab-button
+									[type]="ButtonType.Flat"
+									[icon]="IconType.Drag"
+									[iconPosition]="IconPosition.OnlyIcon"
+									[size]="Size.Large">
+								</snab-button>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{ order.orderId }}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{ order.status }}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{ order.dateOrder }}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{ order.author }}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{ order.client }}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{ order.quantity }}</snab-text>
+							</td>
 							<td class="table-td-provision">
 								<ng-container *ngIf="order.provision?.provisionAvailable">
 									<snab-label class="table-td-provision__label"

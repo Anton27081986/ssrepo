@@ -6,6 +6,7 @@ import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
 import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
+import {IChangeTrackerItemDto} from "@app/core/models/change-tracker/change-tracker-item-dto";
 
 @Injectable({
 	providedIn: 'root',
@@ -97,6 +98,23 @@ export class MpReservationOrdersApiService {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
 			body,
+		);
+	}
+
+	public getHistoryOrder(
+		objectId: string,
+		limit: number,
+		offset: number
+	): Observable<IResponse<IChangeTrackerItemDto>> {
+		let params = new HttpParams()
+			.set('ObjectId', objectId)
+			.set('Type', '5')
+			.set('limit', limit)
+			.set('offset', offset);
+
+		return this.http.get<IResponse<IChangeTrackerItemDto>>(
+			`${environment.apiUrl}/api/change-tracker/history`,
+			{ params }
 		);
 	}
 
