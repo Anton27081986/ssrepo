@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
 import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-reservation-orders-filter';
-import { BehaviorSubject, forkJoin, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, switchMap, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
+import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 
 @UntilDestroy()
 @Injectable({
@@ -142,5 +143,13 @@ export class MpReservationOrdersFacadeService {
 				untilDestroyed(this),
 			)
 			.subscribe();
+	}
+
+	public getHistoryOrder(
+		objectId: string,
+		limit: number,
+		offset: number,
+	): Observable<IResponse<IChangeTrackerItemDto>> {
+		return this.mpReservationOrdersApiService.getHistoryOrder(objectId, limit, offset);
 	}
 }

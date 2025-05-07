@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { ModalService } from '@app/core/modal/modal.service';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -13,15 +12,14 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { NgForOf } from '@angular/common';
-
-export interface IHistoryEntry {
-	author: string;
-	action: string;
-	comment: string;
-	toWhom: string;
-	date: string; // либо Date, если вы хотите форматировать вручную
-}
+import {DatePipe, NgForOf} from '@angular/common';
+import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
+import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
+import { IResponse } from '@app/core/utils/response';
+import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
+import {
+	IHistoryRow
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history.model";
 
 @UntilDestroy()
 @Component({
@@ -37,6 +35,7 @@ export interface IHistoryEntry {
 		ButtonComponent,
 		TextComponent,
 		TextComponent,
+		DatePipe,
 	],
 })
 export class MpReservationOrdersPopupHistoryComponent {
@@ -47,27 +46,53 @@ export class MpReservationOrdersPopupHistoryComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	public historyEntries: IHistoryEntry[] = [
-		{
-			author: 'Маслова (Гольская) М.Н.',
-			action: 'Начать апробацию образца',
-			comment: 'Пример текста к действию',
-			toWhom: 'Бородулин A.C., Шубинкова A.K.',
-			date: '08.10.2024 17:00',
-		},
-		{
-			author: 'Маслова (Гольская) М.Н.',
-			action: 'Начать апробацию образца',
-			comment: 'im ipsum dolor sit amet, consectetur adipiscing elit...',
-			toWhom: 'Бородулин A.C.',
-			date: '09.10.2024 11:20',
-		},
-	];
+	public historyEntries: IHistoryRow[] = [];
+	public total = 0;
+	public pageSize = 10;
+	public offset = 0;
 
 	constructor(
+		@Inject(DIALOG_DATA) protected readonly orderId: string,
 		private readonly modalRef: ModalRef,
-		private readonly modalService: ModalService
-	) {}
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+	) {
+		this.loadHistory();
+	}
+
+	private loadHistory(): void {
+		this.mpReservationOrdersFacadeService
+			.getHistoryOrder(this.orderId, this.pageSize, this.offset)
+			.pipe(untilDestroyed(this))
+			.subscribe((resp: IResponse<IChangeTrackerItemDto>) => {
+				this.total = resp.total ?? resp.items.length;
+				this.historyEntries = this.mapToRows(resp.items);
+			});
+	}
+
+	private mapToRows(itemsHistory: IChangeTrackerItemDto[]): IHistoryRow[] {
+		const rows: IHistoryRow[] = [];
+		for (const item of itemsHistory) {
+			const baseDate = item.createdTime;
+			const author = item.user?.name ?? '-';
+			const action = item.action;
+			const comment = item.comments ?? '';
+
+			if (item.changes?.length) {
+				for (const change of item.changes) {
+					rows.push({
+						author,
+						action,
+						comment,
+						toWhom: change.propertyName ?? '',
+						date: baseDate,
+					});
+				}
+			} else {
+				rows.push({ author, action, comment, toWhom: '', date: baseDate });
+			}
+		}
+		return rows;
+	}
 
 	public close(): void {
 		this.modalRef.close();
