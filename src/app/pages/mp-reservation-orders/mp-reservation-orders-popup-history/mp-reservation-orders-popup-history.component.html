@@ -3,6 +3,7 @@
 		class="history-popup"
 		[headerRef]="header"
 		[bodyRef]="body"
+		[footerRef]="footer"
 		(mousedown)="$event.stopPropagation()">
 		<ng-template #header>
 			<div class="header">
@@ -62,6 +63,17 @@
 					</tr>
 					</tbody>
 				</table>
+
+			</div>
+		</ng-template>
+		<ng-template #footer>
+			<div class="pagination">
+				<ss-pagination
+					[total]="total"
+					[pageSize]="pageSize"
+					[pageIndex]="pageIndex"
+					(changeIndex)="pageIndexChange($event)">
+				</ss-pagination>
 			</div>
 		</ng-template>
 	</snab-card>
