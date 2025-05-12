@@ -12,14 +12,13 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import {DatePipe, NgForOf} from '@angular/common';
+import { DatePipe, NgForOf } from '@angular/common';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { IResponse } from '@app/core/utils/response';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import {
-	IHistoryRow
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history.model";
+import { IHistoryRow } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history.model';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -36,6 +35,7 @@ import {
 		TextComponent,
 		TextComponent,
 		DatePipe,
+		PaginationComponent,
 	],
 })
 export class MpReservationOrdersPopupHistoryComponent {
@@ -49,6 +49,7 @@ export class MpReservationOrdersPopupHistoryComponent {
 	public historyEntries: IHistoryRow[] = [];
 	public total = 0;
 	public pageSize = 10;
+	public pageIndex = 1;
 	public offset = 0;
 
 	constructor(
@@ -70,28 +71,26 @@ export class MpReservationOrdersPopupHistoryComponent {
 	}
 
 	private mapToRows(itemsHistory: IChangeTrackerItemDto[]): IHistoryRow[] {
-		const rows: IHistoryRow[] = [];
-		for (const item of itemsHistory) {
-			const baseDate = item.createdTime;
-			const author = item.user?.name ?? '-';
-			const action = item.action;
-			const comment = item.comments ?? '';
+		return itemsHistory.map(item => {
+			const nameChange = item.changes?.find(changeItem => changeItem.propertyName === 'Name');
+			const toWhom = nameChange
+				? `${nameChange.fromValue ?? ''}, ${nameChange.toValue ?? ''}`
+				: '';
 
-			if (item.changes?.length) {
-				for (const change of item.changes) {
-					rows.push({
-						author,
-						action,
-						comment,
-						toWhom: change.propertyName ?? '',
-						date: baseDate,
-					});
-				}
-			} else {
-				rows.push({ author, action, comment, toWhom: '', date: baseDate });
-			}
-		}
-		return rows;
+			return {
+				author: item.user.name ?? '-',
+				action: item.action ?? '-',
+				comment: item.comments ?? '-',
+				toWhom,
+				date: item.createdTime ?? '-',
+			};
+		});
+	}
+
+	public pageIndexChange(newPage: number) {
+		this.pageIndex = newPage;
+		this.offset = this.pageSize * (newPage - 1);
+		this.loadHistory();
 	}
 
 	public close(): void {

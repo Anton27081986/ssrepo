@@ -2,7 +2,7 @@
 
 .history-popup {
 	width: 965px;
-	max-height: 836px;
+	max-height: 795px;
 	display: flex;
 	flex-direction: column;
 	background: lighten($island-outline, 40%);
@@ -29,7 +29,7 @@
 	flex-direction: column;
 	padding: var(--padding-l);
 	overflow: auto;
-	max-height: 560px;
+	min-height: 560px;
 }
 
 .history-table {
