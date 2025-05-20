@@ -22,7 +22,7 @@
 </ng-template>
 
 <ng-template #body>
-    <form class="manager__body">
+    <form [formGroup]="changeManagerForm" class="manager__body">
         <div class="manager__body__info">
             <div class="manager__body__info__item">
                 <snab-text [weight]="TextWeight.Semibold">Менеджер продаж:</snab-text>
@@ -33,11 +33,19 @@
                 <snab-text>{{ tov?.name }}</snab-text>
             </div>
         </div>
-        <ss-table-v2>
-            <tr mp-reservation-orders-card-popup-change-manager-tr *ngFor="let item of items" [item]="item"></tr>
-        </ss-table-v2>
-
-        <ss-search-input class="manager__body__manager" label="Менеджер по продажам *" [searchType]="'user-dictionary'"></ss-search-input>
+		<div class="manager__body__table">
+			<ss-table-v2>
+				<tr mp-reservation-orders-card-popup-change-manager-tr *ngFor="let item of items" [item]="item"></tr>
+			</ss-table-v2>
+		</div>
+        <ss-search-input
+			class="manager__body__manager"
+			label="Менеджер по продажам *"
+			[error]="changeManagerForm.controls.managerField.touched && changeManagerForm.controls.managerField.errors?.required ? 'Обязательное поле' : undefined"
+			(select)="onManagerSelect($event)"
+			(click)="changeManagerForm.controls.managerField.setErrors(null)"
+			[searchType]="'user'">
+		</ss-search-input>
     </form>
 </ng-template>
 
@@ -48,6 +56,6 @@
                      [size]="Size.Large"
                      (click)="close()"
         ></snab-button>
-        <snab-button text="Персонифицировать" [size]="Size.Large"></snab-button>
+        <snab-button text="Персонифицировать" [size]="Size.Large" (click)="changeManager()"></snab-button>
     </div>
 </ng-template>

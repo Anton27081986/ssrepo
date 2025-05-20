@@ -28,7 +28,6 @@
 		display: flex;
 		width: 100%;
 		flex-grow: 1;
-		overflow-y: auto;
 		flex-direction: column;
 		gap: var(--gap-xl-2);
 
@@ -47,6 +46,10 @@
 
 		&__manager {
 			width: 236px;
+		}
+
+		&__table {
+			overflow-y: auto;
 		}
 	}
 

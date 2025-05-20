@@ -1,6 +1,6 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
-		<ng-container [ngSwitch]="col.id">
+		<ng-container [formGroup]="qualificationTrForm" [ngSwitch]="col.id">
 			<td class="ss-table-td" *ngIf="col.display">
 
 				<ng-container *ngSwitchCase="QualificationTrRowItemField.amount">
@@ -20,9 +20,8 @@
 				<ng-container *ngSwitchCase="QualificationTrRowItemField.requestedProvisionDate">
 					<div class="hc-table-td__content">
 						<ss-date-time-picker
-                            [value]="item.requestedProvisionDate"
+							formControlName="dateProvision"
                             [showTime]="false"
-                            (change)="item.requestedProvisionDate = getInputValue($event.target!)"
                             [error]="item.errors.requestedProvisionDate ? 'Обязательное поле' : undefined"
                         ></ss-date-time-picker>
 					</div>

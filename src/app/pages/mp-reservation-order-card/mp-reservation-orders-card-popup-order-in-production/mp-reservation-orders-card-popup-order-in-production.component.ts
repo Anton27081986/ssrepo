@@ -57,6 +57,8 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	protected readonly TextType = TextType;
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 
 	public inProductionForm!: FormGroup<{
 		quantity: FormControl<number | null>;
@@ -155,7 +157,4 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 				}
 		})
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
 }

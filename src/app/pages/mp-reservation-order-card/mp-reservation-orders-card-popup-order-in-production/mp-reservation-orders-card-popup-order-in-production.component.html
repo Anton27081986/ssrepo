@@ -12,8 +12,8 @@
 				<snab-button [type]="ButtonType.Flat"
 							 [size]="Size.Large"
 							 [icon]="IconType.ClearLarge"
-                             [iconPosition]="IconPosition.OnlyIcon"
-                             (click)="close()"></snab-button>
+							 [iconPosition]="IconPosition.OnlyIcon"
+							 (click)="close()"></snab-button>
 			</div>
 		</ng-template>
 
@@ -44,10 +44,20 @@
 				<table class="dates-table">
 					<thead>
 					<tr>
-						<th>Дата производства</th>
-						<th>Дата обеспечения</th>
-						<th>Кол-во (факт)</th>
-						<th>Действия</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата производства
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата обеспечения
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Кол-во (факт)</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Действия</snab-text>
+						</th>
 					</tr>
 					</thead>
 					<tbody formArrayName="dates">
@@ -57,7 +67,7 @@
 								[showTime]="false"
 								type="number"
 								formControlName="productionDate"
-                                [error]="(inProductionForm.controls['dates']!.controls[i].controls?.productionDate?.errors &&
+								[error]="(inProductionForm.controls['dates']!.controls[i].controls?.productionDate?.errors &&
                                 !inProductionForm.controls['dates']!.controls[i].controls?.productionDate?.untouched)
                                 ? 'Неверно заполнено поле'
                                 : ''"
@@ -68,7 +78,7 @@
 								[showTime]="false"
 								type="number"
 								formControlName="provisionDate"
-                                [error]="(inProductionForm.controls['dates']!.controls[i].controls?.provisionDate?.errors &&
+								[error]="(inProductionForm.controls['dates']!.controls[i].controls?.provisionDate?.errors &&
                                 !inProductionForm.controls['dates']!.controls[i].controls?.provisionDate?.untouched)
                                 ? 'Неверно заполнено поле'
                                 : ''"

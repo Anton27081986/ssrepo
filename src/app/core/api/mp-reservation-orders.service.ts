@@ -4,9 +4,13 @@ import { MpReservationFilter } from '@app/core/models/mp-reservation-orders/mp-r
 import { IResponse } from '@app/core/utils/response';
 import { environment } from '@environments/environment';
 import { Observable } from 'rxjs';
-import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import {
+	IMpReservationOrder,
+	IProvisionDetailsTypes,
+} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
-import {IChangeTrackerItemDto} from "@app/core/models/change-tracker/change-tracker-item-dto";
+import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
+import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
 
 @Injectable({
 	providedIn: 'root',
@@ -94,6 +98,13 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
+	public removePersonification(orderId: number): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/remove`,
+			{},
+		);
+	}
+
 	public createDetails(orderId: number, body: IProvisionDetailsTypes): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
@@ -104,7 +115,7 @@ export class MpReservationOrdersApiService {
 	public getHistoryOrder(
 		objectId: string,
 		limit: number,
-		offset: number
+		offset: number,
 	): Observable<IResponse<IChangeTrackerItemDto>> {
 		let params = new HttpParams()
 			.set('ObjectId', objectId)
@@ -114,7 +125,7 @@ export class MpReservationOrdersApiService {
 
 		return this.http.get<IResponse<IChangeTrackerItemDto>>(
 			`${environment.apiUrl}/api/change-tracker/history`,
-			{ params }
+			{ params },
 		);
 	}
 
@@ -129,6 +140,19 @@ export class MpReservationOrdersApiService {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/author`,
 			{ authorId },
+		);
+	}
+
+	public clarify(orderId: number, body: IClarifyOrder): Observable<void> {
+		return this.http.post<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/requests`,
+			body,
+		);
+	}
+
+	public approveClarification(orderId: number): Observable<void> {
+		return this.http.get<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/requests`,
 		);
 	}
 }
