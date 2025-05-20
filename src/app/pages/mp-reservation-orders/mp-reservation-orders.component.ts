@@ -38,6 +38,9 @@ import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reserva
 import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
 import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
+import {untilDestroyed} from "@ngneat/until-destroy";
+import {UserFacadeService} from "@app/core/facades/user-facade.service";
+import {IUserProfile} from "@app/core/models/user-profile";
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -116,7 +119,7 @@ export class MPReservationOrdersComponent {
 		{
 			name: 'managerId',
 			type: 'search-select',
-			searchType: 'user-dictionary',
+			searchType: 'user',
 			label: 'МУТМЗ',
 			placeholder: '',
 		},

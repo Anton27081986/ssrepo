@@ -20,7 +20,7 @@
 		<ng-template #body>
 			<div class="author-label">
 				<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
-					Автор: Иванов И.И.
+					Автор: {{ currentUser?.name }}
 				</snab-text>
 			</div>
 			<form [formGroup]="addOrdersForm" class="content">

@@ -16,21 +16,30 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
 import {
-	IOrderChangeQualification
-} from "@app/core/models/mp-reservation-orders/mp-reservation-order-change-qualification";
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { IOrderChangeQualification } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-qualification';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 export enum QualificationTrRowItemField {
 	amount = 'amount',
 	requestedProvisionDate = 'requestedProvisionDate',
 }
 
+@UntilDestroy()
 @Component({
 	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'tr[mp-reservation-orders-card-popup-qualification-tr]',
@@ -48,16 +57,23 @@ export enum QualificationTrRowItemField {
 		InputComponent,
 		SearchInputComponent,
 		NgSwitchDefault,
-		DateTimePickerComponent
+		DateTimePickerComponent,
+		FormsModule,
+		ReactiveFormsModule,
 	],
-	standalone: true
+	standalone: true,
 })
-export class MpReservationOrdersCardPopupQualificationTrComponent implements OnInit, AfterViewChecked {
+export class MpReservationOrdersCardPopupQualificationTrComponent
+	implements OnInit, AfterViewChecked
+{
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly Number = Number;
+
 	protected readonly QualificationTrRowItemField = QualificationTrRowItemField;
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
 	@Input({ required: true }) item!: IOrderChangeQualification;
-
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -65,6 +81,10 @@ export class MpReservationOrdersCardPopupQualificationTrComponent implements OnI
 	@ViewChild('content') public content!: ElementRef;
 
 	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	public qualificationTrForm!: FormGroup<{
+		dateProvision: FormControl<string>;
+	}>;
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
@@ -99,6 +119,20 @@ export class MpReservationOrdersCardPopupQualificationTrComponent implements OnI
 				],
 			},
 		]);
+
+		this.qualificationTrForm = new FormGroup({
+			dateProvision: new FormControl(
+				this.item?.requestedProvisionDate,
+				{
+					nonNullable: true,
+					validators: Validators.required
+				}
+			)
+		});
+
+		this.qualificationTrForm.controls.dateProvision.valueChanges
+			.pipe(untilDestroyed(this))
+			.subscribe(value => this.item.requestedProvisionDate = value);
 	}
 
 	ngAfterViewChecked() {
@@ -121,8 +155,4 @@ export class MpReservationOrdersCardPopupQualificationTrComponent implements OnI
 			},
 		});
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly Number = Number;
 }

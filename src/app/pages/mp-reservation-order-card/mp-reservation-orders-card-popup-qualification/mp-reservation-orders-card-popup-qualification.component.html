@@ -22,9 +22,14 @@
 </ng-template>
 
 <ng-template #body>
-    <form class="qualification__body">
+    <form [formGroup]="changeClarifyOrderForm" class="qualification__body">
         @if (tov) {
-            <ss-search-input [selectedItem]="tov" [searchType]="'tovs'"></ss-search-input>
+            <ss-search-input
+				[selectedItem]="tov"
+				[searchType]="'tovs'"
+				[error]="changeClarifyOrderForm.controls.tov.touched && changeClarifyOrderForm.controls.tov.errors?.required ? 'Обязательное поле' : undefined"
+				(select)="onTovSelect($event)">
+			</ss-search-input>
         }
         <ss-table-v2>
             <tr mp-reservation-orders-card-popup-qualification-tr *ngFor="let item of items" [item]="item"></tr>
@@ -39,6 +44,6 @@
                      [size]="Size.Large"
                      (click)="close()"
         ></snab-button>
-        <snab-button text="Уточнить" [size]="Size.Large"></snab-button>
+        <snab-button text="Уточнить" [size]="Size.Large" (click)="clarifyOrder()"></snab-button>
     </div>
 </ng-template>

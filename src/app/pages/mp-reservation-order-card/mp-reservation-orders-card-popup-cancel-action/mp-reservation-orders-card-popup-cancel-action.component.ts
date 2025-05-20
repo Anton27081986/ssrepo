@@ -12,10 +12,14 @@ import {
 	TextComponent,
 	TextType,
 	TextWeight,
-	CardComponent
+	CardComponent,
 } from '@front-components/components';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {Router} from "@angular/router";
 
+@UntilDestroy()
 @Component({
 	selector: 'app-mp-reservation-orders-card-popup-cancel-action',
 	standalone: true,
@@ -41,9 +45,21 @@ export class MpReservationOrdersCardPopupCancelActionComponent {
 	protected readonly IconType = IconType;
 	protected readonly ButtonType = ButtonType;
 
-	public constructor(private readonly modalRef: ModalRef) {}
+	public constructor(
+		private readonly modalRef: ModalRef,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
+		protected readonly router: Router,
+	) {}
 
 	protected close(result: boolean = false) {
 		this.modalRef.close(result);
+	}
+
+	public removeOrder(): void {
+		this.mpReservationOrderCardFacadeService.removeOrder().pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.modalRef.close();
+				this.router.navigate(['mp-reservation-orders']);
+			});
 	}
 }

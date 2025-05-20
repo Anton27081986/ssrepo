@@ -45,6 +45,9 @@ import {
 import { TagV2Component } from "@app/shared/components/tag-v2/tag-v2.component";
 import { MpReservationOrderCardFacadeService } from "@app/core/facades/mp-reservation-order-card-facade.service";
 import { CorrespondenceTypeEnum } from "@app/widgets/correspondence/correspondence-type-enum";
+import {
+	MpReservationOrdersCardPopupCancelActionComponent
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component";
 
 @Component({
 	selector: 'app-mp-reservation-order-card',
@@ -76,8 +79,9 @@ export class MpReservationOrderCardComponent implements OnInit {
 	protected readonly LabelType = LabelType;
 	protected readonly Permissions = Permissions;
 	protected readonly IconType = IconType;
+	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 
-	public order: Signal<IMpReservationOrder | null> = toSignal(this.mpReservationOrdersFacadeService.activeOrder$, {
+	public order: Signal<IMpReservationOrder | null> = toSignal(this.mpReservationOrderCardFacadeService.activeOrder$, {
 		initialValue: null,
 	});
 
@@ -86,7 +90,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 	public procuring: WritableSignal<ITableItem[]> = signal([])
 
 	constructor(
-		private readonly mpReservationOrdersFacadeService: MpReservationOrderCardFacadeService,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 		private readonly modalService: ModalService,
 		private readonly activatedRoute: ActivatedRoute,
 		protected readonly router: Router) {
@@ -115,7 +119,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if (id) {
-			this.mpReservationOrdersFacadeService.getPersonificationById(id);
+			this.mpReservationOrderCardFacadeService.getPersonificationById(id);
 		} else {
 			this.router.navigate(['mp-reservation-orders']);
 		}
@@ -138,16 +142,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 	}
 
 	public openPopupCancelAction(): void {
-		this.modalService
-			.open(NoticeDialogComponent, {
-				data: {
-					header: 'Изменения не будут сохранены',
-					text: 'Вы уверены, что хотите совершить действие',
-					type: 'Warning',
-					buttonOk: 'Отмена',
-					buttonCancel: 'Не сохранять',
-				},
-			})
+		this.modalService.open(MpReservationOrdersCardPopupCancelActionComponent);
 	}
 
 	public openPopupQualification(): void {
@@ -178,6 +173,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 				id: this.order()?.id
 			}
 		});
+		this.mpReservationOrderCardFacadeService.approveClarification().subscribe()
 	}
 
 	public openPopupChangeManager(): void {
@@ -190,6 +186,4 @@ export class MpReservationOrderCardComponent implements OnInit {
 			}
 		});
 	}
-
-	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 }

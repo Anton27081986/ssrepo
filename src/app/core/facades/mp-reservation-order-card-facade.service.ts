@@ -5,6 +5,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { Router } from "@angular/router";
 import { catchError } from "rxjs/operators";
+import {
+	IClarifyOrder,
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models";
 
 @UntilDestroy()
 @Injectable({
@@ -45,7 +48,27 @@ export class MpReservationOrderCardFacadeService {
 		return this.mpReservationOrdersApiService.rejectPersonification(this.activeOrder.value?.id!, reason);
 	}
 
+	public removeOrder() {
+		return this.mpReservationOrdersApiService.removePersonification(this.activeOrder.value?.id!);
+	}
+
 	public addDetails(details: IProvisionDetailsTypes) {
 		return this.mpReservationOrdersApiService.createDetails(this.activeOrder.value?.id!, details);
+	}
+
+	public changeDetails(details: IProvisionDetailsTypes) {
+		return this.mpReservationOrdersApiService.changeDetails(this.activeOrder.value?.id!, details);
+	}
+
+	public changeManager(authorId: number) {
+		return this.mpReservationOrdersApiService.changeManager(this.activeOrder.value?.id!, authorId);
+	}
+
+	public clarifyOrder(body: IClarifyOrder) {
+		return this.mpReservationOrdersApiService.clarify(this.activeOrder.value?.id!, body);
+	}
+
+	public approveClarification() {
+		return this.mpReservationOrdersApiService.approveClarification(this.activeOrder.value?.id!);
 	}
 }

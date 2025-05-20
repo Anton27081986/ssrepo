@@ -28,11 +28,24 @@
 				<table class="orders-table">
 					<thead>
 					<tr>
-						<th>Склад</th>
-						<th>Кол-во в производстве</th>
-						<th>Количество на складе</th>
-						<th>Количество (факт)</th>
-						<th>Действие</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Склад</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Кол-во в производстве
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Количество на складе
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Количество (факт)
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Действие</snab-text>
+						</th>
 					</tr>
 					</thead>
 					<tbody formArrayName="warehouses">
