@@ -19,16 +19,15 @@ import {
 	IconPosition,
 	IconType,
 	Size,
-	TextareaComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-components/components';
 import { ModalService } from '@app/core/modal/modal.service';
-import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { Router } from '@angular/router';
+import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
 
 @UntilDestroy()
 @Component({
@@ -43,10 +42,9 @@ import { Router } from '@angular/router';
 		ReactiveFormsModule,
 		TextComponent,
 		ButtonComponent,
-		TextareaComponent,
-		TextareaComponent,
 		FormFieldComponent,
 		FieldCtrlDirective,
+		TextareaComponent,
 	],
 	templateUrl: './mp-reservation-orders-card-popup-reject-order.component.html',
 	styleUrl: './mp-reservation-orders-card-popup-reject-order.component.scss',

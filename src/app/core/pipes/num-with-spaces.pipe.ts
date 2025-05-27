@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 	standalone: true
 })
 export class NumWithSpacesPipe implements PipeTransform {
-	transform(value: unknown, digits = 2, sep = ' '): string {
+	transform(value: unknown, digits = 2, sep = '\u00A0'): string {
 		if (typeof value === 'number') {
 			return this.numberWithSpaces(value, digits, sep);
 		}
@@ -17,7 +17,7 @@ export class NumWithSpacesPipe implements PipeTransform {
 		return '';
 	}
 
-	numberWithSpaces(num: number, digits = 2, sep = ' '): string {
+	numberWithSpaces(num: number, digits = 2, sep = '\u00A0'): string {
 		const number = num % 1 > 0 ? num.toFixed(digits) : num;
 		const separate = number.toString().split('.');
 

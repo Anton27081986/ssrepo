@@ -54,7 +54,7 @@ export class MessagesComponent {
 
 	protected tabs: ITab[] = [
 		{
-			label: 'Все сообщения по клиенту',
+			label: 'Все сообщения',
 			name: 'messages',
 			isVisible: true,
 		},
@@ -95,7 +95,7 @@ export class MessagesComponent {
 
 			const messageTab = this.tabs.find(x => x.name === 'messages');
 
-			messageTab!.label = subject !== null ? subject : 'Все сообщения по клиенту';
+			messageTab!.label = subject !== null ? subject : 'Все сообщения';
 			this.pageIndex = 1;
 			this.pageSize = 10;
 			this.total = 0;

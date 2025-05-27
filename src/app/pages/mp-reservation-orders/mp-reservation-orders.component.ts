@@ -3,6 +3,8 @@ import {
 	ButtonComponent,
 	ButtonType,
 	CheckboxComponent,
+	Colors,
+	IconComponent,
 	IconPosition,
 	IconType,
 	LabelComponent,
@@ -31,16 +33,12 @@ import { Router } from '@angular/router';
 import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
-import {
-	ChartLineComponent,
-} from '@app/shared/components/chart-line/chart-line.component';
+import { ChartLineComponent } from '@app/shared/components/chart-line/chart-line.component';
 import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
 import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
 import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
-import {untilDestroyed} from "@ngneat/until-destroy";
-import {UserFacadeService} from "@app/core/facades/user-facade.service";
-import {IUserProfile} from "@app/core/models/user-profile";
+import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -67,6 +65,8 @@ import {IUserProfile} from "@app/core/models/user-profile";
 		LinkComponent,
 		TooltipDirective,
 		LabelComponent,
+		IconComponent,
+		TagV2Component,
 	],
 	standalone: true,
 })
@@ -78,6 +78,7 @@ export class MPReservationOrdersComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 	protected readonly LabelType = LabelType;
+	protected readonly Colors = Colors;
 
 	public pageSize = 10;
 	public offset = 0;
