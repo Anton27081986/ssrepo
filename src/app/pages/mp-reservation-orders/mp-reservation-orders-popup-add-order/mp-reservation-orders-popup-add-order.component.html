@@ -31,6 +31,7 @@
 							label="ТП"
 							[placeholder]="'Выберите товарную позицию'"
 							[error]="addOrdersForm.controls.tov.touched && addOrdersForm.controls.tov.errors?.required ? 'Обязательное поле' : undefined"
+							[fromAddOrder]="true"
 							(select)="onTovSelect($event)"
 							(click)="addOrdersForm.controls.tov.setErrors(null)"/>
 					</div>
@@ -40,6 +41,7 @@
 							label="Клиент"
 							[placeholder]="'Выберите клиента'"
 							[error]="addOrdersForm.controls.client.touched && addOrdersForm.controls.client.errors?.required ? 'Обязательное поле' : undefined"
+							[fromAddOrder]="true"
 							(select)="onClientSelect($event)"
 							(click)="addOrdersForm.controls.client.setErrors(null)"/>
 					</div>
@@ -88,9 +90,18 @@
 				<table class="details-table">
 					<thead>
 					<tr>
-						<th>Количество (план)</th>
-						<th>Желаемая дата обеспечения</th>
-						<th>Действия</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Количество (план)
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Желаемая дата обеспечения
+							</snab-text>
+						</th>
+						<th>
+							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Действия
+							</snab-text>
+						</th>
 					</tr>
 					</thead>
 					<tbody formArrayName="details">

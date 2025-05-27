@@ -1,31 +1,55 @@
 <div class="wrapper" (click)="close()">
-	<snab-card class="card-wrapper"
-			   [bodyRef]="body"
-               [footerRef]="footer"
-			   (click)="$event.stopPropagation()">
+	<snab-card
+		class="card-wrapper"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(click)="$event.stopPropagation()">
 		<ng-template #body>
 			<div class="body">
-				<snab-icon class="body__icon" [icon]="IconType.Save" [width]="'36'" [height]="'36'"/>
+				<snab-icon
+					class="body__icon"
+					[icon]="IconType.ClearSmall"
+					[width]="'36'"
+					[height]="'36'" />
+				@if (isConfirmed) {
+					<snab-text [weight]="TextWeight.Medium" [type]="TextType.Title">
+						Подтвердить удаление заказа по обеспечению?
+					</snab-text>
+				} @else {
+					<snab-text [weight]="TextWeight.Medium" [type]="TextType.Title">
+						Отклонить удаление заказа по обеспечению?
+					</snab-text>
+				}
 				<snab-text
-					[weight]="TextWeight.Medium"
-					[type]="TextType.Title">Изменения не будут сохранены
-				</snab-text>
-				<snab-text class="body__description"
-						   [weight]="TextWeight.Regular"
-						   [type]="TextType.Body">Вы уверены, что хотите совершить действие?
+					class="body__description"
+					[weight]="TextWeight.Regular"
+					[type]="TextType.Body">
+					Вы уверены, что хотите совершить действие?
 				</snab-text>
 			</div>
 		</ng-template>
-        <ng-template #footer>
-            <div class="footer-controls">
-                <snab-button class="footer-controls__button" text="Отмена"
-                             [type]="ButtonType.Secondary"
-                             [size]="Size.Large"
-                             (click)="close()"
-                ></snab-button>
-                <snab-button class="footer-controls__button" text="Не сохранять" [size]="Size.Large"
-                             (click)="removeOrder()"></snab-button>
-            </div>
-        </ng-template>
+		<ng-template #footer>
+			<div class="footer-controls">
+				<snab-button
+					text="Отмена"
+					class="footer-controls__button"
+					[type]="ButtonType.Secondary"
+					[size]="Size.Large"
+					(click)="close()"></snab-button>
+				@if (isConfirmed) {
+					<snab-button
+						text="Подтвердить"
+						class="footer-controls__button"
+						[size]="Size.Large"
+						(click)="removeOrder()"></snab-button>
+				} @else {
+					<snab-button
+						text="Отклонить"
+						class="footer-controls__button"
+						[size]="Size.Large"
+						(click)="rejectRemoveOrder()"></snab-button>
+				}
+			</div>
+		</ng-template>
 	</snab-card>
 </div>

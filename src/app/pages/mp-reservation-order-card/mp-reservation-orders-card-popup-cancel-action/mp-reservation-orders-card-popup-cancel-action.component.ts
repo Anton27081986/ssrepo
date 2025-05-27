@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
@@ -18,6 +18,7 @@ import { TextareaComponent } from '@app/shared/components/textarea/textarea.comp
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {Router} from "@angular/router";
+import {DIALOG_DATA} from "@app/core/modal/modal-tokens";
 
 @UntilDestroy()
 @Component({
@@ -45,7 +46,10 @@ export class MpReservationOrdersCardPopupCancelActionComponent {
 	protected readonly IconType = IconType;
 	protected readonly ButtonType = ButtonType;
 
+	public readonly isConfirmed = this.data;
+
 	public constructor(
+		@Inject(DIALOG_DATA) private readonly data: boolean,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 		protected readonly router: Router,
@@ -61,5 +65,9 @@ export class MpReservationOrdersCardPopupCancelActionComponent {
 				this.modalRef.close();
 				this.router.navigate(['mp-reservation-orders']);
 			});
+	}
+
+	public rejectRemoveOrder(): void {
+		//TODO новый метод возврата в предыдущий статус
 	}
 }
