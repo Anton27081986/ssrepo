@@ -1,0 +1,79 @@
+<ng-container *ngFor="let col of columnState.colsTr$ | async">
+	<ng-container [ngSwitch]="col.id">
+		<td
+			class="ss-lib-table-td"
+			[class.ss-lib-table-td-sticky]="col.sticky"
+		>
+			<div
+				class="ss-lib-table-td-item
+				ss-lib-table-td-item-align--{{ col.align }}"
+				[class.ss-lib-table-td-item--no-padding]="col.noPadding"
+			>
+				<ng-container *ngSwitchCase="PostponePersonificationRowItemField.orderNumber">
+					<ss-lib-text [type]="TextType.BodySm"
+								 [weight]="TextWeight.Regular">{{ personification().orderId }}
+					</ss-lib-text>
+				</ng-container>
+				<ng-container *ngSwitchCase="PostponePersonificationRowItemField.countForPostpone">
+					<div class="postpone-personification__countForPostpone"
+						 (mouseenter)="mouseEnterCount()"
+						 (focusin)="focusCount = true"
+						 (focusout)="focusOutCount()"
+						 (mouseleave)="mouseleaveCount()"
+					>
+						<ss-lib-text *ngIf="!viewCountControl" [type]="TextType.BodySm"
+									 [weight]="TextWeight.Regular">{{ personification().countForPostpone.value }}
+						</ss-lib-text>
+						<ss-lib-form-field
+							*ngIf="viewCountControl"
+							[showValidationFieldIcon]="true"
+						>
+							<ss-lib-input
+								fieldCtrl
+								[formControl]="personification().countForPostpone"
+								[max]="personification().quantity"
+								[min]="0"
+								[type]="InputType.Number"
+							/>
+						</ss-lib-form-field>
+					</div>
+				</ng-container>
+				<ng-container *ngSwitchCase="PostponePersonificationRowItemField.count">
+					<ss-lib-text [type]="TextType.BodySm"
+								 [weight]="TextWeight.Regular">{{ personification().quantity }}
+					</ss-lib-text>
+				</ng-container>
+				<ng-container *ngSwitchCase="PostponePersonificationRowItemField.customer">
+					<ss-lib-text [type]="TextType.BodySm"
+								 [weight]="TextWeight.Regular">{{ personification().customerUser.name }}
+					</ss-lib-text>
+				</ng-container>
+				<ng-container *ngSwitchCase="PostponePersonificationRowItemField.postponeForData">
+					<div class="postpone-personification__countForPostpone"
+						 (mouseenter)="mouseEnterDateControl()"
+						 (focusin)="focusDateControl = true"
+						 (focusout)="focusOutDateControl()"
+						 (mouseleave)="mouseleaveDateControl()">
+
+						<ss-lib-text *ngIf="!viewDateControl" [type]="TextType.BodySm"
+									 [weight]="TextWeight.Regular"
+						>
+							{{ personification().productionDateControl.value | date:'dd.MM.yyyy' }}
+						</ss-lib-text>
+
+						<ss-lib-form-field
+							*ngIf="viewDateControl"
+						>
+							<ss-lib-datepicker
+								[min]="now"
+								fieldCtrl
+								[formControl]="personification().productionDateControl"
+							/>
+						</ss-lib-form-field>
+
+					</div>
+				</ng-container>
+			</div>
+		</td>
+	</ng-container>
+</ng-container>

@@ -7,6 +7,7 @@ export interface IResponse<T> {
 	totalCount?: number;
 	weekCount?: number;
 	clientOfferId?: string;
+	totalQuantity?: number;
 }
 
 export interface Currency {

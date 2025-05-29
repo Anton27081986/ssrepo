@@ -1,23 +1,127 @@
 <ss-lib-modal
 	[badgeProps]="{
-						icon: IconType.Plus,
+						icon: IconType.PackagePlus,
 						size: ExtraSize.lg,
 						shape: Shape.Square
 					}"
+	[class.add-manufactures-popup--visibility]="!isVisibleModal()"
 	[titleHeader]="'Добавление полуфабриката'"
 	[descriptionHeader]="'Добавьте полуфабрикат(ы) в планирование на неделю.'"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
+	[stickyRef]="stickyRef"
 	(closeEmit)="close()"
 >
 </ss-lib-modal>
 
-<ng-template #contentRef></ng-template>
+<ng-template #stickyRef>
+	<div class="add-manufactures-popup__sticky">
+		<ss-lib-form-field
+			[icon]="IconType.Search"
+		>
+			<ss-lib-input
+				fieldCtrl
+				[formControl]="queryControl"
+				[placeholder]="'Введите название полуфабриката...'"
+				[clearButton]="true"
+			/>
+		</ss-lib-form-field>
+		<ss-lib-button class="add-manufactures-popup__clear-button" *ngIf="selectedTov().length"
+					   (click)="deleteSelected()" [type]="ButtonType.Text"
+					   [text]="'Очистить выбор'"></ss-lib-button>
+	</div>
+</ng-template>
+
+<ng-template #contentRef>
+	<div class="add-manufactures-popup">
+		<div *ngIf="selectedTov().length" class="add-manufactures-popup__selected">
+			<div *ngFor="let selectedItem of selectedTov()" class="add-manufactures-popup__item">
+				<div class="add-manufactures-popup__item-left">
+					<ss-lib-checkbox [formControl]="selectedItem.selected"
+									 (click)="removeTovSelected(selectedItem)"></ss-lib-checkbox>
+					<ss-lib-text [type]="TextType.BodySm" [weight]="TextWeight.Regular"> {{ selectedItem.tov.name }}
+					</ss-lib-text>
+				</div>
+				<div class="add-manufactures-popup__item-right">
+					<ss-lib-button [justifyContent]="JustifyContent.SpaceBetween" [iconPosition]="IconPosition.End"
+								   [icon]="IconType.ChevronDown"
+								   [popoverTriggerFor]="listActions" [size]="ExtraSize.xs" [type]="ButtonType.Secondary"
+								   [text]="selectedItem.selectedSection ? selectedItem.selectedSection.name : 'Выберите участок'"></ss-lib-button>
+					<ss-lib-dropdown-list [width]="'354px'" #listActions>
+						<ss-lib-dropdown-item *ngFor="let section of selectedItem.section"
+											  [label]="section.name"
+											  (click)="selectOpt(selectedItem,section)"
+						/>
+					</ss-lib-dropdown-list>
+				</div>
+			</div>
+
+			<ss-lib-divider></ss-lib-divider>
+		</div>
+		<ng-container *ngIf="!isLoaderMain(); else  loaderMain">
+			<div class="add-manufactures-popup__items" *ngIf="tov().length;else empty ">
+				<div *ngFor="let item of tov()" class="add-manufactures-popup__item">
+					<div class="add-manufactures-popup__item-left">
+						<ss-lib-checkbox [formControl]="item.selected" (click)="addTovSelected(item)"></ss-lib-checkbox>
+						<ss-lib-text [type]="TextType.BodySm" [weight]="TextWeight.Regular"> {{ item.tov.name }}
+						</ss-lib-text>
+					</div>
+					<div class="add-manufactures-popup__item-right">
+						<ss-lib-button [justifyContent]="JustifyContent.SpaceBetween" [iconPosition]="IconPosition.End"
+									   [icon]="IconType.ChevronDown"
+									   [popoverTriggerFor]="listActions" [size]="ExtraSize.xs"
+									   [type]="ButtonType.Secondary"
+									   [text]="item.selectedSection ? item.selectedSection.name : 'Выберите участок'"></ss-lib-button>
+						<ss-lib-dropdown-list [width]="'354px'" #listActions>
+							<ss-lib-dropdown-item *ngFor="let section of item.section"
+												  [label]="section.name"
+												  (click)="selectOpt(item,section)"
+							/>
+						</ss-lib-dropdown-list>
+					</div>
+				</div>
+			</div>
+			<ng-container *ngIf="isLoader()">
+				<ng-container *ngTemplateOutlet="loader"></ng-container>
+			</ng-container>
+			<ng-template #empty>
+				<div class="add-manufactures-popup__empty-state">
+					<ss-lib-badge [badgeProps]="{
+				icon: IconType.Search,
+				size: ExtraSize.xl,
+				}"></ss-lib-badge>
+					<div class="add-manufactures-popup__empty-state__text">
+						<ss-lib-text [color]="Colors.TextBody" [type]="TextType.BodyXl" [weight]="TextWeight.Semibold">
+							Полуфубрикаты не найдены
+						</ss-lib-text>
+						<ss-lib-text [align]="Align.Center" [color]="Colors.TextBody3" [type]="TextType.BodyMd"
+									 [weight]="TextWeight.Regular">По вашему запросу “{{ queryControl.value }}”
+							ничего не найдено. Попробуйте изменить запрос.
+						</ss-lib-text>
+					</div>
+				</div>
+			</ng-template>
+		</ng-container>
+	</div>
+</ng-template>
+
+<ng-template #loaderMain>
+	<div class="add-manufactures-popup">
+		<ss-lib-spinner></ss-lib-spinner>
+	</div>
+</ng-template>
+
+<ng-template #loader>
+	<ss-lib-spinner></ss-lib-spinner>
+</ng-template>
+
 
 <ng-template #actionRef>
 	<div class="add-manufactures-popup__actions">
-		<ss-lib-button [style.width]="'430px'" (click)="close()" [type]="ButtonType.Secondary"
+		<ss-lib-button [justifyContent]="JustifyContent.Center" [style.width]="'430px'" (click)="close()"
+					   [type]="ButtonType.Secondary"
 					   [text]="'Отменить'"></ss-lib-button>
-		<ss-lib-button [style.width]="'430px'" (click)="add()" [text]="'Добавить'"></ss-lib-button>
+		<ss-lib-button [justifyContent]="JustifyContent.Center" [style.width]="'430px'" (click)="add()"
+					   [text]="'Добавить'"></ss-lib-button>
 	</div>
 </ng-template>
