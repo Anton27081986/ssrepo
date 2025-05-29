@@ -2,24 +2,70 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	inject,
+	OnDestroy,
+	OnInit,
+	signal,
 	Signal,
+	WritableSignal,
 } from '@angular/core';
 import {
+	Align,
+	BadgeComponent,
 	ButtonComponent,
 	ButtonType,
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	DropdownListComponent,
+	EmptyStateComponent,
 	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
 	IconType,
+	IDictionaryItemDto,
 	InputComponent,
+	JustifyContent,
 	ModalActionApplyComponent,
 	ModalComponent,
 	ModalRef,
+	PopoverTriggerForDirective,
 	Shape,
+	SharedPopupService,
+	SpinnerComponent,
+	Status,
+	TextComponent,
+	TextType,
+	TextWeight,
+	ToastTypeEnum,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
-import { ManufacturingTovs } from '@app/core/models/operation-plan/manufacturing-tovs';
+import { ManufacturingSelectedTovs } from '@app/core/models/operation-plan/manufacturing-tovs';
+import {
+	IconPosition,
+	SearchInputComponent,
+	Size,
+} from '@front-components/components';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+	BehaviorSubject,
+	debounceTime,
+	map,
+	NEVER,
+	scan,
+	switchMap,
+	take,
+	tap,
+} from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { InputType } from '@front-components/components';
-import { ReactiveFormsModule } from '@angular/forms';
+import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
+import { AddToVRequest } from '@app/core/models/operation-plan/add-tov-request';
+
+export enum TovEventEnum {
+	default = 0,
+	changeQuery = 1,
+	changePage = 2,
+}
 
 @Component({
 	selector: 'app-add-manufactures-popup',
@@ -30,30 +76,286 @@ import { ReactiveFormsModule } from '@angular/forms';
 		ButtonComponent,
 		InputComponent,
 		ReactiveFormsModule,
+		SearchInputComponent,
+		FormFieldComponent,
+		FieldCtrlDirective,
+		InputComponent,
+		FormFieldComponent,
+		FormFieldComponent,
+		FieldCtrlDirective,
+		NgFor,
+		TextComponent,
+		CheckboxComponent,
+		DividerComponent,
+		NgIf,
+		DropdownItemComponent,
+		DropdownListComponent,
+		PopoverTriggerForDirective,
+		EmptyStateComponent,
+		BadgeComponent,
+		SpinnerComponent,
+		NgTemplateOutlet,
 	],
 	templateUrl: './add-manufactures-popup.component.html',
 	styleUrl: './add-manufactures-popup.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddManufacturesPopupComponent {
+export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly Shape = Shape;
 	protected readonly IconType = IconType;
 
+	protected readonly queryControl: FormControl<string | null> =
+		new FormControl<string | null>('');
+
+	protected readonly sharedService: SharedPopupService =
+		inject(SharedPopupService);
+
+	protected readonly limit: number = 60;
+	protected total: number | null = null;
+
+	protected isVisibleModal: WritableSignal<boolean> = signal(true);
+
+	protected isLoaderMain: WritableSignal<boolean> = signal(false);
+
+	protected isLoader: WritableSignal<boolean> = signal(false);
+
+	constructor() {
+		toSignal(
+			this.queryControl.valueChanges.pipe(
+				debounceTime(1000),
+				tap((value) => {
+					this.offset.set(0);
+					this.tovEvent.next(TovEventEnum.changeQuery);
+				}),
+			),
+		);
+	}
+
+	protected tovEvent: BehaviorSubject<TovEventEnum> =
+		new BehaviorSubject<TovEventEnum>(TovEventEnum.default);
+
+	protected offset: WritableSignal<number> = signal<number>(0);
+
 	private readonly popup = inject(ModalRef);
 	private readonly operationPlanService = inject(OperationPlanService);
 
-	private readonly tovs: Signal<ManufacturingTovs[]> = toSignal(
-		this.operationPlanService.getManufacturingTov(),
-		{ initialValue: [] },
+	protected selectedTov: WritableSignal<ManufacturingSelectedTovs[]> = signal(
+		[],
 	);
 
-	protected add() {}
+	protected tov: Signal<ManufacturingSelectedTovs[]> = toSignal(
+		this.tovEvent.pipe(
+			switchMap((event) => {
+				let query = '';
+
+				if (event === TovEventEnum.changeQuery) {
+					this.isLoaderMain.set(true);
+					const valueControl = this.queryControl.value;
+
+					if (valueControl === null) {
+						return NEVER;
+					}
+
+					query = valueControl;
+					this.offset.set(0);
+					const elem = document.getElementsByClassName(
+						'ss-lib-popup-global-scrolled',
+					);
+
+					const elemItem = elem.item(0);
+
+					elemItem!.scrollTop = 0;
+				}
+
+				if (event === TovEventEnum.changePage) {
+					this.isLoader.set(true);
+				}
+
+				if (event === TovEventEnum.default) {
+					this.isLoaderMain.set(true);
+				}
+
+				return this.operationPlanService.getManufacturingTov(
+					query,
+					this.limit,
+					this.offset(),
+				);
+			}),
+			debounceTime(1000),
+			map((tov) => {
+				this.total = tov.total;
+				return tov.items.map((item) => {
+					return {
+						tov: item.tov,
+						section: item.section,
+						selected: new FormControl<boolean | null>(false),
+						selectedSection: null,
+					};
+				});
+			}),
+			scan((acc, value) => {
+				if (this.tovEvent.value === TovEventEnum.changeQuery) {
+					return value;
+				}
+				return [...acc, ...value];
+			}),
+			tap((item) => {
+				this.isLoaderMain.set(false);
+				this.isLoader.set(false);
+			}),
+		),
+		{
+			initialValue: [],
+		},
+	);
+
+	ngOnInit() {
+		window.addEventListener(
+			'scroll',
+			() => {
+				const elem = document.getElementsByClassName(
+					'ss-lib-popup-global-scrolled',
+				);
+
+				const elemItem = elem.item(0);
+
+				if (elemItem) {
+					if (
+						elemItem.scrollHeight -
+							elemItem.clientHeight -
+							elemItem.scrollTop ===
+						0
+					) {
+						this.offset.set(this.offset() + this.limit);
+						this.tovEvent.next(TovEventEnum.changePage);
+					}
+				}
+			},
+			true,
+		);
+	}
+
+	ngOnDestroy() {}
+
+	protected add() {
+		if (this.selectedTov().length > 0) {
+			if (this.checkForUnselectedItems()) {
+				this.sharedService.openToast({
+					type: ToastTypeEnum.Error,
+					text: 'У некоторых полуфабрикатов не выбран участок',
+				});
+			} else {
+				const mapRequest: AddToVRequest[] = this.selectedTov().map(
+					(tov) => {
+						return {
+							sectionId: tov.selectedSection?.id as number,
+							tovId: tov.tov.id as number,
+						};
+					},
+				);
+				this.operationPlanService.addGp(mapRequest).subscribe();
+			}
+		} else {
+			this.sharedService.openToast({
+				type: ToastTypeEnum.Error,
+				text: 'выберите элементы',
+			});
+		}
+	}
+
+	private checkForUnselectedItems(): boolean {
+		return this.selectedTov().some((item) => {
+			return item.selectedSection === null;
+		});
+	}
 
 	protected close() {
-		this.popup.close();
+		if (this.selectedTov().length > 0) {
+			this.isVisibleModal.set(false);
+			const confirmModal = this.confirmIfCloseForm();
+
+			confirmModal.afterSubmit$
+				.pipe(
+					take(1),
+					tap(() => {
+						this.popup.close();
+					}),
+				)
+				.subscribe();
+
+			confirmModal.afterClosed$
+				.pipe(
+					take(1),
+					tap(() => {
+						this.isVisibleModal.set(true);
+					}),
+				)
+				.subscribe();
+		} else {
+			this.popup.close();
+		}
+	}
+
+	public confirmIfCloseForm(): ModalRef {
+		return this.sharedService.openConfirmModal(
+			{
+				title: 'Выйти без сохранения ?',
+				description: 'Все изменения будут утеряны.',
+				badgeProps: {
+					icon: IconType.Alert,
+					status: Status.Warning,
+				},
+				apply: {
+					text: 'Выйти',
+				},
+				cancelText: 'Остаться',
+			},
+			false,
+		);
+	}
+
+	protected addTovSelected(tov: ManufacturingSelectedTovs) {
+		tov.selected.setValue(false);
+
+		const arrTov = this.selectedTov();
+
+		const cloneTov: ManufacturingSelectedTovs = JSON.parse(
+			JSON.stringify(tov),
+		);
+
+		cloneTov.selected = new FormControl(true);
+
+		arrTov.push(cloneTov);
+
+		this.selectedTov.set(arrTov);
+	}
+
+	protected removeTovSelected(tov: ManufacturingSelectedTovs) {
+		tov.selected.setValue(false);
+		const arrTov = this.selectedTov().filter(
+			(item) => item.tov !== tov.tov,
+		);
+		this.selectedTov.set(arrTov);
+	}
+
+	protected deleteSelected() {
+		this.selectedTov.set([]);
+	}
+
+	protected selectOpt(
+		item: ManufacturingSelectedTovs,
+		section: IDictionaryItemDto,
+	) {
+		item.selectedSection = section;
 	}
 
 	protected readonly ButtonType = ButtonType;
-	protected readonly InputType = InputType;
+	protected readonly Size = Size;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly IconPosition = IconPosition;
+	protected readonly JustifyContent = JustifyContent;
+	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 }
