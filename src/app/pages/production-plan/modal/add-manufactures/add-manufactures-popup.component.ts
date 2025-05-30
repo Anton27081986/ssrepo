@@ -51,7 +51,6 @@ import {
 	BehaviorSubject,
 	debounceTime,
 	map,
-	NEVER,
 	scan,
 	switchMap,
 	take,
@@ -116,6 +115,8 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 	protected isVisibleModal: WritableSignal<boolean> = signal(true);
 
+	protected blockOffset: WritableSignal<boolean> = signal(false);
+
 	protected isLoaderMain: WritableSignal<boolean> = signal(false);
 
 	protected isLoader: WritableSignal<boolean> = signal(false);
@@ -148,17 +149,10 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		this.tovEvent.pipe(
 			switchMap((event) => {
 				let query = '';
-
+				this.blockOffset.set(true);
 				if (event === TovEventEnum.changeQuery) {
 					this.isLoaderMain.set(true);
-					const valueControl = this.queryControl.value;
-
-					if (valueControl === null) {
-						return NEVER;
-					}
-
-					query = valueControl;
-					this.offset.set(0);
+					query = this.queryControl.value ?? '';
 					const elem = document.getElementsByClassName(
 						'ss-lib-popup-global-scrolled',
 					);
@@ -182,7 +176,6 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					this.offset(),
 				);
 			}),
-			debounceTime(1000),
 			map((tov) => {
 				this.total = tov.total;
 				return tov.items.map((item) => {
@@ -203,6 +196,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 			tap((item) => {
 				this.isLoaderMain.set(false);
 				this.isLoader.set(false);
+				this.blockOffset.set(false);
 			}),
 		),
 		{
@@ -220,7 +214,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 				const elemItem = elem.item(0);
 
-				if (elemItem) {
+				if (elemItem && !this.blockOffset()) {
 					if (
 						elemItem.scrollHeight -
 							elemItem.clientHeight -
