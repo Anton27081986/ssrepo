@@ -11,6 +11,9 @@ import {
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
+import {
+	IApproveClarificationResponse
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.models";
 
 @Injectable({
 	providedIn: 'root',
@@ -91,6 +94,13 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
+	public updateProvisionDateById(orderId: number, provisionDate: string, provisionId: number): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate/${provisionId}`,
+			{ provisionDate },
+		);
+	}
+
 	public rejectPersonification(orderId: number, reason: string): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/reject`,
@@ -101,6 +111,13 @@ export class MpReservationOrdersApiService {
 	public removePersonification(orderId: number): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/remove`,
+			{},
+		);
+	}
+
+	public rejectRemovePersonification(orderId: number): Observable<void> {
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/remove/cancel`,
 			{},
 		);
 	}
@@ -145,14 +162,21 @@ export class MpReservationOrdersApiService {
 
 	public clarify(orderId: number, body: IClarifyOrder): Observable<void> {
 		return this.http.post<void>(
-			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/requests`,
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
 			body,
 		);
 	}
 
+	public getApproveClarification(orderId: number): Observable<IApproveClarificationResponse> {
+		return this.http.get<IApproveClarificationResponse>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
+		);
+	}
+
 	public approveClarification(orderId: number): Observable<void> {
-		return this.http.get<void>(
-			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/requests`,
+		return this.http.patch<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
+			{}
 		);
 	}
 }

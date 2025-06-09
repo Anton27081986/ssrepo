@@ -13,7 +13,7 @@
 		   #input
 	/>
 	@if ((found$ | async)?.length) {
-		<div class="search-result" [ngClass]="{'height-options': fromAddOrder}" #options>
+		<div class="search-result" [ngClass]="{'height-options': reSizeHeightOptions}" #options>
 			<div class="separator"></div>
 			@for (item of found$ | async; track item.id) {
 				<ss-caption class="search-result-item"

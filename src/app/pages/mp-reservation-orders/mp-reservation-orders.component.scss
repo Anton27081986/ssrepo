@@ -78,9 +78,20 @@
 	}
 }
 
+.link-tov-name {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	word-wrap: break-word;
+}
+
 .table-td-provision {
 	display: table-cell;
 	text-align: left !important;
+	min-width: 160px;
 
 	&__label {
 		display: inline-block;

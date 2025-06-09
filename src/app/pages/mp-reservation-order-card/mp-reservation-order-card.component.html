@@ -63,12 +63,12 @@
 					"></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Подтвердить удаление заказа по обеспечению'"
-					(click)="$event.stopPropagation(); openPopupCancelAction(true)
+					(click)="$event.stopPropagation(); openPopupCancelActionRemove(true)
 					"></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Отклонить удаление заказа по обеспечению'"
 					(click)="
-						$event.stopPropagation(); openPopupCancelAction(false)
+						$event.stopPropagation(); openPopupCancelActionRemove(false)
 					"></snab-dropdown-item>
 			</snab-dropdown-button>
 		</div>

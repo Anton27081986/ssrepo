@@ -31,7 +31,7 @@
 							label="ТП"
 							[placeholder]="'Выберите товарную позицию'"
 							[error]="addOrdersForm.controls.tov.touched && addOrdersForm.controls.tov.errors?.required ? 'Обязательное поле' : undefined"
-							[fromAddOrder]="true"
+							[reSizeHeightOptions]="true"
 							(select)="onTovSelect($event)"
 							(click)="addOrdersForm.controls.tov.setErrors(null)"/>
 					</div>
@@ -41,7 +41,7 @@
 							label="Клиент"
 							[placeholder]="'Выберите клиента'"
 							[error]="addOrdersForm.controls.client.touched && addOrdersForm.controls.client.errors?.required ? 'Обязательное поле' : undefined"
-							[fromAddOrder]="true"
+							[reSizeHeightOptions]="true"
 							(select)="onClientSelect($event)"
 							(click)="addOrdersForm.controls.client.setErrors(null)"/>
 					</div>

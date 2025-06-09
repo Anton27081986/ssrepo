@@ -16,15 +16,21 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
 import {
-	IReservationOrderChangeProvisionDetails
-} from "@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details";
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { IReservationOrderChangeProvisionDetails } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
 
 export enum ChangeProvisionDetailsTrRowItemField {
 	manufacturingAmount = 'manufacturingAmount',
@@ -49,23 +55,25 @@ export enum ChangeProvisionDetailsTrRowItemField {
 		InputComponent,
 		SearchInputComponent,
 		NgSwitchDefault,
-		DateTimePickerComponent
+		DateTimePickerComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent implements OnInit, AfterViewChecked {
-	protected readonly ChangeProvisionDetailsTrRowItemField = ChangeProvisionDetailsTrRowItemField;
-	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
-
 	@Input({ required: true }) item!: IReservationOrderChangeProvisionDetails;
-
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
-	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	@ViewChild('content') public content!: ElementRef;
 
-	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly Number = Number;
+
+	protected readonly ChangeProvisionDetailsTrRowItemField = ChangeProvisionDetailsTrRowItemField;
+	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
+	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
@@ -131,8 +139,4 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent imple
 			},
 		});
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly Number = Number;
 }

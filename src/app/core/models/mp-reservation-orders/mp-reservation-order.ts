@@ -28,6 +28,7 @@ export interface IProvisionType {
 }
 
 export interface IProvisionDetailsTypes {
+	id?: number;
 	productionDate?: string;
 	provisionDate?: string;
 	manufacturingAmount?: number;

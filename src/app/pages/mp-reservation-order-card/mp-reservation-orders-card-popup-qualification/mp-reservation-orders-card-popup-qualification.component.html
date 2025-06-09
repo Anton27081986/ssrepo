@@ -28,7 +28,8 @@
 				[selectedItem]="tov"
 				[searchType]="'tovs'"
 				[error]="changeClarifyOrderForm.controls.tov.touched && changeClarifyOrderForm.controls.tov.errors?.required ? 'Обязательное поле' : undefined"
-				(select)="onTovSelect($event)">
+				(select)="onTovSelect($event)"
+				(blurEvent)="this.changeClarifyOrderForm.controls.tov.setValue(null)">
 			</ss-search-input>
         }
         <ss-table-v2>
@@ -42,7 +43,7 @@
         <snab-button text="Отмена"
                      [type]="ButtonType.Secondary"
                      [size]="Size.Large"
-                     (click)="close()"
+                     (click)="openPopupCancelAction()"
         ></snab-button>
         <snab-button text="Уточнить" [size]="Size.Large" (click)="clarifyOrder()"></snab-button>
     </div>

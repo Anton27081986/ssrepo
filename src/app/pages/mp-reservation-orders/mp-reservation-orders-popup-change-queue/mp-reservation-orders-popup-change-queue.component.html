@@ -23,8 +23,9 @@
 					<div class="search-row__input">
 						<ss-search-input class="search-row__input__field"
 										 label="ТП"
-										 size="large"
+										 size="medium"
 										 searchType="tovs"
+										 [reSizeHeightOptions]="true"
 										 [placeholder]="'Выберите товарную позицию'"
 										 (select)="onTovFilter($event)"/>
 						<snab-button

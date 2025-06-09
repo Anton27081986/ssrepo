@@ -1,9 +1,9 @@
-import {IProvisionDetailsTypes} from "@app/core/models/mp-reservation-orders/mp-reservation-order";
+import { IOrderRequests } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { IDictionaryItemDto } from '@front-components/components';
 
-export interface IReservationOrderApproveDetailsChange extends IProvisionDetailsTypes {
-    errors: {
-        productionDate?: boolean;
-        provisionDate?: boolean;
-        manufacturingAmount?: boolean;
-    }
+export interface IApproveChangeData {
+	oldItems: IOrderRequests[];
+	newItems: { requestedProvisionDate: string; amount: number }[];
+	tov: IDictionaryItemDto;
+	id: number;
 }

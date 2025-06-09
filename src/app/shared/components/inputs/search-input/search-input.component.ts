@@ -64,7 +64,7 @@ export class SearchInputComponent {
 	@Input() public error: string | undefined;
 	@Input() public searchType: searchType;
 	@Input() public clientId: number | undefined;
-	@Input() public fromAddOrder: boolean | undefined;
+	@Input() public reSizeHeightOptions: boolean | undefined;
 	@Input() selectedItem: IFilterOption | undefined;
 	@Input() onlyActive: boolean = false;
 
