@@ -41,7 +41,7 @@
 
 	&__input {
 		display: flex;
-		align-items: center;
+		align-items: end;
 		gap: 37px;
 
 		&__field {
@@ -61,7 +61,6 @@
 .orders-table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 16px;
 
 	thead {
 		background-color: lighten($island-outline, 40%);
@@ -69,6 +68,8 @@
 
 	th {
 		background-color: #eef2ff;
+		position: sticky;
+		top: 0;
 	}
 
 	th,

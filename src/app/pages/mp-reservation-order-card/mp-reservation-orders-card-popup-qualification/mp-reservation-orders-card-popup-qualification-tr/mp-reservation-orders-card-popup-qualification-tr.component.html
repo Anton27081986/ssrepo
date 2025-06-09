@@ -6,14 +6,10 @@
 				<ng-container *ngSwitchCase="QualificationTrRowItemField.amount">
 					<div class="hc-table-td__content">
 						<ss-input
-							size="small"
-							[value]="item.amount"
-							type="number"
-							placeholder="Введите"
-							(change)="item.amount = Number(getInputValue($event.target!))"
+							formControlName="amount"
 							(click)="item.errors.amount = false"
-							[error]="item.errors.amount ? 'Обязательное поле' : undefined"
-						></ss-input>
+							[error]="item.errors.amount ? 'Обязательное поле' : undefined">
+						</ss-input>
 					</div>
 				</ng-container>
 
@@ -21,9 +17,9 @@
 					<div class="hc-table-td__content">
 						<ss-date-time-picker
 							formControlName="dateProvision"
-                            [showTime]="false"
-                            [error]="item.errors.requestedProvisionDate ? 'Обязательное поле' : undefined"
-                        ></ss-date-time-picker>
+							[showTime]="false"
+							[error]="item.errors.requestedProvisionDate ? 'Обязательное поле' : undefined">
+						</ss-date-time-picker>
 					</div>
 
 				</ng-container>

@@ -78,8 +78,8 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		private readonly facade: MpReservationOrderCardFacadeService
 	) {
 		this.inProductionForm = new FormGroup({
-			manager: new FormControl<string>('Борисова А.В.'), // Для примера, если нужно выводить менеджера
-			quantity: new FormControl<number | null>(300, [Validators.required]), // Пример
+			manager: new FormControl<string>('Борисова А.В.'),
+			quantity: new FormControl<number | null>(300, [Validators.required]),
 			dates: new FormArray<
 				FormGroup<{
 					productionDate: FormControl<string | null>;

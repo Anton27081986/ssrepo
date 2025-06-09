@@ -16,20 +16,27 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
 import {
-	IReservationOrderChangeProvisionDetails
-} from "@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details";
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { IApproveChangeRow } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
+import { TextComponent, TextType, TextWeight } from '@front-components/components';
 
 export enum ChangeProvisionDetailsTrRowItemField {
-	manufacturingAmount = 'manufacturingAmount',
-	productionDate = 'productionDate',
-	provisionDate = 'provisionDate',
+	oldDate = 'oldDate',
+	newDate = 'newDate',
+	oldAmount = 'oldAmount',
+	newAmount = 'newAmount',
 }
 
 @Component({
@@ -49,23 +56,29 @@ export enum ChangeProvisionDetailsTrRowItemField {
 		InputComponent,
 		SearchInputComponent,
 		NgSwitchDefault,
-		DateTimePickerComponent
+		DateTimePickerComponent,
 	],
-	standalone: true
+	standalone: true,
 })
-export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent implements OnInit, AfterViewChecked {
-	protected readonly ChangeProvisionDetailsTrRowItemField = ChangeProvisionDetailsTrRowItemField;
-	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
-
-	@Input({ required: true }) item!: IReservationOrderChangeProvisionDetails;
-
+export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent
+	implements OnInit, AfterViewChecked
+{
+	@Input({ required: true }) item!: IApproveChangeRow;
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
-
-	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	@ViewChild('content') public content!: ElementRef;
 
 	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TextWeight = TextWeight;
+	protected readonly TextType = TextType;
+	protected readonly Number = Number;
+
+	protected readonly ChangeProvisionDetailsTrRowItemField = ChangeProvisionDetailsTrRowItemField;
+	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
+	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
@@ -80,8 +93,8 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent impleme
 			{
 				cols: [
 					{
-						id: ChangeProvisionDetailsTrRowItemField.productionDate,
-						title: 'Дата обеспечения (старое значение)',
+						id: ChangeProvisionDetailsTrRowItemField.oldDate,
+						title: 'Желаемая дата (старое значение)',
 						order: 1,
 						show: true,
 						colspan: 1,
@@ -89,8 +102,8 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent impleme
 						display: true,
 					},
 					{
-						id: ChangeProvisionDetailsTrRowItemField.provisionDate,
-						title: 'Дата обеспечения (новое значение)',
+						id: ChangeProvisionDetailsTrRowItemField.newDate,
+						title: 'Желаемая дата(новое значение)',
 						order: 2,
 						show: true,
 						colspan: 1,
@@ -98,7 +111,7 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent impleme
 						display: true,
 					},
 					{
-						id: ChangeProvisionDetailsTrRowItemField.manufacturingAmount,
+						id: ChangeProvisionDetailsTrRowItemField.oldAmount,
 						title: 'Количество (старое значение)',
 						order: 3,
 						show: true,
@@ -107,7 +120,7 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent impleme
 						display: true,
 					},
 					{
-						id: ChangeProvisionDetailsTrRowItemField.manufacturingAmount,
+						id: ChangeProvisionDetailsTrRowItemField.newAmount,
 						title: 'Количество (новое значение)',
 						order: 4,
 						show: true,
@@ -140,8 +153,4 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent impleme
 			},
 		});
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly Number = Number;
 }

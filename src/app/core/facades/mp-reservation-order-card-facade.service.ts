@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { Router } from "@angular/router";
@@ -8,6 +8,9 @@ import { catchError } from "rxjs/operators";
 import {
 	IClarifyOrder,
 } from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models";
+import {
+	IApproveClarificationResponse
+} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.models";
 
 @UntilDestroy()
 @Injectable({
@@ -48,8 +51,16 @@ export class MpReservationOrderCardFacadeService {
 		return this.mpReservationOrdersApiService.rejectPersonification(this.activeOrder.value?.id!, reason);
 	}
 
+	public updateProvisionDateById(orderId: number, provisionDate: string, provisionId: number) {
+		return this.mpReservationOrdersApiService.updateProvisionDateById(orderId, provisionDate, provisionId);
+	}
+
 	public removeOrder() {
 		return this.mpReservationOrdersApiService.removePersonification(this.activeOrder.value?.id!);
+	}
+
+	public rejectRemove() {
+		return this.mpReservationOrdersApiService.rejectRemovePersonification(this.activeOrder.value?.id!);
 	}
 
 	public addDetails(details: IProvisionDetailsTypes) {
@@ -66,6 +77,10 @@ export class MpReservationOrderCardFacadeService {
 
 	public clarifyOrder(body: IClarifyOrder) {
 		return this.mpReservationOrdersApiService.clarify(this.activeOrder.value?.id!, body);
+	}
+
+	public getApproveClarification() {
+		return this.mpReservationOrdersApiService.getApproveClarification(this.activeOrder.value?.id!);
 	}
 
 	public approveClarification() {

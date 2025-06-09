@@ -68,6 +68,10 @@ export class MpReservationOrdersCardPopupCancelActionComponent {
 	}
 
 	public rejectRemoveOrder(): void {
-		//TODO новый метод возврата в предыдущий статус
+		this.mpReservationOrderCardFacadeService.rejectRemove().pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.modalRef.close();
+				this.router.navigate(['mp-reservation-orders']);
+			});
 	}
 }

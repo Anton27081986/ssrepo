@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
@@ -38,12 +38,9 @@ import { SearchInputComponent } from '@app/shared/components/inputs/search-input
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { map, take } from 'rxjs';
-import {
-	IMpReservationAddOrder,
-	IOrderItemsTypes,
-} from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
+import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice-dialog.component";
+import {ModalService} from "@app/core/modal/modal.service";
 
 interface IQualificationData {
 	id: number;
@@ -99,6 +96,7 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 		@Inject(DIALOG_DATA) private readonly data: IQualificationData,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
+		private readonly modalService: ModalService,
 	) {
 		if (data) {
 			this.items = this.data.items.map(item => {
@@ -119,7 +117,7 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 
 		this.changeClarifyOrderForm = new FormGroup({
 			tov: new FormControl<IDictionaryItemDto | null>(
-				{ id: this.data.tov.id, name: this.data.tov.name }, // ← начальное значение
+				{ id: this.data.tov.id, name: this.data.tov.name },
 				[Validators.required],
 			),
 		});
@@ -145,43 +143,60 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 	}
 
 	public clarifyOrder(): void {
-		this.mpReservationOrderCardFacadeService.activeOrder$
-			.pipe(take(1), map(o => o!.author.id))
-			.subscribe(authorId => {
-				const body: IClarifyOrder = {
-					tovId: this.tov!.id,
-					requests: {
-						authorId,
-						items: [
-							{
-								tovId: this.tov!.id,
-								clientId: this.data.id,
-								orderRequests: this.items.map(item => {
-									const itemDate = new Date(item.requestedProvisionDate);
-									const year  = itemDate.getFullYear();
-									const month = String(itemDate.getMonth() + 1).padStart(2, '0');
-									const day   = String(itemDate.getDate()).padStart(2, '0');
-									const isoItemDate = `${year}-${month}-${day}T00:00:00.000Z`;
+		this.setErrorsControl();
+		this.changeClarifyOrderForm.markAllAsTouched();
 
-									return {
-										requestedProvisionDate: isoItemDate,
-										amount: item.amount,
-									};
-								}),
-							} as IOrderItemsTypes,
-						],
-					} as IMpReservationAddOrder,
+		let invalidRows = false;
+
+		this.items.forEach(item => {
+			item.errors.amount = !item.amount;
+			item.errors.requestedProvisionDate = !item.requestedProvisionDate;
+			invalidRows = invalidRows || item.errors.amount || item.errors.requestedProvisionDate;
+		});
+
+		if (invalidRows || this.changeClarifyOrderForm.invalid) {
+			return;
+		}
+
+		const body: IClarifyOrder = {
+			tovId: this.tov!.id,
+			requests: this.items.map(item => {
+				const itemDate = new Date(item.requestedProvisionDate);
+				const year = itemDate.getFullYear();
+				const month = String(itemDate.getMonth() + 1).padStart(2, '0');
+				const day = String(itemDate.getDate()).padStart(2, '0');
+				const isoItemDate = `${year}-${month}-${day}T00:00:00.000Z`;
+				return {
+					requestedProvisionDate: isoItemDate,
+					amount: item.amount,
 				};
+			}),
+		};
 
-				this.mpReservationOrderCardFacadeService
-					.clarifyOrder(body)
-					.pipe(untilDestroyed(this))
-					.subscribe(() => this.modalRef.close(true));
-			});
+		this.mpReservationOrderCardFacadeService
+			.clarifyOrder(body)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => this.modalRef.close(true));
 	}
-
 
 	protected close() {
 		this.modalRef.close();
+	}
+
+	public openPopupCancelAction(): void {
+		this.modalService
+			.open(NoticeDialogComponent, {
+				data: {
+					header: 'Изменения не будут сохранены',
+					text: 'Вы уверены, что хотите совершить действие',
+					type: 'Warning',
+					buttonOk: 'Отмена',
+					buttonCancel: 'Не сохранять',
+				},
+			}).afterClosed().pipe(untilDestroyed(this)).subscribe(status => {
+			if (!status) {
+				this.modalRef.close()
+			}
+		})
 	}
 }

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import {FormGroup, FormControl, FormArray, Validators, ReactiveFormsModule} from '@angular/forms';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { Component, Inject } from '@angular/core';
+import { FormGroup, FormControl, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
@@ -17,7 +17,17 @@ import {
 	FormFieldComponent,
 } from '@front-components/components';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
-import { NgIf, NgForOf } from '@angular/common';
+import { NgIf, NgForOf, DatePipe } from '@angular/common';
+import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
+import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
+import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
+import { forkJoin, Observable } from 'rxjs';
+
+interface IProvisionDatePopupData {
+	id: number;
+	provisionDetails: IProvisionDetailsTypes[];
+}
 
 @UntilDestroy()
 @Component({
@@ -39,6 +49,7 @@ import { NgIf, NgForOf } from '@angular/common';
 		FormFieldComponent,
 		CardComponent,
 		ReactiveFormsModule,
+		DatePipe,
 	],
 })
 export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
@@ -58,11 +69,16 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 	}>;
 
 	constructor(
+		@Inject(DIALOG_DATA) protected readonly data: IProvisionDatePopupData,
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 	) {
+		const initialRows: FormGroup<{ provisionDate: FormControl<string | null> }>[] =
+			this.data.provisionDetails.map(() => this.createRow());
+
 		this.provisionDateForm = new FormGroup({
-			rows: new FormArray([this.createRow()]),
+			rows: new FormArray(initialRows),
 		});
 	}
 
@@ -72,7 +88,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 
 	private createRow(): FormGroup {
 		return new FormGroup({
-			provisionDate: new FormControl<string | null>(null, [Validators.required]),
+			provisionDate: new FormControl<string | null>(null),
 		});
 	}
 
@@ -81,11 +97,28 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 	}
 
 	public confirmChange(): void {
-		if (this.provisionDateForm.valid) {
-			console.log('Изменяем даты обеспечения:', this.provisionDateForm.value);
+		const observables: Observable<void>[] = [];
+
+		this.data.provisionDetails.forEach((detail, index) => {
+			const newDateValue: string | null = this.rows.at(index).get('provisionDate')?.value;
+			if (newDateValue && detail.id != null) {
+				const obs$ = this.mpReservationOrderCardFacadeService.updateProvisionDateById(
+					this.data.id,
+					newDateValue,
+					detail.id,
+				);
+				observables.push(obs$);
+			}
+		});
+
+		if (observables.length === 0) {
 			this.modalRef.close();
-		} else {
-			console.warn('Форма невалидна');
+			this.mpReservationOrderCardFacadeService.reloadOrder();
+			return;
 		}
+		forkJoin(observables).subscribe(() => {
+			this.modalRef.close();
+			this.mpReservationOrderCardFacadeService.reloadOrder();
+		});
 	}
 }

@@ -31,8 +31,14 @@ import { InputComponent } from '@app/shared/components/inputs/input/input.compon
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { IOrderChangeQualification } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-qualification';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 export enum QualificationTrRowItemField {
 	amount = 'amount',
@@ -83,6 +89,7 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	public qualificationTrForm!: FormGroup<{
+		amount: FormControl<number>;
 		dateProvision: FormControl<string>;
 	}>;
 
@@ -109,7 +116,7 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 					},
 					{
 						id: QualificationTrRowItemField.requestedProvisionDate,
-						title: 'Дата обеспечения',
+						title: 'Желаемая дата',
 						order: 2,
 						show: true,
 						colspan: 1,
@@ -121,14 +128,19 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 		]);
 
 		this.qualificationTrForm = new FormGroup({
-			dateProvision: new FormControl(
-				this.item?.requestedProvisionDate,
-				{
-					nonNullable: true,
-					validators: Validators.required
-				}
-			)
+			amount: new FormControl(this.item?.amount, {
+				nonNullable: true,
+				validators: Validators.required,
+			}),
+			dateProvision: new FormControl(this.item?.requestedProvisionDate, {
+				nonNullable: true,
+				validators: Validators.required,
+			}),
 		});
+
+		this.qualificationTrForm.controls.amount.valueChanges
+			.pipe(untilDestroyed(this))
+			.subscribe(value => this.item.amount = value);
 
 		this.qualificationTrForm.controls.dateProvision.valueChanges
 			.pipe(untilDestroyed(this))
@@ -139,10 +151,6 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 		if (this.content) {
 			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
 		}
-	}
-
-	getInputValue(target: EventTarget) {
-		return (target as HTMLInputElement).value;
 	}
 
 	showText(text: string[], title?: string) {
