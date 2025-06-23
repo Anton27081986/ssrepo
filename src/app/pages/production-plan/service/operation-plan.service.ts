@@ -1,34 +1,23 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of, merge, switchMap } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IDictionaryItemDto } from '@front-library/components';
-import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
+import { ManufacturingTovs } from '@app/core/models/operation-plan/manufacturing-tovs';
 import {
 	TransferProductionPlanFromBackend,
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
-} from '@app/core/models/production-plan/transfer-production-plan-from-backend';
+} from '@app/core/models/operation-plan/transfer-production-plan-from-backend';
 import { FormControl } from '@angular/forms';
 import { IResponse } from '@app/core/utils/response';
-import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
-import {
-	OperationPlanItems,
-	OperationPlanRequest,
-	Pagination,
-} from '@app/core/models/production-plan/operation-plan';
+import { AddToVRequest } from '@app/core/models/operation-plan/add-tov-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
 	private operationPlanApiService: OperationPlanApiService = inject(
 		OperationPlanApiService,
 	);
-
-	public getProductionPlan(
-		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItems>> {
-		return this.operationPlanApiService.getOperationPlan(request);
-	}
 
 	public getTransferProductionPlan(
 		id: number,

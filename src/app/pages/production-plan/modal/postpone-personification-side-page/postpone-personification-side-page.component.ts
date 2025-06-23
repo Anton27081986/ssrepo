@@ -21,7 +21,7 @@ import {
 	TextWeight,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
-import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
+import { TransferProductionPlanMap } from '@app/core/models/operation-plan/transfer-production-plan-from-backend';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
 	PostponePersonificationRowItemField,
