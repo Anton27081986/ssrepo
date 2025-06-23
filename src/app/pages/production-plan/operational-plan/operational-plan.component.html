@@ -1,15 +1,1 @@
-<ss-lib-table-filters-canvas
-	[tableRef]="tableRef"
-	[leftFiltersRef]="leftFiltersRef"
-	[rightFiltersRef]="rightFiltersRef"
-	[paginationRef]="paginationRef">
-</ss-lib-table-filters-canvas>
-
-<ng-template #tableRef></ng-template>
-<ng-template #leftFiltersRef></ng-template>
-<ng-template #rightFiltersRef>
-	<app-filters-trigger-button></app-filters-trigger-button>
-</ng-template>
-<ng-template #paginationRef>
-	<ss-lib-load-pagination [total]="total" [limit]="10" [offsetInput]="offset" (changeOffset)="changeOffset($event)"></ss-lib-load-pagination>
-</ng-template>
+<ss-lib-button [text]="'открыть модалку'" (click)="openPostponePlanModal(100)"></ss-lib-button>

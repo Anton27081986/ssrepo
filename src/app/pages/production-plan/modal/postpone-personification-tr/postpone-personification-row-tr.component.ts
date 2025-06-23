@@ -18,7 +18,7 @@ import {
 	TextWeight,
 	InputType,
 } from '@front-library/components';
-import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
+import { TransferProductionPlanMap } from '@app/core/models/operation-plan/transfer-production-plan-from-backend';
 import {
 	AsyncPipe,
 	DatePipe,

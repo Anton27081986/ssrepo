@@ -4,57 +4,16 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@front-library/components';
-import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
+import { ManufacturingTovs } from '@app/core/models/operation-plan/manufacturing-tovs';
 import {
 	TransferProductionPlanFromBackend,
 	TransferProductionPlanPatch,
-} from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
-import {
-	OperationPlanItems,
-	OperationPlanRequest,
-	Pagination,
-} from '@app/core/models/production-plan/operation-plan';
+} from '@app/core/models/operation-plan/transfer-production-plan-from-backend';
+import { AddToVRequest } from '@app/core/models/operation-plan/add-tov-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
 	private http: HttpClient = inject(HttpClient);
-
-	public getOperationPlan(
-		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItems>> {
-		let params = new HttpParams();
-		params = params.set('weekId', 300);
-		params = params.set(
-			'planEconomicUserIds',
-			request.planEconomicUserId ?? null,
-		);
-		params = params.set(
-			'productManagerUserId',
-			request.productManagerUserId ?? null,
-		);
-		params = params.set('warehouseId', request.warehouseId ?? null);
-		params = params.set(
-			'productionSectionId',
-			request.productionSectionId ?? null,
-		);
-		params = params.set('tovId', request.tovId ?? null);
-		params = params.set('cityId', request.cityId ?? null);
-		params = params.set('tovCategoryId', request.tovCategoryId ?? null);
-		params = params.set('tovCategoryId', request.tovCategoryId ?? null);
-		params = params.set(
-			'productionFactoryId',
-			request.productionFactoryId ?? null,
-		);
-		params = params.set('Additional', request.additional ?? null);
-		params = params.set('limit', request.limit ?? null);
-		params = params.set('offset', request.offset ?? null);
-
-		return this.http.get<IResponse<OperationPlanItems>>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan`,
-			{ params },
-		);
-	}
 
 	public getTransferProductionPlan(id: number) {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
