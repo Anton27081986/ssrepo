@@ -1,0 +1,49 @@
+<div class="section-filter">
+	<div class="section-filter__input">
+		<ss-lib-form-field
+			[icon]="IconType.Search"
+			[showBorder]="false"
+		>
+			<ss-lib-input
+				fieldCtrl
+				[formControl]="queryControl"
+				[placeholder]="'Введите название полуфабриката...'"
+				[clearButton]="true"
+			/>
+		</ss-lib-form-field>
+	</div>
+
+	<div class="section-filter__content">
+		<ng-container *ngIf="isLoader(); else content">
+			<ss-lib-spinner></ss-lib-spinner>
+		</ng-container>
+		<ng-template #content>
+			<ng-container *ngIf="treeNode | async as nodes">
+				<ng-container *ngIf="nodes.length > 0; else noContent">
+					<ss-lib-dropdown-filter-item [(indeterminate)]="indeterminate" [text]="'Выбрать все'"
+												 [control]="controlsCheckAll"></ss-lib-dropdown-filter-item>
+
+					<ss-lib-dropdown-group-filter-items
+						*ngFor="let node of nodes"
+						[treeNode]="node"
+					>
+						<ss-lib-dropdown-filter-item [isPaddingLeft]="true" *ngFor="let child of node.children" [text]="child.name"
+													 [control]="currentControlsMap[child.id]"></ss-lib-dropdown-filter-item>
+					</ss-lib-dropdown-group-filter-items>
+
+				</ng-container>
+				<ng-template #noContent>
+					<div class="section-filter__no-content">
+						<ss-lib-text [align]="Align.Center" [color]="Colors.TextBody3" [type]="TextType.BodySm"
+									 [weight]="TextWeight.Regular">
+							По запросу {{ queryControl.valueChanges | async }} ничего
+							не найдено. Попробуйте изменить запрос.
+						</ss-lib-text>
+					</div>
+				</ng-template>
+			</ng-container>
+		</ng-template>
+	</div>
+</div>
+
+
