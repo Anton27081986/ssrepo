@@ -40,7 +40,7 @@ import {
 	ToastTypeEnum,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
-import { ManufacturingSelectedTovs } from '@app/core/models/operation-plan/manufacturing-tovs';
+import { ManufacturingSelectedTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
 	IconPosition,
 	SearchInputComponent,
@@ -58,7 +58,7 @@ import {
 } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { AddToVRequest } from '@app/core/models/operation-plan/add-tov-request';
+import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 
 export enum TovEventEnum {
 	default = 0,

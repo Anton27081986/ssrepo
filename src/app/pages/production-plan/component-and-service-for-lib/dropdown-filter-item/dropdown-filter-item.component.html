@@ -1,0 +1,4 @@
+<div class="ss-lib-dropdown-filter-item" [class.ss-lib-dropdown-filter-item--padding]="isPaddingLeft()" (click)="checkItem()">
+	<ss-lib-checkbox (click)="$event.stopPropagation()" [(indeterminate)]="indeterminate" [formControl]="control()"></ss-lib-checkbox>
+	<ss-lib-text [weight]="TextWeight.Medium" [type]="TextType.BodySm" [color]="Colors.TextAction2">{{ text() }}</ss-lib-text>
+</div>

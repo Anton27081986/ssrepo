@@ -1,0 +1,20 @@
+<div class="ss-lib-table-filters">
+	<div class="ss-lib-table-filters__filters">
+		<div class="ss-lib-table-filters__left">
+			<ng-container *ngTemplateOutlet="leftFiltersRef()"></ng-container>
+		</div>
+
+		<div class="ss-lib-table-filters__right">
+			<ng-container *ngTemplateOutlet="rightFiltersRef()"></ng-container>
+		</div>
+	</div>
+	<div class="ss-lib-table-filters__selected">
+		<ss-lib-filter-menu-item *ngFor="let filter of filterService.menuFilterItems " [filter]="filter"></ss-lib-filter-menu-item>
+	</div>
+	<div class="ss-lib-table-filters__table">
+		<ng-container *ngTemplateOutlet="tableRef()"></ng-container>
+	</div>
+	<div class="ss-lib-table-filters__pagination">
+		<ng-container *ngTemplateOutlet="paginationRef()"></ng-container>
+	</div>
+</div>
