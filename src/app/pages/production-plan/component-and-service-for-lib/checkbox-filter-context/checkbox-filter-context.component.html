@@ -18,10 +18,10 @@
 		</ng-container>
 		<ng-template #content>
 			<ng-container *ngIf="items().length > 0; else noContent">
-				<ss-lib-dropdown-filter-item [(indeterminate)]="indeterminate" [text]="'Выбрать все'"
-											 [control]="controlCheckAll()"></ss-lib-dropdown-filter-item>
+				<ss-lib-dropdown-filter-item *ngIf="trueCheckControlMap" [(indeterminate)]="indeterminate" [text]="queryControl().value?.trim() ? 'Очистить выбранное' : 'Очистить все' "
+											 [control]="controlClearAll()"></ss-lib-dropdown-filter-item>
 
-				<ng-container *ngFor="let item of items()">
+				<ng-container *ngFor="let item of items(); let i = index">
 					<ss-lib-dropdown-filter-item
 						[text]="item.name"
 						[control]="controlsMap()[item.id]">

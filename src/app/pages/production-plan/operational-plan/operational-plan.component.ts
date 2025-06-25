@@ -3,12 +3,21 @@ import {
 	Component,
 	inject,
 	OnInit,
+	signal,
 	Signal,
+	WritableSignal,
 } from '@angular/core';
 import {
 	ButtonComponent,
+	ButtonType,
+	DropdownItemComponent,
+	DropdownListComponent,
+	ExtraSize,
+	IconComponent,
+	IconType,
 	IDictionaryItemDto,
 	LoadPaginationComponent,
+	PopoverTriggerForDirective,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -19,14 +28,14 @@ import {
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
 import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { IconPosition } from '@front-components/components';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-plan-days',
@@ -36,6 +45,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 		FiltersTableCanvasComponent,
 		FiltersTriggerButtonComponent,
 		LoadPaginationComponent,
+		DropdownItemComponent,
+		PopoverTriggerForDirective,
+		DropdownListComponent,
+		NgFor,
+		NgIf,
+		AsyncPipe,
+		IconComponent,
 	],
 	templateUrl: './operational-plan.component.html',
 	styleUrl: './operational-plan.component.scss',
@@ -49,14 +65,26 @@ export class OperationalPlanComponent
 	private operationalPlanService: OperationPlanService =
 		inject(OperationPlanService);
 
-	protected weeks: Signal<IDictionaryItemDto[]> = toSignal(
-		this.operationalPlanService.getWeeks(),
-		{ initialValue: [] },
-	);
+	protected weeks$: Observable<IDictionaryItemDto[]> =
+		this.operationalPlanService.getWeeks();
+
+	protected activeWeek: WritableSignal<IDictionaryItemDto | null> =
+		signal(null);
 
 	private popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService,
 	);
+
+	constructor() {
+		super();
+		toSignal(
+			this.weeks$.pipe(
+				tap((value) => {
+					this.activeWeek.set(value[0]);
+				}),
+			),
+		);
+	}
 
 	public loadItems(
 		request: OperationPlanRequest & Pagination,
@@ -72,4 +100,13 @@ export class OperationalPlanComponent
 		this.filtersConfig = operationPlanFilter;
 		super.ngOnInit();
 	}
+
+	protected selectWeek(week: IDictionaryItemDto) {
+		this.activeWeek.set(week);
+	}
+
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly IconPosition = IconPosition;
+	protected readonly ButtonType = ButtonType;
 }

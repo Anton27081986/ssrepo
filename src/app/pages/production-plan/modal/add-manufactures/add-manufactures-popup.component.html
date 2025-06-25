@@ -74,6 +74,7 @@
 									   [text]="item.selectedSection ? item.selectedSection.name : 'Выберите участок'"></ss-lib-button>
 						<ss-lib-dropdown-list [width]="'354px'" #listActions>
 							<ss-lib-dropdown-item *ngFor="let section of item.section"
+												  [selected]="true"
 												  [label]="section.name"
 												  (click)="selectOpt(item,section)"
 							/>

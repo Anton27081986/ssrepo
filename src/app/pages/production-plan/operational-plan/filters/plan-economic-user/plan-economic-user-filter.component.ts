@@ -36,7 +36,7 @@ import { checkboxFilterContextComponent } from '@app/pages/production-plan/compo
 	],
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
-		[controlCheckAll]="controlsCheckAll"
+		[controlClearAll]="controlsClearAll"
 		[items]="(items$ | async)!"
 		[isLoader]="isLoader()"
 		[controlsMap]="currentControlsMap"

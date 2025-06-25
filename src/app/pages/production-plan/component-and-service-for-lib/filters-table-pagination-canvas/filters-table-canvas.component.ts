@@ -9,6 +9,7 @@ import {
 import { AsyncPipe, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { FilterMenuItemComponent } from '@app/pages/production-plan/component-and-service-for-lib/filter-menu-item/filter-menu-item.component';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
+import { FilterMenuComponent } from '@app/pages/production-plan/component-and-service-for-lib/filter-menu/filter-menu.component';
 
 @Component({
 	selector: 'ss-lib-table-filters-canvas',
@@ -22,6 +23,7 @@ import { HeaderFilterService } from '@app/pages/production-plan/component-and-se
 		NgIf,
 		FilterMenuItemComponent,
 		NgFor,
+		FilterMenuComponent,
 	],
 })
 export class FiltersTableCanvasComponent {

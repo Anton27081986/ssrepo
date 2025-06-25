@@ -48,7 +48,7 @@ export class checkboxFilterContextComponent {
 	}> = input.required();
 	public items: InputSignal<IDictionaryItemDto[]> = input.required();
 	public isLoader: InputSignal<boolean> = input.required();
-	public controlCheckAll: InputSignal<FormControl<boolean | null>> =
+	public controlClearAll: InputSignal<FormControl<boolean | null>> =
 		input.required();
 	public queryControl: InputSignal<FormControl<string | null>> =
 		input.required();
@@ -58,4 +58,12 @@ export class checkboxFilterContextComponent {
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Align = Align;
+
+	get trueCheckControlMap(): boolean {
+		return (
+			Object.values(this.controlsMap()).some(
+				(control) => control.value === true,
+			) && this.indeterminate()
+		);
+	}
 }

@@ -52,12 +52,15 @@ export class SectionFilterComponent
 		OperationPlanFiltersApiService,
 	);
 
-	private parent$: BehaviorSubject<IDictionaryItemDto[]> =
-		new BehaviorSubject<IDictionaryItemDto[]>([]);
-
-	private firstRequest: boolean = true;
-
 	protected treeNode!: Observable<TreeNodeFilter[]>;
+
+	get trueCheckControlMap(): boolean {
+		return (
+			Object.values(this.currentControlsMap).some(
+				(control) => control.value === true,
+			) && this.indeterminate()
+		);
+	}
 
 	constructor() {
 		super();
@@ -65,17 +68,19 @@ export class SectionFilterComponent
 
 	override ngOnInit() {
 		super.ngOnInit();
-		this.treeNode = combineLatest([this.parent$, this.items$]).pipe(
-			map(([parent, items]) => {
+		this.treeNode = this.items$.pipe(
+			map((items) => {
 				const node: TreeNodeFilter[] = [];
-				parent.forEach((parent) => {
-					node.push(
-						new TreeNodeFilter(
-							parent,
-							items,
-							this.currentControlsMap,
-						),
-					);
+				items.forEach((parent) => {
+					if (!parent.parentId) {
+						node.push(
+							new TreeNodeFilter(
+								parent,
+								items,
+								this.currentControlsMap,
+							),
+						);
+					}
 				});
 				return node;
 			}),
@@ -84,29 +89,13 @@ export class SectionFilterComponent
 
 	override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionSection(query).pipe(
-			tap((value) => {
-				const newParents = value.items.map((item) => item.data);
-				const oldParents = this.parent$.value;
-
-				const allParents = [...oldParents, ...newParents];
-				const uniqueParents = allParents.filter(
-					(parent, index, self) =>
-						index === self.findIndex((p) => p.id === parent.id),
-				);
-
-				if (this.firstRequest) {
-					this.parent$.next(uniqueParents);
-					this.firstRequest = false;
-				} else {
-					this.parent$.next(newParents);
-				}
-			}),
 			map((value) => {
 				return value.items.flatMap((item) => {
-					return item.childs.map((child) => {
+					const mapItems = item.childs.map((child) => {
 						child.parentId = item.data.id;
 						return child;
 					});
+					return [item.data, ...mapItems];
 				});
 			}),
 		);
@@ -114,20 +103,13 @@ export class SectionFilterComponent
 
 	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionSection('', ids).pipe(
-			tap((value) => {
-				const parent: IDictionaryItemDto[] = [];
-				value.items.map((item) => {
-					parent.push(item.data);
-				});
-
-				this.parent$.next(parent);
-			}),
 			map((value) => {
 				return value.items.flatMap((item) => {
-					return item.childs.map((child) => {
+					const mapItems = item.childs.map((child) => {
 						child.parentId = item.data.id;
 						return child;
 					});
+					return [item.data, ...mapItems];
 				});
 			}),
 		);

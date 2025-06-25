@@ -9,7 +9,7 @@
 		</div>
 	</div>
 	<div class="ss-lib-table-filters__selected">
-		<ss-lib-filter-menu-item *ngFor="let filter of filterService.menuFilterItems " [filter]="filter"></ss-lib-filter-menu-item>
+		<ss-lib-filter-menu></ss-lib-filter-menu>
 	</div>
 	<div class="ss-lib-table-filters__table">
 		<ng-container *ngTemplateOutlet="tableRef()"></ng-container>

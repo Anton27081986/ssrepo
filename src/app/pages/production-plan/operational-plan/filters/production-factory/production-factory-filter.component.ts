@@ -24,7 +24,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 	styles: '',
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
-		[controlCheckAll]="controlsCheckAll"
+		[controlClearAll]="controlsClearAll"
 		[items]="itemsSignal()"
 		[isLoader]="isLoader()"
 		[controlsMap]="currentControlsMap"

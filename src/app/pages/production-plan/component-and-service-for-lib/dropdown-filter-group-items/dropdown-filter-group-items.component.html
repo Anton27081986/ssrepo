@@ -1,7 +1,7 @@
 <div class="ss-lib-dropdown-filter-group-items">
-	<div class="ss-lib-dropdown-filter-group-items__item" (click)="checkItems(treeNode().controlCheckAll)">
+	<div class="ss-lib-dropdown-filter-group-items__item" (click)="checkItems(treeNode().controlCheckOrClearAll)">
 		<div class="ss-lib-dropdown-filter-group-items__item-left">
-			<ss-lib-checkbox (click)="$event.stopPropagation()" [indeterminate]="treeNode().indeterminate()" [formControl]="treeNode().controlCheckAll"></ss-lib-checkbox>
+			<ss-lib-checkbox (click)="$event.stopPropagation()" [indeterminate]="treeNode().indeterminate()" [formControl]="treeNode().controlCheckOrClearAll"></ss-lib-checkbox>
 			<ss-lib-text [weight]="TextWeight.Medium" [type]="TextType.BodySm"
 						 [color]="Colors.TextAction2">{{ treeNode().parent.name }}
 			</ss-lib-text>

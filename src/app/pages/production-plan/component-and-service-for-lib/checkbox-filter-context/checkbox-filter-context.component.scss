@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  gap: 1px;
 
   &__content {
     height: 274px;
     overflow: auto;
+    padding: 6px 4px;
   }
 
   &__no-content {

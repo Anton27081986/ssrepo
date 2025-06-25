@@ -46,7 +46,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 	protected readonly selectedItems$: Observable<T[]>;
 	protected readonly _headerFilterService = inject(HeaderFilterService);
 
-	public readonly controlsCheckAll: FormControl<boolean | null> =
+	public readonly controlsClearAll: FormControl<boolean | null> =
 		new FormControl<boolean | null>(null);
 
 	public indeterminate: ModelSignal<boolean> = model(false);
@@ -71,12 +71,15 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 		super();
 
 		toSignal(
-			this.controlsCheckAll.valueChanges.pipe(
+			this.controlsClearAll.valueChanges.pipe(
 				tap((value) => {
 					this.indeterminate.set(false);
 					Object.keys(this.currentControlsMap).forEach((key) => {
 						const control = this.currentControlsMap[key];
-						control.setValue(value);
+						control.setValue(false);
+						this.controlsClearAll.setValue(false, {
+							emitEvent: false,
+						});
 					});
 				}),
 			),
@@ -98,25 +101,17 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 	}
 
 	private calcIndeterminate(): void {
-		const totalCount = this.getTotalControlsCount();
 		const trueCount = this.getTrueControlsCount();
 
 		if (trueCount === 0) {
 			this.indeterminate.set(false);
-			this.controlsCheckAll.setValue(false, { emitEvent: false });
-
-			return;
-		}
-
-		if (trueCount === totalCount) {
-			this.indeterminate.set(false);
-			this.controlsCheckAll.setValue(true, { emitEvent: false });
+			this.controlsClearAll.setValue(false, { emitEvent: false });
 
 			return;
 		}
 
 		this.indeterminate.set(true);
-		this.controlsCheckAll.setValue(false, { emitEvent: false });
+		this.controlsClearAll.setValue(false, { emitEvent: false });
 	}
 
 	public search$(searchTerm: string | null): Observable<T[]> {
@@ -227,10 +222,6 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 			this.controlsMap[id] = control;
 		}
 		return control;
-	}
-
-	public getTotalControlsCount(): number {
-		return Object.keys(this.currentControlsMap).length;
 	}
 
 	public getTrueControlsCount(): number {

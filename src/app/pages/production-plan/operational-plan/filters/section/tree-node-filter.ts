@@ -1,7 +1,7 @@
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { signal, WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription, tap } from 'rxjs';
+import { debounceTime, Subscription, tap } from 'rxjs';
 
 export class TreeNodeFilter {
 	public parent: IDictionaryItemDto;
@@ -13,9 +13,8 @@ export class TreeNodeFilter {
 
 	public indeterminate: WritableSignal<boolean> = signal(false);
 
-	public controlCheckAll: FormControl<boolean | null> = new FormControl<
-		boolean | null
-	>(false);
+	public controlCheckOrClearAll: FormControl<boolean | null> =
+		new FormControl<boolean | null>(false);
 
 	public readonly controls: {
 		[id: string]: FormControl<boolean | null>;
@@ -39,18 +38,24 @@ export class TreeNodeFilter {
 				this.expanded = true;
 			}
 			this.subscription.add(
-				this.controls[item.id].valueChanges.subscribe(() => {
-					this.calcIndeterminate();
-				}),
+				this.controls[item.id].valueChanges
+					.pipe(debounceTime(50))
+					.subscribe(() => {
+						this.calcIndeterminate();
+					}),
 			);
 		});
 
 		this.subscription.add(
-			this.controlCheckAll.valueChanges
+			this.controlCheckOrClearAll.valueChanges
 				.pipe(
 					tap((value) => {
 						this.children.forEach((item) => {
-							this.controls[item.id].setValue(value);
+							if (this.indeterminate()) {
+								this.controls[item.id].setValue(false);
+							} else {
+								this.controls[item.id].setValue(value);
+							}
 						});
 					}),
 				)
@@ -76,19 +81,19 @@ export class TreeNodeFilter {
 
 		if (trueCount === 0) {
 			this.indeterminate.set(false);
-			this.controlCheckAll.setValue(false, { emitEvent: false });
+			this.controlCheckOrClearAll.setValue(false, { emitEvent: false });
 
 			return;
 		}
 
 		if (trueCount === totalCount) {
 			this.indeterminate.set(false);
-			this.controlCheckAll.setValue(true, { emitEvent: false });
+			this.controlCheckOrClearAll.setValue(true, { emitEvent: false });
 
 			return;
 		}
 
 		this.indeterminate.set(true);
-		this.controlCheckAll.setValue(false, { emitEvent: false });
+		this.controlCheckOrClearAll.setValue(false, { emitEvent: false });
 	}
 }

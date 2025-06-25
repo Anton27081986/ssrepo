@@ -179,4 +179,11 @@ export class HeaderFilterService {
 			this.setQueryParamsFromFilter();
 		}
 	}
+
+	public removeFilterAllMenu(): void {
+		this.filterItems.forEach((item) => {
+			item.active = false;
+			this.removeFilterMenu(item);
+		});
+	}
 }
