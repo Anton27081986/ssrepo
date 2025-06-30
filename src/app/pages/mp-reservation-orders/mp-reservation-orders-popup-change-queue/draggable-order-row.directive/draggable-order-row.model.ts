@@ -1,4 +1,4 @@
 export interface IOrderReorderRequest {
-	orderId: string;
+	orderId: number;
 	toIndex: number;
 }

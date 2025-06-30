@@ -91,27 +91,15 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		this.addDatesRow();
 	}
 
-	public get dates(): FormArray<
-		FormGroup<{
-			productionDate: FormControl<string | null>;
-			provisionDate: FormControl<string | null>;
-			fact: FormControl<number | null>;
-		}>
-	> {
-		return this.inProductionForm.get('dates') as FormArray<
-			FormGroup<{
-				productionDate: FormControl<string | null>;
-				provisionDate: FormControl<string | null>;
-				fact: FormControl<number | null>;
-			}>
-		>;
+	public get dates(): FormArray{
+		return this.inProductionForm.get('dates') as FormArray;
 	}
 
 	private createDatesGroup(): FormGroup {
 		return new FormGroup({
 			productionDate: new FormControl<string | null>(null, [Validators.required]),
 			provisionDate: new FormControl<string | null>(null, [Validators.required]),
-			fact: new FormControl<number | null>(null, [Validators.required]), // Для примера
+			fact: new FormControl<number | null>(null, [Validators.required]),
 		});
 	}
 

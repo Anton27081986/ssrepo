@@ -171,7 +171,7 @@
 							<snab-icon
 								[color]="Colors.WarningLight"
 								[icon]="IconType.Unlock"></snab-icon>
-							{{ order.provision.provided.toString() || '-' }}
+							{{ order.provision.provided || '-' }}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
@@ -181,7 +181,7 @@
 							<snab-icon
 								[color]="Colors.PositiveHeavy"
 								[icon]="IconType.Check"></snab-icon>
-							{{ order.provision.provisionAvailable.toString() || '-' }}
+							{{ order.provision.provisionAvailable || '-' }}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
@@ -191,7 +191,7 @@
 							<snab-icon
 								[color]="Colors.InfoHeavy"
 								[icon]="IconType.Refresh"></snab-icon>
-							{{ order.provision.manufacturing.toString() || '-' }}
+							{{ order.provision.manufacturing || '-' }}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
@@ -201,7 +201,7 @@
 							<snab-icon
 								[color]="Colors.DangerHeavy"
 								[icon]="IconType.Error"></snab-icon>
-							{{ order.provision.provisionUnavailable.toString() || '-' }}
+							{{ order.provision.provisionUnavailable || '-' }}
 						</ss-tag-v2>
 					</td>
 					<td>
