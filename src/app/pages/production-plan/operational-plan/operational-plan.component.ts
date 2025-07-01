@@ -3,9 +3,6 @@ import {
 	Component,
 	inject,
 	OnInit,
-	signal,
-	Signal,
-	WritableSignal,
 } from '@angular/core';
 import {
 	ButtonComponent,
@@ -28,14 +25,15 @@ import {
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import { Observable, tap } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { DaysTotal, IResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
 import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
 import { IconPosition } from '@front-components/components';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { OperationPlanTableComponent } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table.component';
 
 @Component({
 	selector: 'app-plan-days',
@@ -52,6 +50,7 @@ import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 		NgIf,
 		AsyncPipe,
 		IconComponent,
+		OperationPlanTableComponent,
 	],
 	templateUrl: './operational-plan.component.html',
 	styleUrl: './operational-plan.component.scss',
@@ -68,8 +67,12 @@ export class OperationalPlanComponent
 	protected weeks$: Observable<IDictionaryItemDto[]> =
 		this.operationalPlanService.getWeeks();
 
-	protected activeWeek: WritableSignal<IDictionaryItemDto | null> =
-		signal(null);
+	protected daysTotal$: BehaviorSubject<DaysTotal[]> = new BehaviorSubject<
+		DaysTotal[]
+	>([]);
+
+	protected activeWeek$: BehaviorSubject<IDictionaryItemDto | null> =
+		new BehaviorSubject<IDictionaryItemDto | null>(null);
 
 	private popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService,
@@ -77,10 +80,11 @@ export class OperationalPlanComponent
 
 	constructor() {
 		super();
+		this.limit = 7;
 		toSignal(
 			this.weeks$.pipe(
 				tap((value) => {
-					this.activeWeek.set(value[0]);
+					this.activeWeek$.next(value[0]);
 				}),
 			),
 		);
@@ -89,7 +93,16 @@ export class OperationalPlanComponent
 	public loadItems(
 		request: OperationPlanRequest & Pagination,
 	): Observable<IResponse<OperationPlanItems>> {
-		return this.operationalPlanService.getProductionPlan(request);
+		return this.activeWeek$.pipe(
+			switchMap((week) => {
+				// request.weekId = week!.id; // временно
+				request.weekId = 202526;
+				return this.operationalPlanService.getProductionPlan(request);
+			}),
+			tap((value) => {
+				this.daysTotal$.next(value.daysTotal!);
+			}),
+		);
 	}
 
 	protected openPostponePlanModal(id: number) {
@@ -102,7 +115,7 @@ export class OperationalPlanComponent
 	}
 
 	protected selectWeek(week: IDictionaryItemDto) {
-		this.activeWeek.set(week);
+		this.activeWeek$.next(week);
 	}
 
 	protected readonly IconType = IconType;

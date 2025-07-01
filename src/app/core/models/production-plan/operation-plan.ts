@@ -2,16 +2,16 @@ export interface OperationPlanItems {
 	id: number;
 	weekId: number;
 	tov: IName;
-	category: IName;
-	section: IName;
+	tovCategory: IName;
+	productionSection: IName;
 	optimalBatch: number;
 	productionType: IName;
 	productionCity: IName;
 	productManagerUser: IName;
-	planEcomonicUser: IName;
+	planEconomicUser: IName;
 	isPersonification: boolean;
 	isComment: boolean;
-	planDays: PlanDays[];
+	planDays: PlanDays[] | null;
 	monthPlanQuantity: number;
 	monthFactQuantity: number;
 	weekPlanQuantity: number;
@@ -34,15 +34,14 @@ export interface PlanDays {
 
 export interface OperationPlanRequest {
 	weekId: number;
-	planEconomicUserId: number;
-	productManagerUserId: number;
-	warehouseId: number;
-	productionSectionId: number;
-	tovId: number;
-	cityId: number;
-	tovCategoryId: number;
-	productionFactoryId: number;
-	additional: number;
+	planEconomicUserIds: number;
+	productManagerUserIds: number;
+	warehouseIds: number;
+	productionSectionIds: number;
+	tovIds: number;
+	cityIds: number;
+	tovCategoryIds: number;
+	productionFactoryIds: number;
 }
 
 export interface Pagination {

@@ -1,0 +1,114 @@
+<div class="table-wrapper">
+	<table
+		ssTable
+		class="operation-plan-table"
+		[hasBorderRadius]="false"
+		[showCellBorders]="true"
+		[columns]="visibleColumnsIds()"
+	>
+		<thead>
+		<tr ssThGroup>
+			@for (column of visibleColumns(); track column) {
+				@if (!isSubColumn(column.id)) {
+					<th
+						*ssHead="column.id"
+						ssTh
+						[attr.rowspan]="
+								!column.subColumns && !column.subGroups
+									? 2
+									: null
+							"
+						[attr.colspan]="
+								column.subColumns
+									? column.subColumns.length
+									: null
+							"
+						[resizable]="true"
+					>
+						<div
+							class="item-align--center"
+						>
+							<!-- Чекбокс только для колонки 'tov' -->
+							@if (column.id === 'tov') {
+								<ss-lib-checkbox
+									[formControl]="masterCheckboxCtrl"
+									[indeterminate]="
+											getMasterCheckboxIndeterminate()
+										"
+								/>
+							}
+							<ss-lib-text
+								[color]="Colors.TextBody2"
+								[weight]="TextWeight.Semibold"
+								[type]="TextType.BodyXs"
+								[align]="Align.Center"
+								[isEllipsis]="true"
+							>
+								{{ formatColumnName(column.name) }}
+							</ss-lib-text>
+						</div>
+					</th>
+				}
+			}
+		</tr>
+		<tr ssThGroup>
+			@for (column of visibleColumns(); track column) {
+				@if (column.subColumns) {
+					@for (subColumnId of column.subColumns;
+						track subColumnId) {
+						<th
+							*ssHead="subColumnId"
+							ssTh
+						>
+							<ss-lib-text
+								[color]="Colors.TextBody2"
+								[weight]="TextWeight.Semibold"
+								[type]="TextType.BodyXs"
+								[align]="Align.Center"
+								[isEllipsis]="true"
+							>
+								{{ getSubColumnName(subColumnId) }}
+							</ss-lib-text>
+						</th>
+					}
+				}
+			}
+		</tr>
+		</thead>
+		<tbody>
+			@for (row of data(); track row.id; let idxRow = $index) {
+				<tr
+					ssTr
+				>
+					@for (column of visibleColumns(); track column.id) {
+						@if (!column.subColumns?.length &&
+						!column.subGroups?.length) {
+							<td
+								*ssCell="column.id"
+								ssTd
+							>
+								<div
+									class="item-align--center"
+								>
+									<!-- Чекбокс только для колонки 'tov' -->
+									@if (column.id === 'tov') {
+										<ss-lib-checkbox
+											[formControl]="getRowCheckboxControl(idxRow)"
+										></ss-lib-checkbox>
+									}
+									<ss-lib-text
+										[type]="TextType.BodySm"
+										[weight]="TextWeight.Regular"
+										[align]="Align.Center"
+									>
+										{{ getCellValue(row, column.id) }}
+									</ss-lib-text>
+								</div>
+							</td>
+						}
+					}
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

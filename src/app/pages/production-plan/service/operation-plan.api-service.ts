@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { IResponse } from '@app/core/utils/response';
@@ -24,31 +24,12 @@ export class OperationPlanApiService {
 		request: OperationPlanRequest & Pagination,
 	): Observable<IResponse<OperationPlanItems>> {
 		let params = new HttpParams();
-		params = params.set('weekId', 300);
-		params = params.set(
-			'planEconomicUserIds',
-			request.planEconomicUserId ?? null,
-		);
-		params = params.set(
-			'productManagerUserId',
-			request.productManagerUserId ?? null,
-		);
-		params = params.set('warehouseId', request.warehouseId ?? null);
-		params = params.set(
-			'productionSectionId',
-			request.productionSectionId ?? null,
-		);
-		params = params.set('tovId', request.tovId ?? null);
-		params = params.set('cityId', request.cityId ?? null);
-		params = params.set('tovCategoryId', request.tovCategoryId ?? null);
-		params = params.set('tovCategoryId', request.tovCategoryId ?? null);
-		params = params.set(
-			'productionFactoryId',
-			request.productionFactoryId ?? null,
-		);
-		params = params.set('Additional', request.additional ?? null);
-		params = params.set('limit', request.limit ?? null);
-		params = params.set('offset', request.offset ?? null);
+
+		Object.entries(request).forEach(([key, value]) => {
+			if (value !== null && value !== undefined) {
+				params = params.set(key, value);
+			}
+		});
 
 		return this.http.get<IResponse<OperationPlanItems>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlan`,

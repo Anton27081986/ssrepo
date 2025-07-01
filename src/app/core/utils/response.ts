@@ -8,6 +8,7 @@ export interface IResponse<T> {
 	weekCount?: number;
 	clientOfferId?: string;
 	totalQuantity?: number;
+	daysTotal?: DaysTotal[];
 }
 
 export interface Currency {
@@ -23,4 +24,10 @@ export interface IResponseProposalsTrips<T> extends IResponse<T> {
 
 export interface IRatingTeamsResponse<T> extends IResponse<T> {
 	teamName: string;
+}
+
+export interface DaysTotal {
+	date: string;
+	planDayTotalQuantity: number;
+	factDayTotalQuantity: number;
 }

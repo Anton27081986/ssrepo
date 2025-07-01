@@ -41,6 +41,7 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 	templateUrl: './production-plan.component.html',
 	styleUrl: './production-plan.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [],
 })
 export class ProductionPlanComponent {
 	protected readonly TextType = TextType;

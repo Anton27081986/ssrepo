@@ -12,14 +12,14 @@ import { TovCategoryFilterComponent } from '@app/pages/production-plan/operation
 import { SectionFilterComponent } from '@app/pages/production-plan/operational-plan/filters/section/section-filter.component';
 
 export enum operationPlanFiltersFields {
-	planEconomicUserId = 'planEconomicUserId',
-	productManagerUserId = 'ProductManagerUserId',
-	warehouseId = 'WarehouseId',
+	planEconomicUserId = 'planEconomicUserIds',
+	productManagerUserId = 'ProductManagerUserIds',
+	warehouseId = 'WarehouseIds',
 	productionSectionId = 'ProductionSectionId',
-	tovId = 'TovId',
-	cityId = 'CityId',
-	tovCategoryId = 'TovCategoryId',
-	productionFactoryId = 'ProductionFactoryId',
+	tovId = 'TovIds',
+	cityId = 'CityIds',
+	tovCategoryId = 'TovCategoryIds',
+	productionFactoryId = 'ProductionFactoryIds',
 }
 
 export const operationPlanFilter: IFilterItem[] = [

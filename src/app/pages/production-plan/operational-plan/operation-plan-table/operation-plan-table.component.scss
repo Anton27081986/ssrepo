@@ -1,0 +1,41 @@
+.table-wrapper {
+  display: inline-flex;
+  width: 100%;
+  overflow-x: auto;
+  max-width: none; /* Убираем ограничения */
+  box-sizing: border-box;
+}
+
+.operation-plan-table {
+  width: 100%;
+  position: relative;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  transition: width 0.1s ease;
+  overflow: hidden;
+}
+
+.column-item__content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  &_label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.drag-action__content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.item-align--center {
+  justify-content: center;
+}

@@ -1,49 +1,59 @@
-import { Component, effect, inject, OnInit, Signal } from '@angular/core';
-import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
+import { Component, inject, OnInit } from '@angular/core';
+import {
+	BehaviorSubject,
+	map,
+	Observable,
+	switchMap,
+	combineLatest,
+	tap,
+} from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { IFilterItem } from '@app/pages/production-plan/component-and-service-for-lib/filter-items';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({ template: '' })
 export abstract class BaseAbstractComponent<TValue, ReqParams>
 	implements OnInit
 {
-	private headerFilterService: HeaderFilterService =
+	private readonly headerFilterService: HeaderFilterService =
 		inject(HeaderFilterService);
 
 	protected filtersConfig: IFilterItem[] = [];
-	public offset: number = 0;
+	public limit = 20;
 
-	private offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	public offset$ = new BehaviorSubject<number>(0);
 
-	// private initialization$: BehaviorSubject<boolean> =
-	// 	new BehaviorSubject<boolean>(false);
+	private readonly initialization$ = new BehaviorSubject<boolean>(false);
 
-	// private items: Signal<TValue[]> = toSignal(
-	// 	this.headerFilterService.criteria$.pipe(
-	// 		switchMap((value) => {
-	// 			console.log(value);
-	// 			return this.loadItems(value as ReqParams);
-	// 		}),
-	// 		map((value) => value.items),
-	// 	),
-	// 	{ initialValue: [] },
-	// );
+	protected items$: Observable<TValue[]> = combineLatest([
+		this.headerFilterService.criteria$,
+		this.offset$,
+	]).pipe(
+		switchMap(([value, offset]) => {
+			const valueWithPagination = {
+				...value,
+				limit: this.limit,
+				offset,
+			};
+			return this.loadItems(valueWithPagination as ReqParams);
+		}),
+		tap((value) => (this.total = value.total)),
+		map((value) => value.items),
+		tap((value) => console.log(value)),
+	);
 
-	public total: number = 0;
+	public total = 0;
 
 	abstract loadItems(criterion: ReqParams): Observable<IResponse<TValue>>;
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.headerFilterService.init(this.filtersConfig);
-		this.headerFilterService.criteria$.subscribe((item) => {
-			console.log(item);
-		});
+		// this.headerFilterService.criteria$.subscribe((item) => {
+		// 	console.log(item);
+		// });
 	}
 
-	public changeOffset(offset: number) {
+	public changeOffset(offset: number): void {
 		this.offset$.next(offset);
-		return offset;
 	}
 }
