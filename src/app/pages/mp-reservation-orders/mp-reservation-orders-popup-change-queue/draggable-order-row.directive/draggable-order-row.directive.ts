@@ -18,10 +18,10 @@ import {
 })
 export class DraggableOrderRowDirective {
 	/** Временное хранилище id перетаскиваемого заказа */
-	private static draggedOrderId: string | null = null;
+	private static draggedOrderId: number | null = null;
 
-	/** Входящий заказ (должен содержать поле orderId) */
-	@Input() order!: { orderId: string };
+	/** Входящий заказ (должен содержать поле queueOrderId) */
+	@Input() queueOrder!: { id: number };
 
 	/** Текущий индекс в списке */
 	@Input() index!: number;
@@ -31,8 +31,8 @@ export class DraggableOrderRowDirective {
 
 	@HostListener('dragstart', ['$event'])
 	onDragStart(event: DragEvent): void {
-		DraggableOrderRowDirective.draggedOrderId = this.order.orderId;
-		event.dataTransfer?.setData('text/plain', this.order.orderId);
+		DraggableOrderRowDirective.draggedOrderId = this.queueOrder.id;
+		event.dataTransfer?.setData('text/plain', this.queueOrder.id.toString());
 		event.dataTransfer!.effectAllowed = 'move';
 	}
 
@@ -53,7 +53,7 @@ export class DraggableOrderRowDirective {
 		const fromOrderId = DraggableOrderRowDirective.draggedOrderId;
 		const toIndex = this.index;
 
-		if (fromOrderId && fromOrderId !== this.order.orderId) {
+		if (fromOrderId && fromOrderId !== this.queueOrder.id) {
 			this.reorder.emit({ orderId: fromOrderId, toIndex });
 		}
 	}

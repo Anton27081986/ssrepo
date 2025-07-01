@@ -11,6 +11,7 @@ import { catchError } from 'rxjs/operators';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
+import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
 
 @UntilDestroy()
 @Injectable({
@@ -32,6 +33,10 @@ export class MpReservationOrdersFacadeService {
 	public personificationStatuses$ = this.personificationStatuses.asObservable();
 	public orders$ = this.orders.asObservable();
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
+	private readonly queueOrdersSubject = new BehaviorSubject<IQueueOrderDto[]>([]);
+	public queueOrders$ = this.queueOrdersSubject.asObservable();
+
 
 	private readonly activeOrder = new BehaviorSubject<IMpReservationOrder | null>(null);
 	public activeOrder$ = this.activeOrder.asObservable();
@@ -151,5 +156,26 @@ export class MpReservationOrdersFacadeService {
 		offset: number,
 	): Observable<IResponse<IChangeTrackerItemDto>> {
 		return this.mpReservationOrdersApiService.getHistoryOrder(objectId, limit, offset);
+	}
+
+	public updateQueueOrders(updated: IQueueOrderDto[]): void {
+		this.queueOrdersSubject.next(updated);
+	}
+
+	public loadQueueOrders(): void {
+		this.mpReservationOrdersApiService
+			.getQueueOrders()
+			.pipe(
+				tap(queue => this.queueOrdersSubject.next(queue.data)),
+				untilDestroyed(this),
+			)
+			.subscribe();
+	}
+
+	public updateOrderPositionInQueue(oldPosition: number, newPosition: number): void {
+		this.mpReservationOrdersApiService
+			.reorderQueueOrders({ oldPosition: oldPosition, newPosition: newPosition })
+			.pipe(untilDestroyed(this))
+			.subscribe();
 	}
 }

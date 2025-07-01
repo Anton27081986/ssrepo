@@ -1,8 +1,9 @@
 <div class="wrapper" (mousedown)="close()">
-	<snab-card class="change-queue-form"
-			   [headerRef]="header"
-			   [bodyRef]="body"
-			   (mousedown)="$event.stopPropagation()">
+	<snab-card
+		class="change-queue-form"
+		[headerRef]="header"
+		[bodyRef]="body"
+		(mousedown)="$event.stopPropagation()">
 		<ng-template #header>
 			<div class="header">
 				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
@@ -13,163 +14,169 @@
 					[size]="Size.Large"
 					[icon]="IconType.ClearLarge"
 					[iconPosition]="IconPosition.OnlyIcon"
-					(click)="close()">
-				</snab-button>
+					(click)="close()"></snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>
 			<div class="content">
 				<div class="search-row">
 					<div class="search-row__input">
-						<ss-search-input class="search-row__input__field"
-										 label="ТП"
-										 size="medium"
-										 searchType="tovs"
-										 [reSizeHeightOptions]="true"
-										 [placeholder]="'Выберите товарную позицию'"
-										 (select)="onTovFilter($event)"/>
+						<ss-search-input
+							label="ТП"
+							size="medium"
+							searchType="tovs"
+							class="search-row__input__field"
+							[reSizeHeightOptions]="true"
+							[placeholder]="'Выберите товарную позицию'"
+							(select)="onTovFilter($event)" />
 						<snab-button
 							text="Найти заказы"
 							[size]="Size.Large"
-							(click)="findQueueOrders()">
-						</snab-button>
+							(click)="findQueueOrders()"></snab-button>
 					</div>
 					<div class="search-row__status">
-						<snab-form-field
-							[label]="'Статус'"
-							[size]="Size.Large">
+						<snab-form-field [label]="'Статус'" [size]="Size.Large">
 							<snab-select
 								fieldCtrl
 								[formControl]="status"
 								[options]="statusOptions()"
-								[placeholder]="'Введите статус'"
-							/>
+								[placeholder]="'Введите статус'" />
 						</snab-form-field>
 					</div>
-
 				</div>
 				<div class="table-container">
 					<table class="orders-table">
 						<thead>
-						<tr>
-							<th></th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Код заказа</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Статус</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата заказа
-								</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Заказчик</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Клиент</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Кол-во</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Обеспечение
-								</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата производства
-								</snab-text>
-							</th>
-							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата обеспечения
-								</snab-text>
-							</th>
-						</tr>
+							<tr>
+								<th></th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Код заказа
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Статус
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Позиция
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Кол-во
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Ед. изм.
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										ТП
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Заказчик
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Клиент
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold">
+										Дата создания
+									</snab-text>
+								</th>
+							</tr>
 						</thead>
 						<tbody>
-						<tr
-							*ngFor="let order of filteredOrdersQueue; let i = index"
-							ssDraggableOrderRow
-							[order]="order"
-							[index]="i"
-							(reorder)="onOrderReorder($event)"
-						>
-							<td>
-								<snab-button
-									[type]="ButtonType.Flat"
-									[icon]="IconType.Drag"
-									[iconPosition]="IconPosition.OnlyIcon"
-									[size]="Size.Large">
-								</snab-button>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">{{ order.orderId }}</snab-text>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">{{ order.status }}</snab-text>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">{{ order.dateOrder }}</snab-text>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">{{ order.author }}</snab-text>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">{{ order.client }}</snab-text>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">{{ order.quantity }}</snab-text>
-							</td>
-							<td class="table-td-provision">
-								<ng-container *ngIf="order.provision?.provisionAvailable">
-									<snab-label class="table-td-provision__label"
-												[type]="LabelType.Success"
-												[size]="Size.Default"
-												[text]="order.provision.provisionAvailable.toString()"
-												[tooltip]="'Свободно'"
-												[theme]="TooltipTheme.MAIN">
-									</snab-label>
-								</ng-container>
-								<ng-container *ngIf="order.provision?.provided">
-									<snab-label class="table-td-provision__label" snab-tooltip
-												[type]="LabelType.Warning"
-												[size]="Size.Default"
-												[text]="order.provision.provided.toString()"
-												[tooltip]="'Моя бронь'"
-												[theme]="TooltipTheme.MAIN"></snab-label>
-								</ng-container>
-								<ng-container *ngIf="order.provision?.provisionUnavailable">
-									<snab-label class="table-td-provision__label" snab-tooltip
-												[type]="LabelType.Danger"
-												[size]="Size.Default"
-												[text]="order.provision.provisionUnavailable.toString()"
-												[tooltip]="'Не может быть обеспечено'"
-												[theme]="TooltipTheme.MAIN"></snab-label>
-								</ng-container>
-								<ng-container *ngIf="order.provision?.manufacturing">
-									<snab-label class="table-td-provision__label" snab-tooltip
-												[type]="LabelType.Info"
-												[size]="Size.Default"
-												[text]="order.provision.manufacturing.toString()"
-												[tooltip]="'В производстве'"
-												[theme]="TooltipTheme.MAIN"></snab-label>
-								</ng-container>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">
-									<ng-container *ngFor="let prodDate of order.provision?.provisionDetails">
-										{{ prodDate.productionDate  | date: 'dd.MM.yyyy' }}
-									</ng-container>
-								</snab-text>
-							</td>
-							<td>
-								<snab-text [type]="TextType.Body">
-									<ng-container *ngFor="let provDate of order.provision?.provisionDetails">
-										{{ provDate.provisionDate  | date: 'dd.MM.yyyy' }}
-									</ng-container>
-								</snab-text>
-							</td>
-						</tr>
+							<tr
+								*ngFor="let queueOrder of filteredOrdersQueue; let i = index"
+								ssDraggableOrderRow
+								[queueOrder]="queueOrder"
+								[index]="i"
+								(reorder)="onOrderReorder($event)">
+								<td>
+									<snab-button
+										[type]="ButtonType.Flat"
+										[icon]="IconType.Drag"
+										[iconPosition]="IconPosition.OnlyIcon"
+										[size]="Size.Large"></snab-button>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.id }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.status }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.position }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.personificationOrder.totalAmount }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.personificationOrder.tovUnit }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.personificationOrder.tov?.name }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.personificationOrder.author?.name }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{ queueOrder.personificationOrder.client?.name }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text [type]="TextType.Body">
+										{{
+											queueOrder.personificationOrder.dateCreated
+												| date: 'dd.MM.yyyy'
+										}}
+									</snab-text>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

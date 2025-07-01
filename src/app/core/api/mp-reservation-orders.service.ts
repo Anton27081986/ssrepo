@@ -11,9 +11,13 @@ import {
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
+import { IApproveClarificationResponse } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.models';
 import {
-	IApproveClarificationResponse
-} from "@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.models";
+	IQueueOrderDto,
+	IQueueReorderPosition,
+} from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
+import { IWarehouseBalanceResponse } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
+import { IDispatchesRequest } from '@app/core/models/mp-reservation-orders/mp-reservation-transfer-dispatch';
 
 @Injectable({
 	providedIn: 'root',
@@ -94,7 +98,11 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public updateProvisionDateById(orderId: number, provisionDate: string, provisionId: number): Observable<void> {
+	public updateProvisionDateById(
+		orderId: number,
+		provisionDate: string,
+		provisionId: number,
+	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate/${provisionId}`,
 			{ provisionDate },
@@ -173,10 +181,41 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
+	public getQueueOrders(): Observable<{
+		data: IQueueOrderDto[];
+		permissions: string[];
+	}> {
+		return this.http.get<{ data: IQueueOrderDto[]; permissions: string[] }>(
+			`${environment.apiUrl}/api/manufacturing/Queue`,
+		);
+	}
+
+	public getWarehouseForAgreeOrder(orderId: number): Observable<IWarehouseBalanceResponse> {
+		return this.http.get<IWarehouseBalanceResponse>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`,
+		);
+	}
+
+	public createTransferInvoice(orderId: number, body: IDispatchesRequest): Observable<void> {
+		return this.http.post<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`,
+			body,
+		);
+	}
+
+	public reorderQueueOrders(
+		body: IQueueReorderPosition,
+	): Observable<{ data: IResponse<IQueueOrderDto>; permissions: string[] }> {
+		return this.http.put<{ data: IResponse<IQueueOrderDto>; permissions: string[] }>(
+			`${environment.apiUrl}/api/manufacturing/Queue/Reorder`,
+			body,
+		);
+	}
+
 	public approveClarification(orderId: number): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
-			{}
+			{},
 		);
 	}
 }

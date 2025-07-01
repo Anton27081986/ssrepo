@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import { FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -20,6 +20,9 @@ import {
 } from '@front-components/components';
 import { NgForOf, NgIf } from '@angular/common';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
+import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -51,65 +54,82 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	public approvalForm!: FormGroup<{
-		tov: FormControl<IDictionaryItemDto | null>;
-		quantity: FormControl<number | null>;
-		warehouses: FormArray<
+	public order: Signal<IMpReservationOrder | null> = toSignal(
+		this.mpReservationOrderCardFacadeService.activeOrder$,
+		{
+			initialValue: null,
+		},
+	);
+
+	public approvalForm = new FormGroup({
+		tov: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+		totalRequested: new FormControl<number | null>(null, [Validators.required]),
+		manufacturingAmount: new FormControl<number | null>(null, [Validators.required]),
+		stocks: new FormArray<
 			FormGroup<{
 				warehouseName: FormControl<string>;
-				inProduction: FormControl<number | null>;
 				inStock: FormControl<number | null>;
 				fact: FormControl<number | null>;
 			}>
-		>;
-	}>;
+		>([]),
+	});
 
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 	) {
-		this.approvalForm = new FormGroup({
-			tov: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			quantity: new FormControl<number | null>(null, [Validators.required]),
-			warehouses: new FormArray<
-				FormGroup<{
-					warehouseName: FormControl<string>;
-					inProduction: FormControl<number | null>;
-					inStock: FormControl<number | null>;
-					fact: FormControl<number | null>;
-				}>
-			>([]),
-		});
+		const orderId = this.order()!.id;
 
-		this.addWarehouse('ССП Сосневский', 300, 200, 4);
-		this.addWarehouse('ССП Готовая продукция', 1000, 100, 8);
+		this.mpReservationOrderCardFacadeService.loadWarehouseBalance(orderId);
+
+		this.mpReservationOrderCardFacadeService.warehouseBalance$
+			.pipe(untilDestroyed(this))
+			.subscribe(data => {
+				if (!data) return;
+
+				this.approvalForm.patchValue({
+					tov: data.tov,
+					totalRequested: data.totalRequested,
+					manufacturingAmount: data.manufacturingAmount,
+				});
+
+				const stocksArr = this.approvalForm.get('stocks') as FormArray;
+				stocksArr.clear();
+				data.stocks.forEach(stock => {
+					stocksArr.push(
+						new FormGroup({
+							warehouseId: new FormControl<number>(stock.warehouse.id),
+							warehouseName: new FormControl<string>(stock.warehouse.name),
+							inStock: new FormControl<number | null>(stock.amount),
+							fact: new FormControl<number | null>(null),
+						}),
+					);
+				});
+			});
 	}
 
-	public get warehouses(): FormArray {
-		return this.approvalForm.get('warehouses') as FormArray;
+	public get dates(): FormArray {
+		return this.approvalForm.get('stocks') as FormArray;
 	}
 
-	private createWarehouseRow(
-		warehouseName: string,
-		inProduction: number,
-		inStock: number,
-		fact: number,
-	): FormGroup {
-		return new FormGroup({
-			warehouseName: new FormControl<string>(warehouseName),
-			inProduction: new FormControl<number | null>(inProduction),
-			inStock: new FormControl<number | null>(inStock),
-			fact: new FormControl<number | null>(fact),
-		});
-	}
+	public submitDispatch(): void {
+		if (this.approvalForm.invalid) return;
 
-	public addWarehouse(
-		warehouseName: string,
-		inProduction: number,
-		inStock: number,
-		fact: number,
-	) {
-		this.warehouses.push(this.createWarehouseRow(warehouseName, inProduction, inStock, fact));
+		const orderId = this.order()?.id;
+		if (!orderId) return;
+
+		const dispatches = this.dates.controls
+			.map(row => ({
+				warehouseId: row.get('warehouseId')?.value as number,
+				amount: row.get('fact')?.value as number,
+			}))
+			.filter(({ amount }) => amount > 0);
+
+		if (!dispatches.length) return;
+
+		this.mpReservationOrderCardFacadeService.dispatchToQueue(orderId, dispatches);
+		this.close();
 	}
 
 	public close(): void {

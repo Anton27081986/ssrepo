@@ -23,7 +23,9 @@ import { AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import { IProvisionType } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import {
+	IProvisionType,
+} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
@@ -31,6 +33,7 @@ import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservati
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DraggableOrderRowDirective } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.directive';
 import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
+import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
 
 interface IQueueOrderRow {
 	orderId: string;
@@ -89,219 +92,14 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		},
 	);
 
+	protected queueOrders: Signal<IQueueOrderDto[]> = toSignal(
+		this.mpReservationOrdersFacadeService.queueOrders$,
+		{ initialValue: [] },
+	);
+
 	public filterTov: IDictionaryItemDto | null = null;
 	public filterStatus: IDictionaryItemDto | null = null;
 	public status = new FormControl<IDictionaryItemDto | null>(null);
-
-	public ordersQueue: IQueueOrderRow[] = [
-		{
-			orderId: '1',
-			status: 'Обработка ТМЗ',
-			dateOrder: '01.01.2023 10:00',
-			author: 'Иванов И.И.',
-			client: 'Петров П.П.',
-			quantity: 250,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '05.01.2023',
-			dateProvision: '06.01.2023',
-		},
-		{
-			orderId: '2',
-			status: 'В производстве',
-			dateOrder: '02.01.2023 10:30',
-			author: 'Сидоров С.С.',
-			client: 'Козлов К.К.',
-			quantity: 300,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '06.01.2023',
-			dateProvision: '07.01.2023',
-		},
-		{
-			orderId: '3',
-			status: 'В производстве',
-			dateOrder: '01.01.2023 10:00',
-			author: 'Иванов И.И.',
-			client: 'Петров П.П.',
-			quantity: 250,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '05.01.2023',
-			dateProvision: '06.01.2023',
-		},
-		{
-			orderId: '4',
-			status: 'В очереди',
-			dateOrder: '02.01.2023 10:30',
-			author: 'Сидоров С.С.',
-			client: 'Козлов К.К.',
-			quantity: 300,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '06.01.2023',
-			dateProvision: '07.01.2023',
-		},
-		{
-			orderId: '5',
-			status: 'В очереди',
-			dateOrder: '01.01.2023 10:00',
-			author: 'Иванов И.И.',
-			client: 'Петров П.П.',
-			quantity: 250,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '05.01.2023',
-			dateProvision: '06.01.2023',
-		},
-		{
-			orderId: '6',
-			status: 'В очереди',
-			dateOrder: '02.01.2023 10:30',
-			author: 'Сидоров С.С.',
-			client: 'Козлов К.К.',
-			quantity: 300,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '06.01.2023',
-			dateProvision: '07.01.2023',
-		},
-		{
-			orderId: '7',
-			status: 'В очереди',
-			dateOrder: '01.01.2023 10:00',
-			author: 'Иванов И.И.',
-			client: 'Петров П.П.',
-			quantity: 250,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '05.01.2023',
-			dateProvision: '06.01.2023',
-		},
-		{
-			orderId: '8',
-			status: 'В очереди',
-			dateOrder: '02.01.2023 10:30',
-			author: 'Сидоров С.С.',
-			client: 'Козлов К.К.',
-			quantity: 300,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '06.01.2023',
-			dateProvision: '07.01.2023',
-		},
-		{
-			orderId: '9',
-			status: 'В очереди',
-			dateOrder: '01.01.2023 10:00',
-			author: 'Иванов И.И.',
-			client: 'Петров П.П.',
-			quantity: 250,
-			provision: {
-				provided: 150,
-				manufacturing: 200,
-				provisionAvailable: 100,
-				provisionUnavailable: 50,
-				provisionDetails: [
-					{
-						productionDate: '05.01.2023',
-						provisionDate: '06.01.2023',
-						manufacturingAmount: 200,
-					},
-				],
-			},
-			dateProduction: '05.01.2023',
-			dateProvision: '06.01.2023',
-		},
-	];
 
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -311,12 +109,16 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		this.status.valueChanges
 			.pipe(untilDestroyed(this))
 			.subscribe(value => (this.filterStatus = value));
+
+		this.mpReservationOrdersFacadeService.loadQueueOrders();
 	}
 
-	public get filteredOrdersQueue(): IQueueOrderRow[] {
-		return this.ordersQueue.filter(order => {
+	public get filteredOrdersQueue(): IQueueOrderDto[] {
+
+		return this.queueOrders().filter(order => {
 			if (this.filterStatus) {
-				return order.status === this.filterStatus.name;
+				const statusName = this.filterStatus.name;
+				return (order.status ? 'Обработан' : 'В очереди') === statusName;
 			}
 			return true;
 		});
@@ -348,13 +150,21 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 	public onOrderReorder(event: IOrderReorderRequest): void {
 		const { orderId, toIndex } = event;
-		const fromIndex = this.ordersQueue.findIndex(o => o.orderId === orderId);
+		const current = [...this.queueOrders()];
+		const fromIndex = current.findIndex(q => q.id === orderId);
 
-		if (fromIndex < 0 || fromIndex === toIndex) {
-			return;
-		}
+		if (fromIndex < 0 || fromIndex === toIndex) return;
 
-		const [movedItem] = this.ordersQueue.splice(fromIndex, 1);
-		this.ordersQueue.splice(toIndex, 0, movedItem);
+		const [moved] = current.splice(fromIndex, 1);
+		current.splice(toIndex, 0, moved);
+
+		current.forEach((queueOrder, idx) => (queueOrder.position = idx + 1));
+
+		this.mpReservationOrdersFacadeService.updateQueueOrders(current);
+
+		const oldPos = fromIndex + 1;
+		const newPos = toIndex + 1;
+
+		this.mpReservationOrdersFacadeService.updateOrderPositionInQueue(oldPos, newPos);
 	}
 }

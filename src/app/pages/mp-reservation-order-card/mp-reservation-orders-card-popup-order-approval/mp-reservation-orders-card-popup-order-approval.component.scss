@@ -52,3 +52,10 @@
 		vertical-align: middle;
 	}
 }
+
+.footer {
+	display: flex;
+	padding: var(--padding-l);
+	justify-content: flex-end;
+	gap: 20px;
+}
