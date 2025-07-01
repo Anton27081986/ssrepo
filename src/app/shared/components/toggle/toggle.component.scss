@@ -43,7 +43,7 @@
 		}
 
 		&.disabled {
-			background: lighten($island, 20%);
+			background: #ffffff;
 			&::before {
 				box-shadow: none;
 			}

@@ -1,62 +1,34 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { finalize, map, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { BannersApiService } from '@app/core/api/banners-api.service';
+import { IResponseItems } from '@app/core/utils/response-items';
 import { IBannerDto } from '@app/core/models/banners/banner-dto';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {
-	ButtonType,
-	IconPosition,
-	IconType,
-} from '@front-components/components';
-import { BannerImports } from '@app/widgets/banner/banner.imports';
+import { bannerImports } from '@app/widgets/banner/banner.imports';
 
-@UntilDestroy()
 @Component({
 	selector: 'app-banner',
+	standalone: true,
 	templateUrl: './banner.component.html',
 	styleUrls: ['./banner.component.scss'],
-	imports: BannerImports,
-	standalone: true,
+	imports: [bannerImports],
 })
-export class BannerComponent implements OnInit {
-	public banners: IBannerDto[] = [];
-	public currentIndex = 0;
-	public isLoading = true;
-	public width = 0;
+export class BannerComponent {
+	private readonly bannersApi = inject(BannersApiService);
+	public carouselIndex = signal(0);
+	public isLoading = signal(true);
 
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconType = IconType;
-	protected readonly IconPosition = IconPosition;
-	constructor(
-		protected readonly el: ElementRef,
-		private readonly apiService: BannersApiService,
-	) {}
-
-	public ngOnInit(): any {
-		this.apiService
-			.getBanners()
-			.pipe(
-				map(({ banners }) => {
-					if (banners) {
-						this.banners = banners;
-					}
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe(() => {
-				this.isLoading = false;
-			});
-
-		this.width = this.el.nativeElement.offsetWidth;
-	}
-
-	public next() {
-		this.width = this.el.nativeElement.offsetWidth;
-		this.currentIndex += 1;
-	}
-
-	public prev() {
-		this.width = this.el.nativeElement.offsetWidth;
-		this.currentIndex -= 1;
-	}
+	public readonly banners = toSignal(
+		this.bannersApi.getBanners().pipe(
+			map((request: IResponseItems<IBannerDto>) =>
+				request.items.sort(
+					(a: IBannerDto, b: IBannerDto) => a.order - b.order,
+				),
+			),
+			catchError(() => of([] as IBannerDto[])),
+			finalize(() => this.isLoading.set(false)),
+		),
+		{ initialValue: [] as IBannerDto[] },
+	);
 }

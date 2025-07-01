@@ -6,15 +6,16 @@
 		</div>
 		<form class="content" [formGroup]="addSpecificationForm">
 			<div class="content__column">
-				<ss-select-v2
-					[label]="'Услуга'"
-					[placeholder]="'Выберите услугу'"
-					[options]="services()"
-					[formControlName]="'service'"
-					[errorText]="addSpecificationForm.controls.service.touched && addSpecificationForm.controls.service.errors?.required ? 'Обязательное поле' : ''"
-				/>
-				<ss-textarea formControlName="comment" label="Комментарий" [maxLength]="500"
-							 [error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
+				<ss-search-input searchType="services" label="Услуга" placeholder="Выберите из списка"
+					 [selectedItem]="spec ? spec.service : undefined"
+					 [error]="addSpecificationForm.controls.serviceId.touched && addSpecificationForm.controls.serviceId.errors?.required ? 'Обязательное поле' : undefined"
+					 (focusout)="addSpecificationForm.controls.serviceId.markAsTouched()"
+					 (input)="addSpecificationForm.controls.serviceId.markAsTouched()"
+					 (select)="addSpecificationForm.controls.serviceId.setValue($event.id); addSpecificationForm.controls.serviceId.setErrors(null)">
+				</ss-search-input>
+				<ss-textarea
+					formControlName="comment" label="Комментарий" [maxLength]="500"
+					[error]="addSpecificationForm.controls.comment.touched && addSpecificationForm.controls.comment.errors?.required ? 'Обязательное поле' : undefined"></ss-textarea>
 				<ss-input formControlName="quantity" label="Количество" type="number"
 					[error]="addSpecificationForm.controls.quantity.touched && addSpecificationForm.controls.quantity.errors?.required ? 'Обязательное поле' : undefined">
 				</ss-input>
@@ -27,8 +28,8 @@
 				<ss-search-input searchType="cost-article" label="Статья" placeholder="Выберите из списка"
 					[selectedItem]="spec ? spec.cost : undefined"
 					[error]="addSpecificationForm.controls.costId.touched && addSpecificationForm.controls.costId.errors?.required ? 'Обязательное поле' : undefined"
-				    (focusout)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
-				    (input)="resetValueControl($event, addSpecificationForm.controls.costId, 'cost')"
+				    (focusout)="addSpecificationForm.controls.costId.markAsTouched()"
+				    (input)="addSpecificationForm.controls.costId.markAsTouched()"
 					(select)="addSpecificationForm.controls.costId.setValue($event.id); addSpecificationForm.controls.costId.setErrors(null)">
 				</ss-search-input>
 				<ss-search-input searchType="fa-objects" label="Объект ОС/НМА" placeholder="Выберите из списка"
@@ -57,8 +58,10 @@
 				</ss-search-input>
 				<ss-search-input searchType="mfs-sections" label="Производственный участок" placeholder="Выберите из списка"
 					[selectedItem]="mySection"
-					[error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined"
-					(select)="addSpecificationForm.controls.sectionId.setValue($event.id)"
+				    [error]="addSpecificationForm.controls.sectionId.touched && addSpecificationForm.controls.sectionId.errors?.required ? 'Обязательное поле' : undefined"
+				    (focusout)="resetValueControlMySection($event, addSpecificationForm.controls.sectionId)"
+					(input)="resetValueControlMySection($event, addSpecificationForm.controls.sectionId)"
+					(select)="addSpecificationForm.controls.sectionId.setValue($event?.id)"
 					(click)="addSpecificationForm.controls.sectionId.setErrors(null)">
 				</ss-search-input>
 				<ss-numeric-input formControlName="amount" label="Сумма 1С"
@@ -73,7 +76,7 @@
 		</form>
 		<div class="footer">
 			<ss-button type="muted" size="small" (click)="close()">Отмена</ss-button>
-			@if(spec?.id) {
+			@if(spec.id) {
 				<ss-button type="primary" size="small" (click)="updateSpecification()">Сохранить изменения</ss-button>
 			} @else {
 				<ss-button type="primary" size="small" (click)="addSpecification()">Добавить новую спецификацию</ss-button>

@@ -9,46 +9,6 @@
 	}
 }
 
-::ng-deep .ant-modal {
-	width: 474px !important;
-
-	.ant-modal-body {
-		padding: 0 31px;
-	}
-
-	.ant-radio-inner::after {
-		width: 13.5px;
-		height: 13.5px;
-		margin-top: -6.9px;
-		margin-left: -6.9px;
-	}
-
-	.ant-radio-wrapper {
-		margin-right: 0;
-	}
-
-	.select-radio {
-		margin-top: 47.6px;
-
-		[nz-radio] {
-			height: 29px;
-		}
-
-		.ant-radio-inner {
-			width: 13.5px;
-			height: 13.5px;
-		}
-	}
-
-	.send {
-		button {
-			width: 260px;
-		}
-
-		margin-bottom: 20px;
-	}
-}
-
 .content {
 	.top-panel {
 		display: flex;

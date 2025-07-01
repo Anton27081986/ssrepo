@@ -51,6 +51,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		margin-bottom: 25px;
 
 		.title {
 			display: flex;
@@ -69,6 +70,7 @@
 
 	.mobile {
 		display: none;
+		margin-bottom: 20px !important;
 
 		ss-card {
 			display: flex;
@@ -128,5 +130,11 @@
 			display: flex;
 			flex-direction: column;
 		}
+	}
+}
+
+.placeholder {
+	&-headline {
+		margin-bottom: 15px !important;
 	}
 }
