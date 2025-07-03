@@ -22,7 +22,6 @@ import {
 	IconType,
 	Size,
 } from '@front-components/components';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { MainMenuComponent } from '@app/shared/components/main-menu/main-menu.component';
@@ -57,13 +56,6 @@ export class HeaderComponent implements OnInit {
 	public listMenu$?: Observable<IMenuItemDto[] | null>;
 	public userProfile$?: Observable<IUserProfile | null>;
 	public profilePopup$?: Observable<boolean | null>;
-
-	public aiPermission: Signal<boolean> = toSignal(
-		this.mainMenuFacade.aiPermission$,
-		{
-			initialValue: false,
-		},
-	);
 
 	protected readonly AppRoutes = AppRoutes;
 	public route: string | undefined;

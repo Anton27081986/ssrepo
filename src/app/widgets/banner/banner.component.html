@@ -1,40 +1,24 @@
-<div class="carousel">
+@if (isLoading()) {
+	<ss-loader></ss-loader>
+}
 
-	@if(isLoading) {
-		<ss-loader></ss-loader>
-	}
-
-	@if(banners.length) {
-		@for (banner of banners; track $index) {
-			<a
-				class="carousel__banner"
-				[style.left.px]="($index * width - currentIndex * width)"
-				[style.background-image]="'url(' + banner.imageUrl + ')'"
-				[href]="banner.linkUrl"
-			>
-			</a>
+@if(banners() && banners()!.length) {
+	<ss-lib-carousel
+		[duration]="3000"
+		[(index)]="carouselIndex"
+	>
+		@for (banner of banners(); track banner) {
+			<img
+				*ssItem
+				class="carousel-item"
+				alt="Banner image"
+				height="200"
+				width="990"
+				priority
+				[ngSrc]="banner.imageUrl! | safe: 'url'"
+			/>
 		}
-		@if (banners.length > 0 && currentIndex > 0) {
-			<snab-button
-				class="carousel__prev-button"
-				[type]="ButtonType.Secondary"
-				[icon]="IconType.ArrowLargeLeft"
-				[iconPosition]="IconPosition.OnlyIcon"
-				(click)="prev()"></snab-button>
-		}
-		@if (banners.length > 0 && currentIndex < banners.length - 1) {
-			<snab-button
-				class="carousel__next-button"
-				[type]="ButtonType.Secondary"
-				[icon]="IconType.ArrowLargeRight"
-				[iconPosition]="IconPosition.OnlyIcon"
-				(click)="next()"></snab-button>
-		}
-	}
-	@else {
-		<ss-empty-data-page></ss-empty-data-page>
-	}
-</div>
-
+	</ss-lib-carousel>
+}
 
 

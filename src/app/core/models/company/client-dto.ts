@@ -36,7 +36,7 @@ export interface IClientDto {
 	 * Направление продаж
 	 */
 	saleDirection?: string | null;
-	mainSector?: string | null;
+	mainSector?: IDictionaryItemDto;
 	status?: IDictionaryItemDto;
 	/**
 	 * Передано в юр. отдел
