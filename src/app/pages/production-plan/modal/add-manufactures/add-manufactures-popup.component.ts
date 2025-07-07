@@ -2,50 +2,44 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	inject,
-	OnDestroy,
 	OnInit,
 	signal,
 	Signal,
 	WritableSignal,
+	OnDestroy,
 } from '@angular/core';
 import {
-	Align,
 	BadgeComponent,
 	ButtonComponent,
-	ButtonType,
 	CheckboxComponent,
-	Colors,
 	DividerComponent,
 	DropdownItemComponent,
 	DropdownListComponent,
-	EmptyStateComponent,
 	ExtraSize,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	IconType,
 	IDictionaryItemDto,
 	InputComponent,
-	JustifyContent,
-	ModalActionApplyComponent,
 	ModalComponent,
 	ModalRef,
 	PopoverTriggerForDirective,
-	Shape,
 	SharedPopupService,
 	SpinnerComponent,
-	Status,
 	TextComponent,
+	ToastTypeEnum,
+	Shape,
+	ButtonType,
 	TextType,
 	TextWeight,
-	ToastTypeEnum,
+	JustifyContent,
+	Colors,
+	Align,
+	Status,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { ManufacturingSelectedTovs } from '@app/core/models/production-plan/manufacturing-tovs';
-import {
-	IconPosition,
-	SearchInputComponent,
-	Size,
-} from '@front-components/components';
+import { IconPosition, Size } from '@front-components/components';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
 	BehaviorSubject,
@@ -55,10 +49,14 @@ import {
 	switchMap,
 	take,
 	tap,
+	Subscription,
 } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
+import {
+	AddToVRequest,
+	toVRequest,
+} from '@app/core/models/production-plan/add-tov-request';
 
 export enum TovEventEnum {
 	default = 0,
@@ -66,16 +64,17 @@ export enum TovEventEnum {
 	changePage = 2,
 }
 
+export interface AddManufacturesPopup {
+	weekId: number;
+}
+
 @Component({
 	selector: 'app-add-manufactures-popup',
 	standalone: true,
 	imports: [
 		ModalComponent,
-		ModalActionApplyComponent,
 		ButtonComponent,
 		InputComponent,
-		ReactiveFormsModule,
-		SearchInputComponent,
 		FormFieldComponent,
 		FieldCtrlDirective,
 		InputComponent,
@@ -90,9 +89,9 @@ export enum TovEventEnum {
 		DropdownItemComponent,
 		DropdownListComponent,
 		PopoverTriggerForDirective,
-		EmptyStateComponent,
 		BadgeComponent,
 		SpinnerComponent,
+		ReactiveFormsModule,
 		NgTemplateOutlet,
 	],
 	templateUrl: './add-manufactures-popup.component.html',
@@ -103,6 +102,14 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly Shape = Shape;
 	protected readonly IconType = IconType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Size = Size;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly IconPosition = IconPosition;
+	protected readonly JustifyContent = JustifyContent;
+	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 
 	protected readonly queryControl: FormControl<string | null> =
 		new FormControl<string | null>('');
@@ -113,32 +120,19 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	protected readonly limit: number = 60;
 	protected total: number | null = null;
 
+	protected readonly popup: ModalRef<AddManufacturesPopup> = inject(
+		ModalRef<AddManufacturesPopup>,
+	);
+
 	protected isVisibleModal: WritableSignal<boolean> = signal(true);
-
 	protected blockOffset: WritableSignal<boolean> = signal(false);
-
 	protected isLoaderMain: WritableSignal<boolean> = signal(false);
-
 	protected isLoader: WritableSignal<boolean> = signal(false);
-
-	constructor() {
-		toSignal(
-			this.queryControl.valueChanges.pipe(
-				debounceTime(1000),
-				tap((value) => {
-					this.offset.set(0);
-					this.tovEvent.next(TovEventEnum.changeQuery);
-				}),
-			),
-		);
-	}
 
 	protected tovEvent: BehaviorSubject<TovEventEnum> =
 		new BehaviorSubject<TovEventEnum>(TovEventEnum.default);
 
 	protected offset: WritableSignal<number> = signal<number>(0);
-
-	private readonly popup = inject(ModalRef);
 	private readonly operationPlanService = inject(OperationPlanService);
 
 	protected selectedTov: WritableSignal<ManufacturingSelectedTovs[]> = signal(
@@ -150,6 +144,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 			switchMap((event) => {
 				let query = '';
 				this.blockOffset.set(true);
+
 				if (event === TovEventEnum.changeQuery) {
 					this.isLoaderMain.set(true);
 					query = this.queryControl.value ?? '';
@@ -159,7 +154,9 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 					const elemItem = elem.item(0);
 
-					elemItem!.scrollTop = 0;
+					if (elemItem) {
+						elemItem.scrollTop = 0;
+					}
 				}
 
 				if (event === TovEventEnum.changePage) {
@@ -178,6 +175,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 			}),
 			map((tov) => {
 				this.total = tov.total;
+
 				return tov.items.map((item) => {
 					return {
 						tov: item.tov,
@@ -191,9 +189,10 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 				if (this.tovEvent.value === TovEventEnum.changeQuery) {
 					return value;
 				}
+
 				return [...acc, ...value];
 			}),
-			tap((item) => {
+			tap((_item) => {
 				this.isLoaderMain.set(false);
 				this.isLoader.set(false);
 				this.blockOffset.set(false);
@@ -204,7 +203,21 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		},
 	);
 
-	ngOnInit() {
+	private readonly subscriptions: Subscription[] = [];
+
+	constructor() {
+		toSignal(
+			this.queryControl.valueChanges.pipe(
+				debounceTime(1000),
+				tap((_value) => {
+					this.offset.set(0);
+					this.tovEvent.next(TovEventEnum.changeQuery);
+				}),
+			),
+		);
+	}
+
+	ngOnInit(): void {
 		window.addEventListener(
 			'scroll',
 			() => {
@@ -230,9 +243,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	ngOnDestroy() {}
-
-	protected add() {
+	protected add(): void {
 		if (this.selectedTov().length > 0) {
 			if (this.checkForUnselectedItems()) {
 				this.sharedService.openToast({
@@ -240,7 +251,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					text: 'У некоторых полуфабрикатов не выбран участок',
 				});
 			} else {
-				const mapRequest: AddToVRequest[] = this.selectedTov().map(
+				const mapTovRequest: toVRequest[] = this.selectedTov().map(
 					(tov) => {
 						return {
 							sectionId: tov.selectedSection?.id as number,
@@ -248,7 +259,16 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 						};
 					},
 				);
-				this.operationPlanService.addGp(mapRequest).subscribe();
+
+				const params: AddToVRequest = {
+					weekId: this.popup.data.weekId,
+					items: mapTovRequest,
+				};
+
+				const sub = this.operationPlanService
+					.addGp(params)
+					.subscribe(() => this.popup.close());
+				this.subscriptions.push(sub);
 			}
 		} else {
 			this.sharedService.openToast({
@@ -264,12 +284,12 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	protected close() {
+	protected close(): void {
 		if (this.selectedTov().length > 0) {
 			this.isVisibleModal.set(false);
 			const confirmModal = this.confirmIfCloseForm();
 
-			confirmModal.afterSubmit$
+			const sub1 = confirmModal.afterSubmit$
 				.pipe(
 					take(1),
 					tap(() => {
@@ -277,8 +297,9 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					}),
 				)
 				.subscribe();
+			this.subscriptions.push(sub1);
 
-			confirmModal.afterClosed$
+			const sub2 = confirmModal.afterClosed$
 				.pipe(
 					take(1),
 					tap(() => {
@@ -286,6 +307,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					}),
 				)
 				.subscribe();
+			this.subscriptions.push(sub2);
 		} else {
 			this.popup.close();
 		}
@@ -309,7 +331,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	protected addTovSelected(tov: ManufacturingSelectedTovs) {
+	protected addTovSelected(tov: ManufacturingSelectedTovs): void {
 		tov.selected.setValue(false);
 
 		const arrTov = this.selectedTov();
@@ -325,31 +347,28 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		this.selectedTov.set(arrTov);
 	}
 
-	protected removeTovSelected(tov: ManufacturingSelectedTovs) {
+	protected removeTovSelected(tov: ManufacturingSelectedTovs): void {
 		tov.selected.setValue(false);
+
 		const arrTov = this.selectedTov().filter(
 			(item) => item.tov !== tov.tov,
 		);
+
 		this.selectedTov.set(arrTov);
 	}
 
-	protected deleteSelected() {
+	protected deleteSelected(): void {
 		this.selectedTov.set([]);
 	}
 
 	protected selectOpt(
 		item: ManufacturingSelectedTovs,
 		section: IDictionaryItemDto,
-	) {
+	): void {
 		item.selectedSection = section;
 	}
 
-	protected readonly ButtonType = ButtonType;
-	protected readonly Size = Size;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
-	protected readonly IconPosition = IconPosition;
-	protected readonly JustifyContent = JustifyContent;
-	protected readonly Colors = Colors;
-	protected readonly Align = Align;
+	ngOnDestroy(): void {
+		this.subscriptions.forEach((sub) => sub.unsubscribe());
+	}
 }

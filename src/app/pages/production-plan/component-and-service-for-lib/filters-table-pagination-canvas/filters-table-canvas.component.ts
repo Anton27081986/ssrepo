@@ -1,28 +1,25 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	effect,
 	inject,
 	input,
 	type InputSignal,
 	type TemplateRef,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { FilterMenuItemComponent } from '@app/pages/production-plan/component-and-service-for-lib/filter-menu-item/filter-menu-item.component';
+import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { FilterMenuComponent } from '@app/pages/production-plan/component-and-service-for-lib/filter-menu/filter-menu.component';
 
 @Component({
-	selector: 'ss-lib-table-filters-canvas',
+	selector: 'ss-lib-table-canvas',
 	templateUrl: 'filters-table-canvas.component.html',
 	styleUrls: ['filters-table-canvas.component.scss'],
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		NgTemplateOutlet,
-		AsyncPipe,
 		NgIf,
-		FilterMenuItemComponent,
-		NgFor,
 		FilterMenuComponent,
 	],
 })
@@ -39,6 +36,11 @@ export class FiltersTableCanvasComponent {
 	public readonly paginationRef: InputSignal<TemplateRef<{}> | null> =
 		input.required();
 
-	public readonly filterService: HeaderFilterService =
-		inject(HeaderFilterService);
+	public readonly viewPagination: InputSignal<boolean> = input(true);
+
+	filterService: HeaderFilterService = inject(HeaderFilterService);
+
+	get checkActiveFilter(): boolean {
+		return this.filterService.menuFilterItems.length > 0;
+	}
 }

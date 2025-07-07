@@ -1,23 +1,21 @@
-.ss-lib-table-filters {
+.ss-lib-table-canvas {
   display: flex;
   flex-direction: column;
   background-color: var(--surface-primary);
+  border-radius: 8px;
+  border: 1px solid var(--border-primary);
 
   &__filters {
     display: flex;
     justify-content: space-between;
     padding: 24px;
-    border: 1px solid var(--border-primary);
     border-bottom: none;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
     align-items: center;
   }
 
   &__selected {
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid var(--border-primary);
     border-bottom: none;
     padding: 16px 24px;
     gap: 16px;
@@ -37,19 +35,21 @@
 
   &__pagination {
     display: flex;
-    border: 1px solid var(--border-primary);
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
     padding: 24px;
     border-top: none;
     box-sizing: border-box;
     width: 100%;
   }
 
-  //&__table {
-  //  width: 100%;
-  //  overflow-x: auto;
-  //  max-width: none; /* Убираем ограничения */
-  //  box-sizing: border-box;
-  //}
+  &__table {
+    width: 100%;
+    max-width: none; /* Убираем ограничения */
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+
+    &-content {
+      overflow: auto;
+    }
+  }
 }

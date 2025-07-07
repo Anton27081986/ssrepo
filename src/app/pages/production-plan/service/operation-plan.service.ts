@@ -13,10 +13,11 @@ import { FormControl } from '@angular/forms';
 import { IResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
-	OperationPlanItems,
+	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
+import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -26,7 +27,7 @@ export class OperationPlanService {
 
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItems>> {
+	): Observable<IResponse<OperationPlanItem>> {
 		return this.operationPlanApiService.getOperationPlan(request);
 	}
 
@@ -54,32 +55,12 @@ export class OperationPlanService {
 		return this.operationPlanApiService.transferProductionPlan(mapParams);
 	}
 
-	public upload1C(weekId: number) {
-		if (environment.production) {
-			window.open(
-				`https://cisp.ssnab.ru/mfs/ouexport#!/index?weekId=${weekId}&sectionId=`,
-				'_blank',
-			);
-		} else {
-			window.open(
-				`https://ssnab.it/mfs/ouexport#!/index?weekId==${weekId}&sectionId=`,
-				'_blank',
-			);
-		}
+	public upload1C() {
+		return this.operationPlanApiService.upload1C();
 	}
 
 	public downloadReport() {
-		if (environment.production) {
-			window.open(
-				'https://cisp.ssnab.ru/Reports/Report/MfsPlanDays',
-				'_blank',
-			);
-		} else {
-			window.open(
-				'https://ssnab.it/Reports/Report/MfsPlanDays',
-				'_blank',
-			);
-		}
+		return this.operationPlanApiService.downloadReport();
 	}
 
 	public downloadExel(): Observable<Blob> {
@@ -127,7 +108,19 @@ export class OperationPlanService {
 		};
 	}
 
-	public addGp(params: AddToVRequest[]) {
+	public addGp(params: AddToVRequest) {
 		return this.operationPlanApiService.addGp(params);
+	}
+
+	public deleteItemsTov(tovIds: number[]) {
+		return this.operationPlanApiService.deleteItemsTov(tovIds);
+	}
+
+	public getCalcVariants() {
+		return this.operationPlanApiService.getCalcVariants();
+	}
+
+	public updateRawMaterial(params: UpdateRawMaterialsRequest) {
+		return this.operationPlanApiService.updateRawMaterial(params);
 	}
 }

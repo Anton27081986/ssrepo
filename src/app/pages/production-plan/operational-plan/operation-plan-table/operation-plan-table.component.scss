@@ -1,19 +1,15 @@
-.table-wrapper {
-  display: inline-flex;
-  width: 100%;
-  overflow-x: auto;
-  max-width: none; /* Убираем ограничения */
-  box-sizing: border-box;
-}
-
 .operation-plan-table {
-  width: 100%;
+  //width: 100%;
   position: relative;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
   transition: width 0.1s ease;
-  overflow: hidden;
+
+  thead {
+    position: sticky;
+    top: 0;
+  }
 }
 
 .column-item__content {
@@ -30,10 +26,11 @@
   }
 }
 
-.drag-action__content {
+.td__content {
   display: flex;
   align-items: center;
   gap: 15px;
+  padding: 6px 12px;
 }
 
 .item-align--center {

@@ -12,20 +12,20 @@ import { TovCategoryFilterComponent } from '@app/pages/production-plan/operation
 import { SectionFilterComponent } from '@app/pages/production-plan/operational-plan/filters/section/section-filter.component';
 
 export enum operationPlanFiltersFields {
-	planEconomicUserId = 'planEconomicUserIds',
-	productManagerUserId = 'ProductManagerUserIds',
-	warehouseId = 'WarehouseIds',
-	productionSectionId = 'ProductionSectionId',
-	tovId = 'TovIds',
-	cityId = 'CityIds',
-	tovCategoryId = 'TovCategoryIds',
-	productionFactoryId = 'ProductionFactoryIds',
+	planEconomicUserIds = 'planEconomicUserIds',
+	productManagerUserIds = 'ProductManagerUserIds',
+	warehouseIds = 'WarehouseIds',
+	productionSectionIds = 'ProductionSectionIds',
+	tovIds = 'TovIds',
+	cityIds = 'CityIds',
+	tovCategoryIds = 'TovCategoryIds',
+	productionFactoryIds = 'ProductionFactoryIds',
 }
 
 export const operationPlanFilter: IFilterItem[] = [
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.tovId,
+		field: operationPlanFiltersFields.tovIds,
 		text: 'Наименование ГП',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -37,7 +37,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.productionFactoryId,
+		field: operationPlanFiltersFields.productionFactoryIds,
 		text: 'Производство',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -49,7 +49,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.planEconomicUserId,
+		field: operationPlanFiltersFields.planEconomicUserIds,
 		text: 'Менеджер ПЭО',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -61,7 +61,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.productManagerUserId,
+		field: operationPlanFiltersFields.productManagerUserIds,
 		text: 'Менеджер ТМЗ',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -73,7 +73,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.warehouseId,
+		field: operationPlanFiltersFields.warehouseIds,
 		text: 'Склады',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -85,7 +85,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.cityId,
+		field: operationPlanFiltersFields.cityIds,
 		text: 'Город',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -97,7 +97,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.tovCategoryId,
+		field: operationPlanFiltersFields.tovCategoryIds,
 		text: 'Категория',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
@@ -109,7 +109,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	},
 	{
 		defaultValue: null,
-		field: operationPlanFiltersFields.productionSectionId,
+		field: operationPlanFiltersFields.productionSectionIds,
 		text: 'Участок',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>

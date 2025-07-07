@@ -174,7 +174,6 @@ export class HeaderFilterService {
 		const findFil = this.getFilter(filter.field); // если в старом было значение то обновляем если не было то нет
 		if (findFil.value !== null) {
 			findFil.value = null;
-
 			this.filterChanges$.next(this.filters);
 			this.setQueryParamsFromFilter();
 		}

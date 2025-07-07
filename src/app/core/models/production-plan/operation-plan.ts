@@ -1,4 +1,4 @@
-export interface OperationPlanItems {
+export interface OperationPlanItem {
 	id: number;
 	weekId: number;
 	tov: IName;

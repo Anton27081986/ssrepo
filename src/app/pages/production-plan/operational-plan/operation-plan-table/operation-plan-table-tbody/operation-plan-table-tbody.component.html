@@ -1,0 +1,34 @@
+@for (row of data(); track row.id; let idxRow = $index) {
+	<tr
+		ssTr
+	>
+		@for (column of visibleColumns(); track column.id) {
+			@if (!column.subColumns?.length &&
+			!column.subGroups?.length) {
+				<td
+					*ssCell="column.id"
+					ssTd
+				>
+					@if (column.id === 'tov') {
+						<ss-lib-checkbox
+							[formControl]="getRowCheckboxControl(idxRow)"
+						></ss-lib-checkbox>
+						<ss-lib-icon
+							[width]="'24'"
+							[height]="'24'"
+							[icon]="IconType.Plus"
+							(click)="openPostponePlanModal(row)">
+						</ss-lib-icon>
+					}
+					<ss-lib-text
+						[type]="TextType.BodySm"
+						[weight]="TextWeight.Regular"
+						[align]="Align.Center"
+					>
+						{{ getCellValue(row, column.id) }}
+					</ss-lib-text>
+				</td>
+			}
+		}
+	</tr>
+}

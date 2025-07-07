@@ -1,0 +1,22 @@
+<div class="operation-plan-empty-state">
+	<div class="operation-plan-empty-state__content">
+		<div class="operation-plan-empty-state__content-info">
+			<ss-lib-badge
+				[badgeProps]="{
+										icon: icon(),
+										size: ExtraSize.xl,
+										status: Status.Default
+										}">
+			</ss-lib-badge>
+			<div class="operation-plan-empty-state__content-info-text">
+				<ss-lib-text [type]="TextType.BodyXl" [weight]="TextWeight.Semibold">{{ title() }}</ss-lib-text>
+				<ss-lib-text [align]="Align.Center" [color]="Colors.TextBody3"
+							 [type]="TextType.BodyMd"
+							 [weight]="TextWeight.Regular">
+					{{ description() }}
+				</ss-lib-text>
+			</div>
+			<ss-lib-button (click)="addSemiManufactures()" [text]="'Добавить полуфабрикат'"></ss-lib-button>
+		</div>
+	</div>
+</div>

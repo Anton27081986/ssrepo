@@ -1,20 +1,22 @@
-<div class="ss-lib-table-filters">
-	<div class="ss-lib-table-filters__filters">
-		<div class="ss-lib-table-filters__left">
+<div class="ss-lib-table-canvas">
+	<div class="ss-lib-table-canvas__filters">
+		<div class="ss-lib-table-canvas__left">
 			<ng-container *ngTemplateOutlet="leftFiltersRef()"></ng-container>
 		</div>
 
-		<div class="ss-lib-table-filters__right">
+		<div class="ss-lib-table-canvas__right">
 			<ng-container *ngTemplateOutlet="rightFiltersRef()"></ng-container>
 		</div>
 	</div>
-	<div class="ss-lib-table-filters__selected">
+	<div *ngIf="checkActiveFilter" class="ss-lib-table-canvas__selected">
 		<ss-lib-filter-menu></ss-lib-filter-menu>
 	</div>
-	<div class="ss-lib-table-filters__table">
-		<ng-container *ngTemplateOutlet="tableRef()"></ng-container>
+	<div class="ss-lib-table-canvas__table">
+		<div class="ss-lib-table-canvas__table-content">
+			<ng-container *ngTemplateOutlet="tableRef()"></ng-container>
+		</div>
 	</div>
-	<div class="ss-lib-table-filters__pagination">
+	<div  class="ss-lib-table-canvas__pagination">
 		<ng-container *ngTemplateOutlet="paginationRef()"></ng-container>
 	</div>
 </div>

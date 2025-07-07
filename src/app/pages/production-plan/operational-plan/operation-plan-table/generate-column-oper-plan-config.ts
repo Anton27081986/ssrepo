@@ -1,8 +1,9 @@
-import { OperationPlanItems } from '@app/core/models/production-plan/operation-plan';
+import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
 import { TableColumnConfig } from '@front-library/components/lib/components/table/models';
 
 export function generateColumnOperationPlanConfig(
-	data: OperationPlanItems[],
+	data: OperationPlanItem[],
+	days: string[],
 ): TableColumnConfig[] {
 	// Базовые колонки, не зависящие от дат
 	const baseColumns: TableColumnConfig[] = [
@@ -67,18 +68,12 @@ export function generateColumnOperationPlanConfig(
 
 	// Собираем уникальные даты из planDays
 	const uniqueDates = new Set<string>();
-	console.log(data);
-	data.forEach((item) => {
-		if (item.planDays?.length) {
-			item.planDays.forEach((day) => {
-				const date = new Date(day.date)
-					.toISOString()
-					.split('T')[0]
-					.slice(5); // Формат MM-DD
+	days.forEach((day) => {
+		const newDate = new Date(day);
+		newDate.setDate(newDate.getDate() + 1);
+		const date = newDate.toISOString().split('T')[0].slice(5); // Формат MM-DD
 
-				uniqueDates.add(date);
-			});
-		}
+		uniqueDates.add(date);
 	});
 
 	// Создаем группу колонок для недели

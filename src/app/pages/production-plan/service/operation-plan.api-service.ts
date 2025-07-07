@@ -11,10 +11,14 @@ import {
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
-	OperationPlanItems,
+	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
+import {
+	UpdateRawMaterialsRequest,
+	LinkToModule,
+} from '@app/core/models/production-plan/update-raw-materials-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -22,30 +26,36 @@ export class OperationPlanApiService {
 
 	public getOperationPlan(
 		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItems>> {
+	): Observable<IResponse<OperationPlanItem>> {
 		let params = new HttpParams();
 
 		Object.entries(request).forEach(([key, value]) => {
 			if (value !== null && value !== undefined) {
-				params = params.set(key, value);
+				if (Array.isArray(value)) {
+					value.forEach((v) => {
+						params = params.append(key, v);
+					});
+				} else {
+					params = params.set(key, value);
+				}
 			}
 		});
 
-		return this.http.get<IResponse<OperationPlanItems>>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan`,
+		return this.http.get<IResponse<OperationPlanItem>>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
 			{ params },
 		);
 	}
 
 	public getTransferProductionPlan(id: number) {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan/TransferProductionPlan`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
 		);
 	}
 
 	public downloadExel(): Observable<Blob> {
 		return this.http.get<Blob>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan/Action/Reports`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Action/Reports`,
 		);
 	}
 
@@ -66,7 +76,7 @@ export class OperationPlanApiService {
 		params = params.set('limit', limit);
 		params = params.set('offset', offset);
 		return this.http.get<IResponse<ManufacturingTovs>>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan/Tovs`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Tovs`,
 			{ params },
 		);
 	}
@@ -75,15 +85,52 @@ export class OperationPlanApiService {
 		params: TransferProductionPlanPatch[],
 	): Observable<void> {
 		return this.http.patch<void>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan/TransferProductionPlan`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlan`,
 			params,
 		);
 	}
 
-	public addGp(params: AddToVRequest[]): Observable<void> {
+	public addGp(params: AddToVRequest): Observable<void> {
 		return this.http.post<void>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlan`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
 			params,
+		);
+	}
+
+	public deleteItemsTov(tovIds: number[]) {
+		return this.http.request<void>(
+			'delete',
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
+			{ body: { ids: tovIds } },
+		);
+	}
+
+	public getCalcVariants() {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductCalcVariants`,
+		);
+	}
+
+	public updateRawMaterial(
+		params: UpdateRawMaterialsRequest,
+	): Observable<LinkToModule> {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/CalcRowMaterials`,
+			{ ...params },
+		);
+	}
+
+	public upload1C(): Observable<LinkToModule> {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadOneS`,
+			{},
+		);
+	}
+
+	public downloadReport(): Observable<LinkToModule> {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadReport`,
+			{},
 		);
 	}
 }

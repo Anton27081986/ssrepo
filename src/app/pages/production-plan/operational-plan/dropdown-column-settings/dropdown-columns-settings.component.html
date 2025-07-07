@@ -1,0 +1,93 @@
+<ss-lib-button [type]="ButtonType.Secondary" [iconPosition]="IconPosition.Start" [icon]="IconType.FilterLines"
+			   [text]="'Отображение'" [popoverTriggerFor]="dropdownColumn"></ss-lib-button>
+
+<ss-lib-dropdown-list
+	#dropdownColumn
+	[width]="'282px'"
+>
+	@if (dropdownColumnsVisible().length > 0) {
+		<ss-lib-dropdown-group [label]="'Отображаемые'">
+			<div
+				id="visibleList"
+				class="draggable-list"
+				cdkDropList
+				[cdkDropListData]="dropdownColumnsVisible()"
+				[cdkDropListConnectedTo]="['hiddenList']"
+				(cdkDropListDropped)="onDropdownItemDrop($event)"
+			>
+				@for (column of dropdownColumnsVisible(); track column) {
+					<ss-lib-dropdown-item
+						cdkDrag
+						class="draggable-item"
+					>
+						<div class="column-item__content">
+							<div class="column-item__content_label">
+								<ss-lib-checkbox
+									[formControl]="getControlForColumn(column)"
+									(click)="updateColumnVisibility(column)"
+								></ss-lib-checkbox>
+
+								<ss-lib-text
+									[type]="TextType.BodySm"
+									[weight]="TextWeight.Regular"
+									[color]="Colors.TextBody3"
+								>
+									{{ column.name }}
+								</ss-lib-text>
+							</div>
+
+							<ss-lib-icon
+								[height]="'16'"
+								[width]="'16'"
+								[icon]="IconType.Drag"
+							/>
+						</div>
+					</ss-lib-dropdown-item>
+				}
+			</div>
+		</ss-lib-dropdown-group>
+	}
+
+	@if (dropdownColumnsUnVisible().length > 0) {
+		<ss-lib-dropdown-group [label]="'Скрытые'">
+			<div
+				id="hiddenList"
+				cdkDropList
+				class="draggable-list"
+				[cdkDropListData]="dropdownColumnsUnVisible()"
+				[cdkDropListConnectedTo]="['visibleList']"
+				(cdkDropListDropped)="onDropdownItemDrop($event)"
+			>
+				@for (column of dropdownColumnsUnVisible(); track column) {
+					<ss-lib-dropdown-item
+						cdkDrag
+						class="draggable-item"
+					>
+						<div class="column-item__content">
+							<div class="column-item__content_label">
+								<ss-lib-checkbox
+									[formControl]="getControlForColumn(column)"
+									(click)="updateColumnVisibility(column)"
+								></ss-lib-checkbox>
+
+								<ss-lib-text
+									[type]="TextType.BodySm"
+									[weight]="TextWeight.Regular"
+									[color]="Colors.TextBody3"
+								>
+									{{ column.name }}
+								</ss-lib-text>
+							</div>
+
+							<ss-lib-icon
+								[height]="'16'"
+								[width]="'16'"
+								[icon]="IconType.Drag"
+							/>
+						</div>
+					</ss-lib-dropdown-item>
+				}
+			</div>
+		</ss-lib-dropdown-group>
+	}
+</ss-lib-dropdown-list>
