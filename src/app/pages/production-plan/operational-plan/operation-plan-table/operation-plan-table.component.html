@@ -1,0 +1,151 @@
+<ss-lib-indicator-checklist-popup
+	[count]="getSelectedElemCount"
+	[total]="total()"
+	(closed)="popupCloseEmit()">
+	<ss-lib-button
+		[size]="ExtraSize.xs"
+		[type]="ButtonType.Ghost"
+		[popoverTriggerFor]="orderAnOutfit"
+		[text]="'Заказ наряд'">
+		<ss-lib-icon
+			[width]="'20'"
+			[height]="'20'"
+			[icon]="IconType.ChevronDown">
+		</ss-lib-icon>
+	</ss-lib-button>
+	<ss-lib-button
+		[icon]="IconType.FilePreviewSearch"
+		[size]="ExtraSize.xs"
+		[type]="ButtonType.Ghost"
+		[popoverTriggerFor]="calcProd"
+		[text]="'Рассчитать сырье'">
+		<ss-lib-icon
+			[width]="'20'"
+			[height]="'20'"
+			[icon]="IconType.ChevronDown">
+		</ss-lib-icon>
+	</ss-lib-button>
+	<ss-lib-button
+		[icon]="IconType.Trash"
+		[size]="ExtraSize.xs"
+		[type]="ButtonType.Ghost"
+		(click)="deleteItemsTov()"
+		[text]="'Удалить'">
+	</ss-lib-button>
+</ss-lib-indicator-checklist-popup>
+
+<ss-lib-dropdown-list [width]="'155px'" #calcProd>
+	<ss-lib-dropdown-item
+		(click)="openCalculationOfRawMaterialsForCheckList(day)"
+		*ngFor="let day of days()">
+		{{ day | date:'dd.MM' }}
+	</ss-lib-dropdown-item>
+</ss-lib-dropdown-list>
+
+<ss-lib-dropdown-list [width]="'155px'" #orderAnOutfit>
+	<ss-lib-dropdown-item
+		(click)="openOrderAnOutfit()"
+		*ngFor="let day of days()">
+		{{ day | date:'dd.MM' }}
+	</ss-lib-dropdown-item>
+</ss-lib-dropdown-list>
+
+
+
+<table
+	ssTable
+	class="operation-plan-table"
+	[hasBorderRadius]="false"
+	[showCellBorders]="true"
+	[columns]="visibleColumnsIds()"
+>
+	<thead>
+	<tr ssThGroup>
+		@for (column of visibleColumns(); track column) {
+			@if (!isSubColumn(column.id)) {
+				<th
+					*ssHead="column.id"
+					ssTh
+					[attr.rowspan]="
+								!column.subColumns && !column.subGroups
+									? 2
+									: null
+							"
+					[attr.colspan]="
+								column.subColumns
+									? column.subColumns.length
+									: null
+							"
+					[resizable]="true"
+				>
+					<div
+						class="item-align--center td__content"
+					>
+						<!-- Чекбокс только для колонки 'tov' -->
+						@if (column.id === 'tov') {
+							<ss-lib-checkbox
+								[formControl]="masterCheckboxCtrl"
+								[indeterminate]="
+											getMasterCheckboxIndeterminate()
+										"
+							/>
+						}
+
+						<ss-lib-text
+							[color]="Colors.TextBody2"
+							[weight]="TextWeight.Semibold"
+							[type]="TextType.BodyXs"
+							[align]="Align.Center"
+							[isEllipsis]="true"
+						>
+							{{ formatColumnName(column.name) }}
+						</ss-lib-text>
+
+						@if (column.id.startsWith('week-')) {
+							<ss-lib-hint [type]="HintType.Success" [icon]="IconType.Alert"></ss-lib-hint>
+							<ss-lib-utility-button [popoverTriggerFor]="listFunc"
+												   [icon]="IconType.KebabMenuDots"></ss-lib-utility-button>
+							<ss-lib-dropdown-list #listFunc>
+								<ss-lib-dropdown-item
+									[icon]="IconType.FilePreviewSearch"
+									[label]="'Заказ наряд'"></ss-lib-dropdown-item>
+								<ss-lib-dropdown-item [icon]="IconType.FileUpload02"
+													  [label]="'Выгрузить в WMS'"></ss-lib-dropdown-item>
+								<ss-lib-dropdown-item [icon]="IconType.FileCheck"
+													  [label]="'Согласовать сырье'"></ss-lib-dropdown-item>
+								<ss-lib-dropdown-item (click)="openCalculationOfRawMaterialsForColumn(column.id)"
+													  [icon]="IconType.FileSearch02"
+													  [label]="'Рассчитать сырье'"></ss-lib-dropdown-item>
+							</ss-lib-dropdown-list>
+						}
+					</div>
+				</th>
+			}
+		}
+	</tr>
+	<tr ssThGroup>
+		@for (column of visibleColumns(); track column) {
+			@if (column.subColumns) {
+				@for (subColumnId of column.subColumns;
+					track subColumnId) {
+					<th
+						*ssHead="subColumnId"
+						ssTh
+					>
+						<ss-lib-text
+							[color]="Colors.TextBody2"
+							[weight]="TextWeight.Semibold"
+							[type]="TextType.BodyXs"
+							[align]="Align.Center"
+							[isEllipsis]="true"
+						>
+							{{ getSubColumnName(subColumnId) }}
+						</ss-lib-text>
+					</th>
+				}
+			}
+		}
+	</tr>
+	</thead>
+	<tbody app-operation-plan-table-tbody></tbody>
+</table>

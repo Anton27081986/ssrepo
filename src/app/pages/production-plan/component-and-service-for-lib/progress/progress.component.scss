@@ -1,0 +1,12 @@
+.ss-lib-progress {
+	height: 8px;
+	background-color: var(--surface-disabled);
+	border-radius: 4px;
+	display: inline-flex;
+	width: 100%;
+
+	&__active {
+		background-color: var(--surface-action);
+		border-radius: 4px;
+	}
+}

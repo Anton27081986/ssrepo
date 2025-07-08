@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { environment } from '@environments/environment';
 import { Title } from '@angular/platform-browser';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -44,6 +44,8 @@ import { CommonModule } from '@angular/common';
 export class AppComponent implements OnInit {
 	public title!: string;
 	public user?: IUser | null;
+	@HostBinding('id')
+	public id = 'app-root';
 
 	constructor(
 		private readonly titleService: Title,

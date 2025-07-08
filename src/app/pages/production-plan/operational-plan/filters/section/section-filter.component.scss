@@ -1,0 +1,16 @@
+.section-filter {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &__content {
+    padding: 4px 6px;
+    height: 274px;
+    overflow: auto;
+  }
+
+  &__no-content {
+    height: 274px;
+    padding: 20px 16px;
+  }
+}
