@@ -15,13 +15,13 @@ import {
 	DropdownListComponent,
 	DropdownItemComponent,
 } from '@front-library/components';
-import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab';
 import { IconPosition } from '@front-components/components';
 import { RouterOutlet } from '@angular/router';
 import { environment } from '@environments/environment';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
+import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab';
 
 @Component({
 	selector: 'app-plan-days',
@@ -29,15 +29,14 @@ import { OperationPlanState } from '@app/pages/production-plan/service/operation
 	imports: [
 		HeadlineComponent,
 		SelectComponent,
-		TabsComponent,
 		CardComponent,
 		ButtonComponent,
 		TextComponent,
-		TabsComponent,
 		RouterOutlet,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
 		DropdownItemComponent,
+		TabsComponent,
 	],
 	templateUrl: './production-plan.component.html',
 	styleUrl: './production-plan.component.scss',
