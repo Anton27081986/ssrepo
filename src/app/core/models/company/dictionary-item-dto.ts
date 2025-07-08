@@ -10,14 +10,12 @@
  * Do not edit the class manually.
  */
 
+import { IId } from '@app/pages/production-plan/component-and-service-for-lib/i-id';
+
 /**
  * Модель айтема словаря
  */
-export interface IDictionaryItemDto {
-	/**
-	 * Айди элемента
-	 */
-	id: number;
+export interface IDictionaryItemDto extends IId {
 	/**
 	 * Название
 	 */
@@ -26,4 +24,6 @@ export interface IDictionaryItemDto {
 	 * link
 	 */
 	linkToDetail?: string | null;
+
+	parentId?: number;
 }

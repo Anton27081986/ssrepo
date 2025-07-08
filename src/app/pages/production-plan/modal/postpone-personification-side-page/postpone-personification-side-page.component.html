@@ -1,0 +1,44 @@
+<ss-lib-right-side-page-popup
+	[badgeProps]="{
+						icon: IconType.CornerUpRight,
+						size: ExtraSize.lg,
+						shape: Shape.Square
+					}"
+	[titleHeader]="'Перенести кол-во'"
+	[descriptionHeader]="'Перенесите количество на другую дату'"
+	[actionsRef]="actionRef"
+	[contentRef]="contentRef"
+	(closeEmit)="close()"
+>
+</ss-lib-right-side-page-popup>
+
+<ng-template #contentRef>
+	<ng-container *ngIf="personificationRes() as item">
+		<ss-lib-table>
+			<tr class="ss-lib-table-tr" *ngFor="let personification of item.items" postpone-personification-row-tr
+				[personification]="personification"></tr>
+			<tr class="ss-lib-table-tr">
+				<td class="ss-lib-table-td">
+					<div
+						class="ss-lib-table-td-item">
+						<ss-lib-text [type]="TextType.BodySm" [weight]="TextWeight.Regular">Итого</ss-lib-text>
+					</div>
+				</td>
+				<td class="ss-lib-table-td">&nbsp;</td>
+				<td class="ss-lib-table-td">
+					<div
+						class="ss-lib-table-td-item">
+						<ss-lib-text [type]="TextType.BodySm" [weight]="TextWeight.Regular">{{ item.totalQuantity }}
+						</ss-lib-text>
+					</div>
+				</td>
+				<td class="ss-lib-table-td" *ngIf="totalQuantityCalc">{{ totalQuantityCalc }}</td>
+				<td class="ss-lib-table-td">&nbsp;</td>
+			</tr>
+		</ss-lib-table>
+	</ng-container>
+</ng-template>
+
+<ng-template #actionRef>
+	<ss-lib-button (click)="transferProductionPlan()" [text]="'Провести'"></ss-lib-button>
+</ng-template>

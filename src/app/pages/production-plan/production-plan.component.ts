@@ -21,6 +21,7 @@ import { RouterOutlet } from '@angular/router';
 import { environment } from '@environments/environment';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
+import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 
 @Component({
 	selector: 'app-plan-days',
@@ -41,6 +42,7 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 	templateUrl: './production-plan.component.html',
 	styleUrl: './production-plan.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [OperationPlanState],
 })
 export class ProductionPlanComponent {
 	protected readonly TextType = TextType;
@@ -66,6 +68,10 @@ export class ProductionPlanComponent {
 		OperationPlanPopupService,
 	);
 
+	private operationPlanState: OperationPlanState = inject(OperationPlanState);
+
+	private weekId$ = this.operationPlanState.weekId$;
+
 	private productionPlanService: OperationPlanService =
 		inject(OperationPlanService);
 
@@ -88,14 +94,22 @@ export class ProductionPlanComponent {
 	}
 
 	protected addSemiManufactures() {
-		this.operationPlanPopupService.addSemiManufactures();
+		const weekId = this.weekId$.value;
+		if (weekId !== null) {
+			this.operationPlanPopupService.addSemiManufactures(weekId);
+		}
 	}
+
 	protected upload1C() {
-		this.productionPlanService.upload1C(202519);
+		this.productionPlanService.upload1C().subscribe((value) => {
+			window.open(value.linkToModule, '_blank');
+		});
 	}
 
 	protected downloadReport() {
-		this.productionPlanService.downloadReport();
+		this.productionPlanService.downloadReport().subscribe((value) => {
+			window.open(value.linkToModule, '_blank');
+		});
 	}
 
 	protected downloadExel() {

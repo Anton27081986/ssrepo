@@ -1,0 +1,38 @@
+.operation-plan-table {
+  //width: 100%;
+  position: relative;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  transition: width 0.1s ease;
+
+  thead {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.column-item__content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  &_label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.td__content {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 6px 12px;
+}
+
+.item-align--center {
+  justify-content: center;
+}

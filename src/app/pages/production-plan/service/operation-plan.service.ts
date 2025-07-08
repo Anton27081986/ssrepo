@@ -3,7 +3,21 @@ import { OperationPlanApiService } from '@app/pages/production-plan/service/oper
 import { map, Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { IDictionaryItemDto } from '@front-library/components';
-import { ManufacturingTovs } from '@app/core/models/operation-plan/manufacturing-tovs';
+import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
+import {
+	TransferProductionPlanFromBackend,
+	TransferProductionPlanMap,
+	TransferProductionPlanPatch,
+} from '@app/core/models/production-plan/transfer-production-plan-from-backend';
+import { FormControl } from '@angular/forms';
+import { IResponse } from '@app/core/utils/response';
+import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
+import {
+	OperationPlanItem,
+	OperationPlanRequest,
+	Pagination,
+} from '@app/core/models/production-plan/operation-plan';
+import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -11,32 +25,42 @@ export class OperationPlanService {
 		OperationPlanApiService,
 	);
 
-	public upload1C(weekId: number) {
-		if (environment.production) {
-			window.open(
-				`https://cisp.ssnab.ru/mfs/ouexport#!/index?weekId=${weekId}&sectionId=`,
-				'_blank',
-			);
-		} else {
-			window.open(
-				`https://ssnab.it/mfs/ouexport#!/index?weekId==${weekId}&sectionId=`,
-				'_blank',
-			);
-		}
+	public getProductionPlan(
+		request: OperationPlanRequest & Pagination,
+	): Observable<IResponse<OperationPlanItem>> {
+		return this.operationPlanApiService.getOperationPlan(request);
+	}
+
+	public getTransferProductionPlan(
+		id: number,
+	): Observable<IResponse<TransferProductionPlanMap>> {
+		return this.operationPlanApiService.getTransferProductionPlan(id).pipe(
+			map((res) => {
+				return this.mapIResponse(res);
+			}),
+		);
+	}
+
+	public transferProductionPlan(
+		params: TransferProductionPlanMap[],
+	): Observable<void> {
+		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
+			return {
+				orderId: item.orderId,
+				productionDate:
+					item.productionDateControl.value?.toISOString()!,
+				quantity: item.countForPostpone.value!,
+			};
+		});
+		return this.operationPlanApiService.transferProductionPlan(mapParams);
+	}
+
+	public upload1C() {
+		return this.operationPlanApiService.upload1C();
 	}
 
 	public downloadReport() {
-		if (environment.production) {
-			window.open(
-				'https://cisp.ssnab.ru/Reports/Report/MfsPlanDays',
-				'_blank',
-			);
-		} else {
-			window.open(
-				'https://ssnab.it/Reports/Report/MfsPlanDays',
-				'_blank',
-			);
-		}
+		return this.operationPlanApiService.downloadReport();
 	}
 
 	public downloadExel(): Observable<Blob> {
@@ -51,11 +75,52 @@ export class OperationPlanService {
 		);
 	}
 
-	public getManufacturingTov(): Observable<ManufacturingTovs[]> {
-		return this.operationPlanApiService.getManufacturingTov().pipe(
-			map((item) => {
-				return item.items;
-			}),
+	public getManufacturingTov(
+		query: string,
+		limit: number,
+		offset: number,
+	): Observable<IResponse<ManufacturingTovs>> {
+		return this.operationPlanApiService.getManufacturingTov(
+			query,
+			limit,
+			offset,
 		);
+	}
+
+	private mapIResponse(
+		input: IResponse<TransferProductionPlanFromBackend>,
+	): IResponse<TransferProductionPlanMap> {
+		const mappedItems = input.items.map((item) => ({
+			orderId: item.orderId,
+			customerUser: item.customerUser,
+			quantity: item.quantity,
+			countForPostpone: new FormControl<number | null>(item.quantity),
+			productionDateControl: new FormControl<Date | null>(
+				new Date(item.productionDate),
+			),
+		}));
+
+		return {
+			items: mappedItems,
+			total: input.total,
+			totalQuantity: input.totalQuantity,
+			linkToModule: input.linkToModule,
+		};
+	}
+
+	public addGp(params: AddToVRequest) {
+		return this.operationPlanApiService.addGp(params);
+	}
+
+	public deleteItemsTov(tovIds: number[]) {
+		return this.operationPlanApiService.deleteItemsTov(tovIds);
+	}
+
+	public getCalcVariants() {
+		return this.operationPlanApiService.getCalcVariants();
+	}
+
+	public updateRawMaterial(params: UpdateRawMaterialsRequest) {
+		return this.operationPlanApiService.updateRawMaterial(params);
 	}
 }

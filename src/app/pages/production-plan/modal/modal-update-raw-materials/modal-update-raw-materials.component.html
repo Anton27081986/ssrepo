@@ -1,0 +1,42 @@
+<ss-lib-modal
+	[badgeProps]="{
+						icon: IconType.PackagePlus,
+						size: ExtraSize.lg,
+						shape: Shape.Square
+					}"
+
+	[titleHeader]="'Расчет сырья за ' + (data.day ? (data.day | date:'d MMMM y') : '')"
+	[descriptionHeader]="'Выберите вариант расчета сырья для выбранных ГП'"
+	[contentRef]="contentRef"
+	[actionsRef]="actionRef"
+	(closeEmit)="close()"
+>
+</ss-lib-modal>
+
+<ng-template #contentRef>
+
+	<div class="modal-update-raw-materials">
+		<ss-lib-text [color]="Colors.TextBody2" [type]="TextType.BodySm">Вариант расчета</ss-lib-text>
+		<ss-lib-button [justifyContent]="JustifyContent.SpaceBetween" [iconPosition]="IconPosition.End"
+					   [icon]="IconType.ChevronDown" [type]="ButtonType.Secondary" [popoverTriggerFor]="list"
+					   [text]="selectedItem() ? selectedItem()?.name : 'Выберите вариант расчета'"></ss-lib-button>
+
+		<ss-lib-dropdown-list [width]="'535px'" [height]="'274px'" #list>
+			<ss-lib-dropdown-item [selected]="item.id === selectedItem()?.id"
+								  (click)="selectedItem.set(item)"
+								  [label]="item.name"
+								  *ngFor="let item of calcVariants()"
+			/>
+		</ss-lib-dropdown-list>
+	</div>
+
+</ng-template>
+
+<ng-template #actionRef>
+	<div class="modal-update-raw-materials__actions">
+		<ss-lib-button [style.width]="'262px'" [type]="ButtonType.Secondary" (close)="close()"
+					   [text]="'Отменить'"></ss-lib-button>
+		<ss-lib-button (click)="updateRawMaterial()" [style.width]="'262px'" [type]="ButtonType.Primary"
+					   [text]="'Рассчитать для ' + data.total + ' ГП'"></ss-lib-button>
+	</div>
+</ng-template>
