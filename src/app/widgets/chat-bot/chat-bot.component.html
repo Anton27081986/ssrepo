@@ -97,7 +97,7 @@
 				<img ngSrc="assets/images/profile/bot.png" class="chat__footer__avatar" alt="bot" height="205"
 					 width="226" />
 				<div class="chat__footer__form__input">
-					<textarea formControlName="question" onInput="this.parentNode.dataset.replicatedValue = this.value" [placeholder]="activeSubsector() ? 'Ввведите запрос...' : 'Выберите категорию запроса...'" (keydown)="sendMessage($event)"></textarea>
+					<textarea formControlName="question" onInput="this.parentNode.dataset.replicatedValue = this.value" [placeholder]="activeSubsector() ? 'Введите запрос...' : 'Выберите категорию запроса...'" (keydown)="sendMessage($event)"></textarea>
 				</div>
 				<snab-button
 					class="chat__footer__form__button"
