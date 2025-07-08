@@ -20,20 +20,17 @@ import {
 	ModalComponent,
 	ModalRef,
 	PopoverTriggerForDirective,
-	RightSidePagePopupComponent,
 	Shape,
 	SharedPopupService,
-	TableComponent,
 	TextComponent,
 	TextType,
 	ToastTypeEnum,
+	IconPosition,
 } from '@front-library/components';
-import { PostponePersonificationRowTrComponent } from '@app/pages/production-plan/modal/postpone-personification-tr/postpone-personification-row-tr.component';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor } from '@angular/common';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { EMPTY, map } from 'rxjs';
-import { IconPosition } from '@front-components/components';
 import {
 	OperationPlanRequest,
 	Pagination,
@@ -42,7 +39,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
 
 export interface UpdateRawMaterialsData {
-	day: string | undefined;
+	day: string;
 	tovIds?: number[];
 	filterParams?: OperationPlanRequest & Pagination;
 	weekId: number;
@@ -130,9 +127,12 @@ export class ModalUpdateRawMaterialsComponent {
 		}
 	}
 
+	example() {}
+
 	protected readonly ButtonType = ButtonType;
 	protected readonly JustifyContent = JustifyContent;
 	protected readonly IconPosition = IconPosition;
 	protected readonly TextType = TextType;
 	protected readonly Colors = Colors;
+	protected readonly document = document;
 }

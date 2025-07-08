@@ -20,15 +20,15 @@
 		<ss-lib-button [justifyContent]="JustifyContent.SpaceBetween" [iconPosition]="IconPosition.End"
 					   [icon]="IconType.ChevronDown" [type]="ButtonType.Secondary" [popoverTriggerFor]="list"
 					   [text]="selectedItem() ? selectedItem()?.name : 'Выберите вариант расчета'"></ss-lib-button>
-	</div>
 
-	<ss-lib-dropdown-list [width]="'535px'" [height]="'274px'" #list>
-		<ss-lib-dropdown-item [selected]="item.id === selectedItem()?.id"
-							  (click)="selectedItem.set(item)"
-							  [label]="item.name"
-							  *ngFor="let item of calcVariants()"
-		/>
-	</ss-lib-dropdown-list>
+		<ss-lib-dropdown-list [width]="'535px'" [height]="'274px'" #list>
+			<ss-lib-dropdown-item [selected]="item.id === selectedItem()?.id"
+								  (click)="selectedItem.set(item)"
+								  [label]="item.name"
+								  *ngFor="let item of calcVariants()"
+			/>
+		</ss-lib-dropdown-list>
+	</div>
 
 </ng-template>
 

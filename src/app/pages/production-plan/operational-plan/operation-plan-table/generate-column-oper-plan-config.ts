@@ -71,7 +71,7 @@ export function generateColumnOperationPlanConfig(
 	days.forEach((day) => {
 		const newDate = new Date(day);
 		newDate.setDate(newDate.getDate() + 1);
-		const date = newDate.toISOString().split('T')[0].slice(5); // Формат MM-DD
+		const date = newDate.toISOString().split('T')[0]; // Формат MM-DD
 
 		uniqueDates.add(date);
 	});

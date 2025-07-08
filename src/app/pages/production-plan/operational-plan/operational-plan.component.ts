@@ -28,7 +28,14 @@ import {
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import { BehaviorSubject, Observable, scan, switchMap, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	filter,
+	Observable,
+	scan,
+	switchMap,
+	tap,
+} from 'rxjs';
 import { IResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
@@ -154,6 +161,7 @@ export class OperationalPlanComponent
 		request: OperationPlanRequest & Pagination,
 	): Observable<IResponse<OperationPlanItem>> {
 		return this.activeWeek$.pipe(
+			filter((value) => value !== null),
 			switchMap((week) => {
 				request.weekId = week!.id; // временно
 				const filterParams = Object.fromEntries(

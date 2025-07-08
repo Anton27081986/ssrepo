@@ -1,4 +1,3 @@
-<!--[style.display]="popupVisible ? 'flex' : 'none'"-->
 <ss-lib-indicator-checklist-popup
 	[count]="getSelectedElemCount"
 	[total]="total()"
@@ -6,6 +5,7 @@
 	<ss-lib-button
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
+		[popoverTriggerFor]="orderAnOutfit"
 		[text]="'Заказ наряд'">
 		<ss-lib-icon
 			[width]="'20'"
@@ -36,11 +36,21 @@
 
 <ss-lib-dropdown-list [width]="'155px'" #calcProd>
 	<ss-lib-dropdown-item
-		(click)="openCalculationOfRawMaterials(false,days)"
-		*ngFor="let days of days()">
-		{{ days | date:'dd.MM' }}
+		(click)="openCalculationOfRawMaterialsForCheckList(day)"
+		*ngFor="let day of days()">
+		{{ day | date:'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
+
+<ss-lib-dropdown-list [width]="'155px'" #orderAnOutfit>
+	<ss-lib-dropdown-item
+		(click)="openOrderAnOutfit()"
+		*ngFor="let day of days()">
+		{{ day | date:'dd.MM' }}
+	</ss-lib-dropdown-item>
+</ss-lib-dropdown-list>
+
+
 
 <table
 	ssTable
@@ -96,14 +106,15 @@
 							<ss-lib-utility-button [popoverTriggerFor]="listFunc"
 												   [icon]="IconType.KebabMenuDots"></ss-lib-utility-button>
 							<ss-lib-dropdown-list #listFunc>
-								<ss-lib-dropdown-item (click)="openCalculationOfRawMaterials()"
-													  [icon]="IconType.FilePreviewSearch"
-													  [label]="'Заказ наряд'"></ss-lib-dropdown-item>
+								<ss-lib-dropdown-item
+									[icon]="IconType.FilePreviewSearch"
+									[label]="'Заказ наряд'"></ss-lib-dropdown-item>
 								<ss-lib-dropdown-item [icon]="IconType.FileUpload02"
 													  [label]="'Выгрузить в WMS'"></ss-lib-dropdown-item>
 								<ss-lib-dropdown-item [icon]="IconType.FileCheck"
 													  [label]="'Согласовать сырье'"></ss-lib-dropdown-item>
-								<ss-lib-dropdown-item (click)="openCalculationOfRawMaterials(true)" [icon]="IconType.FileSearch02"
+								<ss-lib-dropdown-item (click)="openCalculationOfRawMaterialsForColumn(column.id)"
+													  [icon]="IconType.FileSearch02"
 													  [label]="'Рассчитать сырье'"></ss-lib-dropdown-item>
 							</ss-lib-dropdown-list>
 						}

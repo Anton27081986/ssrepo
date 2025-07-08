@@ -192,31 +192,33 @@ export class OperationPlanTableComponent {
 		return subColumnId;
 	}
 
-	public openCalculationOfRawMaterials(
-		isColumn: boolean = false,
-		day: string | undefined = undefined,
-		columnName: string | undefined = undefined,
-	) {
-		let rawFilter: (OperationPlanRequest & Pagination) | undefined =
-			this.operationPlanState.filterValueStore$.value!;
-		let tovIds: number[] | undefined = this.getSelectedIds();
-
-		let checkDay = day;
-
-		let total = tovIds.length;
-		if (isColumn) {
-			rawFilter = undefined;
-			tovIds = undefined;
-			total = this.total();
-			checkDay = this.days().find((day) => {});
-		}
+	public openCalculationOfRawMaterialsForCheckList(day: string) {
+		let tovIds = this.getSelectedIds();
 
 		const param: UpdateRawMaterialsData = {
-			day: checkDay,
-			tovIds: tovIds,
-			filterParams: rawFilter,
+			day: day,
 			weekId: this.operationPlanState.weekId$.value!,
-			total: total,
+			total: tovIds.length,
+			tovIds: tovIds,
+		};
+		this.operationPlanPopup.openCalculationOfRawMaterials(param);
+	}
+
+	public openCalculationOfRawMaterialsForColumn(columnName: string) {
+		let rawFilter: OperationPlanRequest & Pagination =
+			this.operationPlanState.filterValueStore$.value!;
+
+		let weekId = this.operationPlanState.weekId$.value!;
+
+		let data = this.days().find((day) =>
+			day.startsWith(columnName.slice(5)),
+		)!;
+
+		const param: UpdateRawMaterialsData = {
+			day: data,
+			weekId: weekId,
+			total: this.totalItems(),
+			filterParams: rawFilter,
 		};
 		this.operationPlanPopup.openCalculationOfRawMaterials(param);
 	}
@@ -318,6 +320,8 @@ export class OperationPlanTableComponent {
 	protected popupCloseEmit() {
 		this.tableStateService.onMasterCheckboxChange(false);
 	}
+
+	openOrderAnOutfit() {}
 
 	protected readonly ButtonType = ButtonType;
 	protected readonly ExtraSize = ExtraSize;
