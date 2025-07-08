@@ -1,9 +1,9 @@
 <ss-lib-right-side-page-popup
 	[badgeProps]="{
-						icon: IconType.CornerUpRight,
-						size: ExtraSize.lg,
-						shape: Shape.Square
-					}"
+		icon: IconType.CornerUpRight,
+		size: ExtraSize.lg,
+		shape: Shape.Square,
+	}"
 	[titleHeader]="'Перенести кол-во'"
 	[descriptionHeader]="'Перенесите количество на другую дату'"
 	[actionsRef]="actionRef"
@@ -13,32 +13,82 @@
 </ss-lib-right-side-page-popup>
 
 <ng-template #contentRef>
+	<div class="table-label">
+		<ss-lib-text
+			[color]="Colors.TextBody2"
+			[weight]="TextWeight.Semibold"
+			[type]="TextType.BodySm"
+			[align]="Align.Start"
+			[isEllipsis]="true"
+		>
+			Перенос ГП по заказам
+		</ss-lib-text>
+		<div class="table-label__calc">
+			<ss-lib-text
+				[color]="Colors.TextBody2"
+				[weight]="TextWeight.Medium"
+				[type]="TextType.BodySm"
+			>
+				<div class="table-label__calc__total">
+					Всего:
+					<ss-lib-icon
+						[icon]="IconType.Box"
+						[width]="'16'"
+						[height]="'16'"
+						[color]="Colors.IconSuccess"
+					></ss-lib-icon>
+					<ss-lib-text
+						[color]="Colors.IconSuccess"
+						[weight]="TextWeight.Regular"
+						[type]="TextType.BodySm"
+					>
+						{{ totalQuantityCalc }}
+					</ss-lib-text>
+				</div>
+			</ss-lib-text>
+			<ss-lib-text
+				[color]="Colors.TextBody2"
+				[weight]="TextWeight.Medium"
+				[type]="TextType.BodySm"
+				[align]="Align.End"
+				[isEllipsis]="true"
+			>
+                <div class="table-label__calc__total">
+                    Для переноса:
+                    <ss-lib-icon
+                            [icon]="IconType.CornerUpRight"
+                            [width]="'16'"
+                            [height]="'16'"
+                            [color]="Colors.IconInformation "
+                    ></ss-lib-icon>
+                    <ss-lib-text
+                            [color]="Colors.IconInformation"
+                            [weight]="TextWeight.Regular"
+                            [type]="TextType.BodySm"
+                    >
+                        {{ totalQuantityForTransferCalc }}
+                    </ss-lib-text>
+                </div>
+			</ss-lib-text>
+		</div>
+	</div>
 	<ng-container *ngIf="personificationRes() as item">
-		<ss-lib-table>
-			<tr class="ss-lib-table-tr" *ngFor="let personification of item.items" postpone-personification-row-tr
-				[personification]="personification"></tr>
-			<tr class="ss-lib-table-tr">
-				<td class="ss-lib-table-td">
-					<div
-						class="ss-lib-table-td-item">
-						<ss-lib-text [type]="TextType.BodySm" [weight]="TextWeight.Regular">Итого</ss-lib-text>
-					</div>
-				</td>
-				<td class="ss-lib-table-td">&nbsp;</td>
-				<td class="ss-lib-table-td">
-					<div
-						class="ss-lib-table-td-item">
-						<ss-lib-text [type]="TextType.BodySm" [weight]="TextWeight.Regular">{{ item.totalQuantity }}
-						</ss-lib-text>
-					</div>
-				</td>
-				<td class="ss-lib-table-td" *ngIf="totalQuantityCalc">{{ totalQuantityCalc }}</td>
-				<td class="ss-lib-table-td">&nbsp;</td>
-			</tr>
-		</ss-lib-table>
+		<app-postpone-personification-table
+			[data]="item.items"
+		></app-postpone-personification-table>
 	</ng-container>
 </ng-template>
 
 <ng-template #actionRef>
-	<ss-lib-button (click)="transferProductionPlan()" [text]="'Провести'"></ss-lib-button>
+	<div class="action-button-group">
+		<ss-lib-button
+			(click)="transferProductionPlan()"
+			[text]="totalForButtonTransfer"
+		></ss-lib-button>
+		<ss-lib-button
+			(click)="close()"
+			[text]="'Отменить'"
+			[type]="ButtonType.Secondary"
+		></ss-lib-button>
+	</div>
 </ng-template>

@@ -34,12 +34,18 @@
 
 <ng-template #leftFiltersRef>
 	<ng-container *ngIf="weeks$ | async as weeks">
-		<ss-lib-button [iconPosition]="IconPosition.Start"
-					   [icon]="IconType.Trash"
-					   [popoverTriggerFor]="listActions" [type]="ButtonType.Secondary"
-					   [text]="(activeWeek$ | async)?.name">
-
-			<ss-lib-icon [icon]="IconType.ChevronDown" [width]="'20'" [height]="'20'"></ss-lib-icon>
+		<ss-lib-button
+			[iconPosition]="IconPosition.Start"
+			[icon]="IconType.Trash"
+			[popoverTriggerFor]="listActions"
+			[type]="ButtonType.Secondary"
+			[text]="(activeWeek$ | async)?.name"
+		>
+			<ss-lib-icon
+				[icon]="IconType.ChevronDown"
+				[width]="'20'"
+				[height]="'20'"
+			></ss-lib-icon>
 		</ss-lib-button>
 		<ss-lib-dropdown-list #listActions [height]="'274px'" [width]="'236px'">
 			<ss-lib-dropdown-item *ngFor="let week of weeks"
