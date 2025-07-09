@@ -26,17 +26,19 @@ import {
 	ModalRef,
 	PopoverTriggerForDirective,
 	Shape,
+	SharedPopupService,
 	TextComponent,
 	TextType,
 	TextWeight,
+	ToastTypeEnum,
 } from '@front-library/components';
 import { DatePipe, NgFor } from '@angular/common';
-import { UntilDestroy } from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { map } from 'rxjs';
-import { DatepickerCalendarComponent } from '@front-library/components/lib/components/datepicker/datepicker-calendar/datepicker-calendar.component';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 
 export interface ApproveMaterialData {
 	total: number;
@@ -56,7 +58,6 @@ export interface ApproveMaterialData {
 		DropdownListComponent,
 		DropdownItemComponent,
 		DatepickerComponent,
-		DatepickerCalendarComponent,
 		FormFieldComponent,
 		FieldCtrlDirective,
 		ReactiveFormsModule,
@@ -74,6 +75,8 @@ export class ApproveMaterialComponent implements OnInit {
 	private readonly popup: ModalRef<ApproveMaterialData> = inject(
 		ModalRef<ApproveMaterialData>,
 	);
+
+	private readonly sharedService = inject(SharedPopupService);
 
 	protected startDate: FormControl<null | Date> =
 		new FormControl<null | Date>(null);
@@ -114,7 +117,27 @@ export class ApproveMaterialComponent implements OnInit {
 		this.popup.close();
 	}
 
-	approveMaterial() {}
+	protected approveMaterial() {
+		const city = this.city();
+		if (city) {
+			const params: ApproveMaterialRequest = {
+				dateFrom: this.startDate.value?.toString()!,
+				dateTo: this.endDate.value?.toISOString()!,
+				cityId: city.id,
+			};
+			this.service
+				.approveMaterials(params)
+				.pipe(untilDestroyed(this))
+				.subscribe((value) => {
+					window.open(value.linkToModule, '_target');
+				});
+		} else {
+			this.sharedService.openToast({
+				type: ToastTypeEnum.Error,
+				text: 'Выберите город',
+			});
+		}
+	}
 
 	protected readonly ButtonType = ButtonType;
 	protected readonly TextType = TextType;

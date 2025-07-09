@@ -17,7 +17,11 @@ import {
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
+import {
+	LinkToModule,
+	UpdateRawMaterialsRequest,
+} from '@app/core/models/production-plan/update-raw-materials-request';
+import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -126,5 +130,11 @@ export class OperationPlanService {
 
 	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.operationPlanApiService.getCities();
+	}
+
+	public approveMaterials(
+		params: ApproveMaterialRequest,
+	): Observable<LinkToModule> {
+		return this.operationPlanApiService.approveMaterials(params);
 	}
 }

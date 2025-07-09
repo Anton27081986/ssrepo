@@ -19,6 +19,7 @@ import {
 	UpdateRawMaterialsRequest,
 	LinkToModule,
 } from '@app/core/models/production-plan/update-raw-materials-request';
+import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -137,6 +138,15 @@ export class OperationPlanApiService {
 	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities`,
+		);
+	}
+
+	public approveMaterials(
+		params: ApproveMaterialRequest,
+	): Observable<LinkToModule> {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/ApproveMaterials`,
+			params,
 		);
 	}
 }

@@ -16,31 +16,37 @@
 <ng-template #contentRef>
 	<div class="approve-material">
 		<div class="approve-material__date">
-			<ss-lib-text [weight]="TextWeight.Medium" [type]="TextType.BodySm">Период согласования</ss-lib-text>
+			<ss-lib-text [weight]="TextWeight.Semibold" [type]="TextType.BodySm">Период согласования</ss-lib-text>
 
-			<ss-lib-form-field
-			>
-				<ss-lib-datepicker
-					fieldCtrl
-					[formControl]="startDate"
-				/>
-			</ss-lib-form-field>
+			<div class="approve-material__date-controls">
+				<ss-lib-form-field
+					class="approve-material__date-control"
+				>
+					<ss-lib-datepicker
+						fieldCtrl
+						[formControl]="startDate"
+					/>
+				</ss-lib-form-field>
 
-			<ss-lib-form-field
-			>
-				<ss-lib-datepicker
-					fieldCtrl
-					[min]="data.dataStart"
-					[formControl]="endDate"
-				/>
-			</ss-lib-form-field>
+				<ss-lib-text>-</ss-lib-text>
+
+				<ss-lib-form-field
+					class="approve-material__date-control"
+				>
+					<ss-lib-datepicker
+						fieldCtrl
+						[min]="data.dataStart"
+						[formControl]="endDate"
+					/>
+				</ss-lib-form-field>
+			</div>
 		</div>
 		<div class="approve-material__city">
-			<ss-lib-text [color]="Colors.TextBody2" [type]="TextType.BodySm">Город</ss-lib-text>
+			<ss-lib-text [weight]="TextWeight.Semibold" [type]="TextType.BodySm">Город</ss-lib-text>
 
 			<ss-lib-button [justifyContent]="JustifyContent.SpaceBetween" [iconPosition]="IconPosition.End"
 						   [icon]="IconType.ChevronDown" [type]="ButtonType.Secondary" [popoverTriggerFor]="list"
-						   [text]="'Выберите вариант расчета'"></ss-lib-button>
+						   [text]="city() ? city()?.name : 'Выберите город'"></ss-lib-button>
 
 			<ss-lib-dropdown-list [width]="'535px'" [height]="'274px'" #list>
 				<ss-lib-dropdown-item [selected]="item.id === city()?.id"
@@ -54,7 +60,7 @@
 </ng-template>
 
 <ng-template #actionRef>
-	<div class="modal-update-raw-materials__actions">
+	<div class="approve-material__actions">
 		<ss-lib-button [style.width]="'262px'" [type]="ButtonType.Secondary" (close)="close()"
 					   [text]="'Отменить'"></ss-lib-button>
 		<ss-lib-button (click)="approveMaterial()" [style.width]="'262px'" [type]="ButtonType.Primary"
