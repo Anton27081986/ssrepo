@@ -6,7 +6,7 @@
 	<ss-lib-button
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
-		[popoverTriggerFor]="orderAnOutfit"
+		[popoverTriggerFor]="orderAnOutfitList"
 		[text]="'Заказ наряд'">
 		<ss-lib-icon
 			[width]="'20'"
@@ -43,10 +43,10 @@
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
-<ss-lib-dropdown-list #orderAnOutfit [width]="'155px'">
+<ss-lib-dropdown-list #orderAnOutfitList [width]="'155px'">
 	<ss-lib-dropdown-item
 		*ngFor="let day of days()"
-		(click)="openOrderAnOutfit()">
+		(click)="orderAnOutfitForCheckList(day)">
 		{{ day.day | date:'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
@@ -118,6 +118,7 @@
                                                        [icon]="IconType.KebabMenuDots"></ss-lib-utility-button>
                                 <ss-lib-dropdown-list #listFunc>
                                     <ss-lib-dropdown-item
+										(click)="orderAnOutfit(column.id)"
                                             [icon]="IconType.FilePreviewSearch"
                                             [label]="'Заказ наряд'"></ss-lib-dropdown-item>
                                     <ss-lib-dropdown-item [icon]="IconType.FileUpload02"

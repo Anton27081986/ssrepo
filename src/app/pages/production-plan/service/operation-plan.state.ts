@@ -18,12 +18,5 @@ export class OperationPlanState {
 	> = new BehaviorSubject<(OperationPlanRequest & Pagination) | null>(null);
 	public permissionsFacadeService = inject(PermissionsFacadeService);
 
-	constructor() {
-		console.log(
-			this.permissionsFacadeService.hasPermission(
-				ModulesWithPermissionsEnum.OperationalPlan,
-				Permissions.OPERATIONAL_PLAN_CALC_ROW_MATERIALS,
-			),
-		);
-	}
+	constructor() {}
 }

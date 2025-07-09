@@ -119,9 +119,10 @@ export class ApproveMaterialComponent implements OnInit {
 
 	protected approveMaterial() {
 		const city = this.city();
+		console.log(this.startDate.value);
 		if (city) {
 			const params: ApproveMaterialRequest = {
-				dateFrom: this.startDate.value?.toString()!,
+				dateFrom: this.startDate.value?.toISOString()!,
 				dateTo: this.endDate.value?.toISOString()!,
 				cityId: city.id,
 			};

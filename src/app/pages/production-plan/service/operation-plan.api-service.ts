@@ -20,6 +20,10 @@ import {
 	LinkToModule,
 } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
+import {
+	OrderAnOutfit,
+	OrderAnOutfitRequest,
+} from '@app/core/models/production-plan/order-an-outfit-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -146,6 +150,15 @@ export class OperationPlanApiService {
 	): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/ApproveMaterials`,
+			params,
+		);
+	}
+
+	public orderAnOutfit(
+		params: OrderAnOutfitRequest,
+	): Observable<OrderAnOutfit> {
+		return this.http.post<OrderAnOutfit>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/OrderProduction`,
 			params,
 		);
 	}

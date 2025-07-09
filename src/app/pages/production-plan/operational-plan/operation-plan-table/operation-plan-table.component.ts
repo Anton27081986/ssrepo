@@ -5,7 +5,6 @@ import {
 	inject,
 	input,
 	InputSignal,
-	OnInit,
 } from '@angular/core';
 import {
 	Align,
@@ -13,7 +12,6 @@ import {
 	ButtonType,
 	CheckboxComponent,
 	Colors,
-	DraggableItemDirective,
 	DropdownItemComponent,
 	DropdownListComponent,
 	ExtraSize,
@@ -21,24 +19,17 @@ import {
 	HintType,
 	IconComponent,
 	IconType,
-	LoadPaginationComponent,
 	PopoverTriggerForDirective,
 	SsTableState,
-	TableCellDirective,
 	TableDirective,
 	TableHeadDirective,
 	TableThGroupComponent,
-	TdComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
 	ThComponent,
-	TrComponent,
 	UtilityButtonComponent,
 } from '@front-library/components';
-import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
-import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
-import { AsyncPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -57,6 +48,11 @@ import {
 import { UpdateRawMaterialsData } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { ApproveMaterialData } from '@app/pages/production-plan/modal/approve-material/approve-material.component';
+import {
+	OrderAnOutfit,
+	OrderAnOutfitRequest,
+} from '@app/core/models/production-plan/order-an-outfit-request';
+import { NgFor, NgIf, AsyncPipe, DatePipe, NgClass } from '@angular/common';
 
 @Component({
 	selector: 'app-operation-plan-table',
@@ -176,7 +172,7 @@ export class OperationPlanTableComponent {
 		if (name.match(/\d{2}-\d{2}$/)) {
 			const [, month, day] = name.split('-');
 
-			return `${day}.${month}`;
+			return `${month}.${day}`;
 		}
 
 		return name;
@@ -238,84 +234,34 @@ export class OperationPlanTableComponent {
 			.subscribe();
 	}
 
-	public openWindowWithPost(
-		url: string = ' https://ssnab.it/Mfs/Receipts/ReceipTermsTree',
-	) {
-		// Create a new form element
+	public openOrderAnOutfit(params: OrderAnOutfit) {
 		let form = document.createElement('form');
 		form.method = 'POST';
-		form.action = url;
-		form.target = 'NewWindow'; // Name of the target window/tab
+		form.action = params.linkToModule;
+		form.target = 'NewWindow';
 		form.id = 'ReceipTermsTree';
 
-		// // Add hidden input fields for each data parameter
-		// for (var key in data) {
-		// 	if (data.hasOwnProperty(key)) {
-		// 		var input = document.createElement('input');
-		// 		input.type = 'hidden';
-		// 		input.name = key;
-		// 		input.value = data[key];
-		// 		form.appendChild(input);
-		// 	}
-		// }
+		// Добавляем все параметры кроме linkToModule
+		Object.entries(params).forEach(([key, value]) => {
+			if (key === 'linkToModule') return;
+			const input = document.createElement('input');
+			input.type = 'hidden';
+			input.name = key;
+			input.value =
+				value !== undefined && value !== null ? String(value) : '';
+			form.appendChild(input);
+		});
 
-		var input1 = document.createElement('input');
-		input1.type = 'hidden';
-		input1.name = 'D_DOC'; // выбранная дата в формате 30.06.2025
-		input1.value = '30.06.2025';
-		form.appendChild(input1);
-		var input2 = document.createElement('input');
-		input2.type = 'hidden';
-		input2.name = 'gps'; // ?
-		input2.value = '';
-		form.appendChild(input2);
-		var input3 = document.createElement('input');
-		input3.type = 'hidden';
-		input3.name = 'TOV'; // наименование tp т.е пустой
-		input3.value = '';
-		form.appendChild(input3);
-		var input4 = document.createElement('input');
-		input4.type = 'hidden';
-		input4.name = 'FACTORY_ID'; // productionFactoryId
-		input4.value = '';
-		form.appendChild(input4);
-		var input5 = document.createElement('input');
-		input5.type = 'hidden';
-		input5.name = 'SECTION_ID'; // Участки
-		input5.value = '';
-		form.appendChild(input5);
-		var input6 = document.createElement('input');
-		input6.type = 'hidden';
-		input6.name = 'MPO_ID'; // PlanEconomicUserIds  - только 1
-		input6.value = '';
-		form.appendChild(input6);
-		var input7 = document.createElement('input');
-		input7.type = 'hidden';
-		input7.name = 'PRE_BUNK_ID'; // ''
-		input7.value = '';
-		form.appendChild(input7);
-		var input8 = document.createElement('input');
-		input8.type = 'hidden';
-		input8.name = 'QUANTITY'; // ?
-		input8.value = '0';
-		form.appendChild(input8);
-		// Append the form to the document body (it will not be visible)
 		document.body.appendChild(form);
 
-		var features =
-			'resizable= yes; status= no; scroll= no; help= no; center= yes; width = 460; height = 200; menubar = no; directories = no; location = no; modal = yes';
-
-		// Open the new window/tab
-		var newWindow = window.open('', 'NewWindow', features);
+		const features =
+			'resizable=yes,status=no,scroll=no,help=no,center=yes,width=460,height=200,menubar=no,directories=no,location=no,modal=yes';
+		const newWindow = window.open('', 'NewWindow', features);
 		form.submit();
-		// Check if the window was successfully opened (e.g., not blocked by a popup blocker)
-		if (newWindow) {
-			// Submit the form to the new window
-		} else {
+
+		if (!newWindow) {
 			alert('Pop-ups must be enabled to open the new window.');
 		}
-
-		// Remove the form from the document body after submission
 		document.body.removeChild(form);
 	}
 
@@ -323,7 +269,28 @@ export class OperationPlanTableComponent {
 		this.tableStateService.onMasterCheckboxChange(false);
 	}
 
-	openOrderAnOutfit() {}
+	protected orderAnOutfit(columnId: string) {
+		let data = this.days().find((day) =>
+			day.day.startsWith(columnId.slice(5)),
+		)!;
+		const params: OrderAnOutfitRequest = {
+			date: data.day!,
+		};
+		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
+			this.openOrderAnOutfit(item);
+		});
+	}
+
+	protected orderAnOutfitForCheckList(day: IDay) {
+		let ids = this.getSelectedIds();
+		const params: OrderAnOutfitRequest = {
+			date: day.day,
+			ids: ids,
+		};
+		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
+			this.openOrderAnOutfit(item);
+		});
+	}
 
 	protected openApproveMaterials(column: string) {
 		let date = this.days().find((day) =>

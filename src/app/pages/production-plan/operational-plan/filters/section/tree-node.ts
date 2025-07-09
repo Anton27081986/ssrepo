@@ -3,7 +3,7 @@ import { signal, WritableSignal } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Subscription, tap } from 'rxjs';
 
-export class TreeNodeFilter {
+export class TreeNode {
 	public parent: IDictionaryItemDto;
 
 	public children: IDictionaryItemDto[];

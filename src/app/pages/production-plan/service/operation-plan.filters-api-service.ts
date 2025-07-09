@@ -58,13 +58,13 @@ export class OperationPlanFiltersApiService {
 	public getProductionSection(
 		query: string,
 		ids: number[] = [],
-	): Observable<IResponse<FilterSectionDto>> {
+	): Observable<FilterSectionDto> {
 		let params = new HttpParams().set('query', query);
 
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
 		});
-		return this.http.get<IResponse<FilterSectionDto>>(
+		return this.http.get<FilterSectionDto>(
 			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductionSections`,
 			{ params },
 		);

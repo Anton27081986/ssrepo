@@ -13,6 +13,7 @@ import { FormControl } from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
+	IDay,
 	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
@@ -22,6 +23,7 @@ import {
 	UpdateRawMaterialsRequest,
 } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
+import { OrderAnOutfitRequest } from '@app/core/models/production-plan/order-an-outfit-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -136,5 +138,9 @@ export class OperationPlanService {
 		params: ApproveMaterialRequest,
 	): Observable<LinkToModule> {
 		return this.operationPlanApiService.approveMaterials(params);
+	}
+
+	public orderAnOutfit(params: OrderAnOutfitRequest) {
+		return this.operationPlanApiService.orderAnOutfit(params);
 	}
 }
