@@ -1,0 +1,19 @@
+.postpone-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+
+	th {
+		background-color: var(--surface-information);
+	}
+
+	th,
+	td {
+		padding: 12px 8px;
+		text-align: center;
+	}
+
+	.width-column-inputs {
+		width: 140px;
+	}
+}

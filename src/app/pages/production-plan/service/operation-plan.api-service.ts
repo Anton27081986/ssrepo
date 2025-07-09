@@ -85,7 +85,7 @@ export class OperationPlanApiService {
 		params: TransferProductionPlanPatch[],
 	): Observable<void> {
 		return this.http.patch<void>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlan`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
 			params,
 		);
 	}
