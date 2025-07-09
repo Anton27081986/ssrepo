@@ -173,8 +173,8 @@ export class OperationPlanTableComponent {
 	}
 
 	public formatColumnName(name: string): string {
-		if (name.match(/^\d{2}-\d{2}$/)) {
-			const [month, day] = name.split('-');
+		if (name.match(/\d{2}-\d{2}$/)) {
+			const [, month, day] = name.split('-');
 
 			return `${day}.${month}`;
 		}
