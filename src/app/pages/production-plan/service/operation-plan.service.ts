@@ -10,7 +10,7 @@ import {
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
 import { FormControl } from '@angular/forms';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
 	OperationPlanItem,
@@ -27,7 +27,7 @@ export class OperationPlanService {
 
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItem>> {
+	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		return this.operationPlanApiService.getOperationPlan(request);
 	}
 
@@ -122,5 +122,9 @@ export class OperationPlanService {
 
 	public updateRawMaterial(params: UpdateRawMaterialsRequest) {
 		return this.operationPlanApiService.updateRawMaterial(params);
+	}
+
+	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.operationPlanApiService.getCities();
 	}
 }

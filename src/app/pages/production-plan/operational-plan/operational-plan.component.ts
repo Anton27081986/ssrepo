@@ -24,6 +24,7 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BaseAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/base-abstract-component';
 import {
+	IDay,
 	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
@@ -36,7 +37,7 @@ import {
 	switchMap,
 	tap,
 } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
@@ -99,9 +100,7 @@ export class OperationalPlanComponent
 	protected weeks$: Observable<IDictionaryItemDto[]> =
 		this.operationalPlanService.getWeeks();
 
-	protected days$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
-		[],
-	);
+	protected days$: BehaviorSubject<IDay[]> = new BehaviorSubject<IDay[]>([]);
 
 	protected operationPlanState: OperationPlanState =
 		inject(OperationPlanState);
@@ -159,7 +158,7 @@ export class OperationalPlanComponent
 
 	public loadItems(
 		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItem>> {
+	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		return this.activeWeek$.pipe(
 			filter((value) => value !== null),
 			switchMap((week) => {
@@ -176,7 +175,7 @@ export class OperationalPlanComponent
 				);
 			}),
 			tap((value) => {
-				this.days$.next(value.days!);
+				this.days$.next(value.days);
 			}),
 		);
 	}

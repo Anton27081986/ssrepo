@@ -36,9 +36,9 @@
 
 <ss-lib-dropdown-list [width]="'155px'" #calcProd>
 	<ss-lib-dropdown-item
-		(click)="openCalculationOfRawMaterialsForCheckList(day)"
+		(click)="openCalculationOfRawMaterialsForCheckList(day.day)"
 		*ngFor="let day of days()">
-		{{ day | date:'dd.MM' }}
+		{{ day.day | date:'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
@@ -46,7 +46,7 @@
 	<ss-lib-dropdown-item
 		(click)="openOrderAnOutfit()"
 		*ngFor="let day of days()">
-		{{ day | date:'dd.MM' }}
+		{{ day.day | date:'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
@@ -112,6 +112,7 @@
 								<ss-lib-dropdown-item [icon]="IconType.FileUpload02"
 													  [label]="'Выгрузить в WMS'"></ss-lib-dropdown-item>
 								<ss-lib-dropdown-item [icon]="IconType.FileCheck"
+													  (click)="openApproveMaterials(column.id)"
 													  [label]="'Согласовать сырье'"></ss-lib-dropdown-item>
 								<ss-lib-dropdown-item (click)="openCalculationOfRawMaterialsForColumn(column.id)"
 													  [icon]="IconType.FileSearch02"
