@@ -49,12 +49,14 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { OperationPlanTableTbodyComponent } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-tbody.component';
 import {
+	IDay,
 	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
 import { UpdateRawMaterialsData } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
+import { ApproveMaterialData } from '@app/pages/production-plan/modal/approve-material/approve-material.component';
 
 @Component({
 	selector: 'app-operation-plan-table',
@@ -95,7 +97,7 @@ export class OperationPlanTableComponent {
 
 	public planItems: InputSignal<OperationPlanItem[]> = input.required();
 
-	public days: InputSignal<string[]> = input.required();
+	public days: InputSignal<IDay[]> = input.required();
 
 	public total: InputSignal<number> = input.required();
 
@@ -171,8 +173,8 @@ export class OperationPlanTableComponent {
 	}
 
 	public formatColumnName(name: string): string {
-		if (name.match(/^\d{2}-\d{2}$/)) {
-			const [month, day] = name.split('-');
+		if (name.match(/\d{2}-\d{2}$/)) {
+			const [, month, day] = name.split('-');
 
 			return `${day}.${month}`;
 		}
@@ -211,11 +213,11 @@ export class OperationPlanTableComponent {
 		let weekId = this.operationPlanState.weekId$.value!;
 
 		let data = this.days().find((day) =>
-			day.startsWith(columnName.slice(5)),
+			day.day.startsWith(columnName.slice(5)),
 		)!;
 
 		const param: UpdateRawMaterialsData = {
-			day: data,
+			day: data.day,
 			weekId: weekId,
 			total: this.totalItems(),
 			filterParams: rawFilter,
@@ -322,6 +324,17 @@ export class OperationPlanTableComponent {
 	}
 
 	openOrderAnOutfit() {}
+
+	protected openApproveMaterials(column: string) {
+		let date = this.days().find((day) =>
+			day.day.startsWith(column.slice(5)),
+		)!.day;
+		const data: ApproveMaterialData = {
+			total: this.totalItems(),
+			dataStart: new Date(date),
+		};
+		this.operationPlanPopup.openApproveMaterials(data);
+	}
 
 	protected readonly ButtonType = ButtonType;
 	protected readonly ExtraSize = ExtraSize;

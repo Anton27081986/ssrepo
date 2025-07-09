@@ -1,0 +1,15 @@
+.item-td {
+  padding: 16px 12px;
+  min-width: 80px;
+}
+
+.item-tov {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 485px;
+
+  &__text {
+    flex-grow: 1;
+  }
+}

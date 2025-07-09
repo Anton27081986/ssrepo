@@ -1,3 +1,5 @@
+import { IDay } from '@app/core/models/production-plan/operation-plan';
+
 export interface IResponse<T> {
 	isExtendedMode?: boolean;
 	items: T[];
@@ -8,7 +10,6 @@ export interface IResponse<T> {
 	weekCount?: number;
 	clientOfferId?: string;
 	totalQuantity?: number;
-	days?: string[];
 }
 
 export interface Currency {
@@ -24,4 +25,8 @@ export interface IResponseProposalsTrips<T> extends IResponse<T> {
 
 export interface IRatingTeamsResponse<T> extends IResponse<T> {
 	teamName: string;
+}
+
+export interface ProductionPlanResponse<T> extends IResponse<T> {
+	days: IDay[];
 }

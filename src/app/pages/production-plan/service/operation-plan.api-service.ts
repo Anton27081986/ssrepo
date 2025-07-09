@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '@environments/environment';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -19,6 +19,7 @@ import {
 	UpdateRawMaterialsRequest,
 	LinkToModule,
 } from '@app/core/models/production-plan/update-raw-materials-request';
+import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -26,7 +27,7 @@ export class OperationPlanApiService {
 
 	public getOperationPlan(
 		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItem>> {
+	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		let params = new HttpParams();
 
 		Object.entries(request).forEach(([key, value]) => {
@@ -41,7 +42,7 @@ export class OperationPlanApiService {
 			}
 		});
 
-		return this.http.get<IResponse<OperationPlanItem>>(
+		return this.http.get<ProductionPlanResponse<OperationPlanItem>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
 			{ params },
 		);
@@ -85,7 +86,7 @@ export class OperationPlanApiService {
 		params: TransferProductionPlanPatch[],
 	): Observable<void> {
 		return this.http.patch<void>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlan`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
 			params,
 		);
 	}
@@ -131,6 +132,21 @@ export class OperationPlanApiService {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadReport`,
 			{},
+		);
+	}
+
+	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities`,
+		);
+	}
+
+	public approveMaterials(
+		params: ApproveMaterialRequest,
+	): Observable<LinkToModule> {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/ApproveMaterials`,
+			params,
 		);
 	}
 }

@@ -1,0 +1,23 @@
+.action-button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.table-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    &__calc {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+
+        &__total {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+}

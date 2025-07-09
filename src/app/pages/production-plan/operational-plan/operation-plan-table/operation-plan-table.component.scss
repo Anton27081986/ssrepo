@@ -26,13 +26,42 @@
   }
 }
 
-.td__content {
+.td-column {
   display: flex;
-  align-items: center;
-  gap: 15px;
+  gap: 8px;
   padding: 6px 12px;
+  position: relative;
+  min-width: 80px;
+  align-items: center;
+
+  ::ng-deep ss-lib-text {
+    .body-xs {
+      line-height: unset;
+    }
+  }
 }
 
-.item-align--center {
+.item-day {
   justify-content: center;
+}
+
+.item-day-utility {
+  position: absolute;
+  right: 12px;
+}
+
+.item-day-text {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.td-subcolumn {
+  display: flex;
+  gap: 15px;
+  padding: 6px 12px;
+  position: relative;
+  min-width: 74px;
+  align-items: center;
+  width: 100%;
 }

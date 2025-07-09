@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BehaviorSubject, map, Observable, switchMap, tap, scan } from 'rxjs';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { IFilterItem } from '@app/pages/production-plan/component-and-service-for-lib/filter-items';
 
@@ -50,7 +50,9 @@ export abstract class BaseAbstractComponent<TValue, ReqParams>
 		tap((value) => this.itemTotal$.next(value.length)),
 	);
 
-	abstract loadItems(criterion: ReqParams): Observable<IResponse<TValue>>;
+	abstract loadItems(
+		criterion: ReqParams,
+	): Observable<ProductionPlanResponse<TValue>>;
 
 	ngOnInit(): void {
 		this.headerFilterService.init(this.filtersConfig);

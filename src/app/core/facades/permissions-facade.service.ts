@@ -10,6 +10,7 @@ export enum PermissionsApiEnum {
 	completedWorkActs = 'CompletedWorkAct',
 	procurements = 'Contract',
 	excessIncome = 'Snd',
+	operationPlan = 'OperationalPlan',
 }
 
 @Injectable({
@@ -30,6 +31,10 @@ export class PermissionsFacadeService {
 
 	private readonly excessIncomePermissions: WritableSignal<string[] | null> =
 		signal(null);
+
+	private readonly productionPlanPermissions: WritableSignal<
+		string[] | null
+	> = signal(null);
 
 	private checkPermission(
 		permissions: WritableSignal<string[] | null>,
@@ -94,6 +99,13 @@ export class PermissionsFacadeService {
 					permission,
 				);
 
+			case ModulesWithPermissionsEnum.OperationalPlan:
+				return this.checkPermission(
+					this.productionPlanPermissions,
+					PermissionsApiEnum.operationPlan,
+					permission,
+				);
+
 			default:
 				return of(false);
 		}
@@ -125,6 +137,12 @@ export class PermissionsFacadeService {
 			case ModulesWithPermissionsEnum.ExcessIncome:
 				return this.checkPermissionType(
 					this.excessIncomePermissions(),
+					permissionType,
+				);
+
+			case ModulesWithPermissionsEnum.OperationalPlan:
+				return this.checkPermissionType(
+					this.productionPlanPermissions(),
 					permissionType,
 				);
 

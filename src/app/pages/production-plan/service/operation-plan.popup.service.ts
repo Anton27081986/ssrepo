@@ -12,6 +12,10 @@ import {
 	ModalUpdateRawMaterialsComponent,
 	UpdateRawMaterialsData,
 } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
+import {
+	ApproveMaterialComponent,
+	ApproveMaterialData,
+} from '@app/pages/production-plan/modal/approve-material/approve-material.component';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanPopupService {
@@ -39,6 +43,15 @@ export class OperationPlanPopupService {
 	): ModalRef {
 		return this.popup.openModal<UpdateRawMaterialsData>(
 			ModalUpdateRawMaterialsComponent,
+			data,
+			true,
+			'584px',
+		);
+	}
+
+	public openApproveMaterials(data: ApproveMaterialData): ModalRef {
+		return this.popup.openModal<ApproveMaterialData>(
+			ApproveMaterialComponent,
 			data,
 			true,
 			'584px',
