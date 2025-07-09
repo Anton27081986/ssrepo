@@ -48,3 +48,8 @@ export interface Pagination {
 	limit: number;
 	offset: number;
 }
+
+export interface IDay {
+	day: string;
+	isWmsUpload: boolean;
+}

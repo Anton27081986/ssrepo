@@ -1,3 +1,4 @@
+<!--[style.display]="popupVisible ? 'flex' : 'none'"-->
 <ss-lib-indicator-checklist-popup
 	[count]="getSelectedElemCount"
 	[total]="total()"
@@ -29,24 +30,24 @@
 		[icon]="IconType.Trash"
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
-		(click)="deleteItemsTov()"
-		[text]="'Удалить'">
+		[text]="'Удалить'"
+		(click)="deleteItemsTov()">
 	</ss-lib-button>
 </ss-lib-indicator-checklist-popup>
 
-<ss-lib-dropdown-list [width]="'155px'" #calcProd>
+<ss-lib-dropdown-list #calcProd [width]="'155px'">
 	<ss-lib-dropdown-item
-		(click)="openCalculationOfRawMaterialsForCheckList(day)"
-		*ngFor="let day of days()">
-		{{ day | date:'dd.MM' }}
+		*ngFor="let day of days()"
+		(click)="openCalculationOfRawMaterialsForCheckList(day.day)">
+		{{ day.day | date:'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
-<ss-lib-dropdown-list [width]="'155px'" #orderAnOutfit>
+<ss-lib-dropdown-list #orderAnOutfit [width]="'155px'">
 	<ss-lib-dropdown-item
-		(click)="openOrderAnOutfit()"
-		*ngFor="let day of days()">
-		{{ day | date:'dd.MM' }}
+		*ngFor="let day of days()"
+		(click)="openOrderAnOutfit()">
+		{{ day.day | date:'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
@@ -78,47 +79,72 @@
 							"
 					[resizable]="true"
 				>
-					<div
-						class="item-align--center td__content"
-					>
-						<!-- Чекбокс только для колонки 'tov' -->
-						@if (column.id === 'tov') {
-							<ss-lib-checkbox
-								[formControl]="masterCheckboxCtrl"
-								[indeterminate]="
-											getMasterCheckboxIndeterminate()
-										"
-							/>
-						}
+                    @if (column.id === 'tov') {
+                        <div class="td-column">
+                            <ss-lib-checkbox
+                                [formControl]="masterCheckboxCtrl"
+                                [indeterminate]="
+                                            getMasterCheckboxIndeterminate()
+                                        "
+                            />
+                            <ss-lib-text
+                                    [color]="Colors.TextBody2"
+                                    [weight]="TextWeight.Semibold"
+                                    [type]="TextType.BodyXs"
+                                    [align]="Align.Center"
+                                    [isEllipsis]="true"
+                            >
+                                {{ formatColumnName(column.name) }}
+                            </ss-lib-text>
+                        </div>
+                    } @else if (column.id.startsWith('week-')) {
 
-						<ss-lib-text
-							[color]="Colors.TextBody2"
-							[weight]="TextWeight.Semibold"
-							[type]="TextType.BodyXs"
-							[align]="Align.Center"
-							[isEllipsis]="true"
-						>
-							{{ formatColumnName(column.name) }}
-						</ss-lib-text>
+                        <div class="td-column item-day">
+                            <div class="item-day-text">
+                                <ss-lib-text
+                                        [color]="Colors.TextBody2"
+                                        [weight]="TextWeight.Semibold"
+                                        [type]="TextType.BodyXs"
+                                        [align]="Align.Center"
+                                        [isEllipsis]="true"
+                                >
+                                    {{ formatColumnName(column.name) }}
+                                </ss-lib-text>
 
-						@if (column.id.startsWith('week-')) {
-							<ss-lib-hint [type]="HintType.Success" [icon]="IconType.Alert"></ss-lib-hint>
-							<ss-lib-utility-button [popoverTriggerFor]="listFunc"
-												   [icon]="IconType.KebabMenuDots"></ss-lib-utility-button>
-							<ss-lib-dropdown-list #listFunc>
-								<ss-lib-dropdown-item
-									[icon]="IconType.FilePreviewSearch"
-									[label]="'Заказ наряд'"></ss-lib-dropdown-item>
-								<ss-lib-dropdown-item [icon]="IconType.FileUpload02"
-													  [label]="'Выгрузить в WMS'"></ss-lib-dropdown-item>
-								<ss-lib-dropdown-item [icon]="IconType.FileCheck"
-													  [label]="'Согласовать сырье'"></ss-lib-dropdown-item>
-								<ss-lib-dropdown-item (click)="openCalculationOfRawMaterialsForColumn(column.id)"
-													  [icon]="IconType.FileSearch02"
-													  [label]="'Рассчитать сырье'"></ss-lib-dropdown-item>
-							</ss-lib-dropdown-list>
-						}
-					</div>
+                                <ss-lib-hint [type]="HintType.Success" [icon]="IconType.Alert"></ss-lib-hint>
+                            </div>
+                            <div class="item-day-utility">
+                                <ss-lib-utility-button [popoverTriggerFor]="listFunc"
+                                                       [icon]="IconType.KebabMenuDots"></ss-lib-utility-button>
+                                <ss-lib-dropdown-list #listFunc>
+                                    <ss-lib-dropdown-item
+                                            [icon]="IconType.FilePreviewSearch"
+                                            [label]="'Заказ наряд'"></ss-lib-dropdown-item>
+                                    <ss-lib-dropdown-item [icon]="IconType.FileUpload02"
+                                                          [label]="'Выгрузить в WMS'"></ss-lib-dropdown-item>
+                                    <ss-lib-dropdown-item [icon]="IconType.FileCheck"
+                                                          [label]="'Согласовать сырье'"
+                                                          (click)="openApproveMaterials(column.id)"></ss-lib-dropdown-item>
+                                    <ss-lib-dropdown-item [icon]="IconType.FileSearch02"
+                                                          [label]="'Рассчитать сырье'"
+                                                          (click)="openCalculationOfRawMaterialsForColumn(column.id)"></ss-lib-dropdown-item>
+                                </ss-lib-dropdown-list>
+                            </div>
+                        </div>
+                    } @else {
+                        <div class="td-column">
+                            <ss-lib-text
+                                    [color]="Colors.TextBody2"
+                                    [weight]="TextWeight.Semibold"
+                                    [type]="TextType.BodyXs"
+                                    [align]="Align.Center"
+                                    [isEllipsis]="true"
+                            >
+                                {{ formatColumnName(column.name) }}
+                            </ss-lib-text>
+                        </div>
+
+                    }
 				</th>
 			}
 		}
@@ -132,15 +158,17 @@
 						*ssHead="subColumnId"
 						ssTh
 					>
-						<ss-lib-text
-							[color]="Colors.TextBody2"
-							[weight]="TextWeight.Semibold"
-							[type]="TextType.BodyXs"
-							[align]="Align.Center"
-							[isEllipsis]="true"
-						>
-							{{ getSubColumnName(subColumnId) }}
-						</ss-lib-text>
+                        <div class="td-subcolumn" [style.justify-content]="subColumnId.startsWith('planQuantity') ? 'flex-start' : 'flex-end'">
+                            <ss-lib-text
+                                [color]="Colors.TextBody2"
+                                [weight]="TextWeight.Semibold"
+                                [type]="TextType.BodyXs"
+                                [align]="Align.Center"
+                                [isEllipsis]="true"
+                            >
+                                {{ getSubColumnName(subColumnId) }}
+                            </ss-lib-text>
+                        </div>
 					</th>
 				}
 			}

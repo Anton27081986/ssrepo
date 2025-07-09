@@ -23,7 +23,8 @@ export const Permissions = {
 	COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT: 'CompletedWorkAct.EditActApplicant',
 	COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER: 'CompletedWorkAct.EditActProvider',
 	COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY: 'CompletedWorkAct.EditActCurrency',
-	COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD: 'CompletedWorkAct.EditActDateUpload',
+	COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD:
+		'CompletedWorkAct.EditActDateUpload',
 	COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT: 'CompletedWorkAct.EditActComment',
 	COMPLETED_WORK_ACTS_EDIT_ACT_BU_UNIT: 'CompletedWorkAct.EditActBuUnit',
 	COMPLETED_WORK_ACTS_EDIT_DOCUMENT: 'CompletedWorkAct.EditDocument',
@@ -33,6 +34,11 @@ export const Permissions = {
 	EXCESS_INCOME_READ: 'Snd.Read',
 	EXCESS_INCOME_EDIT: 'Snd.Edit',
 	EXCESS_INCOME_EDIT_COMMENT: 'Snd.EditComment',
+	OPERATIONAL_PLAN_ACCESS: 'OperationalPlan.Access',
+	OPERATIONAL_PLAN_ADMIN: 'OperationalPlan.Admin',
+	OPERATIONAL_PLAN_EDIT: 'OperationalPlan.Edit',
+	OPERATIONAL_PLAN_APPROVE_MATERIALS: 'OperationalPlan.ApproveMaterials',
+	OPERATIONAL_PLAN_CALC_ROW_MATERIALS: 'OperationalPlan.CalcRowMaterials',
 } as const;
 
 export type PermissionType = (typeof Permissions)[keyof typeof Permissions];

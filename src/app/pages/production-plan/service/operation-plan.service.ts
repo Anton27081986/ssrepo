@@ -10,14 +10,18 @@ import {
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
 import { FormControl } from '@angular/forms';
-import { IResponse } from '@app/core/utils/response';
+import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
 	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
+import {
+	LinkToModule,
+	UpdateRawMaterialsRequest,
+} from '@app/core/models/production-plan/update-raw-materials-request';
+import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -27,7 +31,7 @@ export class OperationPlanService {
 
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
-	): Observable<IResponse<OperationPlanItem>> {
+	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		return this.operationPlanApiService.getOperationPlan(request);
 	}
 
@@ -122,5 +126,15 @@ export class OperationPlanService {
 
 	public updateRawMaterial(params: UpdateRawMaterialsRequest) {
 		return this.operationPlanApiService.updateRawMaterial(params);
+	}
+
+	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
+		return this.operationPlanApiService.getCities();
+	}
+
+	public approveMaterials(
+		params: ApproveMaterialRequest,
+	): Observable<LinkToModule> {
+		return this.operationPlanApiService.approveMaterials(params);
 	}
 }

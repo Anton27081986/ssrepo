@@ -3,4 +3,5 @@ export enum ModulesWithPermissionsEnum {
 	CompletedWorkActs = 'completedWorkActs',
 	Procurements = 'procurements',
 	ExcessIncome = 'excessIncome',
+	OperationalPlan = 'OperationalPlan',
 }

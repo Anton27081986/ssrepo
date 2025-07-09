@@ -127,8 +127,6 @@ export class ModalUpdateRawMaterialsComponent {
 		}
 	}
 
-	example() {}
-
 	protected readonly ButtonType = ButtonType;
 	protected readonly JustifyContent = JustifyContent;
 	protected readonly IconPosition = IconPosition;

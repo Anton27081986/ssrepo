@@ -48,6 +48,7 @@ import { ResetPasswordComponent } from '@auth/reset-password/reset-password.comp
 import { ProductionPlanComponent } from '@app/pages/production-plan/production-plan.component';
 import { OperationalPlanComponent } from '@app/pages/production-plan/operational-plan/operational-plan.component';
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
+import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -258,6 +259,7 @@ export const routes: Routes = [
 	{
 		path: '',
 		component: FrontLibraryLayoutComponent,
+		canActivate: [AuthGuard, operationPlanPermissionGuard],
 		data: {
 			animation: 'animation',
 		},
