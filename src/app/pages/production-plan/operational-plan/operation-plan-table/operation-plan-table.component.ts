@@ -76,6 +76,7 @@ import { NgFor, NgIf, AsyncPipe, DatePipe, NgClass } from '@angular/common';
 		OperationPlanTableTbodyComponent,
 		HintComponent,
 		UtilityButtonComponent,
+		NgIf,
 	],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
@@ -89,7 +90,7 @@ export class OperationPlanTableComponent {
 
 	private readonly operationPlanService = inject(OperationPlanService);
 
-	private readonly operationPlanState = inject(OperationPlanState);
+	protected readonly operationPlanState = inject(OperationPlanState);
 
 	public planItems: InputSignal<OperationPlanItem[]> = input.required();
 
@@ -301,6 +302,15 @@ export class OperationPlanTableComponent {
 			dataStart: new Date(date),
 		};
 		this.operationPlanPopup.openApproveMaterials(data);
+	}
+
+	protected uploadWMS() {
+		this.operationPlanService
+			.uploadWMS()
+			.pipe(untilDestroyed(this))
+			.subscribe((value) => {
+				window.open(value.linkToModule);
+			});
 	}
 
 	protected readonly ButtonType = ButtonType;

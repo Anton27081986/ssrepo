@@ -14,7 +14,6 @@ import {
 	ExtraSize,
 	IconComponent,
 	IconType,
-	IDictionaryItemDto,
 	PopoverTriggerForDirective,
 	SsTableState,
 	TextType,
@@ -22,7 +21,6 @@ import {
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { BaseAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/base-abstract-component';
 import {
 	IDay,
 	OperationPlanItem,
@@ -32,12 +30,15 @@ import {
 import {
 	BehaviorSubject,
 	filter,
+	map,
 	Observable,
 	scan,
 	switchMap,
 	tap,
+	combineLatest,
+	NEVER,
 } from 'rxjs';
-import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
+import { ProductionPlanResponse } from '@app/core/utils/response';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
@@ -52,6 +53,8 @@ import { state } from '@angular/animations';
 import { OperationPlanEmptyStateComponent } from '@app/pages/production-plan/operational-plan/operation-plan-empty-state/operation-plan-empty-state.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoadPaginationComponent } from '@app/pages/production-plan/component-and-service-for-lib/load-pagination/load-pagination.component';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { OperationPlanRootService } from '@app/pages/production-plan/service/operation-plan.root.service';
 
 @Component({
 	selector: 'app-operation-plan',
@@ -78,14 +81,76 @@ import { LoadPaginationComponent } from '@app/pages/production-plan/component-an
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [HeaderFilterService, SsTableState],
 })
-export class OperationalPlanComponent
-	extends BaseAbstractComponent<OperationPlanItem, OperationPlanRequest>
-	implements OnInit
-{
+export class OperationalPlanComponent {
 	private readonly operationalPlanService: OperationPlanService =
 		inject(OperationPlanService);
 	private readonly router: Router = inject(Router);
 	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
+	private readonly headerFilterService: HeaderFilterService =
+		inject(HeaderFilterService);
+
+	public limit = 20;
+
+	public offset$ = new BehaviorSubject<number>(0);
+	public itemTotal$ = new BehaviorSubject<number>(0);
+
+	protected activeWeek$: BehaviorSubject<IDictionaryItemDto | null> =
+		new BehaviorSubject<IDictionaryItemDto | null>(null);
+
+	public total = 0;
+
+	protected items$: Observable<OperationPlanItem[]> = this.offset$.pipe(
+		switchMap((offset) => {
+			const week = this.activeWeek$.value;
+
+			if (!week) {
+				return NEVER;
+			}
+
+			return this.headerFilterService.criteria$.pipe(
+				switchMap((criteria) => {
+					const filterParams = Object.fromEntries(
+						Object.entries(criteria).filter(([_, v]) => v !== null),
+					);
+
+					const valueWithPagination = {
+						...filterParams,
+						limit: this.limit,
+						offset,
+					};
+					this.operationPlanState.filterValueStore$.next(
+						valueWithPagination as OperationPlanRequest &
+							Pagination,
+					);
+
+					return this.loadItems(
+						valueWithPagination as OperationPlanRequest &
+							Pagination,
+					);
+				}),
+			);
+		}),
+		tap((value) => {
+			this.total = value.total;
+		}),
+
+		map((value) => value.items),
+
+		scan((acc, value) => {
+			if (this.offset$.value === 0) {
+				return value;
+			}
+
+			return [...acc, ...value];
+		}),
+
+		tap((value) => this.itemTotal$.next(value.length)),
+	);
+
+	private operationPlanRootService: OperationPlanRootService = inject(
+		OperationPlanRootService,
+	);
 
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
@@ -105,12 +170,9 @@ export class OperationalPlanComponent
 	protected operationPlanState: OperationPlanState =
 		inject(OperationPlanState);
 
-	protected activeWeek$: BehaviorSubject<IDictionaryItemDto | null> =
-		new BehaviorSubject<IDictionaryItemDto | null>(null);
-
 	constructor() {
-		super();
-		this.limit = 7;
+		this.limit = 2;
+		this.headerFilterService.init(operationPlanFilter);
 		toSignal(
 			this.weeks$.pipe(
 				tap((weeks) => {
@@ -119,7 +181,9 @@ export class OperationalPlanComponent
 							'weekId',
 						);
 
-					let activeWeek = weeks[0];
+					let activeWeek = weeks.find((week) => week.isCurrent);
+
+					//console.log(weeks, activeWeek);
 
 					if (weekIdFromQuery) {
 						const found = weeks.find(
@@ -131,7 +195,7 @@ export class OperationalPlanComponent
 						}
 					}
 
-					this.activeWeek$.next(activeWeek);
+					this.activeWeek$.next(activeWeek!);
 				}),
 			),
 		);
@@ -154,6 +218,18 @@ export class OperationalPlanComponent
 				}),
 			),
 		);
+
+		toSignal(
+			this.headerFilterService.criteria$.pipe(
+				tap(() => {
+					this.offset$.next(0);
+				}),
+			),
+		);
+
+		this.operationPlanRootService.event$.subscribe(() => {
+			this.offset$.next(0);
+		});
 	}
 
 	public loadItems(
@@ -163,26 +239,13 @@ export class OperationalPlanComponent
 			filter((value) => value !== null),
 			switchMap((week) => {
 				request.weekId = week!.id; // временно
-				const filterParams = Object.fromEntries(
-					Object.entries(request).filter(([_, v]) => v !== null),
-				);
-				this.operationPlanState.filterValueStore$.next(
-					filterParams as OperationPlanRequest & Pagination,
-				);
 
-				return this.operationalPlanService.getProductionPlan(
-					filterParams as OperationPlanRequest & Pagination,
-				);
+				return this.operationalPlanService.getProductionPlan(request);
 			}),
 			tap((value) => {
 				this.days$.next(value.days);
 			}),
 		);
-	}
-
-	override ngOnInit(): void {
-		this.filtersConfig = operationPlanFilter;
-		super.ngOnInit();
 	}
 
 	protected selectWeek(week: IDictionaryItemDto): void {
@@ -202,5 +265,9 @@ export class OperationalPlanComponent
 		return Object.keys(filters).some(
 			(key) => !['weekId', 'limit', 'offset'].includes(key),
 		);
+	}
+
+	public changeOffset(offset: number): void {
+		this.offset$.next(offset);
 	}
 }

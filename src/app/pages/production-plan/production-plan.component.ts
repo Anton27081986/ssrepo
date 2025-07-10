@@ -22,6 +22,7 @@ import { OperationPlanPopupService } from '@app/pages/production-plan/service/op
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-plan-days',
@@ -37,6 +38,7 @@ import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab'
 		DropdownListComponent,
 		DropdownItemComponent,
 		TabsComponent,
+		NgIf,
 	],
 	templateUrl: './production-plan.component.html',
 	styleUrl: './production-plan.component.scss',
@@ -67,7 +69,8 @@ export class ProductionPlanComponent {
 		OperationPlanPopupService,
 	);
 
-	private operationPlanState: OperationPlanState = inject(OperationPlanState);
+	protected operationPlanState: OperationPlanState =
+		inject(OperationPlanState);
 
 	private weekId$ = this.operationPlanState.weekId$;
 

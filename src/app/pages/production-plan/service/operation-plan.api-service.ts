@@ -162,4 +162,11 @@ export class OperationPlanApiService {
 			params,
 		);
 	}
+
+	public uploadWMS() {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadWMS`,
+			{},
+		);
+	}
 }

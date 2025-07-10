@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable } from 'rxjs';
-import { environment } from '@environments/environment';
+import { map, Observable, of, tap, merge, switchMap } from 'rxjs';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -13,7 +12,6 @@ import { FormControl } from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
-	IDay,
 	OperationPlanItem,
 	OperationPlanRequest,
 	Pagination,
@@ -24,6 +22,10 @@ import {
 } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 import { OrderAnOutfitRequest } from '@app/core/models/production-plan/order-an-outfit-request';
+import {
+	OperationPlanEventEnum,
+	OperationPlanRootService,
+} from '@app/pages/production-plan/service/operation-plan.root.service';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -31,10 +33,18 @@ export class OperationPlanService {
 		OperationPlanApiService,
 	);
 
+	private operationPlanRootService: OperationPlanRootService = inject(
+		OperationPlanRootService,
+	);
+
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
-		return this.operationPlanApiService.getOperationPlan(request);
+		return merge(of(void 0), this.operationPlanRootService.event$).pipe(
+			switchMap(() => {
+				return this.operationPlanApiService.getOperationPlan(request);
+			}),
+		);
 	}
 
 	public getTransferProductionPlan(
@@ -115,11 +125,23 @@ export class OperationPlanService {
 	}
 
 	public addGp(params: AddToVRequest) {
-		return this.operationPlanApiService.addGp(params);
+		return this.operationPlanApiService.addGp(params).pipe(
+			tap(() => {
+				this.operationPlanRootService.event$.next({
+					type: OperationPlanEventEnum.operationPlanAdd,
+				});
+			}),
+		);
 	}
 
 	public deleteItemsTov(tovIds: number[]) {
-		return this.operationPlanApiService.deleteItemsTov(tovIds);
+		return this.operationPlanApiService.deleteItemsTov(tovIds).pipe(
+			tap(() => {
+				this.operationPlanRootService.event$.next({
+					type: OperationPlanEventEnum.operationPlanDelete,
+				});
+			}),
+		);
 	}
 
 	public getCalcVariants() {
@@ -142,5 +164,9 @@ export class OperationPlanService {
 
 	public orderAnOutfit(params: OrderAnOutfitRequest) {
 		return this.operationPlanApiService.orderAnOutfit(params);
+	}
+
+	public uploadWMS() {
+		return this.operationPlanApiService.uploadWMS();
 	}
 }
