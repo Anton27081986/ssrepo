@@ -1,9 +1,9 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	inject,
+	inject, Injector,
 	input,
-	InputSignal,
+	InputSignal, ViewContainerRef,
 } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
@@ -12,6 +12,7 @@ import {
 	CheckboxComponent,
 	IconComponent,
 	IconType,
+	PopoverTriggerForDirective,
 	SsTableState,
 	TableCellDirective,
 	TdComponent,
@@ -25,6 +26,8 @@ import { HeaderFilterService } from '@app/pages/production-plan/component-and-se
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BehaviorSubject } from 'rxjs';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
+import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
+import {Overlay, OverlayRef} from '@angular/cdk/overlay';
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<
@@ -69,6 +72,7 @@ export const BASE_COLUMN_MAP: Record<
 		TableCellDirective,
 		TrComponent,
 		IconComponent,
+		AddCommentsModalComponent,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
@@ -96,6 +100,14 @@ export class OperationPlanTableTbodyComponent {
 
 	protected openPostponePlanModal(row: OperationPlanItem) {
 		this.popupService.openPostponePlanModal(row.id);
+	}
+
+	public openCreateCommentsModal(row: OperationPlanItem) {
+		this.popupService.openCreateCommentsModal(row.id);
+	}
+
+	public openAddCommentsModal(row: OperationPlanItem) {
+		this.popupService.openAddCommentsModal(row.id);
 	}
 
 	public getCellValue(
