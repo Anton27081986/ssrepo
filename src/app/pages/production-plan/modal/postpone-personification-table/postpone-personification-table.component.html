@@ -61,9 +61,9 @@
 								fieldCtrl
 								required
 								[formControl]="item.productionDateControl"
+                                [min]="item.productionDateControl.value || Now"
 							></ss-lib-datepicker>
 						</ss-lib-form-field>
-
 						<ng-container *ngSwitchDefault>
 							<ss-lib-text
 								[color]="Colors.TextBody2"
