@@ -56,9 +56,8 @@
 		</ss-lib-dropdown-list>
 	</ng-container>
 </ng-template>
-<!--*ngIf="hasCustomFilters()"-->
 <ng-template #rightFiltersRef>
-	<ng-container >
+	<ng-container *ngIf="hasCustomFilters()">
 		<app-dropdown-columns-settings></app-dropdown-columns-settings>
 		<app-filters-trigger-button></app-filters-trigger-button>
 	</ng-container>
