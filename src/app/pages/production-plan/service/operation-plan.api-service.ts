@@ -24,6 +24,7 @@ import {
 	OrderAnOutfit,
 	OrderAnOutfitRequest,
 } from '@app/core/models/production-plan/order-an-outfit-request';
+import { ICommentsItemDto, ISendComment} from '@app/core/models/production-plan/comments';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -99,6 +100,19 @@ export class OperationPlanApiService {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
 			params,
+		);
+	}
+
+	public sendComment(id: number, body: ISendComment): Observable<void> {
+		return this.http.post<void>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
+			body,
+		);
+	}
+
+	public addComment(id: number): Observable<ICommentsItemDto[]> {
+		return this.http.get<ICommentsItemDto[]>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
 		);
 	}
 

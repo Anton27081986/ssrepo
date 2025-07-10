@@ -35,6 +35,19 @@
                                     [icon]="IconType.Plus"
                                     (click)="openPostponePlanModal(row)">
                             </ss-lib-icon>
+                            <ss-lib-icon
+                                    [width]="'24'"
+                                    [height]="'24'"
+                                    [icon]="IconType.Message"
+                                    (click)="openCreateCommentsModal(row)">
+                            </ss-lib-icon>
+                            <ss-lib-icon
+                                    [width]="'24'"
+                                    [height]="'24'"
+                                    [icon]="IconType.Message"
+                                    (click)="openAddCommentsModal(row)">
+                            </ss-lib-icon>
+
                         </div>
                     } @else if (column.id === "optimalBatch" || column.id.startsWith('week') || column.id.startsWith('month')) {
                         <ss-lib-text

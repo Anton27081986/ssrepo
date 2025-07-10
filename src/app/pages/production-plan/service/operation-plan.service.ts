@@ -18,7 +18,6 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import {
 	LinkToModule,
-	UpdateRawMaterialsRequest,
 } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 import { OrderAnOutfitRequest } from '@app/core/models/production-plan/order-an-outfit-request';
@@ -26,6 +25,8 @@ import {
 	OperationPlanEventEnum,
 	OperationPlanRootService,
 } from '@app/pages/production-plan/service/operation-plan.root.service';
+import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
+import {ICommentsItemDto, ISendComment} from '@app/core/models/production-plan/comments';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -57,11 +58,20 @@ export class OperationPlanService {
 		);
 	}
 
+	public sendComment(id: number, body: ISendComment) {
+		return this.operationPlanApiService.sendComment(id, body).subscribe();
+	}
+
+	public addComment(id: number): Observable<ICommentsItemDto[]> {
+		return this.operationPlanApiService.addComment(id);
+	}
+
 	public transferProductionPlan(
 		params: TransferProductionPlanMap[],
 	): Observable<void> {
 		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
 			return {
+				id: item.id,
 				orderId: item.orderId,
 				productionDate:
 					item.productionDateControl.value?.toISOString()!,
@@ -107,6 +117,7 @@ export class OperationPlanService {
 		input: IResponse<TransferProductionPlanFromBackend>,
 	): IResponse<TransferProductionPlanMap> {
 		const mappedItems = input.items.map((item) => ({
+			id: item.id,
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
