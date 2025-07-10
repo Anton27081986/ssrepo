@@ -101,31 +101,45 @@ export class ApproveMaterialComponent implements OnInit {
 
 	protected data: ApproveMaterialData;
 
+	protected readonly ButtonType = ButtonType;
+	protected readonly TextType = TextType;
+	protected readonly JustifyContent = JustifyContent;
+	protected readonly IconPosition = IconPosition;
+	protected readonly Colors = Colors;
+	protected readonly TextWeight = TextWeight;
+
 	constructor() {
 		this.data = this.popup.data;
 	}
 
-	ngOnInit() {
+	ngOnInit(): void {
 		this.startDate.setValue(this.data.dataStart);
-
 		this.startDate.disable();
-
 		this.endDate.setValue(this.data.dataStart);
 	}
 
-	protected close() {
+	protected close(): void {
 		this.popup.close();
 	}
 
-	protected approveMaterial() {
+	private formatDate(date: Date | null): string {
+		if (!date) return '';
+		const year = date.getFullYear();
+		const month = (date.getMonth() + 1).toString().padStart(2, '0');
+		const day = date.getDate().toString().padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	}
+
+	protected approveMaterial(): void {
 		const city = this.city();
-		console.log(this.startDate.value);
+
 		if (city) {
 			const params: ApproveMaterialRequest = {
-				dateFrom: this.startDate.value?.toISOString()!,
-				dateTo: this.endDate.value?.toISOString()!,
+				dateFrom: this.formatDate(this.startDate.value),
+				dateTo: this.formatDate(this.endDate.value),
 				cityId: city.id,
 			};
+
 			this.service
 				.approveMaterials(params)
 				.pipe(untilDestroyed(this))
@@ -139,11 +153,4 @@ export class ApproveMaterialComponent implements OnInit {
 			});
 		}
 	}
-
-	protected readonly ButtonType = ButtonType;
-	protected readonly TextType = TextType;
-	protected readonly JustifyContent = JustifyContent;
-	protected readonly IconPosition = IconPosition;
-	protected readonly Colors = Colors;
-	protected readonly TextWeight = TextWeight;
 }

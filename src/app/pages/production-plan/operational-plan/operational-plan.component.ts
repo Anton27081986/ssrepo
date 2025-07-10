@@ -35,7 +35,6 @@ import {
 	scan,
 	switchMap,
 	tap,
-	combineLatest,
 	NEVER,
 } from 'rxjs';
 import { ProductionPlanResponse } from '@app/core/utils/response';
@@ -90,7 +89,7 @@ export class OperationalPlanComponent {
 	private readonly headerFilterService: HeaderFilterService =
 		inject(HeaderFilterService);
 
-	public limit = 20;
+	public limit = 10;
 
 	public offset$ = new BehaviorSubject<number>(0);
 	public itemTotal$ = new BehaviorSubject<number>(0);
@@ -171,7 +170,6 @@ export class OperationalPlanComponent {
 		inject(OperationPlanState);
 
 	constructor() {
-		this.limit = 2;
 		this.headerFilterService.init(operationPlanFilter);
 		toSignal(
 			this.weeks$.pipe(

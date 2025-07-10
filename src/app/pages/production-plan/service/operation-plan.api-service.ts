@@ -141,7 +141,7 @@ export class OperationPlanApiService {
 
 	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities?ids=58&ids=6`,
 		);
 	}
 
