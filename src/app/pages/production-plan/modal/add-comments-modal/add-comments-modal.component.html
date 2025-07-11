@@ -3,8 +3,8 @@
 	class="modal-content add-comments"
 >
 	<div
-		class="comments-list"
 		*ngIf="comments.length; else noComments"
+		class="comments-list"
 	>
 		<div
 			*ngFor="let comment of comments"
@@ -45,8 +45,8 @@
 					>
 				</div>
 				<ss-lib-text
-					[type]="TextType.BodySm"
 					class="comment-item__text"
+					[type]="TextType.BodySm"
 				>
 					{{ comment.note }}
 				</ss-lib-text>
@@ -62,16 +62,16 @@
 		[class.multi-line]="isMultiLine"
 	>
 		<ss-lib-avatar
+			*ngIf="currentUser"
 			class="comment-avatar"
 			[src]="currentUser?.avatarUrl || ''"
-			*ngIf="currentUser"
 		></ss-lib-avatar>
 		<div
 			#editable
 			class="comment-input"
 			contenteditable="true"
-			(input)="onInput()"
 			[attr.data-placeholder]="'Добавьте комментарий…'"
+			(input)="onInput()"
 		></div>
 		<ss-lib-button
 			class="comment-send-btn"

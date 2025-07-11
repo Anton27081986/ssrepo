@@ -16,9 +16,7 @@ import {
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import {
-	LinkToModule,
-} from '@app/core/models/production-plan/update-raw-materials-request';
+import { LinkToModule } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 import { OrderAnOutfitRequest } from '@app/core/models/production-plan/order-an-outfit-request';
 import {
@@ -73,14 +71,23 @@ export class OperationPlanService {
 		params: TransferProductionPlanMap[],
 	): Observable<void> {
 		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
+			const date = item.productionDateControl.value;
+			const productionDate = date
+				? [
+						date.getFullYear(),
+						String(date.getMonth() + 1).padStart(2, '0'),
+						String(date.getDate()).padStart(2, '0'),
+					].join('-')
+				: '';
+
 			return {
 				id: item.id,
 				orderId: item.orderId,
-				productionDate:
-					item.productionDateControl.value?.toISOString()!,
 				quantity: item.countForPostpone.value!,
+				productionDate,
 			};
 		});
+
 		return this.operationPlanApiService.transferProductionPlan(mapParams);
 	}
 

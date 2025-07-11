@@ -57,9 +57,10 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public getTransferProductionPlan(id: number) {
+	public getTransferProductionPlan(productionPlanDayId: number) {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
+			{ params: { productionPlanDayId } },
 		);
 	}
 

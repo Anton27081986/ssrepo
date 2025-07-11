@@ -20,6 +20,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
+import {NgIf} from "@angular/common";
+import {OperationPlanState} from "@app/pages/production-plan/service/operation-plan.state";
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<
@@ -65,6 +67,7 @@ export const BASE_COLUMN_MAP: Record<
 		TrComponent,
 		IconComponent,
 		AddCommentsModalComponent,
+		NgIf,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
@@ -82,11 +85,14 @@ export class OperationPlanTableTbodyComponent {
 	private readonly popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService,
 	);
+	protected readonly operationPlanState = inject(OperationPlanState);
 
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
+	protected readonly IconType = IconType;
+
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
@@ -94,9 +100,9 @@ export class OperationPlanTableTbodyComponent {
 		return this.tableStateService.getRowCheckboxControl(index);
 	}
 
-	protected openPostponePlanModal(row: OperationPlanItem): void {
-		this.popupService.openPostponePlanModal(row.id);
-	}
+	// protected openPostponePlanModal(row: OperationPlanItem): void {
+	// 	this.popupService.openPostponePlanModal(row.id);
+	// }
 
 	protected editPlanFact(
 		event: Event,
@@ -160,12 +166,20 @@ export class OperationPlanTableTbodyComponent {
 		}
 	}
 
-	public openCreateCommentsModal(row: OperationPlanItem) {
-		this.popupService.openCreateCommentsModal(row.id);
+	// public openCreateCommentsModal(row: OperationPlanItem) {
+	// 	this.popupService.openCreateCommentsModal(row.id);
+	// }
+	//
+	// public openAddCommentsModal(row: OperationPlanItem) {
+	// 	this.popupService.openAddCommentsModal(row.id);
+	protected openPostponePlanModal(row: OperationPlanItem) {
+		this.popupService.openPostponePlanModal(58);
 	}
 
-	public openAddCommentsModal(row: OperationPlanItem) {
-		this.popupService.openAddCommentsModal(row.id);
+	public openCommentsModal(row: OperationPlanItem) {
+		row.isComment
+			? this.popupService.openAddCommentsModal(row.id)
+			: this.popupService.openCreateCommentsModal(row.id);
 	}
 
 	public getCellValue(
@@ -250,5 +264,4 @@ export class OperationPlanTableTbodyComponent {
 		return null;
 	}
 
-	protected readonly IconType = IconType;
 }

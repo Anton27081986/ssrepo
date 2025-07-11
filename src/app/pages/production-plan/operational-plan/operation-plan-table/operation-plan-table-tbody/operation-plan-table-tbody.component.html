@@ -18,7 +18,7 @@
                             <ss-lib-icon
                                 [width]="'24'"
                                 [height]="'24'"
-                                [icon]="IconType.Plus"
+                                [icon]="IconType.CornerUpRight"
                                 (click)="openPostponePlanModal(row)">
                             </ss-lib-icon>
                             <ss-lib-text
@@ -29,23 +29,17 @@
                             >
                                 {{ getCellValue(row, column.id) }}
                             </ss-lib-text>
-                            <ss-lib-icon
+                            <ss-lib-icon *ngIf="operationPlanState.getHasPermissionEdit"
                                     [width]="'24'"
                                     [height]="'24'"
-                                    [icon]="IconType.Plus"
+                                    [icon]="IconType.CornerUpRight"
                                     (click)="openPostponePlanModal(row)">
                             </ss-lib-icon>
-                            <ss-lib-icon
-                                    [width]="'24'"
-                                    [height]="'24'"
+                            <ss-lib-icon *ngIf="operationPlanState.getHasPermissionEdit"
+                                    [width]="'16'"
+                                    [height]="'16'"
                                     [icon]="IconType.Message"
-                                    (click)="openCreateCommentsModal(row)">
-                            </ss-lib-icon>
-                            <ss-lib-icon
-                                    [width]="'24'"
-                                    [height]="'24'"
-                                    [icon]="IconType.Message"
-                                    (click)="openAddCommentsModal(row)">
+                                    (click)="openCommentsModal(row)">
                             </ss-lib-icon>
 
                         </div>
