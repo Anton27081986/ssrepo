@@ -27,16 +27,19 @@ import {
 } from '@app/pages/production-plan/service/operation-plan.root.service';
 import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
 import {ICommentsItemDto, ISendComment} from '@app/core/models/production-plan/comments';
+import {
+    CreatePlanFactRequest,
+    UpdatePlanFactRequest,
+} from '@app/core/models/production-plan/plan-fact-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
-	private operationPlanApiService: OperationPlanApiService = inject(
+	private readonly operationPlanApiService: OperationPlanApiService = inject(
 		OperationPlanApiService,
 	);
 
-	private operationPlanRootService: OperationPlanRootService = inject(
-		OperationPlanRootService,
-	);
+	private readonly operationPlanRootService: OperationPlanRootService =
+		inject(OperationPlanRootService);
 
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
@@ -175,6 +178,20 @@ export class OperationPlanService {
 
 	public orderAnOutfit(params: OrderAnOutfitRequest) {
 		return this.operationPlanApiService.orderAnOutfit(params);
+	}
+
+	public setPlanFact(
+		rowId: number,
+		params: CreatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.operationPlanApiService.setPlanFact(rowId, params);
+	}
+
+	public updatePlanFact(
+		rowId: number,
+		params: UpdatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.operationPlanApiService.updatePlanFact(rowId, params);
 	}
 
 	public uploadWMS() {

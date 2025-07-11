@@ -24,6 +24,10 @@ import {
 	OrderAnOutfit,
 	OrderAnOutfitRequest,
 } from '@app/core/models/production-plan/order-an-outfit-request';
+import {
+	CreatePlanFactRequest,
+	UpdatePlanFactRequest
+} from '@app/core/models/production-plan/plan-fact-request';
 import { ICommentsItemDto, ISendComment} from '@app/core/models/production-plan/comments';
 
 @Injectable({ providedIn: 'root' })
@@ -174,6 +178,26 @@ export class OperationPlanApiService {
 		return this.http.post<OrderAnOutfit>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/OrderProduction`,
 			params,
+		);
+	}
+
+	public setPlanFact(
+		rowId: number,
+		params: CreatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.http.post<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
+			{ ...params },
+		);
+	}
+
+	public updatePlanFact(
+		rowId: number,
+		params: UpdatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.http.patch<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
+			{ ...params },
 		);
 	}
 
