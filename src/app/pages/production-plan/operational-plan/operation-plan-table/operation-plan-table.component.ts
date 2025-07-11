@@ -52,7 +52,7 @@ import {
 	OrderAnOutfit,
 	OrderAnOutfitRequest,
 } from '@app/core/models/production-plan/order-an-outfit-request';
-import { NgFor, NgIf, AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import { NgFor, NgIf, DatePipe } from '@angular/common';
 
 @Component({
 	selector: 'app-operation-plan-table',

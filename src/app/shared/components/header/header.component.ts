@@ -1,6 +1,9 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	input,
+	Input,
+	InputSignal,
 	OnInit,
 	Signal,
 } from '@angular/core';
@@ -56,6 +59,8 @@ export class HeaderComponent implements OnInit {
 	public listMenu$?: Observable<IMenuItemDto[] | null>;
 	public userProfile$?: Observable<IUserProfile | null>;
 	public profilePopup$?: Observable<boolean | null>;
+
+	public sticky: InputSignal<boolean> = input(true);
 
 	protected readonly AppRoutes = AppRoutes;
 	public route: string | undefined;

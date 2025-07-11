@@ -2,3 +2,9 @@
   min-height: 100vh;
   background-color: var(--surface-page);
 }
+
+.outlet {
+  overflow: auto;
+  height: 100vh;
+  padding-bottom: 70px;
+}

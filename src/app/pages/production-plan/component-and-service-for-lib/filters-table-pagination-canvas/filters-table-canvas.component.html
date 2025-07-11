@@ -8,7 +8,11 @@
 			<ng-container *ngTemplateOutlet="rightFiltersRef()"></ng-container>
 		</div>
 	</div>
-	<div *ngIf="checkActiveFilter" class="ss-lib-table-canvas__selected">
+	<div
+		*ngIf="checkActiveFilter"
+		class="ss-lib-table-canvas__selected"
+	>
+		<ss-lib-divider></ss-lib-divider>
 		<ss-lib-filter-menu></ss-lib-filter-menu>
 	</div>
 	<div class="ss-lib-table-canvas__table">
@@ -16,7 +20,7 @@
 			<ng-container *ngTemplateOutlet="tableRef()"></ng-container>
 		</div>
 	</div>
-	<div  class="ss-lib-table-canvas__pagination">
+	<div class="ss-lib-table-canvas__pagination">
 		<ng-container *ngTemplateOutlet="paginationRef()"></ng-container>
 	</div>
 </div>
