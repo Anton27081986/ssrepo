@@ -57,15 +57,24 @@
                         >
                             {{ getCellValue(row, column.id) }}
                         </ss-lib-text>
+                    } @else if (column.id.startsWith('planQuantity') || column.id.startsWith('factQuantity')) {
+                        <input
+                                #quantityInput
+                                class="quantity-input"
+                                type="number"
+                                [value]="getCellValue(row, column.id)"
+                                (focusout)="editPlanFact($event, row, column.id);"
+                                (keyup.enter)="quantityInput.blur()"
+                        >
+
                     } @else {
                         <ss-lib-text
                                 [type]="TextType.BodySm"
                                 [weight]="TextWeight.Regular"
-                                [align]="Align.Center"
+                                [align]="Align.Start"
                         >
                             {{ getCellValue(row, column.id) }}
                         </ss-lib-text>
-
                     }
 				</td>
 			}
