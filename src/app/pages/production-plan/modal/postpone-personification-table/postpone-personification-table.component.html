@@ -47,7 +47,7 @@
                                 [size]="ExtraSize.md"
 								[formControl]="item.countForPostpone"
 								[max]="item.quantity"
-								[min]="0"
+								[min]="1"
 								[type]="InputType.Number"
 							></ss-lib-input>
 						</ss-lib-form-field>
@@ -56,6 +56,7 @@
 							*ngSwitchCase="'productionDateControl'"
 							fieldCtrl
 							[showValidationFieldIcon]="true"
+                            [errorText]="'Для переноса необходимо выбрать дату'"
 						>
 							<ss-lib-datepicker
 								fieldCtrl

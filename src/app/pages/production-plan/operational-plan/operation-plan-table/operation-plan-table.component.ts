@@ -85,31 +85,22 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 @UntilDestroy()
 export class OperationPlanTableComponent {
 	private readonly tableStateService = inject(SsTableState);
-
 	private readonly operationPlanPopup = inject(OperationPlanPopupService);
-
 	private readonly operationPlanService = inject(OperationPlanService);
-
 	protected readonly operationPlanState = inject(OperationPlanState);
 
 	public planItems: InputSignal<OperationPlanItem[]> = input.required();
-
 	public days: InputSignal<IDay[]> = input.required();
-
 	public total: InputSignal<number> = input.required();
-
 	public totalItems: InputSignal<number> = input.required();
 
 	public readonly visibleColumnsIds =
 		this.tableStateService.visibleColumnsIds;
-
+	public readonly data = this.tableStateService.data;
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
 
 	public readonly masterCheckboxCtrl =
 		this.tableStateService.getMasterCheckboxCtrl();
-
-	public readonly data = this.tableStateService.data;
-
 	public readonly rowCheckboxes = this.tableStateService.getRowCheckboxes();
 
 	protected readonly Colors = Colors;
