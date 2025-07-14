@@ -7,7 +7,6 @@ import {
 	ChangeDetectionStrategy,
 	inject,
 	ChangeDetectorRef,
-	HostListener,
 	Input,
 } from '@angular/core';
 import {
@@ -15,12 +14,12 @@ import {
 	ButtonType,
 	ButtonComponent,
 	IconType,
-	ModalRef,
 	TextComponent,
 	TextType,
 	TextWeight,
 	Colors,
 	PopoverTriggerForDirective,
+	DropdownListComponent,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { IUserProfile } from '@app/core/models/user-profile';
@@ -28,6 +27,7 @@ import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { switchMap, tap } from 'rxjs';
 
 export interface AddCommentsModalData {
 	id: number;
@@ -68,49 +68,37 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	public isMultiLine = false;
 	public currentUser: IUserProfile | null = null;
 	private singleLineHeight = 0;
-	private outsideClickEnabled = false;
 
-	private readonly popup = inject(ModalRef<AddCommentsModalData>);
 	private readonly service = inject(OperationPlanService);
 	private readonly userService = inject(UserFacadeService);
 	private readonly cdr = inject(ChangeDetectorRef);
+	private readonly dropdownList: DropdownListComponent = inject(
+		DropdownListComponent,
+	);
 
 	ngOnInit() {
 		this.userService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
-			.subscribe((u) => (this.currentUser = u));
+			.subscribe((user) => (this.currentUser = user));
 
 		this.service
-			.addComment(this.popup.data.id)
+			.addComment(this.data)
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
 				this.comments = list;
 				this.cdr.markForCheck();
 			});
+
+		this.dropdownList.closed.subscribe(() => {
+			this.resetInput();
+		});
 	}
 
 	ngAfterViewInit() {
 		this.autoHeight();
 		this.singleLineHeight = this.editableDiv.nativeElement.scrollHeight;
 		this.updateMultiLineFlag();
-
-		setTimeout(() => {
-			this.outsideClickEnabled = true;
-		}, 0);
-	}
-
-	@HostListener('document:click', ['$event'])
-	onDocumentClick(event: MouseEvent) {
-		if (!this.outsideClickEnabled) {
-			return;
-		}
-		if (
-			this.modalContent &&
-			!this.modalContent.nativeElement.contains(event.target as Node)
-		) {
-			this.popup.close();
-		}
 	}
 
 	onInput(): void {
@@ -120,30 +108,42 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	}
 
 	private updateMultiLineFlag(): void {
-		const h = this.editableDiv.nativeElement.scrollHeight;
-		this.isMultiLine = h > this.singleLineHeight + 1;
+		const currentHeight = this.editableDiv.nativeElement.scrollHeight;
+		this.isMultiLine = currentHeight > this.singleLineHeight + 1;
 	}
 
 	private autoHeight(): void {
-		const el = this.editableDiv.nativeElement;
+		const element = this.editableDiv.nativeElement;
 
-		el.style.height = 'auto';
-		el.style.height = `${el.scrollHeight}px`;
+		element.style.height = 'auto';
+		element.style.height = `${element.scrollHeight}px`;
+	}
+
+	private resetInput(): void {
+		this.comment = '';
+		this.editableDiv.nativeElement.innerText = '';
+		this.autoHeight();
+		this.isMultiLine = false;
+		this.cdr.markForCheck();
 	}
 
 	public sendComment(): void {
 		const text = this.editableDiv.nativeElement.innerText.trim();
-
 		if (!text) return;
 
 		this.comment = text;
-		this.service.sendComment(this.popup.data.id, {
-			note: this.comment,
-		});
-		this.popup.close();
-	}
 
-	// public close() {
-	// 	this.popoverHost.close();     // закрыть поповер
-	// }
+		this.service
+			.sendComment(this.data, { note: this.comment })
+			.pipe(
+				switchMap(() => this.service.addComment(this.data)),
+				tap((list) => {
+					this.comments = list;
+					this.cdr.markForCheck();
+					this.dropdownList.closed.emit();
+				}),
+				untilDestroyed(this),
+			)
+			.subscribe();
+	}
 }

@@ -25,12 +25,41 @@
 							</ss-lib-text>
 							<ss-lib-icon
 								*ngIf="operationPlanState.getHasPermissionEdit"
-								[width]="'16'"
-								[height]="'16'"
-								[icon]="IconType.Message"
-								(click)="openCommentsModal(row)"
+								[width]="'24'"
+								[height]="'24'"
+								[icon]="IconType.CornerUpRight"
+								(click)="openPostponePlanModal(row)"
 							>
 							</ss-lib-icon>
+							<ss-lib-button
+								[icon]="IconType.Message"
+								[size]="ExtraSize.xxs"
+								[type]="ButtonType.Secondary"
+								[popoverTriggerFor]="
+									row.isComment
+										? addCommentsModal
+										: createCommentsModal
+								"
+							>
+							</ss-lib-button>
+							<ss-lib-dropdown-list
+								#createCommentsModal
+								[height]="'100%'"
+								[width]="'449px'"
+							>
+								<app-create-comments-modal
+									[data]="row.id"
+								></app-create-comments-modal>
+							</ss-lib-dropdown-list>
+							<ss-lib-dropdown-list
+								#addCommentsModal
+								[height]="'100%'"
+								[width]="'449px'"
+							>
+								<app-add-comments-modal
+									[data]="row.id"
+								></app-add-comments-modal>
+							</ss-lib-dropdown-list>
 						</div>
 					} @else if (
 						column.id === 'optimalBatch' ||

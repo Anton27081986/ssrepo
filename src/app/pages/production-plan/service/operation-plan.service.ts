@@ -59,7 +59,7 @@ export class OperationPlanService {
 	}
 
 	public sendComment(id: number, body: ISendComment) {
-		return this.operationPlanApiService.sendComment(id, body).subscribe();
+		return this.operationPlanApiService.sendComment(id, body);
 	}
 
 	public addComment(id: number): Observable<ICommentsItemDto[]> {
