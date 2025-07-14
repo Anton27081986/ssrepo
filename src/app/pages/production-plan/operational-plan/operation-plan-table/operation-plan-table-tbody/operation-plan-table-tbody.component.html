@@ -23,20 +23,12 @@
 							>
 								{{ getCellValue(row, column.id) }}
 							</ss-lib-text>
-							<ss-lib-icon
-								*ngIf="operationPlanState.getHasPermissionEdit"
-								[width]="'24'"
-								[height]="'24'"
-								[icon]="IconType.CornerUpRight"
-								(click)="openPostponePlanModal(row)"
-							>
-							</ss-lib-icon>
 							<ss-lib-button
 								[icon]="IconType.Message"
 								[size]="ExtraSize.xxs"
 								[type]="ButtonType.Secondary"
 								[popoverTriggerFor]="
-									row.isComment
+									!row.isComment
 										? addCommentsModal
 										: createCommentsModal
 								"
@@ -85,7 +77,10 @@
 								[size]="ExtraSize.xxs"
 								[iconPosition]="IconPosition.OnlyIcon"
 								[icon]="IconType.CornerUpRight"
-								(click)="openPostponePlanModal(row)"
+								(click)="
+									openPostponePlanModal(row);
+									$event.stopPropagation()
+								"
 							></ss-lib-button>
 						}
 						<input

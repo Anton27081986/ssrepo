@@ -34,14 +34,14 @@ export interface PlanDays {
 
 export interface OperationPlanRequest {
 	weekId: number;
-	planEconomicUserIds: number;
-	productManagerUserIds: number;
-	warehouseIds: number;
-	productionSectionIds: number;
-	tovIds: number;
-	cityIds: number;
-	tovCategoryIds: number;
-	productionFactoryIds: number;
+	planEconomicUserIds: number[];
+	productManagerUserIds: number[];
+	warehouseIds: number[];
+	productionSectionIds: number[];
+	tovIds: number[];
+	cityIds: number[];
+	tovCategoryIds: number[];
+	productionFactoryIds: number[];
 }
 
 export interface Pagination {

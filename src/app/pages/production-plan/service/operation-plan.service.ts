@@ -209,7 +209,7 @@ export class OperationPlanService {
 	public getPlanInfo(
 		weekId: number,
 		date: string,
-		productionSectionIds: number,
+		productionSectionIds: number[],
 	): Observable<{ planDayTotalQuantity: number }> {
 		return this.operationPlanApiService.getPlanInfo(
 			weekId,

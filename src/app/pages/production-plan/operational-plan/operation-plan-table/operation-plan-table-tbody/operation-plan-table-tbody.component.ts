@@ -9,10 +9,7 @@ import {
 	ButtonComponent,
 	ButtonType,
 	CheckboxComponent,
-	ExtraSize,
-	IconComponent,
 	IconPosition,
-	IconType,
 	DropdownListComponent,
 	ExtraSize,
 	IconComponent,
@@ -113,8 +110,6 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
 	// 	this.popupService.openPostponePlanModal(row.id);
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly ButtonType = ButtonType;
 	protected readonly ExtraSize = ExtraSize;
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}

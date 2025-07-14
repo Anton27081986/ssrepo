@@ -232,17 +232,15 @@ export class OperationPlanApiService {
 	public getPlanInfo(
 		weekId: number,
 		date: string,
-		productionSectionIds: number,
-	): Observable<{planDayTotalQuantity: number}> {
+		productionSectionIds: number[],
+	): Observable<{ planDayTotalQuantity: number }> {
 		let params = new HttpParams();
 
 		params = params.set('WeekId', weekId.toString());
 		params = params.set('Date', date);
-
-		const productSections = productionSectionIds.toString();
-
-		params = params.set('ProductionSectionsIds', productSections);
-
+		productionSectionIds.forEach((val) => {
+			params.append('ProductionSectionsIds', val);
+		});
 		return this.http.get<{ planDayTotalQuantity: number }>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TotalPlans`,
 			{ params },

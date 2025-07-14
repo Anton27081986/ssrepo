@@ -21,13 +21,13 @@
 	&__message {
 		display: flex;
 		flex-wrap: wrap;
+		flex-grow: 1;
 	}
 
 	ss-icon {
 		cursor: pointer;
-		position: absolute;
-		right: 12px;
-		top: 12px;
+		position: relative;
+		top: 0;
 	}
 }
 

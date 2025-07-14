@@ -1,5 +1,6 @@
 import {
-	ChangeDetectionStrategy, ChangeDetectorRef,
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
 	effect,
 	inject,
@@ -99,7 +100,7 @@ export class OperationPlanTableComponent {
 	public planTooltipText =
 		'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
 
-	public productionSectionIds: number | null = null;
+	public productionSectionIds: number[] | null = null;
 
 	public readonly visibleColumnsIds =
 		this.tableStateService.visibleColumnsIds;

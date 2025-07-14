@@ -54,6 +54,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { LoadPaginationComponent } from '@app/pages/production-plan/component-and-service-for-lib/load-pagination/load-pagination.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { OperationPlanRootService } from '@app/pages/production-plan/service/operation-plan.root.service';
+import { NoticeComponent } from '@app/shared/components/notice/notice.component';
 
 @Component({
 	selector: 'app-operation-plan',
@@ -74,6 +75,7 @@ import { OperationPlanRootService } from '@app/pages/production-plan/service/ope
 		DropdownColumnsSettingsComponent,
 		OperationPlanEmptyStateComponent,
 		LoadPaginationComponent,
+		NoticeComponent,
 	],
 	templateUrl: './operational-plan.component.html',
 	styleUrl: './operational-plan.component.scss',
