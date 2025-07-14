@@ -117,6 +117,7 @@ export class ProductionPlanComponent {
 	protected downloadExel() {
 		const filters = this.operationPlanState.filterValueStore$.value!;
 		this.productionPlanService.downloadExel(filters).subscribe((blob) => {
+			console.log(typeof blob);
 			const fileURL = window.URL.createObjectURL(blob);
 			const link = document.createElement('a');
 

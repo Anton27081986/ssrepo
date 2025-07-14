@@ -1,17 +1,19 @@
-<!--[style.display]="popupVisible ? 'flex' : 'none'"-->
 <ss-lib-indicator-checklist-popup
 	[count]="getSelectedElemCount"
-	[total]="total()"
-	(closed)="popupCloseEmit()">
+	[total]="totalItems()"
+	(closed)="popupCloseEmit()"
+>
 	<ss-lib-button
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
 		[popoverTriggerFor]="orderAnOutfitList"
-		[text]="'Заказ наряд'">
+		[text]="'Заказ наряд'"
+	>
 		<ss-lib-icon
 			[width]="'20'"
 			[height]="'20'"
-			[icon]="IconType.ChevronDown">
+			[icon]="IconType.ChevronDown"
+		>
 		</ss-lib-icon>
 	</ss-lib-button>
 	<ss-lib-button
@@ -20,11 +22,13 @@
 		[type]="ButtonType.Ghost"
 		[popoverTriggerFor]="calcProd"
 		*ngIf="operationPlanState.getHasPermissionCalcRowMaterials"
-		[text]="'Рассчитать сырье'">
+		[text]="'Рассчитать сырье'"
+	>
 		<ss-lib-icon
 			[width]="'20'"
 			[height]="'20'"
-			[icon]="IconType.ChevronDown">
+			[icon]="IconType.ChevronDown"
+		>
 		</ss-lib-icon>
 	</ss-lib-button>
 	<ss-lib-button
@@ -33,26 +37,34 @@
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
 		[text]="'Удалить'"
-		(click)="deleteItemsTov()">
+		(click)="deleteItemsTov()"
+	>
 	</ss-lib-button>
 </ss-lib-indicator-checklist-popup>
 
-<ss-lib-dropdown-list #calcProd [width]="'155px'">
+<ss-lib-dropdown-list
+	#calcProd
+	[width]="'155px'"
+>
 	<ss-lib-dropdown-item
 		*ngFor="let day of days()"
-		(click)="openCalculationOfRawMaterialsForCheckList(day.day)">
-		{{ day.day | date:'dd.MM' }}
+		(click)="openCalculationOfRawMaterialsForCheckList(day.day)"
+	>
+		{{ day.day | date: 'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
-<ss-lib-dropdown-list #orderAnOutfitList [width]="'155px'">
+<ss-lib-dropdown-list
+	#orderAnOutfitList
+	[width]="'155px'"
+>
 	<ss-lib-dropdown-item
 		*ngFor="let day of days()"
-		(click)="orderAnOutfitForCheckList(day)">
-		{{ day.day | date:'dd.MM' }}
+		(click)="orderAnOutfitForCheckList(day)"
+	>
+		{{ day.day | date: 'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
-
 
 <table
 	ssTable
@@ -62,46 +74,28 @@
 	[columns]="visibleColumnsIds()"
 >
 	<thead>
-	<tr ssThGroup>
-		@for (column of visibleColumns(); track column) {
-			@if (!isSubColumn(column.id)) {
-				<th
-					*ssHead="column.id"
-					ssTh
-					[attr.rowspan]="
-								!column.subColumns && !column.subGroups
-									? 2
-									: null
-							"
-					[attr.colspan]="
-								column.subColumns
-									? column.subColumns.length
-									: null
-							"
-					[resizable]="true"
-				>
-					@if (column.id === 'tov') {
-						<div class="td-column">
-							<ss-lib-checkbox
-								[formControl]="masterCheckboxCtrl"
-								[indeterminate]="
-                                            getMasterCheckboxIndeterminate()
-                                        "
-							/>
-							<ss-lib-text
-								[color]="Colors.TextBody2"
-								[weight]="TextWeight.Semibold"
-								[type]="TextType.BodyXs"
-								[align]="Align.Center"
-								[isEllipsis]="true"
-							>
-								{{ formatColumnName(column.name) }}
-							</ss-lib-text>
-						</div>
-					} @else if (column.id.startsWith('week-')) {
-
-						<div class="td-column item-day">
-							<div class="item-day-text">
+		<tr ssThGroup>
+			@for (column of visibleColumns(); track column) {
+				@if (!isSubColumn(column.id)) {
+					<th
+						*ssHead="column.id"
+						ssTh
+						[attr.rowspan]="
+							!column.subColumns && !column.subGroups ? 2 : null
+						"
+						[attr.colspan]="
+							column.subColumns ? column.subColumns.length : null
+						"
+						[resizable]="true"
+					>
+						@if (column.id === 'tov') {
+							<div class="td-column">
+								<ss-lib-checkbox
+									[formControl]="masterCheckboxCtrl"
+									[indeterminate]="
+										getMasterCheckboxIndeterminate()
+									"
+								/>
 								<ss-lib-text
 									[color]="Colors.TextBody2"
 									[weight]="TextWeight.Semibold"
@@ -111,74 +105,114 @@
 								>
 									{{ formatColumnName(column.name) }}
 								</ss-lib-text>
-
-								<ss-lib-hint [type]="HintType.Success" [icon]="IconType.Alert"></ss-lib-hint>
 							</div>
-							<div class="item-day-utility">
-								<ss-lib-utility-button [popoverTriggerFor]="listFunc"
-													   [icon]="IconType.KebabMenuDots"></ss-lib-utility-button>
-								<ss-lib-dropdown-list #listFunc>
-									<ss-lib-dropdown-item
-										(click)="orderAnOutfit(column.id)"
-										[icon]="IconType.FilePreviewSearch"
-										[label]="'Заказ наряд'"></ss-lib-dropdown-item>
-									<ss-lib-dropdown-item [icon]="IconType.FileUpload02"
-														  [label]="'Выгрузить в WMS'" (click)="uploadWMS()"></ss-lib-dropdown-item>
-									<ss-lib-dropdown-item *ngIf="operationPlanState.getHasPermissionApproveMaterials"
-														  [icon]="IconType.FileCheck"
-														  [label]="'Согласовать сырье'"
-														  (click)="openApproveMaterials(column.id)"></ss-lib-dropdown-item>
-									<ss-lib-dropdown-item *ngIf="operationPlanState.getHasPermissionCalcRowMaterials"
-														  [icon]="IconType.FileSearch02"
-														  [label]="'Рассчитать сырье'"
-														  (click)="openCalculationOfRawMaterialsForColumn(column.id)"></ss-lib-dropdown-item>
-								</ss-lib-dropdown-list>
-							</div>
-						</div>
-					} @else {
-						<div class="td-column">
-							<ss-lib-text
-								[color]="Colors.TextBody2"
-								[weight]="TextWeight.Semibold"
-								[type]="TextType.BodyXs"
-								[align]="Align.Center"
-								[isEllipsis]="true"
-							>
-								{{ formatColumnName(column.name) }}
-							</ss-lib-text>
-						</div>
+						} @else if (column.id.startsWith('week-')) {
+							<div class="td-column item-day">
+								<div class="item-day-text">
+									<ss-lib-text
+										[color]="Colors.TextBody2"
+										[weight]="TextWeight.Semibold"
+										[type]="TextType.BodyXs"
+										[align]="Align.Center"
+										[isEllipsis]="true"
+									>
+										{{ formatColumnName(column.name) }}
+									</ss-lib-text>
 
-					}
-				</th>
-			}
-		}
-	</tr>
-	<tr ssThGroup>
-		@for (column of visibleColumns(); track column) {
-			@if (column.subColumns) {
-				@for (subColumnId of column.subColumns;
-					track subColumnId) {
-					<th
-						*ssHead="subColumnId"
-						ssTh
-					>
-						<div class="td-subcolumn"
-							 [style.justify-content]="subColumnId.startsWith('planQuantity') ? 'flex-start' : 'flex-end'">
-							<ss-lib-text
-								[color]="Colors.TextBody2"
-								[weight]="TextWeight.Semibold"
-								[type]="TextType.BodyXs"
-								[align]="Align.Center"
-								[isEllipsis]="true"
-							>
-								{{ getSubColumnName(subColumnId) }}
-							</ss-lib-text>
-						</div>
+									<ss-lib-hint
+										[type]="HintType.Success"
+										[icon]="IconType.Alert"
+									></ss-lib-hint>
+								</div>
+								<div class="item-day-utility">
+									<ss-lib-utility-button
+										[popoverTriggerFor]="listFunc"
+										[icon]="IconType.KebabMenuDots"
+									></ss-lib-utility-button>
+									<ss-lib-dropdown-list #listFunc>
+										<ss-lib-dropdown-item
+											(click)="orderAnOutfit(column.id)"
+											[icon]="IconType.FilePreviewSearch"
+											[label]="'Заказ наряд'"
+										></ss-lib-dropdown-item>
+										<ss-lib-dropdown-item
+											[icon]="IconType.FileUpload02"
+											[label]="'Выгрузить в WMS'"
+											(click)="uploadWMS()"
+										></ss-lib-dropdown-item>
+										<ss-lib-dropdown-item
+											*ngIf="
+												operationPlanState.getHasPermissionApproveMaterials
+											"
+											[icon]="IconType.FileCheck"
+											[label]="'Согласовать сырье'"
+											(click)="
+												openApproveMaterials(column.id)
+											"
+										></ss-lib-dropdown-item>
+										<ss-lib-dropdown-item
+											*ngIf="
+												operationPlanState.getHasPermissionCalcRowMaterials
+											"
+											[icon]="IconType.FileSearch02"
+											[label]="'Рассчитать сырье'"
+											(click)="
+												openCalculationOfRawMaterialsForColumn(
+													column.id
+												)
+											"
+										></ss-lib-dropdown-item>
+									</ss-lib-dropdown-list>
+								</div>
+							</div>
+						} @else {
+							<div class="td-column">
+								<ss-lib-text
+									[color]="Colors.TextBody2"
+									[weight]="TextWeight.Semibold"
+									[type]="TextType.BodyXs"
+									[align]="Align.Center"
+									[isEllipsis]="true"
+								>
+									{{ formatColumnName(column.name) }}
+								</ss-lib-text>
+							</div>
+						}
 					</th>
 				}
 			}
-		}
-	</tr>
+		</tr>
+		<tr ssThGroup>
+			@for (column of visibleColumns(); track column) {
+				@if (column.subColumns) {
+					@for (subColumnId of column.subColumns; track subColumnId) {
+						<th
+							*ssHead="subColumnId"
+							ssTh
+						>
+							<div
+								class="td-subcolumn"
+								[style.justify-content]="
+									subColumnId.startsWith('planQuantity')
+										? 'flex-start'
+										: 'flex-end'
+								"
+							>
+								<ss-lib-text
+									[color]="Colors.TextBody2"
+									[weight]="TextWeight.Semibold"
+									[type]="TextType.BodyXs"
+									[align]="Align.Center"
+									[isEllipsis]="true"
+								>
+									{{ getSubColumnName(subColumnId) }}
+								</ss-lib-text>
+							</div>
+						</th>
+					}
+				}
+			}
+		</tr>
 	</thead>
 	<tbody app-operation-plan-table-tbody></tbody>
 </table>

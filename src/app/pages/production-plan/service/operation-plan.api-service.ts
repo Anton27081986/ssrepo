@@ -85,7 +85,7 @@ export class OperationPlanApiService {
 		});
 		return this.http.get<Blob>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Reports`,
-			{},
+			{ params: params, responseType: 'blob' as 'json' },
 		);
 	}
 
