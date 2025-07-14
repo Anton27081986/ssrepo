@@ -239,7 +239,7 @@ export class OperationPlanApiService {
 		params = params.set('WeekId', weekId.toString());
 		params = params.set('Date', date);
 		productionSectionIds.forEach((val) => {
-			params.append('ProductionSectionsIds', val);
+			params = params.append('ProductionSectionsIds', val);
 		});
 		return this.http.get<{ planDayTotalQuantity: number }>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TotalPlans`,

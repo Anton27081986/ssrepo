@@ -15,14 +15,7 @@ import {
 	SpinnerComponent,
 	TextComponent,
 } from '@front-library/components';
-import {
-	BehaviorSubject,
-	map,
-	Observable,
-	tap,
-	combineLatest,
-	filter,
-} from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
@@ -103,7 +96,6 @@ export class SectionFilterComponent
 		return this.filterApiService.getProductionSection(query).pipe(
 			map((value) => {
 				const flat: IDictionaryItemDto[] = [];
-				console.log(value);
 				value.parentItems.forEach(
 					(parent: FilterSectionParentItems) => {
 						// Добавляем родителя (date)

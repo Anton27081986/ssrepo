@@ -348,6 +348,7 @@ export class OperationPlanTableComponent {
 	}
 
 	protected onPlanInfoEnter(date: string) {
+		console.log(this.productionSectionIds);
 		if (this.productionSectionIds) {
 			this.operationPlanService
 				.getPlanInfo(
