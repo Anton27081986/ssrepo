@@ -102,9 +102,16 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	}
 
 	onInput(): void {
+		const element = this.editableDiv.nativeElement;
+		const text = element.innerText.trim();
+
+		if (!text) {
+			element.innerHTML = '';
+		}
+
+		this.comment = text;
 		this.autoHeight();
 		this.updateMultiLineFlag();
-		this.comment = this.editableDiv.nativeElement.innerText.trim();
 	}
 
 	private updateMultiLineFlag(): void {
