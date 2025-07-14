@@ -13,6 +13,11 @@ import {
 	IconComponent,
 	IconPosition,
 	IconType,
+	DropdownListComponent,
+	ExtraSize,
+	IconComponent,
+	IconType,
+	PopoverTriggerForDirective,
 	SsTableState,
 	TableCellDirective,
 	TdComponent,
@@ -27,6 +32,7 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
 import { NgIf } from '@angular/common';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
+import { CreateCommentsModalComponent } from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<
@@ -74,6 +80,10 @@ export const BASE_COLUMN_MAP: Record<
 		AddCommentsModalComponent,
 		NgIf,
 		ButtonComponent,
+		PopoverTriggerForDirective,
+		DropdownListComponent,
+		ButtonComponent,
+		CreateCommentsModalComponent,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
@@ -104,15 +114,14 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly IconPosition = IconPosition;
 	// 	this.popupService.openPostponePlanModal(row.id);
 	protected readonly ExtraSize = ExtraSize;
+	protected readonly ButtonType = ButtonType;
+	protected readonly ExtraSize = ExtraSize;
+
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
 	public getRowCheckboxControl(index: number): FormControl {
 		return this.tableStateService.getRowCheckboxControl(index);
 	}
-
-	// protected openPostponePlanModal(row: OperationPlanItem): void {
-
-	// }
 
 	protected editPlanFact(
 		event: Event,
@@ -185,13 +194,6 @@ export class OperationPlanTableTbodyComponent {
 			}
 		}
 	}
-
-	// public openCreateCommentsModal(row: OperationPlanItem) {
-	// 	this.popupService.openCreateCommentsModal(row.id);
-	// }
-	//
-	// public openAddCommentsModal(row: OperationPlanItem) {
-	// 	this.popupService.openAddCommentsModal(row.id);
 	protected openPostponePlanModal(row: OperationPlanItem) {
 		this.popupService.openPostponePlanModal(47);
 	}

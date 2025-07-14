@@ -1,7 +1,7 @@
 .modal-content {
 	position: relative;
 	display: flex;
-	border: 1px solid var(--border-secondary);
+	//border: 1px solid var(--border-secondary);
 	border-radius: 8px;
 	background-color: var(--surface-primary);
 	align-items: center;
@@ -36,6 +36,8 @@
 }
 
 .comment-input {
+	position: relative;
+	height: 100% !important;
 	width: 100%;
 	max-width: 330px;
 	max-height: calc(1.4em * 5);
@@ -44,10 +46,16 @@
 	white-space: pre-wrap;
 	overflow-y: auto;
 	line-height: 1.4em;
-}
+	overflow-wrap: break-word;
 
-.comment-input[data-placeholder]:empty::before {
-	content: attr(data-placeholder);
-	color: var(--surface-primary);
-	pointer-events: none;
+	&[data-placeholder]:empty::before {
+		content: attr(data-placeholder);
+		position: absolute;
+		top: 50%;
+		//left: 10px;            // учитывайте ваш padding
+		transform: translateY(-50%);
+		color: var(--text-placeholder);
+		pointer-events: none;
+		white-space: nowrap;
+	}
 }

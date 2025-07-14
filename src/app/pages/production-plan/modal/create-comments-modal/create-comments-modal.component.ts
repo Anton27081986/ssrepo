@@ -1,9 +1,11 @@
 import {
 	AfterViewInit,
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
-	ElementRef, HostListener,
+	ElementRef,
 	inject,
+	Input,
 	OnInit,
 	ViewChild,
 } from '@angular/core';
@@ -11,15 +13,16 @@ import {
 	AvatarComponent,
 	ButtonComponent,
 	ButtonType,
+	DropdownListComponent,
 	ExtraSize,
 	IconType,
 	ModalComponent,
-	ModalRef,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserProfile } from '@app/core/models/user-profile';
+import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 
 export interface CreateCommentsModalData {
 	id: number;
@@ -29,35 +32,35 @@ export interface CreateCommentsModalData {
 @Component({
 	selector: 'app-create-comments-modal',
 	standalone: true,
-	imports: [
-		ModalComponent,
-		ButtonComponent,
-		AvatarComponent,
-	],
+	imports: [ModalComponent, ButtonComponent, AvatarComponent],
 	templateUrl: './create-comments-modal.component.html',
 	styleUrl: './create-comments-modal.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
+	@Input() data!: number;
+
 	@ViewChild('editable') editableDiv!: ElementRef<HTMLDivElement>;
-	@ViewChild('content', { static: true }) modalContent!: ElementRef<HTMLElement>;
+	@ViewChild('content', { static: true })
+	modalContent!: ElementRef<HTMLElement>;
 
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly ButtonType = ButtonType;
 
+	public comments: ICommentsItemDto[] = [];
 	public comment: string = '';
 	public currentUser: IUserProfile | null = null;
 	public isMultiLine = false;
 	public singleLineHeight = 0;
-	private outsideClickEnabled = false;
 
 	private readonly service: OperationPlanService =
 		inject(OperationPlanService);
 	private readonly userService: UserFacadeService = inject(UserFacadeService);
-	protected readonly popup: ModalRef<CreateCommentsModalData> = inject(
-		ModalRef<CreateCommentsModalData>,
+	private readonly dropdownList: DropdownListComponent = inject(
+		DropdownListComponent,
 	);
+	private readonly cdr = inject(ChangeDetectorRef);
 
 	ngOnInit() {
 		this.userService
@@ -66,29 +69,17 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 			.subscribe((user) => {
 				this.currentUser = user;
 			});
+
+		this.dropdownList.closed.subscribe(() => {
+			this.resetInput();
+		});
 	}
 
 	ngAfterViewInit() {
 		this.autoHeight();
-		this.singleLineHeight = this.editableDiv.nativeElement.scrollHeight;
+		const style = getComputedStyle(this.editableDiv.nativeElement);
+		this.singleLineHeight = parseFloat(style.lineHeight);
 		this.updateMultiLineFlag();
-
-		setTimeout(() => {
-			this.outsideClickEnabled = true;
-		}, 0);
-	}
-
-	@HostListener('document:click', ['$event'])
-	onDocumentClick(event: MouseEvent) {
-		if (!this.outsideClickEnabled) {
-			return;
-		}
-		if (
-			this.modalContent &&
-			!this.modalContent.nativeElement.contains(event.target as Node)
-		) {
-			this.popup.close();
-		}
 	}
 
 	public onInput(): void {
@@ -102,9 +93,17 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 	}
 
 	private autoHeight(): void {
-		const el = this.editableDiv.nativeElement;
-		el.style.height = 'auto';
-		el.style.height = `${el.scrollHeight}px`;
+		const element = this.editableDiv.nativeElement;
+		element.style.height = 'auto';
+		element.style.height = `${element.scrollHeight}px`;
+	}
+
+	private resetInput(): void {
+		this.comment = '';
+		this.editableDiv.nativeElement.innerText = '';
+		this.autoHeight();
+		this.isMultiLine = false;
+		this.cdr.markForCheck();
 	}
 
 	public sendComment(): void {
@@ -113,9 +112,11 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 		if (!text) return;
 
 		this.comment = text;
-		this.service.sendComment(this.popup.data.id, {
-			note: this.comment,
-		});
-		this.popup.close();
+		this.service
+			.sendComment(this.data, {
+				note: this.comment,
+			})
+			.subscribe();
+		this.dropdownList.closed.emit();
 	}
 }
