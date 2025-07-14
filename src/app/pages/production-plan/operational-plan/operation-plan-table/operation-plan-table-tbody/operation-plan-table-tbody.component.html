@@ -86,7 +86,9 @@
 						<input
 							#quantityInput
 							class="quantity-input"
-							type="number"
+							type="text"
+							pattern="\d*"
+							maxlength="7"
 							[value]="getCellValue(row, column.id)"
 							(focusout)="editPlanFact($event, row, column.id)"
 							(keyup.enter)="quantityInput.blur()"
