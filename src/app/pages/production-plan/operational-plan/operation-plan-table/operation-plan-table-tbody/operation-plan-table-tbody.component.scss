@@ -67,3 +67,11 @@ input::-webkit-inner-spin-button {
     opacity: 100%;
   }
 }
+
+tr td:last-child {
+  border-right: none !important;
+}
+
+tr td:first-child {
+  border-left: none !important;
+}
