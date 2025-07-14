@@ -7,10 +7,7 @@
 					ssTd
 					class="item-td"
 					[style.min-width.px]="
-						column.id.startsWith('planQuantity') &&
-						getCellValue(row, column.id)
-							? 120
-							: 80
+						column.id.startsWith('planQuantity') ? 120 : 80
 					"
 				>
 					@if (column.id === 'tov') {
