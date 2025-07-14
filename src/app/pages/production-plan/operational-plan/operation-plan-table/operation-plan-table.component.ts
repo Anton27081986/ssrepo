@@ -1,5 +1,5 @@
 import {
-	ChangeDetectionStrategy,
+	ChangeDetectionStrategy, ChangeDetectorRef,
 	Component,
 	effect,
 	inject,
@@ -29,6 +29,8 @@ import {
 	TextWeight,
 	ThComponent,
 	UtilityButtonComponent,
+	TooltipDirective,
+	TooltipPosition,
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
@@ -77,6 +79,7 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 		HintComponent,
 		UtilityButtonComponent,
 		NgIf,
+		TooltipDirective,
 	],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
@@ -93,14 +96,20 @@ export class OperationPlanTableComponent {
 	public days: InputSignal<IDay[]> = input.required();
 	public total: InputSignal<number> = input.required();
 	public totalItems: InputSignal<number> = input.required();
+	public planTooltipText =
+		'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
+
+	public productionSectionIds: number | null = null;
 
 	public readonly visibleColumnsIds =
 		this.tableStateService.visibleColumnsIds;
+
 	public readonly data = this.tableStateService.data;
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
 
 	public readonly masterCheckboxCtrl =
 		this.tableStateService.getMasterCheckboxCtrl();
+
 	public readonly rowCheckboxes = this.tableStateService.getRowCheckboxes();
 
 	protected readonly Colors = Colors;
@@ -110,11 +119,12 @@ export class OperationPlanTableComponent {
 
 	public popupVisible = false;
 
-	protected get getSelectedElemCount(): number {
-		return this.rowCheckboxes.value.filter((ctrl) => ctrl).length;
-	}
-
-	constructor() {
+	protected readonly ButtonType = ButtonType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly IconType = IconType;
+	protected readonly HintType = HintType;
+	protected readonly TooltipPosition = TooltipPosition;
+	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		toSignal(
 			this.masterCheckboxCtrl.valueChanges.pipe(
 				tap((value: boolean | null) =>
@@ -127,6 +137,7 @@ export class OperationPlanTableComponent {
 			this.rowCheckboxes.valueChanges.pipe(
 				tap((value) => {
 					const count = value.filter((ctrl) => ctrl).length;
+
 					if (count > 0 && !this.popupVisible) {
 						this.popupVisible = true;
 					}
@@ -147,6 +158,18 @@ export class OperationPlanTableComponent {
 				columnOperPlanConfig,
 			);
 		});
+
+		this.operationPlanState.filterValueStore$.subscribe((filters) => {
+			if (filters?.productionSectionIds) {
+				this.productionSectionIds = filters.productionSectionIds;
+			} else {
+				this.productionSectionIds = null;
+			}
+		});
+	}
+
+	protected get getSelectedElemCount(): number {
+		return this.rowCheckboxes.value.filter((ctrl) => ctrl).length;
 	}
 
 	public isSubColumn(columnId: string): boolean {
@@ -170,6 +193,13 @@ export class OperationPlanTableComponent {
 		return name;
 	}
 
+	public isWmsUpload(columnId: string): boolean {
+		return (
+			this.days().find((day) => day.day.startsWith(columnId))
+				?.isWmsUpload || false
+		);
+	}
+
 	public getSubColumnName(subColumnId: string): string {
 		if (subColumnId.startsWith('planQuantity')) {
 			return 'План';
@@ -183,33 +213,35 @@ export class OperationPlanTableComponent {
 	}
 
 	public openCalculationOfRawMaterialsForCheckList(day: string) {
-		let tovIds = this.getSelectedIds();
+		const tovIds = this.getSelectedIds();
 
 		const param: UpdateRawMaterialsData = {
-			day: day,
+			day,
 			weekId: this.operationPlanState.weekId$.value!,
 			total: tovIds.length,
-			tovIds: tovIds,
+			tovIds,
 		};
+
 		this.operationPlanPopup.openCalculationOfRawMaterials(param);
 	}
 
 	public openCalculationOfRawMaterialsForColumn(columnName: string) {
-		let rawFilter: OperationPlanRequest & Pagination =
+		const rawFilter: OperationPlanRequest & Pagination =
 			this.operationPlanState.filterValueStore$.value!;
 
-		let weekId = this.operationPlanState.weekId$.value!;
+		const weekId = this.operationPlanState.weekId$.value!;
 
-		let data = this.days().find((day) =>
+		const data = this.days().find((day) =>
 			day.day.startsWith(columnName.slice(5)),
 		)!;
 
 		const param: UpdateRawMaterialsData = {
 			day: data.day,
-			weekId: weekId,
+			weekId,
 			total: this.totalItems(),
 			filterParams: rawFilter,
 		};
+
 		this.operationPlanPopup.openCalculationOfRawMaterials(param);
 	}
 
@@ -227,7 +259,8 @@ export class OperationPlanTableComponent {
 	}
 
 	public openOrderAnOutfit(params: OrderAnOutfit) {
-		let form = document.createElement('form');
+		const form = document.createElement('form');
+
 		form.method = 'POST';
 		form.action = params.linkToModule;
 		form.target = 'NewWindow';
@@ -235,8 +268,12 @@ export class OperationPlanTableComponent {
 
 		// Добавляем все параметры кроме linkToModule
 		Object.entries(params).forEach(([key, value]) => {
-			if (key === 'linkToModule') return;
+			if (key === 'linkToModule') {
+				return;
+			}
+
 			const input = document.createElement('input');
+
 			input.type = 'hidden';
 			input.name = key;
 			input.value =
@@ -249,11 +286,13 @@ export class OperationPlanTableComponent {
 		const features =
 			'resizable=yes,status=no,scroll=no,help=no,center=yes,width=460,height=200,menubar=no,directories=no,location=no,modal=yes';
 		const newWindow = window.open('', 'NewWindow', features);
+
 		form.submit();
 
 		if (!newWindow) {
 			alert('Pop-ups must be enabled to open the new window.');
 		}
+
 		document.body.removeChild(form);
 	}
 
@@ -262,36 +301,39 @@ export class OperationPlanTableComponent {
 	}
 
 	protected orderAnOutfit(columnId: string) {
-		let data = this.days().find((day) =>
+		const data = this.days().find((day) =>
 			day.day.startsWith(columnId.slice(5)),
 		)!;
 		const params: OrderAnOutfitRequest = {
 			date: data.day!,
 		};
+
 		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
 			this.openOrderAnOutfit(item);
 		});
 	}
 
 	protected orderAnOutfitForCheckList(day: IDay) {
-		let ids = this.getSelectedIds();
+		const ids = this.getSelectedIds();
 		const params: OrderAnOutfitRequest = {
 			date: day.day,
-			ids: ids,
+			ids,
 		};
+
 		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
 			this.openOrderAnOutfit(item);
 		});
 	}
 
 	protected openApproveMaterials(column: string) {
-		let date = this.days().find((day) =>
+		const date = this.days().find((day) =>
 			day.day.startsWith(column.slice(5)),
 		)!.day;
 		const data: ApproveMaterialData = {
 			total: this.totalItems(),
 			dataStart: new Date(date),
 		};
+
 		this.operationPlanPopup.openApproveMaterials(data);
 	}
 
@@ -304,8 +346,23 @@ export class OperationPlanTableComponent {
 			});
 	}
 
-	protected readonly ButtonType = ButtonType;
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly IconType = IconType;
-	protected readonly HintType = HintType;
+	protected onPlanInfoEnter(date: string) {
+		if (this.productionSectionIds) {
+			this.operationPlanService
+				.getPlanInfo(
+					this.operationPlanState.weekId$.value!,
+					date.slice(-10),
+					this.productionSectionIds,
+				)
+				.subscribe((res) => {
+					this.planTooltipText = `Всего по выбранным участкам  — ${
+						res.planDayTotalQuantity
+					}`;
+					this.changeDetectorRef.detectChanges();
+				});
+		} else {
+			this.planTooltipText =
+				'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
+		}
+	}
 }

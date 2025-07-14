@@ -205,4 +205,16 @@ export class OperationPlanService {
 	public uploadWMS() {
 		return this.operationPlanApiService.uploadWMS();
 	}
+
+	public getPlanInfo(
+		weekId: number,
+		date: string,
+		productionSectionIds: number,
+	): Observable<{ planDayTotalQuantity: number }> {
+		return this.operationPlanApiService.getPlanInfo(
+			weekId,
+			date,
+			productionSectionIds,
+		);
+	}
 }
