@@ -6,6 +6,6 @@ export interface CreatePlanFactRequest {
 
 export interface UpdatePlanFactRequest {
 	id: number;
-	planQuantity?: string | null;
-	factQuantity?: string | null;
+	planQuantity?: string | number | null;
+	factQuantity?: string | number | null;
 }

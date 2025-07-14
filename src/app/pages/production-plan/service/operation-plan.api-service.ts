@@ -35,7 +35,7 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
-	private http: HttpClient = inject(HttpClient);
+	private readonly http: HttpClient = inject(HttpClient);
 
 	public getOperationPlan(
 		request: OperationPlanRequest & Pagination,
@@ -105,6 +105,7 @@ export class OperationPlanApiService {
 		params = params.set('name', query);
 		params = params.set('limit', limit);
 		params = params.set('offset', offset);
+
 		return this.http.get<IResponse<ManufacturingTovs>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Tovs`,
 			{ params },
@@ -225,6 +226,26 @@ export class OperationPlanApiService {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadWMS`,
 			{},
+		);
+	}
+
+	public getPlanInfo(
+		weekId: number,
+		date: string,
+		productionSectionIds: number,
+	): Observable<{planDayTotalQuantity: number}> {
+		let params = new HttpParams();
+
+		params = params.set('WeekId', weekId.toString());
+		params = params.set('Date', date);
+
+		const productSections = productionSectionIds.toString();
+
+		params = params.set('ProductionSectionsIds', productSections);
+
+		return this.http.get<{ planDayTotalQuantity: number }>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TotalPlans`,
+			{ params },
 		);
 	}
 }

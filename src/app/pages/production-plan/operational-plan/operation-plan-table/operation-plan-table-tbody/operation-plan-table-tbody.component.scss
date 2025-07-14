@@ -54,3 +54,14 @@ input::-webkit-inner-spin-button {
   background-color: var(--surface-primary);
   box-shadow: var(--shadow-xl);
 }
+
+.postpone-button {
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
+.item-td:hover {
+  .postpone-button {
+    opacity: 100%;
+  }
+}

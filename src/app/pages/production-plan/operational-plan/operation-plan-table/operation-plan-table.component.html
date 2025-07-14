@@ -119,10 +119,17 @@
 										{{ formatColumnName(column.name) }}
 									</ss-lib-text>
 
-									<ss-lib-hint
-										[type]="HintType.Success"
-										[icon]="IconType.Alert"
-									></ss-lib-hint>
+									@if (isWmsUpload(column.name)) {
+										<ss-lib-hint
+											ss-lib-tooltip
+											[type]="HintType.Success"
+											[icon]="IconType.CheckCircle"
+											[position]="TooltipPosition.Top"
+											[tooltipText]="
+												'План выгружен в WMS'
+											"
+										></ss-lib-hint>
+									}
 								</div>
 								<div class="item-day-utility">
 									<ss-lib-utility-button
@@ -131,9 +138,9 @@
 									></ss-lib-utility-button>
 									<ss-lib-dropdown-list #listFunc>
 										<ss-lib-dropdown-item
-											(click)="orderAnOutfit(column.id)"
 											[icon]="IconType.FilePreviewSearch"
 											[label]="'Заказ наряд'"
+											(click)="orderAnOutfit(column.id)"
 										></ss-lib-dropdown-item>
 										<ss-lib-dropdown-item
 											[icon]="IconType.FileUpload02"
@@ -207,6 +214,17 @@
 								>
 									{{ getSubColumnName(subColumnId) }}
 								</ss-lib-text>
+								@if (subColumnId.startsWith('planQuantity')) {
+									<ss-lib-hint
+										ss-lib-tooltip
+										[icon]="IconType.Info"
+										[position]="TooltipPosition.Top"
+										[tooltipText]="planTooltipText"
+										(mouseenter)="
+											onPlanInfoEnter(subColumnId)
+										"
+									></ss-lib-hint>
+								}
 							</div>
 						</th>
 					}
