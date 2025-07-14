@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, Signal } from '@angular/core';
+import {ChangeDetectorRef, Component, inject, Signal, ViewChild} from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	OperationPlanItem,
@@ -87,6 +87,8 @@ export const BASE_COLUMN_MAP: Record<
 })
 @UntilDestroy()
 export class OperationPlanTableTbodyComponent {
+	@ViewChild('getCommentsList') commentsComp!: AddCommentsModalComponent;
+
 	private readonly tableStateService =
 		inject<SsTableState<OperationPlanItem>>(SsTableState);
 
@@ -192,10 +194,10 @@ export class OperationPlanTableTbodyComponent {
 		this.popupService.openPostponePlanModal(47);
 	}
 
-	public openCommentsModal(row: OperationPlanItem) {
-		row.isComment
-			? this.popupService.openAddCommentsModal(row.id)
-			: this.popupService.openCreateCommentsModal(row.id);
+	public onCommentsOpen(opened: boolean): void {
+		if (opened) {
+			this.commentsComp.loadCommentsList();
+		}
 	}
 
 	public getCellValue(
