@@ -82,14 +82,6 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((user) => (this.currentUser = user));
 
-		this.service
-			.addComment(this.data)
-			.pipe(untilDestroyed(this))
-			.subscribe((list) => {
-				this.comments = list;
-				this.cdr.markForCheck();
-			});
-
 		this.dropdownList.closed.subscribe(() => {
 			this.resetInput();
 		});
@@ -132,6 +124,15 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 		this.autoHeight();
 		this.isMultiLine = false;
 		this.cdr.markForCheck();
+	}
+
+	public loadCommentsList(): void {
+		this.service.addComment(this.data)
+			.pipe(untilDestroyed(this))
+			.subscribe(list => {
+				this.comments = list;
+				this.cdr.markForCheck();
+			});
 	}
 
 	public sendComment(): void {
