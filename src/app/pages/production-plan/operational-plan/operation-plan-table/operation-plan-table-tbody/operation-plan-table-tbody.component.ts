@@ -7,7 +7,8 @@ import {
 import {
 	Align,
 	CheckboxComponent,
-	IconComponent, IconType,
+	IconComponent,
+	IconType,
 	SsTableState,
 	TableCellDirective,
 	TdComponent,
@@ -20,8 +21,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
-import {NgIf} from "@angular/common";
-import {OperationPlanState} from "@app/pages/production-plan/service/operation-plan.state";
+import { NgIf } from '@angular/common';
+import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<
@@ -92,7 +93,6 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
-
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
@@ -173,7 +173,7 @@ export class OperationPlanTableTbodyComponent {
 	// public openAddCommentsModal(row: OperationPlanItem) {
 	// 	this.popupService.openAddCommentsModal(row.id);
 	protected openPostponePlanModal(row: OperationPlanItem) {
-		this.popupService.openPostponePlanModal(58);
+		this.popupService.openPostponePlanModal(47);
 	}
 
 	public openCommentsModal(row: OperationPlanItem) {
@@ -263,5 +263,4 @@ export class OperationPlanTableTbodyComponent {
 
 		return null;
 	}
-
 }

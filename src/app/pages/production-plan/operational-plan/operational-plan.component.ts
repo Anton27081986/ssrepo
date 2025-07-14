@@ -113,7 +113,17 @@ export class OperationalPlanComponent {
 						Object.entries(criteria).filter(([_, v]) => v !== null),
 					);
 
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							weekId: week.id,
+						},
+						queryParamsHandling: 'merge',
+					});
+
 					const valueWithPagination = {
+						weekId: week.id,
 						...filterParams,
 						limit: this.limit,
 						offset,
@@ -181,8 +191,6 @@ export class OperationalPlanComponent {
 
 					let activeWeek = weeks.find((week) => week.isCurrent);
 
-					//console.log(weeks, activeWeek);
-
 					if (weekIdFromQuery) {
 						const found = weeks.find(
 							(w) => String(w.id) === String(weekIdFromQuery),
@@ -233,13 +241,7 @@ export class OperationalPlanComponent {
 	public loadItems(
 		request: OperationPlanRequest & Pagination,
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
-		return this.activeWeek$.pipe(
-			filter((value) => value !== null),
-			switchMap((week) => {
-				request.weekId = week!.id; // временно
-
-				return this.operationalPlanService.getProductionPlan(request);
-			}),
+		return this.operationalPlanService.getProductionPlan(request).pipe(
 			tap((value) => {
 				this.days$.next(value.days);
 			}),

@@ -24,10 +24,13 @@ import {
 	OperationPlanRootService,
 } from '@app/pages/production-plan/service/operation-plan.root.service';
 import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
-import {ICommentsItemDto, ISendComment} from '@app/core/models/production-plan/comments';
 import {
-    CreatePlanFactRequest,
-    UpdatePlanFactRequest,
+	ICommentsItemDto,
+	ISendComment,
+} from '@app/core/models/production-plan/comments';
+import {
+	CreatePlanFactRequest,
+	UpdatePlanFactRequest,
 } from '@app/core/models/production-plan/plan-fact-request';
 
 @Injectable({ providedIn: 'root' })
@@ -42,11 +45,7 @@ export class OperationPlanService {
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
-		return merge(of(void 0), this.operationPlanRootService.event$).pipe(
-			switchMap(() => {
-				return this.operationPlanApiService.getOperationPlan(request);
-			}),
-		);
+		return this.operationPlanApiService.getOperationPlan(request);
 	}
 
 	public getTransferProductionPlan(
@@ -99,8 +98,10 @@ export class OperationPlanService {
 		return this.operationPlanApiService.downloadReport();
 	}
 
-	public downloadExel(): Observable<Blob> {
-		return this.operationPlanApiService.downloadExel();
+	public downloadExel(
+		request: OperationPlanRequest & Pagination,
+	): Observable<Blob> {
+		return this.operationPlanApiService.downloadExel(request);
 	}
 
 	public getWeeks(): Observable<IDictionaryItemDto[]> {

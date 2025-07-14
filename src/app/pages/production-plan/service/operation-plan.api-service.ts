@@ -26,9 +26,12 @@ import {
 } from '@app/core/models/production-plan/order-an-outfit-request';
 import {
 	CreatePlanFactRequest,
-	UpdatePlanFactRequest
+	UpdatePlanFactRequest,
 } from '@app/core/models/production-plan/plan-fact-request';
-import { ICommentsItemDto, ISendComment} from '@app/core/models/production-plan/comments';
+import {
+	ICommentsItemDto,
+	ISendComment,
+} from '@app/core/models/production-plan/comments';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -64,9 +67,25 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public downloadExel(): Observable<Blob> {
+	public downloadExel(
+		request: OperationPlanRequest & Pagination,
+	): Observable<Blob> {
+		let params = new HttpParams();
+
+		Object.entries(request).forEach(([key, value]) => {
+			if (value !== null && value !== undefined) {
+				if (Array.isArray(value)) {
+					value.forEach((v) => {
+						params = params.append(key, v);
+					});
+				} else {
+					params = params.set(key, value);
+				}
+			}
+		});
 		return this.http.get<Blob>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Action/Reports`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Reports`,
+			{},
 		);
 	}
 

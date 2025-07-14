@@ -145,6 +145,7 @@ export class ApproveMaterialComponent implements OnInit {
 				.pipe(untilDestroyed(this))
 				.subscribe((value) => {
 					window.open(value.linkToModule, '_target');
+					this.popup.close();
 				});
 		} else {
 			this.sharedService.openToast({

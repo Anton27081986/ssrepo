@@ -10,16 +10,31 @@
 		</div>
 
 		<div class="production-plan__tabs">
-			<ss-lib-tabs [tabs]="tabs" [(activeTabIndex)]="activeTabIndex" (changeIndexEmit)="changeTabIndex($event)"
-						 [actionsRef]="actions"></ss-lib-tabs>
+			<ss-lib-tabs
+				[tabs]="tabs"
+				[(activeTabIndex)]="activeTabIndex"
+				(changeIndexEmit)="changeTabIndex($event)"
+				[actionsRef]="actions"
+			></ss-lib-tabs>
 
 			<ng-template #actions>
-				<ss-lib-button [popoverTriggerFor]="listActions" [iconPosition]="IconPosition.End"
-							   [style.width]="'121px'" [type]="ButtonType.Secondary"
-							   [size]="ExtraSize.md" [text]="'Действия'" [icon]="IconType.ChevronDown"></ss-lib-button>
-				<ss-lib-button *ngIf="operationPlanState.getHasPermissionEdit" (click)="addSemiManufactures()" [style.width]="'220px'" [size]="ExtraSize.md"
-							   [text]="'Добавить полуфабрикат'"
-							   [icon]="IconType.Plus"></ss-lib-button>
+				<ss-lib-button
+					[popoverTriggerFor]="listActions"
+					[iconPosition]="IconPosition.End"
+					[style.width]="'121px'"
+					[type]="ButtonType.Secondary"
+					[size]="ExtraSize.md"
+					[text]="'Действия'"
+					[icon]="IconType.ChevronDown"
+				></ss-lib-button>
+				<ss-lib-button
+					*ngIf="operationPlanState.getHasPermissionEdit"
+					(click)="addSemiManufactures()"
+					[style.width]="'220px'"
+					[size]="ExtraSize.md"
+					[text]="'Добавить полуфабрикат'"
+					[icon]="IconType.Plus"
+				></ss-lib-button>
 
 				<ss-lib-dropdown-list #listActions>
 					<ss-lib-dropdown-item

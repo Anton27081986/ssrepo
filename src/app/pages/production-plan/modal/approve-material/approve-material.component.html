@@ -1,12 +1,15 @@
 <ss-lib-modal
 	[badgeProps]="{
-						icon: IconType.PackagePlus,
-						size: ExtraSize.lg,
-						shape: Shape.Square
-					}"
-
-	[titleHeader]="'Согласование сырья за ' + (data.dataStart | date:'d MMMM y')"
-	[descriptionHeader]="'Выберите период согласования сырья и город для выбранных ГП.'"
+		icon: IconType.PackagePlus,
+		size: ExtraSize.lg,
+		shape: Shape.Square,
+	}"
+	[titleHeader]="
+		'Согласование сырья за ' + (data.dataStart | date: 'd MMMM y')
+	"
+	[descriptionHeader]="
+		'Выберите период согласования сырья и город для выбранных ГП.'
+	"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
 	(closeEmit)="close()"
@@ -16,12 +19,14 @@
 <ng-template #contentRef>
 	<div class="approve-material">
 		<div class="approve-material__date">
-			<ss-lib-text [weight]="TextWeight.Semibold" [type]="TextType.BodySm">Период согласования</ss-lib-text>
+			<ss-lib-text
+				[weight]="TextWeight.Semibold"
+				[type]="TextType.BodySm"
+				>Период согласования</ss-lib-text
+			>
 
 			<div class="approve-material__date-controls">
-				<ss-lib-form-field
-					class="approve-material__date-control"
-				>
+				<ss-lib-form-field class="approve-material__date-control">
 					<ss-lib-datepicker
 						fieldCtrl
 						[formControl]="startDate"
@@ -30,9 +35,7 @@
 
 				<ss-lib-text>-</ss-lib-text>
 
-				<ss-lib-form-field
-					class="approve-material__date-control"
-				>
+				<ss-lib-form-field class="approve-material__date-control">
 					<ss-lib-datepicker
 						fieldCtrl
 						[min]="data.dataStart"
@@ -42,17 +45,30 @@
 			</div>
 		</div>
 		<div class="approve-material__city">
-			<ss-lib-text [weight]="TextWeight.Semibold" [type]="TextType.BodySm">Город</ss-lib-text>
+			<ss-lib-text
+				[weight]="TextWeight.Semibold"
+				[type]="TextType.BodySm"
+				>Город</ss-lib-text
+			>
 
-			<ss-lib-button [justifyContent]="JustifyContent.SpaceBetween" [iconPosition]="IconPosition.End"
-						   [icon]="IconType.ChevronDown" [type]="ButtonType.Secondary" [popoverTriggerFor]="list"
-						   [text]="city() ? city()?.name : 'Выберите город'"></ss-lib-button>
+			<ss-lib-button
+				[justifyContent]="JustifyContent.SpaceBetween"
+				[iconPosition]="IconPosition.End"
+				[icon]="IconType.ChevronDown"
+				[type]="ButtonType.Secondary"
+				[popoverTriggerFor]="list"
+				[text]="city() ? city()?.name : 'Выберите город'"
+			></ss-lib-button>
 
-			<ss-lib-dropdown-list [width]="'535px'" [height]="'274px'" #list>
-				<ss-lib-dropdown-item [selected]="item.id === city()?.id"
-									  (click)="city.set(item)"
-									  [label]="item.name"
-									  *ngFor="let item of cities()"
+			<ss-lib-dropdown-list
+				[width]="'535px'"
+				#list
+			>
+				<ss-lib-dropdown-item
+					[selected]="item.id === city()?.id"
+					(click)="city.set(item)"
+					[label]="item.name"
+					*ngFor="let item of cities()"
 				/>
 			</ss-lib-dropdown-list>
 		</div>
@@ -61,9 +77,17 @@
 
 <ng-template #actionRef>
 	<div class="approve-material__actions">
-		<ss-lib-button [style.width]="'262px'" [type]="ButtonType.Secondary" (close)="close()"
-					   [text]="'Отменить'"></ss-lib-button>
-		<ss-lib-button (click)="approveMaterial()" [style.width]="'262px'" [type]="ButtonType.Primary"
-					   [text]="'Рассчитать для ' + data.total + ' ГП'"></ss-lib-button>
+		<ss-lib-button
+			[style.width]="'262px'"
+			[type]="ButtonType.Secondary"
+			(close)="close()"
+			[text]="'Отменить'"
+		></ss-lib-button>
+		<ss-lib-button
+			(click)="approveMaterial()"
+			[style.width]="'262px'"
+			[type]="ButtonType.Primary"
+			[text]="'Рассчитать для ' + data.total + ' ГП'"
+		></ss-lib-button>
 	</div>
 </ng-template>
