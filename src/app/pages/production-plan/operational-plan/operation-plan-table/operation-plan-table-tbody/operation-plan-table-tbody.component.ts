@@ -6,8 +6,12 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import {
 	Align,
+	ButtonComponent,
+	ButtonType,
 	CheckboxComponent,
+	ExtraSize,
 	IconComponent,
+	IconPosition,
 	IconType,
 	SsTableState,
 	TableCellDirective,
@@ -69,6 +73,7 @@ export const BASE_COLUMN_MAP: Record<
 		IconComponent,
 		AddCommentsModalComponent,
 		NgIf,
+		ButtonComponent,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
@@ -86,6 +91,7 @@ export class OperationPlanTableTbodyComponent {
 	private readonly popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService,
 	);
+
 	protected readonly operationPlanState = inject(OperationPlanState);
 
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
@@ -94,6 +100,10 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
 
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconPosition = IconPosition;
+	// 	this.popupService.openPostponePlanModal(row.id);
+	protected readonly ExtraSize = ExtraSize;
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
 	public getRowCheckboxControl(index: number): FormControl {
@@ -101,7 +111,7 @@ export class OperationPlanTableTbodyComponent {
 	}
 
 	// protected openPostponePlanModal(row: OperationPlanItem): void {
-	// 	this.popupService.openPostponePlanModal(row.id);
+
 	// }
 
 	protected editPlanFact(
@@ -111,7 +121,11 @@ export class OperationPlanTableTbodyComponent {
 	): void {
 		const input = event.target as HTMLInputElement;
 		const newValue = input.value || null;
-		const oldValue = this.getDayCell(row, columnId);
+		const oldValue =
+			this.getDayCell(row, columnId.replace('fact', 'plan')) ||
+			this.getDayCell(row, columnId.replace('plan', 'fact'));
+
+		console.log(oldValue);
 
 		if (columnId.startsWith('plan')) {
 			if (oldValue?.id) {
@@ -119,10 +133,12 @@ export class OperationPlanTableTbodyComponent {
 					.updatePlanFact(row.id, {
 						id: oldValue.id,
 						planQuantity: newValue,
+						factQuantity: oldValue.factQuantity,
 					})
 					.subscribe((r: OperationPlanItem) => {
 						row.weekPlanQuantity = r.weekPlanQuantity;
 						row.monthPlanQuantity = r.monthPlanQuantity;
+						row.planDays = r.planDays;
 						this.changeDetectorRef.detectChanges();
 					});
 			} else if (newValue) {
@@ -134,6 +150,7 @@ export class OperationPlanTableTbodyComponent {
 					.subscribe((r: OperationPlanItem) => {
 						row.weekPlanQuantity = r.weekPlanQuantity;
 						row.monthPlanQuantity = r.monthPlanQuantity;
+						row.planDays = r.planDays;
 						this.changeDetectorRef.detectChanges();
 					});
 			}
@@ -145,10 +162,12 @@ export class OperationPlanTableTbodyComponent {
 					.updatePlanFact(row.id, {
 						id: oldValue.id,
 						factQuantity: newValue,
+						planQuantity: oldValue.planQuantity,
 					})
 					.subscribe((r: OperationPlanItem) => {
 						row.weekFactQuantity = r.weekFactQuantity;
 						row.monthFactQuantity = r.monthFactQuantity;
+						row.planDays = r.planDays;
 						this.changeDetectorRef.detectChanges();
 					});
 			} else if (newValue) {
@@ -160,6 +179,7 @@ export class OperationPlanTableTbodyComponent {
 					.subscribe((r: OperationPlanItem) => {
 						row.weekFactQuantity = r.weekFactQuantity;
 						row.monthFactQuantity = r.monthFactQuantity;
+						row.planDays = r.planDays;
 						this.changeDetectorRef.detectChanges();
 					});
 			}

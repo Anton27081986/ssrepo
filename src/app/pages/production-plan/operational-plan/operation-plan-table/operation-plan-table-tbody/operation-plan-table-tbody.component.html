@@ -1,75 +1,84 @@
 @for (row of data(); track row.id; let idxRow = $index) {
-	<tr
-		ssTr
-	>
+	<tr ssTr>
 		@for (column of visibleColumns(); track column.id) {
-			@if (!column.subColumns?.length &&
-			!column.subGroups?.length) {
+			@if (!column.subColumns?.length && !column.subGroups?.length) {
 				<td
 					*ssCell="column.id"
 					ssTd
-                    class="item-td"
+					class="item-td"
+					[style.min-width.px]="
+						column.id.startsWith('planQuantity') &&
+						getCellValue(row, column.id)
+							? 120
+							: 80
+					"
 				>
 					@if (column.id === 'tov') {
-                        <div class="item-tov">
-                            <ss-lib-checkbox
-                                [formControl]="getRowCheckboxControl(idxRow)"
-                            ></ss-lib-checkbox>
-                            <ss-lib-icon
-                                [width]="'24'"
-                                [height]="'24'"
-                                [icon]="IconType.CornerUpRight"
-                                (click)="openPostponePlanModal(row)">
-                            </ss-lib-icon>
-                            <ss-lib-text
-                                    class="item-tov__text"
-                                [type]="TextType.BodySm"
-                                [weight]="TextWeight.Regular"
-                                [align]="Align.Start"
-                            >
-                                {{ getCellValue(row, column.id) }}
-                            </ss-lib-text>
-                            <ss-lib-icon *ngIf="operationPlanState.getHasPermissionEdit"
-                                    [width]="'24'"
-                                    [height]="'24'"
-                                    [icon]="IconType.CornerUpRight"
-                                    (click)="openPostponePlanModal(row)">
-                            </ss-lib-icon>
-                            <ss-lib-icon *ngIf="operationPlanState.getHasPermissionEdit"
-                                    [width]="'16'"
-                                    [height]="'16'"
-                                    [icon]="IconType.Message"
-                                    (click)="openCommentsModal(row)">
-                            </ss-lib-icon>
-
-                        </div>
-                    } @else if (column.id === "optimalBatch" || column.id.startsWith('week') || column.id.startsWith('month')) {
-                        <ss-lib-text
-                                [type]="TextType.BodySm"
-                                [weight]="TextWeight.Regular"
-                                [align]="Align.End"
-                        >
-                            {{ getCellValue(row, column.id) }}
-                        </ss-lib-text>
-                    } @else if (column.id.startsWith('planQuantity') || column.id.startsWith('factQuantity')) {
-                        <input
-                                #quantityInput
-                                class="quantity-input"
-                                type="number"
-                                [value]="getCellValue(row, column.id)"
-                                (focusout)="editPlanFact($event, row, column.id);"
-                                (keyup.enter)="quantityInput.blur()"
-                        >
-
-                    } @else {
-                        <ss-lib-text
-                                [type]="TextType.BodySm"
-                                [weight]="TextWeight.Regular"
-                                [align]="Align.Start"
-                        >
-                            {{ getCellValue(row, column.id) }}
-                        </ss-lib-text>
-                    }
+						<div class="item-tov">
+							<ss-lib-checkbox
+								[formControl]="getRowCheckboxControl(idxRow)"
+							></ss-lib-checkbox>
+							<ss-lib-text
+								class="item-tov__text"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ getCellValue(row, column.id) }}
+							</ss-lib-text>
+							<ss-lib-icon
+								*ngIf="operationPlanState.getHasPermissionEdit"
+								[width]="'16'"
+								[height]="'16'"
+								[icon]="IconType.Message"
+								(click)="openCommentsModal(row)"
+							>
+							</ss-lib-icon>
+						</div>
+					} @else if (
+						column.id === 'optimalBatch' ||
+						column.id.startsWith('week') ||
+						column.id.startsWith('month')
+					) {
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Regular"
+							[align]="Align.End"
+						>
+							{{ getCellValue(row, column.id) }}
+						</ss-lib-text>
+					} @else if (
+						(column.id.startsWith('planQuantity') ||
+							column.id.startsWith('factQuantity')) &&
+						operationPlanState.getHasPermissionEdit
+					) {
+						@if (column.id.startsWith('planQuantity')) {
+							<ss-lib-button
+								class="postpone-button"
+								[type]="ButtonType.Secondary"
+								[size]="ExtraSize.xxs"
+								[iconPosition]="IconPosition.OnlyIcon"
+								[icon]="IconType.CornerUpRight"
+								(click)="openPostponePlanModal(row)"
+							></ss-lib-button>
+						}
+						<input
+							#quantityInput
+							class="quantity-input"
+							type="number"
+							[value]="getCellValue(row, column.id)"
+							(focusout)="editPlanFact($event, row, column.id)"
+							(keyup.enter)="quantityInput.blur()"
+						/>
+					} @else {
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Regular"
+							[align]="Align.Start"
+						>
+							{{ getCellValue(row, column.id) }}
+						</ss-lib-text>
+					}
 				</td>
 			}
 		}
