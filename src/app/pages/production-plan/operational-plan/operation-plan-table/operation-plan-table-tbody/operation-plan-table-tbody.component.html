@@ -32,6 +32,7 @@
 										? addCommentsModal
 										: createCommentsModal
 								"
+                                (isPopoverOpenEmit)="onCommentsOpen($event)"
 							>
 							</ss-lib-button>
 							<ss-lib-dropdown-list
@@ -49,6 +50,7 @@
 								[width]="'449px'"
 							>
 								<app-add-comments-modal
+                                    #getCommentsList
 									[data]="row.id"
 								></app-add-comments-modal>
 							</ss-lib-dropdown-list>
