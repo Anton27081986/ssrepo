@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormControl, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { FormGroup, FormControl, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { ModalService } from '@app/core/modal/modal.service';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -18,7 +17,6 @@ import {
 } from '@front-components/components';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { NgIf, NgForOf, DatePipe } from '@angular/common';
-import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
@@ -71,7 +69,6 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 	constructor(
 		@Inject(DIALOG_DATA) protected readonly data: IProvisionDatePopupData,
 		private readonly modalRef: ModalRef,
-		private readonly modalService: ModalService,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 	) {
 		const initialRows: FormGroup<{ provisionDate: FormControl<string | null> }>[] =
@@ -100,14 +97,18 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 		const observables: Observable<void>[] = [];
 
 		this.data.provisionDetails.forEach((detail, index) => {
-			const newDateValue: string | null = this.rows.at(index).get('provisionDate')?.value;
+			const newDateValue: string | null = this.rows
+				.at(index)
+				.get('provisionDate')
+				?.value.split('T')[0];
 			if (newDateValue && detail.id != null) {
-				const obs$ = this.mpReservationOrderCardFacadeService.updateProvisionDateById(
-					this.data.id,
-					newDateValue,
-					detail.id,
-				);
-				observables.push(obs$);
+				const updatesDates$ =
+					this.mpReservationOrderCardFacadeService.updateProvisionDateById(
+						this.data.id,
+						newDateValue,
+						detail.id,
+					);
+				observables.push(updatesDates$);
 			}
 		});
 
