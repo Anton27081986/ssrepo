@@ -3,14 +3,10 @@ import {
 	Component,
 	input,
 	InputSignal,
-	model,
-	ModelSignal,
 } from '@angular/core';
 import {
-	ButtonComponent,
 	CheckboxComponent,
 	Colors,
-	DropdownListComponent,
 	ExtraSize,
 	IconComponent,
 	IconType,
@@ -28,10 +24,6 @@ import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/se
 	selector: 'ss-lib-dropdown-group-filter-items',
 	standalone: true,
 	imports: [
-		ButtonComponent,
-		DropdownListComponent,
-		PopoverTriggerForDirective,
-		NgComponentOutlet,
 		IconComponent,
 		CheckboxComponent,
 		TextComponent,

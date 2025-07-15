@@ -5,36 +5,17 @@ import {
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import {
-	CheckboxComponent,
-	FieldCtrlDirective,
-	FormFieldComponent,
-	IconType,
-	InputComponent,
-	TextComponent,
-} from '@front-library/components';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { checkboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-tov-category-filter',
 	standalone: true,
-	imports: [
-		FieldCtrlDirective,
-		FormFieldComponent,
-		InputComponent,
-		ReactiveFormsModule,
-		NgFor,
-		AsyncPipe,
-		CheckboxComponent,
-		TextComponent,
-		NgIf,
-		checkboxFilterContextComponent,
-	],
+	imports: [ReactiveFormsModule, AsyncPipe, checkboxFilterContextComponent],
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
 		[controlClearAll]="controlsClearAll"

@@ -7,10 +7,10 @@ import {
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
 	Align,
-	CheckboxComponent,
-	DropdownItemComponent,
+	DropdownFilterItemComponent,
 	FieldCtrlDirective,
 	FormFieldComponent,
+	HeaderFilterCheckboxItemAbstractComponent,
 	InputComponent,
 	SpinnerComponent,
 	TextComponent,
@@ -18,11 +18,9 @@ import {
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
 import { DropdownFilterGroupItemsComponent } from '@app/pages/production-plan/component-and-service-for-lib/dropdown-filter-group-items/dropdown-filter-group-items.component';
-import { DropdownFilterItemComponent } from '@app/pages/production-plan/component-and-service-for-lib/dropdown-filter-item/dropdown-filter-item.component';
 import { FilterSectionParentItems } from '@app/core/models/production-plan/filter-section-dto';
 
 @Component({
@@ -35,13 +33,11 @@ import { FilterSectionParentItems } from '@app/core/models/production-plan/filte
 		ReactiveFormsModule,
 		NgFor,
 		AsyncPipe,
-		CheckboxComponent,
 		TextComponent,
 		NgIf,
 		DropdownFilterGroupItemsComponent,
 		DropdownFilterItemComponent,
 		SpinnerComponent,
-		DropdownItemComponent,
 	],
 	templateUrl: '/section-filter.component.html',
 	styleUrl: 'section-filter.component.scss',

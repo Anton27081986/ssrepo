@@ -12,8 +12,10 @@ import {
 	DropdownItemComponent,
 	DropdownListComponent,
 	ExtraSize,
+	HeaderFilterService,
 	IconComponent,
 	IconType,
+	LoadPaginationComponent,
 	PopoverTriggerForDirective,
 	SsTableState,
 	TextType,
@@ -38,7 +40,6 @@ import {
 	NEVER,
 } from 'rxjs';
 import { ProductionPlanResponse } from '@app/core/utils/response';
-import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
 import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
@@ -51,11 +52,8 @@ import { OperationPlanState } from '@app/pages/production-plan/service/operation
 import { state } from '@angular/animations';
 import { OperationPlanEmptyStateComponent } from '@app/pages/production-plan/operational-plan/operation-plan-empty-state/operation-plan-empty-state.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoadPaginationComponent } from '@app/pages/production-plan/component-and-service-for-lib/load-pagination/load-pagination.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { OperationPlanRootService } from '@app/pages/production-plan/service/operation-plan.root.service';
-import { NoticeComponent } from '@app/shared/components/notice/notice.component';
-
 @Component({
 	selector: 'app-operation-plan',
 	standalone: true,
@@ -75,7 +73,6 @@ import { NoticeComponent } from '@app/shared/components/notice/notice.component'
 		DropdownColumnsSettingsComponent,
 		OperationPlanEmptyStateComponent,
 		LoadPaginationComponent,
-		NoticeComponent,
 	],
 	templateUrl: './operational-plan.component.html',
 	styleUrl: './operational-plan.component.scss',

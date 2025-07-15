@@ -1,9 +1,17 @@
 import {
 	ChangeDetectionStrategy,
-	Component, inject,
+	Component,
+	inject,
 	Input,
 } from '@angular/core';
-import {NgFor, NgIf, DatePipe, NgSwitch, NgSwitchCase, NgSwitchDefault} from '@angular/common';
+import {
+	NgFor,
+	NgIf,
+	DatePipe,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
 import {
 	TableDirective,
 	TableHeadDirective,
@@ -21,17 +29,17 @@ import {
 	InputComponent,
 	DatepickerComponent,
 	FieldCtrlDirective,
-	InputType, ExtraSize,
+	InputType,
+	ExtraSize,
 } from '@front-library/components';
 import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import {ReactiveFormsModule} from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
 	selector: 'app-postpone-personification-table',
 	standalone: true,
 	imports: [
 		NgFor,
-		NgIf,
 		TableDirective,
 		TableHeadDirective,
 		TableThGroupComponent,
@@ -40,7 +48,6 @@ import {ReactiveFormsModule} from "@angular/forms";
 		TdComponent,
 		TextComponent,
 		ThComponent,
-		DatePipe,
 		FormFieldComponent,
 		InputComponent,
 		DatepickerComponent,
@@ -65,7 +72,7 @@ export class PostponePersonificationTableComponent {
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly InputType = InputType;
-	protected readonly Now = new Date;
+	protected readonly Now = new Date();
 	protected readonly ExtraSize = ExtraSize;
 
 	public readonly columns = [
@@ -109,8 +116,9 @@ export class PostponePersonificationTableComponent {
 		}
 	}
 
-	public isInputColumn(column: typeof this.columns[number]): boolean {
-		return column === 'countForPostpone' || column === 'productionDateControl';
+	public isInputColumn(column: (typeof this.columns)[number]): boolean {
+		return (
+			column === 'countForPostpone' || column === 'productionDateControl'
+		);
 	}
-
 }

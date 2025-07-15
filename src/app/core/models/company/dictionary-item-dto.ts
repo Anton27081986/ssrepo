@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { IId } from '@app/pages/production-plan/component-and-service-for-lib/i-id';
+import { IId } from '@front-library/components';
 
 /**
  * Модель айтема словаря

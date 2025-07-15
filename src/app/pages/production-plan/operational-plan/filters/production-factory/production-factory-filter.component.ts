@@ -6,13 +6,11 @@ import {
 	Signal,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import { map, Observable, tap } from 'rxjs';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
+import { map, Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {
-	FieldCtrlDirective,
 	FormFieldComponent,
-	InputComponent,
+	HeaderFilterCheckboxItemAbstractComponent,
 } from '@front-library/components';
 import { checkboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 import { AsyncPipe } from '@angular/common';
@@ -31,13 +29,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 		[(indeterminate)]="indeterminate"
 	></ss-lib-checkbox-filter-context>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		FormFieldComponent,
-		InputComponent,
-		FieldCtrlDirective,
-		checkboxFilterContextComponent,
-		AsyncPipe,
-	],
+	imports: [checkboxFilterContextComponent],
 })
 export class ProductionFactoryFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>

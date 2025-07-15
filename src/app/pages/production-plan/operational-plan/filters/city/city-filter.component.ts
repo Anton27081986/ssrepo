@@ -4,16 +4,8 @@ import {
 	inject,
 	OnInit,
 } from '@angular/core';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import {
-	CheckboxComponent,
-	FieldCtrlDirective,
-	FormFieldComponent,
-	IconType,
-	InputComponent,
-	TextComponent,
-} from '@front-library/components';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
+import { AsyncPipe } from '@angular/common';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { map, Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -23,18 +15,7 @@ import { checkboxFilterContextComponent } from '@app/pages/production-plan/compo
 @Component({
 	selector: 'app-city-filter',
 	standalone: true,
-	imports: [
-		AsyncPipe,
-		CheckboxComponent,
-		FieldCtrlDirective,
-		FormFieldComponent,
-		TextComponent,
-		ReactiveFormsModule,
-		InputComponent,
-		NgFor,
-		NgIf,
-		checkboxFilterContextComponent,
-	],
+	imports: [AsyncPipe, ReactiveFormsModule, checkboxFilterContextComponent],
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
 		[controlClearAll]="controlsClearAll"

@@ -15,7 +15,6 @@ import {
 	ModalRef,
 	RightSidePagePopupComponent,
 	Shape,
-	TableComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
@@ -23,7 +22,6 @@ import {
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { PostponePersonificationRowTrComponent } from '@app/pages/production-plan/modal/postpone-personification-tr/postpone-personification-row-tr.component';
 import { NgFor, NgIf } from '@angular/common';
 import { IResponse } from '@app/core/utils/response';
 import { tap } from 'rxjs';
@@ -38,9 +36,6 @@ export interface PostponeSidePageData {
 	standalone: true,
 	imports: [
 		RightSidePagePopupComponent,
-		TableComponent,
-		PostponePersonificationRowTrComponent,
-		NgFor,
 		NgIf,
 		TextComponent,
 		ButtonComponent,

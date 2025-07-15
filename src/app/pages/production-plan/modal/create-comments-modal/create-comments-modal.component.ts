@@ -32,7 +32,7 @@ export interface CreateCommentsModalData {
 @Component({
 	selector: 'app-create-comments-modal',
 	standalone: true,
-	imports: [ModalComponent, ButtonComponent, AvatarComponent],
+	imports: [ButtonComponent, AvatarComponent],
 	templateUrl: './create-comments-modal.component.html',
 	styleUrl: './create-comments-modal.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,

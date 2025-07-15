@@ -7,34 +7,15 @@ import {
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { map, Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {
-	CheckboxComponent,
-	FieldCtrlDirective,
-	FormFieldComponent,
-	IconType,
-	InputComponent,
-	TextComponent,
-} from '@front-library/components';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
-import { AsyncPipe, NgFor, NgForOf, NgIf } from '@angular/common';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
+import { AsyncPipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { checkboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-manager-tmz-filter',
 	standalone: true,
-	imports: [
-		FormFieldComponent,
-		InputComponent,
-		FieldCtrlDirective,
-		CheckboxComponent,
-		AsyncPipe,
-		ReactiveFormsModule,
-		TextComponent,
-		NgFor,
-		NgIf,
-		checkboxFilterContextComponent,
-	],
+	imports: [AsyncPipe, ReactiveFormsModule, checkboxFilterContextComponent],
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
 		[controlClearAll]="controlsClearAll"
