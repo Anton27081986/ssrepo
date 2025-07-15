@@ -2,6 +2,7 @@
 
 ## Getting started
 
+Запуск приложения
 ng serve
 
 ## Swagger
