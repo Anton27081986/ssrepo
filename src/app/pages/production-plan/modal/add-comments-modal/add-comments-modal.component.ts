@@ -18,7 +18,6 @@ import {
 	TextType,
 	TextWeight,
 	Colors,
-	PopoverTriggerForDirective,
 	DropdownListComponent,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
@@ -28,6 +27,7 @@ import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { switchMap, tap } from 'rxjs';
+import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
 
 export interface AddCommentsModalData {
 	id: number;
@@ -50,11 +50,17 @@ export interface AddCommentsModalData {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCommentsModalComponent implements OnInit, AfterViewInit {
-	@Input() data!: number;
+	@Input()
+	data!: OperationPlanItem;
 
-	@ViewChild('editable') editableDiv!: ElementRef<HTMLDivElement>;
+	@ViewChild('editable')
+	editableDiv!: ElementRef<HTMLDivElement>;
+
 	@ViewChild('content', { static: true })
 	modalContent!: ElementRef<HTMLElement>;
+
+	@ViewChild('commentsEl')
+	public messagesElement!: ElementRef;
 
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconType = IconType;
@@ -107,6 +113,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 
 	private updateMultiLineFlag(): void {
 		const currentHeight = this.editableDiv.nativeElement.scrollHeight;
+
 		this.isMultiLine = currentHeight > this.singleLineHeight + 1;
 	}
 
@@ -127,24 +134,34 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 
 	public loadCommentsList(): void {
 		this.service
-			.addComment(this.data)
+			.addComment(this.data.id)
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
 				this.comments = list;
 				this.cdr.markForCheck();
+				setTimeout(() => {
+					this.scrollToBottom();
+				}, 1);
 			});
 	}
 
 	public sendComment(): void {
 		const text = this.editableDiv.nativeElement.innerText.trim();
-		if (!text) return;
+
+		if (!text) {
+			return;
+		}
 
 		this.comment = text;
 
 		this.service
-			.sendComment(this.data, { note: this.comment })
+			.sendComment(this.data.id, { note: this.comment })
 			.pipe(
-				switchMap(() => this.service.addComment(this.data)),
+				tap((res) => {
+					this.data.isComment = res.isComment;
+					this.data.commentCount = res.commentCount;
+				}),
+				switchMap(() => this.service.addComment(this.data.id)),
 				tap((list) => {
 					this.comments = list;
 					this.cdr.markForCheck();
@@ -153,5 +170,16 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 				untilDestroyed(this),
 			)
 			.subscribe();
+	}
+
+	protected scrollToBottom(): void {
+		if (this.messagesElement) {
+			try {
+				this.messagesElement.nativeElement.scrollTop =
+					this.messagesElement.nativeElement.scrollHeight;
+			} catch (err) {
+				console.error(err);
+			}
+		}
 	}
 }

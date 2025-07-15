@@ -58,7 +58,10 @@ export class OperationPlanService {
 		);
 	}
 
-	public sendComment(id: number, body: ISendComment) {
+	public sendComment(
+		id: number,
+		body: ISendComment,
+	): Observable<{ isComment: boolean; commentCount: string }> {
 		return this.operationPlanApiService.sendComment(id, body);
 	}
 
