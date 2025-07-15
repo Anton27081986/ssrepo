@@ -1,7 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable } from 'rxjs';
-import { environment } from '@environments/environment';
+import { map, Observable, of, tap, merge, switchMap } from 'rxjs';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -17,17 +16,31 @@ import {
 	OperationPlanRequest,
 	Pagination,
 } from '@app/core/models/production-plan/operation-plan';
-import {
-	LinkToModule,
-	UpdateRawMaterialsRequest,
-} from '@app/core/models/production-plan/update-raw-materials-request';
+import { LinkToModule } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
+import { OrderAnOutfitRequest } from '@app/core/models/production-plan/order-an-outfit-request';
+import {
+	OperationPlanEventEnum,
+	OperationPlanRootService,
+} from '@app/pages/production-plan/service/operation-plan.root.service';
+import { UpdateRawMaterialsRequest } from '@app/core/models/production-plan/update-raw-materials-request';
+import {
+	ICommentsItemDto,
+	ISendComment,
+} from '@app/core/models/production-plan/comments';
+import {
+	CreatePlanFactRequest,
+	UpdatePlanFactRequest,
+} from '@app/core/models/production-plan/plan-fact-request';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
-	private operationPlanApiService: OperationPlanApiService = inject(
+	private readonly operationPlanApiService: OperationPlanApiService = inject(
 		OperationPlanApiService,
 	);
+
+	private readonly operationPlanRootService: OperationPlanRootService =
+		inject(OperationPlanRootService);
 
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
@@ -45,17 +58,35 @@ export class OperationPlanService {
 		);
 	}
 
+	public sendComment(id: number, body: ISendComment) {
+		return this.operationPlanApiService.sendComment(id, body);
+	}
+
+	public addComment(id: number): Observable<ICommentsItemDto[]> {
+		return this.operationPlanApiService.addComment(id);
+	}
+
 	public transferProductionPlan(
 		params: TransferProductionPlanMap[],
 	): Observable<void> {
 		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
+			const date = item.productionDateControl.value;
+			const productionDate = date
+				? [
+						date.getFullYear(),
+						String(date.getMonth() + 1).padStart(2, '0'),
+						String(date.getDate()).padStart(2, '0'),
+					].join('-')
+				: '';
+
 			return {
+				id: item.id,
 				orderId: item.orderId,
-				productionDate:
-					item.productionDateControl.value?.toISOString()!,
 				quantity: item.countForPostpone.value!,
+				productionDate,
 			};
 		});
+
 		return this.operationPlanApiService.transferProductionPlan(mapParams);
 	}
 
@@ -67,8 +98,10 @@ export class OperationPlanService {
 		return this.operationPlanApiService.downloadReport();
 	}
 
-	public downloadExel(): Observable<Blob> {
-		return this.operationPlanApiService.downloadExel();
+	public downloadExel(
+		request: OperationPlanRequest & Pagination,
+	): Observable<Blob> {
+		return this.operationPlanApiService.downloadExel(request);
 	}
 
 	public getWeeks(): Observable<IDictionaryItemDto[]> {
@@ -95,6 +128,7 @@ export class OperationPlanService {
 		input: IResponse<TransferProductionPlanFromBackend>,
 	): IResponse<TransferProductionPlanMap> {
 		const mappedItems = input.items.map((item) => ({
+			id: item.id,
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
@@ -113,11 +147,23 @@ export class OperationPlanService {
 	}
 
 	public addGp(params: AddToVRequest) {
-		return this.operationPlanApiService.addGp(params);
+		return this.operationPlanApiService.addGp(params).pipe(
+			tap(() => {
+				this.operationPlanRootService.event$.next({
+					type: OperationPlanEventEnum.operationPlanAdd,
+				});
+			}),
+		);
 	}
 
 	public deleteItemsTov(tovIds: number[]) {
-		return this.operationPlanApiService.deleteItemsTov(tovIds);
+		return this.operationPlanApiService.deleteItemsTov(tovIds).pipe(
+			tap(() => {
+				this.operationPlanRootService.event$.next({
+					type: OperationPlanEventEnum.operationPlanDelete,
+				});
+			}),
+		);
 	}
 
 	public getCalcVariants() {
@@ -136,5 +182,39 @@ export class OperationPlanService {
 		params: ApproveMaterialRequest,
 	): Observable<LinkToModule> {
 		return this.operationPlanApiService.approveMaterials(params);
+	}
+
+	public orderAnOutfit(params: OrderAnOutfitRequest) {
+		return this.operationPlanApiService.orderAnOutfit(params);
+	}
+
+	public setPlanFact(
+		rowId: number,
+		params: CreatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.operationPlanApiService.setPlanFact(rowId, params);
+	}
+
+	public updatePlanFact(
+		rowId: number,
+		params: UpdatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.operationPlanApiService.updatePlanFact(rowId, params);
+	}
+
+	public uploadWMS() {
+		return this.operationPlanApiService.uploadWMS();
+	}
+
+	public getPlanInfo(
+		weekId: number,
+		date: string,
+		productionSectionIds: number[],
+	): Observable<{ planDayTotalQuantity: number }> {
+		return this.operationPlanApiService.getPlanInfo(
+			weekId,
+			date,
+			productionSectionIds,
+		);
 	}
 }

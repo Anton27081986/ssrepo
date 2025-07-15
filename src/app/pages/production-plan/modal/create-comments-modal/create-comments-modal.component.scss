@@ -1,0 +1,60 @@
+.modal-content {
+	position: relative;
+	display: flex;
+	//border: 1px solid var(--border-secondary);
+	border-radius: 8px;
+	background-color: var(--surface-primary);
+	align-items: center;
+	padding: 5px;
+	gap: 5px;
+
+	&__avatar,
+	&__btn {
+		position: static;
+	}
+
+	&.multi-line {
+		align-items: flex-start;
+		padding: 48px 16px;
+		gap: 0;
+
+		.modal-content__avatar {
+			position: absolute;
+			top: 16px;
+			left: 16px;
+		}
+		.modal-content__btn {
+			position: absolute;
+			bottom: 16px;
+			right: 16px;
+		}
+	}
+
+	&__text {
+		flex: 1;
+	}
+}
+
+.comment-input {
+	position: relative;
+	height: 100% !important;
+	width: 100%;
+	max-width: 330px;
+	max-height: calc(1.4em * 5);
+	padding: 6px 10px;
+	outline: none;
+	white-space: pre-wrap;
+	overflow-y: auto;
+	line-height: 1.4em;
+	overflow-wrap: break-word;
+
+	&[data-placeholder]:empty::before {
+		content: attr(data-placeholder);
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--text-placeholder);
+		pointer-events: none;
+		white-space: nowrap;
+	}
+}

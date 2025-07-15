@@ -26,4 +26,6 @@ export interface IDictionaryItemDto extends IId {
 	linkToDetail?: string | null;
 
 	parentId?: number;
+
+	isCurrent?: boolean;
 }

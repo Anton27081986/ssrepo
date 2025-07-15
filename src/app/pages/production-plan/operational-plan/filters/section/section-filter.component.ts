@@ -8,20 +8,22 @@ import { OperationPlanFiltersApiService } from '@app/pages/production-plan/servi
 import {
 	Align,
 	CheckboxComponent,
+	DropdownItemComponent,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	InputComponent,
 	SpinnerComponent,
 	TextComponent,
 } from '@front-library/components';
-import { BehaviorSubject, map, Observable, tap, combineLatest } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/component-and-service-for-lib/header-filter-checkbox-item-abstract.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { TreeNodeFilter } from '@app/pages/production-plan/operational-plan/filters/section/tree-node-filter';
+import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
 import { DropdownFilterGroupItemsComponent } from '@app/pages/production-plan/component-and-service-for-lib/dropdown-filter-group-items/dropdown-filter-group-items.component';
 import { DropdownFilterItemComponent } from '@app/pages/production-plan/component-and-service-for-lib/dropdown-filter-item/dropdown-filter-item.component';
+import { FilterSectionParentItems } from '@app/core/models/production-plan/filter-section-dto';
 
 @Component({
 	selector: 'app-section-filter',
@@ -39,6 +41,7 @@ import { DropdownFilterItemComponent } from '@app/pages/production-plan/componen
 		DropdownFilterGroupItemsComponent,
 		DropdownFilterItemComponent,
 		SpinnerComponent,
+		DropdownItemComponent,
 	],
 	templateUrl: '/section-filter.component.html',
 	styleUrl: 'section-filter.component.scss',
@@ -52,7 +55,9 @@ export class SectionFilterComponent
 		OperationPlanFiltersApiService,
 	);
 
-	protected treeNode!: Observable<TreeNodeFilter[]>;
+	protected treeNode$!: Observable<TreeNode[]>;
+
+	protected node: IDictionaryItemDto[] = [];
 
 	get trueCheckControlMap(): boolean {
 		return (
@@ -68,13 +73,13 @@ export class SectionFilterComponent
 
 	override ngOnInit() {
 		super.ngOnInit();
-		this.treeNode = this.items$.pipe(
+		this.treeNode$ = this.items$.pipe(
 			map((items) => {
-				const node: TreeNodeFilter[] = [];
+				const node: TreeNode[] = [];
 				items.forEach((parent) => {
 					if (!parent.parentId) {
 						node.push(
-							new TreeNodeFilter(
+							new TreeNode(
 								parent,
 								items,
 								this.currentControlsMap,
@@ -90,13 +95,22 @@ export class SectionFilterComponent
 	override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionSection(query).pipe(
 			map((value) => {
-				return value.items.flatMap((item) => {
-					const mapItems = item.childs.map((child) => {
-						child.parentId = item.data.id;
-						return child;
-					});
-					return [item.data, ...mapItems];
-				});
+				const flat: IDictionaryItemDto[] = [];
+				value.parentItems.forEach(
+					(parent: FilterSectionParentItems) => {
+						// Добавляем родителя (date)
+						flat.push(parent.data);
+						// Добавляем детей с parentId = parent.date.id
+						parent.childs.forEach((child: IDictionaryItemDto) => {
+							flat.push({
+								...child,
+								parentId: parent.data.id,
+							});
+						});
+					},
+				);
+				this.node = value.items;
+				return [...flat, ...value.items];
 			}),
 		);
 	}
@@ -104,13 +118,21 @@ export class SectionFilterComponent
 	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionSection('', ids).pipe(
 			map((value) => {
-				return value.items.flatMap((item) => {
-					const mapItems = item.childs.map((child) => {
-						child.parentId = item.data.id;
-						return child;
-					});
-					return [item.data, ...mapItems];
-				});
+				const flat: IDictionaryItemDto[] = [];
+
+				value.parentItems.forEach(
+					(parent: FilterSectionParentItems) => {
+						flat.push(parent.data);
+						parent.childs.forEach((child: IDictionaryItemDto) => {
+							flat.push({
+								...child,
+								parentId: parent.data.id,
+							});
+						});
+					},
+				);
+				this.node = value.items;
+				return [...flat, ...value.items];
 			}),
 		);
 	}

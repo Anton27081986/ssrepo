@@ -1,0 +1,83 @@
+<div
+	#content
+	class="modal-content add-comments"
+>
+	<div
+		*ngIf="comments.length; else noComments"
+		class="comments-list"
+	>
+		<div
+			*ngFor="let comment of comments"
+			class="comment-item"
+		>
+			<ss-lib-avatar
+				class="comment-item__avatar"
+				[src]="comment.author?.avatarUrl || ''"
+			></ss-lib-avatar>
+			<div class="comment-item__body">
+				<div class="comment-item__header">
+					<div class="comment-item__header-top">
+						<ss-lib-text
+							class="comment-item__author"
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Medium"
+						>
+							{{ comment.author.name }}
+						</ss-lib-text>
+						<ss-lib-text
+							class="comment-item__date"
+							[type]="TextType.BodyXs"
+							[weight]="TextWeight.Regular"
+							[color]="Colors.TextBody3"
+						>
+							{{
+								comment.createdDate
+									| date: 'dd MMMM yyyy в HH:mm' : '' : 'ru'
+							}}
+						</ss-lib-text>
+					</div>
+					<ss-lib-text
+						class="comment-item__position"
+						[type]="TextType.BodyXs"
+						[weight]="TextWeight.Regular"
+						[color]="Colors.TextBody3"
+						>{{ comment.author.position }}</ss-lib-text
+					>
+				</div>
+				<ss-lib-text
+					class="comment-item__text"
+					[type]="TextType.BodySm"
+				>
+					{{ comment.note }}
+				</ss-lib-text>
+			</div>
+		</div>
+	</div>
+	<ng-template #noComments>
+		<div class="no-comments">Комментариев пока нет</div>
+	</ng-template>
+	<div class="divider"></div>
+	<div
+		class="comment-input-wrapper"
+		[class.multi-line]="isMultiLine"
+	>
+		<ss-lib-avatar
+			*ngIf="currentUser"
+			class="comment-avatar"
+			[src]="currentUser?.avatarUrl || ''"
+		></ss-lib-avatar>
+		<div
+			#editable
+			class="comment-input"
+			contenteditable="true"
+			[attr.data-placeholder]="'Добавьте комментарий…'"
+			(input)="onInput()"
+		></div>
+		<ss-lib-button
+			class="comment-send-btn"
+			[type]="ButtonType.Secondary"
+			[icon]="IconType.ArrowUp"
+			(click)="sendComment()"
+		></ss-lib-button>
+	</div>
+</div>

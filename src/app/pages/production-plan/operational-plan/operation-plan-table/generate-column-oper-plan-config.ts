@@ -71,11 +71,13 @@ export function generateColumnOperationPlanConfig(
 
 	// Собираем уникальные даты из planDays
 	const uniqueDates = new Set<string>();
+
 	days.forEach((day) => {
 		const newDate = new Date(day.day);
-		newDate.setDate(newDate.getDate() + 1);
-		const date = newDate.toISOString().split('T')[0]; // Формат MM-DD
-
+		const year = newDate.getFullYear();
+		const month = String(newDate.getMonth() + 1).padStart(2, '0');
+		const dayNum = String(newDate.getDate()).padStart(2, '0');
+		const date = `${year}-${month}-${dayNum}`; // Формат ГГГГ-ММ-ДД
 		uniqueDates.add(date);
 	});
 

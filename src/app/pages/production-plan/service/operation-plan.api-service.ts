@@ -20,10 +20,22 @@ import {
 	LinkToModule,
 } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
+import {
+	OrderAnOutfit,
+	OrderAnOutfitRequest,
+} from '@app/core/models/production-plan/order-an-outfit-request';
+import {
+	CreatePlanFactRequest,
+	UpdatePlanFactRequest,
+} from '@app/core/models/production-plan/plan-fact-request';
+import {
+	ICommentsItemDto,
+	ISendComment,
+} from '@app/core/models/production-plan/comments';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
-	private http: HttpClient = inject(HttpClient);
+	private readonly http: HttpClient = inject(HttpClient);
 
 	public getOperationPlan(
 		request: OperationPlanRequest & Pagination,
@@ -48,15 +60,32 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public getTransferProductionPlan(id: number) {
+	public getTransferProductionPlan(productionPlanDayId: number) {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
+			{ params: { productionPlanDayId } },
 		);
 	}
 
-	public downloadExel(): Observable<Blob> {
+	public downloadExel(
+		request: OperationPlanRequest & Pagination,
+	): Observable<Blob> {
+		let params = new HttpParams();
+
+		Object.entries(request).forEach(([key, value]) => {
+			if (value !== null && value !== undefined) {
+				if (Array.isArray(value)) {
+					value.forEach((v) => {
+						params = params.append(key, v);
+					});
+				} else {
+					params = params.set(key, value);
+				}
+			}
+		});
 		return this.http.get<Blob>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Action/Reports`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Reports`,
+			{ params: params, responseType: 'blob' as 'json' },
 		);
 	}
 
@@ -76,6 +105,7 @@ export class OperationPlanApiService {
 		params = params.set('name', query);
 		params = params.set('limit', limit);
 		params = params.set('offset', offset);
+
 		return this.http.get<IResponse<ManufacturingTovs>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Tovs`,
 			{ params },
@@ -95,6 +125,19 @@ export class OperationPlanApiService {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
 			params,
+		);
+	}
+
+	public sendComment(id: number, body: ISendComment): Observable<void> {
+		return this.http.post<void>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
+			body,
+		);
+	}
+
+	public addComment(id: number): Observable<ICommentsItemDto[]> {
+		return this.http.get<ICommentsItemDto[]>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
 		);
 	}
 
@@ -137,7 +180,7 @@ export class OperationPlanApiService {
 
 	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities?ids=58&ids=6`,
 		);
 	}
 
@@ -147,6 +190,60 @@ export class OperationPlanApiService {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/ApproveMaterials`,
 			params,
+		);
+	}
+
+	public orderAnOutfit(
+		params: OrderAnOutfitRequest,
+	): Observable<OrderAnOutfit> {
+		return this.http.post<OrderAnOutfit>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/OrderProduction`,
+			params,
+		);
+	}
+
+	public setPlanFact(
+		rowId: number,
+		params: CreatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.http.post<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
+			{ ...params },
+		);
+	}
+
+	public updatePlanFact(
+		rowId: number,
+		params: UpdatePlanFactRequest,
+	): Observable<OperationPlanItem> {
+		return this.http.patch<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
+			{ ...params },
+		);
+	}
+
+	public uploadWMS() {
+		return this.http.post<LinkToModule>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadWMS`,
+			{},
+		);
+	}
+
+	public getPlanInfo(
+		weekId: number,
+		date: string,
+		productionSectionIds: number[],
+	): Observable<{ planDayTotalQuantity: number }> {
+		let params = new HttpParams();
+
+		params = params.set('WeekId', weekId.toString());
+		params = params.set('Date', date);
+		productionSectionIds.forEach((val) => {
+			params = params.append('ProductionSectionsIds', val);
+		});
+		return this.http.get<{ planDayTotalQuantity: number }>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TotalPlans`,
+			{ params },
 		);
 	}
 }

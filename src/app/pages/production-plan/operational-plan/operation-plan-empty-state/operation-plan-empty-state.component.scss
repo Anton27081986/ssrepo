@@ -5,6 +5,8 @@
   justify-content: center;
   align-items: center;
   border: 1px solid var(--border-primary);
+  border-left: none;
+  border-right: none;
 
   &__content {
     display: flex;

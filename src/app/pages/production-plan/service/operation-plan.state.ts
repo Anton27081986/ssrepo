@@ -13,17 +13,33 @@ export class OperationPlanState {
 	public weekId$: BehaviorSubject<number | null> = new BehaviorSubject<
 		number | null
 	>(null);
+
 	public filterValueStore$: BehaviorSubject<
 		(OperationPlanRequest & Pagination) | null
 	> = new BehaviorSubject<(OperationPlanRequest & Pagination) | null>(null);
+
 	public permissionsFacadeService = inject(PermissionsFacadeService);
 
-	constructor() {
-		console.log(
-			this.permissionsFacadeService.hasPermission(
-				ModulesWithPermissionsEnum.OperationalPlan,
-				Permissions.OPERATIONAL_PLAN_CALC_ROW_MATERIALS,
-			),
+	get getHasPermissionEdit() {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_EDIT,
 		);
 	}
+
+	get getHasPermissionCalcRowMaterials() {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_CALC_ROW_MATERIALS,
+		);
+	}
+
+	get getHasPermissionApproveMaterials() {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_APPROVE_MATERIALS,
+		);
+	}
+
+	constructor() {}
 }

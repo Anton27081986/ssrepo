@@ -8,7 +8,7 @@ export interface UpdateRawMaterialsRequest {
 	calcVariantId: number;
 	calcDate?: string;
 	filterParams: OperationPlanRequest & Pagination;
-	tovIds?: number[];
+	ids?: number[];
 }
 
 export interface LinkToModule {

@@ -1,6 +1,7 @@
 import { FormControl } from '@angular/forms';
 
 export interface TransferProductionPlanFromBackend {
+	id: number;
 	orderId: number;
 	customerUser: {
 		id: number;
@@ -11,6 +12,7 @@ export interface TransferProductionPlanFromBackend {
 }
 
 export interface TransferProductionPlanMap {
+	id: number;
 	orderId: number;
 	customerUser: {
 		id: number;
@@ -22,6 +24,7 @@ export interface TransferProductionPlanMap {
 }
 
 export interface TransferProductionPlanPatch {
+	id: number;
 	orderId: number;
 	quantity: number;
 	productionDate: string;

@@ -22,7 +22,7 @@ import {
 import { NgComponentOutlet, NgIf } from '@angular/common';
 import { rotateAnimation } from '@app/core/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TreeNodeFilter } from '@app/pages/production-plan/operational-plan/filters/section/tree-node-filter';
+import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
 
 @Component({
 	selector: 'ss-lib-dropdown-group-filter-items',
@@ -44,7 +44,7 @@ import { TreeNodeFilter } from '@app/pages/production-plan/operational-plan/filt
 	animations: [rotateAnimation],
 })
 export class DropdownFilterGroupItemsComponent {
-	public treeNode: InputSignal<TreeNodeFilter> = input.required();
+	public treeNode: InputSignal<TreeNode> = input.required();
 	protected readonly Colors = Colors;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly TextType = TextType;

@@ -285,32 +285,33 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	}
 
 	protected close(): void {
-		if (this.selectedTov().length > 0) {
-			this.isVisibleModal.set(false);
-			const confirmModal = this.confirmIfCloseForm();
-
-			const sub1 = confirmModal.afterSubmit$
-				.pipe(
-					take(1),
-					tap(() => {
-						this.popup.close();
-					}),
-				)
-				.subscribe();
-			this.subscriptions.push(sub1);
-
-			const sub2 = confirmModal.afterClosed$
-				.pipe(
-					take(1),
-					tap(() => {
-						this.isVisibleModal.set(true);
-					}),
-				)
-				.subscribe();
-			this.subscriptions.push(sub2);
-		} else {
-			this.popup.close();
-		}
+		// if (this.selectedTov().length > 0) {
+		// 	this.isVisibleModal.set(false);
+		// 	const confirmModal = this.confirmIfCloseForm();
+		//
+		// 	const sub1 = confirmModal.afterSubmit$
+		// 		.pipe(
+		// 			take(1),
+		// 			tap(() => {
+		// 				this.popup.close();
+		// 			}),
+		// 		)
+		// 		.subscribe();
+		// 	this.subscriptions.push(sub1);
+		//
+		// 	const sub2 = confirmModal.afterClosed$
+		// 		.pipe(
+		// 			take(1),
+		// 			tap(() => {
+		// 				this.isVisibleModal.set(true);
+		// 			}),
+		// 		)
+		// 		.subscribe();
+		// 	this.subscriptions.push(sub2);
+		// } else {
+		// 	this.popup.close();
+		// }
+		this.popup.close();
 	}
 
 	public confirmIfCloseForm(): ModalRef {

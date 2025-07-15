@@ -107,6 +107,7 @@ export class ModalUpdateRawMaterialsComponent {
 					weekId: this.data.weekId,
 					calcVariantId: calcVariant.id,
 					calcDate: this.data.day,
+					ids: this.data.tovIds,
 				})
 				.pipe(
 					untilDestroyed(this),

@@ -1,7 +1,6 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	effect,
 	inject,
 	input,
 	type InputSignal,
@@ -10,6 +9,7 @@ import {
 import { NgIf, NgTemplateOutlet } from '@angular/common';
 import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import { FilterMenuComponent } from '@app/pages/production-plan/component-and-service-for-lib/filter-menu/filter-menu.component';
+import { DividerComponent } from '@front-library/components';
 
 @Component({
 	selector: 'ss-lib-table-canvas',
@@ -17,11 +17,7 @@ import { FilterMenuComponent } from '@app/pages/production-plan/component-and-se
 	styleUrls: ['filters-table-canvas.component.scss'],
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		NgTemplateOutlet,
-		NgIf,
-		FilterMenuComponent,
-	],
+	imports: [NgTemplateOutlet, NgIf, FilterMenuComponent, DividerComponent],
 })
 export class FiltersTableCanvasComponent {
 	public readonly leftFiltersRef: InputSignal<TemplateRef<{}> | null> =

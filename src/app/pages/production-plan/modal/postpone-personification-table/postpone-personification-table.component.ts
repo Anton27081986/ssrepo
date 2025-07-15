@@ -65,7 +65,7 @@ export class PostponePersonificationTableComponent {
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly InputType = InputType;
-	protected readonly Date = new Date;
+	protected readonly Now = new Date;
 	protected readonly ExtraSize = ExtraSize;
 
 	public readonly columns = [

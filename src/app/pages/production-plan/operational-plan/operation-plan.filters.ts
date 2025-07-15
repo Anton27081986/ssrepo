@@ -15,7 +15,7 @@ export enum operationPlanFiltersFields {
 	planEconomicUserIds = 'planEconomicUserIds',
 	productManagerUserIds = 'ProductManagerUserIds',
 	warehouseIds = 'WarehouseIds',
-	productionSectionIds = 'ProductionSectionIds',
+	productionSectionIds = 'productionSectionIds',
 	tovIds = 'TovIds',
 	cityIds = 'CityIds',
 	tovCategoryIds = 'TovCategoryIds',
