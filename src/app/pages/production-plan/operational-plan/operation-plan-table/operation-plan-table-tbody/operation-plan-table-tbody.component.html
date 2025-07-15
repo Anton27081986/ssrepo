@@ -27,21 +27,25 @@
 							>
 								{{ getCellValue(row, column.id) }}
 							</ss-lib-text>
-							<ss-lib-button
-								[class]="{ 'comment-button': !row.isComment }"
-								[text]="row.commentCount"
-								[iconPosition]="IconPosition.Start"
-								[icon]="IconType.Message"
-								[size]="ExtraSize.xs"
-								[type]="ButtonType.Secondary"
-								[popoverTriggerFor]="
-									row.isComment
-										? addCommentsModal
-										: createCommentsModal
-								"
-								(isPopoverOpenEmit)="onCommentsOpen($event)"
-							>
-							</ss-lib-button>
+							@if (operationPlanState.getHasPermissionEdit) {
+								<ss-lib-button
+									[class]="{
+										'comment-button': !row.isComment,
+									}"
+									[text]="row.commentCount"
+									[iconPosition]="IconPosition.Start"
+									[icon]="IconType.Message"
+									[size]="ExtraSize.xs"
+									[type]="ButtonType.Secondary"
+									[popoverTriggerFor]="
+										row.isComment
+											? addCommentsModal
+											: createCommentsModal
+									"
+									(isPopoverOpenEmit)="onCommentsOpen($event)"
+								>
+								</ss-lib-button>
+							}
 							<ss-lib-dropdown-list
 								#createCommentsModal
 								[height]="'100%'"
@@ -79,7 +83,10 @@
 							column.id.startsWith('factQuantity')) &&
 						operationPlanState.getHasPermissionEdit
 					) {
-						@if (column.id.startsWith('planQuantity')) {
+						@if (
+							column.id.startsWith('planQuantity') &&
+							operationPlanState.getHasPermissionEdit
+						) {
 							<ss-lib-button
 								class="postpone-button"
 								[type]="ButtonType.Secondary"
