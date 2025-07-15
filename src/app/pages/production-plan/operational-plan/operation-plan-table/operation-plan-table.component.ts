@@ -32,12 +32,12 @@ import {
 	UtilityButtonComponent,
 	TooltipDirective,
 	TooltipPosition,
+	IndicatorChecklistPopupComponent,
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { tap } from 'rxjs';
-import { IndicatorChecklistPopupComponent } from '@app/pages/production-plan/component-and-service-for-lib/indicator-checklist-popup/indicator-checklist-popup.component';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -74,13 +74,13 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 		ReactiveFormsModule,
 		TextComponent,
 		TableHeadDirective,
-		IndicatorChecklistPopupComponent,
 		DatePipe,
 		OperationPlanTableTbodyComponent,
 		HintComponent,
 		UtilityButtonComponent,
 		NgIf,
 		TooltipDirective,
+		IndicatorChecklistPopupComponent,
 	],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',

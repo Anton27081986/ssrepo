@@ -1,9 +1,0 @@
-<ss-lib-filter-menu-item *ngFor="let filter of filterService.menuFilterItems "
-						 [filter]="filter"></ss-lib-filter-menu-item>
-<ss-lib-button
-	*ngIf="checkActiveFilter"
-	[type]="ButtonType.Text"
-	[text]="'Очистить все'"
-	(click)="clearAll()"
->
-</ss-lib-button>

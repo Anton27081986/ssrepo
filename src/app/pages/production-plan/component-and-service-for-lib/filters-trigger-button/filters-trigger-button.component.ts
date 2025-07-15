@@ -1,16 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
 import {
 	ButtonComponent,
 	ButtonType,
-	CheckboxComponent,
 	DropdownItemComponent,
 	DropdownListComponent,
+	HeaderFilterService,
 	IconType,
+	IFilterItem,
 	PopoverTriggerForDirective,
-	TextComponent,
 } from '@front-library/components';
-import { IFilterItem } from '@app/pages/production-plan/component-and-service-for-lib/filter-items';
 import { NgForOf } from '@angular/common';
 import { IconPosition } from '@front-components/components';
 
@@ -22,8 +20,6 @@ import { IconPosition } from '@front-components/components';
 		DropdownListComponent,
 		DropdownItemComponent,
 		PopoverTriggerForDirective,
-		CheckboxComponent,
-		TextComponent,
 		NgForOf,
 	],
 	templateUrl: './filters-trigger-button.component.html',

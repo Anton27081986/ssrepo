@@ -44,7 +44,6 @@ export interface AddCommentsModalData {
 		ButtonComponent,
 		AvatarComponent,
 		DatePipe,
-		PopoverTriggerForDirective,
 	],
 	templateUrl: './add-comments-modal.component.html',
 	styleUrls: ['./add-comments-modal.component.scss'],
@@ -127,9 +126,10 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	}
 
 	public loadCommentsList(): void {
-		this.service.addComment(this.data)
+		this.service
+			.addComment(this.data)
 			.pipe(untilDestroyed(this))
-			.subscribe(list => {
+			.subscribe((list) => {
 				this.comments = list;
 				this.cdr.markForCheck();
 			});

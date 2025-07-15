@@ -1,7 +1,4 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
-import { SelectComponent } from '@app/shared/components/select/select.component';
-import { CardComponent } from '@app/shared/components/card/card.component';
 import {
 	ButtonComponent,
 	TabsComponent,
@@ -28,9 +25,6 @@ import { NgIf } from '@angular/common';
 	selector: 'app-plan-days',
 	standalone: true,
 	imports: [
-		HeadlineComponent,
-		SelectComponent,
-		CardComponent,
 		ButtonComponent,
 		TextComponent,
 		RouterOutlet,

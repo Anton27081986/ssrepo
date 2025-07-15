@@ -7,9 +7,10 @@ import {
 	type TemplateRef,
 } from '@angular/core';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import { HeaderFilterService } from '@app/pages/production-plan/component-and-service-for-lib/header-filter.service';
-import { FilterMenuComponent } from '@app/pages/production-plan/component-and-service-for-lib/filter-menu/filter-menu.component';
-import { DividerComponent } from '@front-library/components';
+import {
+	FilterMenuComponent,
+	HeaderFilterService,
+} from '@front-library/components';
 
 @Component({
 	selector: 'ss-lib-table-canvas',
@@ -17,7 +18,7 @@ import { DividerComponent } from '@front-library/components';
 	styleUrls: ['filters-table-canvas.component.scss'],
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [NgTemplateOutlet, NgIf, FilterMenuComponent, DividerComponent],
+	imports: [NgTemplateOutlet, NgIf, FilterMenuComponent],
 })
 export class FiltersTableCanvasComponent {
 	public readonly leftFiltersRef: InputSignal<TemplateRef<{}> | null> =

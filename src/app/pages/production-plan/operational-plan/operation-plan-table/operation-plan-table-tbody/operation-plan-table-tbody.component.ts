@@ -1,4 +1,10 @@
-import {ChangeDetectorRef, Component, inject, Signal, ViewChild} from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	inject,
+	Signal,
+	ViewChild,
+} from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	OperationPlanItem,
@@ -12,7 +18,6 @@ import {
 	IconPosition,
 	DropdownListComponent,
 	ExtraSize,
-	IconComponent,
 	IconType,
 	PopoverTriggerForDirective,
 	SsTableState,
@@ -27,7 +32,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
-import { NgIf } from '@angular/common';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { CreateCommentsModalComponent } from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
 
@@ -73,9 +77,7 @@ export const BASE_COLUMN_MAP: Record<
 		TextComponent,
 		TableCellDirective,
 		TrComponent,
-		IconComponent,
 		AddCommentsModalComponent,
-		NgIf,
 		ButtonComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,

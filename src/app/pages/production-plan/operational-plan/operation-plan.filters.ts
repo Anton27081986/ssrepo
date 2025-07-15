@@ -1,7 +1,3 @@
-import {
-	IFilterCriterionType,
-	IFilterItem,
-} from '@app/pages/production-plan/component-and-service-for-lib/filter-items';
 import { PlanEconomicUserFilterComponent } from '@app/pages/production-plan/operational-plan/filters/plan-economic-user/plan-economic-user-filter.component';
 import { ManagerTmzFilterComponent } from '@app/pages/production-plan/operational-plan/filters/manager-tmz/managerTmz-filter.component';
 import { TovFilterComponent } from '@app/pages/production-plan/operational-plan/filters/tov/tov-filter.component';
@@ -10,6 +6,7 @@ import { WareHouseFilterComponent } from '@app/pages/production-plan/operational
 import { CityFilterComponent } from '@app/pages/production-plan/operational-plan/filters/city/city-filter.component';
 import { TovCategoryFilterComponent } from '@app/pages/production-plan/operational-plan/filters/tov-category/tov-category-filter.component';
 import { SectionFilterComponent } from '@app/pages/production-plan/operational-plan/filters/section/section-filter.component';
+import { IFilterCriterionType, IFilterItem } from '@front-library/components';
 
 export enum operationPlanFiltersFields {
 	planEconomicUserIds = 'planEconomicUserIds',
