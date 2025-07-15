@@ -7,7 +7,11 @@
 					ssTd
 					class="item-td"
 					[style.min-width.px]="
-						column.id.startsWith('planQuantity') ? 170 : 80
+						column.id.startsWith('planQuantity')
+							? 160
+							: column.id.startsWith('factQuantity')
+								? 105
+								: 80
 					"
 				>
 					@if (column.id === 'tov') {
@@ -24,11 +28,14 @@
 								{{ getCellValue(row, column.id) }}
 							</ss-lib-text>
 							<ss-lib-button
+								[class]="{ 'comment-button': !row.isComment }"
+								[text]="row.commentCount"
+								[iconPosition]="IconPosition.Start"
 								[icon]="IconType.Message"
-								[size]="ExtraSize.xxs"
+								[size]="ExtraSize.xs"
 								[type]="ButtonType.Secondary"
 								[popoverTriggerFor]="
-									!row.isComment
+									row.isComment
 										? addCommentsModal
 										: createCommentsModal
 								"
@@ -41,7 +48,7 @@
 								[width]="'449px'"
 							>
 								<app-create-comments-modal
-									[data]="row.id"
+									[data]="row"
 								></app-create-comments-modal>
 							</ss-lib-dropdown-list>
 							<ss-lib-dropdown-list
@@ -51,7 +58,7 @@
 							>
 								<app-add-comments-modal
 									#getCommentsList
-									[data]="row.id"
+									[data]="row"
 								></app-add-comments-modal>
 							</ss-lib-dropdown-list>
 						</div>
@@ -88,9 +95,11 @@
 						<input
 							#quantityInput
 							class="quantity-input"
-							type="text"
-							pattern="\d*"
-							maxlength="9"
+							type="number"
+							maxlength="10"
+							[disabled]="
+								!operationPlanState.getHasPermissionEdit
+							"
 							[value]="getCellValue(row, column.id)"
 							(focusout)="editPlanFact($event, row, column.id)"
 							(keyup.enter)="quantityInput.blur()"

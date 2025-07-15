@@ -62,7 +62,16 @@ input::-webkit-inner-spin-button {
   display: inline-flex;
 }
 
+.comment-button {
+  transition: all 0.5s ease;
+  opacity: 0;
+}
+
 .item-td:hover {
+  .comment-button {
+    opacity: 100%;
+  }
+
   .postpone-button {
     opacity: 100%;
   }

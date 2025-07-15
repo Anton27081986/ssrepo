@@ -4,6 +4,7 @@
 >
 	<div
 		*ngIf="comments.length; else noComments"
+		#commentsEl
 		class="comments-list"
 	>
 		<div

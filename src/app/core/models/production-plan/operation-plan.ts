@@ -16,6 +16,7 @@ export interface OperationPlanItem {
 	monthFactQuantity: number;
 	weekPlanQuantity: number;
 	weekFactQuantity: number;
+	commentCount: string;
 }
 
 export interface IName {

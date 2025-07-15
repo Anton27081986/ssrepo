@@ -34,6 +34,7 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { CreateCommentsModalComponent } from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
+import { NgIf } from '@angular/common';
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<
@@ -83,13 +84,15 @@ export const BASE_COLUMN_MAP: Record<
 		DropdownListComponent,
 		ButtonComponent,
 		CreateCommentsModalComponent,
+		NgIf,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
 })
 @UntilDestroy()
 export class OperationPlanTableTbodyComponent {
-	@ViewChild('getCommentsList') commentsComp!: AddCommentsModalComponent;
+	@ViewChild('getCommentsList')
+	commentsComp!: AddCommentsModalComponent;
 
 	private readonly tableStateService =
 		inject<SsTableState<OperationPlanItem>>(SsTableState);
@@ -127,12 +130,10 @@ export class OperationPlanTableTbodyComponent {
 		columnId: string,
 	): void {
 		const input = event.target as HTMLInputElement;
-		const newValue = input.value || null;
+		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
 		const oldValue =
 			this.getDayCell(row, columnId.replace('fact', 'plan')) ||
 			this.getDayCell(row, columnId.replace('plan', 'fact'));
-
-		console.log(oldValue);
 
 		if (columnId.startsWith('plan')) {
 			if (oldValue?.id) {
@@ -192,6 +193,7 @@ export class OperationPlanTableTbodyComponent {
 			}
 		}
 	}
+
 	protected openPostponePlanModal(row: OperationPlanItem) {
 		this.popupService.openPostponePlanModal(47);
 	}

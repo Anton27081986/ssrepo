@@ -83,9 +83,10 @@ export class OperationPlanApiService {
 				}
 			}
 		});
+
 		return this.http.get<Blob>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Reports`,
-			{ params: params, responseType: 'blob' as 'json' },
+			{ params, responseType: 'blob' as 'json' },
 		);
 	}
 
@@ -128,8 +129,11 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public sendComment(id: number, body: ISendComment): Observable<void> {
-		return this.http.post<void>(
+	public sendComment(
+		id: number,
+		body: ISendComment,
+	): Observable<{ isComment: boolean; commentCount: string }> {
+		return this.http.post<{ isComment: boolean; commentCount: string }>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
 			body,
 		);
@@ -241,6 +245,7 @@ export class OperationPlanApiService {
 		productionSectionIds.forEach((val) => {
 			params = params.append('ProductionSectionsIds', val);
 		});
+
 		return this.http.get<{ planDayTotalQuantity: number }>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TotalPlans`,
 			{ params },
