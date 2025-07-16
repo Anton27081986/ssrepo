@@ -1,18 +1,24 @@
 import { Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	FormBuilder,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { IUserDto } from '@app/core/models/awards/user-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { ThankColleagueFacadeService } from '@app/core/facades/thanks-colleague-facade.service';
 import { NotificationToastService } from '@app/core/services/notification-toast.service';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {ChipsUserSearchComponent} from "@app/shared/components/inputs/chips-user-search/chips-user-search.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { ChipsUserSearchComponent } from '@app/shared/components/inputs/chips-user-search/chips-user-search.component';
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 
 @UntilDestroy()
 @Component({
@@ -26,9 +32,9 @@ import {ButtonComponent} from "@app/shared/components/buttons/button/button.comp
 		ReactiveFormsModule,
 		ChipsUserSearchComponent,
 		TextareaComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class AddThanksColleagueModalComponent {
 	protected formGroup: FormGroup<AddVictoryForm>;
@@ -36,7 +42,9 @@ export class AddThanksColleagueModalComponent {
 	public toUsers: IUserDto[] = [];
 	protected subscription: Subscription = new Subscription();
 
-	protected readonly victoryFiles = new BehaviorSubject<IAttachmentDto[] | null>(null);
+	protected readonly victoryFiles = new BehaviorSubject<
+		IAttachmentDto[] | null
+	>(null);
 
 	constructor(
 		private readonly modalRef: ModalRef,
@@ -45,7 +53,10 @@ export class AddThanksColleagueModalComponent {
 		private readonly notificationService: NotificationToastService,
 	) {
 		this.formGroup = this._formBuilder.group<AddVictoryForm>({
-			note: this._formBuilder.nonNullable.control('', Validators.required),
+			note: this._formBuilder.nonNullable.control(
+				'',
+				Validators.required,
+			),
 			userIds: this._formBuilder.nonNullable.control([]),
 		});
 	}
@@ -55,7 +66,7 @@ export class AddThanksColleagueModalComponent {
 	}
 
 	submit() {
-		const userIds = this.toUsers.map(user => user.id!);
+		const userIds = this.toUsers.map((user) => user.id!);
 
 		if (userIds.length) {
 			this.formGroup.controls.userIds.setValue(userIds);

@@ -19,7 +19,9 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DynamicPaginationComponent implements OnInit {
-	@Output() public changeOffset: EventEmitter<number> = new EventEmitter<number>();
+	@Output()
+	public changeOffset: EventEmitter<number> = new EventEmitter<number>();
+
 	public total: InputSignal<number> = input.required<number>();
 	public limit: InputSignal<number> = input.required<number>();
 	public offset: InputSignal<number> = input.required<number>();
@@ -27,6 +29,7 @@ export class DynamicPaginationComponent implements OnInit {
 		if (this.limit() > this.total()) {
 			return this.limit() - this.total();
 		}
+
 		return this.limit();
 	});
 

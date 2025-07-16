@@ -1,0 +1,133 @@
+import { inject, Injectable } from '@angular/core';
+import { environment } from '@environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { IResponse } from '@app/core/utils/response';
+import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { FilterSectionDto } from '@app/core/models/production-plan/filter-section-dto';
+
+@Injectable({ providedIn: 'root' })
+export class OperationPlanFiltersApiService {
+	private http: HttpClient = inject(HttpClient);
+
+	public getPlanEconomicUser(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/PlanEconomicUsers`,
+			{ params },
+		);
+	}
+
+	public getProductManagerUser(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductManagerUsers`,
+			{ params },
+		);
+	}
+
+	public getWarehouse(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Warehouses`,
+			{ params },
+		);
+	}
+
+	public getProductionSection(
+		query: string,
+		ids: number[] = [],
+	): Observable<FilterSectionDto> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<FilterSectionDto>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductionSections`,
+			{ params },
+		);
+	}
+
+	public getTov(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Tovs`,
+			{ params },
+		);
+	}
+
+	public getCities(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities`,
+			{ params },
+		);
+	}
+
+	public getTovCategory(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/TovCategories`,
+			{ params },
+		);
+	}
+
+	public getProductionFactory(
+		query: string,
+		ids: number[] = [],
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query);
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductionFactories`,
+			{ params },
+		);
+	}
+}

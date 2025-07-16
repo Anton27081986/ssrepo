@@ -1,29 +1,35 @@
 import { Component, Input, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @Component({
 	selector: 'ss-password',
 	templateUrl: './password.component.html',
 	styleUrls: ['./password.component.scss'],
-	imports: [
-		CaptionComponent,
-		IconComponent
-	],
-	standalone: true
+	imports: [CaptionComponent, IconComponent],
+	standalone: true,
 })
 export class PasswordComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public error: string | undefined;
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
+
+	@Input()
+	public disabled = false;
+
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public error: string | undefined;
 
 	public type: 'text' | 'password' = 'password';
 	public value: any = '';
 
-	public constructor(
+	constructor(
 		// Retrieve the dependency only from the local injector,
 		// not from parent or ancestors.
 		@Self()

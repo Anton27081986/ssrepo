@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, Signal, ViewChild } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Component,
+	ElementRef,
+	Signal,
+	ViewChild,
+} from '@angular/core';
 import {
 	AvatarComponent,
 	ButtonComponent,
@@ -18,11 +24,19 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { ChatBotFacadeService, ChatBotStates } from '@app/core/facades/chat-bot-facade.service';
+import {
+	ChatBotFacadeService,
+	ChatBotStates,
+} from '@app/core/facades/chat-bot-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DatePipe, NgClass, NgOptimizedImage } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { ChatBotMessageTypeEnum } from '@app/core/models/chat-bot/message-type-enum';
 import { ModalService } from '@app/core/modal/modal.service';
@@ -38,19 +52,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	styleUrls: ['./chat-bot.component.scss'],
 	standalone: true,
 	imports: [
-		CardComponent,
 		IconComponent,
 		TextComponent,
 		ButtonComponent,
-		AvatarComponent,
 		NgClass,
 		ReactiveFormsModule,
-		FormFieldComponent,
-		FieldCtrlDirective,
-		InputComponent,
 		DatePipe,
 		NgOptimizedImage,
-		TextareaComponent,
 		MdToHtmlPipe,
 	],
 })
@@ -63,13 +71,19 @@ export class ChatBotComponent {
 		initialValue: false,
 	});
 
-	public messages: Signal<IChatBotMessage[]> = toSignal(this.botFacade.messages$, {
-		initialValue: [],
-	});
+	public messages: Signal<IChatBotMessage[]> = toSignal(
+		this.botFacade.messages$,
+		{
+			initialValue: [],
+		},
+	);
 
-	public subsectors: Signal<IDictionaryItemDto[]> = toSignal(this.botFacade.subsectors$, {
-		initialValue: [],
-	});
+	public subsectors: Signal<IDictionaryItemDto[]> = toSignal(
+		this.botFacade.subsectors$,
+		{
+			initialValue: [],
+		},
+	);
 
 	public activeSubsector: Signal<IDictionaryItemDto | null> = toSignal(
 		this.botFacade.activeSubsector$,
@@ -82,12 +96,24 @@ export class ChatBotComponent {
 		initialValue: ChatBotStates.Ready,
 	});
 
-	@ViewChild('messagesEl') public messagesElement!: ElementRef;
+	@ViewChild('messagesEl')
+	public messagesElement!: ElementRef;
 
 	public pageIndex = 1;
 	public pageSize = 10;
 	public offset = 10;
 
+	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly ExtendedSize = ExtendedSize;
+	protected readonly ChatBotMessageTypeEnum = ChatBotMessageTypeEnum;
+	protected readonly Colors = Colors;
+	protected readonly Size = Size;
+	protected readonly ChatBotStates = ChatBotStates;
+	protected readonly ChatBotLikeTypeEnum = ChatBotLikeTypeEnum;
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly botFacade: ChatBotFacadeService,
@@ -100,7 +126,7 @@ export class ChatBotComponent {
 		this.botFacade.getSubsectors();
 		this.botFacade.getMessages(this.pageSize, 0);
 
-		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe(state => {
+		this.botFacade.state$.pipe(untilDestroyed(this)).subscribe((state) => {
 			if (this.messagesElement) {
 				setTimeout(() => {
 					this.messagesElement.nativeElement.scrollTop =
@@ -113,12 +139,14 @@ export class ChatBotComponent {
 			}
 		});
 
-		this.botFacade.isOpened$.pipe(untilDestroyed(this)).subscribe(status => {
-			if (status && this.messagesElement) {
-				this.messagesElement.nativeElement.scrollTop =
-					this.messagesElement.nativeElement.scrollHeight;
-			}
-		});
+		this.botFacade.isOpened$
+			.pipe(untilDestroyed(this))
+			.subscribe((status) => {
+				if (status && this.messagesElement) {
+					this.messagesElement.nativeElement.scrollTop =
+						this.messagesElement.nativeElement.scrollHeight;
+				}
+			});
 	}
 
 	protected loadMoreMessages() {
@@ -148,7 +176,10 @@ export class ChatBotComponent {
 		this.botFacade.sendMessage(this.questionForm.controls.question.value);
 	}
 
-	public openFeedBack(message: IChatBotMessage, likeType: ChatBotLikeTypeEnum): void {
+	public openFeedBack(
+		message: IChatBotMessage,
+		likeType: ChatBotLikeTypeEnum,
+	): void {
 		this.modalService
 			.open(ChatBotFeedbackComponent, { data: { message, likeType } })
 			.afterClosed()
@@ -162,16 +193,4 @@ export class ChatBotComponent {
 		this.botFacade.toggleBot();
 		this.questionForm.controls.question.setValue(null);
 	}
-
-	protected readonly IconType = IconType;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly ExtendedSize = ExtendedSize;
-	protected readonly ChatBotMessageTypeEnum = ChatBotMessageTypeEnum;
-	protected readonly Colors = Colors;
-	protected readonly Size = Size;
-	protected readonly ChatBotStates = ChatBotStates;
-	protected readonly ChatBotLikeTypeEnum = ChatBotLikeTypeEnum;
 }

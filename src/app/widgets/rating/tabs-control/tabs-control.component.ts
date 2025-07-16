@@ -1,9 +1,14 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component, forwardRef, input } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	forwardRef,
+	input,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
-import {CommonModule, NgForOf} from "@angular/common";
-import {RatingTeamTabComponent} from "@app/widgets/rating/rating-team-tab/rating-team-tab.component";
+import { CommonModule, NgForOf } from '@angular/common';
+import { RatingTeamTabComponent } from '@app/widgets/rating/rating-team-tab/rating-team-tab.component';
 
 @UntilDestroy()
 @Component({
@@ -18,12 +23,8 @@ import {RatingTeamTabComponent} from "@app/widgets/rating/rating-team-tab/rating
 			multi: true,
 		},
 	],
-	imports: [
-		CommonModule,
-		RatingTeamTabComponent,
-		NgForOf
-	],
-	standalone: true
+	imports: [CommonModule, RatingTeamTabComponent, NgForOf],
+	standalone: true,
 })
 export class TabsControlComponent implements ControlValueAccessor {
 	public items = input.required<IRankTypeItemDto[]>();

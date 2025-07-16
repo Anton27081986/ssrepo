@@ -7,7 +7,9 @@ import {
 	ButtonType,
 	CardComponent,
 	FieldCtrlDirective,
-	FormFieldComponent, IconPosition, IconType,
+	FormFieldComponent,
+	IconPosition,
+	IconType,
 	InputComponent,
 	LabelComponent,
 	LabelType,
@@ -17,7 +19,12 @@ import {
 	TextWeight,
 } from '@front-components/components';
 import { ChatBotFacadeService } from '@app/core/facades/chat-bot-facade.service';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	FormsModule,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { IChatBotMessage } from '@app/core/models/chat-bot/message';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -52,6 +59,11 @@ export class ChatBotFeedbackComponent {
 	public message: IChatBotMessage | undefined;
 	public likeType: ChatBotLikeTypeEnum | undefined;
 
+	protected readonly Size = Size;
+	protected readonly TextWeight = TextWeight;
+	protected readonly TextType = TextType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly LabelType = LabelType;
 	constructor(
 		private readonly botFacade: ChatBotFacadeService,
 		private readonly modalRef: ModalRef,
@@ -69,6 +81,7 @@ export class ChatBotFeedbackComponent {
 		this.likeType = data.likeType;
 	}
 
+	protected readonly IconPosition = IconPosition;
 	public sendFeedback(): void {
 		this.botFacade
 			.sendFeedback({
@@ -77,7 +90,7 @@ export class ChatBotFeedbackComponent {
 				type: this.likeType!,
 			})
 			.pipe(untilDestroyed(this))
-			.subscribe(res => {
+			.subscribe((res) => {
 				this.message!.likeType = res.likeType;
 				this.close();
 			});
@@ -87,11 +100,5 @@ export class ChatBotFeedbackComponent {
 		this.modalRef.close();
 	}
 
-	protected readonly Size = Size;
-	protected readonly TextWeight = TextWeight;
-	protected readonly TextType = TextType;
-	protected readonly ButtonType = ButtonType;
-	protected readonly LabelType = LabelType;
-	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 }

@@ -7,9 +7,11 @@ import { HttpClient } from '@angular/common/http';
 	providedIn: 'root',
 })
 export class SocialLinksApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	public getSocialLink(): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/company/settings/favoriteLinks`);
+		return this.http.get<any[]>(
+			`${environment.apiUrl}/api/company/settings/favoriteLinks`,
+		);
 	}
 }

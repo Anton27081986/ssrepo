@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, Input, OnInit, Signal} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Signal } from '@angular/core';
 import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -12,36 +12,36 @@ import { IFile } from '@app/core/models/files/file';
 import { forkJoin } from 'rxjs';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {MultiselectV2Component} from "@app/shared/components/multiselect-v2/multiselect-v2.component";
+import { CardComponent } from "@app/shared/components/card/card.component";
+import { TextComponent } from "@app/shared/components/typography/text/text.component";
+import { ButtonComponent } from "@app/shared/components/buttons/button/button.component";
+import { DateTimePickerComponent } from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
+import { SearchInputComponent } from "@app/shared/components/inputs/search-input/search-input.component";
+import { SelectV2Component } from "@app/shared/components/inputs/select-v2/select-v2.component";
+import { TextareaComponent } from "@app/shared/components/textarea/textarea.component";
+import { MultiselectV2Component } from "@app/shared/components/multiselect-v2/multiselect-v2.component";
+import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import { IconComponent } from "@app/shared/components/icon/icon.component";
 
 @UntilDestroy()
 @Component({
-	selector: 'ss-completed-work-act-edit',
-	templateUrl: './completed-work-act-edit.component.html',
-	styleUrls: ['./completed-work-act-edit.component.scss'],
+	selector: "ss-completed-work-act-edit",
+	templateUrl: "./completed-work-act-edit.component.html",
+	styleUrls: ["./completed-work-act-edit.component.scss"],
 	imports: [
-		CommonModule,
 		CardComponent,
 		TextComponent,
 		ButtonComponent,
 		ReactiveFormsModule,
-		InputComponent,
 		DateTimePickerComponent,
 		SearchInputComponent,
 		SelectV2Component,
+		TextareaComponent,
+		MultiselectV2Component,
 		NgIf,
-		IconComponent,
 		NgForOf,
-		MultiselectV2Component
+		IconComponent,
+		DatePipe
 	],
 	standalone: true
 })
@@ -49,17 +49,14 @@ export class CompletedWorkActEditComponent implements OnInit {
 	@Input() specification: ICompletedWorkActSpecification | null = null;
 
 	protected editActForm!: FormGroup<{
-		externalActNumber: FormControl<string | null>;
-		internalActNumber: FormControl<string | null>;
-		externalActDate: FormControl<string | null>;
-		internalActDate: FormControl<string | null>;
+		dateUpload: FormControl<string | null>;
 		finDocOrderIds: FormControl<IFilterOption[] | null>;
 		applicantUserId: FormControl<number | null>;
 		buUnit: FormControl<IDictionaryItemDto | null>;
-		payerContractorId: FormControl<number | null>;
 		providerContractorId: FormControl<number | null>;
 		contract: FormControl<IDictionaryItemDto | null>;
 		currency: FormControl<IDictionaryItemDto | null>;
+		comment: FormControl<string | null>;
 	}>;
 
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
@@ -105,25 +102,19 @@ export class CompletedWorkActEditComponent implements OnInit {
 		private readonly ref: ChangeDetectorRef,
 	) {
 		this.editActForm = new FormGroup({
-			externalActNumber: new FormControl<string | null>('', [Validators.required]),
-			internalActNumber: new FormControl<string | null>('', [Validators.required]),
-			externalActDate: new FormControl<string | null>(null, [Validators.required]),
-			internalActDate: new FormControl<string | null>(null, [Validators.required]),
+			dateUpload: new FormControl<string | null>(null, [Validators.required]),
 			finDocOrderIds: new FormControl<IFilterOption[]>([]),
 			applicantUserId: new FormControl<number | null>(null, [Validators.required]),
 			buUnit: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			payerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			providerContractorId: new FormControl<number | null>(null, [Validators.required]),
 			contract: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
 			currency: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			comment: new FormControl<string | null>(''),
 		});
 
 		this.completedWorkActsFacade.act$.pipe(untilDestroyed(this)).subscribe(act => {
 			if (act) {
-				this.editActForm.controls.externalActNumber.setValue(act.externalActNumber);
-				this.editActForm.controls.internalActNumber.setValue(act.internalActNumber);
-				this.editActForm.controls.externalActDate.setValue(act.externalActDate);
-				this.editActForm.controls.internalActDate.setValue(act.internalActDate);
+				this.editActForm.controls.dateUpload.setValue(act.dateUpload);
 				this.editActForm.controls.finDocOrderIds.setValue(
 					act.finDocOrders.map(doc => {
 						return { ...doc, checked: true };
@@ -131,17 +122,15 @@ export class CompletedWorkActEditComponent implements OnInit {
 				);
 				this.editActForm.controls.applicantUserId.setValue(act.applicantUser?.id || null);
 				this.editActForm.controls.buUnit.setValue(act.buUnit);
-				this.editActForm.controls.payerContractorId.setValue(act.payerContractor?.id);
 				this.editActForm.controls.providerContractorId.setValue(act.providerContractor?.id);
 				this.editActForm.controls.contract.setValue(act.contract || null);
 				this.editActForm.controls.currency.setValue(act.currency);
-
-				this.finDocOrders = act.finDocOrders || [];
+				this.editActForm.controls.comment.setValue(act.comment);
 
 				if (act.providerContractor.id) {
 					this.completedWorkActsFacade.getFinDocs(
 						act.providerContractor.id,
-						this.editActForm.controls.externalActDate.value,
+						act.externalActDate,
 					);
 				}
 			}
@@ -150,8 +139,24 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 	public ngOnInit() {
 		this.completedWorkActsFacade.finDocs$.pipe(untilDestroyed(this)).subscribe(docs => {
-			this.finDocOrders = docs || [];
-			this.ref.detectChanges();
+			if (docs) {
+				const checked = this.act()?.finDocOrders || [];
+
+				this.finDocOrders = docs.reduce(
+					(previousValue: IFilterOption[], currentValue: IFilterOption) => {
+						const selected = checked.find(item => item.id === currentValue.id);
+
+						if (selected) {
+							return [...previousValue, { ...currentValue, checked: true }];
+						}
+
+						return [...previousValue, currentValue];
+					},
+					[],
+				);
+
+				this.ref.detectChanges();
+			}
 		});
 	}
 
@@ -184,15 +189,9 @@ export class CompletedWorkActEditComponent implements OnInit {
 			return;
 		}
 
-		if (this.editActForm.controls.externalActDate.value?.length === 10) {
-			this.editActForm.controls.externalActDate.setValue(
-				`${this.editActForm.controls.externalActDate.value}T00:00:00.000Z`,
-			);
-		}
-
-		if (this.editActForm.controls.internalActDate.value?.length === 10) {
-			this.editActForm.controls.internalActDate.setValue(
-				`${this.editActForm.controls.internalActDate.value}T00:00:00.000Z`,
+		if (this.editActForm.controls.dateUpload.value?.length === 10) {
+			this.editActForm.controls.dateUpload.setValue(
+				`${this.editActForm.controls.dateUpload.value}T00:00:00.000Z`,
 			);
 		}
 
@@ -265,7 +264,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.finDocOrders = [];
 					this.completedWorkActsFacade.getFinDocs(
 						id,
-						this.editActForm.controls.externalActDate.value,
+						this.act()?.externalActDate || null,
 					);
 					this.ref.detectChanges();
 				});
@@ -296,7 +295,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 
-	onInputChange(event: any) {
+	protected onInputChange(event: any) {
 		if (!event.target.value) {
 			const act = this.act();
 

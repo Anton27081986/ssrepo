@@ -1,136 +1,136 @@
 @use '../../../../../styles/colors' as *;
 
 input {
-    display: flex;
-    align-items: center;
-    padding: 0 25px 0 20px;
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid $island-outline;
-    background-color: $island;
-    outline: none;
-    font-family: 'Inter', serif;
-    font-size: 14px;
-    line-height: 17px;
-    letter-spacing: -0.01em;
-    text-overflow: ellipsis;
+	display: flex;
+	align-items: center;
+	padding: 0 25px 0 20px;
+	width: 100%;
+	border-radius: 8px;
+	border: 1px solid $island-outline;
+	background-color: $island;
+	outline: none;
+	font-family: 'Inter', serif;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: -0.01em;
+	text-overflow: ellipsis;
 }
 
 .input {
-    position: relative;
+	position: relative;
 
-    ss-icon {
-        position: absolute;
-        right: 8px;
-        top: 16px;
-        cursor: pointer;
-    }
+	ss-icon {
+		position: absolute;
+		right: 8px;
+		top: 16px;
+		cursor: pointer;
+	}
 
-    .search-result {
-        position: absolute;
-        width: 100%;
-        left: 0;
-        top: 90%;
-        background-color: $island;
-        max-height: 162px;
-        overflow-y: auto;
-        border: 1px solid $island-outline;
-        border-radius: 0 0 8px 8px;
-        border-top: none;
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
+	.search-result {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		top: 90%;
+		background-color: $island;
+		max-height: 162px;
+		overflow-y: auto;
+		border: 1px solid $island-outline;
+		border-radius: 0 0 8px 8px;
+		border-top: none;
+		z-index: 9999;
+		display: flex;
+		flex-direction: column;
 
-        .separator {
-            position: sticky;
-            height: 3px;
-            top: 0;
-            border-bottom: 1px solid $island-outline;
-        }
+		.separator {
+			position: sticky;
+			height: 3px;
+			top: 0;
+			border-bottom: 1px solid $island-outline;
+		}
 
-        .search-result-item {
-            padding: 12px 20px;
-            cursor: pointer;
-        }
+		.search-result-item {
+			padding: 12px 20px;
+			cursor: pointer;
+		}
 
-        .search-result-item:hover {
-            background-color: #F2F3F7;
-        }
-    }
+		.search-result-item:hover {
+			background-color: #f2f3f7;
+		}
+	}
 }
 
 input.large ~ ss-icon {
-    top: 20px;
+	top: 20px;
 }
 
 input.small ~ ss-icon {
-    top: 10px;
+	top: 10px;
 }
 
 input::placeholder {
-    color: $lite-text;
+	color: $lite-text;
 }
 
 input:focus {
-    border-color: $additional-outline;
+	border-color: $additional-outline;
 }
 
 input.small {
-    height: 36px;
-    font-weight: 400;
+	height: 36px;
+	font-weight: 400;
 }
 
 input.medium {
-    height: 41px;
-    font-weight: 400;
+	height: 41px;
+	font-weight: 400;
 }
 
 input.large {
-    height: 52px;
-    font-weight: 600;
+	height: 52px;
+	font-weight: 600;
 }
 
 input.error {
-    border: 1px solid $error;
-    background-color: $lite-error;
+	border: 1px solid $error;
+	background-color: $lite-error;
 }
 
 ss-caption {
-    color: $lite-text;
+	color: $lite-text;
 }
 
 ss-caption.error {
-    color: $error;
+	color: $error;
 }
 
 :host-context(.dark) {
-    input {
-        background-color: $dark-island;
-    }
+	input {
+		background-color: $dark-island;
+	}
 
-    .search-result {
-        background-color: $dark-island !important;
-        color: $dark-text !important;
-    }
+	.search-result {
+		background-color: $dark-island !important;
+		color: $dark-text !important;
+	}
 
-    .ss-caption {
-        background-color: $dark-island !important;
-        color: $dark-text !important;
-    }
+	.ss-caption {
+		background-color: $dark-island !important;
+		color: $dark-text !important;
+	}
 
-    ::ng-deep {
-        .search-result {
-            background-color: $dark-island !important;
-            color: $dark-text !important;
-        }
-    }
+	::ng-deep {
+		.search-result {
+			background-color: $dark-island !important;
+			color: $dark-text !important;
+		}
+	}
 }
 
 .overflow {
-    top: 0;
-    left: 0;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    z-index: 999;
+	top: 0;
+	left: 0;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	z-index: 999;
 }

@@ -1,11 +1,11 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display">
+			<td *ngIf="col.display" class="ss-table-td">
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-					<snab-link (click)="goToClientCard()"
-							   [text]="client().client.name"
-							   [type]="TextType.Caption"></snab-link>
+					<snab-link [text]="client().client.name"
+							   [type]="TextType.Caption"
+							   (click)="goToClientCard()"></snab-link>
 				</ng-container>
 				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
 					<div class="ss-table-td__content">

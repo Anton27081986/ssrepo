@@ -1,14 +1,15 @@
-@use '../../../../assets/scss/mixins' as *;
-@use '../../../../assets/scss/variables' as *;
 @use '../../../../styles/colors' as *;
 
 .header {
 	width: 100%;
-	position: sticky;
 	top: 0;
 	z-index: 1000;
 	background-color: $white;
-	border-bottom: 1px solid #E4E8EA;
+	border-bottom: 1px solid #e4e8ea;
+
+	&__sticky {
+		position: sticky;
+	}
 
 	&__content {
 		display: flex;
@@ -20,7 +21,7 @@
 	}
 
 	&__logo {
-		color: #4770FF;
+		color: #4770ff;
 		cursor: pointer;
 	}
 
@@ -55,7 +56,7 @@
 }
 
 .profile {
-	border: 1px solid #E4E8EA;
+	border: 1px solid #e4e8ea;
 	border-radius: 8px;
 	min-width: 142px;
 	height: 36px;

@@ -74,7 +74,7 @@ input {
 		}
 
 		.variants-item:hover {
-			background-color: #F2F3F7;
+			background-color: #f2f3f7;
 		}
 	}
 }
@@ -115,18 +115,19 @@ ss-caption.error {
 }
 
 :host-context(.dark) {
-	.input, input, {
+	.input,
+	input {
 		background-color: $dark-island;
 	}
 
-	.variants-wrapper, .variants {
-		background-color: $dark-island!important;
+	.variants-wrapper,
+	.variants {
+		background-color: $dark-island !important;
 	}
 
 	.variants-item:hover {
 		::ng-deep p {
-			color: $dark-island!important;
+			color: $dark-island !important;
 		}
 	}
 }
-

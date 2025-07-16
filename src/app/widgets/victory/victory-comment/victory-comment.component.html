@@ -2,12 +2,12 @@
 	<div class="victory-comment__header">
 		<app-user-card [size]="'small'" [user]="comment?.user!"></app-user-card>
 		<div class="victory-comment__actions">
-			<ss-icon [tooltip]="'Редактировать'" [theme]="TooltipTheme.DEFAULT"
-					 [position]="TooltipPosition.DEFAULT" *ngIf="authUserId && authUserId === comment?.user?.id"
-					 style="cursor: pointer" (click)="editComment()" [name]="'editNew'"></ss-icon>
-			<ss-icon [tooltip]="'Удалить'" [theme]="TooltipTheme.DEFAULT"
-					 [position]="TooltipPosition.DEFAULT" *ngIf="authUserId && authUserId === comment?.user?.id"
-					 style="cursor: pointer" (click)="deleteComment()" [name]="'close'"></ss-icon>
+			<ss-icon *ngIf="authUserId && authUserId === comment?.user?.id" style="cursor: pointer"
+					 [tooltip]="'Редактировать'" [theme]="TooltipTheme.DEFAULT"
+					 [position]="TooltipPosition.DEFAULT" [name]="'editNew'" (click)="editComment()"></ss-icon>
+			<ss-icon *ngIf="authUserId && authUserId === comment?.user?.id" style="cursor: pointer"
+					 [tooltip]="'Удалить'" [theme]="TooltipTheme.DEFAULT"
+					 [position]="TooltipPosition.DEFAULT" [name]="'close'" (click)="deleteComment()"></ss-icon>
 		</div>
 	</div>
 	<div class="victory-comment__body">

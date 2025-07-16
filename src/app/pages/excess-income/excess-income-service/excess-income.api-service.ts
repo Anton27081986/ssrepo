@@ -36,17 +36,15 @@ export class ExcessIncomeApiService {
 	}
 
 	getGroup(request: ExcessIncomeGroupRequest) {
-		return this.http.post<ExcessIncomeData<IResponse<ExcessIncomeFromBackendGroup>>>(
-			`${environment.apiUrl}/api/company/Snd/groups`,
-			request,
-		);
+		return this.http.post<
+			ExcessIncomeData<IResponse<ExcessIncomeFromBackendGroup>>
+		>(`${environment.apiUrl}/api/company/Snd/groups`, request);
 	}
 
 	getTov(request: ExcessIncomeTovRequest) {
-		return this.http.post<ExcessIncomeData<IResponse<ExcessIncomeTovFromBackend>>>(
-			`${environment.apiUrl}/api/company/Snd/tovs`,
-			request,
-		);
+		return this.http.post<
+			ExcessIncomeData<IResponse<ExcessIncomeTovFromBackend>>
+		>(`${environment.apiUrl}/api/company/Snd/tovs`, request);
 	}
 
 	public getCurrency(): Observable<IResponse<IDictionaryItemDto>> {
@@ -55,14 +53,20 @@ export class ExcessIncomeApiService {
 		);
 	}
 
-	public updateSndClient(clientId: number, request: ExcessIncomeUpdateClientRequest) {
+	public updateSndClient(
+		clientId: number,
+		request: ExcessIncomeUpdateClientRequest,
+	) {
 		return this.http.put<IResponse<ExcessIncomeClient>>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}`,
 			request,
 		);
 	}
 
-	public updateSndGroup(clientId: number, request: ExcessIncomeUpdateGroupRequest) {
+	public updateSndGroup(
+		clientId: number,
+		request: ExcessIncomeUpdateGroupRequest,
+	) {
 		return this.http.put<ExcessIncomeFromBackendGroup>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/group`,
 			request,

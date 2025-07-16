@@ -3,43 +3,51 @@ import { Observable } from 'rxjs';
 import { IClientDto } from '@app/core/models/company/client-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
-import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
-import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {ReplacePipe} from "@app/shared/pipe/replace.pipe";
-import {NotificationToastService} from "@app/core/services/notification-toast.service";
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TooltipMenuComponent } from '@app/shared/components/tooltip-menu/tooltip-menu.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-client-card-info',
+	standalone: true,
 	templateUrl: './client-card-info.component.html',
 	styleUrls: ['./client-card-info.component.scss'],
 	imports: [
-		CommonModule,
 		LoaderComponent,
 		AsyncPipe,
 		NgIf,
 		HeadlineComponent,
 		IconComponent,
-		TooltipDirective,
 		TooltipMenuComponent,
 		CaptionComponent,
+		TooltipDirective,
 		ReactiveFormsModule,
 		TextComponent,
 		InputComponent,
@@ -48,9 +56,8 @@ import {NotificationToastService} from "@app/core/services/notification-toast.se
 		SearchInputComponent,
 		TextareaComponent,
 		ButtonComponent,
-		ReplacePipe
+		ReplacePipe,
 	],
-	standalone: true
 })
 export class ClientCardInfoComponent implements OnInit {
 	public client$: Observable<IClientDto | null>;
@@ -58,9 +65,9 @@ export class ClientCardInfoComponent implements OnInit {
 	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
-	public canEdit: boolean = false;
-	public visiblePriceList: boolean = false;
-	public visibleCalculateDistributor: boolean = false;
+	public canEdit = false;
+	public visiblePriceList = false;
+	public visibleCalculateDistributor = false;
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
@@ -69,7 +76,7 @@ export class ClientCardInfoComponent implements OnInit {
 		name: FormControl<string | null>;
 		status: FormControl<number | null>;
 		category: FormControl<string | null>;
-		saleDirection: FormControl<string | null>;
+		mainSector: FormControl<string | null>;
 		region: FormControl<string | null>;
 		comment: FormControl<string | null>;
 	}>;
@@ -80,7 +87,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 	public isLoading$: Observable<boolean>;
 
-	public constructor(
+	constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NotificationToastService,
 		private readonly userFacadeService: UserFacadeService,
@@ -91,7 +98,7 @@ export class ClientCardInfoComponent implements OnInit {
 			name: new FormControl<string>('', Validators.required),
 			status: new FormControl<number>(0, Validators.required),
 			category: new FormControl(),
-			saleDirection: new FormControl(),
+			mainSector: new FormControl(),
 			region: new FormControl<string>('', Validators.required),
 			comment: new FormControl(),
 		});
@@ -100,12 +107,18 @@ export class ClientCardInfoComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.client$.pipe(untilDestroyed(this)).subscribe(client => {
+		this.client$.pipe(untilDestroyed(this)).subscribe((client) => {
 			this.infoForm.controls.name.setValue(client?.name || '');
 			this.infoForm.controls.status.setValue(client?.status?.id || null);
-			this.infoForm.controls.category.setValue(client?.category?.name || null);
-			this.infoForm.controls.region.setValue(client?.region?.name || null);
-			this.infoForm.controls.saleDirection.setValue(client?.mainSector || null);
+			this.infoForm.controls.category.setValue(
+				client?.category?.name || null,
+			);
+			this.infoForm.controls.region.setValue(
+				client?.region?.name || null,
+			);
+			this.infoForm.controls.mainSector.setValue(
+				client?.mainSector?.name || null,
+			);
 			this.newCategoryId = client?.category?.id;
 			this.newRegionId = client?.region?.id;
 		});
@@ -113,17 +126,23 @@ export class ClientCardInfoComponent implements OnInit {
 		this.userFacadeService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
-			.subscribe(user => {
+			.subscribe((user) => {
 				this.currentUser = user;
 			});
 
-		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
-			this.canEdit = permissions.includes(Permissions.CLIENT_MAIN_INFO_EDIT);
-			this.visiblePriceList = permissions.includes(Permissions.CLIENT_MAIN_INFO_PRICE_LIST);
-			this.visibleCalculateDistributor = permissions.includes(
-				Permissions.CLIENT_MAIN_INFO_CALCULATION_DISTRIBUTORS,
-			);
-		});
+		this.clientCardListFacade.permissions$
+			.pipe(untilDestroyed(this))
+			.subscribe((permissions) => {
+				this.canEdit = permissions.includes(
+					Permissions.CLIENT_MAIN_INFO_EDIT,
+				);
+				this.visiblePriceList = permissions.includes(
+					Permissions.CLIENT_MAIN_INFO_PRICE_LIST,
+				);
+				this.visibleCalculateDistributor = permissions.includes(
+					Permissions.CLIENT_MAIN_INFO_CALCULATION_DISTRIBUTORS,
+				);
+			});
 
 		this.clientCardListFacade.getStatuses();
 	}

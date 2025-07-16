@@ -14,8 +14,8 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { filterTruthy } from '@app/core/facades/client-proposals-facade.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
 
 export interface SearchInputItem {
 	id: number | null;
@@ -35,23 +35,21 @@ export interface SearchInputItem {
 			multi: true,
 		},
 	],
-	imports: [
-		CommonModule,
-		CaptionComponent,
-		NgIf,
-		AsyncPipe,
-		NgForOf
-	],
-	standalone: true
+	imports: [CommonModule, CaptionComponent, NgIf, AsyncPipe, NgForOf],
+	standalone: true,
 })
 export class SearchUserInputComponent implements ControlValueAccessor {
-	@Input() public size: 'large' | 'medium' | 'small' = 'medium';
-	@Input() public label: string | undefined;
-	@Input() disabled: boolean = false;
+	@Input()
+	public size: 'large' | 'medium' | 'small' = 'medium';
 
-	private readonly entityId$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(
-		null,
-	);
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	disabled = false;
+
+	private readonly entityId$: BehaviorSubject<number | null> =
+		new BehaviorSubject<number | null>(null);
 
 	private OnChange!: (value: number) => void;
 	private OnTouched!: (value: number | null) => void;
@@ -62,7 +60,7 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 		IDictionaryItemDto[]
 	>([]);
 
-	public constructor(
+	constructor(
 		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
 		private readonly usersApiService: UsersApiService,
@@ -71,10 +69,10 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 			.pipe(
 				untilDestroyed(this),
 				filterTruthy(),
-				switchMap(id => {
+				switchMap((id) => {
 					return this.getEntity(id);
 				}),
-				tap(entity => {
+				tap((entity) => {
 					if (entity && entity.title && entity.id) {
 						this.query = entity.title;
 						this.OnChange(entity.id);
@@ -86,7 +84,7 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 
 	private getEntity(value: number): Observable<SearchInputItem | null> {
 		return this.usersApiService.getUserById(value).pipe(
-			map(res => {
+			map((res) => {
 				return { id: res.id, title: res.name };
 			}),
 		);
@@ -123,7 +121,7 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 			this.searchFacade
 				.getUsers(query)
 				.pipe(untilDestroyed(this))
-				.subscribe(res => {
+				.subscribe((res) => {
 					this.found$.next(res.items);
 					this.ref.detectChanges();
 				});

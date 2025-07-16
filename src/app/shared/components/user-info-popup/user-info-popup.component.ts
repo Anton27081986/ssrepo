@@ -1,16 +1,16 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {Component, forwardRef, Inject} from '@angular/core';
+import { Component, forwardRef, Inject } from '@angular/core';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { Observable } from 'rxjs';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {UserCardComponent} from "@app/shared/components/user-card/user-card.component";
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { UserCardComponent } from '@app/shared/components/user-card/user-card.component';
 
 @UntilDestroy()
 @Component({
@@ -23,11 +23,11 @@ import {UserCardComponent} from "@app/shared/components/user-card/user-card.comp
 		NgIf,
 		HeadlineComponent,
 		SsDividerComponent,
-		forwardRef(()=>UserCardComponent),
+		forwardRef(() => UserCardComponent),
 		IconComponent,
-		TextComponent
+		TextComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class UserInfoPopupComponent {
 	protected $user: Observable<IUserProfile>;

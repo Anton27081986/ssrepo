@@ -10,6 +10,7 @@ export enum PermissionsApiEnum {
 	completedWorkActs = 'CompletedWorkAct',
 	procurements = 'Contract',
 	excessIncome = 'Snd',
+	operationPlan = 'OperationalPlan',
 	mpReservationOrders = 'Personification',
 }
 
@@ -19,29 +20,53 @@ export enum PermissionsApiEnum {
 export class PermissionsFacadeService {
 	private readonly permissionsApiService = inject(PermissionsApiService);
 
-	private readonly proposalsPermissions: WritableSignal<string[] | null> = signal(null);
-	private readonly completedWorkActsPermissions: WritableSignal<string[] | null> = signal(null);
-	private readonly procurementsPermissions: WritableSignal<string[] | null> = signal(null);
-	private readonly excessIncomePermissions: WritableSignal<string[] | null> = signal(null);
-	private readonly mpReservationOrders: WritableSignal<string[] | null> = signal(null);
+	private readonly proposalsPermissions: WritableSignal<string[] | null> =
+		signal(null);
+
+	private readonly completedWorkActsPermissions: WritableSignal<
+		string[] | null
+	> = signal(null);
+
+	private readonly procurementsPermissions: WritableSignal<string[] | null> =
+		signal(null);
+
+	private readonly excessIncomePermissions: WritableSignal<string[] | null> =
+		signal(null);
+
+	private readonly productionPlanPermissions: WritableSignal<
+		string[] | null
+	> = signal(null);
+
+	private readonly mpReservationOrders: WritableSignal<string[] | null> =
+		signal(null);
 
 	private checkPermission(
 		permissions: WritableSignal<string[] | null>,
 		permissionApi: PermissionsApiEnum,
 		permissionType: PermissionType,
 	): Observable<boolean> {
-		return this.permissionsApiService.getPermissionClient(permissionApi).pipe(
-			tap(permissionsData => {
-				permissions.set(permissionsData.items);
-			}),
-			map(permissionsData => this.checkPermissionType(permissionsData.items, permissionType)),
-			catchError(() => {
-				return of(false);
-			}),
-		);
+		return this.permissionsApiService
+			.getPermissionClient(permissionApi)
+			.pipe(
+				tap((permissionsData) => {
+					permissions.set(permissionsData.items);
+				}),
+				map((permissionsData) =>
+					this.checkPermissionType(
+						permissionsData.items,
+						permissionType,
+					),
+				),
+				catchError(() => {
+					return of(false);
+				}),
+			);
 	}
 
-	private checkPermissionType(permissions: string[] | null, permissionType: string): boolean {
+	private checkPermissionType(
+		permissions: string[] | null,
+		permissionType: string,
+	): boolean {
 		return permissions?.includes(permissionType) ?? false;
 	}
 
@@ -85,6 +110,13 @@ export class PermissionsFacadeService {
 					permission,
 				);
 
+			case ModulesWithPermissionsEnum.OperationalPlan:
+				return this.checkPermission(
+					this.productionPlanPermissions,
+					PermissionsApiEnum.operationPlan,
+					permission,
+				);
+
 			default:
 				return of(false);
 		}
@@ -96,7 +128,10 @@ export class PermissionsFacadeService {
 	): boolean {
 		switch (permissionModule) {
 			case ModulesWithPermissionsEnum.Proposals:
-				return this.checkPermissionType(this.proposalsPermissions(), permissionType);
+				return this.checkPermissionType(
+					this.proposalsPermissions(),
+					permissionType,
+				);
 
 			case ModulesWithPermissionsEnum.CompletedWorkActs:
 				return this.checkPermissionType(
@@ -105,13 +140,28 @@ export class PermissionsFacadeService {
 				);
 
 			case ModulesWithPermissionsEnum.Procurements:
-				return this.checkPermissionType(this.procurementsPermissions(), permissionType);
+				return this.checkPermissionType(
+					this.procurementsPermissions(),
+					permissionType,
+				);
 
 			case ModulesWithPermissionsEnum.ExcessIncome:
-				return this.checkPermissionType(this.excessIncomePermissions(), permissionType);
+				return this.checkPermissionType(
+					this.excessIncomePermissions(),
+					permissionType,
+				);
+
+			case ModulesWithPermissionsEnum.OperationalPlan:
+				return this.checkPermissionType(
+					this.productionPlanPermissions(),
+					permissionType,
+				);
 
 			case ModulesWithPermissionsEnum.MpReservationOrders:
-				return this.checkPermissionType(this.mpReservationOrders(), permissionType);
+				return this.checkPermissionType(
+					this.mpReservationOrders(),
+					permissionType,
+				);
 
 			default:
 				return false;

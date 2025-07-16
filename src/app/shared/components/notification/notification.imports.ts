@@ -1,5 +1,3 @@
-import { ButtonComponent } from "@front-components/components";
+import { ButtonComponent } from '@front-components/components';
 
-export const NotificationImports = [
-	ButtonComponent
-]
+export const NotificationImports = [ButtonComponent];

@@ -1,5 +1,3 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use '../../../../styles/colors' as *;
 
 .user-card {
@@ -15,7 +13,6 @@
 		gap: 8px;
 	}
 
-
 	&__description {
 		display: flex;
 		flex-direction: column;
@@ -27,7 +24,6 @@
 		font-weight: 500;
 		line-height: 11px;
 	}
-
 
 	:host-context(.dark) .user-card__item {
 		color: $dark-text;

@@ -7,7 +7,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 	providedIn: 'root',
 })
 export class CommentsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Получить комментарий по objectId */
 	public getComment(
@@ -16,16 +16,25 @@ export class CommentsApiService {
 		Offset: number,
 		Limit: number,
 	): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/awards/comments/${objectId}`, {
-			params: new HttpParams().set('Type', Type).set('Offset', Offset).set('Limit', Limit),
-		});
+		return this.http.get<any[]>(
+			`${environment.apiUrl}/api/awards/comments/${objectId}`,
+			{
+				params: new HttpParams()
+					.set('Type', Type)
+					.set('Offset', Offset)
+					.set('Limit', Limit),
+			},
+		);
 	}
 
 	/** Получение комментария по id */
 	public getCommentId(id: number): Observable<any> {
-		return this.http.get<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
-			params: new HttpParams().set('id', id),
-		});
+		return this.http.get<any[]>(
+			`${environment.apiUrl}/api/awards/comments/${id}`,
+			{
+				params: new HttpParams().set('id', id),
+			},
+		);
 	}
 
 	/** Добавить комментарий */
@@ -35,18 +44,24 @@ export class CommentsApiService {
 		awardId: number,
 		note: string,
 	): Observable<any> {
-		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments`, {
-			objectId,
-			type,
-			awardId,
-			note,
-		});
+		return this.http.post<any[]>(
+			`${environment.apiUrl}/api/awards/comments`,
+			{
+				objectId,
+				type,
+				awardId,
+				note,
+			},
+		);
 	}
 
 	/** Удаление комментария по id */
 	public removeCommentById(id: number): Observable<any> {
-		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/comments/${id}`, {
-			params: new HttpParams().set('id', id),
-		});
+		return this.http.post<any[]>(
+			`${environment.apiUrl}/api/awards/comments/${id}`,
+			{
+				params: new HttpParams().set('id', id),
+			},
+		);
 	}
 }

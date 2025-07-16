@@ -1,13 +1,13 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input type="date"
+	<input #input
+		   class="{{ error ? size + ' error' : size }}"
+		   type="date"
+		   lang="ru-RU"
 		   [value]="value"
 		   [disabled]="disabled"
 		   (input)="onChange($any($event.target).value)"
 		   (blur)="onTouched()"
-		   class="{{ error ? size + ' error' : size }}"
-		   lang="ru-RU"
-		   #input
 	/>
 	<ss-text class="value" size="2">{{ (input.value | date: 'dd.MM.yyyy') }}</ss-text>
 	@if (!input.value) {

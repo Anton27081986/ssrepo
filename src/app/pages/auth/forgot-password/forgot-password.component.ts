@@ -1,15 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {
+	FormBuilder,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthenticationService } from '@app/core/services/authentication.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
-import {CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
+import { CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 @UntilDestroy()
 @Component({
@@ -25,9 +30,9 @@ import {IconComponent} from "@app/shared/components/icon/icon.component";
 		InputComponent,
 		ButtonComponent,
 		IconComponent,
-		RouterLink
+		RouterLink,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ForgotPasswordComponent implements OnInit {
 	public loginForm!: FormGroup;
@@ -35,7 +40,7 @@ export class ForgotPasswordComponent implements OnInit {
 	public submitted = false;
 	public error: unknown = '';
 
-	public constructor(
+	constructor(
 		private readonly formBuilder: FormBuilder,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
@@ -53,19 +58,23 @@ export class ForgotPasswordComponent implements OnInit {
 				null,
 				[
 					Validators.required,
-					Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+					Validators.pattern(
+						'^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
+					),
 				],
 			],
 		});
 
-		this.route.queryParams.pipe(untilDestroyed(this)).subscribe(params => {
-			if (params.login) {
-				this.loginForm.controls.login.setValue(params.login);
-				this.loginForm.setErrors({
-					link: 'Срок действия ссылки истек',
-				});
-			}
-		});
+		this.route.queryParams
+			.pipe(untilDestroyed(this))
+			.subscribe((params) => {
+				if (params.login) {
+					this.loginForm.controls.login.setValue(params.login);
+					this.loginForm.setErrors({
+						link: 'Срок действия ссылки истек',
+					});
+				}
+			});
 	}
 
 	private startTimer() {

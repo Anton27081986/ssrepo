@@ -6,6 +6,7 @@
 	height: 0;
 	top: 53px;
 	left: 0;
+	z-index: 999;
 }
 
 .chat-wrapper.opened {
@@ -87,7 +88,7 @@
 
 				&__my-message {
 					max-width: 376px;
-					background-color: #F2F2F2;
+					background-color: #f2f2f2;
 					align-self: flex-end;
 
 					&__time {
@@ -117,7 +118,6 @@
 					}
 
 					&__text {
-
 						&__title {
 							align-self: flex-start;
 						}
@@ -159,12 +159,13 @@
 			&__loader {
 				width: 30px;
 				aspect-ratio: 2;
-				--_g: no-repeat radial-gradient(circle closest-side,#737373 90%, #0000);
+				--_g: no-repeat
+					radial-gradient(circle closest-side, #737373 90%, #0000);
 				background:
-					var(--_g) 0%   50%,
-					var(--_g) 50%  50%,
+					var(--_g) 0% 50%,
+					var(--_g) 50% 50%,
 					var(--_g) 100% 50%;
-				background-size: calc(100%/3) 50%;
+				background-size: calc(100% / 3) 50%;
 				animation: loader 1s infinite linear;
 			}
 		}
@@ -188,13 +189,13 @@
 
 			&__item {
 				cursor: pointer;
-				color: #416CFF;
+				color: #416cff;
 				outline: 1px solid #e6e6e6;
 				padding: 7px 12px;
 				border-radius: 8px;
 
 				&__active {
-					outline: 1px solid #416CFF;
+					outline: 1px solid #416cff;
 				}
 			}
 		}
@@ -216,7 +217,7 @@
 			}
 
 			&__input::after {
-				content: attr(data-replicated-value) " ";
+				content: attr(data-replicated-value) ' ';
 				white-space: pre-wrap;
 				visibility: hidden;
 			}
@@ -267,8 +268,28 @@
 }
 
 @keyframes loader {
-	20%{background-position:0%   0%, 50%  50%,100%  50%}
-	40%{background-position:0% 100%, 50%   0%,100%  50%}
-	60%{background-position:0%  50%, 50% 100%,100%   0%}
-	80%{background-position:0%  50%, 50%  50%,100% 100%}
+	20% {
+		background-position:
+			0% 0%,
+			50% 50%,
+			100% 50%;
+	}
+	40% {
+		background-position:
+			0% 100%,
+			50% 0%,
+			100% 50%;
+	}
+	60% {
+		background-position:
+			0% 50%,
+			50% 100%,
+			100% 0%;
+	}
+	80% {
+		background-position:
+			0% 50%,
+			50% 50%,
+			100% 100%;
+	}
 }

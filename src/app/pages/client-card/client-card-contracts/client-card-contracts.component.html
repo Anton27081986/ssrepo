@@ -5,7 +5,7 @@
 			<ss-headline class="contracts-header-title" size="h6">Договоры</ss-headline>
 			<ss-icon *ngIf="!isFiltersVisible" class="contracts-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
 		</div>
-		<div class="contracts-content" *ngIf="tableState === TableState.Full || tableState === TableState.Loading">
+		<div *ngIf="tableState === TableState.Full || tableState === TableState.Loading" class="contracts-content">
 			<div class="contracts-content-table">
 				<ss-table
 					[head]="[
@@ -22,16 +22,16 @@
 				<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
 			</div>
 		</div>
-		<div class="contracts-content" *ngIf="tableState === TableState.Empty">
+		<div *ngIf="tableState === TableState.Empty" class="contracts-content">
 			<ss-empty-placeholder>
-				<ss-headline size="h3" class="m-b-15">По вашему запросу ничего не найдено</ss-headline>
+				<ss-headline size="h3" class="placeholder-headline">По вашему запросу ничего не найдено</ss-headline>
 				<div class="placeholder-subtitle">
 					<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
 				</div>
 			</ss-empty-placeholder>
 		</div>
 	</div>
-	<div class="separator" *ngIf="isFiltersVisible"></div>
-	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredSales(true)" [(filters)]="filters"></ss-filters>
+	<div *ngIf="isFiltersVisible" class="separator"></div>
+	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredSales(true)"></ss-filters>
 </ss-card>
 

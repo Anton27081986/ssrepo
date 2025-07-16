@@ -1,22 +1,22 @@
 <form>
 	<ss-caption size="1">{{ label }}</ss-caption>
 	<div class="input" [ngClass]="{'dropdown': found.length}">
-		<div class="chips" *ngFor="let item of selectedItems;  index as i">
+		<div *ngFor="let item of selectedItems;  index as i" class="chips">
 			<ss-text size="3">{{ item.name }}</ss-text>
 			<ss-icon height="10" width="10" name="close" (click)="onRemoveItemFromList(i)"></ss-icon>
 		</div>
-		<input type="text"
+		<input #input
+			   class="{{ error ? size + ' error' : size }}"
+			   type="text"
 			   [placeholder]="placeholder"
 			   [disabled]="disabled"
-			   class="{{ error ? size + ' error' : size }}"
 			   (keydown.enter)="dontSend($event)"
-			   #input
 		/>
 	</div>
-	<div class="variants-wrapper" *ngIf="found.length">
+	<div *ngIf="found.length" class="variants-wrapper">
 		<div class="variants">
 			<div class="separator"></div>
-			<div class="variants-item" *ngFor="let item of found" (click)="onAddItemToList(item)">
+			<div *ngFor="let item of found" class="variants-item" (click)="onAddItemToList(item)">
 				<ss-text size="3">{{ item?.name }}</ss-text>
 			</div>
 		</div>

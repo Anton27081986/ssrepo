@@ -1,16 +1,13 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use 'src/styles/colors.scss' as *;
 
 :host:hover {
 	color: #212529;
-	background-color: rgba(0, 0, 0, .075);
+	background-color: rgba(0, 0, 0, 0.075);
 }
 
 .ss-table-td {
 	border: 1px solid $border-table;
 	position: relative;
-
 
 	&__canvas {
 		display: flex;
@@ -25,9 +22,9 @@
 		position: relative;
 	}
 
-	 &__td.limit {
-		 max-height: 42px;
-	 }
+	&__td.limit {
+		max-height: 42px;
+	}
 
 	&__maximise {
 		position: absolute;
@@ -35,7 +32,6 @@
 		right: 4px;
 		cursor: pointer;
 	}
-
 
 	&__content {
 		display: flex;
@@ -55,7 +51,7 @@
 	}
 
 	&__open-doc {
-		color: #335DF2;
+		color: #335df2;
 		cursor: pointer;
 	}
 }

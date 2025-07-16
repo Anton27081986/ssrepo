@@ -5,6 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	templateUrl: './empty-placeholder.component.html',
 	styleUrls: ['./empty-placeholder.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	standalone: true
+	standalone: true,
 })
 export class EmptyPlaceholderComponent {}

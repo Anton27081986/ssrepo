@@ -1,5 +1,3 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use '../../../../styles/colors' as *;
 
 :host ss-card {
@@ -33,7 +31,6 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-
 	}
 
 	&__return-personal-info {
@@ -71,6 +68,3 @@
 	background-color: $dark-background;
 	border: 1px solid $white;
 }
-
-
-

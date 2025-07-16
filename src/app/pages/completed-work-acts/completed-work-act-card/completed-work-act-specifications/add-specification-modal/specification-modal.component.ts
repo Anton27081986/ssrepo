@@ -1,66 +1,57 @@
-import { Component, Inject, Signal } from '@angular/core';
-import { ModalRef } from '@app/core/modal/modal.ref';
-import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ModalService } from '@app/core/modal/modal.service';
+import { Component, Inject, Signal } from "@angular/core";
+import { ModalRef } from "@app/core/modal/modal.ref";
+import { DialogComponent } from "@app/shared/components/dialog/dialog.component";
+import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
+import { ModalService } from "@app/core/modal/modal.service";
 import {
 	AbstractControl,
 	FormControl,
 	FormGroup, ReactiveFormsModule,
 	ValidationErrors,
-	Validators,
-} from '@angular/forms';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
-import { SearchFacadeService } from '@app/core/facades/search-facade.service';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SelectV2Component} from "@app/shared/components/inputs/select-v2/select-v2.component";
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
+	Validators
+} from "@angular/forms";
+import { CompletedWorkActsFacadeService } from "@app/core/facades/completed-work-acts-facade.service";
+import { SearchFacadeService } from "@app/core/facades/search-facade.service";
+import { IDictionaryItemDto } from "@app/core/models/company/dictionary-item-dto";
+import { DIALOG_DATA } from "@app/core/modal/modal-tokens";
+import { ICompletedWorkActSpecification } from "@app/core/models/completed-work-acts/specification";
+import { toSignal } from "@angular/core/rxjs-interop";
+import { ICompletedWorkAct } from "@app/core/models/completed-work-acts/completed-work-act";
+import { ButtonComponent } from "@app/shared/components/buttons/button/button.component";
+import { NumericInputComponent } from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
+import { SearchInputComponent } from "@app/shared/components/inputs/search-input/search-input.component";
+import { CardComponent } from "@app/shared/components/card/card.component";
+import { TextComponent } from "@app/shared/components/typography/text/text.component";
+import { IconComponent } from "@app/shared/components/icon/icon.component";
+import { TextareaComponent } from "@app/shared/components/textarea/textarea.component";
+import { InputComponent } from "@app/shared/components/inputs/input/input.component";
 
 @UntilDestroy()
 @Component({
-	selector: 'ss-specification-modal',
-	templateUrl: './specification-modal.component.html',
-	styleUrls: ['./specification-modal.component.scss'],
+	selector: "ss-specification-modal",
+	templateUrl: "./specification-modal.component.html",
+	styleUrls: ["./specification-modal.component.scss"],
 	imports: [
+		ButtonComponent,
+		NumericInputComponent,
+		SearchInputComponent,
 		CardComponent,
 		TextComponent,
 		IconComponent,
 		ReactiveFormsModule,
-		SelectV2Component,
 		TextareaComponent,
-		InputComponent,
-		SearchInputComponent,
-		NumericInputComponent,
-		ButtonComponent
+		InputComponent
 	],
-	standalone: true,
+	standalone: true
 })
 export class SpecificationModalComponent {
-	private readonly defaultTovUnitsName = 'шт';
+	private readonly defaultTovUnitsName = "шт";
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
-		initialValue: null,
+		initialValue: null
 	});
 
-	protected services: Signal<IDictionaryItemDto[]> = toSignal(
-		this.completedWorkActsFacade.services$,
-		{
-			initialValue: [],
-		},
-	);
-
 	protected addSpecificationForm!: FormGroup<{
-		service: FormControl<IDictionaryItemDto | null>;
+		serviceId: FormControl<number | null>;
 		comment: FormControl<string | null>;
 		quantity: FormControl<number | null>;
 		tovUnitId: FormControl<number | null>;
@@ -83,10 +74,10 @@ export class SpecificationModalComponent {
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		private readonly searchFacade: SearchFacadeService,
+		private readonly searchFacade: SearchFacadeService
 	) {
 		this.addSpecificationForm = new FormGroup({
-			service: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			serviceId: new FormControl<number | null>(null, [Validators.required]),
 			comment: new FormControl<string | null>(null, [Validators.required]),
 			quantity: new FormControl<number | null>(null),
 			tovUnitId: new FormControl<number | null>(null),
@@ -98,12 +89,12 @@ export class SpecificationModalComponent {
 			userId: new FormControl<number | null>(null, [Validators.required]),
 			amount: new FormControl<number | null>(null, [
 				Validators.required,
-				this.amountValidator,
-			]),
+				this.amountValidator
+			])
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.service.setValue(spec.service || null);
+			this.addSpecificationForm.controls.serviceId.setValue(spec.service?.id || null);
 			this.addSpecificationForm.controls.comment.setValue(spec.comment || null);
 			this.addSpecificationForm.controls.quantity.setValue(spec.quantity || null);
 			this.addSpecificationForm.controls.tovUnitId.setValue(spec.tovUnit?.id || null);
@@ -129,12 +120,12 @@ export class SpecificationModalComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(units => {
 					this.defaultTovUnits = units.items.find(
-						item => item.name === this.defaultTovUnitsName,
+						item => item.name === this.defaultTovUnitsName
 					);
 
 					if (this.defaultTovUnits) {
 						this.addSpecificationForm.controls.tovUnitId.setValue(
-							this.defaultTovUnits.id,
+							this.defaultTovUnits.id
 						);
 					}
 				});
@@ -147,19 +138,6 @@ export class SpecificationModalComponent {
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
 			this.mySection = undefined;
-		}
-	}
-
-	protected resetValueControl(
-		event: Event,
-		control: AbstractControl,
-		fieldName: keyof ICompletedWorkActSpecification,
-	): void {
-		control.markAsTouched();
-
-		if (!(event.target as HTMLInputElement).value) {
-			control.setValue(null);
-			this.spec = { ...this.spec, [fieldName]: undefined };
 		}
 	}
 
@@ -176,7 +154,7 @@ export class SpecificationModalComponent {
 	protected getMyDept() {
 		if (this.user) {
 			this.searchFacade
-				.getDictionaryDepts('', this.user.id)
+				.getDictionaryDepts("", this.user.id)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
 					if (res.items.length) {
@@ -191,7 +169,7 @@ export class SpecificationModalComponent {
 	protected getMySection() {
 		if (this.myDept?.id) {
 			this.searchFacade
-				.getDictionarySections('', this.myDept?.id)
+				.getDictionarySections("", this.myDept?.id)
 				.pipe(untilDestroyed(this))
 				.subscribe(res => {
 					if (res.items.length) {
@@ -218,9 +196,9 @@ export class SpecificationModalComponent {
 		this.modalService
 			.open(DialogComponent, {
 				data: {
-					header: 'Данные не будут сохранены',
-					text: 'Вы уверены, что хотите уйти?',
-				},
+					header: "Данные не будут сохранены",
+					text: "Вы уверены, что хотите уйти?"
+				}
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
@@ -238,6 +216,7 @@ export class SpecificationModalComponent {
 	}
 
 	protected setErrorsControl(): void {
+		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.serviceId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.costId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.deptId);
 		this.setErrorsIfNotControlValue(this.addSpecificationForm.controls.userId);
@@ -252,15 +231,8 @@ export class SpecificationModalComponent {
 			return;
 		}
 
-		if (!this.addSpecificationForm.controls.service.value?.id) {
-			return;
-		}
-
 		this.completedWorkActsFacade
-			.addSpecificationToAct({
-				...this.addSpecificationForm.value,
-				serviceId: this.addSpecificationForm.controls.service.value.id,
-			})
+			.addSpecificationToAct(this.addSpecificationForm.value)
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();
@@ -276,16 +248,8 @@ export class SpecificationModalComponent {
 			return;
 		}
 
-		if (!this.addSpecificationForm.controls.service.value?.id) {
-			return;
-		}
-
 		this.completedWorkActsFacade
-			.updateSpecification({
-				...this.addSpecificationForm.value,
-				serviceId: this.addSpecificationForm.controls.service.value.id,
-				id: this.spec.id,
-			})
+			.updateSpecification({ ...this.addSpecificationForm.value, id: this.spec.id })
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.modalRef.close();

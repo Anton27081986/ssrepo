@@ -43,11 +43,17 @@ export class ExcessIncomeService {
 		return this.apiService.getCurrency();
 	}
 
-	public updateSndClient(clientId: number, request: ExcessIncomeUpdateClientRequest) {
+	public updateSndClient(
+		clientId: number,
+		request: ExcessIncomeUpdateClientRequest,
+	) {
 		return this.apiService.updateSndClient(clientId, request);
 	}
 
-	public updateSndTovGroups(clientId: number, request: ExcessIncomeUpdateGroupRequest) {
+	public updateSndTovGroups(
+		clientId: number,
+		request: ExcessIncomeUpdateGroupRequest,
+	) {
 		return this.apiService.updateSndGroup(clientId, request);
 	}
 

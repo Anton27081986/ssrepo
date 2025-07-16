@@ -1,11 +1,11 @@
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
-import {ButtonComponent} from "@front-components/components";
-import {NgOptimizedImage} from "@angular/common";
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { NgOptimizedImage } from '@angular/common';
+import { CarouselComponent, ItemDirective, SafePipe } from "@front-library/components";
 
-export const BannerImports = [
+export const bannerImports = [
+	CarouselComponent,
+	ItemDirective,
+	NgOptimizedImage,
+	SafePipe,
 	LoaderComponent,
-	EmptyDataPageComponent,
-	ButtonComponent,
-	NgOptimizedImage
-]
+];

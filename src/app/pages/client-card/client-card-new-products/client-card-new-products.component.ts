@@ -1,21 +1,32 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnInit,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
-import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { TableState } from '@app/shared/components/table/table-state';
 import { INewProductsTableItem } from '@app/pages/client-card/client-card-new-products/new-products-table-item';
 import { NewProductsFacadeService } from '@app/core/facades/new-products-facade.service';
 import { INewProductsItemDto } from '@app/core/models/company/new-products-item-dto';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { Observable } from 'rxjs';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -35,15 +46,15 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		EmptyPlaceholderComponent,
 		TextComponent,
 		FiltersComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardNewProductsComponent implements OnInit {
 	public newProducts$: Observable<INewProductsItemDto | null>;
 
 	// table
-	public total: number = 0;
+	public total = 0;
 	public pageSize = 6;
 	public pageIndex = 1;
 	public offset = 0;
@@ -52,7 +63,7 @@ export class ClientCardNewProductsComponent implements OnInit {
 	private clientId: number | undefined;
 
 	// state
-	public isFiltersVisible: boolean = false;
+	public isFiltersVisible = false;
 	public tableState: TableState = TableState.Empty;
 
 	public filters: IFilter[] = [
@@ -65,7 +76,8 @@ export class ClientCardNewProductsComponent implements OnInit {
 		},
 	];
 
-	public constructor(
+	protected readonly TableState = TableState;
+	constructor(
 		public readonly newProductsFacadeService: NewProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
@@ -78,7 +90,7 @@ export class ClientCardNewProductsComponent implements OnInit {
 
 		this.newProductsFacadeService.newProducts$
 			.pipe(untilDestroyed(this))
-			.subscribe(response => {
+			.subscribe((response) => {
 				if (!response.items || response.items.length === 0) {
 					this.tableState = TableState.Empty;
 				} else {
@@ -96,19 +108,22 @@ export class ClientCardNewProductsComponent implements OnInit {
 
 				this.cdr.detectChanges();
 			});
-		this.clientCardListFacade.client$.pipe(untilDestroyed(this)).subscribe(client => {
-			if (client.id) {
-				this.clientId = client.id;
+		this.clientCardListFacade.client$
+			.pipe(untilDestroyed(this))
+			.subscribe((client) => {
+				if (client.id) {
+					this.clientId = client.id;
 
-				this.getFilteredSales();
-			}
-		});
+					this.getFilteredSales();
+				}
+			});
 	}
 
 	private mapClientsToTableItems(sales: INewProductsItemDto) {
 		return (
-			sales.items?.map(x => {
-				const tableItem: INewProductsTableItem = {} as INewProductsTableItem;
+			sales.items?.map((x) => {
+				const tableItem: INewProductsTableItem =
+					{} as INewProductsTableItem;
 
 				tableItem.code = {
 					text: x.id.toString() ?? '-',
@@ -116,7 +131,8 @@ export class ClientCardNewProductsComponent implements OnInit {
 				};
 				tableItem.status = x.status.name ?? '-';
 				tableItem.productName = x.productName ?? '-';
-				tableItem.customer = x.customers?.map(c => c.name).join(', ') ?? '-';
+				tableItem.customer =
+					x.customers?.map((c) => c.name).join(', ') ?? '-';
 				tableItem.developer = x.developer?.name ?? '-';
 
 				return tableItem;
@@ -140,17 +156,19 @@ export class ClientCardNewProductsComponent implements OnInit {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'select':
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				case 'search':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
@@ -179,6 +197,4 @@ export class ClientCardNewProductsComponent implements OnInit {
 
 		this.getFilteredSales();
 	}
-
-	protected readonly TableState = TableState;
 }

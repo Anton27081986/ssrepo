@@ -5,7 +5,7 @@ import { CallPhoneApiService } from '@app/core/api/call-phone-api.service';
 	providedIn: 'root',
 })
 export class CallPhoneService {
-	public constructor(public apiService: CallPhoneApiService) {}
+	constructor(public apiService: CallPhoneApiService) {}
 
 	// TODO: change any to model type
 	public toggleCallForUser(user: any) {
@@ -25,7 +25,10 @@ export class CallPhoneService {
 					user.isCalling = false;
 				},
 				error: (error: unknown) => {
-					console.error('Ошибка при сбросе звонка пользователя:', error);
+					console.error(
+						'Ошибка при сбросе звонка пользователя:',
+						error,
+					);
 				},
 			});
 		}

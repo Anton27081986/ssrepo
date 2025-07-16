@@ -1,0 +1,8 @@
+<ss-lib-button [type]="ButtonType.Secondary" [iconPosition]="IconPosition.Start" [icon]="IconType.FilterLines"
+			   [text]="'Фильтры'" [popoverTriggerFor]="filtersList"></ss-lib-button>
+
+<ss-lib-dropdown-list [width]="'249px'" #filtersList>
+	<ss-lib-dropdown-item [label]="filter.text" [isDisabled]="filter.active" (click)="addFilterMenu(filter)"
+						  *ngFor="let filter of filters">
+	</ss-lib-dropdown-item>
+</ss-lib-dropdown-list>

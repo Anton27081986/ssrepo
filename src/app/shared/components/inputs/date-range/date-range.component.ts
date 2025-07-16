@@ -1,12 +1,29 @@
-import { Component, EventEmitter, Input, Optional, Output, Self } from '@angular/core';
-import {FormControl, FormGroup, NgControl, ReactiveFormsModule} from '@angular/forms';
-import {CommonModule, DatePipe, formatDate, NgClass} from '@angular/common';
+import {
+	Component,
+	EventEmitter,
+	Input,
+	Optional,
+	Output,
+	Self,
+} from '@angular/core';
+import {
+	FormControl,
+	FormGroup,
+	NgControl,
+	ReactiveFormsModule,
+} from '@angular/forms';
+import { CommonModule, DatePipe, formatDate, NgClass } from '@angular/common';
 import { EMPTY_FUNCTION } from '@app/core/constants/empty';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {MatFormField} from "@angular/material/form-field";
-import {MatDateRangeInput, MatDateRangePicker, MatEndDate, MatStartDate} from "@angular/material/datepicker";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { MatFormField } from '@angular/material/form-field';
+import {
+	MatDateRangeInput,
+	MatDateRangePicker,
+	MatEndDate,
+	MatStartDate,
+} from '@angular/material/datepicker';
 
 @Component({
 	selector: 'ss-date-range',
@@ -29,13 +46,23 @@ import {MatDateRangeInput, MatDateRangePicker, MatEndDate, MatStartDate} from "@
 	standalone: true,
 })
 export class DateRangeComponent {
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string | undefined;
-	@Input() public error: string | undefined;
-	@Input() public size: string = 'large';
-	@Output() public select = new EventEmitter<string>();
+	@Input()
+	public label: string | undefined;
 
-	@Input() public value: any = '';
+	@Input()
+	public placeholder: string | undefined;
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public size = 'large';
+
+	@Output()
+	public select = new EventEmitter<string>();
+
+	@Input()
+	public value: any = '';
 
 	public formRange = new FormGroup({
 		startDate: new FormControl<string | null>(null),
@@ -45,7 +72,7 @@ export class DateRangeComponent {
 	private onChange = EMPTY_FUNCTION;
 	private onTouched = EMPTY_FUNCTION;
 
-	public constructor(@Self() @Optional() private readonly ngControl: NgControl) {
+	constructor(@Self() @Optional() private readonly ngControl: NgControl) {
 		if (this.ngControl) {
 			this.ngControl.valueAccessor = this;
 		}
@@ -82,13 +109,19 @@ export class DateRangeComponent {
 	}
 
 	public dateChanged(): void {
-		if (!this.formRange.controls.startDate.value && !this.formRange.controls.endDate.value) {
+		if (
+			!this.formRange.controls.startDate.value &&
+			!this.formRange.controls.endDate.value
+		) {
 			this.select.emit('');
 
 			return;
 		}
 
-		if (!this.formRange.controls.startDate.value || !this.formRange.controls.endDate.value) {
+		if (
+			!this.formRange.controls.startDate.value ||
+			!this.formRange.controls.endDate.value
+		) {
 			return;
 		}
 
@@ -98,7 +131,11 @@ export class DateRangeComponent {
 			'ru-RU',
 		);
 
-		const endDate = formatDate(this.formRange.controls.endDate?.value, 'dd.MM.yyyy', 'ru-RU');
+		const endDate = formatDate(
+			this.formRange.controls.endDate?.value,
+			'dd.MM.yyyy',
+			'ru-RU',
+		);
 
 		this.select.emit(`${startDate}-${endDate}`);
 	}

@@ -7,19 +7,26 @@ import { IManagerItemDto } from '@app/core/models/company/manager-item-dto';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { ModalService } from '@app/core/modal/modal.service';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {AsyncPipe, CommonModule, DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {TagComponent} from "@app/shared/components/tag/tag.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
-import {NotificationToastService} from "@app/core/services/notification-toast.service";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import {
+	AsyncPipe,
+	CommonModule,
+	DatePipe,
+	NgClass,
+	NgForOf,
+	NgIf,
+} from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { AvatarComponent } from '@app/shared/components/avatar/avatar.component';
+import { TagComponent } from '@app/shared/components/tag/tag.component';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { UserInfoPopupComponent } from '@app/shared/components/user-info-popup/user-info-popup.component';
+import { NotificationToastService } from '@app/core/services/notification-toast.service';
 
 enum OperationStatuses {
 	Add,
@@ -48,9 +55,9 @@ enum OperationStatuses {
 		SearchInputComponent,
 		NgForOf,
 		NgClass,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientCardManagersComponent implements OnInit {
 	public managers$: Observable<IManagerItemDto[] | null>;
@@ -59,9 +66,9 @@ export class ClientCardManagersComponent implements OnInit {
 	public currentUser: IUserProfile | null | undefined;
 
 	public isEditing = false;
-	public canAppointMainManager: boolean = false;
-	public canAddManagers: boolean = false;
-	public canRemoveManagers: boolean = false;
+	public canAppointMainManager = false;
+	public canAddManagers = false;
+	public canRemoveManagers = false;
 
 	public operationStatuses = OperationStatuses;
 
@@ -69,10 +76,13 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public changedData: {
 		basicManager: number | undefined;
-		managersList: Array<{ manager: IManagerItemDto; status: OperationStatuses }>;
+		managersList: Array<{
+			manager: IManagerItemDto;
+			status: OperationStatuses;
+		}>;
 	} = { basicManager: undefined, managersList: [] };
 
-	public constructor(
+	constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NotificationToastService,
 		private readonly userFacadeService: UserFacadeService,
@@ -84,35 +94,41 @@ export class ClientCardManagersComponent implements OnInit {
 	}
 
 	public ngOnInit() {
-		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
-			if (clientId) {
-				this.clientCardListFacade.getManagers();
-			}
-		});
-
-		this.clientCardListFacade.managers$.pipe(untilDestroyed(this)).subscribe(managers => {
-			this.basicManager = managers.find(manager => manager.isBase);
-			this.changedData.managersList = managers.map(manager => {
-				return { manager, status: OperationStatuses.Static };
+		this.clientCardListFacade.clientId$
+			.pipe(untilDestroyed(this))
+			.subscribe((clientId) => {
+				if (clientId) {
+					this.clientCardListFacade.getManagers();
+				}
 			});
-		});
 
-		this.clientCardListFacade.permissions$.pipe(untilDestroyed(this)).subscribe(permissions => {
-			this.canAddManagers = permissions.includes(
-				Permissions.CLIENT_MANAGERS_CAN_ADD_MANAGERS,
-			);
-			this.canRemoveManagers = permissions.includes(
-				Permissions.CLIENT_MANAGERS_CAN_REMOVE_MANAGERS,
-			);
-			this.canAppointMainManager = permissions.includes(
-				Permissions.CLIENT_MANAGERS_CAN_APPOINT_BASE_MANAGER,
-			);
-		});
+		this.clientCardListFacade.managers$
+			.pipe(untilDestroyed(this))
+			.subscribe((managers) => {
+				this.basicManager = managers.find((manager) => manager.isBase);
+				this.changedData.managersList = managers.map((manager) => {
+					return { manager, status: OperationStatuses.Static };
+				});
+			});
+
+		this.clientCardListFacade.permissions$
+			.pipe(untilDestroyed(this))
+			.subscribe((permissions) => {
+				this.canAddManagers = permissions.includes(
+					Permissions.CLIENT_MANAGERS_CAN_ADD_MANAGERS,
+				);
+				this.canRemoveManagers = permissions.includes(
+					Permissions.CLIENT_MANAGERS_CAN_REMOVE_MANAGERS,
+				);
+				this.canAppointMainManager = permissions.includes(
+					Permissions.CLIENT_MANAGERS_CAN_APPOINT_BASE_MANAGER,
+				);
+			});
 
 		this.userFacadeService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
-			.subscribe(user => {
+			.subscribe((user) => {
 				this.currentUser = user;
 			});
 	}
@@ -123,7 +139,7 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public onBasicManagerChange(managerId: number) {
 		this.changedData.basicManager = managerId;
-		this.changedData.managersList.map(item => {
+		this.changedData.managersList.map((item) => {
 			if (item.manager.id == managerId) {
 				item.manager.isBase = true;
 			} else {
@@ -133,9 +149,13 @@ export class ClientCardManagersComponent implements OnInit {
 	}
 
 	public async onSaveChanges() {
-		for (const operation of this.changedData.managersList.sort((a, b) => a.status - b.status)) {
+		for (const operation of this.changedData.managersList.sort(
+			(a, b) => a.status - b.status,
+		)) {
 			if (operation.status === OperationStatuses.Add) {
-				await this.clientCardListFacade.addManager(operation.manager.id).toPromise();
+				await this.clientCardListFacade
+					.addManager(operation.manager.id)
+					.toPromise();
 			}
 
 			if (
@@ -148,7 +168,9 @@ export class ClientCardManagersComponent implements OnInit {
 			}
 
 			if (operation.status === OperationStatuses.Delete) {
-				await this.clientCardListFacade.deleteManager(operation.manager.id).toPromise();
+				await this.clientCardListFacade
+					.deleteManager(operation.manager.id)
+					.toPromise();
 			}
 		}
 
@@ -167,7 +189,7 @@ export class ClientCardManagersComponent implements OnInit {
 			this.clientCardListFacade
 				.getUserById($event.id)
 				.pipe(untilDestroyed(this))
-				.subscribe(user => {
+				.subscribe((user) => {
 					this.changedData.managersList.push({
 						manager: user,
 						status: OperationStatuses.Add,

@@ -17,20 +17,20 @@
 
 	<div class="rating-team-users-card__actions">
 		<div class="rating-team-users-card__rating">
-			<div *ngIf="teamUsers().avgWeekRate" [tooltip]="'Средняя оценка за неделю'" [theme]="TooltipTheme.DEFAULT"
-				 [position]="TooltipPosition.DEFAULT" class="rating-team-users-card__tab">
+			<div *ngIf="teamUsers().avgWeekRate" class="rating-team-users-card__tab" [tooltip]="'Средняя оценка за неделю'"
+				 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
 				<ss-text [size]="'4'">{{ teamUsers().avgWeekRate }}</ss-text>
 			</div>
-			<div *ngIf="teamUsers().avgQuarterRate" [tooltip]="'Средняя оценка за квартал'" [theme]="TooltipTheme.DEFAULT"
-				 [position]="TooltipPosition.DEFAULT" class="rating-team-users-card__tab">
+			<div *ngIf="teamUsers().avgQuarterRate" class="rating-team-users-card__tab" [tooltip]="'Средняя оценка за квартал'"
+				 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
 				<ss-text [size]="'4'">{{ teamUsers().avgQuarterRate }}</ss-text>
 			</div>
 			<ss-icon *ngIf="typeCup()" class="rating-team-users-card__tab rating-team-users-card__tab--{{ typeCup() }}" [name]="'cup'"></ss-icon>
 		</div>
 		<div class="rating-team-users-card__card-comment">
 			<div *ngIf="teamUsers().allowMsgView" class="rating-team-users-card__comment" (click)="redirectOnComment(teamUsers().talksLink!)">
-				<ss-icon [tooltip]="'Оставить комментарий'" [theme]="TooltipTheme.DEFAULT"
-						 [position]="TooltipPosition.DEFAULT" [width]="'15'" [height]="'15'" name="comment"></ss-icon>
+				<ss-icon name="comment" [tooltip]="'Оставить комментарий'"
+						 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT" [width]="'15'" [height]="'15'"></ss-icon>
 				<ss-text [size]="'3'">{{teamUsers().msgCount }}</ss-text>
 			</div>
 		</div>

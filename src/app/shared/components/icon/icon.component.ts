@@ -9,23 +9,30 @@ import {
 	ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {AppIcons} from "@app/core/icons";
+import { AppIcons } from '@app/core/icons';
 
 @Component({
 	selector: 'ss-icon',
 	templateUrl: './icon.component.html',
 	styleUrls: ['./icon.component.scss'],
-	standalone: true
+	standalone: true,
 })
 export class IconComponent implements OnInit, OnChanges, AfterViewInit {
-	@Input() public name: string = '';
-	@Input() public width: string | undefined;
-	@Input() public height: string | undefined;
-	@ViewChild('svgIcon') public svgIcon!: ElementRef;
+	@Input()
+	public name = '';
+
+	@Input()
+	public width: string | undefined;
+
+	@Input()
+	public height: string | undefined;
+
+	@ViewChild('svgIcon')
+	public svgIcon!: ElementRef;
 
 	protected svg: SafeHtml | undefined;
 
-	public constructor(private readonly sanitizer: DomSanitizer) {}
+	constructor(private readonly sanitizer: DomSanitizer) {}
 
 	ngAfterViewInit() {
 		this.svgIcon.nativeElement.setAttribute(

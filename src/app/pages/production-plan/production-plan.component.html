@@ -1,21 +1,59 @@
-<div class="production-plan-wrapper">
-    <div class="header">
-        <ss-headline size="h3">Планирование производства</ss-headline>
-        <div class="header__controls">
-            <ss-select>
-                <option value="">Выберите период</option>
-            </ss-select>
-        </div>
-    </div>
+<div class="production-plan">
+	<div class="production-plan__header">
+		<div class="production-plan__title">
+			<ss-lib-text
+				[type]="TextType.HeadingXs"
+				[weight]="TextWeight.Medium"
+			>
+				Планирование производства
+			</ss-lib-text>
+		</div>
 
-    <div class="tabs">
-        <ss-tabs
-            [tabs]="productionPlanTabs"
-            [selectedTab]="productionPlanTabs[0]"
-            [size]="'small'"
-        />
-        <ss-card padding="0" radius="0 0 16px 16px" class="tabs__content">
-            <router-outlet></router-outlet>
-        </ss-card>
-    </div>
+		<div class="production-plan__tabs">
+			<ss-lib-tabs
+				[tabs]="tabs"
+				[(activeTabIndex)]="activeTabIndex"
+				(changeIndexEmit)="changeTabIndex($event)"
+				[actionsRef]="actions"
+			></ss-lib-tabs>
+
+			<ng-template #actions>
+				<ss-lib-button
+					[popoverTriggerFor]="listActions"
+					[iconPosition]="IconPosition.End"
+					[style.width]="'121px'"
+					[type]="ButtonType.Secondary"
+					[size]="ExtraSize.md"
+					[text]="'Действия'"
+					[icon]="IconType.ChevronDown"
+				></ss-lib-button>
+				<ss-lib-button
+					*ngIf="operationPlanState.getHasPermissionEdit"
+					(click)="addSemiManufactures()"
+					[style.width]="'220px'"
+					[size]="ExtraSize.md"
+					[text]="'Добавить полуфабрикат'"
+					[icon]="IconType.Plus"
+				></ss-lib-button>
+
+				<ss-lib-dropdown-list #listActions>
+					<ss-lib-dropdown-item
+						[label]="'Выгрузить 1С'"
+						(click)="upload1C()"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Сводный отчет'"
+						(click)="downloadReport()"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Выгрузить Excel'"
+						(click)="downloadExel()"
+					/>
+				</ss-lib-dropdown-list>
+			</ng-template>
+		</div>
+	</div>
+	<div class="production-plan__body">
+		<router-outlet></router-outlet>
+	</div>
 </div>

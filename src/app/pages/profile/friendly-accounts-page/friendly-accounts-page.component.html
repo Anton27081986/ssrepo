@@ -38,15 +38,15 @@
 							</div>
 						</div>
 						<ng-container [ngSwitch]="item?.equType">
-							<div class="connection-type" *ngSwitchCase="1">
+							<div *ngSwitchCase="1" class="connection-type">
 								<ss-icon class="connect-icon" [name]="'oneConnectIn'"></ss-icon>
 								<span>Односторонняя связь (от имени друга)</span>
 							</div>
-							<div class="connection-type" *ngSwitchCase="2">
+							<div *ngSwitchCase="2" class="connection-type">
 								<ss-icon class="connect-icon" [name]="'oneConnectOut'"></ss-icon>
 								<span>Односторонняя связь (от моего имени)</span>
 							</div>
-							<div class="connection-type" *ngSwitchCase="3">
+							<div *ngSwitchCase="3" class="connection-type">
 								<ss-icon class="connect-icon"n [name]="'twoWayConnect'"></ss-icon>
 								<span>Двусторонняя связь</span>
 							</div>

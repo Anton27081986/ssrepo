@@ -9,8 +9,8 @@ import {
 	ChangeDetectorRef,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
 
 @Component({
 	selector: 'ss-numeric-input',
@@ -24,28 +24,44 @@ import {CaptionComponent} from "@app/shared/components/typography/caption/captio
 			multi: true,
 		},
 	],
-	imports: [
-		CaptionComponent,
-		IconComponent,
-		CaptionComponent
-	],
-	standalone: true
+	imports: [CaptionComponent, IconComponent, CaptionComponent],
+	standalone: true,
 })
 export class NumericInputComponent implements ControlValueAccessor, OnInit {
-	@Input() public size: 'large' | 'medium' = 'medium';
-	@Input() public disabled: boolean = false;
-	@Input() public label: string | undefined;
-	@Input() public placeholder: string = '';
-	@Input() public error: string | undefined;
-	@Input() public value: any = '';
-	@Input() public isInt: boolean = false;
+	@Input()
+	public size: 'large' | 'medium' = 'medium';
 
-	@ViewChild('input', { static: true }) public input!: ElementRef<HTMLInputElement>;
+	@Input()
+	public disabled = false;
 
-	public constructor(private readonly cdr: ChangeDetectorRef) {}
+	@Input()
+	public label: string | undefined;
+
+	@Input()
+	public placeholder = '';
+
+	@Input()
+	public error: string | undefined;
+
+	@Input()
+	public value: any = '';
+
+	@Input()
+	public isInt = false;
+
+	@ViewChild('input', { static: true })
+	public input!: ElementRef<HTMLInputElement>;
+
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	public onChange = (value: string) => {};
+	public onTouched = () => {};
+	constructor(private readonly cdr: ChangeDetectorRef) {}
 
 	public ngOnInit(): void {
-		this.input.nativeElement.addEventListener('input', this.handleInput.bind(this));
+		this.input.nativeElement.addEventListener(
+			'input',
+			this.handleInput.bind(this),
+		);
 	}
 
 	public handleInput(event: Event): void {
@@ -110,10 +126,6 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 			this.input.nativeElement.disabled = isDisabled;
 		}
 	}
-
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	public onChange = (value: string) => {};
-	public onTouched = () => {};
 
 	public clear(): void {
 		this.writeValue('');

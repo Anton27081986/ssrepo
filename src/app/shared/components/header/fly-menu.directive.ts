@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Directive, HostBinding, HostListener } from '@angular/core';
+import {
+	ChangeDetectorRef,
+	Directive,
+	HostBinding,
+	HostListener,
+} from '@angular/core';
 import { fromEvent, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
@@ -8,11 +13,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class FlyMenuDirective {
 	private offsetY!: number;
-	public constructor(private readonly cd: ChangeDetectorRef) {}
+	@HostBinding('class')
+	public classFlyHeader = '';
 
-	@HostBinding('class') public classFlyHeader: string = '';
+	constructor(private readonly cd: ChangeDetectorRef) {}
 
-	@HostListener('document:scroll') public onMouseScrollTop() {
+	@HostListener('document:scroll')
+	public onMouseScrollTop() {
 		fromEvent(window, 'scroll')
 			.pipe(
 				untilDestroyed(this),

@@ -1,22 +1,20 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use '../../../../styles/colors' as *;
 
 .ss-divider {
-  display: flex;
+	display: flex;
 
-  --_divider-border: 1px solid rgba(0, 0, 0, 0.12);
+	--_divider-border: 1px solid rgba(0, 0, 0, 0.12);
 
-  min-height: 1px;
-  min-width: 1px;
+	min-height: 1px;
+	min-width: 1px;
 
-  &--vertical {
-    border-right: var(--_divider-border);
-  }
+	&--vertical {
+		border-right: var(--_divider-border);
+	}
 
-  &--horizontal {
-    border-top: var(--_divider-border);
-  }
+	&--horizontal {
+		border-top: var(--_divider-border);
+	}
 }
 
 :host-context(.dark) .ss-divider {

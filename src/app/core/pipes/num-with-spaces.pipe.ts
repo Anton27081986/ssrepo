@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
 	name: 'numWithSpaces',
-	standalone: true
+	standalone: true,
 })
 export class NumWithSpacesPipe implements PipeTransform {
 	transform(value: unknown, digits = 2, sep = '\u00A0'): string {

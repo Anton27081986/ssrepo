@@ -3,7 +3,7 @@
 	<div class="header__controls">
 		<ss-tooltip-menu icon="download">
 			<ss-caption size="1">
-				<a [href]="facadeService.instructionFileLink" target="_blank">
+				<a target="_blank" [href]="facadeService.instructionFileLink">
 					Инструкция по учету законтрактованного сырья
 				</a>
 			</ss-caption>
@@ -50,7 +50,7 @@
 	}
 	@if (isFiltersVisible) {
 		<ss-card class="filters" padding="0">
-			<ss-filters [(isFiltersVisible)]="isFiltersVisible" (applyFilter)="getFilteredContracts(true)" [(filters)]="filters"></ss-filters>
+			<ss-filters [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredContracts(true)"></ss-filters>
 		</ss-card>
 	}
 	@if (isLoading$ | async) {

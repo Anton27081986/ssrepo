@@ -1,5 +1,3 @@
-@use '../../../../../assets/scss/mixins' as *;
-@use '../../../../../assets/scss/variables' as *;
 @use '../../../../../styles/colors' as *;
 
 :host {
@@ -9,7 +7,7 @@
 
 :host:hover {
 	color: #212529;
-	background-color: rgba(0, 0, 0, .075);
+	background-color: rgba(0, 0, 0, 0.075);
 }
 
 .ss-table-td {

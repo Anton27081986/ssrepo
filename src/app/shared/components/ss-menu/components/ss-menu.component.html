@@ -1,4 +1,4 @@
-<div id="menu" class="main-menu" *ngIf="menuItems" #myElement>
+<div *ngIf="menuItems" #myElement id="menu" class="main-menu">
 	<div class="main-menu__content" [ngStyle]="{'column-count': getColomnCount()}">
 		<ng-container *ngFor="let menu of menuItems">
 			<ss-menu-item [menuItems]="menu"></ss-menu-item>

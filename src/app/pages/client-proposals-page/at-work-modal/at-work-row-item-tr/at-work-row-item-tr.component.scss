@@ -1,5 +1,3 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use 'src/styles/colors.scss' as *;
 
 .hc-table-td {
@@ -19,9 +17,9 @@
 		position: relative;
 	}
 
-	 &__td.limit {
-		 max-height: 42px;
-	 }
+	&__td.limit {
+		max-height: 42px;
+	}
 
 	&__maximise {
 		position: absolute;
@@ -29,7 +27,6 @@
 		right: 4px;
 		cursor: pointer;
 	}
-
 
 	&__content {
 		display: flex;
@@ -56,9 +53,8 @@
 	}
 
 	&__error {
-
 		::ng-deep span {
-			color: #E9033A;
+			color: #e9033a;
 		}
 	}
 }

@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { IBannersListDto } from '@app/core/models/banners/banners-list-dto';
+import { IResponseItems } from '@app/core/utils/response-items';
+import { IBannerDto } from '@app/core/models/banners/banner-dto';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class BannersApiService {
-	public constructor(private readonly http: HttpClient) {}
+	private readonly prefix = 'cms';
 
-	public getBanners(): Observable<IBannersListDto> {
-		return this.http.get<IBannersListDto>(`${environment.apiUrl}/api/company/banners`);
+	constructor(private readonly http: HttpClient) {}
+
+	public getBanners(): Observable<IResponseItems<IBannerDto>> {
+		return this.http.get<IResponseItems<IBannerDto>>(
+			`${environment.apiUrl}/api/${this.prefix}/Banners`,
+		);
 	}
 }

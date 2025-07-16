@@ -8,7 +8,7 @@ import { IPartnerThanksListDto } from '@app/core/models/awards/partner-thanks-li
 	providedIn: 'root',
 })
 export class ThanksPartnerApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Спасибо партнеру */
 	public getPartnerThanks(date: string): Observable<IPartnerThanksListDto> {

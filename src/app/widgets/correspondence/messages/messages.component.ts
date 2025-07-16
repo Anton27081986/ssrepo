@@ -9,18 +9,18 @@ import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
 import { NotificationsApiService } from '@app/core/api/notifications-api.service';
 import { ITab } from '@app/shared/components/tabs/tab';
-import {TabsComponent} from "@app/shared/components/tabs/tabs.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {AsyncPipe, CommonModule, DatePipe, NgClass} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AttachmentComponent} from "@app/shared/components/attachment/attachment.component";
-import {BypassSecurityTrustHtmlPipe} from "@app/core/pipes/bypass-security-trust-html.pipe";
-import {TooltipMenuComponent} from "@app/shared/components/tooltip-menu/tooltip-menu.component";
-import {FileSizePipe} from "@app/core/pipes/size.pipe";
+import { TabsComponent } from '@app/shared/components/tabs/tabs.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { AvatarComponent } from '@app/shared/components/avatar/avatar.component';
+import { AsyncPipe, CommonModule, DatePipe, NgClass } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AttachmentComponent } from '@app/shared/components/attachment/attachment.component';
+import { BypassSecurityTrustHtmlPipe } from '@app/core/pipes/bypass-security-trust-html.pipe';
+import { TooltipMenuComponent } from '@app/shared/components/tooltip-menu/tooltip-menu.component';
+import { FileSizePipe } from '@app/core/pipes/size.pipe';
 
 @UntilDestroy()
 @Component({
@@ -42,15 +42,22 @@ import {FileSizePipe} from "@app/core/pipes/size.pipe";
 		DatePipe,
 		NgClass,
 		TooltipMenuComponent,
-		FileSizePipe
+		FileSizePipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class MessagesComponent {
-	protected messages$: Observable<{ items: IMessageItemDto[]; total: number } | null>;
+	protected messages$: Observable<{
+		items: IMessageItemDto[];
+		total: number;
+	} | null>;
+
 	protected topic$: Observable<string | null>;
 	protected user$: Observable<IUserProfile | null>;
-	protected files$: Observable<{ items: IAttachmentDto[]; total: number } | null>;
+	protected files$: Observable<{
+		items: IAttachmentDto[];
+		total: number;
+	} | null>;
 
 	protected tabs: ITab[] = [
 		{
@@ -65,11 +72,16 @@ export class MessagesComponent {
 		},
 	];
 
-	protected messageTab: ITab | undefined = this.tabs.find(x => x.name === 'messages');
+	protected messageTab: ITab | undefined = this.tabs.find(
+		(x) => x.name === 'messages',
+	);
 
-	protected selectedTab: ITab | undefined = this.tabs.find(x => x.name === 'messages');
+	protected selectedTab: ITab | undefined = this.tabs.find(
+		(x) => x.name === 'messages',
+	);
 
-	@ViewChild('messages') public messagesElement!: ElementRef;
+	@ViewChild('messages')
+	public messagesElement!: ElementRef;
 
 	public pageIndex = 1;
 	public pageSize = 10;
@@ -80,7 +92,7 @@ export class MessagesComponent {
 
 	private searchText: string | undefined;
 
-	public constructor(
+	constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 		private readonly userService: UserProfileStoreService,
@@ -90,10 +102,10 @@ export class MessagesComponent {
 		this.topic$ = this.notificationsFacadeService.selectedTopic$;
 		this.user$ = this.userService.userProfile$;
 
-		this.topic$.pipe(untilDestroyed(this)).subscribe(subject => {
-			this.selectedTab = this.tabs.find(x => x.name === 'messages');
+		this.topic$.pipe(untilDestroyed(this)).subscribe((subject) => {
+			this.selectedTab = this.tabs.find((x) => x.name === 'messages');
 
-			const messageTab = this.tabs.find(x => x.name === 'messages');
+			const messageTab = this.tabs.find((x) => x.name === 'messages');
 
 			messageTab!.label = subject !== null ? subject : 'Все сообщения';
 			this.pageIndex = 1;
@@ -103,7 +115,7 @@ export class MessagesComponent {
 			this.isLoading = true;
 		});
 
-		this.messages$.pipe(untilDestroyed(this)).subscribe(messages => {
+		this.messages$.pipe(untilDestroyed(this)).subscribe((messages) => {
 			this.isLoading = false;
 			this.total = messages?.total || 0;
 
@@ -157,23 +169,31 @@ export class MessagesComponent {
 	}
 
 	protected selectTab(name: string) {
-		this.selectedTab = this.tabs.find(x => x.name === name);
+		this.selectedTab = this.tabs.find((x) => x.name === name);
 	}
 
-	protected replyTo(message: IMessageItemDto, author: IUserDto, toUsers: IUserDto[] = []) {
+	protected replyTo(
+		message: IMessageItemDto,
+		author: IUserDto,
+		toUsers: IUserDto[] = [],
+	) {
 		const users = [author, ...toUsers];
 
 		this.notificationsFacadeService.selectMessageToReply({
 			message,
 			toUsers: users.filter(
-				(user, index) => index === users.findIndex(el => user.id === el.id),
+				(user, index) =>
+					index === users.findIndex((el) => user.id === el.id),
 			),
 		});
 	}
 
 	protected changeVisibility(message: IMessageItemDto) {
 		this.notificationsApiService
-			.patchMessage(message.id!, { ...message, isPrivate: !message.isPrivate })
+			.patchMessage(message.id!, {
+				...message,
+				isPrivate: !message.isPrivate,
+			})
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
 				this.notificationsFacadeService.setMessageVisibility(
@@ -193,6 +213,10 @@ export class MessagesComponent {
 		this.isLoading = true;
 		this.searchText = target.value;
 
-		this.notificationsFacadeService.searchMessages(this.pageSize, this.offset, target.value);
+		this.notificationsFacadeService.searchMessages(
+			this.pageSize,
+			this.offset,
+			target.value,
+		);
 	}
 }

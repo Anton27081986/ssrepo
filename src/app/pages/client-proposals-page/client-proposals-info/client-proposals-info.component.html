@@ -3,10 +3,10 @@
 		<ss-headline class="clients-proposals-info__header" size="h3">Контакт с клиентом: рекомендации по ВГП
 		</ss-headline>
 		<ss-search-client-input
+			class="header-content__search"
 			[formControl]="searchControl"
 			[onlyActive]="true"
 			[disabled]="(blockForProposals$ | async)!"
-			class="header-content__search"
 			(select)="getSearchClient($event)"
 		></ss-search-client-input>
 	</div>
@@ -31,8 +31,8 @@
 		<div class="content-accordion__tabs">
 			<ss-tabs [tabs]="tabs()"
 					 [size]="'medium'"
-					 (select)="selectTab($event)"
-					 [selectedTab]="selectedTab">
+					 [selectedTab]="selectedTab"
+					 (select)="selectTab($event)">
 			</ss-tabs>
 			<router-outlet></router-outlet>
 		</div>

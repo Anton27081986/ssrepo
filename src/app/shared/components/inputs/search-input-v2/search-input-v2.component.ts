@@ -51,18 +51,20 @@ export class SearchInputV2Component implements ControlValueAccessor {
 	public errorText = input<string>('');
 	private isSettingValue = false;
 
-	public constructor() {
+	public showOptions = signal<boolean>(false);
+	private onChange!: (value: IDictionaryItemDto | null) => void;
+	private onTouched!: () => void;
+	constructor() {
 		effect(() => {
-			this.options().length ? this.handleOptionsAvailable() : this.hideOptions();
+			this.options().length
+				? this.handleOptionsAvailable()
+				: this.hideOptions();
 		});
 	}
 
-	public showOptions = signal<boolean>(false);
-
-	private onChange!: (value: IDictionaryItemDto | null) => void;
-	private onTouched!: () => void;
-
-	public registerOnChange(fn: (value: IDictionaryItemDto | null) => void): void {
+	public registerOnChange(
+		fn: (value: IDictionaryItemDto | null) => void,
+	): void {
 		this.onChange = fn;
 	}
 
@@ -80,11 +82,17 @@ export class SearchInputV2Component implements ControlValueAccessor {
 	}
 
 	public setDisabledState?(isDisabled: boolean): void {
-		isDisabled ? this.queryControl().disable() : this.queryControl().enable();
+		isDisabled
+			? this.queryControl().disable()
+			: this.queryControl().enable();
 	}
 
 	public onBlur(): void {
-		if (!this.options().some(item => item.name === (this.queryControl().value || ''))) {
+		if (
+			!this.options().some(
+				(item) => item.name === (this.queryControl().value || ''),
+			)
+		) {
 			this.queryControl().setValue('');
 
 			this.updateValue(null);

@@ -1,5 +1,3 @@
-@use '../../../../../assets/scss/mixins' as *;
-@use '../../../../../assets/scss/variables' as *;
 @use '../../../../../styles/colors' as *;
 
 .user-list-more {
@@ -29,9 +27,7 @@
 	}
 }
 
-
 :host-context(.dark) .user-list-more {
 	background-color: $dark-background;
 	border: 1px solid $white;
 }
-

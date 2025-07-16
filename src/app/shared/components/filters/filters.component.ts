@@ -1,17 +1,27 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {
+	ChangeDetectorRef,
+	Component,
+	EventEmitter,
+	Input,
+	OnInit,
+	Output,
+} from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {SearchInputComponent, searchType} from '@app/shared/components/inputs/search-input/search-input.component';
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {DateRangeComponent} from "@app/shared/components/inputs/date-range/date-range.component";
-import {MultiselectComponent} from "@app/shared/components/multiselect/multiselect.component";
-import {ChipsSearchComponent} from "@app/shared/components/inputs/chips-search/chips-search.component";
-import {ToggleComponent} from "@app/shared/components/toggle/toggle.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {NumericInputComponent} from "@app/shared/components/_deprecated/numeric-input/numeric-input.component";
+import {
+	SearchInputComponent,
+	searchType,
+} from '@app/shared/components/inputs/search-input/search-input.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { DateRangeComponent } from '@app/shared/components/inputs/date-range/date-range.component';
+import { MultiselectComponent } from '@app/shared/components/multiselect/multiselect.component';
+import { ChipsSearchComponent } from '@app/shared/components/inputs/chips-search/chips-search.component';
+import { ToggleComponent } from '@app/shared/components/toggle/toggle.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { NumericInputComponent } from '@app/shared/components/_deprecated/numeric-input/numeric-input.component';
 
 export interface IFilter {
 	name: string;
@@ -51,23 +61,33 @@ export interface IFilterOption extends IDictionaryItemDto {
 		ToggleComponent,
 		SearchInputComponent,
 		ButtonComponent,
-		NumericInputComponent
+		NumericInputComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class FiltersComponent implements OnInit {
-	@Input() public isFiltersVisible!: boolean;
-	@Output() public isFiltersVisibleChange = new EventEmitter<boolean>();
+	@Input()
+	public isFiltersVisible!: boolean;
 
-	@Input() public filters: IFilter[] = [];
-	@Output() public filtersChange = new EventEmitter<IFilter[]>();
+	@Output()
+	public isFiltersVisibleChange = new EventEmitter<boolean>();
 
-	@Output() public applyFilter = new EventEmitter();
+	@Input()
+	public filters: IFilter[] = [];
 
-	@Input() public isDropdown: boolean = false;
+	@Output()
+	public filtersChange = new EventEmitter<IFilter[]>();
+
+	@Output()
+	public applyFilter = new EventEmitter();
+
+	@Input()
+	public isDropdown = false;
 
 	public filtersForm!: FormGroup;
 
+	protected readonly Event = Event;
+	protected readonly Array = Array;
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
 		private readonly formBuilder: FormBuilder,
@@ -82,7 +102,7 @@ export class FiltersComponent implements OnInit {
 	}
 
 	public resetForm() {
-		this.filters.forEach(filter => {
+		this.filters.forEach((filter) => {
 			this.removeFilter(filter.name);
 		});
 		this.changeDetector.detectChanges();
@@ -135,19 +155,16 @@ export class FiltersComponent implements OnInit {
 	public removeFilter(name: string) {
 		this.filtersForm.get(name)?.setValue(null);
 
-		const filter = this.filters.find(item => item.name === name);
+		const filter = this.filters.find((item) => item.name === name);
 
 		if (filter) {
 			filter.value = null;
 
 			if (filter.type === 'select') {
-				filter.options?.forEach(option => (option.checked = false));
+				filter.options?.forEach((option) => (option.checked = false));
 			} else {
 				filter.options = [];
 			}
 		}
 	}
-
-	protected readonly Event = Event;
-	protected readonly Array = Array;
 }

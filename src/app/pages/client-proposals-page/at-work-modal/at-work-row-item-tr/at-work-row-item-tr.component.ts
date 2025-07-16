@@ -10,17 +10,28 @@ import {
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
+import {
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 
 export enum AtWorkRowItemField {
 	tovProductName = 'tovProductName',
@@ -47,15 +58,16 @@ export enum AtWorkRowItemField {
 		SelectComponent,
 		InputComponent,
 		SearchInputComponent,
-		NgSwitchDefault
+		NgSwitchDefault,
 	],
-	standalone: true
+	standalone: true,
 })
 export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	protected readonly AtWorkRowItemField = AtWorkRowItemField;
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
-	@Input({ required: true }) item!: {
+	@Input({ required: true })
+	item!: {
 		tovProductId: number;
 		tovSubGroupId: number;
 		tovProductName: string;
@@ -72,20 +84,27 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 		};
 	};
 
-	@Input() defaultCols: IStoreTableBaseColumn[] = [];
+	@Input()
+	defaultCols: IStoreTableBaseColumn[] = [];
 
-	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected viewMaximise$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
-	@ViewChild('content') public content!: ElementRef;
+	@ViewChild('content')
+	public content!: ElementRef;
 
-	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		private readonly modalService: ModalService,
 	) {
-		this.tprRejectsReasons$ = this.clientProposalsFacadeService.tprRejectsReasons$;
+		this.tprRejectsReasons$ =
+			this.clientProposalsFacadeService.tprRejectsReasons$;
 	}
 
 	ngOnInit() {
@@ -158,7 +177,9 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 
 	ngAfterViewChecked() {
 		if (this.content) {
-			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+			this.viewMaximise$.next(
+				this.content.nativeElement.scrollHeight > 200,
+			);
 		}
 	}
 
@@ -173,14 +194,11 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	showText(text: string[], title?: string) {
 		this.modalService.open(TableFullCellComponent, {
 			data: {
-				cell: text.map(item => {
+				cell: text.map((item) => {
 					return { text: item };
 				}),
 				title,
 			},
 		});
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
 }

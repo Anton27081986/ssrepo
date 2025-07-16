@@ -15,7 +15,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IFriendAccountDto } from '@app/core/models/auth/friend-account-dto';
 import { FriendlyAccountsFacadeService } from '@app/core/facades/frendly-accounts-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { ProfilePopupImports } from "@app/shared/components/profile-popup/profile-popup.imports";
+import { ProfilePopupImports } from '@app/shared/components/profile-popup/profile-popup.imports';
 
 @UntilDestroy()
 @Component({
@@ -24,7 +24,7 @@ import { ProfilePopupImports } from "@app/shared/components/profile-popup/profil
 	styleUrls: ['./profile-popup.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: ProfilePopupImports,
-	standalone: true
+	standalone: true,
 })
 export class ProfilePopupComponent implements OnInit, OnDestroy {
 	public accountsFriends$!: Observable<any>;
@@ -33,9 +33,9 @@ export class ProfilePopupComponent implements OnInit, OnDestroy {
 	public friendsAccount!: IFriendAccountDto[] | null;
 
 	private readonly destroy$ = new Subject<void>();
-	public isExpanded: boolean = false;
+	public isExpanded = false;
 
-	public constructor(
+	constructor(
 		private readonly apiService: UsersApiService,
 		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
@@ -61,7 +61,7 @@ export class ProfilePopupComponent implements OnInit, OnDestroy {
 	private getAccountsFriends() {
 		this.friendlyAccountsFacadeService.friendlyAccounts$
 			.pipe(untilDestroyed(this))
-			.subscribe(item => {
+			.subscribe((item) => {
 				this.friendsAccount = item;
 				this.cd.detectChanges();
 			});

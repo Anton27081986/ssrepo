@@ -11,7 +11,10 @@ import { IRankTypeItemDto } from '@app/core/models/awards/rank-type-item-dto';
 export class RatingService {
 	constructor(private readonly apiService: RatingApiService) {}
 
-	public getRatingTypes(weekId: number, userId: number): Observable<IRankTypeListDto> {
+	public getRatingTypes(
+		weekId: number,
+		userId: number,
+	): Observable<IRankTypeListDto> {
 		return this.apiService.getRatingTypes(weekId, userId);
 	}
 

@@ -13,17 +13,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { rotateAnimation } from '@app/core/animations';
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {
-	MultiselectChipsV2Component
-} from "@app/shared/components/multiselect-v2/multiselect-chips-v2/multiselect-chips-v2.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {
-	MultiselectOptionV2Component
-} from "@app/shared/components/multiselect-v2/multiselect-option-v2/multiselect-option-v2.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
+import { MultiselectChipsV2Component } from '@app/shared/components/multiselect-v2/multiselect-chips-v2/multiselect-chips-v2.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { MultiselectOptionV2Component } from '@app/shared/components/multiselect-v2/multiselect-option-v2/multiselect-option-v2.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
 
 @UntilDestroy()
 @Component({
@@ -49,32 +45,55 @@ import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.c
 		IconComponent,
 		MultiselectOptionV2Component,
 		SsDividerComponent,
-		NgForOf
+		NgForOf,
 	],
-	standalone: true
+	standalone: true,
 })
-export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAccessor {
-	@Input() public label: string | undefined;
-	@Input() public size: 'large' | 'medium' = 'medium';
-	@Input() public placeholder: string | undefined;
-	@Input() public options: IFilterOption[] = [];
-	@Input() public disabled: boolean = false;
-	@Input() public readOnly: boolean | null = null;
-	protected isExpanded: boolean = false;
-	protected readonly chipsEllipsis$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
+export class MultiselectV2Component
+	implements OnChanges, OnInit, ControlValueAccessor
+{
+	@Input()
+	public label: string | undefined;
 
-	protected readonly readOnly$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Input()
+	public size: 'large' | 'medium' = 'medium';
+
+	@Input()
+	public placeholder: string | undefined;
+
+	@Input()
+	public options: IFilterOption[] = [];
+
+	@Input()
+	public disabled = false;
+
+	@Input()
+	public readOnly: boolean | null = null;
+
+	protected isExpanded = false;
+	protected readonly chipsEllipsis$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
+
+	protected readonly readOnly$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	protected subscription: Subscription = new Subscription();
 
 	private OnChange!: (value: number[]) => void;
 	private OnTouched!: (value: number[]) => void;
 
+	protected readonly options$: BehaviorSubject<IFilterOption[]> =
+		new BehaviorSubject<IFilterOption[]>([]);
+
+	protected readonly viewOptions$: BehaviorSubject<IFilterOption[]> =
+		new BehaviorSubject<IFilterOption[]>([]);
+
+	protected readonly selectedOptions$: BehaviorSubject<IFilterOption[]> =
+		new BehaviorSubject<IFilterOption[]>([]);
+
 	constructor() {
 		this.subscription.add(
-			this.selectedOptions$.subscribe(item => {
+			this.selectedOptions$.subscribe((item) => {
 				if (item.length > 3) {
 					this.chipsEllipsis$.next(true);
 				} else {
@@ -97,18 +116,6 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 		this.OnTouched = fn;
 	}
 
-	protected readonly options$: BehaviorSubject<IFilterOption[]> = new BehaviorSubject<
-		IFilterOption[]
-	>([]);
-
-	protected readonly viewOptions$: BehaviorSubject<IFilterOption[]> = new BehaviorSubject<
-		IFilterOption[]
-	>([]);
-
-	protected readonly selectedOptions$: BehaviorSubject<IFilterOption[]> = new BehaviorSubject<
-		IFilterOption[]
-	>([]);
-
 	public ngOnInit() {
 		this.isExpanded = false;
 	}
@@ -118,13 +125,15 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 	}
 
 	private mapIds(models: IDictionaryItemDto[]) {
-		return models.map(val => val.id);
+		return models.map((val) => val.id);
 	}
 
 	protected addStateOptions(item: IFilterOption) {
 		if (!this.readOnly$.value) {
 			item.checked = true;
-			this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
+			this.viewOptions$.next(
+				this.options$.value.filter((item) => !item.checked),
+			);
 			const selected = this.selectedOptions$.value;
 
 			selected.push(item);
@@ -137,19 +146,39 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 		if (!this.readOnly$.value) {
 			const oldSelected = this.selectedOptions$.value;
 
+			this.options$.next(
+				this.options$.value.map(option => {
+					if (option.id === item.id) {
+						return { ...option, checked: false };
+					}
+
+					return option;
+				}),
+			);
+
 			item.checked = false;
-			this.selectedOptions$.next(oldSelected.filter(val => val.checked));
-			this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
+			this.selectedOptions$.next(
+				oldSelected.filter((val) => val.checked),
+			);
+			this.viewOptions$.next(
+				this.options$.value.filter((item) => !item.checked),
+			);
 			this.updateStateControl();
 		}
 	}
 
 	public ngOnChanges(changes: SimpleChanges) {
 		if (changes.options) {
-			this.options$.next(changes.options.currentValue ? changes.options.currentValue : []);
+			this.options$.next(
+				changes.options.currentValue
+					? changes.options.currentValue
+					: [],
+			);
 
 			if (this.options$.value.length) {
-				this.viewOptions$.next(this.options$.value.filter(item => !item.checked));
+				this.viewOptions$.next(
+					this.options$.value.filter((item) => !item.checked),
+				);
 			}
 		}
 
@@ -164,7 +193,7 @@ export class MultiselectV2Component implements OnChanges, OnInit, ControlValueAc
 
 	protected clear() {
 		this.isExpanded = false;
-		this.options.forEach(opt => (opt.checked = false));
+		this.options.forEach((opt) => (opt.checked = false));
 		this.viewOptions$.next(this.options);
 		this.selectedOptions$.next([]);
 		this.updateStateControl();

@@ -22,9 +22,9 @@ import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence
 		TopicComponent,
 		MessagesComponent,
 		MailComponent,
-		CardDropdownComponent
+		CardDropdownComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class CorrespondenceComponent implements OnChanges {
 	@Input() public objectId: number | undefined;
@@ -32,7 +32,10 @@ export class CorrespondenceComponent implements OnChanges {
 
 	public isLoading$: Observable<boolean>;
 
-	public constructor(private readonly notificationsFacadeService: CorrespondenceFacadeService) {
+	protected readonly TableState = TableState;
+	constructor(
+		private readonly notificationsFacadeService: CorrespondenceFacadeService,
+	) {
 		this.isLoading$ = this.notificationsFacadeService.isLoading$;
 
 	}
@@ -43,6 +46,4 @@ export class CorrespondenceComponent implements OnChanges {
 			this.notificationsFacadeService.setObjectId(this.objectId);
 		}
 	}
-
-	protected readonly TableState = TableState;
 }

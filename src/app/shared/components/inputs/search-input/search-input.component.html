@@ -1,16 +1,16 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input type="text"
+	<input #input
+		   class="{{ error ? size + ' error' : size }}"
+		   type="text"
 		   [attr.value]="value"
 		   [placeholder]="placeholder"
 		   [value]="selectedItem?.name || ''"
 		   [disabled]="disabled"
-		   [readOnly]="readonly"
+           [readOnly]="readonly"
 		   (input)="onChange($any($event.target).value)"
-           (blur)="onBlur()"
+		   (blur)="onBlur()"
 		   (focusout)="input.value = selectedItem ? selectedItem.name || '' : ''"
-		   class="{{ error ? size + ' error' : size }}"
-		   #input
 	/>
 	@if ((found$ | async)?.length) {
 		<div class="search-result" [ngClass]="{'height-options': reSizeHeightOptions}" #options>

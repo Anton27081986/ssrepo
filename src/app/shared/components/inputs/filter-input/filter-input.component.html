@@ -1,15 +1,15 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input type="text"
+	<input #input
+		   class="{{ error ? size + ' error' : size }}"
+		   type="text"
 		   placeholder="Поиск по сотрудникам"
 		   [value]="value"
 		   [disabled]="disabled"
 		   (input)="onChange($any($event.target).value)"
 		   (blur)="onTouched()"
-		   class="{{ error ? size + ' error' : size }}"
-		   #input
 	/>
 	<ss-icon height="12" name="iconSearch" (click)="search.emit(input.value)"></ss-icon>
-	<ss-icon height="12" name="delete" (click)="search.emit(input.value)" *ngIf="false"></ss-icon>
+	<ss-icon *ngIf="false" height="12" name="delete" (click)="search.emit(input.value)"></ss-icon>
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>

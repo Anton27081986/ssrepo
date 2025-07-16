@@ -10,18 +10,19 @@ import { ContractsApiService } from '@app/core/api/contracts-api.service';
 	providedIn: 'root',
 })
 export class ContractsFacadeService {
-	private readonly filtersChanged: Subject<IContractsFilter> = new Subject<IContractsFilter>();
+	private readonly filtersChanged: Subject<IContractsFilter> =
+		new Subject<IContractsFilter>();
 
 	private readonly contracts = new BehaviorSubject<IContractsItemDto>({});
 	public contracts$ = this.contracts.asObservable();
 
-	public constructor(private readonly contractsApiService: ContractsApiService) {
+	constructor(private readonly contractsApiService: ContractsApiService) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
+				switchMap((filter) => {
 					return this.contractsApiService.getContracts(filter);
 				}),
-				tap(sales => {
+				tap((sales) => {
 					this.contracts.next(sales);
 				}),
 				untilDestroyed(this),

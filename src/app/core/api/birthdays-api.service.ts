@@ -9,13 +9,16 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 	providedIn: 'root',
 })
 export class BirthdaysApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Birthday */
 	public getBirthday(date: string): Observable<IBirthdaysListDto> {
-		return this.http.get<IBirthdaysListDto>(`${environment.apiUrl}/api/auth/users/birthdays`, {
-			params: new HttpParams().set('date', date),
-		});
+		return this.http.get<IBirthdaysListDto>(
+			`${environment.apiUrl}/api/auth/users/birthdays`,
+			{
+				params: new HttpParams().set('date', date),
+			},
+		);
 	}
 
 	/** Birthdays contractor */
@@ -42,14 +45,25 @@ export class BirthdaysApiService {
 					.set('pageSize', pageSize!)
 					.set('offset', offset!);
 
-		return this.http.get<any>(`${environment.apiUrl}/api/company/BirthDays`, {
-			params,
-		});
+		return this.http.get<any>(
+			`${environment.apiUrl}/api/company/BirthDays`,
+			{
+				params,
+			},
+		);
 	}
 
-	public searchBirthdayContractor(clientId?: number, contractorId?: number): Observable<any> {
-		return this.http.get<any>(`${environment.apiUrl}/api/company/BirthDays`, {
-			params: new HttpParams().set('clientId', clientId!).set('contractorId', contractorId!),
-		});
+	public searchBirthdayContractor(
+		clientId?: number,
+		contractorId?: number,
+	): Observable<any> {
+		return this.http.get<any>(
+			`${environment.apiUrl}/api/company/BirthDays`,
+			{
+				params: new HttpParams()
+					.set('clientId', clientId!)
+					.set('contractorId', contractorId!),
+			},
+		);
 	}
 }

@@ -15,7 +15,7 @@ export const proposalsPermissionsGuard: CanActivateFn = () => {
 			Permissions.CLIENT_TPR_URL_READ,
 		)
 		.pipe(
-			map(isAllowAccess => {
+			map((isAllowAccess) => {
 				if (isAllowAccess) {
 					return true;
 				}

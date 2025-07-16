@@ -1,19 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { IAuctionSalesDto } from '@app/core/models/sales/auction-sales-dto';
 import { TableState } from '@app/shared/components/table/table-state';
 import { BehaviorSubject } from 'rxjs';
 import { AuctionSaleFacadeService } from '@app/core/facades/auction-sale-facade.service';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {CaptionComponent} from "@app/shared/components/typography/caption/caption.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { CaptionComponent } from '@app/shared/components/typography/caption/caption.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -31,9 +34,9 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		AsyncPipe,
 		EmptyPlaceholderComponent,
 		IconComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class AuctionSalesComponent implements OnInit {
 	public pageIndex = 1;
@@ -41,10 +44,17 @@ export class AuctionSalesComponent implements OnInit {
 	public total: number | undefined;
 	public listAuction: IAuctionSalesDto | undefined;
 	public offset = 0;
-	public tableItems$: BehaviorSubject<ITableItem[]> = new BehaviorSubject<ITableItem[]>([]);
+	public tableItems$: BehaviorSubject<ITableItem[]> = new BehaviorSubject<
+		ITableItem[]
+	>([]);
+
 	public tableState: TableState = TableState.Loading;
 
-	public constructor(private readonly auctionSaleFacadeService: AuctionSaleFacadeService) {}
+	protected readonly window = window;
+	protected readonly TableState = TableState;
+	constructor(
+		private readonly auctionSaleFacadeService: AuctionSaleFacadeService,
+	) {}
 
 	public ngOnInit(): any {
 		this.loadDataFromServer(this.pageSize, this.offset);
@@ -56,23 +66,25 @@ export class AuctionSalesComponent implements OnInit {
 		this.auctionSaleFacadeService
 			.getAuctionSale(pageSize, offset)
 			.pipe(untilDestroyed(this))
-			.subscribe(value => {
+			.subscribe((value) => {
 				this.listAuction = value;
 
 				if (value.items) {
-					const dataTable = <ITableItem[]>(<unknown>value.items.map(item => {
-						const pipeNumWithSpaces = new NumWithSpacesPipe();
+					const dataTable = <ITableItem[]>(<unknown>value.items.map(
+						(item) => {
+							const pipeNumWithSpaces = new NumWithSpacesPipe();
 
-						return {
-							...item,
-							price: `${pipeNumWithSpaces.numberWithSpaces(item.price!, 2)} ${item.currency!}`,
-							quantity: `${pipeNumWithSpaces.numberWithSpaces(item.quantity!, 2)} ${item.tovUnitName!}`,
-							tovName: {
-								text: `${item.tovName}`,
-								url: item.detailUrl,
-							},
-						};
-					}));
+							return {
+								...item,
+								price: `${pipeNumWithSpaces.numberWithSpaces(item.price!, 2)} ${item.currency!}`,
+								quantity: `${pipeNumWithSpaces.numberWithSpaces(item.quantity!, 2)} ${item.tovUnitName!}`,
+								tovName: {
+									text: `${item.tovName}`,
+									url: item.detailUrl,
+								},
+							};
+						},
+					));
 
 					this.tableItems$.next(dataTable);
 					this.tableState = TableState.Full;
@@ -96,7 +108,4 @@ export class AuctionSalesComponent implements OnInit {
 
 		this.loadDataFromServer(this.pageSize, this.offset);
 	}
-
-	protected readonly window = window;
-	protected readonly TableState = TableState;
 }

@@ -9,10 +9,12 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 	providedIn: 'root',
 })
 export class DictionaryApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Список категорий клиентов */
-	public getCategories(query?: string): Observable<IResponse<{ id: number; name: string }>> {
+	public getCategories(
+		query?: string,
+	): Observable<IResponse<{ id: number; name: string }>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -51,7 +53,9 @@ export class DictionaryApiService {
 	}
 
 	/** Список плательщиков */
-	public getPayerContractors(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getPayerContractors(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -74,7 +78,9 @@ export class DictionaryApiService {
 	}
 
 	/** Список статусов учета законтрактованного сырья */
-	public getProcurementsStatuses(): Observable<IResponse<{ id: number; name: string }>> {
+	public getProcurementsStatuses(): Observable<
+		IResponse<{ id: number; name: string }>
+	> {
 		return this.http.get<IResponse<{ id: number; name: string }>>(
 			`${environment.apiUrl}/api/procurements/dictionary/contractStatuses`,
 		);
@@ -126,7 +132,9 @@ export class DictionaryApiService {
 	}
 
 	/** Список договоров */
-	public getContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getContracts(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -186,7 +194,9 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getServices(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getServices(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -199,7 +209,9 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getCostArticles(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getCostArticles(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -212,7 +224,9 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getFaObjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getFaObjects(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -225,7 +239,9 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getProjects(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getProjects(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -238,7 +254,10 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getDepts(query?: string, userId?: number): Observable<IResponse<IDictionaryItemDto>> {
+	public getDepts(
+		query?: string,
+		userId?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -255,7 +274,10 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getSections(query?: string, deptId?: number): Observable<IResponse<IDictionaryItemDto>> {
+	public getSections(
+		query?: string,
+		deptId?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -292,7 +314,9 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getTovUnits(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getTovUnits(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -305,7 +329,9 @@ export class DictionaryApiService {
 		);
 	}
 
-	public getCompletedActContracts(id?: number): Observable<IResponse<IDictionaryItemDto>> {
+	public getCompletedActContracts(
+		id?: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (id) {

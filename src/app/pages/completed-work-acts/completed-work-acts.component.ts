@@ -6,16 +6,16 @@ import { IResponse } from '@app/core/utils/response';
 import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
 import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
 import {FiltersComponent, IFilter} from '@app/shared/components/filters/filters.component';
-import { Permissions } from '@app/core/constants/permissions.constants';
-import { Router } from '@angular/router';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
+import {ButtonComponent, ButtonType, IconPosition, IconType, Size} from '@front-components/components';
 import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
+import {TooltipDirective} from "@app/shared/components/tooltip/tooltip.directive";
 import {DropdownButtonComponent} from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
 import {CommonModule, NgIf} from "@angular/common";
+import {MapperPipe} from "@app/core/pipes/mapper.pipe";
 import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
 import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
 import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {MapperPipe} from "@app/core/pipes/mapper.pipe";
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -24,18 +24,22 @@ import {MapperPipe} from "@app/core/pipes/mapper.pipe";
 	imports: [
 		CommonModule,
 		HeadlineComponent,
+		ButtonComponent,
+		TooltipDirective,
 		DropdownButtonComponent,
 		FiltersComponent,
 		NgIf,
 		TableComponent,
+		MapperPipe,
 		PaginationComponent,
 		EmptyDataPageComponent,
-		LoaderComponent,
-		MapperPipe
+		LoaderComponent
 	],
 	standalone: true
 })
 export class CompletedWorkActsComponent {
+	private readonly filtersKey: string = 'work-acts-filters';
+
 	public pageSize = 20;
 	public pageIndex = 1;
 	public offset = 0;
@@ -130,9 +134,14 @@ export class CompletedWorkActsComponent {
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
+		private readonly localStorageService: LocalStorageService,
 	) {
+		const savedFilters = this.localStorageService.getItem<IFilter[]>(this.filtersKey);
+
+		if (savedFilters) {
+			this.filters = savedFilters;
+		}
+
 		this.getFilteredActs();
 	}
 
@@ -180,10 +189,20 @@ export class CompletedWorkActsComponent {
 				},
 			)}`;
 
+			tableItem.uploadActDate = `${new Date(Date.parse(x.dateUpload)).toLocaleString(
+				'ru-RU',
+				{
+					year: 'numeric',
+					month: 'numeric',
+					day: 'numeric',
+				},
+			)}`;
+
 			tableItem.externalActNumber = x.externalActNumber ?? '-';
 
 			tableItem.internalActNumber = x.internalActNumber ?? '-';
 
+			tableItem.buUnit = x.buUnit?.name ?? '-';
 			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
 
 			tableItem.providerContractor = {
@@ -252,6 +271,8 @@ export class CompletedWorkActsComponent {
 			}
 		}
 
+		this.localStorageService.setItem(this.filtersKey, this.filters);
+
 		this.completedWorkActsFacade.applyFilters(preparedFilter);
 	}
 
@@ -273,4 +294,16 @@ export class CompletedWorkActsComponent {
 			this.completedWorkActsFacade.getAct(item.row.code.text);
 		}
 	}
+
+	public downloadInstruction() {
+		const link = document.createElement('a');
+
+		link.href = this.completedWorkActsFacade.linkToInstruction;
+		link.click();
+	}
+
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
 }

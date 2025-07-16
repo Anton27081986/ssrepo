@@ -2,22 +2,22 @@
 	<div class="rating__header">
 		<div class="rating__header-left">
 			<ss-text [size]="'1'">Рейтинги сотрудников</ss-text>
-			<div *ngIf="averageAll()" [tooltip]="'Средняя оценка по всем рейтингам'" [theme]="TooltipTheme.DEFAULT"
-				 [position]="TooltipPosition.DEFAULT" class="rating__tab--blue">
+			<div *ngIf="averageAll()" class="rating__tab--blue" [tooltip]="'Средняя оценка по всем рейтингам'"
+				 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
 				<ss-text [color]="'white'" [size]="'3'" [weight]="'semi-bold'">{{ averageAll() }}</ss-text>
 			</div>
-			<div *ngIf="membersTotal()" [tooltip]="'Количество сотрудников во всех рейтингах'" [theme]="TooltipTheme.DEFAULT"
-				 [position]="TooltipPosition.DEFAULT" class="rating__tab--gray">
+			<div *ngIf="membersTotal()" class="rating__tab--gray" [tooltip]="'Количество сотрудников во всех рейтингах'"
+				 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
 				<ss-text [size]="'3'">{{ membersTotal() }}</ss-text>
 			</div>
 		</div>
 		<div class="rating__header-right">
 			<ng-container *ngIf="canDownloadReport()">
-				<div (click)="redirectUrl(TypeReport.weekly)" class="rating__link">
+				<div class="rating__link" (click)="redirectUrl(TypeReport.weekly)">
 					<ss-icon [name]="'link'"></ss-icon>
 					<ss-text [size]="'3'">Неделя</ss-text>
 				</div>
-				<div (click)="redirectUrl(TypeReport.quarter)" class="rating__link">
+				<div class="rating__link" (click)="redirectUrl(TypeReport.quarter)">
 					<ss-icon [name]="'link'"></ss-icon>
 					<ss-text [size]="'3'">Квартал</ss-text>
 				</div>
@@ -25,8 +25,8 @@
 			<form [formGroup]="form">
 				<ss-select-v2 [size]="'small'" [options]="weeksOptions()" [formControlName]="'week'"></ss-select-v2>
 				<ss-search-user-input
-					[formControlName]="'userId'"
 					class="rating__search-user"
+					[formControlName]="'userId'"
 				></ss-search-user-input>
 			</form>
 		</div>

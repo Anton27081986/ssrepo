@@ -1,7 +1,7 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td class="ss-table-td" *ngIf="col.display">
+			<td *ngIf="col.display" class="ss-table-td">
 				<ng-container *ngSwitchCase="AtWorkRowItemField.tovProductName">
 					<div class="hc-table-td__content">{{ item.tovProductName }}</div>
 				</ng-container>
@@ -17,9 +17,9 @@
 					<div *ngIf="!item.atWork; else noComment" class="hc-table-td__content">
 						<ss-select
 							size="small"
+							[error]="item.errors.commentId ? 'Обязательное поле' : undefined"
 							(change)="item.commentId = getInputValue($event.target!)"
 							(click)="item.errors.commentId = false"
-							[error]="item.errors.commentId ? 'Обязательное поле' : undefined"
 						>
 							<option value="{{ null }}">(Не выбран)</option>
 							<option *ngFor="let item of (tprRejectsReasons$ | async)" [value]="item.id">{{ item.name }}</option>
@@ -35,12 +35,12 @@
 					<div *ngIf="item.atWork; else noPotencial" class="hc-table-td__content">
 						<ss-input
 							size="small"
-							[value]="item.potencial"
 							type="number"
 							placeholder="Введите"
+							[value]="item.potencial"
+							[error]="item.errors.potencial ? 'Обязательное поле' : undefined"
 							(change)="item.potencial = getInputValue($event.target!)"
 							(click)="item.errors.potencial = false"
-							[error]="item.errors.potencial ? 'Обязательное поле' : undefined"
 						></ss-input>
 					</div>
 					<ng-template #noPotencial>
@@ -53,12 +53,12 @@
 					<div *ngIf="item.atWork; else noObjective" class="hc-table-td__content">
 						<ss-input
 							size="small"
-							[value]="item.objective"
 							type="number"
 							placeholder="Введите"
+							[value]="item.objective"
+							[error]="item.errors.objective ? 'Обязательное поле' : undefined"
 							(change)="item.objective = getInputValue($event.target!)"
 							(click)="item.errors.objective = false"
-							[error]="item.errors.objective ? 'Обязательное поле' : undefined"
 						></ss-input>
 					</div>
 					<ng-template #noObjective>
@@ -71,9 +71,9 @@
 					<div *ngIf="item.atWork; else noTechnologist" class="hc-table-td__content">
 						<ss-search-input searchType="technologist"
 										 size="small"
+										 [error]="item.errors.technologistId ? 'Обязательное поле' : undefined"
 										 (select)="item.technologistId = $event.id"
 										 (click)="item.errors.technologistId = false"
-										 [error]="item.errors.technologistId ? 'Обязательное поле' : undefined"
 						></ss-search-input>
 					</div>
 					<ng-template #noTechnologist>

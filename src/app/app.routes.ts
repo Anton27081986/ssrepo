@@ -42,6 +42,10 @@ import { AppRoutes } from '@app/common/routes';
 import { SignInComponent } from '@auth/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
+import { ProductionPlanComponent } from '@app/pages/production-plan/production-plan.component';
+import { OperationalPlanComponent } from '@app/pages/production-plan/operational-plan/operational-plan.component';
+import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
+import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
 import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
 import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
 import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
@@ -220,11 +224,13 @@ export const routes: Routes = [
 						children: [
 							{
 								path: 'business-trips',
-								component: ClientProposalsBusinessTripsTabComponent,
+								component:
+									ClientProposalsBusinessTripsTabComponent,
 							},
 							{
 								path: 'development',
-								component: ClientProposalsDevelopmentTabComponent,
+								component:
+									ClientProposalsDevelopmentTabComponent,
 							},
 							{
 								path: 'news-line',
@@ -240,7 +246,8 @@ export const routes: Routes = [
 							},
 							{
 								path: 'contractors',
-								component: ClientProposalsContractorsTabComponent,
+								component:
+									ClientProposalsContractorsTabComponent,
 							},
 							{ path: '**', redirectTo: 'contractors' },
 						],
@@ -251,17 +258,22 @@ export const routes: Routes = [
 	},
 	{
 		path: '',
-		component: FullWidthWithoutFooterLayoutComponent,
+		component: FrontLibraryLayoutComponent,
+		canActivate: [AuthGuard, operationPlanPermissionGuard],
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
 				path: 'production-plan',
-				loadChildren: () =>
-					import('./pages/production-plan/production-plan.routing').then(
-						r => r.productionPlanRoutes,
-					),
+				component: ProductionPlanComponent,
+				children: [
+					{
+						path: 'operational-plan',
+						component: OperationalPlanComponent,
+					},
+					{ path: '**', redirectTo: 'operational-plan' },
+				],
 			},
 			{
 				path: 'mp-reservation-orders',
@@ -320,13 +332,21 @@ export const routes: Routes = [
 		},
 		component: AuthComponent,
 		children: [
-			{ path: AppRoutes.signIn, component: SignInComponent, pathMatch: 'full' },
+			{
+				path: AppRoutes.signIn,
+				component: SignInComponent,
+				pathMatch: 'full',
+			},
 			{
 				path: AppRoutes.forgotPassword,
 				component: ForgotPasswordComponent,
 				pathMatch: 'full',
 			},
-			{ path: AppRoutes.resetPassword, component: ResetPasswordComponent, pathMatch: 'full' },
+			{
+				path: AppRoutes.resetPassword,
+				component: ResetPasswordComponent,
+				pathMatch: 'full',
+			},
 			{ path: '**', redirectTo: AppRoutes.signIn },
 		],
 	},

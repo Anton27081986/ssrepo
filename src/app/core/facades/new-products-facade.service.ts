@@ -16,13 +16,13 @@ export class NewProductsFacadeService {
 	private readonly newProducts = new BehaviorSubject<INewProductsItemDto>({});
 	public newProducts$ = this.newProducts.asObservable();
 
-	public constructor(private readonly newProductsApiService: NewProductsApiService) {
+	constructor(private readonly newProductsApiService: NewProductsApiService) {
 		this.filtersChanged
 			.pipe(
-				switchMap(filter => {
+				switchMap((filter) => {
 					return this.newProductsApiService.getNewProducts(filter);
 				}),
-				tap(sales => {
+				tap((sales) => {
 					this.newProducts.next(sales);
 				}),
 				untilDestroyed(this),

@@ -1,0 +1,84 @@
+<table
+	ssTable
+	class="postpone-table"
+	[hasBorderRadius]="true"
+	[showCellBorders]="false"
+	[columns]="columns"
+>
+	<thead>
+		<tr ssThGroup>
+			<ng-container *ngFor="let column of columns">
+				<th
+					ssTh
+					*ssHead="column"
+                    [class.width-column-inputs]="isInputColumn(column)"
+				>
+					<ss-lib-text
+						[color]="Colors.TextBody2"
+						[weight]="TextWeight.Semibold"
+						[type]="TextType.BodyXs"
+						[align]="Align.Center"
+						[isEllipsis]="true"
+					>
+						{{ getColumnName(column) }}
+					</ss-lib-text>
+				</th>
+			</ng-container>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr ssTr *ngFor="let item of data">
+			<ng-container *ngFor="let column of columns">
+				<td
+					ssTd
+					*ssCell="column"
+					[class.width-column-inputs]="isInputColumn(column)"
+				>
+					<ng-container [ngSwitch]="column">
+						<ss-lib-form-field
+							*ngSwitchCase="'countForPostpone'"
+							fieldCtrl
+							[showValidationFieldIcon]="true"
+						>
+							<ss-lib-input
+								fieldCtrl
+								required
+                                [size]="ExtraSize.md"
+								[formControl]="item.countForPostpone"
+								[max]="item.quantity"
+								[min]="1"
+								[type]="InputType.Number"
+							></ss-lib-input>
+						</ss-lib-form-field>
+
+						<ss-lib-form-field
+							*ngSwitchCase="'productionDateControl'"
+							fieldCtrl
+							[showValidationFieldIcon]="true"
+                            [errorText]="'Для переноса необходимо выбрать дату'"
+						>
+							<ss-lib-datepicker
+								fieldCtrl
+								required
+								[formControl]="item.productionDateControl"
+                                [min]="item.productionDateControl.value || Now"
+							></ss-lib-datepicker>
+						</ss-lib-form-field>
+						<ng-container *ngSwitchDefault>
+							<ss-lib-text
+								[color]="Colors.TextBody2"
+								[weight]="TextWeight.Regular"
+								[type]="TextType.BodySm"
+								[align]="Align.Center"
+								[isEllipsis]="true"
+							>
+								{{ getCellValue(item, column) }}
+							</ss-lib-text>
+						</ng-container>
+					</ng-container>
+				</td>
+			</ng-container>
+		</tr>
+	</tbody>
+</table>

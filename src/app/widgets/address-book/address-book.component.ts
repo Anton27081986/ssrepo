@@ -4,17 +4,17 @@ import { IAddressBookSearchUser } from '@app/core/models/address-book-search-use
 import { AddressBookApiService } from '@app/core/api/address-book-api.service';
 import { UsersApiService } from '@app/core/api/users-api.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {CommonModule, NgForOf, NgIf} from "@angular/common";
-import {AddressBookCardComponent} from "@app/widgets/address-book/address-book-card/address-book-card.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { CommonModule, NgForOf, NgIf } from '@angular/common';
+import { AddressBookCardComponent } from '@app/widgets/address-book/address-book-card/address-book-card.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -34,13 +34,13 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		NgForOf,
 		EmptyPlaceholderComponent,
 		HeadlineComponent,
-		PaginationComponent
+		PaginationComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class AddressBookComponent implements OnInit {
-	public isFavoriteMode: boolean = true;
-	public loading: boolean = false;
+	public isFavoriteMode = true;
+	public loading = false;
 	public idFavoriteUser: number | undefined;
 	public addresses: IAddressBookUser[] = [];
 	public searchedUsers: IAddressBookSearchUser[] = [];
@@ -50,7 +50,7 @@ export class AddressBookComponent implements OnInit {
 	public total: number | undefined;
 	public offset = 0;
 
-	public constructor(
+	constructor(
 		private readonly apiService: AddressBookApiService,
 		private readonly usersApiService: UsersApiService,
 		private readonly ref: ChangeDetectorRef,
@@ -64,8 +64,8 @@ export class AddressBookComponent implements OnInit {
 		this.apiService
 			.getAddressBookUsers(this.pageSize, this.offset)
 			.pipe(untilDestroyed(this))
-			.subscribe(addresses => {
-				this.addresses = addresses.items.map(user => {
+			.subscribe((addresses) => {
+				this.addresses = addresses.items.map((user) => {
 					return { ...user, isFavorite: true };
 				});
 				this.total = addresses.total;
@@ -82,7 +82,7 @@ export class AddressBookComponent implements OnInit {
 			this.usersApiService
 				.getUsersByFIO(searchTerm)
 				.pipe(untilDestroyed(this))
-				.subscribe(response => {
+				.subscribe((response) => {
 					this.searchedUsers = response.items;
 					this.searchedUsers.forEach((user, index: number) => {
 						if (this.addresses.some(({ id }) => id === user.id)) {

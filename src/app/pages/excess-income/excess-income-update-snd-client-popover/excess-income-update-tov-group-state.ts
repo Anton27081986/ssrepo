@@ -14,12 +14,13 @@ export class ExcessIncomeUpdateTovGroupState {
 	public tovGroups$: BehaviorSubject<ExcessIncomeUpdateClientTovGroupItem[]> =
 		new BehaviorSubject<ExcessIncomeUpdateClientTovGroupItem[]>([]);
 
-	public tovGroupControl: FormControl<IDictionaryItemDto | null> = new FormControl(null);
+	public tovGroupControl: FormControl<IDictionaryItemDto | null> =
+		new FormControl(null);
 
 	constructor() {
 		this.tovGroupControl.valueChanges
 			.pipe(filterTruthy(), untilDestroyed(this))
-			.subscribe(value => {
+			.subscribe((value) => {
 				this.addTovGroups({
 					id: value.id,
 					name: value.name!,
@@ -34,7 +35,7 @@ export class ExcessIncomeUpdateTovGroupState {
 	protected addTovGroups(tovGroup: ExcessIncomeUpdateClientTovGroupItem) {
 		const aldTovGroups = this.tovGroups$.value;
 
-		if (!aldTovGroups.find(item => item.id === tovGroup.id)) {
+		if (!aldTovGroups.find((item) => item.id === tovGroup.id)) {
 			this.tovGroups$.next([...aldTovGroups, tovGroup]);
 		}
 	}
@@ -42,6 +43,6 @@ export class ExcessIncomeUpdateTovGroupState {
 	public delTovGroups(id: number) {
 		const aldTovGroups = this.tovGroups$.value;
 
-		this.tovGroups$.next(aldTovGroups.filter(val => val.id !== id));
+		this.tovGroups$.next(aldTovGroups.filter((val) => val.id !== id));
 	}
 }

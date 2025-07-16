@@ -21,7 +21,7 @@
 		justify-content: center;
 		flex-direction: column;
 		align-items: center;
-		gap: 12px
+		gap: 12px;
 	}
 
 	&__search-input {
@@ -39,7 +39,6 @@
 .header-content {
 	display: flex;
 	justify-content: space-between;
-
 
 	&__search {
 		min-width: 340px;

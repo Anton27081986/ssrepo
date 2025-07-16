@@ -1,12 +1,12 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input type="text"
+	<input #input
 		   class="{{ size }}"
+		   type="text"
 		   [placeholder]="'поиск'"
 		   [disabled]="disabled"
 		   [value]="query"
 		   (input)="onInputValueChange($event)"
-		   #input
 	/>
 	@if ((found$ | async)?.length) {
 		<div class="search-result">

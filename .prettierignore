@@ -3,5 +3,5 @@ dist
 .angular
 node_modules
 .helm
+.husky
 
-*.html

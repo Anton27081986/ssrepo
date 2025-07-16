@@ -6,14 +6,11 @@ import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-income-state/excess-income-base-node.state';
 import { Permissions } from '@app/core/constants/permissions.constants';
+
 @UntilDestroy()
 export class ClientNodeState extends ExcessIncomeBaseNodeState {
 	public client: ExcessIncomeClient;
 	public contractors$: Observable<ContractorNodeState[]>;
-
-	get canEdit(): boolean {
-		return this.permissions.includes(Permissions.EXCESS_INCOME_EDIT);
-	}
 
 	constructor(
 		client: ExcessIncomeClient,
@@ -24,13 +21,14 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 		super();
 		this.client = client;
 		this.contractors$ = this.expended$.pipe(
-			map(val => {
+			map((val) => {
 				if (!val) {
 					NEVER;
 				}
+
 				if (client.contractors.length) {
 					return client.contractors.map(
-						contractor =>
+						(contractor) =>
 							new ContractorNodeState(
 								contractor,
 								client.id,
@@ -40,8 +38,21 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 							),
 					);
 				}
-				return [new ContractorNodeState(null, client.id, this.service, state, true)];
+
+				return [
+					new ContractorNodeState(
+						null,
+						client.id,
+						this.service,
+						state,
+						true,
+					),
+				];
 			}),
 		);
+	}
+
+	get canEdit(): boolean {
+		return this.permissions.includes(Permissions.EXCESS_INCOME_EDIT);
 	}
 }

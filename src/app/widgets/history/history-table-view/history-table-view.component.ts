@@ -1,17 +1,22 @@
-import { ChangeDetectionStrategy, Component, input, model } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	model,
+} from '@angular/core';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import {ITableHead, ITableItem, TableComponent} from '@app/shared/components/table/table.component';
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import {
+	ITableHead,
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @Component({
 	selector: 'app-history-table-view',
 	standalone: true,
-	imports: [
-		LoaderComponent,
-		TableComponent,
-		PaginationComponent
-	],
+	imports: [LoaderComponent, TableComponent, PaginationComponent],
 	templateUrl: './history-table-view.component.html',
 	styleUrl: './history-table-view.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,8 +37,10 @@ export class HistoryTableViewComponent {
 		this.pageIndex.set(index);
 	}
 
-	private convertToTableItems(historyItems: IChangeTrackerItemDto[]): ITableItem[] {
-		return <ITableItem[]>(<unknown>historyItems.map(item => {
+	private convertToTableItems(
+		historyItems: IChangeTrackerItemDto[],
+	): ITableItem[] {
+		return <ITableItem[]>(<unknown>historyItems.map((item) => {
 			return {
 				createdTime: item.createdTime,
 				userName: item.user?.name,

@@ -14,13 +14,11 @@ import {
 	CardComponent,
 	IconType,
 	IconPosition,
-	InputComponent,
 	Size,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { NgForOf, NgIf } from '@angular/common';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
@@ -32,14 +30,9 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 	styleUrls: ['./mp-reservation-orders-popup-date-provision.component.scss'],
 	standalone: true,
 	imports: [
-		NgForOf,
-		NgIf,
 		CardComponent,
 		DateTimePickerComponent,
-		InputComponent,
 		ButtonComponent,
-		ButtonComponent,
-		TextComponent,
 		TextComponent,
 		ReactiveFormsModule,
 	],
@@ -62,7 +55,9 @@ export class MpReservationOrdersPopupDateProvisionComponent {
 		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
 	) {
 		this.provisionForm = new FormGroup({
-			provisionDate: new FormControl<string | null>(null, [Validators.required]),
+			provisionDate: new FormControl<string | null>(null, [
+				Validators.required,
+			]),
 		});
 	}
 
@@ -77,16 +72,25 @@ export class MpReservationOrdersPopupDateProvisionComponent {
 	}
 
 	protected setErrorsControl(): void {
-		this.setErrorsIfNotControlValue(this.provisionForm.controls.provisionDate);
+		this.setErrorsIfNotControlValue(
+			this.provisionForm.controls.provisionDate,
+		);
 	}
+
 	public onSetProvisionDate(): void {
 		this.setErrorsControl();
 		this.provisionForm.markAllAsTouched();
+
 		if (this.provisionForm.invalid) {
 			return;
 		}
+
 		const date = this.provisionForm.value.provisionDate!;
-		this.mpReservationOrdersFacadeService.updateProvisionDates(Array.from(this.orderIds), date);
+
+		this.mpReservationOrdersFacadeService.updateProvisionDates(
+			Array.from(this.orderIds),
+			date,
+		);
 		this.modalRef.close();
 	}
 }

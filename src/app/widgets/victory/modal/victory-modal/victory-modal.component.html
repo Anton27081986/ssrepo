@@ -1,5 +1,5 @@
 <div class="wrapper">
-	<div class="victory-modal" *ngIf="victory$ | async as victory">
+	<div *ngIf="victory$ | async as victory" class="victory-modal">
 		<div class="victory-modal__header">
 			<ss-text size="1"> Победа № {{ victory.id }}</ss-text>
 			<ss-icon style="cursor: pointer;" [name]="'close'" (click)="close()"></ss-icon>
@@ -7,8 +7,8 @@
 		<ss-divider></ss-divider>
 		<div class="victory-modal__body">
 			<app-user-card [viewPopupInfo]="true" [size]="'large'" [user]="victory.user!"></app-user-card>
-			<div class="victory-modal__group" *ngIf="victory.groupWinUsers">
-				<app-user-card [viewPopupInfo]="true" [size]="'small'" *ngFor="let user of victory.groupWinUsers"
+			<div *ngIf="victory.groupWinUsers" class="victory-modal__group">
+				<app-user-card *ngFor="let user of victory.groupWinUsers" [viewPopupInfo]="true" [size]="'small'"
 							   [user]="user"></app-user-card>
 			</div>
 			<div class="victory-modal__actions">
@@ -16,7 +16,7 @@
 						  [type]="(typeLike$ | async)!" [count]="victory.likesCount!"
 						  (click)="changeLike(victory.isUserLiked!)"></app-like>
 				<div class="victory-modal__isExtendedMode">
-					<app-choice-like (close)="isChoiceLike.next(false)" *ngIf="isChoiceLike |async"
+					<app-choice-like *ngIf="isChoiceLike |async" (close)="isChoiceLike.next(false)"
 									 (stateLike)="getLike(victory.isUserLiked!,$event)"></app-choice-like>
 					<app-like
 						*ngIf="isExtendedMode$ | async"
@@ -33,8 +33,8 @@
 			<div class="victory-modal__comments">
 				<ss-text class="victory-modal__description-comment" size="1">Комментарии:</ss-text>
 				<ng-container *ngIf="comments.total > 0">
-					<app-victory-comment (updateComment)="updateComment($event)" *ngFor="let comment of comments.items"
-										 [comment]="comment"></app-victory-comment>
+					<app-victory-comment *ngFor="let comment of comments.items" [comment]="comment"
+										 (updateComment)="updateComment($event)"></app-victory-comment>
 					<ss-divider></ss-divider>
 				</ng-container>
 				<ng-container *ngIf="comments.total === 0">
@@ -50,8 +50,8 @@
 		</ng-container>
 		<ss-divider></ss-divider>
 		<div class="victory-modal__footer">
-			<ss-form-control-input-with-func-edit (cancelEditing)="cancelEditing()" [funcEdit]="(funcEdit$ | async)!" [control]="notes"
-					  [placeholder]="'Оставить комментарий'"></ss-form-control-input-with-func-edit>
+			<ss-form-control-input-with-func-edit [funcEdit]="(funcEdit$ | async)!" [control]="notes" [placeholder]="'Оставить комментарий'"
+					  (cancelEditing)="cancelEditing()"></ss-form-control-input-with-func-edit>
 			<ss-button [size]="'small'" (click)="addOrUpdateComment(victory.id)">
 				<ss-icon [name]="'telegram'"></ss-icon>
 			</ss-button>

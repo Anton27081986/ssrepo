@@ -6,10 +6,10 @@
 				<th
 					colSpan="{{ col.colspan }}"
 					rowSpan="{{ col.rowspan }}"
-					[ngStyle]="{'width': col.width, 'cursor': col.toolTip ? 'pointer' : 'default'}"
-					[tooltip]="col.toolTip!" [theme]="TooltipTheme.DEFAULT"
-					[position]="TooltipPosition.DEFAULT"
 					class="ss-table-th"
+					[ngStyle]="{'width': col.width, 'cursor': col.toolTip ? 'pointer' : 'default'}" [tooltip]="col.toolTip!"
+					[theme]="TooltipTheme.DEFAULT"
+					[position]="TooltipPosition.DEFAULT"
 				>
 					{{ col.title  }}
 

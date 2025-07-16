@@ -6,7 +6,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
 .notice-dialog {
@@ -24,7 +24,7 @@
 	}
 
 	::ng-deep ss-text p {
-		text-align: center
+		text-align: center;
 	}
 
 	snab-button {

@@ -6,9 +6,9 @@
 		</div>
 		<ss-divider></ss-divider>
 		<div class="add-victory-modal__body">
-			<form [formGroup]="formGroup" class="add-victory-modal__form">
+			<form class="add-victory-modal__form" [formGroup]="formGroup">
 				<div class="add-victory-modal__form-item">
-					<ss-chips-user-search placeholder="Введите ФИО" [selectedItems]="toUsers" label="Cотрудник"></ss-chips-user-search>
+					<ss-chips-user-search placeholder="Введите ФИО" label="Cотрудник" [selectedItems]="toUsers"></ss-chips-user-search>
 				</div>
 				<div class="add-victory-modal__form-item">
 					<ss-textarea formControlName="note" size="large" label="Описание" placeholder="Введите текст"></ss-textarea>

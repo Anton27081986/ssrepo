@@ -1,33 +1,45 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	Inject,
+} from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { IResponse } from '@app/core/utils/response';
 import { ICommentsItemDto } from '@app/core/models/awards/comments-item-dto';
 import { IObjectType } from '@app/core/models/awards/object-type';
 import { FormControl, Validators } from '@angular/forms';
 import { IThanksColleagueItem } from '@app/core/models/thanks-colleagues/thanks-colleague-item';
 import { ModalService } from '@app/core/modal/modal.service';
-import {LikeComponent, LikeStateEnum} from '@app/shared/components/like/like.component';
-import {AsyncPipe, CommonModule, NgForOf, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {IconComponent} from "@app/shared/components/icon/icon.component";
-import {SsDividerComponent} from "@app/shared/components/ss-divider/ss-divider.component";
-import {AvatarComponent} from "@app/shared/components/avatar/avatar.component";
-import {ChoiceLikeComponent} from "@app/shared/components/choice-like/choice-like.component";
-import {EmptyPlaceholderComponent} from "@app/shared/components/empty-placeholder/empty-placeholder.component";
-import {HeadlineComponent} from "@app/shared/components/typography/headline/headline.component";
 import {
-	FormControlInputWithFuncEditComponent
-} from "@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component";
-import {ButtonComponent} from "@app/shared/components/buttons/button/button.component";
-import {VictoryCommentComponent} from "@app/widgets/victory/victory-comment/victory-comment.component";
-import {VictoryService} from "@app/widgets/victory/victory.service";
-import {VictoryEventEnum, VictoryRootService} from "@app/widgets/victory/victory-root.service";
-import {VictoryState} from "@app/widgets/victory/victory.state";
-import {UserInfoPopupComponent} from "@app/shared/components/user-info-popup/user-info-popup.component";
+	LikeComponent,
+	LikeStateEnum,
+} from '@app/shared/components/like/like.component';
+import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
+import { AvatarComponent } from '@app/shared/components/avatar/avatar.component';
+import { ChoiceLikeComponent } from '@app/shared/components/choice-like/choice-like.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
+import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
+import { FormControlInputWithFuncEditComponent } from '@app/shared/components/inputs/form-control-input-with-func-edit/form-control-input-with-func-edit.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { VictoryCommentComponent } from '@app/widgets/victory/victory-comment/victory-comment.component';
+import { VictoryService } from '@app/widgets/victory/victory.service';
+import {
+	VictoryEventEnum,
+	VictoryRootService,
+} from '@app/widgets/victory/victory-root.service';
+import { VictoryState } from '@app/widgets/victory/victory.state';
+import { UserInfoPopupComponent } from '@app/shared/components/user-info-popup/user-info-popup.component';
 
 export interface ThankColleagueModal {
 	thank: IThanksColleagueItem;
@@ -55,9 +67,9 @@ export interface ThankColleagueModal {
 		EmptyPlaceholderComponent,
 		HeadlineComponent,
 		FormControlInputWithFuncEditComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ThanksColleagueModalComponent {
 	protected readonly TooltipPosition = TooltipPosition;
@@ -69,14 +81,19 @@ export class ThanksColleagueModalComponent {
 
 	protected readonly comments$: Observable<IResponse<ICommentsItemDto>>;
 	protected readonly subscription: Subscription = new Subscription();
-	protected readonly funcEdit$: Observable<boolean> = this.victoryState.activeFuncCommentEdit$;
+	protected readonly funcEdit$: Observable<boolean> =
+		this.victoryState.activeFuncCommentEdit$;
+
 	protected readonly updateComment$: BehaviorSubject<ICommentsItemDto | null> =
 		new BehaviorSubject<ICommentsItemDto | null>(null);
 
-	protected isChoiceLike: boolean = false;
+	protected isChoiceLike = false;
 
-	protected notes: FormControl<string | null> = new FormControl(null, [Validators.required]);
+	protected notes: FormControl<string | null> = new FormControl(null, [
+		Validators.required,
+	]);
 
+	protected readonly LikeStateEnum = LikeStateEnum;
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
@@ -107,7 +124,10 @@ export class ThanksColleagueModalComponent {
 	}
 
 	protected addOrUpdateComment(id: number) {
-		if (!this.victoryState.activeFuncCommentEdit$.value && this.notes.valid) {
+		if (
+			!this.victoryState.activeFuncCommentEdit$.value &&
+			this.notes.valid
+		) {
 			this.subscription.add(
 				this.victoryService
 					.addComments({
@@ -178,7 +198,8 @@ export class ThanksColleagueModalComponent {
 						thank.isUserLiked = false;
 						thank.likesCount! -= 1;
 						thank.award =
-							thank.award === this.LikeStateEnum.default || this.isExtendedMode
+							thank.award === this.LikeStateEnum.default ||
+							this.isExtendedMode
 								? this.LikeStateEnum.usual
 								: thank.award;
 						this.cdr.detectChanges();
@@ -207,6 +228,4 @@ export class ThanksColleagueModalComponent {
 			}
 		}
 	}
-
-	protected readonly LikeStateEnum = LikeStateEnum;
 }

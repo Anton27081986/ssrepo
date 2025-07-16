@@ -4,7 +4,7 @@ import { Component, HostBinding, Input } from '@angular/core';
 	selector: 'ss-card',
 	templateUrl: './card.component.html',
 	styleUrls: ['./card.component.scss'],
-	standalone: true
+	standalone: true,
 })
 export class CardComponent {
 	@HostBinding('style.padding')

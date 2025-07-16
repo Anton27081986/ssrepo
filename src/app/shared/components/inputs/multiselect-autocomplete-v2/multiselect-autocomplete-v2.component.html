@@ -4,9 +4,9 @@
 	}
 	<div class="multiselect-autocomplete-v2__input" [class.multiselect-v2__input--isExpanded]="isExpanded">
 		@if (!(selectedOptions$ | async)?.length) {
-			<input [placeholder]="placeholder"
+			<input type="text"
+				   [placeholder]="placeholder"
 				   [attr.disabled]="readOnly$ | async"
-				   type="text"
 				   [formControl]="queryControl" />
 		}
 		@if ((selectedOptions$ | async)?.length) {
@@ -24,8 +24,8 @@
 			<ss-icon [name]="'basket'" (click)="clear()"></ss-icon>
 		}
 		@if ((this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length) {
-			<ss-icon (click)="toggle()" height="12" name="chevron"
-					 [@rotate]="isExpanded">
+			<ss-icon height="12" name="chevron" [@rotate]="isExpanded"
+					 (click)="toggle()">
 			</ss-icon>
 		}
 	</div>

@@ -12,7 +12,7 @@ import { CorrespondenceTypeEnum } from "@app/widgets/correspondence/corresponden
 	providedIn: 'root',
 })
 export class NotificationsApiService {
-	public constructor(private readonly http: HttpClient) {}
+	constructor(private readonly http: HttpClient) {}
 
 	/** Получить список тем */
 	public getSubjects(
@@ -78,23 +78,18 @@ export class NotificationsApiService {
 	}
 
 	/** Отправить сообщение */
-	public sendMessage(body: {
-		sourceUrl: string;
-		copyUserIds: number[];
-		toUserIds: number[];
-		fileIds: string[];
-		subject: string;
-		replyToMessageId: string | null | undefined;
-		text: string;
-		isPrivate: boolean;
-		type: CorrespondenceTypeEnum;
-		objectId: number | null
-	}): Observable<any> {
-		return this.http.post<any>(`${environment.apiUrl}/api/notifications/messages`, body);
+	public sendMessage(body: ISendMessageRequest): Observable<any> {
+		return this.http.post<any>(
+			`${environment.apiUrl}/api/notifications/messages`,
+			body,
+		);
 	}
 
 	/** Изменить сообщение */
-	public patchMessage(id: string, body: ISendMessageRequest): Observable<IMessageItemDto> {
+	public patchMessage(
+		id: string,
+		body: ISendMessageRequest,
+	): Observable<IMessageItemDto> {
 		return this.http.put<IMessageItemDto>(
 			`${environment.apiUrl}/api/notifications/messages/${id}/edit`,
 			body,

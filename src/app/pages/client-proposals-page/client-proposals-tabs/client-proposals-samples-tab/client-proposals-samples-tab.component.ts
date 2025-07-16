@@ -1,20 +1,26 @@
 import { UntilDestroy } from '@ngneat/until-destroy';
-import { ChangeDetectionStrategy, Component, computed, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	Signal,
+} from '@angular/core';
 import { IResponse, IResponseProposalsTrips } from '@app/core/utils/response';
 import { ISamples } from '@app/core/models/client-proposails/samples';
-import {ITableItem, TableComponent} from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { IClientProposalsSamplesTableItem } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-table-item';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { ClientProposalsSamplesTabState } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.state';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {CardComponent} from "@app/shared/components/card/card.component";
-import {
-	ClientProposalsTabsCanvasComponent
-} from "@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {EmptyDataPageComponent} from "@app/shared/components/empty-data-page/empty-data-page.component";
-import {PaginationComponent} from "@app/shared/components/pagination/pagination.component";
+import { CardComponent } from '@app/shared/components/card/card.component';
+import { ClientProposalsTabsCanvasComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-tabs-canvas/client-proposals-tabs-canvas.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
+import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()
 @Component({
@@ -32,17 +38,15 @@ import {PaginationComponent} from "@app/shared/components/pagination/pagination.
 		TableComponent,
 		EmptyDataPageComponent,
 		PaginationComponent,
-		NumWithSpacesPipe
+		NumWithSpacesPipe,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ClientProposalsSamplesTabComponent {
-	protected samples: Signal<IResponseProposalsTrips<ISamples> | null> = toSignal(
-		this.stateService.samples$,
-		{
+	protected samples: Signal<IResponseProposalsTrips<ISamples> | null> =
+		toSignal(this.stateService.samples$, {
 			initialValue: null,
-		},
-	);
+		});
 
 	protected linkToModule: Signal<string | null> = computed(() => {
 		const samples = this.samples();
@@ -79,10 +83,12 @@ export class ClientProposalsSamplesTabComponent {
 
 	protected isLoader$ = this.stateService.isLoader$;
 
-	constructor(private readonly stateService: ClientProposalsSamplesTabState) {}
+	constructor(
+		private readonly stateService: ClientProposalsSamplesTabState,
+	) {}
 
 	protected getTableItems(production: IResponse<ISamples>): ITableItem[] {
-		const productionTableItem = production.items.map(x => {
+		const productionTableItem = production.items.map((x) => {
 			const tableItem: IClientProposalsSamplesTableItem =
 				{} as IClientProposalsSamplesTableItem;
 
@@ -95,7 +101,9 @@ export class ClientProposalsSamplesTabComponent {
 			tableItem.weight = x.weight ?? 0;
 			tableItem.quantity = x.quantity ?? 0;
 			tableItem.tov = x.tov.name ?? '-';
-			tableItem.price = x.price ? pipeNumWithSpaces.numberWithSpaces(x.price, 2) : '-';
+			tableItem.price = x.price
+				? pipeNumWithSpaces.numberWithSpaces(x.price, 2)
+				: '-';
 			tableItem.sales = x.sales ?? '-';
 
 			return tableItem;
@@ -108,7 +116,9 @@ export class ClientProposalsSamplesTabComponent {
 		if ($event === 1) {
 			this.stateService.offset$.next(0);
 		} else {
-			this.stateService.offset$.next(this.pageSize * $event - this.pageSize);
+			this.stateService.offset$.next(
+				this.pageSize * $event - this.pageSize,
+			);
 		}
 
 		this.pageIndex = $event;

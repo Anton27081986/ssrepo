@@ -1,104 +1,79 @@
-@use 'src/assets/scss/_app.scss' as *;
+@use '../../../../styles/colors' as *;
 
 .my-menu {
-    p {
-        font-size: 16px;
-        line-height: 22px;
-        margin-top: 10px;
-    }
+	p {
+		font-size: 16px;
+		line-height: 22px;
+		margin-top: 10px;
+	}
 
-    ::ng-deep .ant-form-vertical .ant-form-item {
-        width: 375px;
-    }
+	::ng-deep .ant-form-vertical .ant-form-item {
+		width: 375px;
+	}
 
-    ::ng-deep .anticon.search {
-        svg {
-            font-size: 21px;
 
-            path {
-                stroke: #b5b6be;
-            }
-        }
-    }
+	.filter {
+		display: flex;
+		justify-content: space-between;
 
-    .filter {
-        display: flex;
-        justify-content: space-between;
+		.search {
+		}
 
-        .search {
-        }
+		.favorite-title {
+			width: 375px;
+			background-color: $gray-light;
+			border: 1px solid $border-color;
+			border-radius: 16px;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			height: 52px;
 
-        .favorite-title {
-            width: 375px;
-            background-color: $gray-light;
-            border: 1px solid $border-color;
-            border-radius: 16px;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            height: 52px;
+			.text {
+				font-size: 16px;
+				margin-left: 20px;
+				font-weight: 600;
+			}
 
-            .text {
-                font-size: 16px;
-                margin-left: 20px;
-                font-weight: 600;
-            }
+			.icon {
+				margin-left: 18px;
 
-            .icon {
-                margin-left: 18px;
+				::ng-deep svg {
+					font-size: 21px;
+				}
+			}
+		}
+	}
+	.select {
+		display: flex;
+		justify-content: space-between;
 
-                ::ng-deep svg {
-                    font-size: 21px;
-                }
-            }
-        }
-    }
-    .select {
-        display: flex;
-        justify-content: space-between;
-
-        .groups {
-            width: 375px;
-            border-radius: 30px;
-            border: 1px solid $border-color;
-            background-color: $gray-light;
-            margin-top: 15px;
-            padding: 11px 18px 20px 19px;
+		.groups {
+			width: 375px;
+			border-radius: 30px;
+			border: 1px solid $border-color;
+			background-color: $gray-light;
+			margin-top: 15px;
+			padding: 11px 18px 20px 19px;
 
 			.category:first-child {
 				margin-top: 9px;
 			}
 
-            .category {
-                margin-top: 24px;
-                font-size: 16px;
-                font-weight: bold;
+			.category {
+				margin-top: 24px;
+				font-size: 16px;
+				font-weight: bold;
 
-                ::ng-deep .anticon {
-                    svg {
-                        font-size: 13px;
-
-                        path {
-                            stroke: $black;
-                        }
-                    }
-                }
-
-                .title {
-                    display: flex;
-                    justify-content: space-between;
-                }
+				.title {
+					display: flex;
+					justify-content: space-between;
+				}
 
 				.item {
 					display: flex;
 					justify-content: space-between;
 					margin-top: 12px;
-
-					::ng-deep .anticon {
-						svg {
-							font-size: 22px;
-						}
-					}
 
 					span {
 						font-size: 14px;
@@ -109,7 +84,7 @@
 						cursor: pointer;
 					}
 				}
-            }
-        }
-    }
+			}
+		}
+	}
 }

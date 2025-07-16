@@ -1,5 +1,3 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use '../../../styles/colors' as *;
 
 .user-card-widget {
@@ -9,7 +7,6 @@
 	width: 390px;
 	height: 290px;
 	position: relative;
-
 
 	&__card {
 		display: flex;
@@ -31,18 +28,18 @@
 
 	&__actions {
 		display: flex;
-		gap: 6px
+		gap: 6px;
 	}
 
 	&__card-action {
 		width: 62px;
 		height: 36px;
-		border: 1px solid #E4E8EA;
+		border: 1px solid #e4e8ea;
 		border-radius: 8px;
 		display: flex;
 		gap: 8px;
 		flex-wrap: nowrap;
-		background-color: #F2F3F7;
+		background-color: #f2f3f7;
 		justify-content: center;
 		align-items: center;
 		cursor: pointer;

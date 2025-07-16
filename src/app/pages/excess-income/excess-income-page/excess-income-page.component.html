@@ -7,7 +7,7 @@
 		<ss-select-v2 [size]="'small'" [formControl]="currencyControl" [placeholder]="'Выберите валюту'"
 					  [label]="'Валюта'"
 					  [options]="currency()"></ss-select-v2>
-		<ss-dropdown-button [isDropdownVisible]="(excessIncomeStateService.dropDownVisible$ | async)!" title="Фильтры">
+		<ss-dropdown-button title="Фильтры" [isDropdownVisible]="(excessIncomeStateService.dropDownVisible$ | async)!">
 			<ss-filters [isFiltersVisible]="true" [isDropdown]="true" [(filters)]="filters"
 						(applyFilter)="getFilteredExcessIncome(true);"></ss-filters>
 		</ss-dropdown-button>
@@ -25,12 +25,12 @@
 
 					<ng-container *ngIf="client.expended$ | async">
 						<ng-container *ngFor="let contractor of client.contractors$ | async">
-							<tr excess-income-contractor-tr *ngIf="contractor.contractor"
-								(click)="expended(contractor)" [contractor]="contractor"></tr>
+							<tr *ngIf="contractor.contractor" excess-income-contractor-tr
+								[contractor]="contractor" (click)="expended(contractor)"></tr>
 
 							<ng-container *ngIf="contractor.expended$ | async">
 								<ng-container *ngFor="let group of contractor.groups$ | async">
-									<tr excess-income-group-tr (click)="expended(group)" [group]="group"></tr>
+									<tr excess-income-group-tr [group]="group" (click)="expended(group)"></tr>
 
 									<ng-container *ngIf="group.expended$ | async">
 										<tr *ngFor="let tov of group.tov$ | async" excess-income-tov-tr
@@ -39,7 +39,7 @@
 											<tr loader-tr [countCol]="13"></tr>
 										</ng-container>
 
-										<tr [countCol]="13" pagination-tr [total]="(group.total$ | async)!"
+										<tr pagination-tr [countCol]="13" [total]="(group.total$ | async)!"
 											[limit]="group.limit"
 											[formControl]="group.paginationControl"></tr>
 									</ng-container>
@@ -47,7 +47,7 @@
 								<ng-container *ngIf="contractor.isLoader$ | async">
 									<tr loader-tr [countCol]="13"></tr>
 								</ng-container>
-								<tr [countCol]="13" pagination-tr [total]="(contractor.total$ | async)!"
+								<tr pagination-tr [countCol]="13" [total]="(contractor.total$ | async)!"
 									[limit]="contractor.limit"
 									[formControl]="contractor.paginationControl"></tr>
 							</ng-container>
@@ -78,7 +78,7 @@
 		<ng-container *ngIf="isLoaderTr$ | async">
 			<tr loader-tr [countCol]="13"></tr>
 		</ng-container>
-		<tr [countCol]="13" pagination-tr [total]="total()"
+		<tr pagination-tr [countCol]="13" [total]="total()"
 			[limit]="limit"
 			[formControl]="paginationControl"></tr>
 	</ss-table-v2>

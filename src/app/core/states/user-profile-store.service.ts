@@ -10,15 +10,20 @@ import { UsersApiService } from '@app/core/api/users-api.service';
 	providedIn: 'root',
 })
 export class UserProfileStoreService implements OnDestroy {
-	public readonly userProfileSubject = new BehaviorSubject<IUserProfile | null>(null);
+	public readonly userProfileSubject =
+		new BehaviorSubject<IUserProfile | null>(null);
+
 	public userProfile$ = this.userProfileSubject.asObservable();
 	private readonly userProfileKey: string = 'userProfile';
 	private readonly subscription: Subscription = new Subscription();
 
-	private readonly windowProfileSubject = new BehaviorSubject<boolean | null>(null);
+	private readonly windowProfileSubject = new BehaviorSubject<boolean | null>(
+		null,
+	);
+
 	public windowProfile$ = this.windowProfileSubject.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly apiService: UsersApiService,
 		private readonly localStorageService: LocalStorageService,
 		private readonly authenticationService: AuthenticationService,
@@ -29,11 +34,12 @@ export class UserProfileStoreService implements OnDestroy {
 	private init(): void {
 		const sub = this.authenticationService.user$
 			.pipe(
-				filter(user => !!user),
+				filter((user) => !!user),
 				switchMap(() => {
-					const userProfile = this.localStorageService.getItem<IUserProfile>(
-						this.userProfileKey,
-					);
+					const userProfile =
+						this.localStorageService.getItem<IUserProfile>(
+							this.userProfileKey,
+						);
 
 					if (userProfile) {
 						this.userProfileSubject.next(userProfile);
@@ -56,7 +62,7 @@ export class UserProfileStoreService implements OnDestroy {
 
 	public loadUserProfile(): Observable<IUserProfile> {
 		return this.apiService.getProfile().pipe(
-			tap(profile => {
+			tap((profile) => {
 				this.localStorageService.setItem(this.userProfileKey, profile);
 				this.userProfileSubject.next(profile);
 			}),

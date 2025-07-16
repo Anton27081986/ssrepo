@@ -4,7 +4,10 @@ import { NotificationsApiService } from '@app/core/api/notifications-api.service
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
-import { FileBucketsEnum, FilesApiService } from '@app/core/api/files.api.service';
+import {
+	FileBucketsEnum,
+	FilesApiService,
+} from '@app/core/api/files.api.service';
 import { IUserDto } from '@app/core/models/notifications/user-dto';
 import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
 import { environment } from '@environments/environment';
@@ -28,7 +31,9 @@ export class CorrespondenceFacadeService {
 	public topics$ = this.topicsSubject.asObservable();
 
 	// Выбранная тема
-	private readonly selectedTopicSubject = new BehaviorSubject<string | null>(null);
+	private readonly selectedTopicSubject = new BehaviorSubject<string | null>(
+		null,
+	);
 
 	public selectedTopic$ = this.selectedTopicSubject.asObservable();
 
@@ -62,7 +67,9 @@ export class CorrespondenceFacadeService {
 	public repliedMessage$ = this.repliedMessageSubject.asObservable();
 
 	// Файлы сообщения
-	private readonly messageFilesSubject = new BehaviorSubject<IAttachmentDto[] | null>(null);
+	private readonly messageFilesSubject = new BehaviorSubject<
+		IAttachmentDto[] | null
+	>(null);
 
 	public messageFiles$ = this.messageFilesSubject.asObservable();
 
@@ -71,7 +78,7 @@ export class CorrespondenceFacadeService {
 
 	public isLoading$ = this.isLoadingSubject.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly filesApiService: FilesApiService,
 	) {}
@@ -94,7 +101,7 @@ export class CorrespondenceFacadeService {
 			this.notificationsApiService
 				.getSubjects(this.type, this.objectId, Query)
 				.pipe(untilDestroyed(this))
-				.subscribe(x => {
+				.subscribe((x) => {
 					this.topicsSubject.next(x);
 				});
 		}
@@ -112,15 +119,18 @@ export class CorrespondenceFacadeService {
 					Query,
 				)
 				.pipe(
-					tap(x => {
+					tap((x) => {
 						this.messagesSubject.next({
-							items: [...this.messagesSubject.value.items, ...x.items],
+							items: [
+								...this.messagesSubject.value.items,
+								...x.items,
+							],
 							total: x.total,
 						});
 					}),
 					untilDestroyed(this),
 				)
-				.subscribe(res => {
+				.subscribe((res) => {
 					if (!this.selectedTopicSubject.value) {
 						this.totalMessagesSubject.next(res.total);
 					}
@@ -130,7 +140,11 @@ export class CorrespondenceFacadeService {
 		}
 	}
 
-	public searchMessages(limit = 10, offset = 0, Query: string | undefined = undefined) {
+	public searchMessages(
+		limit = 10,
+		offset = 0,
+		Query: string | undefined = undefined,
+	) {
 		this.messagesSubject.next({ items: [], total: 0 });
 		this.loadMessages(limit, offset, Query);
 	}
@@ -140,7 +154,7 @@ export class CorrespondenceFacadeService {
 			this.notificationsApiService
 				.getFiles(this.type, this.objectId, this.selectedTopicSubject.value)
 				.pipe(
-					tap(x => {
+					tap((x) => {
 						this.filesSubject.next(x);
 					}),
 					untilDestroyed(this),
@@ -161,7 +175,7 @@ export class CorrespondenceFacadeService {
 
 	public setMessageVisibility(id: string, isPrivate: boolean) {
 		this.messagesSubject.next({
-			items: this.messagesSubject.value.items.map(message => {
+			items: this.messagesSubject.value.items.map((message) => {
 				if (message.id === id) {
 					return { ...message, isPrivate };
 				}
@@ -176,7 +190,7 @@ export class CorrespondenceFacadeService {
 		this.filesApiService
 			.uploadFile(FileBucketsEnum.Attachments, file)
 			.pipe(untilDestroyed(this))
-			.subscribe(file => {
+			.subscribe((file) => {
 				this.messageFilesSubject.next(
 					this.messageFilesSubject.value
 						? [...this.messageFilesSubject.value, file]
@@ -192,7 +206,9 @@ export class CorrespondenceFacadeService {
 			.subscribe(() => {
 				if (this.messageFilesSubject.value) {
 					this.messageFilesSubject.next(
-						this.messageFilesSubject.value.filter(file => file.id !== id),
+						this.messageFilesSubject.value.filter(
+							(file) => file.id !== id,
+						),
 					);
 				}
 			});

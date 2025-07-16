@@ -15,22 +15,30 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-	public constructor(
+	constructor(
 		private readonly authenticationService: AuthenticationService,
 		private readonly notificationToastService: NotificationToastService,
 		private readonly route: Router,
 	) {}
 
-	public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+	public intercept(
+		request: HttpRequest<any>,
+		next: HttpHandler,
+	): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(
 			catchError((err: unknown) => {
 				if (err instanceof HttpErrorResponse) {
 					if (Math.floor(err.status / 100) === 4) {
 						if (err.status === 401) {
-							if (err.error?.status && err.error?.status === 405) {
+							if (
+								err.error?.status &&
+								err.error?.status === 405
+							) {
 								this.route
 									.navigate([`auth/forgot-password`], {
-										queryParams: { login: request.body.username },
+										queryParams: {
+											login: request.body.username,
+										},
 									})
 									.then();
 							} else {
@@ -38,7 +46,8 @@ export class ErrorInterceptor implements HttpInterceptor {
 							}
 
 							this.notificationToastService.addToast(
-								err.error?.title || Notifications.SERVER_ERROR_UNAUTHORIZED,
+								err.error?.title ||
+									Notifications.SERVER_ERROR_UNAUTHORIZED,
 								'warning',
 								err.status,
 							);

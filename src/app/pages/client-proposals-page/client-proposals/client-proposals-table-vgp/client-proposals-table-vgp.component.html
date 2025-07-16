@@ -22,7 +22,7 @@
 <ng-template #alterSearch>
 	<ng-container *ngIf="clientOffers() as clientOffers">
 		<div class="client-proposals-table-vgp__alter-search-content">
-			<div class="client-proposals-table-vgp__alter-search-item" (click)="goToUrlProposals(alterItem.linkToDetail)" *ngFor="let alterItem of clientOffers.alterSearch">
+			<div *ngFor="let alterItem of clientOffers.alterSearch" class="client-proposals-table-vgp__alter-search-item" (click)="goToUrlProposals(alterItem.linkToDetail)">
 				<ss-icon [name]="'link'"></ss-icon>
 				<span>{{ alterItem.name }}</span>
 			</div>
@@ -43,7 +43,7 @@
 </ng-template>
 <ng-template #data>
 	<ss-table-v2 *ngIf="clientOffers() as clientOffers">
-		<tr app-client-proposals-row-item-tr *ngFor="let offer of clientOffers.items" [item]="offer"></tr>
+		<tr *ngFor="let offer of clientOffers.items" app-client-proposals-row-item-tr [item]="offer"></tr>
 	</ss-table-v2>
 </ng-template>
 <ng-template #default>

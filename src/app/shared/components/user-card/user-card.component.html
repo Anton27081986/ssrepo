@@ -1,4 +1,4 @@
-<div (click)="openModalInfoUser()" class="user-card" *ngIf="user">
+<div *ngIf="user" class="user-card" (click)="openModalInfoUser()">
 	<ss-avatar [type]="'rectangle'" [size]="size" [src]="user.avatarUrl!"></ss-avatar>
 	<div class="user-card__info">
 		<ss-text size="2" weight="medium">{{ user.name }}</ss-text>

@@ -13,9 +13,9 @@
     />
 	@if (!disabled()) {
 		<div class="input__icon">
-			<ss-icon (click)="valueUp()" [name]="'chevron'"></ss-icon>
+			<ss-icon [name]="'chevron'" (click)="valueUp()"></ss-icon>
 			@if (value$ | async) {
-				<ss-icon (click)="valueDown()" [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'"></ss-icon>
+				<ss-icon [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'" (click)="valueDown()"></ss-icon>
 			}
 		</div>
 	}

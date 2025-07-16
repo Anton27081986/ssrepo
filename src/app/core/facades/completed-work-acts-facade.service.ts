@@ -17,12 +17,17 @@ import { catchError } from 'rxjs/operators';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class CompletedWorkActsFacadeService {
+	public linkToInstruction = environment.production
+		? 'https://erp.ssnab.ru/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_a390d5da-6462-4fc0-b8a2-aeb21a9c3e36.docx'
+		: 'https://erp-dev.ssnab.it/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_01b6e1dd-456d-4a1f-affd-891754889406.docx';
+
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	private readonly filters: Subject<ICompletedActsFilter> = new Subject<ICompletedActsFilter>();
@@ -38,9 +43,6 @@ export class CompletedWorkActsFacadeService {
 
 	private readonly actStates = new BehaviorSubject<IDictionaryItemDto[] | null>(null);
 	public actStates$ = this.actStates.asObservable();
-
-	private readonly services = new BehaviorSubject<IDictionaryItemDto[]>([]);
-	public services$ = this.services.asObservable();
 
 	private readonly specifications = new BehaviorSubject<ICompletedWorkActSpecification[]>([]);
 	public specifications$ = this.specifications.asObservable();
@@ -96,7 +98,6 @@ export class CompletedWorkActsFacadeService {
 		this.getCurrencies();
 		this.getBuUnits();
 		this.getPermissions();
-		this.getServices();
 	}
 
 	public applyFilters(filters: ICompletedActsFilter) {
@@ -140,6 +141,10 @@ export class CompletedWorkActsFacadeService {
 					this.specificationsTotalAmount.next(specifications.totalAmount);
 				}),
 				untilDestroyed(this),
+				catchError((err: unknown) => {
+					this.router.navigate([`completed-work-acts`]);
+					throw err;
+				}),
 			)
 			.subscribe();
 	}
@@ -186,17 +191,6 @@ export class CompletedWorkActsFacadeService {
 			.pipe(
 				tap(states => {
 					this.actStates.next(states.items);
-				}),
-				untilDestroyed(this),
-			)
-			.subscribe();
-	}
-
-	public getServices() {
-		this.searchFacade.getDictionaryServices()
-			.pipe(
-				tap(services => {
-					this.services.next(services.items);
 				}),
 				untilDestroyed(this),
 			)

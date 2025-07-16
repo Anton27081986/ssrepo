@@ -5,7 +5,13 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IResponse } from '@app/core/utils/response';
 import { IClientItemDto } from '@app/core/models/company/client-item-dto';
 import { BirthdaysContractorsFacadeService } from '@app/core/facades/birthdays-contractors-facade.service';
-import { AsyncPipe, CommonModule, DatePipe, formatDate, NgForOf } from '@angular/common';
+import {
+	AsyncPipe,
+	CommonModule,
+	DatePipe,
+	formatDate,
+	NgForOf,
+} from '@angular/common';
 import { ClientsCardFacadeService } from '@app/core/facades/client-card-facade.service';
 import { fromPickerDateToIso } from '@app/shared/pipe/from-picker-date-to-iso';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
@@ -51,13 +57,14 @@ export class ClientCardBirthdaysComponent implements OnInit {
 	public birthdaysContractors$: Observable<any>;
 	public clientId: number | undefined;
 
-	public constructor(
+	constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		public readonly birthdaysContractorsFacade: BirthdaysContractorsFacadeService,
 	) {
 		this.clients$ = this.clientsListFacade.clients$;
-		this.birthdaysContractors$ = this.birthdaysContractorsFacade.birthdaysContractors$;
+		this.birthdaysContractors$ =
+			this.birthdaysContractorsFacade.birthdaysContractors$;
 	}
 
 	public ngOnInit() {
@@ -79,18 +86,20 @@ export class ClientCardBirthdaysComponent implements OnInit {
 
 		this.birthdaysContractors$
 			.pipe(
-				tap(value => {
+				tap((value) => {
 					this.total = value?.total;
 				}),
 				untilDestroyed(this),
 			)
 			.subscribe();
 
-		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
-			if (clientId) {
-				this.clientId = Number(clientId);
-			}
-		});
+		this.clientCardListFacade.clientId$
+			.pipe(untilDestroyed(this))
+			.subscribe((clientId) => {
+				if (clientId) {
+					this.clientId = Number(clientId);
+				}
+			});
 
 		this.birthdaysContractorsFacade.getBirthdaysContractorsList(
 			this.clientId,

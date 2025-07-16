@@ -1,5 +1,5 @@
 <div class="wrapper">
-	<div class="victory-modal" *ngIf="thank">
+	<div *ngIf="thank" class="victory-modal">
 		<div class="victory-modal__header">
 			<ss-text size="1"> Победа № {{ thank.id }}</ss-text>
 			<ss-icon style="cursor: pointer;" name="close" (click)="close()"></ss-icon>
@@ -7,7 +7,7 @@
 		<ss-divider></ss-divider>
 		<div class="victory-modal__body">
 			<div class="victory-modal__body__user">
-				<ss-avatar [src]="thank.fromUser.avatarUrl || ''" size="medium" type="square" (click)="openModalInfoUser(thank.fromUser.id)"></ss-avatar>
+				<ss-avatar size="medium" type="square" [src]="thank.fromUser.avatarUrl || ''" (click)="openModalInfoUser(thank.fromUser.id)"></ss-avatar>
 				<div class="victory-modal__body__user__info">
 					<ss-text size="3">{{ thank.fromUser.name}}</ss-text>
 					<ss-text size="4">{{ thank.fromUser.position}}</ss-text>
@@ -15,7 +15,7 @@
 				</div>
 			</div>
 			<div class="victory-modal__body__user">
-				<ss-avatar [src]="thank.toUser.avatarUrl || ''" size="medium" type="square" (click)="openModalInfoUser(thank.toUser.id)"></ss-avatar>
+				<ss-avatar size="medium" type="square" [src]="thank.toUser.avatarUrl || ''" (click)="openModalInfoUser(thank.toUser.id)"></ss-avatar>
 				<div class="victory-modal__body__user__info">
 					<ss-text size="3">{{ thank.toUser.name}}</ss-text>
 					<ss-text size="4">{{ thank.toUser.position}}</ss-text>
@@ -31,8 +31,8 @@
 				</app-like>
 				<div class="thanks-colleague-card__footer__controls__like">
 					<app-choice-like
-						(close)="isChoiceLike = false"
 						*ngIf="isChoiceLike"
+						(close)="isChoiceLike = false"
 						(stateLike)="changeLike(thank, $event)">
 					</app-choice-like>
 					<app-like
@@ -51,8 +51,8 @@
 			<div class="victory-modal__comments">
 				<ss-text class="victory-modal__description-comment" size="1">Комментарии:</ss-text>
 				<ng-container *ngIf="comments.total > 0">
-					<app-victory-comment (updateComment)="updateComment($event)" *ngFor="let comment of comments.items"
-										 [comment]="comment"></app-victory-comment>
+					<app-victory-comment *ngFor="let comment of comments.items" [comment]="comment"
+										 (updateComment)="updateComment($event)"></app-victory-comment>
 					<ss-divider></ss-divider>
 				</ng-container>
 				<ng-container *ngIf="comments.total === 0">
@@ -68,8 +68,8 @@
 		</ng-container>
 		<ss-divider></ss-divider>
 		<div class="victory-modal__footer">
-			<ss-form-control-input-with-func-edit (cancelEditing)="cancelEditing()" [funcEdit]="(funcEdit$ | async)!" [control]="notes"
-					  placeholder="Оставить комментарий"></ss-form-control-input-with-func-edit>
+			<ss-form-control-input-with-func-edit placeholder="Оставить комментарий" [funcEdit]="(funcEdit$ | async)!" [control]="notes"
+					  (cancelEditing)="cancelEditing()"></ss-form-control-input-with-func-edit>
 			<ss-button size="small" (click)="addOrUpdateComment(thank.id!)">
 				<ss-icon name="telegram"></ss-icon>
 			</ss-button>

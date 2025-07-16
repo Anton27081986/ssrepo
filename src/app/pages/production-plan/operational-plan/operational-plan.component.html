@@ -1,0 +1,93 @@
+<ss-lib-table-canvas
+	[tableRef]="tableRef"
+	[leftFiltersRef]="leftFiltersRef"
+	[rightFiltersRef]="rightFiltersRef"
+	[paginationRef]="paginationRef"
+>
+</ss-lib-table-canvas>
+
+<ng-template #tableRef>
+	<ng-container *ngIf="items$ | async as items">
+		<ng-container *ngIf="items.length > 0; else empty">
+			<app-operation-plan-table
+				[days]="(days$ | async)!"
+				[total]="total"
+				[totalItems]="(itemTotal$ | async)!"
+				[planItems]="items"
+			>
+			</app-operation-plan-table>
+		</ng-container>
+		<ng-template #empty>
+			<ng-container *ngIf="!hasCustomFilters()">
+				<app-operation-plan-empty-state
+					[viewAddButton]="true"
+					[title]="'ГП и полуфабрикатов ещё нет'"
+					[description]="
+						'Здесь будет отображаться планирование ГП и полуфабрикатов на неделю. ' +
+						'Нажмите на «Добавить полфуабрикат», чтобы добавить новый.'
+					"
+					[icon]="IconType.PackagePlus"
+				></app-operation-plan-empty-state>
+			</ng-container>
+			<ng-container *ngIf="hasCustomFilters()">
+				<app-operation-plan-empty-state
+					[viewAddButton]="false"
+					[title]="'По вашему запросу ничего не найдено'"
+					[description]="
+						'Попробуйте изменить критерии запроса или настройки фильтров'
+					"
+					[icon]="IconType.Search"
+				></app-operation-plan-empty-state>
+			</ng-container>
+		</ng-template>
+	</ng-container>
+</ng-template>
+
+<ng-template #leftFiltersRef>
+	<ng-container *ngIf="weeks$ | async as weeks">
+		<ss-lib-button
+			[iconPosition]="IconPosition.Start"
+			[icon]="IconType.Calendar"
+			[popoverTriggerFor]="listActions"
+			[type]="ButtonType.Secondary"
+			[text]="(activeWeek$ | async)?.name"
+		>
+			<ss-lib-icon
+				[icon]="IconType.ChevronDown"
+				[width]="'20'"
+				[height]="'20'"
+			></ss-lib-icon>
+		</ss-lib-button>
+		<ss-lib-dropdown-list
+			#listActions
+			[height]="'274px'"
+			[width]="'236px'"
+		>
+			<ss-lib-dropdown-item
+				*ngFor="let week of weeks"
+				[label]="week.name"
+				[selected]="activeWeek$.value?.id === week.id"
+				(click)="selectWeek(week)"
+			/>
+		</ss-lib-dropdown-list>
+	</ng-container>
+</ng-template>
+
+<ng-template #rightFiltersRef>
+	<ng-container *ngIf="hasCustomFilters()">
+		<app-dropdown-columns-settings></app-dropdown-columns-settings>
+		<app-filters-trigger-button></app-filters-trigger-button>
+	</ng-container>
+</ng-template>
+
+<ng-template #paginationRef>
+	<ss-lib-load-pagination
+		[itemCount]="(itemTotal$ | async)!"
+		[style.width]="'100%'"
+		[total]="total"
+		[limit]="limit"
+		[offsetInput]="(offset$ | async)!"
+		(changeOffset)="changeOffset($event)"
+	>
+	</ss-lib-load-pagination>
+</ng-template>

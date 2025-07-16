@@ -1,7 +1,4 @@
-@use 'src/assets/scss/_mixins.scss' as *;
-@use 'src/assets/scss/_variables.scss' as *;
 @use 'src/styles/colors.scss' as *;
-
 
 .wrapper {
 	width: 100vw;
@@ -9,7 +6,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: rgba(0,0,0,0.1);
+	background-color: rgba(0, 0, 0, 0.1);
 }
 
 .client-proposals-view-files-popover {

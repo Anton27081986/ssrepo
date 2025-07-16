@@ -1,6 +1,6 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
-		<ng-container [formGroup]="group().groupSignal().paramsGroup" *ngIf="col.display" [ngSwitch]="col.id">
+		<ng-container *ngIf="col.display" [formGroup]="group().groupSignal().paramsGroup" [ngSwitch]="col.id">
 			<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.nameGroups">
 				<td class="ss-table-td" [style.min-width]="col.width">
 					<snab-link [url]=" group().groupSignal().tovSubgroup.linkToDetail"
@@ -19,23 +19,23 @@
 						>
 							<snab-input
 								snab-tooltip
+								fieldCtrl
+								formControlName="sndCurrentControl"
 								[tooltipText]="'СНД, %'"
 								[position]="TooltipPosition.Top"
 								[theme]="TooltipTheme.Dark"
-								fieldCtrl
-								formControlName="sndCurrentControl"
 								[onlyPositiveValue]="true"
 								[type]="InputType.Number"
 								[showClearButton]="false"
 								[step]="0.01"
 							/>
 						</snab-form-field>
-						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
+						<snab-button *ngIf="group().validSndControlCurrent$ | async" snab-tooltip [tooltipText]="'Сохранить'"
+									 [position]="TooltipPosition.Bottom" [theme]="TooltipTheme.Dark"
+									 [iconPosition]="IconPosition.OnlyIcon"
 									 [icon]="IconType.Check"
-									 [size]="Size.Small"
-									 [type]="ButtonType.Primary" (click)="group().updateSnd($event,true)"
-									 *ngIf="group().validSndControlCurrent$ | async">
+									 [size]="Size.Small" [type]="ButtonType.Primary"
+									 (click)="group().updateSnd($event,true)">
 
 						</snab-button>
 
@@ -53,23 +53,23 @@
 						>
 							<snab-input
 								snab-tooltip
+								fieldCtrl
+								formControlName="sndNextControl"
 								[tooltipText]="'СНД, %'"
 								[position]="TooltipPosition.Top"
 								[theme]="TooltipTheme.Dark"
-								fieldCtrl
-								formControlName="sndNextControl"
 								[onlyPositiveValue]="true"
 								[type]="InputType.Number"
 								[showClearButton]="false"
 								[step]="0.01"
 							/>
 						</snab-form-field>
-						<snab-button snab-tooltip [tooltipText]="'Сохранить'" [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [iconPosition]="IconPosition.OnlyIcon"
+						<snab-button *ngIf="group().validSndControlNext$ | async" snab-tooltip [tooltipText]="'Сохранить'"
+									 [position]="TooltipPosition.Bottom" [theme]="TooltipTheme.Dark"
+									 [iconPosition]="IconPosition.OnlyIcon"
 									 [icon]="IconType.Check"
-									 [size]="Size.Small"
-									 [type]="ButtonType.Primary" (click)="group().updateSnd($event,false)"
-									 *ngIf="group().validSndControlNext$ | async"></snab-button>
+									 [size]="Size.Small" [type]="ButtonType.Primary"
+									 (click)="group().updateSnd($event,false)"></snab-button>
 					</div>
 				</td>
 			</ng-container>
