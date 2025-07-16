@@ -85,7 +85,7 @@
 					) {
 						@if (
 							column.id.startsWith('planQuantity') &&
-							operationPlanState.getHasPermissionEdit
+							getDayCell(row, column.id)?.isManufactoryOrder
 						) {
 							<ss-lib-button
 								class="postpone-button"
