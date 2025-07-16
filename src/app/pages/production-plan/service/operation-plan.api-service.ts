@@ -159,10 +159,10 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public upload1C(): Observable<LinkToModule> {
+	public upload1C(weekId: number): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadOneS`,
-			{},
+			{ weekId },
 		);
 	}
 
