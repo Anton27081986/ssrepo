@@ -1,15 +1,6 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	inject,
-	Signal,
-	ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Signal, ViewChild } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {
-	OperationPlanItem,
-	PlanDays,
-} from '@app/core/models/production-plan/operation-plan';
+import { OperationPlanItem, PlanDays } from '@app/core/models/production-plan/operation-plan';
 import {
 	Align,
 	ButtonComponent,
@@ -54,18 +45,18 @@ export const BASE_COLUMN_MAP: Record<
 	>,
 	(row: OperationPlanItem) => string | number
 > = {
-	tov: (row) => row.tov.name,
-	tovCategory: (row) => row.tovCategory.name,
-	productionSection: (row) => row.productionSection.name,
-	optimalBatch: (row) => row.optimalBatch,
-	productionType: (row) => row.productionType.name,
-	productionCity: (row) => row.productionCity.name,
-	productManagerUser: (row) => row.productManagerUser.name,
-	planEconomicUser: (row) => row.planEconomicUser.name,
-	weekPlanQuantity: (row) => row.weekPlanQuantity,
-	weekFactQuantity: (row) => row.weekFactQuantity,
-	monthPlanQuantity: (row) => row.monthPlanQuantity,
-	monthFactQuantity: (row) => row.monthFactQuantity,
+	tov: row => row.tov.name,
+	tovCategory: row => row.tovCategory.name,
+	productionSection: row => row.productionSection.name,
+	optimalBatch: row => row.optimalBatch,
+	productionType: row => row.productionType.name,
+	productionCity: row => row.productionCity.name,
+	productManagerUser: row => row.productManagerUser.name,
+	planEconomicUser: row => row.planEconomicUser.name,
+	weekPlanQuantity: row => row.weekPlanQuantity,
+	weekFactQuantity: row => row.weekFactQuantity,
+	monthPlanQuantity: row => row.monthPlanQuantity,
+	monthFactQuantity: row => row.monthFactQuantity,
 };
 
 @Component({
@@ -94,17 +85,13 @@ export class OperationPlanTableTbodyComponent {
 	@ViewChild('getCommentsList')
 	commentsComp!: AddCommentsModalComponent;
 
-	private readonly tableStateService =
-		inject<SsTableState<OperationPlanItem>>(SsTableState);
+	private readonly tableStateService = inject<SsTableState<OperationPlanItem>>(SsTableState);
 
-	public data: Signal<OperationPlanItem[] | undefined> =
-		this.tableStateService.data;
+	public data: Signal<OperationPlanItem[] | undefined> = this.tableStateService.data;
 
 	private readonly operationPlanService = inject(OperationPlanService);
 
-	private readonly popupService: OperationPlanPopupService = inject(
-		OperationPlanPopupService,
-	);
+	private readonly popupService: OperationPlanPopupService = inject(OperationPlanPopupService);
 
 	protected readonly operationPlanState = inject(OperationPlanState);
 
@@ -124,11 +111,7 @@ export class OperationPlanTableTbodyComponent {
 		return this.tableStateService.getRowCheckboxControl(index);
 	}
 
-	protected editPlanFact(
-		event: Event,
-		row: OperationPlanItem,
-		columnId: string,
-	): void {
+	protected editPlanFact(event: Event, row: OperationPlanItem, columnId: string): void {
 		const input = event.target as HTMLInputElement;
 		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
 		const oldValue =
@@ -194,8 +177,11 @@ export class OperationPlanTableTbodyComponent {
 		}
 	}
 
-	protected openPostponePlanModal(row: OperationPlanItem) {
-		this.popupService.openPostponePlanModal(47);
+	protected openPostponePlanModal(row: OperationPlanItem, columnId: string): void {
+		const data = row.planDays!.find(day => day.date.startsWith(columnId.slice(13)));
+		if (data) {
+			this.popupService.openPostponePlanModal(data.id);
+		}
 	}
 
 	public onCommentsOpen(opened: boolean): void {
@@ -204,30 +190,22 @@ export class OperationPlanTableTbodyComponent {
 		}
 	}
 
-	public getCellValue(
-		row: OperationPlanItem,
-		columnId: string,
-	): string | number {
+	public getCellValue(row: OperationPlanItem, columnId: string): string | number {
 		// 1. Базовые колонки
-		const baseFieldHandler =
-			BASE_COLUMN_MAP[columnId as keyof typeof BASE_COLUMN_MAP];
+		const baseFieldHandler = BASE_COLUMN_MAP[columnId as keyof typeof BASE_COLUMN_MAP];
 
 		if (baseFieldHandler) {
 			return baseFieldHandler(row);
 		}
 
 		// 2. Динамические колонки по дням
-		const planMatch = columnId.match(
-			/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/,
-		);
-		const factMatch = columnId.match(
-			/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/,
-		);
+		const planMatch = columnId.match(/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/);
+		const factMatch = columnId.match(/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/);
 
 		if (planMatch || factMatch) {
 			const [, , month, day] = planMatch || factMatch!;
 
-			const planDay = row.planDays?.find((dayObj) => {
+			const planDay = row.planDays?.find(dayObj => {
 				const [, m, d] = dayObj.date.slice(0, 10).split('-');
 
 				return m === month && d === day;
@@ -250,21 +228,14 @@ export class OperationPlanTableTbodyComponent {
 		return '';
 	}
 
-	public getDayCell(
-		row: OperationPlanItem,
-		columnId: string,
-	): PlanDays | null {
-		const planMatch = columnId.match(
-			/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/,
-		);
-		const factMatch = columnId.match(
-			/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/,
-		);
+	public getDayCell(row: OperationPlanItem, columnId: string): PlanDays | null {
+		const planMatch = columnId.match(/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/);
+		const factMatch = columnId.match(/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/);
 
 		if (planMatch || factMatch) {
 			const [, , month, day] = planMatch || factMatch!;
 
-			const planDay = row.planDays?.find((dayObj) => {
+			const planDay = row.planDays?.find(dayObj => {
 				const [, m, d] = dayObj.date.slice(0, 10).split('-');
 
 				return m === month && d === day;

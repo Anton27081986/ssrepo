@@ -1,33 +1,37 @@
-.operation-plan-empty-state {
-  height: 398px;
-  width: 100%;
+@mixin flexColumn {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.operation-plan-empty-state {
+  @include flexColumn;
+  flex-direction: column;
+  height: 398px;
+  width: 100%;
   border: 1px solid var(--border-primary);
   border-left: none;
   border-right: none;
 
+  &__info {
+    @include flexColumn;
+    flex-direction: column;
+    gap: 16px;
+  }
+
   &__content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexColumn;
     flex-direction: column;
     width: 596px;
-    gap: 24px;
 
     &-info {
-      display: flex;
+      @include flexColumn;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 16px;
+      gap: 24px;
 
       &-text {
-        display: flex;
+        @include flexColumn;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
         gap: 4px;
       }
     }

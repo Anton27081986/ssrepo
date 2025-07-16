@@ -28,10 +28,7 @@ import {
 	CreatePlanFactRequest,
 	UpdatePlanFactRequest,
 } from '@app/core/models/production-plan/plan-fact-request';
-import {
-	ICommentsItemDto,
-	ISendComment,
-} from '@app/core/models/production-plan/comments';
+import { ICommentsItemDto, ISendComment } from '@app/core/models/production-plan/comments';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -45,7 +42,7 @@ export class OperationPlanApiService {
 		Object.entries(request).forEach(([key, value]) => {
 			if (value !== null && value !== undefined) {
 				if (Array.isArray(value)) {
-					value.forEach((v) => {
+					value.forEach(v => {
 						params = params.append(key, v);
 					});
 				} else {
@@ -67,15 +64,13 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public downloadExel(
-		request: OperationPlanRequest & Pagination,
-	): Observable<Blob> {
+	public downloadExel(request: OperationPlanRequest & Pagination): Observable<Blob> {
 		let params = new HttpParams();
 
 		Object.entries(request).forEach(([key, value]) => {
 			if (value !== null && value !== undefined) {
 				if (Array.isArray(value)) {
-					value.forEach((v) => {
+					value.forEach(v => {
 						params = params.append(key, v);
 					});
 				} else {
@@ -113,9 +108,7 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public transferProductionPlan(
-		params: TransferProductionPlanPatch[],
-	): Observable<void> {
+	public transferProductionPlan(params: TransferProductionPlanPatch[]): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
 			params,
@@ -159,19 +152,17 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public updateRawMaterial(
-		params: UpdateRawMaterialsRequest,
-	): Observable<LinkToModule> {
+	public updateRawMaterial(params: UpdateRawMaterialsRequest): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/CalcRowMaterials`,
 			{ ...params },
 		);
 	}
 
-	public upload1C(): Observable<LinkToModule> {
+	public upload1C(weekId: number): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadOneS`,
-			{},
+			{ weekId },
 		);
 	}
 
@@ -188,18 +179,14 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public approveMaterials(
-		params: ApproveMaterialRequest,
-	): Observable<LinkToModule> {
+	public approveMaterials(params: ApproveMaterialRequest): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/ApproveMaterials`,
 			params,
 		);
 	}
 
-	public orderAnOutfit(
-		params: OrderAnOutfitRequest,
-	): Observable<OrderAnOutfit> {
+	public orderAnOutfit(params: OrderAnOutfitRequest): Observable<OrderAnOutfit> {
 		return this.http.post<OrderAnOutfit>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/OrderProduction`,
 			params,
@@ -226,10 +213,10 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public uploadWMS() {
+	public uploadWMS(date: string) {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadWMS`,
-			{},
+			{ date },
 		);
 	}
 
@@ -242,7 +229,7 @@ export class OperationPlanApiService {
 
 		params = params.set('WeekId', weekId.toString());
 		params = params.set('Date', date);
-		productionSectionIds.forEach((val) => {
+		productionSectionIds.forEach(val => {
 			params = params.append('ProductionSectionsIds', val);
 		});
 

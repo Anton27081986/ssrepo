@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	inject,
-	Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Signal } from '@angular/core';
 import {
 	Align,
 	ButtonComponent,
@@ -56,11 +51,8 @@ export class PostponePersonificationSidePageComponent {
 	protected readonly Colors = Colors;
 	protected readonly Align = Align;
 
-	private readonly popup: ModalRef<PostponeSidePageData> = inject(
-		ModalRef<PostponeSidePageData>,
-	);
-	private readonly service: OperationPlanService =
-		inject(OperationPlanService);
+	private readonly popup: ModalRef<PostponeSidePageData> = inject(ModalRef<PostponeSidePageData>);
+	private readonly service: OperationPlanService = inject(OperationPlanService);
 
 	protected readonly personificationRes: Signal<IResponse<TransferProductionPlanMap> | null> =
 		toSignal(this.service.getTransferProductionPlan(this.popup.data.id), {
@@ -81,10 +73,7 @@ export class PostponePersonificationSidePageComponent {
 	protected get totalQuantityCalc(): number | null {
 		const personificationRes = this.personificationRes();
 		if (personificationRes) {
-			return personificationRes.items.reduce(
-				(sum, item) => sum + item.quantity,
-				0,
-			);
+			return personificationRes.items.reduce((sum, item) => sum + item.quantity, 0);
 		}
 		return null;
 	}
@@ -101,9 +90,7 @@ export class PostponePersonificationSidePageComponent {
 		const personificationRes = this.personificationRes();
 		if (
 			personificationRes?.items.some(
-				(item) =>
-					item.countForPostpone.invalid ||
-					item.productionDateControl.invalid,
+				item => item.countForPostpone.invalid || item.productionDateControl.invalid,
 			)
 		) {
 			return;

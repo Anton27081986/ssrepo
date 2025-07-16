@@ -59,25 +59,20 @@ export class ProductionPlanComponent {
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
-	private operationPlanPopupService: OperationPlanPopupService = inject(
-		OperationPlanPopupService,
-	);
+	private operationPlanPopupService: OperationPlanPopupService =
+		inject(OperationPlanPopupService);
 
-	protected operationPlanState: OperationPlanState =
-		inject(OperationPlanState);
+	protected operationPlanState: OperationPlanState = inject(OperationPlanState);
 
 	private weekId$ = this.operationPlanState.weekId$;
 
-	private productionPlanService: OperationPlanService =
-		inject(OperationPlanService);
+	private productionPlanService: OperationPlanService = inject(OperationPlanService);
 
 	protected changeTabIndex(index: number) {
 		if (index === 1) {
 			// Костыль пока не появится модуль Журнал расчета сырья
 			if (environment.production) {
-				window.open(
-					'https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx',
-				);
+				window.open('https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx');
 				window.location.reload();
 			} else {
 				window.open(' https://ssnab.it/Ss/Mfs/Plan/PlanDaysRaw.aspx');
@@ -97,20 +92,21 @@ export class ProductionPlanComponent {
 	}
 
 	protected upload1C() {
-		this.productionPlanService.upload1C().subscribe((value) => {
+		const weekId = this.operationPlanState.weekId$.value!;
+		this.productionPlanService.upload1C(weekId).subscribe(value => {
 			window.open(value.linkToModule, '_blank');
 		});
 	}
 
 	protected downloadReport() {
-		this.productionPlanService.downloadReport().subscribe((value) => {
+		this.productionPlanService.downloadReport().subscribe(value => {
 			window.open(value.linkToModule, '_blank');
 		});
 	}
 
 	protected downloadExel() {
 		const filters = this.operationPlanState.filterValueStore$.value!;
-		this.productionPlanService.downloadExel(filters).subscribe((blob) => {
+		this.productionPlanService.downloadExel(filters).subscribe(blob => {
 			console.log(typeof blob);
 			const fileURL = window.URL.createObjectURL(blob);
 			const link = document.createElement('a');
