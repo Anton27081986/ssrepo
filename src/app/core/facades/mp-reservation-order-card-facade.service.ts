@@ -80,7 +80,7 @@ export class MpReservationOrderCardFacadeService {
 		);
 	}
 
-	public addDetails(details: IProvisionDetailsTypes) {
+	public addDetails(details: IProvisionDetailsTypes[]) {
 		return this.mpReservationOrdersApiService.createDetails(
 			this.activeOrder.value?.id!,
 			details,

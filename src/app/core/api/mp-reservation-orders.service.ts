@@ -130,7 +130,7 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public createDetails(orderId: number, body: IProvisionDetailsTypes): Observable<void> {
+	public createDetails(orderId: number, body: IProvisionDetailsTypes[]): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
 			body,

@@ -75,7 +75,7 @@
 
   &__additional {
     max-width: 276px;
-    max-height: 376px;
+    max-height: 420px;
 
     &__header {
       padding: 16px;
@@ -110,6 +110,7 @@
 
         &__tags {
           display: flex;
+		  flex-wrap: wrap;
           gap: var(--gap-micro);
         }
 

@@ -140,12 +140,13 @@
 						</snab-text>
 					</td>
 					<td>
-						<snab-link [type]="TextType.Body" [text]="order.author?.name!"></snab-link>
+						<snab-link [type]="TextType.Body" [text]="order.author?.name!" [url]="order.author.linkToDetail || ''"></snab-link>
 					</td>
 					<td>
 						<snab-link
 							class="link-tov-name"
 							snab-tooltip
+							[url]="order.tov.linkToDetail || ''"
 							[type]="TextType.Body"
 							[text]="order.tov?.name!"
 							[tooltipText]="order.tov.name"></snab-link>
@@ -171,7 +172,7 @@
 							<snab-icon
 								[color]="Colors.WarningLight"
 								[icon]="IconType.Unlock"></snab-icon>
-							{{ order.provision.provided || '-' }}
+							{{ order.provision.provided || '-' | numWithSpaces: 1 }}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
@@ -181,7 +182,7 @@
 							<snab-icon
 								[color]="Colors.PositiveHeavy"
 								[icon]="IconType.Check"></snab-icon>
-							{{ order.provision.provisionAvailable || '-' }}
+							{{ order.provision.provisionAvailable || '-' | numWithSpaces: 1 }}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
@@ -191,7 +192,7 @@
 							<snab-icon
 								[color]="Colors.InfoHeavy"
 								[icon]="IconType.Refresh"></snab-icon>
-							{{ order.provision.manufacturing || '-' }}
+							{{ order.provision.manufacturing || '-' | numWithSpaces:1 }}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
@@ -201,7 +202,7 @@
 							<snab-icon
 								[color]="Colors.DangerHeavy"
 								[icon]="IconType.Error"></snab-icon>
-							{{ order.provision.provisionUnavailable || '-' }}
+							{{ order.provision.provisionUnavailable || '-' | numWithSpaces:1 }}
 						</ss-tag-v2>
 					</td>
 					<td>

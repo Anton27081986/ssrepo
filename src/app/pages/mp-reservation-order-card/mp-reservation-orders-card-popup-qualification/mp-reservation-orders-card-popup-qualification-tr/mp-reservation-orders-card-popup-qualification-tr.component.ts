@@ -39,6 +39,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import {InputType} from "@front-components/components";
 
 export enum QualificationTrRowItemField {
 	amount = 'amount',
@@ -163,4 +164,7 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 			},
 		});
 	}
+
+	protected readonly Input = Input;
+	protected readonly InputType = InputType;
 }

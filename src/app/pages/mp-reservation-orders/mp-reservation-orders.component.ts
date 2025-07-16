@@ -39,6 +39,7 @@ import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-rese
 import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
+import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -67,6 +68,7 @@ import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 		LabelComponent,
 		IconComponent,
 		TagV2Component,
+		NumWithSpacesPipe,
 	],
 	standalone: true,
 })
