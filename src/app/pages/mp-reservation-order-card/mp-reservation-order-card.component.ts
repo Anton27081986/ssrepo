@@ -58,6 +58,7 @@ import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 		DatePipe,
 		TagV2Component,
 		IconComponent,
+		NumWithSpacesPipe,
 	],
 	standalone: true,
 })

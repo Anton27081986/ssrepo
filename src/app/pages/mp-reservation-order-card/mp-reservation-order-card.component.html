@@ -151,40 +151,40 @@
 							<snab-icon
 								[color]="Colors.WarningLight"
 								[icon]="IconType.Unlock"></snab-icon>
-							{{ order()!.provision?.provided || '-' }}
+							{{ order()!.provision?.provided || '-' | numWithSpaces: 1 }}
 						</ss-tag-v2>
 						<ss-tag-v2 state="success">
 							<snab-icon
 								[color]="Colors.PositiveHeavy"
 								[icon]="IconType.Check"></snab-icon>
-							{{ order()!.provision?.provisionAvailable || '-' }}
+							{{ order()!.provision?.provisionAvailable || '-' | numWithSpaces: 1 }}
 						</ss-tag-v2>
 						<ss-tag-v2 state="info">
 							<snab-icon
 								[color]="Colors.InfoHeavy"
 								[icon]="IconType.Refresh"></snab-icon>
-							{{ order()!.provision?.manufacturing || '-' }}
+							{{ order()!.provision?.manufacturing || '-' | numWithSpaces: 1 }}
 						</ss-tag-v2>
 						<ss-tag-v2 state="danger">
 							<snab-icon
 								[color]="Colors.DangerHeavy"
 								[icon]="IconType.Error"></snab-icon>
-							{{ order()!.provision?.provisionUnavailable || '-' }}
+							{{ order()!.provision?.provisionUnavailable || '-' | numWithSpaces: 1 }}
 						</ss-tag-v2>
 					</div>
 					<div class="content__procuring__body__chart__more">
 						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.WarningLight">
-							Моя персонификация: {{ order()!.provision?.provided || '-' }}
+							Моя персонификация: {{ order()!.provision?.provided || '-' | numWithSpaces: 1 }}
 						</snab-text>
 						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.PositiveHeavy">
-							Свободно: {{ order()!.provision?.provisionAvailable || '-' }}
+							Свободно: {{ order()!.provision?.provisionAvailable || '-' | numWithSpaces: 1 }}
 						</snab-text>
 						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.InfoHeavy">
-							В производстве: {{ order()!.provision?.manufacturing || '-' }}
+							В производстве: {{ order()!.provision?.manufacturing || '-' | numWithSpaces: 1 }}
 						</snab-text>
 						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.DangerHeavy">
 							Не может быть обеспечено:
-							{{ (order()?.provision)!.provisionUnavailable || '-' }}
+							{{ (order()?.provision)!.provisionUnavailable || '-' | numWithSpaces: 1 }}
 						</snab-text>
 					</div>
 				</div>

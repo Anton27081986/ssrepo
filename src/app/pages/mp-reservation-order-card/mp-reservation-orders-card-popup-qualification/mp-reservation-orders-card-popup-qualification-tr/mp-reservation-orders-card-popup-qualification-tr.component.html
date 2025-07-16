@@ -8,6 +8,7 @@
 						<ss-input
 							formControlName="amount"
 							(click)="item.errors.amount = false"
+							[type]="InputType.Number"
 							[error]="item.errors.amount ? 'Обязательное поле' : undefined">
 						</ss-input>
 					</div>

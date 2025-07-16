@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import {UntilDestroy, untilDestroyed} from '@ngneat/until-destroy';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -23,10 +23,10 @@ import {
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { NgForOf, NgIf } from '@angular/common';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
-import {NoticeDialogComponent} from "@app/shared/components/notice-dialog/notice-dialog.component";
-import {MpReservationOrderCardFacadeService} from "@app/core/facades/mp-reservation-order-card-facade.service";
-import {forkJoin} from "rxjs";
-import {IProvisionDetailsTypes} from "@app/core/models/mp-reservation-orders/mp-reservation-order";
+import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
+import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
+import { forkJoin } from 'rxjs';
+import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 
 @UntilDestroy()
 @Component({
@@ -59,6 +59,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	protected readonly IconType = IconType;
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly InputType = InputType;
 
 	public inProductionForm!: FormGroup<{
 		quantity: FormControl<number | null>;
@@ -67,7 +68,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 			FormGroup<{
 				productionDate: FormControl<string | null>;
 				provisionDate: FormControl<string | null>;
-				fact: FormControl<number | null>;
+				manufacturingAmount: FormControl<number | null>;
 			}>
 		>;
 	}>;
@@ -75,7 +76,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		private readonly facade: MpReservationOrderCardFacadeService
+		private readonly facade: MpReservationOrderCardFacadeService,
 	) {
 		this.inProductionForm = new FormGroup({
 			manager: new FormControl<string>('Борисова А.В.'),
@@ -84,14 +85,14 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 				FormGroup<{
 					productionDate: FormControl<string | null>;
 					provisionDate: FormControl<string | null>;
-					fact: FormControl<number | null>;
+					manufacturingAmount: FormControl<number | null>;
 				}>
 			>([]),
 		});
 		this.addDatesRow();
 	}
 
-	public get dates(): FormArray{
+	public get dates(): FormArray {
 		return this.inProductionForm.get('dates') as FormArray;
 	}
 
@@ -99,7 +100,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		return new FormGroup({
 			productionDate: new FormControl<string | null>(null, [Validators.required]),
 			provisionDate: new FormControl<string | null>(null, [Validators.required]),
-			fact: new FormControl<number | null>(null, [Validators.required]),
+			manufacturingAmount: new FormControl<number | null>(null, [Validators.required]),
 		});
 	}
 
@@ -117,16 +118,24 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 
 	public placeOrder(): void {
 		this.inProductionForm.markAllAsTouched();
-		if (this.inProductionForm.valid) {
-			forkJoin(
-				this.dates.controls.map((form)=> {
-					return this.facade.addDetails(form.value as IProvisionDetailsTypes);
-				})
-			).pipe(untilDestroyed(this)).subscribe(()=>{
+		if (!this.inProductionForm.valid) return;
+
+		const detailsList: IProvisionDetailsTypes[] = this.dates.controls.map(group => {
+			const { productionDate, provisionDate, manufacturingAmount } = group.value as any;
+			return {
+				productionDate,
+				provisionDate,
+				manufacturingAmount: manufacturingAmount,
+			};
+		});
+
+		this.facade
+			.addDetails(detailsList)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
 				this.facade.reloadOrder();
 				this.modalRef.close();
-			})
-		}
+			});
 	}
 
 	public openPopupCancelAction(): void {
@@ -139,10 +148,13 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 					buttonOk: 'Отмена',
 					buttonCancel: 'Не сохранять',
 				},
-			}).afterClosed().pipe(untilDestroyed(this)).subscribe(status => {
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe(status => {
 				if (!status) {
-					this.modalRef.close()
+					this.modalRef.close();
 				}
-		})
+			});
 	}
 }
