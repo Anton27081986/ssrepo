@@ -261,7 +261,9 @@ export class MPReservationOrdersComponent {
 	}
 
 	public goToOrderCard(orderId: number): void {
-		this.router.navigate(['mp-reservation-orders', orderId]);
+		const urlTree = this.router.createUrlTree(['mp-reservation-orders', orderId]);
+		const url = this.router.serializeUrl(urlTree);
+		window.open(url, '_blank');
 	}
 
 	public openPopupHistoryOrder(orderId: number): void {
