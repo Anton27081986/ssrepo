@@ -95,9 +95,20 @@ export class PostponePersonificationSidePageComponent {
 		) {
 			return;
 		}
+
+		const changedItems = personificationRes?.items.filter(
+			item =>
+				item.countForPostpone.dirty ||
+				item.productionDateControl.dirty,
+		);
+
+		if (changedItems?.length === 0) {
+			return;
+		}
+
 		if (personificationRes) {
 			this.service
-				.transferProductionPlan(personificationRes.items)
+				.transferProductionPlan(changedItems!)
 				.pipe(
 					tap(() => {
 						this.close();
