@@ -143,10 +143,8 @@ export class OperationPlanService {
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
-			countForPostpone: new FormControl<number | null>(item.quantity),
-			productionDateControl: new FormControl<Date | null>(
-				new Date(item.productionDate),
-			),
+			countForPostpone: new FormControl<number | null>(0),
+			productionDateControl: new FormControl<Date | null>(new Date(item.productionDate)),
 		}));
 
 		return {
