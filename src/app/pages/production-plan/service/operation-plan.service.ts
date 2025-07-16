@@ -85,8 +85,8 @@ export class OperationPlanService {
 		return this.operationPlanApiService.transferProductionPlan(mapParams);
 	}
 
-	public upload1C() {
-		return this.operationPlanApiService.upload1C();
+	public upload1C(weekId: number) {
+		return this.operationPlanApiService.upload1C(weekId);
 	}
 
 	public downloadReport() {
