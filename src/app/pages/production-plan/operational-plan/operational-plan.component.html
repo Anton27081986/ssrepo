@@ -2,7 +2,7 @@
 	[tableRef]="tableRef"
 	[leftFiltersRef]="leftFiltersRef"
 	[rightFiltersRef]="rightFiltersRef"
-	[paginationRef]="paginationRef"
+	[paginationRef]="paginationRef ?? null"
 >
 </ss-lib-table-canvas>
 
@@ -81,13 +81,16 @@
 </ng-template>
 
 <ng-template #paginationRef>
-	<ss-lib-load-pagination
-		[itemCount]="(itemTotal$ | async)!"
-		[style.width]="'100%'"
-		[total]="total"
-		[limit]="limit"
-		[offsetInput]="(offset$ | async)!"
-		(changeOffset)="changeOffset($event)"
-	>
-	</ss-lib-load-pagination>
+	<ng-container *ngIf="itemTotal$ | async as itemTotal">
+		<ss-lib-load-pagination
+			*ngIf="itemTotal !== 0"
+			[itemCount]="itemTotal"
+			[style.width]="'100%'"
+			[total]="total"
+			[limit]="limit"
+			[offsetInput]="(offset$ | async)!"
+			(changeOffset)="changeOffset($event)"
+		>
+		</ss-lib-load-pagination>
+	</ng-container>
 </ng-template>

@@ -13,7 +13,7 @@
 		>
 			<ss-lib-avatar
 				class="comment-item__avatar"
-				[src]="comment.author?.avatarUrl || ''"
+				[src]="comment.author.avatarUrl || ''"
 			></ss-lib-avatar>
 			<div class="comment-item__body">
 				<div class="comment-item__header">
@@ -65,7 +65,7 @@
 		<ss-lib-avatar
 			*ngIf="currentUser"
 			class="comment-avatar"
-			[src]="currentUser?.avatarUrl || ''"
+			[src]="currentUser.avatarUrl || ''"
 		></ss-lib-avatar>
 		<div
 			#editable
