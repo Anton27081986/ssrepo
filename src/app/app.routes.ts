@@ -3,10 +3,7 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { FullLayoutComponent } from '@app/shared/layouts/new-layout/full-layout.component';
-import {
-	procurementsPermissionsGuard,
-	proposalsPermissionsGuard,
-} from '@app/core/guards';
+import { procurementsPermissionsGuard, proposalsPermissionsGuard } from '@app/core/guards';
 import { MainPageComponent } from '@app/pages/main-page/main-page.component';
 import { ProfileComponent } from '@app/pages/profile/profile.component';
 import { SettingsComponent } from '@app/pages/profile/settings/settings.component';
@@ -45,10 +42,9 @@ import { AppRoutes } from '@app/common/routes';
 import { SignInComponent } from '@auth/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
-import {MPReservationOrdersComponent} from "@app/pages/mp-reservation-orders/mp-reservation-orders.component";
-import {
-	MpReservationOrderCardComponent
-} from "@app/pages/mp-reservation-order-card/mp-reservation-order-card.component";
+import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
+import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
+import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -269,6 +265,7 @@ export const routes: Routes = [
 			},
 			{
 				path: 'mp-reservation-orders',
+				canActivate: [AuthGuard],
 				children: [
 					{
 						path: '',
