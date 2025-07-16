@@ -102,14 +102,12 @@ export class OperationPlanTableComponent {
 
 	public productionSectionIds: number[] | null = null;
 
-	public readonly visibleColumnsIds =
-		this.tableStateService.visibleColumnsIds;
+	public readonly visibleColumnsIds = this.tableStateService.visibleColumnsIds;
 
 	public readonly data = this.tableStateService.data;
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
 
-	public readonly masterCheckboxCtrl =
-		this.tableStateService.getMasterCheckboxCtrl();
+	public readonly masterCheckboxCtrl = this.tableStateService.getMasterCheckboxCtrl();
 
 	public readonly rowCheckboxes = this.tableStateService.getRowCheckboxes();
 
@@ -125,6 +123,7 @@ export class OperationPlanTableComponent {
 	protected readonly IconType = IconType;
 	protected readonly HintType = HintType;
 	protected readonly TooltipPosition = TooltipPosition;
+
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		toSignal(
 			this.masterCheckboxCtrl.valueChanges.pipe(
@@ -136,8 +135,8 @@ export class OperationPlanTableComponent {
 
 		toSignal(
 			this.rowCheckboxes.valueChanges.pipe(
-				tap((value) => {
-					const count = value.filter((ctrl) => ctrl).length;
+				tap(value => {
+					const count = value.filter(ctrl => ctrl).length;
 
 					if (count > 0 && !this.popupVisible) {
 						this.popupVisible = true;
@@ -154,13 +153,10 @@ export class OperationPlanTableComponent {
 				this.days(),
 			);
 
-			this.tableStateService.initialize(
-				this.planItems(),
-				columnOperPlanConfig,
-			);
+			this.tableStateService.initialize(this.planItems(), columnOperPlanConfig);
 		});
 
-		this.operationPlanState.filterValueStore$.subscribe((filters) => {
+		this.operationPlanState.filterValueStore$.subscribe(filters => {
 			if (filters?.productionSectionIds) {
 				this.productionSectionIds = filters.productionSectionIds;
 			} else {
@@ -170,13 +166,12 @@ export class OperationPlanTableComponent {
 	}
 
 	protected get getSelectedElemCount(): number {
-		return this.rowCheckboxes.value.filter((ctrl) => ctrl).length;
+		return this.rowCheckboxes.value.filter(ctrl => ctrl).length;
 	}
 
 	public isSubColumn(columnId: string): boolean {
 		return this.visibleColumns().some(
-			(column) =>
-				column.subColumns && column.subColumns.includes(columnId),
+			column => column.subColumns && column.subColumns.includes(columnId),
 		);
 	}
 
@@ -195,10 +190,7 @@ export class OperationPlanTableComponent {
 	}
 
 	public isWmsUpload(columnId: string): boolean {
-		return (
-			this.days().find((day) => day.day.startsWith(columnId))
-				?.isWmsUpload || false
-		);
+		return this.days().find(day => day.day.startsWith(columnId))?.isWmsUpload || false;
 	}
 
 	public getSubColumnName(subColumnId: string): string {
@@ -232,9 +224,7 @@ export class OperationPlanTableComponent {
 
 		const weekId = this.operationPlanState.weekId$.value!;
 
-		const data = this.days().find((day) =>
-			day.day.startsWith(columnName.slice(5)),
-		)!;
+		const data = this.days().find(day => day.day.startsWith(columnName.slice(5)))!;
 
 		const param: UpdateRawMaterialsData = {
 			day: data.day,
@@ -277,8 +267,7 @@ export class OperationPlanTableComponent {
 
 			input.type = 'hidden';
 			input.name = key;
-			input.value =
-				value !== undefined && value !== null ? String(value) : '';
+			input.value = value !== undefined && value !== null ? String(value) : '';
 			form.appendChild(input);
 		});
 
@@ -302,14 +291,12 @@ export class OperationPlanTableComponent {
 	}
 
 	protected orderAnOutfit(columnId: string) {
-		const data = this.days().find((day) =>
-			day.day.startsWith(columnId.slice(5)),
-		)!;
+		const data = this.days().find(day => day.day.startsWith(columnId.slice(5)))!;
 		const params: OrderAnOutfitRequest = {
 			date: data.day!,
 		};
 
-		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
+		this.operationPlanService.orderAnOutfit(params).subscribe(item => {
 			this.openOrderAnOutfit(item);
 		});
 	}
@@ -321,15 +308,13 @@ export class OperationPlanTableComponent {
 			ids,
 		};
 
-		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
+		this.operationPlanService.orderAnOutfit(params).subscribe(item => {
 			this.openOrderAnOutfit(item);
 		});
 	}
 
 	protected openApproveMaterials(column: string) {
-		const date = this.days().find((day) =>
-			day.day.startsWith(column.slice(5)),
-		)!.day;
+		const date = this.days().find(day => day.day.startsWith(column.slice(5)))!.day;
 		const data: ApproveMaterialData = {
 			total: this.totalItems(),
 			dataStart: new Date(date),
@@ -338,17 +323,17 @@ export class OperationPlanTableComponent {
 		this.operationPlanPopup.openApproveMaterials(data);
 	}
 
-	protected uploadWMS() {
+	protected uploadWMS(columnId: string) {
+		const data = this.days().find(day => day.day.startsWith(columnId.slice(5)))!;
 		this.operationPlanService
-			.uploadWMS()
+			.uploadWMS(data.day)
 			.pipe(untilDestroyed(this))
-			.subscribe((value) => {
+			.subscribe(value => {
 				window.open(value.linkToModule);
 			});
 	}
 
 	protected onPlanInfoEnter(date: string) {
-		console.log(this.productionSectionIds);
 		if (this.productionSectionIds) {
 			this.operationPlanService
 				.getPlanInfo(
@@ -356,7 +341,7 @@ export class OperationPlanTableComponent {
 					date.slice(-10),
 					this.productionSectionIds,
 				)
-				.subscribe((res) => {
+				.subscribe(res => {
 					this.planTooltipText = `Всего по выбранным участкам  — ${
 						res.planDayTotalQuantity
 					}`;

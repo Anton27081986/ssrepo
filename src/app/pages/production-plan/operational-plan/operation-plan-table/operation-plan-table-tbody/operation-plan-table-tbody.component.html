@@ -38,22 +38,17 @@
 									[size]="ExtraSize.xs"
 									[type]="ButtonType.Secondary"
 									[popoverTriggerFor]="
-										row.isComment
-											? addCommentsModal
-											: createCommentsModal
+										row.isComment ? addCommentsModal : createCommentsModal
 									"
 									(isPopoverOpenEmit)="onCommentsOpen($event)"
-								>
-								</ss-lib-button>
+								></ss-lib-button>
 							}
 							<ss-lib-dropdown-list
 								#createCommentsModal
 								[height]="'100%'"
 								[width]="'449px'"
 							>
-								<app-create-comments-modal
-									[data]="row"
-								></app-create-comments-modal>
+								<app-create-comments-modal [data]="row"></app-create-comments-modal>
 							</ss-lib-dropdown-list>
 							<ss-lib-dropdown-list
 								#addCommentsModal
@@ -79,8 +74,7 @@
 							{{ getCellValue(row, column.id) }}
 						</ss-lib-text>
 					} @else if (
-						column.id.startsWith('planQuantity') ||
-						column.id.startsWith('factQuantity')
+						column.id.startsWith('planQuantity') || column.id.startsWith('factQuantity')
 					) {
 						@if (
 							column.id.startsWith('planQuantity') &&
@@ -93,24 +87,19 @@
 								[iconPosition]="IconPosition.OnlyIcon"
 								[icon]="IconType.CornerUpRight"
 								(click)="
-									openPostponePlanModal(row);
-									$event.stopPropagation()
+									openPostponePlanModal(row, column.id); $event.stopPropagation()
 								"
 							></ss-lib-button>
 						}
 						@if (operationPlanState.getHasPermissionEdit) {
 							<input
 								#quantityInput
-								class="quantity-input"
 								type="number"
 								maxlength="10"
-								[disabled]="
-									!operationPlanState.getHasPermissionEdit
-								"
+								class="quantity-input"
+								[disabled]="!operationPlanState.getHasPermissionEdit"
 								[value]="getCellValue(row, column.id)"
-								(focusout)="
-									editPlanFact($event, row, column.id)
-								"
+								(focusout)="editPlanFact($event, row, column.id)"
 								(keyup.enter)="quantityInput.blur()"
 							/>
 						}
