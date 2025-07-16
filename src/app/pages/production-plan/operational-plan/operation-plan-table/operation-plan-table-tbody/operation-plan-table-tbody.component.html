@@ -79,13 +79,12 @@
 							{{ getCellValue(row, column.id) }}
 						</ss-lib-text>
 					} @else if (
-						(column.id.startsWith('planQuantity') ||
-							column.id.startsWith('factQuantity')) &&
-						operationPlanState.getHasPermissionEdit
+						column.id.startsWith('planQuantity') ||
+						column.id.startsWith('factQuantity')
 					) {
 						@if (
 							column.id.startsWith('planQuantity') &&
-							operationPlanState.getHasPermissionEdit
+							getDayCell(row, column.id)?.isManufactoryOrder
 						) {
 							<ss-lib-button
 								class="postpone-button"
@@ -99,18 +98,22 @@
 								"
 							></ss-lib-button>
 						}
-						<input
-							#quantityInput
-							class="quantity-input"
-							type="number"
-							maxlength="10"
-							[disabled]="
-								!operationPlanState.getHasPermissionEdit
-							"
-							[value]="getCellValue(row, column.id)"
-							(focusout)="editPlanFact($event, row, column.id)"
-							(keyup.enter)="quantityInput.blur()"
-						/>
+						@if (operationPlanState.getHasPermissionEdit) {
+							<input
+								#quantityInput
+								class="quantity-input"
+								type="number"
+								maxlength="10"
+								[disabled]="
+									!operationPlanState.getHasPermissionEdit
+								"
+								[value]="getCellValue(row, column.id)"
+								(focusout)="
+									editPlanFact($event, row, column.id)
+								"
+								(keyup.enter)="quantityInput.blur()"
+							/>
+						}
 					} @else {
 						<ss-lib-text
 							[type]="TextType.BodySm"
