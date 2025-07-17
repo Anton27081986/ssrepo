@@ -235,7 +235,7 @@
 								[icon]="IconType.Unlock"
 							></snab-icon>
 							{{
-								order()!.provision?.provided || '-'
+								order()!.provision.provided || '-'
 									| numWithSpaces: 1
 							}}
 						</ss-tag-v2>
@@ -245,7 +245,7 @@
 								[icon]="IconType.Check"
 							></snab-icon>
 							{{
-								order()!.provision?.provisionAvailable || '-'
+								order()!.provision.provisionAvailable || '-'
 									| numWithSpaces: 1
 							}}
 						</ss-tag-v2>
@@ -255,7 +255,7 @@
 								[icon]="IconType.Refresh"
 							></snab-icon>
 							{{
-								order()!.provision?.manufacturing || '-'
+								order()!.provision.manufacturing || '-'
 									| numWithSpaces: 1
 							}}
 						</ss-tag-v2>
@@ -265,7 +265,7 @@
 								[icon]="IconType.Error"
 							></snab-icon>
 							{{
-								order()!.provision?.provisionUnavailable || '-'
+								order()!.provision.provisionUnavailable || '-'
 									| numWithSpaces: 1
 							}}
 						</ss-tag-v2>
@@ -277,7 +277,7 @@
 						>
 							Моя персонификация:
 							{{
-								order()!.provision?.provided || '-'
+								order()!.provision.provided || '-'
 									| numWithSpaces: 1
 							}}
 						</snab-text>
@@ -287,7 +287,7 @@
 						>
 							Свободно:
 							{{
-								order()!.provision?.provisionAvailable || '-'
+								order()!.provision.provisionAvailable || '-'
 									| numWithSpaces: 1
 							}}
 						</snab-text>
@@ -297,7 +297,7 @@
 						>
 							В производстве:
 							{{
-								order()!.provision?.manufacturing || '-'
+								order()!.provision.manufacturing || '-'
 									| numWithSpaces: 1
 							}}
 						</snab-text>

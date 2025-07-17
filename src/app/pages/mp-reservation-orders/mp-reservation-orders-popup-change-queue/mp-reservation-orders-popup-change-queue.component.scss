@@ -1,11 +1,12 @@
 @use 'src/styles/colors.scss' as *;
+@use 'sass:color';
 
 .change-queue-form {
 	width: 1289px;
 	max-height: 765px;
 	display: flex;
 	flex-direction: column;
-	background: lighten($island-outline, 40%);
+	background: color.adjust($island-outline, $lightness: 40%);
 	border-radius: var(--radius-xl-3);
 }
 
@@ -62,7 +63,7 @@
 	border-collapse: collapse;
 
 	thead {
-		background-color: lighten($island-outline, 40%);
+		background-color: color.adjust($island-outline, $lightness: 40%);
 	}
 
 	th {

@@ -28,11 +28,7 @@ import {
 	NgSwitchCase,
 	NgSwitchDefault,
 } from '@angular/common';
-import { TextComponent } from '@app/shared/components/typography/text/text.component';
-import { SelectComponent } from '@app/shared/components/select/select.component';
 import { InputComponent } from '@app/shared/components/inputs/input/input.component';
-import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
-import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { IReservationOrderChangeProvisionDetails } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
 
 export enum ChangeProvisionDetailsTrRowItemField {
@@ -57,12 +53,8 @@ export enum ChangeProvisionDetailsTrRowItemField {
 		NgSwitch,
 		NgIf,
 		NgSwitchCase,
-		TextComponent,
-		SelectComponent,
 		InputComponent,
-		SearchInputComponent,
 		NgSwitchDefault,
-		DateTimePickerComponent,
 	],
 	standalone: true,
 })

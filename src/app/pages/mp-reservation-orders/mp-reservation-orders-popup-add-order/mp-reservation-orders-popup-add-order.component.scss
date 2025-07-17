@@ -1,9 +1,10 @@
 @use 'src/styles/colors.scss' as *;
+@use 'sass:color';
 
 .add-orders-form {
 	width: 965px;
 	max-height: 836px;
-	background: lighten($island-outline, 40%);
+	background: color.adjust($island-outline, $lightness: 40%);
 	border-radius: var(--radius-xl-3);
 }
 

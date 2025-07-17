@@ -172,7 +172,7 @@
 					<td>
 						<input
 							type="checkbox"
-							[checked]="selectedOrders?.has(order.id)"
+							[checked]="selectedOrders.has(order.id)"
 							(change)="onCheckboxChange($event, order.id)"
 						/>
 					</td>
@@ -190,7 +190,7 @@
 							[type]="TextType.Body"
 							[weight]="TextWeight.Semibold"
 						>
-							{{ order.status?.name }}
+							{{ order.status.name }}
 						</snab-text>
 					</td>
 					<td>
@@ -201,7 +201,7 @@
 					<td>
 						<snab-link
 							[type]="TextType.Body"
-							[text]="order.author?.name!"
+							[text]="order.author.name!"
 							[url]="order.author.linkToDetail || ''"
 						></snab-link>
 					</td>
@@ -211,13 +211,13 @@
 							snab-tooltip
 							[url]="order.tov.linkToDetail || ''"
 							[type]="TextType.Body"
-							[text]="order.tov?.name!"
+							[text]="order.tov.name!"
 							[tooltipText]="order.tov.name"
 						></snab-link>
 					</td>
 					<td>
 						<snab-text [type]="TextType.Body">{{
-							order.client?.name
+							order.client.name
 						}}</snab-text>
 					</td>
 					<td>

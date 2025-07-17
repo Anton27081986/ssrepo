@@ -108,10 +108,10 @@
 									[error]="
 										inProductionForm.controls['dates']!
 											.controls[i].controls
-											?.productionDate?.errors &&
+											.productionDate.errors &&
 										!inProductionForm.controls['dates']!
 											.controls[i].controls
-											?.productionDate?.untouched
+											.productionDate.untouched
 											? 'Неверно заполнено поле'
 											: ''
 									"
@@ -124,11 +124,11 @@
 									formControlName="provisionDate"
 									[error]="
 										inProductionForm.controls['dates']!
-											.controls[i].controls?.provisionDate
-											?.errors &&
+											.controls[i].controls.provisionDate
+											.errors &&
 										!inProductionForm.controls['dates']!
-											.controls[i].controls?.provisionDate
-											?.untouched
+											.controls[i].controls.provisionDate
+											.untouched
 											? 'Неверно заполнено поле'
 											: ''
 									"

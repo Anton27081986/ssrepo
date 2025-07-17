@@ -1,11 +1,12 @@
 @use 'src/styles/colors.scss' as *;
+@use 'sass:color';
 
 .history-popup {
 	width: 965px;
 	max-height: 795px;
 	display: flex;
 	flex-direction: column;
-	background: lighten($island-outline, 40%);
+	background: color.adjust($island-outline, $lightness: 40%);
 	border-radius: var(--radius-xl-3);
 }
 
@@ -37,7 +38,7 @@
 	border-collapse: collapse;
 
 	thead {
-		background-color: lighten($island-outline, 40%);
+		background-color: color.adjust($island-outline, $lightness: 40%);
 	}
 
 	th {
