@@ -61,14 +61,14 @@
 			></ss-lib-button>
 
 			<ss-lib-dropdown-list
-				[width]="'535px'"
 				#list
+				[width]="'535px'"
 			>
 				<ss-lib-dropdown-item
-					[selected]="item.id === city()?.id"
-					(click)="city.set(item)"
-					[label]="item.name"
 					*ngFor="let item of cities()"
+					[selected]="item.id === city()?.id"
+					[label]="item.name"
+					(click)="city.set(item)"
 				/>
 			</ss-lib-dropdown-list>
 		</div>
@@ -80,14 +80,14 @@
 		<ss-lib-button
 			[style.width]="'262px'"
 			[type]="ButtonType.Secondary"
-			(close)="close()"
 			[text]="'Отменить'"
+			(close)="close()"
 		></ss-lib-button>
 		<ss-lib-button
-			(click)="approveMaterial()"
 			[style.width]="'262px'"
 			[type]="ButtonType.Primary"
 			[text]="'Рассчитать для ' + data.total + ' ГП'"
+			(click)="approveMaterial()"
 		></ss-lib-button>
 	</div>
 </ng-template>

@@ -40,13 +40,13 @@ export interface CreateCommentsModalData {
 })
 export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 	@Input()
-	data!: OperationPlanItem;
+	public data!: OperationPlanItem;
 
 	@ViewChild('editable')
-	editableDiv!: ElementRef<HTMLDivElement>;
+	public editableDiv!: ElementRef<HTMLDivElement>;
 
 	@ViewChild('content', { static: true })
-	modalContent!: ElementRef<HTMLElement>;
+	public modalContent!: ElementRef<HTMLElement>;
 
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
@@ -63,12 +63,12 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 
 	private readonly userService: UserFacadeService = inject(UserFacadeService);
 	private readonly dropdownList: DropdownListComponent = inject(
-		DropdownListComponent,
+		DropdownListComponent
 	);
 
 	private readonly cdr = inject(ChangeDetectorRef);
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.userService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
@@ -81,7 +81,7 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	ngAfterViewInit() {
+	public ngAfterViewInit(): void {
 		this.autoHeight();
 		const style = getComputedStyle(this.editableDiv.nativeElement);
 
@@ -140,7 +140,7 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 					this.data.isComment = res.isComment;
 					this.data.commentCount = res.commentCount;
 					this.dropdownList.closed.emit();
-				}),
+				})
 			)
 			.subscribe();
 	}

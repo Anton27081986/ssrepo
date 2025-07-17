@@ -62,12 +62,12 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		this.mpReservationOrdersFacadeService.personificationStatuses$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected queueOrders: Signal<IQueueOrderDto[]> = toSignal(
 		this.mpReservationOrdersFacadeService.queueOrders$,
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	public filterTov: IDictionaryItemDto | null = null;
@@ -77,7 +77,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService
 	) {
 		this.status.valueChanges
 			.pipe(untilDestroyed(this))
@@ -125,7 +125,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			'Поиск заказов по ТП:',
 			this.filterTov,
 			'и статусу:',
-			this.filterStatus,
+			this.filterStatus
 		);
 	}
 
@@ -151,7 +151,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 		this.mpReservationOrdersFacadeService.updateOrderPositionInQueue(
 			oldPos,
-			newPos,
+			newPos
 		);
 	}
 }

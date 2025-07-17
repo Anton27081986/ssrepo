@@ -2,8 +2,8 @@
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
 			<td
-				class="ss-table-td"
 				*ngIf="col.display"
+				class="ss-table-td"
 			>
 				<ng-container
 					*ngSwitchCase="

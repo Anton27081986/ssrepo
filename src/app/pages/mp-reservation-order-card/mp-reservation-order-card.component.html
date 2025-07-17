@@ -61,8 +61,8 @@
 					(click)="$event.stopPropagation(); openPopupProvisionDate()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					[textContent]="'Удалить заказ по обеспечению'"
 					*ngIf="hasPermissionDeleteOrder"
+					[textContent]="'Удалить заказ по обеспечению'"
 					(click)="$event.stopPropagation(); removeOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item

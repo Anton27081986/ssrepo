@@ -60,23 +60,31 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 {
 	protected readonly ChangeProvisionDetailsTrRowItemField =
 		ChangeProvisionDetailsTrRowItemField;
+
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
-	@Input({ required: true }) item!: IReservationOrderChangeProvisionDetails;
+	@Input({ required: true })
+	item!: IReservationOrderChangeProvisionDetails;
 
-	@Input() defaultCols: IStoreTableBaseColumn[] = [];
+	@Input()
+	defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected viewMaximise$: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 
-	@ViewChild('content') public content!: ElementRef;
+	@ViewChild('content')
+	public content!: ElementRef;
 
-	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Output()
+	checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly Number = Number;
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.tprRejectsReasons$ =
 			this.clientProposalsFacadeService.tprRejectsReasons$;
@@ -121,7 +129,7 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 	ngAfterViewChecked() {
 		if (this.content) {
 			this.viewMaximise$.next(
-				this.content.nativeElement.scrollHeight > 200,
+				this.content.nativeElement.scrollHeight > 200
 			);
 		}
 	}
@@ -140,8 +148,4 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 			},
 		});
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly Number = Number;
 }

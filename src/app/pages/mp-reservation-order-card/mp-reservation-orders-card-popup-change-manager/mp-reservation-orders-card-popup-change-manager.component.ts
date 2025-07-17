@@ -83,7 +83,7 @@ export class MpReservationOrdersCardPopupChangeManagerComponent {
 		@Inject(DIALOG_DATA) private readonly data: IManagerData,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
-		protected readonly router: Router,
+		protected readonly router: Router
 	) {
 		if (data) {
 			this.items = this.data.items.map((item) => {
@@ -113,7 +113,7 @@ export class MpReservationOrdersCardPopupChangeManagerComponent {
 
 	protected setErrorsControl(): void {
 		this.setErrorsIfNotControlValue(
-			this.changeManagerForm.controls.managerField,
+			this.changeManagerForm.controls.managerField
 		);
 	}
 
@@ -131,8 +131,8 @@ export class MpReservationOrdersCardPopupChangeManagerComponent {
 			this.mpReservationOrderCardFacadeService
 				.changeManager(
 					Number(
-						this.changeManagerForm.controls.managerField.value?.id,
-					),
+						this.changeManagerForm.controls.managerField.value?.id
+					)
 				)
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {

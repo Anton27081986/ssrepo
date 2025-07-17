@@ -69,7 +69,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 	constructor(
 		@Inject(DIALOG_DATA) protected readonly data: IProvisionDatePopupData,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
 	) {
 		const initialRows: Array<
 			FormGroup<{ provisionDate: FormControl<string | null> }>
@@ -109,7 +109,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 					this.mpReservationOrderCardFacadeService.updateProvisionDateById(
 						this.data.id,
 						newDateValue,
-						detail.id,
+						detail.id
 					);
 
 				observables.push(updatesDates$);

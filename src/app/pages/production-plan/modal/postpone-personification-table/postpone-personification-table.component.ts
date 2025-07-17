@@ -63,16 +63,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostponePersonificationTableComponent {
-	@Input() data!: TransferProductionPlanMap[];
-
-	private readonly datePipe = inject(DatePipe);
+	@Input()
+	public data!: TransferProductionPlanMap[];
 
 	protected readonly Colors = Colors;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly InputType = InputType;
-	protected readonly Now = new Date();
 	protected readonly ExtraSize = ExtraSize;
 
 	public readonly columns = [
@@ -102,7 +100,7 @@ export class PostponePersonificationTableComponent {
 
 	public getCellValue(
 		item: TransferProductionPlanMap,
-		column: keyof TransferProductionPlanMap,
+		column: keyof TransferProductionPlanMap
 	): string | number {
 		switch (column) {
 			case 'orderId':

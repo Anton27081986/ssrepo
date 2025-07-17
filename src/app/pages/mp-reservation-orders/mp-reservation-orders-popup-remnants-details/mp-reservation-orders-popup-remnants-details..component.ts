@@ -50,8 +50,6 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	constructor(private readonly modalRef: ModalRef) {}
-
 	public remnants: IRemnantDetail[] = [
 		{
 			quantity: 10,
@@ -66,6 +64,8 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 			linkUrl: '#',
 		},
 	];
+
+	constructor(private readonly modalRef: ModalRef) {}
 
 	public close(): void {
 		this.modalRef.close();

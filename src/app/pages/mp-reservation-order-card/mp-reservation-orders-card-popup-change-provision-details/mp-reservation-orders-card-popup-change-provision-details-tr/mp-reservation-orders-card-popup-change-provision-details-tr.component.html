@@ -2,8 +2,8 @@
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
 			<td
-				class="ss-table-td"
 				*ngIf="col.display"
+				class="ss-table-td"
 			>
 				<ng-container
 					*ngSwitchCase="
@@ -33,20 +33,20 @@
 					<div class="hc-table-td__content">
 						<ss-input
 							size="small"
-							[value]="item.manufacturingAmount"
 							type="number"
 							placeholder="Введите"
+							[value]="item.manufacturingAmount"
+							[error]="
+								item.errors.manufacturingAmount
+									? 'Обязательное поле'
+									: undefined
+							"
 							(change)="
 								item.manufacturingAmount = Number(
 									getInputValue($event.target!)
 								)
 							"
 							(click)="item.errors.manufacturingAmount = false"
-							[error]="
-								item.errors.manufacturingAmount
-									? 'Обязательное поле'
-									: undefined
-							"
 						></ss-input>
 					</div>
 				</ng-container>

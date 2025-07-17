@@ -28,8 +28,8 @@
 
 <ng-template #body>
 	<form
-		[formGroup]="changeClarifyOrderForm"
 		class="qualification__body"
+		[formGroup]="changeClarifyOrderForm"
 	>
 		@if (tov) {
 			<ss-search-input
@@ -50,8 +50,8 @@
 		}
 		<ss-table-v2>
 			<tr
-				mp-reservation-orders-card-popup-qualification-tr
 				*ngFor="let item of items"
+				mp-reservation-orders-card-popup-qualification-tr
 				[item]="item"
 			></tr>
 		</ss-table-v2>

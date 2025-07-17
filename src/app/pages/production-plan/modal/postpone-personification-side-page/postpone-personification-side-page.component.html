@@ -5,7 +5,9 @@
 		shape: Shape.Square,
 	}"
 	[titleHeader]="'Перенести кол-во плана по ГП'"
-	[descriptionHeader]="'Перенесите количество плана ГП по каждому заказу на другую дату'"
+	[descriptionHeader]="
+		'Перенесите количество плана ГП по каждому заказу на другую дату'
+	"
 	[actionsRef]="actionRef"
 	[contentRef]="contentRef"
 	(closeEmit)="close()"
@@ -86,9 +88,9 @@
 			(click)="transferProductionPlan()"
 		></ss-lib-button>
 		<ss-lib-button
-			(click)="close()"
 			[text]="'Отменить'"
 			[type]="ButtonType.Secondary"
+			(click)="close()"
 		></ss-lib-button>
 	</div>
 </ng-template>

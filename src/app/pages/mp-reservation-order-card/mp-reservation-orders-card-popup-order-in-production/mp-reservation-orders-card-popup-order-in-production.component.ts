@@ -1,4 +1,4 @@
-import {Component, Signal} from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
@@ -30,9 +30,11 @@ import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time
 import { NgForOf } from '@angular/common';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
-import { forkJoin } from 'rxjs';
-import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
-import {toSignal} from "@angular/core/rxjs-interop";
+import {
+	IMpReservationOrder,
+	IProvisionDetailsTypes,
+} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @UntilDestroy()
 @Component({
@@ -71,7 +73,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		this.facade.activeOrder$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public inProductionForm!: FormGroup<{
@@ -89,11 +91,16 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		private readonly facade: MpReservationOrderCardFacadeService,
+		private readonly facade: MpReservationOrderCardFacadeService
 	) {
 		this.inProductionForm = new FormGroup({
-			manager: new FormControl<string>(this.order()!.author.name, [Validators.required]),
-			quantity: new FormControl<number | null>(this.order()!.totalAmount, [Validators.required]),
+			manager: new FormControl<string>(this.order()!.author.name, [
+				Validators.required,
+			]),
+			quantity: new FormControl<number | null>(
+				this.order()!.totalAmount,
+				[Validators.required]
+			),
 			dates: new FormArray<
 				FormGroup<{
 					productionDate: FormControl<string | null>;
@@ -152,7 +159,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 					provisionDate,
 					manufacturingAmount,
 				};
-			},
+			}
 		);
 
 		this.facade

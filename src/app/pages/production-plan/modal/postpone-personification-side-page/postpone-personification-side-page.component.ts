@@ -57,8 +57,9 @@ export class PostponePersonificationSidePageComponent {
 	protected readonly Align = Align;
 
 	private readonly popup: ModalRef<PostponeSidePageData> = inject(
-		ModalRef<PostponeSidePageData>,
+		ModalRef<PostponeSidePageData>
 	);
+
 	private readonly service: OperationPlanService =
 		inject(OperationPlanService);
 
@@ -69,6 +70,7 @@ export class PostponePersonificationSidePageComponent {
 
 	protected get totalQuantityForTransferCalc(): number | null {
 		const personificationRes = this.personificationRes();
+
 		if (personificationRes) {
 			return personificationRes.items.reduce((sum, item) => {
 				return sum + Number(item.countForPostpone.value!);
@@ -80,12 +82,14 @@ export class PostponePersonificationSidePageComponent {
 
 	protected get totalQuantityCalc(): number | null {
 		const personificationRes = this.personificationRes();
+
 		if (personificationRes) {
 			return personificationRes.items.reduce(
 				(sum, item) => sum + item.quantity,
-				0,
+				0
 			);
 		}
+
 		return null;
 	}
 
@@ -93,17 +97,18 @@ export class PostponePersonificationSidePageComponent {
 		return `Перенести ${this.totalQuantityForTransferCalc} едениц`;
 	}
 
-	protected close() {
+	protected close(): void {
 		this.popup.close();
 	}
 
-	protected transferProductionPlan() {
+	protected transferProductionPlan(): void {
 		const personificationRes = this.personificationRes();
+
 		if (
 			personificationRes?.items.some(
 				(item) =>
 					item.countForPostpone.invalid ||
-					item.productionDateControl.invalid,
+					item.productionDateControl.invalid
 			)
 		) {
 			return;
@@ -111,7 +116,7 @@ export class PostponePersonificationSidePageComponent {
 
 		const changedItems = personificationRes?.items.filter(
 			(item) =>
-				item.countForPostpone.dirty || item.productionDateControl.dirty,
+				item.countForPostpone.dirty || item.productionDateControl.dirty
 		);
 
 		if (changedItems?.length === 0) {
@@ -124,7 +129,7 @@ export class PostponePersonificationSidePageComponent {
 				.pipe(
 					tap(() => {
 						this.close();
-					}),
+					})
 				)
 				.subscribe();
 		}

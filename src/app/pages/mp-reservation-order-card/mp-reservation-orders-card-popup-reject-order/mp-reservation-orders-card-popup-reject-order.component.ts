@@ -18,7 +18,6 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { ModalService } from '@app/core/modal/modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { Router } from '@angular/router';
@@ -55,9 +54,8 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 
 	constructor(
 		private readonly modalRef: ModalRef,
-		private readonly modalService: ModalService,
 		private readonly facade: MpReservationOrderCardFacadeService,
-		protected readonly router: Router,
+		protected readonly router: Router
 	) {
 		this.declineForm = new FormGroup({
 			reason: new FormControl<string | null>(null, [Validators.required]),

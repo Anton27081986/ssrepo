@@ -47,7 +47,7 @@ export class MpReservationOrdersCardPopupCancelActionComponent {
 		@Inject(DIALOG_DATA) private readonly data: boolean,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
-		protected readonly router: Router,
+		protected readonly router: Router
 	) {}
 
 	protected close(result: boolean = false): void {

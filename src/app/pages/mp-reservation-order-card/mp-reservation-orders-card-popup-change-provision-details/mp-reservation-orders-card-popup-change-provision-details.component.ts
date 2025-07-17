@@ -67,7 +67,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsComponent {
 		@Inject(DIALOG_DATA) private readonly data: IProvisionDetailsData,
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
 	) {
 		if (data) {
 			this.items = this.data.items.map((item) => {
@@ -89,7 +89,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsComponent {
 
 	public updateProvisionDetails(): void {
 		const requests = this.items.map((item) =>
-			this.mpReservationOrderCardFacadeService.changeDetails(item),
+			this.mpReservationOrderCardFacadeService.changeDetails(item)
 		);
 
 		forkJoin(requests)

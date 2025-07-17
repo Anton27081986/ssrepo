@@ -47,7 +47,6 @@ import {
 	map,
 	scan,
 	switchMap,
-	take,
 	tap,
 	Subscription,
 } from 'rxjs';
@@ -121,7 +120,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	protected total: number | null = null;
 
 	protected readonly popup: ModalRef<AddManufacturesPopup> = inject(
-		ModalRef<AddManufacturesPopup>,
+		ModalRef<AddManufacturesPopup>
 	);
 
 	protected isVisibleModal: WritableSignal<boolean> = signal(true);
@@ -136,20 +135,21 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	private readonly operationPlanService = inject(OperationPlanService);
 
 	protected selectedTov: WritableSignal<ManufacturingSelectedTovs[]> = signal(
-		[],
+		[]
 	);
 
 	protected tov: Signal<ManufacturingSelectedTovs[]> = toSignal(
 		this.tovEvent.pipe(
 			switchMap((event) => {
 				let query = '';
+
 				this.blockOffset.set(true);
 
 				if (event === TovEventEnum.changeQuery) {
 					this.isLoaderMain.set(true);
 					query = this.queryControl.value ?? '';
 					const elem = document.getElementsByClassName(
-						'ss-lib-popup-global-scrolled',
+						'ss-lib-popup-global-scrolled'
 					);
 
 					const elemItem = elem.item(0);
@@ -170,7 +170,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 				return this.operationPlanService.getManufacturingTov(
 					query,
 					this.limit,
-					this.offset(),
+					this.offset()
 				);
 			}),
 			map((tov) => {
@@ -196,11 +196,11 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 				this.isLoaderMain.set(false);
 				this.isLoader.set(false);
 				this.blockOffset.set(false);
-			}),
+			})
 		),
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	private readonly subscriptions: Subscription[] = [];
@@ -212,17 +212,17 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 				tap((_value) => {
 					this.offset.set(0);
 					this.tovEvent.next(TovEventEnum.changeQuery);
-				}),
-			),
+				})
+			)
 		);
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		window.addEventListener(
 			'scroll',
 			() => {
 				const elem = document.getElementsByClassName(
-					'ss-lib-popup-global-scrolled',
+					'ss-lib-popup-global-scrolled'
 				);
 
 				const elemItem = elem.item(0);
@@ -239,7 +239,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					}
 				}
 			},
-			true,
+			true
 		);
 	}
 
@@ -257,7 +257,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 							sectionId: tov.selectedSection?.id as number,
 							tovId: tov.tov.id as number,
 						};
-					},
+					}
 				);
 
 				const params: AddToVRequest = {
@@ -268,6 +268,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 				const sub = this.operationPlanService
 					.addGp(params)
 					.subscribe(() => this.popup.close());
+
 				this.subscriptions.push(sub);
 			}
 		} else {
@@ -328,7 +329,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 				},
 				cancelText: 'Остаться',
 			},
-			false,
+			false
 		);
 	}
 
@@ -338,7 +339,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		const arrTov = this.selectedTov();
 
 		const cloneTov: ManufacturingSelectedTovs = JSON.parse(
-			JSON.stringify(tov),
+			JSON.stringify(tov)
 		);
 
 		cloneTov.selected = new FormControl(true);
@@ -352,7 +353,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		tov.selected.setValue(false);
 
 		const arrTov = this.selectedTov().filter(
-			(item) => item.tov !== tov.tov,
+			(item) => item.tov !== tov.tov
 		);
 
 		this.selectedTov.set(arrTov);
@@ -364,12 +365,12 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 	protected selectOpt(
 		item: ManufacturingSelectedTovs,
-		section: IDictionaryItemDto,
+		section: IDictionaryItemDto
 	): void {
 		item.selectedSection = section;
 	}
 
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		this.subscriptions.forEach((sub) => sub.unsubscribe());
 	}
 }

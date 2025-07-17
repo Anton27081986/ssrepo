@@ -52,7 +52,7 @@ export class MpReservationOrdersPopupDateProvisionComponent {
 	constructor(
 		@Inject(DIALOG_DATA) private readonly orderIds: Set<number>,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService
 	) {
 		this.provisionForm = new FormGroup({
 			provisionDate: new FormControl<string | null>(null, [
@@ -73,7 +73,7 @@ export class MpReservationOrdersPopupDateProvisionComponent {
 
 	protected setErrorsControl(): void {
 		this.setErrorsIfNotControlValue(
-			this.provisionForm.controls.provisionDate,
+			this.provisionForm.controls.provisionDate
 		);
 	}
 
@@ -89,7 +89,7 @@ export class MpReservationOrdersPopupDateProvisionComponent {
 
 		this.mpReservationOrdersFacadeService.updateProvisionDates(
 			Array.from(this.orderIds),
-			date,
+			date
 		);
 		this.modalRef.close();
 	}

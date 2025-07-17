@@ -78,10 +78,10 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	private readonly userService = inject(UserFacadeService);
 	private readonly cdr = inject(ChangeDetectorRef);
 	private readonly dropdownList: DropdownListComponent = inject(
-		DropdownListComponent,
+		DropdownListComponent
 	);
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.userService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
@@ -92,13 +92,13 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 		});
 	}
 
-	ngAfterViewInit() {
+	public ngAfterViewInit(): void {
 		this.autoHeight();
 		this.singleLineHeight = this.editableDiv.nativeElement.scrollHeight;
 		this.updateMultiLineFlag();
 	}
 
-	onInput(): void {
+	public onInput(): void {
 		const element = this.editableDiv.nativeElement;
 		const text = element.innerText.trim();
 
@@ -167,7 +167,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 					this.cdr.markForCheck();
 					this.dropdownList.closed.emit();
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

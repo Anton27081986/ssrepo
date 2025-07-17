@@ -30,8 +30,8 @@
 
 <ng-template #body>
 	<form
-		[formGroup]="changeManagerForm"
 		class="manager__body"
+		[formGroup]="changeManagerForm"
 	>
 		<div class="manager__body__info">
 			<div class="manager__body__info__item">
@@ -48,8 +48,8 @@
 		<div class="manager__body__table">
 			<ss-table-v2>
 				<tr
-					mp-reservation-orders-card-popup-change-manager-tr
 					*ngFor="let item of items"
+					mp-reservation-orders-card-popup-change-manager-tr
 					[item]="item"
 				></tr>
 			</ss-table-v2>
@@ -63,9 +63,9 @@
 					? 'Обязательное поле'
 					: undefined
 			"
+			[searchType]="'user'"
 			(select)="onManagerSelect($event)"
 			(click)="changeManagerForm.controls.managerField.setErrors(null)"
-			[searchType]="'user'"
 		>
 		</ss-search-input>
 	</form>

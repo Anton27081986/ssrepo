@@ -97,7 +97,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
-		private readonly userFacadeService: UserFacadeService,
+		private readonly userFacadeService: UserFacadeService
 	) {
 		this.addOrdersForm = new FormGroup({
 			tov: new FormControl<IDictionaryItemDto | null>(null, [
@@ -255,7 +255,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 		positions.controls.forEach((positionGroup) => {
 			const details = (positionGroup as FormGroup).get(
-				'details',
+				'details'
 			) as FormArray;
 
 			if (!details.length) {
@@ -297,7 +297,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 				});
 
 				return { tovId, clientId, orderRequests: requests };
-			},
+			}
 		);
 
 		const payload: IMpReservationAddOrder = {

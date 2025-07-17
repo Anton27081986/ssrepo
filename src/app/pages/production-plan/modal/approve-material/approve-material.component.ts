@@ -73,7 +73,7 @@ export class ApproveMaterialComponent implements OnInit {
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly Shape = Shape;
 	private readonly popup: ModalRef<ApproveMaterialData> = inject(
-		ModalRef<ApproveMaterialData>,
+		ModalRef<ApproveMaterialData>
 	);
 
 	private readonly sharedService = inject(SharedPopupService);
@@ -82,7 +82,7 @@ export class ApproveMaterialComponent implements OnInit {
 		new FormControl<null | Date>(null);
 
 	protected endDate: FormControl<null | Date> = new FormControl<null | Date>(
-		null,
+		null
 	);
 
 	private readonly service: OperationPlanService =
@@ -94,9 +94,9 @@ export class ApproveMaterialComponent implements OnInit {
 		this.service.getCities().pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		),
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	protected data: ApproveMaterialData;
@@ -112,7 +112,7 @@ export class ApproveMaterialComponent implements OnInit {
 		this.data = this.popup.data;
 	}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.startDate.setValue(this.data.dataStart);
 		this.startDate.disable();
 		this.endDate.setValue(this.data.dataStart);
@@ -123,10 +123,14 @@ export class ApproveMaterialComponent implements OnInit {
 	}
 
 	private formatDate(date: Date | null): string {
-		if (!date) return '';
+		if (!date) {
+			return '';
+		}
+
 		const year = date.getFullYear();
 		const month = (date.getMonth() + 1).toString().padStart(2, '0');
 		const day = date.getDate().toString().padStart(2, '0');
+
 		return `${year}-${month}-${day}`;
 	}
 

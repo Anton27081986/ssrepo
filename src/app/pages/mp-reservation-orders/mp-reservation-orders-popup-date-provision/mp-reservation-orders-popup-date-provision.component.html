@@ -28,8 +28,8 @@
 		</ng-template>
 		<ng-template #body>
 			<form
-				[formGroup]="provisionForm"
 				class="content"
+				[formGroup]="provisionForm"
 			>
 				<snab-text
 					[type]="TextType.Title"
@@ -55,14 +55,14 @@
 		<ng-template #footer>
 			<div class="footer">
 				<snab-button
+					text="Отмена"
 					[type]="ButtonType.Secondary"
 					[size]="Size.Large"
-					text="Отмена"
 					(click)="close()"
 				></snab-button>
 				<snab-button
-					[size]="Size.Large"
 					text="Назначить"
+					[size]="Size.Large"
 					(click)="onSetProvisionDate()"
 				></snab-button>
 			</div>

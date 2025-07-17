@@ -16,7 +16,6 @@ import {
 } from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
-import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import {
@@ -107,7 +106,7 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.tprRejectsReasons$ =
 			this.clientProposalsFacadeService.tprRejectsReasons$;
@@ -162,7 +161,7 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 	public ngAfterViewChecked(): void {
 		if (this.content) {
 			this.viewMaximise$.next(
-				this.content.nativeElement.scrollHeight > 200,
+				this.content.nativeElement.scrollHeight > 200
 			);
 		}
 	}

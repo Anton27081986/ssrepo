@@ -28,7 +28,7 @@ export class NotPermissionPageComponent {
 		private readonly activatedRoute: ActivatedRoute,
 	) {
 		if (this.activatedRoute.snapshot.queryParams.redirectUrl) {
-			this.router.navigate([
+			void this.router.navigate([
 				this.activatedRoute.snapshot.queryParams.redirectUrl,
 			]);
 		}

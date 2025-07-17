@@ -51,9 +51,7 @@ import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
-import {
-	MpReservationOrdersPopupHistoryComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
+import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 
 @UntilDestroy()
 @Component({
@@ -93,96 +91,24 @@ export class MpReservationOrderCardComponent implements OnInit {
 
 	public pipeNumWithSpaces = new NumWithSpacesPipe();
 
-	permissionService: PermissionsFacadeService = inject(
-		PermissionsFacadeService,
+	public permissionService: PermissionsFacadeService = inject(
+		PermissionsFacadeService
 	);
-
-	get hasPermissionDeleteOrder(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_ORDER_AUTHOR_DELETE,
-		);
-	}
-
-	get hasPermissionOrderAuthorApprove(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_ORDER_AUTHOR_APPROVE,
-		);
-	}
-
-	get hasPermissionOrderAuthorReject(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_ORDER_AUTHOR_REJECT,
-		);
-	}
-
-	get hasPermissionMutmzImpersonateAnotherEmployee(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE,
-		);
-	}
-
-	get hasPermissionMutmzConfirmSupplyOrderDeletion(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION,
-		);
-	}
-
-	get hasPermissionMutmzRejectSupplyOrderDeletion(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION,
-		);
-	}
-
-	get hasPermissionMutmzChangeSupplyDate(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE,
-		);
-	}
-
-	get hasPermissionMutmzPlaceSupplyOrderInProduction(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION,
-		);
-	}
-
-	get hasPermissionMutmzClarify(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_CLARIFY,
-		);
-	}
-
-	get hasPermissionMutmzChangeQuantity(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUANTITY,
-		);
-	}
 
 	public order: Signal<IMpReservationOrder | null> = toSignal(
 		this.mpReservationOrderCardFacadeService.activeOrder$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public volumes: WritableSignal<ITableItem[]> = signal([]);
-
 	public procuring: WritableSignal<ITableItem[]> = signal([]);
-
 	constructor(
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 		private readonly modalService: ModalService,
 		private readonly activatedRoute: ActivatedRoute,
-		protected readonly router: Router,
+		protected readonly router: Router
 	) {
 		effect(() => {
 			if (this.order()?.provision) {
@@ -191,7 +117,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 						return {
 							amount: this.pipeNumWithSpaces.numberWithSpaces(
 								item.amount,
-								2,
+								2
 							),
 							requestedProvisionDate: item.requestedProvisionDate
 								.split('T')[0]
@@ -199,7 +125,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 								.reverse()
 								.join('.'),
 						} as unknown as ITableItem;
-					}),
+					})
 				);
 
 				this.procuring.set(
@@ -208,7 +134,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 							manufacturingAmount: item.manufacturingAmount
 								? this.pipeNumWithSpaces.numberWithSpaces(
 										item.manufacturingAmount,
-										2,
+										2
 									)
 								: '-',
 							productionDate: item.productionDate
@@ -226,19 +152,89 @@ export class MpReservationOrderCardComponent implements OnInit {
 										.join('.')
 								: '-',
 						} as unknown as ITableItem;
-					}) || [],
+					}) || []
 				);
 			}
 		});
 	}
 
-	public ngOnInit() {
+	public get hasPermissionDeleteOrder(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_DELETE
+		);
+	}
+
+	public get hasPermissionOrderAuthorApprove(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_APPROVE
+		);
+	}
+
+	public get hasPermissionOrderAuthorReject(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_REJECT
+		);
+	}
+
+	public get hasPermissionMutmzImpersonateAnotherEmployee(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE
+		);
+	}
+
+	public get hasPermissionMutmzConfirmSupplyOrderDeletion(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION
+		);
+	}
+
+	public get hasPermissionMutmzRejectSupplyOrderDeletion(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION
+		);
+	}
+
+	public get hasPermissionMutmzChangeSupplyDate(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE
+		);
+	}
+
+	public get hasPermissionMutmzPlaceSupplyOrderInProduction(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION
+		);
+	}
+
+	public get hasPermissionMutmzClarify(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CLARIFY
+		);
+	}
+
+	public get hasPermissionMutmzChangeQuantity(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUANTITY
+		);
+	}
+
+	public ngOnInit(): void {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if (id) {
 			this.mpReservationOrderCardFacadeService.getPersonificationById(id);
 		} else {
-			this.router.navigate(['mp-reservation-orders']);
+			void this.router.navigate(['mp-reservation-orders']);
 		}
 	}
 
@@ -251,23 +247,25 @@ export class MpReservationOrderCardComponent implements OnInit {
 			MpReservationOrdersCardPopupRejectOrderComponent,
 			{
 				data: this.order()?.id,
-			},
+			}
 		);
 	}
 
 	public openPopupHistoryOrder(orderId: number): void {
-		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
+		this.modalService.open(MpReservationOrdersPopupHistoryComponent, {
+			data: orderId,
+		});
 	}
 
 	public openPopupOrderApproval(): void {
 		this.modalService.open(
-			MpReservationOrdersCardPopupOrderApprovalComponent,
+			MpReservationOrdersCardPopupOrderApprovalComponent
 		);
 	}
 
 	public openPopupOrderInProduction(): void {
 		this.modalService.open(
-			MpReservationOrdersCardPopupOrderInProductionComponent,
+			MpReservationOrdersCardPopupOrderInProductionComponent
 		);
 	}
 
@@ -279,7 +277,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					id: this.order()?.id,
 					provisionDetails: this.order()?.provision.provisionDetails,
 				},
-			},
+			}
 		);
 	}
 
@@ -288,7 +286,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.removeOrder()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.router.navigate(['mp-reservation-orders']);
+				void this.router.navigate(['mp-reservation-orders']);
 			});
 	}
 
@@ -297,7 +295,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 			MpReservationOrdersCardPopupCancelActionComponent,
 			{
 				data: isConfirm,
-			},
+			}
 		);
 	}
 
@@ -310,7 +308,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					tov: this.order()?.tov,
 					id: this.order()?.id,
 				},
-			},
+			}
 		);
 	}
 
@@ -323,7 +321,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					tov: this.order()?.tov,
 					id: this.order()?.id,
 				},
-			},
+			}
 		);
 	}
 
@@ -337,11 +335,12 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((response) => {
 				const newItems = response.provisionRequests;
+
 				this.modalService.open(
 					MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent,
 					{
 						data: { oldItems, newItems, tov, id },
-					},
+					}
 				);
 			});
 	}
@@ -356,7 +355,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					id: this.order()?.id,
 					manager: this.order()?.manager,
 				},
-			},
+			}
 		);
 	}
 }

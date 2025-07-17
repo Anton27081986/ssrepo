@@ -9,9 +9,9 @@
 		<tr ssThGroup>
 			<ng-container *ngFor="let column of columns">
 				<th
-					ssTh
 					*ssHead="column"
-                    [class.width-column-inputs]="isInputColumn(column)"
+					ssTh
+					[class.width-column-inputs]="isInputColumn(column)"
 				>
 					<ss-lib-text
 						[color]="Colors.TextBody2"
@@ -28,11 +28,14 @@
 	</thead>
 
 	<tbody>
-		<tr ssTr *ngFor="let item of data">
+		<tr
+			*ngFor="let item of data"
+			ssTr
+		>
 			<ng-container *ngFor="let column of columns">
 				<td
-					ssTd
 					*ssCell="column"
+					ssTd
 					[class.width-column-inputs]="isInputColumn(column)"
 				>
 					<ng-container [ngSwitch]="column">
@@ -44,7 +47,7 @@
 							<ss-lib-input
 								fieldCtrl
 								required
-                                [size]="ExtraSize.md"
+								[size]="ExtraSize.md"
 								[formControl]="item.countForPostpone"
 								[max]="item.quantity"
 								[min]="0"
@@ -56,13 +59,15 @@
 							*ngSwitchCase="'productionDateControl'"
 							fieldCtrl
 							[showValidationFieldIcon]="true"
-                            [errorText]="'Необходимо выбрать дату не ранее исходной'"
+							[errorText]="
+								'Необходимо выбрать дату не ранее исходной'
+							"
 						>
 							<ss-lib-datepicker
 								fieldCtrl
 								required
 								[formControl]="item.productionDateControl"
-                                [min]="item.originalProductionDate"
+								[min]="item.originalProductionDate"
 							></ss-lib-datepicker>
 						</ss-lib-form-field>
 						<ng-container *ngSwitchDefault>

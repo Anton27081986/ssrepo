@@ -37,6 +37,7 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { catchError } from 'rxjs/operators';
+import { LinkToModule } from '@app/core/models/production-plan/update-raw-materials-request';
 
 export interface UpdateRawMaterialsData {
 	day: string;
@@ -78,28 +79,35 @@ export class ModalUpdateRawMaterialsComponent {
 		this.operationPlanService.getCalcVariants().pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		),
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	protected selectedItem: WritableSignal<IDictionaryItemDto | null> =
 		signal(null);
 
 	private readonly popup: ModalRef<UpdateRawMaterialsData> = inject(
-		ModalRef<UpdateRawMaterialsData>,
+		ModalRef<UpdateRawMaterialsData>
 	);
 
+	protected readonly ButtonType = ButtonType;
+	protected readonly JustifyContent = JustifyContent;
+	protected readonly IconPosition = IconPosition;
+	protected readonly TextType = TextType;
+	protected readonly Colors = Colors;
+	protected readonly document = document;
 	constructor() {
 		this.data = this.popup.data;
 	}
 
-	protected close() {
+	protected close(): void {
 		this.popup.close();
 	}
 
-	protected updateRawMaterial() {
+	protected updateRawMaterial(): void {
 		const calcVariant = this.selectedItem();
+
 		if (calcVariant) {
 			this.operationPlanService
 				.updateRawMaterial({
@@ -111,12 +119,13 @@ export class ModalUpdateRawMaterialsComponent {
 				})
 				.pipe(
 					untilDestroyed(this),
-					catchError((error) => {
+					catchError((error: unknown) => {
 						this.close();
+
 						return EMPTY;
-					}),
+					})
 				)
-				.subscribe((val) => {
+				.subscribe((val: LinkToModule) => {
 					window.open(val.linkToModule, '_blank');
 					this.close();
 				});
@@ -127,11 +136,4 @@ export class ModalUpdateRawMaterialsComponent {
 			});
 		}
 	}
-
-	protected readonly ButtonType = ButtonType;
-	protected readonly JustifyContent = JustifyContent;
-	protected readonly IconPosition = IconPosition;
-	protected readonly TextType = TextType;
-	protected readonly Colors = Colors;
-	protected readonly document = document;
 }

@@ -64,7 +64,7 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 		@Inject(DIALOG_DATA) private readonly data: IApproveChangeData,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.items = this.data.oldItems.map((oldItem, idx) => {
 			const newItem = this.data.newItems[idx] ?? {

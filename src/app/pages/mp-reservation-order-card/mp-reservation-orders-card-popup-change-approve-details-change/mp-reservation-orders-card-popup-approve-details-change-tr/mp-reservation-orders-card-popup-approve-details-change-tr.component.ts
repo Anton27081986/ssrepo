@@ -87,7 +87,7 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService
 		// private readonly modalService: ModalService,
 	) {
 		this.tprRejectsReasons$ =
@@ -142,7 +142,7 @@ export class MpReservationOrdersCardPopupApproveDetailsChangeTrComponent
 	public ngAfterViewChecked(): void {
 		if (this.content) {
 			this.viewMaximise$.next(
-				this.content.nativeElement.scrollHeight > 200,
+				this.content.nativeElement.scrollHeight > 200
 			);
 		}
 	}

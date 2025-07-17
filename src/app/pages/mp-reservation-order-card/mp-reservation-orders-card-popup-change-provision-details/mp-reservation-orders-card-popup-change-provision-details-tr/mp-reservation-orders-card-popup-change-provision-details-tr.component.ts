@@ -61,12 +61,17 @@ export enum ChangeProvisionDetailsTrRowItemField {
 export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent
 	implements OnInit, AfterViewChecked
 {
-	@Input({ required: true }) item!: IReservationOrderChangeProvisionDetails;
-	@Input() defaultCols: IStoreTableBaseColumn[] = [];
+	@Input({ required: true })
+	public item!: IReservationOrderChangeProvisionDetails;
 
-	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@Input()
+	public defaultCols: IStoreTableBaseColumn[] = [];
 
-	@ViewChild('content') public content!: ElementRef;
+	@Output()
+	public checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	@ViewChild('content')
+	public content!: ElementRef;
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
@@ -74,20 +79,20 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent
 
 	protected readonly ChangeProvisionDetailsTrRowItemField =
 		ChangeProvisionDetailsTrRowItemField;
+
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 	protected viewMaximise$: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly modalService: ModalService,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {
 		this.tprRejectsReasons$ =
 			this.clientProposalsFacadeService.tprRejectsReasons$;
 	}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.columnsStateService.colsTr$.next([
 			{
 				cols: [
@@ -123,26 +128,26 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent
 		]);
 	}
 
-	ngAfterViewChecked() {
+	public ngAfterViewChecked(): void {
 		if (this.content) {
 			this.viewMaximise$.next(
-				this.content.nativeElement.scrollHeight > 200,
+				this.content.nativeElement.scrollHeight > 200
 			);
 		}
 	}
 
-	getInputValue(target: EventTarget) {
+	public getInputValue(target: EventTarget): string {
 		return (target as HTMLInputElement).value;
 	}
 
-	showText(text: string[], title?: string) {
-		this.modalService.open(TableFullCellComponent, {
-			data: {
-				cell: text.map((item) => {
-					return { text: item };
-				}),
-				title,
-			},
-		});
-	}
+	// public showText(text: string[], title?: string) {
+	// 	this.modalService.open(TableFullCellComponent, {
+	// 		data: {
+	// 			cell: text.map((item) => {
+	// 				return { text: item };
+	// 			}),
+	// 			title,
+	// 		},
+	// 	});
+	// }
 }

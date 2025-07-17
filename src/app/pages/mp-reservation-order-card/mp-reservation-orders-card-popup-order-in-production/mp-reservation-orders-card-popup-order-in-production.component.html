@@ -29,8 +29,8 @@
 
 		<ng-template #body>
 			<form
-				[formGroup]="inProductionForm"
 				class="content"
+				[formGroup]="inProductionForm"
 			>
 				<div class="content-header">
 					<div class="content-text">
@@ -56,9 +56,9 @@
 					<div class="content-button">
 						<snab-button
 							text="Добавить даты"
+							style="margin-left: auto"
 							[size]="Size.Large"
 							(click)="addDatesRow()"
-							style="margin-left: auto"
 						></snab-button>
 					</div>
 				</div>
@@ -102,16 +102,16 @@
 						>
 							<td>
 								<ss-date-time-picker
-									[showTime]="false"
 									type="number"
 									formControlName="productionDate"
+									[showTime]="false"
 									[error]="
 										inProductionForm.controls['dates']!
-											.controls[i].controls
-											.productionDate.errors &&
+											.controls[i].controls.productionDate
+											.errors &&
 										!inProductionForm.controls['dates']!
-											.controls[i].controls
-											.productionDate.untouched
+											.controls[i].controls.productionDate
+											.untouched
 											? 'Неверно заполнено поле'
 											: ''
 									"
@@ -119,9 +119,9 @@
 							</td>
 							<td>
 								<ss-date-time-picker
-									[showTime]="false"
 									type="number"
 									formControlName="provisionDate"
+									[showTime]="false"
 									[error]="
 										inProductionForm.controls['dates']!
 											.controls[i].controls.provisionDate
@@ -160,14 +160,14 @@
 		<ng-template #footer>
 			<div class="footer">
 				<snab-button
+					text="Отмена"
 					[type]="ButtonType.Secondary"
 					[size]="Size.Large"
-					text="Отмена"
 					(click)="openPopupCancelAction()"
 				></snab-button>
 				<snab-button
-					[size]="Size.Large"
 					text="Разместить"
+					[size]="Size.Large"
 					(click)="placeOrder()"
 				></snab-button>
 			</div>

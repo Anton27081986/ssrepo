@@ -62,7 +62,7 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 		this.mpReservationOrderCardFacadeService.activeOrder$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public approvalForm = new FormGroup({
@@ -85,9 +85,8 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 	});
 
 	constructor(
-		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
 	) {
 		const orderId = this.order()!.id;
 
@@ -113,16 +112,16 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 					stocksArr.push(
 						new FormGroup({
 							warehouseId: new FormControl<number>(
-								stock.warehouse.id,
+								stock.warehouse.id
 							),
 							warehouseName: new FormControl<string>(
-								stock.warehouse.name,
+								stock.warehouse.name
 							),
 							inStock: new FormControl<number | null>(
-								stock.amount,
+								stock.amount
 							),
 							fact: new FormControl<number | null>(null),
-						}),
+						})
 					);
 				});
 			});
@@ -156,7 +155,7 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 
 		this.mpReservationOrderCardFacadeService.dispatchToQueue(
 			orderId,
-			dispatches,
+			dispatches
 		);
 		this.close();
 	}

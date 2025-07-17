@@ -55,7 +55,7 @@ export class MpReservationOrdersPopupHistoryComponent {
 	constructor(
 		@Inject(DIALOG_DATA) protected readonly orderId: string,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService
 	) {
 		this.loadHistory();
 	}
@@ -73,7 +73,7 @@ export class MpReservationOrdersPopupHistoryComponent {
 	private mapToRows(itemsHistory: IChangeTrackerItemDto[]): IHistoryRow[] {
 		return itemsHistory.map((item) => {
 			const nameChange = item.changes?.find(
-				(changeItem) => changeItem.propertyName === 'Name',
+				(changeItem) => changeItem.propertyName === 'Name'
 			);
 			const toWhom = nameChange
 				? `${nameChange.fromValue ?? ''}, ${nameChange.toValue ?? ''}`
@@ -89,7 +89,7 @@ export class MpReservationOrdersPopupHistoryComponent {
 		});
 	}
 
-	public pageIndexChange(newPage: number) {
+	public pageIndexChange(newPage: number): void {
 		this.pageIndex = newPage;
 		this.offset = this.pageSize * (newPage - 1);
 		this.loadHistory();

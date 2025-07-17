@@ -5,8 +5,8 @@
 			[ngSwitch]="col.id"
 		>
 			<td
-				class="ss-table-td"
 				*ngIf="col.display"
+				class="ss-table-td"
 			>
 				<ng-container
 					*ngSwitchCase="QualificationTrRowItemField.amount"
@@ -14,13 +14,13 @@
 					<div class="hc-table-td__content">
 						<ss-input
 							formControlName="amount"
-							(click)="item.errors.amount = false"
 							[type]="InputType.Number"
 							[error]="
 								item.errors.amount
 									? 'Обязательное поле'
 									: undefined
 							"
+							(click)="item.errors.amount = false"
 						>
 						</ss-input>
 					</div>

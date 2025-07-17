@@ -25,11 +25,11 @@
 			/>
 		</ss-lib-form-field>
 		<ss-lib-button
-			class="add-manufactures-popup__clear-button"
 			*ngIf="selectedTov().length"
-			(click)="deleteSelected()"
+			class="add-manufactures-popup__clear-button"
 			[type]="ButtonType.Text"
 			[text]="'Очистить выбор'"
+			(click)="deleteSelected()"
 		></ss-lib-button>
 	</div>
 </ng-template>
@@ -71,8 +71,8 @@
 						"
 					></ss-lib-button>
 					<ss-lib-dropdown-list
-						[width]="'354px'"
 						#listActions
+						[width]="'354px'"
 					>
 						<ss-lib-dropdown-item
 							*ngFor="let section of selectedItem.section"
@@ -89,8 +89,8 @@
 		</div>
 		<ng-container *ngIf="!isLoaderMain(); else loaderMain">
 			<div
-				class="add-manufactures-popup__items"
 				*ngIf="tov().length; else empty"
+				class="add-manufactures-popup__items"
 			>
 				<div
 					*ngFor="let item of tov()"
@@ -123,8 +123,8 @@
 							"
 						></ss-lib-button>
 						<ss-lib-dropdown-list
-							[width]="'354px'"
 							#listActions
+							[width]="'354px'"
 						>
 							<ss-lib-dropdown-item
 								*ngFor="let section of item.section"
@@ -187,15 +187,15 @@
 		<ss-lib-button
 			[justifyContent]="JustifyContent.Center"
 			[style.width]="'430px'"
-			(click)="close()"
 			[type]="ButtonType.Secondary"
 			[text]="'Отменить'"
+			(click)="close()"
 		></ss-lib-button>
 		<ss-lib-button
 			[justifyContent]="JustifyContent.Center"
 			[style.width]="'430px'"
-			(click)="add()"
 			[text]="'Добавить'"
+			(click)="add()"
 		></ss-lib-button>
 	</div>
 </ng-template>
