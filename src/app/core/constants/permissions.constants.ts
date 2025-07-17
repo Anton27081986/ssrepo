@@ -39,23 +39,41 @@ export const Permissions = {
 	OPERATIONAL_PLAN_EDIT: 'OperationalPlan.Edit',
 	OPERATIONAL_PLAN_APPROVE_MATERIALS: 'OperationalPlan.ApproveMaterials',
 	OPERATIONAL_PLAN_CALC_ROW_MATERIALS: 'OperationalPlan.CalcRowMaterials',
-	PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA: 'Personification.OrderAuthorViewData',
+	PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA:
+		'Personification.OrderAuthorViewData',
 	PERSONIFICATION_ORDER_AUTHOR_CREATE: 'Personification.OrderAuthorViewData',
 	PERSONIFICATION_ORDER_AUTHOR_DELETE: 'Personification.OrderAuthorDelete',
 	PERSONIFICATION_ORDER_AUTHOR_APPROVE: 'Personification.OrderAuthorApprove',
 	PERSONIFICATION_ORDER_AUTHOR_REJECT: 'Personification.OrderAuthorReject',
 	PERSONIFICATION_MUTMZ_VIEW_DATA: 'Personification.MutmzViewData',
-	PERSONIFICATION_MUTMZ_APPROVE_SUPPLY_ORDER: 'Personification.MutmzApproveSupplyOrder',
-	PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER: 'Personification.MutmzRejectSupplyOrder',
-	PERSONIFICATION_MUTMZ_SUPPLY_ORDER_IN_PRODUCTION:
+
+	PERSONIFICATION_MUTMZ_APPROVE_SUPPLY_ORDER:
+		'Personification.MutmzApproveSupplyOrder',
+
+	PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER:
+		'Personification.MutmzRejectSupplyOrder',
+
+	PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION:
 		'Personification.MutmzPlaceSupplyOrderInProduction',
-	PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE: 'Personification.MutmzChangeSupplyDate',
-	PERSONIFICATION_MUTMZ_DELETE_SUPPLY_ORDER: 'Personification.MutmzChangeSupplyOrder',
+
+	PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE:
+		'Personification.MutmzChangeSupplyDate',
+
+	PERSONIFICATION_MUTMZ_DELETE_SUPPLY_ORDER:
+		'Personification.MutmzChangeSupplyOrder',
+
+	PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION:
+		'Personification.MutmzRejectSupplyOrderDeletion',
+
 	PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE:
 		'Personification.MutmzImpersonateAnotherEmployee',
+
 	PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION:
 		'Personification.MutmzConfirmSupplyOrderDeletion',
+
 	PERSONIFICATION_MUTMZ_CLARIFY: 'Personification.MutmzClarify',
+
+	PERSONIFICATION_MUTMZ_CHANGE_QUANTITY: 'Personification.ChangeQuantity',
 } as const;
 
 export type PermissionType = (typeof Permissions)[keyof typeof Permissions];

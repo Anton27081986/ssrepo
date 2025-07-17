@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -21,7 +21,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
 import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
-import { FiltersComponent, IFilter } from '@app/shared/components/filters/filters.component';
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
@@ -39,7 +42,13 @@ import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-rese
 import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
-import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
+import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
+import {
+	Permissions,
+	PermissionType,
+} from '@app/core/constants/permissions.constants';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -88,15 +97,29 @@ export class MPReservationOrdersComponent {
 
 	public selectedOrders: Set<number> = new Set<number>();
 
+	permissionService: PermissionsFacadeService = inject(
+		PermissionsFacadeService,
+	);
+
+	get hasPermissionAddOrder(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_CREATE,
+		);
+	}
+
 	public orders: Signal<IResponse<IMpReservationOrder> | null> = toSignal(
 		this.mpReservationOrdersFacadeService.orders$,
 		{
 			initialValue: null,
 		},
 	);
-	public isLoader: Signal<boolean> = toSignal(this.mpReservationOrdersFacadeService.isLoader$, {
-		initialValue: true,
-	});
+	public isLoader: Signal<boolean> = toSignal(
+		this.mpReservationOrdersFacadeService.isLoader$,
+		{
+			initialValue: true,
+		},
+	);
 
 	public filters: IFilter[] = [
 		{
@@ -177,12 +200,13 @@ export class MPReservationOrdersComponent {
 		};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 
@@ -212,7 +236,9 @@ export class MPReservationOrdersComponent {
 			}
 		}
 
-		this.mpReservationOrdersFacadeService.applyFiltersOrders(preparedFilter);
+		this.mpReservationOrdersFacadeService.applyFiltersOrders(
+			preparedFilter,
+		);
 	}
 
 	public ordersTableIndexChange($event: number): void {
@@ -241,16 +267,22 @@ export class MPReservationOrdersComponent {
 	public isAllSelected(): boolean {
 		return (
 			(this.orders()?.items || []).length > 0 &&
-			(this.orders()?.items || []).every(order => this.selectedOrders.has(order.id))
+			(this.orders()?.items || []).every((order) =>
+				this.selectedOrders.has(order.id),
+			)
 		);
 	}
 
 	public toggleSelectAll(event: Event): void {
 		const checkbox = event.target as HTMLInputElement;
 		if (checkbox.checked) {
-			this.orders()?.items.forEach(order => this.selectedOrders.add(order.id));
+			this.orders()?.items.forEach((order) =>
+				this.selectedOrders.add(order.id),
+			);
 		} else {
-			this.orders()?.items.forEach(order => this.selectedOrders.delete(order.id));
+			this.orders()?.items.forEach((order) =>
+				this.selectedOrders.delete(order.id),
+			);
 		}
 	}
 
@@ -267,7 +299,9 @@ export class MPReservationOrdersComponent {
 	}
 
 	public openPopupHistoryOrder(orderId: number): void {
-		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
+		this.modalService.open(MpReservationOrdersPopupHistoryComponent, {
+			data: orderId,
+		});
 	}
 
 	public openPopupAddOrder(): void {
@@ -286,7 +320,10 @@ export class MPReservationOrdersComponent {
 	}
 
 	public openPopupRemnantDetailsOrder(orderId: number): void {
-		this.modalService.open(MpReservationOrdersPopupRemnantsDetailsComponent, { data: orderId });
+		this.modalService.open(
+			MpReservationOrdersPopupRemnantsDetailsComponent,
+			{ data: orderId },
+		);
 	}
 
 	public openPopupTotalAmount(): void {
