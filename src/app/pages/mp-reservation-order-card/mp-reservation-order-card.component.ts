@@ -38,6 +38,9 @@ import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/corresponden
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import {
+	MpReservationOrdersPopupHistoryComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
 
 @UntilDestroy()
 @Component({
@@ -148,6 +151,10 @@ export class MpReservationOrderCardComponent implements OnInit {
 		this.modalService.open(MpReservationOrdersCardPopupRejectOrderComponent, {
 			data: this.order()?.id,
 		});
+	}
+
+	public openPopupHistoryOrder(orderId: number): void {
+		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
 	}
 
 	public openPopupOrderApproval(): void {
