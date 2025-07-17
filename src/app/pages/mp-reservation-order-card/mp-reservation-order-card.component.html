@@ -22,7 +22,8 @@
 			<snab-button
 				text="История изменений"
 				[type]="ButtonType.Secondary"
-				[size]="Size.Large"></snab-button>
+				[size]="Size.Large"
+                (click)="openPopupHistoryOrder(order()!.id)"></snab-button>
 			<snab-dropdown-button
 				[text]="'Действия'"
 				[size]="Size.Large"
@@ -99,7 +100,7 @@
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">ТП</snab-text>
-					<snab-text>{{ order()!.tov.name || '-' }}</snab-text>
+                    <snab-link [type]="TextType.Body" [text]="order()!.tov.name" [url]="order()!.tov.linkToDetail || ''"></snab-link>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">Клиент</snab-text>
