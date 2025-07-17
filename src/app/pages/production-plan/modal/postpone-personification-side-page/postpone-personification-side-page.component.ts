@@ -79,7 +79,7 @@ export class PostponePersonificationSidePageComponent {
 	}
 
 	protected get totalForButtonTransfer(): string {
-		return `Перенести ${this.totalQuantityForTransferCalc} ГП`;
+		return `Перенести ${this.totalQuantityForTransferCalc} едениц`;
 	}
 
 	protected close() {
