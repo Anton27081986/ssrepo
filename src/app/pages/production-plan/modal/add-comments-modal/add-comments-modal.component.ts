@@ -51,13 +51,13 @@ export interface AddCommentsModalData {
 })
 export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	@Input()
-	data!: OperationPlanItem;
+	public data!: OperationPlanItem;
 
 	@ViewChild('editable')
-	editableDiv!: ElementRef<HTMLDivElement>;
+	public editableDiv!: ElementRef<HTMLDivElement>;
 
 	@ViewChild('content', { static: true })
-	modalContent!: ElementRef<HTMLElement>;
+	public modalContent!: ElementRef<HTMLElement>;
 
 	@ViewChild('commentsEl')
 	public messagesElement!: ElementRef;
@@ -85,11 +85,22 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 		this.userService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
+			// eslint-disable-next-line no-return-assign
 			.subscribe((user) => (this.currentUser = user));
+
+		this.loadCommentsList(this.data.id);
 
 		this.dropdownList.closed.subscribe(() => {
 			this.resetInput();
 		});
+
+		this.service
+			.comments$(this.data.id)
+			.pipe(untilDestroyed(this))
+			.subscribe((list) => {
+				this.comments = list;
+				this.cdr.detectChanges();
+			});
 	}
 
 	public ngAfterViewInit(): void {
@@ -138,7 +149,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
 				this.comments = list;
-				this.cdr.markForCheck();
+				this.cdr.detectChanges();
 				setTimeout(() => {
 					this.scrollToBottom();
 				}, 1);

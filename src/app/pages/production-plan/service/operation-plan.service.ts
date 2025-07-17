@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable, of, tap, merge, switchMap } from 'rxjs';
+import { map, Observable, tap, switchMap, ReplaySubject, mapTo } from 'rxjs';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -8,7 +8,12 @@ import {
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	ValidatorFn,
+	Validators,
+} from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
@@ -18,7 +23,10 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import { LinkToModule } from '@app/core/models/production-plan/update-raw-materials-request';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
-import { OrderAnOutfitRequest } from '@app/core/models/production-plan/order-an-outfit-request';
+import {
+	OrderAnOutfit,
+	OrderAnOutfitRequest,
+} from '@app/core/models/production-plan/order-an-outfit-request';
 import {
 	OperationPlanEventEnum,
 	OperationPlanRootService,
@@ -36,31 +44,68 @@ import {
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
 	private readonly operationPlanApiService: OperationPlanApiService = inject(
-		OperationPlanApiService,
+		OperationPlanApiService
 	);
 
 	private readonly operationPlanRootService: OperationPlanRootService =
 		inject(OperationPlanRootService);
 
+	private readonly commentsCache = new Map<
+		number,
+		ReplaySubject<ICommentsItemDto[]>
+	>();
+
 	public getProductionPlan(
-		request: OperationPlanRequest & Pagination,
+		request: OperationPlanRequest & Pagination
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		return this.operationPlanApiService.getOperationPlan(request);
 	}
 
 	public getTransferProductionPlan(
-		id: number,
+		id: number
 	): Observable<IResponse<TransferProductionPlanMap>> {
 		return this.operationPlanApiService.getTransferProductionPlan(id).pipe(
 			map((res) => {
 				return this.mapIResponse(res);
-			}),
+			})
+		);
+	}
+
+	public comments$(id: number): Observable<ICommentsItemDto[]> {
+		if (!this.commentsCache.has(id)) {
+			const subject = new ReplaySubject<ICommentsItemDto[]>(1);
+
+			this.commentsCache.set(id, subject);
+			this.operationPlanApiService
+				.addComment(id)
+				.subscribe((list) => subject.next(list));
+		}
+
+		return this.commentsCache.get(id)!.asObservable();
+	}
+
+	public sendCommentAndRefresh$(
+		id: number,
+		body: ISendComment
+	): Observable<{ isComment: boolean; commentCount: string }> {
+		return this.operationPlanApiService.sendComment(id, body).pipe(
+			switchMap((res) =>
+				this.operationPlanApiService.addComment(id).pipe(
+					tap((list) => {
+						this.commentsCache.get(id)?.next(list);
+					}),
+					mapTo({
+						isComment: res.isComment,
+						commentCount: res.commentCount,
+					})
+				)
+			)
 		);
 	}
 
 	public sendComment(
 		id: number,
-		body: ISendComment,
+		body: ISendComment
 	): Observable<{ isComment: boolean; commentCount: string }> {
 		return this.operationPlanApiService.sendComment(id, body);
 	}
@@ -70,7 +115,7 @@ export class OperationPlanService {
 	}
 
 	public transferProductionPlan(
-		params: TransferProductionPlanMap[],
+		params: TransferProductionPlanMap[]
 	): Observable<void> {
 		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
 			const date = item.productionDateControl.value;
@@ -97,20 +142,20 @@ export class OperationPlanService {
 					this.operationPlanRootService.event$.next({
 						type: OperationPlanEventEnum.operationPlanAdd,
 					});
-				}),
+				})
 			);
 	}
 
-	public upload1C(weekId: number) {
+	public upload1C(weekId: number): Observable<LinkToModule> {
 		return this.operationPlanApiService.upload1C(weekId);
 	}
 
-	public downloadReport() {
+	public downloadReport(): Observable<LinkToModule> {
 		return this.operationPlanApiService.downloadReport();
 	}
 
 	public downloadExel(
-		request: OperationPlanRequest & Pagination,
+		request: OperationPlanRequest & Pagination
 	): Observable<Blob> {
 		return this.operationPlanApiService.downloadExel(request);
 	}
@@ -119,24 +164,24 @@ export class OperationPlanService {
 		return this.operationPlanApiService.getWeeks().pipe(
 			map((res) => {
 				return res.items;
-			}),
+			})
 		);
 	}
 
 	public getManufacturingTov(
 		query: string,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<ManufacturingTovs>> {
 		return this.operationPlanApiService.getManufacturingTov(
 			query,
 			limit,
-			offset,
+			offset
 		);
 	}
 
 	private mapIResponse(
-		input: IResponse<TransferProductionPlanFromBackend>,
+		input: IResponse<TransferProductionPlanFromBackend>
 	): IResponse<TransferProductionPlanMap> {
 		const mappedItems = input.items.map((item) => ({
 			id: item.id,
@@ -150,8 +195,10 @@ export class OperationPlanService {
 					nonNullable: true,
 					validators: [
 						Validators.required,
-						this.minOriginalDateValidator(new Date(item.productionDate))
-					]
+						this.minOriginalDateValidator(
+							new Date(item.productionDate)
+						),
+					],
 				}
 			),
 			originalProductionDate: new Date(item.productionDate),
@@ -168,40 +215,44 @@ export class OperationPlanService {
 	private minOriginalDateValidator(origDate: Date): ValidatorFn {
 		return (control: AbstractControl<Date | null>) => {
 			const controlValue = control.value;
+
 			if (!controlValue) {
 				return null;
 			}
+
 			return controlValue < origDate
 				? { dateTooEarly: { requiredDate: origDate } }
 				: null;
 		};
 	}
 
-	public addGp(params: AddToVRequest) {
+	public addGp(params: AddToVRequest): Observable<void> {
 		return this.operationPlanApiService.addGp(params).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({
 					type: OperationPlanEventEnum.operationPlanAdd,
 				});
-			}),
+			})
 		);
 	}
 
-	public deleteItemsTov(tovIds: number[]) {
+	public deleteItemsTov(tovIds: number[]): Observable<void> {
 		return this.operationPlanApiService.deleteItemsTov(tovIds).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({
 					type: OperationPlanEventEnum.operationPlanDelete,
 				});
-			}),
+			})
 		);
 	}
 
-	public getCalcVariants() {
+	public getCalcVariants(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.operationPlanApiService.getCalcVariants();
 	}
 
-	public updateRawMaterial(params: UpdateRawMaterialsRequest) {
+	public updateRawMaterial(
+		params: UpdateRawMaterialsRequest
+	): Observable<LinkToModule> {
 		return this.operationPlanApiService.updateRawMaterial(params);
 	}
 
@@ -210,42 +261,44 @@ export class OperationPlanService {
 	}
 
 	public approveMaterials(
-		params: ApproveMaterialRequest,
+		params: ApproveMaterialRequest
 	): Observable<LinkToModule> {
 		return this.operationPlanApiService.approveMaterials(params);
 	}
 
-	public orderAnOutfit(params: OrderAnOutfitRequest) {
+	public orderAnOutfit(
+		params: OrderAnOutfitRequest
+	): Observable<OrderAnOutfit> {
 		return this.operationPlanApiService.orderAnOutfit(params);
 	}
 
 	public setPlanFact(
 		rowId: number,
-		params: CreatePlanFactRequest,
+		params: CreatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.operationPlanApiService.setPlanFact(rowId, params);
 	}
 
 	public updatePlanFact(
 		rowId: number,
-		params: UpdatePlanFactRequest,
+		params: UpdatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.operationPlanApiService.updatePlanFact(rowId, params);
 	}
 
-	public uploadWMS(date: string) {
+	public uploadWMS(date: string): Observable<LinkToModule> {
 		return this.operationPlanApiService.uploadWMS(date);
 	}
 
 	public getPlanInfo(
 		weekId: number,
 		date: string,
-		productionSectionIds: number[],
+		productionSectionIds: number[]
 	): Observable<{ planDayTotalQuantity: number }> {
 		return this.operationPlanApiService.getPlanInfo(
 			weekId,
 			date,
-			productionSectionIds,
+			productionSectionIds
 		);
 	}
 }

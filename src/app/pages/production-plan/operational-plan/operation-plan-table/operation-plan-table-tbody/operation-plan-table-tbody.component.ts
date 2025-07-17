@@ -99,24 +99,22 @@ export class OperationPlanTableTbodyComponent {
 		this.tableStateService.data;
 
 	private readonly operationPlanService = inject(OperationPlanService);
-
 	private readonly popupService: OperationPlanPopupService = inject(
-		OperationPlanPopupService,
+		OperationPlanPopupService
 	);
 
 	protected readonly operationPlanState = inject(OperationPlanState);
+	private readonly changeDetectorRef: ChangeDetectorRef =
+		inject(ChangeDetectorRef);
 
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
-
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
-
-	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
 	public getRowCheckboxControl(index: number): FormControl {
 		return this.tableStateService.getRowCheckboxControl(index);
@@ -125,7 +123,7 @@ export class OperationPlanTableTbodyComponent {
 	protected editPlanFact(
 		event: Event,
 		row: OperationPlanItem,
-		columnId: string,
+		columnId: string
 	): void {
 		const input = event.target as HTMLInputElement;
 		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
@@ -194,10 +192,10 @@ export class OperationPlanTableTbodyComponent {
 
 	protected openPostponePlanModal(
 		row: OperationPlanItem,
-		columnId: string,
+		columnId: string
 	): void {
 		const data = row.planDays!.find((day) =>
-			day.date.startsWith(columnId.slice(13)),
+			day.date.startsWith(columnId.slice(13))
 		);
 
 		if (data) {
@@ -208,12 +206,13 @@ export class OperationPlanTableTbodyComponent {
 	public onCommentsOpen(opened: boolean, rowId: number): void {
 		if (opened) {
 			this.commentsComp.loadCommentsList(rowId);
+			this.changeDetectorRef.markForCheck();
 		}
 	}
 
 	public getCellValue(
 		row: OperationPlanItem,
-		columnId: string,
+		columnId: string
 	): string | number {
 		// 1. Базовые колонки
 		const baseFieldHandler =
@@ -225,10 +224,10 @@ export class OperationPlanTableTbodyComponent {
 
 		// 2. Динамические колонки по дням
 		const planMatch = columnId.match(
-			/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/,
+			/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/
 		);
 		const factMatch = columnId.match(
-			/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/,
+			/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/
 		);
 
 		if (planMatch || factMatch) {
@@ -259,13 +258,13 @@ export class OperationPlanTableTbodyComponent {
 
 	public getDayCell(
 		row: OperationPlanItem,
-		columnId: string,
+		columnId: string
 	): PlanDays | null {
 		const planMatch = columnId.match(
-			/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/,
+			/^planQuantity-(\d{4})-(\d{2})-(\d{2})$/
 		);
 		const factMatch = columnId.match(
-			/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/,
+			/^factQuantity-(\d{4})-(\d{2})-(\d{2})$/
 		);
 
 		if (planMatch || factMatch) {

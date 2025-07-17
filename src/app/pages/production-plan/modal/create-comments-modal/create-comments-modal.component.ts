@@ -23,7 +23,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
-import { tap } from 'rxjs';
 
 export interface CreateCommentsModalData {
 	id: number;
@@ -132,16 +131,12 @@ export class CreateCommentsModalComponent implements OnInit, AfterViewInit {
 
 		this.comment = text;
 		this.service
-			.sendComment(this.data.id, {
-				note: this.comment,
-			})
-			.pipe(
-				tap((res) => {
-					this.data.isComment = res.isComment;
-					this.data.commentCount = res.commentCount;
-					this.dropdownList.closed.emit();
-				})
-			)
-			.subscribe();
+			.sendCommentAndRefresh$(this.data.id, { note: this.comment })
+			.pipe(untilDestroyed(this))
+			.subscribe((res) => {
+				this.data.isComment = res.isComment;
+				this.data.commentCount = res.commentCount;
+				this.dropdownList.closed.emit();
+			});
 	}
 }
