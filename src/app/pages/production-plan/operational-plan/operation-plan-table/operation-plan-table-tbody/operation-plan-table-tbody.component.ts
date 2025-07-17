@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, Signal, ViewChild } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Signal, ViewChild} from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { OperationPlanItem, PlanDays } from '@app/core/models/production-plan/operation-plan';
 import {
@@ -90,22 +90,18 @@ export class OperationPlanTableTbodyComponent {
 	public data: Signal<OperationPlanItem[] | undefined> = this.tableStateService.data;
 
 	private readonly operationPlanService = inject(OperationPlanService);
-
 	private readonly popupService: OperationPlanPopupService = inject(OperationPlanPopupService);
-
 	protected readonly operationPlanState = inject(OperationPlanState);
+	private readonly changeDetectorRef: ChangeDetectorRef = inject(ChangeDetectorRef);
 
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
-
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
-
-	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
 	public getRowCheckboxControl(index: number): FormControl {
 		return this.tableStateService.getRowCheckboxControl(index);
@@ -187,6 +183,7 @@ export class OperationPlanTableTbodyComponent {
 	public onCommentsOpen(opened: boolean, rowId: number): void {
 		if (opened) {
 			this.commentsComp.loadCommentsList(rowId);
+			this.changeDetectorRef.markForCheck();
 		}
 	}
 

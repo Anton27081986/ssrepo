@@ -1,6 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable, of, tap, merge, switchMap } from 'rxjs';
+import {
+	map,
+	Observable,
+	tap,
+	switchMap,
+	ReplaySubject,
+	mapTo,
+} from 'rxjs';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -8,7 +15,12 @@ import {
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
+import {
+	AbstractControl,
+	FormControl,
+	ValidatorFn,
+	Validators,
+} from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
@@ -42,6 +54,11 @@ export class OperationPlanService {
 	private readonly operationPlanRootService: OperationPlanRootService =
 		inject(OperationPlanRootService);
 
+	private commentsCache = new Map<
+		number,
+		ReplaySubject<ICommentsItemDto[]>
+	>();
+
 	public getProductionPlan(
 		request: OperationPlanRequest & Pagination,
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
@@ -55,6 +72,37 @@ export class OperationPlanService {
 			map((res) => {
 				return this.mapIResponse(res);
 			}),
+		);
+	}
+
+	public comments$(id: number): Observable<ICommentsItemDto[]> {
+		if (!this.commentsCache.has(id)) {
+			const subject = new ReplaySubject<ICommentsItemDto[]>(1);
+			this.commentsCache.set(id, subject);
+			this.operationPlanApiService
+				.addComment(id)
+				.subscribe((list) => subject.next(list));
+		}
+		return this.commentsCache.get(id)!.asObservable();
+	}
+
+	public sendCommentAndRefresh$(
+		id: number,
+		body: ISendComment,
+	): Observable<{ isComment: boolean; commentCount: string }> {
+		return this.operationPlanApiService.sendComment(id, body).pipe(
+			tap((res) => {}),
+			switchMap((res) =>
+				this.operationPlanApiService.addComment(id).pipe(
+					tap((list) => {
+						this.commentsCache.get(id)?.next(list);
+					}),
+					mapTo({
+						isComment: res.isComment,
+						commentCount: res.commentCount,
+					}),
+				),
+			),
 		);
 	}
 
@@ -150,9 +198,11 @@ export class OperationPlanService {
 					nonNullable: true,
 					validators: [
 						Validators.required,
-						this.minOriginalDateValidator(new Date(item.productionDate))
-					]
-				}
+						this.minOriginalDateValidator(
+							new Date(item.productionDate),
+						),
+					],
+				},
 			),
 			originalProductionDate: new Date(item.productionDate),
 		}));
