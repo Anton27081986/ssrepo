@@ -1,6 +1,7 @@
 import {
 	Component,
 	effect,
+	inject,
 	OnInit,
 	Signal,
 	signal,
@@ -35,7 +36,7 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
 import { ModalService } from '@app/core/modal/modal.service';
 import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
-import { DatePipe } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
 import { MpReservationOrdersCardPopupQualificationComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.component';
 import { MpReservationOrdersCardPopupChangeProvisionDetailsComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-details/mp-reservation-orders-card-popup-change-provision-details.component';
 import { MpReservationOrdersCardPopupChangeManagerComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-manager/mp-reservation-orders-card-popup-change-manager.component';
@@ -48,7 +49,11 @@ import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/corresponden
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
-import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
+import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
+import {
+	MpReservationOrdersPopupHistoryComponent
+} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
 
 @UntilDestroy()
 @Component({
@@ -61,6 +66,7 @@ import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservat
 		ButtonComponent,
 		LabelComponent,
 		CardComponent,
+		CardComponent,
 		LinkComponent,
 		TableComponent,
 		DropdownButtonComponent,
@@ -69,6 +75,7 @@ import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservat
 		TagV2Component,
 		IconComponent,
 		NumWithSpacesPipe,
+		NgIf,
 	],
 	standalone: true,
 })
@@ -85,6 +92,80 @@ export class MpReservationOrderCardComponent implements OnInit {
 	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 
 	public pipeNumWithSpaces = new NumWithSpacesPipe();
+
+	permissionService: PermissionsFacadeService = inject(
+		PermissionsFacadeService,
+	);
+
+	get hasPermissionDeleteOrder(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_DELETE,
+		);
+	}
+
+	get hasPermissionOrderAuthorApprove(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_APPROVE,
+		);
+	}
+
+	get hasPermissionOrderAuthorReject(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_REJECT,
+		);
+	}
+
+	get hasPermissionMutmzImpersonateAnotherEmployee(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE,
+		);
+	}
+
+	get hasPermissionMutmzConfirmSupplyOrderDeletion(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION,
+		);
+	}
+
+	get hasPermissionMutmzRejectSupplyOrderDeletion(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION,
+		);
+	}
+
+	get hasPermissionMutmzChangeSupplyDate(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE,
+		);
+	}
+
+	get hasPermissionMutmzPlaceSupplyOrderInProduction(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION,
+		);
+	}
+
+	get hasPermissionMutmzClarify(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CLARIFY,
+		);
+	}
+
+	get hasPermissionMutmzChangeQuantity(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUANTITY,
+		);
+	}
 
 	public order: Signal<IMpReservationOrder | null> = toSignal(
 		this.mpReservationOrderCardFacadeService.activeOrder$,
@@ -151,13 +232,13 @@ export class MpReservationOrderCardComponent implements OnInit {
 		});
 	}
 
-	public ngOnInit(): void {
+	public ngOnInit() {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if (id) {
 			this.mpReservationOrderCardFacadeService.getPersonificationById(id);
 		} else {
-			void this.router.navigate(['mp-reservation-orders']);
+			this.router.navigate(['mp-reservation-orders']);
 		}
 	}
 
@@ -175,9 +256,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 	}
 
 	public openPopupHistoryOrder(orderId: number): void {
-		this.modalService.open(MpReservationOrdersPopupHistoryComponent, {
-			data: orderId,
-		});
+		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
 	}
 
 	public openPopupOrderApproval(): void {
@@ -209,7 +288,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.removeOrder()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				void this.router.navigate(['mp-reservation-orders']);
+				this.router.navigate(['mp-reservation-orders']);
 			});
 	}
 
@@ -258,7 +337,6 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((response) => {
 				const newItems = response.provisionRequests;
-
 				this.modalService.open(
 					MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent,
 					{

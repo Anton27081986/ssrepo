@@ -132,9 +132,9 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 		this.cdr.markForCheck();
 	}
 
-	public loadCommentsList(): void {
+	public loadCommentsList(rowId: number): void {
 		this.service
-			.addComment(this.data.id)
+			.addComment(rowId)
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
 				this.comments = list;

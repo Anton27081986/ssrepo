@@ -1,11 +1,13 @@
-import { Component, Signal } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
+	CheckboxComponent,
 	Colors,
 	IconComponent,
 	IconPosition,
 	IconType,
+	LabelComponent,
 	LabelType,
 	LinkComponent,
 	Size,
@@ -14,13 +16,16 @@ import {
 	TextWeight,
 	TooltipDirective,
 } from '@front-components/components';
+import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
+import { AsyncPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
 import {
 	FiltersComponent,
 	IFilter,
 } from '@app/shared/components/filters/filters.component';
+import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { IResponse } from '@app/core/utils/response';
@@ -31,12 +36,19 @@ import { Router } from '@angular/router';
 import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { ChartLineComponent } from '@app/shared/components/chart-line/chart-line.component';
 import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
 import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
 import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
+import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
+import {
+	Permissions,
+	PermissionType,
+} from '@app/core/constants/permissions.constants';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -45,17 +57,24 @@ import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 	imports: [
 		TextComponent,
 		ButtonComponent,
+		SelectV2Component,
 		ReactiveFormsModule,
+		TableV2Component,
+		AsyncPipe,
 		DropdownButtonComponent,
 		FiltersComponent,
+		PaginationTrComponent,
 		PaginationComponent,
 		LinkComponent,
 		NgForOf,
 		NgIf,
 		DatePipe,
+		ChartLineComponent,
+		CheckboxComponent,
 		LinkComponent,
 		LinkComponent,
 		TooltipDirective,
+		LabelComponent,
 		IconComponent,
 		TagV2Component,
 		NumWithSpacesPipe,
@@ -78,13 +97,23 @@ export class MPReservationOrdersComponent {
 
 	public selectedOrders: Set<number> = new Set<number>();
 
+	permissionService: PermissionsFacadeService = inject(
+		PermissionsFacadeService,
+	);
+
+	get hasPermissionAddOrder(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_CREATE,
+		);
+	}
+
 	public orders: Signal<IResponse<IMpReservationOrder> | null> = toSignal(
 		this.mpReservationOrdersFacadeService.orders$,
 		{
 			initialValue: null,
 		},
 	);
-
 	public isLoader: Signal<boolean> = toSignal(
 		this.mpReservationOrdersFacadeService.isLoader$,
 		{
@@ -150,9 +179,9 @@ export class MPReservationOrdersComponent {
 		this.getFilteredOrders();
 	}
 
-	protected downloadInstr(): void {
-		// TODO поменять ссылку на нужную инструкцию
-		const instructionFileLink =
+	protected downloadInstr() {
+		//TODO поменять ссылку на нужную инструкцию
+		let instructionFileLink =
 			'https://erp.ssnab.ru/api/static/general/2025/02/14/Инструкция_Управление_СНД_59605308-9107-4c29-8a42-89143dfde87c.docx';
 		const link = document.createElement('a');
 
@@ -246,7 +275,6 @@ export class MPReservationOrdersComponent {
 
 	public toggleSelectAll(event: Event): void {
 		const checkbox = event.target as HTMLInputElement;
-
 		if (checkbox.checked) {
 			this.orders()?.items.forEach((order) =>
 				this.selectedOrders.add(order.id),
@@ -265,12 +293,8 @@ export class MPReservationOrdersComponent {
 	}
 
 	public goToOrderCard(orderId: number): void {
-		const urlTree = this.router.createUrlTree([
-			'mp-reservation-orders',
-			orderId,
-		]);
+		const urlTree = this.router.createUrlTree(['mp-reservation-orders', orderId]);
 		const url = this.router.serializeUrl(urlTree);
-
 		window.open(url, '_blank');
 	}
 

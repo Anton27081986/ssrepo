@@ -13,6 +13,7 @@
 		></snab-button>
 		<snab-button
 			text="Добавить заказ"
+			*ngIf="hasPermissionAddOrder"
 			[size]="Size.Large"
 			(click)="openPopupAddOrder()"
 		></snab-button>

@@ -262,13 +262,14 @@ export const routes: Routes = [
 	{
 		path: '',
 		component: FrontLibraryLayoutComponent,
-		canActivate: [AuthGuard, operationPlanPermissionGuard],
+		canActivate: [AuthGuard],
 		data: {
 			animation: 'animation',
 		},
 		children: [
 			{
 				path: 'production-plan',
+				canActivate: [operationPlanPermissionGuard],
 				component: ProductionPlanComponent,
 				children: [
 					{
@@ -280,7 +281,7 @@ export const routes: Routes = [
 			},
 			{
 				path: 'mp-reservation-orders',
-				canActivate: [AuthGuard],
+				canActivate: [mpReservationOrdersPermissionsGuard],
 				children: [
 					{
 						path: '',

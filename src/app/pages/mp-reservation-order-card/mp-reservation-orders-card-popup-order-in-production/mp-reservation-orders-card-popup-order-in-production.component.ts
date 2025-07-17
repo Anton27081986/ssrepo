@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Signal} from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
@@ -30,7 +30,9 @@ import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time
 import { NgForOf } from '@angular/common';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
-import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { forkJoin } from 'rxjs';
+import {IMpReservationOrder, IProvisionDetailsTypes} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @UntilDestroy()
 @Component({
@@ -65,6 +67,13 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly InputType = InputType;
 
+	public order: Signal<IMpReservationOrder | null> = toSignal(
+		this.facade.activeOrder$,
+		{
+			initialValue: null,
+		},
+	);
+
 	public inProductionForm!: FormGroup<{
 		quantity: FormControl<number | null>;
 		manager: FormControl<string | null>;
@@ -83,10 +92,8 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		private readonly facade: MpReservationOrderCardFacadeService,
 	) {
 		this.inProductionForm = new FormGroup({
-			manager: new FormControl<string>('Борисова А.В.'),
-			quantity: new FormControl<number | null>(300, [
-				Validators.required,
-			]),
+			manager: new FormControl<string>(this.order()!.author.name, [Validators.required]),
+			quantity: new FormControl<number | null>(this.order()!.totalAmount, [Validators.required]),
 			dates: new FormArray<
 				FormGroup<{
 					productionDate: FormControl<string | null>;

@@ -21,6 +21,7 @@ export interface TransferProductionPlanMap {
 	quantity: number;
 	countForPostpone: FormControl<number | null>;
 	productionDateControl: FormControl<Date | null>;
+	originalProductionDate: Date;
 }
 
 export interface TransferProductionPlanPatch {

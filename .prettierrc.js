@@ -1,16 +1,18 @@
 /* jshint ignore:start */
-const { tinkoffConfig } = require("@tinkoff/prettier-config");
-
 module.exports = {
-    ...tinkoffConfig,
+    // Base from @tinkoff/prettier-config (v5.0.0)
+    singleQuote: true,
+    trailingComma: 'es5',
+    arrowParens: 'always',
+
+    // Project-specific overrides
     tabWidth: 4,
     useTabs: true,
     semi: true,
-    singleQuote: true,
     bracketSpacing: true,
     bracketSameLine: false,
-    htmlWhitespaceSensitivity: "css",
+    htmlWhitespaceSensitivity: 'css',
     singleAttributePerLine: true,
-    endOfLine: "crlf"
+    endOfLine: 'crlf',
 };
 /* jshint ignore:end */
