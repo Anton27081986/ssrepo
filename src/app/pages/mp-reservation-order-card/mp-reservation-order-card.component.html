@@ -95,7 +95,7 @@
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">Заказчик</snab-text>
-					<snab-link [type]="TextType.Body" [text]="order()!.author.name"></snab-link>
+					<snab-link [type]="TextType.Body" [text]="order()!.author.name" [url]="order()!.author.linkToDetail || ''"></snab-link>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">ТП</snab-text>
@@ -103,7 +103,7 @@
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">Клиент</snab-text>
-					<snab-text>{{ order()!.client?.name }}</snab-text>
+                    <snab-link [type]="TextType.Body" [text]="order()!.client.name" [url]="order()!.client.linkToDetail || ''"></snab-link>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">МУТМЗ</snab-text>
@@ -143,7 +143,7 @@
 							Остатки:
 						</snab-text>
 						<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
-							15
+							{{ order()!.stockBalance }}
 						</snab-text>
 					</div>
 					<div class="content__procuring__body__chart__tags">
