@@ -87,9 +87,18 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((user) => (this.currentUser = user));
 
+		this.loadCommentsList(this.data.id);
+
 		this.dropdownList.closed.subscribe(() => {
 			this.resetInput();
 		});
+
+		this.service.comments$(this.data.id)
+			.pipe(untilDestroyed(this))
+			.subscribe(list => {
+				this.comments = list;
+				this.cdr.detectChanges();
+			});
 	}
 
 	ngAfterViewInit() {
@@ -138,7 +147,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
 				this.comments = list;
-				this.cdr.markForCheck();
+				this.cdr.detectChanges();
 				setTimeout(() => {
 					this.scrollToBottom();
 				}, 1);
