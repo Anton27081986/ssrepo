@@ -1,39 +1,64 @@
 <ng-container *ngFor="let cols of columnsStateService.colsTr$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td *ngIf="col.display" class="ss-table-td">
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.client">
-					<snab-link [text]="client().client.name"
-							   [type]="TextType.Caption"
-							   (click)="goToClientCard()"></snab-link>
+			<td
+				*ngIf="col.display"
+				class="ss-table-td"
+			>
+				<ng-container
+					*ngSwitchCase="ExcessIncomeClientRowItemField.client"
+				>
+					<snab-link
+						[text]="client().client.name"
+						[type]="TextType.Caption"
+						(click)="goToClientCard()"
+					></snab-link>
 				</ng-container>
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent">
+				<ng-container
+					*ngSwitchCase="ExcessIncomeClientRowItemField.sndCurrent"
+				>
 					<div class="ss-table-td__content">
-						<snab-button *ngIf="client().canEdit" snab-tooltip
-									 [tooltipText]="'Установить СНД для ТПГ Клиента'"
-									 [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
-									 [type]="ButtonType.Primary"
-									 [iconPosition]="IconPosition.OnlyIcon"
-									 (click)="openUpdateClientPriceModal(true); $event.stopPropagation()">
+						<snab-button
+							*ngIf="client().canEdit"
+							snab-tooltip
+							[tooltipText]="'Установить СНД для ТПГ Клиента'"
+							[position]="TooltipPosition.Bottom"
+							[theme]="TooltipTheme.Dark"
+							[icon]="IconType.Settings"
+							[size]="Size.Small"
+							[type]="ButtonType.Primary"
+							[iconPosition]="IconPosition.OnlyIcon"
+							(click)="
+								openUpdateClientPriceModal(true);
+								$event.stopPropagation()
+							"
+						>
 						</snab-button>
 					</div>
 				</ng-container>
-				<ng-container *ngSwitchCase="ExcessIncomeClientRowItemField.sndNext">
+				<ng-container
+					*ngSwitchCase="ExcessIncomeClientRowItemField.sndNext"
+				>
 					<div class="ss-table-td__content">
-						<snab-button *ngIf="client().canEdit" snab-tooltip
-									 [tooltipText]="'Установить СНД для ТПГ Клиента'"
-									 [position]="TooltipPosition.Bottom"
-									 [theme]="TooltipTheme.Dark" [icon]="IconType.Settings" [size]="Size.Small"
-									 [type]="ButtonType.Primary"
-									 [iconPosition]="IconPosition.OnlyIcon"
-									 (click)="openUpdateClientPriceModal(false); $event.stopPropagation()">
+						<snab-button
+							*ngIf="client().canEdit"
+							snab-tooltip
+							[tooltipText]="'Установить СНД для ТПГ Клиента'"
+							[position]="TooltipPosition.Bottom"
+							[theme]="TooltipTheme.Dark"
+							[icon]="IconType.Settings"
+							[size]="Size.Small"
+							[type]="ButtonType.Primary"
+							[iconPosition]="IconPosition.OnlyIcon"
+							(click)="
+								openUpdateClientPriceModal(false);
+								$event.stopPropagation()
+							"
+						>
 						</snab-button>
 					</div>
 				</ng-container>
-				<ng-container *ngSwitchDefault>
-					&nbsp;
-				</ng-container>
+				<ng-container *ngSwitchDefault> &nbsp; </ng-container>
 			</td>
 		</ng-container>
 	</ng-container>

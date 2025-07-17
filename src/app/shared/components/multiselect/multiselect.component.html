@@ -2,23 +2,44 @@
 	<ss-caption size="1">{{ label }}</ss-caption>
 }
 <div class="input {{ size }}">
-	<div class="selected" (click)="changeState($event)">
+	<div
+		class="selected"
+		(click)="changeState($event)"
+	>
 		@if (placeholder && !getSelectedOptions().length) {
-			<ss-text class="placeholder" size="2">{{ placeholder }}</ss-text>
+			<ss-text
+				class="placeholder"
+				size="2"
+				>{{ placeholder }}</ss-text
+			>
 		}
 		@for (option of getSelectedOptions(); track option.id) {
 			<div class="chips">
 				<ss-text size="3">{{ option.name }}</ss-text>
-				<ss-icon height="8" width="8" name="close" (click)="$event.stopPropagation(); onSelect(option.id!)"></ss-icon>
+				<ss-icon
+					height="8"
+					width="8"
+					name="close"
+					(click)="$event.stopPropagation(); onSelect(option.id!)"
+				></ss-icon>
 			</div>
 		}
 	</div>
 	@if (isOptionsVisible) {
-		<div #optionsEl class="options">
+		<div
+			#optionsEl
+			class="options"
+		>
 			@for (option of options; track option.id) {
-				<div class="option" (click)="onSelect(option.id!)">
+				<div
+					class="option"
+					(click)="onSelect(option.id!)"
+				>
 					@if (option.checked) {
-						<ss-icon height="16" name="checkbox"></ss-icon>
+						<ss-icon
+							height="16"
+							name="checkbox"
+						></ss-icon>
 					} @else {
 						<div class="checkbox"></div>
 					}
@@ -29,5 +50,8 @@
 	}
 </div>
 @if (isOptionsVisible) {
-	<div class="overflow" (click)="changeState($event)"></div>
+	<div
+		class="overflow"
+		(click)="changeState($event)"
+	></div>
 }

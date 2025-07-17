@@ -1,5 +1,5 @@
-import {IDictionaryItemDto} from "@front-components/components";
-import {IOrderRequests} from "@app/core/models/mp-reservation-orders/mp-reservation-order";
+import { IDictionaryItemDto } from '@front-components/components';
+import { IOrderRequests } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 
 export interface IApproveClarificationResponse {
 	authorId: number;
@@ -8,5 +8,3 @@ export interface IApproveClarificationResponse {
 	tov: IDictionaryItemDto;
 	provisionRequests: IOrderRequests[];
 }
-
-

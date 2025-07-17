@@ -9,8 +9,16 @@
 		(blur)="onTouched()"
 	/>
 	@if (value && !disabled) {
-		<ss-icon name="close" height="12" (click)="clear()">
+		<ss-icon
+			name="close"
+			height="12"
+			(click)="clear()"
+		>
 		</ss-icon>
 	}
 </div>
-<ss-caption size="2" class="error">{{ error }}</ss-caption>
+<ss-caption
+	size="2"
+	class="error"
+	>{{ error }}</ss-caption
+>

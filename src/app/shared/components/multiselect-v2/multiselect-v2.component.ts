@@ -147,7 +147,7 @@ export class MultiselectV2Component
 			const oldSelected = this.selectedOptions$.value;
 
 			this.options$.next(
-				this.options$.value.map(option => {
+				this.options$.value.map((option) => {
 					if (option.id === item.id) {
 						return { ...option, checked: false };
 					}

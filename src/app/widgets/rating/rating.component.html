@@ -1,29 +1,57 @@
-<ss-card class="rating" [padding]="'0'">
+<ss-card
+	class="rating"
+	[padding]="'0'"
+>
 	<div class="rating__header">
 		<div class="rating__header-left">
 			<ss-text [size]="'1'">Рейтинги сотрудников</ss-text>
-			<div *ngIf="averageAll()" class="rating__tab--blue" [tooltip]="'Средняя оценка по всем рейтингам'"
-				 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
-				<ss-text [color]="'white'" [size]="'3'" [weight]="'semi-bold'">{{ averageAll() }}</ss-text>
+			<div
+				*ngIf="averageAll()"
+				class="rating__tab--blue"
+				[tooltip]="'Средняя оценка по всем рейтингам'"
+				[theme]="TooltipTheme.DEFAULT"
+				[position]="TooltipPosition.DEFAULT"
+			>
+				<ss-text
+					[color]="'white'"
+					[size]="'3'"
+					[weight]="'semi-bold'"
+					>{{ averageAll() }}</ss-text
+				>
 			</div>
-			<div *ngIf="membersTotal()" class="rating__tab--gray" [tooltip]="'Количество сотрудников во всех рейтингах'"
-				 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
+			<div
+				*ngIf="membersTotal()"
+				class="rating__tab--gray"
+				[tooltip]="'Количество сотрудников во всех рейтингах'"
+				[theme]="TooltipTheme.DEFAULT"
+				[position]="TooltipPosition.DEFAULT"
+			>
 				<ss-text [size]="'3'">{{ membersTotal() }}</ss-text>
 			</div>
 		</div>
 		<div class="rating__header-right">
 			<ng-container *ngIf="canDownloadReport()">
-				<div class="rating__link" (click)="redirectUrl(TypeReport.weekly)">
+				<div
+					class="rating__link"
+					(click)="redirectUrl(TypeReport.weekly)"
+				>
 					<ss-icon [name]="'link'"></ss-icon>
 					<ss-text [size]="'3'">Неделя</ss-text>
 				</div>
-				<div class="rating__link" (click)="redirectUrl(TypeReport.quarter)">
+				<div
+					class="rating__link"
+					(click)="redirectUrl(TypeReport.quarter)"
+				>
 					<ss-icon [name]="'link'"></ss-icon>
 					<ss-text [size]="'3'">Квартал</ss-text>
 				</div>
 			</ng-container>
 			<form [formGroup]="form">
-				<ss-select-v2 [size]="'small'" [options]="weeksOptions()" [formControlName]="'week'"></ss-select-v2>
+				<ss-select-v2
+					[size]="'small'"
+					[options]="weeksOptions()"
+					[formControlName]="'week'"
+				></ss-select-v2>
 				<ss-search-user-input
 					class="rating__search-user"
 					[formControlName]="'userId'"
@@ -32,11 +60,11 @@
 		</div>
 	</div>
 	<ss-divider></ss-divider>
-		<div class="rating__body-teams">
-			<app-rating-teams></app-rating-teams>
-		</div>
-		<ss-divider></ss-divider>
-		<div class="rating__body-team-users">
-			<app-rating-team-users></app-rating-team-users>
-		</div>
+	<div class="rating__body-teams">
+		<app-rating-teams></app-rating-teams>
+	</div>
+	<ss-divider></ss-divider>
+	<div class="rating__body-team-users">
+		<app-rating-team-users></app-rating-team-users>
+	</div>
 </ss-card>

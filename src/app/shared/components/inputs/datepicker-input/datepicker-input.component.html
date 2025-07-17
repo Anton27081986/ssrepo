@@ -1,17 +1,26 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input #input
-		   class="{{ error ? size + ' error' : size }}"
-		   type="date"
-		   lang="ru-RU"
-		   [value]="value"
-		   [disabled]="disabled"
-		   (input)="onChange($any($event.target).value)"
-		   (blur)="onTouched()"
+	<input
+		#input
+		class="{{ error ? size + ' error' : size }}"
+		type="date"
+		lang="ru-RU"
+		[value]="value"
+		[disabled]="disabled"
+		(input)="onChange($any($event.target).value)"
+		(blur)="onTouched()"
 	/>
-	<ss-text class="value" size="2">{{ (input.value | date: 'dd.MM.yyyy') }}</ss-text>
+	<ss-text
+		class="value"
+		size="2"
+		>{{ input.value | date: 'dd.MM.yyyy' }}</ss-text
+	>
 	@if (!input.value) {
-		<ss-text class="value" size="2">{{ placeholder }}</ss-text>
+		<ss-text
+			class="value"
+			size="2"
+			>{{ placeholder }}</ss-text
+		>
 	}
 </div>
 <ss-caption class="error">{{ error }}</ss-caption>

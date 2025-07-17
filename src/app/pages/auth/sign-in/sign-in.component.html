@@ -1,11 +1,36 @@
 <div class="login-header">
-	<ss-headline size="h3" weight="semi-bold">Войдите в аккаунт</ss-headline>
+	<ss-headline
+		size="h3"
+		weight="semi-bold"
+		>Войдите в аккаунт</ss-headline
+	>
 </div>
-<form class="login-form" [formGroup]="loginForm">
+<form
+	class="login-form"
+	[formGroup]="loginForm"
+>
 	<fieldset class="login-form-inputs">
-		<ss-input error="{{ loginForm.getError('unauthorized') ? ' ' : null }}" size="small" formControlName="login" placeholder="Логин"></ss-input>
-		<ss-password error="{{ loginForm.getError('unauthorized') }}" size="small" formControlName="password" placeholder="Пароль"></ss-password>
-		<ss-link [routerLink]="['/auth/forgot-password']">Восстановить пароль</ss-link>
+		<ss-input
+			error="{{ loginForm.getError('unauthorized') ? ' ' : null }}"
+			size="small"
+			formControlName="login"
+			placeholder="Логин"
+		></ss-input>
+		<ss-password
+			error="{{ loginForm.getError('unauthorized') }}"
+			size="small"
+			formControlName="password"
+			placeholder="Пароль"
+		></ss-password>
+		<ss-link [routerLink]="['/auth/forgot-password']"
+			>Восстановить пароль</ss-link
+		>
 	</fieldset>
-	<ss-button size="small" type="primary" [disabled]="loading" (click)="onSubmit()">Войти</ss-button>
+	<ss-button
+		size="small"
+		type="primary"
+		[disabled]="loading"
+		(click)="onSubmit()"
+		>Войти</ss-button
+	>
 </form>

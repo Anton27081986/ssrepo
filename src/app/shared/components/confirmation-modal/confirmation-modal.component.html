@@ -1,15 +1,44 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="dialog" padding="16px 16px 16px 16px" (click)="$event.stopPropagation()">
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<ss-card
+		class="dialog"
+		padding="16px 16px 16px 16px"
+		(click)="$event.stopPropagation()"
+	>
 		<div class="header">
-			<ss-icon width="16" class="close-icon" name="close" (click)="close()"></ss-icon>
-			<ss-headline *ngIf="title" size="h6">{{ title }}</ss-headline>
+			<ss-icon
+				width="16"
+				class="close-icon"
+				name="close"
+				(click)="close()"
+			></ss-icon>
+			<ss-headline
+				*ngIf="title"
+				size="h6"
+				>{{ title }}</ss-headline
+			>
 		</div>
-		<ss-text *ngIf="text" class="body" size="2">
+		<ss-text
+			*ngIf="text"
+			class="body"
+			size="2"
+		>
 			{{ text }}
 		</ss-text>
 		<div class="footer">
-			<ss-button size="small" type="muted" (click)="close()">Отмена</ss-button>
-			<ss-button size="small" (click)="close(true)">Ок</ss-button>
+			<ss-button
+				size="small"
+				type="muted"
+				(click)="close()"
+				>Отмена</ss-button
+			>
+			<ss-button
+				size="small"
+				(click)="close(true)"
+				>Ок</ss-button
+			>
 		</div>
 	</ss-card>
 </div>

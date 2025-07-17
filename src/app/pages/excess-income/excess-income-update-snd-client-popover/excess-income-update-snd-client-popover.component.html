@@ -1,28 +1,51 @@
 <div class="wrapper">
-	<ss-card class="excess-income-update-snd-client-popover" [padding]="'0'">
+	<ss-card
+		class="excess-income-update-snd-client-popover"
+		[padding]="'0'"
+	>
 		<div class="excess-income-update-snd-client-popover__header">
-			<snab-text [type]="TextType.Title">Установить СНД,% для всех ТПГ Клиента {{ client.name }}</snab-text>
-			<snab-icon [icon]="IconType.ClearLarge" (click)="close()"></snab-icon>
+			<snab-text [type]="TextType.Title"
+				>Установить СНД,% для всех ТПГ Клиента
+				{{ client.name }}</snab-text
+			>
+			<snab-icon
+				[icon]="IconType.ClearLarge"
+				(click)="close()"
+			></snab-icon>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="excess-income-update-snd-client-popover__body">
 			<ss-search-input-v2
-				[placeholder]="'Выберите ТПГ'" [label]="'ТПГ (подгруппа товарных позиций)'"
-				[formControl]="tovGroupControl" [queryControl]="queryControl"
-				[options]="options()">
+				[placeholder]="'Выберите ТПГ'"
+				[label]="'ТПГ (подгруппа товарных позиций)'"
+				[formControl]="tovGroupControl"
+				[queryControl]="queryControl"
+				[options]="options()"
+			>
 			</ss-search-input-v2>
 			<ng-container *ngIf="tovGroups$ | async as group">
 				<div class="excess-income-update-snd-client-popover__content">
-					<ss-table-v2 *ngIf="group.length;else empty">
-						<tr *ngFor="let tovGroup of group" excess-income-update-tov-group-tr [tovGroup]="tovGroup"></tr>
+					<ss-table-v2 *ngIf="group.length; else empty">
+						<tr
+							*ngFor="let tovGroup of group"
+							excess-income-update-tov-group-tr
+							[tovGroup]="tovGroup"
+						></tr>
 					</ss-table-v2>
 					<ng-template #empty>
-						<div class="excess-income-update-snd-client-popover__no-content">
+						<div
+							class="excess-income-update-snd-client-popover__no-content"
+						>
 							<ss-empty-placeholder>
-								<snab-label [type]="LabelType.Info" [size]="Size.Large"
-											[iconPosition]="IconPosition.OnlyIcon"
-											[icon]="IconType.Telescope"></snab-label>
-								<snab-text [type]="TextType.Title">Выберите ТПГ из списка</snab-text>
+								<snab-label
+									[type]="LabelType.Info"
+									[size]="Size.Large"
+									[iconPosition]="IconPosition.OnlyIcon"
+									[icon]="IconType.Telescope"
+								></snab-label>
+								<snab-text [type]="TextType.Title"
+									>Выберите ТПГ из списка</snab-text
+								>
 							</ss-empty-placeholder>
 						</div>
 					</ng-template>
@@ -31,10 +54,19 @@
 		</div>
 		<ss-divider></ss-divider>
 		<div class="excess-income-update-snd-client-popover__footer">
-			<snab-button [size]="Size.Large" [type]="ButtonType.Secondary" [text]="'Отмена'"
-						 (click)="close()"></snab-button>
-			<snab-button [disabled]="(state.tovGroups$ | async)?.length === 0" [size]="Size.Large"
-						 [type]="ButtonType.Primary" [text]="'Применить'" (click)="submit()"></snab-button>
+			<snab-button
+				[size]="Size.Large"
+				[type]="ButtonType.Secondary"
+				[text]="'Отмена'"
+				(click)="close()"
+			></snab-button>
+			<snab-button
+				[disabled]="(state.tovGroups$ | async)?.length === 0"
+				[size]="Size.Large"
+				[type]="ButtonType.Primary"
+				[text]="'Применить'"
+				(click)="submit()"
+			></snab-button>
 		</div>
 	</ss-card>
 </div>

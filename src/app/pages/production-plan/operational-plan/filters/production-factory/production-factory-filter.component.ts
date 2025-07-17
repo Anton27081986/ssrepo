@@ -12,7 +12,7 @@ import {
 	FormFieldComponent,
 	HeaderFilterCheckboxItemAbstractComponent,
 } from '@front-library/components';
-import { checkboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
+import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 import { AsyncPipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 
@@ -29,7 +29,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 		[(indeterminate)]="indeterminate"
 	></ss-lib-checkbox-filter-context>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [checkboxFilterContextComponent],
+	imports: [CheckboxFilterContextComponent],
 })
 export class ProductionFactoryFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>

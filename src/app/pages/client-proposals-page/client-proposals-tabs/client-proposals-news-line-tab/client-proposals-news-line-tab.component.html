@@ -1,4 +1,7 @@
-<ss-card padding="0" radius="0 0 16px 16px">
+<ss-card
+	padding="0"
+	radius="0 0 16px 16px"
+>
 	<app-client-proposals-tabs-canvas
 		[headerTemplateRef]="header"
 		[bodyTemplateRef]="body"
@@ -6,37 +9,46 @@
 		[isLoader]="(isLoader$ | async)!"
 	>
 	</app-client-proposals-tabs-canvas>
-		<ng-template #header>
-			<a *ngIf="linkToModule();else text" href="{{ linkToModule() }}" class="client-tpr-news-line-tab__link" target="_blank">Лента новостей</a>
-			<ng-template #text>
-				<ss-text size="1">Лента новостей</ss-text>
-			</ng-template>
+	<ng-template #header>
+		<a
+			*ngIf="linkToModule(); else text"
+			href="{{ linkToModule() }}"
+			class="client-tpr-news-line-tab__link"
+			target="_blank"
+			>Лента новостей</a
+		>
+		<ng-template #text>
+			<ss-text size="1">Лента новостей</ss-text>
 		</ng-template>
-		<ng-template #body>
-			<ng-container *ngIf="news() as news">
-				<ss-table
-					*ngIf="news.total > 0;else empty"
-					[padding]="'8px'"
-					[head]="[
-						{title: 'Код', field: 'code'},
-						{title: 'Дата создания', field: 'createDate'},
-						{title: 'Заголовок', field: 'title', sizeRatio: 5}
-						]"
-					[items]="getTableItems(news)"
-				>
-				</ss-table>
-				<ng-template #empty>
-					<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
-				</ng-template>
-			</ng-container>
-		</ng-template>
-		<ng-template #footer>
-			<ss-pagination
-				[total]="total()"
-				[pageIndex]="pageIndex"
-				[pageSize]="pageSize"
-				(changeIndex)="pageIndexChange($event)"
+	</ng-template>
+	<ng-template #body>
+		<ng-container *ngIf="news() as news">
+			<ss-table
+				*ngIf="news.total > 0; else empty"
+				[padding]="'8px'"
+				[head]="[
+					{ title: 'Код', field: 'code' },
+					{ title: 'Дата создания', field: 'createDate' },
+					{ title: 'Заголовок', field: 'title', sizeRatio: 5 },
+				]"
+				[items]="getTableItems(news)"
 			>
-			</ss-pagination>
-		</ng-template>
+			</ss-table>
+			<ng-template #empty>
+				<ss-empty-data-page
+					[width]="'300px'"
+					[height]="'176px'"
+				></ss-empty-data-page>
+			</ng-template>
+		</ng-container>
+	</ng-template>
+	<ng-template #footer>
+		<ss-pagination
+			[total]="total()"
+			[pageIndex]="pageIndex"
+			[pageSize]="pageSize"
+			(changeIndex)="pageIndexChange($event)"
+		>
+		</ss-pagination>
+	</ng-template>
 </ss-card>

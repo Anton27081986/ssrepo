@@ -1,28 +1,55 @@
 <div class="accordion">
-	<div class="accordion-header" (click)="toggle()">
-		<ng-container *ngIf="headerRef; else defaultHeader"
-					  [ngTemplateOutlet]="headerRef">
+	<div
+		class="accordion-header"
+		(click)="toggle()"
+	>
+		<ng-container
+			*ngIf="headerRef; else defaultHeader"
+			[ngTemplateOutlet]="headerRef"
+		>
 		</ng-container>
 		<ng-template #defaultHeader>
-			<ss-text size="1" weight="semi-bold">{{ title }}</ss-text>
+			<ss-text
+				size="1"
+				weight="semi-bold"
+				>{{ title }}</ss-text
+			>
 		</ng-template>
 		<div class="accordion-header__icons">
-			<ss-icon name="chevron"
-					 class="accordion-header__icon-toggle"
-					 [class.accordion-header__icon-toggle--expanded]="isExpanded">
+			<ss-icon
+				name="chevron"
+				class="accordion-header__icon-toggle"
+				[class.accordion-header__icon-toggle--expanded]="isExpanded"
+			>
 			</ss-icon>
 			@if (isMpReservationOrders) {
 				<div class="accordion-header__icon-order">
-					<snab-button class="accordion-header__icon-order-item" [size]="Size.Small" [type]="ButtonType.Primary" [iconPosition]="IconPosition.OnlyIcon"
-								 [icon]="IconType.AddSmall" (click)="addRowInPosition($event)"></snab-button>
-					<snab-button class="accordion-header__icon-order-item" [size]="Size.Small" [type]="ButtonType.Primary" [iconPosition]="IconPosition.OnlyIcon"
-								 [icon]="IconType.Trash" (click)="removeRowInPosition($event)"></snab-button>
+					<snab-button
+						class="accordion-header__icon-order-item"
+						[size]="Size.Small"
+						[type]="ButtonType.Primary"
+						[iconPosition]="IconPosition.OnlyIcon"
+						[icon]="IconType.AddSmall"
+						(click)="addRowInPosition($event)"
+					></snab-button>
+					<snab-button
+						class="accordion-header__icon-order-item"
+						[size]="Size.Small"
+						[type]="ButtonType.Primary"
+						[iconPosition]="IconPosition.OnlyIcon"
+						[icon]="IconType.Trash"
+						(click)="removeRowInPosition($event)"
+					></snab-button>
 				</div>
 			}
 		</div>
 	</div>
 	@if (isExpanded) {
-		<div class="accordion-content" [ngClass]="{'accordion-content-table': isMpReservationOrders}" [class.open]="isExpanded">
+		<div
+			class="accordion-content"
+			[ngClass]="{ 'accordion-content-table': isMpReservationOrders }"
+			[class.open]="isExpanded"
+		>
 			<ng-content></ng-content>
 		</div>
 	}

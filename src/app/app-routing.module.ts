@@ -5,7 +5,10 @@ import { EmptyLayoutComponent } from '@app/shared/layouts/empty-layout/empty-lay
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { NewLayoutComponent } from '@app/shared/layouts/new-layout/new-layout.component';
-import { procurementsPermissionsGuard, proposalsPermissionsGuard } from '@app/core/guards';
+import {
+	procurementsPermissionsGuard,
+	proposalsPermissionsGuard,
+} from '@app/core/guards';
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -20,7 +23,9 @@ const routes: Routes = [
 			{
 				path: '',
 				loadChildren: () =>
-					import('@app/pages/main-page/main-page.module').then(m => m.MainPageModule),
+					import('@app/pages/main-page/main-page.module').then(
+						(m) => m.MainPageModule,
+					),
 			},
 			{
 				path: '',
@@ -33,7 +38,9 @@ const routes: Routes = [
 						path: 'profile',
 						canActivate: [AuthGuard],
 						loadChildren: () =>
-							import('./pages/profile/profile.module').then(m => m.ProfileModule),
+							import('./pages/profile/profile.module').then(
+								(m) => m.ProfileModule,
+							),
 					},
 					{
 						path: 'raw-material-accounting',
@@ -41,7 +48,7 @@ const routes: Routes = [
 						loadChildren: () =>
 							import(
 								'./pages/raw-material-accounting/raw-material-accounting.module'
-							).then(m => m.RawMaterialAccountingModule),
+							).then((m) => m.RawMaterialAccountingModule),
 					},
 				],
 			},
@@ -58,26 +65,30 @@ const routes: Routes = [
 			{
 				path: 'clients-list',
 				loadChildren: () =>
-					import('@app/pages/clients-list-page/clients-list-page.module').then(
-						m => m.ClientsListPageModule,
-					),
+					import(
+						'@app/pages/clients-list-page/clients-list-page.module'
+					).then((m) => m.ClientsListPageModule),
 			},
 			{
 				path: 'client-card',
 				loadChildren: () =>
-					import('./pages/client-card/client-card.module').then(m => m.ClientCardModule),
+					import('./pages/client-card/client-card.module').then(
+						(m) => m.ClientCardModule,
+					),
 			},
 			{
 				path: 'client-request-samples',
 				loadChildren: () =>
 					import('@app/pages/samples-page/samples-page.module').then(
-						m => m.SamplesPageModule,
+						(m) => m.SamplesPageModule,
 					),
 			},
 			{
 				path: 'invite',
 				loadChildren: () =>
-					import('./pages/invite/invite.module').then(m => m.InviteModule),
+					import('./pages/invite/invite.module').then(
+						(m) => m.InviteModule,
+					),
 			},
 		],
 	},
@@ -92,9 +103,9 @@ const routes: Routes = [
 			{
 				path: 'client-proposals-page',
 				loadChildren: () =>
-					import('@app/pages/client-proposals-page/client-proposals.module').then(
-						m => m.ClientProposalsModule,
-					),
+					import(
+						'@app/pages/client-proposals-page/client-proposals.module'
+					).then((m) => m.ClientProposalsModule),
 			},
 		],
 	},
@@ -109,9 +120,9 @@ const routes: Routes = [
 			{
 				path: 'completed-work-acts',
 				loadChildren: () =>
-					import('./pages/completed-work-acts/completed-work-acts.module').then(
-						m => m.CompletedWorkActsModule,
-					),
+					import(
+						'./pages/completed-work-acts/completed-work-acts.module'
+					).then((m) => m.CompletedWorkActsModule),
 			},
 		],
 	},
@@ -125,9 +136,9 @@ const routes: Routes = [
 			{
 				path: 'production-plan',
 				loadChildren: () =>
-					import('./pages/production-plan/production-plan.routing').then(
-						r => r.productionPlanRoutes,
-					),
+					import(
+						'./pages/production-plan/production-plan.routing'
+					).then((r) => r.productionPlanRoutes),
 			},
 		],
 	},
@@ -142,9 +153,9 @@ const routes: Routes = [
 			{
 				path: 'excess-income-page',
 				loadChildren: () =>
-					import('@app/pages/excess-income/excess-income.module').then(
-						m => m.ExcessIncomeModule,
-					),
+					import(
+						'@app/pages/excess-income/excess-income.module'
+					).then((m) => m.ExcessIncomeModule),
 			},
 		],
 	},
@@ -159,9 +170,9 @@ const routes: Routes = [
 			{
 				path: 'not-permission',
 				loadChildren: () =>
-					import('./pages/not-permission-page/not-permission-page.module').then(
-						m => m.NotPermissionPageModule,
-					),
+					import(
+						'./pages/not-permission-page/not-permission-page.module'
+					).then((m) => m.NotPermissionPageModule),
 			},
 		],
 	},
@@ -170,14 +181,18 @@ const routes: Routes = [
 		data: {
 			animation: 'animation',
 		},
-		loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule),
+		loadChildren: () =>
+			import('./pages/auth/auth.module').then((m) => m.AuthModule),
 	},
 	{
 		path: 'sandbox',
 		data: {
 			animation: 'animation',
 		},
-		loadChildren: () => import('./pages/sandbox/sandbox.module').then(m => m.SandboxModule),
+		loadChildren: () =>
+			import('./pages/sandbox/sandbox.module').then(
+				(m) => m.SandboxModule,
+			),
 	},
 	{ path: '**', redirectTo: '' },
 ];

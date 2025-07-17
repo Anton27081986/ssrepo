@@ -3,23 +3,30 @@
 		@for (item of menu; track item.id) {
 			@if (item.link) {
 				<a href="{{ item.link }}">
-					<ss-text class="main-menu__item" [size]="'3'"> {{ item.name }}</ss-text>
+					<ss-text
+						class="main-menu__item"
+						[size]="'3'"
+					>
+						{{ item.name }}</ss-text
+					>
 				</a>
 			} @else {
 				<div class="main-menu__item">
-					<ss-text [size]="'3'" [color]="'gray'" (click)="toggleMenu(item)">
+					<ss-text
+						[size]="'3'"
+						[color]="'gray'"
+						(click)="toggleMenu(item)"
+					>
 						{{ item.name }}
 					</ss-text>
 					@if ((item.toggle$ | async) && item.items?.length) {
-						<ss-menu [menuItems]="item.items" [parent]="item"></ss-menu>
+						<ss-menu
+							[menuItems]="item.items"
+							[parent]="item"
+						></ss-menu>
 					}
 				</div>
 			}
 		}
 	</div>
 }
-
-
-
-
-

@@ -9,7 +9,11 @@
 		[popoverTriggerFor]="orderAnOutfitList"
 		[text]="'Заказ наряд'"
 	>
-		<ss-lib-icon [width]="'20'" [height]="'20'" [icon]="IconType.ChevronDown"></ss-lib-icon>
+		<ss-lib-icon
+			[width]="'20'"
+			[height]="'20'"
+			[icon]="IconType.ChevronDown"
+		></ss-lib-icon>
 	</ss-lib-button>
 	<ss-lib-button
 		*ngIf="operationPlanState.getHasPermissionCalcRowMaterials"
@@ -19,7 +23,11 @@
 		[popoverTriggerFor]="calcProd"
 		[text]="'Рассчитать сырье'"
 	>
-		<ss-lib-icon [width]="'20'" [height]="'20'" [icon]="IconType.ChevronDown"></ss-lib-icon>
+		<ss-lib-icon
+			[width]="'20'"
+			[height]="'20'"
+			[icon]="IconType.ChevronDown"
+		></ss-lib-icon>
 	</ss-lib-button>
 	<ss-lib-button
 		*ngIf="operationPlanState.getHasPermissionEdit"
@@ -31,7 +39,10 @@
 	></ss-lib-button>
 </ss-lib-indicator-checklist-popup>
 
-<ss-lib-dropdown-list #calcProd [width]="'155px'">
+<ss-lib-dropdown-list
+	#calcProd
+	[width]="'155px'"
+>
 	<ss-lib-dropdown-item
 		*ngFor="let day of days()"
 		(click)="openCalculationOfRawMaterialsForCheckList(day.day)"
@@ -40,8 +51,14 @@
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
 
-<ss-lib-dropdown-list #orderAnOutfitList [width]="'155px'">
-	<ss-lib-dropdown-item *ngFor="let day of days()" (click)="orderAnOutfitForCheckList(day)">
+<ss-lib-dropdown-list
+	#orderAnOutfitList
+	[width]="'155px'"
+>
+	<ss-lib-dropdown-item
+		*ngFor="let day of days()"
+		(click)="orderAnOutfitForCheckList(day)"
+	>
 		{{ day.day | date: 'dd.MM' }}
 	</ss-lib-dropdown-item>
 </ss-lib-dropdown-list>
@@ -60,15 +77,21 @@
 					<th
 						*ssHead="column.id"
 						ssTh
-						[attr.rowspan]="!column.subColumns && !column.subGroups ? 2 : null"
-						[attr.colspan]="column.subColumns ? column.subColumns.length : null"
+						[attr.rowspan]="
+							!column.subColumns && !column.subGroups ? 2 : null
+						"
+						[attr.colspan]="
+							column.subColumns ? column.subColumns.length : null
+						"
 						[resizable]="true"
 					>
 						@if (column.id === 'tov') {
 							<div class="td-column">
 								<ss-lib-checkbox
 									[formControl]="masterCheckboxCtrl"
-									[indeterminate]="getMasterCheckboxIndeterminate()"
+									[indeterminate]="
+										getMasterCheckboxIndeterminate()
+									"
 								/>
 								<ss-lib-text
 									[color]="Colors.TextBody2"
@@ -99,7 +122,9 @@
 											[type]="HintType.Success"
 											[icon]="IconType.CheckCircle"
 											[position]="TooltipPosition.Top"
-											[tooltipText]="'План выгружен в WMS'"
+											[tooltipText]="
+												'План выгружен в WMS'
+											"
 										></ss-lib-hint>
 									}
 								</div>
@@ -125,7 +150,9 @@
 											"
 											[icon]="IconType.FileCheck"
 											[label]="'Согласовать сырье'"
-											(click)="openApproveMaterials(column.id)"
+											(click)="
+												openApproveMaterials(column.id)
+											"
 										></ss-lib-dropdown-item>
 										<ss-lib-dropdown-item
 											*ngIf="
@@ -134,7 +161,9 @@
 											[icon]="IconType.FileSearch02"
 											[label]="'Рассчитать сырье'"
 											(click)="
-												openCalculationOfRawMaterialsForColumn(column.id)
+												openCalculationOfRawMaterialsForColumn(
+													column.id
+												)
 											"
 										></ss-lib-dropdown-item>
 									</ss-lib-dropdown-list>
@@ -161,7 +190,10 @@
 			@for (column of visibleColumns(); track column) {
 				@if (column.subColumns) {
 					@for (subColumnId of column.subColumns; track subColumnId) {
-						<th *ssHead="subColumnId" ssTh>
+						<th
+							*ssHead="subColumnId"
+							ssTh
+						>
 							<div
 								class="td-subcolumn"
 								[style.justify-content]="
@@ -185,7 +217,9 @@
 										[icon]="IconType.Info"
 										[position]="TooltipPosition.Top"
 										[tooltipText]="planTooltipText"
-										(mouseenter)="onPlanInfoEnter(subColumnId)"
+										(mouseenter)="
+											onPlanInfoEnter(subColumnId)
+										"
 									></ss-lib-hint>
 								}
 							</div>

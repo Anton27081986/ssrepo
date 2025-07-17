@@ -5,50 +5,49 @@ import { ExcessIncomeState } from '@app/pages/excess-income/excess-income-state/
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
 	ExcessIncomeClientRowItemField,
-	ExcessIncomeClientTrComponent
-} from "@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component";
+	ExcessIncomeClientTrComponent,
+} from '@app/pages/excess-income/excess-income-tr/excess-income-client-tr/excess-income-client-tr.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientNodeState } from '@app/pages/excess-income/excess-income-state/client-node-state';
-import { FiltersComponent, IFilter } from "@app/shared/components/filters/filters.component";
+import {
+	FiltersComponent,
+	IFilter,
+} from '@app/shared/components/filters/filters.component';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ContractorNodeState } from '@app/pages/excess-income/excess-income-state/contractor-node-state';
 import { GroupNodeState } from '@app/pages/excess-income/excess-income-state/group-node-state';
 import { BehaviorSubject } from 'rxjs';
-import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
 	ButtonComponent,
 	ButtonType,
 	collapseHeight,
 	IconPosition,
-	IconType, LabelComponent,
+	IconType,
+	LabelComponent,
 	LabelType,
-	Size, TextComponent,
+	Size,
+	TextComponent,
 	TextType,
-	TextWeight
-} from "@front-components/components";
-import { SelectV2Component } from "@app/shared/components/inputs/select-v2/select-v2.component";
-import { DropdownButtonComponent } from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
-import { TableV2Component } from "@app/shared/components/ss-table-v2/ss-table-v2.component";
-import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
-import { LoaderComponent } from "@app/shared/components/loader/loader.component";
-import {
-	ExcessIncomeContractorTrComponent
-} from "@app/pages/excess-income/excess-income-tr/excess-income-contractor-tr/excess-income-contractor-tr.component";
-import {
-	ExcessIncomeGroupTrComponent
-} from "@app/pages/excess-income/excess-income-tr/excess-income-group-tr/excess-income-group-tr.component";
-import {
-	ExcessIncomeTovTrComponent
-} from "@app/pages/excess-income/excess-income-tr/excess-income-tov-tr/excess-income-tov-tr.component";
-import { LoaderTrComponent } from "@app/shared/components/loader-tr/loader-tr.component";
-import { PaginationTrComponent } from "@app/shared/components/pagination-tr/pagination-tr.component";
-import { EmptyPlaceholderComponent } from "@app/shared/components/empty-placeholder/empty-placeholder.component";
+	TextWeight,
+} from '@front-components/components';
+import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
+import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
+import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { ExcessIncomeContractorTrComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-contractor-tr/excess-income-contractor-tr.component';
+import { ExcessIncomeGroupTrComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-group-tr/excess-income-group-tr.component';
+import { ExcessIncomeTovTrComponent } from '@app/pages/excess-income/excess-income-tr/excess-income-tov-tr/excess-income-tov-tr.component';
+import { LoaderTrComponent } from '@app/shared/components/loader-tr/loader-tr.component';
+import { PaginationTrComponent } from '@app/shared/components/pagination-tr/pagination-tr.component';
+import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
 
 @UntilDestroy()
 @Component({
-	selector: "app-excess-income-page",
-	templateUrl: "./excess-income-page.component.html",
-	styleUrls: ["./excess-income-page.component.scss"],
+	selector: 'app-excess-income-page',
+	templateUrl: './excess-income-page.component.html',
+	styleUrls: ['./excess-income-page.component.scss'],
 	providers: [ExcessIncomeState],
 	animations: [collapseHeight],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -71,9 +70,9 @@ import { EmptyPlaceholderComponent } from "@app/shared/components/empty-placehol
 		LoaderTrComponent,
 		PaginationTrComponent,
 		EmptyPlaceholderComponent,
-		LabelComponent
+		LabelComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class ExcessIncomePageComponent {
 	protected clientsNode: Signal<ClientNodeState[]> = toSignal(
@@ -81,9 +80,12 @@ export class ExcessIncomePageComponent {
 		{ initialValue: [] },
 	);
 
-	protected total: Signal<number> = toSignal(this.excessIncomeStateService.total$, {
-		requireSync: true,
-	});
+	protected total: Signal<number> = toSignal(
+		this.excessIncomeStateService.total$,
+		{
+			requireSync: true,
+		},
+	);
 
 	protected currency: Signal<IDictionaryItemDto[]> = toSignal(
 		this.excessIncomeStateService.currency$,
@@ -131,16 +133,18 @@ export class ExcessIncomePageComponent {
 		const preparedFilter: any = {};
 
 		for (const filter of this.filters) {
-			preparedFilter[filter.name] = filter.value && filter.type ? filter.value : null;
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
 
 			switch (filter.type) {
 				case 'search-select':
 					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map(item => item.id)
+						? filter.value.map((item) => item.id)
 						: null;
 					break;
 				case 'boolean':
-					preparedFilter[filter.name] = filter.value === 'Да' ? true : null;
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
 					break;
 				default:
 					preparedFilter[filter.name] =
@@ -151,8 +155,10 @@ export class ExcessIncomePageComponent {
 		this.excessIncomeStateService.applyFilters(preparedFilter);
 	}
 
-	public isLoader$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoader$;
-	public isLoaderTr$: BehaviorSubject<boolean> = this.excessIncomeStateService.isLoaderTr$;
+	public isLoader$: BehaviorSubject<boolean> =
+		this.excessIncomeStateService.isLoader$;
+	public isLoaderTr$: BehaviorSubject<boolean> =
+		this.excessIncomeStateService.isLoaderTr$;
 
 	protected readonly paginationControl: FormControl<number | null> =
 		this.excessIncomeStateService.paginationControl;
@@ -166,7 +172,9 @@ export class ExcessIncomePageComponent {
 		this.currencyControl.setValue({ id: 2, name: 'RUR' });
 	}
 
-	public expended(node: ClientNodeState | ContractorNodeState | GroupNodeState) {
+	public expended(
+		node: ClientNodeState | ContractorNodeState | GroupNodeState,
+	) {
 		node.expended$.next(!node.expended$.value);
 	}
 

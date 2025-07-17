@@ -1,1 +1,7 @@
-<app-rating-team-tab *ngFor="let team of items()" [isTeam]="rankTypeId() === team.id" [active]="target?.id === team.id" [team]="team" (click)="changeTab(team)"></app-rating-team-tab>
+<app-rating-team-tab
+	*ngFor="let team of items()"
+	[isTeam]="rankTypeId() === team.id"
+	[active]="target?.id === team.id"
+	[team]="team"
+	(click)="changeTab(team)"
+></app-rating-team-tab>

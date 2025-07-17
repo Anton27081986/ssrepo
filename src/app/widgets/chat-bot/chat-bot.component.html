@@ -1,4 +1,7 @@
-<div class="chat-wrapper" [class]="{'opened': isOpened()}">
+<div
+	class="chat-wrapper"
+	[class]="{ opened: isOpened() }"
+>
 	<div class="chat">
 		<div class="chat__header">
 			<snab-button
@@ -6,107 +9,240 @@
 				[icon]="IconType.ClearLarge"
 				[iconPosition]="IconPosition.OnlyIcon"
 				[size]="Size.Large"
-				(click)="close()">
+				(click)="close()"
+			>
 			</snab-button>
 		</div>
-		<div #messagesEl class="chat__content" (scrollend)="loadMoreMessages()">
+		<div
+			#messagesEl
+			class="chat__content"
+			(scrollend)="loadMoreMessages()"
+		>
 			@if (!messages().length) {
-				<snab-text class="chat__content__title" [type]="TextType.Headline" [weight]="TextWeight.Medium">
-					Добрый день, я&nbsp;нейропомощник. Выберите категорию ниже и&nbsp;введите Ваш запрос.
+				<snab-text
+					class="chat__content__title"
+					[type]="TextType.Headline"
+					[weight]="TextWeight.Medium"
+				>
+					Добрый день, я&nbsp;нейропомощник. Выберите категорию ниже
+					и&nbsp;введите Ваш запрос.
 				</snab-text>
 			} @else {
 				<div class="chat__content__body">
-						<div class="chat__content__body__messages">
-							@if (state()===ChatBotStates.Generating) {
-								<div class="chat__content__body__messages__bot-message">
-									<span class="chat__content__body__loader"></span>
+					<div class="chat__content__body__messages">
+						@if (state() === ChatBotStates.Generating) {
+							<div
+								class="chat__content__body__messages__bot-message"
+							>
+								<span
+									class="chat__content__body__loader"
+								></span>
+							</div>
+						}
+						@for (message of messages(); track message.createdAt) {
+							@if (
+								message.messageType ===
+								ChatBotMessageTypeEnum.Me
+							) {
+								<div
+									class="chat__content__body__messages__message chat__content__body__messages__my-message"
+								>
+									<snab-text
+										[type]="TextType.Body"
+										[weight]="TextWeight.Regular"
+									>
+										{{ message.text }}
+									</snab-text>
+									<snab-text
+										class="chat__content__body__messages__my-message__time"
+										[type]="TextType.Body"
+										[weight]="TextWeight.Regular"
+										[color]="Colors.Complementary"
+									>
+										{{
+											message.createdAt
+												| date
+													: 'dd.MM.yyyy, HH:mm'
+													: ''
+													: 'ru'
+										}}
+									</snab-text>
 								</div>
 							}
-							@for (message of messages(); track message.createdAt) {
-								@if (message.messageType === ChatBotMessageTypeEnum.Me) {
-									<div class="chat__content__body__messages__message chat__content__body__messages__my-message">
-										<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
-											{{ message.text }}
-										</snab-text>
-										<snab-text class="chat__content__body__messages__my-message__time" [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
-											{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
-										</snab-text>
-									</div>
-								}
-								@if (message.messageType === ChatBotMessageTypeEnum.Bot) {
-									<div class="chat__content__body__messages__message chat__content__body__messages__bot-message">
-										<div class="chat__content__body__messages__bot-message__text" [innerHTML]="message.text | mdToHtml"></div>
-										@if (message.likeType === null && message.id) {
-											<div class="chat__content__body__messages__bot-message__controls">
-												<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
-													{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
-												</snab-text>
-												<div class="chat__content__body__messages__bot-message__controls__buttons">
-													<snab-icon
-														[icon]="IconType.Like"
-														[color]="Colors.Complementary"
-														(click)="openFeedBack(message, ChatBotLikeTypeEnum.Like)">
-													</snab-icon>
-													<snab-icon class="chat__content__body__messages__bot-message__controls__buttons__dislike"
-															   [icon]="IconType.Like" [color]="Colors.Complementary"
-															   (click)="openFeedBack(message, ChatBotLikeTypeEnum.Dislike)">
-													</snab-icon>
-												</div>
+							@if (
+								message.messageType ===
+								ChatBotMessageTypeEnum.Bot
+							) {
+								<div
+									class="chat__content__body__messages__message chat__content__body__messages__bot-message"
+								>
+									<div
+										class="chat__content__body__messages__bot-message__text"
+										[innerHTML]="message.text | mdToHtml"
+									></div>
+									@if (
+										message.likeType === null && message.id
+									) {
+										<div
+											class="chat__content__body__messages__bot-message__controls"
+										>
+											<snab-text
+												[type]="TextType.Body"
+												[weight]="TextWeight.Regular"
+												[color]="Colors.Complementary"
+											>
+												{{
+													message.createdAt
+														| date
+															: 'dd.MM.yyyy, HH:mm'
+															: ''
+															: 'ru'
+												}}
+											</snab-text>
+											<div
+												class="chat__content__body__messages__bot-message__controls__buttons"
+											>
+												<snab-icon
+													[icon]="IconType.Like"
+													[color]="
+														Colors.Complementary
+													"
+													(click)="
+														openFeedBack(
+															message,
+															ChatBotLikeTypeEnum.Like
+														)
+													"
+												>
+												</snab-icon>
+												<snab-icon
+													class="chat__content__body__messages__bot-message__controls__buttons__dislike"
+													[icon]="IconType.Like"
+													[color]="
+														Colors.Complementary
+													"
+													(click)="
+														openFeedBack(
+															message,
+															ChatBotLikeTypeEnum.Dislike
+														)
+													"
+												>
+												</snab-icon>
 											</div>
-										}
-										@if (message.likeType !== null && message.id) {
-											<div class="chat__content__body__messages__bot-message__controls">
-												<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular" [color]="Colors.Complementary">
-													{{ message.createdAt | date:'dd.MM.yyyy, HH:mm':'':'ru' }}
-												</snab-text>
-												<div class="chat__content__body__messages__bot-message__controls__icons">
-													<snab-icon
-														[icon]="message.likeType === ChatBotLikeTypeEnum.Like ? IconType.LikeFilled: IconType.Like"
-														[color]="Colors.Complementary">
-													</snab-icon>
-													<snab-icon class="chat__content__body__messages__bot-message__controls__buttons__dislike"
-													   [icon]="message.likeType === ChatBotLikeTypeEnum.Dislike ? IconType.LikeFilled: IconType.Like"
-													   [color]="Colors.Complementary">
-													</snab-icon>
-												</div>
+										</div>
+									}
+									@if (
+										message.likeType !== null && message.id
+									) {
+										<div
+											class="chat__content__body__messages__bot-message__controls"
+										>
+											<snab-text
+												[type]="TextType.Body"
+												[weight]="TextWeight.Regular"
+												[color]="Colors.Complementary"
+											>
+												{{
+													message.createdAt
+														| date
+															: 'dd.MM.yyyy, HH:mm'
+															: ''
+															: 'ru'
+												}}
+											</snab-text>
+											<div
+												class="chat__content__body__messages__bot-message__controls__icons"
+											>
+												<snab-icon
+													[icon]="
+														message.likeType ===
+														ChatBotLikeTypeEnum.Like
+															? IconType.LikeFilled
+															: IconType.Like
+													"
+													[color]="
+														Colors.Complementary
+													"
+												>
+												</snab-icon>
+												<snab-icon
+													class="chat__content__body__messages__bot-message__controls__buttons__dislike"
+													[icon]="
+														message.likeType ===
+														ChatBotLikeTypeEnum.Dislike
+															? IconType.LikeFilled
+															: IconType.Like
+													"
+													[color]="
+														Colors.Complementary
+													"
+												>
+												</snab-icon>
 											</div>
-										}
-									</div>
-								}
+										</div>
+									}
+								</div>
 							}
-						</div>
+						}
+					</div>
 				</div>
 			}
 		</div>
 
 		<div class="chat__footer">
-
 			<div class="chat__footer__subsectors">
 				@for (subsector of subsectors(); track subsector.id) {
-					<div class="chat__footer__subsectors__item"
-						 [ngClass]="{'chat__footer__subsectors__item__active':activeSubsector()?.id === subsector.id}"
-						 (click)="selectSubsector(subsector)"
+					<div
+						class="chat__footer__subsectors__item"
+						[ngClass]="{
+							chat__footer__subsectors__item__active:
+								activeSubsector()?.id === subsector.id,
+						}"
+						(click)="selectSubsector(subsector)"
 					>
-						<snab-text [type]="TextType.Body" [weight]="TextWeight.Medium" [color]="Colors.InfoHeavy">
+						<snab-text
+							[type]="TextType.Body"
+							[weight]="TextWeight.Medium"
+							[color]="Colors.InfoHeavy"
+						>
 							{{ subsector.name }}
 						</snab-text>
 					</div>
 				}
 			</div>
-			<form class="chat__footer__form" [formGroup]="questionForm">
-				<img ngSrc="assets/images/profile/bot.png" class="chat__footer__avatar" alt="bot" height="205"
-					 width="226" />
+			<form
+				class="chat__footer__form"
+				[formGroup]="questionForm"
+			>
+				<img
+					ngSrc="assets/images/profile/bot.png"
+					class="chat__footer__avatar"
+					alt="bot"
+					height="205"
+					width="226"
+				/>
 				<div class="chat__footer__form__input">
-					<textarea formControlName="question" onInput="this.parentNode.dataset.replicatedValue = this.value" [placeholder]="activeSubsector() ? 'Введите запрос...' : 'Выберите категорию запроса...'" (keydown)="sendMessage($event)"></textarea>
+					<textarea
+						formControlName="question"
+						onInput="this.parentNode.dataset.replicatedValue = this.value"
+						[placeholder]="
+							activeSubsector()
+								? 'Введите запрос...'
+								: 'Выберите категорию запроса...'
+						"
+						(keydown)="sendMessage($event)"
+					></textarea>
 				</div>
 				<snab-button
 					class="chat__footer__form__button"
 					[type]="ButtonType.Primary"
 					[icon]="IconType.ArrowLongUp"
 					[iconPosition]="IconPosition.OnlyIcon"
-					[loading]="state()===ChatBotStates.Generating"
-					[disabled]="state()===ChatBotStates.Generating"
-					(click)="sendMessage()">
+					[loading]="state() === ChatBotStates.Generating"
+					[disabled]="state() === ChatBotStates.Generating"
+					(click)="sendMessage()"
+				>
 				</snab-button>
 			</form>
 		</div>

@@ -1,9 +1,9 @@
-import { IDictionaryItemDto } from "@front-components/components";
+import { IDictionaryItemDto } from '@front-components/components';
 
 export interface IMpReservationOrder {
 	id: number;
 	note: string;
-    code: number;
+	code: number;
 	status: IDictionaryItemDto;
 	author: IDictionaryItemDto;
 	totalAmount: number;

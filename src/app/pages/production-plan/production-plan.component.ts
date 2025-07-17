@@ -56,58 +56,66 @@ export class ProductionPlanComponent {
 			isVisible: true,
 		},
 	];
+
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
-	private operationPlanPopupService: OperationPlanPopupService =
+	private readonly operationPlanPopupService: OperationPlanPopupService =
 		inject(OperationPlanPopupService);
 
-	protected operationPlanState: OperationPlanState = inject(OperationPlanState);
+	protected operationPlanState: OperationPlanState =
+		inject(OperationPlanState);
 
-	private weekId$ = this.operationPlanState.weekId$;
+	private readonly weekId$ = this.operationPlanState.weekId$;
 
-	private productionPlanService: OperationPlanService = inject(OperationPlanService);
+	private readonly productionPlanService: OperationPlanService =
+		inject(OperationPlanService);
 
-	protected changeTabIndex(index: number) {
+	protected changeTabIndex(index: number): void {
 		if (index === 1) {
 			// Костыль пока не появится модуль Журнал расчета сырья
 			if (environment.production) {
-				window.open('https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx');
+				window.open(
+					'https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx',
+				);
 				window.location.reload();
 			} else {
 				window.open(' https://ssnab.it/Ss/Mfs/Plan/PlanDaysRaw.aspx');
 				window.location.reload();
 			}
+
 			this.activeTabIndex = 0;
 		} else {
 			this.activeTabIndex = index;
 		}
 	}
 
-	protected addSemiManufactures() {
+	protected addSemiManufactures(): void {
 		const weekId = this.weekId$.value;
+
 		if (weekId !== null) {
 			this.operationPlanPopupService.addSemiManufactures(weekId);
 		}
 	}
 
-	protected upload1C() {
+	protected upload1C(): void {
 		const weekId = this.operationPlanState.weekId$.value!;
-		this.productionPlanService.upload1C(weekId).subscribe(value => {
+
+		this.productionPlanService.upload1C(weekId).subscribe((value) => {
 			window.open(value.linkToModule, '_blank');
 		});
 	}
 
-	protected downloadReport() {
-		this.productionPlanService.downloadReport().subscribe(value => {
+	protected downloadReport(): void {
+		this.productionPlanService.downloadReport().subscribe((value) => {
 			window.open(value.linkToModule, '_blank');
 		});
 	}
 
-	protected downloadExel() {
+	protected downloadExel(): void {
 		const filters = this.operationPlanState.filterValueStore$.value!;
-		this.productionPlanService.downloadExel(filters).subscribe(blob => {
-			console.log(typeof blob);
+
+		this.productionPlanService.downloadExel(filters).subscribe((blob) => {
 			const fileURL = window.URL.createObjectURL(blob);
 			const link = document.createElement('a');
 

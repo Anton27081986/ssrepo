@@ -10,7 +10,8 @@ import {
 	Size,
 	TextComponent,
 	TextType,
-	TextWeight, LinkComponent,
+	TextWeight,
+	LinkComponent,
 } from '@front-components/components';
 import { NgForOf } from '@angular/common';
 
@@ -24,8 +25,11 @@ interface IRemnantDetail {
 @UntilDestroy()
 @Component({
 	selector: 'mp-reservation-orders-popup-remnants-details',
-	templateUrl: './mp-reservation-orders-popup-remnants-details.component.html',
-	styleUrls: ['./mp-reservation-orders-popup-remnants-details.component.scss'],
+	templateUrl:
+		'./mp-reservation-orders-popup-remnants-details.component.html',
+	styleUrls: [
+		'./mp-reservation-orders-popup-remnants-details.component.scss',
+	],
 	standalone: true,
 	imports: [
 		NgForOf,
@@ -46,9 +50,7 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	constructor(
-		private readonly modalRef: ModalRef,
-	) {}
+	constructor(private readonly modalRef: ModalRef) {}
 
 	public remnants: IRemnantDetail[] = [
 		{

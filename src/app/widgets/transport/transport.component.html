@@ -1,63 +1,73 @@
 @if (transport$ | async; as transport) {
-    <div class="transport">
-        <ss-card padding="0">
-            <div class="header">
-                <ss-text size="1">Корпоративный транспорт</ss-text>
+	<div class="transport">
+		<ss-card padding="0">
+			<div class="header">
+				<ss-text size="1">Корпоративный транспорт</ss-text>
 
-                @if (transport?.canAddNotification) {
-                    <ss-button
-                        type="primary"
-                        size="small"
-                        (click)="showModalNotice()"
-                    >
-                        <ss-icon name="plus"></ss-icon>
-                        Создать уведомление
-                    </ss-button>
-                }
-            </div>
+				@if (transport?.canAddNotification) {
+					<ss-button
+						type="primary"
+						size="small"
+						(click)="showModalNotice()"
+					>
+						<ss-icon name="plus"></ss-icon>
+						Создать уведомление
+					</ss-button>
+				}
+			</div>
 
-            <ss-divider class="divider" />
+			<ss-divider class="divider" />
 
-            <div class="content">
-                @if (transport?.transportNotify) {
-                    <div class="notice">
-                        <app-notice
-                            @fadeInDown
-                            isLabeled="false"
-                            type="warning"
-                            title="Изменение в расписании корпоративного транспорта"
-                            [text]="transport | mapper : noticeText"
-                        >
-                        </app-notice>
-                    </div>
-                }
+			<div class="content">
+				@if (transport?.transportNotify) {
+					<div class="notice">
+						<app-notice
+							@fadeInDown
+							isLabeled="false"
+							type="warning"
+							title="Изменение в расписании корпоративного транспорта"
+							[text]="transport | mapper: noticeText"
+						>
+						</app-notice>
+					</div>
+				}
 
-                <div class="bus-list">
-                    @for (bus of transport!.transportList; track bus.id) {
-                        <div class="bus">
-                            <div class="direction">
-                                <ss-tag class="station">{{ bus.startRoute }}</ss-tag>
+				<div class="bus-list">
+					@for (bus of transport!.transportList; track bus.id) {
+						<div class="bus">
+							<div class="direction">
+								<ss-tag class="station">{{
+									bus.startRoute
+								}}</ss-tag>
 
-                                <ss-icon name="direction"></ss-icon>
+								<ss-icon name="direction"></ss-icon>
 
-                                <ss-tag class="station">{{ bus.endRoute }}</ss-tag>
-                            </div>
+								<ss-tag class="station">{{
+									bus.endRoute
+								}}</ss-tag>
+							</div>
 
-                            <div class="schedule">
-                                @for (time of bus?.departureTime; track time) {
-                                    <div
-                                        class="item"
-                                        [ngClass]="time | mapper : currentTimeClass : bus.id : nearestDepartureTimeForBuses"
-                                    >
-                                        <ss-icon name="bus"></ss-icon>
-                                        {{ time }}
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </ss-card>
-    </div>
+							<div class="schedule">
+								@for (time of bus?.departureTime; track time) {
+									<div
+										class="item"
+										[ngClass]="
+											time
+												| mapper
+													: currentTimeClass
+													: bus.id
+													: nearestDepartureTimeForBuses
+										"
+									>
+										<ss-icon name="bus"></ss-icon>
+										{{ time }}
+									</div>
+								}
+							</div>
+						</div>
+					}
+				</div>
+			</div>
+		</ss-card>
+	</div>
 }

@@ -1,13 +1,29 @@
 <div class="client-proposals-send-cloud-popover">
 	<div class="client-proposals-send-cloud-popover__header">
 		<ss-headline size="h6">Ссылка на документы</ss-headline>
-		<ss-icon class="client-proposals-send-cloud-popover__close" width="16" name="close" (click)="close()"></ss-icon>
+		<ss-icon
+			class="client-proposals-send-cloud-popover__close"
+			width="16"
+			name="close"
+			(click)="close()"
+		></ss-icon>
 	</div>
 	<div class="client-proposals-send-cloud-popover__body">
 		<div class="client-proposals-send-cloud-popover__input">
-			<ss-input [disabled]="true" [value]="(url$ | async)!"></ss-input>
-			<ss-icon class="client-proposals-send-cloud-popover__icon-copy" width="32" name="copy" [cdkCopyToClipboard]="(url$ | async)!"></ss-icon>
+			<ss-input
+				[disabled]="true"
+				[value]="(url$ | async)!"
+			></ss-input>
+			<ss-icon
+				class="client-proposals-send-cloud-popover__icon-copy"
+				width="32"
+				name="copy"
+				[cdkCopyToClipboard]="(url$ | async)!"
+			></ss-icon>
 		</div>
-		<ss-caption size="2">*Ссылка со списком документов также отправлена вам на почту</ss-caption>
+		<ss-caption size="2"
+			>*Ссылка со списком документов также отправлена вам на
+			почту</ss-caption
+		>
 	</div>
 </div>

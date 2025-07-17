@@ -1,8 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	Inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
 import {

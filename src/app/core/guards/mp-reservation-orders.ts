@@ -15,7 +15,7 @@ export const mpReservationOrdersPermissionsGuard: CanActivateFn = () => {
 			Permissions.PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA,
 		)
 		.pipe(
-			map(isAllowAccess => {
+			map((isAllowAccess) => {
 				if (isAllowAccess) {
 					return true;
 				}

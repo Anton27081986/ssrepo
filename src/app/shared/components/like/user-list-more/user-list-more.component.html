@@ -3,11 +3,20 @@
 		<ss-text [size]="'4'">Нравится {{ count }} людям: </ss-text>
 		<div class="user-list-more__items">
 			@for (user of users; track user.id) {
-				<ss-avatar class="user-list-more__item" [size]="'small'" [type]="'round'" [src]="user.avatarUrl!"></ss-avatar>
+				<ss-avatar
+					class="user-list-more__item"
+					[size]="'small'"
+					[type]="'round'"
+					[src]="user.avatarUrl!"
+				></ss-avatar>
 			}
 			@if (count > viewCount) {
 				<div class="user-list-more__all-count">
-					<ss-text [weight]="'semi-bold'" [size]="'4'">+{{ this.remainder | async }}</ss-text>
+					<ss-text
+						[weight]="'semi-bold'"
+						[size]="'4'"
+						>+{{ this.remainder | async }}</ss-text
+					>
 				</div>
 			}
 		</div>

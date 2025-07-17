@@ -1,37 +1,100 @@
 <div class="header">
-    <div class="tabs">
-		<ss-tabs [tabs]="tabs"
-		         [selectedTab]="this.selectedTab || this.messageTab!"
-		         (select)="selectTab($event)">
+	<div class="tabs">
+		<ss-tabs
+			[tabs]="tabs"
+			[selectedTab]="this.selectedTab || this.messageTab!"
+			(select)="selectTab($event)"
+		>
 		</ss-tabs>
-    </div>
-    <ss-search-input class="search" size="small" placeholder="Поиск по сообщениям" (input)="searchMessagesByText($event)"></ss-search-input>
+	</div>
+	<ss-search-input
+		class="search"
+		size="small"
+		placeholder="Поиск по сообщениям"
+		(input)="searchMessagesByText($event)"
+	></ss-search-input>
 </div>
 
-@if(selectedTab && selectedTab.name === 'messages') {
+@if (selectedTab && selectedTab.name === 'messages') {
 	<div class="messages-list">
-
 		@if ((messages$ | async)?.total) {
-			<div #messages class="content" (scrollend)="loadMoreMessages()">
+			<div
+				#messages
+				class="content"
+				(scrollend)="loadMoreMessages()"
+			>
 				@for (message of (messages$ | async)?.items; track message.id) {
-					<div class="message" [ngClass]="{'my': (user$ | async)?.id == message.author?.id}">
-						<ss-avatar [size]="'small'" [src]="message.author?.avatarUrl || ''"></ss-avatar>
+					<div
+						class="message"
+						[ngClass]="{
+							my: (user$ | async)?.id == message.author?.id,
+						}"
+					>
+						<ss-avatar
+							[size]="'small'"
+							[src]="message.author?.avatarUrl || ''"
+						></ss-avatar>
 						<div class="message-content">
 							<div class="message-content-header">
-								<ss-text size="1" weight="semi-bold">{{ message.author?.name }}</ss-text>
+								<ss-text
+									size="1"
+									weight="semi-bold"
+									>{{ message.author?.name }}</ss-text
+								>
 								<div class="message-content-header-controls">
-									<ss-icon name="{{ message.isPrivate ? 'lock' : '' }}"></ss-icon>
+									<ss-icon
+										name="{{
+											message.isPrivate ? 'lock' : ''
+										}}"
+									></ss-icon>
 									<ss-tooltip-menu icon="more">
-										<ss-caption size="1" (click)="replyTo(message, message.author!)">
-											<ss-icon name="reply"></ss-icon>Ответить
+										<ss-caption
+											size="1"
+											(click)="
+												replyTo(
+													message,
+													message.author!
+												)
+											"
+										>
+											<ss-icon name="reply"></ss-icon
+											>Ответить
 										</ss-caption>
-										<ss-caption size="1" (click)="replyTo(message, message.author!, message.toUsers!)">
-											<ss-icon name="reply"></ss-icon>Ответить всем
+										<ss-caption
+											size="1"
+											(click)="
+												replyTo(
+													message,
+													message.author!,
+													message.toUsers!
+												)
+											"
+										>
+											<ss-icon name="reply"></ss-icon
+											>Ответить всем
 										</ss-caption>
-										@if ((user$ | async)?.id == message.author?.id) {
-											<ss-caption size="1" (click)="changeVisibility(message)">
-												<ss-icon name="{{ message.isPrivate ? 'unlock' : 'lock' }}"></ss-icon>
-												{{ message.isPrivate ? 'Доступ для всех' : 'Доступ только адресатам' }}
+										@if (
+											(user$ | async)?.id ==
+											message.author?.id
+										) {
+											<ss-caption
+												size="1"
+												(click)="
+													changeVisibility(message)
+												"
+											>
+												<ss-icon
+													name="{{
+														message.isPrivate
+															? 'unlock'
+															: 'lock'
+													}}"
+												></ss-icon>
+												{{
+													message.isPrivate
+														? 'Доступ для всех'
+														: 'Доступ только адресатам'
+												}}
 											</ss-caption>
 										}
 									</ss-tooltip-menu>
@@ -41,7 +104,10 @@
 								@if (message.toUsers?.length) {
 									<ss-text size="2">
 										<b>Кому:</b>
-										@for (user of message.toUsers; track user.id) {
+										@for (
+											user of message.toUsers;
+											track user.id
+										) {
 											<span> {{ user.name }}</span>
 										}
 									</ss-text>
@@ -49,29 +115,65 @@
 								@if (message.copyUsers?.length) {
 									<ss-text size="2">
 										<b>Копия:</b>
-										@for (copyUser of message.copyUsers; track copyUser.id) {
-											<span > {{ copyUser.name }}</span>
+										@for (
+											copyUser of message.copyUsers;
+											track copyUser.id
+										) {
+											<span> {{ copyUser.name }}</span>
 										}
 									</ss-text>
 								}
 							</div>
 							@if (message.replyToMessage) {
 								<div class="message-content-blockquote">
-									<div class="message-content-blockquote-author">
-										{{ message.replyToMessage.author?.name }}
+									<div
+										class="message-content-blockquote-author"
+									>
+										{{
+											message.replyToMessage.author?.name
+										}}
 									</div>
-									<div class="message-content-blockquote-message" [innerHTML]="message.replyToMessage.text"></div>
+									<div
+										class="message-content-blockquote-message"
+										[innerHTML]="
+											message.replyToMessage.text
+										"
+									></div>
 								</div>
 							}
-							<div class="message-content-text" [innerHTML]="message.text | bypassSecurityTrustHtml"></div>
+							<div
+								class="message-content-text"
+								[innerHTML]="
+									message.text | bypassSecurityTrustHtml
+								"
+							></div>
 							@if (message.attachments?.length) {
 								<div class="files">
-									@for (file of message.attachments; track file.id) {
-										<ss-attachment title="{{ file.fileName }}" size="{{ file.size }}" (click)="downloadFile(file?.directUrl || '', file?.fileName || '')"></ss-attachment>
+									@for (
+										file of message.attachments;
+										track file.id
+									) {
+										<ss-attachment
+											title="{{ file.fileName }}"
+											size="{{ file.size }}"
+											(click)="
+												downloadFile(
+													file?.directUrl || '',
+													file?.fileName || ''
+												)
+											"
+										></ss-attachment>
 									}
 								</div>
 							}
-							<ss-caption size="2" class="message-content-time">{{ message.createdAt | date: 'HH:mm, dd.MM.yyyy' }}</ss-caption>
+							<ss-caption
+								size="2"
+								class="message-content-time"
+								>{{
+									message.createdAt
+										| date: 'HH:mm, dd.MM.yyyy'
+								}}</ss-caption
+							>
 						</div>
 					</div>
 				}
@@ -89,10 +191,28 @@
 			<div class="files-list">
 				@for (file of (files$ | async)?.items; track file.id) {
 					<div class="files-list-item">
-						<ss-icon height="28" width="28" name="file" class="doc"></ss-icon>
-						<div class="files-list-item-content" (click)="downloadFile(file.directUrl!, file.fileName!)">
-							<ss-caption size="1" class="title">{{ file.fileName }}</ss-caption>
-							<ss-caption size="2" class="size">{{ file.size | ssFileSize }}</ss-caption>
+						<ss-icon
+							height="28"
+							width="28"
+							name="file"
+							class="doc"
+						></ss-icon>
+						<div
+							class="files-list-item-content"
+							(click)="
+								downloadFile(file.directUrl!, file.fileName!)
+							"
+						>
+							<ss-caption
+								size="1"
+								class="title"
+								>{{ file.fileName }}</ss-caption
+							>
+							<ss-caption
+								size="2"
+								class="size"
+								>{{ file.size | ssFileSize }}</ss-caption
+							>
 						</div>
 					</div>
 				}

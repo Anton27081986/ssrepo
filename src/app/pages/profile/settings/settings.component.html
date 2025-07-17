@@ -1,5 +1,5 @@
 <div class="title">
-  <h1>Основная информация</h1>
+	<h1>Основная информация</h1>
 </div>
 @if (userProfile$ | async; as profileData) {
 	<div class="settings">
@@ -7,11 +7,17 @@
 			<div class="personal">
 				<div class="img">
 					<ng-container>
-						<img ngSrc="{{ profileData?.avatarUrl }}" alt="user" />
+						<img
+							ngSrc="{{ profileData?.avatarUrl }}"
+							alt="user"
+						/>
 					</ng-container>
 				</div>
 				<div class="personal-btn">
-					<snab-button text="Сменить" [type]="ButtonType.Primary"></snab-button>
+					<snab-button
+						text="Сменить"
+						[type]="ButtonType.Primary"
+					></snab-button>
 				</div>
 			</div>
 		</div>
@@ -20,7 +26,11 @@
 				@if (profileData?.firstName) {
 					<div class="field col-12">
 						<div class="label">Имя пользователя</div>
-						<div class="text">{{ profileData?.firstName }} {{ profileData?.lastName }} {{ profileData?.surName }}</div>
+						<div class="text">
+							{{ profileData?.firstName }}
+							{{ profileData?.lastName }}
+							{{ profileData?.surName }}
+						</div>
 					</div>
 				}
 				@if (profileData?.id) {
@@ -32,7 +42,9 @@
 				@if (profileData?.birthDate) {
 					<div class="field col-6">
 						<div class="label">Дата рождения</div>
-						<div class="text">{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}</div>
+						<div class="text">
+							{{ profileData?.birthDate | date: 'dd.MM.yyyy' }}
+						</div>
 					</div>
 				}
 			</div>
@@ -89,7 +101,5 @@
 		<ng-template #prefixUser>
 			<snab-icon [icon]="IconType.Profile"></snab-icon>
 		</ng-template>
-
 	</div>
 }
-

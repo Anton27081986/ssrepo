@@ -1,18 +1,27 @@
 <div class="multiselect-autocomplete-v2">
-	@if	(label) {
+	@if (label) {
 		<ss-caption size="1">{{ label }}</ss-caption>
 	}
-	<div class="multiselect-autocomplete-v2__input" [class.multiselect-v2__input--isExpanded]="isExpanded">
+	<div
+		class="multiselect-autocomplete-v2__input"
+		[class.multiselect-v2__input--isExpanded]="isExpanded"
+	>
 		@if (!(selectedOptions$ | async)?.length) {
-			<input type="text"
-				   [placeholder]="placeholder"
-				   [attr.disabled]="readOnly$ | async"
-				   [formControl]="queryControl" />
+			<input
+				type="text"
+				[placeholder]="placeholder"
+				[attr.disabled]="readOnly$ | async"
+				[formControl]="queryControl"
+			/>
 		}
 		@if ((selectedOptions$ | async)?.length) {
 			<div class="multiselect-autocomplete-v2__chips">
-				<ss-multiselect-chips-v2 [readOnly]="(readOnly$ | async)!" [ellipsis]="(chipsEllipsis$ | async)!" [chips]="(selectedOptions$ | async)!"
-										 (delChipEmit)="delSelectedOption($event)"></ss-multiselect-chips-v2>
+				<ss-multiselect-chips-v2
+					[readOnly]="(readOnly$ | async)!"
+					[ellipsis]="(chipsEllipsis$ | async)!"
+					[chips]="(selectedOptions$ | async)!"
+					(delChipEmit)="delSelectedOption($event)"
+				></ss-multiselect-chips-v2>
 			</div>
 		}
 		@if ((this.selectedOptions$ | async)?.length) {
@@ -20,12 +29,24 @@
 				{{ (this.selectedOptions$ | async)?.length }}
 			</div>
 		}
-		@if ((this.selectedOptions$ | async)?.length && !(this.readOnly$ | async)) {
-			<ss-icon [name]="'basket'" (click)="clear()"></ss-icon>
+		@if (
+			(this.selectedOptions$ | async)?.length && !(this.readOnly$ | async)
+		) {
+			<ss-icon
+				[name]="'basket'"
+				(click)="clear()"
+			></ss-icon>
 		}
-		@if ((this.viewOptions$ | async)?.length || (this.selectedOptions$ | async)?.length) {
-			<ss-icon height="12" name="chevron" [@rotate]="isExpanded"
-					 (click)="toggle()">
+		@if (
+			(this.viewOptions$ | async)?.length ||
+			(this.selectedOptions$ | async)?.length
+		) {
+			<ss-icon
+				height="12"
+				name="chevron"
+				[@rotate]="isExpanded"
+				(click)="toggle()"
+			>
 			</ss-icon>
 		}
 	</div>
@@ -34,16 +55,22 @@
 			@if (selectedOptions$ | async; as options) {
 				@if (options.length && !(this.readOnly$ | async)) {
 					<div class="multiselect-autocomplete-v2__select-input">
-						<input type="text"
-							   [placeholder]="placeholder"
-							   [formControl]="queryControl" />
+						<input
+							type="text"
+							[placeholder]="placeholder"
+							[formControl]="queryControl"
+						/>
 					</div>
 				}
 				@for (selectedOpt of options; track selectedOpt.id) {
 					<ss-multiselect-option-v2
 						[disabled]="(readOnly$ | async)!"
 						[option]="selectedOpt"
-						(click)="delSelectedOption(selectedOpt); $event.stopPropagation()">
+						(click)="
+							delSelectedOption(selectedOpt);
+							$event.stopPropagation()
+						"
+					>
 					</ss-multiselect-option-v2>
 				}
 				@if (options.length && !(readOnly$ | async)!) {
@@ -54,7 +81,9 @@
 				@for (opt of viewOptions$ | async; track opt.id) {
 					<ss-multiselect-option-v2
 						[disabled]="(readOnly$ | async)!"
-						[option]="opt" (click)="addStateOptions(opt); $event.stopPropagation()">
+						[option]="opt"
+						(click)="addStateOptions(opt); $event.stopPropagation()"
+					>
 					</ss-multiselect-option-v2>
 				}
 			}

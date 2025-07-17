@@ -1,7 +1,10 @@
 <ng-container *ngIf="act() as act">
 	<div class="header">
 		<div class="header__title">
-			<ss-icon name="arrow" (click)="toActsList()"></ss-icon>
+			<ss-icon
+				name="arrow"
+				(click)="toActsList()"
+			></ss-icon>
 			<ss-text size="0">Акт №{{ act.id }}</ss-text>
 			@switch (act.state.id) {
 				@case (0) {
@@ -16,28 +19,64 @@
 			}
 		</div>
 		<div class="header__controls">
-			<snab-button [tooltip]="'Скачать инструкцию'"
-						 [icon]="IconType.Doc"
-						 [iconPosition]="IconPosition.OnlyIcon"
-						 [size]="Size.Large" [type]="ButtonType.Outline"
-						 (click)="downloadInstruction()">
+			<snab-button
+				[tooltip]="'Скачать инструкцию'"
+				[icon]="IconType.Doc"
+				[iconPosition]="IconPosition.OnlyIcon"
+				[size]="Size.Large"
+				[type]="ButtonType.Outline"
+				(click)="downloadInstruction()"
+			>
 			</snab-button>
-			<ss-button type="muted" size="small" (click)="openHistoryModal(act.id)">История</ss-button>
-			<ss-dropdown-button *ngIf="!isEdit()" title="Действия" [closeOnClick]="true">
+			<ss-button
+				type="muted"
+				size="small"
+				(click)="openHistoryModal(act.id)"
+				>История</ss-button
+			>
+			<ss-dropdown-button
+				*ngIf="!isEdit()"
+				title="Действия"
+				[closeOnClick]="true"
+			>
 				@if (act.state.id === 0) {
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_RESTORE)" class="header__controls__dropdown-item" (click)="restoreAct()">
+					<div
+						*ngIf="
+							permissions().includes(
+								Permissions.COMPLETED_WORK_ACTS_RESTORE
+							)
+						"
+						class="header__controls__dropdown-item"
+						(click)="restoreAct()"
+					>
 						<ss-icon name="refresh"></ss-icon>
 						<ss-text size="3">Восстановить</ss-text>
 					</div>
 				}
 				@if (act.state.id === 1) {
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_PULL_ACT)" class="header__controls__dropdown-item" (click)="pullAct()">
+					<div
+						*ngIf="
+							permissions().includes(
+								Permissions.COMPLETED_WORK_ACTS_PULL_ACT
+							)
+						"
+						class="header__controls__dropdown-item"
+						(click)="pullAct()"
+					>
 						<ss-icon name="clipboard"></ss-icon>
 						<ss-text size="3">Провести</ss-text>
 					</div>
 				}
 				@if (act.state.id === 1 || act.state.id === 2) {
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_DELETE)" class="header__controls__dropdown-item" (click)="toArchiveAct()">
+					<div
+						*ngIf="
+							permissions().includes(
+								Permissions.COMPLETED_WORK_ACTS_DELETE
+							)
+						"
+						class="header__controls__dropdown-item"
+						(click)="toArchiveAct()"
+					>
 						<ss-icon name="trash"></ss-icon>
 						<ss-text size="3">Удалить</ss-text>
 					</div>

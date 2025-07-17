@@ -1,25 +1,53 @@
-<div class="like" [tooltip]="null" [elemRef]="count && toolTipRef ? toolTipRef: null"
-	 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT">
+<div
+	class="like"
+	[tooltip]="null"
+	[elemRef]="count && toolTipRef ? toolTipRef : null"
+	[theme]="TooltipTheme.DEFAULT"
+	[position]="TooltipPosition.DEFAULT"
+>
 	@switch (type) {
 		@case (LikeStateEnum.copper) {
-			<ss-icon width="15" height="15" name="likeCopper"></ss-icon>
+			<ss-icon
+				width="15"
+				height="15"
+				name="likeCopper"
+			></ss-icon>
 		}
 		@case (LikeStateEnum.gold) {
-			<ss-icon width="15" height="15" name="likeGold"></ss-icon>
+			<ss-icon
+				width="15"
+				height="15"
+				name="likeGold"
+			></ss-icon>
 		}
 		@case (LikeStateEnum.silver) {
-			<ss-icon width="15" height="15" name="likeSilver"></ss-icon>
+			<ss-icon
+				width="15"
+				height="15"
+				name="likeSilver"
+			></ss-icon>
 		}
 		@case (LikeStateEnum.usual) {
-			<ss-icon width="15" height="15" name="likeUsual"></ss-icon>
+			<ss-icon
+				width="15"
+				height="15"
+				name="likeUsual"
+			></ss-icon>
 		}
 		@default {
-			<ss-icon width="15" height="15" name="like"></ss-icon>
+			<ss-icon
+				width="15"
+				height="15"
+				name="like"
+			></ss-icon>
 		}
 	}
 	<ss-text [size]="'3'">{{ count }}</ss-text>
 </div>
 
 <ng-template #toolTipRef>
-	<app-user-list-more [count]="count" [users]="likedUsers!"></app-user-list-more>
+	<app-user-list-more
+		[count]="count"
+		[users]="likedUsers!"
+	></app-user-list-more>
 </ng-template>

@@ -1,13 +1,20 @@
-<div class="wrapper" (mousedown)="close()">
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
 	<snab-card
 		class="change-provision-date-form"
 		[headerRef]="header"
 		[bodyRef]="body"
 		[footerRef]="footer"
-		(mousedown)="$event.stopPropagation()">
+		(mousedown)="$event.stopPropagation()"
+	>
 		<ng-template #header>
 			<div class="header">
-				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+				<snab-text
+					[type]="TextType.Headline"
+					[weight]="TextWeight.Semibold"
+				>
 					Изменить дату обеспечения
 				</snab-text>
 				<snab-button
@@ -15,21 +22,31 @@
 					[size]="Size.Large"
 					[icon]="IconType.ClearLarge"
 					[iconPosition]="IconPosition.OnlyIcon"
-					(click)="close()"></snab-button>
+					(click)="close()"
+				></snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>
-			<form class="content" [formGroup]="provisionDateForm">
+			<form
+				class="content"
+				[formGroup]="provisionDateForm"
+			>
 				<table class="date-table">
 					<thead>
 						<tr>
 							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+								>
 									Дата производства
 								</snab-text>
 							</th>
 							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+								>
 									Дата обеспечения
 								</snab-text>
 							</th>
@@ -37,17 +54,25 @@
 					</thead>
 					<tbody formArrayName="rows">
 						<tr
-							*ngFor="let rowControl of rows.controls; let i = index"
-							[formGroupName]="i">
+							*ngFor="
+								let rowControl of rows.controls;
+								let i = index
+							"
+							[formGroupName]="i"
+						>
 							<td>
 								<snab-text [type]="TextType.Body">
-									{{ data.provisionDetails[i].productionDate | date: 'dd.MM.yyyy' }}
+									{{
+										data.provisionDetails[i].productionDate
+											| date: 'dd.MM.yyyy'
+									}}
 								</snab-text>
 							</td>
 							<td>
 								<ss-date-time-picker
 									formControlName="provisionDate"
-									[showTime]="false"></ss-date-time-picker>
+									[showTime]="false"
+								></ss-date-time-picker>
 							</td>
 						</tr>
 					</tbody>
@@ -60,11 +85,13 @@
 					text="Отмена"
 					[type]="ButtonType.Secondary"
 					[size]="Size.Large"
-					(click)="close()"></snab-button>
+					(click)="close()"
+				></snab-button>
 				<snab-button
 					text="Изменить"
 					[size]="Size.Large"
-					(click)="confirmChange()"></snab-button>
+					(click)="confirmChange()"
+				></snab-button>
 			</div>
 		</ng-template>
 	</snab-card>

@@ -1,16 +1,24 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input #input
-		   class="{{ size }}"
-		   type="text"
-		   [placeholder]="'поиск'"
-		   [disabled]="disabled"
-		   [value]="query"
-		   (input)="onInputValueChange($event)"
+	<input
+		#input
+		class="{{ size }}"
+		type="text"
+		[placeholder]="'поиск'"
+		[disabled]="disabled"
+		[value]="query"
+		(input)="onInputValueChange($event)"
 	/>
-	<div *ngIf="(found$ | async)?.length" class="search-result">
+	<div
+		*ngIf="(found$ | async)?.length"
+		class="search-result"
+	>
 		<div class="separator"></div>
-		<ss-caption *ngFor="let item of found$ | async" class="search-result-item" (click)="setItem(item)">{{ item.name }}
+		<ss-caption
+			*ngFor="let item of found$ | async"
+			class="search-result-item"
+			(click)="setItem(item)"
+			>{{ item.name }}
 		</ss-caption>
 	</div>
 </div>

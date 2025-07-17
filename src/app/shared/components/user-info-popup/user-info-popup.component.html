@@ -1,64 +1,180 @@
-<div class="wrapper" (click)="close()">
-	<div *ngIf="$user | async as user" class="user-info-popup" (click)="$event.stopPropagation()">
-		<ss-headline class="user-info-popup__header" [size]="'h6'">Информация о пользователе</ss-headline>
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<div
+		*ngIf="$user | async as user"
+		class="user-info-popup"
+		(click)="$event.stopPropagation()"
+	>
+		<ss-headline
+			class="user-info-popup__header"
+			[size]="'h6'"
+			>Информация о пользователе</ss-headline
+		>
 		<ss-divider></ss-divider>
-		<app-user-card class="user-info-popup__user-card" [size]="'large'" [viewPopupInfo]="false" [user]="user"></app-user-card>
+		<app-user-card
+			class="user-info-popup__user-card"
+			[size]="'large'"
+			[viewPopupInfo]="false"
+			[user]="user"
+		></app-user-card>
 		<div class="user-info-popup__contacts">
-			<div *ngIf="user.phone" class="user-info-popup__item">
+			<div
+				*ngIf="user.phone"
+				class="user-info-popup__item"
+			>
 				<div class="user-info-popup__item-description">
-					<ss-icon name="phone" height="16" width="16"></ss-icon>
-					<ss-text size="3" class="title">Tелефон:</ss-text>
+					<ss-icon
+						name="phone"
+						height="16"
+						width="16"
+					></ss-icon>
+					<ss-text
+						size="3"
+						class="title"
+						>Tелефон:</ss-text
+					>
 				</div>
 				<div>
-					<ss-text size="3" class="description" color="gray">{{ user.phone }}</ss-text>
+					<ss-text
+						size="3"
+						class="description"
+						color="gray"
+						>{{ user.phone }}</ss-text
+					>
 				</div>
 			</div>
-			<div *ngIf="user.skype" class="user-info-popup__item">
+			<div
+				*ngIf="user.skype"
+				class="user-info-popup__item"
+			>
 				<div class="user-info-popup__item-description">
-					<ss-icon name="skype" height="16" width="16"></ss-icon>
-					<ss-text size="3" class="title">Skype:</ss-text>
+					<ss-icon
+						name="skype"
+						height="16"
+						width="16"
+					></ss-icon>
+					<ss-text
+						size="3"
+						class="title"
+						>Skype:</ss-text
+					>
 				</div>
 				<div>
-					<ss-text size="3" class="description" color="gray">{{ user.skype}}</ss-text>
+					<ss-text
+						size="3"
+						class="description"
+						color="gray"
+						>{{ user.skype }}</ss-text
+					>
 				</div>
 			</div>
-			<a *ngIf="user.phoneLocal" target="_blank" class="user-info-popup__item" [href]="user.linkToCall">
+			<a
+				*ngIf="user.phoneLocal"
+				target="_blank"
+				class="user-info-popup__item"
+				[href]="user.linkToCall"
+			>
 				<div class="user-info-popup__item-description">
-					<ss-icon name="phone" height="16" width="16"></ss-icon>
-					<ss-text size="3" class="title">Внутренний телефон:</ss-text>
+					<ss-icon
+						name="phone"
+						height="16"
+						width="16"
+					></ss-icon>
+					<ss-text
+						size="3"
+						class="title"
+						>Внутренний телефон:</ss-text
+					>
 				</div>
 				<div>
-					<ss-text size="3" class="description" color="gray">{{ user.phoneLocal }}</ss-text>
+					<ss-text
+						size="3"
+						class="description"
+						color="gray"
+						>{{ user.phoneLocal }}</ss-text
+					>
 				</div>
 			</a>
-			<div *ngIf="user.email" class="user-info-popup__item">
+			<div
+				*ngIf="user.email"
+				class="user-info-popup__item"
+			>
 				<div class="user-info-popup__item-description">
-					<ss-icon name="mail" height="16" width="16"></ss-icon>
-					<ss-text size="3" class="title">Email:</ss-text>
+					<ss-icon
+						name="mail"
+						height="16"
+						width="16"
+					></ss-icon>
+					<ss-text
+						size="3"
+						class="title"
+						>Email:</ss-text
+					>
 				</div>
 				<div>
-					<ss-text size="3" class="description" color="gray">{{ user.email }}</ss-text>
+					<ss-text
+						size="3"
+						class="description"
+						color="gray"
+						>{{ user.email }}</ss-text
+					>
 				</div>
 			</div>
-			<div *ngIf="user.room" class="user-info-popup__item">
+			<div
+				*ngIf="user.room"
+				class="user-info-popup__item"
+			>
 				<div class="user-info-popup__item-description">
-					<ss-icon name="room" height="16" width="16"></ss-icon>
-					<ss-text size="3" class="title">Корпус/Комната:</ss-text>
+					<ss-icon
+						name="room"
+						height="16"
+						width="16"
+					></ss-icon>
+					<ss-text
+						size="3"
+						class="title"
+						>Корпус/Комната:</ss-text
+					>
 				</div>
 				<div>
-					<ss-text size="3" class="description" color="gray">{{ user.room }}</ss-text>
+					<ss-text
+						size="3"
+						class="description"
+						color="gray"
+						>{{ user.room }}</ss-text
+					>
 				</div>
 			</div>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="user-info-popup__info-supervisors">
 			<div class="user-info-popup__item">
-				<ss-text size="3" class="title">Руководитель направления:</ss-text>
-				<ss-text size="3" class="description" color="gray">{{ user.chiefName }}</ss-text>
+				<ss-text
+					size="3"
+					class="title"
+					>Руководитель направления:</ss-text
+				>
+				<ss-text
+					size="3"
+					class="description"
+					color="gray"
+					>{{ user.chiefName }}</ss-text
+				>
 			</div>
 			<div class="user-info-popup__item">
-				<ss-text size="3" class="title">Руководитель подразделения:</ss-text>
-				<ss-text size="3" class="description" color="gray">{{ user.headName }}</ss-text>
+				<ss-text
+					size="3"
+					class="title"
+					>Руководитель подразделения:</ss-text
+				>
+				<ss-text
+					size="3"
+					class="description"
+					color="gray"
+					>{{ user.headName }}</ss-text
+				>
 			</div>
 		</div>
 	</div>

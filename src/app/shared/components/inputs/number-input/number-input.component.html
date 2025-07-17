@@ -1,25 +1,35 @@
 @if (label()) {
-    <ss-caption size="1">{{ label() }}</ss-caption>
+	<ss-caption size="1">{{ label() }}</ss-caption>
 }
 
 <div class="input">
-    <input
-        [ngClass]="size() | mapper : getControlClasses : errorText()"
-      	[value]="value$ | async"
+	<input
+		[ngClass]="size() | mapper: getControlClasses : errorText()"
+		[value]="value$ | async"
 		[disabled]="disabled()"
-        [placeholder]="placeholder()"
-        [maxLength]="maxlength()"
-        (input)="onInput($event)"
-    />
+		[placeholder]="placeholder()"
+		[maxLength]="maxlength()"
+		(input)="onInput($event)"
+	/>
 	@if (!disabled()) {
 		<div class="input__icon">
-			<ss-icon [name]="'chevron'" (click)="valueUp()"></ss-icon>
+			<ss-icon
+				[name]="'chevron'"
+				(click)="valueUp()"
+			></ss-icon>
 			@if (value$ | async) {
-				<ss-icon [style]="{ 'transform': 'rotate(180deg)' }" [name]="'chevron'" (click)="valueDown()"></ss-icon>
+				<ss-icon
+					[style]="{ transform: 'rotate(180deg)' }"
+					[name]="'chevron'"
+					(click)="valueDown()"
+				></ss-icon>
 			}
 		</div>
 	}
-
 </div>
 
-<ss-caption size="2" color="error">{{ errorText() }}</ss-caption>
+<ss-caption
+	size="2"
+	color="error"
+	>{{ errorText() }}</ss-caption
+>

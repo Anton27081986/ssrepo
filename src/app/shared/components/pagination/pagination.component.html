@@ -6,24 +6,31 @@
 				[class.ss-pagination__tab--disabled]="!disabledLeft"
 				(click)="back()"
 			>
-				<ss-icon width="5" height="9" name="arrowRight" class="ss-pagination__tab--left-arrow"></ss-icon>
+				<ss-icon
+					width="5"
+					height="9"
+					name="arrowRight"
+					class="ss-pagination__tab--left-arrow"
+				></ss-icon>
 			</li>
 			@if (viewFirstWaiting) {
 				<li
 					class="ss-pagination__tab"
 					[class.ss-pagination__tab--active]="pageIndex === 1"
-					(click)="changePageIndex(1)">
+					(click)="changePageIndex(1)"
+				>
 					{{ 1 }}
 				</li>
 			}
 			@if (viewFirstWaiting) {
 				<div class="ss-pagination__tab">...</div>
 			}
-			@for (tab of (arrTabs | async); track tab) {
+			@for (tab of arrTabs | async; track tab) {
 				<li
 					class="ss-pagination__tab"
 					[class.ss-pagination__tab--active]="pageIndex === tab"
-					(click)="changePageIndex(tab)">
+					(click)="changePageIndex(tab)"
+				>
 					{{ tab }}
 				</li>
 			}
@@ -33,13 +40,25 @@
 			@if (viewLastWaiting) {
 				<li
 					class="ss-pagination__tab"
-					[class.ss-pagination__tab--active]="pageIndex === countAllTabs"
-					(click)="changePageIndex(countAllTabs)">
+					[class.ss-pagination__tab--active]="
+						pageIndex === countAllTabs
+					"
+					(click)="changePageIndex(countAllTabs)"
+				>
 					{{ countAllTabs }}
 				</li>
 			}
-			<li class="ss-pagination__tab" [class.ss-pagination__tab--disabled]="!disabledRight" (click)="next()">
-				<ss-icon width="5" height="9" name="arrowRight" class="left-arrow"></ss-icon>
+			<li
+				class="ss-pagination__tab"
+				[class.ss-pagination__tab--disabled]="!disabledRight"
+				(click)="next()"
+			>
+				<ss-icon
+					width="5"
+					height="9"
+					name="arrowRight"
+					class="left-arrow"
+				></ss-icon>
 			</li>
 		</ul>
 	</div>

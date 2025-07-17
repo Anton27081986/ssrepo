@@ -71,8 +71,10 @@ export class MpReservationOrdersPopupHistoryComponent {
 	}
 
 	private mapToRows(itemsHistory: IChangeTrackerItemDto[]): IHistoryRow[] {
-		return itemsHistory.map(item => {
-			const nameChange = item.changes?.find(changeItem => changeItem.propertyName === 'Name');
+		return itemsHistory.map((item) => {
+			const nameChange = item.changes?.find(
+				(changeItem) => changeItem.propertyName === 'Name',
+			);
 			const toWhom = nameChange
 				? `${nameChange.fromValue ?? ''}, ${nameChange.toValue ?? ''}`
 				: '';

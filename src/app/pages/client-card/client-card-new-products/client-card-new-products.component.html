@@ -1,41 +1,101 @@
-<ss-card padding="0" radius="0 0 16px 16px" class="container">
+<ss-card
+	padding="0"
+	radius="0 0 16px 16px"
+	class="container"
+>
 	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
 	<div class="new-products">
 		<div class="new-products-header">
-			<a *ngIf="(newProducts$ | async)?.linkToModule; else noLink" target="_blank" [href]="(newProducts$ | async)?.linkToModule">
-				<ss-headline class="new-products-header-title" size="h6">ЖНТПР</ss-headline>
+			<a
+				*ngIf="(newProducts$ | async)?.linkToModule; else noLink"
+				target="_blank"
+				[href]="(newProducts$ | async)?.linkToModule"
+			>
+				<ss-headline
+					class="new-products-header-title"
+					size="h6"
+					>ЖНТПР</ss-headline
+				>
 			</a>
 			<ng-template #noLink>
-				<ss-headline class="new-products-header-title" size="h6">ЖНТПР</ss-headline>
+				<ss-headline
+					class="new-products-header-title"
+					size="h6"
+					>ЖНТПР</ss-headline
+				>
 			</ng-template>
-			<ss-icon *ngIf="!isFiltersVisible" class="new-products-header-filter-button" height="18" width="18" name="filter" (click)="toggleFilters()"></ss-icon>
+			<ss-icon
+				*ngIf="!isFiltersVisible"
+				class="new-products-header-filter-button"
+				height="18"
+				width="18"
+				name="filter"
+				(click)="toggleFilters()"
+			></ss-icon>
 		</div>
-		<div *ngIf="tableState === TableState.Full || tableState === TableState.Loading" class="new-products-content">
+		<div
+			*ngIf="
+				tableState === TableState.Full ||
+				tableState === TableState.Loading
+			"
+			class="new-products-content"
+		>
 			<div class="new-products-content-table">
 				<ss-table
 					[head]="[
-						{title: 'Код', field: 'code'},
-						{title: 'Статус', field: 'status', sizeRatio: 2},
-						{title: 'Название ТПР',  field: 'productName', sizeRatio: 4},
-						{title: 'Заказчик',  field: 'customer', sizeRatio: 2},
-						{title: 'Разработчик', field: 'developer', sizeRatio: 2}
-						]"
-					[items]="tableItems">
+						{ title: 'Код', field: 'code' },
+						{ title: 'Статус', field: 'status', sizeRatio: 2 },
+						{
+							title: 'Название ТПР',
+							field: 'productName',
+							sizeRatio: 4,
+						},
+						{ title: 'Заказчик', field: 'customer', sizeRatio: 2 },
+						{
+							title: 'Разработчик',
+							field: 'developer',
+							sizeRatio: 2,
+						},
+					]"
+					[items]="tableItems"
+				>
 				</ss-table>
 			</div>
 			<div class="new-products-content-pagination pagination">
-				<ss-pagination [total]="total" [pageSize]="pageSize" [pageIndex]="pageIndex" (changeIndex)="nzPageIndexChange($event)"></ss-pagination>
+				<ss-pagination
+					[total]="total"
+					[pageSize]="pageSize"
+					[pageIndex]="pageIndex"
+					(changeIndex)="nzPageIndexChange($event)"
+				></ss-pagination>
 			</div>
 		</div>
-		<div *ngIf="tableState === TableState.Empty" class="new-products-content">
+		<div
+			*ngIf="tableState === TableState.Empty"
+			class="new-products-content"
+		>
 			<ss-empty-placeholder>
-				<ss-headline size="h3" class="placeholder-headline">По вашему запросу ничего не найдено</ss-headline>
+				<ss-headline
+					size="h3"
+					class="placeholder-headline"
+					>По вашему запросу ничего не найдено</ss-headline
+				>
 				<div class="placeholder-subtitle">
-					<ss-text size="3">Попробуйте изменить параметры поиска</ss-text>
+					<ss-text size="3"
+						>Попробуйте изменить параметры поиска</ss-text
+					>
 				</div>
 			</ss-empty-placeholder>
 		</div>
 	</div>
-	<div *ngIf="isFiltersVisible" class="separator"></div>
-	<ss-filters *ngIf="isFiltersVisible" [(isFiltersVisible)]="isFiltersVisible" [(filters)]="filters" (applyFilter)="getFilteredSales(true)"></ss-filters>
+	<div
+		*ngIf="isFiltersVisible"
+		class="separator"
+	></div>
+	<ss-filters
+		*ngIf="isFiltersVisible"
+		[(isFiltersVisible)]="isFiltersVisible"
+		[(filters)]="filters"
+		(applyFilter)="getFilteredSales(true)"
+	></ss-filters>
 </ss-card>

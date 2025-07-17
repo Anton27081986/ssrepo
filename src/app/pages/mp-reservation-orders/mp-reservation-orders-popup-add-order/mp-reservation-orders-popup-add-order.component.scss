@@ -73,7 +73,8 @@
 	width: 100%;
 	border-collapse: collapse;
 
-	th, td {
+	th,
+	td {
 		padding: var(--padding-xs);
 		text-align: left;
 		border-bottom: 1px solid $island-outline;
@@ -83,7 +84,7 @@
 		position: sticky;
 		top: 0;
 		z-index: 2;
-		background-color: #EEF2FF;
+		background-color: #eef2ff;
 		font-weight: bold;
 	}
 
@@ -99,4 +100,3 @@
 	align-items: center;
 	gap: var(--gap-l);
 }
-

@@ -1,39 +1,39 @@
 @mixin flexColumn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .operation-plan-empty-state {
-  @include flexColumn;
-  flex-direction: column;
-  height: 398px;
-  width: 100%;
-  border: 1px solid var(--border-primary);
-  border-left: none;
-  border-right: none;
+	@include flexColumn;
+	flex-direction: column;
+	height: 398px;
+	width: 100%;
+	border: 1px solid var(--border-primary);
+	border-left: none;
+	border-right: none;
 
-  &__info {
-    @include flexColumn;
-    flex-direction: column;
-    gap: 16px;
-  }
+	&__info {
+		@include flexColumn;
+		flex-direction: column;
+		gap: 16px;
+	}
 
-  &__content {
-    @include flexColumn;
-    flex-direction: column;
-    width: 596px;
+	&__content {
+		@include flexColumn;
+		flex-direction: column;
+		width: 596px;
 
-    &-info {
-      @include flexColumn;
-      flex-direction: column;
-      gap: 24px;
+		&-info {
+			@include flexColumn;
+			flex-direction: column;
+			gap: 24px;
 
-      &-text {
-        @include flexColumn;
-        flex-direction: column;
-        gap: 4px;
-      }
-    }
-  }
+			&-text {
+				@include flexColumn;
+				flex-direction: column;
+				gap: 4px;
+			}
+		}
+	}
 }

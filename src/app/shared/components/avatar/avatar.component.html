@@ -1,9 +1,24 @@
 @if (!noImage) {
-	<div style="background: center / contain no-repeat url('{{src}}') white;
-width: {{(width | async)!}}px; height: {{(height | async)!}}px; border-radius: {{ radius | async }}%"  class="avatar">
-		<img src="{{src}}" alt="" width="0" height="0" (error)="onImageError()" />
+	<div
+		style="background: center / contain no-repeat url('{{ src }}') white;
+width: {{ (width | async)! }}px; height: {{
+			(height | async)!
+		}}px; border-radius: {{ radius | async }}%"
+		class="avatar"
+	>
+		<img
+			src="{{ src }}"
+			alt=""
+			width="0"
+			height="0"
+			(error)="onImageError()"
+		/>
 	</div>
 } @else {
-	<ss-icon class="avatar" name="noAvatar" [width]="(width | async)!" [height]="(height | async)!"></ss-icon>
+	<ss-icon
+		class="avatar"
+		name="noAvatar"
+		[width]="(width | async)!"
+		[height]="(height | async)!"
+	></ss-icon>
 }
-

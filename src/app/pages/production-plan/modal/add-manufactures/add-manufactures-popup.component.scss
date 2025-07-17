@@ -1,90 +1,90 @@
 .add-manufactures-popup {
-  position: relative;
-  min-height: 378px;
-  display: flex;
-  flex-direction: column;
+	position: relative;
+	min-height: 378px;
+	display: flex;
+	flex-direction: column;
 
-  &__sticky {
-    display: flex;
-    gap: 6px;
-    flex-direction: column;
-  }
+	&__sticky {
+		display: flex;
+		gap: 6px;
+		flex-direction: column;
+	}
 
-  &--visibility {
-    visibility: hidden;
-  }
+	&--visibility {
+		visibility: hidden;
+	}
 
-  &__empty-state {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    margin: auto;
+	&__empty-state {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+		margin: auto;
 
-    &__text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      align-items: center;
-      gap: 4px;
-      max-width: 374px;
-    }
-  }
+		&__text {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			text-align: center;
+			align-items: center;
+			gap: 4px;
+			max-width: 374px;
+		}
+	}
 
-  &__selected {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+	&__selected {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
 
-  &__item {
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 3px 1px;
-    gap: 16px;
-  }
+	&__item {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+		padding: 3px 1px;
+		gap: 16px;
+	}
 
-  &__item-left {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: 8px;
-  }
+	&__item-left {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 8px;
+	}
 
-  &__item-right {
-    display: flex;
+	&__item-right {
+		display: flex;
 
-    ss-lib-button {
-      width: 354px;
-    }
-  }
+		ss-lib-button {
+			width: 354px;
+		}
+	}
 
-  &__items {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding-top: 10px;
-  }
+	&__items {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding-top: 10px;
+	}
 
-  &__actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-  }
+	&__actions {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 12px;
+	}
 
-  &__clear-button {
-    display: flex;
-    justify-content: start;
-    width: 110px;
-  }
+	&__clear-button {
+		display: flex;
+		justify-content: start;
+		width: 110px;
+	}
 }
 
 ss-lib-spinner {
-  padding-top: 10px;
-  margin: auto;
+	padding-top: 10px;
+	margin: auto;
 }

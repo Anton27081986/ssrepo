@@ -1,21 +1,36 @@
-<ss-card *ngIf="thanksPartner" class="thanks-parther-card" [padding]="'16px'">
-		<app-user-card [user]="thanksPartner.user" [size]="'large'" [viewPopupInfo]="true"></app-user-card>
-		<div class="thanks-parther-card__actions">
-			<ng-container [ngSwitch]="thanksPartner.place">
-				<ng-container *ngSwitchCase="IPartnerPlaceEmblem.gold">
-					<ss-icon class="thanks-parther-card__share" [name]="'goldEmblem'"></ss-icon>
-				</ng-container>
-				<ng-container *ngSwitchCase="IPartnerPlaceEmblem.silver">
-					<ss-icon class="thanks-parther-card__share" [name]="'silverEmblem'"></ss-icon>
-				</ng-container>
-				<ng-container *ngSwitchCase="IPartnerPlaceEmblem.cooper">
-					<ss-icon class="thanks-parther-card__share" [name]="'cooperEmblem'"></ss-icon>
-				</ng-container>
+<ss-card
+	*ngIf="thanksPartner"
+	class="thanks-parther-card"
+	[padding]="'16px'"
+>
+	<app-user-card
+		[user]="thanksPartner.user"
+		[size]="'large'"
+		[viewPopupInfo]="true"
+	></app-user-card>
+	<div class="thanks-parther-card__actions">
+		<ng-container [ngSwitch]="thanksPartner.place">
+			<ng-container *ngSwitchCase="IPartnerPlaceEmblem.gold">
+				<ss-icon
+					class="thanks-parther-card__share"
+					[name]="'goldEmblem'"
+				></ss-icon>
 			</ng-container>
-			<div class="thanks-parther-card__thanks-count">
-				{{ thanksPartner.thanksCount }}
-			</div>
+			<ng-container *ngSwitchCase="IPartnerPlaceEmblem.silver">
+				<ss-icon
+					class="thanks-parther-card__share"
+					[name]="'silverEmblem'"
+				></ss-icon>
+			</ng-container>
+			<ng-container *ngSwitchCase="IPartnerPlaceEmblem.cooper">
+				<ss-icon
+					class="thanks-parther-card__share"
+					[name]="'cooperEmblem'"
+				></ss-icon>
+			</ng-container>
+		</ng-container>
+		<div class="thanks-parther-card__thanks-count">
+			{{ thanksPartner.thanksCount }}
 		</div>
+	</div>
 </ss-card>
-
-

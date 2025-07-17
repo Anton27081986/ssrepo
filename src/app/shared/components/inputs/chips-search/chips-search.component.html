@@ -1,19 +1,28 @@
 <form>
 	<ss-caption size="1">{{ label }}</ss-caption>
-	<div class="input" [ngClass]="{'dropdown': found.length}">
+	<div
+		class="input"
+		[ngClass]="{ dropdown: found.length }"
+	>
 		@for (item of selectedItems; track $index) {
 			<div class="chips">
 				<ss-text size="3">{{ item.name }}</ss-text>
-				<ss-icon height="10" width="10" name="close" (click)="onRemoveItemFromList($index)"></ss-icon>
+				<ss-icon
+					height="10"
+					width="10"
+					name="close"
+					(click)="onRemoveItemFromList($index)"
+				></ss-icon>
 			</div>
 		}
-		<input #input
-			   class="{{ error ? size + ' error' : size }}"
-			   type="text"
-			   [placeholder]="placeholder"
-			   [disabled]="disabled"
-			   (input)="onInputChange(input.value)"
-			   (keydown.enter)="dontSend($event)"
+		<input
+			#input
+			class="{{ error ? size + ' error' : size }}"
+			type="text"
+			[placeholder]="placeholder"
+			[disabled]="disabled"
+			(input)="onInputChange(input.value)"
+			(keydown.enter)="dontSend($event)"
 		/>
 	</div>
 	@if (found.length) {
@@ -21,7 +30,10 @@
 			<div class="variants">
 				<div class="separator"></div>
 				@for (item of found; track item) {
-					<div class="variants-item" (click)="onAddItemToList(item)">
+					<div
+						class="variants-item"
+						(click)="onAddItemToList(item)"
+					>
 						<ss-text size="3">{{ item?.name }}</ss-text>
 					</div>
 				}
@@ -29,7 +41,9 @@
 		</div>
 	}
 	@if (found.length) {
-		<div class="overflow" (click)="found = []"></div>
+		<div
+			class="overflow"
+			(click)="found = []"
+		></div>
 	}
 </form>
-

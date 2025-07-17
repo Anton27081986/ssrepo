@@ -2,9 +2,17 @@
 	<ng-container *ngFor="let cols of state.colsTr$ | async">
 		<ng-container *ngFor="let col of cols.cols">
 			<div class="ss-settings-view-column__item">
-				<ss-icon *ngIf="col.show; else empty" height="12" name="checkbox" (click)="toggleItemShow(col)"></ss-icon>
+				<ss-icon
+					*ngIf="col.show; else empty"
+					height="12"
+					name="checkbox"
+					(click)="toggleItemShow(col)"
+				></ss-icon>
 				<ng-template #empty>
-					<div class="ss-settings-view-column__checkbox" (click)="toggleItemShow(col)"></div>
+					<div
+						class="ss-settings-view-column__checkbox"
+						(click)="toggleItemShow(col)"
+					></div>
 				</ng-template>
 
 				<div class="ss-settings-view-column__title">

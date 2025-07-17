@@ -1,13 +1,20 @@
-<div class="wrapper" (mousedown)="close()">
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
 	<snab-card
 		class="history-popup"
 		[headerRef]="header"
 		[bodyRef]="body"
 		[footerRef]="footer"
-		(mousedown)="$event.stopPropagation()">
+		(mousedown)="$event.stopPropagation()"
+	>
 		<ng-template #header>
 			<div class="header">
-				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+				<snab-text
+					[type]="TextType.Headline"
+					[weight]="TextWeight.Semibold"
+				>
 					История изменений по заказу
 				</snab-text>
 				<snab-button
@@ -23,47 +30,74 @@
 			<div class="content">
 				<table class="history-table">
 					<thead>
-					<tr>
-						<th>
-							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Автор</snab-text>
-						</th>
-						<th>
-							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Действие</snab-text>
-						</th>
-						<th>
-							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Сопроводительный текст к
-								действию
-							</snab-text>
-						</th>
-						<th>
-							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Кому</snab-text>
-						</th>
-						<th>
-							<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">Дата</snab-text>
-						</th>
-					</tr>
+						<tr>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Автор</snab-text
+								>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Действие</snab-text
+								>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Сопроводительный текст к действию
+								</snab-text>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Кому</snab-text
+								>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Дата</snab-text
+								>
+							</th>
+						</tr>
 					</thead>
 					<tbody>
-					<tr *ngFor="let entry of historyEntries">
-						<td>
-							<snab-text [type]="TextType.Body">{{ entry.author }}</snab-text>
-						</td>
-						<td>
-							<snab-text [type]="TextType.Body">{{ entry.action }}</snab-text>
-						</td>
-						<td>
-							<snab-text [type]="TextType.Body">{{ entry.comment }}</snab-text>
-						</td>
-						<td>
-							<snab-text [type]="TextType.Body">{{ entry.toWhom }}</snab-text>
-						</td>
-						<td>
-							<snab-text [type]="TextType.Body">{{ entry.date | date: 'dd.MM.yyyy' }}</snab-text>
-						</td>
-					</tr>
+						<tr *ngFor="let entry of historyEntries">
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									entry.author
+								}}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									entry.action
+								}}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									entry.comment
+								}}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									entry.toWhom
+								}}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									entry.date | date: 'dd.MM.yyyy'
+								}}</snab-text>
+							</td>
+						</tr>
 					</tbody>
 				</table>
-
 			</div>
 		</ng-template>
 		<ng-template #footer>
@@ -72,7 +106,8 @@
 					[total]="total"
 					[pageSize]="pageSize"
 					[pageIndex]="pageIndex"
-					(changeIndex)="pageIndexChange($event)">
+					(changeIndex)="pageIndexChange($event)"
+				>
 				</ss-pagination>
 			</div>
 		</ng-template>

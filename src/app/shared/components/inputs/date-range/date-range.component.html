@@ -1,40 +1,70 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="calendar-button-wrapper">
-    <div class="calendar-button" [ngClass]="{'error': error}" [className]="size" (click)="picker.open()">
-		@if (formRange.controls.startDate.value || formRange.controls.endDate.value) {
+	<div
+		class="calendar-button"
+		[ngClass]="{ error: error }"
+		[className]="size"
+		(click)="picker.open()"
+	>
+		@if (
+			formRange.controls.startDate.value ||
+			formRange.controls.endDate.value
+		) {
 			<div class="calendar-button-text">
-				<ss-text size="2">{{ formRange.controls.startDate.value | date : 'dd.MM.yyyy' }}</ss-text>
+				<ss-text size="2">{{
+					formRange.controls.startDate.value | date: 'dd.MM.yyyy'
+				}}</ss-text>
 
 				@if (formRange.controls.endDate.value) {
 					<div class="calendar-button-text-separator"></div>
 				}
 
-				<ss-text size="2">{{ formRange.controls.endDate.value  | date : 'dd.MM.yyyy' }}</ss-text>
+				<ss-text size="2">{{
+					formRange.controls.endDate.value | date: 'dd.MM.yyyy'
+				}}</ss-text>
 			</div>
 		} @else {
 			<div class="calendar-button-text">{{ placeholder }}</div>
-
 		}
 
-        <ss-icon height="16" name="calendar" class="calendar-icon"></ss-icon>
-    </div>
+		<ss-icon
+			height="16"
+			name="calendar"
+			class="calendar-icon"
+		></ss-icon>
+	</div>
 
-    <ss-icon
-        height="16"
-        width="16"
-        name="close"
-        class="calendar-button-wrapper__icon"
-        (click)="clear()"
-    ></ss-icon>
+	<ss-icon
+		height="16"
+		width="16"
+		name="close"
+		class="calendar-button-wrapper__icon"
+		(click)="clear()"
+	></ss-icon>
 </div>
 <mat-form-field class="date-range">
-    <mat-date-range-input [rangePicker]="picker" [formGroup]="formRange">
-        <input matStartDate formControlName="startDate" (dateChange)="dateChanged()"/>
+	<mat-date-range-input
+		[rangePicker]="picker"
+		[formGroup]="formRange"
+	>
+		<input
+			matStartDate
+			formControlName="startDate"
+			(dateChange)="dateChanged()"
+		/>
 
-        <input matEndDate formControlName="endDate" (dateChange)="dateChanged()" />
-    </mat-date-range-input>
+		<input
+			matEndDate
+			formControlName="endDate"
+			(dateChange)="dateChanged()"
+		/>
+	</mat-date-range-input>
 
-    <mat-date-range-picker #picker></mat-date-range-picker>
+	<mat-date-range-picker #picker></mat-date-range-picker>
 </mat-form-field>
 
-<ss-caption size="2" color="error">{{ error }}</ss-caption>
+<ss-caption
+	size="2"
+	color="error"
+	>{{ error }}</ss-caption
+>

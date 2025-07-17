@@ -1,89 +1,157 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td *ngIf="col.display" class="ss-table-td">
+			<td
+				*ngIf="col.display"
+				class="ss-table-td"
+			>
 				<ng-container *ngSwitchCase="AtWorkRowItemField.tovProductName">
-					<div class="hc-table-td__content">{{ item.tovProductName }}</div>
+					<div class="hc-table-td__content">
+						{{ item.tovProductName }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="AtWorkRowItemField.atWork">
-					<div class="hc-table-td__content hc-table-td__content--center">
-						<input type="checkbox" (change)="onCheckAtWork($event.target!); item.errors = {}" />
+					<div
+						class="hc-table-td__content hc-table-td__content--center"
+					>
+						<input
+							type="checkbox"
+							(change)="
+								onCheckAtWork($event.target!); item.errors = {}
+							"
+						/>
 						<ss-text size="3">Взять в работу</ss-text>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="AtWorkRowItemField.commentId">
-					<div *ngIf="!item.atWork; else noComment" class="hc-table-td__content">
+					<div
+						*ngIf="!item.atWork; else noComment"
+						class="hc-table-td__content"
+					>
 						<ss-select
 							size="small"
-							[error]="item.errors.commentId ? 'Обязательное поле' : undefined"
-							(change)="item.commentId = getInputValue($event.target!)"
+							[error]="
+								item.errors.commentId
+									? 'Обязательное поле'
+									: undefined
+							"
+							(change)="
+								item.commentId = getInputValue($event.target!)
+							"
 							(click)="item.errors.commentId = false"
 						>
 							<option value="{{ null }}">(Не выбран)</option>
-							<option *ngFor="let item of (tprRejectsReasons$ | async)" [value]="item.id">{{ item.name }}</option>
+							<option
+								*ngFor="let item of tprRejectsReasons$ | async"
+								[value]="item.id"
+							>
+								{{ item.name }}
+							</option>
 						</ss-select>
 					</div>
 					<ng-template #noComment>
-						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+						<div
+							class="hc-table-td__content hc-table-td__content--center"
+						>
+							-
+						</div>
 					</ng-template>
-
 				</ng-container>
 
 				<ng-container *ngSwitchCase="AtWorkRowItemField.potencial">
-					<div *ngIf="item.atWork; else noPotencial" class="hc-table-td__content">
+					<div
+						*ngIf="item.atWork; else noPotencial"
+						class="hc-table-td__content"
+					>
 						<ss-input
 							size="small"
 							type="number"
 							placeholder="Введите"
 							[value]="item.potencial"
-							[error]="item.errors.potencial ? 'Обязательное поле' : undefined"
-							(change)="item.potencial = getInputValue($event.target!)"
+							[error]="
+								item.errors.potencial
+									? 'Обязательное поле'
+									: undefined
+							"
+							(change)="
+								item.potencial = getInputValue($event.target!)
+							"
 							(click)="item.errors.potencial = false"
 						></ss-input>
 					</div>
 					<ng-template #noPotencial>
-						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+						<div
+							class="hc-table-td__content hc-table-td__content--center"
+						>
+							-
+						</div>
 					</ng-template>
-
 				</ng-container>
 
 				<ng-container *ngSwitchCase="AtWorkRowItemField.objective">
-					<div *ngIf="item.atWork; else noObjective" class="hc-table-td__content">
+					<div
+						*ngIf="item.atWork; else noObjective"
+						class="hc-table-td__content"
+					>
 						<ss-input
 							size="small"
 							type="number"
 							placeholder="Введите"
 							[value]="item.objective"
-							[error]="item.errors.objective ? 'Обязательное поле' : undefined"
-							(change)="item.objective = getInputValue($event.target!)"
+							[error]="
+								item.errors.objective
+									? 'Обязательное поле'
+									: undefined
+							"
+							(change)="
+								item.objective = getInputValue($event.target!)
+							"
 							(click)="item.errors.objective = false"
 						></ss-input>
 					</div>
 					<ng-template #noObjective>
-						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+						<div
+							class="hc-table-td__content hc-table-td__content--center"
+						>
+							-
+						</div>
 					</ng-template>
-
 				</ng-container>
 
 				<ng-container *ngSwitchCase="AtWorkRowItemField.technologistId">
-					<div *ngIf="item.atWork; else noTechnologist" class="hc-table-td__content">
-						<ss-search-input searchType="technologist"
-										 size="small"
-										 [error]="item.errors.technologistId ? 'Обязательное поле' : undefined"
-										 (select)="item.technologistId = $event.id"
-										 (click)="item.errors.technologistId = false"
+					<div
+						*ngIf="item.atWork; else noTechnologist"
+						class="hc-table-td__content"
+					>
+						<ss-search-input
+							searchType="technologist"
+							size="small"
+							[error]="
+								item.errors.technologistId
+									? 'Обязательное поле'
+									: undefined
+							"
+							(select)="item.technologistId = $event.id"
+							(click)="item.errors.technologistId = false"
 						></ss-search-input>
 					</div>
 					<ng-template #noTechnologist>
-						<div class="hc-table-td__content hc-table-td__content--center">-</div>
+						<div
+							class="hc-table-td__content hc-table-td__content--center"
+						>
+							-
+						</div>
 					</ng-template>
-
 				</ng-container>
 
 				<ng-container *ngSwitchDefault>
-					<div class="hc-table-td__content hc-table-td__content--center">-</div>
+					<div
+						class="hc-table-td__content hc-table-td__content--center"
+					>
+						-
+					</div>
 				</ng-container>
 			</td>
 		</ng-container>

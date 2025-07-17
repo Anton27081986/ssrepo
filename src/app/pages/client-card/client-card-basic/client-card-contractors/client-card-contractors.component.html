@@ -1,23 +1,32 @@
 <ss-loader *ngIf="isLoading$ | async"></ss-loader>
 <ss-card padding="0">
 	<div class="header">
-		<ss-headline size="h6" weight="semi-bold">Состав контрагентов</ss-headline>
+		<ss-headline
+			size="h6"
+			weight="semi-bold"
+			>Состав контрагентов</ss-headline
+		>
 		<div class="header-controls">
-			<input type="checkbox" (change)="onActiveContractorChange($event)" />
-			<ss-text size="2">
-				Показать архивных контрагентов
-			</ss-text>
+			<input
+				type="checkbox"
+				(change)="onActiveContractorChange($event)"
+			/>
+			<ss-text size="2"> Показать архивных контрагентов </ss-text>
 		</div>
 	</div>
 	<div class="content">
 		<ss-table
 			[head]="[
-					{title: 'Код', field: 'id', sizeRatio: 0.8},
-					{title: 'ИНН', field: 'inn'},
-					{title: 'Название', field: 'name', sizeRatio: 1.4},
-					{title: 'Кредитный статус', field: 'creditStatus', sizeRatio: 1.1},
-					{title: 'Состояние', field: 'status', sizeRatio: 0.9}
-					]"
+				{ title: 'Код', field: 'id', sizeRatio: 0.8 },
+				{ title: 'ИНН', field: 'inn' },
+				{ title: 'Название', field: 'name', sizeRatio: 1.4 },
+				{
+					title: 'Кредитный статус',
+					field: 'creditStatus',
+					sizeRatio: 1.1,
+				},
+				{ title: 'Состояние', field: 'status', sizeRatio: 0.9 },
+			]"
 			[items]="tableItems"
 		></ss-table>
 	</div>

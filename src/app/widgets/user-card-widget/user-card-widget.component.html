@@ -1,13 +1,32 @@
-<ss-card *ngIf="widget$ | async as widget" class="user-card-widget" [padding]="'16px'">
-	<ss-icon *ngIf="widget.groupWinUsers" class="user-card-widget__members"
-			 name="iconMembers"
-			 [tooltip]="getGroupWinsUser(widget.groupWinUsers)" [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT"></ss-icon>
+<ss-card
+	*ngIf="widget$ | async as widget"
+	class="user-card-widget"
+	[padding]="'16px'"
+>
+	<ss-icon
+		*ngIf="widget.groupWinUsers"
+		class="user-card-widget__members"
+		name="iconMembers"
+		[tooltip]="getGroupWinsUser(widget.groupWinUsers)"
+		[theme]="TooltipTheme.DEFAULT"
+		[position]="TooltipPosition.DEFAULT"
+	></ss-icon>
 
 	<div class="user-card-widget__card">
-		<app-user-card [size]="'large'" [viewPopupInfo]="true" [user]="widget.user!"></app-user-card>
+		<app-user-card
+			[size]="'large'"
+			[viewPopupInfo]="true"
+			[user]="widget.user!"
+		></app-user-card>
 		<div class="user-card-widget__actions">
-			<ss-icon class="user-card-widget__share" [tooltip]="'Развернуть'" [theme]="TooltipTheme.DEFAULT"
-					 [position]="TooltipPosition.DEFAULT" [name]="'externalLinkIcon'" (click)="goToUrlVictory(widget.detailUrl!)"></ss-icon>
+			<ss-icon
+				class="user-card-widget__share"
+				[tooltip]="'Развернуть'"
+				[theme]="TooltipTheme.DEFAULT"
+				[position]="TooltipPosition.DEFAULT"
+				[name]="'externalLinkIcon'"
+				(click)="goToUrlVictory(widget.detailUrl!)"
+			></ss-icon>
 		</div>
 	</div>
 	<div class="user-card-widget__description">
@@ -15,29 +34,48 @@
 	</div>
 	<div class="user-card-widget__actions-block">
 		<div class="user-card-widget__actions">
-			<app-like *ngIf="!isExtendedMode" [likedUsers]="widget.likedUsers || []" [type]="(typeLike$ | async)!"
-					  [count]="widget.likesCount!" (click)="changeLike()"></app-like>
+			<app-like
+				*ngIf="!isExtendedMode"
+				[likedUsers]="widget.likedUsers || []"
+				[type]="(typeLike$ | async)!"
+				[count]="widget.likesCount!"
+				(click)="changeLike()"
+			></app-like>
 			<div class="user-card-widget__isExtendedMode">
-				<app-choice-like *ngIf="isChoiceLike |async" (close)="isChoiceLike.next(false)"
-								 (stateLike)="getLike($event)"></app-choice-like>
+				<app-choice-like
+					*ngIf="isChoiceLike | async"
+					(close)="isChoiceLike.next(false)"
+					(stateLike)="getLike($event)"
+				></app-choice-like>
 				<app-like
 					*ngIf="isExtendedMode"
 					[likedUsers]="widget.likedUsers || []"
 					[type]="(typeLike$ | async)!"
 					[count]="widget.likesCount!"
-					(click)="openChoiceLike()">
+					(click)="openChoiceLike()"
+				>
 				</app-like>
 			</div>
 
-			<div class="user-card-widget__card-action" (click)="openPopoverInfo()">
-				<ss-icon name="comment" [tooltip]="'Оставить комментарий'"
-						 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT" [width]="'15'" [height]="'15'"></ss-icon>
+			<div
+				class="user-card-widget__card-action"
+				(click)="openPopoverInfo()"
+			>
+				<ss-icon
+					name="comment"
+					[tooltip]="'Оставить комментарий'"
+					[theme]="TooltipTheme.DEFAULT"
+					[position]="TooltipPosition.DEFAULT"
+					[width]="'15'"
+					[height]="'15'"
+				></ss-icon>
 				<ss-text [size]="'3'">{{ widget.commentsCount }}</ss-text>
 			</div>
 		</div>
-		<ss-caption class="user-card-widget__created" [size]="'2'">{{ widget.createdDate | date: 'HH:mm, dd.MM.yyyy' }}</ss-caption>
+		<ss-caption
+			class="user-card-widget__created"
+			[size]="'2'"
+			>{{ widget.createdDate | date: 'HH:mm, dd.MM.yyyy' }}</ss-caption
+		>
 	</div>
-
 </ss-card>
-
-

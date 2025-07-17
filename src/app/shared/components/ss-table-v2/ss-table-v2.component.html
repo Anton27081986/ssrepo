@@ -1,24 +1,30 @@
 <div class="table-wrapper">
 	<table class="table">
-		<thead class="table__thead" [class.table__thead__sticky]="sticky">
-		<tr *ngFor="let cols of stateColumn.visibleCols$ | async">
-			<ng-container *ngFor="let col of cols.cols">
-				<th
-					colSpan="{{ col.colspan }}"
-					rowSpan="{{ col.rowspan }}"
-					class="ss-table-th"
-					[ngStyle]="{'width': col.width, 'cursor': col.toolTip ? 'pointer' : 'default'}" [tooltip]="col.toolTip!"
-					[theme]="TooltipTheme.DEFAULT"
-					[position]="TooltipPosition.DEFAULT"
-				>
-					{{ col.title  }}
-
-				</th>
-			</ng-container>
-		</tr>
+		<thead
+			class="table__thead"
+			[class.table__thead__sticky]="sticky"
+		>
+			<tr *ngFor="let cols of stateColumn.visibleCols$ | async">
+				<ng-container *ngFor="let col of cols.cols">
+					<th
+						colSpan="{{ col.colspan }}"
+						rowSpan="{{ col.rowspan }}"
+						class="ss-table-th"
+						[ngStyle]="{
+							width: col.width,
+							cursor: col.toolTip ? 'pointer' : 'default',
+						}"
+						[tooltip]="col.toolTip!"
+						[theme]="TooltipTheme.DEFAULT"
+						[position]="TooltipPosition.DEFAULT"
+					>
+						{{ col.title }}
+					</th>
+				</ng-container>
+			</tr>
 		</thead>
-			<tbody>
+		<tbody>
 			<ng-content></ng-content>
-			</tbody>
+		</tbody>
 	</table>
 </div>

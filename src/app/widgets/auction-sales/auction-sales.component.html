@@ -2,8 +2,16 @@
 	<ss-loader *ngIf="tableState === TableState.Loading"></ss-loader>
 
 	<div class="header">
-		<ss-headline size="h6" weight="semi-bold" (click)="window.open(listAuction!.allListLink!)">Аукционные продажи</ss-headline>
-		<ss-caption color="gray">Менеджер по продажам может предлагать свою цену при принятии участия в аукционе</ss-caption>
+		<ss-headline
+			size="h6"
+			weight="semi-bold"
+			(click)="window.open(listAuction!.allListLink!)"
+			>Аукционные продажи</ss-headline
+		>
+		<ss-caption color="gray"
+			>Менеджер по продажам может предлагать свою цену при принятии
+			участия в аукционе</ss-caption
+		>
 	</div>
 	<div class="content">
 		<ss-table
@@ -11,12 +19,13 @@
 			size="3"
 			[padding]="'5px 9px'"
 			[head]="[
-				{title: 'ТП', field: 'tovName', sizeRatio: 4},
-				{title: 'Доступность', field: 'source'},
-				{title: 'Цена', field: 'price'},
-				{title: 'Количество', field: 'quantity'}
-				]"
-			[items]="tableItems$ | async">
+				{ title: 'ТП', field: 'tovName', sizeRatio: 4 },
+				{ title: 'Доступность', field: 'source' },
+				{ title: 'Цена', field: 'price' },
+				{ title: 'Количество', field: 'quantity' },
+			]"
+			[items]="tableItems$ | async"
+		>
 		</ss-table>
 
 		<ng-template #empty>
@@ -37,4 +46,3 @@
 		</div>
 	</div>
 </ss-card>
-

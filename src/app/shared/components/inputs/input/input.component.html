@@ -1,18 +1,27 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input #input
-		   class="{{ error ? size + ' error' : size }}"
-		   [type]="type"
-		   [placeholder]="placeholder"
-		   [value]="value"
-		   [class.input-padding-disabled]="disabled"
-		   [disabled]="disabled"
-		   [maxLength]="maxlength"
-		   (input)="onChange($any($event.target).value)"
-		   (blur)="onTouched()"
+	<input
+		#input
+		class="{{ error ? size + ' error' : size }}"
+		[type]="type"
+		[placeholder]="placeholder"
+		[value]="value"
+		[class.input-padding-disabled]="disabled"
+		[disabled]="disabled"
+		[maxLength]="maxlength"
+		(input)="onChange($any($event.target).value)"
+		(blur)="onTouched()"
 	/>
 	@if (input.value && !disabled) {
-		<ss-icon height="12" name="close" (click)="input.value = ''; writeValue('')"></ss-icon>
+		<ss-icon
+			height="12"
+			name="close"
+			(click)="input.value = ''; writeValue('')"
+		></ss-icon>
 	}
 </div>
-<ss-caption size="2" color="error">{{ error }}</ss-caption>
+<ss-caption
+	size="2"
+	color="error"
+	>{{ error }}</ss-caption
+>

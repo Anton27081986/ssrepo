@@ -6,29 +6,29 @@ import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { ButtonComponent as FrontButtonComponent, ButtonType, IconPosition, IconType, Size } from "@front-components/components";
-import { ButtonComponent } from "@app/shared/components/buttons/button/button.component";
-import { NgIf } from "@angular/common";
-import { IconComponent } from "@app/shared/components/icon/icon.component";
-import { TextComponent } from "@app/shared/components/typography/text/text.component";
-import { TooltipDirective } from "@app/shared/components/tooltip/tooltip.directive";
+import {
+	ButtonComponent as FrontButtonComponent,
+	ButtonType,
+	IconPosition,
+	IconType,
+	Size,
+} from '@front-components/components';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { NgIf } from '@angular/common';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
 
-import { DropdownButtonComponent } from "@app/shared/components/buttons/dropdown-button/dropdown-button.component";
-import {
-	CompletedWorkActEditComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component";
-import {
-	CompletedWorkActInfoComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component";
-import {
-	CompletedWorkActSpecificationsComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component";
-import { TagV2Component } from "@app/shared/components/tag-v2/tag-v2.component";
+import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
+import { CompletedWorkActEditComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component';
+import { CompletedWorkActInfoComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component';
+import { CompletedWorkActSpecificationsComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component';
+import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 
 @Component({
-	selector: "ss-completed-work-act-card",
-	templateUrl: "./completed-work-act-card.component.html",
-	styleUrls: ["./completed-work-act-card.component.scss"],
+	selector: 'ss-completed-work-act-card',
+	templateUrl: './completed-work-act-card.component.html',
+	styleUrls: ['./completed-work-act-card.component.scss'],
 	imports: [
 		NgIf,
 		IconComponent,
@@ -40,22 +40,31 @@ import { TagV2Component } from "@app/shared/components/tag-v2/tag-v2.component";
 		CompletedWorkActSpecificationsComponent,
 		TagV2Component,
 		FrontButtonComponent,
-		ButtonComponent
+		ButtonComponent,
 	],
-	standalone: true
+	standalone: true,
 })
 export class CompletedWorkActCardComponent {
-	protected act: Signal<ICompletedWorkAct | null> = toSignal(this.completedWorkActsFacade.act$, {
-		initialValue: null,
-	});
+	protected act: Signal<ICompletedWorkAct | null> = toSignal(
+		this.completedWorkActsFacade.act$,
+		{
+			initialValue: null,
+		},
+	);
 
-	protected isEdit: Signal<boolean> = toSignal(this.completedWorkActsFacade.isEditMode$, {
-		initialValue: false,
-	});
+	protected isEdit: Signal<boolean> = toSignal(
+		this.completedWorkActsFacade.isEditMode$,
+		{
+			initialValue: false,
+		},
+	);
 
-	public permissions: Signal<string[]> = toSignal(this.completedWorkActsFacade.permissions$, {
-		initialValue: [],
-	});
+	public permissions: Signal<string[]> = toSignal(
+		this.completedWorkActsFacade.permissions$,
+		{
+			initialValue: [],
+		},
+	);
 
 	public constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
@@ -71,7 +80,9 @@ export class CompletedWorkActCardComponent {
 	}
 
 	public openHistoryModal(actId: number): void {
-		this.modalService.open(CompletedWorkActHistoryComponent, { data: actId });
+		this.modalService.open(CompletedWorkActHistoryComponent, {
+			data: actId,
+		});
 	}
 
 	public toArchiveAct() {

@@ -1,75 +1,100 @@
 <div class="birthday">
-    <ss-card padding="0">
-        <div class="header">
-            <div class="title">
-                <ss-text size="1">Дни рождения</ss-text>
+	<ss-card padding="0">
+		<div class="header">
+			<div class="title">
+				<ss-text size="1">Дни рождения</ss-text>
 
-                <ss-text size="3" weight="medium">
-                    Не забывайте поздравить коллег и партнеров!
-                </ss-text>
-            </div>
+				<ss-text
+					size="3"
+					weight="medium"
+				>
+					Не забывайте поздравить коллег и партнеров!
+				</ss-text>
+			</div>
 
-            <ss-button
-                type="primary"
-                size="medium"
-                (click)="addNotice()"
-            >
-                <ss-icon size="small" name="blocknote"></ss-icon>
-                Добавить напоминание
-            </ss-button>
-        </div>
+			<ss-button
+				type="primary"
+				size="medium"
+				(click)="addNotice()"
+			>
+				<ss-icon
+					size="small"
+					name="blocknote"
+				></ss-icon>
+				Добавить напоминание
+			</ss-button>
+		</div>
 
-        <div class="actions">
-            <div class="calendar">
-                <ss-date-time-picker [formControl]="dateBirthCtrl" [showTime]="false"></ss-date-time-picker>
-            </div>
+		<div class="actions">
+			<div class="calendar">
+				<ss-date-time-picker
+					[formControl]="dateBirthCtrl"
+					[showTime]="false"
+				></ss-date-time-picker>
+			</div>
 
-            <div class="tabs">
-                @if (!loading()) {
-                    <ss-tabs
-                        [tabs]="birthDays() | mapper : toTabsItemsFormat : shortYear"
-                        [selectedTab]="selectedTabName() | mapper : toITabFormat : shortYear"
-                        [tabsBorder]="false"
-                        (select)="selectTab($event)"
-                    />
-                }
-            </div>
-        </div>
+			<div class="tabs">
+				@if (!loading()) {
+					<ss-tabs
+						[tabs]="
+							birthDays() | mapper: toTabsItemsFormat : shortYear
+						"
+						[selectedTab]="
+							selectedTabName() | mapper: toITabFormat : shortYear
+						"
+						[tabsBorder]="false"
+						(select)="selectTab($event)"
+					/>
+				}
+			</div>
+		</div>
 
-        <ss-divider class="divider" />
+		<ss-divider class="divider" />
 
-        <div class="content">
-            @if (loading()) {
-                <div class="card-list__empty">
-                    <ss-loader></ss-loader>
-                </div>
-            } @else {
-                @if (selectedTabContent().length) {
-                    <div class="card-list">
-                        @for (userData of selectedTabContent(); track userData.id) {
-                            <div class="card-list__item">
-                                <ss-card padding="16px">
-                                    <app-user-card [user]="userData" [size]="'large'"></app-user-card>
-                                </ss-card>
-                            </div>
-                        }
-                    </div>
-                } @else {
-                    <div class="card-list__empty">
-                        <ss-empty-placeholder>
-                            <ss-icon name="cake" class="card-list__empty_icon"></ss-icon>
+		<div class="content">
+			@if (loading()) {
+				<div class="card-list__empty">
+					<ss-loader></ss-loader>
+				</div>
+			} @else {
+				@if (selectedTabContent().length) {
+					<div class="card-list">
+						@for (
+							userData of selectedTabContent();
+							track userData.id
+						) {
+							<div class="card-list__item">
+								<ss-card padding="16px">
+									<app-user-card
+										[user]="userData"
+										[size]="'large'"
+									></app-user-card>
+								</ss-card>
+							</div>
+						}
+					</div>
+				} @else {
+					<div class="card-list__empty">
+						<ss-empty-placeholder>
+							<ss-icon
+								name="cake"
+								class="card-list__empty_icon"
+							></ss-icon>
 
-                            <ss-headline size="h3" class="card-list__empty_title">
-                                В этот день ни у кого нет дня рождения
-                            </ss-headline>
+							<ss-headline
+								size="h3"
+								class="card-list__empty_title"
+							>
+								В этот день ни у кого нет дня рождения
+							</ss-headline>
 
-                            <ss-text size="1">Попробуйте выбрать другую дату</ss-text>
-                        </ss-empty-placeholder>
-                    </div>
-                }
-            }
-        </div>
-    </ss-card>
+							<ss-text size="1"
+								>Попробуйте выбрать другую дату</ss-text
+							>
+						</ss-empty-placeholder>
+					</div>
+				}
+			}
+		</div>
+	</ss-card>
 </div>
-
-

@@ -1,8 +1,15 @@
 @if (viewPagination) {
-	<td class="pagination-tr" [colSpan]="countCol()">
+	<td
+		class="pagination-tr"
+		[colSpan]="countCol()"
+	>
 		<div class="pagination-tr__content">
-			<snab-button text="показать еще {{  remainder() }}" [type]="ButtonType.Primary" [size]="Size.Large"
-						 (click)="nextOffset()"></snab-button>
+			<snab-button
+				text="показать еще {{ remainder() }}"
+				[type]="ButtonType.Primary"
+				[size]="Size.Large"
+				(click)="nextOffset()"
+			></snab-button>
 		</div>
 	</td>
 }

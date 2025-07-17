@@ -1,6 +1,26 @@
-<ss-icon height="24" width="19" name="file" class="doc"></ss-icon>
+<ss-icon
+	height="24"
+	width="19"
+	name="file"
+	class="doc"
+></ss-icon>
 <div class="file-info">
-	<ss-caption size="2" class="title">{{ title }}</ss-caption>
-	<ss-caption size="2" class="size">{{ size | ssFileSize }}</ss-caption>
+	<ss-caption
+		size="2"
+		class="title"
+		>{{ title }}</ss-caption
+	>
+	<ss-caption
+		size="2"
+		class="size"
+		>{{ size | ssFileSize }}</ss-caption
+	>
 </div>
-<ss-icon *ngIf="!readonly" height="8" width="8" name="close" class="close" (click)="delete.emit()"></ss-icon>
+<ss-icon
+	*ngIf="!readonly"
+	height="8"
+	width="8"
+	name="close"
+	class="close"
+	(click)="delete.emit()"
+></ss-icon>

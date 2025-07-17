@@ -1,4 +1,10 @@
-<ss-icon name="{{ icon }}" (click)="isHidden= !isHidden"></ss-icon>
-<div class="dropdown-menu" [ngClass]="{'hidden': isHidden}">
+<ss-icon
+	name="{{ icon }}"
+	(click)="isHidden = !isHidden"
+></ss-icon>
+<div
+	class="dropdown-menu"
+	[ngClass]="{ hidden: isHidden }"
+>
 	<ng-content></ng-content>
 </div>

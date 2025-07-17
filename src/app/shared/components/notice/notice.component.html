@@ -1,8 +1,31 @@
 <div class="notice {{ type }} {{ size }}">
-	<ss-icon *ngIf="isLabeled" name="{{type}}" class="notice__icon" height="12" (click)="closeNotice()"></ss-icon>
+	<ss-icon
+		*ngIf="isLabeled"
+		name="{{ type }}"
+		class="notice__icon"
+		height="12"
+		(click)="closeNotice()"
+	></ss-icon>
 	<div class="notice__message">
-		<ss-text *ngIf="title" size="1" weight="semi-bold" [size]="sizeText">{{ title }}</ss-text>
-		<ss-text *ngIf="text" size="1" weight="medium" [size]="sizeText">{{ text }}</ss-text>
+		<ss-text
+			*ngIf="title"
+			size="1"
+			weight="semi-bold"
+			[size]="sizeText"
+			>{{ title }}</ss-text
+		>
+		<ss-text
+			*ngIf="text"
+			size="1"
+			weight="medium"
+			[size]="sizeText"
+			>{{ text }}</ss-text
+		>
 	</div>
-	<ss-icon *ngIf="isLabeled" height="12" name="close" (click)="closeNotice()"></ss-icon>
+	<ss-icon
+		*ngIf="isLabeled"
+		height="12"
+		name="close"
+		(click)="closeNotice()"
+	></ss-icon>
 </div>

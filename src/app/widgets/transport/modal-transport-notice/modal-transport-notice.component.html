@@ -1,56 +1,78 @@
 <div class="modal-transport-notice">
-    <ss-card [padding]="'14px 0px 16px'">
-        <div class="header">
-            <div class="title">
-                <ss-text size="1">Новое уведомление</ss-text>
-            </div>
+	<ss-card [padding]="'14px 0px 16px'">
+		<div class="header">
+			<div class="title">
+				<ss-text size="1">Новое уведомление</ss-text>
+			</div>
 
-            <ss-icon class="close-icon" name="close" (click)="close()"></ss-icon>
-        </div>
+			<ss-icon
+				class="close-icon"
+				name="close"
+				(click)="close()"
+			></ss-icon>
+		</div>
 
-        <div class="divider">
-            <ss-divider />
-        </div>
+		<div class="divider">
+			<ss-divider />
+		</div>
 
-        <form class="card" [formGroup]="noteForm">
-            <div class="dates">
-                <div class="label">
-                    <ss-text size="4" class="info-list-item-name">Действителен от:</ss-text>
+		<form
+			class="card"
+			[formGroup]="noteForm"
+		>
+			<div class="dates">
+				<div class="label">
+					<ss-text
+						size="4"
+						class="info-list-item-name"
+						>Действителен от:</ss-text
+					>
 
-                    <ss-date-time-picker formControlName="dateFrom"></ss-date-time-picker>
-                </div>
+					<ss-date-time-picker
+						formControlName="dateFrom"
+					></ss-date-time-picker>
+				</div>
 
-                <div class="label">
-                    <ss-text size="4" class="info-list-item-name">Действителен до:</ss-text>
+				<div class="label">
+					<ss-text
+						size="4"
+						class="info-list-item-name"
+						>Действителен до:</ss-text
+					>
 
-                    <ss-date-time-picker formControlName="dateTo"></ss-date-time-picker>
-                </div>
-            </div>
+					<ss-date-time-picker
+						formControlName="dateTo"
+					></ss-date-time-picker>
+				</div>
+			</div>
 
-            <div class="label">
-                <ss-text size="4" class="info-list-item-name">Текст уведомления:</ss-text>
+			<div class="label">
+				<ss-text
+					size="4"
+					class="info-list-item-name"
+					>Текст уведомления:</ss-text
+				>
 
-                <ss-textarea
-                    size="medium"
-                    rows="3"
-                    placeholder="Введите текст"
-                    formControlName="note"
-                ></ss-textarea>
-            </div>
-        </form>
+				<ss-textarea
+					size="medium"
+					rows="3"
+					placeholder="Введите текст"
+					formControlName="note"
+				></ss-textarea>
+			</div>
+		</form>
 
-        <ss-divider class="divider" />
+		<ss-divider class="divider" />
 
-        <div class="footer">
-            <ss-button
-                size="small"
-                type="primary"
-                [disabled]="!noteForm.valid"
-                (click)="saveAndCloseModal()"
-            >
-                Опубликовать
-            </ss-button>
-        </div>
-    </ss-card>
+		<div class="footer">
+			<ss-button
+				size="small"
+				type="primary"
+				[disabled]="!noteForm.valid"
+				(click)="saveAndCloseModal()"
+			>
+				Опубликовать
+			</ss-button>
+		</div>
+	</ss-card>
 </div>
-

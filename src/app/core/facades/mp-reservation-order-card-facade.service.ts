@@ -20,13 +20,17 @@ import {
 	providedIn: 'root',
 })
 export class MpReservationOrderCardFacadeService {
-	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+		false,
+	);
 
-	private readonly activeOrder = new BehaviorSubject<IMpReservationOrder | null>(null);
+	private readonly activeOrder =
+		new BehaviorSubject<IMpReservationOrder | null>(null);
 	public activeOrder$ = this.activeOrder.asObservable();
 	private readonly warehouseBalanceSubject =
 		new BehaviorSubject<IWarehouseBalanceResponse | null>(null);
-	public readonly warehouseBalance$ = this.warehouseBalanceSubject.asObservable();
+	public readonly warehouseBalance$ =
+		this.warehouseBalanceSubject.asObservable();
 
 	public constructor(
 		private readonly mpReservationOrdersApiService: MpReservationOrdersApiService,
@@ -38,13 +42,12 @@ export class MpReservationOrderCardFacadeService {
 			.getPersonificationById(id)
 			.pipe(
 				untilDestroyed(this),
-				catchError(
-				(err: unknown)=> {
+				catchError((err: unknown) => {
 					this.router.navigate(['mp-reservation-orders']);
-					throw err
-				})
+					throw err;
+				}),
 			)
-			.subscribe(res => {
+			.subscribe((res) => {
 				this.activeOrder.next(res.data);
 			});
 	}
@@ -60,7 +63,11 @@ export class MpReservationOrderCardFacadeService {
 		);
 	}
 
-	public updateProvisionDateById(orderId: number, provisionDate: string, provisionId: number) {
+	public updateProvisionDateById(
+		orderId: number,
+		provisionDate: string,
+		provisionId: number,
+	) {
 		return this.mpReservationOrdersApiService.updateProvisionDateById(
 			orderId,
 			provisionDate,
@@ -102,7 +109,10 @@ export class MpReservationOrderCardFacadeService {
 	}
 
 	public clarifyOrder(body: IClarifyOrder) {
-		return this.mpReservationOrdersApiService.clarify(this.activeOrder.value?.id!, body);
+		return this.mpReservationOrdersApiService.clarify(
+			this.activeOrder.value?.id!,
+			body,
+		);
 	}
 
 	public getApproveClarification() {
@@ -112,14 +122,18 @@ export class MpReservationOrderCardFacadeService {
 	}
 
 	public approveClarification() {
-		return this.mpReservationOrdersApiService.approveClarification(this.activeOrder.value?.id!);
+		return this.mpReservationOrdersApiService.approveClarification(
+			this.activeOrder.value?.id!,
+		);
 	}
 
 	public loadWarehouseBalance(orderId: number): void {
 		this.mpReservationOrdersApiService
 			.getWarehouseForAgreeOrder(orderId)
 			.pipe(
-				tap(warehouseBalance => this.warehouseBalanceSubject.next(warehouseBalance)),
+				tap((warehouseBalance) =>
+					this.warehouseBalanceSubject.next(warehouseBalance),
+				),
 				untilDestroyed(this),
 			)
 			.subscribe();

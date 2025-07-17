@@ -32,14 +32,13 @@ export class FiltersTriggerButtonComponent {
 
 	protected filters: IFilterItem[] = this.filterService.filterItems;
 
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly ButtonType = ButtonType;
 	protected addFilterMenu(filter: IFilterItem): void {
 		if (!filter.active) {
 			filter.active = true;
 			this.filterService.addFilterMenu(filter);
 		}
 	}
-
-	protected readonly IconType = IconType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly ButtonType = ButtonType;
 }

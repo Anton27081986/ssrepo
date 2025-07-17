@@ -37,9 +37,12 @@ export class AccordionComponent {
 	@Input() headerRef: TemplateRef<any> | null = null;
 	@Input() isExpanded: boolean = false;
 	@Input() isMpReservationOrders: boolean = false;
-	@Output() public onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
-	@Output() public addRowPosition: EventEmitter<void> = new EventEmitter<void>();
-	@Output() public removePosition: EventEmitter<void> = new EventEmitter<void>();
+	@Output() public onToggle: EventEmitter<boolean> =
+		new EventEmitter<boolean>();
+	@Output() public addRowPosition: EventEmitter<void> =
+		new EventEmitter<void>();
+	@Output() public removePosition: EventEmitter<void> =
+		new EventEmitter<void>();
 
 	protected readonly Size = Size;
 	protected readonly ButtonType = ButtonType;

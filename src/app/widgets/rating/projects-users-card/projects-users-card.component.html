@@ -1,6 +1,14 @@
 <div class="user-card">
-	<ss-avatar [type]="'rectangle'" [size]="size" [src]="team().avatarUrl!"></ss-avatar>
+	<ss-avatar
+		[type]="'rectangle'"
+		[size]="size"
+		[src]="team().avatarUrl!"
+	></ss-avatar>
 	<div class="user-card__info">
-		<ss-text size="2" weight="medium">{{ team().name }}</ss-text>
+		<ss-text
+			size="2"
+			weight="medium"
+			>{{ team().name }}</ss-text
+		>
 	</div>
 </div>

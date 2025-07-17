@@ -1,14 +1,23 @@
-<ss-card class="victory" [padding]="'16px 0'">
+<ss-card
+	class="victory"
+	[padding]="'16px 0'"
+>
 	<ss-loader *ngIf="isLoading"></ss-loader>
 
 	<div class="victory__header">
 		<div class="victory__header-info">
 			<ss-text size="1">Победы</ss-text>
-			<ss-text size="3">Делитесь достижениями, ведь успех заразителен!</ss-text>
+			<ss-text size="3"
+				>Делитесь достижениями, ведь успех заразителен!</ss-text
+			>
 		</div>
 		<div class="victory__header-actions">
 			<ss-button (click)="openAddVictoryPopover()">
-				<ss-icon [width]="'12'" [height]="'12'" [name]="'plus'"></ss-icon>
+				<ss-icon
+					[width]="'12'"
+					[height]="'12'"
+					[name]="'plus'"
+				></ss-icon>
 				Добавить победу
 			</ss-button>
 		</div>
@@ -19,7 +28,11 @@
 			<ng-container *ngIf="victoryList$ | async as list">
 				<ng-container *ngIf="list.total > 0">
 					<div class="victory__content">
-						<app-user-card-widget *ngFor="let item of list.items" [isExtendedMode]="list.isExtendedMode" [widget]="item"></app-user-card-widget>
+						<app-user-card-widget
+							*ngFor="let item of list.items"
+							[isExtendedMode]="list.isExtendedMode"
+							[widget]="item"
+						></app-user-card-widget>
 					</div>
 				</ng-container>
 				<ng-container *ngIf="list.total === 0">

@@ -1,17 +1,17 @@
 .checkbox-filter-context {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  gap: 1px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	gap: 1px;
 
-  &__content {
-    height: 274px;
-    overflow: auto;
-    padding: 6px 4px;
-  }
+	&__content {
+		height: 274px;
+		overflow: auto;
+		padding: 6px 4px;
+	}
 
-  &__no-content {
-    height: 274px;
-    padding: 20px 16px;
-  }
+	&__no-content {
+		height: 274px;
+		padding: 20px 16px;
+	}
 }

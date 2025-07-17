@@ -1,7 +1,10 @@
 @if (option) {
 	<div class="multiselect-option-v2">
-		<input type="checkbox" [disabled]="disabled" [(ngModel)]="option.checked" />
+		<input
+			type="checkbox"
+			[disabled]="disabled"
+			[(ngModel)]="option.checked"
+		/>
 		<ss-text [size]="'3'">{{ option.name }}</ss-text>
 	</div>
 }
-

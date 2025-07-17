@@ -2,95 +2,204 @@
 	<div class="header">
 		<ss-text size="1">Общая информация</ss-text>
 		<div class="header__controls">
-			<ss-button size="small" type="muted" (click)="switchMode()">
+			<ss-button
+				size="small"
+				type="muted"
+				(click)="switchMode()"
+			>
 				Отмена
 			</ss-button>
-			<ss-button size="small" type="primary" (click)="onSave()">
+			<ss-button
+				size="small"
+				type="primary"
+				(click)="onSave()"
+			>
 				Сохранить
 			</ss-button>
 		</div>
 	</div>
-	<form class="content" [formGroup]="editActForm">
+	<form
+		class="content"
+		[formGroup]="editActForm"
+	>
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Номер Поставщика</ss-text>
-				<ss-text size="3" weight="regular">{{ act()?.externalActNumber }}</ss-text>
+				<ss-text
+					size="3"
+					weight="regular"
+					>{{ act()?.externalActNumber }}</ss-text
+				>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Номер БУ</ss-text>
-				<ss-text size="3" weight="regular">{{ act()?.internalActNumber }}</ss-text>
+				<ss-text
+					size="3"
+					weight="regular"
+					>{{ act()?.internalActNumber }}</ss-text
+				>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата оказания услуги</ss-text>
-				<ss-text size="3" weight="regular">{{ act()?.externalActDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+				<ss-text
+					size="3"
+					weight="regular"
+					>{{
+						act()?.externalActDate | date: 'dd.MM.yyyy' : '' : 'ru'
+					}}</ss-text
+				>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата БУ</ss-text>
-				<ss-text size="3" weight="regular">{{ act()?.internalActDate | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+				<ss-text
+					size="3"
+					weight="regular"
+					>{{
+						act()?.internalActDate | date: 'dd.MM.yyyy' : '' : 'ru'
+					}}</ss-text
+				>
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Дата КИСП</ss-text>
-				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD)) {
+				@if (
+					permissions().includes(
+						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_DATE_UPLOAD
+					)
+				) {
 					<ss-date-time-picker
-						formControlName="dateUpload" [showTime]="false"
-						[error]="editActForm.controls.dateUpload.touched && editActForm.controls.dateUpload.errors?.required ? 'Обязательное поле' : undefined"></ss-date-time-picker>
+						formControlName="dateUpload"
+						[showTime]="false"
+						[error]="
+							editActForm.controls.dateUpload.touched &&
+							editActForm.controls.dateUpload.errors?.required
+								? 'Обязательное поле'
+								: undefined
+						"
+					></ss-date-time-picker>
 				} @else {
-					<ss-text size="3" weight="regular">{{ act()?.dateUpload | date:'dd.MM.yyyy':'':'ru' }}</ss-text>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{
+							act()?.dateUpload | date: 'dd.MM.yyyy' : '' : 'ru'
+						}}</ss-text
+					>
 				}
 			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Заявитель</ss-text>
-				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT)) {
-					<ss-search-input searchType="user" size="small"
-						 [selectedItem]="act()?.applicantUser"
-						 [error]="editActForm.controls.applicantUserId.touched && editActForm.controls.applicantUserId.errors?.required ? 'Обязательное поле' : undefined"
-						 (select)="onApplicantUserSelect($event.id)"
-						 (click)="editActForm.controls.applicantUserId.setErrors(null)"
-						 (input)="onInputChange($event)">
+				@if (
+					permissions().includes(
+						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_APPLICANT
+					)
+				) {
+					<ss-search-input
+						searchType="user"
+						size="small"
+						[selectedItem]="act()?.applicantUser"
+						[error]="
+							editActForm.controls.applicantUserId.touched &&
+							editActForm.controls.applicantUserId.errors
+								?.required
+								? 'Обязательное поле'
+								: undefined
+						"
+						(select)="onApplicantUserSelect($event.id)"
+						(click)="
+							editActForm.controls.applicantUserId.setErrors(null)
+						"
+						(input)="onInputChange($event)"
+					>
 					</ss-search-input>
 				} @else {
-					<ss-text size="3" weight="regular">{{ act()?.applicantUser?.name }}</ss-text>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{ act()?.applicantUser?.name }}</ss-text
+					>
 				}
-
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_BU_UNIT)) {
+				@if (
+					permissions().includes(
+						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_BU_UNIT
+					)
+				) {
 					<ss-select-v2
 						[size]="'small'"
 						[options]="buUnits()"
 						[formControlName]="'buUnit'"
-						[errorText]="editActForm.controls.buUnit.touched && editActForm.controls.buUnit.errors?.required ? 'Обязательное поле' : ''"
+						[errorText]="
+							editActForm.controls.buUnit.touched &&
+							editActForm.controls.buUnit.errors?.required
+								? 'Обязательное поле'
+								: ''
+						"
 					/>
 				} @else {
-					<ss-text size="3" weight="regular">{{ act()?.buUnit?.name }}</ss-text>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{ act()?.buUnit?.name }}</ss-text
+					>
 				}
 			</div>
 			<div class="content__column__item">
 				<ss-text size="4">Комментарий</ss-text>
-				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT)) {
+				@if (
+					permissions().includes(
+						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_COMMENT
+					)
+				) {
 					<ss-textarea
 						formControlName="comment"
-						[maxLength]="50"></ss-textarea>
+						[maxLength]="50"
+					></ss-textarea>
 				} @else {
-					<ss-text size="3" weight="regular">{{ act()?.comment }}</ss-text>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{ act()?.comment }}</ss-text
+					>
 				}
 			</div>
 		</div>
 		<div class="content__column">
 			<div class="content__column__item">
 				<ss-text size="4">Поставщик услуг</ss-text>
-				@if (permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER)) {
-					<ss-search-input searchType="contractor" size="small"
-						 [selectedItem]="act()?.providerContractor"
-						 [error]="editActForm.controls.providerContractorId.touched && editActForm.controls.providerContractorId.errors?.required ? 'Обязательное поле' : undefined"
-						 (select)="onProviderContractorSelect($event.id)"
-						 (click)="editActForm.controls.providerContractorId.setErrors(null)">
+				@if (
+					permissions().includes(
+						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_PROVIDER
+					)
+				) {
+					<ss-search-input
+						searchType="contractor"
+						size="small"
+						[selectedItem]="act()?.providerContractor"
+						[error]="
+							editActForm.controls.providerContractorId.touched &&
+							editActForm.controls.providerContractorId.errors
+								?.required
+								? 'Обязательное поле'
+								: undefined
+						"
+						(select)="onProviderContractorSelect($event.id)"
+						(click)="
+							editActForm.controls.providerContractorId.setErrors(
+								null
+							)
+						"
+					>
 					</ss-search-input>
 				} @else {
-					<ss-text size="3" weight="regular">{{ act()?.providerContractor?.name }}</ss-text>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{ act()?.providerContractor?.name }}</ss-text
+					>
 				}
 			</div>
 			<div class="content__column__item">
@@ -100,24 +209,46 @@
 					[size]="'small'"
 					[options]="contracts()"
 					[formControlName]="'contract'"
-					[errorText]="editActForm.controls.contract.touched && !editActForm.controls.contract.value ? 'Обязательное поле' : ''"
+					[errorText]="
+						editActForm.controls.contract.touched &&
+						!editActForm.controls.contract.value
+							? 'Обязательное поле'
+							: ''
+					"
 				/>
 			</div>
 			<div class="content__column__item content__column__findocs">
 				<ss-text size="4">Заявки на оплату</ss-text>
 				<ss-multiselect-v2
-					[placeholder]="finDocOrders.length ? 'Выберите заявки' : 'Заявки отсутствуют'"
+					[placeholder]="
+						finDocOrders.length
+							? 'Выберите заявки'
+							: 'Заявки отсутствуют'
+					"
 					[formControlName]="'finDocOrderIds'"
-					[options]="finDocOrders"></ss-multiselect-v2>
+					[options]="finDocOrders"
+				></ss-multiselect-v2>
 			</div>
-			<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY)" class="content__column__item">
+			<div
+				*ngIf="
+					permissions().includes(
+						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_CURRENCY
+					)
+				"
+				class="content__column__item"
+			>
 				<ss-text size="4">Валюта</ss-text>
 
 				<ss-select-v2
 					[size]="'small'"
 					[options]="currencies()"
 					[formControlName]="'currency'"
-					[errorText]="editActForm.controls.currency.touched && editActForm.controls.currency.errors?.required ? 'Обязательное поле' : ''"
+					[errorText]="
+						editActForm.controls.currency.touched &&
+						editActForm.controls.currency.errors?.required
+							? 'Обязательное поле'
+							: ''
+					"
 				/>
 			</div>
 		</div>
@@ -125,41 +256,99 @@
 			<div class="content__column__item">
 				<div class="content__column__item__files-header">
 					<ss-text size="4">Документы </ss-text>
-					<ng-container *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT)">
-						<label class="upload-file" for="upload-file">
+					<ng-container
+						*ngIf="
+							permissions().includes(
+								Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT
+							)
+						"
+					>
+						<label
+							class="upload-file"
+							for="upload-file"
+						>
 							Добавить документ
 						</label>
-						<input type="file" id="upload-file"
-							 accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
-							 multiple
-							 (change)="addFiles($event)"
+						<input
+							type="file"
+							id="upload-file"
+							accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf"
+							multiple
+							(change)="addFiles($event)"
 						/>
 					</ng-container>
 				</div>
 				<div class="content__column__item__files-list">
-					<div *ngFor="let doc of documents()" class="content__column__item__files-list__item">
-						<div class="content__column__item__files-list__item__img">
-							<ss-icon height="16" width="16" name="doc"></ss-icon>
+					<div
+						*ngFor="let doc of documents()"
+						class="content__column__item__files-list__item"
+					>
+						<div
+							class="content__column__item__files-list__item__img"
+						>
+							<ss-icon
+								height="16"
+								width="16"
+								name="doc"
+							></ss-icon>
 						</div>
-						<div class="content__column__item__files-list__item__description">
+						<div
+							class="content__column__item__files-list__item__description"
+						>
 							<ss-text size="3">{{ doc.fileName }}</ss-text>
-							<ss-text class="size" size="3">{{ doc.size }}Б</ss-text>
+							<ss-text
+								class="size"
+								size="3"
+								>{{ doc.size }}Б</ss-text
+							>
 						</div>
-						<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT)" class="content__column__item__files-list__item__controls">
-							<ss-icon name="trash" (click)="deleteFile(doc.id)"></ss-icon>
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_EDIT_DOCUMENT
+								)
+							"
+							class="content__column__item__files-list__item__controls"
+						>
+							<ss-icon
+								name="trash"
+								(click)="deleteFile(doc.id)"
+							></ss-icon>
 						</div>
 					</div>
 					<ng-container *ngIf="newDocuments">
-						<div *ngFor="let ndoc of newDocuments" class="content__column__item__files-list__item">
-							<div class="content__column__item__files-list__item__img">
-								<ss-icon height="16" width="16" name="doc"></ss-icon>
+						<div
+							*ngFor="let ndoc of newDocuments"
+							class="content__column__item__files-list__item"
+						>
+							<div
+								class="content__column__item__files-list__item__img"
+							>
+								<ss-icon
+									height="16"
+									width="16"
+									name="doc"
+								></ss-icon>
 							</div>
-							<div class="content__column__item__files-list__item__description">
+							<div
+								class="content__column__item__files-list__item__description"
+							>
 								<ss-text size="3">{{ ndoc.name }}</ss-text>
-								<ss-text class="size" size="3">{{ ndoc.size }}</ss-text>
+								<ss-text
+									class="size"
+									size="3"
+									>{{ ndoc.size }}</ss-text
+								>
 							</div>
-							<div class="content__column__item__files-list__item__controls">
-								<ss-icon name="trash" (click)="removeFileFromUploadList(ndoc.name)"></ss-icon>
+							<div
+								class="content__column__item__files-list__item__controls"
+							>
+								<ss-icon
+									name="trash"
+									(click)="
+										removeFileFromUploadList(ndoc.name)
+									"
+								></ss-icon>
 							</div>
 						</div>
 					</ng-container>

@@ -1,131 +1,131 @@
 @use 'src/styles/colors.scss' as *;
 
 :host {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0;
-  gap: 24px;
-  width: 1695px;
-  margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	padding: 20px 0;
+	gap: 24px;
+	width: 1695px;
+	margin: 0 auto;
 }
 
 .navigation {
-  width: 100%;
-  display: flex;
-  gap: 4px;
+	width: 100%;
+	display: flex;
+	gap: 4px;
 
-  &__link {
-    cursor: pointer;
-  }
+	&__link {
+		cursor: pointer;
+	}
 }
 
 .header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
 
-  &__title {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
+	&__title {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
 
-  &__controls {
-    display: flex;
-    gap: 16px;
-  }
+	&__controls {
+		display: flex;
+		gap: 16px;
+	}
 }
 
 .content {
-  display: flex;
-  gap: 24px;
+	display: flex;
+	gap: 24px;
 
-  &__properties {
-    max-width: 442px;
+	&__properties {
+		max-width: 442px;
 
-    &__header {
-      padding: 16px;
-      border-bottom: 1px solid $island-outline;
-    }
+		&__header {
+			padding: 16px;
+			border-bottom: 1px solid $island-outline;
+		}
 
-    &__amount {
-      padding: 16px;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
+		&__amount {
+			padding: 16px;
+			display: flex;
+			align-items: baseline;
+			gap: 4px;
+		}
 
-    &__body {
-      padding: 16px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+		&__body {
+			padding: 16px;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
 
-      &__item {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-    }
+			&__item {
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+			}
+		}
 
-    &__comment {
-      padding: 0 16px 16px 16px;
-    }
-  }
+		&__comment {
+			padding: 0 16px 16px 16px;
+		}
+	}
 
-  &__additional {
-    max-width: 276px;
-    max-height: 420px;
+	&__additional {
+		max-width: 276px;
+		max-height: 420px;
 
-    &__header {
-      padding: 16px;
-      border-bottom: 1px solid $island-outline;
-    }
+		&__header {
+			padding: 16px;
+			border-bottom: 1px solid $island-outline;
+		}
 
-    &__body {
-      padding: 16px;
-      overflow-y: hidden;
-    }
-  }
+		&__body {
+			padding: 16px;
+			overflow-y: hidden;
+		}
+	}
 
-  &__procuring {
-    flex-grow: 1;
+	&__procuring {
+		flex-grow: 1;
 
-    &__header {
-      padding: 16px;
-      border-bottom: 1px solid $island-outline;
-    }
+		&__header {
+			padding: 16px;
+			border-bottom: 1px solid $island-outline;
+		}
 
-    &__body {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
+		&__body {
+			padding: 16px;
+			display: flex;
+			justify-content: space-between;
+			gap: 20px;
 
-      &__chart {
-        width: 310px;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
+			&__chart {
+				width: 310px;
+				display: flex;
+				flex-direction: column;
+				gap: 40px;
 
-        &__tags {
-          display: flex;
-		  flex-wrap: wrap;
-          gap: var(--gap-micro);
-        }
+				&__tags {
+					display: flex;
+					flex-wrap: wrap;
+					gap: var(--gap-micro);
+				}
 
-        &__quantity {
-          display: flex;
-          gap: 4px;
-          align-items: baseline;
-        }
+				&__quantity {
+					display: flex;
+					gap: 4px;
+					align-items: baseline;
+				}
 
-        &__more {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-      }
-    }
-  }
+				&__more {
+					display: flex;
+					flex-direction: column;
+					gap: 20px;
+				}
+			}
+		}
+	}
 }

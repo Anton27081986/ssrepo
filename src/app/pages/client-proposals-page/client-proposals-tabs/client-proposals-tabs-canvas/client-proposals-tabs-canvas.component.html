@@ -4,7 +4,7 @@
 			<ng-container *ngTemplateOutlet="headerTemplateRef"></ng-container>
 		</div>
 		<div class="client-proposals-tabs-canvas__body">
-				<ss-loader *ngIf="isLoader"></ss-loader>
+			<ss-loader *ngIf="isLoader"></ss-loader>
 			<ng-container *ngIf="!isLoader">
 				<ng-template *ngTemplateOutlet="bodyTemplateRef"></ng-template>
 			</ng-container>

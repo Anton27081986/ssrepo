@@ -10,12 +10,12 @@ import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { checkboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
+import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-tov-category-filter',
 	standalone: true,
-	imports: [ReactiveFormsModule, AsyncPipe, checkboxFilterContextComponent],
+	imports: [ReactiveFormsModule, AsyncPipe, CheckboxFilterContextComponent],
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
 		[controlClearAll]="controlsClearAll"

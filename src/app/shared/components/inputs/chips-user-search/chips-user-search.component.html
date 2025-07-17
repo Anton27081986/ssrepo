@@ -1,28 +1,56 @@
 <form>
 	<ss-caption size="1">{{ label }}</ss-caption>
-	<div class="input" [ngClass]="{'dropdown': foundItems.length}">
-		<div *ngFor="let item of selectedItems;  index as i" class="chips">
-			<ss-avatar [size]="'smallest'" [src]="item?.avatarUrl"></ss-avatar>
+	<div
+		class="input"
+		[ngClass]="{ dropdown: foundItems.length }"
+	>
+		<div
+			*ngFor="let item of selectedItems; index as i"
+			class="chips"
+		>
+			<ss-avatar
+				[size]="'smallest'"
+				[src]="item?.avatarUrl"
+			></ss-avatar>
 			<ss-text size="3">{{ item.name }}</ss-text>
-			<ss-icon height="10" width="10" name="close" (click)="onRemoveItemFromList(i)"></ss-icon>
+			<ss-icon
+				height="10"
+				width="10"
+				name="close"
+				(click)="onRemoveItemFromList(i)"
+			></ss-icon>
 		</div>
-		<input #input
-			   class="{{ error ? size + ' error' : size }}"
-			   type="text"
-			   [placeholder]="placeholder"
-			   [disabled]="disabled"
-			   (input)="onInputChange(input.value)"
-			   (keydown.enter)="dontSend($event)"
+		<input
+			#input
+			class="{{ error ? size + ' error' : size }}"
+			type="text"
+			[placeholder]="placeholder"
+			[disabled]="disabled"
+			(input)="onInputChange(input.value)"
+			(keydown.enter)="dontSend($event)"
 		/>
-		<ss-icon *ngIf="foundItems.length" class="hide-dropdown-button" height="14" width="14" name="arrowBottom" (click)="input.value = ''; foundItems = []"></ss-icon>
+		<ss-icon
+			*ngIf="foundItems.length"
+			class="hide-dropdown-button"
+			height="14"
+			width="14"
+			name="arrowBottom"
+			(click)="input.value = ''; foundItems = []"
+		></ss-icon>
 	</div>
-	<div *ngIf="foundItems.length" class="variants-wrapper">
+	<div
+		*ngIf="foundItems.length"
+		class="variants-wrapper"
+	>
 		<div class="variants">
 			<div class="separator"></div>
-			<div *ngFor="let item of foundItems" class="variants-item" (click)="onAddItemToList(item)">
+			<div
+				*ngFor="let item of foundItems"
+				class="variants-item"
+				(click)="onAddItemToList(item)"
+			>
 				<ss-text size="3">{{ item?.name }}</ss-text>
 			</div>
 		</div>
 	</div>
 </form>
-

@@ -1,9 +1,26 @@
-<ss-card *ngIf="thankColleague" class="thanks-colleague-card" padding="16px">
+<ss-card
+	*ngIf="thankColleague"
+	class="thanks-colleague-card"
+	padding="16px"
+>
 	<div class="thanks-colleague-card__header">
 		<div class="thanks-colleague-card__header__avatars">
-			<ss-avatar size="medium" type="rectangle" [src]="thankColleague.fromUser.avatarUrl || ''" (click)="openModalInfoUser(thankColleague.fromUser.id)"></ss-avatar>
-			<ss-avatar size="medium" type="rectangle" [src]="thankColleague.toUser.avatarUrl || ''" (click)="openModalInfoUser(thankColleague.toUser.id)"></ss-avatar>
-			<ss-icon class="thanks-colleague-card__header__avatars__arrow" name="arrow"></ss-icon>
+			<ss-avatar
+				size="medium"
+				type="rectangle"
+				[src]="thankColleague.fromUser.avatarUrl || ''"
+				(click)="openModalInfoUser(thankColleague.fromUser.id)"
+			></ss-avatar>
+			<ss-avatar
+				size="medium"
+				type="rectangle"
+				[src]="thankColleague.toUser.avatarUrl || ''"
+				(click)="openModalInfoUser(thankColleague.toUser.id)"
+			></ss-avatar>
+			<ss-icon
+				class="thanks-colleague-card__header__avatars__arrow"
+				name="arrow"
+			></ss-icon>
 		</div>
 		<div class="thanks-colleague-card__header__persons">
 			<ss-text size="4">От кого:</ss-text>
@@ -11,7 +28,10 @@
 			<ss-text size="4">Кому:</ss-text>
 			<ss-text size="3">{{ thankColleague.toUser.name }}</ss-text>
 		</div>
-		<ss-icon name="maximise" (click)="openPopoverInfo(thankColleague)"></ss-icon>
+		<ss-icon
+			name="maximise"
+			(click)="openPopoverInfo(thankColleague)"
+		></ss-icon>
 	</div>
 	<div class="thanks-colleague-card__content">
 		<ss-text size="3">{{ thankColleague.text || '' }}</ss-text>
@@ -19,37 +39,62 @@
 	<div class="thanks-colleague-card__footer">
 		<div class="thanks-colleague-card__footer__controls">
 			<app-like
-				*ngIf="!isExtendedMode" [likedUsers]="thankColleague.likedUsers || []"
-				[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.default : thankColleague.award || LikeStateEnum.usual"
+				*ngIf="!isExtendedMode"
+				[likedUsers]="thankColleague.likedUsers || []"
+				[type]="
+					thankColleague.isUserLiked && !thankColleague.award
+						? LikeStateEnum.default
+						: thankColleague.award || LikeStateEnum.usual
+				"
 				[count]="thankColleague.likesCount || 0"
-				(click)="changeLike(thankColleague)">
+				(click)="changeLike(thankColleague)"
+			>
 			</app-like>
 			<div class="thanks-colleague-card__footer__controls__like">
 				<app-choice-like
 					*ngIf="isChoiceLike"
 					(close)="isChoiceLike = false"
-					(stateLike)="changeLike(thankColleague, $event)">
+					(stateLike)="changeLike(thankColleague, $event)"
+				>
 				</app-choice-like>
 				<app-like
 					*ngIf="isExtendedMode"
 					[likedUsers]="thankColleague.likedUsers || []"
-					[type]="thankColleague.isUserLiked && !thankColleague.award ? LikeStateEnum.usual : thankColleague.award || LikeStateEnum.usual"
+					[type]="
+						thankColleague.isUserLiked && !thankColleague.award
+							? LikeStateEnum.usual
+							: thankColleague.award || LikeStateEnum.usual
+					"
 					[count]="thankColleague.likesCount || 0"
-					(click)="thankColleague.isUserLiked ? changeLike(thankColleague, thankColleague.award) : isChoiceLike = true">
+					(click)="
+						thankColleague.isUserLiked
+							? changeLike(thankColleague, thankColleague.award)
+							: (isChoiceLike = true)
+					"
+				>
 				</app-like>
 			</div>
 
-			<div class="thanks-colleague-card__footer__controls__comment" (click)="openPopoverInfo(thankColleague)">
+			<div
+				class="thanks-colleague-card__footer__controls__comment"
+				(click)="openPopoverInfo(thankColleague)"
+			>
 				<ss-icon
 					name="comment"
 					[tooltip]="'Оставить комментарий'"
 					[theme]="TooltipTheme.DEFAULT"
 					[position]="TooltipPosition.DEFAULT"
-					[width]="'15'" [height]="'15'">
+					[width]="'15'"
+					[height]="'15'"
+				>
 				</ss-icon>
-				<ss-text [size]="'3'">{{ thankColleague.commentsCount }}</ss-text>
+				<ss-text [size]="'3'">{{
+					thankColleague.commentsCount
+				}}</ss-text>
 			</div>
 		</div>
-		<ss-text size="4">{{ thankColleague.createdDate | date:'dd.MM.yyyy HH:mm':'':'ru' }}</ss-text>
+		<ss-text size="4">{{
+			thankColleague.createdDate | date: 'dd.MM.yyyy HH:mm' : '' : 'ru'
+		}}</ss-text>
 	</div>
 </ss-card>

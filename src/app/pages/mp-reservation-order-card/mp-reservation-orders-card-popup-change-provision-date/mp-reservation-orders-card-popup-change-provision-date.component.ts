@@ -103,6 +103,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 				.get('provisionDate')
 				?.value.split('T')[0];
 
+			// eslint-disable-next-line eqeqeq
 			if (newDateValue && detail.id != null) {
 				const updatesDates$ =
 					this.mpReservationOrderCardFacadeService.updateProvisionDateById(

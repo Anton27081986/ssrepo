@@ -10,7 +10,10 @@ import {
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
@@ -25,10 +28,7 @@ import {
 	NgSwitchCase,
 	NgSwitchDefault,
 } from '@angular/common';
-import { TextComponent } from '@app/shared/components/typography/text/text.component';
-import { SelectComponent } from '@app/shared/components/select/select.component';
 import { InputComponent } from '@app/shared/components/inputs/input/input.component';
-import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { IOrderChangeQualification } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-qualification';
 import {
@@ -39,7 +39,7 @@ import {
 	Validators,
 } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import {InputType} from "@front-components/components";
+import { InputType } from '@front-components/components';
 
 export enum QualificationTrRowItemField {
 	amount = 'amount',
@@ -50,8 +50,11 @@ export enum QualificationTrRowItemField {
 @Component({
 	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'tr[mp-reservation-orders-card-popup-qualification-tr]',
-	styleUrls: ['mp-reservation-orders-card-popup-qualification-tr.component.scss'],
-	templateUrl: './mp-reservation-orders-card-popup-qualification-tr.component.html',
+	styleUrls: [
+		'mp-reservation-orders-card-popup-qualification-tr.component.scss',
+	],
+	templateUrl:
+		'./mp-reservation-orders-card-popup-qualification-tr.component.html',
 	imports: [
 		CommonModule,
 		NgForOf,
@@ -59,10 +62,7 @@ export enum QualificationTrRowItemField {
 		NgSwitch,
 		NgIf,
 		NgSwitchCase,
-		TextComponent,
-		SelectComponent,
 		InputComponent,
-		SearchInputComponent,
 		NgSwitchDefault,
 		DateTimePickerComponent,
 		FormsModule,
@@ -77,32 +77,43 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly Number = Number;
 
-	protected readonly QualificationTrRowItemField = QualificationTrRowItemField;
+	protected readonly QualificationTrRowItemField =
+		QualificationTrRowItemField;
+
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
-	@Input({ required: true }) item!: IOrderChangeQualification;
-	@Input() defaultCols: IStoreTableBaseColumn[] = [];
+	@Input({ required: true })
+	public item!: IOrderChangeQualification;
 
-	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	@Input()
+	public defaultCols: IStoreTableBaseColumn[] = [];
 
-	@ViewChild('content') public content!: ElementRef;
+	protected viewMaximise$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
-	@Output() checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+	@ViewChild('content')
+	public content!: ElementRef;
+
+	@Output()
+	public checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	public qualificationTrForm!: FormGroup<{
 		amount: FormControl<number>;
 		dateProvision: FormControl<string>;
 	}>;
 
+	protected readonly Input = Input;
+	protected readonly InputType = InputType;
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		private readonly modalService: ModalService,
 	) {
-		this.tprRejectsReasons$ = this.clientProposalsFacadeService.tprRejectsReasons$;
+		this.tprRejectsReasons$ =
+			this.clientProposalsFacadeService.tprRejectsReasons$;
 	}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.columnsStateService.colsTr$.next([
 			{
 				cols: [
@@ -141,30 +152,29 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 
 		this.qualificationTrForm.controls.amount.valueChanges
 			.pipe(untilDestroyed(this))
-			.subscribe(value => this.item.amount = value);
+			.subscribe((value) => (this.item.amount = value));
 
 		this.qualificationTrForm.controls.dateProvision.valueChanges
 			.pipe(untilDestroyed(this))
-			.subscribe(value => this.item.requestedProvisionDate = value);
+			.subscribe((value) => (this.item.requestedProvisionDate = value));
 	}
 
-	ngAfterViewChecked() {
+	public ngAfterViewChecked(): void {
 		if (this.content) {
-			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+			this.viewMaximise$.next(
+				this.content.nativeElement.scrollHeight > 200,
+			);
 		}
 	}
 
-	showText(text: string[], title?: string) {
-		this.modalService.open(TableFullCellComponent, {
-			data: {
-				cell: text.map(item => {
-					return { text: item };
-				}),
-				title,
-			},
-		});
-	}
-
-	protected readonly Input = Input;
-	protected readonly InputType = InputType;
+	// showText(text: string[], title?: string) {
+	// 	this.modalService.open(TableFullCellComponent, {
+	// 		data: {
+	// 			cell: text.map((item) => {
+	// 				return { text: item };
+	// 			}),
+	// 			title,
+	// 		},
+	// 	});
+	// }
 }

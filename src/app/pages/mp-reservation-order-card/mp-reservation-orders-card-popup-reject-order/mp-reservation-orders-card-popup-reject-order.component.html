@@ -1,9 +1,23 @@
-<div class="wrapper" (click)="close()">
-	<form [formGroup]="declineForm" (click)="$event.stopPropagation()">
-		<snab-card class="card-wrapper" [headerRef]="header" [bodyRef]="body" [footerRef]="footer">
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<form
+		[formGroup]="declineForm"
+		(click)="$event.stopPropagation()"
+	>
+		<snab-card
+			class="card-wrapper"
+			[headerRef]="header"
+			[bodyRef]="body"
+			[footerRef]="footer"
+		>
 			<ng-template #header>
 				<div class="header">
-					<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+					<snab-text
+						[type]="TextType.Title"
+						[weight]="TextWeight.Medium"
+					>
 						Отклонение заказа
 					</snab-text>
 					<snab-button
@@ -11,7 +25,8 @@
 						[size]="Size.Default"
 						[icon]="IconType.ClearLarge"
 						[iconPosition]="IconPosition.OnlyIcon"
-						(click)="close()"></snab-button>
+						(click)="close()"
+					></snab-button>
 				</div>
 			</ng-template>
 			<ng-template #body>
@@ -28,7 +43,8 @@
 								declineForm.controls.reason.errors?.required
 									? 'Обязательное поле'
 									: undefined
-							"></ss-textarea>
+							"
+						></ss-textarea>
 					</div>
 				</div>
 			</ng-template>
@@ -39,11 +55,13 @@
 						class="footer-controls__cancel"
 						[type]="ButtonType.Secondary"
 						[size]="Size.Large"
-						(click)="close()"></snab-button>
+						(click)="close()"
+					></snab-button>
 					<snab-button
 						text="Отклонить"
 						[size]="Size.Large"
-						(click)="rejectOrder()"></snab-button>
+						(click)="rejectOrder()"
+					></snab-button>
 				</div>
 			</ng-template>
 		</snab-card>

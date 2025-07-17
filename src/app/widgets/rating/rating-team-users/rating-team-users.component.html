@@ -5,8 +5,11 @@
 			<ss-loader></ss-loader>
 		</ng-container>
 		<ng-container *ngIf="!isLoading()">
-			<ng-container *ngIf="total() > 0;else noData">
-				<app-rating-team-users-card *ngFor="let user of users()" [teamUsers]="user"></app-rating-team-users-card>
+			<ng-container *ngIf="total() > 0; else noData">
+				<app-rating-team-users-card
+					*ngFor="let user of users()"
+					[teamUsers]="user"
+				></app-rating-team-users-card>
 			</ng-container>
 			<ng-template #noData>
 				<ss-empty-placeholder class="empty">
@@ -24,5 +27,3 @@
 	>
 	</ss-pagination>
 </div>
-
-

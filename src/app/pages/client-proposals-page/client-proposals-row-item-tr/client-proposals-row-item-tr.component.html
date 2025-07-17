@@ -1,79 +1,146 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td *ngIf="col.display" class="ss-table-td">
+			<td
+				*ngIf="col.display"
+				class="ss-table-td"
+			>
 				<ng-container *ngSwitchCase="ClientTprRowItemField.vgp">
-					<a href="{{ item().productionUrl }}" class="ss-table-td__content" target="_blank"> {{ item().productionName }}</a>
+					<a
+						href="{{ item().productionUrl }}"
+						class="ss-table-td__content"
+						target="_blank"
+					>
+						{{ item().productionName }}</a
+					>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tg">
-					<a href="{{ item().tovGroupUrl }}" class="ss-table-td__content" target="_blank"> {{ item().tovGroupName }}</a>
+					<a
+						href="{{ item().tovGroupUrl }}"
+						class="ss-table-td__content"
+						target="_blank"
+					>
+						{{ item().tovGroupName }}</a
+					>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpg">
-					<a href="{{ item().productionGroupUrl }}" class="ss-table-td__content" target="_blank"> {{ item().tovSubGroupName }}</a>
+					<a
+						href="{{ item().productionGroupUrl }}"
+						class="ss-table-td__content"
+						target="_blank"
+					>
+						{{ item().tovSubGroupName }}</a
+					>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.tpr">
-					<a href="{{item().newProductUrl }}" class="ss-table-td__content" target="_blank"> {{ item().newProductName }}</a>
+					<a
+						href="{{ item().newProductUrl }}"
+						class="ss-table-td__content"
+						target="_blank"
+					>
+						{{ item().newProductName }}</a
+					>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.countKA">
-					<div class="ss-table-td__content hc-table-td__content--number">{{ item().saleClientsCount }}</div>
+					<div
+						class="ss-table-td__content hc-table-td__content--number"
+					>
+						{{ item().saleClientsCount }}
+					</div>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="ClientTprRowItemField.volumeOfSales">
-					<div class="ss-table-td__content hc-table-td__content--number">{{ item().salesWeight | numWithSpaces:3 }}</div>
+				<ng-container
+					*ngSwitchCase="ClientTprRowItemField.volumeOfSales"
+				>
+					<div
+						class="ss-table-td__content hc-table-td__content--number"
+					>
+						{{ item().salesWeight | numWithSpaces: 3 }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.ratingTpr">
-					<div class="ss-table-td__content hc-table-td__content--number">{{item().rating | numWithSpaces:4 }}</div>
+					<div
+						class="ss-table-td__content hc-table-td__content--number"
+					>
+						{{ item().rating | numWithSpaces: 4 }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.price">
 					<div class="ss-table-td__canvas">
 						<ng-container *ngFor="let price of item().prices">
-							<div *ngIf="price" class="ss-table-td__content ss-table-td__content--number" style="cursor: pointer"
-								 [tooltip]="price.name" [theme]="TooltipTheme.DEFAULT"
-								 [position]="TooltipPosition.DEFAULT">
-								{{ price.price | numWithSpaces:2 }}
+							<div
+								*ngIf="price"
+								class="ss-table-td__content ss-table-td__content--number"
+								style="cursor: pointer"
+								[tooltip]="price.name"
+								[theme]="TooltipTheme.DEFAULT"
+								[position]="TooltipPosition.DEFAULT"
+							>
+								{{ price.price | numWithSpaces: 2 }}
 							</div>
 						</ng-container>
 					</div>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="ClientTprRowItemField.advantagesTpr">
+				<ng-container
+					*ngSwitchCase="ClientTprRowItemField.advantagesTpr"
+				>
 					<div class="ss-table-td__td limit">
-						<div *ngIf="advantagesTpr" #content class="hc-table-td__content">{{ advantagesTpr }}</div>
+						<div
+							*ngIf="advantagesTpr"
+							#content
+							class="hc-table-td__content"
+						>
+							{{ advantagesTpr }}
+						</div>
 					</div>
-					<ss-icon *ngIf="viewMaximise$ | async" class="ss-table-td__maximise maximise" name="maximise"
-							 (click)="showText(advantagesTpr, 'Преимущества ТПР')"></ss-icon>
+					<ss-icon
+						*ngIf="viewMaximise$ | async"
+						class="ss-table-td__maximise maximise"
+						name="maximise"
+						(click)="showText(advantagesTpr, 'Преимущества ТПР')"
+					></ss-icon>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.rim">
 					<div class="ss-table-td__td">
-					<a *ngIf="(rims$ | async)?.length else empty" class="ss-table-td__content"
-					   (click)="openPopoverRimsView()">Показать рим</a>
-					<ng-template #empty>
-						<div class="ss-table-td__content"> -</div>
-					</ng-template>
+						<a
+							*ngIf="(rims$ | async)?.length; else empty"
+							class="ss-table-td__content"
+							(click)="openPopoverRimsView()"
+							>Показать рим</a
+						>
+						<ng-template #empty>
+							<div class="ss-table-td__content">-</div>
+						</ng-template>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="ClientTprRowItemField.documents">
 					<div class="ss-table-td__td">
-					<div *ngIf="(documents$ | async)?.length else  empty" class="ss-table-td__content"
-						 (click)="openPopoverDocumentView()">
-						<span class="ss-table-td__open-doc">Показать документы</span>
-					</div>
-					<ng-template #empty>
-						<div class="ss-table-td__content"> -</div>
-					</ng-template>
+						<div
+							*ngIf="(documents$ | async)?.length; else empty"
+							class="ss-table-td__content"
+							(click)="openPopoverDocumentView()"
+						>
+							<span class="ss-table-td__open-doc"
+								>Показать документы</span
+							>
+						</div>
+						<ng-template #empty>
+							<div class="ss-table-td__content">-</div>
+						</ng-template>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchDefault>
-					<div class="ss-table-td__content"> -</div>
+					<div class="ss-table-td__content">-</div>
 				</ng-container>
 			</td>
 		</ng-container>

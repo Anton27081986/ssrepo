@@ -29,20 +29,26 @@ export class SearchFacadeService {
 		public readonly winsApiService: WinsApiService,
 		public readonly menuApiService: MenuApiService,
 	) {
-		this.clientCardListFacade.clientId$.pipe(untilDestroyed(this)).subscribe(clientId => {
-			this.clientId = clientId;
-		});
+		this.clientCardListFacade.clientId$
+			.pipe(untilDestroyed(this))
+			.subscribe((clientId) => {
+				this.clientId = clientId;
+			});
 	}
 
 	public getUsers(query: string) {
 		return this.usersApiService.getUsersByFIO(query);
 	}
 
-	public getRegions(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getRegions(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getRegions(query);
 	}
 
-	public getSubSectors(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getSubSectors(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getSubSectors(query);
 	}
 
@@ -53,27 +59,39 @@ export class SearchFacadeService {
 		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
-	public getClientsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getClientsCompany(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientsCompany(query);
 	}
 
-	public getTovCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getTovCompany(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getTovCompany(query);
 	}
 
-	public getContractorsCompany(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getContractorsCompany(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getContractorsCompany(query);
 	}
 
-	public getProductions(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getProductions(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.searchProductions(query);
 	}
 
-	public getContractor(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getContractor(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getContractors(query, this.clientId);
 	}
 
-	public getPayerContractor(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getPayerContractor(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getPayerContractors(query);
 	}
 
@@ -81,31 +99,45 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getTovs(query);
 	}
 
-	public getPersonificationStatuses(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getPersonificationStatuses(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getPersonificationStatuses(query);
 	}
 
-	public getTovGroups(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getTovGroups(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.getTpgSearch(query);
 	}
 
-	public getTechnologist(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getTechnologist(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getTechnologist(this.clientId!, query);
 	}
 
-	public getClientIdDictionary(id: number): Observable<IResponse<IDictionaryItemDto>> {
+	public getClientIdDictionary(
+		id: number,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientIdDictionary(id);
 	}
 
-	public getContracts(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getContracts(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getContracts(query);
 	}
 
-	public globalSearch(query: string): Observable<IResponse<IGlobalSearchDto>> {
+	public globalSearch(
+		query: string,
+	): Observable<IResponse<IGlobalSearchDto>> {
 		return this.menuApiService.globalSearch(query);
 	}
 
-	public getProductSearch(query: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getProductSearch(
+		query: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.winsApiService.getProductSearch(query);
 	}
 
@@ -149,12 +181,23 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getCompletedActContracts(id);
 	}
 
-	public getFinDocOrders(providerContractorId: number, externalActDate: string | null) {
-		return this.dictionaryApiService.getFinDocOrders(providerContractorId, externalActDate);
+	public getFinDocOrders(
+		providerContractorId: number,
+		externalActDate: string | null,
+	) {
+		return this.dictionaryApiService.getFinDocOrders(
+			providerContractorId,
+			externalActDate,
+		);
 	}
 
-	public getDictionaryUsers(query?: string): Observable<IResponse<IDictionaryItemDto>> {
-		return this.dictionaryApiService.getDictionaryUsers(this.clientId!, query);
+	public getDictionaryUsers(
+		query?: string,
+	): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getDictionaryUsers(
+			this.clientId!,
+			query,
+		);
 	}
 
 	public getSearchMethodByType(
@@ -165,7 +208,7 @@ export class SearchFacadeService {
 		switch (searchType) {
 			case SearchTypeEnum.User:
 				return this.getUsers(query).pipe(
-					map(data =>
+					map((data) =>
 						data.items.map((item: { id: any; fio: any }) => ({
 							id: item.id,
 							name: item.fio,
@@ -174,11 +217,13 @@ export class SearchFacadeService {
 				);
 
 			case SearchTypeEnum.UserDictionary:
-				return this.getDictionaryUsers(query).pipe(map(data => data.items));
+				return this.getDictionaryUsers(query).pipe(
+					map((data) => data.items),
+				);
 
 			case SearchTypeEnum.SubSector:
 				return this.getSubSectors(query).pipe(
-					map(data =>
+					map((data) =>
 						data.items.map((item: { id: any; name: any }) => ({
 							id: item.id,
 							name: item.name,
@@ -188,7 +233,7 @@ export class SearchFacadeService {
 
 			case SearchTypeEnum.Region:
 				return this.getRegions(query).pipe(
-					map(data =>
+					map((data) =>
 						data.items.map((item: { id: any; name: any }) => ({
 							id: item.id,
 							name: item.name,
@@ -197,31 +242,41 @@ export class SearchFacadeService {
 				);
 
 			case SearchTypeEnum.Contractor:
-				return this.getContractor(query).pipe(map(data => data.items));
+				return this.getContractor(query).pipe(
+					map((data) => data.items),
+				);
 
 			case SearchTypeEnum.Tovs:
-				return this.getTovs(query).pipe(map(data => data.items));
+				return this.getTovs(query).pipe(map((data) => data.items));
 
 			case SearchTypeEnum.PersonificationStatuses:
-				return this.getPersonificationStatuses(query).pipe(map(data => data.items));
+				return this.getPersonificationStatuses(query).pipe(
+					map((data) => data.items),
+				);
 
 			case SearchTypeEnum.Technologist:
-				return this.getTechnologist(query).pipe(map(data => data.items));
+				return this.getTechnologist(query).pipe(
+					map((data) => data.items),
+				);
 
 			case SearchTypeEnum.Client:
-				return this.getClients(query, isActive).pipe(map(data => data.items));
+				return this.getClients(query, isActive).pipe(
+					map((data) => data.items),
+				);
 
 			case SearchTypeEnum.Contract:
-				return this.getContracts(query).pipe(map(data => data.items));
+				return this.getContracts(query).pipe(map((data) => data.items));
 
 			case SearchTypeEnum.Products:
-				return this.getProductSearch(query).pipe(map(data => data.items));
+				return this.getProductSearch(query).pipe(
+					map((data) => data.items),
+				);
 
 			case SearchTypeEnum.Global:
 				return this.globalSearch(query).pipe(
-					map(data => {
+					map((data) => {
 						return data.items.map(
-							item =>
+							(item) =>
 								({
 									id: 0,
 									name: item.title,

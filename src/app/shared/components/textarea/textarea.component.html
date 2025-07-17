@@ -11,10 +11,16 @@
 			[rows]="rows"
 			[maxLength]="maxLength"
 			(input)="onChange($any($event.target).value)"
-			(blur)="onTouched()">
+			(blur)="onTouched()"
+		>
 		</textarea>
 		@if (textarea.value && !disabled) {
-			<ss-icon class="close" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>
+			<ss-icon
+				class="close"
+				height="12"
+				name="close"
+				(click)="textarea.value = ''; onChange('')"
+			></ss-icon>
 		}
 	} @else {
 		<textarea
@@ -26,11 +32,21 @@
 			[cols]="cols"
 			[rows]="rows"
 			(input)="onChange($any($event.target).value)"
-			(blur)="onTouched()">
+			(blur)="onTouched()"
+		>
 		</textarea>
 		@if (textarea.value && !disabled) {
-			<ss-icon class="close" height="12" name="close" (click)="textarea.value = ''; onChange('')"></ss-icon>
+			<ss-icon
+				class="close"
+				height="12"
+				name="close"
+				(click)="textarea.value = ''; onChange('')"
+			></ss-icon>
 		}
 	}
 </div>
-<ss-caption class="error" color="error">{{ error }}</ss-caption>
+<ss-caption
+	class="error"
+	color="error"
+	>{{ error }}</ss-caption
+>

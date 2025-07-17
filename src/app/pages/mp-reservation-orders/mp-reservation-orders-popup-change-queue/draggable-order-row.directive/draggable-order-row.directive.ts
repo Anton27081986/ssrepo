@@ -5,9 +5,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import {
-	IOrderReorderRequest
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model";
+import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
 
 @Directive({
 	selector: '[ssDraggableOrderRow]',
@@ -32,7 +30,10 @@ export class DraggableOrderRowDirective {
 	@HostListener('dragstart', ['$event'])
 	onDragStart(event: DragEvent): void {
 		DraggableOrderRowDirective.draggedOrderId = this.queueOrder.id;
-		event.dataTransfer?.setData('text/plain', this.queueOrder.id.toString());
+		event.dataTransfer?.setData(
+			'text/plain',
+			this.queueOrder.id.toString(),
+		);
 		event.dataTransfer!.effectAllowed = 'move';
 	}
 

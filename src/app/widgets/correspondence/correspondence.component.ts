@@ -1,14 +1,14 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {CorrespondenceFacadeService} from '@app/core/facades/correspondence-facade.service';
-import {TableState} from '@app/shared/components/table/table-state';
-import {Observable} from 'rxjs';
-import {LoaderComponent} from "@app/shared/components/loader/loader.component";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
-import {TopicComponent} from "@app/widgets/correspondence/topic/topic.component";
-import {MessagesComponent} from "@app/widgets/correspondence/messages/messages.component";
-import {MailComponent} from "@app/widgets/correspondence/mail/mail.component";
-import {CardDropdownComponent} from "@app/shared/components/card-dropdown/card-dropdown.component";
-import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { CorrespondenceFacadeService } from '@app/core/facades/correspondence-facade.service';
+import { TableState } from '@app/shared/components/table/table-state';
+import { Observable } from 'rxjs';
+import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { AsyncPipe, CommonModule, NgIf } from '@angular/common';
+import { TopicComponent } from '@app/widgets/correspondence/topic/topic.component';
+import { MessagesComponent } from '@app/widgets/correspondence/messages/messages.component';
+import { MailComponent } from '@app/widgets/correspondence/mail/mail.component';
+import { CardDropdownComponent } from '@app/shared/components/card-dropdown/card-dropdown.component';
+import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
 
 @Component({
 	selector: 'ss-correspondence',
@@ -28,7 +28,8 @@ import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence
 })
 export class CorrespondenceComponent implements OnChanges {
 	@Input() public objectId: number | undefined;
-	@Input() public type: CorrespondenceTypeEnum = CorrespondenceTypeEnum.Clients;
+	@Input() public type: CorrespondenceTypeEnum =
+		CorrespondenceTypeEnum.Clients;
 
 	public isLoading$: Observable<boolean>;
 
@@ -37,12 +38,11 @@ export class CorrespondenceComponent implements OnChanges {
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
 	) {
 		this.isLoading$ = this.notificationsFacadeService.isLoading$;
-
 	}
 
 	public ngOnChanges(changes: SimpleChanges) {
 		if (changes.objectId && this.objectId) {
-			this.notificationsFacadeService.setType(this.type)
+			this.notificationsFacadeService.setType(this.type);
 			this.notificationsFacadeService.setObjectId(this.objectId);
 		}
 	}

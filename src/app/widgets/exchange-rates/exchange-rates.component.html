@@ -1,61 +1,91 @@
 @if (exchangeRates$ | async; as exchangeRates) {
-    <ss-card [padding]="'16px 0'">
-        <div class="header">
-            <div class="title">
-                <ss-text size="1">Котировки валют</ss-text>
+	<ss-card [padding]="'16px 0'">
+		<div class="header">
+			<div class="title">
+				<ss-text size="1">Котировки валют</ss-text>
 
-                @if (requestTime) {
-                    <ss-text size="3" weight="medium" color="gray">
-                        Действительны на {{ requestTime |  date: 'HH:mm' }} по Москве,
-                        {{ requestTime |  date: 'd MMMM yyyy': undefined : 'ru-RU' }}
-                    </ss-text>
-                }
-            </div>
-        </div>
+				@if (requestTime) {
+					<ss-text
+						size="3"
+						weight="medium"
+						color="gray"
+					>
+						Действительны на {{ requestTime | date: 'HH:mm' }} по
+						Москве,
+						{{
+							requestTime
+								| date: 'd MMMM yyyy' : undefined : 'ru-RU'
+						}}
+					</ss-text>
+				}
+			</div>
+		</div>
 
-        <ss-divider class="divider" />
+		<ss-divider class="divider" />
 
-        <div class="rates">
-            <div class="column">
-                <ss-text size="3" weight="medium">Валюта:</ss-text>
-            </div>
+		<div class="rates">
+			<div class="column">
+				<ss-text
+					size="3"
+					weight="medium"
+					>Валюта:</ss-text
+				>
+			</div>
 
-            <div class="column">
-                <ss-text size="3" weight="medium">Вчера:</ss-text>
-            </div>
+			<div class="column">
+				<ss-text
+					size="3"
+					weight="medium"
+					>Вчера:</ss-text
+				>
+			</div>
 
-            <div class="column">
-                <ss-text size="3" weight="medium">Сегодня:</ss-text>
-            </div>
+			<div class="column">
+				<ss-text
+					size="3"
+					weight="medium"
+					>Сегодня:</ss-text
+				>
+			</div>
 
-            @for (currency of exchangeRates?.items; track currency) {
-                <div class="column">
-                    <div class="item text-complementary">{{ currency.currencyName }}</div>
-                </div>
+			@for (currency of exchangeRates?.items; track currency) {
+				<div class="column">
+					<div class="item text-complementary">
+						{{ currency.currencyName }}
+					</div>
+				</div>
 
-                <div class="column">
-                    <div class="item text-complementary">{{ currency.yesterdayRate }}</div>
-                </div>
+				<div class="column">
+					<div class="item text-complementary">
+						{{ currency.yesterdayRate }}
+					</div>
+				</div>
 
-                <div class="column">
-                    <div class="item text-complementary">{{ currency.todayRate }}</div>
-                </div>
-            }
-        </div>
-    </ss-card>
+				<div class="column">
+					<div class="item text-complementary">
+						{{ currency.todayRate }}
+					</div>
+				</div>
+			}
+		</div>
+	</ss-card>
 
-    <ss-card
-        class="controls"
-        padding="10px"
-    >
-        @for (item of exchangeRatesLinks; track item) {
-            <ss-card
-                radius="8px"
-                class="controls-item"
-                (click)="onRedirect(item.link)"
-            >
-                <ss-headline size="h3" weight="semi-bold">{{ item.title }}</ss-headline>
-            </ss-card>
-        }
-    </ss-card>
+	<ss-card
+		class="controls"
+		padding="10px"
+	>
+		@for (item of exchangeRatesLinks; track item) {
+			<ss-card
+				radius="8px"
+				class="controls-item"
+				(click)="onRedirect(item.link)"
+			>
+				<ss-headline
+					size="h3"
+					weight="semi-bold"
+					>{{ item.title }}</ss-headline
+				>
+			</ss-card>
+		}
+	</ss-card>
 }

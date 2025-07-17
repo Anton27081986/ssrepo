@@ -1,14 +1,31 @@
 <div class="header">
 	<div class="header-title">
-		<ss-icon name="arrow" (click)="toClientsList()"></ss-icon>
-		<ss-headline size="h3" weight="semi-bold">{{ (client$ | async)?.name }}</ss-headline>
-		<ss-tag *ngIf="(client$ | async)?.isDeleted" type="error">Удалён</ss-tag>
-		<ss-tag *ngIf="(client$ | async)?.isArchived" type="warning">Архив</ss-tag>
+		<ss-icon
+			name="arrow"
+			(click)="toClientsList()"
+		></ss-icon>
+		<ss-headline
+			size="h3"
+			weight="semi-bold"
+			>{{ (client$ | async)?.name }}</ss-headline
+		>
+		<ss-tag
+			*ngIf="(client$ | async)?.isDeleted"
+			type="error"
+			>Удалён</ss-tag
+		>
+		<ss-tag
+			*ngIf="(client$ | async)?.isArchived"
+			type="warning"
+			>Архив</ss-tag
+		>
 	</div>
 	<div class="header-tabs">
-		<ss-tabs [tabs]="tabs"
-		         [selectedTab]="selectedTab"
-		         (select)="selectTab($event)">
+		<ss-tabs
+			[tabs]="tabs"
+			[selectedTab]="selectedTab"
+			(select)="selectTab($event)"
+		>
 		</ss-tabs>
 	</div>
 </div>
@@ -16,7 +33,10 @@
 <div class="footer">
 	<div class="contractors">
 		<ss-client-card-contractors></ss-client-card-contractors>
-        <ss-history [objectId]="(client$ | async)?.id?.toString()!" [queryType]="queryType.UserCard"></ss-history>
+		<ss-history
+			[objectId]="(client$ | async)?.id?.toString()!"
+			[queryType]="queryType.UserCard"
+		></ss-history>
 	</div>
 	<ss-correspondence [objectId]="(client$ | async)?.id!"></ss-correspondence>
 </div>

@@ -1,10 +1,15 @@
 @if (label) {
 	<ss-caption size="1">{{ label }}</ss-caption>
 }
-<select [disabled]="disabled"
-		[ngClass]="error ? size + ' error' : size"
+<select
+	[disabled]="disabled"
+	[ngClass]="error ? size + ' error' : size"
 	(change)="onClick($event.currentTarget)"
 >
 	<ng-content></ng-content>
 </select>
-<ss-caption size="2" class="error">{{ error }}</ss-caption>
+<ss-caption
+	size="2"
+	class="error"
+	>{{ error }}</ss-caption
+>

@@ -1,54 +1,72 @@
-<ss-card class="thanks-partner" [padding]="'16px 0'">
-    <div class="thanks-partner__header">
-        <div class="thanks-partner__header-info">
-            <ss-text size="1">Скажите спасибо партнеру</ss-text>
+<ss-card
+	class="thanks-partner"
+	[padding]="'16px 0'"
+>
+	<div class="thanks-partner__header">
+		<div class="thanks-partner__header-info">
+			<ss-text size="1">Скажите спасибо партнеру</ss-text>
 
-            <ss-text size="3">Топ-9 самых клиентоориентированных сотрудников!</ss-text>
-        </div>
+			<ss-text size="3"
+				>Топ-9 самых клиентоориентированных сотрудников!</ss-text
+			>
+		</div>
 
-        <div class="thanks-partner__header-actions">
-            <div class="thanks-partner__header-actions_calendar">
-                <ss-date-time-picker [formControl]="dateCtrl" [showTime]="false"></ss-date-time-picker>
-            </div>
+		<div class="thanks-partner__header-actions">
+			<div class="thanks-partner__header-actions_calendar">
+				<ss-date-time-picker
+					[formControl]="dateCtrl"
+					[showTime]="false"
+				></ss-date-time-picker>
+			</div>
 
-            <ss-button (click)="thankToUrl(thankYouList().addNewThanksLink || '')">
-                <ss-icon [width]="'12'" [height]="'12'" [name]="'like'"></ss-icon>
-                Поблагодарить партнера
-            </ss-button>
-        </div>
-    </div>
+			<ss-button
+				(click)="thankToUrl(thankYouList().addNewThanksLink || '')"
+			>
+				<ss-icon
+					[width]="'12'"
+					[height]="'12'"
+					[name]="'like'"
+				></ss-icon>
+				Поблагодарить партнера
+			</ss-button>
+		</div>
+	</div>
 
-    <ss-divider></ss-divider>
+	<ss-divider></ss-divider>
 
-    @if (loading()) {
-        <div class="thanks-partner__loading">
-            <ss-loader></ss-loader>
-        </div>
-    } @else {
-        <div class="thanks-partner__info">
-            <ss-text [size]="'3'">Всего за неделю: {{ thankYouList().weekCount }}</ss-text>
+	@if (loading()) {
+		<div class="thanks-partner__loading">
+			<ss-loader></ss-loader>
+		</div>
+	} @else {
+		<div class="thanks-partner__info">
+			<ss-text [size]="'3'"
+				>Всего за неделю: {{ thankYouList().weekCount }}</ss-text
+			>
 
-            <ss-text [size]="'3'">Всего за все время: {{ thankYouList().totalCount }}</ss-text>
-        </div>
+			<ss-text [size]="'3'"
+				>Всего за все время: {{ thankYouList().totalCount }}</ss-text
+			>
+		</div>
 
-        @if (thankYouList().total) {
-            <div class="thanks-partner__grid-body">
-                @for (item of thankYouList().items; track item.id) {
-                    <app-thanks-partner-card
-                        [thanksPartner]="item"
-                        [class.thanks-partner__card-item]="thankYouList().total | mapper : isAddCardItemPaddings"
-                    ></app-thanks-partner-card>
-                }
-            </div>
-
-        } @else {
-            <div class="thanks-partner__no-content">
-                <ss-empty-placeholder>
-                    <ss-icon name="empty"></ss-icon>
-                    <ss-headline size="h3">Нет данных</ss-headline>
-                </ss-empty-placeholder>
-            </div>
-        }
-    }
+		@if (thankYouList().total) {
+			<div class="thanks-partner__grid-body">
+				@for (item of thankYouList().items; track item.id) {
+					<app-thanks-partner-card
+						[thanksPartner]="item"
+						[class.thanks-partner__card-item]="
+							thankYouList().total | mapper: isAddCardItemPaddings
+						"
+					></app-thanks-partner-card>
+				}
+			</div>
+		} @else {
+			<div class="thanks-partner__no-content">
+				<ss-empty-placeholder>
+					<ss-icon name="empty"></ss-icon>
+					<ss-headline size="h3">Нет данных</ss-headline>
+				</ss-empty-placeholder>
+			</div>
+		}
+	}
 </ss-card>
-

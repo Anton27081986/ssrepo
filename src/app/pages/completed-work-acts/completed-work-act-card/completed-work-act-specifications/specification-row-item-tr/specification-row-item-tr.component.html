@@ -1,64 +1,116 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
 		<ng-container [ngSwitch]="col.id">
-			<td *ngIf="col.display" class="ss-table-td">
+			<td
+				*ngIf="col.display"
+				class="ss-table-td"
+			>
 				<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
 				<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
 				<!--				</ng-container>-->
 
 				<ng-container *ngSwitchCase="specificationRowItemField.service">
-					<div class="ss-table-td__content">{{ item().service?.name || '-' }}</div>
+					<div class="ss-table-td__content">
+						{{ item().service?.name || '-' }}
+					</div>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="specificationRowItemField.quantity">
-					<div class="ss-table-td__content hc-table-td__content--number">{{ item().quantity || '-' }} {{ item().tovUnit?.name }}</div>
+				<ng-container
+					*ngSwitchCase="specificationRowItemField.quantity"
+				>
+					<div
+						class="ss-table-td__content hc-table-td__content--number"
+					>
+						{{ item().quantity || '-' }} {{ item().tovUnit?.name }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.cost">
-					<div class="ss-table-td__content">{{ item().cost?.name || '-' }}</div>
+					<div class="ss-table-td__content">
+						{{ item().cost?.name || '-' }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.section">
-					<div class="ss-table-td__content">{{ item().section?.name || '-' }}</div>
+					<div class="ss-table-td__content">
+						{{ item().section?.name || '-' }}
+					</div>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="specificationRowItemField.faObject">
-					<div class="ss-table-td__content">{{ item().faObject?.name || '-' }}</div>
+				<ng-container
+					*ngSwitchCase="specificationRowItemField.faObject"
+				>
+					<div class="ss-table-td__content">
+						{{ item().faObject?.name || '-' }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.project">
-					<div class="ss-table-td__content">{{ item().project?.name || '-' }}</div>
+					<div class="ss-table-td__content">
+						{{ item().project?.name || '-' }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.dept">
-					<div class="ss-table-td__content">{{ item().dept?.name || '-' }}</div>
+					<div class="ss-table-td__content">
+						{{ item().dept?.name || '-' }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.user">
-					<div class="ss-table-td__content">{{ item().user?.name || '-' }}</div>
+					<div class="ss-table-td__content">
+						{{ item().user?.name || '-' }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.amount">
-					<div class="ss-table-td__content ss-table-td__content--number">{{ item().amount | numWithSpaces }}</div>
+					<div
+						class="ss-table-td__content ss-table-td__content--number"
+					>
+						{{ item().amount | numWithSpaces }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.comment">
-					<div class="ss-table-td__content hc-table-td__content--number">{{ item().comment || '-' }}</div>
+					<div
+						class="ss-table-td__content hc-table-td__content--number"
+					>
+						{{ item().comment || '-' }}
+					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="specificationRowItemField.faAsset">
-					<div class="ss-table-td__content hc-table-td__content--number">{{ item().faAsset?.name || '-' }}</div>
+					<div
+						class="ss-table-td__content hc-table-td__content--number"
+					>
+						{{ item().faAsset?.name || '-' }}
+					</div>
 				</ng-container>
 
-				<ng-container  *ngSwitchCase="specificationRowItemField.controls">
-					<div *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_EDIT)" class="ss-table-td__content hc-table-td__content--controls">
-						<ss-icon name="edit" (click)="onEditSpecification(item())"></ss-icon>
-						<ss-icon name="trash" (click)="onDeleteSpecification(item().id)"></ss-icon>
+				<ng-container
+					*ngSwitchCase="specificationRowItemField.controls"
+				>
+					<div
+						*ngIf="
+							permissions().includes(
+								Permissions.COMPLETED_WORK_ACTS_EDIT
+							)
+						"
+						class="ss-table-td__content hc-table-td__content--controls"
+					>
+						<ss-icon
+							name="edit"
+							(click)="onEditSpecification(item())"
+						></ss-icon>
+						<ss-icon
+							name="trash"
+							(click)="onDeleteSpecification(item().id)"
+						></ss-icon>
 					</div>
 				</ng-container>
 
 				<ng-container *ngSwitchDefault>
-					<div class="ss-table-td__content"> - </div>
+					<div class="ss-table-td__content">-</div>
 				</ng-container>
 			</td>
 		</ng-container>

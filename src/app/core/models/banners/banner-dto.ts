@@ -1,4 +1,4 @@
-import { idName } from "@app/core/models/client-proposails/business-trips";
+import { idName } from '@app/core/models/client-proposails/business-trips';
 
 /**
  * Модель банера

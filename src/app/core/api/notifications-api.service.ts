@@ -6,7 +6,7 @@ import { ISendMessageRequest } from '@app/core/models/notifications/send-message
 import { IMessageItemDto } from '@app/core/models/notifications/message-item-dto';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { IResponse } from '@app/core/utils/response';
-import { CorrespondenceTypeEnum } from "@app/widgets/correspondence/correspondence-type-enum";
+import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
 
 @Injectable({
 	providedIn: 'root',

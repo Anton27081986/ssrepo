@@ -5,15 +5,23 @@
 			<div class="profile-popup__manager-buttons">
 				@if (userProfile$ | async; as data) {
 					@if (!data?.loggedUser) {
-						<ss-button size="small" type="muted"
-								   [routerLink]="'profile/settings'">
+						<ss-button
+							size="small"
+							type="muted"
+							[routerLink]="'profile/settings'"
+						>
 							<ss-icon name="settings2"></ss-icon>
 							<span>Настройки профиля</span>
 						</ss-button>
 					}
 				}
 
-				<ss-button size="small" type="muted" class="exit-button" (click)="logout()">
+				<ss-button
+					size="small"
+					type="muted"
+					class="exit-button"
+					(click)="logout()"
+				>
 					<ss-icon name="exit2"></ss-icon>
 					Выйти
 				</ss-button>
@@ -25,16 +33,29 @@
 				<ss-divider></ss-divider>
 				<div class="profile-popup__return-in-personal-user">
 					<div class="profile-popup__return-personal-info">
-						<ss-avatar [size]="'small'" [type]="'rectangle'" [src]="loggedUser?.avatarUrl!"></ss-avatar>
+						<ss-avatar
+							[size]="'small'"
+							[type]="'rectangle'"
+							[src]="loggedUser?.avatarUrl!"
+						></ss-avatar>
 						<div class="profile-popup__return-personal-description">
-							<ss-text
-								size="3">{{ loggedUser?.lastName }} {{ loggedUser?.firstName }} {{ loggedUser?.surName }}
+							<ss-text size="3"
+								>{{ loggedUser?.lastName }}
+								{{ loggedUser?.firstName }}
+								{{ loggedUser?.surName }}
 							</ss-text>
-							<ss-caption size="2" color="gray">{{ loggedUser?.position }}</ss-caption>
+							<ss-caption
+								size="2"
+								color="gray"
+								>{{ loggedUser?.position }}</ss-caption
+							>
 						</div>
 					</div>
-					<ss-icon style="cursor: pointer" name="enter"
-							 (click)="enterUnderFriendlyAccount(loggedUser)"></ss-icon>
+					<ss-icon
+						style="cursor: pointer"
+						name="enter"
+						(click)="enterUnderFriendlyAccount(loggedUser)"
+					></ss-icon>
 				</div>
 			}
 
@@ -42,12 +63,14 @@
 				<div class="admin-enter">
 					<ss-caption size="2">Войти под сотрудником</ss-caption>
 					<div class="enter-by-search">
-						<ss-search-input class="search"
-										 searchType="user"
-										 placeholder="Поиск"
-										 size="medium"
-										 [clear]="true"
-										 (select)="AuthUser($event)">
+						<ss-search-input
+							class="search"
+							searchType="user"
+							placeholder="Поиск"
+							size="medium"
+							[clear]="true"
+							(select)="AuthUser($event)"
+						>
 						</ss-search-input>
 					</div>
 				</div>
@@ -57,11 +80,23 @@
 		@if (friendsAccount; as accounts) {
 			@if (accounts.length > 0) {
 				<div class="profile-popup__list-friends">
-					<div class="profile-popup__accordion" (click)="isExpanded=!isExpanded;">
-						<ss-text size="3" weight="medium">Связь с другими сотрудниками: {{ accounts.length }}</ss-text>
+					<div
+						class="profile-popup__accordion"
+						(click)="isExpanded = !isExpanded"
+					>
+						<ss-text
+							size="3"
+							weight="medium"
+							>Связь с другими сотрудниками:
+							{{ accounts.length }}</ss-text
+						>
 						<div class="arrowBottom">
-							<ss-icon name="arrowBottom" width="16" height="8" class="arrow-bottom"
-									 [class.open]="isExpanded"
+							<ss-icon
+								name="arrowBottom"
+								width="16"
+								height="8"
+								class="arrow-bottom"
+								[class.open]="isExpanded"
 							></ss-icon>
 						</div>
 					</div>
@@ -70,18 +105,46 @@
 						<div class="profile-popup__list-friends">
 							@for (account of accounts; track account.id) {
 								<div class="profile-popup__list-friend">
-									<div class="profile-popup__list-friend-description">
-										<ss-avatar [size]="'medium'" [type]="'rectangle'" [src]="account?.avatarUrl!"></ss-avatar>
+									<div
+										class="profile-popup__list-friend-description"
+									>
+										<ss-avatar
+											[size]="'medium'"
+											[type]="'rectangle'"
+											[src]="account?.avatarUrl!"
+										></ss-avatar>
 										<div class="profile-popup__caption">
-											<ss-caption
-												size="2">{{ account?.lastName }} {{ account?.firstName }} {{ account?.surName }}
-											</ss-caption>
 											<ss-caption size="2"
-														color="gray">{{ account?.position }}{{ account?.department ? ', ' : '' }}
+												>{{ account?.lastName }}
+												{{ account?.firstName }}
+												{{ account?.surName }}
 											</ss-caption>
-											<ss-caption size="2" color="gray">{{ account?.department }}</ss-caption>
+											<ss-caption
+												size="2"
+												color="gray"
+												>{{ account?.position
+												}}{{
+													account?.department
+														? ', '
+														: ''
+												}}
+											</ss-caption>
+											<ss-caption
+												size="2"
+												color="gray"
+												>{{
+													account?.department
+												}}</ss-caption
+											>
 										</div>
-										<ss-icon name="enter" (click)="enterUnderFriendlyAccount(account)"></ss-icon>
+										<ss-icon
+											name="enter"
+											(click)="
+												enterUnderFriendlyAccount(
+													account
+												)
+											"
+										></ss-icon>
 									</div>
 								</div>
 							}

@@ -1,10 +1,12 @@
-<div class="chart-line" [class]="size()">
-    @for (item of data(); track $index) {
-        <div
-            [style.width.%]="(100 / width()) * item.value"
-            [style.background-color]="item.color"
-            [tooltip]="item.label + ': ' + item.value || ''"
-        >
-        </div>
-    }
+<div
+	class="chart-line"
+	[class]="size()"
+>
+	@for (item of data(); track $index) {
+		<div
+			[style.width.%]="(100 / width()) * item.value"
+			[style.background-color]="item.color"
+			[tooltip]="item.label + ': ' + item.value || ''"
+		></div>
+	}
 </div>

@@ -1,21 +1,21 @@
 @switch (view()) {
-    @case (viewMode.List) {
-        <app-history-list-view
-            [historyItems]="mutableHistoryItems()"
-            [loading]="loading()"
-            [pageSize]="pageSize()"
-            [pageTotal]="pageTotal()"
-            [(pageIndex)]="pageIndex"
-            />
-    }
-    @default {
-        <app-history-table-view
-            [historyItems]="mutableHistoryItems()"
-            [loading]="loading()"
-            [pageSize]="pageSize()"
-            [pageTotal]="pageTotal()"
-            [tableHead]="tableHead()"
+	@case (viewMode.List) {
+		<app-history-list-view
+			[historyItems]="mutableHistoryItems()"
+			[loading]="loading()"
+			[pageSize]="pageSize()"
+			[pageTotal]="pageTotal()"
 			[(pageIndex)]="pageIndex"
-        />
-    }
+		/>
+	}
+	@default {
+		<app-history-table-view
+			[historyItems]="mutableHistoryItems()"
+			[loading]="loading()"
+			[pageSize]="pageSize()"
+			[pageTotal]="pageTotal()"
+			[tableHead]="tableHead()"
+			[(pageIndex)]="pageIndex"
+		/>
+	}
 }

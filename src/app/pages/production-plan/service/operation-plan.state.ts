@@ -20,26 +20,24 @@ export class OperationPlanState {
 
 	public permissionsFacadeService = inject(PermissionsFacadeService);
 
-	get getHasPermissionEdit() {
+	public get getHasPermissionEdit(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,
 			Permissions.OPERATIONAL_PLAN_EDIT,
 		);
 	}
 
-	get getHasPermissionCalcRowMaterials() {
+	public get getHasPermissionCalcRowMaterials(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,
 			Permissions.OPERATIONAL_PLAN_CALC_ROW_MATERIALS,
 		);
 	}
 
-	get getHasPermissionApproveMaterials() {
+	public get getHasPermissionApproveMaterials(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,
 			Permissions.OPERATIONAL_PLAN_APPROVE_MATERIALS,
 		);
 	}
-
-	constructor() {}
 }

@@ -1,70 +1,70 @@
 .operation-plan-table {
-  position: relative;
-  border-collapse: separate;
-  border-spacing: 0;
-  table-layout: fixed;
-  transition: width 0.1s ease;
+	position: relative;
+	border-collapse: separate;
+	border-spacing: 0;
+	table-layout: fixed;
+	transition: width 0.1s ease;
 
-  thead {
-    position: sticky;
-    top: 0;
-  }
+	thead {
+		position: sticky;
+		top: 0;
+	}
 }
 
 .column-item__content {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
 
-  &_label {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
+	&_label {
+		display: flex;
+		align-items: flex-start;
+		gap: 8px;
+	}
 }
 
 .td-column {
-  display: flex;
-  gap: 8px;
-  padding: 6px 12px;
-  position: relative;
-  min-width: 80px;
-  align-items: center;
+	display: flex;
+	gap: 8px;
+	padding: 6px 12px;
+	position: relative;
+	min-width: 80px;
+	align-items: center;
 
-  ::ng-deep ss-lib-text {
-    .body-xs {
-      line-height: unset;
-    }
-  }
+	::ng-deep ss-lib-text {
+		.body-xs {
+			line-height: unset;
+		}
+	}
 }
 
 .item-day {
-  justify-content: center;
+	justify-content: center;
 }
 
 .item-day-utility {
-  position: absolute;
-  right: 12px;
+	position: absolute;
+	right: 12px;
 }
 
 .item-day-text {
-  display: flex;
-  gap: 4px;
-  align-items: center;
+	display: flex;
+	gap: 4px;
+	align-items: center;
 }
 
 .td-subcolumn {
-  display: flex;
-  gap: 4px;
-  padding: 6px 12px;
-  position: relative;
-  min-width: 74px;
-  align-items: center;
-  width: 100%;
+	display: flex;
+	gap: 4px;
+	padding: 6px 12px;
+	position: relative;
+	min-width: 74px;
+	align-items: center;
+	width: 100%;
 }
 
 thead tr th:first-child {
-  border-left: none !important;
+	border-left: none !important;
 }

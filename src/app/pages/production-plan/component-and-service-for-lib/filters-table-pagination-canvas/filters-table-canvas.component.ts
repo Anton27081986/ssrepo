@@ -35,9 +35,9 @@ export class FiltersTableCanvasComponent {
 
 	public readonly viewPagination: InputSignal<boolean> = input(true);
 
-	filterService: HeaderFilterService = inject(HeaderFilterService);
+	public filterService: HeaderFilterService = inject(HeaderFilterService);
 
-	get checkActiveFilter(): boolean {
+	public get checkActiveFilter(): boolean {
 		return this.filterService.menuFilterItems.length > 0;
 	}
 }

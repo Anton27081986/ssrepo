@@ -1,16 +1,35 @@
-<div class="wrapper" (click)="close()">
-	<ss-card padding="0" (click)="$event.stopPropagation()">
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<ss-card
+		padding="0"
+		(click)="$event.stopPropagation()"
+	>
 		<div class="header">
 			<ss-headline size="h6">Взять в работу</ss-headline>
-			<ss-icon width="16" name="close" (click)="close()"></ss-icon>
+			<ss-icon
+				width="16"
+				name="close"
+				(click)="close()"
+			></ss-icon>
 		</div>
 		<form class="body">
 			<ss-table-v2>
-				<tr *ngFor="let item of items" ss-at-work-row-item-tr [item]="item"></tr>
+				<tr
+					*ngFor="let item of items"
+					ss-at-work-row-item-tr
+					[item]="item"
+				></tr>
 			</ss-table-v2>
 		</form>
 		<div class="footer">
-			<ss-button type="primary" size="small" (click)="createTask()">Отправить</ss-button>
+			<ss-button
+				type="primary"
+				size="small"
+				(click)="createTask()"
+				>Отправить</ss-button
+			>
 		</div>
 	</ss-card>
 </div>

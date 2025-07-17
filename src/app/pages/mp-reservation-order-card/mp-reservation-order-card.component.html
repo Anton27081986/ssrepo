@@ -3,122 +3,187 @@
 		<snab-text
 			class="navigation__link"
 			[color]="Colors.Secondary"
-			(click)="router.navigate(['mp-reservation-orders'])">
+			(click)="router.navigate(['mp-reservation-orders'])"
+		>
 			Реестр объектов интеллектуальной собственности /
 		</snab-text>
 		<snab-text>Заказ №{{ order()?.id }}</snab-text>
 	</div>
 	<div class="header">
 		<div class="header__title">
-			<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+			<snab-text
+				[type]="TextType.Headline"
+				[weight]="TextWeight.Semibold"
+			>
 				Заказ № {{ order()?.id }}
 			</snab-text>
 			<snab-label
 				[text]="order()!.status.name"
 				[size]="Size.Large"
-				[type]="LabelType.Clear"></snab-label>
+				[type]="LabelType.Clear"
+			></snab-label>
 		</div>
 		<div class="header__controls">
 			<snab-button
 				text="История изменений"
 				[type]="ButtonType.Secondary"
 				[size]="Size.Large"
-                (click)="openPopupHistoryOrder(order()!.id)"></snab-button>
+				(click)="openPopupHistoryOrder(order()!.id)"
+			></snab-button>
 			<snab-dropdown-button
 				[text]="'Действия'"
 				[size]="Size.Large"
 				[optionsSize]="11"
-				[disabled]="isDisabledActionButton">
+				[disabled]="isDisabledActionButton"
+			>
 				<snab-dropdown-item
 					[textContent]="'Согласовать заказ по обеспечению'"
-					(click)="$event.stopPropagation(); openPopupOrderApproval()"></snab-dropdown-item>
+					(click)="$event.stopPropagation(); openPopupOrderApproval()"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Отклонить заказ по обеспечению'"
-					(click)="$event.stopPropagation(); openPopupRejectOrder()"></snab-dropdown-item>
+					(click)="$event.stopPropagation(); openPopupRejectOrder()"
+				></snab-dropdown-item>
 				<snab-dropdown-item
-					[textContent]="'Разместить в производстве заказ по обеспечению'"
-					(click)="$event.stopPropagation(); openPopupOrderInProduction()
-					"></snab-dropdown-item>
+					[textContent]="
+						'Разместить в производстве заказ по обеспечению'
+					"
+					(click)="
+						$event.stopPropagation(); openPopupOrderInProduction()
+					"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Изменить дату обеспечения'"
-					(click)="$event.stopPropagation(); openPopupProvisionDate()
-					"></snab-dropdown-item>
+					(click)="$event.stopPropagation(); openPopupProvisionDate()"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Удалить заказ по обеспечению'"
-					(click)="$event.stopPropagation(); removeOrder()"></snab-dropdown-item>
+					(click)="$event.stopPropagation(); removeOrder()"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Персонифицировать за другим сотрудником'"
-					(click)="$event.stopPropagation(); openPopupChangeManager()
-					"></snab-dropdown-item>
+					(click)="$event.stopPropagation(); openPopupChangeManager()"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Уточнить'"
-					(click)="$event.stopPropagation(); openPopupQualification()
-					"></snab-dropdown-item>
+					(click)="$event.stopPropagation(); openPopupQualification()"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Согласовать уточнение'"
-					(click)="$event.stopPropagation(); openPopupApproveDetailsChange()
-					"></snab-dropdown-item>
+					(click)="
+						$event.stopPropagation();
+						openPopupApproveDetailsChange()
+					"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Изменить количество в производстве'"
-					(click)="$event.stopPropagation(); openPopupChangeProvisionDetails()
-					"></snab-dropdown-item>
+					(click)="
+						$event.stopPropagation();
+						openPopupChangeProvisionDetails()
+					"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Подтвердить удаление заказа по обеспечению'"
-					(click)="$event.stopPropagation(); openPopupCancelActionRemove(true)
-					"></snab-dropdown-item>
+					(click)="
+						$event.stopPropagation();
+						openPopupCancelActionRemove(true)
+					"
+				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Отклонить удаление заказа по обеспечению'"
 					(click)="
-						$event.stopPropagation(); openPopupCancelActionRemove(false)
-					"></snab-dropdown-item>
+						$event.stopPropagation();
+						openPopupCancelActionRemove(false)
+					"
+				></snab-dropdown-item>
 			</snab-dropdown-button>
 		</div>
 	</div>
 	<div class="content">
-		<ss-card padding="0" class="content__properties">
+		<ss-card
+			padding="0"
+			class="content__properties"
+		>
 			<div class="content__properties__header">
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
 					Характеристики заказа
 				</snab-text>
 			</div>
 			<div class="content__properties__amount">
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Regular"
+				>
 					Количество и ед. изм:
 				</snab-text>
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
 					{{ order()!.totalAmount }} {{ order()!.tovUnit }}
 				</snab-text>
 			</div>
 			<div class="content__properties__body">
 				<div class="content__properties__body__item">
-					<snab-text [weight]="TextWeight.Semibold">Дата создания заказа</snab-text>
-					<snab-text>{{ order()!.dateCreated | date: 'dd.MM.yyyy' }}</snab-text>
+					<snab-text [weight]="TextWeight.Semibold"
+						>Дата создания заказа</snab-text
+					>
+					<snab-text>{{
+						order()!.dateCreated | date: 'dd.MM.yyyy'
+					}}</snab-text>
 				</div>
 				<div class="content__properties__body__item">
-					<snab-text [weight]="TextWeight.Semibold">Заказчик</snab-text>
-					<snab-link [type]="TextType.Body" [text]="order()!.author.name" [url]="order()!.author.linkToDetail || ''"></snab-link>
+					<snab-text [weight]="TextWeight.Semibold"
+						>Заказчик</snab-text
+					>
+					<snab-link
+						[type]="TextType.Body"
+						[text]="order()!.author.name"
+						[url]="order()!.author.linkToDetail || ''"
+					></snab-link>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">ТП</snab-text>
-                    <snab-link [type]="TextType.Body" [text]="order()!.tov.name" [url]="order()!.tov.linkToDetail || ''"></snab-link>
+					<snab-link
+						[type]="TextType.Body"
+						[text]="order()!.tov.name"
+						[url]="order()!.tov.linkToDetail || ''"
+					></snab-link>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">Клиент</snab-text>
-                    <snab-link [type]="TextType.Body" [text]="order()!.client.name" [url]="order()!.client.linkToDetail || ''"></snab-link>
+					<snab-link
+						[type]="TextType.Body"
+						[text]="order()!.client.name"
+						[url]="order()!.client.linkToDetail || ''"
+					></snab-link>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold">МУТМЗ</snab-text>
 					<snab-text>{{ order()!.manager?.name || '-' }}</snab-text>
 				</div>
 			</div>
-			<div class="content__properties__body__item content__properties__comment">
-				<snab-text [weight]="TextWeight.Semibold">Комментарий</snab-text>
+			<div
+				class="content__properties__body__item content__properties__comment"
+			>
+				<snab-text [weight]="TextWeight.Semibold"
+					>Комментарий</snab-text
+				>
 				<snab-text>{{ order()!.note }}</snab-text>
 			</div>
 		</ss-card>
-		<ss-card padding="0" class="content__additional">
+		<ss-card
+			padding="0"
+			class="content__additional"
+		>
 			<div class="content__additional__header">
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
 					Сроки и объёмы
 				</snab-text>
 			</div>
@@ -126,24 +191,40 @@
 				<ss-table
 					[head]="[
 						{ title: 'Кол-во', field: 'amount' },
-						{ title: 'Желаемая дата', field: 'requestedProvisionDate' },
+						{
+							title: 'Желаемая дата',
+							field: 'requestedProvisionDate',
+						},
 					]"
-					[items]="volumes()"></ss-table>
+					[items]="volumes()"
+				></ss-table>
 			</div>
 		</ss-card>
-		<ss-card padding="0" class="content__procuring">
+		<ss-card
+			padding="0"
+			class="content__procuring"
+		>
 			<div class="content__procuring__header">
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
 					Обеспечение
 				</snab-text>
 			</div>
 			<div class="content__procuring__body">
 				<div class="content__procuring__body__chart">
 					<div class="content__procuring__body__chart__quantity">
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Regular">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Regular"
+						>
 							Остатки:
 						</snab-text>
-						<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+						<snab-text
+							[type]="TextType.Headline"
+							[weight]="TextWeight.Semibold"
+						>
 							{{ order()!.stockBalance }}
 						</snab-text>
 					</div>
@@ -151,57 +232,111 @@
 						<ss-tag-v2 state="warning">
 							<snab-icon
 								[color]="Colors.WarningLight"
-								[icon]="IconType.Unlock"></snab-icon>
-							{{ order()!.provision?.provided || '-' | numWithSpaces: 1 }}
+								[icon]="IconType.Unlock"
+							></snab-icon>
+							{{
+								order()!.provision?.provided || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 						<ss-tag-v2 state="success">
 							<snab-icon
 								[color]="Colors.PositiveHeavy"
-								[icon]="IconType.Check"></snab-icon>
-							{{ order()!.provision?.provisionAvailable || '-' | numWithSpaces: 1 }}
+								[icon]="IconType.Check"
+							></snab-icon>
+							{{
+								order()!.provision?.provisionAvailable || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 						<ss-tag-v2 state="info">
 							<snab-icon
 								[color]="Colors.InfoHeavy"
-								[icon]="IconType.Refresh"></snab-icon>
-							{{ order()!.provision?.manufacturing || '-' | numWithSpaces: 1 }}
+								[icon]="IconType.Refresh"
+							></snab-icon>
+							{{
+								order()!.provision?.manufacturing || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 						<ss-tag-v2 state="danger">
 							<snab-icon
 								[color]="Colors.DangerHeavy"
-								[icon]="IconType.Error"></snab-icon>
-							{{ order()!.provision?.provisionUnavailable || '-' | numWithSpaces: 1 }}
+								[icon]="IconType.Error"
+							></snab-icon>
+							{{
+								order()!.provision?.provisionUnavailable || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 					</div>
 					<div class="content__procuring__body__chart__more">
-						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.WarningLight">
-							Моя персонификация: {{ order()!.provision?.provided || '-' | numWithSpaces: 1 }}
+						<snab-text
+							[weight]="TextWeight.Semibold"
+							[color]="Colors.WarningLight"
+						>
+							Моя персонификация:
+							{{
+								order()!.provision?.provided || '-'
+									| numWithSpaces: 1
+							}}
 						</snab-text>
-						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.PositiveHeavy">
-							Свободно: {{ order()!.provision?.provisionAvailable || '-' | numWithSpaces: 1 }}
+						<snab-text
+							[weight]="TextWeight.Semibold"
+							[color]="Colors.PositiveHeavy"
+						>
+							Свободно:
+							{{
+								order()!.provision?.provisionAvailable || '-'
+									| numWithSpaces: 1
+							}}
 						</snab-text>
-						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.InfoHeavy">
-							В производстве: {{ order()!.provision?.manufacturing || '-' | numWithSpaces: 1 }}
+						<snab-text
+							[weight]="TextWeight.Semibold"
+							[color]="Colors.InfoHeavy"
+						>
+							В производстве:
+							{{
+								order()!.provision?.manufacturing || '-'
+									| numWithSpaces: 1
+							}}
 						</snab-text>
-						<snab-text [weight]="TextWeight.Semibold" [color]="Colors.DangerHeavy">
+						<snab-text
+							[weight]="TextWeight.Semibold"
+							[color]="Colors.DangerHeavy"
+						>
 							Не может быть обеспечено:
-							{{ (order()?.provision)!.provisionUnavailable || '-' | numWithSpaces: 1 }}
+							{{
+								(order()?.provision)!.provisionUnavailable ||
+									'-' | numWithSpaces: 1
+							}}
 						</snab-text>
 					</div>
 				</div>
 				<div class="content__procuring__body__table">
 					<ss-table
 						[head]="[
-							{ title: 'Дата производства', field: 'productionDate' },
-							{ title: 'Дата обеспечения', field: 'provisionDate' },
-							{ title: 'Кол-во в производстве', field: 'manufacturingAmount' },
+							{
+								title: 'Дата производства',
+								field: 'productionDate',
+							},
+							{
+								title: 'Дата обеспечения',
+								field: 'provisionDate',
+							},
+							{
+								title: 'Кол-во в производстве',
+								field: 'manufacturingAmount',
+							},
 						]"
-						[items]="procuring()"></ss-table>
+						[items]="procuring()"
+					></ss-table>
 				</div>
 			</div>
 		</ss-card>
 	</div>
 	<ss-correspondence
 		[type]="CorrespondenceTypeEnum.Personifications"
-		[objectId]="order()!.id"></ss-correspondence>
+		[objectId]="order()!.id"
+	></ss-correspondence>
 }

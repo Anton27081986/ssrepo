@@ -1,51 +1,58 @@
-<ss-card padding="0" radius="0 0 16px 16px">
-		<app-client-proposals-tabs-canvas
-			[headerTemplateRef]="header"
-			[bodyTemplateRef]="body"
-			[footerTemplateRef]="footer"
-			[isLoader]="(isLoader$ | async)!"
+<ss-card
+	padding="0"
+	radius="0 0 16px 16px"
+>
+	<app-client-proposals-tabs-canvas
+		[headerTemplateRef]="header"
+		[bodyTemplateRef]="body"
+		[footerTemplateRef]="footer"
+		[isLoader]="(isLoader$ | async)!"
+	>
+	</app-client-proposals-tabs-canvas>
+	<ng-template #header>
+		<a
+			*ngIf="linkToModule(); else text"
+			href="{{ linkToModule() }}"
+			class="app-client-tpr-contractors-tab__link"
+			target="_blank"
+			>Состав контрагентов</a
 		>
-		</app-client-proposals-tabs-canvas>
-		<ng-template #header>
-			<a *ngIf="linkToModule(); else text" href="{{ linkToModule() }}" class="app-client-tpr-contractors-tab__link" target="_blank">Состав контрагентов</a>
-			<ng-template #text>
-				<ss-text size="1">Состав контрагентов</ss-text>
-			</ng-template>
-			<div class="control">
-				<input type="checkbox" (change)="onActiveContractorChange($event)" />
-				<ss-text size="2">
-					Показать архивных контрагентов
-				</ss-text>
-			</div>
+		<ng-template #text>
+			<ss-text size="1">Состав контрагентов</ss-text>
 		</ng-template>
-		<ng-template #body>
-			<ng-container *ngIf="contractors() as contractors">
-				<ss-table
-					*ngIf="contractors.total > 0;else empty"
-					[padding]="'8px'"
-					[head]="[
-							{title: 'Контрагент', field: 'name', sizeRatio: 3},
-							{title: 'Кредитный статус', field: 'creditStatus'},
-							]"
-					[items]="getTableItems(contractors)"
-				>
-				</ss-table>
+		<div class="control">
+			<input
+				type="checkbox"
+				(change)="onActiveContractorChange($event)"
+			/>
+			<ss-text size="2"> Показать архивных контрагентов </ss-text>
+		</div>
+	</ng-template>
+	<ng-template #body>
+		<ng-container *ngIf="contractors() as contractors">
+			<ss-table
+				*ngIf="contractors.total > 0; else empty"
+				[padding]="'8px'"
+				[head]="[
+					{ title: 'Контрагент', field: 'name', sizeRatio: 3 },
+					{ title: 'Кредитный статус', field: 'creditStatus' },
+				]"
+				[items]="getTableItems(contractors)"
+			>
+			</ss-table>
 
-				<ng-template #empty>
-					<ss-empty-data-page></ss-empty-data-page>
-				</ng-template>
-			</ng-container>
-		</ng-template>
-		<ng-template #footer>
-			<ss-pagination
+			<ng-template #empty>
+				<ss-empty-data-page></ss-empty-data-page>
+			</ng-template>
+		</ng-container>
+	</ng-template>
+	<ng-template #footer>
+		<ss-pagination
 			[total]="total()"
 			[pageIndex]="pageIndex"
 			[pageSize]="pageSize"
 			(changeIndex)="pageIndexChange($event)"
-			>
-			</ss-pagination>
-		</ng-template>
+		>
+		</ss-pagination>
+	</ng-template>
 </ss-card>
-
-
-

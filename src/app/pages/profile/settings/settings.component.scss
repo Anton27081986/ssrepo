@@ -1,6 +1,5 @@
 @use '../../../../styles/colors' as *;
 
-
 .settings {
 	::ng-deep .ant-form-vertical .ant-form-item-label > label {
 		font-size: 12px;
@@ -23,7 +22,7 @@
 		}
 
 		.personal-btn {
-			margin-top: 8px !important
+			margin-top: 8px !important;
 		}
 	}
 	.feilds {

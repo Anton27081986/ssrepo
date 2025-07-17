@@ -1,89 +1,178 @@
 <ss-card padding="0">
-    @if (loading()) {
-        <ss-loader></ss-loader>
-    }
+	@if (loading()) {
+		<ss-loader></ss-loader>
+	}
 
-    <div class="header">
-		<ss-headline size="h6" weight="semi-bold">История изменений</ss-headline>
+	<div class="header">
+		<ss-headline
+			size="h6"
+			weight="semi-bold"
+			>История изменений</ss-headline
+		>
 	</div>
 
 	<div class="content">
 		@for (item of historyItems(); track item.id) {
 			<div class="history-item">
 				<div class="history-item-line">
-					<ss-text class="history-item-line-title" size="3" weight="semi-bold">Автор:</ss-text>
-					<ss-text size="3" weight="regular">{{ item.user!.name }}, {{item.createdTime }}</ss-text>
+					<ss-text
+						class="history-item-line-title"
+						size="3"
+						weight="semi-bold"
+						>Автор:</ss-text
+					>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{ item.user!.name }}, {{ item.createdTime }}</ss-text
+					>
 				</div>
 				<div class="history-item-line">
-					<ss-text class="history-item-line-title" size="3" weight="semi-bold">Действие:</ss-text>
-					<ss-text size="3" weight="regular">{{ item.action }}</ss-text>
+					<ss-text
+						class="history-item-line-title"
+						size="3"
+						weight="semi-bold"
+						>Действие:</ss-text
+					>
+					<ss-text
+						size="3"
+						weight="regular"
+						>{{ item.action }}</ss-text
+					>
 				</div>
 
 				@if (item.changes.length === 1) {
 					<div class="history-item-table">
 						<table>
-								<thead>
-									<tr>
-										<th>
-											<ss-text class="history-item-line-title" size="3" weight="semi-bold">Поле</ss-text>
-										</th>
-										<th>
-											<ss-text class="history-item-line-title" size="3" weight="semi-bold">Старое значение</ss-text>
-										</th>
-										<th>
-											<ss-text class="history-item-line-title" size="3" weight="semi-bold">Новое значение</ss-text>
-										</th>
-									</tr>
-								</thead>
-							<tbody>
-
-							@for (change of item.changes; track change) {
+							<thead>
 								<tr>
-									<td>
-										<ss-text size="3" weight="regular">{{change.propertyName}}</ss-text>
-									</td>
-									<td>
-										<ss-text size="3" weight="regular">{{change.fromValue?? '-'}}</ss-text>
-									</td>
-									<td>
-										<ss-text size="3" weight="regular">{{change.toValue?? '-'}}</ss-text>
-									</td>
+									<th>
+										<ss-text
+											class="history-item-line-title"
+											size="3"
+											weight="semi-bold"
+											>Поле</ss-text
+										>
+									</th>
+									<th>
+										<ss-text
+											class="history-item-line-title"
+											size="3"
+											weight="semi-bold"
+											>Старое значение</ss-text
+										>
+									</th>
+									<th>
+										<ss-text
+											class="history-item-line-title"
+											size="3"
+											weight="semi-bold"
+											>Новое значение</ss-text
+										>
+									</th>
 								</tr>
-							}
+							</thead>
+							<tbody>
+								@for (change of item.changes; track change) {
+									<tr>
+										<td>
+											<ss-text
+												size="3"
+												weight="regular"
+												>{{
+													change.propertyName
+												}}</ss-text
+											>
+										</td>
+										<td>
+											<ss-text
+												size="3"
+												weight="regular"
+												>{{
+													change.fromValue ?? '-'
+												}}</ss-text
+											>
+										</td>
+										<td>
+											<ss-text
+												size="3"
+												weight="regular"
+												>{{
+													change.toValue ?? '-'
+												}}</ss-text
+											>
+										</td>
+									</tr>
+								}
 							</tbody>
 						</table>
 					</div>
 				}
 
-				@if(item.changes.length > 1) {
+				@if (item.changes.length > 1) {
 					<div class="history-item-line">
 						<ss-accordion [title]="'Изменения полей'">
-							<table >
+							<table>
 								<thead>
-								<tr>
-									<th>
-										<ss-text class="history-item-line-title" size="3" weight="semi-bold">Поле</ss-text>
-									</th>
-									<th>
-										<ss-text class="history-item-line-title" size="3" weight="semi-bold">Старое значение</ss-text>
-									</th>
-									<th>
-										<ss-text class="history-item-line-title" size="3" weight="semi-bold">Новое значение</ss-text>
-									</th>
-								</tr>
+									<tr>
+										<th>
+											<ss-text
+												class="history-item-line-title"
+												size="3"
+												weight="semi-bold"
+												>Поле</ss-text
+											>
+										</th>
+										<th>
+											<ss-text
+												class="history-item-line-title"
+												size="3"
+												weight="semi-bold"
+												>Старое значение</ss-text
+											>
+										</th>
+										<th>
+											<ss-text
+												class="history-item-line-title"
+												size="3"
+												weight="semi-bold"
+												>Новое значение</ss-text
+											>
+										</th>
+									</tr>
 								</thead>
 								<tbody>
-
-									@for (change of item.changes; track change) {
+									@for (
+										change of item.changes;
+										track change
+									) {
 										<tr>
 											<td>
-												<ss-text size="3" weight="regular">{{change.propertyName}}</ss-text>
+												<ss-text
+													size="3"
+													weight="regular"
+													>{{
+														change.propertyName
+													}}</ss-text
+												>
 											</td>
 											<td>
-												<ss-text size="3" weight="regular">{{change.fromValue?? '-'}}</ss-text>
+												<ss-text
+													size="3"
+													weight="regular"
+													>{{
+														change.fromValue ?? '-'
+													}}</ss-text
+												>
 											</td>
 											<td>
-												<ss-text size="3" weight="regular">{{change.toValue?? '-'}}</ss-text>
+												<ss-text
+													size="3"
+													weight="regular"
+													>{{
+														change.toValue ?? '-'
+													}}</ss-text
+												>
 											</td>
 										</tr>
 									}
@@ -94,12 +183,25 @@
 				}
 
 				<div class="history-item-line">
-					<ss-text class="history-item-line-title" size="3" weight="semi-bold">Комментарий:</ss-text>
+					<ss-text
+						class="history-item-line-title"
+						size="3"
+						weight="semi-bold"
+						>Комментарий:</ss-text
+					>
 
 					@if (item.comments) {
-						<ss-text size="3" weight="regular" [innerHTML]="item.comments"></ss-text>
+						<ss-text
+							size="3"
+							weight="regular"
+							[innerHTML]="item.comments"
+						></ss-text>
 					} @else {
-						<ss-text size="3" weight="regular">{{'-'}}</ss-text>
+						<ss-text
+							size="3"
+							weight="regular"
+							>{{ '-' }}</ss-text
+						>
 					}
 				</div>
 			</div>
@@ -108,13 +210,11 @@
 
 	<div class="pagination">
 		<ss-pagination
-            [total]="pageTotal()"
-            [pageIndex]="pageIndex()"
-            [pageSize]="pageSize()"
-            (changeIndex)="indexChanged($event)"
-        >
-        </ss-pagination>
+			[total]="pageTotal()"
+			[pageIndex]="pageIndex()"
+			[pageSize]="pageSize()"
+			(changeIndex)="indexChanged($event)"
+		>
+		</ss-pagination>
 	</div>
 </ss-card>
-
-

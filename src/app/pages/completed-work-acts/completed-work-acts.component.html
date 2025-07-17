@@ -1,36 +1,69 @@
 <div class="header">
 	<ss-headline size="h3">Реестр актов выполненных работ</ss-headline>
 	<div class="header__controls">
-		<snab-button [tooltip]="'Скачать инструкцию'"
-			 [icon]="IconType.Doc"
-			 [iconPosition]="IconPosition.OnlyIcon"
-			 [size]="Size.Large" [type]="ButtonType.Outline"
-			 (click)="downloadInstruction()">
+		<snab-button
+			[tooltip]="'Скачать инструкцию'"
+			[icon]="IconType.Doc"
+			[iconPosition]="IconPosition.OnlyIcon"
+			[size]="Size.Large"
+			[type]="ButtonType.Outline"
+			(click)="downloadInstruction()"
+		>
 		</snab-button>
-		<ss-dropdown-button [isDropdownVisible]="!isLoader()" title="Фильтры">
-			<ss-filters [isFiltersVisible]="!isLoader()" [isDropdown]="true" [(filters)]="filters" (applyFilter)="getFilteredActs(true)"></ss-filters>
+		<ss-dropdown-button
+			[isDropdownVisible]="!isLoader()"
+			title="Фильтры"
+		>
+			<ss-filters
+				[isFiltersVisible]="!isLoader()"
+				[isDropdown]="true"
+				[(filters)]="filters"
+				(applyFilter)="getFilteredActs(true)"
+			></ss-filters>
 		</ss-dropdown-button>
 	</div>
 </div>
 <div class="content">
 	<ng-container *ngIf="acts() as acts">
 		<ss-table
-			*ngIf="acts.total > 0;else empty"
+			*ngIf="acts.total > 0; else empty"
 			[padding]="'8px'"
 			[head]="[
-					{title: 'Код', field: 'code', sizeRatio: 0.7},
-					{title: 'Состояние', field: 'state', sizeRatio: 1.5},
-					{title: 'Дата оказания услуги', field: 'externalActDate', sizeRatio: 1.5},
-					{title: 'Дата БУ', field: 'internalActDate', sizeRatio: 1.5},
-					{title: 'Дата КИСП', field: 'uploadActDate', sizeRatio: 1.5},
-					{title: 'Номер БУ', field: 'internalActNumber', sizeRatio: 1.5},
-					{title: 'БЕ', field: 'payerBuUnit', sizeRatio: 0.7, tooltip: 'БЕ плательщика'},
-					{title: 'Поставщик услуг', field: 'providerContractor', sizeRatio: 3.5},
-					{title: 'Договор', field: 'contract', sizeRatio: 2},
-					{title: 'Заявитель', field: 'applicantUser', sizeRatio: 2},
-					{title: 'Сумма', field: 'totalAmount', isNumber: true, sizeRatio: 1.5},
-					]"
-			[items]="acts | mapper : getTableItems"
+				{ title: 'Код', field: 'code', sizeRatio: 0.7 },
+				{ title: 'Состояние', field: 'state', sizeRatio: 1.5 },
+				{
+					title: 'Дата оказания услуги',
+					field: 'externalActDate',
+					sizeRatio: 1.5,
+				},
+				{ title: 'Дата БУ', field: 'internalActDate', sizeRatio: 1.5 },
+				{ title: 'Дата КИСП', field: 'uploadActDate', sizeRatio: 1.5 },
+				{
+					title: 'Номер БУ',
+					field: 'internalActNumber',
+					sizeRatio: 1.5,
+				},
+				{
+					title: 'БЕ',
+					field: 'payerBuUnit',
+					sizeRatio: 0.7,
+					tooltip: 'БЕ плательщика',
+				},
+				{
+					title: 'Поставщик услуг',
+					field: 'providerContractor',
+					sizeRatio: 3.5,
+				},
+				{ title: 'Договор', field: 'contract', sizeRatio: 2 },
+				{ title: 'Заявитель', field: 'applicantUser', sizeRatio: 2 },
+				{
+					title: 'Сумма',
+					field: 'totalAmount',
+					isNumber: true,
+					sizeRatio: 1.5,
+				},
+			]"
+			[items]="acts | mapper: getTableItems"
 			(controlClick)="openAct($event)"
 		>
 		</ss-table>
@@ -42,7 +75,10 @@
 		>
 		</ss-pagination>
 		<ng-template #empty>
-			<ss-empty-data-page width="300px" height="176px"></ss-empty-data-page>
+			<ss-empty-data-page
+				width="300px"
+				height="176px"
+			></ss-empty-data-page>
 		</ng-template>
 	</ng-container>
 	<ss-loader *ngIf="isLoader()"></ss-loader>

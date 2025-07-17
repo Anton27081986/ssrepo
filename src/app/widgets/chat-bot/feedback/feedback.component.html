@@ -1,29 +1,49 @@
-<div class="wrapper" (click)="close()">
-	<snab-card class="feedback"
-			   [bodyRef]="body"
-			   [footerRef]="footer"
-			   (click)="$event.stopPropagation()">
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<snab-card
+		class="feedback"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(click)="$event.stopPropagation()"
+	>
 	</snab-card>
 </div>
 <ng-template #body>
 	<div class="feedback__content">
 		<div class="feedback__content__header">
-			<snab-label [size]="Size.Large" [type]="LabelType.Info" [iconPosition]="IconPosition.OnlyIcon" [icon]="IconType.Comments"></snab-label>
+			<snab-label
+				[size]="Size.Large"
+				[type]="LabelType.Info"
+				[iconPosition]="IconPosition.OnlyIcon"
+				[icon]="IconType.Comments"
+			></snab-label>
 			<snab-button
 				class="feedback__content__header__close"
 				[type]="ButtonType.Flat"
 				[icon]="IconType.ClearLarge"
 				[iconPosition]="IconPosition.OnlyIcon"
 				[size]="Size.Large"
-				(click)="close()">
+				(click)="close()"
+			>
 			</snab-button>
 		</div>
 		<div class="feedback__content__body">
-			<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+			<snab-text
+				[type]="TextType.Title"
+				[weight]="TextWeight.Medium"
+			>
 				Оставьте отзыв
 			</snab-text>
-			<form class="feedback__content__body__form" [formGroup]="feedbackForm">
-				<snab-form-field class="feedback__content__body__form__input" [size]="Size.Default">
+			<form
+				class="feedback__content__body__form"
+				[formGroup]="feedbackForm"
+			>
+				<snab-form-field
+					class="feedback__content__body__form__input"
+					[size]="Size.Default"
+				>
 					<snab-input
 						fieldCtrl
 						formControlName="feedback"
@@ -36,11 +56,12 @@
 </ng-template>
 <ng-template #footer>
 	<div class="feedback__footer">
-			<snab-button
-				text="Отправить"
-				[type]="ButtonType.Primary"
-				[size]="Size.Large"
-				(click)="sendFeedback()">
-			</snab-button>
+		<snab-button
+			text="Отправить"
+			[type]="ButtonType.Primary"
+			[size]="Size.Large"
+			(click)="sendFeedback()"
+		>
+		</snab-button>
 	</div>
 </ng-template>

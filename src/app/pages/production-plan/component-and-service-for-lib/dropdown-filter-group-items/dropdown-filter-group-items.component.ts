@@ -10,12 +10,11 @@ import {
 	ExtraSize,
 	IconComponent,
 	IconType,
-	PopoverTriggerForDirective,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-library/components';
-import { NgComponentOutlet, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { rotateAnimation } from '@app/core/animations';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
@@ -43,11 +42,11 @@ export class DropdownFilterGroupItemsComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly IconType = IconType;
 
-	public expand() {
+	public expand(): void {
 		this.treeNode().expanded = !this.treeNode().expanded;
 	}
 
-	public checkItems(controlCheckAll: FormControl<boolean | null>) {
+	public checkItems(controlCheckAll: FormControl<boolean | null>): void {
 		controlCheckAll.setValue(!controlCheckAll.value);
 	}
 }

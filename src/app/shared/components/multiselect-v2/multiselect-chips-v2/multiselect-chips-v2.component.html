@@ -2,19 +2,26 @@
 	@for (chip of getChips(); track chip.id) {
 		<div class="multiselect-chips-v2__chip">
 			@if (chip) {
-				<span class="multiselect-chips-v2__text" [tooltip]="chip.name" [theme]="TooltipTheme.DEFAULT"
-					  [position]="TooltipPosition.DEFAULT">{{ chip.name }}</span>
+				<span
+					class="multiselect-chips-v2__text"
+					[tooltip]="chip.name"
+					[theme]="TooltipTheme.DEFAULT"
+					[position]="TooltipPosition.DEFAULT"
+					>{{ chip.name }}</span
+				>
 				@if (!readOnly) {
-					<ss-icon [name]="'close'" (click)="deleteChipEmit(chip!); $event.stopPropagation()"></ss-icon>
+					<ss-icon
+						[name]="'close'"
+						(click)="
+							deleteChipEmit(chip!); $event.stopPropagation()
+						"
+					></ss-icon>
 				}
 			}
 		</div>
 	}
 
 	@if (ellipsis) {
-		<div class="multiselect-chips-v2__chip-ellipsis">
-			...
-		</div>
+		<div class="multiselect-chips-v2__chip-ellipsis">...</div>
 	}
 </div>
-

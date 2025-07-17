@@ -1,14 +1,34 @@
 @if (isAvatar) {
-	<ss-avatar [size]="'small'" [src]="avatar || null" (click)="isOpened = true"></ss-avatar>
+	<ss-avatar
+		[size]="'small'"
+		[src]="avatar || null"
+		(click)="isOpened = true"
+	></ss-avatar>
 } @else {
-	<ss-button size="small" type="muted" (click)="isOpened = true">
-		{{title}}
-		<ss-icon width="12" height="12" name="chevron" class="icon"></ss-icon>
+	<ss-button
+		size="small"
+		type="muted"
+		(click)="isOpened = true"
+	>
+		{{ title }}
+		<ss-icon
+			width="12"
+			height="12"
+			name="chevron"
+			class="icon"
+		></ss-icon>
 	</ss-button>
 }
 @if (isOpened && isDropdownVisible) {
-	<ss-card padding="0" class="dropdown" (click)="$event.stopPropagation(); close()">
+	<ss-card
+		padding="0"
+		class="dropdown"
+		(click)="$event.stopPropagation(); close()"
+	>
 		<ng-content></ng-content>
 	</ss-card>
-	<div class="overlay" (click)="isOpened = false"></div>
+	<div
+		class="overlay"
+		(click)="isOpened = false"
+	></div>
 }

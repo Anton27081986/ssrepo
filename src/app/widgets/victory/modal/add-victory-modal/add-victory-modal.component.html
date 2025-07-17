@@ -1,37 +1,75 @@
 <div class="wrapper">
 	<div class="add-victory-modal">
 		<div class="add-victory-modal__header">
-			<ss-headline [size]="'h6'">Делитесь Вашими победами, ведь успех заразителен!</ss-headline>
-			<ss-icon style="cursor: pointer;" [name]="'close'" (click)="close()"></ss-icon>
+			<ss-headline [size]="'h6'"
+				>Делитесь Вашими победами, ведь успех заразителен!</ss-headline
+			>
+			<ss-icon
+				style="cursor: pointer"
+				[name]="'close'"
+				(click)="close()"
+			></ss-icon>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="add-victory-modal__body">
-			<form class="add-victory-modal__form" [formGroup]="formGroup">
+			<form
+				class="add-victory-modal__form"
+				[formGroup]="formGroup"
+			>
 				<div class="add-victory-modal__form-item">
-					<ss-textarea formControlName="text" [size]="'large'" [label]="'Описание'" [placeholder]="'Введите текст победы'"></ss-textarea>
+					<ss-textarea
+						formControlName="text"
+						[size]="'large'"
+						[label]="'Описание'"
+						[placeholder]="'Введите текст победы'"
+					></ss-textarea>
 				</div>
 				<ss-divider></ss-divider>
 				<div class="add-victory-modal__form-item">
-					<ss-chips-user-search [placeholder]="'Введите ФИО'" [selectedItems]="toUsers" [label]="'Совместная победа'"></ss-chips-user-search>
+					<ss-chips-user-search
+						[placeholder]="'Введите ФИО'"
+						[selectedItems]="toUsers"
+						[label]="'Совместная победа'"
+					></ss-chips-user-search>
 				</div>
 				<ss-divider></ss-divider>
 				<div class="add-victory-modal__form-item">
-					<ss-chips-search size="medium" [label]="'ТПР'" [placeholder]="'Введите ТПР'" [searchType]="'productions'"
-									 (getSelected)="getProducts($event)"></ss-chips-search>
+					<ss-chips-search
+						size="medium"
+						[label]="'ТПР'"
+						[placeholder]="'Введите ТПР'"
+						[searchType]="'productions'"
+						(getSelected)="getProducts($event)"
+					></ss-chips-search>
 				</div>
 				<div class="upload-file">
 					<label for="upload-file">
-						<ss-icon height="20" width="20" name="paperclip"></ss-icon>
+						<ss-icon
+							height="20"
+							width="20"
+							name="paperclip"
+						></ss-icon>
 						<ss-caption>Прикрепить файл</ss-caption>
 					</label>
-					<input type="file" id="upload-file"
-						   accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf, .mp4, .mov, .avi"
-						   multiple
-						   (change)="uploadFile($event)"
+					<input
+						type="file"
+						id="upload-file"
+						accept=".jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .pdf, .mp4, .mov, .avi"
+						multiple
+						(change)="uploadFile($event)"
 					/>
 				</div>
-				<div *ngIf="(victoryFiles | async)?.length" class="files">
-					<ss-attachment *ngFor="let file of (victoryFiles | async)" title="{{file.fileName}}" size="{{file.size}}" [readonly]="false" (delete)="deleteFile(file.id!)"></ss-attachment>
+				<div
+					*ngIf="(victoryFiles | async)?.length"
+					class="files"
+				>
+					<ss-attachment
+						*ngFor="let file of victoryFiles | async"
+						title="{{ file.fileName }}"
+						size="{{ file.size }}"
+						[readonly]="false"
+						(delete)="deleteFile(file.id!)"
+					></ss-attachment>
 				</div>
 			</form>
 			<ss-divider></ss-divider>

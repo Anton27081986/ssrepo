@@ -34,7 +34,13 @@ export type searchType =
 	selector: 'ss-chips-search',
 	templateUrl: './chips-search.component.html',
 	styleUrls: ['./chips-search.component.scss'],
-	imports: [CommonModule, CaptionComponent, NgClass, IconComponent, TextComponent],
+	imports: [
+		CommonModule,
+		CaptionComponent,
+		NgClass,
+		IconComponent,
+		TextComponent,
+	],
 	standalone: true,
 })
 export class ChipsSearchComponent {
@@ -149,7 +155,7 @@ export class ChipsSearchComponent {
 					this.searchFacade
 						.getPersonificationStatuses(query)
 						.pipe(untilDestroyed(this))
-						.subscribe(res => {
+						.subscribe((res) => {
 							this.found = res.items;
 							this.ref.detectChanges();
 						});

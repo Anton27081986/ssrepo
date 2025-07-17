@@ -67,7 +67,7 @@
 			}
 
 			a {
-				color: #416CFF;
+				color: #416cff;
 				text-decoration: none;
 
 				&:hover {
@@ -126,9 +126,9 @@ ss-loader {
 tr {
 	position: relative;
 }
- ::ng-deep .scroll-content-container {
-	 max-width: 100% !important;
-	 margin: 0 6.25%;
+::ng-deep .scroll-content-container {
+	max-width: 100% !important;
+	margin: 0 6.25%;
 }
 
 .pagination {

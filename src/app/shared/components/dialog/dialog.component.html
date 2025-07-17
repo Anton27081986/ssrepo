@@ -1,12 +1,29 @@
-<ss-card class="dialog" padding="32px 40px">
+<ss-card
+	class="dialog"
+	padding="32px 40px"
+>
 	@if (header) {
-		<ss-headline size="h5" weight="semi-bold">{{ header }}</ss-headline>
+		<ss-headline
+			size="h5"
+			weight="semi-bold"
+			>{{ header }}</ss-headline
+		>
 	}
 	@if (text) {
 		<ss-text size="2">{{ text }}</ss-text>
 	}
-	<ss-button type="secondary" size="medium" (click)="close(true)">Ок</ss-button>
+	<ss-button
+		type="secondary"
+		size="medium"
+		(click)="close(true)"
+		>Ок</ss-button
+	>
 	@if (!oneButton) {
-		<ss-button type="muted" size="medium" (click)="close(false)">Отмена</ss-button>
+		<ss-button
+			type="muted"
+			size="medium"
+			(click)="close(false)"
+			>Отмена</ss-button
+		>
 	}
 </ss-card>

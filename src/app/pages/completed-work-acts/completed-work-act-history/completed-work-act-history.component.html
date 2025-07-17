@@ -1,24 +1,37 @@
-<div class="wrapper" (click)="close()">
-    <ss-card padding="0" (click)="$event.stopPropagation()">
-        <div class="header">
-            <ss-headline size="h6">История изменений</ss-headline>
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<ss-card
+		padding="0"
+		(click)="$event.stopPropagation()"
+	>
+		<div class="header">
+			<ss-headline size="h6">История изменений</ss-headline>
 
-            <ss-icon width="16" name="close" (click)="close()"></ss-icon>
-        </div>
+			<ss-icon
+				width="16"
+				name="close"
+				(click)="close()"
+			></ss-icon>
+		</div>
 
-        <div class="body">
-            <ss-history
-                class="content"
-                [objectId]="actId.toString()"
-                [queryType]="queryType.ActCompletedWorks"
-                [view]="viewMode.Table"
+		<div class="body">
+			<ss-history
+				class="content"
+				[objectId]="actId.toString()"
+				[queryType]="queryType.ActCompletedWorks"
+				[view]="viewMode.Table"
 				[tableHead]="[
-					{title: 'Дата', field: 'createdTime'},
-					{title: 'Автор', field: 'userName'},
-					{title: 'Действие',  field: 'action'},
-					{title: 'Сопроводительный текст к действию',  field: 'comments'},
+					{ title: 'Дата', field: 'createdTime' },
+					{ title: 'Автор', field: 'userName' },
+					{ title: 'Действие', field: 'action' },
+					{
+						title: 'Сопроводительный текст к действию',
+						field: 'comments',
+					},
 				]"
-            ></ss-history>
-        </div>
-    </ss-card>
+			></ss-history>
+		</div>
+	</ss-card>
 </div>

@@ -1,10 +1,12 @@
 @if ((toasts$ | async)?.length) {
 	<div class="toast-list">
-		@for (toast of (toasts$ | async); track toast.id) {
+		@for (toast of toasts$ | async; track toast.id) {
 			<app-notice
-				[type]="toast.type" [isLabeled]="true"
+				[type]="toast.type"
+				[isLabeled]="true"
 				[title]="toast.message"
-				(close)="deleteToast(toast.id)">
+				(close)="deleteToast(toast.id)"
+			>
 			</app-notice>
 		}
 	</div>

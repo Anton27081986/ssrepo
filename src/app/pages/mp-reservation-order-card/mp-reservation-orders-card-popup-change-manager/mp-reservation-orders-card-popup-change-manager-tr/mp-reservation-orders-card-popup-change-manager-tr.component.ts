@@ -10,21 +10,30 @@ import {
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
-import {AsyncPipe, CommonModule, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
-import {TextComponent} from "@app/shared/components/typography/text/text.component";
-import {SelectComponent} from "@app/shared/components/select/select.component";
-import {InputComponent} from "@app/shared/components/inputs/input/input.component";
-import {SearchInputComponent} from "@app/shared/components/inputs/search-input/search-input.component";
-import {DateTimePickerComponent} from "@app/shared/components/inputs/date-time-picker/date-time-picker.component";
 import {
-	IReservationOrderChangeProvisionDetails
-} from "@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details";
+	AsyncPipe,
+	CommonModule,
+	NgForOf,
+	NgIf,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import { TextComponent } from '@app/shared/components/typography/text/text.component';
+import { SelectComponent } from '@app/shared/components/select/select.component';
+import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { IReservationOrderChangeProvisionDetails } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
 
 export enum ChangeProvisionDetailsTrRowItemField {
 	manufacturingAmount = 'manufacturingAmount',
@@ -35,8 +44,11 @@ export enum ChangeProvisionDetailsTrRowItemField {
 @Component({
 	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'tr[mp-reservation-orders-card-popup-change-manager-tr]',
-	styleUrls: ['mp-reservation-orders-card-popup-change-manager-tr.component.scss'],
-	templateUrl: './mp-reservation-orders-card-popup-change-manager-tr.component.html',
+	styleUrls: [
+		'mp-reservation-orders-card-popup-change-manager-tr.component.scss',
+	],
+	templateUrl:
+		'./mp-reservation-orders-card-popup-change-manager-tr.component.html',
 	imports: [
 		CommonModule,
 		NgForOf,
@@ -49,19 +61,23 @@ export enum ChangeProvisionDetailsTrRowItemField {
 		InputComponent,
 		SearchInputComponent,
 		NgSwitchDefault,
-		DateTimePickerComponent
+		DateTimePickerComponent,
 	],
-	standalone: true
+	standalone: true,
 })
-export class MpReservationOrdersCardPopupChangeManagerTrComponent implements OnInit, AfterViewChecked {
-	protected readonly ChangeProvisionDetailsTrRowItemField = ChangeProvisionDetailsTrRowItemField;
+export class MpReservationOrdersCardPopupChangeManagerTrComponent
+	implements OnInit, AfterViewChecked
+{
+	protected readonly ChangeProvisionDetailsTrRowItemField =
+		ChangeProvisionDetailsTrRowItemField;
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
 	@Input({ required: true }) item!: IReservationOrderChangeProvisionDetails;
 
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
-	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected viewMaximise$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	@ViewChild('content') public content!: ElementRef;
 
@@ -72,7 +88,8 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent implements OnI
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		private readonly modalService: ModalService,
 	) {
-		this.tprRejectsReasons$ = this.clientProposalsFacadeService.tprRejectsReasons$;
+		this.tprRejectsReasons$ =
+			this.clientProposalsFacadeService.tprRejectsReasons$;
 	}
 
 	ngOnInit() {
@@ -113,7 +130,9 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent implements OnI
 
 	ngAfterViewChecked() {
 		if (this.content) {
-			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+			this.viewMaximise$.next(
+				this.content.nativeElement.scrollHeight > 200,
+			);
 		}
 	}
 
@@ -124,7 +143,7 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent implements OnI
 	showText(text: string[], title?: string) {
 		this.modalService.open(TableFullCellComponent, {
 			data: {
-				cell: text.map(item => {
+				cell: text.map((item) => {
 					return { text: item };
 				}),
 				title,

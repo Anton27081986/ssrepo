@@ -1,34 +1,49 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input #input
-		   class="{{ error ? size + ' error' : size }}"
-		   type="text"
-		   [attr.value]="value"
-		   [placeholder]="placeholder"
-		   [value]="selectedItem?.name || ''"
-		   [disabled]="disabled"
-           [readOnly]="readonly"
-		   (input)="onChange($any($event.target).value)"
-		   (blur)="onBlur()"
-		   (focusout)="input.value = selectedItem ? selectedItem.name || '' : ''"
+	<input
+		#input
+		class="{{ error ? size + ' error' : size }}"
+		type="text"
+		[attr.value]="value"
+		[placeholder]="placeholder"
+		[value]="selectedItem?.name || ''"
+		[disabled]="disabled"
+		[readOnly]="readonly"
+		(input)="onChange($any($event.target).value)"
+		(blur)="onBlur()"
+		(focusout)="input.value = selectedItem ? selectedItem.name || '' : ''"
 	/>
 	@if ((found$ | async)?.length) {
-		<div class="search-result" [ngClass]="{'height-options': reSizeHeightOptions}" #options>
+		<div
+			class="search-result"
+			[ngClass]="{ 'height-options': reSizeHeightOptions }"
+			#options
+		>
 			<div class="separator"></div>
 			@for (item of found$ | async; track item.id) {
-				<ss-caption class="search-result-item"
-							(click)="
-					clear ? input.value = '' : input.value = item.name!;
-					found$.next([]);
-					select.emit(item);
-				">
+				<ss-caption
+					class="search-result-item"
+					(click)="
+						clear ? (input.value = '') : (input.value = item.name!);
+						found$.next([]);
+						select.emit(item)
+					"
+				>
 					<div [innerHTML]="item.name"></div>
 				</ss-caption>
 			}
 		</div>
 	}
 </div>
-<ss-caption size="2" class="error" color="error">{{ error }}</ss-caption>
+<ss-caption
+	size="2"
+	class="error"
+	color="error"
+	>{{ error }}</ss-caption
+>
 @if ((found$ | async)?.length) {
-	<div class="overflow" (click)="found$.next([])"></div>
+	<div
+		class="overflow"
+		(click)="found$.next([])"
+	></div>
 }

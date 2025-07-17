@@ -27,7 +27,10 @@ export class MpReservationOrdersApiService {
 
 	public getOrders(
 		filter: MpReservationFilter,
-	): Observable<{ data: IResponse<IMpReservationOrder>; permissions: string[] }> {
+	): Observable<{
+		data: IResponse<IMpReservationOrder>;
+		permissions: string[];
+	}> {
 		let params = new HttpParams();
 
 		if (filter.id !== null && filter.id !== undefined) {
@@ -50,11 +53,17 @@ export class MpReservationOrdersApiService {
 			params = params.set('statusId', filter.statusId);
 		}
 
-		if (filter.dateCreatedFrom !== null && filter.dateCreatedFrom !== undefined) {
+		if (
+			filter.dateCreatedFrom !== null &&
+			filter.dateCreatedFrom !== undefined
+		) {
 			params = params.set('dateCreatedFrom', filter.dateCreatedFrom);
 		}
 
-		if (filter.dateCreatedTo !== null && filter.dateCreatedTo !== undefined) {
+		if (
+			filter.dateCreatedTo !== null &&
+			filter.dateCreatedTo !== undefined
+		) {
 			params = params.set('dateCreatedTo', filter.dateCreatedTo);
 		}
 
@@ -70,13 +79,18 @@ export class MpReservationOrdersApiService {
 			params = params.set('offset', filter.offset);
 		}
 
-		return this.http.get<{ data: IResponse<IMpReservationOrder>; permissions: string[] }>(
+		return this.http.get<{
+			data: IResponse<IMpReservationOrder>;
+			permissions: string[];
+		}>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification`,
 			{ params },
 		);
 	}
 
-	public getPersonificationById(id: string): Observable<{ data: IMpReservationOrder }> {
+	public getPersonificationById(
+		id: string,
+	): Observable<{ data: IMpReservationOrder }> {
 		return this.http.get<{ data: IMpReservationOrder }>(
 			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`,
 		);
@@ -91,7 +105,10 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public updateProvisionDate(orderId: number, provisionDate: string): Observable<void> {
+	public updateProvisionDate(
+		orderId: number,
+		provisionDate: string,
+	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate`,
 			{ provisionDate },
@@ -109,7 +126,10 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public rejectPersonification(orderId: number, reason: string): Observable<void> {
+	public rejectPersonification(
+		orderId: number,
+		reason: string,
+	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/reject`,
 			{ reason },
@@ -130,7 +150,10 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public createDetails(orderId: number, body: IProvisionDetailsTypes[]): Observable<void> {
+	public createDetails(
+		orderId: number,
+		body: IProvisionDetailsTypes[],
+	): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
 			body,
@@ -154,7 +177,10 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public changeDetails(orderId: number, body: IProvisionDetailsTypes): Observable<void> {
+	public changeDetails(
+		orderId: number,
+		body: IProvisionDetailsTypes,
+	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
 			body,
@@ -175,7 +201,9 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public getApproveClarification(orderId: number): Observable<IApproveClarificationResponse> {
+	public getApproveClarification(
+		orderId: number,
+	): Observable<IApproveClarificationResponse> {
 		return this.http.get<IApproveClarificationResponse>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
 		);
@@ -190,13 +218,18 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
-	public getWarehouseForAgreeOrder(orderId: number): Observable<IWarehouseBalanceResponse> {
+	public getWarehouseForAgreeOrder(
+		orderId: number,
+	): Observable<IWarehouseBalanceResponse> {
 		return this.http.get<IWarehouseBalanceResponse>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`,
 		);
 	}
 
-	public createTransferInvoice(orderId: number, body: IDispatchesRequest): Observable<void> {
+	public createTransferInvoice(
+		orderId: number,
+		body: IDispatchesRequest,
+	): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`,
 			body,
@@ -206,10 +239,10 @@ export class MpReservationOrdersApiService {
 	public reorderQueueOrders(
 		body: IQueueReorderPosition,
 	): Observable<{ data: IResponse<IQueueOrderDto>; permissions: string[] }> {
-		return this.http.put<{ data: IResponse<IQueueOrderDto>; permissions: string[] }>(
-			`${environment.apiUrl}/api/manufacturing/Queue/Reorder`,
-			body,
-		);
+		return this.http.put<{
+			data: IResponse<IQueueOrderDto>;
+			permissions: string[];
+		}>(`${environment.apiUrl}/api/manufacturing/Queue/Reorder`, body);
 	}
 
 	public approveClarification(orderId: number): Observable<void> {

@@ -1,18 +1,22 @@
 <ss-caption size="1">{{ label }}</ss-caption>
 <div class="input">
-	<input #input
-		   class="{{ size }}"
-		   type="text"
-		   [placeholder]="'поиск'"
-		   [disabled]="disabled"
-		   [value]="query"
-		   (input)="onInputValueChange($event)"
+	<input
+		#input
+		class="{{ size }}"
+		type="text"
+		[placeholder]="'поиск'"
+		[disabled]="disabled"
+		[value]="query"
+		(input)="onInputValueChange($event)"
 	/>
 	@if ((found$ | async)?.length) {
 		<div class="search-result">
 			<div class="separator"></div>
 			@for (item of found$ | async; track item.id) {
-				<ss-caption class="search-result-item" (click)="setItem(item)">{{ item.name }}
+				<ss-caption
+					class="search-result-item"
+					(click)="setItem(item)"
+					>{{ item.name }}
 				</ss-caption>
 			}
 		</div>

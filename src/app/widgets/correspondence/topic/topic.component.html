@@ -1,7 +1,20 @@
-<ss-search-input class="header" size="small" placeholder="Поиск по темам" (input)="filterSubjectsByName($event)"></ss-search-input>
+<ss-search-input
+	class="header"
+	size="small"
+	placeholder="Поиск по темам"
+	(input)="filterSubjectsByName($event)"
+></ss-search-input>
 <div class="subjects">
-	<div class="item all" (click)="onTopic()">
-		<ss-icon height="22" width="22" name="smsTracking" class="item-icon"></ss-icon>
+	<div
+		class="item all"
+		(click)="onTopic()"
+	>
+		<ss-icon
+			height="22"
+			width="22"
+			name="smsTracking"
+			class="item-icon"
+		></ss-icon>
 		<div class="item-content">
 			<ss-headline size="h6">Все сообщения</ss-headline>
 			<div class="item-content-subtitle">
@@ -12,9 +25,17 @@
 		</div>
 	</div>
 
-	@for (topic of (topics$ | async); track topic.subject) {
-		<div class="item" (click)="onTopic(topic.subject)">
-			<ss-icon height="22" width="22" name="smsTracking" class="item-icon"></ss-icon>
+	@for (topic of topics$ | async; track topic.subject) {
+		<div
+			class="item"
+			(click)="onTopic(topic.subject)"
+		>
+			<ss-icon
+				height="22"
+				width="22"
+				name="smsTracking"
+				class="item-icon"
+			></ss-icon>
 			<div class="item-content">
 				<ss-headline size="h6">{{ topic.subject }}</ss-headline>
 				<div class="item-content-subtitle">

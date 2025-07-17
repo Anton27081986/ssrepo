@@ -3,7 +3,10 @@ import { AuthGuard } from '@app/core/guards/auth.guard';
 import { WithoutFooterLayoutComponent } from '@app/shared/layouts/without-footer-layout/without-footer-layout.component';
 import { FullWidthWithoutFooterLayoutComponent } from '@app/shared/layouts/full-width-without-footer-layout/full-width-without-footer-layout.component';
 import { FullLayoutComponent } from '@app/shared/layouts/new-layout/full-layout.component';
-import { procurementsPermissionsGuard, proposalsPermissionsGuard } from '@app/core/guards';
+import {
+	procurementsPermissionsGuard,
+	proposalsPermissionsGuard,
+} from '@app/core/guards';
 import { MainPageComponent } from '@app/pages/main-page/main-page.component';
 import { ProfileComponent } from '@app/pages/profile/profile.component';
 import { SettingsComponent } from '@app/pages/profile/settings/settings.component';

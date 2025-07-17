@@ -1,10 +1,24 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="dialog" padding="0" (click)="$event.stopPropagation()">
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<ss-card
+		class="dialog"
+		padding="0"
+		(click)="$event.stopPropagation()"
+	>
 		<div class="header">
 			<ss-headline size="h5">Добавить контракт</ss-headline>
-			<ss-icon class="close-icon" name="close" (click)="close()"></ss-icon>
+			<ss-icon
+				class="close-icon"
+				name="close"
+				(click)="close()"
+			></ss-icon>
 		</div>
-		<form class="body" [formGroup]="newContractForm">
+		<form
+			class="body"
+			[formGroup]="newContractForm"
+		>
 			<div class="body__column">
 				<div class="body__column__item">
 					<ss-input
@@ -12,7 +26,13 @@
 						label="Контракт, №"
 						placeholder="Введите данные"
 						formControlName="contractNumber"
-						[error]="newContractForm.controls['contractNumber'].touched && newContractForm.controls['contractNumber'].errors ? 'Некорректные данные' : undefined"
+						[error]="
+							newContractForm.controls['contractNumber']
+								.touched &&
+							newContractForm.controls['contractNumber'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
@@ -21,9 +41,21 @@
 						size="small"
 						label="Контрагент"
 						placeholder="Введите данные"
-						[selectedItem]="newContractForm.controls['contractor'].value"
-						[error]="newContractForm.controls['contractor'].touched && newContractForm.controls['contractor'].errors ? 'Некорректные данные' : undefined"
-						(select)="newContractForm.controls['contractor'].setValue($event); onContractorSelect($event?.id)"
+						[selectedItem]="
+							newContractForm.controls['contractor'].value
+						"
+						[error]="
+							newContractForm.controls['contractor'].touched &&
+							newContractForm.controls['contractor'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
+						(select)="
+							newContractForm.controls['contractor'].setValue(
+								$event
+							);
+							onContractorSelect($event?.id)
+						"
 					></ss-search-input>
 				</div>
 				<div class="body__column__item">
@@ -32,12 +64,31 @@
 						size="small"
 						label="Договор"
 						placeholder="Введите данные"
-						[disabled]="!newContractForm.controls['contractor'].value"
-						[error]="newContractForm.controls['contractDetailId'].touched && newContractForm.controls['contractDetailId'].errors ? 'Некорректные данные' : undefined"
-						(onChange)="newContractForm.controls['contractDetailId'].setValue($event)"
+						[disabled]="
+							!newContractForm.controls['contractor'].value
+						"
+						[error]="
+							newContractForm.controls['contractDetailId']
+								.touched &&
+							newContractForm.controls['contractDetailId'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
+						(onChange)="
+							newContractForm.controls[
+								'contractDetailId'
+							].setValue($event)
+						"
 					>
 						<option value="{{ null }}">(Не выбран)</option>
-						<option *ngFor="let item of (contractDetails$ | async)?.items" [value]="item.id">{{ item.name }}</option>
+						<option
+							*ngFor="
+								let item of (contractDetails$ | async)?.items
+							"
+							[value]="item.id"
+						>
+							{{ item.name }}
+						</option>
 					</ss-select>
 				</div>
 				<div class="body__column__item">
@@ -46,7 +97,12 @@
 						label="Количество, кг (всего)"
 						type="number"
 						formControlName="quantityTotal"
-						[error]="newContractForm.controls['quantityTotal'].touched && newContractForm.controls['quantityTotal'].errors ? 'Некорректные данные' : undefined"
+						[error]="
+							newContractForm.controls['quantityTotal'].touched &&
+							newContractForm.controls['quantityTotal'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
@@ -55,37 +111,73 @@
 						label="Цена"
 						type="number"
 						formControlName="price"
-						[error]="newContractForm.controls['price'].touched && newContractForm.controls['price'].errors ? 'Некорректные данные' : undefined"
+						[error]="
+							newContractForm.controls['price'].touched &&
+							newContractForm.controls['price'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
 					></ss-input>
 				</div>
 				<div class="body__column__item">
 					<ss-date-range
 						formControlName="period"
 						label="Период контракта:"
-						[error]="newContractForm.controls['period'].touched && newContractForm.controls['period'].errors ? 'Некорректные данные' : undefined"
-						(select)="newContractForm.controls['period'].setValue($event)"
+						[error]="
+							newContractForm.controls['period'].touched &&
+							newContractForm.controls['period'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
+						(select)="
+							newContractForm.controls['period'].setValue($event)
+						"
 					></ss-date-range>
 				</div>
 			</div>
 			<div class="body__column">
-                <div class="body__column__item">
-                    <ss-search-input
-                        searchType="tovs"
-                        size="small"
-                        label="Товарная позиция"
-                        placeholder="Введите товарную позицию"
-                        [selectedItem]="newContractForm.controls['tradePosition'].value"
-                        [error]="newContractForm.controls['tradePosition'].touched && newContractForm.controls['tradePosition'].errors ? 'Некорректные данные' : undefined"
-                        (select)="selectSearchItem($event, newContractForm.controls['tradePosition'])"
-                        (blurEvent)="selectSearchItem($event, newContractForm.controls['tradePosition'])"
-                    ></ss-search-input>
-                </div>
+				<div class="body__column__item">
+					<ss-search-input
+						searchType="tovs"
+						size="small"
+						label="Товарная позиция"
+						placeholder="Введите товарную позицию"
+						[selectedItem]="
+							newContractForm.controls['tradePosition'].value
+						"
+						[error]="
+							newContractForm.controls['tradePosition'].touched &&
+							newContractForm.controls['tradePosition'].errors
+								? 'Некорректные данные'
+								: undefined
+						"
+						(select)="
+							selectSearchItem(
+								$event,
+								newContractForm.controls['tradePosition']
+							)
+						"
+						(blurEvent)="
+							selectSearchItem(
+								$event,
+								newContractForm.controls['tradePosition']
+							)
+						"
+					></ss-search-input>
+				</div>
 				<div class="body__column__item">
 					<ss-textarea
 						label="Условия оплаты"
 						placeholder="Введите данные"
 						formControlName="paymentConditions"
-						[error]="newContractForm.controls['paymentConditions'].touched && newContractForm.controls['paymentConditions'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="
+							newContractForm.controls['paymentConditions']
+								.touched &&
+							newContractForm.controls['paymentConditions'].errors
+								?.required
+								? 'Некорректные данные'
+								: undefined
+						"
 					></ss-textarea>
 				</div>
 				<div class="body__column__item">
@@ -93,7 +185,14 @@
 						label="Условия отгрузки"
 						placeholder="Введите данные"
 						formControlName="deliveryConditions"
-						[error]="newContractForm.controls['deliveryConditions'].touched && newContractForm.controls['deliveryConditions'].errors?.required ? 'Некорректные данные' : undefined"
+						[error]="
+							newContractForm.controls['deliveryConditions']
+								.touched &&
+							newContractForm.controls['deliveryConditions']
+								.errors?.required
+								? 'Некорректные данные'
+								: undefined
+						"
 					></ss-textarea>
 				</div>
 				<div class="body__column__item">
@@ -102,15 +201,33 @@
 						placeholder="Выберите период"
 						label="Напоминание"
 						formControlName="notificationDate"
-						[placeholder]="newContractForm.controls['notificationDate'].value"
-						[error]="newContractForm.controls['notificationDate'].touched && newContractForm.controls['notificationDate'].errors?.required ? 'Некорректные данные' : undefined"
+						[placeholder]="
+							newContractForm.controls['notificationDate'].value
+						"
+						[error]="
+							newContractForm.controls['notificationDate']
+								.touched &&
+							newContractForm.controls['notificationDate'].errors
+								?.required
+								? 'Некорректные данные'
+								: undefined
+						"
 					></ss-datepicker-input>
 				</div>
 			</div>
 		</form>
 		<div class="footer">
-			<ss-button size="small" (click)="addContract()">Сохранить</ss-button>
-			<ss-button size="small" type="muted" (click)="close()">Отменить</ss-button>
+			<ss-button
+				size="small"
+				(click)="addContract()"
+				>Сохранить</ss-button
+			>
+			<ss-button
+				size="small"
+				type="muted"
+				(click)="close()"
+				>Отменить</ss-button
+			>
 		</div>
 	</ss-card>
 </div>

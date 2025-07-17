@@ -1,50 +1,75 @@
-<div class="wrapper" (click)="close()">
-    <snab-card
-        class="qualification"
-        [headerRef]="header"
-        [bodyRef]="body"
-        [footerRef]="footer"
-        (click)="$event.stopPropagation()">
-    </snab-card>
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<snab-card
+		class="qualification"
+		[headerRef]="header"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(click)="$event.stopPropagation()"
+	>
+	</snab-card>
 </div>
 
 <ng-template #header>
-    <div class="qualification__header">
-        <ss-headline size="h6">Уточнить заказ №{{ id }}</ss-headline>
-        <snab-button
-            [type]="ButtonType.Flat"
-            [size]="Size.Default"
-            [icon]="IconType.ClearLarge"
-            [iconPosition]="IconPosition.OnlyIcon"
-            (click)="close()">
-        </snab-button>
-    </div>
+	<div class="qualification__header">
+		<ss-headline size="h6">Уточнить заказ №{{ id }}</ss-headline>
+		<snab-button
+			[type]="ButtonType.Flat"
+			[size]="Size.Default"
+			[icon]="IconType.ClearLarge"
+			[iconPosition]="IconPosition.OnlyIcon"
+			(click)="close()"
+		>
+		</snab-button>
+	</div>
 </ng-template>
 
 <ng-template #body>
-    <form [formGroup]="changeClarifyOrderForm" class="qualification__body">
-        @if (tov) {
-            <ss-search-input
+	<form
+		[formGroup]="changeClarifyOrderForm"
+		class="qualification__body"
+	>
+		@if (tov) {
+			<ss-search-input
 				[selectedItem]="tov"
 				[searchType]="'tovs'"
-				[error]="changeClarifyOrderForm.controls.tov.touched && changeClarifyOrderForm.controls.tov.errors?.required ? 'Обязательное поле' : undefined"
+				[error]="
+					changeClarifyOrderForm.controls.tov.touched &&
+					changeClarifyOrderForm.controls.tov.errors?.required
+						? 'Обязательное поле'
+						: undefined
+				"
 				(select)="onTovSelect($event)"
-				(blurEvent)="this.changeClarifyOrderForm.controls.tov.setValue(null)">
+				(blurEvent)="
+					this.changeClarifyOrderForm.controls.tov.setValue(null)
+				"
+			>
 			</ss-search-input>
-        }
-        <ss-table-v2>
-            <tr mp-reservation-orders-card-popup-qualification-tr *ngFor="let item of items" [item]="item"></tr>
-        </ss-table-v2>
-    </form>
+		}
+		<ss-table-v2>
+			<tr
+				mp-reservation-orders-card-popup-qualification-tr
+				*ngFor="let item of items"
+				[item]="item"
+			></tr>
+		</ss-table-v2>
+	</form>
 </ng-template>
 
 <ng-template #footer>
-    <div class="qualification__footer">
-        <snab-button text="Отмена"
-                     [type]="ButtonType.Secondary"
-                     [size]="Size.Large"
-                     (click)="openPopupCancelAction()"
-        ></snab-button>
-        <snab-button text="Уточнить" [size]="Size.Large" (click)="clarifyOrder()"></snab-button>
-    </div>
+	<div class="qualification__footer">
+		<snab-button
+			text="Отмена"
+			[type]="ButtonType.Secondary"
+			[size]="Size.Large"
+			(click)="openPopupCancelAction()"
+		></snab-button>
+		<snab-button
+			text="Уточнить"
+			[size]="Size.Large"
+			(click)="clarifyOrder()"
+		></snab-button>
+	</div>
 </ng-template>

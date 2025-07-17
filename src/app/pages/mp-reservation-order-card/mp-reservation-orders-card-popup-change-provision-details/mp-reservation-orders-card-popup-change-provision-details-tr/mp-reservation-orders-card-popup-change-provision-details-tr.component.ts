@@ -10,7 +10,10 @@ import {
 } from '@angular/core';
 import { ColumnsStateService } from '@app/core/columns.state.service';
 import { IStoreTableBaseColumn } from '@app/core/store';
-import { TooltipPosition, TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
+import {
+	TooltipPosition,
+	TooltipTheme,
+} from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ModalService } from '@app/core/modal/modal.service';
 import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
@@ -40,9 +43,13 @@ export enum ChangeProvisionDetailsTrRowItemField {
 
 @Component({
 	// eslint-disable-next-line @angular-eslint/component-selector
-	selector: 'tr[mp-reservation-orders-card-popup-change-provision-details-tr]',
-	styleUrls: ['mp-reservation-orders-card-popup-change-provision-details-tr.component.scss'],
-	templateUrl: './mp-reservation-orders-card-popup-change-provision-details-tr.component.html',
+	selector:
+		'tr[mp-reservation-orders-card-popup-change-provision-details-tr]',
+	styleUrls: [
+		'mp-reservation-orders-card-popup-change-provision-details-tr.component.scss',
+	],
+	templateUrl:
+		'./mp-reservation-orders-card-popup-change-provision-details-tr.component.html',
 	imports: [
 		CommonModule,
 		NgForOf,
@@ -59,7 +66,9 @@ export enum ChangeProvisionDetailsTrRowItemField {
 	],
 	standalone: true,
 })
-export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent implements OnInit, AfterViewChecked {
+export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent
+	implements OnInit, AfterViewChecked
+{
 	@Input({ required: true }) item!: IReservationOrderChangeProvisionDetails;
 	@Input() defaultCols: IStoreTableBaseColumn[] = [];
 
@@ -71,16 +80,19 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent imple
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly Number = Number;
 
-	protected readonly ChangeProvisionDetailsTrRowItemField = ChangeProvisionDetailsTrRowItemField;
+	protected readonly ChangeProvisionDetailsTrRowItemField =
+		ChangeProvisionDetailsTrRowItemField;
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
-	protected viewMaximise$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	protected viewMaximise$: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		private readonly modalService: ModalService,
 	) {
-		this.tprRejectsReasons$ = this.clientProposalsFacadeService.tprRejectsReasons$;
+		this.tprRejectsReasons$ =
+			this.clientProposalsFacadeService.tprRejectsReasons$;
 	}
 
 	ngOnInit() {
@@ -121,7 +133,9 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent imple
 
 	ngAfterViewChecked() {
 		if (this.content) {
-			this.viewMaximise$.next(this.content.nativeElement.scrollHeight > 200);
+			this.viewMaximise$.next(
+				this.content.nativeElement.scrollHeight > 200,
+			);
 		}
 	}
 
@@ -132,7 +146,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent imple
 	showText(text: string[], title?: string) {
 		this.modalService.open(TableFullCellComponent, {
 			data: {
-				cell: text.map(item => {
+				cell: text.map((item) => {
 					return { text: item };
 				}),
 				title,

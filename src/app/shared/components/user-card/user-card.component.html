@@ -1,10 +1,24 @@
-<div *ngIf="user" class="user-card" (click)="openModalInfoUser()">
-	<ss-avatar [type]="'rectangle'" [size]="size" [src]="user.avatarUrl!"></ss-avatar>
+<div
+	*ngIf="user"
+	class="user-card"
+	(click)="openModalInfoUser()"
+>
+	<ss-avatar
+		[type]="'rectangle'"
+		[size]="size"
+		[src]="user.avatarUrl!"
+	></ss-avatar>
 	<div class="user-card__info">
-		<ss-text size="2" weight="medium">{{ user.name }}</ss-text>
+		<ss-text
+			size="2"
+			weight="medium"
+			>{{ user.name }}</ss-text
+		>
 		<div class="user-card__description">
 			<ng-container *ngIf="size === 'small'">
-				<span class="user-card__item">{{ user.position }},{{ user.department }}</span>
+				<span class="user-card__item"
+					>{{ user.position }},{{ user.department }}</span
+				>
 			</ng-container>
 			<ng-container *ngIf="size === 'large'">
 				<span class="user-card__item">{{ user.position }}</span>

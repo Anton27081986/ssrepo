@@ -1,23 +1,29 @@
 <div
-    class="tabs"
-    [class.tabs__border] = "tabsBorder"
+	class="tabs"
+	[class.tabs__border]="tabsBorder"
 >
-    <ng-container *ngFor="let tab of tabs; trackBy: trackBy">
-        <div *ngIf="tab.isVisible"
-             class="tab"
-             [ngClass]="{'selected': tab.name === selectedTab.name }"
-             [class.selected__small]="tab.name === selectedTab.name && size === 'small'"
-             [class.selected__medium]="tab.name === selectedTab.name && size === 'medium'"
-             [class.tab__small]="size === 'small'"
-             [class.tab__medium]="size === 'medium'"
-             (click)="onSelect(tab)"
-        >
-            <ss-text
-                [size]="size === 'small' ? '3' : '2' "
-            >
-                {{ tab.label }}
-            </ss-text>
-            <span *ngIf="tab.icon" class="icon {{tab.icon}}"></span>
-        </div>
-    </ng-container>
+	<ng-container *ngFor="let tab of tabs; trackBy: trackBy">
+		<div
+			*ngIf="tab.isVisible"
+			class="tab"
+			[ngClass]="{ selected: tab.name === selectedTab.name }"
+			[class.selected__small]="
+				tab.name === selectedTab.name && size === 'small'
+			"
+			[class.selected__medium]="
+				tab.name === selectedTab.name && size === 'medium'
+			"
+			[class.tab__small]="size === 'small'"
+			[class.tab__medium]="size === 'medium'"
+			(click)="onSelect(tab)"
+		>
+			<ss-text [size]="size === 'small' ? '3' : '2'">
+				{{ tab.label }}
+			</ss-text>
+			<span
+				*ngIf="tab.icon"
+				class="icon {{ tab.icon }}"
+			></span>
+		</div>
+	</ng-container>
 </div>

@@ -1,27 +1,42 @@
 <ng-container *ngFor="let cols of columnsStateService.visibleCols$ | async">
 	<ng-container *ngFor="let col of cols.cols">
-		<td *ngIf="col.display" class="ss-table-td">
+		<td
+			*ngIf="col.display"
+			class="ss-table-td"
+		>
 			<ng-container [ngSwitch]="col.id">
 				<ng-container *ngSwitchCase="'oldDate'">
-					<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
+					<snab-text
+						[type]="TextType.Body"
+						[weight]="TextWeight.Regular"
+					>
 						{{ item.oldDate | date: 'dd.MM.yyyy' }}
 					</snab-text>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="'newDate'">
-					<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
+					<snab-text
+						[type]="TextType.Body"
+						[weight]="TextWeight.Regular"
+					>
 						{{ item.newDate | date: 'dd.MM.yyyy' }}
 					</snab-text>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="'oldAmount'">
-					<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
+					<snab-text
+						[type]="TextType.Body"
+						[weight]="TextWeight.Regular"
+					>
 						{{ item.oldAmount }}
 					</snab-text>
 				</ng-container>
 
 				<ng-container *ngSwitchCase="'newAmount'">
-					<snab-text [type]="TextType.Body" [weight]="TextWeight.Regular">
+					<snab-text
+						[type]="TextType.Body"
+						[weight]="TextWeight.Regular"
+					>
 						{{ item.newAmount }}
 					</snab-text>
 				</ng-container>

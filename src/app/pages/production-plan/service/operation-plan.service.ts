@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable, of, tap, merge, switchMap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -101,11 +101,11 @@ export class OperationPlanService {
 			);
 	}
 
-	public upload1C(weekId: number) {
+	public upload1C(weekId: number): Observable<LinkToModule> {
 		return this.operationPlanApiService.upload1C(weekId);
 	}
 
-	public downloadReport() {
+	public downloadReport(): Observable<LinkToModule> {
 		return this.operationPlanApiService.downloadReport();
 	}
 
@@ -144,7 +144,9 @@ export class OperationPlanService {
 			customerUser: item.customerUser,
 			quantity: item.quantity,
 			countForPostpone: new FormControl<number | null>(0),
-			productionDateControl: new FormControl<Date | null>(new Date(item.productionDate)),
+			productionDateControl: new FormControl<Date | null>(
+				new Date(item.productionDate),
+			),
 		}));
 
 		return {
@@ -155,7 +157,7 @@ export class OperationPlanService {
 		};
 	}
 
-	public addGp(params: AddToVRequest) {
+	public addGp(params: AddToVRequest): Observable<void> {
 		return this.operationPlanApiService.addGp(params).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({
@@ -165,7 +167,7 @@ export class OperationPlanService {
 		);
 	}
 
-	public deleteItemsTov(tovIds: number[]) {
+	public deleteItemsTov(tovIds: number[]): Observable<void> {
 		return this.operationPlanApiService.deleteItemsTov(tovIds).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({

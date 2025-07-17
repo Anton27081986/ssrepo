@@ -1,4 +1,7 @@
-<ss-card padding="0" radius="0 0 16px 16px">
+<ss-card
+	padding="0"
+	radius="0 0 16px 16px"
+>
 	<app-client-proposals-tabs-canvas
 		[headerTemplateRef]="header"
 		[bodyTemplateRef]="body"
@@ -7,8 +10,13 @@
 	>
 	</app-client-proposals-tabs-canvas>
 	<ng-template #header>
-		<a *ngIf="linkToModule();else text" href="{{ linkToModule() }}"
-		   class="app-client-tpr-samples-tab__link" target="_blank">Образцы</a>
+		<a
+			*ngIf="linkToModule(); else text"
+			href="{{ linkToModule() }}"
+			class="app-client-tpr-samples-tab__link"
+			target="_blank"
+			>Образцы</a
+		>
 		<ng-template #text>
 			<ss-text size="1">Образцы</ss-text>
 		</ng-template>
@@ -16,28 +24,43 @@
 	<ng-template #body>
 		<ng-container *ngIf="samples() as samples">
 			<ss-table
-				*ngIf="samples.total > 0;else empty"
+				*ngIf="samples.total > 0; else empty"
 				[padding]="'8px'"
 				[head]="[
-							{title: 'Код', field: 'code',sizeRatio: 0.2},
-							{title: 'Товарная позиция', field: 'tov', sizeRatio: 1},
-							{title: 'Стоимость образца, руб.', field: 'price',sizeRatio: 0.2, isNumber: true, tooltip: 'Цена прайса * дата заказа * вес * кол-во'},
-							{title: 'Продажи, руб.', field: 'sales',sizeRatio: 0.2},
-							{title: 'Количество(факт)', field: 'quantity',sizeRatio: 0.2},
-							{title: 'Вес(факт)', field: 'weight',sizeRatio: 0.2},
-							]"
+					{ title: 'Код', field: 'code', sizeRatio: 0.2 },
+					{ title: 'Товарная позиция', field: 'tov', sizeRatio: 1 },
+					{
+						title: 'Стоимость образца, руб.',
+						field: 'price',
+						sizeRatio: 0.2,
+						isNumber: true,
+						tooltip: 'Цена прайса * дата заказа * вес * кол-во',
+					},
+					{ title: 'Продажи, руб.', field: 'sales', sizeRatio: 0.2 },
+					{
+						title: 'Количество(факт)',
+						field: 'quantity',
+						sizeRatio: 0.2,
+					},
+					{ title: 'Вес(факт)', field: 'weight', sizeRatio: 0.2 },
+				]"
 				[items]="getTableItems(samples)"
 			>
 			</ss-table>
 			<ng-template #empty>
-				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+				<ss-empty-data-page
+					[width]="'300px'"
+					[height]="'176px'"
+				></ss-empty-data-page>
 			</ng-template>
 		</ng-container>
-
 	</ng-template>
 	<ng-template #footer>
 		<div class="footer">
-			<ss-text class="footer-total" size="3">
+			<ss-text
+				class="footer-total"
+				size="3"
+			>
 				Продажи (всего), руб: {{ totalSales() | numWithSpaces }}
 			</ss-text>
 			<ss-pagination
@@ -50,5 +73,3 @@
 		</div>
 	</ng-template>
 </ss-card>
-
-

@@ -1,29 +1,41 @@
-<div class="wrapper" (click)="close()">
+<div
+	class="wrapper"
+	(click)="close()"
+>
 	<snab-card
 		class="card-wrapper"
 		[bodyRef]="body"
 		[footerRef]="footer"
-		(click)="$event.stopPropagation()">
+		(click)="$event.stopPropagation()"
+	>
 		<ng-template #body>
 			<div class="body">
 				<snab-icon
 					class="body__icon"
 					[icon]="IconType.ClearSmall"
 					[width]="'36'"
-					[height]="'36'" />
+					[height]="'36'"
+				/>
 				@if (isConfirmed) {
-					<snab-text [weight]="TextWeight.Medium" [type]="TextType.Title">
+					<snab-text
+						[weight]="TextWeight.Medium"
+						[type]="TextType.Title"
+					>
 						Подтвердить удаление заказа по обеспечению?
 					</snab-text>
 				} @else {
-					<snab-text [weight]="TextWeight.Medium" [type]="TextType.Title">
+					<snab-text
+						[weight]="TextWeight.Medium"
+						[type]="TextType.Title"
+					>
 						Отклонить удаление заказа по обеспечению?
 					</snab-text>
 				}
 				<snab-text
 					class="body__description"
 					[weight]="TextWeight.Regular"
-					[type]="TextType.Body">
+					[type]="TextType.Body"
+				>
 					Вы уверены, что хотите совершить действие?
 				</snab-text>
 			</div>
@@ -35,19 +47,22 @@
 					class="footer-controls__button"
 					[type]="ButtonType.Secondary"
 					[size]="Size.Large"
-					(click)="close()"></snab-button>
+					(click)="close()"
+				></snab-button>
 				@if (isConfirmed) {
 					<snab-button
 						text="Подтвердить"
 						class="footer-controls__button"
 						[size]="Size.Large"
-						(click)="removeOrder()"></snab-button>
+						(click)="removeOrder()"
+					></snab-button>
 				} @else {
 					<snab-button
 						text="Отклонить"
 						class="footer-controls__button"
 						[size]="Size.Large"
-						(click)="rejectRemoveOrder()"></snab-button>
+						(click)="rejectRemoveOrder()"
+					></snab-button>
 				}
 			</div>
 		</ng-template>

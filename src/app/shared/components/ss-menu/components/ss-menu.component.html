@@ -1,10 +1,20 @@
-<div *ngIf="menuItems" #myElement id="menu" class="main-menu">
-	<div class="main-menu__content" [ngStyle]="{'column-count': getColomnCount()}">
+<div
+	*ngIf="menuItems"
+	#myElement
+	id="menu"
+	class="main-menu"
+>
+	<div
+		class="main-menu__content"
+		[ngStyle]="{ 'column-count': getColomnCount() }"
+	>
 		<ng-container *ngFor="let menu of menuItems">
 			<ss-menu-item [menuItems]="menu"></ss-menu-item>
 		</ng-container>
 	</div>
 </div>
 
-<div class="layout" (click)="close()"></div>
-
+<div
+	class="layout"
+	(click)="close()"
+></div>

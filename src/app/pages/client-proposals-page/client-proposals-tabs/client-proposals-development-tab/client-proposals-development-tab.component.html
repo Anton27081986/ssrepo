@@ -1,4 +1,7 @@
-<ss-card padding="0" radius="0 0 16px 16px">
+<ss-card
+	padding="0"
+	radius="0 0 16px 16px"
+>
 	<app-client-proposals-tabs-canvas
 		[headerTemplateRef]="header"
 		[bodyTemplateRef]="body"
@@ -8,36 +11,45 @@
 	</app-client-proposals-tabs-canvas>
 
 	<ng-template #header>
-		<a *ngIf="linkToModule(); else text" href="{{ linkToModule() }}" class="client-proposals-development-tab__link"
-		   target="_blank">Разработки АК</a>
+		<a
+			*ngIf="linkToModule(); else text"
+			href="{{ linkToModule() }}"
+			class="client-proposals-development-tab__link"
+			target="_blank"
+			>Разработки АК</a
+		>
 		<ng-template #text>
 			<ss-text size="1">Разработки АК</ss-text>
 		</ng-template>
 		<div class="control">
-			<input type="checkbox" (change)="onIsCompletting($event)" />
-			<ss-text size="2">
-				Выполнение задачи
-			</ss-text>
+			<input
+				type="checkbox"
+				(change)="onIsCompletting($event)"
+			/>
+			<ss-text size="2"> Выполнение задачи </ss-text>
 		</div>
 	</ng-template>
 
 	<ng-template #body>
 		<ng-container *ngIf="developments() as developments">
 			<ss-table
-				*ngIf="developments.total > 0;else empty"
+				*ngIf="developments.total > 0; else empty"
 				[padding]="'8px'"
 				[head]="[
-					{title: 'Код', field: 'code'},
-					{title: 'Дата', field: 'date'},
-					{title: 'Название ТПР', field: 'name', sizeRatio: 3},
-					{title: 'Статус', field: 'status'},
-					{title: 'Продажи ТПР', field: 'sale', sizeRatio: 2},
-					]"
+					{ title: 'Код', field: 'code' },
+					{ title: 'Дата', field: 'date' },
+					{ title: 'Название ТПР', field: 'name', sizeRatio: 3 },
+					{ title: 'Статус', field: 'status' },
+					{ title: 'Продажи ТПР', field: 'sale', sizeRatio: 2 },
+				]"
 				[items]="getTableItems(developments)"
 			>
 			</ss-table>
 			<ng-template #empty>
-				<ss-empty-data-page [width]="'300px'" [height]="'176px'"></ss-empty-data-page>
+				<ss-empty-data-page
+					[width]="'300px'"
+					[height]="'176px'"
+				></ss-empty-data-page>
 			</ng-template>
 		</ng-container>
 	</ng-template>
@@ -52,4 +64,3 @@
 		</ss-pagination>
 	</ng-template>
 </ss-card>
-

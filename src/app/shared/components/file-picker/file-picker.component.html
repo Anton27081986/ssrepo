@@ -1,21 +1,47 @@
-<div class="ss-file-picker" [class.open]="isExpanded">
+<div
+	class="ss-file-picker"
+	[class.open]="isExpanded"
+>
 	<div class="ss-file-picker-header">
-		<ss-text size="3" weight="medium">{{ "Выбранные документы" }}</ss-text>
+		<ss-text
+			size="3"
+			weight="medium"
+			>{{ 'Выбранные документы' }}</ss-text
+		>
 		<div class="ss-file-picker__icon">
-			<ss-icon height="12" name="basket" [class.accordion-header__icon-toggle--expanded]="isExpanded"
-					 (click)="dropAll()">
+			<ss-icon
+				height="12"
+				name="basket"
+				[class.accordion-header__icon-toggle--expanded]="isExpanded"
+				(click)="dropAll()"
+			>
 			</ss-icon>
-			<span class="count">{{ (checkListFile.checkFiles$ | async)?.length }}</span>
-			<ss-icon height="12" name="chevron" class="ss-file-picker__icon-toggle" [@rotate]="isExpanded"
-					(click)="toggle()">
+			<span class="count">{{
+				(checkListFile.checkFiles$ | async)?.length
+			}}</span>
+			<ss-icon
+				height="12"
+				name="chevron"
+				class="ss-file-picker__icon-toggle"
+				[@rotate]="isExpanded"
+				(click)="toggle()"
+			>
 			</ss-icon>
 		</div>
 	</div>
-	<div class="ss-file-picker__content" [class.open]="isExpanded">
+	<div
+		class="ss-file-picker__content"
+		[class.open]="isExpanded"
+	>
 		@for (file of checkListFile.checkFiles$ | async; track file.id) {
 			<div class="ss-file-picker__content-item">
-					<ss-caption size="2">{{ file.name}}</ss-caption>
-					<ss-icon height="12" name="close" class="ss-file-picker__icon-basket" (click)="dropFile(file); $event.stopPropagation()"></ss-icon>
+				<ss-caption size="2">{{ file.name }}</ss-caption>
+				<ss-icon
+					height="12"
+					name="close"
+					class="ss-file-picker__icon-basket"
+					(click)="dropFile(file); $event.stopPropagation()"
+				></ss-icon>
 			</div>
 		}
 	</div>

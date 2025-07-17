@@ -1,25 +1,43 @@
-<div class="wrapper" (click)="close()">
-	<ss-card class="excess-income-edit-comment-popover" [padding]="'0'" (click)="$event.stopPropagation()">
+<div
+	class="wrapper"
+	(click)="close()"
+>
+	<ss-card
+		class="excess-income-edit-comment-popover"
+		[padding]="'0'"
+		(click)="$event.stopPropagation()"
+	>
 		<div class="excess-income-edit-comment-popover__header">
-			<snab-text [type]="TextType.Title">Редактировать комментарий</snab-text>
+			<snab-text [type]="TextType.Title"
+				>Редактировать комментарий</snab-text
+			>
 		</div>
 		<snab-divider></snab-divider>
 		<div class="excess-income-edit-comment-popover__body">
-			<ss-form-control-input-with-func-edit [size]="'big'"
-												  [control]="comment" [funcEdit]="false"
-												  [error]="comment.hasError('maxlength') &&
-												   comment ? 'Превышено допустимое количество символов' : undefined"
+			<ss-form-control-input-with-func-edit
+				[size]="'big'"
+				[control]="comment"
+				[funcEdit]="false"
+				[error]="
+					comment.hasError('maxlength') && comment
+						? 'Превышено допустимое количество символов'
+						: undefined
+				"
 			></ss-form-control-input-with-func-edit>
 		</div>
 		<snab-divider></snab-divider>
 		<div class="excess-income-edit-comment-popover__footer">
-			<snab-button [text]="'Сохранить'"
-						 (click)="update()">
+			<snab-button
+				[text]="'Сохранить'"
+				(click)="update()"
+			>
 			</snab-button>
-			<snab-button [type]="ButtonType.Outline" [text]="'Отменить'"
-						 (click)="close()">
+			<snab-button
+				[type]="ButtonType.Outline"
+				[text]="'Отменить'"
+				(click)="close()"
+			>
 			</snab-button>
 		</div>
 	</ss-card>
 </div>
-

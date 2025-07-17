@@ -1,13 +1,20 @@
-<div class="wrapper" (mousedown)="close()">
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
 	<snab-card
 		class="approve-orders-form"
 		[headerRef]="header"
 		[bodyRef]="body"
 		[footerRef]="footer"
-		(mousedown)="$event.stopPropagation()">
+		(mousedown)="$event.stopPropagation()"
+	>
 		<ng-template #header>
 			<div class="header">
-				<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+				<snab-text
+					[type]="TextType.Headline"
+					[weight]="TextWeight.Semibold"
+				>
 					Согласование заказа
 				</snab-text>
 				<snab-button
@@ -15,18 +22,33 @@
 					[size]="Size.Large"
 					[icon]="IconType.ClearLarge"
 					[iconPosition]="IconPosition.OnlyIcon"
-					(click)="close()"></snab-button>
+					(click)="close()"
+				></snab-button>
 			</div>
 		</ng-template>
 		<ng-template #body>
-			<form class="content" [formGroup]="approvalForm">
-				<snab-text [type]="TextType.Body" [weight]="TextWeight.Medium">
-					Товарная позиция: {{ approvalForm.value.tov?.name ?? '...' }}
+			<form
+				class="content"
+				[formGroup]="approvalForm"
+			>
+				<snab-text
+					[type]="TextType.Body"
+					[weight]="TextWeight.Medium"
+				>
+					Товарная позиция:
+					{{ approvalForm.value.tov?.name ?? '...' }}
 				</snab-text>
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
-					Количество и ед.: {{ approvalForm.value.totalRequested ?? '...' }}
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
+					Количество и ед.:
+					{{ approvalForm.value.totalRequested ?? '...' }}
 				</snab-text>
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
 					Количество в производстве.:
 					{{ approvalForm.value.manufacturingAmount ?? '...' }}
 				</snab-text>
@@ -35,24 +57,36 @@
 					<thead>
 						<tr>
 							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+								>
 									Склад
 								</snab-text>
 							</th>
 							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+								>
 									Количество на складе
 								</snab-text>
 							</th>
 							<th>
-								<snab-text [type]="TextType.Title" [weight]="TextWeight.Semibold">
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+								>
 									Количество (факт)
 								</snab-text>
 							</th>
 						</tr>
 					</thead>
 					<tbody formArrayName="stocks">
-						<tr *ngFor="let row of dates.controls; let i = index" [formGroupName]="i">
+						<tr
+							*ngFor="let row of dates.controls; let i = index"
+							[formGroupName]="i"
+						>
 							<td>
 								<snab-text [type]="TextType.Body">
 									{{ row.get('warehouseName')!.value }}
@@ -68,7 +102,8 @@
 									<snab-input
 										fieldCtrl
 										formControlName="fact"
-										placeholder="Введите кол-во"></snab-input>
+										placeholder="Введите кол-во"
+									></snab-input>
 								</snab-form-field>
 							</td>
 						</tr>
@@ -81,7 +116,8 @@
 				<snab-button
 					text="Разместить в очереди"
 					[size]="Size.Large"
-					(click)="submitDispatch()"></snab-button>
+					(click)="submitDispatch()"
+				></snab-button>
 			</div>
 		</ng-template>
 	</snab-card>

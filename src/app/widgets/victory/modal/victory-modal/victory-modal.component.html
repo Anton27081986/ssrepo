@@ -1,29 +1,55 @@
 <div class="wrapper">
-	<div *ngIf="victory$ | async as victory" class="victory-modal">
+	<div
+		*ngIf="victory$ | async as victory"
+		class="victory-modal"
+	>
 		<div class="victory-modal__header">
 			<ss-text size="1"> Победа № {{ victory.id }}</ss-text>
-			<ss-icon style="cursor: pointer;" [name]="'close'" (click)="close()"></ss-icon>
+			<ss-icon
+				style="cursor: pointer"
+				[name]="'close'"
+				(click)="close()"
+			></ss-icon>
 		</div>
 		<ss-divider></ss-divider>
 		<div class="victory-modal__body">
-			<app-user-card [viewPopupInfo]="true" [size]="'large'" [user]="victory.user!"></app-user-card>
-			<div *ngIf="victory.groupWinUsers" class="victory-modal__group">
-				<app-user-card *ngFor="let user of victory.groupWinUsers" [viewPopupInfo]="true" [size]="'small'"
-							   [user]="user"></app-user-card>
+			<app-user-card
+				[viewPopupInfo]="true"
+				[size]="'large'"
+				[user]="victory.user!"
+			></app-user-card>
+			<div
+				*ngIf="victory.groupWinUsers"
+				class="victory-modal__group"
+			>
+				<app-user-card
+					*ngFor="let user of victory.groupWinUsers"
+					[viewPopupInfo]="true"
+					[size]="'small'"
+					[user]="user"
+				></app-user-card>
 			</div>
 			<div class="victory-modal__actions">
-				<app-like *ngIf="!(isExtendedMode$ | async)" [likedUsers]="victory.likedUsers || []"
-						  [type]="(typeLike$ | async)!" [count]="victory.likesCount!"
-						  (click)="changeLike(victory.isUserLiked!)"></app-like>
+				<app-like
+					*ngIf="!(isExtendedMode$ | async)"
+					[likedUsers]="victory.likedUsers || []"
+					[type]="(typeLike$ | async)!"
+					[count]="victory.likesCount!"
+					(click)="changeLike(victory.isUserLiked!)"
+				></app-like>
 				<div class="victory-modal__isExtendedMode">
-					<app-choice-like *ngIf="isChoiceLike |async" (close)="isChoiceLike.next(false)"
-									 (stateLike)="getLike(victory.isUserLiked!,$event)"></app-choice-like>
+					<app-choice-like
+						*ngIf="isChoiceLike | async"
+						(close)="isChoiceLike.next(false)"
+						(stateLike)="getLike(victory.isUserLiked!, $event)"
+					></app-choice-like>
 					<app-like
 						*ngIf="isExtendedMode$ | async"
 						[likedUsers]="victory.likedUsers || []"
 						[type]="(typeLike$ | async)!"
 						[count]="victory.likesCount!"
-						(click)="openChoiceLike(victory)">
+						(click)="openChoiceLike(victory)"
+					>
 					</app-like>
 				</div>
 			</div>
@@ -31,18 +57,32 @@
 		<ss-divider></ss-divider>
 		<ng-container *ngIf="comments$ | async as comments">
 			<div class="victory-modal__comments">
-				<ss-text class="victory-modal__description-comment" size="1">Комментарии:</ss-text>
+				<ss-text
+					class="victory-modal__description-comment"
+					size="1"
+					>Комментарии:</ss-text
+				>
 				<ng-container *ngIf="comments.total > 0">
-					<app-victory-comment *ngFor="let comment of comments.items" [comment]="comment"
-										 (updateComment)="updateComment($event)"></app-victory-comment>
+					<app-victory-comment
+						*ngFor="let comment of comments.items"
+						[comment]="comment"
+						(updateComment)="updateComment($event)"
+					></app-victory-comment>
 					<ss-divider></ss-divider>
 				</ng-container>
 				<ng-container *ngIf="comments.total === 0">
 					<div class="victory-modal__no-comments">
 						<ss-empty-placeholder>
 							<ss-icon name="empty"></ss-icon>
-							<ss-headline size="h3">Ни одного комментария</ss-headline>
-							<ss-text color="gray" size="3">Будьте среди первых, кто оставит комментарий</ss-text>
+							<ss-headline size="h3"
+								>Ни одного комментария</ss-headline
+							>
+							<ss-text
+								color="gray"
+								size="3"
+								>Будьте среди первых, кто оставит
+								комментарий</ss-text
+							>
 						</ss-empty-placeholder>
 					</div>
 				</ng-container>
@@ -50,9 +90,16 @@
 		</ng-container>
 		<ss-divider></ss-divider>
 		<div class="victory-modal__footer">
-			<ss-form-control-input-with-func-edit [funcEdit]="(funcEdit$ | async)!" [control]="notes" [placeholder]="'Оставить комментарий'"
-					  (cancelEditing)="cancelEditing()"></ss-form-control-input-with-func-edit>
-			<ss-button [size]="'small'" (click)="addOrUpdateComment(victory.id)">
+			<ss-form-control-input-with-func-edit
+				[funcEdit]="(funcEdit$ | async)!"
+				[control]="notes"
+				[placeholder]="'Оставить комментарий'"
+				(cancelEditing)="cancelEditing()"
+			></ss-form-control-input-with-func-edit>
+			<ss-button
+				[size]="'small'"
+				(click)="addOrUpdateComment(victory.id)"
+			>
 				<ss-icon [name]="'telegram'"></ss-icon>
 			</ss-button>
 		</div>

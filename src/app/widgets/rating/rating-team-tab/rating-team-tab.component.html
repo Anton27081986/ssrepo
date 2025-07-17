@@ -1,12 +1,27 @@
-<div *ngIf="team()" class="rating-team-tab" [tooltip]="team().name"
-	 [theme]="TooltipTheme.DEFAULT" [position]="TooltipPosition.DEFAULT" [class.rating-team-tab--active]="active()">
-	<div *ngIf="isTeam()" class="rating-team-tab__indicator"></div>
+<div
+	*ngIf="team()"
+	class="rating-team-tab"
+	[tooltip]="team().name"
+	[theme]="TooltipTheme.DEFAULT"
+	[position]="TooltipPosition.DEFAULT"
+	[class.rating-team-tab--active]="active()"
+>
+	<div
+		*ngIf="isTeam()"
+		class="rating-team-tab__indicator"
+	></div>
 	<div class="rating-team-tab__left">
-		<ss-icon *ngIf="team().place <= 3" class="rating-team-tab__{{ team().place }}" [name]="'cup'"></ss-icon>
+		<ss-icon
+			*ngIf="team().place <= 3"
+			class="rating-team-tab__{{ team().place }}"
+			[name]="'cup'"
+		></ss-icon>
 		<span>{{ team().shortName }}</span>
 	</div>
 	<div class="rating-team-tab__right">
-		<ss-text [size]="'3'">{{ team().rate ?? '-' }} / {{ team().membersCount ?? '-' }}</ss-text>
+		<ss-text [size]="'3'"
+			>{{ team().rate ?? '-' }} /
+			{{ team().membersCount ?? '-' }}</ss-text
+		>
 	</div>
 </div>
-

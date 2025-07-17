@@ -22,7 +22,9 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 	standalone: true,
 })
 export class TopicComponent {
-	public topics$: Observable<Array<{ subject: string; messageCount: number }>>;
+	public topics$: Observable<
+		Array<{ subject: string; messageCount: number }>
+	>;
 	public totalMessages$: Observable<number>;
 
 	constructor(private readonly facadeService: CorrespondenceFacadeService) {

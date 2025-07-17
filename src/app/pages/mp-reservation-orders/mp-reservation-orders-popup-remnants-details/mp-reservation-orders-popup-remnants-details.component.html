@@ -1,12 +1,19 @@
-<div class="wrapper" (mousedown)="close()">
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
 	<snab-card
 		class="remnants-details-popup"
 		[headerRef]="header"
 		[bodyRef]="body"
-		(mousedown)="$event.stopPropagation()">
+		(mousedown)="$event.stopPropagation()"
+	>
 		<ng-template #header>
 			<div class="header">
-				<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Medium"
+				>
 					Остатки. Детали
 				</snab-text>
 				<snab-button
@@ -22,25 +29,25 @@
 			<div class="content">
 				<table class="remnants-table">
 					<thead>
-					<tr>
-						<th>Количество</th>
-						<th>Склад</th>
-						<th>Оборотная ведомость по ТП</th>
-					</tr>
+						<tr>
+							<th>Количество</th>
+							<th>Склад</th>
+							<th>Оборотная ведомость по ТП</th>
+						</tr>
 					</thead>
 					<tbody>
-					<tr *ngFor="let remnant of remnants">
-						<td>{{ remnant.quantity }}</td>
-						<td>{{ remnant.warehouse }}</td>
-						<td>
-							<snab-link
-								class="link"
-								[type]="TextType.Body"
-								[text]="remnant.linkText"
-								(click)="onLinkClick(remnant)"
-							></snab-link>
-						</td>
-					</tr>
+						<tr *ngFor="let remnant of remnants">
+							<td>{{ remnant.quantity }}</td>
+							<td>{{ remnant.warehouse }}</td>
+							<td>
+								<snab-link
+									class="link"
+									[type]="TextType.Body"
+									[text]="remnant.linkText"
+									(click)="onLinkClick(remnant)"
+								></snab-link>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>

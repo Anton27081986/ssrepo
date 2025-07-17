@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
+import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
 
 /**
  * Модель отправки сообщения

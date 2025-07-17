@@ -21,7 +21,7 @@ export class CorrespondenceFacadeService {
 	private type: CorrespondenceTypeEnum = CorrespondenceTypeEnum.Clients;
 
 	// Идентификатор объекта переписки
-	private objectId:number | null = null;
+	private objectId: number | null = null;
 
 	// Темы
 	private readonly topicsSubject = new BehaviorSubject<
@@ -107,7 +107,11 @@ export class CorrespondenceFacadeService {
 		}
 	}
 
-	public loadMessages(limit = 10, offset = 0, Query: string | undefined = undefined) {
+	public loadMessages(
+		limit = 10,
+		offset = 0,
+		Query: string | undefined = undefined,
+	) {
 		if (this.objectId) {
 			this.notificationsApiService
 				.getMessages(
@@ -152,7 +156,11 @@ export class CorrespondenceFacadeService {
 	public loadFiles() {
 		if (this.objectId) {
 			this.notificationsApiService
-				.getFiles(this.type, this.objectId, this.selectedTopicSubject.value)
+				.getFiles(
+					this.type,
+					this.objectId,
+					this.selectedTopicSubject.value,
+				)
 				.pipe(
 					tap((x) => {
 						this.filesSubject.next(x);
@@ -237,8 +245,12 @@ export class CorrespondenceFacadeService {
 					toUserIds,
 					copyUserIds,
 					isPrivate,
-					replyToMessageId: this.repliedMessageSubject.value?.message.id,
-					fileIds: this.messageFilesSubject.value?.map(file => file.id!) || [],
+					replyToMessageId:
+						this.repliedMessageSubject.value?.message.id,
+					fileIds:
+						this.messageFilesSubject.value?.map(
+							(file) => file.id!,
+						) || [],
 					sourceUrl: this.getLinkForEmail(this.type),
 				})
 				.pipe(untilDestroyed(this))

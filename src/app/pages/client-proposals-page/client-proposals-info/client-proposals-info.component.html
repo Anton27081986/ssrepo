@@ -1,6 +1,9 @@
 <div class="clients-proposals-info">
 	<div class="header-content">
-		<ss-headline class="clients-proposals-info__header" size="h3">Контакт с клиентом: рекомендации по ВГП
+		<ss-headline
+			class="clients-proposals-info__header"
+			size="h3"
+			>Контакт с клиентом: рекомендации по ВГП
 		</ss-headline>
 		<ss-search-client-input
 			class="header-content__search"
@@ -12,27 +15,42 @@
 	</div>
 
 	<div class="clients-proposals-info__tables">
-		<ss-accordion [isExpanded]="true" [title]="'Информация о клиенте'">
+		<ss-accordion
+			[isExpanded]="true"
+			[title]="'Информация о клиенте'"
+		>
 			<ng-template [ngTemplateOutlet]="contentAccordion"></ng-template>
 		</ss-accordion>
-				<ss-card *ngIf="this.permissions().includes(Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ)" [padding]="'0'">
-					<app-client-proposals-card></app-client-proposals-card>
-				</ss-card>
+		<ss-card
+			*ngIf="
+				this.permissions().includes(
+					Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ
+				)
+			"
+			[padding]="'0'"
+		>
+			<app-client-proposals-card></app-client-proposals-card>
+		</ss-card>
 	</div>
 </div>
 
 <ng-template #contentAccordion>
 	<div class="content-accordion">
 		<div class="content-accordion__model-client model-client">
-			<ss-card class="card-client" [padding]="'0'">
+			<ss-card
+				class="card-client"
+				[padding]="'0'"
+			>
 				<app-client-proposals-done-production></app-client-proposals-done-production>
 			</ss-card>
 		</div>
 		<div class="content-accordion__tabs">
-			<ss-tabs [tabs]="tabs()"
-					 [size]="'medium'"
-					 [selectedTab]="selectedTab"
-					 (select)="selectTab($event)">
+			<ss-tabs
+				[tabs]="tabs()"
+				[size]="'medium'"
+				[selectedTab]="selectedTab"
+				(select)="selectTab($event)"
+			>
 			</ss-tabs>
 			<router-outlet></router-outlet>
 		</div>
