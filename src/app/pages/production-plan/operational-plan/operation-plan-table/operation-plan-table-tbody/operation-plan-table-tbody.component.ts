@@ -205,9 +205,9 @@ export class OperationPlanTableTbodyComponent {
 		}
 	}
 
-	public onCommentsOpen(opened: boolean): void {
+	public onCommentsOpen(opened: boolean, rowId: number): void {
 		if (opened) {
-			this.commentsComp.loadCommentsList();
+			this.commentsComp.loadCommentsList(rowId);
 		}
 	}
 

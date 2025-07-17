@@ -11,7 +11,7 @@
 				<th
 					ssTh
 					*ssHead="column"
-					[class.width-column-inputs]="isInputColumn(column)"
+                    [class.width-column-inputs]="isInputColumn(column)"
 				>
 					<ss-lib-text
 						[color]="Colors.TextBody2"
@@ -28,10 +28,7 @@
 	</thead>
 
 	<tbody>
-		<tr
-			ssTr
-			*ngFor="let item of data"
-		>
+		<tr ssTr *ngFor="let item of data">
 			<ng-container *ngFor="let column of columns">
 				<td
 					ssTd
@@ -47,7 +44,7 @@
 							<ss-lib-input
 								fieldCtrl
 								required
-								[size]="ExtraSize.md"
+                                [size]="ExtraSize.md"
 								[formControl]="item.countForPostpone"
 								[max]="item.quantity"
 								[min]="0"
@@ -59,13 +56,13 @@
 							*ngSwitchCase="'productionDateControl'"
 							fieldCtrl
 							[showValidationFieldIcon]="true"
-							[errorText]="'Для переноса необходимо выбрать дату'"
+                            [errorText]="'Необходимо выбрать дату не ранее исходной'"
 						>
 							<ss-lib-datepicker
 								fieldCtrl
 								required
 								[formControl]="item.productionDateControl"
-								[min]="item.productionDateControl.value || Now"
+                                [min]="item.originalProductionDate"
 							></ss-lib-datepicker>
 						</ss-lib-form-field>
 						<ng-container *ngSwitchDefault>

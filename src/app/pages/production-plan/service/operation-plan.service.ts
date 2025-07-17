@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { OperationPlanApiService } from '@app/pages/production-plan/service/operation-plan.api-service';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable, of, tap, merge, switchMap } from 'rxjs';
 import { IDictionaryItemDto } from '@front-library/components';
 import { ManufacturingTovs } from '@app/core/models/production-plan/manufacturing-tovs';
 import {
@@ -8,7 +8,7 @@ import {
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import { FormControl } from '@angular/forms';
+import {AbstractControl, FormControl, ValidatorFn, Validators} from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
@@ -101,11 +101,11 @@ export class OperationPlanService {
 			);
 	}
 
-	public upload1C(weekId: number): Observable<LinkToModule> {
+	public upload1C(weekId: number) {
 		return this.operationPlanApiService.upload1C(weekId);
 	}
 
-	public downloadReport(): Observable<LinkToModule> {
+	public downloadReport() {
 		return this.operationPlanApiService.downloadReport();
 	}
 
@@ -146,7 +146,15 @@ export class OperationPlanService {
 			countForPostpone: new FormControl<number | null>(0),
 			productionDateControl: new FormControl<Date | null>(
 				new Date(item.productionDate),
+				{
+					nonNullable: true,
+					validators: [
+						Validators.required,
+						this.minOriginalDateValidator(new Date(item.productionDate))
+					]
+				}
 			),
+			originalProductionDate: new Date(item.productionDate),
 		}));
 
 		return {
@@ -157,7 +165,19 @@ export class OperationPlanService {
 		};
 	}
 
-	public addGp(params: AddToVRequest): Observable<void> {
+	private minOriginalDateValidator(origDate: Date): ValidatorFn {
+		return (control: AbstractControl<Date | null>) => {
+			const controlValue = control.value;
+			if (!controlValue) {
+				return null;
+			}
+			return controlValue < origDate
+				? { dateTooEarly: { requiredDate: origDate } }
+				: null;
+		};
+	}
+
+	public addGp(params: AddToVRequest) {
 		return this.operationPlanApiService.addGp(params).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({
@@ -167,7 +187,7 @@ export class OperationPlanService {
 		);
 	}
 
-	public deleteItemsTov(tovIds: number[]): Observable<void> {
+	public deleteItemsTov(tovIds: number[]) {
 		return this.operationPlanApiService.deleteItemsTov(tovIds).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({

@@ -37,14 +37,17 @@
 				[disabled]="isDisabledActionButton"
 			>
 				<snab-dropdown-item
+					*ngIf="hasPermissionOrderAuthorApprove"
 					[textContent]="'Согласовать заказ по обеспечению'"
 					(click)="$event.stopPropagation(); openPopupOrderApproval()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionOrderAuthorReject"
 					[textContent]="'Отклонить заказ по обеспечению'"
 					(click)="$event.stopPropagation(); openPopupRejectOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzPlaceSupplyOrderInProduction"
 					[textContent]="
 						'Разместить в производстве заказ по обеспечению'
 					"
@@ -53,18 +56,22 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzChangeSupplyDate"
 					[textContent]="'Изменить дату обеспечения'"
 					(click)="$event.stopPropagation(); openPopupProvisionDate()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
 					[textContent]="'Удалить заказ по обеспечению'"
+					*ngIf="hasPermissionDeleteOrder"
 					(click)="$event.stopPropagation(); removeOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzImpersonateAnotherEmployee"
 					[textContent]="'Персонифицировать за другим сотрудником'"
 					(click)="$event.stopPropagation(); openPopupChangeManager()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzClarify"
 					[textContent]="'Уточнить'"
 					(click)="$event.stopPropagation(); openPopupQualification()"
 				></snab-dropdown-item>
@@ -76,6 +83,7 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzChangeQuantity"
 					[textContent]="'Изменить количество в производстве'"
 					(click)="
 						$event.stopPropagation();
@@ -83,6 +91,7 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzConfirmSupplyOrderDeletion"
 					[textContent]="'Подтвердить удаление заказа по обеспечению'"
 					(click)="
 						$event.stopPropagation();
@@ -90,6 +99,7 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+					*ngIf="hasPermissionMutmzRejectSupplyOrderDeletion"
 					[textContent]="'Отклонить удаление заказа по обеспечению'"
 					(click)="
 						$event.stopPropagation();
@@ -129,11 +139,11 @@
 			<div class="content__properties__body">
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold"
-						>Дата создания заказа</snab-text
-					>
-					<snab-text>{{
-						order()!.dateCreated | date: 'dd.MM.yyyy'
-					}}</snab-text>
+						>Дата создания заказа
+					</snab-text>
+					<snab-text
+						>{{ order()!.dateCreated | date: 'dd.MM.yyyy' }}
+					</snab-text>
 				</div>
 				<div class="content__properties__body__item">
 					<snab-text [weight]="TextWeight.Semibold"
@@ -170,8 +180,8 @@
 				class="content__properties__body__item content__properties__comment"
 			>
 				<snab-text [weight]="TextWeight.Semibold"
-					>Комментарий</snab-text
-				>
+					>Комментарий
+				</snab-text>
 				<snab-text>{{ order()!.note }}</snab-text>
 			</div>
 		</ss-card>
