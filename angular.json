@@ -36,7 +36,11 @@
 							"node_modules/@front-library/components/lib/shared/styles/overlay.scss",
 							"node_modules/@front-library/components/lib/shared/styles/table.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"allowedCommonJsDependencies": [
+							"color-convert",
+							"showdown"
+						]
 					},
 					"configurations": {
 						"production": {

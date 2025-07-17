@@ -2,7 +2,13 @@ import { Component, Signal } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import { FormControl, FormGroup, FormArray, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormControl,
+	FormGroup,
+	FormArray,
+	Validators,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import {
 	ButtonComponent,
@@ -18,8 +24,7 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { NgForOf, NgIf } from '@angular/common';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { NgForOf } from '@angular/common';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -27,22 +32,21 @@ import { toSignal } from '@angular/core/rxjs-interop';
 @UntilDestroy()
 @Component({
 	selector: 'mp-reservation-orders-card-popup-order-approval',
-	templateUrl: './mp-reservation-orders-card-popup-order-approval.component.html',
-	styleUrls: ['./mp-reservation-orders-card-popup-order-approval.component.scss'],
+	templateUrl:
+		'./mp-reservation-orders-card-popup-order-approval.component.html',
+	styleUrls: [
+		'./mp-reservation-orders-card-popup-order-approval.component.scss',
+	],
 	standalone: true,
 	imports: [
 		CardComponent,
-		IconComponent,
 		ReactiveFormsModule,
 		ButtonComponent,
 		TextComponent,
 		InputComponent,
 		NgForOf,
-		NgIf,
-		IconComponent,
 		FieldCtrlDirective,
 		FormFieldComponent,
-		InputComponent,
 		InputComponent,
 	],
 })
@@ -62,9 +66,15 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 	);
 
 	public approvalForm = new FormGroup({
-		tov: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-		totalRequested: new FormControl<number | null>(null, [Validators.required]),
-		manufacturingAmount: new FormControl<number | null>(null, [Validators.required]),
+		tov: new FormControl<IDictionaryItemDto | null>(null, [
+			Validators.required,
+		]),
+		totalRequested: new FormControl<number | null>(null, [
+			Validators.required,
+		]),
+		manufacturingAmount: new FormControl<number | null>(null, [
+			Validators.required,
+		]),
 		stocks: new FormArray<
 			FormGroup<{
 				warehouseName: FormControl<string>;
@@ -85,8 +95,10 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 
 		this.mpReservationOrderCardFacadeService.warehouseBalance$
 			.pipe(untilDestroyed(this))
-			.subscribe(data => {
-				if (!data) return;
+			.subscribe((data) => {
+				if (!data) {
+					return;
+				}
 
 				this.approvalForm.patchValue({
 					tov: data.tov,
@@ -95,13 +107,20 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 				});
 
 				const stocksArr = this.approvalForm.get('stocks') as FormArray;
+
 				stocksArr.clear();
-				data.stocks.forEach(stock => {
+				data.stocks.forEach((stock) => {
 					stocksArr.push(
 						new FormGroup({
-							warehouseId: new FormControl<number>(stock.warehouse.id),
-							warehouseName: new FormControl<string>(stock.warehouse.name),
-							inStock: new FormControl<number | null>(stock.amount),
+							warehouseId: new FormControl<number>(
+								stock.warehouse.id,
+							),
+							warehouseName: new FormControl<string>(
+								stock.warehouse.name,
+							),
+							inStock: new FormControl<number | null>(
+								stock.amount,
+							),
 							fact: new FormControl<number | null>(null),
 						}),
 					);
@@ -114,21 +133,31 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 	}
 
 	public submitDispatch(): void {
-		if (this.approvalForm.invalid) return;
+		if (this.approvalForm.invalid) {
+			return;
+		}
 
 		const orderId = this.order()?.id;
-		if (!orderId) return;
+
+		if (!orderId) {
+			return;
+		}
 
 		const dispatches = this.dates.controls
-			.map(row => ({
+			.map((row) => ({
 				warehouseId: row.get('warehouseId')?.value as number,
 				amount: row.get('fact')?.value as number,
 			}))
 			.filter(({ amount }) => amount > 0);
 
-		if (!dispatches.length) return;
+		if (!dispatches.length) {
+			return;
+		}
 
-		this.mpReservationOrderCardFacadeService.dispatchToQueue(orderId, dispatches);
+		this.mpReservationOrderCardFacadeService.dispatchToQueue(
+			orderId,
+			dispatches,
+		);
 		this.close();
 	}
 

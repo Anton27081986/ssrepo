@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
-import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	FormArray,
+	FormControl,
+	FormGroup,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -21,29 +27,27 @@ import {
 	FormFieldComponent,
 } from '@front-components/components';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
-import { NgForOf, NgIf } from '@angular/common';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
+import { NgForOf } from '@angular/common';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
-import { forkJoin } from 'rxjs';
 import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 
 @UntilDestroy()
 @Component({
 	selector: 'mp-reservation-orders-card-popup-order-in-production',
-	templateUrl: './mp-reservation-orders-card-popup-order-in-production.component.html',
-	styleUrls: ['./mp-reservation-orders-card-popup-order-in-production.component.scss'],
+	templateUrl:
+		'./mp-reservation-orders-card-popup-order-in-production.component.html',
+	styleUrls: [
+		'./mp-reservation-orders-card-popup-order-in-production.component.scss',
+	],
 	standalone: true,
 	imports: [
 		CardComponent,
-		IconComponent,
 		ButtonComponent,
 		TextComponent,
 		InputComponent,
 		NgForOf,
-		NgIf,
 		DateTimePickerComponent,
-		IconComponent,
 		ReactiveFormsModule,
 		CardComponent,
 		FieldCtrlDirective,
@@ -80,7 +84,9 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	) {
 		this.inProductionForm = new FormGroup({
 			manager: new FormControl<string>('Борисова А.В.'),
-			quantity: new FormControl<number | null>(300, [Validators.required]),
+			quantity: new FormControl<number | null>(300, [
+				Validators.required,
+			]),
 			dates: new FormArray<
 				FormGroup<{
 					productionDate: FormControl<string | null>;
@@ -98,9 +104,15 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 
 	private createDatesGroup(): FormGroup {
 		return new FormGroup({
-			productionDate: new FormControl<string | null>(null, [Validators.required]),
-			provisionDate: new FormControl<string | null>(null, [Validators.required]),
-			manufacturingAmount: new FormControl<number | null>(null, [Validators.required]),
+			productionDate: new FormControl<string | null>(null, [
+				Validators.required,
+			]),
+			provisionDate: new FormControl<string | null>(null, [
+				Validators.required,
+			]),
+			manufacturingAmount: new FormControl<number | null>(null, [
+				Validators.required,
+			]),
 		});
 	}
 
@@ -118,16 +130,23 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 
 	public placeOrder(): void {
 		this.inProductionForm.markAllAsTouched();
-		if (!this.inProductionForm.valid) return;
 
-		const detailsList: IProvisionDetailsTypes[] = this.dates.controls.map(group => {
-			const { productionDate, provisionDate, manufacturingAmount } = group.value as any;
-			return {
-				productionDate,
-				provisionDate,
-				manufacturingAmount: manufacturingAmount,
-			};
-		});
+		if (!this.inProductionForm.valid) {
+			return;
+		}
+
+		const detailsList: IProvisionDetailsTypes[] = this.dates.controls.map(
+			(group) => {
+				const { productionDate, provisionDate, manufacturingAmount } =
+					group.value as any;
+
+				return {
+					productionDate,
+					provisionDate,
+					manufacturingAmount,
+				};
+			},
+		);
 
 		this.facade
 			.addDetails(detailsList)
@@ -151,7 +170,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 			})
 			.afterClosed()
 			.pipe(untilDestroyed(this))
-			.subscribe(status => {
+			.subscribe((status) => {
 				if (!status) {
 					this.modalRef.close();
 				}

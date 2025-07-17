@@ -9,43 +9,24 @@ import {
 	FieldCtrlDirective,
 	FormFieldComponent,
 	IconPosition,
-	InputComponent,
 	IconType,
-	LabelComponent,
-	LabelType,
 	SelectComponent,
 	Size,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { AsyncPipe, DatePipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { DatePipe, NgForOf } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import {
-	IProvisionType,
-} from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
-import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { DraggableOrderRowDirective } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.directive';
 import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
 import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
-
-interface IQueueOrderRow {
-	orderId: string;
-	status: string;
-	dateOrder: string;
-	author: string;
-	client: string;
-	quantity: number;
-	provision: IProvisionType;
-	dateProduction: string;
-	dateProvision: string;
-}
 
 @UntilDestroy()
 @Component({
@@ -55,22 +36,15 @@ interface IQueueOrderRow {
 	standalone: true,
 	imports: [
 		NgForOf,
-		NgIf,
 		CardComponent,
 		ButtonComponent,
 		TextComponent,
-		InputComponent,
 		FormsModule,
 		FieldCtrlDirective,
 		FormFieldComponent,
 		ReactiveFormsModule,
-		LabelComponent,
-		TooltipDirective,
 		DatePipe,
 		SearchInputComponent,
-		TooltipDirective,
-		JsonPipe,
-		AsyncPipe,
 		SelectComponent,
 		DraggableOrderRowDirective,
 	],
@@ -81,7 +55,6 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly IconType = IconType;
-	protected readonly LabelType = LabelType;
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly IconPosition = IconPosition;
 
@@ -108,18 +81,21 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	) {
 		this.status.valueChanges
 			.pipe(untilDestroyed(this))
-			.subscribe(value => (this.filterStatus = value));
+			.subscribe((value) => (this.filterStatus = value));
 
 		this.mpReservationOrdersFacadeService.loadQueueOrders();
 	}
 
 	public get filteredOrdersQueue(): IQueueOrderDto[] {
-
-		return this.queueOrders().filter(order => {
+		return this.queueOrders().filter((order) => {
 			if (this.filterStatus) {
 				const statusName = this.filterStatus.name;
-				return (order.status ? 'Обработан' : 'В очереди') === statusName;
+
+				return (
+					(order.status ? 'Обработан' : 'В очереди') === statusName
+				);
 			}
+
 			return true;
 		});
 	}
@@ -137,7 +113,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 				},
 			})
 			.afterClosed()
-			.subscribe(status => {
+			.subscribe((status) => {
 				if (status) {
 					this.modalRef.close();
 				}
@@ -145,17 +121,25 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	}
 
 	public findQueueOrders(): void {
-		console.log('Поиск заказов по ТП:', this.filterTov, 'и статусу:', this.filterStatus);
+		console.log(
+			'Поиск заказов по ТП:',
+			this.filterTov,
+			'и статусу:',
+			this.filterStatus,
+		);
 	}
 
 	public onOrderReorder(event: IOrderReorderRequest): void {
 		const { orderId, toIndex } = event;
 		const current = [...this.queueOrders()];
-		const fromIndex = current.findIndex(q => q.id === orderId);
+		const fromIndex = current.findIndex((q) => q.id === orderId);
 
-		if (fromIndex < 0 || fromIndex === toIndex) return;
+		if (fromIndex < 0 || fromIndex === toIndex) {
+			return;
+		}
 
 		const [moved] = current.splice(fromIndex, 1);
+
 		current.splice(toIndex, 0, moved);
 
 		current.forEach((queueOrder, idx) => (queueOrder.position = idx + 1));
@@ -165,6 +149,9 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		const oldPos = fromIndex + 1;
 		const newPos = toIndex + 1;
 
-		this.mpReservationOrdersFacadeService.updateOrderPositionInQueue(oldPos, newPos);
+		this.mpReservationOrdersFacadeService.updateOrderPositionInQueue(
+			oldPos,
+			newPos,
+		);
 	}
 }

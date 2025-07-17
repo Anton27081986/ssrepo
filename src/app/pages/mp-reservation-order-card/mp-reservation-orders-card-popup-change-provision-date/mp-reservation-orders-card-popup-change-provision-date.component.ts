@@ -1,5 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormControl, FormArray, ReactiveFormsModule } from '@angular/forms';
+import {
+	FormGroup,
+	FormControl,
+	FormArray,
+	ReactiveFormsModule,
+} from '@angular/forms';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import {
@@ -7,16 +12,14 @@ import {
 	ButtonType,
 	IconType,
 	IconPosition,
-	InputComponent,
 	Size,
 	TextComponent,
 	TextType,
 	TextWeight,
 	CardComponent,
-	FormFieldComponent,
 } from '@front-components/components';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
-import { NgIf, NgForOf, DatePipe } from '@angular/common';
+import { NgForOf, DatePipe } from '@angular/common';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
@@ -30,21 +33,18 @@ interface IProvisionDatePopupData {
 @UntilDestroy()
 @Component({
 	selector: 'mp-reservation-orders-popup-change-provision-date',
-	templateUrl: './mp-reservation-orders-card-popup-change-provision-date.component.html',
-	styleUrl: './mp-reservation-orders-card-popup-change-provision-date.component.scss',
+	templateUrl:
+		'./mp-reservation-orders-card-popup-change-provision-date.component.html',
+	styleUrl:
+		'./mp-reservation-orders-card-popup-change-provision-date.component.scss',
 	standalone: true,
 	imports: [
-		NgIf,
 		NgForOf,
 		CardComponent,
 		ButtonComponent,
-		ButtonComponent,
 		TextComponent,
-		TextComponent,
-		InputComponent,
 		CardComponent,
 		DateTimePickerComponent,
-		FormFieldComponent,
 		CardComponent,
 		ReactiveFormsModule,
 		DatePipe,
@@ -71,8 +71,9 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 	) {
-		const initialRows: FormGroup<{ provisionDate: FormControl<string | null> }>[] =
-			this.data.provisionDetails.map(() => this.createRow());
+		const initialRows: Array<
+			FormGroup<{ provisionDate: FormControl<string | null> }>
+		> = this.data.provisionDetails.map(() => this.createRow());
 
 		this.provisionDateForm = new FormGroup({
 			rows: new FormArray(initialRows),
@@ -94,13 +95,14 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 	}
 
 	public confirmChange(): void {
-		const observables: Observable<void>[] = [];
+		const observables: Array<Observable<void>> = [];
 
 		this.data.provisionDetails.forEach((detail, index) => {
 			const newDateValue: string | null = this.rows
 				.at(index)
 				.get('provisionDate')
 				?.value.split('T')[0];
+
 			if (newDateValue && detail.id != null) {
 				const updatesDates$ =
 					this.mpReservationOrderCardFacadeService.updateProvisionDateById(
@@ -108,6 +110,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 						newDateValue,
 						detail.id,
 					);
+
 				observables.push(updatesDates$);
 			}
 		});
@@ -115,8 +118,10 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 		if (observables.length === 0) {
 			this.modalRef.close();
 			this.mpReservationOrderCardFacadeService.reloadOrder();
+
 			return;
 		}
+
 		forkJoin(observables).subscribe(() => {
 			this.modalRef.close();
 			this.mpReservationOrderCardFacadeService.reloadOrder();

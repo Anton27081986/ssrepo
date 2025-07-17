@@ -1,4 +1,11 @@
-import { Component, effect, OnInit, Signal, signal, WritableSignal } from '@angular/core';
+import {
+	Component,
+	effect,
+	OnInit,
+	Signal,
+	signal,
+	WritableSignal,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
 	ButtonComponent,
@@ -18,7 +25,10 @@ import {
 } from '@front-components/components';
 import { CorrespondenceComponent } from '@app/widgets/correspondence/correspondence.component';
 import { CardComponent } from '@app/shared/components/card/card.component';
-import { ITableItem, TableComponent } from '@app/shared/components/table/table.component';
+import {
+	ITableItem,
+	TableComponent,
+} from '@app/shared/components/table/table.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { Permissions } from '@app/core/constants/permissions.constants';
@@ -38,9 +48,7 @@ import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/corresponden
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
-import {
-	MpReservationOrdersPopupHistoryComponent
-} from "@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component";
+import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 
 @UntilDestroy()
 @Component({
@@ -52,7 +60,6 @@ import {
 		CorrespondenceComponent,
 		ButtonComponent,
 		LabelComponent,
-		CardComponent,
 		CardComponent,
 		LinkComponent,
 		TableComponent,
@@ -99,9 +106,12 @@ export class MpReservationOrderCardComponent implements OnInit {
 		effect(() => {
 			if (this.order()?.provision) {
 				this.volumes.set(
-					this.order()!.orderRequests.map(item => {
+					this.order()!.orderRequests.map((item) => {
 						return {
-							amount: this.pipeNumWithSpaces.numberWithSpaces(item.amount, 2),
+							amount: this.pipeNumWithSpaces.numberWithSpaces(
+								item.amount,
+								2,
+							),
 							requestedProvisionDate: item.requestedProvisionDate
 								.split('T')[0]
 								.split('-')
@@ -112,7 +122,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 				);
 
 				this.procuring.set(
-					this.order()!.provision?.provisionDetails?.map(item => {
+					this.order()!.provision?.provisionDetails?.map((item) => {
 						return {
 							manufacturingAmount: item.manufacturingAmount
 								? this.pipeNumWithSpaces.numberWithSpaces(
@@ -121,10 +131,18 @@ export class MpReservationOrderCardComponent implements OnInit {
 									)
 								: '-',
 							productionDate: item.productionDate
-								? item.productionDate.split('T')[0].split('-').reverse().join('.')
+								? item.productionDate
+										.split('T')[0]
+										.split('-')
+										.reverse()
+										.join('.')
 								: '-',
 							provisionDate: item.provisionDate
-								? item.provisionDate.split('T')[0].split('-').reverse().join('.')
+								? item.provisionDate
+										.split('T')[0]
+										.split('-')
+										.reverse()
+										.join('.')
 								: '-',
 						} as unknown as ITableItem;
 					}) || [],
@@ -133,13 +151,13 @@ export class MpReservationOrderCardComponent implements OnInit {
 		});
 	}
 
-	public ngOnInit() {
+	public ngOnInit(): void {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if (id) {
 			this.mpReservationOrderCardFacadeService.getPersonificationById(id);
 		} else {
-			this.router.navigate(['mp-reservation-orders']);
+			void this.router.navigate(['mp-reservation-orders']);
 		}
 	}
 
@@ -148,30 +166,42 @@ export class MpReservationOrderCardComponent implements OnInit {
 	}
 
 	public openPopupRejectOrder(): void {
-		this.modalService.open(MpReservationOrdersCardPopupRejectOrderComponent, {
-			data: this.order()?.id,
-		});
+		this.modalService.open(
+			MpReservationOrdersCardPopupRejectOrderComponent,
+			{
+				data: this.order()?.id,
+			},
+		);
 	}
 
 	public openPopupHistoryOrder(orderId: number): void {
-		this.modalService.open(MpReservationOrdersPopupHistoryComponent, { data: orderId });
+		this.modalService.open(MpReservationOrdersPopupHistoryComponent, {
+			data: orderId,
+		});
 	}
 
 	public openPopupOrderApproval(): void {
-		this.modalService.open(MpReservationOrdersCardPopupOrderApprovalComponent);
+		this.modalService.open(
+			MpReservationOrdersCardPopupOrderApprovalComponent,
+		);
 	}
 
 	public openPopupOrderInProduction(): void {
-		this.modalService.open(MpReservationOrdersCardPopupOrderInProductionComponent);
+		this.modalService.open(
+			MpReservationOrdersCardPopupOrderInProductionComponent,
+		);
 	}
 
 	public openPopupProvisionDate(): void {
-		this.modalService.open(MpReservationOrdersCardPopupChangeProvisionDateComponent, {
-			data: {
-				id: this.order()?.id,
-				provisionDetails: this.order()?.provision.provisionDetails,
+		this.modalService.open(
+			MpReservationOrdersCardPopupChangeProvisionDateComponent,
+			{
+				data: {
+					id: this.order()?.id,
+					provisionDetails: this.order()?.provision.provisionDetails,
+				},
 			},
-		});
+		);
 	}
 
 	public removeOrder(): void {
@@ -179,34 +209,43 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.removeOrder()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.router.navigate(['mp-reservation-orders']);
+				void this.router.navigate(['mp-reservation-orders']);
 			});
 	}
 
 	public openPopupCancelActionRemove(isConfirm: boolean): void {
-		this.modalService.open(MpReservationOrdersCardPopupCancelActionComponent, {
-			data: isConfirm,
-		});
+		this.modalService.open(
+			MpReservationOrdersCardPopupCancelActionComponent,
+			{
+				data: isConfirm,
+			},
+		);
 	}
 
 	public openPopupQualification(): void {
-		this.modalService.open(MpReservationOrdersCardPopupQualificationComponent, {
-			data: {
-				items: this.order()?.orderRequests,
-				tov: this.order()?.tov,
-				id: this.order()?.id,
+		this.modalService.open(
+			MpReservationOrdersCardPopupQualificationComponent,
+			{
+				data: {
+					items: this.order()?.orderRequests,
+					tov: this.order()?.tov,
+					id: this.order()?.id,
+				},
 			},
-		});
+		);
 	}
 
 	public openPopupChangeProvisionDetails(): void {
-		this.modalService.open(MpReservationOrdersCardPopupChangeProvisionDetailsComponent, {
-			data: {
-				items: this.order()?.provision.provisionDetails,
-				tov: this.order()?.tov,
-				id: this.order()?.id,
+		this.modalService.open(
+			MpReservationOrdersCardPopupChangeProvisionDetailsComponent,
+			{
+				data: {
+					items: this.order()?.provision.provisionDetails,
+					tov: this.order()?.tov,
+					id: this.order()?.id,
+				},
 			},
-		});
+		);
 	}
 
 	public openPopupApproveDetailsChange(): void {
@@ -217,8 +256,9 @@ export class MpReservationOrderCardComponent implements OnInit {
 		this.mpReservationOrderCardFacadeService
 			.getApproveClarification()
 			.pipe(untilDestroyed(this))
-			.subscribe(response => {
+			.subscribe((response) => {
 				const newItems = response.provisionRequests;
+
 				this.modalService.open(
 					MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent,
 					{
@@ -229,13 +269,16 @@ export class MpReservationOrderCardComponent implements OnInit {
 	}
 
 	public openPopupChangeManager(): void {
-		this.modalService.open(MpReservationOrdersCardPopupChangeManagerComponent, {
-			data: {
-				items: this.order()?.provision.provisionDetails,
-				tov: this.order()?.tov,
-				id: this.order()?.id,
-				manager: this.order()?.manager,
+		this.modalService.open(
+			MpReservationOrdersCardPopupChangeManagerComponent,
+			{
+				data: {
+					items: this.order()?.provision.provisionDetails,
+					tov: this.order()?.tov,
+					id: this.order()?.id,
+					manager: this.order()?.manager,
+				},
 			},
-		});
+		);
 	}
 }

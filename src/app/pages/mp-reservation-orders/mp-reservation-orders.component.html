@@ -1,32 +1,43 @@
 <div class="app-mp-reservation-orders__header">
-	<snab-text [type]="TextType.Headline" [weight]="TextWeight.Semibold">
+	<snab-text
+		[type]="TextType.Headline"
+		[weight]="TextWeight.Semibold"
+	>
 		Реестр по обеспечению и персонификации заказов МП
 	</snab-text>
 	<div class="app-mp-reservation-orders__header-filter">
 		<snab-button
 			text="Порядок заказов"
 			[size]="Size.Large"
-			(click)="openPopupChangeQueueOrders()"></snab-button>
+			(click)="openPopupChangeQueueOrders()"
+		></snab-button>
 		<snab-button
 			text="Добавить заказ"
 			[size]="Size.Large"
-			(click)="openPopupAddOrder()"></snab-button>
+			(click)="openPopupAddOrder()"
+		></snab-button>
 		<snab-button
 			text="Назначить дату обеспечения"
 			[size]="Size.Large"
 			[disabled]="!selectedOrders.size"
-			(click)="openPopupDateProvision()"></snab-button>
+			(click)="openPopupDateProvision()"
+		></snab-button>
 		<snab-button
 			[type]="ButtonType.Outline"
 			[size]="Size.Large"
 			[iconPosition]="IconPosition.OnlyIcon"
 			[icon]="IconType.FileNotFound"
-			(click)="downloadInstr()"></snab-button>
-		<ss-dropdown-button title="Фильтры" [isDropdownVisible]="!isLoader()">
+			(click)="downloadInstr()"
+		></snab-button>
+		<ss-dropdown-button
+			title="Фильтры"
+			[isDropdownVisible]="!isLoader()"
+		>
 			<ss-filters
 				[isFiltersVisible]="!isLoader()"
 				[(filters)]="filters"
-				(applyFilter)="getFilteredOrders(true)"></ss-filters>
+				(applyFilter)="getFilteredOrders(true)"
+			></ss-filters>
 		</ss-dropdown-button>
 	</div>
 </div>
@@ -39,75 +50,118 @@
 						<input
 							type="checkbox"
 							[checked]="isAllSelected()"
-							(change)="toggleSelectAll($event)" />
+							(change)="toggleSelectAll($event)"
+						/>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Код заказа
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Статус
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Дата заказа
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Заказчик
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							ТП
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Клиент
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Кол-во
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Ед. изм.
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Обеспечение
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							МУТМЗ
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Остатки
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Дата производства
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							Дата обеспечения
 						</snab-text>
 					</th>
 					<th>
-						<snab-text [type]="TextType.Title" [weight]="TextWeight.Medium">
+						<snab-text
+							[type]="TextType.Title"
+							[weight]="TextWeight.Medium"
+						>
 							История изменений по заявке
 						</snab-text>
 					</th>
@@ -119,18 +173,23 @@
 						<input
 							type="checkbox"
 							[checked]="selectedOrders?.has(order.id)"
-							(change)="onCheckboxChange($event, order.id)" />
+							(change)="onCheckboxChange($event, order.id)"
+						/>
 					</td>
 					<td>
 						<snab-link
 							[type]="TextType.Body"
 							[text]="order.id.toString()"
-							(click)="goToOrderCard(order.id)">
+							(click)="goToOrderCard(order.id)"
+						>
 							{{ order.id }}
 						</snab-link>
 					</td>
 					<td>
-						<snab-text [type]="TextType.Body" [weight]="TextWeight.Semibold">
+						<snab-text
+							[type]="TextType.Body"
+							[weight]="TextWeight.Semibold"
+						>
 							{{ order.status?.name }}
 						</snab-text>
 					</td>
@@ -140,7 +199,11 @@
 						</snab-text>
 					</td>
 					<td>
-						<snab-link [type]="TextType.Body" [text]="order.author?.name!" [url]="order.author.linkToDetail || ''"></snab-link>
+						<snab-link
+							[type]="TextType.Body"
+							[text]="order.author?.name!"
+							[url]="order.author.linkToDetail || ''"
+						></snab-link>
 					</td>
 					<td>
 						<snab-link
@@ -149,77 +212,114 @@
 							[url]="order.tov.linkToDetail || ''"
 							[type]="TextType.Body"
 							[text]="order.tov?.name!"
-							[tooltipText]="order.tov.name"></snab-link>
+							[tooltipText]="order.tov.name"
+						></snab-link>
 					</td>
 					<td>
-						<snab-text [type]="TextType.Body">{{ order.client?.name }}</snab-text>
+						<snab-text [type]="TextType.Body">{{
+							order.client?.name
+						}}</snab-text>
 					</td>
 					<td>
 						<snab-link
 							[type]="TextType.Body"
 							[text]="order.totalAmount.toString()"
-							(click)="openPopupTotalAmount()"></snab-link>
+							(click)="openPopupTotalAmount()"
+						></snab-link>
 					</td>
 					<td>
-						<snab-text [type]="TextType.Body">{{ order.tovUnit }}</snab-text>
+						<snab-text [type]="TextType.Body">{{
+							order.tovUnit
+						}}</snab-text>
 					</td>
 					<td class="table-td-provision">
 						<ss-tag-v2
 							snab-tooltip
 							state="warning"
 							class="table-td-provision__label"
-							[tooltipText]="'Моя бронь'">
+							[tooltipText]="'Моя бронь'"
+						>
 							<snab-icon
 								[color]="Colors.WarningLight"
-								[icon]="IconType.Unlock"></snab-icon>
-							{{ order.provision.provided || '-' | numWithSpaces: 1 }}
+								[icon]="IconType.Unlock"
+							></snab-icon>
+							{{
+								order.provision.provided || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
 							state="success"
 							class="table-td-provision__label"
-							[tooltipText]="'Свободно'">
+							[tooltipText]="'Свободно'"
+						>
 							<snab-icon
 								[color]="Colors.PositiveHeavy"
-								[icon]="IconType.Check"></snab-icon>
-							{{ order.provision.provisionAvailable || '-' | numWithSpaces: 1 }}
+								[icon]="IconType.Check"
+							></snab-icon>
+							{{
+								order.provision.provisionAvailable || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
 							state="info"
 							class="table-td-provision__label"
-							[tooltipText]="'В производстве'">
+							[tooltipText]="'В производстве'"
+						>
 							<snab-icon
 								[color]="Colors.InfoHeavy"
-								[icon]="IconType.Refresh"></snab-icon>
-							{{ order.provision.manufacturing || '-' | numWithSpaces:1 }}
+								[icon]="IconType.Refresh"
+							></snab-icon>
+							{{
+								order.provision.manufacturing || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 						<ss-tag-v2
 							snab-tooltip
 							state="danger"
 							class="table-td-provision__label"
-							[tooltipText]="'Не может быть обеспечено'">
+							[tooltipText]="'Не может быть обеспечено'"
+						>
 							<snab-icon
 								[color]="Colors.DangerHeavy"
-								[icon]="IconType.Error"></snab-icon>
-							{{ order.provision.provisionUnavailable || '-' | numWithSpaces:1 }}
+								[icon]="IconType.Error"
+							></snab-icon>
+							{{
+								order.provision.provisionUnavailable || '-'
+									| numWithSpaces: 1
+							}}
 						</ss-tag-v2>
 					</td>
 					<td>
-						<snab-link [type]="TextType.Body" [text]="order.manager?.name!"></snab-link>
+						<snab-link
+							[type]="TextType.Body"
+							[text]="order.manager?.name!"
+						></snab-link>
 					</td>
 					<td>
 						<snab-link
 							[type]="TextType.Body"
 							[text]="order.stockBalance.toString()"
-							(click)="openPopupRemnantDetailsOrder(order.id)"></snab-link>
+							(click)="openPopupRemnantDetailsOrder(order.id)"
+						></snab-link>
 					</td>
 					<td>
 						<snab-text [type]="TextType.Body">
 							<ng-container
-								*ngFor="let prodDate of order.provision?.provisionDetails">
+								*ngFor="
+									let prodDate of order.provision
+										?.provisionDetails
+								"
+							>
 								<div>
-									{{ prodDate.productionDate | date: 'dd.MM.yyyy' }}
+									{{
+										prodDate.productionDate
+											| date: 'dd.MM.yyyy'
+									}}
 								</div>
 							</ng-container>
 						</snab-text>
@@ -227,9 +327,16 @@
 					<td>
 						<snab-text [type]="TextType.Body">
 							<ng-container
-								*ngFor="let provDate of order.provision?.provisionDetails">
+								*ngFor="
+									let provDate of order.provision
+										?.provisionDetails
+								"
+							>
 								<div>
-									{{ provDate.provisionDate | date: 'dd.MM.yyyy' }}
+									{{
+										provDate.provisionDate
+											| date: 'dd.MM.yyyy'
+									}}
 								</div>
 							</ng-container>
 						</snab-text>
@@ -238,7 +345,8 @@
 						<snab-link
 							[type]="TextType.Body"
 							[text]="'История'"
-							(click)="openPopupHistoryOrder(order.id)"></snab-link>
+							(click)="openPopupHistoryOrder(order.id)"
+						></snab-link>
 					</td>
 				</tr>
 			</tbody>
@@ -248,7 +356,8 @@
 				[total]="orderList.total"
 				[pageSize]="pageSize"
 				[pageIndex]="pageIndex"
-				(changeIndex)="ordersTableIndexChange($event)"></ss-pagination>
+				(changeIndex)="ordersTableIndexChange($event)"
+			></ss-pagination>
 		</div>
 	</ng-container>
 </div>

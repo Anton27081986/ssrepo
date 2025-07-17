@@ -10,7 +10,7 @@ import {
 	TextComponent,
 	TextType,
 	TextWeight,
-	CardComponent
+	CardComponent,
 } from '@front-components/components';
 import { NgForOf } from '@angular/common';
 
@@ -27,7 +27,7 @@ import { NgForOf } from '@angular/common';
 		ButtonComponent,
 		ButtonComponent,
 		TextComponent,
-		TextComponent
+		TextComponent,
 	],
 })
 export class MpReservationOrdersPopupTotalAmountComponent {
@@ -38,14 +38,12 @@ export class MpReservationOrdersPopupTotalAmountComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	constructor(
-		private readonly modalRef: ModalRef,
-	) {}
-
 	public totalAmounts = [
 		{ quantity: 100, desiredDate: '24.07.2024' },
 		{ quantity: 200, desiredDate: '28.07.2024' },
 	];
+
+	constructor(private readonly modalRef: ModalRef) {}
 
 	public close(): void {
 		this.modalRef.close();

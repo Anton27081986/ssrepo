@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
-import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
-import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import {
 	FormControl,
 	FormGroup,
@@ -14,8 +11,6 @@ import {
 	ButtonComponent,
 	ButtonType,
 	CardComponent,
-	FieldCtrlDirective,
-	FormFieldComponent,
 	IconPosition,
 	IconType,
 	Size,
@@ -27,7 +22,7 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { Router } from '@angular/router';
-import {TextareaComponent} from "@app/shared/components/textarea/textarea.component";
+import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 
 @UntilDestroy()
 @Component({
@@ -35,18 +30,14 @@ import {TextareaComponent} from "@app/shared/components/textarea/textarea.compon
 	standalone: true,
 	imports: [
 		CardComponent,
-		HeadlineComponent,
-		IconComponent,
-		DateTimePickerComponent,
 		FormsModule,
 		ReactiveFormsModule,
 		TextComponent,
 		ButtonComponent,
-		FormFieldComponent,
-		FieldCtrlDirective,
 		TextareaComponent,
 	],
-	templateUrl: './mp-reservation-orders-card-popup-reject-order.component.html',
+	templateUrl:
+		'./mp-reservation-orders-card-popup-reject-order.component.html',
 	styleUrl: './mp-reservation-orders-card-popup-reject-order.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -62,7 +53,7 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 		reason: FormControl<string | null>;
 	}>;
 
-	public constructor(
+	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
 		private readonly facade: MpReservationOrderCardFacadeService,
@@ -73,7 +64,7 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 		});
 	}
 
-	public rejectOrder() {
+	public rejectOrder(): void {
 		this.declineForm.markAllAsTouched();
 
 		if (this.declineForm.controls.reason.value) {
@@ -82,12 +73,12 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.modalRef.close();
-					this.router.navigate(['mp-reservation-orders']);
+					void this.router.navigate(['mp-reservation-orders']);
 				});
 		}
 	}
 
-	protected close() {
+	protected close(): void {
 		this.modalRef.close();
 	}
 }

@@ -16,23 +16,18 @@ import {
 	ButtonComponent,
 	ButtonType,
 	CardComponent,
-	DropdownButtonComponent,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	IconPosition,
 	IconType,
 	InputComponent,
 	InputType,
-	SelectComponent,
 	Size,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-components/components';
 import { AccordionComponent } from '@app/shared/components/accordion/accordion.component';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
-import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
-import { TabsComponent } from '@app/shared/components/tabs/tabs.component';
 import { NgTemplateOutlet, NgForOf, NgIf } from '@angular/common';
 import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
@@ -53,21 +48,16 @@ import { IUserProfile } from '@app/core/models/user-profile';
 	styleUrls: ['./mp-reservation-orders-popup-add-order.component.scss'],
 	imports: [
 		CardComponent,
-		IconComponent,
-		SelectV2Component,
 		InputComponent,
 		ButtonComponent,
 		TextComponent,
-		DropdownButtonComponent,
 		AccordionComponent,
-		TabsComponent,
 		NgTemplateOutlet,
 		NgForOf,
 		ReactiveFormsModule,
 		NgIf,
 		DateTimePickerComponent,
 		FormFieldComponent,
-		SelectComponent,
 		FieldCtrlDirective,
 		SearchInputComponent,
 		TooltipDirective,
@@ -81,7 +71,6 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
 	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly length = length;
 	protected readonly IconPosition = IconPosition;
 	protected readonly InputType = InputType;
 
@@ -111,8 +100,12 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		private readonly userFacadeService: UserFacadeService,
 	) {
 		this.addOrdersForm = new FormGroup({
-			tov: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
-			client: new FormControl<IDictionaryItemDto | null>(null, [Validators.required]),
+			tov: new FormControl<IDictionaryItemDto | null>(null, [
+				Validators.required,
+			]),
+			client: new FormControl<IDictionaryItemDto | null>(null, [
+				Validators.required,
+			]),
 			positions: new FormArray<
 				FormGroup<{
 					headerTitle: FormControl<string>;
@@ -130,7 +123,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		this.userFacadeService
 			.getUserProfile()
 			.pipe(untilDestroyed(this))
-			.subscribe(user => {
+			.subscribe((user) => {
 				this.currentUser = user;
 			});
 	}
@@ -138,12 +131,14 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	public get accordionTitle(): string {
 		const tovName = this.addOrdersForm.controls.tov.value?.name ?? '';
 		const client = this.addOrdersForm.controls.client.value?.name ?? '';
-		const short = tovName.length > 50 ? `${tovName.slice(0, 50)}...` : tovName;
+		const short =
+			tovName.length > 50 ? `${tovName.slice(0, 50)}...` : tovName;
+
 		return client ? `${short},\u00A0\u00A0\u00A0\u00A0${client}` : short;
 	}
 
 	// Геттер для доступа к FormArray позиций
-	get positions(): FormArray {
+	public get positions(): FormArray {
 		return this.addOrdersForm.get('positions') as FormArray;
 	}
 
@@ -175,17 +170,19 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	// Создаем новую строку в таблице деталей
 	private createDetailGroup(): FormGroup {
 		return new FormGroup({
-			quantity: new FormControl<number | null>(null, [Validators.required]),
+			quantity: new FormControl<number | null>(null, [
+				Validators.required,
+			]),
 			date: new FormControl<string | null>(null, [Validators.required]),
 		});
 	}
 
-	public onTovSelect(item: IDictionaryItemDto) {
+	public onTovSelect(item: IDictionaryItemDto): void {
 		this.addOrdersForm.controls.tov.setValue(item);
 	}
 
 	// Сюда придет выбранный клиент
-	public onClientSelect(item: IDictionaryItemDto) {
+	public onClientSelect(item: IDictionaryItemDto): void {
 		this.addOrdersForm.controls.client.setValue(item);
 	}
 
@@ -197,9 +194,11 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	public addPosition(): void {
 		this.setErrorsControl();
 		this.addOrdersForm.markAllAsTouched();
+
 		if (!this.addOrdersForm.valid) {
 			return;
 		}
+
 		this.positions.push(this.createPositionGroup());
 	}
 
@@ -211,12 +210,14 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	// Добавление новой строки в таблице деталей внутри позиции
 	public addDetailRow(posIndex: number): void {
 		const details = this.positions.at(posIndex).get('details') as FormArray;
+
 		details.push(this.createDetailGroup());
 	}
 
 	// Удаление строки в таблице деталей внутри позиции
 	public removeDetailRow(posIndex: number, detailIndex: number): void {
 		const details = this.positions.at(posIndex).get('details') as FormArray;
+
 		details.removeAt(detailIndex);
 	}
 
@@ -229,7 +230,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 				},
 			})
 			.afterClosed()
-			.subscribe(status => {
+			.subscribe((status) => {
 				if (status) {
 					this.modalRef.close();
 				}
@@ -247,19 +248,24 @@ export class MpReservationOrdersPopupAddOrderComponent {
 		this.setErrorsIfNotControlValue(this.addOrdersForm.controls.client);
 
 		const positions = this.addOrdersForm.get('positions') as FormArray;
+
 		if (!positions.length) {
 			return;
 		}
-		positions.controls.forEach((positionGroup, posIndex) => {
-			const details = (positionGroup as FormGroup).get('details') as FormArray;
+
+		positions.controls.forEach((positionGroup) => {
+			const details = (positionGroup as FormGroup).get(
+				'details',
+			) as FormArray;
 
 			if (!details.length) {
 				return;
 			}
 
-			details.controls.forEach((detailGroup, detailIndex) => {
+			details.controls.forEach((detailGroup) => {
 				const fg = detailGroup as FormGroup;
 				const dateCtrl = fg.get('date') as FormControl;
+
 				this.setErrorsIfNotControlValue(dateCtrl);
 			});
 		});
@@ -268,21 +274,31 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	public createOrder(): void {
 		this.setErrorsControl();
 		this.addOrdersForm.markAllAsTouched();
-		if (!this.addOrdersForm.valid) return;
 
-		const orderItems: IOrderItemsTypes[] = this.positions.controls.map(newAddOrdersForm => {
-			const group = newAddOrdersForm as FormGroup;
-			const tovId = group.get('tovId')!.value;
-			const clientId = group.get('clientId')!.value;
-			const requests = (group.get('details') as FormArray).controls.map(newDetailsGroup => {
-				const detailsGroup = newDetailsGroup as FormGroup;
-				return {
-					requestedProvisionDate: detailsGroup.get('date')!.value ?? '',
-					amount: detailsGroup.get('quantity')!.value ?? 0,
-				};
-			});
-			return { tovId, clientId, orderRequests: requests };
-		});
+		if (!this.addOrdersForm.valid) {
+			return;
+		}
+
+		const orderItems: IOrderItemsTypes[] = this.positions.controls.map(
+			(newAddOrdersForm) => {
+				const group = newAddOrdersForm as FormGroup;
+				const tovId = group.get('tovId')!.value;
+				const clientId = group.get('clientId')!.value;
+				const requests = (
+					group.get('details') as FormArray
+				).controls.map((newDetailsGroup) => {
+					const detailsGroup = newDetailsGroup as FormGroup;
+
+					return {
+						requestedProvisionDate:
+							detailsGroup.get('date')!.value ?? '',
+						amount: detailsGroup.get('quantity')!.value ?? 0,
+					};
+				});
+
+				return { tovId, clientId, orderRequests: requests };
+			},
+		);
 
 		const payload: IMpReservationAddOrder = {
 			authorId: this.currentUser?.id ?? 0,
