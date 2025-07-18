@@ -16,7 +16,7 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { DatePipe, NgForOf } from '@angular/common';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
@@ -27,6 +27,10 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { DraggableOrderRowDirective } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.directive';
 import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
 import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
+import {
+	IconComponent,
+	IconType as IconTypeNew,
+} from '@front-library/components';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +51,8 @@ import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reserv
 		SearchInputComponent,
 		SelectComponent,
 		DraggableOrderRowDirective,
+		IconComponent,
+		NgIf,
 	],
 })
 export class MpReservationOrdersPopupChangeQueueComponent {
@@ -55,6 +61,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly IconType = IconType;
+	protected readonly IconTypeNew = IconTypeNew;
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly IconPosition = IconPosition;
 

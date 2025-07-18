@@ -56,6 +56,14 @@
 								[placeholder]="'Введите статус'"
 							/>
 						</snab-form-field>
+						<ss-lib-icon
+							*ngIf="status.value"
+							[width]="'16'"
+							[height]="'16'"
+							[style.cursor]="'pointer'"
+							[icon]="IconTypeNew.Close"
+							(click)="status.setValue(null)"
+						></ss-lib-icon>
 					</div>
 				</div>
 				<div class="table-container">
