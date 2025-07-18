@@ -116,7 +116,7 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
 
-	public checkPlanFactValue(event: Event) {
+	public checkPlanFactValue(event: Event): void {
 		const input = event.target as HTMLInputElement;
 
 		const value = input.value.replace(/[^0-9.,]/g, '');

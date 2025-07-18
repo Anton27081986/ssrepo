@@ -22,7 +22,7 @@ import {
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NgFor, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { IResponse } from '@app/core/utils/response';
 import { tap } from 'rxjs';
 import { PostponePersonificationTableComponent } from '@app/pages/production-plan/modal/postpone-personification-table/postpone-personification-table.component';

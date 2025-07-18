@@ -6,16 +6,20 @@ import {
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-tov-category-filter',
 	standalone: true,
-	imports: [ReactiveFormsModule, AsyncPipe, CheckboxFilterContextComponent],
+	imports: [
+		ReactiveFormsModule,
+		CommonModule,
+		CheckboxFilterContextComponent,
+	],
 	template: ` <ss-lib-checkbox-filter-context
 		[queryControl]="queryControl"
 		[controlClearAll]="controlsClearAll"
@@ -34,15 +38,16 @@ export class TovCategoryFilterComponent
 		OperationPlanFiltersApiService
 	);
 
+	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
 
-	override ngOnInit() {
+	public override ngOnInit(): void {
 		super.ngOnInit();
 	}
 
-	override getList$(query: string): Observable<IDictionaryItemDto[]> {
+	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getTovCategory(query).pipe(
 			map((value) => {
 				return value.items;
@@ -50,7 +55,9 @@ export class TovCategoryFilterComponent
 		);
 	}
 
-	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
+	public override searchActive$(
+		ids: number[]
+	): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getTovCategory('', ids).pipe(
 			map((value) => {
 				return value.items;

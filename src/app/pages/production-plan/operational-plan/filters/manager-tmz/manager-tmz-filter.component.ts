@@ -34,15 +34,16 @@ export class ManagerTmzFilterComponent
 		OperationPlanFiltersApiService
 	);
 
+	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
 
-	override ngOnInit() {
+	public override ngOnInit(): void {
 		super.ngOnInit();
 	}
 
-	override getList$(query: string): Observable<IDictionaryItemDto[]> {
+	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductManagerUser(query).pipe(
 			map((value) => {
 				return value.items;
@@ -50,7 +51,9 @@ export class ManagerTmzFilterComponent
 		);
 	}
 
-	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
+	public override searchActive$(
+		ids: number[]
+	): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductManagerUser('', ids).pipe(
 			map((value) => {
 				return value.items;

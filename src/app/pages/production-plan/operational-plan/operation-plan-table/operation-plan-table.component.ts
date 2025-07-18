@@ -214,7 +214,7 @@ export class OperationPlanTableComponent {
 		return subColumnId;
 	}
 
-	public openCalculationOfRawMaterialsForCheckList(day: string) {
+	public openCalculationOfRawMaterialsForCheckList(day: string): void {
 		const tovIds = this.getSelectedIds();
 
 		const param: UpdateRawMaterialsData = {
@@ -227,7 +227,7 @@ export class OperationPlanTableComponent {
 		this.operationPlanPopup.openCalculationOfRawMaterials(param);
 	}
 
-	public openCalculationOfRawMaterialsForColumn(columnName: string) {
+	public openCalculationOfRawMaterialsForColumn(columnName: string): void {
 		const rawFilter: OperationPlanRequest & Pagination =
 			this.operationPlanState.filterValueStore$.value!;
 
@@ -253,14 +253,14 @@ export class OperationPlanTableComponent {
 			.filter((id): id is number => id !== null);
 	}
 
-	protected deleteItemsTov() {
+	protected deleteItemsTov(): void {
 		this.operationPlanService
 			.deleteItemsTov(this.getSelectedIds())
 			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
 
-	public openOrderAnOutfit(params: OrderAnOutfit) {
+	public openOrderAnOutfit(params: OrderAnOutfit): void {
 		const form = document.createElement('form');
 
 		form.method = 'POST';
@@ -274,13 +274,13 @@ export class OperationPlanTableComponent {
 				return;
 			}
 
-			const input = document.createElement('input');
+			const formInput = document.createElement('input');
 
-			input.type = 'hidden';
-			input.name = key;
-			input.value =
+			formInput.type = 'hidden';
+			formInput.name = key;
+			formInput.value =
 				value !== undefined && value !== null ? String(value) : '';
-			form.appendChild(input);
+			form.appendChild(formInput);
 		});
 
 		document.body.appendChild(form);
@@ -292,17 +292,17 @@ export class OperationPlanTableComponent {
 		form.submit();
 
 		if (!newWindow) {
-			alert('Pop-ups must be enabled to open the new window.');
+			console.warn('Pop-ups must be enabled to open the new window.');
 		}
 
 		document.body.removeChild(form);
 	}
 
-	protected popupCloseEmit() {
+	protected popupCloseEmit(): void {
 		this.tableStateService.onMasterCheckboxChange(false);
 	}
 
-	protected orderAnOutfit(columnId: string) {
+	protected orderAnOutfit(columnId: string): void {
 		const data = this.days().find((day) =>
 			day.day.startsWith(columnId.slice(5))
 		)!;
@@ -315,7 +315,7 @@ export class OperationPlanTableComponent {
 		});
 	}
 
-	protected orderAnOutfitForCheckList(day: IDay) {
+	protected orderAnOutfitForCheckList(day: IDay): void {
 		const ids = this.getSelectedIds();
 		const params: OrderAnOutfitRequest = {
 			date: day.day,
@@ -327,7 +327,7 @@ export class OperationPlanTableComponent {
 		});
 	}
 
-	protected openApproveMaterials(column: string) {
+	protected openApproveMaterials(column: string): void {
 		const date = this.days().find((day) =>
 			day.day.startsWith(column.slice(5))
 		)!.day;
@@ -339,7 +339,7 @@ export class OperationPlanTableComponent {
 		this.operationPlanPopup.openApproveMaterials(data);
 	}
 
-	protected uploadWMS(columnId: string) {
+	protected uploadWMS(columnId: string): void {
 		const data = this.days().find((day) =>
 			day.day.startsWith(columnId.slice(5))
 		)!;
@@ -352,7 +352,7 @@ export class OperationPlanTableComponent {
 			});
 	}
 
-	protected onPlanInfoEnter(date: string) {
+	protected onPlanInfoEnter(date: string): void {
 		if (this.productionSectionIds) {
 			this.operationPlanService
 				.getPlanInfo(

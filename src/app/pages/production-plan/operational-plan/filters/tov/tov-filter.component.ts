@@ -12,7 +12,6 @@ import { AsyncPipe } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 
-// @ts-ignore
 @Component({
 	selector: 'app-tov-filter',
 	standalone: true,
@@ -35,15 +34,16 @@ export class TovFilterComponent
 		OperationPlanFiltersApiService
 	);
 
+	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
 
-	override ngOnInit() {
+	public override ngOnInit(): void {
 		super.ngOnInit();
 	}
 
-	override getList$(query: string): Observable<IDictionaryItemDto[]> {
+	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getTov(query).pipe(
 			map((value) => {
 				return value.items;
@@ -51,7 +51,9 @@ export class TovFilterComponent
 		);
 	}
 
-	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
+	public override searchActive$(
+		ids: number[]
+	): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getTov('', ids).pipe(
 			map((value) => {
 				return value.items;

@@ -51,7 +51,7 @@ export class OperationPlanEmptyStateComponent {
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
 
-	protected addSemiManufactures() {
+	protected addSemiManufactures(): void {
 		const weekId = this.weekId$.value;
 
 		if (weekId !== null) {

@@ -64,6 +64,7 @@ export class DropdownColumnsSettingsComponent {
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
 	protected onDropdownItemDrop(
 		event: CdkDragDrop<TableColumnConfig[]>
 	): void {
@@ -80,7 +81,6 @@ export class DropdownColumnsSettingsComponent {
 		this.tableStateService.updateColumnVisibility(column, isVisible);
 	}
 
-	protected readonly Colors = Colors;
 	public getControlForColumn(column: TableColumnConfig): FormControl {
 		return this.tableStateService.getControlForColumn(column);
 	}

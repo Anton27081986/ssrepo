@@ -1,9 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	inject,
-	OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
 	Align,
 	ButtonComponent,
@@ -31,14 +26,12 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import {
 	BehaviorSubject,
-	filter,
 	map,
 	Observable,
 	scan,
 	switchMap,
 	tap,
 	NEVER,
-	take,
 	shareReplay,
 } from 'rxjs';
 import { ProductionPlanResponse } from '@app/core/utils/response';

@@ -1,12 +1,6 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	inject,
-	Input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import {
 	NgFor,
-	NgIf,
 	DatePipe,
 	NgSwitch,
 	NgSwitchCase,

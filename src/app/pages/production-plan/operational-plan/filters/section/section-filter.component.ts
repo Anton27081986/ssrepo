@@ -56,11 +56,13 @@ export class SectionFilterComponent
 	protected node: IDictionaryItemDto[] = [];
 
 	protected readonly Align = Align;
+
+	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
 
-	get trueCheckControlMap(): boolean {
+	public get trueCheckControlMap(): boolean {
 		return (
 			Object.values(this.currentControlsMap).some(
 				(control) => control.value === true
@@ -68,7 +70,7 @@ export class SectionFilterComponent
 		);
 	}
 
-	override ngOnInit() {
+	public override ngOnInit(): void {
 		super.ngOnInit();
 		this.treeNode$ = this.items$.pipe(
 			map((items) => {
@@ -87,7 +89,7 @@ export class SectionFilterComponent
 		);
 	}
 
-	override getList$(query: string): Observable<IDictionaryItemDto[]> {
+	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionSection(query).pipe(
 			map((value) => {
 				const flat: IDictionaryItemDto[] = [];
@@ -112,7 +114,9 @@ export class SectionFilterComponent
 		);
 	}
 
-	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
+	public override searchActive$(
+		ids: number[]
+	): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionSection('', ids).pipe(
 			map((value) => {
 				const flat: IDictionaryItemDto[] = [];

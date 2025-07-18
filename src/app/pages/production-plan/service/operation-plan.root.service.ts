@@ -12,6 +12,6 @@ interface OperationPlanEvent {
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanRootService {
-	readonly event$: Subject<OperationPlanEvent> =
+	public readonly event$: Subject<OperationPlanEvent> =
 		new Subject<OperationPlanEvent>();
 }

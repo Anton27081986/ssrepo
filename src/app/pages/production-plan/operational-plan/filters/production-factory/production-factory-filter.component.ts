@@ -6,14 +6,10 @@ import {
 	Signal,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import { map, Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import {
-	FormFieldComponent,
-	HeaderFilterCheckboxItemAbstractComponent,
-} from '@front-library/components';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
-import { AsyncPipe } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -44,15 +40,16 @@ export class ProductionFactoryFilterComponent
 		{ initialValue: [] }
 	);
 
+	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
 
-	override ngOnInit() {
+	public override ngOnInit(): void {
 		super.ngOnInit();
 	}
 
-	override getList$(query: string): Observable<IDictionaryItemDto[]> {
+	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionFactory(query).pipe(
 			map((value) => {
 				return value.items;
@@ -60,7 +57,9 @@ export class ProductionFactoryFilterComponent
 		);
 	}
 
-	override searchActive$(ids: number[]): Observable<IDictionaryItemDto[]> {
+	public override searchActive$(
+		ids: number[]
+	): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService.getProductionFactory('', ids).pipe(
 			map((value) => {
 				return value.items;

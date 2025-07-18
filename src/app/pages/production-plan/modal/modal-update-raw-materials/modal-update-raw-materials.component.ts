@@ -119,7 +119,7 @@ export class ModalUpdateRawMaterialsComponent {
 				})
 				.pipe(
 					untilDestroyed(this),
-					catchError((error: unknown) => {
+					catchError((_error: unknown) => {
 						this.close();
 
 						return EMPTY;

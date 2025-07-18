@@ -60,7 +60,9 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public getTransferProductionPlan(productionPlanDayId: number) {
+	public getTransferProductionPlan(
+		productionPlanDayId: number
+	): Observable<IResponse<TransferProductionPlanFromBackend>> {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
 			{ params: { productionPlanDayId } }
@@ -145,7 +147,7 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public deleteItemsTov(tovIds: number[]) {
+	public deleteItemsTov(tovIds: number[]): Observable<void> {
 		return this.http.request<void>(
 			'delete',
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
@@ -153,7 +155,7 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public getCalcVariants() {
+	public getCalcVariants(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductCalcVariants`
 		);
@@ -226,7 +228,7 @@ export class OperationPlanApiService {
 		);
 	}
 
-	public uploadWMS(date: string) {
+	public uploadWMS(date: string): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadWMS`,
 			{ date }
