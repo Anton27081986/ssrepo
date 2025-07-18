@@ -38,6 +38,8 @@ import {
 	switchMap,
 	tap,
 	NEVER,
+	take,
+	shareReplay,
 } from 'rxjs';
 import { ProductionPlanResponse } from '@app/core/utils/response';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
@@ -171,7 +173,12 @@ export class OperationalPlanComponent {
 	protected readonly state = state;
 
 	protected weeks$: Observable<IDictionaryItemDto[]> =
-		this.operationalPlanService.getWeeks();
+		this.operationalPlanService.getWeeks().pipe(
+			shareReplay({
+				bufferSize: 1,
+				refCount: true,
+			})
+		);
 
 	protected days$: BehaviorSubject<IDay[]> = new BehaviorSubject<IDay[]>([]);
 

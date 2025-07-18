@@ -31,10 +31,7 @@
 							[weight]="TextWeight.Regular"
 							[color]="Colors.TextBody3"
 						>
-							{{
-								comment.createdDate
-									| date: 'dd MMMM yyyy в HH:mm' : '' : 'ru'
-							}}
+							{{ comment.createdDate }}
 						</ss-lib-text>
 					</div>
 					<ss-lib-text
