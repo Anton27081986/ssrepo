@@ -1,7 +1,6 @@
 import { Component, Signal } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { ModalService } from '@app/core/modal/modal.service';
 import {
 	FormControl,
 	FormGroup,

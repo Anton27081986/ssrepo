@@ -12,7 +12,7 @@
 			(click)="openPopupChangeQueueOrders()"
 		></snab-button>
 		<snab-button
-			*ngIf="hasPermissionAddOrder"
+			*ngIf="hasPermissionAddOrder()"
 			text="Добавить заказ"
 			[size]="Size.Large"
 			(click)="openPopupAddOrder()"
@@ -20,7 +20,7 @@
 		<snab-button
 			text="Назначить дату обеспечения"
 			[size]="Size.Large"
-			[disabled]="!selectedOrders.size"
+			[disabled]="!selectedOrderIds().size"
 			(click)="openPopupDateProvision()"
 		></snab-button>
 		<snab-button
@@ -36,7 +36,8 @@
 		>
 			<ss-filters
 				[isFiltersVisible]="!isLoader()"
-				[(filters)]="filters"
+				[filters]="filters()"
+				(filtersChange)="onFiltersChange($event)"
 				(applyFilter)="getFilteredOrders(true)"
 			></ss-filters>
 		</ss-dropdown-button>
@@ -173,7 +174,7 @@
 					<td>
 						<input
 							type="checkbox"
-							[checked]="selectedOrders.has(order.id)"
+							[checked]="selectedOrderIds().has(order.id)"
 							(change)="onCheckboxChange($event, order.id)"
 						/>
 					</td>
@@ -355,8 +356,8 @@
 		<div class="pagination">
 			<ss-pagination
 				[total]="orderList.total"
-				[pageSize]="pageSize"
-				[pageIndex]="pageIndex"
+				[pageSize]="pageSize()"
+				[pageIndex]="pageIndex()"
 				(changeIndex)="ordersTableIndexChange($event)"
 			></ss-pagination>
 		</div>

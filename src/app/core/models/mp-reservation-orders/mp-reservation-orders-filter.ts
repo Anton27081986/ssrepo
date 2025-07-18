@@ -9,4 +9,6 @@ export interface MpReservationFilter {
 	clientId?: number;
 	limit: number;
 	offset: number;
+	// Индексная сигнатура для динамических полей фильтров
+	[key: string]: string | number | number[] | null | undefined;
 }

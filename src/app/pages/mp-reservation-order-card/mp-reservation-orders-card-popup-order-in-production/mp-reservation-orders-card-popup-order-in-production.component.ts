@@ -152,7 +152,11 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		const detailsList: IProvisionDetailsTypes[] = this.dates.controls.map(
 			(group) => {
 				const { productionDate, provisionDate, manufacturingAmount } =
-					group.value as any;
+					group.value as {
+						productionDate: string;
+						provisionDate: string;
+						manufacturingAmount: number;
+					};
 
 				return {
 					productionDate,

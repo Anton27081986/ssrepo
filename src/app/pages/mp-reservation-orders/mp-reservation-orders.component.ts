@@ -1,4 +1,11 @@
-import { Component, inject, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	inject,
+	OnInit,
+	signal,
+} from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -22,14 +29,12 @@ import {
 } from '@app/shared/components/filters/filters.component';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { IResponse } from '@app/core/utils/response';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalService } from '@app/core/modal/modal.service';
 import { MpReservationOrdersPopupDateProvisionComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component';
 import { Router } from '@angular/router';
 import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
-import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
 import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
 import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
@@ -39,11 +44,14 @@ import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { FilterBuilder } from '@app/core/utils/filter-builder.util';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
 	templateUrl: './mp-reservation-orders.component.html',
 	styleUrls: ['./mp-reservation-orders.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	standalone: true,
 	imports: [
 		TextComponent,
 		ButtonComponent,
@@ -60,9 +68,13 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		TagV2Component,
 		NumWithSpacesPipe,
 	],
-	standalone: true,
 })
-export class MPReservationOrdersComponent {
+export class MPReservationOrdersComponent implements OnInit {
+	private static readonly defaultPageSize = 10;
+	private static readonly instructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2025/02/14/Инструкция_Управление_СНД_59605308-9107-4c29-8a42-89143dfde87c.docx';
+
+	// Protected readonly для template access
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly ButtonType = ButtonType;
@@ -71,31 +83,58 @@ export class MPReservationOrdersComponent {
 	protected readonly IconType = IconType;
 	protected readonly Colors = Colors;
 
-	public pageSize = 10;
-	public offset = 0;
-	public pageIndex = 1;
-
-	public selectedOrders: Set<number> = new Set<number>();
-
-	public permissionService: PermissionsFacadeService = inject(
-		PermissionsFacadeService
+	// Signals для реактивного состояния
+	protected readonly pageSize = signal(
+		MPReservationOrdersComponent.defaultPageSize
 	);
 
-	public orders: Signal<IResponse<IMpReservationOrder> | null> = toSignal(
+	protected readonly pageIndex = signal(1);
+	protected readonly selectedOrderIds = signal<Set<number>>(new Set());
+
+	// Computed для производных значений
+	protected readonly offset = computed(() =>
+		this.pageIndex() === 1 ? 0 : this.pageSize() * (this.pageIndex() - 1)
+	);
+
+	protected readonly isAllSelected = computed(() => {
+		const items = this.orders()?.items || [];
+		const selectedIds = this.selectedOrderIds();
+
+		return (
+			items.length > 0 &&
+			items.every((order) => selectedIds.has(order.id))
+		);
+	});
+
+	// Services
+	private readonly mpReservationOrdersFacadeService = inject(
+		MpReservationOrdersFacadeService
+	);
+
+	private readonly modalService = inject(ModalService);
+	private readonly router = inject(Router);
+	private readonly permissionService = inject(PermissionsFacadeService);
+
+	// External state via toSignal
+	protected readonly orders = toSignal(
 		this.mpReservationOrdersFacadeService.orders$,
-		{
-			initialValue: null,
-		}
+		{ initialValue: null }
 	);
 
-	public isLoader: Signal<boolean> = toSignal(
+	protected readonly isLoader = toSignal(
 		this.mpReservationOrdersFacadeService.isLoader$,
-		{
-			initialValue: true,
-		}
+		{ initialValue: true }
 	);
 
-	public filters: IFilter[] = [
+	protected readonly hasPermissionAddOrder = computed(() =>
+		this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_CREATE
+		)
+	);
+
+	// Filter configuration
+	protected filters = signal<IFilter[]>([
 		{
 			name: 'id',
 			type: 'number',
@@ -143,134 +182,84 @@ export class MPReservationOrdersComponent {
 			label: 'Клиент',
 			placeholder: '',
 		},
-	];
+	]);
 
-	constructor(
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
-		private readonly modalService: ModalService,
-		private readonly router: Router
-	) {
-		this.getFilteredOrders();
-	}
-
-	public get hasPermissionAddOrder(): boolean {
-		return this.permissionService.hasPermission(
-			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_ORDER_AUTHOR_CREATE
-		);
+	public ngOnInit(): void {
+		this.loadOrders();
 	}
 
 	protected downloadInstr(): void {
-		// TODO поменять ссылку на нужную инструкцию
-		const instructionFileLink =
-			'https://erp.ssnab.ru/api/static/general/2025/02/14/Инструкция_Управление_СНД_59605308-9107-4c29-8a42-89143dfde87c.docx';
 		const link = document.createElement('a');
 
-		link.href = instructionFileLink;
+		link.href = MPReservationOrdersComponent.instructionFileLink;
 		link.click();
 	}
 
 	public getFilteredOrders(isNewFilter: boolean = false): void {
 		if (isNewFilter) {
-			this.pageIndex = 1;
+			this.resetPagination();
 		}
 
-		const preparedFilter: any = {
-			limit: isNewFilter ? 10 : this.pageSize,
-			offset: isNewFilter ? 0 : this.offset,
+		this.loadOrders();
+	}
+
+	public onFiltersChange(updatedFilters: IFilter[]): void {
+		this.filters.set(updatedFilters);
+	}
+
+	private loadOrders(): void {
+		const pagination = {
+			limit: this.pageSize(),
+			offset: this.offset(),
 		};
 
-		for (const filter of this.filters) {
-			preparedFilter[filter.name] =
-				filter.value && filter.type ? filter.value : null;
-
-			switch (filter.type) {
-				case 'search-select':
-					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map((item) => item.id)
-						: null;
-					break;
-
-				case 'date-range':
-					const from =
-						filter.value && typeof filter.value === 'string'
-							? filter.value.split('-')[0].split('.')
-							: null;
-
-					preparedFilter[filter.name.split('-')[0]] = from
-						? `${[from[2], from[1], parseInt(from[0], 10)].join('-')}T00:00:00.000Z`
-						: null;
-
-					const to =
-						filter.value && typeof filter.value === 'string'
-							? filter.value.split('-')[1].split('.')
-							: null;
-
-					preparedFilter[filter.name.split('-')[1]] = to
-						? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
-						: null;
-					break;
-
-				default:
-					preparedFilter[filter.name] =
-						filter.value?.toString().replace(',', '.') || null;
-			}
-		}
+		const preparedFilter = FilterBuilder.buildMpReservationFilter(
+			this.filters(),
+			pagination
+		);
 
 		this.mpReservationOrdersFacadeService.applyFiltersOrders(
 			preparedFilter
 		);
 	}
 
-	public ordersTableIndexChange($event: number): void {
-		if ($event === 1) {
-			this.offset = 0;
-		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
-		}
+	private resetPagination(): void {
+		this.pageIndex.set(1);
+	}
 
-		this.offset = this.pageSize * $event - this.pageSize;
-		this.pageIndex = $event;
-
-		this.getFilteredOrders();
+	public ordersTableIndexChange(newPageIndex: number): void {
+		this.pageIndex.set(newPageIndex);
+		this.loadOrders();
 	}
 
 	public onCheckboxChange(event: Event, orderId: number): void {
 		const checkbox = event.target as HTMLInputElement;
+		const currentSelected = new Set(this.selectedOrderIds());
 
 		if (checkbox.checked) {
-			this.selectedOrders.add(orderId);
+			currentSelected.add(orderId);
 		} else {
-			this.selectedOrders.delete(orderId);
+			currentSelected.delete(orderId);
 		}
-	}
 
-	public isAllSelected(): boolean {
-		return (
-			(this.orders()?.items || []).length > 0 &&
-			(this.orders()?.items || []).every((order) =>
-				this.selectedOrders.has(order.id)
-			)
-		);
+		this.selectedOrderIds.set(currentSelected);
 	}
 
 	public toggleSelectAll(event: Event): void {
 		const checkbox = event.target as HTMLInputElement;
+		const items = this.orders()?.items || [];
+		const newSelected = new Set<number>();
 
 		if (checkbox.checked) {
-			this.orders()?.items.forEach((order) =>
-				this.selectedOrders.add(order.id)
-			);
-		} else {
-			this.orders()?.items.forEach((order) =>
-				this.selectedOrders.delete(order.id)
-			);
+			items.forEach((order) => newSelected.add(order.id));
 		}
+
+		this.selectedOrderIds.set(newSelected);
 	}
 
 	public openPopupDateProvision(): void {
 		this.modalService.open(MpReservationOrdersPopupDateProvisionComponent, {
-			data: this.selectedOrders,
+			data: this.selectedOrderIds(),
 		});
 	}
 
@@ -296,13 +285,19 @@ export class MPReservationOrdersComponent {
 			.afterClosed()
 			.subscribe((createdOrders: IMpReservationAddOrder | undefined) => {
 				if (createdOrders?.items.length) {
-					const totalBefore = this.orders()?.total ?? 0;
-					const totalAfter = totalBefore + createdOrders.items.length;
-					const lastPageIndex = Math.ceil(totalAfter / this.pageSize);
-
-					this.ordersTableIndexChange(lastPageIndex);
+					this.navigateToLastPageWithNewOrders(
+						createdOrders.items.length
+					);
 				}
 			});
+	}
+
+	private navigateToLastPageWithNewOrders(newOrdersCount: number): void {
+		const totalBefore = this.orders()?.total ?? 0;
+		const totalAfter = totalBefore + newOrdersCount;
+		const lastPageIndex = Math.ceil(totalAfter / this.pageSize());
+
+		this.ordersTableIndexChange(lastPageIndex);
 	}
 
 	public openPopupRemnantDetailsOrder(orderId: number): void {

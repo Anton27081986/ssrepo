@@ -71,7 +71,7 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 		this.modalRef.close();
 	}
 
-	public onLinkClick(link: IRemnantDetail): void {
-		console.log('Переходим по ссылке:', link.linkUrl);
+	public onLinkClick(_link: IRemnantDetail): void {
+		// Navigate to the link - console.log removed for production
 	}
 }

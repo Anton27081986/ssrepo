@@ -15,8 +15,6 @@ import {
 	TooltipTheme,
 } from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ModalService } from '@app/core/modal/modal.service';
-import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import {

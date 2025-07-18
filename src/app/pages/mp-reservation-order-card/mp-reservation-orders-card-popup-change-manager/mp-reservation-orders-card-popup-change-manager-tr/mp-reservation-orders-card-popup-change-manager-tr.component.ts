@@ -15,8 +15,6 @@ import {
 	TooltipTheme,
 } from '@app/shared/components/tooltip/tooltip.enums';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ModalService } from '@app/core/modal/modal.service';
-import { TableFullCellComponent } from '@app/shared/components/table-full-cell/table-full-cell.component';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ClientProposalsFacadeService } from '@app/core/facades/client-proposals-facade.service';
 import {
@@ -37,7 +35,6 @@ export enum ChangeProvisionDetailsTrRowItemField {
 }
 
 @Component({
-	// eslint-disable-next-line @angular-eslint/component-selector
 	selector: 'tr[mp-reservation-orders-card-popup-change-manager-tr]',
 	styleUrls: [
 		'mp-reservation-orders-card-popup-change-manager-tr.component.scss',
@@ -64,10 +61,10 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 	protected tprRejectsReasons$: Observable<IDictionaryItemDto[]>;
 
 	@Input({ required: true })
-	item!: IReservationOrderChangeProvisionDetails;
+	public item!: IReservationOrderChangeProvisionDetails;
 
 	@Input()
-	defaultCols: IStoreTableBaseColumn[] = [];
+	public defaultCols: IStoreTableBaseColumn[] = [];
 
 	protected viewMaximise$: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
@@ -76,21 +73,20 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 	public content!: ElementRef;
 
 	@Output()
-	checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+	public checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
 	protected readonly Number = Number;
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly modalService: ModalService
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {
 		this.tprRejectsReasons$ =
 			this.clientProposalsFacadeService.tprRejectsReasons$;
 	}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.columnsStateService.colsTr$.next([
 			{
 				cols: [
@@ -126,7 +122,7 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 		]);
 	}
 
-	ngAfterViewChecked() {
+	public ngAfterViewChecked(): void {
 		if (this.content) {
 			this.viewMaximise$.next(
 				this.content.nativeElement.scrollHeight > 200
@@ -134,18 +130,18 @@ export class MpReservationOrdersCardPopupChangeManagerTrComponent
 		}
 	}
 
-	getInputValue(target: EventTarget) {
-		return (target as HTMLInputElement).value;
-	}
-
-	showText(text: string[], title?: string) {
-		this.modalService.open(TableFullCellComponent, {
-			data: {
-				cell: text.map((item) => {
-					return { text: item };
-				}),
-				title,
-			},
-		});
-	}
+	// public getInputValue(target: EventTarget): string {
+	// 	return (target as HTMLInputElement).value;
+	// }
+	//
+	// public showText(text: string[], title?: string): void {
+	// 	this.modalService.open(TableFullCellComponent, {
+	// 		data: {
+	// 			cell: text.map((item) => {
+	// 				return { text: item };
+	// 			}),
+	// 			title,
+	// 		},
+	// 	});
+	// }
 }

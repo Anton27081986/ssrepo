@@ -151,11 +151,15 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 
 		this.qualificationTrForm.controls.amount.valueChanges
 			.pipe(untilDestroyed(this))
-			.subscribe((value) => (this.item.amount = value));
+			.subscribe((value) => {
+				this.item.amount = value;
+			});
 
 		this.qualificationTrForm.controls.dateProvision.valueChanges
 			.pipe(untilDestroyed(this))
-			.subscribe((value) => (this.item.requestedProvisionDate = value));
+			.subscribe((value) => {
+				this.item.requestedProvisionDate = value;
+			});
 	}
 
 	public ngAfterViewChecked(): void {

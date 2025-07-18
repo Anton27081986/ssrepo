@@ -88,7 +88,9 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	) {
 		this.status.valueChanges
 			.pipe(untilDestroyed(this))
-			.subscribe((value) => (this.filterStatus = value));
+			.subscribe((value) => {
+				this.filterStatus = value;
+			});
 
 		this.mpReservationOrdersFacadeService.loadQueueOrders();
 	}
@@ -127,14 +129,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 			});
 	}
 
-	public findQueueOrders(): void {
-		console.log(
-			'Поиск заказов по ТП:',
-			this.filterTov,
-			'и статусу:',
-			this.filterStatus
-		);
-	}
+	public findQueueOrders(): void {}
 
 	public onOrderReorder(event: IOrderReorderRequest): void {
 		const { orderId, toIndex } = event;
@@ -149,7 +144,9 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 		current.splice(toIndex, 0, moved);
 
-		current.forEach((queueOrder, idx) => (queueOrder.position = idx + 1));
+		current.forEach((queueOrder, idx) => {
+			queueOrder.position = idx + 1;
+		});
 
 		this.mpReservationOrdersFacadeService.updateQueueOrders(current);
 
