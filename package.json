@@ -12,6 +12,8 @@
 		"test": "ng test",
 		"lint": "ng lint",
 		"lint:fix": "ng lint --fix",
+		"lint:production-plan": "ng lint --lint-file-patterns=\"src/app/pages/production-plan/**/*.{ts,html}\" --fix",
+		"lint:mp-reservation": "ng lint --lint-file-patterns=\"src/app/pages/mp-reservation-*/**/*.{ts,html}\" --fix",
 		"format": "prettier --write \"**/*.{ts,html,css,scss,json,md}\""
 	},
 	"private": true,
