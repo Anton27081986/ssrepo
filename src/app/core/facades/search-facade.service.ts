@@ -99,9 +99,11 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getTovs(query);
 	}
 
-	public getPersonificationStatuses(
-		query?: string
-	): Observable<IResponse<IDictionaryItemDto>> {
+	public getTovsManufacturing(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getTovsManufacturing(query);
+	}
+
+	public getPersonificationStatuses(query?: string): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getPersonificationStatuses(query);
 	}
 
@@ -248,6 +250,9 @@ export class SearchFacadeService {
 
 			case SearchTypeEnum.Tovs:
 				return this.getTovs(query).pipe(map((data) => data.items));
+
+			case SearchTypeEnum.TovsManufacturing:
+				return this.getTovsManufacturing(query).pipe(map((data) => data.items));
 
 			case SearchTypeEnum.PersonificationStatuses:
 				return this.getPersonificationStatuses(query).pipe(

@@ -21,6 +21,7 @@ export type searchType =
 	| 'user-dictionary'
 	| 'subsector'
 	| 'tovs'
+	| 'tovsManufacturing'
 	| 'tov-company'
 	| 'region'
 	| 'contractor'
@@ -243,6 +244,15 @@ export class SearchInputComponent {
 				case 'tovs':
 					this.searchFacade
 						.getTovs(query)
+						.pipe(untilDestroyed(this))
+						.subscribe((res) => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tovsManufacturing':
+					this.searchFacade
+						.getTovsManufacturing(query)
 						.pipe(untilDestroyed(this))
 						.subscribe((res) => {
 							this.found$.next(res.items);
