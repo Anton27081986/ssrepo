@@ -305,7 +305,10 @@ export class MpReservationOrdersPopupAddOrderComponent {
 			items: orderItems,
 		};
 
-		this.mpReservationOrdersFacadeService.createOrder(payload);
-		this.modalRef.close(payload);
+		this.mpReservationOrdersFacadeService
+			.createOrder(payload)
+			.subscribe(() => {
+				this.modalRef.close(payload);
+			});
 	}
 }

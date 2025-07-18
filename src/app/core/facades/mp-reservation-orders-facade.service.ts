@@ -99,8 +99,10 @@ export class MpReservationOrdersFacadeService {
 		this.filtersChanged$.next(filters);
 	}
 
-	public createOrder(body: IMpReservationAddOrder): void {
-		this.mpReservationOrdersApiService
+	public createOrder(
+		body: IMpReservationAddOrder
+	): Observable<IMpReservationOrder[]> {
+		return this.mpReservationOrdersApiService
 			.createOrderPersonification(body)
 			.pipe(
 				tap((newOrders) => {
@@ -118,8 +120,7 @@ export class MpReservationOrdersFacadeService {
 					});
 				}),
 				untilDestroyed(this)
-			)
-			.subscribe();
+			);
 	}
 
 	public updateProvisionDates(
