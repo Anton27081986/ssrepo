@@ -18,6 +18,7 @@ export type searchType =
 	| 'user'
 	| 'subsector'
 	| 'tovs'
+	| 'tovsManufacturing'
 	| 'region'
 	| 'contractor'
 	| 'contract'
@@ -163,6 +164,15 @@ export class ChipsSearchComponent {
 				case 'tovs':
 					this.searchFacade
 						.getTovs(query)
+						.pipe(untilDestroyed(this))
+						.subscribe((res) => {
+							this.found = res.items;
+							this.ref.detectChanges();
+						});
+					break;
+				case 'tovsManufacturing':
+					this.searchFacade
+						.getTovsManufacturing(query)
 						.pipe(untilDestroyed(this))
 						.subscribe((res) => {
 							this.found = res.items;

@@ -112,7 +112,7 @@ export class MPReservationOrdersComponent {
 		{
 			name: 'tovId',
 			type: 'search-select',
-			searchType: 'tovs',
+			searchType: 'tovsManufacturing',
 			label: 'Товарная позиция',
 			placeholder: '',
 		},

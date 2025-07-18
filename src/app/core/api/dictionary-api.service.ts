@@ -132,6 +132,20 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список товаров из manufacturingApi */
+	public getTovsManufacturing(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/dictionary/tovs`,
+			{ params },
+		);
+	}
+
 	/** Список договоров */
 	public getContracts(
 		query?: string

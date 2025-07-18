@@ -3,6 +3,7 @@ export enum SearchTypeEnum {
 	UserDictionary = 'user-dictionary',
 	SubSector = 'subsector',
 	Tovs = 'tovs',
+	TovsManufacturing = 'tovsManufacturing',
 	PersonificationStatuses = 'personificationStatuses',
 	Region = 'region',
 	Contractor = 'contractor',

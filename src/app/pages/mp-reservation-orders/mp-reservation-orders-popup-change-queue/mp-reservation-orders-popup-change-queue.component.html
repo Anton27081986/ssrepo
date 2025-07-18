@@ -32,7 +32,7 @@
 						<ss-search-input
 							label="ТП"
 							size="medium"
-							searchType="tovs"
+							searchType="tovsManufacturing"
 							class="search-row__input__field"
 							[reSizeHeightOptions]="true"
 							[placeholder]="'Выберите товарную позицию'"
@@ -199,7 +199,7 @@
 									<snab-text [type]="TextType.Body">
 										{{
 											queueOrder.personificationOrder
-												.author.name
+												.author?.name
 										}}
 									</snab-text>
 								</td>
@@ -207,7 +207,7 @@
 									<snab-text [type]="TextType.Body">
 										{{
 											queueOrder.personificationOrder
-												.client.name
+												.client?.name
 										}}
 									</snab-text>
 								</td>
