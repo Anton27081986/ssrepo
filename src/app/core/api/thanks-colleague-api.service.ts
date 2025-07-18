@@ -14,7 +14,7 @@ export class ThanksColleagueApiService {
 
 	public getThanksColleagueList(
 		Limit: number,
-		Offset: number,
+		Offset: number
 	): Observable<IResponse<IThanksColleagueItem>> {
 		return this.http.get<IResponse<IThanksColleagueItem>>(
 			`${environment.apiUrl}/api/awards/thanks`,
@@ -22,23 +22,23 @@ export class ThanksColleagueApiService {
 				params: new HttpParams()
 					.set('Offset', Offset)
 					.set('Limit', Limit),
-			},
+			}
 		);
 	}
 
 	public addThanksColleague(
-		createThanksRequest: ICreateThanksColleagueRequest,
+		createThanksRequest: ICreateThanksColleagueRequest
 	): Observable<IThanksColleagueItem> {
 		return this.http.post<IThanksColleagueItem>(
 			`${environment.apiUrl}/api/awards/thanks`,
-			createThanksRequest,
+			createThanksRequest
 		);
 	}
 
 	// Удалить спасибо коллеге по id
 	public deleteThanksColleague(id: number): Observable<any> {
 		return this.http.delete(
-			`${environment.apiUrl}/api/awards/thanks/${id}`,
+			`${environment.apiUrl}/api/awards/thanks/${id}`
 		);
 	}
 }

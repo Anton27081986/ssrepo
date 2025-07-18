@@ -81,7 +81,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 	constructor(
 		public readonly requestSamplesFacade: RequestSamplesFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {
 		this.samples$ = this.requestSamplesFacade.samples$;
 	}
@@ -137,7 +137,7 @@ export class ClientRequestSamplesComponent implements OnInit {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)
 					: '-';
 				tableItem.managerName = x.manager.name ?? '-';

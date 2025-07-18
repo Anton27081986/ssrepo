@@ -71,22 +71,22 @@ export class RawMaterialAccountingApiService {
 
 	/** Добавить договор */
 	public addContract(
-		contract: AddContractDto,
+		contract: AddContractDto
 	): Observable<IRawMaterialAccountingContract> {
 		return this.http.post<IRawMaterialAccountingContract>(
 			`${environment.apiUrl}/api/procurements/contracts`,
-			contract,
+			contract
 		);
 	}
 
 	/** Редактировать договор */
 	public editContract(
 		id: number,
-		contract: AddContractDto,
+		contract: AddContractDto
 	): Observable<IRawMaterialAccountingContract> {
 		return this.http.put<IRawMaterialAccountingContract>(
 			`${environment.apiUrl}/api/procurements/contracts/${id}`,
-			contract,
+			contract
 		);
 	}
 }

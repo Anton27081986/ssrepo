@@ -56,7 +56,7 @@ export class ChipsUserSearchComponent {
 	protected foundItems: any[] = [];
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly usersApiService: UsersApiService,
+		private readonly usersApiService: UsersApiService
 	) {}
 
 	protected onInputChange(value: string) {
@@ -65,17 +65,17 @@ export class ChipsUserSearchComponent {
 				.getUsersByFIO(value)
 				.pipe(
 					map(({ items }) => items),
-					untilDestroyed(this),
+					untilDestroyed(this)
 				)
 				.subscribe((res) => {
 					if (this.selectedItems?.length) {
 						const selectedIds = this.selectedItems.map(
-							(item) => item.id,
+							(item) => item.id
 						);
 
 						this.foundItems = res.filter(
 							(item: { id: any }) =>
-								!selectedIds.includes(item.id),
+								!selectedIds.includes(item.id)
 						);
 					} else {
 						this.foundItems = res;

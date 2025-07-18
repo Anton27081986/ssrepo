@@ -12,7 +12,7 @@ export const procurementsPermissionsGuard: CanActivateFn = () => {
 	return permissionsFacadeService
 		.checkModulePermissions(
 			ModulesWithPermissionsEnum.Procurements,
-			Permissions.CLIENT_PROCUREMENTS_URL_READ,
+			Permissions.CLIENT_PROCUREMENTS_URL_READ
 		)
 		.pipe(
 			map((isAllowAccess) => {
@@ -27,6 +27,6 @@ export const procurementsPermissionsGuard: CanActivateFn = () => {
 				});
 
 				return false;
-			}),
+			})
 		);
 };

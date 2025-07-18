@@ -108,7 +108,7 @@ export class MultiselectAutocompleteV2Component
 				} else {
 					this.chipsEllipsis$.next(false);
 				}
-			}),
+			})
 		);
 	}
 
@@ -155,7 +155,7 @@ export class MultiselectAutocompleteV2Component
 		if (!this.readOnly) {
 			item.checked = true;
 			this.viewOptions$.next(
-				this.options$.value.filter((item) => !item.checked),
+				this.options$.value.filter((item) => !item.checked)
 			);
 			const selected = this.selectedOptions$.value;
 
@@ -171,10 +171,10 @@ export class MultiselectAutocompleteV2Component
 
 			item.checked = false;
 			this.selectedOptions$.next(
-				oldSelected.filter((val) => val.checked),
+				oldSelected.filter((val) => val.checked)
 			);
 			this.viewOptions$.next(
-				this.options$.value.filter((item) => !item.checked),
+				this.options$.value.filter((item) => !item.checked)
 			);
 			this.updateStateControl();
 		}
@@ -183,14 +183,12 @@ export class MultiselectAutocompleteV2Component
 	public ngOnChanges(changes: SimpleChanges) {
 		if (changes.options) {
 			this.options$.next(
-				changes.options.currentValue
-					? changes.options.currentValue
-					: [],
+				changes.options.currentValue ? changes.options.currentValue : []
 			);
 
 			if (this.options$.value.length) {
 				this.viewOptions$.next(
-					this.options$.value.filter((item) => !item.checked),
+					this.options$.value.filter((item) => !item.checked)
 				);
 			}
 

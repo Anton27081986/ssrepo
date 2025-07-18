@@ -16,7 +16,7 @@ export class ChatBotApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getMessages(
-		params: IGetMessagesParams,
+		params: IGetMessagesParams
 	): Observable<IResponse<IChatBotMessage>> {
 		return this.http.get<IResponse<IChatBotMessage>>(
 			`${environment.apiUrl}/api/ai-assistant/messages`,
@@ -25,27 +25,27 @@ export class ChatBotApiService {
 					.set('TopicId', params.topicId)
 					.set('Limit', params.limit)
 					.set('Offset', params.offset),
-			},
+			}
 		);
 	}
 
 	public getSubsectors(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/ai-assistant/messages/subsectors`,
+			`${environment.apiUrl}/api/ai-assistant/messages/subsectors`
 		);
 	}
 
 	public sendMessage(body: ISendMessageBody): Observable<IChatBotMessage> {
 		return this.http.post<IChatBotMessage>(
 			`${environment.apiUrl}/api/ai-assistant/messages`,
-			body,
+			body
 		);
 	}
 
 	public sendFeedback(body: ISendFeedbackBody): Observable<IChatBotMessage> {
 		return this.http.post<IChatBotMessage>(
 			`${environment.apiUrl}/api/ai-assistant/messages/reaction`,
-			body,
+			body
 		);
 	}
 }

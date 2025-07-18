@@ -36,7 +36,7 @@ export class FlyMenuDirective {
 						this.classFlyHeader = '';
 						this.cd.detectChanges();
 					}
-				}),
+				})
 			)
 			.subscribe();
 	}

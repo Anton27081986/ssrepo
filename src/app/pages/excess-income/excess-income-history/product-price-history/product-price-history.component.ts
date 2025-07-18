@@ -71,7 +71,7 @@ export class ProductPriceHistoryComponent {
 		protected readonly data: IDialogData,
 		private readonly excessIncomeApiService: ExcessIncomeApiService,
 		private readonly modalService: ModalService,
-		private readonly cdr: ChangeDetectorRef,
+		private readonly cdr: ChangeDetectorRef
 	) {
 		this.getHistory();
 	}
@@ -88,7 +88,7 @@ export class ProductPriceHistoryComponent {
 				.getTovHistory(
 					`${this.client.id}:${this.contractor ? `${this.contractor.id}:` : ''}${this.tovGroup.id}:${this.tov.id}`,
 					this.pageSize,
-					this.offset,
+					this.offset
 				)
 				.pipe(untilDestroyed(this))
 				.subscribe((response) => {
@@ -96,7 +96,7 @@ export class ProductPriceHistoryComponent {
 						this.tableState = TableState.Empty;
 					} else {
 						this.items = this.mapHistoryToTableItems(
-							response.items,
+							response.items
 						);
 						this.total = response.total ?? 0;
 
@@ -134,7 +134,7 @@ export class ProductPriceHistoryComponent {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)}`
 					: '-';
 

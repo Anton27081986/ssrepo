@@ -30,8 +30,8 @@ export class CityFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
 	implements OnInit
 {
-	private filterApiService: OperationPlanFiltersApiService = inject(
-		OperationPlanFiltersApiService,
+	private readonly filterApiService: OperationPlanFiltersApiService = inject(
+		OperationPlanFiltersApiService
 	);
 
 	constructor() {
@@ -46,7 +46,7 @@ export class CityFilterComponent
 		return this.filterApiService.getCities(query).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 
@@ -54,7 +54,7 @@ export class CityFilterComponent
 		return this.filterApiService.getCities('', ids).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 }

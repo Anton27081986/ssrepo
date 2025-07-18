@@ -53,7 +53,7 @@ export class AuctionSalesComponent implements OnInit {
 	protected readonly window = window;
 	protected readonly TableState = TableState;
 	constructor(
-		private readonly auctionSaleFacadeService: AuctionSaleFacadeService,
+		private readonly auctionSaleFacadeService: AuctionSaleFacadeService
 	) {}
 
 	public ngOnInit(): any {
@@ -83,7 +83,7 @@ export class AuctionSalesComponent implements OnInit {
 									url: item.detailUrl,
 								},
 							};
-						},
+						}
 					));
 
 					this.tableItems$.next(dataTable);

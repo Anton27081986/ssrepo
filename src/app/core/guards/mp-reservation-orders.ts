@@ -12,7 +12,7 @@ export const mpReservationOrdersPermissionsGuard: CanActivateFn = () => {
 	return permissionsFacadeService
 		.checkModulePermissions(
 			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA,
+			Permissions.PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA
 		)
 		.pipe(
 			map((isAllowAccess) => {
@@ -27,6 +27,6 @@ export const mpReservationOrdersPermissionsGuard: CanActivateFn = () => {
 				});
 
 				return false;
-			}),
+			})
 		);
 };

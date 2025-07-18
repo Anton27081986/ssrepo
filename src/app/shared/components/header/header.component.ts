@@ -69,11 +69,12 @@ export class HeaderComponent implements OnInit {
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
 	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
 	constructor(
 		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly userStateService: UserProfileStoreService,
 		public readonly _router: Router,
-		public readonly chatBotFacade: ChatBotFacadeService,
+		public readonly chatBotFacade: ChatBotFacadeService
 	) {}
 
 	public ngOnInit(): any {
@@ -93,7 +94,6 @@ export class HeaderComponent implements OnInit {
 		}
 	}
 
-	protected readonly IconPosition = IconPosition;
 	public openChatBot(): void {
 		this.chatBotFacade.toggleBot();
 	}

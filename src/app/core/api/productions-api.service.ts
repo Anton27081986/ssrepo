@@ -12,13 +12,13 @@ export class ProductionsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public searchProductions(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Productions`,
 			{
 				params: new HttpParams().set('query', query),
-			},
+			}
 		);
 	}
 
@@ -27,7 +27,7 @@ export class ProductionsApiService {
 			`${environment.apiUrl}/api/company/Dictionary/tovGroups`,
 			{
 				params: new HttpParams().set('query', q).set('isTg', true),
-			},
+			}
 		);
 	}
 
@@ -36,13 +36,13 @@ export class ProductionsApiService {
 			`${environment.apiUrl}/api/company/Dictionary/tovGroups`,
 			{
 				params: new HttpParams().set('query', q).set('isTg', false),
-			},
+			}
 		);
 	}
 
 	public getSignSearch(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/Dictionary/tprFlags`,
+			`${environment.apiUrl}/api/company/Dictionary/tprFlags`
 		);
 	}
 }

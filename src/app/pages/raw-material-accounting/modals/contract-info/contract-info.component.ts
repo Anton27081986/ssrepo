@@ -68,7 +68,7 @@ export class ContractInfoComponent {
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly facadeService: RawMaterialAccountingFacadeService,
-		@Inject(DIALOG_DATA) private readonly data: IDialogData,
+		@Inject(DIALOG_DATA) private readonly data: IDialogData
 	) {
 		this.isLoading$ = this.facadeService.isContractLoading$;
 
@@ -97,12 +97,12 @@ export class ContractInfoComponent {
 				if (contract) {
 					this.contract = contract.data;
 					this.canEdit = contract.permissions.includes(
-						Permissions.CLIENT_PROCUREMENTS_EDIT,
+						Permissions.CLIENT_PROCUREMENTS_EDIT
 					);
 
 					if (typeof contract.data.notificationDate === 'string') {
 						this.contract.notificationDate = new Date(
-							Date.parse(contract.data.notificationDate),
+							Date.parse(contract.data.notificationDate)
 						).toLocaleString('ru-RU', {
 							year: 'numeric',
 							month: 'numeric',
@@ -111,14 +111,14 @@ export class ContractInfoComponent {
 					}
 
 					this.contract.periodStartDate = new Date(
-						Date.parse(contract.data.periodStartDate),
+						Date.parse(contract.data.periodStartDate)
 					).toLocaleString('ru-RU', {
 						year: 'numeric',
 						month: 'numeric',
 						day: 'numeric',
 					});
 					this.contract.periodEndDate = new Date(
-						Date.parse(contract.data.periodEndDate),
+						Date.parse(contract.data.periodEndDate)
 					).toLocaleString('ru-RU', {
 						year: 'numeric',
 						month: 'numeric',
@@ -126,20 +126,20 @@ export class ContractInfoComponent {
 					});
 
 					this.editForm.controls.quantityTotal.setValue(
-						contract.data.quantityTotal,
+						contract.data.quantityTotal
 					);
 					this.editForm.controls.price.setValue(contract.data.price);
 					this.editForm.controls.period.setValue(
-						`${this.contract.periodStartDate}-${this.contract.periodEndDate}`,
+						`${this.contract.periodStartDate}-${this.contract.periodEndDate}`
 					);
 					this.editForm.controls.reasonCompletion.setValue(
-						contract.data.reasonCompletion || '',
+						contract.data.reasonCompletion || ''
 					);
 					this.editForm.controls.isComplete.setValue(
-						contract.data.isComplete || false,
+						contract.data.isComplete || false
 					);
 					this.editForm.controls.tradePosition.setValue(
-						contract.data.tov,
+						contract.data.tov
 					);
 				}
 			});

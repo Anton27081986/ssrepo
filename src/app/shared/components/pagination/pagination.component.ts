@@ -63,7 +63,7 @@ export class PaginationComponent implements OnInit, OnChanges {
 			if (Math.ceil(this.countAllTabs / 3) > 2) {
 				const lastPath = arr.slice(
 					this.countAllTabs - 3,
-					this.countAllTabs,
+					this.countAllTabs
 				);
 				const firstPath = arr.slice(0, 3);
 
@@ -77,8 +77,8 @@ export class PaginationComponent implements OnInit, OnChanges {
 					this.arrTabs.next(
 						this.buildArrTabs(
 							firstPath[0],
-							firstPath[firstPath.length - 1] + 1,
-						),
+							firstPath[firstPath.length - 1] + 1
+						)
 					);
 				} else {
 					this.viewFirstWaiting = true;
@@ -93,8 +93,8 @@ export class PaginationComponent implements OnInit, OnChanges {
 					this.arrTabs.next(
 						this.buildArrTabs(
 							lastPath[0] - 1,
-							lastPath[firstPath.length - 1],
-						),
+							lastPath[firstPath.length - 1]
+						)
 					);
 				} else if (!findFirstPath) {
 					this.viewLastWaiting = true;

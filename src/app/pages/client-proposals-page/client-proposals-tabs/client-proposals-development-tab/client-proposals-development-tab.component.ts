@@ -72,11 +72,11 @@ export class ClientProposalsDevelopmentTabComponent {
 	protected pageSize = this.stateService.pageSize;
 
 	constructor(
-		private readonly stateService: ClientProposalsDevelopmentTabState,
+		private readonly stateService: ClientProposalsDevelopmentTabState
 	) {}
 
 	protected getTableItems(
-		production: IResponse<IDevelopmentDto>,
+		production: IResponse<IDevelopmentDto>
 	): ITableItem[] {
 		const productionTableItem = production.items.map((x) => {
 			const tableItem: IClientDevelopmentTableItem =
@@ -108,8 +108,7 @@ export class ClientProposalsDevelopmentTabComponent {
 			this.stateService.offset$.next(0);
 		} else {
 			this.stateService.offset$.next(
-				this.stateService.pageSize * $event -
-					this.stateService.pageSize,
+				this.stateService.pageSize * $event - this.stateService.pageSize
 			);
 		}
 
@@ -118,7 +117,7 @@ export class ClientProposalsDevelopmentTabComponent {
 
 	protected onIsCompletting(e: Event) {
 		this.stateService.isCompleting$.next(
-			(e.currentTarget! as HTMLInputElement).checked,
+			(e.currentTarget! as HTMLInputElement).checked
 		);
 		this.stateService.offset$.next(0);
 		this.stateService.pageIndex = 1;

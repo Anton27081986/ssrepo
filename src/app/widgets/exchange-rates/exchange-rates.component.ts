@@ -23,7 +23,7 @@ export class ExchangeRatesComponent {
 		.pipe(
 			tap(() => {
 				this.requestTime = new Date();
-			}),
+			})
 		);
 
 	protected readonly exchangeRatesLinks = ExchangeRatesLinks;

@@ -99,7 +99,7 @@ export class MultiselectV2Component
 				} else {
 					this.chipsEllipsis$.next(false);
 				}
-			}),
+			})
 		);
 	}
 
@@ -132,7 +132,7 @@ export class MultiselectV2Component
 		if (!this.readOnly$.value) {
 			item.checked = true;
 			this.viewOptions$.next(
-				this.options$.value.filter((item) => !item.checked),
+				this.options$.value.filter((item) => !item.checked)
 			);
 			const selected = this.selectedOptions$.value;
 
@@ -153,15 +153,15 @@ export class MultiselectV2Component
 					}
 
 					return option;
-				}),
+				})
 			);
 
 			item.checked = false;
 			this.selectedOptions$.next(
-				oldSelected.filter((val) => val.checked),
+				oldSelected.filter((val) => val.checked)
 			);
 			this.viewOptions$.next(
-				this.options$.value.filter((item) => !item.checked),
+				this.options$.value.filter((item) => !item.checked)
 			);
 			this.updateStateControl();
 		}
@@ -170,14 +170,12 @@ export class MultiselectV2Component
 	public ngOnChanges(changes: SimpleChanges) {
 		if (changes.options) {
 			this.options$.next(
-				changes.options.currentValue
-					? changes.options.currentValue
-					: [],
+				changes.options.currentValue ? changes.options.currentValue : []
 			);
 
 			if (this.options$.value.length) {
 				this.viewOptions$.next(
-					this.options$.value.filter((item) => !item.checked),
+					this.options$.value.filter((item) => !item.checked)
 				);
 			}
 		}

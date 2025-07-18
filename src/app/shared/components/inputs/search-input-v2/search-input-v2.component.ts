@@ -63,7 +63,7 @@ export class SearchInputV2Component implements ControlValueAccessor {
 	}
 
 	public registerOnChange(
-		fn: (value: IDictionaryItemDto | null) => void,
+		fn: (value: IDictionaryItemDto | null) => void
 	): void {
 		this.onChange = fn;
 	}
@@ -90,7 +90,7 @@ export class SearchInputV2Component implements ControlValueAccessor {
 	public onBlur(): void {
 		if (
 			!this.options().some(
-				(item) => item.name === (this.queryControl().value || ''),
+				(item) => item.name === (this.queryControl().value || '')
 			)
 		) {
 			this.queryControl().setValue('');

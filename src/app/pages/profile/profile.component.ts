@@ -37,13 +37,13 @@ export class ProfileComponent implements OnInit {
 	public switchValue!: boolean;
 
 	control: FormControl<boolean | null> = new FormControl<boolean | null>(
-		false,
+		false
 	);
 
 	constructor(
 		private readonly profileService: ProfileService,
 		private readonly themeService: ThemeService,
-		private readonly changeDetector: ChangeDetectorRef,
+		private readonly changeDetector: ChangeDetectorRef
 	) {
 		toSignal(
 			this.control.valueChanges.pipe(
@@ -51,18 +51,21 @@ export class ProfileComponent implements OnInit {
 					if (value === null) {
 						return NEVER;
 					}
+
 					this.switchValue = value;
+
 					return this.profileService.updateTheme(value);
 				}),
 				tap(() => {
 					document.documentElement.classList.add('dark');
+
 					if (this.switchValue) {
 						this.profileService.changeTheme(1);
 					} else {
 						this.profileService.changeTheme(0);
 					}
-				}),
-			),
+				})
+			)
 		);
 	}
 
@@ -74,7 +77,7 @@ export class ProfileComponent implements OnInit {
 					this.switchValue = value.isDarkTheme;
 					this.changeDetector.detectChanges();
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

@@ -12,7 +12,7 @@ export const operationPlanPermissionGuard: CanActivateFn = () => {
 	return permissionsFacadeService
 		.checkModulePermissions(
 			ModulesWithPermissionsEnum.OperationalPlan,
-			Permissions.OPERATIONAL_PLAN_ACCESS,
+			Permissions.OPERATIONAL_PLAN_ACCESS
 		)
 		.pipe(
 			map((isAllowAccess) => {
@@ -27,6 +27,6 @@ export const operationPlanPermissionGuard: CanActivateFn = () => {
 				});
 
 				return false;
-			}),
+			})
 		);
 };

@@ -70,13 +70,13 @@ export class SelectV2Component implements ControlValueAccessor {
 				}
 
 				return options.filter((item) =>
-					item.name!.toLowerCase().includes(value.toLowerCase()),
+					item.name!.toLowerCase().includes(value.toLowerCase())
 				);
-			}),
+			})
 		),
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	public mutableFilteredOptions = signal(this.options());
@@ -97,7 +97,7 @@ export class SelectV2Component implements ControlValueAccessor {
 	}
 
 	public registerOnChange(
-		fn: (value: IDictionaryItemDto | null) => void,
+		fn: (value: IDictionaryItemDto | null) => void
 	): void {
 		this.onChange = fn;
 	}
@@ -123,7 +123,7 @@ export class SelectV2Component implements ControlValueAccessor {
 	public onBlur(): void {
 		if (
 			!this.options().some(
-				(item) => item.name === (this.selectCtrl.value || ''),
+				(item) => item.name === (this.selectCtrl.value || '')
 			)
 		) {
 			this.selectCtrl.setValue('');
@@ -145,7 +145,7 @@ export class SelectV2Component implements ControlValueAccessor {
 	public getControlClasses(
 		size: string,
 		errorText: string,
-		isAutocomplete: boolean,
+		isAutocomplete: boolean
 	): string {
 		return `${size}${errorText ? ' error' : ''}${isAutocomplete ? ' autocomplete' : ''}`;
 	}

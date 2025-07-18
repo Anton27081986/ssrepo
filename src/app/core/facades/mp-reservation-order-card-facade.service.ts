@@ -21,20 +21,22 @@ import {
 })
 export class MpReservationOrderCardFacadeService {
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	private readonly activeOrder =
 		new BehaviorSubject<IMpReservationOrder | null>(null);
+
 	public activeOrder$ = this.activeOrder.asObservable();
 	private readonly warehouseBalanceSubject =
 		new BehaviorSubject<IWarehouseBalanceResponse | null>(null);
+
 	public readonly warehouseBalance$ =
 		this.warehouseBalanceSubject.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly mpReservationOrdersApiService: MpReservationOrdersApiService,
-		protected readonly router: Router,
+		protected readonly router: Router
 	) {}
 
 	public getPersonificationById(id: string): void {
@@ -45,7 +47,7 @@ export class MpReservationOrderCardFacadeService {
 				catchError((err: unknown) => {
 					this.router.navigate(['mp-reservation-orders']);
 					throw err;
-				}),
+				})
 			)
 			.subscribe((res) => {
 				this.activeOrder.next(res.data);
@@ -59,71 +61,71 @@ export class MpReservationOrderCardFacadeService {
 	public rejectOrder(reason: string) {
 		return this.mpReservationOrdersApiService.rejectPersonification(
 			this.activeOrder.value?.id!,
-			reason,
+			reason
 		);
 	}
 
 	public updateProvisionDateById(
 		orderId: number,
 		provisionDate: string,
-		provisionId: number,
+		provisionId: number
 	) {
 		return this.mpReservationOrdersApiService.updateProvisionDateById(
 			orderId,
 			provisionDate,
-			provisionId,
+			provisionId
 		);
 	}
 
 	public removeOrder() {
 		return this.mpReservationOrdersApiService.removePersonification(
-			this.activeOrder.value?.id!,
+			this.activeOrder.value?.id!
 		);
 	}
 
 	public rejectRemove() {
 		return this.mpReservationOrdersApiService.rejectRemovePersonification(
-			this.activeOrder.value?.id!,
+			this.activeOrder.value?.id!
 		);
 	}
 
 	public addDetails(details: IProvisionDetailsTypes[]) {
 		return this.mpReservationOrdersApiService.createDetails(
 			this.activeOrder.value?.id!,
-			details,
+			details
 		);
 	}
 
 	public changeDetails(details: IProvisionDetailsTypes) {
 		return this.mpReservationOrdersApiService.changeDetails(
 			this.activeOrder.value?.id!,
-			details,
+			details
 		);
 	}
 
 	public changeManager(authorId: number) {
 		return this.mpReservationOrdersApiService.changeManager(
 			this.activeOrder.value?.id!,
-			authorId,
+			authorId
 		);
 	}
 
 	public clarifyOrder(body: IClarifyOrder) {
 		return this.mpReservationOrdersApiService.clarify(
 			this.activeOrder.value?.id!,
-			body,
+			body
 		);
 	}
 
 	public getApproveClarification() {
 		return this.mpReservationOrdersApiService.getApproveClarification(
-			this.activeOrder.value?.id!,
+			this.activeOrder.value?.id!
 		);
 	}
 
 	public approveClarification() {
 		return this.mpReservationOrdersApiService.approveClarification(
-			this.activeOrder.value?.id!,
+			this.activeOrder.value?.id!
 		);
 	}
 
@@ -132,15 +134,16 @@ export class MpReservationOrderCardFacadeService {
 			.getWarehouseForAgreeOrder(orderId)
 			.pipe(
 				tap((warehouseBalance) =>
-					this.warehouseBalanceSubject.next(warehouseBalance),
+					this.warehouseBalanceSubject.next(warehouseBalance)
 				),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
 
 	public dispatchToQueue(orderId: number, dispatches: IDispatchDto[]): void {
 		const payload: IDispatchesRequest = { dispatches };
+
 		this.mpReservationOrdersApiService
 			.createTransferInvoice(orderId, payload)
 			.pipe(untilDestroyed(this))

@@ -31,8 +31,8 @@ export class TovFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
 	implements OnInit
 {
-	private filterApiService: OperationPlanFiltersApiService = inject(
-		OperationPlanFiltersApiService,
+	private readonly filterApiService: OperationPlanFiltersApiService = inject(
+		OperationPlanFiltersApiService
 	);
 
 	constructor() {
@@ -47,7 +47,7 @@ export class TovFilterComponent
 		return this.filterApiService.getTov(query).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 
@@ -55,7 +55,7 @@ export class TovFilterComponent
 		return this.filterApiService.getTov('', ids).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 }

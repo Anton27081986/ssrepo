@@ -61,12 +61,12 @@ export class ClientProposalsApiService {
 			data: IResponse<ProposalsProduction>;
 			permissions: string[];
 		}>(
-			`${environment.apiUrl}/api/company/ClientProposals/doneProductions/${clientId}`,
+			`${environment.apiUrl}/api/company/ClientProposals/doneProductions/${clientId}`
 		);
 	}
 
 	public getNews(
-		params: IRequestGetProposals,
+		params: IRequestGetProposals
 	): Observable<IResponse<INewsDto>> {
 		return this.http.get<IResponse<INewsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/news`,
@@ -75,12 +75,12 @@ export class ClientProposalsApiService {
 					.set('clientId', params.clientId)
 					.set('Limit', params.limit)
 					.set('Offset', params.offset),
-			},
+			}
 		);
 	}
 
 	public getTrips(
-		params: IRequestGetBusinessTrips,
+		params: IRequestGetBusinessTrips
 	): Observable<IResponseProposalsTrips<IBusinessTripsDto>> {
 		let httpParams = new HttpParams()
 			.set('clientId', params.clientId)
@@ -90,7 +90,7 @@ export class ClientProposalsApiService {
 		if (params.onlyCurrentYear) {
 			httpParams = httpParams.set(
 				'OnlyCurrentYear',
-				params.onlyCurrentYear,
+				params.onlyCurrentYear
 			);
 		}
 
@@ -98,12 +98,12 @@ export class ClientProposalsApiService {
 			`${environment.apiUrl}/api/company/ClientProposals/trips`,
 			{
 				params: httpParams,
-			},
+			}
 		);
 	}
 
 	public getTradeList(
-		params: IRequestGetTradeList,
+		params: IRequestGetTradeList
 	): Observable<IResponse<ITradeList>> {
 		let httpParams = new HttpParams()
 			.set('clientId', params.clientId)
@@ -134,12 +134,12 @@ export class ClientProposalsApiService {
 			`${environment.apiUrl}/api/company/ClientProposals/productSheets`,
 			{
 				params: httpParams,
-			},
+			}
 		);
 	}
 
 	public getContractors(
-		params: IRequestGetProposals,
+		params: IRequestGetProposals
 	): Observable<IResponse<IContractorsDto>> {
 		return this.http.get<IResponse<IContractorsDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/contractors`,
@@ -149,12 +149,12 @@ export class ClientProposalsApiService {
 					.set('Limit', params.limit)
 					.set('Offset', params.offset)
 					.set('WithArchived', params.withArchiver!),
-			},
+			}
 		);
 	}
 
 	public getSamples(
-		params: IRequestGetProposals,
+		params: IRequestGetProposals
 	): Observable<IResponseProposalsTrips<ISamples>> {
 		return this.http.get<IResponseProposalsTrips<ISamples>>(
 			`${environment.apiUrl}/api/company/ClientProposals/samples`,
@@ -163,12 +163,12 @@ export class ClientProposalsApiService {
 					.set('clientId', params.clientId)
 					.set('Limit', params.limit)
 					.set('Offset', params.offset),
-			},
+			}
 		);
 	}
 
 	public getCommitteeDevelopments(
-		params: IRequestGetDevelopment,
+		params: IRequestGetDevelopment
 	): Observable<IResponse<IDevelopmentDto>> {
 		return this.http.get<IResponse<IDevelopmentDto>>(
 			`${environment.apiUrl}/api/company/ClientProposals/CommitteeDevelopments`,
@@ -178,12 +178,12 @@ export class ClientProposalsApiService {
 					.set('Limit', params.limit)
 					.set('Offset', params.offset)
 					.set('isCompleting', params.isCompleting),
-			},
+			}
 		);
 	}
 
 	public getClientOffers(
-		params: IRequestGetClientOffer,
+		params: IRequestGetClientOffer
 	): Observable<ResponseProposals<IClientOffersDto>> {
 		let httpParams = new HttpParams();
 
@@ -225,13 +225,13 @@ export class ClientProposalsApiService {
 			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
 			{
 				params: httpParams,
-			},
+			}
 		);
 	}
 
 	public saveInCloud(
 		files: IFilesProposals[],
-		sendEmail: boolean,
+		sendEmail: boolean
 	): Observable<SaveInCloud> {
 		const request: IFile[] = files.map((file) => {
 			return {
@@ -245,7 +245,7 @@ export class ClientProposalsApiService {
 
 		return this.http.post<SaveInCloud>(
 			`${environment.apiUrl}/api/files/share`,
-			dataRequest,
+			dataRequest
 		);
 	}
 
@@ -267,17 +267,17 @@ export class ClientProposalsApiService {
 							}
 
 							return throwError(error);
-						}),
-					),
+						})
+					)
 				),
-				catchError(this.handleError),
+				catchError(this.handleError)
 			);
 	}
 
 	public saveOffer(body: ICreateOfferDto): Observable<ICreateOfferDto> {
 		return this.http.post<ICreateOfferDto>(
 			`${environment.apiUrl}/api/company/ClientProposals/clientOffers`,
-			body,
+			body
 		);
 	}
 
@@ -288,10 +288,10 @@ export class ClientProposalsApiService {
 				responseType: 'blob' as 'json',
 				headers: new HttpHeaders().append(
 					'Content-Type',
-					'application/json',
+					'application/json'
 				),
 				params: new HttpParams().set('report', type),
-			},
+			}
 		);
 	}
 

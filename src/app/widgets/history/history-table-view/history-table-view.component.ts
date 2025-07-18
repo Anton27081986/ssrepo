@@ -38,7 +38,7 @@ export class HistoryTableViewComponent {
 	}
 
 	private convertToTableItems(
-		historyItems: IChangeTrackerItemDto[],
+		historyItems: IChangeTrackerItemDto[]
 	): ITableItem[] {
 		return <ITableItem[]>(<unknown>historyItems.map((item) => {
 			return {

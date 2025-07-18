@@ -75,12 +75,12 @@ export class AddVictoryModalComponent {
 		private readonly filesApiService: FilesApiService,
 		private readonly apiService: WinsApiService,
 		private readonly victoryRootService: VictoryRootService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.formGroup = this._formBuilder.group<AddVictoryForm>({
 			text: this._formBuilder.nonNullable.control(
 				'',
-				Validators.required,
+				Validators.required
 			),
 			userIds: this._formBuilder.nonNullable.control([]),
 			productIds: this._formBuilder.nonNullable.control([]),
@@ -104,9 +104,7 @@ export class AddVictoryModalComponent {
 			.subscribe(() => {
 				if (this.victoryFiles.value) {
 					this.victoryFiles.next(
-						this.victoryFiles.value.filter(
-							(file) => file.id !== id,
-						),
+						this.victoryFiles.value.filter((file) => file.id !== id)
 					);
 				}
 			});
@@ -131,7 +129,7 @@ export class AddVictoryModalComponent {
 						this.victoryFiles.next(
 							this.victoryFiles.value
 								? [...this.victoryFiles.value, file]
-								: [file],
+								: [file]
 						);
 					});
 			};
@@ -156,7 +154,7 @@ export class AddVictoryModalComponent {
 						this.formGroup.get('productIds')?.value!,
 						this.victoryFiles.value
 							? this.victoryFiles.value.map((item) => item.id)
-							: [],
+							: []
 					)
 					.subscribe(() => {
 						this.modalRef.close();
@@ -164,7 +162,7 @@ export class AddVictoryModalComponent {
 							type: VictoryEventEnum.victoryCreated,
 						});
 						this.modalService.open(AddVictoryModalResultComponent);
-					}),
+					})
 			);
 		}
 	}

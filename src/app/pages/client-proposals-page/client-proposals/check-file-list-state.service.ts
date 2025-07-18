@@ -10,7 +10,7 @@ export class CheckFileListStateService {
 	changeArrFile(newFile: IFilesProposals) {
 		let savedFiles = this.checkFiles$.value;
 		const checkFile = savedFiles.find(
-			(file) => file.uniqId === newFile.uniqId,
+			(file) => file.uniqId === newFile.uniqId
 		);
 
 		if (newFile.checked && !checkFile) {
@@ -31,12 +31,12 @@ export class CheckFileListStateService {
 	dropFile(dropFile: IFilesProposals) {
 		const files = this.checkFiles$.value;
 		const walkerFile = files.find(
-			(file) => file.uniqId === dropFile.uniqId,
+			(file) => file.uniqId === dropFile.uniqId
 		);
 
 		if (walkerFile) {
 			const newFileArr = files.filter(
-				(item) => item.uniqId !== walkerFile.uniqId,
+				(item) => item.uniqId !== walkerFile.uniqId
 			);
 
 			this.checkFiles$.next(newFileArr);

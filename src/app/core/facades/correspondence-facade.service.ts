@@ -32,7 +32,7 @@ export class CorrespondenceFacadeService {
 
 	// Выбранная тема
 	private readonly selectedTopicSubject = new BehaviorSubject<string | null>(
-		null,
+		null
 	);
 
 	public selectedTopic$ = this.selectedTopicSubject.asObservable();
@@ -80,7 +80,7 @@ export class CorrespondenceFacadeService {
 
 	constructor(
 		private readonly notificationsApiService: NotificationsApiService,
-		private readonly filesApiService: FilesApiService,
+		private readonly filesApiService: FilesApiService
 	) {}
 
 	public setType(type: CorrespondenceTypeEnum) {
@@ -110,7 +110,7 @@ export class CorrespondenceFacadeService {
 	public loadMessages(
 		limit = 10,
 		offset = 0,
-		Query: string | undefined = undefined,
+		Query: string | undefined = undefined
 	) {
 		if (this.objectId) {
 			this.notificationsApiService
@@ -120,7 +120,7 @@ export class CorrespondenceFacadeService {
 					this.selectedTopicSubject.value,
 					limit,
 					offset,
-					Query,
+					Query
 				)
 				.pipe(
 					tap((x) => {
@@ -132,7 +132,7 @@ export class CorrespondenceFacadeService {
 							total: x.total,
 						});
 					}),
-					untilDestroyed(this),
+					untilDestroyed(this)
 				)
 				.subscribe((res) => {
 					if (!this.selectedTopicSubject.value) {
@@ -147,7 +147,7 @@ export class CorrespondenceFacadeService {
 	public searchMessages(
 		limit = 10,
 		offset = 0,
-		Query: string | undefined = undefined,
+		Query: string | undefined = undefined
 	) {
 		this.messagesSubject.next({ items: [], total: 0 });
 		this.loadMessages(limit, offset, Query);
@@ -159,13 +159,13 @@ export class CorrespondenceFacadeService {
 				.getFiles(
 					this.type,
 					this.objectId,
-					this.selectedTopicSubject.value,
+					this.selectedTopicSubject.value
 				)
 				.pipe(
 					tap((x) => {
 						this.filesSubject.next(x);
 					}),
-					untilDestroyed(this),
+					untilDestroyed(this)
 				)
 				.subscribe();
 		}
@@ -202,7 +202,7 @@ export class CorrespondenceFacadeService {
 				this.messageFilesSubject.next(
 					this.messageFilesSubject.value
 						? [...this.messageFilesSubject.value, file]
-						: [file],
+						: [file]
 				);
 			});
 	}
@@ -215,15 +215,15 @@ export class CorrespondenceFacadeService {
 				if (this.messageFilesSubject.value) {
 					this.messageFilesSubject.next(
 						this.messageFilesSubject.value.filter(
-							(file) => file.id !== id,
-						),
+							(file) => file.id !== id
+						)
 					);
 				}
 			});
 	}
 
 	public selectMessageToReply(
-		replyObject: { message: IMessageItemDto; toUsers: IUserDto[] } | null,
+		replyObject: { message: IMessageItemDto; toUsers: IUserDto[] } | null
 	) {
 		this.repliedMessageSubject.next(replyObject);
 	}
@@ -233,7 +233,7 @@ export class CorrespondenceFacadeService {
 		text: string,
 		toUserIds: number[],
 		copyUserIds: number[],
-		isPrivate: boolean,
+		isPrivate: boolean
 	) {
 		if (this.objectId) {
 			this.notificationsApiService
@@ -249,7 +249,7 @@ export class CorrespondenceFacadeService {
 						this.repliedMessageSubject.value?.message.id,
 					fileIds:
 						this.messageFilesSubject.value?.map(
-							(file) => file.id!,
+							(file) => file.id!
 						) || [],
 					sourceUrl: this.getLinkForEmail(this.type),
 				})

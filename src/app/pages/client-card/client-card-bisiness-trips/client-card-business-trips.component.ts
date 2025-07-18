@@ -64,7 +64,7 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 	constructor(
 		public readonly businessTripsFacadeService: BusinessTripsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {
 		this.businessTrips$ = this.businessTripsFacadeService.businessTrips$;
 	}
@@ -120,14 +120,14 @@ export class ClientCardBusinessTripsComponent implements OnInit {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)} - ${new Date(Date.parse(x.endDate)).toLocaleString(
 							'ru-RU',
 							{
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)}`
 					: '-';
 				tableItem.task = x.goal.name;

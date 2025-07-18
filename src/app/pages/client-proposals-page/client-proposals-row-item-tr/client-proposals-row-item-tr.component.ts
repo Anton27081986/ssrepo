@@ -100,7 +100,7 @@ export class ClientProposalsRowItemTrComponent
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		public readonly checkListService: CheckFileListStateService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {}
 
 	ngOnInit() {
@@ -108,14 +108,14 @@ export class ClientProposalsRowItemTrComponent
 			if (this.item().promotionalMaterials) {
 				this.rims$.next(
 					this.item().promotionalMaterials.filter(
-						(item) => item !== null,
-					),
+						(item) => item !== null
+					)
 				);
 			}
 
 			if (this.item().documents) {
 				this.documents$.next(
-					this.item().documents.filter((item) => item !== null),
+					this.item().documents.filter((item) => item !== null)
 				);
 			}
 
@@ -130,7 +130,7 @@ export class ClientProposalsRowItemTrComponent
 	ngAfterViewChecked() {
 		if (this.content) {
 			this.viewMaximise$.next(
-				this.content.nativeElement.scrollHeight > 200,
+				this.content.nativeElement.scrollHeight > 200
 			);
 		}
 	}

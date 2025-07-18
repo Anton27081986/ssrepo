@@ -104,7 +104,7 @@ export class NumberInputComponent implements ControlValueAccessor {
 
 	valueUp() {
 		const result = Number(
-			((this.value$.value ?? 0) + this.step()).toFixed(2),
+			((this.value$.value ?? 0) + this.step()).toFixed(2)
 		);
 
 		this.updateControl(result);
@@ -112,7 +112,7 @@ export class NumberInputComponent implements ControlValueAccessor {
 
 	valueDown() {
 		const result = Number(
-			((this.value$.value ?? 0) - this.step()).toFixed(2),
+			((this.value$.value ?? 0) - this.step()).toFixed(2)
 		);
 
 		this.updateControl(result < 0 ? 0 : result);

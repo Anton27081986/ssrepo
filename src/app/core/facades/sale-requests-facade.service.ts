@@ -25,7 +25,7 @@ export class SaleRequestsFacadeService {
 				tap((sales) => {
 					this.sales.next(sales);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

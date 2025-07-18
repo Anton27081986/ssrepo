@@ -16,7 +16,7 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 		client: ExcessIncomeClient,
 		private readonly service: ExcessIncomeService,
 		private readonly state: ExcessIncomeState,
-		private readonly permissions: string[],
+		private readonly permissions: string[]
 	) {
 		super();
 		this.client = client;
@@ -34,8 +34,8 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 								client.id,
 								this.service,
 								state,
-								false,
-							),
+								false
+							)
 					);
 				}
 
@@ -45,10 +45,10 @@ export class ClientNodeState extends ExcessIncomeBaseNodeState {
 						client.id,
 						this.service,
 						state,
-						true,
+						true
 					),
 				];
-			}),
+			})
 		);
 	}
 

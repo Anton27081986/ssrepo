@@ -67,22 +67,7 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 	public time$ = toSignal(this.timeCtrl.valueChanges, { initialValue: null });
 	protected readonly dateInputTextMask = dateInputTextMask;
 	private onChange = EMPTY_FUNCTION;
-	@Input()
-	public get value(): string | null {
-		return null;
-	}
-
-	public set value(initialDate: string | null) {
-		const hasDate = initialDate ? new Date(initialDate) : null;
-		const time = hasDate ? getTime(hasDate) : TIME_FORMAT_DELIMITED;
-
-		if (hasDate && time) {
-			this.form.setValue({ date: hasDate, time });
-		}
-	}
-
 	private onTouched = EMPTY_FUNCTION;
-
 	constructor() {
 		effect(() => {
 			if (this.showDate) {
@@ -95,6 +80,20 @@ export class DateTimePickerComponent implements ControlValueAccessor {
 				this.timeChanges(this.time$());
 			}
 		});
+	}
+
+	@Input()
+	public get value(): string | null {
+		return null;
+	}
+
+	public set value(initialDate: string | null) {
+		const hasDate = initialDate ? new Date(initialDate) : null;
+		const time = hasDate ? getTime(hasDate) : TIME_FORMAT_DELIMITED;
+
+		if (hasDate && time) {
+			this.form.setValue({ date: hasDate, time });
+		}
 	}
 
 	private get dateCtrl(): AbstractControl {

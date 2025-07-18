@@ -13,13 +13,13 @@ export class PermissionsApiService {
 
 	/** Получить доступ к входу на страницу */
 	public getPermissionClient(
-		entity: string,
+		entity: string
 	): Observable<{ items: string[] }> {
 		return this.http.get<{ items: string[] }>(
 			`${environment.apiUrl}/api/auth/permission/permissions`,
 			{
 				params: new HttpParams().set('Entities', entity),
-			},
+			}
 		);
 	}
 }

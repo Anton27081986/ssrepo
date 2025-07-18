@@ -130,9 +130,9 @@ export class OperationPlanTableComponent {
 		toSignal(
 			this.masterCheckboxCtrl.valueChanges.pipe(
 				tap((value: boolean | null) =>
-					this.tableStateService.onMasterCheckboxChange(value),
-				),
-			),
+					this.tableStateService.onMasterCheckboxChange(value)
+				)
+			)
 		);
 
 		toSignal(
@@ -145,19 +145,19 @@ export class OperationPlanTableComponent {
 					}
 
 					this.tableStateService.updateMasterCheckboxState();
-				}),
-			),
+				})
+			)
 		);
 
 		effect(() => {
 			const columnOperPlanConfig = generateColumnOperationPlanConfig(
 				this.planItems(),
-				this.days(),
+				this.days()
 			);
 
 			this.tableStateService.initialize(
 				this.planItems(),
-				columnOperPlanConfig,
+				columnOperPlanConfig
 			);
 		});
 
@@ -177,7 +177,7 @@ export class OperationPlanTableComponent {
 	public isSubColumn(columnId: string): boolean {
 		return this.visibleColumns().some(
 			(column) =>
-				column.subColumns && column.subColumns.includes(columnId),
+				column.subColumns && column.subColumns.includes(columnId)
 		);
 	}
 
@@ -234,7 +234,7 @@ export class OperationPlanTableComponent {
 		const weekId = this.operationPlanState.weekId$.value!;
 
 		const data = this.days().find((day) =>
-			day.day.startsWith(columnName.slice(5)),
+			day.day.startsWith(columnName.slice(5))
 		)!;
 
 		const param: UpdateRawMaterialsData = {
@@ -304,7 +304,7 @@ export class OperationPlanTableComponent {
 
 	protected orderAnOutfit(columnId: string) {
 		const data = this.days().find((day) =>
-			day.day.startsWith(columnId.slice(5)),
+			day.day.startsWith(columnId.slice(5))
 		)!;
 		const params: OrderAnOutfitRequest = {
 			date: data.day!,
@@ -329,7 +329,7 @@ export class OperationPlanTableComponent {
 
 	protected openApproveMaterials(column: string) {
 		const date = this.days().find((day) =>
-			day.day.startsWith(column.slice(5)),
+			day.day.startsWith(column.slice(5))
 		)!.day;
 		const data: ApproveMaterialData = {
 			total: this.totalItems(),
@@ -341,8 +341,9 @@ export class OperationPlanTableComponent {
 
 	protected uploadWMS(columnId: string) {
 		const data = this.days().find((day) =>
-			day.day.startsWith(columnId.slice(5)),
+			day.day.startsWith(columnId.slice(5))
 		)!;
+
 		this.operationPlanService
 			.uploadWMS(data.day)
 			.pipe(untilDestroyed(this))
@@ -357,7 +358,7 @@ export class OperationPlanTableComponent {
 				.getPlanInfo(
 					this.operationPlanState.weekId$.value!,
 					date.slice(-10),
-					this.productionSectionIds,
+					this.productionSectionIds
 				)
 				.subscribe((res) => {
 					this.planTooltipText = `Всего по выбранным участкам  — ${

@@ -13,7 +13,7 @@ export class CurrencyApiService {
 	/** Получить котировки валют **/
 	public getExchangeRates(): Observable<IExchangeRates> {
 		return this.http.get<IExchangeRates>(
-			`${environment.apiUrl}/api/company/Currency`,
+			`${environment.apiUrl}/api/company/Currency`
 		);
 	}
 }

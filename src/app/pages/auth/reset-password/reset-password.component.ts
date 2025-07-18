@@ -40,7 +40,7 @@ export class ResetPasswordComponent implements OnInit {
 		private readonly formBuilder: FormBuilder,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
-		private readonly authenticationService: AuthenticationService,
+		private readonly authenticationService: AuthenticationService
 	) {
 		// redirect to home if already logged in
 		if (this.authenticationService.userValue) {
@@ -88,7 +88,7 @@ export class ResetPasswordComponent implements OnInit {
 						`auth/forgot-password?login=${this.login}`,
 					]);
 					throw error;
-				}),
+				})
 			)
 			.subscribe(() => {
 				this.router.navigate(['auth/sign-in']);

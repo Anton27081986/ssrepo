@@ -23,7 +23,7 @@ export class RatingApiService {
 
 	public getRatingTypes(
 		weekId: number,
-		userId: number,
+		userId: number
 	): Observable<IRankTypeListDto> {
 		return this.http.get<IRankTypeListDto>(
 			`${environment.apiUrl}/api/awards/rank/types`,
@@ -31,12 +31,12 @@ export class RatingApiService {
 				params: new HttpParams()
 					.set('weekId', weekId)
 					.set('userId', userId),
-			},
+			}
 		);
 	}
 
 	public getCommentsWins(
-		request: ICommentRequest,
+		request: ICommentRequest
 	): Observable<IResponse<ICommentsItemDto>> {
 		return this.http.get<IResponse<ICommentsItemDto>>(
 			`${environment.apiUrl}/api/awards/comments/${request.objectId}`,
@@ -45,21 +45,21 @@ export class RatingApiService {
 					.set('Type', request.type)
 					.set('Offset', 0)
 					.set('Limit', 1000),
-			},
+			}
 		);
 	}
 
 	/** Список последних 5 недель */
 	public getLastFiveRatingWeeks(): Observable<IResponse<IWeekItemDto>> {
 		return this.http.get<IResponse<IWeekItemDto>>(
-			`${environment.apiUrl}/api/awards/rank/weeks`,
+			`${environment.apiUrl}/api/awards/rank/weeks`
 		);
 	}
 
 	public getReport(type: TypeReport, rank: IRankTypeItemDto) {
 		return this.http.post<string>(
 			`${environment.apiUrl}/api/awards/rank/report/${type}`,
-			rank,
+			rank
 		);
 	}
 
@@ -68,7 +68,7 @@ export class RatingApiService {
 		weekId: number,
 		RankTypeId: number,
 		Limit: number,
-		Offset: number,
+		Offset: number
 	): Observable<IRatingTeamsResponse<IRankItemDto>> {
 		return this.http.get<IRatingTeamsResponse<IRankItemDto>>(
 			`${environment.apiUrl}/api/awards/rank`,
@@ -78,7 +78,7 @@ export class RatingApiService {
 					.set('RankTypeId', RankTypeId)
 					.set('Limit', Limit)
 					.set('Offset', Offset),
-			},
+			}
 		);
 	}
 }

@@ -8,20 +8,20 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 })
 export class HistoryFacadeService {
 	constructor(
-		private readonly changeTrackerApiService: ChangeTrackerApiService,
+		private readonly changeTrackerApiService: ChangeTrackerApiService
 	) {}
 
 	public getHistory(
 		objectId: string,
 		type: number,
 		limit: number,
-		offset: number,
+		offset: number
 	) {
 		return this.changeTrackerApiService.getHistoryOfObject(
 			objectId,
 			type,
 			limit,
-			offset,
+			offset
 		);
 	}
 }

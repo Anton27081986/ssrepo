@@ -32,15 +32,15 @@ export interface ExcessIncomeCriteria {
 export class ExcessIncomeState {
 	readonly event$: BehaviorSubject<ExcessIncomeEventEnum> =
 		new BehaviorSubject<ExcessIncomeEventEnum>(
-			ExcessIncomeEventEnum.excessIncomeDefault,
+			ExcessIncomeEventEnum.excessIncomeDefault
 		);
 
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	public isLoaderTr$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	public dropDownVisible$: BehaviorSubject<boolean> =
@@ -101,13 +101,13 @@ export class ExcessIncomeState {
 
 				return this.getClients(
 					this.filters$.value,
-					this.paginationControl.value!,
+					this.paginationControl.value!
 				).pipe(
 					map((res) => {
 						this.total$.next(res.total);
 
 						return res.items;
-					}),
+					})
 				);
 			}),
 			map((clients) => {
@@ -117,8 +117,8 @@ export class ExcessIncomeState {
 							item.data,
 							this.excessIncomeService,
 							this,
-							item.permissions,
-						),
+							item.permissions
+						)
 				);
 			}),
 			scan((acc, value) => {
@@ -135,13 +135,13 @@ export class ExcessIncomeState {
 				this.isLoader$.next(false);
 				this.isLoaderTr$.next(false);
 				this.dropDownVisible$.next(true);
-			}),
+			})
 		);
 	}
 
 	private getClients(
 		filters: ExcessIncomeCriteria,
-		offset: number,
+		offset: number
 	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
 		return this.excessIncomeService.getClients({
 			limit: this.limit,

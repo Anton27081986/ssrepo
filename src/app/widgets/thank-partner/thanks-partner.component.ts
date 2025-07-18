@@ -49,7 +49,7 @@ export class ThanksPartnerComponent {
 	private readonly apiService = inject(ThanksPartnerApiService);
 
 	protected dateCtrl: FormControl<string | null> = new FormControl<string>(
-		this.getDate(),
+		this.getDate()
 	);
 
 	protected loading = signal(false);
@@ -74,11 +74,11 @@ export class ThanksPartnerComponent {
 						this.loading.set(false);
 
 						return of({} as IPartnerThanksListDto);
-					}),
+					})
 				);
-			}),
+			})
 		),
-		{ initialValue: {} as IPartnerThanksListDto },
+		{ initialValue: {} as IPartnerThanksListDto }
 	);
 
 	public thankToUrl(url?: string): void {

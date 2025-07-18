@@ -18,13 +18,13 @@ export class MenuApiService {
 			`${environment.apiUrl}/api/company/menu`,
 			{
 				withCredentials: false,
-			},
+			}
 		);
 	}
 
 	public getFavoriteMenu(): Observable<IFavoriteMenuListDto> {
 		return this.http.get<IFavoriteMenuListDto>(
-			`${environment.apiUrl}/api/company/menu/favorite`,
+			`${environment.apiUrl}/api/company/menu/favorite`
 		);
 	}
 
@@ -33,7 +33,7 @@ export class MenuApiService {
 			`${environment.apiUrl}/api/company/menu/${id}/favorite`,
 			{
 				params: new HttpParams().set('id', id),
-			},
+			}
 		);
 	}
 
@@ -42,18 +42,18 @@ export class MenuApiService {
 			`${environment.apiUrl}/api/company/menu/${id}/favorite`,
 			{
 				params: new HttpParams().set('id', id),
-			},
+			}
 		);
 	}
 
 	public globalSearch(
-		query: string,
+		query: string
 	): Observable<IResponse<IGlobalSearchDto>> {
 		return this.http.get<IResponse<IGlobalSearchDto>>(
 			`${environment.apiUrl}/api/search`,
 			{
 				params: new HttpParams().set('q', query),
-			},
+			}
 		);
 	}
 }

@@ -24,7 +24,7 @@ export class WinsApiService {
 				params: new HttpParams()
 					.set('Offset', Offset)
 					.set('Limit', Limit),
-			},
+			}
 		);
 	}
 
@@ -33,7 +33,7 @@ export class WinsApiService {
 		text: string,
 		userIds: number[],
 		productIds: number[],
-		fileIds: string[],
+		fileIds: string[]
 	): Observable<any> {
 		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/wins`, {
 			text,
@@ -52,23 +52,23 @@ export class WinsApiService {
 				awardId: null,
 				note: request.note,
 				fileIds: [],
-			},
+			}
 		);
 	}
 
 	public getProductSearch(
-		q: string,
+		q: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/awards/wins/products`,
 			{
 				params: new HttpParams().set('q', q),
-			},
+			}
 		);
 	}
 
 	public getCommentsWins(
-		request: ICommentRequest,
+		request: ICommentRequest
 	): Observable<IResponse<ICommentsItemDto>> {
 		return this.http.get<IResponse<ICommentsItemDto>>(
 			`${environment.apiUrl}/api/awards/comments/${request.objectId}`,
@@ -77,19 +77,19 @@ export class WinsApiService {
 					.set('Type', request.type)
 					.set('Offset', 0)
 					.set('Limit', 1000),
-			},
+			}
 		);
 	}
 
 	public getWin(id: number): Observable<IWinsItemDto> {
 		return this.http.get<IWinsItemDto>(
-			`${environment.apiUrl}/api/awards/wins/${id}`,
+			`${environment.apiUrl}/api/awards/wins/${id}`
 		);
 	}
 
 	public updateCommentWins(
 		id: number,
-		request: ICommentRequest,
+		request: ICommentRequest
 	): Observable<IResponse<ICommentsItemDto>> {
 		return this.http.put<IResponse<ICommentsItemDto>>(
 			`${environment.apiUrl}/api/awards/comments/${id}`,
@@ -99,14 +99,14 @@ export class WinsApiService {
 				awardId: 1,
 				note: request.note,
 				fileIds: [],
-			},
+			}
 		);
 	}
 
 	/** Получение продукта по id */
 	public getProductById(id: number): Observable<any> {
 		return this.http.get<any[]>(
-			`${environment.apiUrl}/api/awards/wins/products/${id}`,
+			`${environment.apiUrl}/api/awards/wins/products/${id}`
 		);
 	}
 
@@ -116,7 +116,7 @@ export class WinsApiService {
 			`${environment.apiUrl}/api/awards/comments/${id}`,
 			{
 				params: new HttpParams().set('id', id),
-			},
+			}
 		);
 	}
 
@@ -135,7 +135,7 @@ export class WinsApiService {
 				params: new HttpParams()
 					.set('ObjectId', request.objectId)
 					.set('type', request.type),
-			},
+			}
 		);
 	}
 }

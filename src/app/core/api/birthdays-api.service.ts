@@ -17,7 +17,7 @@ export class BirthdaysApiService {
 			`${environment.apiUrl}/api/auth/users/birthdays`,
 			{
 				params: new HttpParams().set('date', date),
-			},
+			}
 		);
 	}
 
@@ -28,7 +28,7 @@ export class BirthdaysApiService {
 		dateFrom?: string,
 		dateTo?: string,
 		pageSize?: number,
-		offset?: number,
+		offset?: number
 	): Observable<any> {
 		const params = contractor
 			? new HttpParams()
@@ -49,13 +49,13 @@ export class BirthdaysApiService {
 			`${environment.apiUrl}/api/company/BirthDays`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
 	public searchBirthdayContractor(
 		clientId?: number,
-		contractorId?: number,
+		contractorId?: number
 	): Observable<any> {
 		return this.http.get<any>(
 			`${environment.apiUrl}/api/company/BirthDays`,
@@ -63,7 +63,7 @@ export class BirthdaysApiService {
 				params: new HttpParams()
 					.set('clientId', clientId!)
 					.set('contractorId', contractorId!),
-			},
+			}
 		);
 	}
 }

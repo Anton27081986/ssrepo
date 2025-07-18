@@ -43,7 +43,7 @@ export class ThankColleagueFacadeService {
 					this.total = response.total;
 					this.isExtendedMode = response.isExtendedMode || false;
 					this.isLoading.next(false);
-				}),
+				})
 			)
 			.subscribe();
 	}
@@ -56,13 +56,13 @@ export class ThankColleagueFacadeService {
 	}
 
 	public addThanksForColleague(
-		createThanksRequest: ICreateThanksColleagueRequest,
+		createThanksRequest: ICreateThanksColleagueRequest
 	): Observable<IThanksColleagueItem> {
 		return this.apiService.addThanksColleague(createThanksRequest).pipe(
 			untilDestroyed(this),
 			tap(() => {
 				this.loadThanksForColleagues();
-			}),
+			})
 		);
 	}
 

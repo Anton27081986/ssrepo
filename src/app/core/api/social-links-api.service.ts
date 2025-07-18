@@ -11,7 +11,7 @@ export class SocialLinksApiService {
 
 	public getSocialLink(): Observable<any> {
 		return this.http.get<any[]>(
-			`${environment.apiUrl}/api/company/settings/favoriteLinks`,
+			`${environment.apiUrl}/api/company/settings/favoriteLinks`
 		);
 	}
 }

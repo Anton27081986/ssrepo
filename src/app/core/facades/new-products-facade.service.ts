@@ -25,7 +25,7 @@ export class NewProductsFacadeService {
 				tap((sales) => {
 					this.newProducts.next(sales);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

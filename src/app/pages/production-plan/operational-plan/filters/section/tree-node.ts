@@ -7,7 +7,7 @@ export class TreeNode {
 	public parent: IDictionaryItemDto;
 
 	public children: IDictionaryItemDto[];
-	public expanded: boolean = false;
+	public expanded = false;
 
 	public subscription: Subscription = new Subscription();
 
@@ -25,24 +25,26 @@ export class TreeNode {
 		items: IDictionaryItemDto[],
 		controlsMap: {
 			[id: string]: FormControl<boolean | null>;
-		},
+		}
 	) {
 		this.parent = parent;
 		this.children = items.filter(
-			(item: IDictionaryItemDto) => parent.id === item.parentId,
+			(item: IDictionaryItemDto) => parent.id === item.parentId
 		);
 
 		this.children.forEach((item) => {
 			this.controls[item.id] = controlsMap[item.id];
+
 			if (this.controls[item.id].value) {
 				this.expanded = true;
 			}
+
 			this.subscription.add(
 				this.controls[item.id].valueChanges
 					.pipe(debounceTime(50))
 					.subscribe(() => {
 						this.calcIndeterminate();
-					}),
+					})
 			);
 		});
 
@@ -57,9 +59,9 @@ export class TreeNode {
 								this.controls[item.id].setValue(value);
 							}
 						});
-					}),
+					})
 				)
-				.subscribe(),
+				.subscribe()
 		);
 
 		this.calcIndeterminate();
@@ -71,7 +73,7 @@ export class TreeNode {
 
 	public getTrueControlsCount(): number {
 		return Object.values(this.controls).filter(
-			(control) => control.value === true,
+			(control) => control.value === true
 		).length;
 	}
 

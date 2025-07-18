@@ -25,7 +25,7 @@ export class ContractsFacadeService {
 				tap((sales) => {
 					this.contracts.next(sales);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

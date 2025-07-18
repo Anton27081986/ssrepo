@@ -46,7 +46,7 @@ export class TooltipDirective implements OnDestroy {
 		private readonly elementRef: ElementRef,
 		private readonly appRef: ApplicationRef,
 		private readonly componentFactoryResolver: ComponentFactoryResolver,
-		private readonly injector: Injector,
+		private readonly injector: Injector
 	) {}
 
 	@HostListener('mouseenter')
@@ -78,7 +78,7 @@ export class TooltipDirective implements OnDestroy {
 		window.clearTimeout(this.touchTimeout);
 		this.touchTimeout = window.setTimeout(
 			this.initializeTooltip.bind(this),
-			500,
+			500
 		);
 	}
 
@@ -93,7 +93,7 @@ export class TooltipDirective implements OnDestroy {
 			window.clearInterval(this.hideDelay);
 			const componentFactory =
 				this.componentFactoryResolver.resolveComponentFactory(
-					TooltipComponent,
+					TooltipComponent
 				);
 
 			this.componentRef = componentFactory.create(this.injector);
@@ -108,7 +108,7 @@ export class TooltipDirective implements OnDestroy {
 			document.body.appendChild(tooltipDOMElement);
 			this.showTimeout = window.setTimeout(
 				this.showTooltip.bind(this),
-				this.showDelay,
+				this.showDelay
 			);
 		}
 	}
@@ -126,14 +126,14 @@ export class TooltipDirective implements OnDestroy {
 			switch (this.position) {
 				case TooltipPosition.BELOW: {
 					this.componentRef.instance.left = Math.round(
-						(right - left) / 2 + left,
+						(right - left) / 2 + left
 					);
 					this.componentRef.instance.top = Math.round(bottom);
 					break;
 				}
 				case TooltipPosition.ABOVE: {
 					this.componentRef.instance.left = Math.round(
-						(right - left) / 2 + left,
+						(right - left) / 2 + left
 					);
 					this.componentRef.instance.top = Math.round(top);
 					break;
@@ -141,14 +141,14 @@ export class TooltipDirective implements OnDestroy {
 				case TooltipPosition.RIGHT: {
 					this.componentRef.instance.left = Math.round(right);
 					this.componentRef.instance.top = Math.round(
-						top + (bottom - top) / 2,
+						top + (bottom - top) / 2
 					);
 					break;
 				}
 				case TooltipPosition.LEFT: {
 					this.componentRef.instance.left = Math.round(left);
 					this.componentRef.instance.top = Math.round(
-						top + (bottom - top) / 2,
+						top + (bottom - top) / 2
 					);
 					break;
 				}
@@ -168,7 +168,7 @@ export class TooltipDirective implements OnDestroy {
 	private setHideTooltipTimeout() {
 		this.hideTimeout = window.setTimeout(
 			this.destroy.bind(this),
-			this.hideDelay,
+			this.hideDelay
 		);
 	}
 

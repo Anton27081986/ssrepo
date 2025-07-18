@@ -13,7 +13,7 @@ export class RatingService {
 
 	public getRatingTypes(
 		weekId: number,
-		userId: number,
+		userId: number
 	): Observable<IRankTypeListDto> {
 		return this.apiService.getRatingTypes(weekId, userId);
 	}
@@ -30,7 +30,7 @@ export class RatingService {
 		weekId: number,
 		RankTypeId: number,
 		Limit: number,
-		Offset: number,
+		Offset: number
 	): Observable<IRatingTeamsResponse<IRankItemDto>> {
 		return this.apiService.getRatings(weekId, RankTypeId, Limit, Offset);
 	}

@@ -87,7 +87,7 @@ export class ClientCardManagersComponent implements OnInit {
 		private readonly notificationService: NotificationToastService,
 		private readonly userFacadeService: UserFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.managers$ = this.clientCardListFacade.managers$;
 		this.isLoading$ = this.clientCardListFacade.isManagersLoading$;
@@ -115,13 +115,13 @@ export class ClientCardManagersComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((permissions) => {
 				this.canAddManagers = permissions.includes(
-					Permissions.CLIENT_MANAGERS_CAN_ADD_MANAGERS,
+					Permissions.CLIENT_MANAGERS_CAN_ADD_MANAGERS
 				);
 				this.canRemoveManagers = permissions.includes(
-					Permissions.CLIENT_MANAGERS_CAN_REMOVE_MANAGERS,
+					Permissions.CLIENT_MANAGERS_CAN_REMOVE_MANAGERS
 				);
 				this.canAppointMainManager = permissions.includes(
-					Permissions.CLIENT_MANAGERS_CAN_APPOINT_BASE_MANAGER,
+					Permissions.CLIENT_MANAGERS_CAN_APPOINT_BASE_MANAGER
 				);
 			});
 
@@ -150,7 +150,7 @@ export class ClientCardManagersComponent implements OnInit {
 
 	public async onSaveChanges() {
 		for (const operation of this.changedData.managersList.sort(
-			(a, b) => a.status - b.status,
+			(a, b) => a.status - b.status
 		)) {
 			if (operation.status === OperationStatuses.Add) {
 				await this.clientCardListFacade

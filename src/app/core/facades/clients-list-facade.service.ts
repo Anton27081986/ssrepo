@@ -23,7 +23,7 @@ export class ClientsListFacadeService {
 		new Subject<IClientsFilter>();
 
 	private readonly clients = new BehaviorSubject<IResponse<IClientItemDto>>(
-		{} as IResponse<any>,
+		{} as IResponse<any>
 	);
 
 	public clients$ = this.clients.asObservable();
@@ -48,7 +48,7 @@ export class ClientsListFacadeService {
 
 	constructor(
 		private readonly clientApiService: ClientApiService,
-		private readonly dictionaryApiService: DictionaryApiService,
+		private readonly dictionaryApiService: DictionaryApiService
 	) {
 		this.filtersChanged
 			.pipe(
@@ -58,7 +58,7 @@ export class ClientsListFacadeService {
 				tap((clients) => {
 					this.clients.next(clients);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 
@@ -68,7 +68,7 @@ export class ClientsListFacadeService {
 				tap((categories) => {
 					this.categories.next(categories);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 
@@ -78,7 +78,7 @@ export class ClientsListFacadeService {
 				tap((statuses) => {
 					this.statuses.next(statuses);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

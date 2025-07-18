@@ -12,7 +12,7 @@ export class RequestSamplesApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getRequestSamples(
-		filter: IRequestSamplesFilter,
+		filter: IRequestSamplesFilter
 	): Observable<ISampleItemDto> {
 		let params = new HttpParams();
 
@@ -40,7 +40,7 @@ export class RequestSamplesApiService {
 			`${environment.apiUrl}/api/company/RequestSamples`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

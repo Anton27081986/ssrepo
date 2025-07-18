@@ -48,7 +48,7 @@ export class ExcessIncomeEditCommentPopoverComponent {
 
 	constructor(
 		@Inject(DIALOG_DATA)
-		protected readonly data: { tovNode: TovNodeState },
+		protected readonly data: { tovNode: TovNodeState }
 	) {
 		this.comment = new FormControl(this.tovNode().tovCommentSignal(), [
 			Validators.maxLength(50),

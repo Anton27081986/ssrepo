@@ -17,19 +17,19 @@ export class ReturnRequestsFacadeService {
 	public requests$ = this.requests.asObservable();
 
 	constructor(
-		private readonly returnRequestsApiService: ReturnRequestsApiService,
+		private readonly returnRequestsApiService: ReturnRequestsApiService
 	) {
 		this.filtersChanged
 			.pipe(
 				switchMap((filter) => {
 					return this.returnRequestsApiService.getReturnRequests(
-						filter,
+						filter
 					);
 				}),
 				tap((sales) => {
 					this.requests.next(sales);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

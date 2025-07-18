@@ -53,7 +53,7 @@ export class SignalService {
 				};
 
 				this.historyChanged.next(change);
-			},
+			}
 		);
 	}
 
@@ -71,7 +71,7 @@ export class SignalService {
 					console.info('Отлючились от хаба');
 				})
 				.catch((err) =>
-					console.error(`Ошибка отключения от хаба: ${err}`),
+					console.error(`Ошибка отключения от хаба: ${err}`)
 				);
 			this.hubConnection = undefined;
 		}

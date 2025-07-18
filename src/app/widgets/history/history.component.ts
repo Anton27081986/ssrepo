@@ -65,11 +65,11 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 						objectId,
 						queryType,
 						pageSize,
-						(pageIndex - 1) * pageSize,
+						(pageIndex - 1) * pageSize
 					)
 					.pipe(
 						tap((response) =>
-							this.pageTotal.set(response.total || 0),
+							this.pageTotal.set(response.total || 0)
 						),
 
 						map((response) =>
@@ -77,25 +77,25 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 								historyItem.createdTime = formatDate(
 									new Date(historyItem.createdTime),
 									'dd.MM.yyyy HH:mm',
-									'ru-RU',
+									'ru-RU'
 								);
 
 								return historyItem;
-							}),
+							})
 						),
 
 						catchError(() => {
 							this.loading.set(false);
 
 							return of([] as IChangeTrackerItemDto[]);
-						}),
-					),
+						})
+					)
 			),
-			tap(() => this.loading.set(false)),
+			tap(() => this.loading.set(false))
 		),
 		{
 			initialValue: [] as IChangeTrackerItemDto[],
-		},
+		}
 	);
 
 	public mutableHistoryItems: WritableSignal<IChangeTrackerItemDto[]> =
@@ -112,7 +112,7 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 						]);
 					}
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 
@@ -120,7 +120,7 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 			() => {
 				this.mutableHistoryItems.set(this.historyItems());
 			},
-			{ allowSignalWrites: true },
+			{ allowSignalWrites: true }
 		);
 	}
 
@@ -129,7 +129,7 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 			this.signalHistoryService.startConnection(
 				this.authService.userValue.token!,
 				this.objectId(),
-				this.queryType(),
+				this.queryType()
 			);
 		}
 	}

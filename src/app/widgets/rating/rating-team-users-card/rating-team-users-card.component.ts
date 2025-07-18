@@ -63,7 +63,7 @@ export class RatingTeamUsersCardComponent {
 				default:
 					return null;
 			}
-		},
+		}
 	);
 
 	protected readonly TooltipPosition = TooltipPosition;

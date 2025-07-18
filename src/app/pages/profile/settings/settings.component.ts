@@ -39,7 +39,7 @@ export class SettingsComponent implements OnInit {
 	protected readonly IconType = IconType;
 	constructor(
 		private readonly formBuilder: FormBuilder,
-		private readonly userStateService: UserProfileStoreService,
+		private readonly userStateService: UserProfileStoreService
 	) {}
 
 	public ngOnInit() {

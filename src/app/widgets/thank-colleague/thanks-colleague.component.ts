@@ -45,7 +45,7 @@ import { CommonModule, NgForOf, NgIf } from '@angular/common';
 export class ThanksColleagueComponent {
 	protected thanksList: Signal<IThanksColleagueItem[]> = toSignal(
 		this.facade.thanksForColleagues$,
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	protected isLoading: Signal<boolean> = toSignal(this.facade.isLoading$, {
@@ -57,7 +57,7 @@ export class ThanksColleagueComponent {
 
 	constructor(
 		protected readonly facade: ThankColleagueFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {}
 
 	protected openAddThanks() {

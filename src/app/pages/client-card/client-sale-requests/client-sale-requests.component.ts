@@ -96,7 +96,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 	constructor(
 		public readonly saleRequestsFacade: SaleRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {
 		this.sales$ = this.saleRequestsFacade.sales$;
 	}
@@ -159,7 +159,7 @@ export class ClientSaleRequestsComponent implements OnInit {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)
 					: '-';
 

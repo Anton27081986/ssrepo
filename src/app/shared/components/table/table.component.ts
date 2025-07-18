@@ -93,7 +93,7 @@ export class TableComponent implements AfterViewInit, AfterViewChecked {
 	protected readonly TooltipTheme = TooltipTheme;
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {}
 
 	ngAfterViewInit() {

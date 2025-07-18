@@ -23,15 +23,15 @@ export class AvatarComponent implements OnInit {
 	protected noImage = false;
 
 	protected width: BehaviorSubject<string> = new BehaviorSubject<string>(
-		'36',
+		'36'
 	);
 
 	protected height: BehaviorSubject<string> = new BehaviorSubject<string>(
-		'36',
+		'36'
 	);
 
 	protected radius: BehaviorSubject<string> = new BehaviorSubject<string>(
-		'none',
+		'none'
 	);
 
 	protected onImageError() {

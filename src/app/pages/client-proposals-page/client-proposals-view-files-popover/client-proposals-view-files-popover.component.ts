@@ -49,7 +49,7 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) protected readonly data: FileData,
+		@Inject(DIALOG_DATA) protected readonly data: FileData
 	) {
 		this.type = data.clientProposalsTypeDocuments;
 	}
@@ -73,7 +73,7 @@ export class ClientProposalsViewFilesPopoverComponent implements OnInit {
 			files = this.data.files.map((file) => {
 				const findFile =
 					this.data.checkListService.checkFiles$.value.find(
-						(checkFiles) => file.uniqId === checkFiles.uniqId,
+						(checkFiles) => file.uniqId === checkFiles.uniqId
 					);
 
 				file.checked = !!findFile;

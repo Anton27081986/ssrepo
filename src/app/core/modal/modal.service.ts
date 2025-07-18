@@ -15,7 +15,7 @@ export interface DialogConfig {
 export class ModalService {
 	constructor(
 		private readonly overlay: Overlay,
-		private readonly injector: Injector,
+		private readonly injector: Injector
 	) {}
 
 	open<T>(component: ComponentType<T>, config?: DialogConfig) {

@@ -64,10 +64,12 @@ export class ChatBotFeedbackComponent {
 	protected readonly TextType = TextType;
 	protected readonly ButtonType = ButtonType;
 	protected readonly LabelType = LabelType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
 	constructor(
 		private readonly botFacade: ChatBotFacadeService,
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: DialogData,
+		@Inject(DIALOG_DATA) private readonly data: DialogData
 	) {
 		this.feedbackForm = new FormGroup({
 			feedback: new FormControl<string>(''),
@@ -81,7 +83,6 @@ export class ChatBotFeedbackComponent {
 		this.likeType = data.likeType;
 	}
 
-	protected readonly IconPosition = IconPosition;
 	public sendFeedback(): void {
 		this.botFacade
 			.sendFeedback({
@@ -99,6 +100,4 @@ export class ChatBotFeedbackComponent {
 	public close() {
 		this.modalRef.close();
 	}
-
-	protected readonly IconType = IconType;
 }

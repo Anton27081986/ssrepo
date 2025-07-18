@@ -12,7 +12,7 @@ export class LostProductsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getLostProducts(
-		filter: ILostProductsFilter,
+		filter: ILostProductsFilter
 	): Observable<ILostProductsItemDto> {
 		let params = new HttpParams();
 
@@ -32,7 +32,7 @@ export class LostProductsApiService {
 			`${environment.apiUrl}/api/company/lostProducts`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

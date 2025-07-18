@@ -12,12 +12,12 @@ import { environment } from '@environments/environment';
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 	constructor(
-		private readonly authenticationService: AuthenticationService,
+		private readonly authenticationService: AuthenticationService
 	) {}
 
 	public intercept(
 		request: HttpRequest<any>,
-		next: HttpHandler,
+		next: HttpHandler
 	): Observable<HttpEvent<any>> {
 		// add auth header with jwt if user is logged in and request is to services url
 		const user = this.authenticationService.userValue;

@@ -27,7 +27,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: TovFilterComponent,
 		active: false,
@@ -39,7 +39,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: ProductionFactoryFilterComponent,
 		active: false,
@@ -51,7 +51,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: PlanEconomicUserFilterComponent,
 		active: false,
@@ -63,7 +63,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: ManagerTmzFilterComponent,
 		active: false,
@@ -75,7 +75,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: WareHouseFilterComponent,
 		active: false,
@@ -87,7 +87,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: CityFilterComponent,
 		active: false,
@@ -99,7 +99,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: TovCategoryFilterComponent,
 		active: false,
@@ -111,7 +111,7 @@ export const operationPlanFilter: IFilterItem[] = [
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
-			mapFrom: (value: string[]) => value.map((v) => +v),
+			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
 		valueComponent: SectionFilterComponent,
 		active: false,

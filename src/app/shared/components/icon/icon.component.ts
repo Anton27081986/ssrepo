@@ -37,7 +37,7 @@ export class IconComponent implements OnInit, OnChanges, AfterViewInit {
 	ngAfterViewInit() {
 		this.svgIcon.nativeElement.setAttribute(
 			'style',
-			`width: ${this.width}px; height: ${this.height}px`,
+			`width: ${this.width}px; height: ${this.height}px`
 		);
 	}
 

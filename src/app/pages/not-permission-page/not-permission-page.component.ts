@@ -25,7 +25,7 @@ export class NotPermissionPageComponent {
 
 	constructor(
 		private readonly router: Router,
-		private readonly activatedRoute: ActivatedRoute,
+		private readonly activatedRoute: ActivatedRoute
 	) {
 		if (this.activatedRoute.snapshot.queryParams.redirectUrl) {
 			void this.router.navigate([

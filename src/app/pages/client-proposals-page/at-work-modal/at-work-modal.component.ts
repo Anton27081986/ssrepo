@@ -45,7 +45,7 @@ export class AtWorkModalComponent {
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		@Inject(DIALOG_DATA) private readonly data: IOfferData,
+		@Inject(DIALOG_DATA) private readonly data: IOfferData
 	) {
 		if (data) {
 			this.items = this.data.items.map((item) => {

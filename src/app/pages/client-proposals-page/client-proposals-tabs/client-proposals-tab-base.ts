@@ -5,7 +5,7 @@ export class ClientProposalsTabBase {
 	public pageIndex = 1;
 	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	constructor() {}

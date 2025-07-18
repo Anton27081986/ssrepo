@@ -57,7 +57,8 @@ import { IconComponent } from '@app/shared/components/icon/icon.component';
 	standalone: true,
 })
 export class CompletedWorkActEditComponent implements OnInit {
-	@Input() specification: ICompletedWorkActSpecification | null = null;
+	@Input()
+	specification: ICompletedWorkActSpecification | null = null;
 
 	protected editActForm!: FormGroup<{
 		dateUpload: FormControl<string | null>;
@@ -74,52 +75,53 @@ export class CompletedWorkActEditComponent implements OnInit {
 		this.completedWorkActsFacade.act$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected currencies: Signal<IDictionaryItemDto[]> = toSignal(
 		this.completedWorkActsFacade.currencies$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected buUnits: Signal<IDictionaryItemDto[]> = toSignal(
 		this.completedWorkActsFacade.buUnits$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected contracts: Signal<IDictionaryItemDto[]> = toSignal(
 		this.completedWorkActsFacade.contracts$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected documents: Signal<IFile[]> = toSignal(
 		this.completedWorkActsFacade.actAttachment$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	public permissions: Signal<string[]> = toSignal(
 		this.completedWorkActsFacade.permissions$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected newDocuments: File[] = [];
 
 	protected finDocOrders: IFilterOption[] = [];
 
-	public constructor(
+	protected readonly Permissions = Permissions;
+	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly searchFacade: SearchFacadeService,
-		private readonly ref: ChangeDetectorRef,
+		private readonly ref: ChangeDetectorRef
 	) {
 		this.editActForm = new FormGroup({
 			dateUpload: new FormControl<string | null>(null, [
@@ -149,22 +151,22 @@ export class CompletedWorkActEditComponent implements OnInit {
 			.subscribe((act) => {
 				if (act) {
 					this.editActForm.controls.dateUpload.setValue(
-						act.dateUpload,
+						act.dateUpload
 					);
 					this.editActForm.controls.finDocOrderIds.setValue(
 						act.finDocOrders.map((doc) => {
 							return { ...doc, checked: true };
-						}),
+						})
 					);
 					this.editActForm.controls.applicantUserId.setValue(
-						act.applicantUser?.id || null,
+						act.applicantUser?.id || null
 					);
 					this.editActForm.controls.buUnit.setValue(act.buUnit);
 					this.editActForm.controls.providerContractorId.setValue(
-						act.providerContractor?.id,
+						act.providerContractor?.id
 					);
 					this.editActForm.controls.contract.setValue(
-						act.contract || null,
+						act.contract || null
 					);
 					this.editActForm.controls.currency.setValue(act.currency);
 					this.editActForm.controls.comment.setValue(act.comment);
@@ -172,7 +174,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 					if (act.providerContractor.id) {
 						this.completedWorkActsFacade.getFinDocs(
 							act.providerContractor.id,
-							act.externalActDate,
+							act.externalActDate
 						);
 					}
 				}
@@ -189,10 +191,10 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.finDocOrders = docs.reduce(
 						(
 							previousValue: IFilterOption[],
-							currentValue: IFilterOption,
+							currentValue: IFilterOption
 						) => {
 							const selected = checked.find(
-								(item) => item.id === currentValue.id,
+								(item) => item.id === currentValue.id
 							);
 
 							if (selected) {
@@ -204,7 +206,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 							return [...previousValue, currentValue];
 						},
-						[],
+						[]
 					);
 
 					this.ref.detectChanges();
@@ -243,14 +245,14 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 		if (this.editActForm.controls.dateUpload.value?.length === 10) {
 			this.editActForm.controls.dateUpload.setValue(
-				`${this.editActForm.controls.dateUpload.value}T00:00:00.000Z`,
+				`${this.editActForm.controls.dateUpload.value}T00:00:00.000Z`
 			);
 		}
 
 		const selectedFinDocIds = new Set(
 			(this.editActForm.value.finDocOrderIds || []).map((finDoc) =>
-				typeof finDoc === 'number' ? finDoc : finDoc.id,
-			),
+				typeof finDoc === 'number' ? finDoc : finDoc.id
+			)
 		);
 
 		const updatedFinDocOrders = this.finDocOrders.map((order) => ({
@@ -259,7 +261,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 		}));
 
 		this.editActForm.controls.finDocOrderIds.setValue(
-			updatedFinDocOrders.filter((order) => order.checked),
+			updatedFinDocOrders.filter((order) => order.checked)
 		);
 
 		const updatedAct: IUpdateAct = {
@@ -276,13 +278,13 @@ export class CompletedWorkActEditComponent implements OnInit {
 		if (this.newDocuments.length) {
 			forkJoin(
 				this.newDocuments.map((file) =>
-					this.completedWorkActsFacade.uploadFile(file),
-				),
+					this.completedWorkActsFacade.uploadFile(file)
+				)
 			)
 				.pipe(untilDestroyed(this))
 				.subscribe((files) => {
 					updatedAct.documentIds = updatedAct.documentIds.concat(
-						files.map((file) => file.id),
+						files.map((file) => file.id)
 					);
 					this.completedWorkActsFacade.updateAct(updatedAct);
 				});
@@ -320,7 +322,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.finDocOrders = [];
 					this.completedWorkActsFacade.getFinDocs(
 						id,
-						this.act()?.externalActDate || null,
+						this.act()?.externalActDate || null
 					);
 					this.ref.detectChanges();
 				});
@@ -336,7 +338,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 		Array.from(element.files).forEach((file) => {
 			const earlyLoaded = this.newDocuments.find(
-				(doc) => doc.name === file.name,
+				(doc) => doc.name === file.name
 			);
 
 			if (!earlyLoaded) {
@@ -347,7 +349,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 
 	protected removeFileFromUploadList(fileName: string) {
 		this.newDocuments = this.newDocuments.filter(
-			(file) => file.name !== fileName,
+			(file) => file.name !== fileName
 		);
 	}
 
@@ -366,6 +368,4 @@ export class CompletedWorkActEditComponent implements OnInit {
 			this.editActForm.controls.applicantUserId.setValue(null);
 		}
 	}
-
-	protected readonly Permissions = Permissions;
 }

@@ -16,7 +16,7 @@ import { IUpdateAct } from '@app/core/models/completed-work-acts/update-act';
 export class CompletedWorkActsApiService {
 	constructor(private readonly http: HttpClient) {}
 	public getWorkActsList(
-		filters: ICompletedActsFilter,
+		filters: ICompletedActsFilter
 	): Observable<IResponse<ICompletedWorkAct>> {
 		let params = new HttpParams();
 
@@ -56,7 +56,7 @@ export class CompletedWorkActsApiService {
 		) {
 			params = params.set(
 				'ProviderContractorId',
-				filters.ProviderContractorId,
+				filters.ProviderContractorId
 			);
 		}
 
@@ -81,12 +81,12 @@ export class CompletedWorkActsApiService {
 
 		return this.http.get<IResponse<ICompletedWorkAct>>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs`,
-			{ params },
+			{ params }
 		);
 	}
 
 	public getWorkAct(
-		id: string,
+		id: string
 	): Observable<{ data: ICompletedWorkAct; permissions: string[] }> {
 		return this.http.get<{
 			data: ICompletedWorkAct;
@@ -96,11 +96,11 @@ export class CompletedWorkActsApiService {
 
 	public updateAct(
 		actId: number,
-		body: IUpdateAct,
+		body: IUpdateAct
 	): Observable<ICompletedWorkAct> {
 		return this.http.put<ICompletedWorkAct>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}`,
-			body,
+			body
 		);
 	}
 
@@ -112,33 +112,33 @@ export class CompletedWorkActsApiService {
 			totalAmount: number;
 			items: ICompletedWorkActSpecification[];
 		}>(
-			`${environment.apiUrl}/api/company/CompletedWorkActs/${id}/CostDetails`,
+			`${environment.apiUrl}/api/company/CompletedWorkActs/${id}/CostDetails`
 		);
 	}
 
 	public addSpecification(
 		actId: number,
-		body: IAddSpecification,
+		body: IAddSpecification
 	): Observable<ICompletedWorkActSpecification> {
 		return this.http.post<ICompletedWorkActSpecification>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/CostDetails`,
-			body,
+			body
 		);
 	}
 
 	public updateSpecification(
 		actId: number,
-		body: IAddSpecification,
+		body: IAddSpecification
 	): Observable<ICompletedWorkActSpecification> {
 		return this.http.put<ICompletedWorkActSpecification>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/CostDetails`,
-			body,
+			body
 		);
 	}
 
 	public deleteSpecification(
 		actId: number,
-		costDetailId: number,
+		costDetailId: number
 	): Observable<ICompletedWorkActSpecification> {
 		let params = new HttpParams();
 
@@ -150,52 +150,52 @@ export class CompletedWorkActsApiService {
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/CostDetails`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
 	public getActStates(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/dictionary/CompletedWorkActStates`,
+			`${environment.apiUrl}/api/company/dictionary/CompletedWorkActStates`
 		);
 	}
 
 	public getCurrencies(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/dictionary/Currency`,
+			`${environment.apiUrl}/api/company/dictionary/Currency`
 		);
 	}
 
 	public getBuUnits(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/dictionary/BuUnits`,
+			`${environment.apiUrl}/api/company/dictionary/BuUnits`
 		);
 	}
 
 	public toArchiveAct(actId: number): Observable<any> {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/Delete`,
-			{},
+			{}
 		);
 	}
 
 	public pullAct(actId: number): Observable<any> {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/Pull`,
-			{},
+			{}
 		);
 	}
 
 	public restoreAct(actId: number): Observable<any> {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/Restore`,
-			{},
+			{}
 		);
 	}
 
 	public addDocumentToAct(
 		actId: number,
-		documentId: string,
+		documentId: string
 	): Observable<string> {
 		return this.http.post<string>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document`,
@@ -204,16 +204,16 @@ export class CompletedWorkActsApiService {
 				headers: new HttpHeaders({
 					'Content-Type': 'application/json',
 				}),
-			},
+			}
 		);
 	}
 
 	public removeDocumentFromAct(
 		actId: number,
-		documentId: string,
+		documentId: string
 	): Observable<string> {
 		return this.http.delete<string>(
-			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document/${documentId}`,
+			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Document/${documentId}`
 		);
 	}
 }

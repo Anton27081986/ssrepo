@@ -31,11 +31,11 @@ export class ClientProposalsBusinessTripsTabState {
 	public pageIndex = 1;
 	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	constructor(
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {
 		this.businessTrips$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
@@ -56,7 +56,7 @@ export class ClientProposalsBusinessTripsTabState {
 			switchMap((item) => {
 				return item;
 			}),
-			tap(() => this.isLoader$.next(false)),
+			tap(() => this.isLoader$.next(false))
 		);
 	}
 }

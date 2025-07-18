@@ -14,7 +14,7 @@ import {
 export class VictoryService {
 	constructor(
 		private readonly apiService: WinsApiService,
-		private readonly victoryRootService: VictoryRootService,
+		private readonly victoryRootService: VictoryRootService
 	) {}
 
 	/** Удаление комментария по id */
@@ -24,13 +24,13 @@ export class VictoryService {
 
 	public getWins(pageSize: number, offset: number) {
 		return merge(of(void 0), this.victoryRootService.event$).pipe(
-			switchMap(() => this.apiService.getWins(pageSize, offset)),
+			switchMap(() => this.apiService.getWins(pageSize, offset))
 		);
 	}
 
 	public getComments(request: ICommentRequest) {
 		return merge(of(void 0), this.victoryRootService.event$).pipe(
-			switchMap(() => this.apiService.getCommentsWins(request)),
+			switchMap(() => this.apiService.getCommentsWins(request))
 		);
 	}
 
@@ -40,7 +40,7 @@ export class VictoryService {
 
 	public getWinModal(id: number) {
 		return merge(of(void 0), this.victoryRootService.eventLike$).pipe(
-			switchMap(() => this.apiService.getWin(id)),
+			switchMap(() => this.apiService.getWin(id))
 		);
 	}
 
@@ -58,7 +58,7 @@ export class VictoryService {
 				this.victoryRootService.eventLike$.next({
 					type: VictoryLikeEventEnum.victoryLikeAdd,
 				});
-			}),
+			})
 		);
 	}
 
@@ -68,7 +68,7 @@ export class VictoryService {
 				this.victoryRootService.eventLike$.next({
 					type: VictoryLikeEventEnum.victoryLikeRemove,
 				});
-			}),
+			})
 		);
 	}
 }

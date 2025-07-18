@@ -114,7 +114,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.topic$ = this.notificationsFacadeService.selectedTopic$;
 		this.repliedMessage$ = this.notificationsFacadeService.repliedMessage$;
@@ -146,7 +146,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 							this.mailForm.controls.subject.setValue(subject);
 						} else {
 							this.notificationsFacadeService.selectSubject(
-								this.mailForm.controls.subject.value,
+								this.mailForm.controls.subject.value
 							);
 						}
 
@@ -162,7 +162,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			.subscribe((replyObject) => {
 				if (replyObject?.message) {
 					this.mailForm.controls.subject.setValue(
-						replyObject.message.subject!,
+						replyObject.message.subject!
 					);
 				}
 
@@ -316,7 +316,7 @@ export class MailComponent implements OnInit, AfterViewInit {
 			this.mailForm.controls.text.value!,
 			this.toUsers.map((user) => user.id!),
 			this.toUsersCopy.map((user) => user.id!),
-			this.mailForm.controls.isPrivate.value!,
+			this.mailForm.controls.isPrivate.value!
 		);
 
 		this.resetForm();

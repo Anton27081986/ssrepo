@@ -22,7 +22,7 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
 	constructor(
 		private readonly elementRef: ElementRef,
 		private readonly renderer: Renderer2,
-		private readonly ngZone: NgZone,
+		private readonly ngZone: NgZone
 	) {}
 
 	public ngOnInit() {
@@ -32,7 +32,7 @@ export class ClickOutsideDirective implements OnInit, OnDestroy {
 				'click',
 				(event: Event) => {
 					this.handleClick(event);
-				},
+				}
 			);
 		});
 	}

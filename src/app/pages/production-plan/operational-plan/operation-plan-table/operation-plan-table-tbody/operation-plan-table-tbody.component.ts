@@ -116,6 +116,24 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
 
+	public checkPlanFactValue(event: Event) {
+		const input = event.target as HTMLInputElement;
+
+		const value = input.value.replace(/[^0-9.,]/g, '');
+
+		const firstPunctuationIndex = value.search(/[.,]/);
+
+		if (firstPunctuationIndex !== -1) {
+			const withoutPunctuation = value.replace(/[.,]/g, '');
+			const start = withoutPunctuation.slice(0, firstPunctuationIndex);
+			const end = withoutPunctuation.slice(firstPunctuationIndex);
+
+			input.value = `${start},${end}`;
+		} else {
+			input.value = value;
+		}
+	}
+
 	public getRowCheckboxControl(index: number): FormControl {
 		return this.tableStateService.getRowCheckboxControl(index);
 	}

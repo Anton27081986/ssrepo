@@ -26,7 +26,7 @@ export class TableFullCellComponent {
 	protected readonly Array = Array;
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: DialogData,
+		@Inject(DIALOG_DATA) private readonly data: DialogData
 	) {
 		if (!data.cell) {
 			return;

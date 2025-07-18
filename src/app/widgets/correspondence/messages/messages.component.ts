@@ -73,11 +73,11 @@ export class MessagesComponent {
 	];
 
 	protected messageTab: ITab | undefined = this.tabs.find(
-		(x) => x.name === 'messages',
+		(x) => x.name === 'messages'
 	);
 
 	protected selectedTab: ITab | undefined = this.tabs.find(
-		(x) => x.name === 'messages',
+		(x) => x.name === 'messages'
 	);
 
 	@ViewChild('messages')
@@ -95,7 +95,7 @@ export class MessagesComponent {
 	constructor(
 		private readonly notificationsApiService: NotificationsApiService,
 		private readonly notificationsFacadeService: CorrespondenceFacadeService,
-		private readonly userService: UserProfileStoreService,
+		private readonly userService: UserProfileStoreService
 	) {
 		this.messages$ = this.notificationsFacadeService.messages$;
 		this.files$ = this.notificationsFacadeService.files$;
@@ -162,7 +162,7 @@ export class MessagesComponent {
 				this.notificationsFacadeService.loadMessages(
 					this.pageSize,
 					this.offset,
-					this.searchText,
+					this.searchText
 				);
 			}
 		}
@@ -175,7 +175,7 @@ export class MessagesComponent {
 	protected replyTo(
 		message: IMessageItemDto,
 		author: IUserDto,
-		toUsers: IUserDto[] = [],
+		toUsers: IUserDto[] = []
 	) {
 		const users = [author, ...toUsers];
 
@@ -183,7 +183,7 @@ export class MessagesComponent {
 			message,
 			toUsers: users.filter(
 				(user, index) =>
-					index === users.findIndex((el) => user.id === el.id),
+					index === users.findIndex((el) => user.id === el.id)
 			),
 		});
 	}
@@ -198,7 +198,7 @@ export class MessagesComponent {
 			.subscribe(() => {
 				this.notificationsFacadeService.setMessageVisibility(
 					message.id!,
-					!message.isPrivate,
+					!message.isPrivate
 				);
 			});
 	}
@@ -216,7 +216,7 @@ export class MessagesComponent {
 		this.notificationsFacadeService.searchMessages(
 			this.pageSize,
 			this.offset,
-			target.value,
+			target.value
 		);
 	}
 }

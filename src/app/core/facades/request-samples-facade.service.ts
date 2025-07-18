@@ -17,19 +17,19 @@ export class RequestSamplesFacadeService {
 	public samples$ = this.samples.asObservable();
 
 	constructor(
-		private readonly requestSamplesApiService: RequestSamplesApiService,
+		private readonly requestSamplesApiService: RequestSamplesApiService
 	) {
 		this.filtersChanged
 			.pipe(
 				switchMap((filter) => {
 					return this.requestSamplesApiService.getRequestSamples(
-						filter,
+						filter
 					);
 				}),
 				tap((sales) => {
 					this.samples.next(sales);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

@@ -60,7 +60,7 @@ export class ClientProposalsFacadeService {
 	public tprRejectsReasons$ = this.tprRejectsReasonsSubject.asObservable();
 
 	public readonly blockForProposalSubject$ = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	public doneProductions$: Observable<{
@@ -74,13 +74,13 @@ export class ClientProposalsFacadeService {
 		private readonly clientProposalsApiService: ClientProposalsApiService,
 		private readonly clientProductionsApiService: ProductionsApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
-		activatedRoute: ActivatedRoute,
+		activatedRoute: ActivatedRoute
 	) {
 		this.clientId$ = activatedRoute.paramMap.pipe(
 			filterTruthy(),
 			map((params) => {
 				return Number(params.get('clientId'));
-			}),
+			})
 		);
 
 		this.doneProductions$ = this.clientId$.pipe(
@@ -91,13 +91,13 @@ export class ClientProposalsFacadeService {
 			shareReplay({
 				refCount: true,
 				bufferSize: 1,
-			}),
+			})
 		);
 
 		this.proposalsPermissions$ = this.doneProductions$.pipe(
 			map((productions) => {
 				return productions.permissions;
-			}),
+			})
 		);
 
 		this.getTprRejectReasons()
@@ -105,7 +105,7 @@ export class ClientProposalsFacadeService {
 				untilDestroyed(this),
 				tap((val) => {
 					this.tprRejectsReasonsSubject.next(val.items);
-				}),
+				})
 			)
 			.subscribe();
 	}
@@ -114,9 +114,9 @@ export class ClientProposalsFacadeService {
 		return this.proposalsPermissions$.pipe(
 			map((permission) => {
 				return permission.includes(
-					Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK,
+					Permissions.CLIENT_PROPOSALS_CAN_TAKE_IN_WORK
 				);
-			}),
+			})
 		);
 	}
 
@@ -128,43 +128,43 @@ export class ClientProposalsFacadeService {
 	}
 
 	public getNewsByClientId(
-		params: IRequestGetProposals,
+		params: IRequestGetProposals
 	): Observable<IResponse<INewsDto>> {
 		return this.clientProposalsApiService.getNews(params);
 	}
 
 	public getExamplesByClientId(
-		params: IRequestGetProposals,
+		params: IRequestGetProposals
 	): Observable<IResponseProposalsTrips<ISamples>> {
 		return this.clientProposalsApiService.getSamples(params);
 	}
 
 	public getTradeList(
-		params: IRequestGetTradeList,
+		params: IRequestGetTradeList
 	): Observable<IResponse<ITradeList>> {
 		return this.clientProposalsApiService.getTradeList(params);
 	}
 
 	public getTrips(
-		params: IRequestGetBusinessTrips,
+		params: IRequestGetBusinessTrips
 	): Observable<IResponseProposalsTrips<IBusinessTripsDto>> {
 		return this.clientProposalsApiService.getTrips(params);
 	}
 
 	public getContractors(
-		params: IRequestGetProposals,
+		params: IRequestGetProposals
 	): Observable<IResponse<IContractorsDto>> {
 		return this.clientProposalsApiService.getContractors(params);
 	}
 
 	public getDevelopment(
-		params: IRequestGetDevelopment,
+		params: IRequestGetDevelopment
 	): Observable<IResponse<IDevelopmentDto>> {
 		return this.clientProposalsApiService.getCommitteeDevelopments(params);
 	}
 
 	public getClientOffers(
-		params: IRequestGetClientOffer,
+		params: IRequestGetClientOffer
 	): Observable<ResponseProposals<IClientOffersDto>> {
 		return this.clientProposalsApiService.getClientOffers(params).pipe(
 			map((items) => {
@@ -188,7 +188,7 @@ export class ClientProposalsFacadeService {
 
 				this.isAlterFilter$.next(items.isAlterFilter);
 				this.alterFilterDefenitionNote$.next(
-					items.alterFilterDefenitionNote!,
+					items.alterFilterDefenitionNote!
 				);
 
 				return {
@@ -198,7 +198,7 @@ export class ClientProposalsFacadeService {
 					alterFilterDefenitionNote: items.alterFilterDefenitionNote,
 					alterSearch: items.alterSearch,
 				};
-			}),
+			})
 		);
 	}
 
@@ -226,7 +226,7 @@ export class ClientProposalsFacadeService {
 
 		for (let i = 0; i < length; i++) {
 			result += characters.charAt(
-				Math.floor(Math.random() * charactersLength),
+				Math.floor(Math.random() * charactersLength)
 			);
 		}
 
@@ -235,7 +235,7 @@ export class ClientProposalsFacadeService {
 
 	public saveInCloud(
 		files: IFilesProposals[],
-		sendEmail: boolean,
+		sendEmail: boolean
 	): Observable<SaveInCloud> {
 		return this.clientProposalsApiService.saveInCloud(files, sendEmail);
 	}

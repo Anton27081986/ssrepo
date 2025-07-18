@@ -30,7 +30,7 @@ export class ClientsCardFacadeService {
 	public client$ = this.clientSubject.asObservable();
 
 	private readonly managersSubject = new BehaviorSubject<IManagerItemDto[]>(
-		[],
+		[]
 	);
 
 	public managers$ = this.managersSubject.asObservable();
@@ -55,14 +55,14 @@ export class ClientsCardFacadeService {
 
 	// Загрузка
 	private readonly isContractorsLoadingSubject = new BehaviorSubject<boolean>(
-		true,
+		true
 	);
 
 	public isContractorsLoading$ =
 		this.isContractorsLoadingSubject.asObservable();
 
 	private readonly isManagersLoadingSubject = new BehaviorSubject<boolean>(
-		true,
+		true
 	);
 
 	public isManagersLoading$ = this.isManagersLoadingSubject.asObservable();
@@ -73,7 +73,7 @@ export class ClientsCardFacadeService {
 	constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly callPhoneService: CallPhoneService,
-		private readonly usersApiService: UsersApiService,
+		private readonly usersApiService: UsersApiService
 	) {}
 
 	public setClientId(id: number | null) {
@@ -90,11 +90,11 @@ export class ClientsCardFacadeService {
 					tap((client) => {
 						this.clientSubject.next(client.data);
 						this.clientCardPermissionsSubject.next(
-							client.permissions,
+							client.permissions
 						);
 						this.isInfoLoadingSubject.next(false);
 					}),
-					untilDestroyed(this),
+					untilDestroyed(this)
 				)
 				.subscribe();
 		}
@@ -117,7 +117,7 @@ export class ClientsCardFacadeService {
 						this.managersSubject.next(managers);
 						this.isManagersLoadingSubject.next(false);
 					}),
-					untilDestroyed(this),
+					untilDestroyed(this)
 				)
 				.subscribe();
 		}
@@ -130,7 +130,7 @@ export class ClientsCardFacadeService {
 				tap((statuses) => {
 					this.clientStatusesSubject.next(statuses.items);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -144,7 +144,7 @@ export class ClientsCardFacadeService {
 					this.contractorsSubject.next(contractors);
 					this.isContractorsLoadingSubject.next(false);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -152,21 +152,21 @@ export class ClientsCardFacadeService {
 	public setBasicManager(managerId?: number) {
 		return this.clientApiService.setBasicManager(
 			this.clientIdSubject.value,
-			managerId,
+			managerId
 		);
 	}
 
 	public addManager(managerId?: number) {
 		return this.clientApiService.addManager(
 			this.clientIdSubject.value,
-			managerId,
+			managerId
 		);
 	}
 
 	public deleteManager(managerId?: number) {
 		return this.clientApiService.deleteManager(
 			this.clientIdSubject.value,
-			managerId,
+			managerId
 		);
 	}
 

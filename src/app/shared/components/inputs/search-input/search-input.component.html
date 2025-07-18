@@ -15,9 +15,9 @@
 	/>
 	@if ((found$ | async)?.length) {
 		<div
+			#options
 			class="search-result"
 			[ngClass]="{ 'height-options': reSizeHeightOptions }"
-			#options
 		>
 			<div class="separator"></div>
 			@for (item of found$ | async; track item.id) {

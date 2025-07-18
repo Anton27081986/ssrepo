@@ -32,7 +32,7 @@ export class MyMenuComponent implements OnInit {
 	constructor(
 		private readonly mainMenuFacade: MainMenuFacadeService,
 		private readonly formBuilder: FormBuilder,
-		private readonly cd: ChangeDetectorRef,
+		private readonly cd: ChangeDetectorRef
 	) {}
 
 	public ngOnInit() {
@@ -91,7 +91,7 @@ export class MyMenuComponent implements OnInit {
 						item
 							.name!.toLowerCase()
 							.indexOf(
-								String($event.target.value).toLowerCase(),
+								String($event.target.value).toLowerCase()
 							) !== -1
 					) {
 						this.filterListMenu.push(item);

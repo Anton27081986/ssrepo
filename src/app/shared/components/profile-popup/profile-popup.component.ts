@@ -40,7 +40,7 @@ export class ProfilePopupComponent implements OnInit, OnDestroy {
 		private readonly userStateService: UserProfileStoreService,
 		private readonly authenticationService: AuthenticationService,
 		private readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,
-		private readonly cd: ChangeDetectorRef,
+		private readonly cd: ChangeDetectorRef
 	) {}
 
 	public ngOnInit(): void {

@@ -19,7 +19,7 @@ import { ExcessIncomeBaseNodeState } from '@app/pages/excess-income/excess-incom
 export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 	public readonly event$: BehaviorSubject<ExcessIncomeContractorsEventEnum> =
 		new BehaviorSubject<ExcessIncomeContractorsEventEnum>(
-			ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventDefault,
+			ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventDefault
 		);
 
 	public contractor: ExcessIncomeContractor | null;
@@ -34,7 +34,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		clientId: number,
 		private readonly service: ExcessIncomeService,
 		private readonly state: ExcessIncomeState,
-		private readonly isFake: boolean,
+		private readonly isFake: boolean
 	) {
 		super();
 		this.clientId = clientId;
@@ -47,7 +47,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 		this.expended$.pipe(untilDestroyed(this)).subscribe((value) => {
 			if (value) {
 				this.event$.next(
-					ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventExpended,
+					ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventExpended
 				);
 			} else {
 				this.paginationControl.setValue(0, { emitEvent: false });
@@ -60,10 +60,10 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 				tap((val) => {
 					if (val) {
 						this.event$.next(
-							ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventChangeOffset,
+							ExcessIncomeContractorsEventEnum.excessIncomeContractorsEventChangeOffset
 						);
 					}
-				}),
+				})
 			)
 			.subscribe();
 
@@ -101,7 +101,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 							this.clientId,
 							this.contractor ? this.contractor.id : null,
 							this.service,
-							this.state,
+							this.state
 						);
 					});
 				}),
@@ -114,7 +114,7 @@ export class ContractorNodeState extends ExcessIncomeBaseNodeState {
 					}
 
 					return value;
-				}),
+				})
 			)
 			.subscribe((items) => {
 				this.groups$.next(items);

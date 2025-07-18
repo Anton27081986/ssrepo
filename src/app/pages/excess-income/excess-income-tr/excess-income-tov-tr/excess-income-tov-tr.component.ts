@@ -82,12 +82,16 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconType = IconType;
 	protected readonly IconPosition = IconPosition;
+	protected readonly InputType = InputType;
+	protected readonly Size = Size;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly TextWeight = TextWeight;
 	constructor(
 		private readonly modalService: ModalService,
-		protected readonly columnsStateService: ColumnsStateService,
+		protected readonly columnsStateService: ColumnsStateService
 	) {}
 
-	protected readonly InputType = InputType;
 	get differentCurrentFinalPrice(): boolean {
 		return (
 			this.tovNode().currentParams.controls.finalPrice.value !==
@@ -103,7 +107,6 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		);
 	}
 
-	protected readonly Size = Size;
 	get canEditComment(): boolean {
 		return this.tovNode().canEditComment;
 	}
@@ -112,7 +115,6 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 		this.tovNode().subscription.unsubscribe();
 	}
 
-	protected readonly TooltipTheme = TooltipTheme;
 	protected openPriceHistory() {
 		this.modalService
 			.open(ProductPriceHistoryComponent, {
@@ -163,7 +165,4 @@ export class ExcessIncomeTovTrComponent implements OnDestroy {
 			data: { tovNode: this.tovNode() },
 		});
 	}
-
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly TextWeight = TextWeight;
 }

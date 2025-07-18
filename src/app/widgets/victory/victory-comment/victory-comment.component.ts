@@ -57,10 +57,10 @@ export class VictoryCommentComponent {
 	constructor(
 		private readonly victoryService: VictoryService,
 		private readonly victoryRootService: VictoryRootService,
-		private readonly victoryState: VictoryState,
+		private readonly victoryState: VictoryState
 	) {
 		const profile = JSON.parse(
-			localStorage.getItem('userProfile')!,
+			localStorage.getItem('userProfile')!
 		) as IUserProfile;
 
 		this.authUserId = profile.id!;
@@ -80,7 +80,7 @@ export class VictoryCommentComponent {
 						this.victoryRootService.event$.next({
 							type: VictoryEventEnum.victoryUpdated,
 						});
-					}),
+					})
 			);
 		}
 	}

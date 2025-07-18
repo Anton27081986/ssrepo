@@ -53,7 +53,7 @@ export class AddressBookComponent implements OnInit {
 	constructor(
 		private readonly apiService: AddressBookApiService,
 		private readonly usersApiService: UsersApiService,
-		private readonly ref: ChangeDetectorRef,
+		private readonly ref: ChangeDetectorRef
 	) {}
 
 	public ngOnInit() {

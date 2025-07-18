@@ -84,13 +84,16 @@ export class ExcessIncomeClientTrComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly ButtonType = ButtonType;
 	protected readonly Size = Size;
+	protected readonly TextType = TextType;
+	protected readonly Colors = Colors;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
 		private readonly modalService: ModalService,
-		private readonly state: ExcessIncomeState,
+		private readonly state: ExcessIncomeState
 	) {}
 
-	protected readonly TextType = TextType;
 	openUpdateClientPriceModal(isCurrent: boolean) {
 		this.modalService.open(ExcessIncomeUpdateSndClientPopoverComponent, {
 			data: {
@@ -101,14 +104,10 @@ export class ExcessIncomeClientTrComponent {
 		});
 	}
 
-	protected readonly Colors = Colors;
 	goToClientCard() {
 		window.open(
 			routes.clientCard.toDetail(this.client().client.id).join('/'),
-			'_target',
+			'_target'
 		);
 	}
-
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
 }

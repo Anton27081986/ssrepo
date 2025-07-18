@@ -17,7 +17,7 @@ export interface AnimationOptions {
 export function baseTwoStepAnimation(
 	{ duration, delay, easeBackward, easeForward }: AnimationOptions,
 	forwardStateStyles: Record<string, string>,
-	backwardStateStyles: Record<string, string>,
+	backwardStateStyles: Record<string, string>
 ): Array<AnimationStateMetadata | AnimationTransitionMetadata> {
 	return [
 		state('0', style(forwardStateStyles)),
@@ -31,7 +31,7 @@ export function baseTwoStepAnimation(
 					delay,
 					easeOnIn: easeForward,
 				},
-			},
+			}
 		),
 		transition(
 			'1 => 0',
@@ -42,7 +42,7 @@ export function baseTwoStepAnimation(
 					delay,
 					easeOnOut: easeBackward,
 				},
-			},
+			}
 		),
 	];
 }

@@ -27,12 +27,14 @@ import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reserv
 export class MpReservationOrdersFacadeService {
 	private readonly filtersChanged$: Subject<MpReservationFilter> =
 		new Subject<MpReservationFilter>();
+
 	private readonly orders = new BehaviorSubject<
 		IResponse<IMpReservationOrder>
 	>({
 		items: [],
 		total: 0,
 	} as unknown as IResponse<any>);
+
 	private lastUsedFilters: MpReservationFilter = {
 		limit: 10,
 		offset: 0,
@@ -41,26 +43,30 @@ export class MpReservationOrdersFacadeService {
 	private readonly personificationStatuses = new BehaviorSubject<
 		IDictionaryItemDto[]
 	>([]);
+
 	public personificationStatuses$ =
 		this.personificationStatuses.asObservable();
+
 	public orders$ = this.orders.asObservable();
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	private readonly queueOrdersSubject = new BehaviorSubject<IQueueOrderDto[]>(
-		[],
+		[]
 	);
+
 	public queueOrders$ = this.queueOrdersSubject.asObservable();
 
 	private readonly activeOrder =
 		new BehaviorSubject<IMpReservationOrder | null>(null);
+
 	public activeOrder$ = this.activeOrder.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly mpReservationOrdersApiService: MpReservationOrdersApiService,
 		protected readonly router: Router,
-		private readonly searchFacade: SearchFacadeService,
+		private readonly searchFacade: SearchFacadeService
 	) {
 		this.filtersChanged$
 			.pipe(
@@ -75,7 +81,7 @@ export class MpReservationOrdersFacadeService {
 				catchError((err: unknown) => {
 					this.isLoader$.next(false);
 					throw err;
-				}),
+				})
 			)
 			.subscribe();
 
@@ -83,7 +89,7 @@ export class MpReservationOrdersFacadeService {
 			.getPersonificationStatuses()
 			.pipe(untilDestroyed(this))
 			.subscribe((value) =>
-				this.personificationStatuses.next(value.items),
+				this.personificationStatuses.next(value.items)
 			);
 	}
 
@@ -108,51 +114,53 @@ export class MpReservationOrdersFacadeService {
 					this.applyFiltersOrders({
 						...this.lastUsedFilters,
 						offset: lastOffset,
-						limit: limit,
+						limit,
 					});
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
 
 	public updateProvisionDates(
 		orderIds: number[],
-		provisionDate: string,
+		provisionDate: string
 	): void {
 		forkJoin(
 			orderIds.map((id) =>
 				this.mpReservationOrdersApiService.updateProvisionDate(
 					id,
-					provisionDate,
-				),
-			),
+					provisionDate
+				)
+			)
 		)
 			.pipe(
 				tap(() => {
 					const currentOrders = this.orders.getValue();
 					const updatedOrders = currentOrders.items.map((order) => {
-						if (!orderIds.includes(order.id)) return order;
+						if (!orderIds.includes(order.id)) {
+							return order;
+						}
 
 						const provisionDetails =
 							order.provision.provisionDetails || [];
 						const updatedDetails = provisionDetails.map(
 							(detail) => {
 								const detailTime = new Date(
-									detail.provisionDate!,
+									detail.provisionDate!
 								).getTime();
 								const minTime = Math.min(
 									...provisionDetails.map((detail) =>
 										new Date(
-											detail.provisionDate!,
-										).getTime(),
-									),
+											detail.provisionDate!
+										).getTime()
+									)
 								);
 								const allEqual = provisionDetails.every(
 									(detail) =>
 										new Date(
-											detail.provisionDate!,
-										).getTime() === minTime,
+											detail.provisionDate!
+										).getTime() === minTime
 								);
 
 								return {
@@ -162,7 +170,7 @@ export class MpReservationOrdersFacadeService {
 											? provisionDate
 											: detail.provisionDate,
 								};
-							},
+							}
 						);
 
 						return {
@@ -179,7 +187,7 @@ export class MpReservationOrdersFacadeService {
 						items: updatedOrders,
 					});
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -187,12 +195,12 @@ export class MpReservationOrdersFacadeService {
 	public getHistoryOrder(
 		objectId: string,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<IChangeTrackerItemDto>> {
 		return this.mpReservationOrdersApiService.getHistoryOrder(
 			objectId,
 			limit,
-			offset,
+			offset
 		);
 	}
 
@@ -205,19 +213,19 @@ export class MpReservationOrdersFacadeService {
 			.getQueueOrders()
 			.pipe(
 				tap((queue) => this.queueOrdersSubject.next(queue.data)),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
 
 	public updateOrderPositionInQueue(
 		oldPosition: number,
-		newPosition: number,
+		newPosition: number
 	): void {
 		this.mpReservationOrdersApiService
 			.reorderQueueOrders({
-				oldPosition: oldPosition,
-				newPosition: newPosition,
+				oldPosition,
+				newPosition,
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe();

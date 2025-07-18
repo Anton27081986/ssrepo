@@ -25,7 +25,7 @@ export class DialogComponent {
 	public oneButton = false;
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: DialogData,
+		@Inject(DIALOG_DATA) private readonly data: DialogData
 	) {
 		if (!data) {
 			return;

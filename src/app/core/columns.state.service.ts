@@ -27,7 +27,7 @@ export class ColumnsStateService {
 				});
 
 				return newCol;
-			}),
+			})
 		);
 	}
 

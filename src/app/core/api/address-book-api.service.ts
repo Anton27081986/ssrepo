@@ -13,7 +13,7 @@ export class AddressBookApiService {
 
 	public getAddressBookUsers(
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<IAddressBookUser>> {
 		let params = new HttpParams();
 
@@ -29,20 +29,20 @@ export class AddressBookApiService {
 			`${environment.apiUrl}/api/auth/AddressBook`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
 	public addToAddressBook(userId: number): Observable<any> {
 		return this.http.post(
 			`${environment.apiUrl}/api/auth/AddressBook/${userId}`,
-			{ userId },
+			{ userId }
 		);
 	}
 
 	public deleteFromAddressBook(userId: number): Observable<any> {
 		return this.http.delete(
-			`${environment.apiUrl}/api/auth/AddressBook/${userId}`,
+			`${environment.apiUrl}/api/auth/AddressBook/${userId}`
 		);
 	}
 }

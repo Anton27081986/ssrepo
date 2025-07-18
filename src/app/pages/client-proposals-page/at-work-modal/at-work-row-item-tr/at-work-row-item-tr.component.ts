@@ -101,7 +101,7 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	constructor(
 		public readonly columnsStateService: ColumnsStateService,
 		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {
 		this.tprRejectsReasons$ =
 			this.clientProposalsFacadeService.tprRejectsReasons$;
@@ -178,7 +178,7 @@ export class AtWorkRowItemTrComponent implements OnInit, AfterViewChecked {
 	ngAfterViewChecked() {
 		if (this.content) {
 			this.viewMaximise$.next(
-				this.content.nativeElement.scrollHeight > 200,
+				this.content.nativeElement.scrollHeight > 200
 			);
 		}
 	}

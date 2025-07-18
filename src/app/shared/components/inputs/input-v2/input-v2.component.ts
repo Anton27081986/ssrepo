@@ -92,7 +92,7 @@ export class InputV2Component implements ControlValueAccessor {
 			() => {
 				this.mutableType.set(this.type());
 			},
-			{ allowSignalWrites: true },
+			{ allowSignalWrites: true }
 		);
 
 		effect(
@@ -101,11 +101,11 @@ export class InputV2Component implements ControlValueAccessor {
 					this.updateIconsVisibility(
 						InputIconTypeEnum.Password,
 						'visible',
-						true,
+						true
 					);
 				}
 			},
-			{ allowSignalWrites: true },
+			{ allowSignalWrites: true }
 		);
 
 		effect(
@@ -114,11 +114,11 @@ export class InputV2Component implements ControlValueAccessor {
 					this.updateIconsVisibility(
 						InputIconTypeEnum.Password,
 						'iconName',
-						this.passwordIcon(),
+						this.passwordIcon()
 					);
 				}
 			},
-			{ allowSignalWrites: true },
+			{ allowSignalWrites: true }
 		);
 	}
 
@@ -168,7 +168,7 @@ export class InputV2Component implements ControlValueAccessor {
 			this.updateIconsVisibility(
 				InputIconTypeEnum.Close,
 				'visible',
-				!!value,
+				!!value
 			);
 		}
 
@@ -190,12 +190,12 @@ export class InputV2Component implements ControlValueAccessor {
 	private updateIconsVisibility(
 		type: InputIconTypeEnum,
 		property: keyof IInputIcon,
-		value: unknown,
+		value: unknown
 	): void {
 		this.icons.update((items) =>
 			items.map((item) =>
-				item.type === type ? { ...item, [property]: value } : item,
-			),
+				item.type === type ? { ...item, [property]: value } : item
+			)
 		);
 	}
 }

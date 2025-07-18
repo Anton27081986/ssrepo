@@ -12,7 +12,7 @@ export class UserFacadeService {
 		private readonly authenticationService: AuthenticationService,
 		private readonly menuApiService: MenuApiService,
 		private readonly mainMenuStoreService: MainMenuStoreService,
-		private readonly userProfileStoreService: UserProfileStoreService,
+		private readonly userProfileStoreService: UserProfileStoreService
 	) {}
 
 	public getUserProfile() {

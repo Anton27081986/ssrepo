@@ -45,7 +45,7 @@ export class NoticeDialogComponent {
 	protected readonly ButtonType = ButtonType;
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: NoticeDialogData,
+		@Inject(DIALOG_DATA) private readonly data: NoticeDialogData
 	) {
 		if (!data) {
 			return;

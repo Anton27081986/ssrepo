@@ -14,13 +14,13 @@ export class LostProductsFacadeService {
 		new Subject<ILostProductsFilter>();
 
 	private readonly lostProducts = new BehaviorSubject<ILostProductsItemDto>(
-		{},
+		{}
 	);
 
 	public lostProducts$ = this.lostProducts.asObservable();
 
 	constructor(
-		private readonly lostProductsApiService: LostProductsApiService,
+		private readonly lostProductsApiService: LostProductsApiService
 	) {
 		this.filtersChanged
 			.pipe(
@@ -30,7 +30,7 @@ export class LostProductsFacadeService {
 				tap((sales) => {
 					this.lostProducts.next(sales);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

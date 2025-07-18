@@ -14,7 +14,7 @@ export class ChangeTrackerApiService {
 		objectId: string,
 		type: number,
 		limit: number,
-		offset: number,
+		offset: number
 	) {
 		let params = new HttpParams();
 
@@ -25,7 +25,7 @@ export class ChangeTrackerApiService {
 
 		return this.http.get<IResponse<IChangeTrackerItemDto>>(
 			`${environment.apiUrl}/api/change-tracker/history`,
-			{ params },
+			{ params }
 		);
 	}
 }

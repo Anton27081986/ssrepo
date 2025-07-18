@@ -45,7 +45,7 @@ export class ClientProposalsContractorsTabComponent {
 		this.stateService.contractors$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected linkToModule: Signal<string | null> = computed(() => {
@@ -74,11 +74,11 @@ export class ClientProposalsContractorsTabComponent {
 	protected pageSize = this.stateService.pageSize;
 
 	constructor(
-		private readonly stateService: ClientProposalsContractorsTabState,
+		private readonly stateService: ClientProposalsContractorsTabState
 	) {}
 
 	protected getTableItems(
-		production: IResponse<IContractorsDto>,
+		production: IResponse<IContractorsDto>
 	): ITableItem[] {
 		const productionTableItem = production.items.map((x) => {
 			const tableItem: IClientProposalsContractorsTableItem =
@@ -101,8 +101,7 @@ export class ClientProposalsContractorsTabComponent {
 			this.stateService.offset$.next(0);
 		} else {
 			this.stateService.offset$.next(
-				this.stateService.pageSize * $event -
-					this.stateService.pageSize,
+				this.stateService.pageSize * $event - this.stateService.pageSize
 			);
 		}
 
@@ -111,7 +110,7 @@ export class ClientProposalsContractorsTabComponent {
 
 	protected onActiveContractorChange(e: Event) {
 		this.stateService.isArchiver$.next(
-			(e.currentTarget! as HTMLInputElement).checked,
+			(e.currentTarget! as HTMLInputElement).checked
 		);
 		this.stateService.offset$.next(0);
 		this.stateService.pageIndex = 1;

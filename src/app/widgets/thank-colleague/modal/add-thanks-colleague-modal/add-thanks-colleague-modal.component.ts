@@ -50,12 +50,12 @@ export class AddThanksColleagueModalComponent {
 		private readonly modalRef: ModalRef,
 		private readonly _formBuilder: FormBuilder,
 		protected readonly facade: ThankColleagueFacadeService,
-		private readonly notificationService: NotificationToastService,
+		private readonly notificationService: NotificationToastService
 	) {
 		this.formGroup = this._formBuilder.group<AddVictoryForm>({
 			note: this._formBuilder.nonNullable.control(
 				'',
-				Validators.required,
+				Validators.required
 			),
 			userIds: this._formBuilder.nonNullable.control([]),
 		});
@@ -79,7 +79,7 @@ export class AddThanksColleagueModalComponent {
 				.subscribe(() => {
 					this.notificationService.addToast(
 						'Благодарность уже добавлена на главный экран',
-						'ok',
+						'ok'
 					);
 					this.facade.resetThanks();
 					this.close();

@@ -32,15 +32,16 @@ export class CompletedWorkActsFacadeService {
 		: 'https://erp-dev.ssnab.it/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_01b6e1dd-456d-4a1f-affd-891754889406.docx';
 
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	private readonly filters: Subject<ICompletedActsFilter> =
 		new Subject<ICompletedActsFilter>();
 
 	private readonly acts = new BehaviorSubject<IResponse<ICompletedWorkAct>>(
-		{} as IResponse<any>,
+		{} as IResponse<any>
 	);
+
 	public acts$ = this.acts.asObservable();
 
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
@@ -52,11 +53,13 @@ export class CompletedWorkActsFacadeService {
 	private readonly actStates = new BehaviorSubject<
 		IDictionaryItemDto[] | null
 	>(null);
+
 	public actStates$ = this.actStates.asObservable();
 
 	private readonly specifications = new BehaviorSubject<
 		ICompletedWorkActSpecification[]
 	>([]);
+
 	public specifications$ = this.specifications.asObservable();
 
 	private readonly currencies = new BehaviorSubject<IDictionaryItemDto[]>([]);
@@ -71,6 +74,7 @@ export class CompletedWorkActsFacadeService {
 	private readonly specificationsTotalAmount = new BehaviorSubject<
 		number | null
 	>(null);
+
 	public specificationsTotalAmount$ =
 		this.specificationsTotalAmount.asObservable();
 
@@ -83,14 +87,14 @@ export class CompletedWorkActsFacadeService {
 	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public finDocs$ = this.finDocs.asObservable();
 
-	public constructor(
+	constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
 		private readonly noticeService: NotificationToastService,
 		private readonly searchFacade: SearchFacadeService,
 		private readonly permissionsApiService: PermissionsApiService,
 		private readonly notificationService: NotificationToastService,
-		private readonly router: Router,
+		private readonly router: Router
 	) {
 		this.filters
 			.pipe(
@@ -105,7 +109,7 @@ export class CompletedWorkActsFacadeService {
 				catchError((err: unknown) => {
 					this.isLoader$.next(false);
 					throw err;
-				}),
+				})
 			)
 			.subscribe();
 
@@ -134,7 +138,7 @@ export class CompletedWorkActsFacadeService {
 
 					if (
 						!permissions.includes(
-							Permissions.COMPLETED_WORK_ACTS_ACCESS,
+							Permissions.COMPLETED_WORK_ACTS_ACCESS
 						)
 					) {
 						this.router
@@ -142,7 +146,7 @@ export class CompletedWorkActsFacadeService {
 							.then(() => {
 								this.notificationService.addToast(
 									`Доступ к акту ${id} ограничен`,
-									'warning',
+									'warning'
 								);
 							});
 					} else {
@@ -160,14 +164,14 @@ export class CompletedWorkActsFacadeService {
 				tap((specifications) => {
 					this.specifications.next(specifications.items);
 					this.specificationsTotalAmount.next(
-						specifications.totalAmount,
+						specifications.totalAmount
 					);
 				}),
 				untilDestroyed(this),
 				catchError((err: unknown) => {
 					this.router.navigate([`completed-work-acts`]);
 					throw err;
-				}),
+				})
 			)
 			.subscribe();
 	}
@@ -188,7 +192,7 @@ export class CompletedWorkActsFacadeService {
 				untilDestroyed(this),
 				tap(() => {
 					this.getAct(this.act.value!.id.toString());
-				}),
+				})
 			);
 	}
 
@@ -199,7 +203,7 @@ export class CompletedWorkActsFacadeService {
 				untilDestroyed(this),
 				tap(() => {
 					this.getAct(this.act.value!.id.toString());
-				}),
+				})
 			);
 	}
 
@@ -219,7 +223,7 @@ export class CompletedWorkActsFacadeService {
 				tap((states) => {
 					this.actStates.next(states.items);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -231,7 +235,7 @@ export class CompletedWorkActsFacadeService {
 				tap((states) => {
 					this.currencies.next(states.items);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -243,7 +247,7 @@ export class CompletedWorkActsFacadeService {
 				tap((states) => {
 					this.buUnits.next(states.items);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -253,13 +257,13 @@ export class CompletedWorkActsFacadeService {
 			tap((res) => {
 				this.contracts.next(res.items);
 			}),
-			untilDestroyed(this),
+			untilDestroyed(this)
 		);
 	}
 
 	public getFinDocs(
 		providerContractorId: number,
-		externalActDate: string | null,
+		externalActDate: string | null
 	) {
 		this.searchFacade
 			.getFinDocOrders(providerContractorId, externalActDate)
@@ -267,7 +271,7 @@ export class CompletedWorkActsFacadeService {
 				tap((res) => {
 					this.finDocs.next(res.items);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -325,13 +329,13 @@ export class CompletedWorkActsFacadeService {
 	public uploadFile(file: File) {
 		return this.filesApiService.uploadFile(
 			FileBucketsEnum.Attachments,
-			file,
+			file
 		);
 	}
 
 	public deleteFile(id: string) {
 		this.actAttachment.next(
-			this.actAttachment.value.filter((file) => file.id !== id),
+			this.actAttachment.value.filter((file) => file.id !== id)
 		);
 	}
 
@@ -348,7 +352,7 @@ export class CompletedWorkActsFacadeService {
 						this.permissions.next(res.items);
 					}
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

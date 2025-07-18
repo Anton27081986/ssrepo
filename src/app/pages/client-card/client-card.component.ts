@@ -91,7 +91,7 @@ export class ClientCardComponent implements OnInit {
 	];
 
 	protected mainInfoTab: ITab | undefined = this.tabs.find(
-		(tab) => tab.name === 'basic',
+		(tab) => tab.name === 'basic'
 	);
 
 	protected selectedTab: ITab = this.mainInfoTab!;
@@ -100,7 +100,7 @@ export class ClientCardComponent implements OnInit {
 	constructor(
 		private readonly activatedRoute: ActivatedRoute,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly router: Router,
+		private readonly router: Router
 	) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.clientId$ = this.clientCardListFacade.clientId$;
@@ -122,7 +122,7 @@ export class ClientCardComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((permissions) => {
 				const allTabsAvailable = permissions.includes(
-					Permissions.CLIENT_ADDITIONAL_INFO_READ,
+					Permissions.CLIENT_ADDITIONAL_INFO_READ
 				);
 
 				if (allTabsAvailable) {
@@ -131,7 +131,7 @@ export class ClientCardComponent implements OnInit {
 					});
 				} else if (
 					!permissions.includes(
-						this.clientCardListFacade.notInitPermission,
+						this.clientCardListFacade.notInitPermission
 					)
 				) {
 					this.selectTab('basic');
@@ -141,7 +141,7 @@ export class ClientCardComponent implements OnInit {
 		this.client$.pipe(untilDestroyed(this)).subscribe((client) => {
 			if (client?.isAnyPaymentOverdue) {
 				this.tabs = this.tabs.map((tab) =>
-					tab.name === 'sales' ? { ...tab, icon: 'error' } : tab,
+					tab.name === 'sales' ? { ...tab, icon: 'error' } : tab
 				);
 			}
 		});

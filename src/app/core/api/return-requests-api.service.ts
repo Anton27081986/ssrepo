@@ -12,7 +12,7 @@ export class ReturnRequestsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getReturnRequests(
-		filter: IReturnRequestsFilter,
+		filter: IReturnRequestsFilter
 	): Observable<IReturnRequestsItemDto> {
 		let params = new HttpParams();
 
@@ -40,7 +40,7 @@ export class ReturnRequestsApiService {
 			`${environment.apiUrl}/api/company/returnRequests`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

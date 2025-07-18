@@ -12,14 +12,14 @@ export const expandWidth = trigger('expandWidth', [
 		style({ width: '0%', margin: '0px' }),
 		animate(
 			`${DURATION}ms ease-out`,
-			style({ width: '100%', margin: AUTO_STYLE }),
+			style({ width: '100%', margin: AUTO_STYLE })
 		),
 	]),
 	transition(AnimationState.Enter, [
 		style({ width: '100%', margin: AUTO_STYLE }),
 		animate(
 			`${DURATION}ms ease-out`,
-			style({ width: '0%', margin: '0px' }),
+			style({ width: '0%', margin: '0px' })
 		),
 	]),
 ]);

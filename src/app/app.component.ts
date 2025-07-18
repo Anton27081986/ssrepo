@@ -50,10 +50,10 @@ export class AppComponent implements OnInit {
 	constructor(
 		private readonly titleService: Title,
 		private readonly profileService: ProfileService,
-		private readonly themeService: ThemeService,
+		private readonly themeService: ThemeService
 	) {
 		this.titleService.setTitle(
-			`${environment.tabTitle} ${environment.applicationTitle}`,
+			`${environment.tabTitle} ${environment.applicationTitle}`
 		);
 	}
 
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
 							});
 					}
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

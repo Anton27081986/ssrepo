@@ -43,7 +43,7 @@ export class NotificationToastService {
 
 	public deleteToast(id: number) {
 		this.NotificationsStorage.next(
-			this.NotificationsStorage.value.filter((toast) => toast.id !== id),
+			this.NotificationsStorage.value.filter((toast) => toast.id !== id)
 		);
 	}
 }

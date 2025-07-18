@@ -97,7 +97,7 @@ export class VictoryModalComponent {
 		@Inject(DIALOG_DATA) private readonly data: VictoryModal,
 		private readonly victoryService: VictoryService,
 		private readonly victoryRootService: VictoryRootService,
-		private readonly victoryState: VictoryState,
+		private readonly victoryState: VictoryState
 	) {
 		this.isExtendedMode$.next(this.data.isExtendedMode);
 
@@ -110,7 +110,7 @@ export class VictoryModalComponent {
 			.pipe(
 				tap((victory) => {
 					this.getStateLike(victory);
-				}),
+				})
 			);
 	}
 
@@ -136,7 +136,7 @@ export class VictoryModalComponent {
 							type: VictoryEventEnum.victoryUpdated,
 						});
 						this.notes.setValue('');
-					}),
+					})
 			);
 		} else if (
 			this.victoryState.activeFuncCommentEdit$.value &&
@@ -156,7 +156,7 @@ export class VictoryModalComponent {
 						});
 						this.notes.setValue('');
 						this.victoryState.activeFuncCommentEdit$.next(false);
-					}),
+					})
 			);
 		}
 	}

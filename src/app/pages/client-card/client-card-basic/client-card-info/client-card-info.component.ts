@@ -90,7 +90,7 @@ export class ClientCardInfoComponent implements OnInit {
 	constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		private readonly notificationService: NotificationToastService,
-		private readonly userFacadeService: UserFacadeService,
+		private readonly userFacadeService: UserFacadeService
 	) {
 		this.client$ = this.clientCardListFacade.client$;
 		this.statuses$ = this.clientCardListFacade.statuses$;
@@ -111,13 +111,13 @@ export class ClientCardInfoComponent implements OnInit {
 			this.infoForm.controls.name.setValue(client?.name || '');
 			this.infoForm.controls.status.setValue(client?.status?.id || null);
 			this.infoForm.controls.category.setValue(
-				client?.category?.name || null,
+				client?.category?.name || null
 			);
 			this.infoForm.controls.region.setValue(
-				client?.region?.name || null,
+				client?.region?.name || null
 			);
 			this.infoForm.controls.mainSector.setValue(
-				client?.mainSector?.name || null,
+				client?.mainSector?.name || null
 			);
 			this.newCategoryId = client?.category?.id;
 			this.newRegionId = client?.region?.id;
@@ -134,13 +134,13 @@ export class ClientCardInfoComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((permissions) => {
 				this.canEdit = permissions.includes(
-					Permissions.CLIENT_MAIN_INFO_EDIT,
+					Permissions.CLIENT_MAIN_INFO_EDIT
 				);
 				this.visiblePriceList = permissions.includes(
-					Permissions.CLIENT_MAIN_INFO_PRICE_LIST,
+					Permissions.CLIENT_MAIN_INFO_PRICE_LIST
 				);
 				this.visibleCalculateDistributor = permissions.includes(
-					Permissions.CLIENT_MAIN_INFO_CALCULATION_DISTRIBUTORS,
+					Permissions.CLIENT_MAIN_INFO_CALCULATION_DISTRIBUTORS
 				);
 			});
 

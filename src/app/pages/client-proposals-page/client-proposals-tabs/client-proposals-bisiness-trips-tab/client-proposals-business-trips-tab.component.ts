@@ -101,7 +101,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 
 	protected readonly TooltipTheme = TooltipTheme;
 	constructor(
-		private readonly clientProposalsStateService: ClientProposalsBusinessTripsTabState,
+		private readonly clientProposalsStateService: ClientProposalsBusinessTripsTabState
 	) {}
 
 	public pageIndexChange($event: number) {
@@ -110,7 +110,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 		} else {
 			this.clientProposalsStateService.offset$.next(
 				this.clientProposalsStateService.pageSize * $event -
-					this.clientProposalsStateService.pageSize,
+					this.clientProposalsStateService.pageSize
 			);
 		}
 
@@ -118,7 +118,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 	}
 
 	protected getTableItems(
-		production: IResponseProposalsTrips<IBusinessTripsDto>,
+		production: IResponseProposalsTrips<IBusinessTripsDto>
 	): ITableItem[] {
 		const productionTableItem = production.items.map((x) => {
 			const tableItem: IClientProposalsBusinessTripsTableItem =
@@ -129,7 +129,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 				url: x.linkToDetail ?? '',
 			};
 			tableItem.date = `${new Date(
-				Date.parse(x.beginDate),
+				Date.parse(x.beginDate)
 			).toLocaleString('ru-RU', {
 				year: 'numeric',
 				month: 'numeric',
@@ -154,7 +154,7 @@ export class ClientProposalsBusinessTripsTabComponent {
 
 	protected onOnlyCurrentYear(e: Event) {
 		this.clientProposalsStateService.onlyCurrentYear$.next(
-			(e.currentTarget! as HTMLInputElement).checked,
+			(e.currentTarget! as HTMLInputElement).checked
 		);
 		this.clientProposalsStateService.offset$.next(0);
 		this.clientProposalsStateService.pageIndex = 1;

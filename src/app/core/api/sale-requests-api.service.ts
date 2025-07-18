@@ -12,7 +12,7 @@ export class SaleRequestsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getSaleRequests(
-		filter: ISaleRequestsFilter,
+		filter: ISaleRequestsFilter
 	): Observable<ISaleRequestsDto> {
 		let params = new HttpParams();
 
@@ -46,7 +46,7 @@ export class SaleRequestsApiService {
 		) {
 			params = params.set(
 				'WithPaymentOverdue',
-				filter.WithPaymentOverdue,
+				filter.WithPaymentOverdue
 			);
 		}
 
@@ -54,7 +54,7 @@ export class SaleRequestsApiService {
 			`${environment.apiUrl}/api/company/SaleRequests`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

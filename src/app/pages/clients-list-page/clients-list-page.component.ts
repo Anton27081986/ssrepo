@@ -147,7 +147,7 @@ export class ClientsListPageComponent implements OnInit {
 	constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		private readonly userService: UserProfileStoreService,
+		private readonly userService: UserProfileStoreService
 	) {}
 
 	public ngOnInit(): void {
@@ -157,7 +157,7 @@ export class ClientsListPageComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((user) => {
 				const managersFilter = this.filters.find(
-					(coreFilter) => coreFilter.name === 'managerIds',
+					(coreFilter) => coreFilter.name === 'managerIds'
 				);
 
 				if (managersFilter && user) {
@@ -168,7 +168,7 @@ export class ClientsListPageComponent implements OnInit {
 				}
 
 				const statusesFilter = this.filters.find(
-					(coreFilter) => coreFilter.name === 'statuses',
+					(coreFilter) => coreFilter.name === 'statuses'
 				);
 
 				if (statusesFilter) {
@@ -207,7 +207,7 @@ export class ClientsListPageComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((categories) => {
 				const categoriesFilter = this.filters.find(
-					(filter) => filter.name === 'categoryIds',
+					(filter) => filter.name === 'categoryIds'
 				);
 
 				if (categoriesFilter && categories.items) {
@@ -218,8 +218,8 @@ export class ClientsListPageComponent implements OnInit {
 									(filter) =>
 										!categoriesFilter.options?.find(
 											(savedFilter) =>
-												savedFilter.id === filter.id,
-										),
+												savedFilter.id === filter.id
+										)
 								),
 							]
 						: categories.items;
@@ -230,7 +230,7 @@ export class ClientsListPageComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((statuses) => {
 				const statusesFilter = this.filters.find(
-					(filter) => filter.name === 'statuses',
+					(filter) => filter.name === 'statuses'
 				);
 
 				if (statusesFilter && statuses.items) {
@@ -241,8 +241,8 @@ export class ClientsListPageComponent implements OnInit {
 									(filter) =>
 										!statusesFilter.options?.find(
 											(savedFilter) =>
-												savedFilter.id === filter.id,
-										),
+												savedFilter.id === filter.id
+										)
 								),
 							]
 						: statuses.items;
