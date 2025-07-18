@@ -8,6 +8,7 @@ import {
 	inject,
 	ChangeDetectorRef,
 	Input,
+	LOCALE_ID,
 } from '@angular/core';
 import {
 	AvatarComponent,
@@ -25,7 +26,7 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf, DatePipe } from '@angular/common';
 import { switchMap, tap } from 'rxjs';
 import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
 
@@ -37,10 +38,18 @@ export interface AddCommentsModalData {
 @Component({
 	selector: 'app-add-comments-modal',
 	standalone: true,
-	imports: [NgFor, NgIf, TextComponent, ButtonComponent, AvatarComponent],
+	imports: [
+		NgFor,
+		NgIf,
+		TextComponent,
+		ButtonComponent,
+		AvatarComponent,
+		DatePipe,
+	],
 	templateUrl: './add-comments-modal.component.html',
 	styleUrls: ['./add-comments-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
 })
 export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	@Input()
@@ -93,16 +102,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.subscribe((list) => {
 				this.comments = list.map((item) => ({
 					...item,
-					createdDate: new Date(item.createdDate).toLocaleString(
-						'ru-RU',
-						{
-							year: 'numeric',
-							month: '2-digit',
-							day: '2-digit',
-							hour: '2-digit',
-							minute: '2-digit',
-						}
-					),
+					createdDateObj: new Date(item.createdDate),
 				}));
 				this.cdr.detectChanges();
 			});
@@ -155,16 +155,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.subscribe((list) => {
 				this.comments = list.map((item) => ({
 					...item,
-					createdDate: new Date(item.createdDate).toLocaleString(
-						'ru-RU',
-						{
-							year: 'numeric',
-							month: '2-digit',
-							day: '2-digit',
-							hour: '2-digit',
-							minute: '2-digit',
-						}
-					),
+					createdDateObj: new Date(item.createdDate),
 				}));
 				this.cdr.detectChanges();
 				setTimeout(() => {
@@ -193,16 +184,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 				tap((list) => {
 					this.comments = list.map((item) => ({
 						...item,
-						createdDate: new Date(item.createdDate).toLocaleString(
-							'ru-RU',
-							{
-								year: 'numeric',
-								month: '2-digit',
-								day: '2-digit',
-								hour: '2-digit',
-								minute: '2-digit',
-							}
-						),
+						createdDateObj: new Date(item.createdDate),
 					}));
 					this.cdr.markForCheck();
 					this.dropdownList.closed.emit();

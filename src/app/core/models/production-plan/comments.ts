@@ -7,6 +7,7 @@ export interface ICommentsItemDto {
 	note: string;
 	author: ICommentsAuthorDto;
 	createdDate: string;
+	createdDateObj?: Date;
 }
 
 export interface ICommentsAuthorDto {
