@@ -71,7 +71,6 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.modalRef.close();
-					void this.router.navigate(['mp-reservation-orders']);
 				});
 		}
 	}
