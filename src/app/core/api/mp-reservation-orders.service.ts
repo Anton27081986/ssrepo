@@ -237,10 +237,20 @@ export class MpReservationOrdersApiService {
 	public reorderQueueOrders(
 		body: IQueueReorderPosition
 	): Observable<{ data: IResponse<IQueueOrderDto>; permissions: string[] }> {
+		const params = new HttpParams()
+			.set('fromPosition', body.oldPosition)
+			.set('toPosition', body.newPosition);
+
 		return this.http.put<{
 			data: IResponse<IQueueOrderDto>;
 			permissions: string[];
-		}>(`${environment.apiUrl}/api/manufacturing/Queue/Reorder`, body);
+		}>(
+			`${environment.apiUrl}/api/manufacturing/Queue/Reorder`,
+			{},
+			{
+				params,
+			}
+		);
 	}
 
 	public approveClarification(orderId: number): Observable<void> {
