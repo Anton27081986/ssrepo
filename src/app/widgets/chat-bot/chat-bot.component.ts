@@ -75,21 +75,21 @@ export class ChatBotComponent {
 		this.botFacade.messages$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	public subsectors: Signal<IDictionaryItemDto[]> = toSignal(
 		this.botFacade.subsectors$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	public activeSubsector: Signal<IDictionaryItemDto | null> = toSignal(
 		this.botFacade.activeSubsector$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public state: Signal<ChatBotStates> = toSignal(this.botFacade.state$, {
@@ -117,7 +117,7 @@ export class ChatBotComponent {
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly botFacade: ChatBotFacadeService,
-		private readonly changeDetectorRef: ChangeDetectorRef,
+		private readonly changeDetectorRef: ChangeDetectorRef
 	) {
 		this.questionForm = new FormGroup({
 			question: new FormControl<string>('', [Validators.required]),
@@ -178,7 +178,7 @@ export class ChatBotComponent {
 
 	public openFeedBack(
 		message: IChatBotMessage,
-		likeType: ChatBotLikeTypeEnum,
+		likeType: ChatBotLikeTypeEnum
 	): void {
 		this.modalService
 			.open(ChatBotFeedbackComponent, { data: { message, likeType } })

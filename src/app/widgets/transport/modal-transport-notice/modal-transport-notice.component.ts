@@ -33,7 +33,7 @@ export class ModalTransportNoticeComponent {
 			}),
 			note: new FormControl<string>('', [Validators.required]),
 		},
-		{ validators: dateFromLessDateTo('dateFrom', 'dateTo') },
+		{ validators: dateFromLessDateTo('dateFrom', 'dateTo') }
 	);
 
 	public saveAndCloseModal(): void {

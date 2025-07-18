@@ -38,7 +38,7 @@ export class OperationPlanApiService {
 	private readonly http: HttpClient = inject(HttpClient);
 
 	public getOperationPlan(
-		request: OperationPlanRequest & Pagination,
+		request: OperationPlanRequest & Pagination
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		let params = new HttpParams();
 
@@ -56,19 +56,19 @@ export class OperationPlanApiService {
 
 		return this.http.get<ProductionPlanResponse<OperationPlanItem>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
-			{ params },
+			{ params }
 		);
 	}
 
 	public getTransferProductionPlan(productionPlanDayId: number) {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
-			{ params: { productionPlanDayId } },
+			{ params: { productionPlanDayId } }
 		);
 	}
 
 	public downloadExel(
-		request: OperationPlanRequest & Pagination,
+		request: OperationPlanRequest & Pagination
 	): Observable<Blob> {
 		let params = new HttpParams();
 
@@ -86,20 +86,20 @@ export class OperationPlanApiService {
 
 		return this.http.get<Blob>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Reports`,
-			{ params, responseType: 'blob' as 'json' },
+			{ params, responseType: 'blob' as 'json' }
 		);
 	}
 
 	public getWeeks(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/Weeks`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Weeks`
 		);
 	}
 
 	public getManufacturingTov(
 		query: string,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<ManufacturingTovs>> {
 		let params = new HttpParams();
 
@@ -109,39 +109,39 @@ export class OperationPlanApiService {
 
 		return this.http.get<IResponse<ManufacturingTovs>>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/Tovs`,
-			{ params },
+			{ params }
 		);
 	}
 
 	public transferProductionPlan(
-		params: TransferProductionPlanPatch[],
+		params: TransferProductionPlanPatch[]
 	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
-			params,
+			params
 		);
 	}
 
 	public addGp(params: AddToVRequest): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
-			params,
+			params
 		);
 	}
 
 	public sendComment(
 		id: number,
-		body: ISendComment,
+		body: ISendComment
 	): Observable<{ isComment: boolean; commentCount: string }> {
 		return this.http.post<{ isComment: boolean; commentCount: string }>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
-			body,
+			body
 		);
 	}
 
 	public addComment(id: number): Observable<ICommentsItemDto[]> {
 		return this.http.get<ICommentsItemDto[]>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${id}/Comments`
 		);
 	}
 
@@ -149,94 +149,94 @@ export class OperationPlanApiService {
 		return this.http.request<void>(
 			'delete',
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans`,
-			{ body: { ids: tovIds } },
+			{ body: { ids: tovIds } }
 		);
 	}
 
 	public getCalcVariants() {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductCalcVariants`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductCalcVariants`
 		);
 	}
 
 	public updateRawMaterial(
-		params: UpdateRawMaterialsRequest,
+		params: UpdateRawMaterialsRequest
 	): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/CalcRowMaterials`,
-			{ ...params },
+			{ ...params }
 		);
 	}
 
 	public upload1C(weekId: number): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadOneS`,
-			{ weekId },
+			{ weekId }
 		);
 	}
 
 	public downloadReport(): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadReport`,
-			{},
+			{}
 		);
 	}
 
 	public getCities(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities?ids=58&ids=6`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Cities?ids=58&ids=6`
 		);
 	}
 
 	public approveMaterials(
-		params: ApproveMaterialRequest,
+		params: ApproveMaterialRequest
 	): Observable<LinkToModule> {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/ApproveMaterials`,
-			params,
+			params
 		);
 	}
 
 	public orderAnOutfit(
-		params: OrderAnOutfitRequest,
+		params: OrderAnOutfitRequest
 	): Observable<OrderAnOutfit> {
 		return this.http.post<OrderAnOutfit>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/OrderProduction`,
-			params,
+			params
 		);
 	}
 
 	public setPlanFact(
 		rowId: number,
-		params: CreatePlanFactRequest,
+		params: CreatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.http.post<OperationPlanItem>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
-			{ ...params },
+			{ ...params }
 		);
 	}
 
 	public updatePlanFact(
 		rowId: number,
-		params: UpdatePlanFactRequest,
+		params: UpdatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.http.patch<OperationPlanItem>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
-			{ ...params },
+			{ ...params }
 		);
 	}
 
 	public uploadWMS(date: string) {
 		return this.http.post<LinkToModule>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/UploadWMS`,
-			{ date },
+			{ date }
 		);
 	}
 
 	public getPlanInfo(
 		weekId: number,
 		date: string,
-		productionSectionIds: number[],
+		productionSectionIds: number[]
 	): Observable<{ planDayTotalQuantity: number }> {
 		let params = new HttpParams();
 
@@ -248,7 +248,7 @@ export class OperationPlanApiService {
 
 		return this.http.get<{ planDayTotalQuantity: number }>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TotalPlans`,
-			{ params },
+			{ params }
 		);
 	}
 }

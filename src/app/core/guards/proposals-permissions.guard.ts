@@ -12,7 +12,7 @@ export const proposalsPermissionsGuard: CanActivateFn = () => {
 	return permissionsFacadeService
 		.checkModulePermissions(
 			ModulesWithPermissionsEnum.Proposals,
-			Permissions.CLIENT_TPR_URL_READ,
+			Permissions.CLIENT_TPR_URL_READ
 		)
 		.pipe(
 			map((isAllowAccess) => {
@@ -27,6 +27,6 @@ export const proposalsPermissionsGuard: CanActivateFn = () => {
 				});
 
 				return false;
-			}),
+			})
 		);
 };

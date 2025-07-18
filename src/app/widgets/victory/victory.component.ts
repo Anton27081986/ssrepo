@@ -52,7 +52,7 @@ export class VictoryComponent {
 	protected readonly TableState = TableState;
 	constructor(
 		private readonly modalService: ModalService,
-		private readonly victoryService: VictoryService,
+		private readonly victoryService: VictoryService
 	) {
 		this.victoryList$ = this.offset$.pipe(
 			switchMap((offset) => {
@@ -60,7 +60,7 @@ export class VictoryComponent {
 
 				return this.victoryService.getWins(this.pageSize, offset);
 			}),
-			untilDestroyed(this),
+			untilDestroyed(this)
 		);
 
 		this.victoryList$
@@ -68,7 +68,7 @@ export class VictoryComponent {
 				tap(() => {
 					this.isLoading = false;
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

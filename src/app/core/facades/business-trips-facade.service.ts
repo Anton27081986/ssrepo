@@ -27,19 +27,19 @@ export class BusinessTripsFacadeService {
 	public businessTrips$ = this.businessTrips.asObservable();
 
 	constructor(
-		private readonly businessTripsApiService: BusinessTripsApiService,
+		private readonly businessTripsApiService: BusinessTripsApiService
 	) {
 		this.filtersChanged
 			.pipe(
 				switchMap((filter) => {
 					return this.businessTripsApiService.getBusinessTrips(
-						filter,
+						filter
 					);
 				}),
 				tap((trips) => {
 					this.businessTrips.next(trips);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

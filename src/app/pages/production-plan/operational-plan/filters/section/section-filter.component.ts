@@ -47,24 +47,25 @@ export class SectionFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
 	implements OnInit
 {
-	private filterApiService: OperationPlanFiltersApiService = inject(
-		OperationPlanFiltersApiService,
+	private readonly filterApiService: OperationPlanFiltersApiService = inject(
+		OperationPlanFiltersApiService
 	);
 
 	protected treeNode$!: Observable<TreeNode[]>;
 
 	protected node: IDictionaryItemDto[] = [];
 
+	protected readonly Align = Align;
+	constructor() {
+		super();
+	}
+
 	get trueCheckControlMap(): boolean {
 		return (
 			Object.values(this.currentControlsMap).some(
-				(control) => control.value === true,
+				(control) => control.value === true
 			) && this.indeterminate()
 		);
-	}
-
-	constructor() {
-		super();
 	}
 
 	override ngOnInit() {
@@ -72,19 +73,17 @@ export class SectionFilterComponent
 		this.treeNode$ = this.items$.pipe(
 			map((items) => {
 				const node: TreeNode[] = [];
+
 				items.forEach((parent) => {
 					if (!parent.parentId) {
 						node.push(
-							new TreeNode(
-								parent,
-								items,
-								this.currentControlsMap,
-							),
+							new TreeNode(parent, items, this.currentControlsMap)
 						);
 					}
 				});
+
 				return node;
-			}),
+			})
 		);
 	}
 
@@ -92,6 +91,7 @@ export class SectionFilterComponent
 		return this.filterApiService.getProductionSection(query).pipe(
 			map((value) => {
 				const flat: IDictionaryItemDto[] = [];
+
 				value.parentItems.forEach(
 					(parent: FilterSectionParentItems) => {
 						// Добавляем родителя (date)
@@ -103,11 +103,12 @@ export class SectionFilterComponent
 								parentId: parent.data.id,
 							});
 						});
-					},
+					}
 				);
 				this.node = value.items;
+
 				return [...flat, ...value.items];
-			}),
+			})
 		);
 	}
 
@@ -125,13 +126,12 @@ export class SectionFilterComponent
 								parentId: parent.data.id,
 							});
 						});
-					},
+					}
 				);
 				this.node = value.items;
+
 				return [...flat, ...value.items];
-			}),
+			})
 		);
 	}
-
-	protected readonly Align = Align;
 }

@@ -7,5 +7,5 @@ import ru from '@angular/common/locales/ru';
 registerLocaleData(ru);
 
 bootstrapApplication(AppComponent, appConfig).catch((err) =>
-	console.error(err),
+	console.error(err)
 );

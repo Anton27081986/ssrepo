@@ -52,20 +52,25 @@ export class DropdownColumnsSettingsComponent {
 	public readonly dropdownColumns = this.tableStateService.dropdownColumns;
 
 	public readonly dropdownColumnsVisible = computed(() =>
-		this.dropdownColumns().filter((item) => item.visible),
+		this.dropdownColumns().filter((item) => item.visible)
 	);
 
 	public readonly dropdownColumnsUnVisible = computed(() =>
-		this.dropdownColumns().filter((item) => !item.visible),
+		this.dropdownColumns().filter((item) => !item.visible)
 	);
 
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
 	protected onDropdownItemDrop(
-		event: CdkDragDrop<TableColumnConfig[]>,
+		event: CdkDragDrop<TableColumnConfig[]>
 	): void {
 		this.tableStateService.onDropdownItemDrop(
 			event,
 			this.dropdownColumnsVisible(),
-			this.dropdownColumnsUnVisible(),
+			this.dropdownColumnsUnVisible()
 		);
 	}
 
@@ -75,14 +80,8 @@ export class DropdownColumnsSettingsComponent {
 		this.tableStateService.updateColumnVisibility(column, isVisible);
 	}
 
+	protected readonly Colors = Colors;
 	public getControlForColumn(column: TableColumnConfig): FormControl {
 		return this.tableStateService.getControlForColumn(column);
 	}
-
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly IconType = IconType;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
-	protected readonly Colors = Colors;
 }

@@ -79,7 +79,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 		this.completedWorkActsFacade.permissions$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	@Input()
@@ -95,7 +95,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		public readonly columnsStateService: ColumnsStateService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {}
 
 	ngOnInit() {

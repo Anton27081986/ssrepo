@@ -77,12 +77,16 @@ export class ExcessIncomeGroupTrComponent {
 	protected readonly Size = Size;
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly InputType = InputType;
+	protected readonly TooltipTheme = TooltipTheme;
+	protected readonly TooltipPosition = TooltipPosition;
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {}
 
-	protected readonly ButtonType = ButtonType;
 	public openPriceHistory() {
 		this.modalService
 			.open(GroupPriceHistoryComponent, {
@@ -98,9 +102,4 @@ export class ExcessIncomeGroupTrComponent {
 			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
-
-	protected readonly IconPosition = IconPosition;
-	protected readonly InputType = InputType;
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
 }

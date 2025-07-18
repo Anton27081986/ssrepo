@@ -32,19 +32,19 @@ export class CompletedWorkActInfoComponent {
 		this.completedWorkActsFacade.act$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public permissions: Signal<string[]> = toSignal(
 		this.completedWorkActsFacade.permissions$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected readonly Permissions = Permissions;
 	constructor(
-		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService
 	) {}
 
 	protected switchMode() {

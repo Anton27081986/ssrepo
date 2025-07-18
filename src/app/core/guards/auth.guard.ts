@@ -12,12 +12,12 @@ import { AuthenticationService } from '@app/core/services/authentication.service
 export class AuthGuard implements CanActivate {
 	constructor(
 		private readonly router: Router,
-		private readonly authenticationService: AuthenticationService,
+		private readonly authenticationService: AuthenticationService
 	) {}
 
 	public canActivate(
 		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot,
+		state: RouterStateSnapshot
 	) {
 		const user = this.authenticationService.userValue;
 

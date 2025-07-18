@@ -35,7 +35,7 @@ export class ClientProposalsSendCloudPopoverComponent implements OnInit {
 
 	constructor(
 		private readonly modalRef: ModalRef,
-		@Inject(DIALOG_DATA) private readonly data: UrlData,
+		@Inject(DIALOG_DATA) private readonly data: UrlData
 	) {}
 
 	protected close() {

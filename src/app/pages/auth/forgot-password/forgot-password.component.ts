@@ -44,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit {
 		private readonly formBuilder: FormBuilder,
 		private readonly route: ActivatedRoute,
 		private readonly router: Router,
-		private readonly authenticationService: AuthenticationService,
+		private readonly authenticationService: AuthenticationService
 	) {
 		// redirect to home if already logged in
 		if (this.authenticationService.userValue) {
@@ -59,7 +59,7 @@ export class ForgotPasswordComponent implements OnInit {
 				[
 					Validators.required,
 					Validators.pattern(
-						'^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
+						'^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
 					),
 				],
 			],
@@ -98,7 +98,7 @@ export class ForgotPasswordComponent implements OnInit {
 						unauthorized: 'Неверный или несуществующий e-mail',
 					});
 					throw error;
-				}),
+				})
 			)
 			.subscribe(() => {
 				this.submitted = true;

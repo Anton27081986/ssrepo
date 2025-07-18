@@ -25,7 +25,7 @@ export class ClientProposalsTradeListTabState {
 	public pageIndex = 1;
 	public offset$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	public TovIds$: BehaviorSubject<number[] | undefined> = new BehaviorSubject<
@@ -41,7 +41,7 @@ export class ClientProposalsTradeListTabState {
 	>(undefined);
 
 	constructor(
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {
 		this.tradeList$ = combineLatest([
 			this.clientProposalsFacadeService.clientId$,
@@ -66,7 +66,7 @@ export class ClientProposalsTradeListTabState {
 			switchMap((item) => {
 				return item;
 			}),
-			tap(() => this.isLoader$.next(false)),
+			tap(() => this.isLoader$.next(false))
 		);
 	}
 }

@@ -50,7 +50,7 @@ export class RatingTeamsStateService {
 
 	constructor(
 		private readonly userProfileStore: UserProfileStoreService,
-		private readonly ratingService: RatingService,
+		private readonly ratingService: RatingService
 	) {
 		this.weeks$ = this.loadLastFiveWeeks();
 
@@ -74,7 +74,7 @@ export class RatingTeamsStateService {
 			shareReplay({
 				refCount: true,
 				bufferSize: 1,
-			}),
+			})
 		);
 	}
 
@@ -84,7 +84,7 @@ export class RatingTeamsStateService {
 			shareReplay({
 				refCount: true,
 				bufferSize: 1,
-			}),
+			})
 		);
 	}
 }

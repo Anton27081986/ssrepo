@@ -20,48 +20,48 @@ export class ClientApiService {
 	public getClients(filter: IClientsFilter) {
 		return this.http.post<IResponse<IClientItemDto>>(
 			`${environment.apiUrl}/api/company/clients`,
-			filter,
+			filter
 		);
 	}
 
 	public getClientCardById(id: number): Observable<IClientDataDto> {
 		return this.http.get<IClientDataDto>(
-			`${environment.apiUrl}/api/company/clients/${id}`,
+			`${environment.apiUrl}/api/company/clients/${id}`
 		);
 	}
 
 	public getManagers(id: number): Observable<IManagerItemDto[]> {
 		return this.http.get<IManagerItemDto[]>(
-			`${environment.apiUrl}/api/company/clients/${id}/managers`,
+			`${environment.apiUrl}/api/company/clients/${id}/managers`
 		);
 	}
 
 	public getClientStatuses(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/Dictionary/clientStatuses`,
+			`${environment.apiUrl}/api/company/Dictionary/clientStatuses`
 		);
 	}
 
 	public getContractors(
 		id: number,
-		isActiveOnly: boolean,
+		isActiveOnly: boolean
 	): Observable<IContractorItemDto[]> {
 		return this.http.get<IContractorItemDto[]>(
 			`${environment.apiUrl}/api/company/clients/${id}/contractors`,
 			{
 				params: new HttpParams().set('isActiveOnly', isActiveOnly),
-			},
+			}
 		);
 	}
 
 	public getRegions(
-		searchTerm: string,
+		searchTerm: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/regions`,
 			{
 				params: new HttpParams().set('query', searchTerm),
-			},
+			}
 		);
 	}
 
@@ -76,18 +76,18 @@ export class ClientApiService {
 			`${environment.apiUrl}/api/company/clients/categories`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
 	public getSubSectors(
-		searchTerm: string,
+		searchTerm: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/company/Dictionary/subsectors`,
 			{
 				params: new HttpParams().set('query', searchTerm),
-			},
+			}
 		);
 	}
 
@@ -100,7 +100,7 @@ export class ClientApiService {
 			`${environment.apiUrl}/api/company/Snd/clients`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
@@ -113,7 +113,7 @@ export class ClientApiService {
 			`${environment.apiUrl}/api/company/Snd/tovs`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
@@ -126,13 +126,13 @@ export class ClientApiService {
 			`${environment.apiUrl}/api/company/Snd/Contractors`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
 	public getClientsDictionary(
 		searchTerm: string,
-		onlyActive: boolean,
+		onlyActive: boolean
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
@@ -144,35 +144,35 @@ export class ClientApiService {
 			`${environment.apiUrl}/api/company/Dictionary/clients`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
 	public getClientIdDictionary(
-		id: number,
+		id: number
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/Dictionary/clients/${id}`,
+			`${environment.apiUrl}/api/company/Dictionary/clients/${id}`
 		);
 	}
 
 	public setBasicManager(clientId: number | null, managerId?: number) {
 		return this.http.put<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,
-			{},
+			{}
 		);
 	}
 
 	public addManager(clientId: number | null, userId?: number) {
 		return this.http.post<IManagerItemDto>(
 			`${environment.apiUrl}/api/company/clients/${clientId}/managers`,
-			{ userId, isMain: false },
+			{ userId, isMain: false }
 		);
 	}
 
 	public deleteManager(clientId: number | null, managerId?: number) {
 		return this.http.delete<IManagerItemDto>(
-			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`,
+			`${environment.apiUrl}/api/company/clients/${clientId}/managers/${managerId}`
 		);
 	}
 
@@ -185,7 +185,7 @@ export class ClientApiService {
 				regionId: body.regionId,
 				status: Number(body.status),
 				comments: body.comments,
-			},
+			}
 		);
 	}
 }

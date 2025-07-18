@@ -60,7 +60,7 @@ export class NumericInputComponent implements ControlValueAccessor, OnInit {
 	public ngOnInit(): void {
 		this.input.nativeElement.addEventListener(
 			'input',
-			this.handleInput.bind(this),
+			this.handleInput.bind(this)
 		);
 	}
 

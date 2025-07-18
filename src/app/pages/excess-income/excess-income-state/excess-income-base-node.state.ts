@@ -12,11 +12,11 @@ import {
 })
 export class ExcessIncomeBaseNodeState {
 	public expended$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+		false
 	);
 
 	public total$: BehaviorSubject<number> = new BehaviorSubject<number>(0);

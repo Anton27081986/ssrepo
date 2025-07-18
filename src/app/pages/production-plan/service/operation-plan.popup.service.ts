@@ -34,7 +34,7 @@ export class OperationPlanPopupService {
 			AddManufacturesPopupComponent,
 			{ weekId },
 			true,
-			'920px',
+			'920px'
 		);
 	}
 
@@ -43,7 +43,7 @@ export class OperationPlanPopupService {
 			CreateCommentsModalComponent,
 			{ id },
 			false,
-			'449px',
+			'449px'
 		);
 	}
 
@@ -52,7 +52,7 @@ export class OperationPlanPopupService {
 			AddCommentsModalComponent,
 			{ id },
 			false,
-			'449px',
+			'449px'
 		);
 	}
 
@@ -60,18 +60,18 @@ export class OperationPlanPopupService {
 		return this.popup.openRightSidePage<PostponeSidePageData>(
 			PostponePersonificationSidePageComponent,
 			{ id },
-			'860px',
+			'860px'
 		);
 	}
 
 	public openCalculationOfRawMaterials(
-		data: UpdateRawMaterialsData,
+		data: UpdateRawMaterialsData
 	): ModalRef {
 		return this.popup.openModal<UpdateRawMaterialsData>(
 			ModalUpdateRawMaterialsComponent,
 			data,
 			true,
-			'584px',
+			'584px'
 		);
 	}
 
@@ -80,7 +80,7 @@ export class OperationPlanPopupService {
 			ApproveMaterialComponent,
 			data,
 			true,
-			'584px',
+			'584px'
 		);
 	}
 }

@@ -68,7 +68,7 @@ export class SalesHistoryComponent {
 		protected readonly data: IDialogData,
 		private readonly excessIncomeApiService: ExcessIncomeApiService,
 		private readonly modalService: ModalService,
-		private readonly cdr: ChangeDetectorRef,
+		private readonly cdr: ChangeDetectorRef
 	) {
 		this.getHistory();
 	}
@@ -82,7 +82,7 @@ export class SalesHistoryComponent {
 					this.data.clientId,
 					this.data.tov.tov.id,
 					this.pageSize,
-					this.offset,
+					this.offset
 				)
 				.pipe(
 					untilDestroyed(this),
@@ -91,14 +91,14 @@ export class SalesHistoryComponent {
 
 						this.cdr.detectChanges();
 						throw err;
-					}),
+					})
 				)
 				.subscribe((response) => {
 					if (!response.items || response.items.length === 0) {
 						this.tableState = TableState.Empty;
 					} else {
 						this.items = this.mapHistoryToTableItems(
-							response.items,
+							response.items
 						);
 						this.total = response.total ?? 0;
 

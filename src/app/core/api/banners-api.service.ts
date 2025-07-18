@@ -15,7 +15,7 @@ export class BannersApiService {
 
 	public getBanners(): Observable<IResponseItems<IBannerDto>> {
 		return this.http.get<IResponseItems<IBannerDto>>(
-			`${environment.apiUrl}/api/${this.prefix}/Banners`,
+			`${environment.apiUrl}/api/${this.prefix}/Banners`
 		);
 	}
 }

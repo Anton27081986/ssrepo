@@ -144,12 +144,35 @@ export class CompletedWorkActsComponent {
 		},
 	];
 
-	public constructor(
+	public acts: Signal<IResponse<ICompletedWorkAct> | null> = toSignal(
+		this.completedWorkActsFacade.acts$,
+		{
+			initialValue: null,
+		}
+	);
+
+	public isLoader: Signal<boolean> = toSignal(
+		this.completedWorkActsFacade.isLoader$,
+		{
+			initialValue: true,
+		}
+	);
+
+	public permissions: Signal<string[]> = toSignal(
+		this.completedWorkActsFacade.permissions$,
+		{
+			initialValue: [],
+		}
+	);
+
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly localStorageService: LocalStorageService,
+		private readonly localStorageService: LocalStorageService
 	) {
 		const savedFilters = this.localStorageService.getItem<IFilter[]>(
-			this.filtersKey,
+			this.filtersKey
 		);
 
 		if (savedFilters) {
@@ -159,27 +182,9 @@ export class CompletedWorkActsComponent {
 		this.getFilteredActs();
 	}
 
-	public acts: Signal<IResponse<ICompletedWorkAct> | null> = toSignal(
-		this.completedWorkActsFacade.acts$,
-		{
-			initialValue: null,
-		},
-	);
-
-	public isLoader: Signal<boolean> = toSignal(
-		this.completedWorkActsFacade.isLoader$,
-		{
-			initialValue: true,
-		},
-	);
-
-	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
-		{
-			initialValue: [],
-		},
-	);
-
+	
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
 	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
 		const actTableItems = acts.items.map((x) => {
 			const tableItem: ICompletedWorkActTableItem =
@@ -193,7 +198,7 @@ export class CompletedWorkActsComponent {
 			tableItem.state = x.state.name ?? '-';
 
 			tableItem.externalActDate = `${new Date(
-				Date.parse(x.externalActDate),
+				Date.parse(x.externalActDate)
 			).toLocaleString('ru-RU', {
 				year: 'numeric',
 				month: 'numeric',
@@ -201,7 +206,7 @@ export class CompletedWorkActsComponent {
 			})}`;
 
 			tableItem.internalActDate = `${new Date(
-				Date.parse(x.internalActDate),
+				Date.parse(x.internalActDate)
 			).toLocaleString('ru-RU', {
 				year: 'numeric',
 				month: 'numeric',
@@ -209,7 +214,7 @@ export class CompletedWorkActsComponent {
 			})}`;
 
 			tableItem.uploadActDate = `${new Date(
-				Date.parse(x.dateUpload),
+				Date.parse(x.dateUpload)
 			).toLocaleString('ru-RU', {
 				year: 'numeric',
 				month: 'numeric',
@@ -321,9 +326,4 @@ export class CompletedWorkActsComponent {
 		link.href = this.completedWorkActsFacade.linkToInstruction;
 		link.click();
 	}
-
-	protected readonly IconType = IconType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
 }

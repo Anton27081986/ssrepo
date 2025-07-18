@@ -54,6 +54,7 @@ import { OperationPlanEmptyStateComponent } from '@app/pages/production-plan/ope
 import { Router, ActivatedRoute } from '@angular/router';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { OperationPlanRootService } from '@app/pages/production-plan/service/operation-plan.root.service';
+
 @Component({
 	selector: 'app-operation-plan',
 	standalone: true,
@@ -82,6 +83,7 @@ import { OperationPlanRootService } from '@app/pages/production-plan/service/ope
 export class OperationalPlanComponent {
 	private readonly operationalPlanService: OperationPlanService =
 		inject(OperationPlanService);
+
 	private readonly router: Router = inject(Router);
 	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
 
@@ -109,7 +111,7 @@ export class OperationalPlanComponent {
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
 					const filterParams = Object.fromEntries(
-						Object.entries(criteria).filter(([_, v]) => v !== null),
+						Object.entries(criteria).filter(([_, v]) => v !== null)
 					);
 
 					void this.router.navigate([], {
@@ -127,16 +129,15 @@ export class OperationalPlanComponent {
 						limit: this.limit,
 						offset,
 					};
+
 					this.operationPlanState.filterValueStore$.next(
-						valueWithPagination as OperationPlanRequest &
-							Pagination,
+						valueWithPagination as OperationPlanRequest & Pagination
 					);
 
 					return this.loadItems(
-						valueWithPagination as OperationPlanRequest &
-							Pagination,
+						valueWithPagination as OperationPlanRequest & Pagination
 					);
-				}),
+				})
 			);
 		}),
 		tap((value) => {
@@ -153,12 +154,11 @@ export class OperationalPlanComponent {
 			return [...acc, ...value];
 		}),
 
-		tap((value) => this.itemTotal$.next(value.length)),
+		tap((value) => this.itemTotal$.next(value.length))
 	);
 
-	private operationPlanRootService: OperationPlanRootService = inject(
-		OperationPlanRootService,
-	);
+	private readonly operationPlanRootService: OperationPlanRootService =
+		inject(OperationPlanRootService);
 
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
@@ -185,14 +185,14 @@ export class OperationalPlanComponent {
 				tap((weeks) => {
 					const weekIdFromQuery =
 						this.activatedRoute.snapshot.queryParamMap.get(
-							'weekId',
+							'weekId'
 						);
 
 					let activeWeek = weeks.find((week) => week.isCurrent);
 
 					if (weekIdFromQuery) {
 						const found = weeks.find(
-							(w) => String(w.id) === String(weekIdFromQuery),
+							(w) => String(w.id) === String(weekIdFromQuery)
 						);
 
 						if (found) {
@@ -201,8 +201,8 @@ export class OperationalPlanComponent {
 					}
 
 					this.activeWeek$.next(activeWeek!);
-				}),
-			),
+				})
+			)
 		);
 
 		toSignal(
@@ -220,16 +220,16 @@ export class OperationalPlanComponent {
 						this.operationPlanState.weekId$.next(value.id);
 						this.offset$.next(0);
 					}
-				}),
-			),
+				})
+			)
 		);
 
 		toSignal(
 			this.headerFilterService.criteria$.pipe(
 				tap(() => {
 					this.offset$.next(0);
-				}),
-			),
+				})
+			)
 		);
 
 		this.operationPlanRootService.event$.subscribe(() => {
@@ -238,12 +238,12 @@ export class OperationalPlanComponent {
 	}
 
 	public loadItems(
-		request: OperationPlanRequest & Pagination,
+		request: OperationPlanRequest & Pagination
 	): Observable<ProductionPlanResponse<OperationPlanItem>> {
 		return this.operationalPlanService.getProductionPlan(request).pipe(
 			tap((value) => {
 				this.days$.next(value.days);
-			}),
+			})
 		);
 	}
 
@@ -253,6 +253,7 @@ export class OperationalPlanComponent {
 
 	public hasCustomFilters(): boolean {
 		const filters = this.operationPlanState.filterValueStore$.value;
+
 		if (!filters) {
 			return false;
 		}
@@ -262,7 +263,7 @@ export class OperationalPlanComponent {
 		}
 
 		return Object.keys(filters).some(
-			(key) => !['weekId', 'limit', 'offset'].includes(key),
+			(key) => !['weekId', 'limit', 'offset'].includes(key)
 		);
 	}
 

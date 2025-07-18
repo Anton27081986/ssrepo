@@ -76,7 +76,7 @@ export class ClientProposalsInfoComponent {
 		this.clientProposalsFacadeService.proposalsPermissions$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected tabs: Signal<ITab[]> = computed(() => {
@@ -115,7 +115,7 @@ export class ClientProposalsInfoComponent {
 
 		if (
 			this.permissions().includes(
-				Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ,
+				Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ
 			)
 		) {
 			tabs.forEach((tab) => {
@@ -133,7 +133,7 @@ export class ClientProposalsInfoComponent {
 	});
 
 	protected mainInfoTab: ITab | undefined = this.tabs().find(
-		(tab) => tab.name === 'contractors',
+		(tab) => tab.name === 'contractors'
 	);
 
 	protected selectedTab: ITab = this.mainInfoTab!;
@@ -141,14 +141,14 @@ export class ClientProposalsInfoComponent {
 	protected readonly Permissions = Permissions;
 	constructor(
 		private readonly _router: Router,
-		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {
 		this.clientId$ = this.clientProposalsFacadeService.clientId$;
 		this.subscription.add(
 			this.clientId$.subscribe((id) => {
 				this.clientId = id;
 				this.searchControl.setValue(id);
-			}),
+			})
 		);
 		this.clientProposalsFacadeService.proposalsPermissions$
 			.pipe(untilDestroyed(this))
@@ -156,7 +156,7 @@ export class ClientProposalsInfoComponent {
 				if (item.length) {
 					if (
 						item.includes(
-							Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ,
+							Permissions.CLIENT_PROPOSALS_ADDITIONAL_INFO_READ
 						)
 					) {
 						const url = this._router.url.split('/');

@@ -25,7 +25,7 @@ export class AuthenticationService {
 	constructor(
 		private readonly router: Router,
 		private readonly http: HttpClient,
-		private readonly localStorageService: LocalStorageService,
+		private readonly localStorageService: LocalStorageService
 	) {}
 
 	public get userValue(): IUser {
@@ -43,7 +43,7 @@ export class AuthenticationService {
 					params: this.params,
 					responseType: 'json',
 					reportProgress: true,
-				},
+				}
 			)
 			.pipe(
 				map((user) => {
@@ -52,7 +52,7 @@ export class AuthenticationService {
 					this.userSubject.next(user);
 
 					return user;
-				}),
+				})
 			);
 	}
 
@@ -67,7 +67,7 @@ export class AuthenticationService {
 					params: this.params,
 					responseType: 'json',
 					reportProgress: true,
-				},
+				}
 			)
 			.pipe(
 				map((user) => {
@@ -77,7 +77,7 @@ export class AuthenticationService {
 					this.userSubject.next(user);
 
 					return user;
-				}),
+				})
 			);
 	}
 
@@ -99,7 +99,7 @@ export class AuthenticationService {
 				observe: 'body',
 				responseType: 'json',
 				reportProgress: true,
-			},
+			}
 		);
 	}
 
@@ -108,14 +108,14 @@ export class AuthenticationService {
 			`${environment.apiUrl}/api/auth/resetPasswordRequest`,
 			{
 				login,
-			},
+			}
 		);
 	}
 
 	public resetPassword(body: ResetPasswordDto) {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/auth/resetPassword`,
-			body,
+			body
 		);
 	}
 }

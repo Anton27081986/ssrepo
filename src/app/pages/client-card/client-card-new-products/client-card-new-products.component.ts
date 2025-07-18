@@ -80,7 +80,7 @@ export class ClientCardNewProductsComponent implements OnInit {
 	constructor(
 		public readonly newProductsFacadeService: NewProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {
 		this.newProducts$ = this.newProductsFacadeService.newProducts$;
 	}

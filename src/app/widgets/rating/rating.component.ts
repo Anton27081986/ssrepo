@@ -80,7 +80,7 @@ export class RatingComponent implements OnInit {
 		this.ratingState.rating$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public averageAll: Signal<number | undefined> = computed(() => {
@@ -95,7 +95,7 @@ export class RatingComponent implements OnInit {
 		this.ratingState.reportAvailable$,
 		{
 			initialValue: false,
-		},
+		}
 	);
 
 	protected readonly form: FormGroup<RatingCriteriaForm> = this.buildForm();
@@ -105,7 +105,7 @@ export class RatingComponent implements OnInit {
 	protected readonly TypeReport = TypeReport;
 	constructor(
 		private readonly ratingState: RatingTeamsStateService,
-		private readonly ratingService: RatingService,
+		private readonly ratingService: RatingService
 	) {}
 
 	ngOnInit() {
@@ -136,11 +136,11 @@ export class RatingComponent implements OnInit {
 		return new FormGroup<RatingCriteriaForm>({
 			week: new FormControl<IDictionaryItemDto | null>(
 				{ value: null, disabled: false },
-				Validators.required,
+				Validators.required
 			),
 			userId: new FormControl<number | null>(
 				{ value: null, disabled: false },
-				Validators.required,
+				Validators.required
 			),
 		});
 	}

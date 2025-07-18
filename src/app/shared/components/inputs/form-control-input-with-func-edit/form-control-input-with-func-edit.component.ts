@@ -26,7 +26,7 @@ import { TextComponent } from '@app/shared/components/typography/text/text.compo
 		{
 			provide: NG_VALUE_ACCESSOR,
 			useExisting: forwardRef(
-				() => FormControlInputWithFuncEditComponent,
+				() => FormControlInputWithFuncEditComponent
 			),
 			multi: true,
 		},
@@ -70,7 +70,7 @@ export class FormControlInputWithFuncEditComponent
 
 	@Input()
 	public control: FormControl<string | null> = new FormControl<string | null>(
-		null,
+		null
 	);
 
 	@Output()

@@ -30,7 +30,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @UntilDestroy()
 export class GroupNodeState extends ExcessIncomeBaseNodeState {
 	public groupSignal: WritableSignal<ExcessIncomeGroup> = signal(
-		this.createFormGroup(this.group),
+		this.createFormGroup(this.group)
 	);
 
 	public formGroup: FormGroup<ExcessIncomeParamsFormGroup> =
@@ -38,21 +38,21 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 
 	readonly event$: BehaviorSubject<ExcessIncomeGroupEventEnum> =
 		new BehaviorSubject<ExcessIncomeGroupEventEnum>(
-			ExcessIncomeGroupEventEnum.excessIncomeGroupEventDefault,
+			ExcessIncomeGroupEventEnum.excessIncomeGroupEventDefault
 		);
 
 	public validSndControlCurrent$: Observable<boolean> =
 		this.getSndCurrentControl.statusChanges.pipe(
 			map((status) => {
 				return status === 'VALID';
-			}),
+			})
 		);
 
 	public validSndControlNext$: Observable<boolean> =
 		this.getSndNextControl.statusChanges.pipe(
 			map((status) => {
 				return status === 'VALID';
-			}),
+			})
 		);
 
 	public tov$: BehaviorSubject<TovNodeState[]> = new BehaviorSubject<
@@ -65,7 +65,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 		clientId: number,
 		private readonly contractorId: number | null,
 		private readonly service: ExcessIncomeService,
-		private readonly state: ExcessIncomeState,
+		private readonly state: ExcessIncomeState
 	) {
 		super();
 
@@ -78,7 +78,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 			.pipe(filterTruthy())
 			.subscribe((value) => {
 				this.event$.next(
-					ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency,
+					ExcessIncomeGroupEventEnum.excessIncomeGroupChangeCurrency
 				);
 			});
 
@@ -88,10 +88,10 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 				tap((val) => {
 					if (val) {
 						this.event$.next(
-							ExcessIncomeGroupEventEnum.excessIncomeGroupEventChangeOffset,
+							ExcessIncomeGroupEventEnum.excessIncomeGroupEventChangeOffset
 						);
 					}
-				}),
+				})
 			)
 			.subscribe();
 		this.expended$
@@ -100,10 +100,10 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 				tap((val) => {
 					if (val) {
 						this.event$.next(
-							ExcessIncomeGroupEventEnum.excessIncomeGroupEventExpended,
+							ExcessIncomeGroupEventEnum.excessIncomeGroupEventExpended
 						);
 					}
-				}),
+				})
 			)
 			.subscribe();
 
@@ -163,7 +163,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 							this.contractorId,
 							state,
 							this.state.currencyControl.value!,
-							this,
+							this
 						);
 					});
 				}),
@@ -176,7 +176,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 					}
 
 					return value;
-				}),
+				})
 			)
 			.subscribe((items) => {
 				this.tov$.next(items);
@@ -197,7 +197,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 	}
 
 	private createFormGroup(
-		item: ExcessIncomeFromBackendGroup,
+		item: ExcessIncomeFromBackendGroup
 	): ExcessIncomeGroup {
 		this.formGroup = new FormBuilder().group({
 			sndCurrentControl: [
@@ -215,7 +215,7 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 
 	private mapExcessIncomeGroup(
 		item: ExcessIncomeFromBackendGroup,
-		formGroup: FormGroup<ExcessIncomeParamsFormGroup>,
+		formGroup: FormGroup<ExcessIncomeParamsFormGroup>
 	): ExcessIncomeGroup {
 		return {
 			client: item.client,
@@ -230,16 +230,16 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 
 	updateFormState(group: ExcessIncomeFromBackendGroup) {
 		this.formGroup.controls.sndNextControl.setValue(
-			group.nextExcessIncomePercent,
+			group.nextExcessIncomePercent
 		);
 		this.formGroup.controls.sndNextControl.setValidators(
-			compareValues(group.nextExcessIncomePercent),
+			compareValues(group.nextExcessIncomePercent)
 		);
 		this.formGroup.controls.sndCurrentControl.setValue(
-			group.currentExcessIncomePercent,
+			group.currentExcessIncomePercent
 		);
 		this.formGroup.controls.sndCurrentControl.setValidators(
-			compareValues(group.currentExcessIncomePercent),
+			compareValues(group.currentExcessIncomePercent)
 		);
 		this.formGroup.controls.sndNextControl.updateValueAndValidity();
 		this.formGroup.controls.sndCurrentControl.updateValueAndValidity();
@@ -269,10 +269,10 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 			.subscribe((item) => {
 				this.updateFormState(item);
 				this.groupSignal.set(
-					this.mapExcessIncomeGroup(item, this.formGroup),
+					this.mapExcessIncomeGroup(item, this.formGroup)
 				);
 				this.event$.next(
-					ExcessIncomeGroupEventEnum.excessIncomeGroupEventUpdate,
+					ExcessIncomeGroupEventEnum.excessIncomeGroupEventUpdate
 				);
 			});
 	}
@@ -301,10 +301,10 @@ export class GroupNodeState extends ExcessIncomeBaseNodeState {
 		}
 
 		this.getSndNextControl.setValue(
-			this.groupSignal().nextExcessIncomePercent,
+			this.groupSignal().nextExcessIncomePercent
 		);
 		this.getSndCurrentControl.setValue(
-			this.groupSignal().currentExcessIncomePercent,
+			this.groupSignal().currentExcessIncomePercent
 		);
 	}
 }

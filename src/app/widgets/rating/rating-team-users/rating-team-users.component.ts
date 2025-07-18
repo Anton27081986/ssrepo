@@ -79,7 +79,7 @@ export class RatingTeamUsersComponent {
 		this.usersTeamState.isLoading$,
 		{
 			requireSync: true,
-		},
+		}
 	);
 
 	public limit: number = this.usersTeamState.limit;
@@ -89,7 +89,7 @@ export class RatingTeamUsersComponent {
 
 	constructor(
 		private readonly usersTeamState: RatingTeamUsersState,
-		private readonly teamState: RatingTeamsStateService,
+		private readonly teamState: RatingTeamsStateService
 	) {
 		this.teamState.walkerControl.valueChanges
 			.pipe(untilDestroyed(this))

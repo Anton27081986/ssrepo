@@ -60,7 +60,7 @@ export class ClientCardBirthdaysComponent implements OnInit {
 	constructor(
 		public readonly clientsListFacade: ClientsListFacadeService,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		public readonly birthdaysContractorsFacade: BirthdaysContractorsFacadeService,
+		public readonly birthdaysContractorsFacade: BirthdaysContractorsFacadeService
 	) {
 		this.clients$ = this.clientsListFacade.clients$;
 		this.birthdaysContractors$ =
@@ -72,16 +72,16 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			formatDate(
 				new Date(new Date().setDate(new Date().getDate() - 3)),
 				'dd.MM.yyyy',
-				'ru-RU',
-			),
+				'ru-RU'
+			)
 		);
 
 		this.lastDate = String(
 			formatDate(
 				new Date(new Date().setDate(new Date().getDate() + 3)),
 				'dd.MM.yyyy',
-				'ru-RU',
-			),
+				'ru-RU'
+			)
 		);
 
 		this.birthdaysContractors$
@@ -89,7 +89,7 @@ export class ClientCardBirthdaysComponent implements OnInit {
 				tap((value) => {
 					this.total = value?.total;
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 
@@ -107,7 +107,7 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			fromPickerDateToIso(this.firstDate),
 			fromPickerDateToIso(this.lastDate),
 			this.pageSize,
-			this.offset,
+			this.offset
 		);
 	}
 
@@ -127,16 +127,16 @@ export class ClientCardBirthdaysComponent implements OnInit {
 				formatDate(
 					new Date(new Date().setDate(new Date().getDate() - 3)),
 					'dd.MM.yyyy',
-					'ru-RU',
-				),
+					'ru-RU'
+				)
 			);
 
 			this.lastDate = String(
 				formatDate(
 					new Date(new Date().setDate(new Date().getDate() + 3)),
 					'dd.MM.yyyy',
-					'ru-RU',
-				),
+					'ru-RU'
+				)
 			);
 		}
 
@@ -146,7 +146,7 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			fromPickerDateToIso(this.firstDate),
 			fromPickerDateToIso(this.lastDate),
 			this.pageSize,
-			this.offset,
+			this.offset
 		);
 	}
 
@@ -172,7 +172,7 @@ export class ClientCardBirthdaysComponent implements OnInit {
 			fromPickerDateToIso(this.firstDate),
 			fromPickerDateToIso(this.lastDate),
 			this.pageSize,
-			this.offset,
+			this.offset
 		);
 	}
 }

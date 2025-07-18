@@ -36,11 +36,13 @@ export class OperationPlanEmptyStateComponent {
 	public icon: InputSignal<IconType> = input.required();
 	public viewAddButton: InputSignal<boolean> = input.required();
 
-	private operationPlanState: OperationPlanState = inject(OperationPlanState);
-	private weekId$ = this.operationPlanState.weekId$;
-	private operationPlanPopupService: OperationPlanPopupService = inject(
-		OperationPlanPopupService,
-	);
+	private readonly operationPlanState: OperationPlanState =
+		inject(OperationPlanState);
+
+	private readonly weekId$ = this.operationPlanState.weekId$;
+	private readonly operationPlanPopupService: OperationPlanPopupService =
+		inject(OperationPlanPopupService);
+
 	protected readonly TextType = TextType;
 	protected readonly Status = Status;
 	protected readonly TextWeight = TextWeight;
@@ -51,6 +53,7 @@ export class OperationPlanEmptyStateComponent {
 
 	protected addSemiManufactures() {
 		const weekId = this.weekId$.value;
+
 		if (weekId !== null) {
 			this.operationPlanPopupService.addSemiManufactures(weekId);
 		}

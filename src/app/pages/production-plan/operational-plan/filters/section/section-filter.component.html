@@ -22,13 +22,13 @@
 				<ng-container *ngIf="nodes.length > 0; else noContent">
 					<ss-lib-dropdown-filter-item
 						*ngIf="trueCheckControlMap"
-						[(indeterminate)]="indeterminate"
 						[text]="
 							queryControl.value?.trim()
 								? 'Очистить выбранное'
 								: 'Очистить все'
 						"
 						[control]="controlsClearAll"
+						[(indeterminate)]="indeterminate"
 					></ss-lib-dropdown-filter-item>
 
 					<ss-lib-dropdown-group-filter-items
@@ -36,8 +36,8 @@
 						[treeNode]="node"
 					>
 						<ss-lib-dropdown-filter-item
-							[isPaddingLeft]="true"
 							*ngFor="let child of node.children"
+							[isPaddingLeft]="true"
 							[text]="child.name"
 							[control]="currentControlsMap[child.id]"
 						></ss-lib-dropdown-filter-item>

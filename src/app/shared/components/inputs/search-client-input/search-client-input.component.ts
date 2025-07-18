@@ -74,7 +74,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 
 	constructor(
 		private readonly searchFacade: SearchFacadeService,
-		private readonly ref: ChangeDetectorRef,
+		private readonly ref: ChangeDetectorRef
 	) {
 		this.entityId$
 			.pipe(
@@ -89,7 +89,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 					} else {
 						this.select.emit(null);
 					}
-				}),
+				})
 			)
 			.subscribe(() => ref.detectChanges());
 	}
@@ -102,7 +102,7 @@ export class SearchClientInputComponent implements ControlValueAccessor {
 				}
 
 				return null;
-			}),
+			})
 		);
 	}
 

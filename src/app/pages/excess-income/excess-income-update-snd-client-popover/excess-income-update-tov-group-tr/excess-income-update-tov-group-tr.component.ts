@@ -58,15 +58,14 @@ export class ExcessIncomeUpdateTovGroupTrComponent {
 	protected readonly Size = Size;
 	protected readonly IconType = IconType;
 	protected readonly InputType = InputType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly TextType = TextType;
 	constructor(
 		protected readonly columnsStateService: ColumnsStateService,
-		private readonly state: ExcessIncomeUpdateTovGroupState,
+		private readonly state: ExcessIncomeUpdateTovGroupState
 	) {}
 
-	protected readonly IconPosition = IconPosition;
 	protected delTovGroupsState(id: number) {
 		this.state.delTovGroups(id);
 	}
-
-	protected readonly TextType = TextType;
 }

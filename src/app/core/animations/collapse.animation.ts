@@ -17,31 +17,31 @@ export const collapseHeight: AnimationTriggerMetadata = trigger(
 	[
 		state(
 			AnimationState.False,
-			style({ height: '0px', visibility: 'hidden' }),
+			style({ height: '0px', visibility: 'hidden' })
 		),
 		state(
 			AnimationState.True,
-			style({ height: AUTO_STYLE, visibility: AUTO_STYLE }),
+			style({ height: AUTO_STYLE, visibility: AUTO_STYLE })
 		),
 		transition(AnimationTransition.False, [
 			animate(
 				'300ms 0ms cubic-bezier(.17,.67,.83,.67)',
-				style({ height: AUTO_STYLE }),
+				style({ height: AUTO_STYLE })
 			),
 			animate(
 				'5ms cubic-bezier(.17,.67,.83,.67)',
-				style({ visibility: AUTO_STYLE }),
+				style({ visibility: AUTO_STYLE })
 			),
 		]),
 		transition('true => false', [
 			animate(
 				'50ms cubic-bezier(.17,.67,.83,.67)',
-				style({ visibility: 'hidden' }),
+				style({ visibility: 'hidden' })
 			),
 			animate(
 				'300ms 0ms cubic-bezier(.17,.67,.83,.67)',
-				style({ height: '0' }),
+				style({ height: '0' })
 			),
 		]),
-	],
+	]
 );

@@ -18,7 +18,7 @@ export class NotificationsApiService {
 	public getSubjects(
 		type: CorrespondenceTypeEnum,
 		ObjectId: number,
-		Query?: string,
+		Query?: string
 	): Observable<Array<{ subject: string; messageCount: number }>> {
 		let params = new HttpParams({ fromObject: { ObjectId } });
 
@@ -34,7 +34,7 @@ export class NotificationsApiService {
 			`${environment.apiUrl}/api/notifications/messages/subjects`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
@@ -45,7 +45,7 @@ export class NotificationsApiService {
 		subject: string | null,
 		limit?: number,
 		offset?: number,
-		Query?: string | undefined,
+		Query?: string | undefined
 	): Observable<IResponse<IMessageItemDto>> {
 		let params = new HttpParams({ fromObject: { ObjectId } });
 
@@ -73,7 +73,7 @@ export class NotificationsApiService {
 			`${environment.apiUrl}/api/notifications/messages`,
 			{
 				params,
-			},
+			}
 		);
 	}
 
@@ -81,18 +81,18 @@ export class NotificationsApiService {
 	public sendMessage(body: ISendMessageRequest): Observable<any> {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/notifications/messages`,
-			body,
+			body
 		);
 	}
 
 	/** Изменить сообщение */
 	public patchMessage(
 		id: string,
-		body: ISendMessageRequest,
+		body: ISendMessageRequest
 	): Observable<IMessageItemDto> {
 		return this.http.put<IMessageItemDto>(
 			`${environment.apiUrl}/api/notifications/messages/${id}/edit`,
-			body,
+			body
 		);
 	}
 
@@ -100,7 +100,7 @@ export class NotificationsApiService {
 	public getFiles(
 		type: CorrespondenceTypeEnum,
 		ObjectId: number,
-		subject: string | null,
+		subject: string | null
 	): Observable<IResponse<IAttachmentDto>> {
 		let params = new HttpParams({ fromObject: { ObjectId } });
 
@@ -116,7 +116,7 @@ export class NotificationsApiService {
 			`${environment.apiUrl}/api/notifications/messages/attachments`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

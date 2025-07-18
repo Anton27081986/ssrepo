@@ -12,7 +12,7 @@ export class NewProductsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getNewProducts(
-		filter: INewProductsFilter,
+		filter: INewProductsFilter
 	): Observable<INewProductsItemDto> {
 		let params = new HttpParams();
 
@@ -36,7 +36,7 @@ export class NewProductsApiService {
 			`${environment.apiUrl}/api/company/newProducts`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

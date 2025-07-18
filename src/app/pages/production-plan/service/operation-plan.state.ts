@@ -23,21 +23,21 @@ export class OperationPlanState {
 	public get getHasPermissionEdit(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,
-			Permissions.OPERATIONAL_PLAN_EDIT,
+			Permissions.OPERATIONAL_PLAN_EDIT
 		);
 	}
 
 	public get getHasPermissionCalcRowMaterials(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,
-			Permissions.OPERATIONAL_PLAN_CALC_ROW_MATERIALS,
+			Permissions.OPERATIONAL_PLAN_CALC_ROW_MATERIALS
 		);
 	}
 
 	public get getHasPermissionApproveMaterials(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,
-			Permissions.OPERATIONAL_PLAN_APPROVE_MATERIALS,
+			Permissions.OPERATIONAL_PLAN_APPROVE_MATERIALS
 		);
 	}
 }

@@ -22,7 +22,7 @@ export class ProfileService {
 			`${environment.apiUrl}/api/company/settings`,
 			{
 				isDarkTheme: value,
-			},
+			}
 		);
 	}
 

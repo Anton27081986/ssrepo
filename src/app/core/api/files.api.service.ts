@@ -23,13 +23,13 @@ export class FilesApiService {
 
 		return this.http.post<IFile>(
 			`${environment.apiUrl}/api/files/fileStorage/${bucketId}/upload`,
-			formData,
+			formData
 		);
 	}
 
 	public deleteFile(id: string): Observable<IFile> {
 		return this.http.delete<IFile>(
-			`${environment.apiUrl}/api/files/fileStorage/${id}`,
+			`${environment.apiUrl}/api/files/fileStorage/${id}`
 		);
 	}
 }

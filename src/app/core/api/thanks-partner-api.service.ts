@@ -14,7 +14,7 @@ export class ThanksPartnerApiService {
 	public getPartnerThanks(date: string): Observable<IPartnerThanksListDto> {
 		return this.http.get<IPartnerThanksListDto>(
 			`${environment.apiUrl}/api/awards/partnerThanks?date=${date}`,
-			{},
+			{}
 		);
 	}
 }

@@ -34,7 +34,7 @@ export class RatingTeamUsersState {
 
 	constructor(
 		private readonly service: RatingService,
-		private readonly ratingTeamsStateService: RatingTeamsStateService,
+		private readonly ratingTeamsStateService: RatingTeamsStateService
 	) {
 		this.ratingTeamsStateService.isLoading$
 			.pipe(untilDestroyed(this))
@@ -60,10 +60,10 @@ export class RatingTeamUsersState {
 					this.ratingTeamsStateService.week$.value.id,
 					walker.id,
 					this.limit,
-					offset,
+					offset
 				);
 			}),
-			tap(() => this.isLoading$.next(false)),
+			tap(() => this.isLoading$.next(false))
 		);
 	}
 }

@@ -30,8 +30,8 @@ export class WareHouseFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
 	implements OnInit
 {
-	private filterApiService: OperationPlanFiltersApiService = inject(
-		OperationPlanFiltersApiService,
+	private readonly filterApiService: OperationPlanFiltersApiService = inject(
+		OperationPlanFiltersApiService
 	);
 
 	constructor() {
@@ -46,7 +46,7 @@ export class WareHouseFilterComponent
 		return this.filterApiService.getWarehouse(query).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 
@@ -54,7 +54,7 @@ export class WareHouseFilterComponent
 		return this.filterApiService.getWarehouse('', ids).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 }

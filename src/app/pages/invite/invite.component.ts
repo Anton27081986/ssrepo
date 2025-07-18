@@ -45,14 +45,14 @@ export class InviteComponent implements OnInit {
 	constructor(
 		private readonly profileFacadeService: FriendlyAccountsFacadeService,
 		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService,
-		private readonly activateRoute: ActivatedRoute,
+		private readonly activateRoute: ActivatedRoute
 	) {}
 
 	public ngOnInit(): void {
 		this.tokenAccept = this.activateRoute.snapshot.queryParams.token;
 
 		this.friendsAccount$ = this.profileFacadeService.getUserForAccet(
-			this.tokenAccept,
+			this.tokenAccept
 		);
 	}
 
@@ -60,7 +60,7 @@ export class InviteComponent implements OnInit {
 		this.acceptClick = true;
 		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(
 			this.tokenAccept,
-			true,
+			true
 		);
 
 		this.friendsAccount$.pipe(untilDestroyed(this)).subscribe((item) => {
@@ -72,7 +72,7 @@ export class InviteComponent implements OnInit {
 		this.cancelClick = true;
 		this.profileFacadeService.acceptAddUsersInListFriendlyLogins(
 			this.tokenAccept,
-			false,
+			false
 		);
 	}
 }

@@ -43,7 +43,7 @@ export class PermissionsFacadeService {
 	private checkPermission(
 		permissions: WritableSignal<string[] | null>,
 		permissionApi: PermissionsApiEnum,
-		permissionType: PermissionType,
+		permissionType: PermissionType
 	): Observable<boolean> {
 		return this.permissionsApiService
 			.getPermissionClient(permissionApi)
@@ -54,67 +54,67 @@ export class PermissionsFacadeService {
 				map((permissionsData) =>
 					this.checkPermissionType(
 						permissionsData.items,
-						permissionType,
-					),
+						permissionType
+					)
 				),
 				catchError(() => {
 					return of(false);
-				}),
+				})
 			);
 	}
 
 	private checkPermissionType(
 		permissions: string[] | null,
-		permissionType: string,
+		permissionType: string
 	): boolean {
 		return permissions?.includes(permissionType) ?? false;
 	}
 
 	public checkModulePermissions(
 		permissionModule: ModulesWithPermissionsEnum,
-		permission: PermissionType,
+		permission: PermissionType
 	): Observable<boolean> {
 		switch (permissionModule) {
 			case ModulesWithPermissionsEnum.Proposals:
 				return this.checkPermission(
 					this.proposalsPermissions,
 					PermissionsApiEnum.proposals,
-					permission,
+					permission
 				);
 
 			case ModulesWithPermissionsEnum.CompletedWorkActs:
 				return this.checkPermission(
 					this.completedWorkActsPermissions,
 					PermissionsApiEnum.completedWorkActs,
-					permission,
+					permission
 				);
 
 			case ModulesWithPermissionsEnum.Procurements:
 				return this.checkPermission(
 					this.procurementsPermissions,
 					PermissionsApiEnum.procurements,
-					permission,
+					permission
 				);
 
 			case ModulesWithPermissionsEnum.ExcessIncome:
 				return this.checkPermission(
 					this.excessIncomePermissions,
 					PermissionsApiEnum.excessIncome,
-					permission,
+					permission
 				);
 
 			case ModulesWithPermissionsEnum.MpReservationOrders:
 				return this.checkPermission(
 					this.mpReservationOrders,
 					PermissionsApiEnum.mpReservationOrders,
-					permission,
+					permission
 				);
 
 			case ModulesWithPermissionsEnum.OperationalPlan:
 				return this.checkPermission(
 					this.productionPlanPermissions,
 					PermissionsApiEnum.operationPlan,
-					permission,
+					permission
 				);
 
 			default:
@@ -124,43 +124,43 @@ export class PermissionsFacadeService {
 
 	public hasPermission(
 		permissionModule: ModulesWithPermissionsEnum,
-		permissionType: PermissionType,
+		permissionType: PermissionType
 	): boolean {
 		switch (permissionModule) {
 			case ModulesWithPermissionsEnum.Proposals:
 				return this.checkPermissionType(
 					this.proposalsPermissions(),
-					permissionType,
+					permissionType
 				);
 
 			case ModulesWithPermissionsEnum.CompletedWorkActs:
 				return this.checkPermissionType(
 					this.completedWorkActsPermissions(),
-					permissionType,
+					permissionType
 				);
 
 			case ModulesWithPermissionsEnum.Procurements:
 				return this.checkPermissionType(
 					this.procurementsPermissions(),
-					permissionType,
+					permissionType
 				);
 
 			case ModulesWithPermissionsEnum.ExcessIncome:
 				return this.checkPermissionType(
 					this.excessIncomePermissions(),
-					permissionType,
+					permissionType
 				);
 
 			case ModulesWithPermissionsEnum.OperationalPlan:
 				return this.checkPermissionType(
 					this.productionPlanPermissions(),
-					permissionType,
+					permissionType
 				);
 
 			case ModulesWithPermissionsEnum.MpReservationOrders:
 				return this.checkPermissionType(
 					this.mpReservationOrders(),
-					permissionType,
+					permissionType
 				);
 
 			default:

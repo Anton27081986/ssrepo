@@ -22,9 +22,9 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import('@app/pages/main-page/main-page.module').then(
-						(m) => m.MainPageModule,
+						(m) => m.MainPageModule
 					),
 			},
 			{
@@ -37,15 +37,15 @@ const routes: Routes = [
 					{
 						path: 'profile',
 						canActivate: [AuthGuard],
-						loadChildren: () =>
+						loadChildren: async () =>
 							import('./pages/profile/profile.module').then(
-								(m) => m.ProfileModule,
+								(m) => m.ProfileModule
 							),
 					},
 					{
 						path: 'raw-material-accounting',
 						canActivate: [procurementsPermissionsGuard],
-						loadChildren: () =>
+						loadChildren: async () =>
 							import(
 								'./pages/raw-material-accounting/raw-material-accounting.module'
 							).then((m) => m.RawMaterialAccountingModule),
@@ -64,30 +64,30 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'clients-list',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import(
 						'@app/pages/clients-list-page/clients-list-page.module'
 					).then((m) => m.ClientsListPageModule),
 			},
 			{
 				path: 'client-card',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import('./pages/client-card/client-card.module').then(
-						(m) => m.ClientCardModule,
+						(m) => m.ClientCardModule
 					),
 			},
 			{
 				path: 'client-request-samples',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import('@app/pages/samples-page/samples-page.module').then(
-						(m) => m.SamplesPageModule,
+						(m) => m.SamplesPageModule
 					),
 			},
 			{
 				path: 'invite',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import('./pages/invite/invite.module').then(
-						(m) => m.InviteModule,
+						(m) => m.InviteModule
 					),
 			},
 		],
@@ -102,7 +102,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'client-proposals-page',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import(
 						'@app/pages/client-proposals-page/client-proposals.module'
 					).then((m) => m.ClientProposalsModule),
@@ -119,7 +119,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'completed-work-acts',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import(
 						'./pages/completed-work-acts/completed-work-acts.module'
 					).then((m) => m.CompletedWorkActsModule),
@@ -135,7 +135,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'production-plan',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import(
 						'./pages/production-plan/production-plan.routing'
 					).then((r) => r.productionPlanRoutes),
@@ -152,7 +152,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'excess-income-page',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import(
 						'@app/pages/excess-income/excess-income.module'
 					).then((m) => m.ExcessIncomeModule),
@@ -169,7 +169,7 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'not-permission',
-				loadChildren: () =>
+				loadChildren: async () =>
 					import(
 						'./pages/not-permission-page/not-permission-page.module'
 					).then((m) => m.NotPermissionPageModule),
@@ -181,7 +181,7 @@ const routes: Routes = [
 		data: {
 			animation: 'animation',
 		},
-		loadChildren: () =>
+		loadChildren: async () =>
 			import('./pages/auth/auth.module').then((m) => m.AuthModule),
 	},
 	{
@@ -189,9 +189,9 @@ const routes: Routes = [
 		data: {
 			animation: 'animation',
 		},
-		loadChildren: () =>
+		loadChildren: async () =>
 			import('./pages/sandbox/sandbox.module').then(
-				(m) => m.SandboxModule,
+				(m) => m.SandboxModule
 			),
 	},
 	{ path: '**', redirectTo: '' },

@@ -31,7 +31,7 @@ export class ChartLineComponent {
 			this.width.set(
 				this.data().reduce((prev, next) => {
 					return prev + next.value;
-				}, 0),
+				}, 0)
 			);
 		});
 	}

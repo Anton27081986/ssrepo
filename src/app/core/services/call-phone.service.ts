@@ -27,7 +27,7 @@ export class CallPhoneService {
 				error: (error: unknown) => {
 					console.error(
 						'Ошибка при сбросе звонка пользователя:',
-						error,
+						error
 					);
 				},
 			});

@@ -49,28 +49,33 @@ export class CompletedWorkActCardComponent {
 		this.completedWorkActsFacade.act$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected isEdit: Signal<boolean> = toSignal(
 		this.completedWorkActsFacade.isEditMode$,
 		{
 			initialValue: false,
-		},
+		}
 	);
 
 	public permissions: Signal<string[]> = toSignal(
 		this.completedWorkActsFacade.permissions$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
-	public constructor(
+	protected readonly Permissions = Permissions;
+	protected readonly IconPosition = IconPosition;
+	protected readonly Size = Size;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
+constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly modalService: ModalService,
-		private readonly router: Router,
+		private readonly router: Router
 	) {
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -85,6 +90,7 @@ export class CompletedWorkActCardComponent {
 		});
 	}
 
+	
 	public toArchiveAct() {
 		this.completedWorkActsFacade.toArchiveAct();
 	}
@@ -107,10 +113,4 @@ export class CompletedWorkActCardComponent {
 		link.href = this.completedWorkActsFacade.linkToInstruction;
 		link.click();
 	}
-
-	protected readonly Permissions = Permissions;
-	protected readonly IconPosition = IconPosition;
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconType = IconType;
 }

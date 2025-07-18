@@ -22,7 +22,7 @@ export class ClientCardBasicComponent {
 	public client$: Observable<IClientDto | null>;
 
 	constructor(
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {
 		this.client$ = this.clientCardListFacade.client$;
 	}

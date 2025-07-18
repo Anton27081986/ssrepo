@@ -77,21 +77,21 @@ import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placehol
 export class ExcessIncomePageComponent {
 	protected clientsNode: Signal<ClientNodeState[]> = toSignal(
 		this.excessIncomeStateService.clientNode$,
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	protected total: Signal<number> = toSignal(
 		this.excessIncomeStateService.total$,
 		{
 			requireSync: true,
-		},
+		}
 	);
 
 	protected currency: Signal<IDictionaryItemDto[]> = toSignal(
 		this.excessIncomeStateService.currency$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	public limit = this.excessIncomeStateService.limit;
@@ -129,63 +129,14 @@ export class ExcessIncomePageComponent {
 		},
 	];
 
-	protected getFilteredExcessIncome(isNewFilter: boolean = false) {
-		const preparedFilter: any = {};
-
-		for (const filter of this.filters) {
-			preparedFilter[filter.name] =
-				filter.value && filter.type ? filter.value : null;
-
-			switch (filter.type) {
-				case 'search-select':
-					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map((item) => item.id)
-						: null;
-					break;
-				case 'boolean':
-					preparedFilter[filter.name] =
-						filter.value === 'Да' ? true : null;
-					break;
-				default:
-					preparedFilter[filter.name] =
-						filter.value?.toString().replace(',', '.') || null;
-			}
-		}
-
-		this.excessIncomeStateService.applyFilters(preparedFilter);
-	}
-
 	public isLoader$: BehaviorSubject<boolean> =
 		this.excessIncomeStateService.isLoader$;
+
 	public isLoaderTr$: BehaviorSubject<boolean> =
 		this.excessIncomeStateService.isLoaderTr$;
 
 	protected readonly paginationControl: FormControl<number | null> =
 		this.excessIncomeStateService.paginationControl;
-
-	constructor(
-		public readonly excessIncomeStateService: ExcessIncomeState,
-		public readonly columnStateService: ColumnsStateService,
-	) {
-		this.columnStateService.colsTr$.next(this.defaultCols);
-
-		this.currencyControl.setValue({ id: 2, name: 'RUR' });
-	}
-
-	public expended(
-		node: ClientNodeState | ContractorNodeState | GroupNodeState,
-	) {
-		node.expended$.next(!node.expended$.value);
-	}
-
-	protected downloadInstr() {
-		let instructionFileLink =
-			'https://erp.ssnab.ru/api/static/general/2025/02/14/Инструкция_Управление_СНД_59605308-9107-4c29-8a42-89143dfde87c.docx';
-		const link = document.createElement('a');
-
-		link.href = instructionFileLink;
-		link.click();
-	}
 
 	protected defaultCols: ITrTableBaseColumn[] = [
 		{
@@ -337,11 +288,64 @@ export class ExcessIncomePageComponent {
 			],
 		},
 	];
+
 	protected readonly Size = Size;
+	protected getFilteredExcessIncome(isNewFilter: boolean = false) {
+		const preparedFilter: any = {};
+
+		for (const filter of this.filters) {
+			preparedFilter[filter.name] =
+				filter.value && filter.type ? filter.value : null;
+
+			switch (filter.type) {
+				case 'search-select':
+					preparedFilter[filter.name] = Array.isArray(filter.value)
+						? filter.value.map((item) => item.id)
+						: null;
+					break;
+				case 'boolean':
+					preparedFilter[filter.name] =
+						filter.value === 'Да' ? true : null;
+					break;
+				default:
+					preparedFilter[filter.name] =
+						filter.value?.toString().replace(',', '.') || null;
+			}
+		}
+
+		this.excessIncomeStateService.applyFilters(preparedFilter);
+	}
+
 	protected readonly ButtonType = ButtonType;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
+	constructor(
+		public readonly excessIncomeStateService: ExcessIncomeState,
+		public readonly columnStateService: ColumnsStateService
+	) {
+		this.columnStateService.colsTr$.next(this.defaultCols);
+
+		this.currencyControl.setValue({ id: 2, name: 'RUR' });
+	}
+
 	protected readonly IconPosition = IconPosition;
+public expended(
+		node: ClientNodeState | ContractorNodeState | GroupNodeState
+	) {
+		node.expended$.next(!node.expended$.value);
+	}
+
+	
+	
+	protected downloadInstr() {
+		const instructionFileLink =
+			'https://erp.ssnab.ru/api/static/general/2025/02/14/Инструкция_Управление_СНД_59605308-9107-4c29-8a42-89143dfde87c.docx';
+		const link = document.createElement('a');
+
+		link.href = instructionFileLink;
+		link.click();
+	}
+
 	protected readonly IconType = IconType;
 	protected readonly LabelType = LabelType;
 }

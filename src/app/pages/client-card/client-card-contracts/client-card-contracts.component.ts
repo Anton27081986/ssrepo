@@ -86,7 +86,7 @@ export class ClientCardContractsComponent implements OnInit {
 	constructor(
 		public readonly contractsFacadeService: ContractsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {}
 
 	public ngOnInit(): void {
@@ -141,7 +141,7 @@ export class ClientCardContractsComponent implements OnInit {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)
 					: '-';
 				tableItem.endDate = x.endDate

@@ -87,7 +87,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 	constructor(
 		public readonly returnRequestsFacadeService: ReturnRequestsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {
 		this.requests$ = this.returnRequestsFacadeService.requests$;
 	}
@@ -143,7 +143,7 @@ export class ClientCardReturnRequestsComponent implements OnInit {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)
 					: '-';
 				tableItem.status = x.status.name ?? '-';

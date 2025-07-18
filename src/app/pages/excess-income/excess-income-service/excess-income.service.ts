@@ -22,19 +22,19 @@ export class ExcessIncomeService {
 	constructor(private readonly apiService: ExcessIncomeApiService) {}
 
 	public getClients(
-		request: ExcessIncomeClientRequest,
+		request: ExcessIncomeClientRequest
 	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
 		return this.apiService.getClients(request);
 	}
 
 	public getGroup(
-		request: ExcessIncomeGroupRequest,
+		request: ExcessIncomeGroupRequest
 	): Observable<ExcessIncomeData<IResponse<ExcessIncomeFromBackendGroup>>> {
 		return this.apiService.getGroup(request);
 	}
 
 	public getTov(
-		request: ExcessIncomeTovRequest,
+		request: ExcessIncomeTovRequest
 	): Observable<ExcessIncomeData<IResponse<ExcessIncomeTovFromBackend>>> {
 		return this.apiService.getTov(request);
 	}
@@ -45,14 +45,14 @@ export class ExcessIncomeService {
 
 	public updateSndClient(
 		clientId: number,
-		request: ExcessIncomeUpdateClientRequest,
+		request: ExcessIncomeUpdateClientRequest
 	) {
 		return this.apiService.updateSndClient(clientId, request);
 	}
 
 	public updateSndTovGroups(
 		clientId: number,
-		request: ExcessIncomeUpdateGroupRequest,
+		request: ExcessIncomeUpdateGroupRequest
 	) {
 		return this.apiService.updateSndGroup(clientId, request);
 	}

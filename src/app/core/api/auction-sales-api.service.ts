@@ -13,7 +13,7 @@ export class AuctionSalesApiService {
 	/** Sale */
 	public getAuctions(
 		Limit: number,
-		Offset: number,
+		Offset: number
 	): Observable<IAuctionSalesDto> {
 		return this.http.get<IAuctionSalesDto>(
 			`${environment.apiUrl}/api/sales/widget`,
@@ -21,7 +21,7 @@ export class AuctionSalesApiService {
 				params: new HttpParams()
 					.set('Offset', Offset)
 					.set('Limit', Limit),
-			},
+			}
 		);
 	}
 }

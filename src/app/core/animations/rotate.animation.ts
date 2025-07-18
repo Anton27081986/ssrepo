@@ -14,6 +14,6 @@ export const rotateAnimation: AnimationTriggerMetadata = trigger(
 		{
 			'transform-origin': 'center',
 			transform: 'rotate3d(0, 0, 1, 180deg)',
-		},
-	),
+		}
+	)
 );

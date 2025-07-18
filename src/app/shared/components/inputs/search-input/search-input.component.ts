@@ -146,7 +146,7 @@ export class SearchInputComponent {
 
 	constructor(
 		private readonly searchFacade: SearchFacadeService,
-		private readonly ref: ChangeDetectorRef,
+		private readonly ref: ChangeDetectorRef
 	) {}
 
 	private showHiddenOptions() {
@@ -292,7 +292,7 @@ export class SearchInputComponent {
 						.pipe(untilDestroyed(this))
 						.subscribe((res) => {
 							this.found$.next(
-								this.mapIDictionaryItemDto(res.items),
+								this.mapIDictionaryItemDto(res.items)
 							);
 						});
 					break;
@@ -388,7 +388,7 @@ export class SearchInputComponent {
 	}
 
 	public mapIDictionaryItemDto(
-		items: IGlobalSearchDto[],
+		items: IGlobalSearchDto[]
 	): IDictionaryItemDto[] {
 		return items.map((item) => {
 			return {

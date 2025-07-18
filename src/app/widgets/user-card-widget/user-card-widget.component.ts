@@ -83,10 +83,10 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 	protected readonly TooltipTheme = TooltipTheme;
 	constructor(
 		private readonly modalService: ModalService,
-		private readonly victoryService: VictoryService,
+		private readonly victoryService: VictoryService
 	) {
 		const profile = JSON.parse(
-			localStorage.getItem('userProfile')!,
+			localStorage.getItem('userProfile')!
 		) as IUserProfile;
 
 		this.authUserId = profile.id!;
@@ -161,10 +161,10 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 								.subscribe((widget) => {
 									this.widget$.next(widget);
 									this.getStateLike(widget);
-								}),
+								})
 						);
 					}
-				}),
+				})
 		);
 	}
 
@@ -184,10 +184,10 @@ export class UserCardWidgetComponent implements OnInit, OnChanges {
 								.subscribe((widget) => {
 									this.widget$.next(widget);
 									this.getStateLike(widget);
-								}),
+								})
 						);
 					}
-				}),
+				})
 		);
 	}
 

@@ -58,7 +58,7 @@ export class ContractNewComponent {
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
-		private readonly facadeService: RawMaterialAccountingFacadeService,
+		private readonly facadeService: RawMaterialAccountingFacadeService
 	) {
 		this.newContractForm = new FormGroup({
 			contractNumber: new FormControl<string>('', [Validators.required]),
@@ -97,7 +97,7 @@ export class ContractNewComponent {
 		}
 
 		const dates = fromPickerRangeDateToIso(
-			this.newContractForm.value.period,
+			this.newContractForm.value.period
 		);
 
 		if (!dates[0] || !dates[1]) {
@@ -115,7 +115,7 @@ export class ContractNewComponent {
 			contractorId: this.newContractForm.value.contractor.id,
 			notificationDate: this.newContractForm.value.notificationDate
 				? fromPickerDateToIso(
-						this.newContractForm.value.notificationDate,
+						this.newContractForm.value.notificationDate
 					)
 				: null,
 			periodStartDate: dates[0],

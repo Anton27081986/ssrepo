@@ -55,7 +55,7 @@ export class ClientProposalsTradeListTabComponent {
 		this.clientProposalsTradeListState.tradeList$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected linkToModule: Signal<string | null> = computed(() => {
@@ -95,7 +95,7 @@ export class ClientProposalsTradeListTabComponent {
 	];
 
 	constructor(
-		private readonly clientProposalsTradeListState: ClientProposalsTradeListTabState,
+		private readonly clientProposalsTradeListState: ClientProposalsTradeListTabState
 	) {}
 
 	protected getTableItems(production: IResponse<ITradeList>): ITableItem[] {
@@ -135,7 +135,7 @@ export class ClientProposalsTradeListTabComponent {
 			this.clientProposalsTradeListState.offset$.next(0);
 		} else {
 			this.clientProposalsTradeListState.offset$.next(
-				this.pageSize * $event - this.pageSize,
+				this.pageSize * $event - this.pageSize
 			);
 		}
 

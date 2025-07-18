@@ -35,13 +35,13 @@ export class ProductionFactoryFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
 	implements OnInit
 {
-	private filterApiService: OperationPlanFiltersApiService = inject(
-		OperationPlanFiltersApiService,
+	private readonly filterApiService: OperationPlanFiltersApiService = inject(
+		OperationPlanFiltersApiService
 	);
 
 	protected readonly itemsSignal: Signal<IDictionaryItemDto[]> = toSignal(
 		this.items$,
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	constructor() {
@@ -56,7 +56,7 @@ export class ProductionFactoryFilterComponent
 		return this.filterApiService.getProductionFactory(query).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 
@@ -64,7 +64,7 @@ export class ProductionFactoryFilterComponent
 		return this.filterApiService.getProductionFactory('', ids).pipe(
 			map((value) => {
 				return value.items;
-			}),
+			})
 		);
 	}
 }

@@ -17,7 +17,7 @@ export class BirthdaysContractorsFacadeService {
 		this.birthdaysContractorsSubject.asObservable();
 
 	constructor(
-		private readonly birthdaysContractorsApiService: BirthdaysApiService,
+		private readonly birthdaysContractorsApiService: BirthdaysApiService
 	) {}
 
 	public getBirthdaysContractorsList(
@@ -26,7 +26,7 @@ export class BirthdaysContractorsFacadeService {
 		dateFrom?: string,
 		dateTo?: string,
 		pageSize?: number,
-		offset?: number,
+		offset?: number
 	) {
 		this.birthdaysContractorsApiService
 			.getBirthdayContractor(
@@ -35,13 +35,13 @@ export class BirthdaysContractorsFacadeService {
 				dateFrom,
 				dateTo,
 				pageSize,
-				offset,
+				offset
 			)
 			.pipe(
 				tap((contractors) => {
 					this.birthdaysContractorsSubject.next(contractors);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -53,7 +53,7 @@ export class BirthdaysContractorsFacadeService {
 				tap((contractors) => {
 					this.birthdaysContractorsSubject.next(contractors);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

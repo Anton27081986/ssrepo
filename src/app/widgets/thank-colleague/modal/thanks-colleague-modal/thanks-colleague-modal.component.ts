@@ -101,7 +101,7 @@ export class ThanksColleagueModalComponent {
 		private readonly victoryService: VictoryService,
 		private readonly victoryRootService: VictoryRootService,
 		private readonly victoryState: VictoryState,
-		private readonly cdr: ChangeDetectorRef,
+		private readonly cdr: ChangeDetectorRef
 	) {
 		this.isExtendedMode = this.data.isExtendedMode;
 
@@ -142,7 +142,7 @@ export class ThanksColleagueModalComponent {
 							type: VictoryEventEnum.victoryUpdated,
 						});
 						this.notes.setValue('');
-					}),
+					})
 			);
 		} else if (
 			this.victoryState.activeFuncCommentEdit$.value &&
@@ -163,7 +163,7 @@ export class ThanksColleagueModalComponent {
 						});
 						this.notes.setValue('');
 						this.victoryState.activeFuncCommentEdit$.next(false);
-					}),
+					})
 			);
 		}
 	}
@@ -183,7 +183,7 @@ export class ThanksColleagueModalComponent {
 
 	protected changeLike(
 		thank: IThanksColleagueItem,
-		likeType: LikeStateEnum = this.LikeStateEnum.default,
+		likeType: LikeStateEnum = this.LikeStateEnum.default
 	) {
 		if (thank.id) {
 			if (thank.isUserLiked) {

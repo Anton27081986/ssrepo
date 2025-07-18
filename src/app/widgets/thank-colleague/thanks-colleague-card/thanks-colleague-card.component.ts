@@ -57,7 +57,7 @@ export class ThanksColleagueCardComponent {
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly victoryService: VictoryService,
-		private readonly cdr: ChangeDetectorRef,
+		private readonly cdr: ChangeDetectorRef
 	) {}
 
 	protected openModalInfoUser(id: number | undefined) {
@@ -68,7 +68,7 @@ export class ThanksColleagueCardComponent {
 
 	protected changeLike(
 		thank: IThanksColleagueItem | null,
-		likeType: LikeStateEnum = this.LikeStateEnum.default,
+		likeType: LikeStateEnum = this.LikeStateEnum.default
 	) {
 		if (thank) {
 			if (thank.isUserLiked) {

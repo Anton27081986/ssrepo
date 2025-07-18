@@ -39,7 +39,7 @@ const users = [
 export class FakeBackendInterceptor implements HttpInterceptor {
 	intercept(
 		request: HttpRequest<any>,
-		next: HttpHandler,
+		next: HttpHandler
 	): Observable<HttpEvent<any>> {
 		const { url, method, headers, body } = request;
 
@@ -64,7 +64,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 		function authenticate() {
 			const { username, password } = body;
 			const user = users.find(
-				(x) => x.username === username && x.password === password,
+				(x) => x.username === username && x.password === password
 			);
 
 			if (!user) {
@@ -121,7 +121,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 			return throwError(() => ({ status: 400, error: { message } })).pipe(
 				materialize(),
 				delay(500),
-				dematerialize(),
+				dematerialize()
 			);
 		}
 
@@ -142,7 +142,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
 			const id = parseInt(
 				headers.get('Authorization')!.split('.')[1],
-				10,
+				10
 			);
 
 			return users.find((x) => x.id === id);

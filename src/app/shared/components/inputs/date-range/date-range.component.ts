@@ -128,13 +128,13 @@ export class DateRangeComponent {
 		const startDate = formatDate(
 			this.formRange.controls.startDate.value,
 			'dd.MM.yyyy',
-			'ru-RU',
+			'ru-RU'
 		);
 
 		const endDate = formatDate(
 			this.formRange.controls.endDate?.value,
 			'dd.MM.yyyy',
-			'ru-RU',
+			'ru-RU'
 		);
 
 		this.select.emit(`${startDate}-${endDate}`);

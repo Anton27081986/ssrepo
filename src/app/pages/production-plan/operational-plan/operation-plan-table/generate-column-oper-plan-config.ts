@@ -6,7 +6,7 @@ import { TableColumnConfig } from '@front-library/components/lib/components/tabl
 
 export function generateColumnOperationPlanConfig(
 	data: OperationPlanItem[],
-	days: IDay[],
+	days: IDay[]
 ): TableColumnConfig[] {
 	// Базовые колонки, не зависящие от дат
 	const baseColumns: TableColumnConfig[] = [
@@ -78,6 +78,7 @@ export function generateColumnOperationPlanConfig(
 		const month = String(newDate.getMonth() + 1).padStart(2, '0');
 		const dayNum = String(newDate.getDate()).padStart(2, '0');
 		const date = `${year}-${month}-${dayNum}`; // Формат ГГГГ-ММ-ДД
+
 		uniqueDates.add(date);
 	});
 
@@ -116,7 +117,7 @@ export function generateColumnOperationPlanConfig(
 				showInHeader: true,
 				visible: true,
 			},
-		],
+		]
 	);
 
 	// Колонки для итогов по неделе и месяцу

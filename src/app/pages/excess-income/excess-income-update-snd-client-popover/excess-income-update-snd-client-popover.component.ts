@@ -124,6 +124,8 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 	protected readonly Size = Size;
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly LabelType = LabelType;
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly stateColumn: ColumnsStateService,
@@ -133,7 +135,7 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 		private readonly modalService: ModalService,
 		private readonly toastService: NotificationToastService,
 		@Inject(DIALOG_DATA)
-		protected readonly data: ExcessIncomeUpdateSndClientPopoverData,
+		protected readonly data: ExcessIncomeUpdateSndClientPopoverData
 	) {
 		this.client = this.data.client;
 		this.stateColumn.colsTr$.next(this.defaultCols);
@@ -143,15 +145,15 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 					if (val) {
 						return this.searchService.getTovGroupsByClient(
 							val,
-							this.client.id,
+							this.client.id
 						);
 					}
 
 					return NEVER;
 				}),
-				map((res) => res.items),
+				map((res) => res.items)
 			),
-			{ initialValue: [] },
+			{ initialValue: [] }
 		);
 	}
 
@@ -183,10 +185,9 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 		this.state.tovGroups$.next([]);
 	}
 
-	protected readonly IconPosition = IconPosition;
 	submit() {
 		const isNotValid = this.tovGroups$.value.find(
-			(item) => !item.excessIncomePercent.valid,
+			(item) => !item.excessIncomePercent.valid
 		);
 
 		if (isNotValid) {
@@ -213,7 +214,6 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 		}
 	}
 
-	protected readonly LabelType = LabelType;
 	public updateSnd() {
 		this.excessIncomeService
 			.updateSndClient(this.client.id, {
@@ -229,10 +229,10 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 			.pipe(
 				tap(() =>
 					this.data.state.event$.next(
-						ExcessIncomeEventEnum.excessIncomeClientUpdated,
-					),
+						ExcessIncomeEventEnum.excessIncomeClientUpdated
+					)
 				),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe(() => {
 				this.modalRef.close();

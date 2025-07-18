@@ -39,14 +39,14 @@ export class ClientProposalsDoneProductionComponent {
 
 	constructor(
 		private readonly _activatedRoute: ActivatedRoute,
-		private readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		private readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {
 		this.doneProductions$ =
 			this.clientProposalsFacadeService.doneProductions$;
 	}
 
 	protected getTableItems(
-		production: IResponse<ProposalsProduction>,
+		production: IResponse<ProposalsProduction>
 	): ITableItem[] {
 		const productionTableItem = production.items.map((x) => {
 			const tableItem: IClientProposalsTableItem =

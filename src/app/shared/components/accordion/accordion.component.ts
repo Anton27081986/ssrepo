@@ -33,16 +33,26 @@ import { NgClass, NgIf, NgTemplateOutlet } from '@angular/common';
 	standalone: true,
 })
 export class AccordionComponent {
-	@Input() public title: string = '';
-	@Input() headerRef: TemplateRef<any> | null = null;
-	@Input() isExpanded: boolean = false;
-	@Input() isMpReservationOrders: boolean = false;
-	@Output() public onToggle: EventEmitter<boolean> =
-		new EventEmitter<boolean>();
-	@Output() public addRowPosition: EventEmitter<void> =
-		new EventEmitter<void>();
-	@Output() public removePosition: EventEmitter<void> =
-		new EventEmitter<void>();
+	@Input()
+	public title = '';
+
+	@Input()
+	headerRef: TemplateRef<any> | null = null;
+
+	@Input()
+	isExpanded = false;
+
+	@Input()
+	isMpReservationOrders = false;
+
+	@Output()
+	public onToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	@Output()
+	public addRowPosition: EventEmitter<void> = new EventEmitter<void>();
+
+	@Output()
+	public removePosition: EventEmitter<void> = new EventEmitter<void>();
 
 	protected readonly Size = Size;
 	protected readonly ButtonType = ButtonType;

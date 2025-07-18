@@ -43,7 +43,7 @@ export class ClientCardContractorsComponent implements OnInit {
 	protected readonly TableState = TableState;
 	constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly ref: ChangeDetectorRef,
+		private readonly ref: ChangeDetectorRef
 	) {
 		this.contractors$ = this.clientCardListFacade.contractors$;
 		this.isLoading$ = this.clientCardListFacade.isContractorsLoading$;
@@ -55,7 +55,7 @@ export class ClientCardContractorsComponent implements OnInit {
 			.subscribe((contractors) => {
 				if (contractors) {
 					this.tableItems = this.mapClientsToTableItems(
-						<ITableItem[]>contractors,
+						<ITableItem[]>contractors
 					);
 					this.ref.detectChanges();
 				}

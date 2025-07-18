@@ -43,19 +43,19 @@ export class CompletedWorkActSpecificationsComponent {
 		this.completedWorkActsFacade.specificationsTotalAmount$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public permissions: Signal<string[]> = toSignal(
 		this.completedWorkActsFacade.permissions$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly modalService: ModalService,
+		private readonly modalService: ModalService
 	) {}
 
 	public onAddSpecification() {

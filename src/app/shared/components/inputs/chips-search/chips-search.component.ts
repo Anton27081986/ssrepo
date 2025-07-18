@@ -76,7 +76,7 @@ export class ChipsSearchComponent {
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		public readonly searchFacade: SearchFacadeService,
-		private readonly ref: ChangeDetectorRef,
+		private readonly ref: ChangeDetectorRef
 	) {}
 
 	protected onInputChange(query: string) {

@@ -13,7 +13,7 @@ export class BusinessTripsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getBusinessTrips(
-		filter: IBusinessTripsFilter,
+		filter: IBusinessTripsFilter
 	): Observable<IResponse<IBusinessTripsDto>> {
 		let params = new HttpParams();
 
@@ -33,7 +33,7 @@ export class BusinessTripsApiService {
 			`${environment.apiUrl}/api/company/Trips`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

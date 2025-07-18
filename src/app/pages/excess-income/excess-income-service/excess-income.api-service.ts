@@ -27,11 +27,11 @@ export class ExcessIncomeApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getClients(
-		request: ExcessIncomeClientRequest,
+		request: ExcessIncomeClientRequest
 	): Observable<IResponse<ExcessIncomeData<ExcessIncomeClient>>> {
 		return this.http.post<IResponse<ExcessIncomeData<ExcessIncomeClient>>>(
 			`${environment.apiUrl}/api/company/Snd/search`,
-			request,
+			request
 		);
 	}
 
@@ -49,41 +49,41 @@ export class ExcessIncomeApiService {
 
 	public getCurrency(): Observable<IResponse<IDictionaryItemDto>> {
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/company/Dictionary/Currency`,
+			`${environment.apiUrl}/api/company/Dictionary/Currency`
 		);
 	}
 
 	public updateSndClient(
 		clientId: number,
-		request: ExcessIncomeUpdateClientRequest,
+		request: ExcessIncomeUpdateClientRequest
 	) {
 		return this.http.put<IResponse<ExcessIncomeClient>>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}`,
-			request,
+			request
 		);
 	}
 
 	public updateSndGroup(
 		clientId: number,
-		request: ExcessIncomeUpdateGroupRequest,
+		request: ExcessIncomeUpdateGroupRequest
 	) {
 		return this.http.put<ExcessIncomeFromBackendGroup>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/group`,
-			request,
+			request
 		);
 	}
 
 	public updateSndTov(request: ExcessIncomeUpdateTovRequest) {
 		return this.http.put<ExcessIncomeTovFromBackend>(
 			`${environment.apiUrl}/api/company/Snd/tovs`,
-			request,
+			request
 		);
 	}
 
 	public updateSndTovComment(request: ExcessIncomeUpdateTovCommentRequest) {
 		return this.http.post<{ comment: string }>(
 			`${environment.apiUrl}/api/company/Snd/comments`,
-			request,
+			request
 		);
 	}
 
@@ -91,7 +91,7 @@ export class ExcessIncomeApiService {
 		clientId: number,
 		tovGroupId: number,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<ExcessIncomeTovGroupHistory> {
 		return this.http.post<ExcessIncomeTovGroupHistory>(
 			`${environment.apiUrl}/api/company/Snd/history`,
@@ -100,14 +100,14 @@ export class ExcessIncomeApiService {
 				tovGroupId,
 				limit,
 				offset,
-			},
+			}
 		);
 	}
 
 	public getTovHistory(
 		objectId: string,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<IChangeTrackerItemDto>> {
 		let params = new HttpParams();
 
@@ -118,7 +118,7 @@ export class ExcessIncomeApiService {
 
 		return this.http.get<IResponse<IChangeTrackerItemDto>>(
 			`${environment.apiUrl}/api/change-tracker/history`,
-			{ params },
+			{ params }
 		);
 	}
 
@@ -127,7 +127,7 @@ export class ExcessIncomeApiService {
 		tovId: number,
 		contractorId: number | null,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<ExccessIncomeCommentsHistory>> {
 		return this.http.post<IResponse<ExccessIncomeCommentsHistory>>(
 			`${environment.apiUrl}/api/company/Snd/comments/history`,
@@ -137,7 +137,7 @@ export class ExcessIncomeApiService {
 				contractorId,
 				limit,
 				offset,
-			},
+			}
 		);
 	}
 
@@ -145,7 +145,7 @@ export class ExcessIncomeApiService {
 		clientId: number | undefined | null,
 		tovId: number,
 		limit: number,
-		offset: number,
+		offset: number
 	): Observable<IResponse<ExcessIncomeSalesHistory>> {
 		let params = new HttpParams();
 
@@ -159,7 +159,7 @@ export class ExcessIncomeApiService {
 
 		return this.http.get<IResponse<ExcessIncomeSalesHistory>>(
 			`${environment.apiUrl}/api/company/Snd/clients/${clientId}/tovs/${tovId}/sales`,
-			{ params },
+			{ params }
 		);
 	}
 }

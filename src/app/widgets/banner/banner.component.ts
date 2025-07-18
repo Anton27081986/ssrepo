@@ -23,12 +23,12 @@ export class BannerComponent {
 		this.bannersApi.getBanners().pipe(
 			map((request: IResponseItems<IBannerDto>) =>
 				request.items.sort(
-					(a: IBannerDto, b: IBannerDto) => a.order - b.order,
-				),
+					(a: IBannerDto, b: IBannerDto) => a.order - b.order
+				)
 			),
 			catchError(() => of([] as IBannerDto[])),
-			finalize(() => this.isLoading.set(false)),
+			finalize(() => this.isLoading.set(false))
 		),
-		{ initialValue: [] as IBannerDto[] },
+		{ initialValue: [] as IBannerDto[] }
 	);
 }

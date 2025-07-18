@@ -18,27 +18,27 @@ export class UsersApiService {
 			`${environment.apiUrl}/api/auth/users/search`,
 			{
 				params: new HttpParams().set('query', title),
-			},
+			}
 		);
 	}
 
 	/** Получить прочие настройки пользователя */
 	public getSettings(): Observable<any> {
 		return this.http.get<any[]>(
-			`${environment.apiUrl}/api/company/settings`,
+			`${environment.apiUrl}/api/company/settings`
 		);
 	}
 
 	public getCurrentUserFriendsAccounts() {
 		return this.http.get<IResponse<IFriendAccountDto>>(
-			`${environment.apiUrl}/api/auth/users/friends`,
+			`${environment.apiUrl}/api/auth/users/friends`
 		);
 	}
 
 	/** Получение пользователя по id */
 	public getUserById(id: number): Observable<IUserProfile> {
 		return this.http.get<IUserProfile>(
-			`${environment.apiUrl}/api/auth/users/${id}`,
+			`${environment.apiUrl}/api/auth/users/${id}`
 		);
 	}
 
@@ -47,14 +47,14 @@ export class UsersApiService {
 			`${environment.apiUrl}/api/awards/likes/${id}`,
 			{
 				params: new HttpParams().set('Type', type),
-			},
+			}
 		);
 	}
 
 	/** Получить профиль текущего пользователя */
 	public getProfile(): Observable<IUserProfile> {
 		return this.http.get<IUserProfile>(
-			`${environment.apiUrl}/api/auth/Profile`,
+			`${environment.apiUrl}/api/auth/Profile`
 		);
 	}
 }

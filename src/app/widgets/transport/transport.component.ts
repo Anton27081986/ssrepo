@@ -52,7 +52,7 @@ export class TransportComponent {
 								6 -
 									(bus.departureTime
 										? bus.departureTime.length
-										: 0),
+										: 0)
 							)
 								.fill(NO_TIME)
 								.concat(bus.departureTime),
@@ -61,7 +61,7 @@ export class TransportComponent {
 				};
 			}),
 			tap((transportList) => this.nearestDepartureTime(transportList)),
-			repeat({ delay: () => this.transportRefresh$ }),
+			repeat({ delay: () => this.transportRefresh$ })
 		);
 
 	public noticeText(transport: ITransportDto): string {
@@ -73,7 +73,7 @@ export class TransportComponent {
 	public currentTimeClass(
 		time: string,
 		busID: number,
-		nearestDepartureTimeForBuses: Map<number, string>,
+		nearestDepartureTimeForBuses: Map<number, string>
 	): string {
 		if (time === NO_TIME) {
 			return 'gone';
@@ -109,7 +109,7 @@ export class TransportComponent {
 	public getNearestTime(
 		hoursNow: number,
 		minutesNow: number,
-		bus: IRouteDto,
+		bus: IRouteDto
 	): void {
 		for (const departure of bus.departureTime as string[]) {
 			if (departure === NO_TIME) {
@@ -141,12 +141,12 @@ export class TransportComponent {
 				switchMap((transportNotify) =>
 					this.apiService
 						.sendTransportNote(transportNotify)
-						.pipe(catchError(() => of(null))),
+						.pipe(catchError(() => of(null)))
 				),
 
 				filter(Boolean),
 
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe(() => {
 				this.transportRefresh$.next();

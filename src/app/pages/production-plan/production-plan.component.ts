@@ -76,7 +76,7 @@ export class ProductionPlanComponent {
 			// Костыль пока не появится модуль Журнал расчета сырья
 			if (environment.production) {
 				window.open(
-					'https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx',
+					'https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx'
 				);
 				window.location.reload();
 			} else {

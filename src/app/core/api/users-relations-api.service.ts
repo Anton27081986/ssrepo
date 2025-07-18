@@ -13,7 +13,7 @@ export class UsersRelationsApiService {
 
 	public getRelationsTypes(): Observable<IResponse<IFriendAccountDto>> {
 		return this.http.get<IResponse<IFriendAccountDto>>(
-			`${environment.apiUrl}/api/auth/UsersRelations/Types`,
+			`${environment.apiUrl}/api/auth/UsersRelations/Types`
 		);
 	}
 
@@ -25,26 +25,26 @@ export class UsersRelationsApiService {
 	}
 
 	public getRelationsUser(
-		token: string,
+		token: string
 	): Observable<IResponse<IFriendAccountDto>> {
 		return this.http.get<IResponse<IFriendAccountDto>>(
 			`${environment.apiUrl}/api/auth/UsersRelations/User`,
 			{
 				params: new HttpParams().set('token', token),
-			},
+			}
 		);
 	}
 
 	public confirmRelationsUsers(
 		token: string,
-		isConfirm: boolean,
+		isConfirm: boolean
 	): Observable<any> {
 		return this.http.post<any>(
 			`${environment.apiUrl}/api/auth/UsersRelations/Confirm`,
 			{
 				token,
 				isConfirm,
-			},
+			}
 		);
 	}
 
@@ -53,7 +53,7 @@ export class UsersRelationsApiService {
 			`${environment.apiUrl}/api/auth/users/friends/`,
 			{
 				params: new HttpParams().set('deleteUserId', deleteUserId),
-			},
+			}
 		);
 	}
 }

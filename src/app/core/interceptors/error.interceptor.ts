@@ -18,12 +18,12 @@ export class ErrorInterceptor implements HttpInterceptor {
 	constructor(
 		private readonly authenticationService: AuthenticationService,
 		private readonly notificationToastService: NotificationToastService,
-		private readonly route: Router,
+		private readonly route: Router
 	) {}
 
 	public intercept(
 		request: HttpRequest<any>,
-		next: HttpHandler,
+		next: HttpHandler
 	): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(
 			catchError((err: unknown) => {
@@ -49,21 +49,21 @@ export class ErrorInterceptor implements HttpInterceptor {
 								err.error?.title ||
 									Notifications.SERVER_ERROR_UNAUTHORIZED,
 								'warning',
-								err.status,
+								err.status
 							);
 						} else if (err.error.errors) {
 							for (const field in err.error.errors) {
 								this.notificationToastService.addToast(
 									err.error.errors[field][0],
 									'warning',
-									err.status,
+									err.status
 								);
 							}
 						} else {
 							this.notificationToastService.addToast(
 								err.error.title,
 								'warning',
-								err.status,
+								err.status
 							);
 						}
 					}
@@ -71,7 +71,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 					if (Math.floor(err.status / 100) === 5) {
 						this.notificationToastService.addToast(
 							Notifications.SERVER_ERROR_NOTIFICATION_TEXT,
-							'error',
+							'error'
 						);
 					}
 				}
@@ -81,7 +81,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 				const error = err.error?.message || err.statusText;
 
 				return throwError(() => error);
-			}),
+			})
 		);
 	}
 }

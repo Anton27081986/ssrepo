@@ -16,7 +16,7 @@ export class FriendlyAccountsFacadeService {
 	constructor(
 		private readonly usersApiService: UsersApiService,
 		private readonly usersRelationsApiService: UsersRelationsApiService,
-		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService,
+		private readonly friendlyAccountsStoreService: FriendlyAccountsStoreService
 	) {
 		this.friendlyAccounts$ =
 			this.friendlyAccountsStoreService.friendlyAccounts$;
@@ -29,11 +29,11 @@ export class FriendlyAccountsFacadeService {
 			.getCurrentUserFriendsAccounts()
 			.pipe(
 				map(({ items }) => items),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe((accounts) => {
 				this.friendlyAccountsStoreService.setFriendsAccountsForCurrentUser(
-					accounts,
+					accounts
 				);
 			});
 	}
@@ -45,14 +45,14 @@ export class FriendlyAccountsFacadeService {
 				tap((item) => {
 					this.friendlyAccountsStoreService.addFriendlyAccount(item);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
 
 	public acceptAddUsersInListFriendlyLogins(
 		token: string,
-		isConfirm: boolean,
+		isConfirm: boolean
 	) {
 		this.usersRelationsApiService
 			.confirmRelationsUsers(token, isConfirm)

@@ -29,14 +29,14 @@ export const fadeAnimations: AnimationType<typeof Animation, 'fade'> = {
 		style({ opacity: 0 }),
 		animate(
 			DURATION,
-			keyframes([style({ opacity: 0 }), style({ opacity: 1 })]),
+			keyframes([style({ opacity: 0 }), style({ opacity: 1 })])
 		),
 	]),
 	[Animation.FadeOut]: animation([
 		style({ opacity: 1 }),
 		animate(
 			DURATION,
-			keyframes([style({ opacity: 1 }), style({ opacity: 0 })]),
+			keyframes([style({ opacity: 1 }), style({ opacity: 0 })])
 		),
 	]),
 	[Animation.FadeInUp]: animation([
@@ -46,7 +46,7 @@ export const fadeAnimations: AnimationType<typeof Animation, 'fade'> = {
 			keyframes([
 				style({ opacity: 0, transform: 'translate(0px, 50px)' }),
 				style({ opacity: 1, transform: 'translate(0px, 0px)' }),
-			]),
+			])
 		),
 	]),
 	[Animation.FadeInDown]: animation([
@@ -56,7 +56,7 @@ export const fadeAnimations: AnimationType<typeof Animation, 'fade'> = {
 			keyframes([
 				style({ opacity: 0, transform: 'translate(0px, -50px)' }),
 				style({ opacity: 1, transform: 'translate(0px, 0px)' }),
-			]),
+			])
 		),
 	]),
 	[Animation.FadeInRight]: animation([
@@ -66,7 +66,7 @@ export const fadeAnimations: AnimationType<typeof Animation, 'fade'> = {
 			keyframes([
 				style({ opacity: 0, transform: 'translate(25px, 0px)' }),
 				style({ opacity: 1, transform: 'translate(0px, 0px)' }),
-			]),
+			])
 		),
 	]),
 	[Animation.FadeInLeft]: animation([
@@ -76,7 +76,7 @@ export const fadeAnimations: AnimationType<typeof Animation, 'fade'> = {
 			keyframes([
 				style({ opacity: 0, transform: 'translate(-25px, 0px)' }),
 				style({ opacity: 1, transform: 'translate(0px, 0px)' }),
-			]),
+			])
 		),
 	]),
 };
@@ -89,7 +89,7 @@ export const fade = trigger(Animation.Fade, [
 export const fadeIn = trigger(Animation.FadeIn, [
 	transition(
 		`${AnimationState.Enter}, ${AnimationTransition.Any}`,
-		useAnimation(fadeAnimations.fadeIn),
+		useAnimation(fadeAnimations.fadeIn)
 	),
 ]);
 

@@ -29,7 +29,7 @@ export const appConfig: ApplicationConfig = {
 		provideRouter(routes),
 		provideHttpClient(
 			// DI-based interceptors must be explicitly enabled.
-			withInterceptorsFromDi(),
+			withInterceptorsFromDi()
 		),
 		provideClientHydration(withEventReplay()),
 		AppInitializerProvider,

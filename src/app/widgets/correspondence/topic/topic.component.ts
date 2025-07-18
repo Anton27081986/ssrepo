@@ -21,10 +21,11 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 	],
 	standalone: true,
 })
-export class TopicComponent {
+export class TopicComponent implements OnInit {
 	public topics$: Observable<
 		Array<{ subject: string; messageCount: number }>
 	>;
+
 	public totalMessages$: Observable<number>;
 
 	constructor(private readonly facadeService: CorrespondenceFacadeService) {

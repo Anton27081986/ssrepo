@@ -12,7 +12,7 @@ export class ContractsApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	public getContracts(
-		filter: IContractsFilter,
+		filter: IContractsFilter
 	): Observable<IContractsItemDto> {
 		let params = new HttpParams();
 
@@ -40,7 +40,7 @@ export class ContractsApiService {
 			`${environment.apiUrl}/api/company/contracts`,
 			{
 				params,
-			},
+			}
 		);
 	}
 }

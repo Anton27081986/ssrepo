@@ -49,7 +49,7 @@ export class DatepickerInputComponent {
 		// We want to be able to use the component without a form,
 		// so we mark the dependency as optional.
 		@Optional()
-		private readonly ngControl: NgControl,
+		private readonly ngControl: NgControl
 	) {
 		if (this.ngControl) {
 			this.ngControl.valueAccessor = this;

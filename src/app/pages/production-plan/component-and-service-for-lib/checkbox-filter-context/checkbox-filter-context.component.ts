@@ -66,7 +66,7 @@ export class CheckboxFilterContextComponent {
 	public get trueCheckControlMap(): boolean {
 		return (
 			Object.values(this.controlsMap()).some(
-				(control) => control.value === true,
+				(control) => control.value === true
 			) && this.indeterminate()
 		);
 	}

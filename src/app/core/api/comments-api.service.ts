@@ -14,7 +14,7 @@ export class CommentsApiService {
 		objectId: number,
 		Type: number,
 		Offset: number,
-		Limit: number,
+		Limit: number
 	): Observable<any> {
 		return this.http.get<any[]>(
 			`${environment.apiUrl}/api/awards/comments/${objectId}`,
@@ -23,7 +23,7 @@ export class CommentsApiService {
 					.set('Type', Type)
 					.set('Offset', Offset)
 					.set('Limit', Limit),
-			},
+			}
 		);
 	}
 
@@ -33,7 +33,7 @@ export class CommentsApiService {
 			`${environment.apiUrl}/api/awards/comments/${id}`,
 			{
 				params: new HttpParams().set('id', id),
-			},
+			}
 		);
 	}
 
@@ -42,7 +42,7 @@ export class CommentsApiService {
 		objectId: number,
 		type: number,
 		awardId: number,
-		note: string,
+		note: string
 	): Observable<any> {
 		return this.http.post<any[]>(
 			`${environment.apiUrl}/api/awards/comments`,
@@ -51,7 +51,7 @@ export class CommentsApiService {
 				type,
 				awardId,
 				note,
-			},
+			}
 		);
 	}
 
@@ -61,7 +61,7 @@ export class CommentsApiService {
 			`${environment.apiUrl}/api/awards/comments/${id}`,
 			{
 				params: new HttpParams().set('id', id),
-			},
+			}
 		);
 	}
 }

@@ -84,7 +84,7 @@ export class ClientProposalsSamplesTabComponent {
 	protected isLoader$ = this.stateService.isLoader$;
 
 	constructor(
-		private readonly stateService: ClientProposalsSamplesTabState,
+		private readonly stateService: ClientProposalsSamplesTabState
 	) {}
 
 	protected getTableItems(production: IResponse<ISamples>): ITableItem[] {
@@ -117,7 +117,7 @@ export class ClientProposalsSamplesTabComponent {
 			this.stateService.offset$.next(0);
 		} else {
 			this.stateService.offset$.next(
-				this.pageSize * $event - this.pageSize,
+				this.pageSize * $event - this.pageSize
 			);
 		}
 

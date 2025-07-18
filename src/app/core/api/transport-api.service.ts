@@ -14,17 +14,17 @@ export class TransportApiService {
 	/** Получить расписание транспорта */
 	public getTransport(): Observable<ITransportDto> {
 		return this.http.get<ITransportDto>(
-			`${environment.apiUrl}/api/company/transport`,
+			`${environment.apiUrl}/api/company/transport`
 		);
 	}
 
 	/** Добавить уведомление в расписание транспорта */
 	public sendTransportNote(
-		transportNotify: ITransportNotifyDto,
+		transportNotify: ITransportNotifyDto
 	): Observable<ITransportNotifyDto> {
 		return this.http.post<ITransportNotifyDto>(
 			`${environment.apiUrl}/api/company/transport`,
-			transportNotify,
+			transportNotify
 		);
 	}
 }

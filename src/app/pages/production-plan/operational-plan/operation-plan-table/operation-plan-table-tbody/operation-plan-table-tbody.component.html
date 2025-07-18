@@ -6,13 +6,6 @@
 					*ssCell="column.id"
 					ssTd
 					class="item-td"
-					[style.min-width.px]="
-						column.id.startsWith('planQuantity')
-							? 160
-							: column.id.startsWith('factQuantity')
-								? 105
-								: 80
-					"
 				>
 					@if (column.id === 'tov') {
 						<div class="item-tov">
@@ -42,7 +35,9 @@
 											? addCommentsModal
 											: createCommentsModal
 									"
-									(isPopoverOpenEmit)="onCommentsOpen($event, row.id)"
+									(isPopoverOpenEmit)="
+										onCommentsOpen($event, row.id)
+									"
 								></ss-lib-button>
 							}
 							<ss-lib-dropdown-list
@@ -81,38 +76,45 @@
 						column.id.startsWith('planQuantity') ||
 						column.id.startsWith('factQuantity')
 					) {
-						@if (
-							column.id.startsWith('planQuantity') &&
-							getDayCell(row, column.id)?.isManufactoryOrder
-						) {
-							<ss-lib-button
-								class="postpone-button"
-								[type]="ButtonType.Secondary"
-								[size]="ExtraSize.xxs"
-								[iconPosition]="IconPosition.OnlyIcon"
-								[icon]="IconType.CornerUpRight"
-								(click)="
-									openPostponePlanModal(row, column.id);
-									$event.stopPropagation()
-								"
-							></ss-lib-button>
-						}
-						@if (operationPlanState.getHasPermissionEdit) {
-							<input
-								#quantityInput
-								type="number"
-								maxlength="10"
-								class="quantity-input"
-								[disabled]="
-									!operationPlanState.getHasPermissionEdit
-								"
-								[value]="getCellValue(row, column.id)"
-								(focusout)="
-									editPlanFact($event, row, column.id)
-								"
-								(keyup.enter)="quantityInput.blur()"
-							/>
-						}
+						<div class="plan-fact-wrapper">
+							@if (
+								column.id.startsWith('planQuantity') &&
+								getDayCell(row, column.id)?.isManufactoryOrder
+							) {
+								<ss-lib-button
+									class="postpone-button"
+									[type]="ButtonType.Secondary"
+									[size]="ExtraSize.xxs"
+									[iconPosition]="IconPosition.OnlyIcon"
+									[icon]="IconType.CornerUpRight"
+									(click)="
+										openPostponePlanModal(row, column.id);
+										$event.stopPropagation()
+									"
+								></ss-lib-button>
+							}
+							@if (operationPlanState.getHasPermissionEdit) {
+								<input
+									#quantityInput
+									maxlength="10"
+									class="quantity-input"
+									[disabled]="
+										!operationPlanState.getHasPermissionEdit ||
+										(column.id.startsWith('planQuantity') &&
+											row.isPersonification)
+									"
+									[value]="getCellValue(row, column.id)"
+									(focusout)="
+										editPlanFact($event, row, column.id)
+									"
+									(keyup.enter)="quantityInput.blur()"
+									(input)="checkPlanFactValue($event)"
+								/>
+								<p class="quantity-fixer">
+									{{ getCellValue(row, column.id) }}
+								</p>
+							}
+						</div>
 					} @else {
 						<ss-lib-text
 							[type]="TextType.BodySm"

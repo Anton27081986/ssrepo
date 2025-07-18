@@ -65,7 +65,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 	constructor(
 		public readonly lostProductsFacadeService: LostProductsFacadeService,
 		private readonly cdr: ChangeDetectorRef,
-		public readonly clientCardListFacade: ClientsCardFacadeService,
+		public readonly clientCardListFacade: ClientsCardFacadeService
 	) {}
 
 	public ngOnInit(): void {
@@ -116,7 +116,7 @@ export class ClientCardLostProductsComponent implements OnInit {
 								year: 'numeric',
 								month: 'numeric',
 								day: 'numeric',
-							},
+							}
 						)
 					: '-';
 				tableItem.shipDate = x.shipDate

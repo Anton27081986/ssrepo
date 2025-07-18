@@ -34,7 +34,7 @@ export class BirthdayComponent {
 		formatDate(new Date(), 'yyyy-MM-dd', 'ru-RU'),
 		{
 			nonNullable: true,
-		},
+		}
 	);
 
 	public loading = signal(false);
@@ -46,7 +46,7 @@ export class BirthdayComponent {
 			switchMap((date) =>
 				this.birthdaysApiService.getBirthday(date).pipe(
 					tap((birthdaysList) =>
-						this.reminderLink.set(birthdaysList.reminderLink || ''),
+						this.reminderLink.set(birthdaysList.reminderLink || '')
 					),
 					map(({ days }) => days || []),
 					tap(() => this.loading.set(false)),
@@ -54,11 +54,11 @@ export class BirthdayComponent {
 						this.loading.set(false);
 
 						return of([]);
-					}),
-				),
-			),
+					})
+				)
+			)
 		),
-		{ initialValue: [] as IDayDto[] },
+		{ initialValue: [] as IDayDto[] }
 	);
 
 	public reminderLink = signal('');
@@ -76,9 +76,9 @@ export class BirthdayComponent {
 		effect(
 			() =>
 				this.selectedTabName.set(
-					this.birthDays().length ? this.birthDays()[0].name! : '',
+					this.birthDays().length ? this.birthDays()[0].name! : ''
 				),
-			{ allowSignalWrites: true },
+			{ allowSignalWrites: true }
 		);
 	}
 
@@ -92,7 +92,7 @@ export class BirthdayComponent {
 
 	protected toTabsItemsFormat(
 		birthDays: IDayDto[],
-		shortYear: (date: string) => string,
+		shortYear: (date: string) => string
 	): ITab[] {
 		return birthDays.map((item) => ({
 			name: item.name,
@@ -103,7 +103,7 @@ export class BirthdayComponent {
 
 	protected toITabFormat(
 		name: string,
-		shortYear: (date: string) => string,
+		shortYear: (date: string) => string
 	): ITab {
 		return {
 			name,

@@ -20,14 +20,14 @@ import { SearchTypeEnum } from '@app/core/models/search-type';
 export class SearchFacadeService {
 	private clientId: number | null | undefined;
 
-	public constructor(
+	constructor(
 		private readonly clientApiService: ClientApiService,
 		private readonly usersApiService: UsersApiService,
 		private readonly dictionaryApiService: DictionaryApiService,
 		public readonly clientCardListFacade: ClientsCardFacadeService,
 		public readonly productionsApiService: ProductionsApiService,
 		public readonly winsApiService: WinsApiService,
-		public readonly menuApiService: MenuApiService,
+		public readonly menuApiService: MenuApiService
 	) {
 		this.clientCardListFacade.clientId$
 			.pipe(untilDestroyed(this))
@@ -41,56 +41,56 @@ export class SearchFacadeService {
 	}
 
 	public getRegions(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getRegions(query);
 	}
 
 	public getSubSectors(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getSubSectors(query);
 	}
 
 	public getClients(
 		query: string,
-		onlyActive: boolean = false,
+		onlyActive: boolean = false
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientsDictionary(query, onlyActive);
 	}
 
 	public getClientsCompany(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientsCompany(query);
 	}
 
 	public getTovCompany(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getTovCompany(query);
 	}
 
 	public getContractorsCompany(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getContractorsCompany(query);
 	}
 
 	public getProductions(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.searchProductions(query);
 	}
 
 	public getContractor(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getContractors(query, this.clientId);
 	}
 
 	public getPayerContractor(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getPayerContractors(query);
 	}
@@ -100,43 +100,43 @@ export class SearchFacadeService {
 	}
 
 	public getPersonificationStatuses(
-		query?: string,
+		query?: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getPersonificationStatuses(query);
 	}
 
 	public getTovGroups(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.productionsApiService.getTpgSearch(query);
 	}
 
 	public getTechnologist(
-		query?: string,
+		query?: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getTechnologist(this.clientId!, query);
 	}
 
 	public getClientIdDictionary(
-		id: number,
+		id: number
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.clientApiService.getClientIdDictionary(id);
 	}
 
 	public getContracts(
-		query?: string,
+		query?: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getContracts(query);
 	}
 
 	public globalSearch(
-		query: string,
+		query: string
 	): Observable<IResponse<IGlobalSearchDto>> {
 		return this.menuApiService.globalSearch(query);
 	}
 
 	public getProductSearch(
-		query: string,
+		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.winsApiService.getProductSearch(query);
 	}
@@ -183,27 +183,27 @@ export class SearchFacadeService {
 
 	public getFinDocOrders(
 		providerContractorId: number,
-		externalActDate: string | null,
+		externalActDate: string | null
 	) {
 		return this.dictionaryApiService.getFinDocOrders(
 			providerContractorId,
-			externalActDate,
+			externalActDate
 		);
 	}
 
 	public getDictionaryUsers(
-		query?: string,
+		query?: string
 	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.dictionaryApiService.getDictionaryUsers(
 			this.clientId!,
-			query,
+			query
 		);
 	}
 
 	public getSearchMethodByType(
 		searchType: SearchTypeEnum,
 		query: string,
-		isActive = false,
+		isActive = false
 	): Observable<IDictionaryItemDto[]> {
 		switch (searchType) {
 			case SearchTypeEnum.User:
@@ -212,13 +212,13 @@ export class SearchFacadeService {
 						data.items.map((item: { id: any; fio: any }) => ({
 							id: item.id,
 							name: item.fio,
-						})),
-					),
+						}))
+					)
 				);
 
 			case SearchTypeEnum.UserDictionary:
 				return this.getDictionaryUsers(query).pipe(
-					map((data) => data.items),
+					map((data) => data.items)
 				);
 
 			case SearchTypeEnum.SubSector:
@@ -227,8 +227,8 @@ export class SearchFacadeService {
 						data.items.map((item: { id: any; name: any }) => ({
 							id: item.id,
 							name: item.name,
-						})),
-					),
+						}))
+					)
 				);
 
 			case SearchTypeEnum.Region:
@@ -237,13 +237,13 @@ export class SearchFacadeService {
 						data.items.map((item: { id: any; name: any }) => ({
 							id: item.id,
 							name: item.name,
-						})),
-					),
+						}))
+					)
 				);
 
 			case SearchTypeEnum.Contractor:
 				return this.getContractor(query).pipe(
-					map((data) => data.items),
+					map((data) => data.items)
 				);
 
 			case SearchTypeEnum.Tovs:
@@ -251,17 +251,17 @@ export class SearchFacadeService {
 
 			case SearchTypeEnum.PersonificationStatuses:
 				return this.getPersonificationStatuses(query).pipe(
-					map((data) => data.items),
+					map((data) => data.items)
 				);
 
 			case SearchTypeEnum.Technologist:
 				return this.getTechnologist(query).pipe(
-					map((data) => data.items),
+					map((data) => data.items)
 				);
 
 			case SearchTypeEnum.Client:
 				return this.getClients(query, isActive).pipe(
-					map((data) => data.items),
+					map((data) => data.items)
 				);
 
 			case SearchTypeEnum.Contract:
@@ -269,7 +269,7 @@ export class SearchFacadeService {
 
 			case SearchTypeEnum.Products:
 				return this.getProductSearch(query).pipe(
-					map((data) => data.items),
+					map((data) => data.items)
 				);
 
 			case SearchTypeEnum.Global:
@@ -281,9 +281,9 @@ export class SearchFacadeService {
 									id: 0,
 									name: item.title,
 									linkToDetail: item.linkToDetail,
-								}) as IDictionaryItemDto,
+								}) as IDictionaryItemDto
 						);
-					}),
+					})
 				);
 
 			default:

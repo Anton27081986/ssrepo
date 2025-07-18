@@ -36,7 +36,7 @@ export class RatingTeamsComponent {
 		this.ratingState.rating$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected readonly teams: Signal<IRankTypeItemDto[]> = computed(() => {
@@ -56,19 +56,19 @@ export class RatingTeamsComponent {
 		this.ratingState.isLoading$,
 		{
 			requireSync: true,
-		},
+		}
 	);
 
 	constructor(
 		private readonly ratingState: RatingTeamsStateService,
-		private readonly ratingUsersState: RatingTeamUsersState,
+		private readonly ratingUsersState: RatingTeamUsersState
 	) {
 		effect(() => {
 			const rating = this.rating();
 
 			if (rating) {
 				const findWalkerInItems = rating.items.find(
-					(item) => item.id === rating.rankTypeId,
+					(item) => item.id === rating.rankTypeId
 				);
 
 				if (findWalkerInItems) {

@@ -18,7 +18,7 @@ export class UserProfileStoreService implements OnDestroy {
 	private readonly subscription: Subscription = new Subscription();
 
 	private readonly windowProfileSubject = new BehaviorSubject<boolean | null>(
-		null,
+		null
 	);
 
 	public windowProfile$ = this.windowProfileSubject.asObservable();
@@ -26,7 +26,7 @@ export class UserProfileStoreService implements OnDestroy {
 	constructor(
 		private readonly apiService: UsersApiService,
 		private readonly localStorageService: LocalStorageService,
-		private readonly authenticationService: AuthenticationService,
+		private readonly authenticationService: AuthenticationService
 	) {
 		this.init();
 	}
@@ -38,7 +38,7 @@ export class UserProfileStoreService implements OnDestroy {
 				switchMap(() => {
 					const userProfile =
 						this.localStorageService.getItem<IUserProfile>(
-							this.userProfileKey,
+							this.userProfileKey
 						);
 
 					if (userProfile) {
@@ -48,7 +48,7 @@ export class UserProfileStoreService implements OnDestroy {
 					}
 
 					return this.loadUserProfile();
-				}),
+				})
 			)
 			.subscribe();
 
@@ -65,7 +65,7 @@ export class UserProfileStoreService implements OnDestroy {
 			tap((profile) => {
 				this.localStorageService.setItem(this.userProfileKey, profile);
 				this.userProfileSubject.next(profile);
-			}),
+			})
 		);
 	}
 

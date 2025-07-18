@@ -12,7 +12,7 @@ export const excessIncomePermissionsGuard: CanActivateFn = () => {
 	return permissionsFacadeService
 		.checkModulePermissions(
 			ModulesWithPermissionsEnum.ExcessIncome,
-			Permissions.EXCESS_INCOME_READ,
+			Permissions.EXCESS_INCOME_READ
 		)
 		.pipe(
 			map((isAllowAccess) => {
@@ -27,6 +27,6 @@ export const excessIncomePermissionsGuard: CanActivateFn = () => {
 				});
 
 				return false;
-			}),
+			})
 		);
 };

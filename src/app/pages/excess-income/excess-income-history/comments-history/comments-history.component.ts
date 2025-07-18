@@ -68,7 +68,7 @@ export class CommentsHistoryComponent {
 		protected readonly data: IDialogData,
 		private readonly excessIncomeApiService: ExcessIncomeApiService,
 		private readonly modalService: ModalService,
-		private readonly cdr: ChangeDetectorRef,
+		private readonly cdr: ChangeDetectorRef
 	) {
 		this.getHistory();
 	}
@@ -83,7 +83,7 @@ export class CommentsHistoryComponent {
 					this.data.tovId,
 					this.data.contractorId || null,
 					this.pageSize,
-					this.offset,
+					this.offset
 				)
 				.pipe(untilDestroyed(this))
 				.subscribe((response) => {
@@ -91,7 +91,7 @@ export class CommentsHistoryComponent {
 						this.tableState = TableState.Empty;
 					} else {
 						this.items = this.mapHistoryToTableItems(
-							response.items,
+							response.items
 						);
 						this.total = response.total ?? 0;
 

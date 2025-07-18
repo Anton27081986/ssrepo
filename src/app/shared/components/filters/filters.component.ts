@@ -90,14 +90,14 @@ export class FiltersComponent implements OnInit {
 	protected readonly Array = Array;
 	constructor(
 		private readonly changeDetector: ChangeDetectorRef,
-		private readonly formBuilder: FormBuilder,
+		private readonly formBuilder: FormBuilder
 	) {}
 
 	public ngOnInit() {
 		this.filtersForm = this.formBuilder.group(
 			this.filters.reduce((group, filter) => {
 				return { ...group, [filter.name]: [filter.value] };
-			}, {}),
+			}, {})
 		);
 	}
 

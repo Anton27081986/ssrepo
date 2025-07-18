@@ -27,15 +27,17 @@ import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/corresponden
 	standalone: true,
 })
 export class CorrespondenceComponent implements OnChanges {
-	@Input() public objectId: number | undefined;
-	@Input() public type: CorrespondenceTypeEnum =
-		CorrespondenceTypeEnum.Clients;
+	@Input()
+	public objectId: number | undefined;
+
+	@Input()
+	public type: CorrespondenceTypeEnum = CorrespondenceTypeEnum.Clients;
 
 	public isLoading$: Observable<boolean>;
 
 	protected readonly TableState = TableState;
 	constructor(
-		private readonly notificationsFacadeService: CorrespondenceFacadeService,
+		private readonly notificationsFacadeService: CorrespondenceFacadeService
 	) {
 		this.isLoading$ = this.notificationsFacadeService.isLoading$;
 	}

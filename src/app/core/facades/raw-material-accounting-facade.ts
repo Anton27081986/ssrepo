@@ -20,13 +20,13 @@ export class RawMaterialAccountingFacadeService {
 
 	// Индикатор загрузки
 	private readonly isContractsLoadingSubject = new BehaviorSubject<boolean>(
-		true,
+		true
 	);
 
 	public isContractsLoading$ = this.isContractsLoadingSubject.asObservable();
 
 	private readonly isContractLoadingSubject = new BehaviorSubject<boolean>(
-		true,
+		true
 	);
 
 	public isContractLoading$ = this.isContractLoadingSubject.asObservable();
@@ -34,7 +34,7 @@ export class RawMaterialAccountingFacadeService {
 	// Договоры
 	private readonly contractsSubject =
 		new BehaviorSubject<IResponse<IRawMaterialAccountingContract> | null>(
-			null,
+			null
 		);
 
 	public contracts$ = this.contractsSubject.asObservable();
@@ -68,7 +68,7 @@ export class RawMaterialAccountingFacadeService {
 
 	constructor(
 		private readonly rawMaterialAccountingApiService: RawMaterialAccountingApiService,
-		private readonly dictionaryApiService: DictionaryApiService,
+		private readonly dictionaryApiService: DictionaryApiService
 	) {
 		this.dictionaryApiService
 			.getProcurementsStatuses()
@@ -76,7 +76,7 @@ export class RawMaterialAccountingFacadeService {
 				tap((statuses) => {
 					this.statusesSubject.next(statuses);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}
@@ -90,7 +90,7 @@ export class RawMaterialAccountingFacadeService {
 				catchError((error: unknown) => {
 					this.isContractsLoadingSubject.next(false);
 					throw error;
-				}),
+				})
 			)
 			.subscribe((contracts) => {
 				this.contractsSubject.next(contracts.data);
@@ -106,7 +106,7 @@ export class RawMaterialAccountingFacadeService {
 				tap((contractDetails) => {
 					this.contractDetailsSubject.next(contractDetails);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe();
 	}

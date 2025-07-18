@@ -45,7 +45,7 @@ export class ClientProposalsNewsLineTabComponent {
 		this.stateService.news$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected linkToModule: Signal<string | null> = computed(() => {
@@ -74,7 +74,7 @@ export class ClientProposalsNewsLineTabComponent {
 	protected pageSize = this.stateService.pageSize;
 
 	constructor(
-		protected readonly stateService: ClientProposalsNewsLineTabState,
+		protected readonly stateService: ClientProposalsNewsLineTabState
 	) {}
 
 	protected getTableItems(production: IResponse<INewsDto>): ITableItem[] {
@@ -106,8 +106,7 @@ export class ClientProposalsNewsLineTabComponent {
 			this.stateService.offset$.next(0);
 		} else {
 			this.stateService.offset$.next(
-				this.stateService.pageSize * $event -
-					this.stateService.pageSize,
+				this.stateService.pageSize * $event - this.stateService.pageSize
 			);
 		}
 

@@ -50,13 +50,13 @@ export class ClientProposalsPageComponent {
 		private readonly _router: Router,
 		private readonly apiService: ClientProposalsApiService,
 		private readonly proposalsPermission: PermissionsFacadeService,
-		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
+		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService
 	) {}
 
 	get canLoadFile(): boolean {
 		return this.proposalsPermission.hasPermission(
 			ModulesWithPermissionsEnum.Proposals,
-			Permissions.CLIENT_PROPOSALS_CAN_DOWNLOADREPORTS,
+			Permissions.CLIENT_PROPOSALS_CAN_DOWNLOADREPORTS
 		);
 	}
 

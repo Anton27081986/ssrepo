@@ -37,7 +37,7 @@ export class ChatBotFacadeService {
 	public activeSubsector$ = this.activeSubsector.asObservable();
 
 	private readonly state = new BehaviorSubject<ChatBotStates>(
-		ChatBotStates.Ready,
+		ChatBotStates.Ready
 	);
 
 	public state$ = this.state.asObservable();
@@ -47,7 +47,7 @@ export class ChatBotFacadeService {
 
 	constructor(
 		private readonly botApiService: ChatBotApiService,
-		private readonly usesFacadeService: UserFacadeService,
+		private readonly usesFacadeService: UserFacadeService
 	) {
 		this.usesFacadeService
 			.getUserProfile()
@@ -93,7 +93,7 @@ export class ChatBotFacadeService {
 	}
 
 	public setActiveSubsector(
-		activeSubsector: IDictionaryItemDto | null,
+		activeSubsector: IDictionaryItemDto | null
 	): void {
 		this.activeSubsector.next(activeSubsector);
 	}
@@ -170,7 +170,7 @@ export class ChatBotFacadeService {
 						]);
 						this.state.next(ChatBotStates.Ready);
 						throw err;
-					}),
+					})
 				)
 				.subscribe((res) => {
 					myMessage.id = res.id;

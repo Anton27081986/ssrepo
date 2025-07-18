@@ -36,7 +36,7 @@ export class FilePickerComponent {
 
 	constructor(
 		private readonly elem: ElementRef,
-		protected readonly checkListFile: CheckFileListStateService,
+		protected readonly checkListFile: CheckFileListStateService
 	) {}
 
 	@HostListener('document:click', ['$event'])

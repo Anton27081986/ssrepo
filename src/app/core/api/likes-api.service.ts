@@ -13,7 +13,7 @@ export class LikesApiService {
 	public setLike(
 		objectId: number,
 		type?: number,
-		awardId?: number,
+		awardId?: number
 	): Observable<any> {
 		return this.http.post<any[]>(`${environment.apiUrl}/api/awards/likes`, {
 			objectId,
@@ -30,7 +30,7 @@ export class LikesApiService {
 				params: new HttpParams()
 					.set('objectId', objectId)
 					.set('type', type),
-			},
+			}
 		);
 	}
 }

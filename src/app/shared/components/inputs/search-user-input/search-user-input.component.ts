@@ -63,7 +63,7 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 	constructor(
 		private readonly searchFacade: SearchFacadeService,
 		private readonly ref: ChangeDetectorRef,
-		private readonly usersApiService: UsersApiService,
+		private readonly usersApiService: UsersApiService
 	) {
 		this.entityId$
 			.pipe(
@@ -77,7 +77,7 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 						this.query = entity.title;
 						this.OnChange(entity.id);
 					}
-				}),
+				})
 			)
 			.subscribe(() => ref.detectChanges());
 	}
@@ -86,7 +86,7 @@ export class SearchUserInputComponent implements ControlValueAccessor {
 		return this.usersApiService.getUserById(value).pipe(
 			map((res) => {
 				return { id: res.id, title: res.name };
-			}),
+			})
 		);
 	}
 

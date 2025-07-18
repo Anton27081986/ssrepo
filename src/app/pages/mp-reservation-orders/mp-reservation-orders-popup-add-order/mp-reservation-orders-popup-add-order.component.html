@@ -37,8 +37,8 @@
 				</snab-text>
 			</div>
 			<form
-				[formGroup]="addOrdersForm"
 				class="content"
+				[formGroup]="addOrdersForm"
 			>
 				<div class="content__row">
 					<div class="content__row-item-tov">
@@ -130,14 +130,14 @@
 		<ng-template #footer>
 			<div class="footer">
 				<snab-button
+					text="Отмена"
 					[type]="ButtonType.Secondary"
 					[size]="Size.Large"
-					text="Отмена"
 					(click)="close()"
 				></snab-button>
 				<snab-button
-					[size]="Size.Large"
 					text="Создать заказ"
+					[size]="Size.Large"
 					(click)="createOrder()"
 				></snab-button>
 			</div>

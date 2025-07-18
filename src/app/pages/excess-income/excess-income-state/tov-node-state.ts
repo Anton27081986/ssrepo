@@ -24,15 +24,15 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		new BehaviorSubject<boolean>(false);
 
 	public tovSignal: WritableSignal<ExcessIncomeTov> = signal(
-		this.createFormGroup(this.tov),
+		this.createFormGroup(this.tov)
 	);
 
 	public currencySignal: WritableSignal<IDictionaryItemDto> = signal(
-		this.currency,
+		this.currency
 	);
 
 	public tovCommentSignal: WritableSignal<string | null> = signal(
-		this.tov.comment,
+		this.tov.comment
 	);
 
 	public state: ExcessIncomeState;
@@ -53,28 +53,28 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		this.currentParams.controls.excessIncomePercent.statusChanges.pipe(
 			map((status) => {
 				return status === 'VALID';
-			}),
+			})
 		);
 
 	public validSndControlNext$: Observable<boolean> =
 		this.nextParams.controls.excessIncomePercent.statusChanges.pipe(
 			map((status) => {
 				return status === 'VALID';
-			}),
+			})
 		);
 
 	public validFixPriceControlCurrent$: Observable<boolean> =
 		this.currentParams.controls.fixPrice.statusChanges.pipe(
 			map((status) => {
 				return status === 'VALID';
-			}),
+			})
 		);
 
 	public validFixPriceControlNext$: Observable<boolean> =
 		this.nextParams.controls.fixPrice.statusChanges.pipe(
 			map((status) => {
 				return status === 'VALID';
-			}),
+			})
 		);
 
 	constructor(
@@ -84,7 +84,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 		private readonly contractorId: number | null,
 		state: ExcessIncomeState,
 		private readonly currency: IDictionaryItemDto,
-		private readonly groupNodeState: GroupNodeState,
+		private readonly groupNodeState: GroupNodeState
 	) {
 		super();
 
@@ -102,13 +102,13 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 						this.currentParams.controls.finalPrice.setValue(
 							this.calculateFinalPrice(
 								this.currentParams.controls.price.value,
-								control,
-							),
+								control
+							)
 						);
 					} else {
 						this.currentParams.controls.finalPrice.setValue(0);
 					}
-				}),
+				})
 			)
 			.subscribe();
 
@@ -121,7 +121,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 					}
 
 					this.currentParams.controls.finalPrice.setValue(control);
-				}),
+				})
 			)
 			.subscribe();
 
@@ -137,13 +137,13 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 						this.nextParams.controls.finalPrice.setValue(
 							this.calculateFinalPrice(
 								this.nextParams.controls.price.value,
-								val,
-							),
+								val
+							)
 						);
 					} else {
 						this.nextParams.controls.finalPrice.setValue(0);
 					}
-				}),
+				})
 			)
 			.subscribe();
 
@@ -156,17 +156,18 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 					}
 
 					this.nextParams.controls.finalPrice.setValue(val);
-				}),
+				})
 			)
 			.subscribe();
 	}
+
 	get canEditSnd(): boolean {
 		return !this.permissions.includes(Permissions.EXCESS_INCOME_EDIT);
 	}
 
 	get canEditComment(): boolean {
 		return this.permissions.includes(
-			Permissions.EXCESS_INCOME_EDIT_COMMENT,
+			Permissions.EXCESS_INCOME_EDIT_COMMENT
 		);
 	}
 
@@ -177,37 +178,37 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 		this.currentParams.controls.excessIncomePercent.setValue(
 			tov.currentParams.excessIncomePercent,
-			{ emitEvent: false },
+			{ emitEvent: false }
 		);
 
 		this.currentParams.controls.fixPrice.setValue(
 			tov.currentParams.fixPrice,
 			{
 				emitEvent: false,
-			},
+			}
 		);
 
 		this.currentParams.controls.finalPrice.setValue(
 			tov.currentParams.finalPrice,
 			{
 				emitEvent: false,
-			},
+			}
 		);
 
 		this.currentParams.controls.fixPriceCurrency.setValue(
 			tov.currentParams.fixPriceCurrency,
 			{
 				emitEvent: false,
-			},
+			}
 		);
 
 		this.currentParams.controls.excessIncomePercent.setValidators(
-			compareValues(tov.currentParams.excessIncomePercent),
+			compareValues(tov.currentParams.excessIncomePercent)
 		);
 		this.currentParams.controls.excessIncomePercent.updateValueAndValidity();
 
 		this.currentParams.controls.fixPrice.setValidators(
-			compareValues(tov.currentParams.fixPrice),
+			compareValues(tov.currentParams.fixPrice)
 		);
 		this.currentParams.controls.fixPrice.updateValueAndValidity();
 
@@ -218,7 +219,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			tov.nextParams.excessIncomePercent,
 			{
 				emitEvent: false,
-			},
+			}
 		);
 		this.nextParams.controls.fixPrice.setValue(tov.nextParams.fixPrice, {
 			emitEvent: false,
@@ -227,23 +228,23 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 			tov.nextParams.finalPrice,
 			{
 				emitEvent: false,
-			},
+			}
 		);
 
 		this.nextParams.controls.excessIncomePercent.setValidators(
-			compareValues(tov.nextParams.excessIncomePercent),
+			compareValues(tov.nextParams.excessIncomePercent)
 		);
 
 		this.nextParams.controls.fixPriceCurrency.setValue(
 			tov.nextParams.fixPriceCurrency,
 			{
 				emitEvent: false,
-			},
+			}
 		);
 
 		this.nextParams.controls.excessIncomePercent.updateValueAndValidity();
 		this.nextParams.controls.fixPrice.setValidators(
-			compareValues(tov.nextParams.fixPrice),
+			compareValues(tov.nextParams.fixPrice)
 		);
 		this.nextParams.controls.fixPrice.updateValueAndValidity();
 	}
@@ -269,7 +270,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	resetSndCurrentParent() {
 		this.groupNodeState.getSndCurrentControl.setValue(null);
 		this.groupNodeState.getSndCurrentControl.setValidators(
-			compareValues(null),
+			compareValues(null)
 		);
 		this.groupNodeState.getSndCurrentControl.updateValueAndValidity();
 		const oldGroup = this.groupNodeState.groupSignal();
@@ -280,7 +281,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	resetSndNextParent() {
 		this.groupNodeState.getSndNextControl.setValue(null);
 		this.groupNodeState.getSndNextControl.setValidators(
-			compareValues(null),
+			compareValues(null)
 		);
 		this.groupNodeState.getSndNextControl.updateValueAndValidity();
 		const oldGroup = this.groupNodeState.groupSignal();
@@ -305,7 +306,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 	public updateTov(
 		isCurrent: boolean,
 		excessIncomePercentValue: number | null,
-		fixPriceValue: number | null,
+		fixPriceValue: number | null
 	) {
 		this.service
 			.updateSndTov({
@@ -402,7 +403,7 @@ export class TovNodeState extends ExcessIncomeBaseNodeState {
 
 	public mapExcessIncomeTov(
 		formGroup: FormGroup<ExcessIncomeParamsFormTov>,
-		item: ExcessIncomeTovFromBackend,
+		item: ExcessIncomeTovFromBackend
 	) {
 		return {
 			id: item.id,

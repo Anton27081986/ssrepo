@@ -51,7 +51,7 @@ export class SpecificationModalComponent {
 		this.completedWorkActsFacade.act$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	protected addSpecificationForm!: FormGroup<{
@@ -78,7 +78,7 @@ export class SpecificationModalComponent {
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
-		private readonly searchFacade: SearchFacadeService,
+		private readonly searchFacade: SearchFacadeService
 	) {
 		this.addSpecificationForm = new FormGroup({
 			serviceId: new FormControl<number | null>(null, [
@@ -103,37 +103,37 @@ export class SpecificationModalComponent {
 
 		if (spec) {
 			this.addSpecificationForm.controls.serviceId.setValue(
-				spec.service?.id || null,
+				spec.service?.id || null
 			);
 			this.addSpecificationForm.controls.comment.setValue(
-				spec.comment || null,
+				spec.comment || null
 			);
 			this.addSpecificationForm.controls.quantity.setValue(
-				spec.quantity || null,
+				spec.quantity || null
 			);
 			this.addSpecificationForm.controls.tovUnitId.setValue(
-				spec.tovUnit?.id || null,
+				spec.tovUnit?.id || null
 			);
 			this.addSpecificationForm.controls.costId.setValue(
-				spec.cost?.id || null,
+				spec.cost?.id || null
 			);
 			this.addSpecificationForm.controls.faObjectId.setValue(
-				spec.faObject?.id || null,
+				spec.faObject?.id || null
 			);
 			this.addSpecificationForm.controls.projectId.setValue(
-				spec.project?.id || null,
+				spec.project?.id || null
 			);
 			this.addSpecificationForm.controls.deptId.setValue(
-				spec.dept?.id || null,
+				spec.dept?.id || null
 			);
 			this.addSpecificationForm.controls.sectionId.setValue(
-				spec.section?.id || null,
+				spec.section?.id || null
 			);
 			this.addSpecificationForm.controls.userId.setValue(
-				spec.user?.id || null,
+				spec.user?.id || null
 			);
 			this.addSpecificationForm.controls.amount.setValue(
-				spec.amount || null,
+				spec.amount || null
 			);
 
 			this.myDept = spec.dept;
@@ -150,12 +150,12 @@ export class SpecificationModalComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe((units) => {
 					this.defaultTovUnits = units.items.find(
-						(item) => item.name === this.defaultTovUnitsName,
+						(item) => item.name === this.defaultTovUnitsName
 					);
 
 					if (this.defaultTovUnits) {
 						this.addSpecificationForm.controls.tovUnitId.setValue(
-							this.defaultTovUnits.id,
+							this.defaultTovUnits.id
 						);
 					}
 				});
@@ -164,7 +164,7 @@ export class SpecificationModalComponent {
 
 	protected resetValueControlMySection(
 		event: any,
-		control: AbstractControl,
+		control: AbstractControl
 	): void {
 		control.markAsTouched();
 
@@ -193,7 +193,7 @@ export class SpecificationModalComponent {
 					if (res.items.length) {
 						this.myDept = res.items[0];
 						this.addSpecificationForm.controls.deptId.setValue(
-							this.myDept.id,
+							this.myDept.id
 						);
 						this.getMySection();
 					}
@@ -210,12 +210,12 @@ export class SpecificationModalComponent {
 					if (res.items.length) {
 						this.mySection = res.items[0];
 						this.addSpecificationForm.controls.sectionId.setValue(
-							this.mySection.id,
+							this.mySection.id
 						);
 					} else {
 						this.mySection = undefined;
 						this.addSpecificationForm.controls.sectionId.setValue(
-							null,
+							null
 						);
 					}
 				});
@@ -256,16 +256,16 @@ export class SpecificationModalComponent {
 
 	protected setErrorsControl(): void {
 		this.setErrorsIfNotControlValue(
-			this.addSpecificationForm.controls.serviceId,
+			this.addSpecificationForm.controls.serviceId
 		);
 		this.setErrorsIfNotControlValue(
-			this.addSpecificationForm.controls.costId,
+			this.addSpecificationForm.controls.costId
 		);
 		this.setErrorsIfNotControlValue(
-			this.addSpecificationForm.controls.deptId,
+			this.addSpecificationForm.controls.deptId
 		);
 		this.setErrorsIfNotControlValue(
-			this.addSpecificationForm.controls.userId,
+			this.addSpecificationForm.controls.userId
 		);
 	}
 

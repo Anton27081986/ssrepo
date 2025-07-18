@@ -8,7 +8,7 @@ export class ReplacePipe implements PipeTransform {
 	transform(
 		value: any,
 		strToReplace: string,
-		replacementStr: string,
+		replacementStr: string
 	): string {
 		if (!value || !strToReplace || !replacementStr) {
 			return value;

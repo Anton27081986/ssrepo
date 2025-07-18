@@ -63,7 +63,7 @@ export class FriendlyAccountsPageComponent implements OnInit {
 		protected readonly friendlyAccountsFacadeService: FriendlyAccountsFacadeService,
 		private readonly formBuilder: FormBuilder,
 		public modal: ModalService,
-		private readonly cd: ChangeDetectorRef,
+		private readonly cd: ChangeDetectorRef
 	) {
 		this.friendlyAccountsFacadeService.friendlyAccounts$
 			.pipe(untilDestroyed(this))
@@ -124,7 +124,7 @@ export class FriendlyAccountsPageComponent implements OnInit {
 
 			this.friendlyAccountsFacadeService.addUsersInListFriendlyLogins(
 				userList,
-				Number(this.radioValue),
+				Number(this.radioValue)
 			);
 		} else {
 			console.error('Форма не валидна');

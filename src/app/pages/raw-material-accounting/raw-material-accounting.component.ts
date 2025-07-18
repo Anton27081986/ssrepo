@@ -102,7 +102,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 		private readonly modalService: ModalService,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly activatedRoute: ActivatedRoute,
-		private readonly router: Router,
+		private readonly router: Router
 	) {
 		this.isLoading$ = this.facadeService.isContractsLoading$;
 
@@ -152,13 +152,13 @@ export class RawMaterialAccountingComponent implements OnInit {
 							? x.quantityRemaining
 							: '-';
 						tableItem.period = `${new Date(
-							Date.parse(x.periodStartDate),
+							Date.parse(x.periodStartDate)
 						).toLocaleString('ru-RU', {
 							year: 'numeric',
 							month: 'numeric',
 							day: 'numeric',
 						})} - ${new Date(
-							Date.parse(x.periodEndDate),
+							Date.parse(x.periodEndDate)
 						).toLocaleString('ru-RU', {
 							year: 'numeric',
 							month: 'numeric',
@@ -180,7 +180,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((statuses) => {
 				const statusesFilter = this.filters.find(
-					(filter) => filter.name === 'statuses',
+					(filter) => filter.name === 'statuses'
 				);
 
 				if (statusesFilter && statuses.items) {
@@ -206,7 +206,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((permissions) => {
 				this.canAdd = permissions.includes(
-					Permissions.CLIENT_PROCUREMENTS_ADD,
+					Permissions.CLIENT_PROCUREMENTS_ADD
 				);
 				this.cdr.detectChanges();
 			});
@@ -293,7 +293,7 @@ export class RawMaterialAccountingComponent implements OnInit {
 			history.pushState(
 				null,
 				document.title,
-				`${window.location.href}/${contract.row.id}`,
+				`${window.location.href}/${contract.row.id}`
 			);
 			this.openContractModal(contract.row.id);
 		}

@@ -22,7 +22,7 @@ export class MainMenuFacadeService {
 		private readonly menuApiService: MenuApiService,
 		private readonly mainMenuStoreService: MainMenuStoreService,
 		private readonly userProfileStoreService: UserProfileStoreService,
-		private readonly permissionsApiService: PermissionsApiService,
+		private readonly permissionsApiService: PermissionsApiService
 	) {
 		this.init();
 	}
@@ -36,9 +36,7 @@ export class MainMenuFacadeService {
 						.pipe(untilDestroyed(this))
 						.subscribe((permissions) => {
 							this.aiPermission.next(
-								permissions.items.includes(
-									'AiAssistant.Access',
-								),
+								permissions.items.includes('AiAssistant.Access')
 							);
 						});
 				}),
@@ -68,13 +66,11 @@ export class MainMenuFacadeService {
 				tap((fullMenu) => {
 					fullMenu.map(
 						(menu) =>
-							(menu.toggle$ = new BehaviorSubject<boolean>(
-								false,
-							)),
+							(menu.toggle$ = new BehaviorSubject<boolean>(false))
 					);
 					this.mainMenuStoreService.setMainMenu(fullMenu);
 				}),
-				untilDestroyed(this),
+				untilDestroyed(this)
 			)
 			.subscribe({
 				error: (error: unknown) => {

@@ -6,7 +6,7 @@ import { AuctionSalesApiService } from '@app/core/api/auction-sales-api.service'
 })
 export class AuctionSaleFacadeService {
 	constructor(
-		private readonly auctionSalesApiService: AuctionSalesApiService,
+		private readonly auctionSalesApiService: AuctionSalesApiService
 	) {}
 
 	public getAuctionSale(limit: number, offset: number) {

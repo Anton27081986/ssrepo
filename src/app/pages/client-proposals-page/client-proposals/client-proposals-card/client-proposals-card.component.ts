@@ -115,63 +115,14 @@ export class ClientProposalsCardComponent {
 	protected productionOptionsTg$: Observable<IDictionaryItemDto[]>;
 	protected productionOptionsVgp$: Observable<IDictionaryItemDto[]>;
 	protected productionOptionsTpg$: Observable<IDictionaryItemDto[]>;
-	get vgpFormControl(): number[] {
-		return this.form.controls.vgpIds.value
-			? this.form.controls.vgpIds.value
-			: [];
-	}
-
 	protected productionOptionsSign$: Observable<IDictionaryItemDto[]>;
-	get tgFormControl(): number[] {
-		return this.form.controls.tgIds.value
-			? this.form.controls.tgIds.value
-			: [];
-	}
-
-	get tpgFormControl(): number[] {
-		return this.form.controls.tpgIds.value
-			? this.form.controls.tpgIds.value
-			: [];
-	}
-
-	get TprFlagsFormControl(): number[] {
-		return this.form.controls.TprFlags.value
-			? this.form.controls.TprFlags.value
-			: [];
-	}
-
 	protected readonly TooltipTheme = TooltipTheme;
-	get isDisabledButton(): boolean {
-		if (this.clientProposalsFacadeService.blockForProposalSubject$.value) {
-			return true;
-		}
-
-		return !this.form.valid;
-	}
-
 	protected readonly TooltipPosition = TooltipPosition;
-	protected expandedColumnPopover() {
-		this.expandedPopoverCheckColumn$.next(
-			!this.expandedPopoverCheckColumn$.value,
-		);
-	}
-
-	get canTakeWork(): Observable<boolean> {
-		return combineLatest([
-			this.clientProposalsFacadeService.canTakeWork,
-			this.clientProposalsFacadeService.isAlterFilter$,
-		]).pipe(
-			map(([canTakeWork, isAlter]) => {
-				return canTakeWork && !isAlter;
-			}),
-		);
-	}
-
 	constructor(
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		protected readonly checkListStateService: CheckFileListStateService,
 		private readonly modalService: ModalService,
-		private readonly notificationToastService: NotificationToastService,
+		private readonly notificationToastService: NotificationToastService
 	) {
 		this.clientProposalsFacadeService.clientId$
 			.pipe(untilDestroyed(this))
@@ -191,9 +142,9 @@ export class ClientProposalsCardComponent {
 						filterTruthy(),
 						map((val) => {
 							return val.items;
-						}),
+						})
 					);
-			}),
+			})
 		);
 
 		this.productionOptionsTg$ = this.tgQueryControl.valueChanges.pipe(
@@ -204,9 +155,9 @@ export class ClientProposalsCardComponent {
 					filterTruthy(),
 					map((val) => {
 						return val.items;
-					}),
+					})
 				);
-			}),
+			})
 		);
 
 		this.productionOptionsTpg$ = this.tpgQueryControl.valueChanges.pipe(
@@ -217,9 +168,9 @@ export class ClientProposalsCardComponent {
 					filterTruthy(),
 					map((val) => {
 						return val.items;
-					}),
+					})
 				);
-			}),
+			})
 		);
 
 		this.productionOptionsSign$ = this.clientProposalsFacadeService
@@ -227,8 +178,57 @@ export class ClientProposalsCardComponent {
 			.pipe(
 				map((values) => {
 					return values.items;
-				}),
+				})
 			);
+	}
+
+	get vgpFormControl(): number[] {
+		return this.form.controls.vgpIds.value
+			? this.form.controls.vgpIds.value
+			: [];
+	}
+
+	get tgFormControl(): number[] {
+		return this.form.controls.tgIds.value
+			? this.form.controls.tgIds.value
+			: [];
+	}
+
+	get tpgFormControl(): number[] {
+		return this.form.controls.tpgIds.value
+			? this.form.controls.tpgIds.value
+			: [];
+	}
+
+	get TprFlagsFormControl(): number[] {
+		return this.form.controls.TprFlags.value
+			? this.form.controls.TprFlags.value
+			: [];
+	}
+
+	get isDisabledButton(): boolean {
+		if (this.clientProposalsFacadeService.blockForProposalSubject$.value) {
+			return true;
+		}
+
+		return !this.form.valid;
+	}
+
+	protected expandedColumnPopover() {
+		this.expandedPopoverCheckColumn$.next(
+			!this.expandedPopoverCheckColumn$.value
+		);
+	}
+
+	get canTakeWork(): Observable<boolean> {
+		return combineLatest([
+			this.clientProposalsFacadeService.canTakeWork,
+			this.clientProposalsFacadeService.isAlterFilter$,
+		]).pipe(
+			map(([canTakeWork, isAlter]) => {
+				return canTakeWork && !isAlter;
+			})
+		);
 	}
 
 	private refreshControl() {
@@ -245,7 +245,7 @@ export class ClientProposalsCardComponent {
 		return new FormGroup<IClientProposalsCriteriaForm>({
 			vgpIds: new FormControl<number[] | null>(
 				{ value: null, disabled: false },
-				Validators.required,
+				Validators.required
 			),
 			tpgIds: new FormControl<number[] | null>({
 				value: null,
@@ -309,14 +309,14 @@ export class ClientProposalsCardComponent {
 								.subscribe((bol) => {
 									if (bol) {
 										this.clientProposalsFacadeService.blockForProposalSubject$.next(
-											true,
+											true
 										);
 									}
 								});
 
 							if (
 								!localStorage.getItem(
-									'warningClientProposalsBool',
+									'warningClientProposalsBool'
 								)
 							) {
 								this.modalService
@@ -335,14 +335,14 @@ export class ClientProposalsCardComponent {
 									.subscribe(() => {
 										localStorage.setItem(
 											'warningClientProposalsBool',
-											'true',
+											'true'
 										);
 									});
 							}
 						}
 
 						this.isLoading$.next(false);
-					}),
+					})
 				);
 		}
 	}
@@ -355,7 +355,7 @@ export class ClientProposalsCardComponent {
 			this.clientProposalsFacadeService
 				.saveInCloud(
 					this.checkListStateService.checkFiles$.value,
-					false,
+					false
 				)
 				.pipe(
 					untilDestroyed(this),
@@ -364,13 +364,13 @@ export class ClientProposalsCardComponent {
 						this.waitingForLoading$.next(true);
 
 						return this.clientProposalsFacadeService.getFiles(
-							url.shareLink,
+							url.shareLink
 						);
 					}),
 					switchMap((data) => {
 						return data;
 					}),
-					untilDestroyed(this),
+					untilDestroyed(this)
 				)
 				.subscribe((blob) => {
 					this.waitingForLoading$.next(false);
@@ -411,11 +411,11 @@ export class ClientProposalsCardComponent {
 			.subscribe((status) => {
 				if (status) {
 					this.clientProposalsFacadeService.blockForProposalSubject$.next(
-						false,
+						false
 					);
 					this.notificationToastService.addToast(
 						'Данные успешно отправлены для создания задач(и) в ЛК МП',
-						'ok',
+						'ok'
 					);
 				}
 			});

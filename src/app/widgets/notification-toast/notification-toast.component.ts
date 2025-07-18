@@ -17,7 +17,7 @@ import { NoticeComponent } from '@app/shared/components/notice/notice.component'
 export class NotificationToastComponent {
 	public toasts$: Observable<IToast[]>;
 	constructor(
-		private readonly notificationToastService: NotificationToastService,
+		private readonly notificationToastService: NotificationToastService
 	) {
 		this.toasts$ = this.notificationToastService.notificationsStorage$;
 	}
