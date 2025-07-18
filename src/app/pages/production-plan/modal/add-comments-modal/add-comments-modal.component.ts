@@ -25,7 +25,7 @@ import { IUserProfile } from '@app/core/models/user-profile';
 import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { switchMap, tap } from 'rxjs';
 import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
 
@@ -37,14 +37,7 @@ export interface AddCommentsModalData {
 @Component({
 	selector: 'app-add-comments-modal',
 	standalone: true,
-	imports: [
-		NgFor,
-		NgIf,
-		TextComponent,
-		ButtonComponent,
-		AvatarComponent,
-		DatePipe,
-	],
+	imports: [NgFor, NgIf, TextComponent, ButtonComponent, AvatarComponent],
 	templateUrl: './add-comments-modal.component.html',
 	styleUrls: ['./add-comments-modal.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -98,7 +91,19 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.comments$(this.data.id)
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
-				this.comments = list;
+				this.comments = list.map((item) => ({
+					...item,
+					createdDate: new Date(item.createdDate).toLocaleString(
+						'ru-RU',
+						{
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+						}
+					),
+				}));
 				this.cdr.detectChanges();
 			});
 	}
@@ -148,7 +153,19 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			.addComment(rowId)
 			.pipe(untilDestroyed(this))
 			.subscribe((list) => {
-				this.comments = list;
+				this.comments = list.map((item) => ({
+					...item,
+					createdDate: new Date(item.createdDate).toLocaleString(
+						'ru-RU',
+						{
+							year: 'numeric',
+							month: '2-digit',
+							day: '2-digit',
+							hour: '2-digit',
+							minute: '2-digit',
+						}
+					),
+				}));
 				this.cdr.detectChanges();
 				setTimeout(() => {
 					this.scrollToBottom();
@@ -174,7 +191,19 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 				}),
 				switchMap(() => this.service.addComment(this.data.id)),
 				tap((list) => {
-					this.comments = list;
+					this.comments = list.map((item) => ({
+						...item,
+						createdDate: new Date(item.createdDate).toLocaleString(
+							'ru-RU',
+							{
+								year: 'numeric',
+								month: '2-digit',
+								day: '2-digit',
+								hour: '2-digit',
+								minute: '2-digit',
+							}
+						),
+					}));
 					this.cdr.markForCheck();
 					this.dropdownList.closed.emit();
 				}),
