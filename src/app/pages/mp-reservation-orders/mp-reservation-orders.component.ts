@@ -45,7 +45,7 @@ import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.s
 import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FilterBuilder } from '@app/core/utils/filter-builder.util';
-import {IMpReservationOrder} from "@app/core/models/mp-reservation-orders/mp-reservation-order";
+import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -309,10 +309,9 @@ export class MPReservationOrdersComponent implements OnInit {
 	}
 
 	public openPopupTotalAmount(order: IMpReservationOrder): void {
-		this.modalService.open(
-			MpReservationOrdersPopupTotalAmountComponent,
-			{ data: order.orderRequests }
-		);
+		this.modalService.open(MpReservationOrdersPopupTotalAmountComponent, {
+			data: order.orderRequests,
+		});
 	}
 
 	public openPopupChangeQueueOrders(): void {

@@ -44,7 +44,7 @@ export class MpReservationOrdersPopupTotalAmountComponent {
 
 	constructor(
 		@Inject(DIALOG_DATA) data: IOrderRequests[],
-		private readonly modalRef: ModalRef,
+		private readonly modalRef: ModalRef
 	) {
 		this.orderRequests = data.map((request) => ({
 			amount: request.amount,
