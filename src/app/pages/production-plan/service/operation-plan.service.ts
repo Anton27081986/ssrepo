@@ -11,6 +11,7 @@ import {
 import {
 	AbstractControl,
 	FormControl,
+	ValidationErrors,
 	ValidatorFn,
 	Validators,
 } from '@angular/forms';
@@ -127,10 +128,16 @@ export class OperationPlanService {
 					].join('-')
 				: '';
 
+			// Normalize quantity value (comma to dot)
+			const rawQuantity = item.countForPostpone.value!;
+			const normalizedQuantity = Number(
+				String(rawQuantity).replace(',', '.')
+			);
+
 			return {
 				id: item.id,
 				orderId: item.orderId,
-				quantity: item.countForPostpone.value!,
+				quantity: normalizedQuantity,
 				productionDate,
 			};
 		});
@@ -180,6 +187,29 @@ export class OperationPlanService {
 		);
 	}
 
+	/**
+	 * Custom validator for decimal numbers that accepts both comma and dot as decimal separators
+	 */
+	private decimalNumberValidator(): ValidatorFn {
+		return (control: AbstractControl): ValidationErrors | null => {
+			const value = control.value;
+
+			if (value === null || value === undefined || value === '') {
+				return null;
+			}
+
+			// Convert value to string and normalize comma to dot
+			const stringValue = String(value).replace(',', '.');
+			const numValue = Number(stringValue);
+
+			if (Number.isNaN(numValue) || numValue < 0) {
+				return { invalidNumber: true };
+			}
+
+			return null;
+		};
+	}
+
 	private mapIResponse(
 		input: IResponse<TransferProductionPlanFromBackend>
 	): IResponse<TransferProductionPlanMap> {
@@ -188,7 +218,12 @@ export class OperationPlanService {
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
-			countForPostpone: new FormControl<number | null>(0),
+			countForPostpone: new FormControl<number | null>(0, [
+				Validators.required,
+				Validators.min(0),
+				Validators.max(item.quantity),
+				this.decimalNumberValidator(),
+			]),
 			productionDateControl: new FormControl<Date | null>(
 				new Date(item.productionDate),
 				{
