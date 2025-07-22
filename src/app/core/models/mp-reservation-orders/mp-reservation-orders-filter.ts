@@ -1,6 +1,4 @@
 export interface MpReservationFilter {
-	limit: number;
-	offset: number;
 	personificationId?: number;
 	authorIds?: number[];
 	tovIds?: number[];
@@ -9,4 +7,6 @@ export interface MpReservationFilter {
 	dateFrom?: string;
 	dateTo?: string;
 	clientIds?: number[];
+	limit: number;
+	offset: number;
 }

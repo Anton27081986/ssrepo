@@ -34,86 +34,86 @@ export class MpReservationOrdersApiService {
 			permissions: string[];
 		}>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/search`,
-			filter
+			filter,
 		);
 	}
 
 	public getPersonificationById(
-		id: string
+		id: string,
 	): Observable<{ data: IMpReservationOrder }> {
 		return this.http.get<{ data: IMpReservationOrder }>(
-			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`
+			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`,
 		);
 	}
 
 	public createOrderPersonification(
-		body: IMpReservationAddOrder
+		body: IMpReservationAddOrder,
 	): Observable<IMpReservationOrder[]> {
 		return this.http.post<IMpReservationOrder[]>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification`,
-			body
+			body,
 		);
 	}
 
 	public updateProvisionDate(
 		orderId: number,
-		provisionDate: string
+		provisionDate: string,
 	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate`,
-			{ provisionDate }
+			{ provisionDate },
 		);
 	}
 
 	public updateProvisionDateById(
 		orderId: number,
 		provisionDate: string,
-		provisionId: number
+		provisionId: number,
 	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provisionDate/${provisionId}`,
-			{ provisionDate }
+			{ provisionDate },
 		);
 	}
 
 	public rejectPersonification(
 		orderId: number,
-		reason: string
+		reason: string,
 	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/reject`,
-			{ reason }
+			{ reason },
 		);
 	}
 
 	public removePersonification(orderId: number): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/remove`,
-			{}
+			{},
 		);
 	}
 
 	public rejectRemovePersonification(orderId: number): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/remove/cancel`,
-			{}
+			{},
 		);
 	}
 
 	public createDetails(
 		orderId: number,
-		body: IProvisionDetailsTypes[]
+		body: IProvisionDetailsTypes[],
 	): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
-			body
+			body,
 		);
 	}
 
 	public getHistoryOrder(
 		objectId: string,
 		limit: number,
-		offset: number
+		offset: number,
 	): Observable<IResponse<IChangeTrackerItemDto>> {
 		const params = new HttpParams()
 			.set('ObjectId', objectId)
@@ -123,39 +123,39 @@ export class MpReservationOrdersApiService {
 
 		return this.http.get<IResponse<IChangeTrackerItemDto>>(
 			`${environment.apiUrl}/api/change-tracker/history`,
-			{ params }
+			{ params },
 		);
 	}
 
 	public changeDetails(
 		orderId: number,
-		body: IProvisionDetailsTypes
+		body: IProvisionDetailsTypes,
 	): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/provision/details`,
-			body
+			body,
 		);
 	}
 
 	public changeManager(orderId: number, authorId: number): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/author`,
-			{ authorId }
+			{ authorId },
 		);
 	}
 
 	public clarify(orderId: number, body: IClarifyOrder): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
-			body
+			body,
 		);
 	}
 
 	public getApproveClarification(
-		orderId: number
+		orderId: number,
 	): Observable<IApproveClarificationResponse> {
 		return this.http.get<IApproveClarificationResponse>(
-			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
 		);
 	}
 
@@ -164,30 +164,30 @@ export class MpReservationOrdersApiService {
 		permissions: string[];
 	}> {
 		return this.http.get<{ data: IQueueOrderDto[]; permissions: string[] }>(
-			`${environment.apiUrl}/api/manufacturing/Queue`
+			`${environment.apiUrl}/api/manufacturing/Queue`,
 		);
 	}
 
 	public getWarehouseForAgreeOrder(
-		orderId: number
+		orderId: number,
 	): Observable<IWarehouseBalanceResponse> {
 		return this.http.get<IWarehouseBalanceResponse>(
-			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`,
 		);
 	}
 
 	public createTransferInvoice(
 		orderId: number,
-		body: IDispatchesRequest
+		body: IDispatchesRequest,
 	): Observable<void> {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/stockbalance`,
-			body
+			body,
 		);
 	}
 
 	public reorderQueueOrders(
-		body: IQueueReorderPosition
+		body: IQueueReorderPosition,
 	): Observable<{ data: IResponse<IQueueOrderDto>; permissions: string[] }> {
 		const params = new HttpParams()
 			.set('fromPosition', body.oldPosition)
@@ -201,14 +201,14 @@ export class MpReservationOrdersApiService {
 			{},
 			{
 				params,
-			}
+			},
 		);
 	}
 
 	public approveClarification(orderId: number): Observable<void> {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
-			{}
+			{},
 		);
 	}
 }
