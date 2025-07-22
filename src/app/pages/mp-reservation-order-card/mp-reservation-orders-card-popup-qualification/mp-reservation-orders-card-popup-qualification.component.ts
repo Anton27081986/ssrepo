@@ -33,6 +33,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { ModalService } from '@app/core/modal/modal.service';
+import { SafeNumberConversion } from '@app/core/utils/safe-number-conversion.util';
 
 interface IQualificationData {
 	id: number;
@@ -93,16 +94,29 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 			});
 
 			this.tov = {
-				id: this.data.tov.id,
+				id: SafeNumberConversion.toId(this.data.tov.id, {
+					fieldName: 'tov.id',
+					required: false,
+				}),
 				name: this.data.tov.name,
 				checked: true,
 			} as IFilterOption;
-			this.id = this.data.id;
+
+			this.id = SafeNumberConversion.toId(this.data.id, {
+				fieldName: 'data.id',
+				required: false,
+			});
 		}
 
 		this.changeClarifyOrderForm = new FormGroup({
 			tov: new FormControl<IDictionaryItemDto | null>(
-				{ id: this.data.tov.id, name: this.data.tov.name },
+				{
+					id: SafeNumberConversion.toId(this.data.tov.id, {
+						fieldName: 'tov.id',
+						required: false,
+					}),
+					name: this.data.tov.name,
+				},
 				[Validators.required]
 			),
 		});
@@ -110,7 +124,10 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 
 	public onTovSelect(item: IDictionaryItemDto): void {
 		this.tov = {
-			id: Number(item.id),
+			id: SafeNumberConversion.toId(item.id, {
+				fieldName: 'selectedTov.id',
+				required: false,
+			}),
 			name: item.name,
 			checked: true,
 		};
@@ -148,26 +165,41 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 			return;
 		}
 
-		const body: IClarifyOrder = {
-			tovId: this.tov!.id,
-			requests: this.items.map((item) => {
-				const itemDate = new Date(item.requestedProvisionDate);
-				const year = itemDate.getFullYear();
-				const month = String(itemDate.getMonth() + 1).padStart(2, '0');
-				const day = String(itemDate.getDate()).padStart(2, '0');
-				const isoItemDate = `${year}-${month}-${day}T00:00:00.000Z`;
+		try {
+			const body: IClarifyOrder = {
+				tovId: SafeNumberConversion.toId(this.tov!.id, {
+					fieldName: 'tovId',
+					required: true,
+				}),
+				requests: this.items.map((item) => {
+					const itemDate = new Date(item.requestedProvisionDate);
+					const year = itemDate.getFullYear();
+					const month = String(itemDate.getMonth() + 1).padStart(
+						2,
+						'0'
+					);
+					const day = String(itemDate.getDate()).padStart(2, '0');
+					const isoItemDate = `${year}-${month}-${day}T00:00:00.000Z`;
 
-				return {
-					requestedProvisionDate: isoItemDate,
-					amount: item.amount,
-				};
-			}),
-		};
+					return {
+						requestedProvisionDate: isoItemDate,
+						amount: SafeNumberConversion.toNumber(item.amount, {
+							fieldName: 'amount',
+							defaultValue: 0,
+							throwOnError: true,
+						}),
+					};
+				}),
+			};
 
-		this.mpReservationOrderCardFacadeService
-			.clarifyOrder(body)
-			.pipe(untilDestroyed(this))
-			.subscribe(() => this.modalRef.close(true));
+			this.mpReservationOrderCardFacadeService
+				.clarifyOrder(body)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => this.modalRef.close(true));
+		} catch (error) {
+			console.error('Error clarifying order:', error);
+			// Здесь можно добавить показ пользователю сообщения об ошибке
+		}
 	}
 
 	protected close(): void {

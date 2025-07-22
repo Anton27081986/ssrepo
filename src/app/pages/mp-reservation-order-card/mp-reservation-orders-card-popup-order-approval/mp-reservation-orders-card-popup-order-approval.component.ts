@@ -27,6 +27,7 @@ import { NgForOf } from '@angular/common';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { SafeNumberConversion } from '@app/core/utils/safe-number-conversion.util';
 
 @UntilDestroy()
 @Component({
@@ -87,7 +88,10 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
 	) {
-		const orderId = this.order()!.id;
+		const orderId = SafeNumberConversion.toId(this.order()?.id, {
+			fieldName: 'orderId',
+			required: true,
+		});
 
 		this.mpReservationOrderCardFacadeService.loadWarehouseBalance(orderId);
 
@@ -111,13 +115,20 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 					stocksArr.push(
 						new FormGroup({
 							warehouseId: new FormControl<number>(
-								stock.warehouse.id
+								SafeNumberConversion.toId(stock.warehouse.id, {
+									fieldName: 'warehouse.id',
+									required: true,
+								})
 							),
 							warehouseName: new FormControl<string>(
 								stock.warehouse.name
 							),
 							inStock: new FormControl<number | null>(
-								stock.amount
+								SafeNumberConversion.toNumber(stock.amount, {
+									fieldName: 'stock.amount',
+									defaultValue: 0,
+									throwOnError: false,
+								})
 							),
 							fact: new FormControl<number | null>(null),
 						})
@@ -135,28 +146,45 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 			return;
 		}
 
-		const orderId = this.order()?.id;
+		const orderId = SafeNumberConversion.toId(this.order()?.id, {
+			fieldName: 'orderId',
+			required: true,
+		});
 
-		if (!orderId) {
-			return;
+		try {
+			const dispatches = this.dates.controls
+				.map((row) => ({
+					warehouseId: SafeNumberConversion.fromFormControl(
+						row.get('warehouseId'),
+						{
+							fieldName: 'warehouseId',
+							required: true,
+						}
+					),
+					amount: SafeNumberConversion.numberFromForm(
+						row.get('fact'),
+						{
+							fieldName: 'amount',
+							defaultValue: 0,
+							throwOnError: false,
+						}
+					),
+				}))
+				.filter(({ amount }) => amount > 0);
+
+			if (!dispatches.length) {
+				console.warn('No dispatches with valid amounts');
+				return;
+			}
+
+			this.mpReservationOrderCardFacadeService.dispatchToQueue(
+				orderId,
+				dispatches
+			);
+			this.close();
+		} catch (error) {
+			console.error('Error submitting dispatch:', error);
 		}
-
-		const dispatches = this.dates.controls
-			.map((row) => ({
-				warehouseId: row.get('warehouseId')?.value as number,
-				amount: row.get('fact')?.value as number,
-			}))
-			.filter(({ amount }) => amount > 0);
-
-		if (!dispatches.length) {
-			return;
-		}
-
-		this.mpReservationOrderCardFacadeService.dispatchToQueue(
-			orderId,
-			dispatches
-		);
-		this.close();
 	}
 
 	public close(): void {

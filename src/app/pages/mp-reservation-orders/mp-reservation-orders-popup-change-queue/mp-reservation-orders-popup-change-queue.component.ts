@@ -69,12 +69,12 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		this.mpReservationOrdersFacadeService.personificationStatuses$,
 		{
 			initialValue: [],
-		},
+		}
 	);
 
 	protected queueOrders: Signal<IQueueOrderDto[]> = toSignal(
 		this.mpReservationOrdersFacadeService.queueOrders$,
-		{ initialValue: [] },
+		{ initialValue: [] }
 	);
 
 	public filterTovName = new FormControl<string>('');
@@ -83,7 +83,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService
 	) {
 		this.mpReservationOrdersFacadeService.loadQueueOrders();
 	}
@@ -96,10 +96,12 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		return list.filter((order) => {
 			if (tovSearch) {
 				const name = order.personificationOrder.tov.name.toLowerCase();
+
 				if (!name.includes(tovSearch)) {
 					return false;
 				}
 			}
+
 			if (statusControl) {
 				if (
 					order.personificationOrder.status?.name !==
@@ -108,6 +110,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 					return false;
 				}
 			}
+
 			return true;
 		});
 	}
@@ -156,7 +159,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 		this.mpReservationOrdersFacadeService.updateOrderPositionInQueue(
 			oldPos,
-			newPos,
+			newPos
 		);
 	}
 }
