@@ -90,31 +90,12 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 		this.modalRef.close();
 	}
 
-	public openPopupCancelAction(): void {
-		this.modalService
-			.open(NoticeDialogComponent, {
-				data: {
-					header: 'Изменения не будут сохранены',
-					text: 'Вы уверены, что хотите совершить действие',
-					type: 'Warning',
-					buttonOk: 'Отмена',
-					buttonCancel: 'Не сохранять',
-				},
-			})
-			.afterClosed()
-			.pipe(untilDestroyed(this))
-			.subscribe((status) => {
-				if (!status) {
-					this.modalRef.close();
-				}
-			});
-	}
-
 	public approveClarification(): void {
 		this.mpReservationOrderCardFacadeService
 			.approveClarification()
 			.subscribe();
 		this.modalRef.close();
 		this.mpReservationOrderCardFacadeService.reloadOrder();
+		window.location.reload();
 	}
 }
