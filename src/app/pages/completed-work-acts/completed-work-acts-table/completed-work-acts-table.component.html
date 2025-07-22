@@ -1,0 +1,50 @@
+<table
+	ssTable
+	[hasBorderRadius]="false"
+	[showCellBorders]="true"
+	[columns]="visibleColumnsIds()"
+>
+	<thead>
+		<tr ssThGroup>
+			@for (column of visibleColumns(); track column) {
+				<th
+					*ssHead="column.id"
+					ssTh
+				>
+					<div class="td-column">
+						<ss-lib-text
+							[color]="Colors.TextBody2"
+							[weight]="TextWeight.Semibold"
+							[type]="TextType.BodyXs"
+							[align]="Align.Center"
+							[isEllipsis]="true"
+						>
+							{{ column.name }}
+						</ss-lib-text>
+					</div>
+				</th>
+			}
+		</tr>
+	</thead>
+	<tbody>
+		@for (row of data(); track row.id; let idxRow = $index) {
+			<tr ssTr>
+				@for (column of visibleColumns(); track column.id) {
+					<td
+						*ssCell="column.id"
+						ssTd
+						class="item-td"
+					>
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Regular"
+							[align]="Align.Start"
+						>
+							{{ row[column.id] }}
+						</ss-lib-text>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>

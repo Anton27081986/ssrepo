@@ -10,76 +10,79 @@
 			(click)="downloadInstruction()"
 		>
 		</snab-button>
-		<ss-dropdown-button
-			title="Фильтры"
-			[isDropdownVisible]="!isLoader()"
-		>
-			<ss-filters
-				[isFiltersVisible]="!isLoader()"
-				[isDropdown]="true"
-				[(filters)]="filters"
-				(applyFilter)="getFilteredActs(true)"
-			></ss-filters>
-		</ss-dropdown-button>
 	</div>
 </div>
 <div class="content">
-	<ng-container *ngIf="acts() as acts">
-		<ss-table
-			*ngIf="acts.total > 0; else empty"
-			[padding]="'8px'"
-			[head]="[
-				{ title: 'Код', field: 'code', sizeRatio: 0.7 },
-				{ title: 'Состояние', field: 'state', sizeRatio: 1.5 },
-				{
-					title: 'Дата оказания услуги',
-					field: 'externalActDate',
-					sizeRatio: 1.5,
-				},
-				{ title: 'Дата БУ', field: 'internalActDate', sizeRatio: 1.5 },
-				{ title: 'Дата КИСП', field: 'uploadActDate', sizeRatio: 1.5 },
-				{
-					title: 'Номер БУ',
-					field: 'internalActNumber',
-					sizeRatio: 1.5,
-				},
-				{
-					title: 'БЕ',
-					field: 'payerBuUnit',
-					sizeRatio: 0.7,
-					tooltip: 'БЕ плательщика',
-				},
-				{
-					title: 'Поставщик услуг',
-					field: 'providerContractor',
-					sizeRatio: 3.5,
-				},
-				{ title: 'Договор', field: 'contract', sizeRatio: 2 },
-				{ title: 'Заявитель', field: 'applicantUser', sizeRatio: 2 },
-				{
-					title: 'Сумма',
-					field: 'totalAmount',
-					isNumber: true,
-					sizeRatio: 1.5,
-				},
-			]"
-			[items]="acts | mapper: getTableItems"
-			(controlClick)="openAct($event)"
-		>
-		</ss-table>
-		<ss-pagination
-			[total]="acts.total"
-			[pageIndex]="pageIndex"
-			[pageSize]="pageSize"
-			(changeIndex)="pageIndexChange($event)"
-		>
-		</ss-pagination>
-		<ng-template #empty>
-			<ss-empty-data-page
-				width="300px"
-				height="176px"
-			></ss-empty-data-page>
-		</ng-template>
-	</ng-container>
-	<ss-loader *ngIf="isLoader()"></ss-loader>
+	<ss-lib-table-canvas
+		[tableRef]="tableRef"
+		[leftFiltersRef]="leftFiltersRef"
+		[paginationRef]="paginationRef"
+		[rightFiltersRef]="rightFiltersRef"
+	>
+	</ss-lib-table-canvas>
 </div>
+
+<ng-template #tableRef>
+	<ng-container *ngIf="items$ | async as items">
+		<ng-container *ngIf="items.length > 0; else empty">
+			<app-completed-work-acts-table
+				[total]="total"
+				[totalItems]="(itemTotal$ | async)!"
+				[planItems]="items"
+			></app-completed-work-acts-table>
+		</ng-container>
+		<ng-template #empty> </ng-template>
+	</ng-container>
+</ng-template>
+
+<ng-template #rightFiltersRef>
+	<!--    <ng-container *ngIf="hasCustomFilters()">-->
+	<!--        <app-dropdown-columns-settings></app-dropdown-columns-settings>-->
+	<!--        <app-filters-trigger-button></app-filters-trigger-button>-->
+	<!--    </ng-container>-->
+</ng-template>
+
+<ng-template #leftFiltersRef>
+	<!--	<ng-container *ngIf="weeks$ | async as weeks">-->
+	<!--		<ss-lib-button-->
+	<!--			[iconPosition]="IconPosition.Start"-->
+	<!--			[icon]="IconType.Calendar"-->
+	<!--			[popoverTriggerFor]="listActions"-->
+	<!--			[type]="ButtonType.Secondary"-->
+	<!--			[text]="(activeWeek$ | async)?.name"-->
+	<!--		>-->
+	<!--			<ss-lib-icon-->
+	<!--				[icon]="IconType.ChevronDown"-->
+	<!--				[width]="'20'"-->
+	<!--				[height]="'20'"-->
+	<!--			></ss-lib-icon>-->
+	<!--		</ss-lib-button>-->
+	<!--		<ss-lib-dropdown-list-->
+	<!--			#listActions-->
+	<!--			[height]="'274px'"-->
+	<!--			[width]="'236px'"-->
+	<!--		>-->
+	<!--			<ss-lib-dropdown-item-->
+	<!--				*ngFor="let week of weeks"-->
+	<!--				[label]="week.name"-->
+	<!--				[selected]="activeWeek$.value?.id === week.id"-->
+	<!--				(click)="selectWeek(week)"-->
+	<!--			/>-->
+	<!--		</ss-lib-dropdown-list>-->
+	<!--	</ng-container>-->
+</ng-template>
+
+<ng-template #paginationRef>
+	<!--    <ng-container *ngIf="itemTotal$ | async as itemTotal">-->
+	<!--        <ss-lib-load-pagination-->
+	<!--                *ngIf="itemTotal !== 0"-->
+	<!--                [itemCount]="itemTotal"-->
+	<!--                [style.width]="'100%'"-->
+	<!--                [total]="total"-->
+	<!--                [limit]="limit"-->
+	<!--                [offsetInput]="(offset$ | async)!"-->
+	<!--                (changeOffset)="changeOffset($event)"-->
+	<!--        >-->
+	<!--        </ss-lib-load-pagination>-->
+	<!--    </ng-container>-->
+</ng-template>

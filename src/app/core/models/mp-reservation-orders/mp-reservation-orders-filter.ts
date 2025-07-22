@@ -1,5 +1,5 @@
 export interface MpReservationFilter {
-	id?: number;
+	personificationId?: number;
 	authorId?: number;
 	tovId?: number;
 	managerId?: number;

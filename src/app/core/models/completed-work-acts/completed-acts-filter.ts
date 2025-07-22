@@ -9,6 +9,4 @@ export interface ICompletedActsFilter {
 	TotalAmount?: number;
 	WithArchive: boolean;
 	Additional: number;
-	limit: number;
-	offset: number;
 }
