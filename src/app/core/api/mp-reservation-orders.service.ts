@@ -29,60 +29,12 @@ export class MpReservationOrdersApiService {
 		data: IResponse<IMpReservationOrder>;
 		permissions: string[];
 	}> {
-		let params = new HttpParams();
-
-		if (filter.id !== null && filter.id !== undefined) {
-			params = params.set('id', filter.id);
-		}
-
-		if (filter.authorId !== null && filter.authorId !== undefined) {
-			params = params.set('authorId', filter.authorId);
-		}
-
-		if (filter.tovId !== null && filter.tovId !== undefined) {
-			params = params.set('tovId', filter.tovId);
-		}
-
-		if (filter.managerId !== null && filter.managerId !== undefined) {
-			params = params.set('managerId', filter.managerId);
-		}
-
-		if (filter.statusId !== null && filter.statusId !== undefined) {
-			params = params.set('statusId', filter.statusId);
-		}
-
-		if (
-			filter.dateCreatedFrom !== null &&
-			filter.dateCreatedFrom !== undefined
-		) {
-			params = params.set('dateCreatedFrom', filter.dateCreatedFrom);
-		}
-
-		if (
-			filter.dateCreatedTo !== null &&
-			filter.dateCreatedTo !== undefined
-		) {
-			params = params.set('dateCreatedTo', filter.dateCreatedTo);
-		}
-
-		if (filter.clientId !== null && filter.clientId !== undefined) {
-			params = params.set('clientId', filter.clientId);
-		}
-
-		if (filter.limit !== null && filter.limit !== undefined) {
-			params = params.set('limit', filter.limit);
-		}
-
-		if (filter.offset !== null && filter.offset !== undefined) {
-			params = params.set('offset', filter.offset);
-		}
-
-		return this.http.get<{
+		return this.http.post<{
 			data: IResponse<IMpReservationOrder>;
 			permissions: string[];
 		}>(
-			`${environment.apiUrl}/api/manufacturing/Personification/Personification`,
-			{ params }
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/search`,
+			filter
 		);
 	}
 

@@ -137,7 +137,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	// Filter configuration
 	protected filters = signal<IFilter[]>([
 		{
-			name: 'id',
+			name: 'personificationId',
 			type: 'number',
 			label: 'Код',
 			placeholder: 'Введите код',

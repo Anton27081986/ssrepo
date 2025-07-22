@@ -1,14 +1,12 @@
 export interface MpReservationFilter {
-	id?: number;
-	authorId?: number;
-	tovId?: number;
-	managerId?: number;
-	statusId?: number;
-	dateCreatedFrom?: string;
-	dateCreatedTo?: string;
-	clientId?: number;
 	limit: number;
 	offset: number;
-	// Индексная сигнатура для динамических полей фильтров
-	[key: string]: string | number | number[] | null | undefined;
+	personificationId?: number;
+	authorIds?: number[];
+	tovIds?: number[];
+	managerIds?: number[];
+	statusIds?: number[];
+	dateFrom?: string;
+	dateTo?: string;
+	clientIds?: number[];
 }
