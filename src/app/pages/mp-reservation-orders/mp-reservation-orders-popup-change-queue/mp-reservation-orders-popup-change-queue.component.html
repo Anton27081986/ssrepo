@@ -29,20 +29,18 @@
 			<div class="content">
 				<div class="search-row">
 					<div class="search-row__input">
-						<ss-search-input
-							label="ТП"
-							size="medium"
-							searchType="tovsManufacturing"
+						<snab-form-field
 							class="search-row__input__field"
-							[reSizeHeightOptions]="true"
-							[placeholder]="'Выберите товарную позицию'"
-							(select)="onTovFilter($event)"
-						/>
-						<snab-button
-							text="Найти заказы"
+							[label]="'ТП'"
 							[size]="Size.Large"
-							(click)="findQueueOrders()"
-						></snab-button>
+						>
+							<snab-input
+								fieldCtrl
+								class="search-row__input__field"
+								[formControl]="filterTovName"
+								[placeholder]="'Поиск по товарной позиции...'"
+							/>
+						</snab-form-field>
 					</div>
 					<div class="search-row__status">
 						<snab-form-field
@@ -51,18 +49,18 @@
 						>
 							<snab-select
 								fieldCtrl
-								[formControl]="status"
+								[formControl]="filterStatusName"
 								[options]="statusOptions()"
 								[placeholder]="'Введите статус'"
 							/>
 						</snab-form-field>
 						<ss-lib-icon
-							*ngIf="status.value"
+							*ngIf="filterStatusName.value"
 							[width]="'16'"
 							[height]="'16'"
 							[style.cursor]="'pointer'"
 							[icon]="IconTypeNew.Close"
-							(click)="status.setValue(null)"
+							(click)="clearStatusFilter()"
 						></ss-lib-icon>
 					</div>
 				</div>
@@ -74,7 +72,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Код заказа
 									</snab-text>
@@ -82,7 +80,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Статус
 									</snab-text>
@@ -90,7 +88,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Позиция
 									</snab-text>
@@ -98,7 +96,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Кол-во
 									</snab-text>
@@ -106,7 +104,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Ед. изм.
 									</snab-text>
@@ -114,7 +112,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										ТП
 									</snab-text>
@@ -122,7 +120,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Заказчик
 									</snab-text>
@@ -130,7 +128,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Клиент
 									</snab-text>
@@ -138,7 +136,7 @@
 								<th>
 									<snab-text
 										[type]="TextType.Title"
-										[weight]="TextWeight.Semibold"
+										[weight]="TextWeight.Medium"
 									>
 										Дата создания
 									</snab-text>
@@ -171,7 +169,10 @@
 								</td>
 								<td>
 									<snab-text [type]="TextType.Body">
-										{{ queueOrder.status }}
+										{{
+											queueOrder.personificationOrder
+												.status.name
+										}}
 									</snab-text>
 								</td>
 								<td>
