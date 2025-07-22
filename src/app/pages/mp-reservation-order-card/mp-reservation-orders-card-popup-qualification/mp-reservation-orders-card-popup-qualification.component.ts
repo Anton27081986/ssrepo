@@ -81,7 +81,7 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 		@Inject(DIALOG_DATA) private readonly data: IQualificationData,
 		private readonly modalRef: ModalRef,
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
-		private readonly modalService: ModalService
+		private readonly modalService: ModalService,
 	) {
 		if (data) {
 			this.items = this.data.items.map((item) => {
@@ -103,7 +103,7 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 		this.changeClarifyOrderForm = new FormGroup({
 			tov: new FormControl<IDictionaryItemDto | null>(
 				{ id: this.data.tov.id, name: this.data.tov.name },
-				[Validators.required]
+				[Validators.required],
 			),
 		});
 	}
@@ -119,7 +119,7 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 
 	protected setErrorsControl(): void {
 		this.setErrorsIfNotControlValue(
-			this.changeClarifyOrderForm.controls.tov
+			this.changeClarifyOrderForm.controls.tov,
 		);
 	}
 
@@ -167,7 +167,9 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 		this.mpReservationOrderCardFacadeService
 			.clarifyOrder(body)
 			.pipe(untilDestroyed(this))
-			.subscribe(() => this.modalRef.close(true));
+			.subscribe(() => {
+				(this.modalRef.close(true), window.location.reload());
+			});
 	}
 
 	protected close(): void {

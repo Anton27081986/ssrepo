@@ -97,6 +97,7 @@ export class MpReservationOrdersCardPopupChangeProvisionDetailsComponent {
 			.subscribe(() => {
 				this.mpReservationOrderCardFacadeService.reloadOrder();
 				this.modalRef.close();
+				window.location.reload();
 			});
 	}
 
