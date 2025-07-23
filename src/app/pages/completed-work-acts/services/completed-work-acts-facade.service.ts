@@ -1,7 +1,6 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
-import { CompletedWorkActsApiService } from '@app/core/api/completed-work-acts-api.service';
-import { BehaviorSubject, Observable, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -21,9 +20,8 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
-import {
-	Pagination,
-} from '@app/core/models/production-plan/operation-plan';
+import { Pagination } from '@app/core/models/production-plan/operation-plan';
+import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-api.service';
 
 @UntilDestroy()
 @Injectable({

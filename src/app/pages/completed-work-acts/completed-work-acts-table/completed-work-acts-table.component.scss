@@ -1,0 +1,11 @@
+.item-td {
+  padding: 16px 12px;
+  min-width: 80px;
+  position: relative;
+}
+
+table {
+  width: 100%;
+  overflow-y: auto;
+  max-height: calc(100vh - 413px);
+}

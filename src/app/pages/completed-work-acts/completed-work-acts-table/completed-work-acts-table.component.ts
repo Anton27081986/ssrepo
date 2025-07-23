@@ -1,6 +1,8 @@
 import {
 	ChangeDetectionStrategy,
+	ChangeDetectorRef,
 	Component,
+	effect,
 	inject,
 	input,
 	InputSignal,
@@ -11,6 +13,7 @@ import {
 	ButtonComponent,
 	CheckboxComponent,
 	Colors,
+	LinkComponent,
 	SsTableState,
 	TableCellDirective,
 	TableDirective,
@@ -20,11 +23,14 @@ import {
 	TextComponent,
 	TextType,
 	TextWeight,
-	ThComponent,
+	ThComponent, TooltipDirective,
 	TooltipPosition,
 	TrComponent,
 } from '@front-library/components';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
+import { columnCompletedWorkActsConfigs } from '@app/pages/completed-work-acts/completed-work-acts-table/column-config';
+import { DatePipe } from '@angular/common';
+import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 
 @Component({
 	selector: 'app-completed-work-acts-table',
@@ -40,6 +46,9 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 		TableCellDirective,
 		TdComponent,
 		TrComponent,
+		DatePipe,
+		LinkComponent,
+		TooltipDirective,
 	],
 	templateUrl: './completed-work-acts-table.component.html',
 	styleUrl: './completed-work-acts-table.component.scss',
@@ -49,7 +58,10 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 export class CompletedWorkActsTableComponent {
 	private readonly tableStateService = inject(SsTableState);
 
-	public planItems: InputSignal<ICompletedWorkAct[]> = input.required();
+	private readonly completedWorkActsFacade: CompletedWorkActsFacadeService =
+		inject(CompletedWorkActsFacadeService);
+
+	public actsItems: InputSignal<ICompletedWorkAct[]> = input.required();
 	public total: InputSignal<number> = input.required();
 	public totalItems: InputSignal<number> = input.required();
 
@@ -64,4 +76,19 @@ export class CompletedWorkActsTableComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
+
+	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
+		effect(() => {
+			this.tableStateService.initialize(
+				this.actsItems(),
+				columnCompletedWorkActsConfigs
+			);
+		});
+	}
+
+	public openAct(id: string) {
+		if (id) {
+			this.completedWorkActsFacade.getAct(id);
+		}
+	}
 }

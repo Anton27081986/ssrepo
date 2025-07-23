@@ -10,9 +10,16 @@
 				<th
 					*ssHead="column.id"
 					ssTh
+					[resizable]="true"
 				>
 					<div class="td-column">
 						<ss-lib-text
+							ss-lib-tooltip
+							[tooltipText]="
+								column.id === 'payerBuUnit'
+									? 'БЕ плательщика'
+									: null
+							"
 							[color]="Colors.TextBody2"
 							[weight]="TextWeight.Semibold"
 							[type]="TextType.BodyXs"
@@ -35,13 +42,38 @@
 						ssTd
 						class="item-td"
 					>
-						<ss-lib-text
-							[type]="TextType.BodySm"
-							[weight]="TextWeight.Regular"
-							[align]="Align.Start"
-						>
-							{{ row[column.id] }}
-						</ss-lib-text>
+						@if (column.id === 'id') {
+							<ss-lib-link
+								[text]="row[column.id]"
+								(click)="openAct(row[column.id])"
+							></ss-lib-link>
+						} @else if (column.id === 'providerContractor') {
+							<a
+								target="_blank"
+								[href]="row[column.id]?.linkToDetail"
+							>
+								<ss-lib-link
+									[text]="row[column.id]?.name || ''"
+								></ss-lib-link
+							></a>
+						} @else {
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								@if (column.id.toLowerCase().includes('date')) {
+									{{
+										row[column.id]
+											| date: 'dd.MM.yyyy' : '' : 'ru'
+									}}
+								} @else if (row[column.id]?.name) {
+									{{ row[column.id]?.name }}
+								} @else {
+									{{ row[column.id] }}
+								}
+							</ss-lib-text>
+						}
 					</td>
 				}
 			</tr>
