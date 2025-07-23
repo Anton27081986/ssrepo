@@ -3,6 +3,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 export interface IWarehouseStockDto {
 	warehouse: IDictionaryItemDto;
 	amount: number;
+	linkToDetail: string;
 }
 
 export interface IWarehouseBalanceResponse {
