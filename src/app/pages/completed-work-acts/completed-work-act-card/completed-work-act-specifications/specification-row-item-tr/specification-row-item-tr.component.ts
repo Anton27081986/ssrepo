@@ -33,9 +33,6 @@ import {
 } from '@angular/common';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
-import {
-	CompletedWorkActsFacadeService
-} from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 export enum SpecificationRowItemField {
 	cost = 'cost',
