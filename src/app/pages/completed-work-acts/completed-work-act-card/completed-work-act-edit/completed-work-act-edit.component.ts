@@ -204,7 +204,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 	}
 
 	protected switchMode() {
-		this.completedWorkActsFacade.switchMode(true);
+		this.completedWorkActsFacade.switchMode();
 	}
 
 	protected onSave() {
