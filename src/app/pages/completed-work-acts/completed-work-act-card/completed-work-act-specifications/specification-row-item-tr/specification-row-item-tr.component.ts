@@ -21,6 +21,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import {
 	AsyncPipe,
 	CommonModule,
@@ -37,10 +38,6 @@ import {
 } from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 export enum SpecificationRowItemField {
-	service = 'service',
-	comment = 'comment',
-	quantity = 'quantity',
-	tovUnit = 'tovUnit',
 	cost = 'cost',
 	faObject = 'faObject',
 	faAsset = 'faAsset',
@@ -48,7 +45,7 @@ export enum SpecificationRowItemField {
 	dept = 'dept',
 	section = 'section',
 	user = 'user',
-	amount = 'amount',
+	sum = 'sum',
 	controls = 'controls',
 }
 
@@ -58,6 +55,7 @@ export enum SpecificationRowItemField {
 	selector: 'tr[ss-specification-row-item-tr]',
 	styleUrls: ['specification-row-item-tr.component.scss'],
 	templateUrl: './specification-row-item-tr.component.html',
+	standalone: true,
 	imports: [
 		CommonModule,
 		NgForOf,
@@ -69,7 +67,6 @@ export enum SpecificationRowItemField {
 		IconComponent,
 		NgSwitchDefault,
 	],
-	standalone: true,
 })
 export class SpecificationRowItemTrComponent implements OnInit {
 	protected readonly Permissions = Permissions;
@@ -106,36 +103,9 @@ export class SpecificationRowItemTrComponent implements OnInit {
 				{
 					cols: [
 						{
-							id: SpecificationRowItemField.service,
-							title: 'Услуга',
-							order: 1,
-							show: true,
-							colspan: 1,
-							rowspan: 1,
-							display: true,
-						},
-						{
-							id: SpecificationRowItemField.comment,
-							title: 'Комментарий',
-							order: 2,
-							show: true,
-							colspan: 1,
-							rowspan: 1,
-							display: true,
-						},
-						{
-							id: SpecificationRowItemField.quantity,
-							title: 'Кол-во,\nед.изм',
-							order: 3,
-							show: true,
-							colspan: 1,
-							rowspan: 1,
-							display: true,
-						},
-						{
 							id: SpecificationRowItemField.cost,
 							title: 'Статья',
-							order: 4,
+							order: 1,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -144,7 +114,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.faObject,
 							title: 'Объект ОС/НМА, Тип ОС',
-							order: 5,
+							order: 2,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -153,7 +123,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.project,
 							title: 'Проект',
-							order: 6,
+							order: 3,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -162,7 +132,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.dept,
 							title: 'Отдел',
-							order: 7,
+							order: 4,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -171,7 +141,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.section,
 							title: 'Производственный участок',
-							order: 8,
+							order: 5,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
@@ -180,16 +150,16 @@ export class SpecificationRowItemTrComponent implements OnInit {
 						{
 							id: SpecificationRowItemField.user,
 							title: 'Сотрудник',
-							order: 9,
+							order: 6,
 							show: true,
 							colspan: 1,
 							rowspan: 1,
 							display: true,
 						},
 						{
-							id: SpecificationRowItemField.amount,
-							title: 'Сумма 1С',
-							order: 10,
+							id: SpecificationRowItemField.sum,
+							title: 'Сумма',
+							order: 7,
 							show: true,
 							colspan: 1,
 							rowspan: 1,

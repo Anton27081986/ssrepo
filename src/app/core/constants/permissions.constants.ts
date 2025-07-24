@@ -31,6 +31,13 @@ export const Permissions = {
 	COMPLETED_WORK_ACTS_PULL_ACT: 'CompletedWorkAct.PullAct',
 	COMPLETED_WORK_ACTS_DELETE: 'CompletedWorkAct.Delete',
 	COMPLETED_WORK_ACTS_RESTORE: 'CompletedWorkAct.Restore',
+	COMPLETED_WORK_ACTS_SEND_TO_APPLICANT: 'CompletedWorkAct.SendToApplicant',
+	COMPLETED_WORK_ACTS_PRINT_REPORT: 'CompletedWorkAct.PrintReport',
+	COMPLETED_WORK_ACTS_RETURN_BACK_TO_APPLICANT:
+		'CompletedWorkAct.ReturnBackToApplicant',
+	COMPLETED_WORK_ACTS_SEND_TO_ADMINISTRATOR:
+		'CompletedWorkAct.SendToAdministrator',
+
 	EXCESS_INCOME_READ: 'Snd.Read',
 	EXCESS_INCOME_EDIT: 'Snd.Edit',
 	EXCESS_INCOME_EDIT_COMMENT: 'Snd.EditComment',

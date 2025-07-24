@@ -122,32 +122,6 @@
 				}
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-				@if (
-					permissions().includes(
-						Permissions.COMPLETED_WORK_ACTS_EDIT_ACT_BU_UNIT
-					)
-				) {
-					<ss-select-v2
-						[size]="'small'"
-						[options]="buUnits()"
-						[formControlName]="'buUnit'"
-						[errorText]="
-							editActForm.controls.buUnit.touched &&
-							editActForm.controls.buUnit.errors?.required
-								? 'Обязательное поле'
-								: ''
-						"
-					/>
-				} @else {
-					<ss-text
-						size="3"
-						weight="regular"
-						>{{ act()?.buUnit?.name }}</ss-text
-					>
-				}
-			</div>
-			<div class="content__column__item">
 				<ss-text size="4">Комментарий</ss-text>
 				@if (
 					permissions().includes(

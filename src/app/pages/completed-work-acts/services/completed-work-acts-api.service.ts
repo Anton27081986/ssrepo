@@ -133,6 +133,33 @@ export class CompletedWorkActsApiService {
 		);
 	}
 
+	public sendActToAdmin(actId: number): Observable<ICompletedWorkAct> {
+		return this.http.post<ICompletedWorkAct>(
+			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/SendToAdmin`,
+			{}
+		);
+	}
+
+	public sendActToApplicant(
+		actId: number,
+		comment: string
+	): Observable<ICompletedWorkAct> {
+		return this.http.post<ICompletedWorkAct>(
+			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/SendToApplicant`,
+			{ comment }
+		);
+	}
+
+	public returnActToApplicant(
+		actId: number,
+		comment: string
+	): Observable<ICompletedWorkAct> {
+		return this.http.post<ICompletedWorkAct>(
+			`${environment.apiUrl}/api/company/CompletedWorkActs/${actId}/Action/ReturnBackToApplicant`,
+			{ comment }
+		);
+	}
+
 	public addDocumentToAct(
 		actId: number,
 		documentId: string
