@@ -26,4 +26,23 @@
 			gap: 8px;
 		}
 	}
+
+	.date-range {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+
+		&__inputs {
+			display: flex;
+			gap: 8px;
+			align-items: center;
+
+			ss-lib-form-field {
+				width: 110px;
+			}
+		}
+	}
+	::ng-deep .ss-lib-table-canvas__pagination {
+		justify-content: flex-end;
+	}
 }

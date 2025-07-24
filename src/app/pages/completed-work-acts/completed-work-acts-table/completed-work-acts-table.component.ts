@@ -10,8 +10,6 @@ import {
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	Align,
-	ButtonComponent,
-	CheckboxComponent,
 	Colors,
 	LinkComponent,
 	SsTableState,
@@ -31,6 +29,7 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 import { columnCompletedWorkActsConfigs } from '@app/pages/completed-work-acts/completed-work-acts-table/column-config';
 import { DatePipe } from '@angular/common';
 import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
+import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
 
 @Component({
 	selector: 'app-completed-work-acts-table',
@@ -41,14 +40,13 @@ import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/s
 		TableThGroupComponent,
 		TextComponent,
 		ThComponent,
-		ButtonComponent,
-		CheckboxComponent,
 		TableCellDirective,
 		TdComponent,
 		TrComponent,
 		DatePipe,
 		LinkComponent,
 		TooltipDirective,
+		NumWithSpacesPipe,
 	],
 	templateUrl: './completed-work-acts-table.component.html',
 	styleUrl: './completed-work-acts-table.component.scss',

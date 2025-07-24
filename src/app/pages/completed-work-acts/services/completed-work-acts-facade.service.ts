@@ -334,4 +334,9 @@ export class CompletedWorkActsFacadeService {
 			)
 			.subscribe();
 	}
+
+	public downloadReport(filter: (ICompletedActsFilter & Pagination) | null) {
+		return this.actsApiService.downloadReport(filter);
+	}
+
 }

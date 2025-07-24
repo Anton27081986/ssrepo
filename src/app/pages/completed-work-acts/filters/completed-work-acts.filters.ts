@@ -1,5 +1,10 @@
 import { IFilterCriterionType, IFilterItem } from '@front-library/components';
-import { CostFilterComponent } from '@app/pages/completed-work-acts/filters/cost-filter.component';
+import { ActCostsFilterComponent } from '@app/pages/completed-work-acts/filters/costs-filter.component';
+import { ActIdsFilterComponent } from '@app/pages/completed-work-acts/filters/ids-filter.component';
+import { ActStatesFilterComponent } from '@app/pages/completed-work-acts/filters/states-filter.component';
+import { ActBuUnitsFilterComponent } from '@app/pages/completed-work-acts/filters/buunits-filter.component';
+import { ActProviderContractorsFilterComponent } from '@app/pages/completed-work-acts/filters/provider-contractor-filter.component';
+import { ActApplicantsFilterComponent } from '@app/pages/completed-work-acts/filters/applicant-filter.component';
 
 export enum CompletedWorkActsFiltersFields {
 	ids = 'ids',
@@ -8,7 +13,6 @@ export enum CompletedWorkActsFiltersFields {
 	providerContractorIds = 'providerContractorIds',
 	applicantUserId = 'applicantUserIds',
 	costIds = 'costIds',
-
 }
 
 export const completedWorkActsFilter: IFilterItem[] = [
@@ -21,7 +25,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 				Array.isArray(value) ? value.join(',') : '',
 			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
-		valueComponent: CostFilterComponent,
+		valueComponent: ActIdsFilterComponent,
 		active: false,
 	},
 	{
@@ -33,7 +37,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 				Array.isArray(value) ? value.join(',') : '',
 			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
-		valueComponent: CostFilterComponent,
+		valueComponent: ActStatesFilterComponent,
 		active: false,
 	},
 	{
@@ -45,7 +49,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 				Array.isArray(value) ? value.join(',') : '',
 			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
-		valueComponent: CostFilterComponent,
+		valueComponent: ActBuUnitsFilterComponent,
 		active: false,
 	},
 	{
@@ -57,7 +61,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 				Array.isArray(value) ? value.join(',') : '',
 			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
-		valueComponent: CostFilterComponent,
+		valueComponent: ActProviderContractorsFilterComponent,
 		active: false,
 	},
 	{
@@ -69,7 +73,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 				Array.isArray(value) ? value.join(',') : '',
 			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
-		valueComponent: CostFilterComponent,
+		valueComponent: ActApplicantsFilterComponent,
 		active: false,
 	},
 	{
@@ -81,7 +85,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 				Array.isArray(value) ? value.join(',') : '',
 			mapFrom: (value: string[]) => value.map((v) => Number(v)),
 		},
-		valueComponent: CostFilterComponent,
+		valueComponent: ActCostsFilterComponent,
 		active: false,
 	},
 ];

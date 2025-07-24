@@ -10,8 +10,17 @@
 		[iconPosition]="IconPosition.OnlyIcon"
 		[type]="ButtonType.Secondary"
 		[size]="ExtraSize.xxs"
-		[icon]="IconType.FileUpload02"
+		[icon]="IconType.FilePreviewSearch"
 		(click)="downloadInstruction()"
+	></ss-lib-button
+	><ss-lib-button
+		ss-lib-tooltip
+		[tooltipText]="'Выгрузить отчет в формате Excel'"
+		[iconPosition]="IconPosition.OnlyIcon"
+		[type]="ButtonType.Secondary"
+		[size]="ExtraSize.xxs"
+		[icon]="IconType.FileUpload02"
+		(click)="downloadReport()"
 	></ss-lib-button>
 </div>
 <div class="content">
@@ -45,21 +54,55 @@
 </ng-template>
 
 <ng-template #leftFiltersRef>
-	<ss-lib-form-field label="Период по Дате услуги">
-		<ss-lib-datepicker
-			fieldCtrl
-			[formControl]="calendarControl"
-		></ss-lib-datepicker
-	></ss-lib-form-field>
-	<ss-lib-form-field label="Период по Дате КИСП">
-		<ss-lib-datepicker
-			fieldCtrl
-			[formControl]="calendarControl"
-		></ss-lib-datepicker
-	></ss-lib-form-field>
+	<div class="date-range">
+		<ss-lib-text
+			[type]="TextType.BodySm"
+			[weight]="TextWeight.Semibold"
+			[color]="Colors.TextBody2"
+			>Период по Дате услуги
+		</ss-lib-text>
+		<div class="date-range__inputs">
+			<ss-lib-form-field>
+				<ss-lib-datepicker
+					fieldCtrl
+					[formControl]="dateFromControl"
+				></ss-lib-datepicker
+			></ss-lib-form-field>
+			-
+			<ss-lib-form-field>
+				<ss-lib-datepicker
+					fieldCtrl
+					[formControl]="dateToControl"
+				></ss-lib-datepicker
+			></ss-lib-form-field>
+		</div>
+	</div>
+	<div class="date-range">
+		<ss-lib-text
+			[type]="TextType.BodySm"
+			[weight]="TextWeight.Semibold"
+			[color]="Colors.TextBody2"
+			>Период по Дате КИСП
+		</ss-lib-text>
+		<div class="date-range__inputs">
+			<ss-lib-form-field>
+				<ss-lib-datepicker
+					fieldCtrl
+					[formControl]="uploadDateFromControl"
+				></ss-lib-datepicker
+			></ss-lib-form-field>
+			-
+			<ss-lib-form-field>
+				<ss-lib-datepicker
+					fieldCtrl
+					[formControl]="uploadDateToControl"
+				></ss-lib-datepicker
+			></ss-lib-form-field>
+		</div>
+	</div>
 	<div class="filter-toggles">
 		<div class="filter-toggles__item">
-			<ss-lib-toggle></ss-lib-toggle>
+			<ss-lib-toggle [formControl]="additionalControl"></ss-lib-toggle>
 			<ss-lib-text
 				[type]="TextType.BodySm"
 				[weight]="TextWeight.Semibold"
@@ -68,7 +111,7 @@
 			</ss-lib-text>
 		</div>
 		<div class="filter-toggles__item">
-			<ss-lib-toggle></ss-lib-toggle>
+			<ss-lib-toggle [formControl]="archiveControl"></ss-lib-toggle>
 			<ss-lib-text
 				[type]="TextType.BodySm"
 				[weight]="TextWeight.Semibold"
@@ -81,14 +124,11 @@
 
 <ng-template #paginationRef>
 	<ng-container *ngIf="itemTotal$ | async as itemTotal">
-		<ss-lib-load-pagination
-			*ngIf="itemTotal !== 0"
-			[itemCount]="itemTotal"
-			[style.width]="'100%'"
+		<ss-pagination
+			[pageSize]="limit"
+			[pageIndex]="pageIndex"
 			[total]="total"
-			[limit]="limit"
-			[offsetInput]="(offset$ | async)!"
-		>
-		</ss-lib-load-pagination>
+			(changeIndex)="onPage($event)"
+		></ss-pagination>
 	</ng-container>
 </ng-template>

@@ -8,4 +8,7 @@ table {
   width: 100%;
   overflow-y: auto;
   max-height: calc(100vh - 413px);
+  border-collapse: separate;
+  border-spacing: 0;
+  padding: 0 8px;
 }

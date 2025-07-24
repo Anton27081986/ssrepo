@@ -24,4 +24,69 @@ export class CompletedWorkActsFiltersApiService {
 			{ params }
 		);
 	}
+
+	public getActStates(
+		query: string,
+		ids: number[] = []
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query || 'а');
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/CompletedWorkActStates`
+		);
+	}
+
+	public getBuUnits(
+		query: string,
+		ids: number[] = []
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query || 'а');
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/BuUnits`,
+			{ params }
+		);
+	}
+
+	public getProviderContractors(
+		query: string,
+		ids: number[] = []
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query || 'а');
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/dictionary/contractors`,
+			{
+				params,
+			}
+		);
+	}
+
+	public getApplicantUsers(
+		query: string,
+		ids: number[] = []
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query || 'а');
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/auth/users/search`,
+			{ params }
+		);
+	}
 }

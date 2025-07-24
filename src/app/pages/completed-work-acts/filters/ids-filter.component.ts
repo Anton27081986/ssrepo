@@ -5,7 +5,7 @@ import {
 	OnInit,
 	Signal,
 } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
@@ -13,7 +13,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFiltersApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-filters-api.service';
 
 @Component({
-	selector: 'app-cost-filter',
+	selector: 'app-act-ids-filter',
 	standalone: true,
 	styles: '',
 	template: ` <ss-lib-checkbox-filter-context
@@ -27,7 +27,7 @@ import { CompletedWorkActsFiltersApiService } from '@app/pages/completed-work-ac
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [CheckboxFilterContextComponent],
 })
-export class CostFilterComponent
+export class ActIdsFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
 	implements OnInit
 {
@@ -49,19 +49,34 @@ export class CostFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getCostArticles(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		if (Number.isNaN(parseInt(query, 10))) {
+			return of([]);
+		}
+
+		const idsArray = [...new Array(10).keys()].map((value) => {
+			return {
+				id: parseInt(query + value, 10),
+				name: query + value,
+			} as IDictionaryItemDto;
+		});
+
+		idsArray.unshift({
+			id: parseInt(query, 10),
+			name: query,
+		});
+
+		return of(idsArray);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getCostArticles('', ids).pipe(
-			map((value) => {
-				return value.items;
+		return of(
+			ids.map((value) => {
+				return {
+					id: value,
+					name: value.toString(10),
+				} as IDictionaryItemDto;
 			})
 		);
 	}

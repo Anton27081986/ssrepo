@@ -56,6 +56,14 @@
 									[text]="row[column.id]?.name || ''"
 								></ss-lib-link
 							></a>
+						} @else if (column.id === 'totalAmount') {
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.End"
+							>
+								{{ row[column.id] | numWithSpaces }}
+							</ss-lib-text>
 						} @else {
 							<ss-lib-text
 								[type]="TextType.BodySm"
@@ -67,6 +75,8 @@
 										row[column.id]
 											| date: 'dd.MM.yyyy' : '' : 'ru'
 									}}
+								} @else if (column.id.includes('totalAmount')) {
+									{{ row[column.id] | numWithSpaces }}
 								} @else if (row[column.id]?.name) {
 									{{ row[column.id]?.name }}
 								} @else {
