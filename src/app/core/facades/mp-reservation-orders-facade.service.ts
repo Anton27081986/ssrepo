@@ -19,6 +19,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
 import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
+import {IWarehouseStockDto} from "@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock";
 
 @UntilDestroy()
 @Injectable({
@@ -230,5 +231,11 @@ export class MpReservationOrdersFacadeService {
 			})
 			.pipe(untilDestroyed(this))
 			.subscribe();
+	}
+
+	public getAllStockBalance(orderId: number): Observable<IWarehouseStockDto[]> {
+		return this.mpReservationOrdersApiService
+			.getStockBalance(orderId)
+			.pipe(untilDestroyed(this));
 	}
 }

@@ -301,7 +301,7 @@ export class MPReservationOrdersComponent implements OnInit {
 		this.ordersTableIndexChange(lastPageIndex);
 	}
 
-	public openPopupRemnantDetailsOrder(orderId: number): void {
+	public openPopupStockBalanceDetailsOrder(orderId: number): void {
 		this.modalService.open(
 			MpReservationOrdersPopupRemnantsDetailsComponent,
 			{ data: orderId }

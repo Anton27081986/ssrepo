@@ -11,7 +11,6 @@ import {
 	ValidationErrors,
 	Validators,
 } from '@angular/forms';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
@@ -26,6 +25,9 @@ import { TextComponent } from '@app/shared/components/typography/text/text.compo
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import {
+	CompletedWorkActsFacadeService
+} from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 @UntilDestroy()
 @Component({

@@ -127,10 +127,16 @@ export class OperationPlanService {
 					].join('-')
 				: '';
 
+			// Normalize quantity value (comma to dot)
+			const rawQuantity = item.countForPostpone.value!;
+			const normalizedQuantity = Number(
+				String(rawQuantity).replace(',', '.')
+			);
+
 			return {
 				id: item.id,
 				orderId: item.orderId,
-				quantity: item.countForPostpone.value!,
+				quantity: normalizedQuantity,
 				productionDate,
 			};
 		});
@@ -188,7 +194,11 @@ export class OperationPlanService {
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
-			countForPostpone: new FormControl<number | null>(0),
+			countForPostpone: new FormControl<number | null>(0, [
+				Validators.required,
+				Validators.min(0),
+				Validators.max(item.quantity),
+			]),
 			productionDateControl: new FormControl<Date | null>(
 				new Date(item.productionDate),
 				{

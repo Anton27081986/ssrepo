@@ -16,7 +16,10 @@ import {
 	IQueueOrderDto,
 	IQueueReorderPosition,
 } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
-import { IWarehouseBalanceResponse } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
+import {
+	IWarehouseBalanceResponse,
+	IWarehouseStockDto
+} from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
 import { IDispatchesRequest } from '@app/core/models/mp-reservation-orders/mp-reservation-transfer-dispatch';
 
 @Injectable({
@@ -209,6 +212,12 @@ export class MpReservationOrdersApiService {
 		return this.http.patch<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
 			{},
+		);
+	}
+
+	public getStockBalance(orderId: number): Observable<IWarehouseStockDto[]> {
+		return this.http.get<IWarehouseStockDto[]>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/allStocks`,
 		);
 	}
 }

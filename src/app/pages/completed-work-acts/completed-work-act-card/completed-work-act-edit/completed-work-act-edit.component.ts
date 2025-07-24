@@ -5,7 +5,6 @@ import {
 	OnInit,
 	Signal,
 } from '@angular/core';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import {
@@ -33,6 +32,9 @@ import { TextareaComponent } from '@app/shared/components/textarea/textarea.comp
 import { MultiselectV2Component } from '@app/shared/components/multiselect-v2/multiselect-v2.component';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
+import {
+	CompletedWorkActsFacadeService
+} from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 @UntilDestroy()
 @Component({
