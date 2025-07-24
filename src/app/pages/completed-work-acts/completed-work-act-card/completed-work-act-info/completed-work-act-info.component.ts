@@ -5,7 +5,7 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import { CardComponent } from '@app/shared/components/card/card.component';
 import { TextComponent } from '@app/shared/components/typography/text/text.component';
-import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
+import {CommonModule, DatePipe, NgForOf, NgIf} from '@angular/common';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
