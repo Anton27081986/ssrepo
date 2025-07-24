@@ -9,6 +9,9 @@ import {CommonModule, DatePipe, NgForOf, NgIf} from '@angular/common';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import {
+	CompletedWorkActsFacadeService
+} from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 @Component({
 	selector: 'ss-completed-work-act-info',
