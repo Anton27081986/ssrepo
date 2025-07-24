@@ -75,6 +75,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly isEditMode = new BehaviorSubject<boolean>(false);
 	public isEditMode$ = this.isEditMode.asObservable();
 
+	private readonly listPermissions = new BehaviorSubject<string[]>([]);
+	public listPermissions$ = this.listPermissions.asObservable();
+
 	private readonly permissions = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissions.asObservable();
 

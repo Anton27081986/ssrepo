@@ -32,6 +32,7 @@ export const Permissions = {
 	COMPLETED_WORK_ACTS_DELETE: 'CompletedWorkAct.Delete',
 	COMPLETED_WORK_ACTS_RESTORE: 'CompletedWorkAct.Restore',
 	COMPLETED_WORK_ACTS_SEND_TO_APPLICANT: 'CompletedWorkAct.SendToApplicant',
+	COMPLETED_WORK_ACTS_PRINT_REPORT: 'CompletedWorkAct.PrintReport',
 	COMPLETED_WORK_ACTS_RETURN_BACK_TO_APPLICANT:
 		'CompletedWorkAct.ReturnBackToApplicant',
 	COMPLETED_WORK_ACTS_SEND_TO_ADMINISTRATOR:

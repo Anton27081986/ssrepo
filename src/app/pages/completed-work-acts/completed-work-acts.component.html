@@ -14,6 +14,7 @@
 		(click)="downloadInstruction()"
 	></ss-lib-button
 	><ss-lib-button
+        *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_PRINT_REPORT)"
 		ss-lib-tooltip
 		[tooltipText]="'Выгрузить отчет в формате Excel'"
 		[iconPosition]="IconPosition.OnlyIcon"
