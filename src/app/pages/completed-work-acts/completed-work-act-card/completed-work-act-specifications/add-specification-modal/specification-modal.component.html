@@ -23,75 +23,6 @@
 		>
 			<div class="content__column">
 				<ss-search-input
-					searchType="services"
-					label="Услуга"
-					placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.service : undefined"
-					[error]="
-						addSpecificationForm.controls.serviceId.touched &&
-						addSpecificationForm.controls.serviceId.errors?.required
-							? 'Обязательное поле'
-							: undefined
-					"
-					(focusout)="
-						addSpecificationForm.controls.serviceId.markAsTouched()
-					"
-					(input)="
-						addSpecificationForm.controls.serviceId.markAsTouched()
-					"
-					(select)="
-						addSpecificationForm.controls.serviceId.setValue(
-							$event.id
-						);
-						addSpecificationForm.controls.serviceId.setErrors(null)
-					"
-				>
-				</ss-search-input>
-				<ss-textarea
-					formControlName="comment"
-					label="Комментарий"
-					[maxLength]="500"
-					[error]="
-						addSpecificationForm.controls.comment.touched &&
-						addSpecificationForm.controls.comment.errors?.required
-							? 'Обязательное поле'
-							: undefined
-					"
-				></ss-textarea>
-				<ss-input
-					formControlName="quantity"
-					label="Количество"
-					type="number"
-					[error]="
-						addSpecificationForm.controls.quantity.touched &&
-						addSpecificationForm.controls.quantity.errors?.required
-							? 'Обязательное поле'
-							: undefined
-					"
-				>
-				</ss-input>
-				<ss-search-input
-					searchType="tov-units"
-					label="Единицы измерения"
-					placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.tovUnit : defaultTovUnits"
-					[error]="
-						addSpecificationForm.controls.tovUnitId.touched &&
-						addSpecificationForm.controls.tovUnitId.errors?.required
-							? 'Обязательное поле'
-							: undefined
-					"
-					(select)="
-						addSpecificationForm.controls.tovUnitId.setValue(
-							$event.id
-						)
-					"
-					(click)="
-						addSpecificationForm.controls.tovUnitId.setErrors(null)
-					"
-				>
-				</ss-search-input>
-				<ss-search-input
 					searchType="cost-article"
 					label="Статья"
 					placeholder="Выберите из списка"
@@ -138,8 +69,6 @@
 					"
 				>
 				</ss-search-input>
-			</div>
-			<div class="content__column">
 				<ss-search-input
 					searchType="projects"
 					label="Проект"
@@ -161,6 +90,8 @@
 					"
 				>
 				</ss-search-input>
+			</div>
+			<div class="content__column">
 				<ss-search-input
 					searchType="user"
 					label="Сотрудник"
@@ -186,12 +117,10 @@
 							? 'Обязательное поле'
 							: undefined
 					"
-					(select)="
-						addSpecificationForm.controls.deptId.setValue(
-							$event.id
-						);
+					(click)="
 						addSpecificationForm.controls.deptId.setErrors(null)
 					"
+					(select)="onDeptSelect($event)"
 				>
 				</ss-search-input>
 				<ss-search-input
@@ -219,7 +148,7 @@
 					"
 					(select)="
 						addSpecificationForm.controls.sectionId.setValue(
-							$event?.id
+							$event.id
 						)
 					"
 					(click)="
@@ -228,15 +157,13 @@
 				>
 				</ss-search-input>
 				<ss-numeric-input
-					formControlName="amount"
-					label="Сумма 1С"
+					formControlName="sum"
+					label="Сумма"
 					[error]="
-						addSpecificationForm.controls.amount.touched &&
-						addSpecificationForm.controls.amount.errors?.required
+						addSpecificationForm.controls.sum.touched &&
+						addSpecificationForm.controls.sum.errors?.required
 							? 'Обязательное поле'
-							: amountValidator(
-										addSpecificationForm.controls.amount
-								  )
+							: amountValidator(addSpecificationForm.controls.sum)
 								? 'Некорректное значение'
 								: undefined
 					"
@@ -251,7 +178,7 @@
 				(click)="close()"
 				>Отмена</ss-button
 			>
-			@if (spec.id) {
+			@if (spec) {
 				<ss-button
 					type="primary"
 					size="small"

@@ -270,6 +270,8 @@ export class CorrespondenceFacadeService {
 				return `${environment.apiUrl}/client-card/${this.objectId}`;
 			case CorrespondenceTypeEnum.Personifications:
 				return `${environment.apiUrl}/mp-reservation-orders/${this.objectId}`;
+			default:
+				return '';
 		}
 	}
 }

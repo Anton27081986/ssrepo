@@ -37,6 +37,7 @@ import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/s
 import { completedWorkActsFilter } from '@app/pages/completed-work-acts/filters/completed-work-acts.filters';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -161,6 +162,7 @@ export class CompletedWorkActsComponent {
 	protected readonly ButtonType = ButtonType;
 	protected readonly FormControl = FormControl;
 	protected readonly Colors = Colors;
+	protected readonly Permissions = Permissions;
 	constructor() {
 		this.headerFilterService.init(completedWorkActsFilter);
 

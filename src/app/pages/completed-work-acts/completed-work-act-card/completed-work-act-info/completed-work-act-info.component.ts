@@ -2,9 +2,10 @@ import { Component, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import { CardComponent } from '@app/shared/components/card/card.component';
 import { TextComponent } from '@app/shared/components/typography/text/text.component';
-import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
+import {CommonModule, DatePipe, NgForOf, NgIf} from '@angular/common';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
@@ -16,6 +17,7 @@ import {
 	selector: 'ss-completed-work-act-info',
 	templateUrl: './completed-work-act-info.component.html',
 	styleUrls: ['./completed-work-act-info.component.scss'],
+	standalone: true,
 	imports: [
 		CommonModule,
 		CardComponent,
@@ -27,7 +29,6 @@ import {
 		NumWithSpacesPipe,
 		NgForOf,
 	],
-	standalone: true,
 })
 export class CompletedWorkActInfoComponent {
 	protected act: Signal<ICompletedWorkAct | null> = toSignal(
