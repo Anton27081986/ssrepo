@@ -1,0 +1,46 @@
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
+	<ss-card
+		class="dialog"
+		padding="16px 16px 16px 16px"
+		(mousedown)="$event.stopPropagation()"
+	>
+		<div class="header">
+			<ss-icon
+				width="16"
+				class="close-icon"
+				name="close"
+				(click)="close()"
+			></ss-icon>
+			<ss-headline size="h6">{{ title }}</ss-headline>
+		</div>
+		<form [formGroup]="commentForm">
+			<ss-textarea
+				rows="4"
+				label="Комментарий"
+				[formControlName]="'comment'"
+				[error]="
+					commentForm.controls.comment.touched &&
+					commentForm.controls.comment.errors?.required
+						? 'Обязательное поле'
+						: undefined
+				"
+			></ss-textarea>
+		</form>
+		<div class="footer">
+			<ss-button
+				size="small"
+				type="muted"
+				(click)="close()"
+				>Отмена</ss-button
+			>
+			<ss-button
+				size="small"
+				(click)="apply()"
+				>{{ okButton }}</ss-button
+			>
+		</div>
+	</ss-card>
+</div>

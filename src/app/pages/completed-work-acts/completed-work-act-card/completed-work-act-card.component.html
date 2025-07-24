@@ -16,80 +16,173 @@
 				@case (2) {
 					<ss-tag-v2 state="success">{{ act.state.name }}</ss-tag-v2>
 				}
+				@case (3) {
+					<ss-tag-v2 state="warning">{{ act.state.name }}</ss-tag-v2>
+				}
+				@case (4) {
+					<ss-tag-v2 state="info">{{ act.state.name }}</ss-tag-v2>
+				}
 			}
 		</div>
 		<div class="header__controls">
-			<snab-button
-				[tooltip]="'Скачать инструкцию'"
-				[icon]="IconType.Doc"
-				[iconPosition]="IconPosition.OnlyIcon"
-				[size]="Size.Large"
-				[type]="ButtonType.Outline"
-				(click)="downloadInstruction()"
-			>
-			</snab-button>
 			<ss-button
 				type="muted"
 				size="small"
 				(click)="openHistoryModal(act.id)"
 				>История</ss-button
 			>
-			<ss-dropdown-button
-				*ngIf="!isEdit()"
-				title="Действия"
-				[closeOnClick]="true"
-			>
-				@if (act.state.id === 0) {
-					<div
-						*ngIf="
-							permissions().includes(
-								Permissions.COMPLETED_WORK_ACTS_RESTORE
-							)
-						"
-						class="header__controls__dropdown-item"
-						(click)="restoreAct()"
-					>
-						<ss-icon name="refresh"></ss-icon>
-						<ss-text size="3">Восстановить</ss-text>
-					</div>
-				}
-				@if (act.state.id === 1) {
-					<div
-						*ngIf="
-							permissions().includes(
-								Permissions.COMPLETED_WORK_ACTS_PULL_ACT
-							)
-						"
-						class="header__controls__dropdown-item"
-						(click)="pullAct()"
-					>
-						<ss-icon name="clipboard"></ss-icon>
-						<ss-text size="3">Провести</ss-text>
-					</div>
-				}
-				@if (act.state.id === 1 || act.state.id === 2) {
-					<div
-						*ngIf="
-							permissions().includes(
-								Permissions.COMPLETED_WORK_ACTS_DELETE
-							)
-						"
-						class="header__controls__dropdown-item"
-						(click)="toArchiveAct()"
-					>
-						<ss-icon name="trash"></ss-icon>
-						<ss-text size="3">Удалить</ss-text>
-					</div>
-				}
-			</ss-dropdown-button>
+			@if (hasActions()) {
+				<ss-dropdown-button
+					*ngIf="!isEdit()"
+					title="Действия"
+					[closeOnClick]="true"
+				>
+					@if (act.state.id === 0) {
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_RESTORE
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="restoreAct()"
+						>
+							<ss-icon name="refresh"></ss-icon>
+							<ss-text size="3">Восстановить</ss-text>
+						</div>
+					}
+					@if (act.state.id === 1) {
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_PULL_ACT
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="pullAct()"
+						>
+							<ss-icon name="clipboard"></ss-icon>
+							<ss-text size="3">Провести</ss-text>
+						</div>
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_RETURN_BACK_TO_APPLICANT
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="returnActToApplicant()"
+						>
+							<ss-icon name="reply"></ss-icon>
+							<ss-text size="3">Вернуть заявителю</ss-text>
+						</div>
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_SEND_TO_ADMINISTRATOR
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="sendActToAdmin()"
+						>
+							<ss-icon name="mail"></ss-icon>
+							<ss-text size="3">Отправить</ss-text>
+						</div>
+					}
+					@if (act.state.id === 3) {
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_PULL_ACT
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="pullAct()"
+						>
+							<ss-icon name="clipboard"></ss-icon>
+							<ss-text size="3">Провести</ss-text>
+						</div>
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_SEND_TO_APPLICANT
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="sendActToApplicant()"
+						>
+							<ss-icon name="reply"></ss-icon>
+							<ss-text size="3">Отправить заявителю</ss-text>
+						</div>
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_SEND_TO_ADMINISTRATOR
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="sendActToAdmin()"
+						>
+							<ss-icon name="mail"></ss-icon>
+							<ss-text size="3">Отправить</ss-text>
+						</div>
+					}
+					@if (act.state.id === 4) {
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_PULL_ACT
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="pullAct()"
+						>
+							<ss-icon name="clipboard"></ss-icon>
+							<ss-text size="3">Провести</ss-text>
+						</div>
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_RETURN_BACK_TO_APPLICANT
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="returnActToApplicant()"
+						>
+							<ss-icon name="reply"></ss-icon>
+							<ss-text size="3">Вернуть заявителю</ss-text>
+						</div>
+					}
+					@if (act.state.id !== 0) {
+						<div
+							*ngIf="
+								permissions().includes(
+									Permissions.COMPLETED_WORK_ACTS_DELETE
+								)
+							"
+							class="header__controls__dropdown-item"
+							(click)="toArchiveAct()"
+						>
+							<ss-icon name="trash"></ss-icon>
+							<ss-text size="3">Удалить</ss-text>
+						</div>
+					}
+				</ss-dropdown-button>
+			}
 		</div>
 	</div>
-	<div class="content">
-		@if (isEdit()) {
-			<ss-completed-work-act-edit></ss-completed-work-act-edit>
-		} @else {
-			<ss-completed-work-act-info></ss-completed-work-act-info>
-		}
-		<ss-completed-work-act-specifications></ss-completed-work-act-specifications>
+	<div class="content-wrapper">
+		<div class="content">
+			@if (isEdit()) {
+				<ss-completed-work-act-edit></ss-completed-work-act-edit>
+			} @else {
+				<ss-completed-work-act-info></ss-completed-work-act-info>
+			}
+			<ss-completed-work-act-specifications></ss-completed-work-act-specifications>
+			<ss-correspondence
+				[type]="CorrespondenceTypeEnum.CompletedWorkActs"
+				[objectId]="act.id"
+			></ss-correspondence>
+		</div>
 	</div>
 </ng-container>

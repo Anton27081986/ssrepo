@@ -2,45 +2,47 @@ import { Component, Signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CompletedWorkActHistoryComponent } from '@app/pages/completed-work-acts/completed-work-act-history/completed-work-act-history.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import {
-	ButtonComponent as FrontButtonComponent,
-	ButtonType,
-	IconPosition,
-	IconType,
-	Size,
-} from '@front-components/components';
-import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
-import { NgIf } from '@angular/common';
+import { ReturnToApplicantModalComponent } from '@app/pages/completed-work-acts/completed-work-act-card/return-to-applicant-modal/return-to-applicant-modal.component';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
+import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
+import { CommonModule, NgIf } from '@angular/common';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { TextComponent } from '@app/shared/components/typography/text/text.component';
-import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
-
-import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
-import { CompletedWorkActEditComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component';
-import { CompletedWorkActInfoComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component';
-import { CompletedWorkActSpecificationsComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
+import { CorrespondenceComponent } from '@app/widgets/correspondence/correspondence.component';
+import {
+	CompletedWorkActEditComponent
+} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component";
+import {
+	CompletedWorkActInfoComponent
+} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component";
+import {
+	CompletedWorkActSpecificationsComponent
+} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component";
 
+@UntilDestroy()
 @Component({
 	selector: 'ss-completed-work-act-card',
 	templateUrl: './completed-work-act-card.component.html',
 	styleUrls: ['./completed-work-act-card.component.scss'],
 	imports: [
+		CommonModule,
 		NgIf,
 		IconComponent,
 		TextComponent,
-		TooltipDirective,
+		TagV2Component,
+		ButtonComponent,
 		DropdownButtonComponent,
+		CorrespondenceComponent,
 		CompletedWorkActEditComponent,
 		CompletedWorkActInfoComponent,
 		CompletedWorkActSpecificationsComponent,
-		TagV2Component,
-		FrontButtonComponent,
-		ButtonComponent,
 	],
 	standalone: true,
 })
@@ -67,16 +69,17 @@ export class CompletedWorkActCardComponent {
 	);
 
 	protected readonly Permissions = Permissions;
-	protected readonly IconPosition = IconPosition;
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
-	protected readonly IconType = IconType;
-constructor(
+	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
+	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly modalService: ModalService,
 		private readonly router: Router
 	) {
+		if (this.isEdit()) {
+			this.completedWorkActsFacade.switchMode();
+		}
+
 		const id = this.activatedRoute.snapshot.paramMap.get('id');
 
 		if (id) {
@@ -90,7 +93,6 @@ constructor(
 		});
 	}
 
-	
 	public toArchiveAct() {
 		this.completedWorkActsFacade.toArchiveAct();
 	}
@@ -103,14 +105,60 @@ constructor(
 		this.completedWorkActsFacade.restoreAct();
 	}
 
+	public sendActToAdmin() {
+		this.completedWorkActsFacade.sendActToAdmin();
+	}
+
+	public sendActToApplicant() {
+		this.modalService
+			.open(ReturnToApplicantModalComponent, {
+				data: { title: 'Отправить заявителю', okButton: 'Отправить' },
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe((comment: string) => {
+				if (comment) {
+					this.completedWorkActsFacade.sendActToApplicant(comment);
+				}
+			});
+	}
+
+	public returnActToApplicant() {
+		this.modalService
+			.open(ReturnToApplicantModalComponent, {
+				data: { title: 'Вернуть заявителю', okButton: 'Вернуть' },
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe((comment: string) => {
+				if (comment) {
+					this.completedWorkActsFacade.returnActToApplicant(comment);
+				}
+			});
+	}
+
 	public toActsList() {
 		this.router.navigate([`/completed-work-acts`]);
 	}
 
-	public downloadInstruction() {
-		const link = document.createElement('a');
-
-		link.href = this.completedWorkActsFacade.linkToInstruction;
-		link.click();
+	public hasActions() {
+		return (
+			this.permissions().includes(
+				Permissions.COMPLETED_WORK_ACTS_RESTORE
+			) ||
+			this.permissions().includes(
+				Permissions.COMPLETED_WORK_ACTS_PULL_ACT
+			) ||
+			this.permissions().includes(
+				Permissions.COMPLETED_WORK_ACTS_RETURN_BACK_TO_APPLICANT
+			) ||
+			this.permissions().includes(
+				Permissions.COMPLETED_WORK_ACTS_SEND_TO_APPLICANT
+			) ||
+			this.permissions().includes(
+				Permissions.COMPLETED_WORK_ACTS_SEND_TO_ADMINISTRATOR
+			) ||
+			this.permissions().includes(Permissions.COMPLETED_WORK_ACTS_DELETE)
+		);
 	}
 }
