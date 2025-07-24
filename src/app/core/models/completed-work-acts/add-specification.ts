@@ -1,7 +1,4 @@
 export interface IAddSpecification {
-	serviceId?: number | null;
-	comment?: string | null;
-	quantity?: number | null;
 	costId?: number | null;
 	faObjectId?: number | null;
 	faAssetId?: number | null;
@@ -9,6 +6,6 @@ export interface IAddSpecification {
 	deptId?: number | null;
 	sectionId?: number | null;
 	userId?: number | null;
-	amount?: number | null;
+	sum?: number | null;
 	id?: number | null;
 }

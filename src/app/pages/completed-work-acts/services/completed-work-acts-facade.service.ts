@@ -128,7 +128,14 @@ export class CompletedWorkActsFacadeService {
 								);
 							});
 					} else {
-						this.router.navigate([`completed-work-acts/${id}`]);
+						const url = this.router.serializeUrl(
+							this.router.createUrlTree([
+								'completed-work-acts',
+								`${id}`,
+							])
+						);
+
+						window.open(url, '_blank');
 					}
 
 					this.getContracts(data.providerContractor?.id)
@@ -296,6 +303,48 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
+	public sendActToAdmin() {
+		if (this.act.value) {
+			const id = this.act.value.id;
+
+			this.actsApiService
+				.sendActToAdmin(id)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getAct(id.toString());
+					this.noticeService.addToast('Акт отправлен', 'ok');
+				});
+		}
+	}
+
+	public sendActToApplicant(comment: string) {
+		if (this.act.value) {
+			const id = this.act.value.id;
+
+			this.actsApiService
+				.sendActToApplicant(id, comment)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getAct(id.toString());
+					this.noticeService.addToast('Акт отправлен', 'ok');
+				});
+		}
+	}
+
+	public returnActToApplicant(comment: string) {
+		if (this.act.value) {
+			const id = this.act.value.id;
+
+			this.actsApiService
+				.returnActToApplicant(id, comment)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getAct(id.toString());
+					this.noticeService.addToast('Акт возвращен', 'ok');
+				});
+		}
+	}
+
 	public switchMode(reload: boolean = false) {
 		if (reload && this.act.value?.id) {
 			this.getAct(this.act.value?.id.toString());
@@ -338,5 +387,4 @@ export class CompletedWorkActsFacadeService {
 	public downloadReport(filter: (ICompletedActsFilter & Pagination) | null) {
 		return this.actsApiService.downloadReport(filter);
 	}
-
 }

@@ -56,10 +56,6 @@
 				<ss-text size="3">{{ act()?.applicantUser?.name }}</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">Бизнес единица (БЕ)</ss-text>
-				<ss-text size="3">{{ act()?.buUnit?.name }}</ss-text>
-			</div>
-			<div class="content__column__item">
 				<ss-text size="4">Плательщик</ss-text>
 				<ss-text size="3">{{ act()?.payerContractor?.name }}</ss-text>
 			</div>
@@ -86,10 +82,6 @@
 				</ss-text>
 			</div>
 			<div class="content__column__item">
-				<ss-text size="4">ИНН</ss-text>
-				<ss-text size="3">{{ act()?.inn }}</ss-text>
-			</div>
-			<div class="content__column__item">
 				<ss-text size="4">Договор</ss-text>
 				<ss-text size="3">{{ act()?.contract?.name }}</ss-text>
 			</div>
@@ -105,6 +97,12 @@
 						{{ docOrder.name }}
 					</a>
 				</div>
+			</div>
+			<div class="content__column__item">
+				<ss-text size="4">Сумма Заявок на оплату</ss-text>
+				<ss-text size="3">{{
+					act()?.totalAmount | numWithSpaces
+				}}</ss-text>
 			</div>
 		</div>
 		<div class="content__column">
