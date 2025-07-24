@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
@@ -13,6 +13,8 @@ import {
 	CardComponent,
 } from '@front-components/components';
 import { NgForOf } from '@angular/common';
+import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
+import { IOrderRequests } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 
 @UntilDestroy()
 @Component({
@@ -38,12 +40,21 @@ export class MpReservationOrdersPopupTotalAmountComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	public totalAmounts = [
-		{ quantity: 100, desiredDate: '24.07.2024' },
-		{ quantity: 200, desiredDate: '28.07.2024' },
-	];
+	public orderRequests: IOrderRequests[] = [];
 
-	constructor(private readonly modalRef: ModalRef) {}
+	constructor(
+		@Inject(DIALOG_DATA) data: IOrderRequests[],
+		private readonly modalRef: ModalRef
+	) {
+		this.orderRequests = data.map((request) => ({
+			amount: request.amount,
+			requestedProvisionDate: request.requestedProvisionDate
+				.split('T')[0]
+				.split('-')
+				.reverse()
+				.join('.'),
+		}));
+	}
 
 	public close(): void {
 		this.modalRef.close();

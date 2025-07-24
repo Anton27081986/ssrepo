@@ -30,14 +30,36 @@
 				<table class="dates-table">
 					<thead>
 						<tr>
-							<th>Кол-во</th>
-							<th>Желаемая дата</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Medium"
+								>
+									Кол-во
+								</snab-text>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Medium"
+								>
+									Желаемая дата
+								</snab-text>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let row of totalAmounts">
-							<td>{{ row.quantity }}</td>
-							<td>{{ row.desiredDate }}</td>
+						<tr *ngFor="let row of orderRequests">
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									row.amount
+								}}</snab-text>
+							</td>
+							<td>
+								<snab-text [type]="TextType.Body">{{
+									row.requestedProvisionDate
+								}}</snab-text>
+							</td>
 						</tr>
 					</tbody>
 				</table>

@@ -1,5 +1,5 @@
 import { Component, Signal } from '@angular/core';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { ModalService } from '@app/core/modal/modal.service';
 import {
@@ -10,6 +10,7 @@ import {
 	FormFieldComponent,
 	IconPosition,
 	IconType,
+	InputComponent,
 	SelectComponent,
 	Size,
 	TextComponent,
@@ -20,7 +21,6 @@ import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
-import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -48,11 +48,11 @@ import {
 		FormFieldComponent,
 		ReactiveFormsModule,
 		DatePipe,
-		SearchInputComponent,
 		SelectComponent,
 		DraggableOrderRowDirective,
 		IconComponent,
 		NgIf,
+		InputComponent,
 	],
 })
 export class MpReservationOrdersPopupChangeQueueComponent {
@@ -69,48 +69,51 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 		this.mpReservationOrdersFacadeService.personificationStatuses$,
 		{
 			initialValue: [],
-		}
+		},
 	);
 
 	protected queueOrders: Signal<IQueueOrderDto[]> = toSignal(
 		this.mpReservationOrdersFacadeService.queueOrders$,
-		{ initialValue: [] }
+		{ initialValue: [] },
 	);
 
-	public filterTov: IDictionaryItemDto | null = null;
-	public filterStatus: IDictionaryItemDto | null = null;
-	public status = new FormControl<IDictionaryItemDto | null>(null);
+	public filterTovName = new FormControl<string>('');
+	public filterStatusName = new FormControl<IDictionaryItemDto | null>(null);
 
 	constructor(
 		private readonly modalRef: ModalRef,
 		private readonly modalService: ModalService,
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
 	) {
-		this.status.valueChanges
-			.pipe(untilDestroyed(this))
-			.subscribe((value) => {
-				this.filterStatus = value;
-			});
-
 		this.mpReservationOrdersFacadeService.loadQueueOrders();
 	}
 
 	public get filteredOrdersQueue(): IQueueOrderDto[] {
-		return this.queueOrders().filter((order) => {
-			if (this.filterStatus) {
-				const statusName = this.filterStatus.name;
+		const list = this.queueOrders() ?? [];
+		const tovSearch = this.filterTovName.value?.trim().toLowerCase() || '';
+		const statusControl = this.filterStatusName.value;
 
-				return (
-					(order.status ? 'Обработан' : 'В очереди') === statusName
-				);
+		return list.filter((order) => {
+			if (tovSearch) {
+				const name = order.personificationOrder.tov.name.toLowerCase();
+				if (!name.includes(tovSearch)) {
+					return false;
+				}
 			}
-
+			if (statusControl) {
+				if (
+					order.personificationOrder.status?.name !==
+					statusControl.name
+				) {
+					return false;
+				}
+			}
 			return true;
 		});
 	}
 
-	public onTovFilter(item: IDictionaryItemDto): void {
-		this.filterTov = item;
+	public clearStatusFilter(): void {
+		this.filterStatusName.reset();
 	}
 
 	public close(): void {
@@ -128,8 +131,6 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 				}
 			});
 	}
-
-	public findQueueOrders(): void {}
 
 	public onOrderReorder(event: IOrderReorderRequest): void {
 		const { orderId, toIndex } = event;
@@ -155,7 +156,7 @@ export class MpReservationOrdersPopupChangeQueueComponent {
 
 		this.mpReservationOrdersFacadeService.updateOrderPositionInQueue(
 			oldPos,
-			newPos
+			newPos,
 		);
 	}
 }

@@ -540,7 +540,7 @@ export class AppIcons {
 		'</svg>';
 
 	public static noAvatar =
-		'<svg width="100%" height="auto" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+		'<svg width="100%" height="100%" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">' +
 		'<path d="M16.0555 15.1206C15.9843 15.1134 15.8989 15.1134 15.8206 15.1206C14.1265 15.0635 12.7812 13.674 12.7812 11.9637C12.7812 10.2179 14.1906 8.7998 15.9416 8.7998C17.6855 8.7998 19.102 10.2179 19.102 11.9637C19.0949 13.674 17.7496 15.0635 16.0555 15.1206Z" stroke="#335DF2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'<path d="M16.1106 23.812C16.0038 23.8048 15.8757 23.8048 15.7583 23.812C13.2172 23.755 11.1992 22.3654 11.1992 20.6552C11.1992 18.9093 13.3133 17.4912 15.9398 17.4912C18.5556 17.4912 20.6803 18.9093 20.6803 20.6552C20.6697 22.3654 18.6517 23.755 16.1106 23.812Z" stroke="#335DF2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>' +
 		'</svg>';

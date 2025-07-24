@@ -33,6 +33,11 @@
 	max-height: 560px;
 }
 
+.table-container {
+	overflow-x: auto;
+	max-height: 294px;
+}
+
 .remnants-table {
 	width: 100%;
 	border-collapse: collapse;

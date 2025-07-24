@@ -3,7 +3,6 @@ import { first } from 'rxjs';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { environment } from '@environments/environment';
-import { BannerComponent } from '@app/widgets/banner/banner.component';
 import { AuctionSalesComponent } from '@app/widgets/auction-sales/auction-sales.component';
 import { ThanksColleagueComponent } from '@app/widgets/thank-colleague/thanks-colleague.component';
 import { AddressBookComponent } from '@app/widgets/address-book/address-book.component';
@@ -23,7 +22,6 @@ import { TransportComponent } from '@app/widgets/transport/transport.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	imports: [
 		CommonModule,
-		BannerComponent,
 		AuctionSalesComponent,
 		VictoryComponent,
 		ThanksColleagueComponent,
@@ -44,7 +42,7 @@ export class MainPageComponent implements OnInit {
 
 	constructor(private readonly userStateService: UserProfileStoreService) {}
 
-	public ngOnInit() {
+	public ngOnInit(): void {
 		this.loading = true;
 
 		this.userStateService.userProfile$

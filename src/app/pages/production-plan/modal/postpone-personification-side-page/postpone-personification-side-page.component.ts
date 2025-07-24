@@ -73,8 +73,18 @@ export class PostponePersonificationSidePageComponent {
 
 		if (personificationRes) {
 			return personificationRes.items.reduce((sum, item) => {
-				return sum + Number(item.countForPostpone.value!);
-			}, 0)!;
+				const value = item.countForPostpone.value;
+
+				if (value === null || value === undefined) {
+					return sum;
+				}
+
+				// Normalize comma to dot and convert to number
+				const normalizedValue = String(value).replace(',', '.');
+				const numValue = Number(normalizedValue);
+
+				return sum + (Number.isNaN(numValue) ? 0 : numValue);
+			}, 0);
 		}
 
 		return null;

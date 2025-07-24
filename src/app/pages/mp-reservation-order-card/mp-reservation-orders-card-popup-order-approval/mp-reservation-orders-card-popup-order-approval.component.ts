@@ -157,6 +157,7 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 			dispatches
 		);
 		this.close();
+		window.location.reload();
 	}
 
 	public close(): void {

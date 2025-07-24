@@ -45,6 +45,7 @@ import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.s
 import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FilterBuilder } from '@app/core/utils/filter-builder.util';
+import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -136,7 +137,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	// Filter configuration
 	protected filters = signal<IFilter[]>([
 		{
-			name: 'id',
+			name: 'personificationId',
 			type: 'number',
 			label: 'Код',
 			placeholder: 'Введите код',
@@ -300,15 +301,17 @@ export class MPReservationOrdersComponent implements OnInit {
 		this.ordersTableIndexChange(lastPageIndex);
 	}
 
-	public openPopupRemnantDetailsOrder(orderId: number): void {
+	public openPopupStockBalanceDetailsOrder(orderId: number): void {
 		this.modalService.open(
 			MpReservationOrdersPopupRemnantsDetailsComponent,
 			{ data: orderId }
 		);
 	}
 
-	public openPopupTotalAmount(): void {
-		this.modalService.open(MpReservationOrdersPopupTotalAmountComponent);
+	public openPopupTotalAmount(order: IMpReservationOrder): void {
+		this.modalService.open(MpReservationOrdersPopupTotalAmountComponent, {
+			data: order.orderRequests,
+		});
 	}
 
 	public openPopupChangeQueueOrders(): void {

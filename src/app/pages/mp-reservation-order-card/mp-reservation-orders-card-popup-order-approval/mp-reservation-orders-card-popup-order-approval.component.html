@@ -32,25 +32,25 @@
 				[formGroup]="approvalForm"
 			>
 				<snab-text
-					[type]="TextType.Body"
+					[type]="TextType.Title"
 					[weight]="TextWeight.Medium"
 				>
 					Товарная позиция:
-					{{ approvalForm.value.tov?.name ?? '...' }}
+					{{ order()!.tov.name }}
 				</snab-text>
 				<snab-text
 					[type]="TextType.Title"
 					[weight]="TextWeight.Medium"
 				>
 					Количество и ед.:
-					{{ approvalForm.value.totalRequested ?? '...' }}
+					{{ order()!.totalAmount }}
 				</snab-text>
 				<snab-text
 					[type]="TextType.Title"
 					[weight]="TextWeight.Medium"
 				>
 					Количество в производстве.:
-					{{ approvalForm.value.manufacturingAmount ?? '...' }}
+					{{ order()!.provision.manufacturing }}
 				</snab-text>
 
 				<table class="orders-table">

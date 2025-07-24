@@ -1,10 +1,4 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	inject,
-	Signal,
-	ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, Signal } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	OperationPlanItem,
@@ -34,6 +28,7 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { CreateCommentsModalComponent } from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
+import { NgIf } from '@angular/common';
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<
@@ -83,15 +78,13 @@ export const BASE_COLUMN_MAP: Record<
 		DropdownListComponent,
 		ButtonComponent,
 		CreateCommentsModalComponent,
+		NgIf,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
 })
 @UntilDestroy()
 export class OperationPlanTableTbodyComponent {
-	@ViewChild('getCommentsList')
-	public commentsComp!: AddCommentsModalComponent;
-
 	private readonly tableStateService =
 		inject<SsTableState<OperationPlanItem>>(SsTableState);
 
@@ -102,6 +95,8 @@ export class OperationPlanTableTbodyComponent {
 	private readonly popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService
 	);
+
+	public openCommentsRowId: number | null = null;
 
 	protected readonly operationPlanState = inject(OperationPlanState);
 	private readonly changeDetectorRef: ChangeDetectorRef =
@@ -218,13 +213,6 @@ export class OperationPlanTableTbodyComponent {
 
 		if (data) {
 			this.popupService.openPostponePlanModal(data.id);
-		}
-	}
-
-	public onCommentsOpen(opened: boolean, rowId: number): void {
-		if (opened) {
-			this.commentsComp.loadCommentsList(rowId);
-			this.changeDetectorRef.markForCheck();
 		}
 	}
 

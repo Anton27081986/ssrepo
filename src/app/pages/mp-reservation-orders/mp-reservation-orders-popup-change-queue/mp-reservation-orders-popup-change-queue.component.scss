@@ -87,13 +87,3 @@
 		text-align: left;
 	}
 }
-
-.table-td-provision {
-	display: table-cell;
-	text-align: left !important;
-
-	&__label {
-		display: inline-block;
-		padding: 2px;
-	}
-}

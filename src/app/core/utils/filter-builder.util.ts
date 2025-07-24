@@ -20,100 +20,134 @@ export class FilterBuilder {
 
 		for (const filter of filters) {
 			if (!filter.value || !filter.type) {
-				preparedFilter[filter.name] = null;
 				continue;
 			}
 
-			switch (filter.type) {
-				case 'search-select':
-					preparedFilter[filter.name] =
-						this.processSearchSelectFilter(filter.value);
+			switch (filter.name) {
+				case 'personificationId':
+					preparedFilter.personificationId = 
+						this.processNumericFilter(filter.value as NumericFilterValue);
 					break;
 
-				case 'date-range':
-					this.processDateRangeFilter(filter, preparedFilter);
+				case 'authorId':
+					preparedFilter.authorIds = 
+						this.processSearchSelectArrayFilter(filter.value);
 					break;
 
-				case 'number':
-				case 'int-number':
-					preparedFilter[filter.name] = this.processNumericFilter(
-						filter.value as NumericFilterValue
-					);
+				case 'tovId':
+					preparedFilter.tovIds = 
+						this.processSearchSelectArrayFilter(filter.value);
+					break;
+
+				case 'managerId':
+					preparedFilter.managerIds = 
+						this.processSearchSelectArrayFilter(filter.value);
+					break;
+
+				case 'statusId':
+					preparedFilter.statusIds = 
+						this.processSearchSelectArrayFilter(filter.value);
+					break;
+
+				case 'clientId':
+					preparedFilter.clientIds = 
+						this.processSearchSelectArrayFilter(filter.value);
+					break;
+
+				case 'dateCreatedFrom-dateCreatedTo':
+					this.processDateRangeFilterForMpReservation(filter, preparedFilter);
 					break;
 
 				default:
-					preparedFilter[filter.name] = this.processDefaultFilter(
-						filter.value
-					);
+					// Handle any other filters by their name directly
+					if (filter.type === 'search-select') {
+						const key = filter.name as keyof MpReservationFilter;
+						(preparedFilter as any)[key] = 
+							this.processSearchSelectArrayFilter(filter.value);
+					} else if (
+						filter.type === 'number' || 
+						filter.type === 'int-number'
+					) {
+						const key = filter.name as keyof MpReservationFilter;
+						(preparedFilter as any)[key] = 
+							this.processNumericFilter(filter.value as NumericFilterValue);
+					}
 			}
 		}
 
 		return preparedFilter;
 	}
 
-	private static processSearchSelectFilter(
-		value: FilterValue
-	): number[] | null {
-		return Array.isArray(value) ? value.map((item) => item.id) : null;
+	private static processSearchSelectFilter(value: FilterValue): number | null {
+		if (Array.isArray(value) && value.length > 0) {
+			return value[0].id;
+		}
+		return null;
+	}
+
+	private static processSearchSelectArrayFilter(value: FilterValue): number[] | undefined {
+		if (Array.isArray(value) && value.length > 0) {
+			return value.map(item => item.id);
+		}
+		return undefined;
 	}
 
 	private static processDateRangeFilter(
 		filter: IFilter,
-		preparedFilter: MpReservationFilter
+		preparedFilter: any
 	): void {
-		if (typeof filter.value !== 'string') {
-			return;
-		}
+		if (typeof filter.value === 'string') {
+			const [fromDate, toDate] = filter.value.split('-');
+			const [fromName, toName] = filter.name.split('-');
 
-		const [fromDateStr, toDateStr] = filter.value.split('-');
-		const [fromField, toField] = filter.name.split('-');
-
-		if (fromDateStr) {
-			const fromParts = fromDateStr.split('.');
-
-			if (fromParts.length === 3) {
-				preparedFilter[fromField] = this.formatDateToISO(
-					fromParts,
-					true
-				);
+			if (fromDate && fromName) {
+				preparedFilter[fromName] = this.formatDateForApi(fromDate.trim());
 			}
-		}
 
-		if (toDateStr) {
-			const toParts = toDateStr.split('.');
-
-			if (toParts.length === 3) {
-				preparedFilter[toField] = this.formatDateToISO(toParts, false);
+			if (toDate && toName) {
+				preparedFilter[toName] = this.formatDateForApi(toDate.trim(), true);
 			}
 		}
 	}
 
-	private static formatDateToISO(
-		dateParts: string[],
-		isStartOfDay: boolean
-	): string {
-		const [day, month, year] = dateParts;
-		const time = isStartOfDay ? '00:00:00.000Z' : '23:59:59.999Z';
+	private static processDateRangeFilterForMpReservation(
+		filter: IFilter,
+		preparedFilter: MpReservationFilter
+	): void {
+		if (typeof filter.value === 'string') {
+			const [fromDate, toDate] = filter.value.split('-');
 
-		return `${year}-${month}-${parseInt(day, 10).toString().padStart(2, '0')}T${time}`;
+			if (fromDate) {
+				preparedFilter.dateFrom = this.formatDateForApi(fromDate.trim());
+			}
+
+			if (toDate) {
+				preparedFilter.dateTo = this.formatDateForApi(toDate.trim(), true);
+			}
+		}
+	}
+
+	private static formatDateForApi(dateString: string, isEndDate = false): string {
+		const parts = dateString.split('.');
+		if (parts.length === 3) {
+			const [day, month, year] = parts;
+			const time = isEndDate ? 'T23:59:59.999Z' : 'T00:00:00.000Z';
+			return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}${time}`;
+		}
+		return dateString;
 	}
 
 	private static processNumericFilter(
 		value: NumericFilterValue
-	): number | null {
-		if (value === null || value === undefined) {
-			return null;
+	): number | undefined {
+		if (value !== null && value !== undefined) {
+			const numValue = typeof value === 'string' ? parseFloat(value.replace(',', '.')) : value;
+			return isNaN(numValue) ? undefined : numValue;
 		}
-
-		const numValue =
-			typeof value === 'string'
-				? parseFloat(value.replace(',', '.'))
-				: value;
-
-		return Number.isNaN(numValue) ? null : numValue;
+		return undefined;
 	}
 
-	private static processDefaultFilter(value: FilterValue): string | null {
-		return value?.toString().replace(',', '.') || null;
+	private static processDefaultFilter(value: FilterValue): any {
+		return value;
 	}
 } 
