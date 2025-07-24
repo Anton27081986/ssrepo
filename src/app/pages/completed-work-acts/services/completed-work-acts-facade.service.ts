@@ -1,6 +1,6 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, NEVER, Observable, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -127,16 +127,18 @@ export class CompletedWorkActsFacadeService {
 									'warning'
 								);
 							});
-					} else if (this.act.value?.id !== parseInt(id, 10)) {
-						const url = this.router.serializeUrl(
-							this.router.createUrlTree([
-								'completed-work-acts',
-								`${id}`,
-							])
-						);
 
-						window.open(url, '_blank');
+						return NEVER;
 					}
+
+					const url = this.router.serializeUrl(
+						this.router.createUrlTree([
+							'completed-work-acts',
+							`${id}`,
+						])
+					);
+
+					window.open(url, '_blank');
 
 					this.getContracts(data.providerContractor?.id)
 						.pipe(untilDestroyed(this))
@@ -165,8 +167,8 @@ export class CompletedWorkActsFacadeService {
 		this.actsApiService
 			.updateAct(this.act.value!.id, body)
 			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.switchMode(true);
+			.subscribe((act) => {
+				this.switchMode(act);
 			});
 	}
 
@@ -345,9 +347,9 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public switchMode(reload: boolean = false) {
-		if (reload && this.act.value?.id) {
-			this.getAct(this.act.value?.id.toString());
+	public switchMode(act?: ICompletedWorkAct) {
+		if (act) {
+			this.act.next(act);
 		}
 
 		this.isEditMode.next(!this.isEditMode.value);
