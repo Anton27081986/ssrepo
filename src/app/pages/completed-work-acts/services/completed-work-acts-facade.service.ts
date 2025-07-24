@@ -107,9 +107,6 @@ export class CompletedWorkActsFacadeService {
 			.getWorkAct(id)
 			.pipe(
 				switchMap(({ data, permissions }) => {
-					if (data.id) {
-					}
-
 					this.permissions.next(permissions);
 					this.act.next(data);
 					this.actAttachment.next(data.documents);
@@ -127,7 +124,7 @@ export class CompletedWorkActsFacadeService {
 									'warning'
 								);
 							});
-					} else {
+					} else if (this.act.value?.id !== parseInt(id, 10)) {
 						const url = this.router.serializeUrl(
 							this.router.createUrlTree([
 								'completed-work-acts',
