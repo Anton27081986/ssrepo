@@ -18,7 +18,6 @@ import { ModalService } from '@app/core/modal/modal.service';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { SpecificationModalComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/add-specification-modal/specification-modal.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { DialogComponent } from '@app/shared/components/dialog/dialog.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -33,6 +32,9 @@ import {
 } from '@angular/common';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
+import {
+	CompletedWorkActsFacadeService
+} from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 export enum SpecificationRowItemField {
 	service = 'service',

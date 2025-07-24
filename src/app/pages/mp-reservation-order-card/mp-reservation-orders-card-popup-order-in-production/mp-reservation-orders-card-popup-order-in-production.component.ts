@@ -172,6 +172,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 			.subscribe(() => {
 				this.facade.reloadOrder();
 				this.modalRef.close();
+				window.location.reload();
 			});
 	}
 

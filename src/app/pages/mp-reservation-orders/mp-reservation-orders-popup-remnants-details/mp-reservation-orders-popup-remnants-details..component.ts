@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
@@ -14,13 +14,9 @@ import {
 	LinkComponent,
 } from '@front-components/components';
 import { NgForOf } from '@angular/common';
-
-interface IRemnantDetail {
-	quantity: number;
-	warehouse: string;
-	linkText: string;
-	linkUrl?: string;
-}
+import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
+import { IWarehouseStockDto } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
+import {DIALOG_DATA} from "@app/core/modal/modal-tokens";
 
 @UntilDestroy()
 @Component({
@@ -50,28 +46,23 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
-	public remnants: IRemnantDetail[] = [
-		{
-			quantity: 10,
-			warehouse: 'ССП Сосннаб',
-			linkText: 'Ссылка',
-			linkUrl: '#',
-		},
-		{
-			quantity: 24,
-			warehouse: 'ССП Готовая продукция',
-			linkText: 'Ссылка',
-			linkUrl: '#',
-		},
-	];
+	public remnants: IWarehouseStockDto[] = [];
 
-	constructor(private readonly modalRef: ModalRef) {}
+	constructor(
+		@Inject(DIALOG_DATA) orderId: number,
+		private readonly modalRef: ModalRef,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+	) {
+		this.mpReservationOrdersFacadeService
+			.getAllStockBalance(orderId)
+			.subscribe((remnants) => (this.remnants = remnants));
+	}
 
 	public close(): void {
 		this.modalRef.close();
 	}
 
-	public onLinkClick(_link: IRemnantDetail): void {
-		// Navigate to the link - console.log removed for production
+	public openDetailsLink(url: string): void {
+		window.open(url, '_blank');
 	}
 }

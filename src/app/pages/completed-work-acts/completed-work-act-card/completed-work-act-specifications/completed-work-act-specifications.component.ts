@@ -1,5 +1,4 @@
 import { Component, Signal } from '@angular/core';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { ModalService } from '@app/core/modal/modal.service';
@@ -13,6 +12,9 @@ import { ButtonComponent } from '@app/shared/components/buttons/button/button.co
 import { CommonModule, NgForOf, NgIf } from '@angular/common';
 import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
 import { SpecificationRowItemTrComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/specification-row-item-tr/specification-row-item-tr.component';
+import {
+	CompletedWorkActsFacadeService
+} from "@app/pages/completed-work-acts/services/completed-work-acts-facade.service";
 
 @Component({
 	selector: 'ss-completed-work-act-specifications',

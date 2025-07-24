@@ -1,0 +1,82 @@
+import { TableColumnConfig } from '@front-library/components/lib/components/table/models';
+
+export const columnCompletedWorkActsConfigs: TableColumnConfig[] = [
+	{
+		id: 'id',
+		name: 'Код',
+		showInDropdown: false,
+		showInHeader: true,
+		visible: true,
+		stickyColumn: true,
+	},
+	{
+		id: 'state',
+		name: 'Состояние',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'externalActDate',
+		name: 'Дата оказания услуги',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'internalActDate',
+		name: 'Дата БУ',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'dateUpload',
+		name: 'Дата КИСП',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'internalActNumber',
+		name: 'Номер БУ',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'payerBuUnit',
+		name: 'БЕ',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'providerContractor',
+		name: 'Поставщик услуг',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'contract',
+		name: 'Договор',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'applicantUser',
+		name: 'Заявитель',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+	{
+		id: 'totalAmount',
+		name: 'Сумма',
+		showInDropdown: true,
+		showInHeader: true,
+		visible: true,
+	},
+];
