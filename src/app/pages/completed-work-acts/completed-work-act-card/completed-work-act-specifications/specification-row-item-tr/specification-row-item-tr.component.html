@@ -5,26 +5,6 @@
 				*ngIf="col.display"
 				class="ss-table-td"
 			>
-				<!--				<ng-container *ngSwitchCase="specificationRowItemField.service">-->
-				<!--					<a class="hc-table-td__content" href="{{ item?.service }}" target="_blank"> {{ item?.service?.name }}</a>-->
-				<!--				</ng-container>-->
-
-				<ng-container *ngSwitchCase="specificationRowItemField.service">
-					<div class="ss-table-td__content">
-						{{ item().service?.name || '-' }}
-					</div>
-				</ng-container>
-
-				<ng-container
-					*ngSwitchCase="specificationRowItemField.quantity"
-				>
-					<div
-						class="ss-table-td__content hc-table-td__content--number"
-					>
-						{{ item().quantity || '-' }} {{ item().tovUnit?.name }}
-					</div>
-				</ng-container>
-
 				<ng-container *ngSwitchCase="specificationRowItemField.cost">
 					<div class="ss-table-td__content">
 						{{ item().cost?.name || '-' }}
@@ -63,19 +43,11 @@
 					</div>
 				</ng-container>
 
-				<ng-container *ngSwitchCase="specificationRowItemField.amount">
+				<ng-container *ngSwitchCase="specificationRowItemField.sum">
 					<div
 						class="ss-table-td__content ss-table-td__content--number"
 					>
-						{{ item().amount | numWithSpaces }}
-					</div>
-				</ng-container>
-
-				<ng-container *ngSwitchCase="specificationRowItemField.comment">
-					<div
-						class="ss-table-td__content hc-table-td__content--number"
-					>
-						{{ item().comment || '-' }}
+						{{ item().sum | numWithSpaces }}
 					</div>
 				</ng-container>
 

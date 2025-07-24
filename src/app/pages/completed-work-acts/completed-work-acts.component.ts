@@ -1,33 +1,43 @@
-import { Component, Signal } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	Signal,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import { IResponse } from '@app/core/utils/response';
-import {
-	ITableItem,
-	TableComponent,
-} from '@app/shared/components/table/table.component';
-import { ICompletedWorkActTableItem } from '@app/pages/completed-work-acts/completed-work-act-table-item';
-import {
-	FiltersComponent,
-	IFilter,
-} from '@app/shared/components/filters/filters.component';
-import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { CommonModule, NgIf } from '@angular/common';
+import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
 import {
 	ButtonComponent,
 	ButtonType,
+	Colors,
+	DatepickerComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	HeaderFilterService,
 	IconPosition,
 	IconType,
-	Size,
-} from '@front-components/components';
-import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
-import { TooltipDirective } from '@app/shared/components/tooltip/tooltip.directive';
-import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
-import { CommonModule, NgIf } from '@angular/common';
-import { MapperPipe } from '@app/core/pipes/mapper.pipe';
+	SsTableState,
+	TextComponent,
+	TextType,
+	TextWeight,
+	ToggleComponent,
+	TooltipDirective,
+} from '@front-library/components';
+import { DropdownColumnsSettingsComponent } from '@app/pages/production-plan/operational-plan/dropdown-column-settings/dropdown-columns-settings.component';
+import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
+import { Pagination } from '@app/core/models/production-plan/operation-plan';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ICompletedActsFilter } from '@app/core/models/completed-work-acts/completed-acts-filter';
+import { CompletedWorkActsTableComponent } from '@app/pages/completed-work-acts/completed-work-acts-table/completed-work-acts-table.component';
+import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
+import { completedWorkActsFilter } from '@app/pages/completed-work-acts/filters/completed-work-acts.filters';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
-import { EmptyDataPageComponent } from '@app/shared/components/empty-data-page/empty-data-page.component';
-import { LoaderComponent } from '@app/shared/components/loader/loader.component';
+import { Permissions } from '@app/core/constants/permissions.constants';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -35,127 +45,106 @@ import { LoaderComponent } from '@app/shared/components/loader/loader.component'
 	styleUrls: ['./completed-work-acts.component.scss'],
 	imports: [
 		CommonModule,
-		HeadlineComponent,
 		ButtonComponent,
 		TooltipDirective,
-		DropdownButtonComponent,
-		FiltersComponent,
 		NgIf,
-		TableComponent,
-		MapperPipe,
+		FiltersTableCanvasComponent,
+		ButtonComponent,
+		DropdownColumnsSettingsComponent,
+		FiltersTriggerButtonComponent,
+		ButtonComponent,
+		CompletedWorkActsTableComponent,
+		TextComponent,
+		TooltipDirective,
+		DatepickerComponent,
+		FormFieldComponent,
+		FieldCtrlDirective,
+		ReactiveFormsModule,
+		ToggleComponent,
 		PaginationComponent,
-		EmptyDataPageComponent,
-		LoaderComponent,
+		FormsModule,
 	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
+	providers: [HeaderFilterService, SsTableState],
 })
 export class CompletedWorkActsComponent {
-	private readonly filtersKey: string = 'work-acts-filters';
+	public dateFromControl = new FormControl();
+	public dateToControl = new FormControl();
+	public uploadDateFromControl = new FormControl();
+	public uploadDateToControl = new FormControl();
+	public additionalControl = new FormControl();
+	public archiveControl = new FormControl();
 
-	public pageSize = 20;
+	private readonly router: Router = inject(Router);
+	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+
+	private readonly completedWorkActsFacade: CompletedWorkActsFacadeService =
+		inject(CompletedWorkActsFacadeService);
+
+	private readonly headerFilterService: HeaderFilterService =
+		inject(HeaderFilterService);
+
+	public limit = 10;
+	public offset$ = new BehaviorSubject<number>(0);
+	public itemTotal$ = new BehaviorSubject<number>(0);
+	public total = 0;
 	public pageIndex = 1;
-	public offset = 0;
 
-	public filters: IFilter[] = [
-		{
-			name: 'DateFrom-DateTo',
-			type: 'date-range',
-			label: 'Период (внтр)',
-			placeholder: '',
-		},
-		{
-			name: 'Id',
-			type: 'int-number',
-			label: 'Код',
-			placeholder: 'Введите код',
-		},
-		{
-			name: 'BuUnitId',
-			type: 'search',
-			searchType: 'bu-units',
-			label: 'БЕ Плательщика',
-			placeholder: 'Введите БЕ',
-		},
-		{
-			name: 'State',
-			type: 'select',
-			label: 'Состояние',
-			options: [
-				{
-					id: 0,
-					name: 'Архив',
-				},
-				{
-					id: 1,
-					name: 'Черновик',
-				},
-				{
-					id: 2,
-					name: 'Проведен',
-				},
-			],
-			placeholder: 'Выберите состояние',
-		},
-		{
-			name: 'ProviderContractorId',
-			type: 'search',
-			searchType: 'contractor',
-			label: 'Поставщик услуг',
-			placeholder: 'Выберите поставщика услуг',
-		},
-		{
-			name: 'ApplicantUserId',
-			type: 'search',
-			searchType: 'user',
-			label: 'Заявитель',
-			placeholder: 'Введите ФИО',
-		},
-		{
-			name: 'TotalAmount',
-			type: 'number',
-			label: 'Сумма (Итого)',
-			placeholder: 'Введите сумму',
-		},
-		{
-			name: 'Additional',
-			type: 'boolean',
-			label: 'Требуется моя виза',
-			options: [
-				{
-					id: 0,
-					name: 'Все',
-				},
-				{
-					id: 1,
-					name: 'Требуется моя виза',
-				},
-			],
-			placeholder: '',
-		},
-		{
-			name: 'WithArchive',
-			type: 'boolean',
-			label: 'Показать архивные акты',
-			options: [
-				{ id: 1, name: 'Да' },
-				{ id: 0, name: 'Нет' },
-			],
-			placeholder: '',
-		},
-	];
+	protected dateFrom$: BehaviorSubject<string | null> = new BehaviorSubject<
+		string | null
+	>(null);
 
-	public acts: Signal<IResponse<ICompletedWorkAct> | null> = toSignal(
-		this.completedWorkActsFacade.acts$,
-		{
-			initialValue: null,
-		}
-	);
+	protected items$: Observable<ICompletedWorkAct[]> = this.offset$.pipe(
+		switchMap((offset) => {
+			const dateFrom = this.dateFromControl.value;
+			const dateTo = this.dateToControl.value;
+			const uploadDateFrom = this.uploadDateFromControl.value;
+			const uploadDateTo = this.uploadDateToControl.value;
+			const additional = this.additionalControl.value;
+			const archive = this.archiveControl.value;
 
-	public isLoader: Signal<boolean> = toSignal(
-		this.completedWorkActsFacade.isLoader$,
-		{
-			initialValue: true,
-		}
+			return this.headerFilterService.criteria$.pipe(
+				switchMap((criteria) => {
+					const filterParams = Object.fromEntries(
+						Object.entries(criteria).filter(([_, v]) => v !== null)
+					);
+
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: this.activatedRoute.snapshot.queryParams,
+						queryParamsHandling: 'merge',
+					});
+
+					const valueWithPagination = {
+						...filterParams,
+						DateFrom: dateFrom,
+						DateTo: dateTo,
+						UploadDateFrom: uploadDateFrom,
+						UploadDateTo: uploadDateTo,
+						Additional: additional ? 1 : 0,
+						WithArchive: archive,
+						limit: this.limit,
+						offset,
+					};
+
+					this.completedWorkActsFacade.filterValueStore$.next(
+						valueWithPagination as ICompletedActsFilter & Pagination
+					);
+
+					return this.completedWorkActsFacade.getWorkActsList(
+						valueWithPagination as ICompletedActsFilter & Pagination
+					);
+				})
+			);
+		}),
+		tap((value) => {
+			this.total = value.total;
+		}),
+
+		map((value) => value.items),
+
+		tap((value) => this.itemTotal$.next(value.length))
 	);
 
 	public permissions: Signal<string[]> = toSignal(
@@ -166,164 +155,211 @@ export class CompletedWorkActsComponent {
 	);
 
 	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconPosition = IconPosition;
-constructor(
-		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
-		private readonly localStorageService: LocalStorageService
-	) {
-		const savedFilters = this.localStorageService.getItem<IFilter[]>(
-			this.filtersKey
+	protected readonly ButtonType = ButtonType;
+	protected readonly FormControl = FormControl;
+	protected readonly Colors = Colors;
+	protected readonly Permissions = Permissions;
+	constructor() {
+		this.headerFilterService.init(completedWorkActsFilter);
+
+		toSignal(
+			this.headerFilterService.criteria$.pipe(
+				tap(() => {
+					this.offset$.next(0);
+				})
+			)
 		);
 
-		if (savedFilters) {
-			this.filters = savedFilters;
+		const dateFromFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('DateFrom');
+
+		if (dateFromFromQuery) {
+			this.dateFromControl.setValue(new Date(dateFromFromQuery));
 		}
 
-		this.getFilteredActs();
-	}
+		toSignal(
+			this.dateFromControl.valueChanges.pipe(
+				tap((value) => {
+					if (value) {
+						void this.router.navigate([], {
+							relativeTo: this.activatedRoute,
+							queryParams: {
+								...this.activatedRoute.snapshot.queryParams,
+								DateFrom: new Date(value).toISOString(),
+							},
+							queryParamsHandling: 'merge',
+						});
+						this.offset$.next(0);
+					}
+				})
+			)
+		);
 
-	
-	protected readonly Size = Size;
-	protected readonly ButtonType = ButtonType;
-	protected getTableItems(acts: IResponse<ICompletedWorkAct>): ITableItem[] {
-		const actTableItems = acts.items.map((x) => {
-			const tableItem: ICompletedWorkActTableItem =
-				{} as ICompletedWorkActTableItem;
+		const dateToFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('DateTo');
 
-			tableItem.code = {
-				text: x.id.toString() ?? '-',
-				pseudoLink: `${x.id}`,
-			};
-
-			tableItem.state = x.state.name ?? '-';
-
-			tableItem.externalActDate = `${new Date(
-				Date.parse(x.externalActDate)
-			).toLocaleString('ru-RU', {
-				year: 'numeric',
-				month: 'numeric',
-				day: 'numeric',
-			})}`;
-
-			tableItem.internalActDate = `${new Date(
-				Date.parse(x.internalActDate)
-			).toLocaleString('ru-RU', {
-				year: 'numeric',
-				month: 'numeric',
-				day: 'numeric',
-			})}`;
-
-			tableItem.uploadActDate = `${new Date(
-				Date.parse(x.dateUpload)
-			).toLocaleString('ru-RU', {
-				year: 'numeric',
-				month: 'numeric',
-				day: 'numeric',
-			})}`;
-
-			tableItem.externalActNumber = x.externalActNumber ?? '-';
-
-			tableItem.internalActNumber = x.internalActNumber ?? '-';
-
-			tableItem.buUnit = x.buUnit?.name ?? '-';
-			tableItem.payerBuUnit = x.payerBuUnit?.name ?? '-';
-
-			tableItem.providerContractor = {
-				text: x.providerContractor?.name ?? '-',
-				url: x.providerContractor?.linkToDetail ?? '-',
-			};
-
-			tableItem.applicantUser = x.applicantUser?.name ?? '-';
-
-			tableItem.contract = x.contract?.name ?? '-';
-
-			tableItem.totalAmount = x.totalAmount ?? '-';
-
-			return tableItem;
-		});
-
-		return <ITableItem[]>(<unknown>actTableItems);
-	}
-
-	public getFilteredActs(isNewFilter: boolean = false) {
-		if (isNewFilter) {
-			this.pageIndex = 1;
+		if (dateToFromQuery) {
+			this.dateToControl.setValue(new Date(dateToFromQuery));
 		}
 
-		const preparedFilter: any = {
-			limit: isNewFilter ? 20 : this.pageSize,
-			offset: isNewFilter ? 0 : this.offset,
-		};
+		toSignal(
+			this.dateToControl.valueChanges.pipe(
+				tap((value) => {
+					if (value) {
+						void this.router.navigate([], {
+							relativeTo: this.activatedRoute,
+							queryParams: {
+								...this.activatedRoute.snapshot.queryParams,
+								DateTo: new Date(value).toISOString(),
+							},
+							queryParamsHandling: 'merge',
+						});
+						this.offset$.next(0);
+					}
+				})
+			)
+		);
 
-		for (const filter of this.filters) {
-			preparedFilter[filter.name] =
-				filter.value && filter.type ? filter.value : null;
+		const uploadDateFromFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('UploadDateFrom');
 
-			switch (filter.type) {
-				case 'date-range':
-					const from =
-						filter.value && typeof filter.value === 'string'
-							? filter.value.split('-')[0].split('.')
-							: null;
-
-					preparedFilter[filter.name.split('-')[0]] = from
-						? `${[from[2], from[1], parseInt(from[0], 10)].join('-')}T00:00:00.000Z`
-						: null;
-
-					const to =
-						filter.value && typeof filter.value === 'string'
-							? filter.value.split('-')[1].split('.')
-							: null;
-
-					preparedFilter[filter.name.split('-')[1]] = to
-						? `${[to[2], to[1], parseInt(to[0], 10)].join('-')}T23:59:59.999Z`
-						: null;
-					break;
-				case 'select':
-				case 'search':
-				case 'search-select':
-					preparedFilter[filter.name] = Array.isArray(filter.value)
-						? filter.value.map((item) => item.id)
-						: null;
-					break;
-				case 'boolean':
-					preparedFilter[filter.name] =
-						filter.value === 'Да' ? true : null;
-					break;
-				default:
-					preparedFilter[filter.name] =
-						filter.value?.toString().replace(',', '.') || null;
-			}
+		if (uploadDateFromFromQuery) {
+			this.uploadDateFromControl.setValue(
+				new Date(uploadDateFromFromQuery)
+			);
 		}
 
-		this.localStorageService.setItem(this.filtersKey, this.filters);
+		toSignal(
+			this.uploadDateFromControl.valueChanges.pipe(
+				tap((value) => {
+					if (value) {
+						void this.router.navigate([], {
+							relativeTo: this.activatedRoute,
+							queryParams: {
+								...this.activatedRoute.snapshot.queryParams,
+								UploadDateFrom: new Date(value).toISOString(),
+							},
+							queryParamsHandling: 'merge',
+						});
+						this.offset$.next(0);
+					}
+				})
+			)
+		);
 
-		this.completedWorkActsFacade.applyFilters(preparedFilter);
-	}
+		const uploadDateToFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('UploadDateTo');
 
-	public pageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset = 0;
-		} else {
-			this.offset = this.pageSize * $event - this.pageSize;
+		if (uploadDateToFromQuery) {
+			this.uploadDateToControl.setValue(new Date(uploadDateToFromQuery));
 		}
 
-		this.offset = this.pageSize * $event - this.pageSize;
-		this.pageIndex = $event;
+		toSignal(
+			this.uploadDateToControl.valueChanges.pipe(
+				tap((value) => {
+					if (value) {
+						void this.router.navigate([], {
+							relativeTo: this.activatedRoute,
+							queryParams: {
+								...this.activatedRoute.snapshot.queryParams,
+								UploadDateTo: new Date(value).toISOString(),
+							},
+							queryParamsHandling: 'merge',
+						});
+						this.offset$.next(0);
+					}
+				})
+			)
+		);
 
-		this.getFilteredActs();
-	}
+		const additionalFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('Additional');
 
-	public openAct(item: { row: ITableItem; icon: string }) {
-		if (item.row.code.text) {
-			this.completedWorkActsFacade.getAct(item.row.code.text);
+		if (additionalFromQuery === 'true' || additionalFromQuery === null) {
+			this.additionalControl.setValue(true);
 		}
+
+		if (additionalFromQuery === null) {
+			void this.router.navigate([], {
+				relativeTo: this.activatedRoute,
+				queryParams: {
+					...this.activatedRoute.snapshot.queryParams,
+					Additional: true,
+				},
+				queryParamsHandling: 'merge',
+			});
+			this.offset$.next(0);
+		}
+
+		toSignal(
+			this.additionalControl.valueChanges.pipe(
+				tap((value) => {
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							Additional: value,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.offset$.next(0);
+				})
+			)
+		);
+
+		const archiveFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('WithArchive');
+
+		if (archiveFromQuery === 'true') {
+			this.archiveControl.setValue(true);
+		}
+
+		toSignal(
+			this.archiveControl.valueChanges.pipe(
+				tap((value) => {
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							WithArchive: value,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.offset$.next(0);
+				})
+			)
+		);
 	}
 
-	public downloadInstruction() {
+	public downloadInstruction(): void {
 		const link = document.createElement('a');
 
 		link.href = this.completedWorkActsFacade.linkToInstruction;
 		link.click();
+	}
+
+	protected downloadReport(): void {
+		this.completedWorkActsFacade
+			.downloadReport(
+				this.completedWorkActsFacade.filterValueStore$.value
+			)
+			.subscribe((response) => {
+				const downloadLink = document.createElement('a');
+
+				downloadLink.href = URL.createObjectURL(
+					new Blob([response], { type: response.type })
+				);
+				downloadLink.download = `Акты выполненных работ (${new Date(Date.now()).toLocaleString('ru-Ru')}).xlsx`;
+				downloadLink.click();
+			});
+	}
+
+	protected onPage(index: number): void {
+		this.pageIndex = index;
+		this.offset$.next((index - 1) * this.limit);
 	}
 }

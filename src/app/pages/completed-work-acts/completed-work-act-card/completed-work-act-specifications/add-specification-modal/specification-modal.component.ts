@@ -11,39 +11,37 @@ import {
 	ValidationErrors,
 	Validators,
 } from '@angular/forms';
-import { CompletedWorkActsFacadeService } from '@app/core/facades/completed-work-acts-facade.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
-import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
-import { NumericInputComponent } from '@app/shared/components/_deprecated/numeric-input/numeric-input.component';
-import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import { CardComponent } from '@app/shared/components/card/card.component';
 import { TextComponent } from '@app/shared/components/typography/text/text.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
-import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
-import { InputComponent } from '@app/shared/components/inputs/input/input.component';
+import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
+import { NumericInputComponent } from '@app/shared/components/_deprecated/numeric-input/numeric-input.component';
+import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import { CommonModule } from '@angular/common';
 
 @UntilDestroy()
 @Component({
 	selector: 'ss-specification-modal',
 	templateUrl: './specification-modal.component.html',
 	styleUrls: ['./specification-modal.component.scss'],
+	standalone: true,
 	imports: [
-		ButtonComponent,
-		NumericInputComponent,
-		SearchInputComponent,
+		CommonModule,
 		CardComponent,
 		TextComponent,
 		IconComponent,
 		ReactiveFormsModule,
-		TextareaComponent,
-		InputComponent,
+		SearchInputComponent,
+		NumericInputComponent,
+		ButtonComponent,
 	],
-	standalone: true,
 })
 export class SpecificationModalComponent {
 	private readonly defaultTovUnitsName = 'шт';
@@ -55,17 +53,13 @@ export class SpecificationModalComponent {
 	);
 
 	protected addSpecificationForm!: FormGroup<{
-		serviceId: FormControl<number | null>;
-		comment: FormControl<string | null>;
-		quantity: FormControl<number | null>;
-		tovUnitId: FormControl<number | null>;
 		costId: FormControl<number | null>;
 		faObjectId: FormControl<number | null>;
 		projectId: FormControl<number | null>;
 		deptId: FormControl<number | null>;
 		sectionId: FormControl<number | null>;
 		userId: FormControl<number | null>;
-		amount: FormControl<number | null>;
+		sum: FormControl<number | null>;
 	}>;
 
 	protected user: IDictionaryItemDto | undefined;
@@ -81,39 +75,19 @@ export class SpecificationModalComponent {
 		private readonly searchFacade: SearchFacadeService
 	) {
 		this.addSpecificationForm = new FormGroup({
-			serviceId: new FormControl<number | null>(null, [
-				Validators.required,
-			]),
-			comment: new FormControl<string | null>(null, [
-				Validators.required,
-			]),
-			quantity: new FormControl<number | null>(null),
-			tovUnitId: new FormControl<number | null>(null),
 			costId: new FormControl<number | null>(null, [Validators.required]),
 			faObjectId: new FormControl<number | null>(null),
 			projectId: new FormControl<number | null>(null),
 			deptId: new FormControl<number | null>(null, [Validators.required]),
 			sectionId: new FormControl<number | null>(null),
 			userId: new FormControl<number | null>(null, [Validators.required]),
-			amount: new FormControl<number | null>(null, [
+			sum: new FormControl<number | null>(null, [
 				Validators.required,
 				this.amountValidator,
 			]),
 		});
 
 		if (spec) {
-			this.addSpecificationForm.controls.serviceId.setValue(
-				spec.service?.id || null
-			);
-			this.addSpecificationForm.controls.comment.setValue(
-				spec.comment || null
-			);
-			this.addSpecificationForm.controls.quantity.setValue(
-				spec.quantity || null
-			);
-			this.addSpecificationForm.controls.tovUnitId.setValue(
-				spec.tovUnit?.id || null
-			);
 			this.addSpecificationForm.controls.costId.setValue(
 				spec.cost?.id || null
 			);
@@ -132,9 +106,7 @@ export class SpecificationModalComponent {
 			this.addSpecificationForm.controls.userId.setValue(
 				spec.user?.id || null
 			);
-			this.addSpecificationForm.controls.amount.setValue(
-				spec.amount || null
-			);
+			this.addSpecificationForm.controls.sum.setValue(spec.sum || null);
 
 			this.myDept = spec.dept;
 			this.mySection = spec.section;
@@ -144,21 +116,6 @@ export class SpecificationModalComponent {
 			if (user) {
 				this.onUserSelect(user);
 			}
-
-			this.searchFacade
-				.getDictionaryTovUnits(this.defaultTovUnitsName)
-				.pipe(untilDestroyed(this))
-				.subscribe((units) => {
-					this.defaultTovUnits = units.items.find(
-						(item) => item.name === this.defaultTovUnitsName
-					);
-
-					if (this.defaultTovUnits) {
-						this.addSpecificationForm.controls.tovUnitId.setValue(
-							this.defaultTovUnits.id
-						);
-					}
-				});
 		}
 	}
 
@@ -231,6 +188,14 @@ export class SpecificationModalComponent {
 		}
 	}
 
+	protected onDeptSelect(dept: IDictionaryItemDto) {
+		if (dept.id) {
+			this.addSpecificationForm.controls.deptId.setValue(dept.id);
+		} else if (this.myDept) {
+			this.addSpecificationForm.controls.deptId.setValue(this.myDept.id);
+		}
+	}
+
 	protected close() {
 		this.modalService
 			.open(DialogComponent, {
@@ -250,14 +215,12 @@ export class SpecificationModalComponent {
 
 	private setErrorsIfNotControlValue(control: AbstractControl): void {
 		if (!control.value) {
+			control.setValue('');
 			control.setErrors({ required: true });
 		}
 	}
 
 	protected setErrorsControl(): void {
-		this.setErrorsIfNotControlValue(
-			this.addSpecificationForm.controls.serviceId
-		);
 		this.setErrorsIfNotControlValue(
 			this.addSpecificationForm.controls.costId
 		);

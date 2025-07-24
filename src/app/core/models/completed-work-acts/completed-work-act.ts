@@ -9,11 +9,9 @@ export interface ICompletedWorkAct {
 	internalActDate: string;
 	state: IDictionaryItemDto;
 	applicantUser?: IDictionaryItemDto;
-	buUnit: IDictionaryItemDto;
 	payerContractor: IDictionaryItemDto;
 	payerBuUnit: IDictionaryItemDto;
 	providerContractor: IDictionaryItemDto;
-	inn: string;
 	contract?: IDictionaryItemDto;
 	finDocOrders: IDictionaryItemDto[];
 	documents: IFile[];

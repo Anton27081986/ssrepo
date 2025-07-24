@@ -122,22 +122,6 @@ export const routes: Routes = [
 					},
 				],
 			},
-			{
-				path: 'completed-work-acts',
-				children: [
-					{
-						path: '',
-						component: CompletedWorkActsComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-					{
-						path: ':id',
-						component: CompletedWorkActCardComponent,
-					},
-				],
-			},
 		],
 	},
 	{
@@ -293,6 +277,25 @@ export const routes: Routes = [
 					{
 						path: ':id',
 						component: MpReservationOrderCardComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+				],
+			},
+			{
+				path: 'completed-work-acts',
+				children: [
+					{
+						path: '',
+						component: CompletedWorkActsComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+					{
+						path: ':id',
+						component: CompletedWorkActCardComponent,
 						data: {
 							animation: 'animation',
 						},

@@ -1,7 +1,6 @@
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Injectable } from '@angular/core';
-import { CompletedWorkActsApiService } from '@app/core/api/completed-work-acts-api.service';
-import { BehaviorSubject, Subject, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, NEVER, Observable, switchMap, tap } from 'rxjs';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { IResponse } from '@app/core/utils/response';
 import { ICompletedWorkActSpecification } from '@app/core/models/completed-work-acts/specification';
@@ -21,6 +20,8 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
+import { Pagination } from '@app/core/models/production-plan/operation-plan';
+import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-api.service';
 
 @UntilDestroy()
 @Injectable({
@@ -31,18 +32,11 @@ export class CompletedWorkActsFacadeService {
 		? 'https://erp.ssnab.ru/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_a390d5da-6462-4fc0-b8a2-aeb21a9c3e36.docx'
 		: 'https://erp-dev.ssnab.it/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_01b6e1dd-456d-4a1f-affd-891754889406.docx';
 
-	public isLoader$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false
-	);
+	public filterValueStore$: BehaviorSubject<
+		(ICompletedActsFilter & Pagination) | null
+	> = new BehaviorSubject<(ICompletedActsFilter & Pagination) | null>(null);
 
-	private readonly filters: Subject<ICompletedActsFilter> =
-		new Subject<ICompletedActsFilter>();
-
-	private readonly acts = new BehaviorSubject<IResponse<ICompletedWorkAct>>(
-		{} as IResponse<any>
-	);
-
-	public acts$ = this.acts.asObservable();
+	// old
 
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
 	public act$ = this.act.asObservable();
@@ -81,6 +75,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly isEditMode = new BehaviorSubject<boolean>(false);
 	public isEditMode$ = this.isEditMode.asObservable();
 
+	private readonly listPermissions = new BehaviorSubject<string[]>([]);
+	public listPermissions$ = this.listPermissions.asObservable();
+
 	private readonly permissions = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissions.asObservable();
 
@@ -96,32 +93,16 @@ export class CompletedWorkActsFacadeService {
 		private readonly notificationService: NotificationToastService,
 		private readonly router: Router
 	) {
-		this.filters
-			.pipe(
-				switchMap((filters) => {
-					return this.actsApiService.getWorkActsList(filters);
-				}),
-				tap((acts) => {
-					this.acts.next(acts);
-					this.isLoader$.next(false);
-				}),
-				untilDestroyed(this),
-				catchError((err: unknown) => {
-					this.isLoader$.next(false);
-					throw err;
-				})
-			)
-			.subscribe();
-
 		this.getActStates();
 		this.getCurrencies();
 		this.getBuUnits();
 		this.getPermissions();
 	}
 
-	public applyFilters(filters: ICompletedActsFilter) {
-		this.isLoader$.next(true);
-		this.filters.next(filters);
+	public getWorkActsList(
+		request: ICompletedActsFilter & Pagination
+	): Observable<IResponse<ICompletedWorkAct>> {
+		return this.actsApiService.getWorkActsList(request);
 	}
 
 	public getAct(id: string) {
@@ -129,9 +110,6 @@ export class CompletedWorkActsFacadeService {
 			.getWorkAct(id)
 			.pipe(
 				switchMap(({ data, permissions }) => {
-					if (data.id) {
-					}
-
 					this.permissions.next(permissions);
 					this.act.next(data);
 					this.actAttachment.next(data.documents);
@@ -149,9 +127,18 @@ export class CompletedWorkActsFacadeService {
 									'warning'
 								);
 							});
-					} else {
-						this.router.navigate([`completed-work-acts/${id}`]);
+
+						return NEVER;
 					}
+
+					const url = this.router.serializeUrl(
+						this.router.createUrlTree([
+							'completed-work-acts',
+							`${id}`,
+						])
+					);
+
+					window.open(url, '_blank');
 
 					this.getContracts(data.providerContractor?.id)
 						.pipe(untilDestroyed(this))
@@ -180,8 +167,8 @@ export class CompletedWorkActsFacadeService {
 		this.actsApiService
 			.updateAct(this.act.value!.id, body)
 			.pipe(untilDestroyed(this))
-			.subscribe(() => {
-				this.switchMode(true);
+			.subscribe((act) => {
+				this.switchMode(act);
 			});
 	}
 
@@ -318,9 +305,51 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public switchMode(reload: boolean = false) {
-		if (reload && this.act.value?.id) {
-			this.getAct(this.act.value?.id.toString());
+	public sendActToAdmin() {
+		if (this.act.value) {
+			const id = this.act.value.id;
+
+			this.actsApiService
+				.sendActToAdmin(id)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getAct(id.toString());
+					this.noticeService.addToast('Акт отправлен', 'ok');
+				});
+		}
+	}
+
+	public sendActToApplicant(comment: string) {
+		if (this.act.value) {
+			const id = this.act.value.id;
+
+			this.actsApiService
+				.sendActToApplicant(id, comment)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getAct(id.toString());
+					this.noticeService.addToast('Акт отправлен', 'ok');
+				});
+		}
+	}
+
+	public returnActToApplicant(comment: string) {
+		if (this.act.value) {
+			const id = this.act.value.id;
+
+			this.actsApiService
+				.returnActToApplicant(id, comment)
+				.pipe(untilDestroyed(this))
+				.subscribe(() => {
+					this.getAct(id.toString());
+					this.noticeService.addToast('Акт возвращен', 'ok');
+				});
+		}
+	}
+
+	public switchMode(act?: ICompletedWorkAct) {
+		if (act) {
+			this.act.next(act);
 		}
 
 		this.isEditMode.next(!this.isEditMode.value);
@@ -355,5 +384,9 @@ export class CompletedWorkActsFacadeService {
 				untilDestroyed(this)
 			)
 			.subscribe();
+	}
+
+	public downloadReport(filter: (ICompletedActsFilter & Pagination) | null) {
+		return this.actsApiService.downloadReport(filter);
 	}
 }
