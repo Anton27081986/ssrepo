@@ -1,12 +1,12 @@
 export interface MpReservationFilter {
-	id?: number;
-	authorId?: number;
-	tovId?: number;
-	managerId?: number;
-	statusId?: number;
-	dateCreatedFrom?: string;
-	dateCreatedTo?: string;
-	clientId?: number;
+	personificationId?: number;
+	authorIds?: number[];
+	tovIds?: number[];
+	managerIds?: number[];
+	statusIds?: number[];
+	dateFrom?: string;
+	dateTo?: string;
+	clientIds?: number[];
 	limit: number;
 	offset: number;
 }
