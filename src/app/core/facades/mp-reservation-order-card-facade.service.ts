@@ -26,11 +26,14 @@ export class MpReservationOrderCardFacadeService {
 
 	private readonly activeOrder =
 		new BehaviorSubject<IMpReservationOrder | null>(null);
-
 	public activeOrder$ = this.activeOrder.asObservable();
+
+	private readonly permissions =
+		new BehaviorSubject<string[]>([]);
+	public permissions$ = this.permissions.asObservable();
+
 	private readonly warehouseBalanceSubject =
 		new BehaviorSubject<IWarehouseBalanceResponse | null>(null);
-
 	public readonly warehouseBalance$ =
 		this.warehouseBalanceSubject.asObservable();
 
@@ -51,6 +54,7 @@ export class MpReservationOrderCardFacadeService {
 			)
 			.subscribe((res) => {
 				this.activeOrder.next(res.data);
+				this.permissions.next(res.permissions);
 			});
 	}
 
