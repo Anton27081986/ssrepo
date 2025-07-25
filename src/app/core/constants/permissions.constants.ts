@@ -81,6 +81,7 @@ export const Permissions = {
 	PERSONIFICATION_MUTMZ_CLARIFY: 'Personification.MutmzClarify',
 
 	PERSONIFICATION_MUTMZ_CHANGE_QUANTITY: 'Personification.ChangeQuantity',
+	PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER: 'Personification.MutmzChangeQueueOrder',
 } as const;
 
 export type PermissionType = (typeof Permissions)[keyof typeof Permissions];

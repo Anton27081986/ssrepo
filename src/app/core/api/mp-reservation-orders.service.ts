@@ -43,8 +43,8 @@ export class MpReservationOrdersApiService {
 
 	public getPersonificationById(
 		id: string,
-	): Observable<{ data: IMpReservationOrder }> {
-		return this.http.get<{ data: IMpReservationOrder }>(
+	): Observable<{ data: IMpReservationOrder, permissions: string[] }> {
+		return this.http.get<{ data: IMpReservationOrder, permissions: string[] }>(
 			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`,
 		);
 	}

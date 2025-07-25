@@ -23,10 +23,11 @@ import {
 	TextType,
 	TextWeight,
 } from '@front-components/components';
-import { NgForOf } from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { IWarehouseStockDto } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
 
 @UntilDestroy()
 @Component({
@@ -47,6 +48,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 		FieldCtrlDirective,
 		FormFieldComponent,
 		InputComponent,
+		NgIf,
 	],
 })
 export class MpReservationOrdersCardPopupOrderApprovalComponent {
@@ -57,11 +59,13 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
+	public stockBalance: IWarehouseStockDto[] = [];
+
 	public order: Signal<IMpReservationOrder | null> = toSignal(
 		this.mpReservationOrderCardFacadeService.activeOrder$,
 		{
 			initialValue: null,
-		}
+		},
 	);
 
 	public approvalForm = new FormGroup({
@@ -85,7 +89,7 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 
 	constructor(
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 	) {
 		const orderId = this.order()!.id;
 
@@ -97,6 +101,8 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 				if (!data) {
 					return;
 				}
+
+				this.stockBalance = data.stocks;
 
 				this.approvalForm.patchValue({
 					tov: data.tov,
@@ -111,16 +117,16 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 					stocksArr.push(
 						new FormGroup({
 							warehouseId: new FormControl<number>(
-								stock.warehouse.id
+								stock.warehouse.id,
 							),
 							warehouseName: new FormControl<string>(
-								stock.warehouse.name
+								stock.warehouse.name,
 							),
 							inStock: new FormControl<number | null>(
-								stock.amount
+								stock.amount,
 							),
 							fact: new FormControl<number | null>(null),
-						})
+						}),
 					);
 				});
 			});
@@ -154,7 +160,7 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 
 		this.mpReservationOrderCardFacadeService.dispatchToQueue(
 			orderId,
-			dispatches
+			dispatches,
 		);
 		this.close();
 		window.location.reload();

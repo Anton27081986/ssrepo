@@ -5,7 +5,7 @@
 			[color]="Colors.Secondary"
 			(click)="router.navigate(['mp-reservation-orders'])"
 		>
-			Реестр объектов интеллектуальной собственности /
+            Реестр по обеспечению и персонификации МП /
 		</snab-text>
 		<snab-text>Заказ №{{ order()?.id }}</snab-text>
 	</div>
@@ -37,17 +37,17 @@
 				[disabled]="isDisabledActionButton"
 			>
 				<snab-dropdown-item
-					*ngIf="hasPermissionOrderAuthorApprove"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_APPROVE_SUPPLY_ORDER)"
 					[textContent]="'Согласовать заказ по обеспечению'"
 					(click)="$event.stopPropagation(); openPopupOrderApproval()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionOrderAuthorReject"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER)"
 					[textContent]="'Отклонить заказ по обеспечению'"
 					(click)="$event.stopPropagation(); openPopupRejectOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzPlaceSupplyOrderInProduction"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION)"
 					[textContent]="
 						'Разместить в производстве заказ по обеспечению'
 					"
@@ -56,42 +56,43 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzChangeSupplyDate"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE)"
 					[textContent]="'Изменить дату обеспечения'"
 					(click)="$event.stopPropagation(); openPopupProvisionDate()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionDeleteOrder"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_ORDER_AUTHOR_DELETE)"
 					[textContent]="'Удалить заказ по обеспечению'"
 					(click)="$event.stopPropagation(); removeOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzImpersonateAnotherEmployee"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE)"
 					[textContent]="'Персонифицировать за другим сотрудником'"
 					(click)="$event.stopPropagation(); openPopupChangeManager()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzClarify"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CLARIFY)"
 					[textContent]="'Уточнить'"
 					(click)="$event.stopPropagation(); openPopupQualification()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
+                    *ngIf="hasPermission(Permissions.PERSONIFICATION_ORDER_AUTHOR_APPROVE)"
 					[textContent]="'Согласовать уточнение'"
 					(click)="
 						$event.stopPropagation();
 						openPopupApproveDetailsChange()
 					"
 				></snab-dropdown-item>
+<!--				<snab-dropdown-item-->
+<!--					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUANTITY)"-->
+<!--					[textContent]="'Изменить количество в производстве'"-->
+<!--					(click)="-->
+<!--						$event.stopPropagation();-->
+<!--						openPopupChangeProvisionDetails()-->
+<!--					"-->
+<!--				></snab-dropdown-item>-->
 				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzChangeQuantity"
-					[textContent]="'Изменить количество в производстве'"
-					(click)="
-						$event.stopPropagation();
-						openPopupChangeProvisionDetails()
-					"
-				></snab-dropdown-item>
-				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzConfirmSupplyOrderDeletion"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION)"
 					[textContent]="'Подтвердить удаление заказа по обеспечению'"
 					(click)="
 						$event.stopPropagation();
@@ -99,7 +100,7 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermissionMutmzRejectSupplyOrderDeletion"
+					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION)"
 					[textContent]="'Отклонить удаление заказа по обеспечению'"
 					(click)="
 						$event.stopPropagation();

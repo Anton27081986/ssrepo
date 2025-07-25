@@ -189,6 +189,13 @@ export class MPReservationOrdersComponent implements OnInit {
 		this.loadOrders();
 	}
 
+	public get hasPermissionMutmzChangeQueueOrder(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER,
+		);
+	}
+
 	protected downloadInstr(): void {
 		const link = document.createElement('a');
 
