@@ -131,15 +131,6 @@ export class CompletedWorkActsFacadeService {
 						return NEVER;
 					}
 
-					const url = this.router.serializeUrl(
-						this.router.createUrlTree([
-							'completed-work-acts',
-							`${id}`,
-						])
-					);
-
-					window.open(url, '_blank');
-
 					this.getContracts(data.providerContractor?.id)
 						.pipe(untilDestroyed(this))
 						.subscribe();
