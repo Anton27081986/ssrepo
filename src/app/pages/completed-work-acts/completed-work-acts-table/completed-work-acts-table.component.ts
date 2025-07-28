@@ -21,7 +21,8 @@ import {
 	TextComponent,
 	TextType,
 	TextWeight,
-	ThComponent, TooltipDirective,
+	ThComponent,
+	TooltipDirective,
 	TooltipPosition,
 	TrComponent,
 } from '@front-library/components';
@@ -29,7 +30,8 @@ import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/complete
 import { columnCompletedWorkActsConfigs } from '@app/pages/completed-work-acts/completed-work-acts-table/column-config';
 import { DatePipe } from '@angular/common';
 import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
-import {NumWithSpacesPipe} from "@app/core/pipes/num-with-spaces.pipe";
+import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-completed-work-acts-table',
@@ -59,6 +61,8 @@ export class CompletedWorkActsTableComponent {
 	private readonly completedWorkActsFacade: CompletedWorkActsFacadeService =
 		inject(CompletedWorkActsFacadeService);
 
+	private readonly router: Router = inject(Router);
+
 	public actsItems: InputSignal<ICompletedWorkAct[]> = input.required();
 	public total: InputSignal<number> = input.required();
 	public totalItems: InputSignal<number> = input.required();
@@ -84,9 +88,13 @@ export class CompletedWorkActsTableComponent {
 		});
 	}
 
-	public openAct(id: string) {
+	public openAct(id: string): void {
 		if (id) {
-			this.completedWorkActsFacade.getAct(id);
+			const url = this.router.serializeUrl(
+				this.router.createUrlTree(['completed-work-acts', `${id}`])
+			);
+
+			window.open(url, '_blank');
 		}
 	}
 }
