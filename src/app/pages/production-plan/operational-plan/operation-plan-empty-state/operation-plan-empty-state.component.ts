@@ -36,7 +36,7 @@ export class OperationPlanEmptyStateComponent {
 	public icon: InputSignal<IconType> = input.required();
 	public viewAddButton: InputSignal<boolean> = input.required();
 
-	private readonly operationPlanState: OperationPlanState =
+	protected readonly operationPlanState: OperationPlanState =
 		inject(OperationPlanState);
 
 	private readonly weekId$ = this.operationPlanState.weekId$;
