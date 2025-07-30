@@ -1,8 +1,8 @@
 export interface ICompletedActsFilter {
-	DateFrom?: string;
-	DateTo?: string;
-	UploadDateFrom?: string;
-	UploadDateTo?: string;
+	DateFrom?: string | null;
+	DateTo?: string | null;
+	UploadDateFrom?: string | null;
+	UploadDateTo?: string | null;
 	Id?: number;
 	BuUnitId?: number;
 	ProviderContractorId?: number;
