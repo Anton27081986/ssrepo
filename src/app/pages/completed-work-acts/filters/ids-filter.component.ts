@@ -5,7 +5,7 @@ import {
 	OnInit,
 	Signal,
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
@@ -49,34 +49,19 @@ export class ActIdsFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		if (Number.isNaN(parseInt(query, 10))) {
-			return of([]);
-		}
-
-		const idsArray = [...new Array(10).keys()].map((value) => {
-			return {
-				id: parseInt(query + value, 10),
-				name: query + value,
-			} as IDictionaryItemDto;
-		});
-
-		idsArray.unshift({
-			id: parseInt(query, 10),
-			name: query,
-		});
-
-		return of(idsArray);
+		return this.filterApiService.getIds(query).pipe(
+			map((value) => {
+				return value.items;
+			})
+		);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return of(
-			ids.map((value) => {
-				return {
-					id: value,
-					name: value.toString(10),
-				} as IDictionaryItemDto;
+		return this.filterApiService.getIds('', ids).pipe(
+			map((value) => {
+				return value.items;
 			})
 		);
 	}
