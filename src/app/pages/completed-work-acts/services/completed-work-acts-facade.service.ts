@@ -160,6 +160,7 @@ export class CompletedWorkActsFacadeService {
 			.pipe(untilDestroyed(this))
 			.subscribe((act) => {
 				this.switchMode(act);
+				this.actAttachment.next(act.documents);
 			});
 	}
 
