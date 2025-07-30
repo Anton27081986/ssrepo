@@ -9,6 +9,22 @@ import { environment } from '@environments/environment';
 export class CompletedWorkActsFiltersApiService {
 	private readonly http: HttpClient = inject(HttpClient);
 
+	public getIds(
+		query: string,
+		ids: number[] = []
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams().set('query', query || '0');
+
+		ids.forEach((id) => {
+			params = params.append('ids', id.toString());
+		});
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/company/Dictionary/CompletedWorkActs`,
+			{ params }
+		);
+	}
+
 	public getCostArticles(
 		query: string,
 		ids: number[] = []
