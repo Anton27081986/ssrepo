@@ -168,7 +168,7 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 			.clarifyOrder(body)
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				(this.modalRef.close(true), window.location.reload());
+				(this.modalRef.close(true), this.mpReservationOrderCardFacadeService.reloadOrder());
 			});
 	}
 

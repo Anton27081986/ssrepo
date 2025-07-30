@@ -228,7 +228,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.removeOrder()
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				void this.router.navigate(['mp-reservation-orders']);
+				this.mpReservationOrderCardFacadeService.reloadOrder();
 			});
 	}
 

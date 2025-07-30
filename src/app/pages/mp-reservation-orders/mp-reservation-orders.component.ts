@@ -84,6 +84,8 @@ export class MPReservationOrdersComponent implements OnInit {
 	protected readonly IconType = IconType;
 	protected readonly Colors = Colors;
 
+	protected pipeNumWithSpaces = new NumWithSpacesPipe();
+
 	// Signals для реактивного состояния
 	protected readonly pageSize = signal(
 		MPReservationOrdersComponent.defaultPageSize

@@ -71,7 +71,7 @@ export class MpReservationOrdersCardPopupRejectOrderComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.modalRef.close();
-					window.location.reload();
+					this.facade.reloadOrder();
 				});
 		}
 	}
