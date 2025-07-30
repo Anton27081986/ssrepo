@@ -72,7 +72,7 @@ export class SpecificationRowItemTrComponent implements OnInit {
 		input.required<ICompletedWorkActSpecification>();
 
 	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
+		this.completedWorkActsFacade.actPermissions$,
 		{
 			initialValue: [],
 		}

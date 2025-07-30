@@ -81,6 +81,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly permissions = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissions.asObservable();
 
+	private readonly actPermissions = new BehaviorSubject<string[]>([]);
+	public actPermissions$ = this.actPermissions.asObservable();
+
 	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public finDocs$ = this.finDocs.asObservable();
 
@@ -110,7 +113,7 @@ export class CompletedWorkActsFacadeService {
 			.getWorkAct(id)
 			.pipe(
 				switchMap(({ data, permissions }) => {
-					this.permissions.next(permissions);
+					this.actPermissions.next(permissions);
 					this.act.next(data);
 					this.actAttachment.next(data.documents);
 
