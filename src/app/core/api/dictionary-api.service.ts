@@ -133,7 +133,9 @@ export class DictionaryApiService {
 	}
 
 	/** Список товаров из manufacturingApi */
-	public getTovsManufacturing(query?: string): Observable<IResponse<IDictionaryItemDto>> {
+	public getTovsManufacturing(
+		query?: string
+	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams();
 
 		if (query) {
@@ -141,8 +143,8 @@ export class DictionaryApiService {
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/dictionary/tovs`,
-			{ params },
+			`${environment.apiUrl}/api/manufacturing/Dictionary/OperationalPlanTovs`,
+			{ params }
 		);
 	}
 
