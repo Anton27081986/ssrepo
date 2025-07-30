@@ -20,7 +20,7 @@ export interface IMpReservationOrder {
 }
 
 export interface IProvisionType {
-	provided: number;
+	toProvide: number;
 	manufacturing: number;
 	provisionAvailable: number;
 	provisionUnavailable: number;

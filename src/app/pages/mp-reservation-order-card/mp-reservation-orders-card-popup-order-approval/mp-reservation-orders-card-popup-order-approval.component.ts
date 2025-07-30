@@ -163,7 +163,8 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 			dispatches,
 		);
 		this.close();
-		window.location.reload();
+		this.mpReservationOrderCardFacadeService.reloadOrder();
+
 	}
 
 	public close(): void {

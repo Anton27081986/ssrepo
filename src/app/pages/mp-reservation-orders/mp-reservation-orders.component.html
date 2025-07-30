@@ -7,7 +7,7 @@
 	</snab-text>
 	<div class="app-mp-reservation-orders__header-filter">
 		<snab-button
-            *ngIf="hasPermissionMutmzChangeQueueOrder"
+			*ngIf="hasPermissionMutmzChangeQueueOrder"
 			text="Порядок заказов"
 			[size]="Size.Large"
 			(click)="openPopupChangeQueueOrders()"
@@ -219,14 +219,16 @@
 						></snab-link>
 					</td>
 					<td>
-						<snab-text [type]="TextType.Body">{{
-							order.client.name
-						}}</snab-text>
+						<snab-link
+							[type]="TextType.Body"
+							[url]="order.client.linkToDetail || ''"
+							[text]="order.client.name"
+						></snab-link>
 					</td>
 					<td>
 						<snab-link
 							[type]="TextType.Body"
-							[text]="order.totalAmount.toString()"
+							[text]="pipeNumWithSpaces.numberWithSpaces(order.totalAmount)"
 							(click)="openPopupTotalAmount(order)"
 						></snab-link>
 					</td>
@@ -247,7 +249,7 @@
 								[icon]="IconType.Unlock"
 							></snab-icon>
 							{{
-								order.provision.provided || '-'
+								order.provision.toProvide || '-'
 									| numWithSpaces: 1
 							}}
 						</ss-tag-v2>
@@ -306,8 +308,10 @@
 					<td>
 						<snab-link
 							[type]="TextType.Body"
-							[text]="order.stockBalance.toString()"
-							(click)="openPopupStockBalanceDetailsOrder(order.id)"
+							[text]="pipeNumWithSpaces.numberWithSpaces(order.stockBalance)"
+							(click)="
+								openPopupStockBalanceDetailsOrder(order.id)
+							"
 						></snab-link>
 					</td>
 					<td>

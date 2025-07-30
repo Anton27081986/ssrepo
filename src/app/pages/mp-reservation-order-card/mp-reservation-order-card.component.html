@@ -5,7 +5,7 @@
 			[color]="Colors.Secondary"
 			(click)="router.navigate(['mp-reservation-orders'])"
 		>
-            Реестр по обеспечению и персонификации МП /
+			Реестр по обеспечению и персонификации МП /
 		</snab-text>
 		<snab-text>Заказ №{{ order()?.id }}</snab-text>
 	</div>
@@ -37,17 +37,29 @@
 				[disabled]="isDisabledActionButton"
 			>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_APPROVE_SUPPLY_ORDER)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_APPROVE_SUPPLY_ORDER
+						)
+					"
 					[textContent]="'Согласовать заказ по обеспечению'"
 					(click)="$event.stopPropagation(); openPopupOrderApproval()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER
+						)
+					"
 					[textContent]="'Отклонить заказ по обеспечению'"
 					(click)="$event.stopPropagation(); openPopupRejectOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_PLACE_SUPPLY_ORDER_IN_PRODUCTION
+						)
+					"
 					[textContent]="
 						'Разместить в производстве заказ по обеспечению'
 					"
@@ -56,43 +68,57 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_CHANGE_SUPPLY_DATE
+						)
+					"
 					[textContent]="'Изменить дату обеспечения'"
 					(click)="$event.stopPropagation(); openPopupProvisionDate()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_ORDER_AUTHOR_DELETE)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_ORDER_AUTHOR_DELETE
+						)
+					"
 					[textContent]="'Удалить заказ по обеспечению'"
 					(click)="$event.stopPropagation(); removeOrder()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_IMPERSONATE_ANOTHER_EMPLOYEE
+						)
+					"
 					[textContent]="'Персонифицировать за другим сотрудником'"
 					(click)="$event.stopPropagation(); openPopupChangeManager()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CLARIFY)"
+					*ngIf="
+						hasPermission(Permissions.PERSONIFICATION_MUTMZ_CLARIFY)
+					"
 					[textContent]="'Уточнить'"
 					(click)="$event.stopPropagation(); openPopupQualification()"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-                    *ngIf="hasPermission(Permissions.PERSONIFICATION_ORDER_AUTHOR_APPROVE)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_ORDER_AUTHOR_APPROVE
+						)
+					"
 					[textContent]="'Согласовать уточнение'"
 					(click)="
 						$event.stopPropagation();
 						openPopupApproveDetailsChange()
 					"
 				></snab-dropdown-item>
-<!--				<snab-dropdown-item-->
-<!--					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUANTITY)"-->
-<!--					[textContent]="'Изменить количество в производстве'"-->
-<!--					(click)="-->
-<!--						$event.stopPropagation();-->
-<!--						openPopupChangeProvisionDetails()-->
-<!--					"-->
-<!--				></snab-dropdown-item>-->
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION
+						)
+					"
 					[textContent]="'Подтвердить удаление заказа по обеспечению'"
 					(click)="
 						$event.stopPropagation();
@@ -100,7 +126,11 @@
 					"
 				></snab-dropdown-item>
 				<snab-dropdown-item
-					*ngIf="hasPermission(Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION)"
+					*ngIf="
+						hasPermission(
+							Permissions.PERSONIFICATION_MUTMZ_REJECT_SUPPLY_ORDER_DELETION
+						)
+					"
 					[textContent]="'Отклонить удаление заказа по обеспечению'"
 					(click)="
 						$event.stopPropagation();
@@ -236,7 +266,7 @@
 							[type]="TextType.Headline"
 							[weight]="TextWeight.Semibold"
 						>
-							{{ order()!.stockBalance }}
+							{{ order()!.stockBalance | numWithSpaces: 1 }}
 						</snab-text>
 					</div>
 					<div class="content__procuring__body__chart__tags">
@@ -246,7 +276,7 @@
 								[icon]="IconType.Unlock"
 							></snab-icon>
 							{{
-								order()!.provision.provided || '-'
+								order()!.provision.toProvide || '-'
 									| numWithSpaces: 1
 							}}
 						</ss-tag-v2>
@@ -282,46 +312,71 @@
 						</ss-tag-v2>
 					</div>
 					<div class="content__procuring__body__chart__more">
-						<snab-text
-							[weight]="TextWeight.Semibold"
-							[color]="Colors.WarningLight"
-						>
-							Моя персонификация:
-							{{
-								order()!.provision.provided || '-'
-									| numWithSpaces: 1
-							}}
-						</snab-text>
-						<snab-text
-							[weight]="TextWeight.Semibold"
-							[color]="Colors.PositiveHeavy"
-						>
-							Свободно:
-							{{
-								order()!.provision.provisionAvailable || '-'
-									| numWithSpaces: 1
-							}}
-						</snab-text>
-						<snab-text
-							[weight]="TextWeight.Semibold"
-							[color]="Colors.InfoHeavy"
-						>
-							В производстве:
-							{{
-								order()!.provision.manufacturing || '-'
-									| numWithSpaces: 1
-							}}
-						</snab-text>
-						<snab-text
-							[weight]="TextWeight.Semibold"
-							[color]="Colors.DangerHeavy"
-						>
-							Не может быть обеспечено:
-							{{
-								(order()?.provision)!.provisionUnavailable ||
-									'-' | numWithSpaces: 1
-							}}
-						</snab-text>
+						<div class="icon-charts">
+                            <snab-icon
+                                    [color]="Colors.WarningLight"
+                                    [icon]="IconType.Unlock"
+                            ></snab-icon>
+							<snab-text
+								[weight]="TextWeight.Semibold"
+								[color]="Colors.WarningLight"
+							>
+								Моя персонификация:
+								{{
+									order()!.provision.toProvide || '-'
+										| numWithSpaces: 1
+								}}
+							</snab-text>
+						</div>
+						<div class="icon-charts">
+                            <snab-icon
+                                    [color]="Colors.PositiveHeavy"
+                                    [icon]="IconType.Check"
+                            ></snab-icon>
+							<snab-text
+								[weight]="TextWeight.Semibold"
+								[color]="Colors.PositiveHeavy"
+							>
+								Свободно:
+								{{
+									order()!.provision.provisionAvailable || '-'
+										| numWithSpaces: 1
+								}}
+							</snab-text>
+						</div>
+						<div class="icon-charts">
+                            <snab-icon
+                                    [color]="Colors.InfoHeavy"
+                                    [icon]="IconType.Refresh"
+                            ></snab-icon>
+							<snab-text
+								[weight]="TextWeight.Semibold"
+								[color]="Colors.InfoHeavy"
+							>
+								В производстве:
+								{{
+									order()!.provision.manufacturing || '-'
+										| numWithSpaces: 1
+								}}
+							</snab-text>
+						</div>
+						<div class="icon-charts">
+							<snab-icon
+								[color]="Colors.DangerHeavy"
+								[icon]="IconType.Error"
+							></snab-icon>
+							<snab-text
+								[weight]="TextWeight.Semibold"
+								[color]="Colors.DangerHeavy"
+							>
+								Не может быть обеспечено:
+								{{
+									(order()?.provision)!
+										.provisionUnavailable || '-'
+										| numWithSpaces: 1
+								}}
+							</snab-text>
+						</div>
 					</div>
 				</div>
 				<div class="content__procuring__body__table">
