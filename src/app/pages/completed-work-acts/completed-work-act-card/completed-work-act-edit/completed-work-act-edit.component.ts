@@ -188,14 +188,29 @@ export class CompletedWorkActEditComponent implements OnInit {
 								(item) => item.id === currentValue.id
 							);
 
+							const nameArr = currentValue.name.split('|');
+							const time = nameArr[2]
+								.slice(0, -9)
+								.trim()
+								.split('/');
+
+							nameArr[2] = ` ${[time[1], time[0], time[2]].join('.')} `;
+
 							if (selected) {
 								return [
 									...previousValue,
-									{ ...currentValue, checked: true },
+									{
+										...currentValue,
+										name: nameArr.join('|'),
+										checked: true,
+									},
 								];
 							}
 
-							return [...previousValue, currentValue];
+							return [
+								...previousValue,
+								{ ...currentValue, name: nameArr.join('|') },
+							];
 						},
 						[]
 					);

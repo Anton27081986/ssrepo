@@ -135,7 +135,9 @@ export class CompletedWorkActsFacadeService {
 						.pipe(untilDestroyed(this))
 						.subscribe();
 
-					this.finDocs.next(data.finDocOrders);
+					this.finDocs.next(
+						data.finDocOrders
+					);
 
 					return this.actsApiService.getSpecifications(id);
 				}),
