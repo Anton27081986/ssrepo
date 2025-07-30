@@ -14,7 +14,9 @@
 		(click)="downloadInstruction()"
 	></ss-lib-button
 	><ss-lib-button
-        *ngIf="permissions().includes(Permissions.COMPLETED_WORK_ACTS_PRINT_REPORT)"
+		*ngIf="
+			permissions().includes(Permissions.COMPLETED_WORK_ACTS_PRINT_REPORT)
+		"
 		ss-lib-tooltip
 		[tooltipText]="'Выгрузить отчет в формате Excel'"
 		[iconPosition]="IconPosition.OnlyIcon"
@@ -100,6 +102,23 @@
 				></ss-lib-datepicker
 			></ss-lib-form-field>
 		</div>
+	</div>
+	<div class="date-range">
+		<ss-lib-text
+			[type]="TextType.BodySm"
+			[weight]="TextWeight.Semibold"
+			[color]="Colors.TextBody2"
+			>Сумма (Итого)
+		</ss-lib-text>
+		<ss-lib-form-field>
+			<ss-lib-input
+				fieldCtrl
+				[formControl]="totalAmountControl"
+				[type]="InputType.Number"
+                [min]="0"
+			>
+			</ss-lib-input>
+		</ss-lib-form-field>
 	</div>
 	<div class="filter-toggles">
 		<div class="filter-toggles__item">
