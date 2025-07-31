@@ -9,6 +9,7 @@ import {
 	ChangeDetectorRef,
 	Input,
 	LOCALE_ID,
+	OnDestroy,
 } from '@angular/core';
 import {
 	AvatarComponent,
@@ -27,7 +28,7 @@ import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgFor, NgIf, DatePipe } from '@angular/common';
-import { switchMap, tap } from 'rxjs';
+import { switchMap, tap, debounceTime, distinctUntilChanged, Subject, takeUntil, BehaviorSubject } from 'rxjs';
 import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
 
 export interface AddCommentsModalData {
@@ -51,7 +52,7 @@ export interface AddCommentsModalData {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
 })
-export class AddCommentsModalComponent implements OnInit, AfterViewInit {
+export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input()
 	public data!: OperationPlanItem;
 
@@ -76,6 +77,10 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	public currentUser: IUserProfile | null = null;
 	private singleLineHeight = 0;
 
+	private readonly destroy$ = new Subject<void>();
+	private readonly commentsSubject = new BehaviorSubject<ICommentsItemDto[]>([]);
+	private readonly inputSubject = new Subject<string>();
+
 	private readonly service = inject(OperationPlanService);
 	private readonly userService = inject(UserFacadeService);
 	private readonly cdr = inject(ChangeDetectorRef);
@@ -84,27 +89,56 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 	);
 
 	public ngOnInit(): void {
+		this.setupUserProfile();
+		this.setupCommentsSubscription();
+		this.setupDropdownListener();
+		this.setupInputDebouncing();
+	}
+
+	private setupUserProfile(): void {
 		this.userService
 			.getUserProfile()
-			.pipe(untilDestroyed(this))
-			// eslint-disable-next-line no-return-assign
-			.subscribe((user) => (this.currentUser = user));
+			.pipe(
+				untilDestroyed(this),
+				takeUntil(this.destroy$)
+			)
+			.subscribe((user) => {
+				this.currentUser = user;
+			});
+	}
 
-		this.loadCommentsList(this.data.id);
-
-		this.dropdownList.closed.subscribe(() => {
-			this.resetInput();
-		});
-
+	private setupCommentsSubscription(): void {
 		this.service
 			.comments$(this.data.id)
-			.pipe(untilDestroyed(this))
+			.pipe(
+				untilDestroyed(this),
+				takeUntil(this.destroy$)
+			)
 			.subscribe((list) => {
 				this.comments = list.map((item) => ({
 					...item,
 					createdDateObj: new Date(item.createdDate),
 				}));
 				this.cdr.detectChanges();
+			});
+	}
+
+	private setupDropdownListener(): void {
+		this.dropdownList.closed.subscribe(() => {
+			this.resetInput();
+		});
+	}
+
+	private setupInputDebouncing(): void {
+		this.inputSubject
+			.pipe(
+				debounceTime(300), // Дебаунс 300мс
+				distinctUntilChanged(),
+				untilDestroyed(this),
+				takeUntil(this.destroy$)
+			)
+			.subscribe((text) => {
+				this.comment = text;
 			});
 	}
 
@@ -122,20 +156,19 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 			element.innerHTML = '';
 		}
 
-		this.comment = text;
+		this.inputSubject.next(text);
+		
 		this.autoHeight();
 		this.updateMultiLineFlag();
 	}
 
 	private updateMultiLineFlag(): void {
 		const currentHeight = this.editableDiv.nativeElement.scrollHeight;
-
 		this.isMultiLine = currentHeight > this.singleLineHeight + 1;
 	}
 
 	private autoHeight(): void {
 		const element = this.editableDiv.nativeElement;
-
 		element.style.height = 'auto';
 		element.style.height = `${element.scrollHeight}px`;
 	}
@@ -148,22 +181,6 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 		this.cdr.markForCheck();
 	}
 
-	public loadCommentsList(rowId: number): void {
-		this.service
-			.addComment(rowId)
-			.pipe(untilDestroyed(this))
-			.subscribe((list) => {
-				this.comments = list.map((item) => ({
-					...item,
-					createdDateObj: new Date(item.createdDate),
-				}));
-				this.cdr.detectChanges();
-				setTimeout(() => {
-					this.scrollToBottom();
-				}, 1);
-			});
-	}
-
 	public sendComment(): void {
 		const text = this.editableDiv.nativeElement.innerText.trim();
 
@@ -174,24 +191,24 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 		this.comment = text;
 
 		this.service
-			.sendComment(this.data.id, { note: this.comment })
+			.sendCommentAndRefresh$(this.data.id, { note: this.comment })
 			.pipe(
 				tap((res) => {
 					this.data.isComment = res.isComment;
 					this.data.commentCount = res.commentCount;
 				}),
-				switchMap(() => this.service.addComment(this.data.id)),
-				tap((list) => {
-					this.comments = list.map((item) => ({
-						...item,
-						createdDateObj: new Date(item.createdDate),
-					}));
-					this.cdr.markForCheck();
-					this.dropdownList.closed.emit();
-				}),
-				untilDestroyed(this)
+				untilDestroyed(this),
+				takeUntil(this.destroy$)
 			)
-			.subscribe();
+			.subscribe({
+				next: () => {
+					this.dropdownList.closed.emit();
+					this.scrollToBottom();
+				},
+				error: (error) => {
+					console.error('Error sending comment:', error);
+				}
+			});
 	}
 
 	protected scrollToBottom(): void {
@@ -200,8 +217,13 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit {
 				this.messagesElement.nativeElement.scrollTop =
 					this.messagesElement.nativeElement.scrollHeight;
 			} catch (err) {
-				console.error(err);
+				console.error('Error scrolling:', err);
 			}
 		}
+	}
+
+	public ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 }
