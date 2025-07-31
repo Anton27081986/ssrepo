@@ -19,6 +19,8 @@ import {
 	HeaderFilterService,
 	IconPosition,
 	IconType,
+	InputComponent,
+	InputType,
 	SsTableState,
 	TextComponent,
 	TextType,
@@ -63,6 +65,7 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		ToggleComponent,
 		PaginationComponent,
 		FormsModule,
+		InputComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
@@ -84,6 +87,7 @@ export class CompletedWorkActsComponent {
 	public additionalControl = new FormControl();
 
 	public archiveControl = new FormControl();
+	public totalAmountControl = new FormControl();
 
 	private readonly router: Router = inject(Router);
 	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -112,6 +116,7 @@ export class CompletedWorkActsComponent {
 			const uploadDateTo = this.uploadDateToControl.value;
 			const additional = this.additionalControl.value;
 			const archive = this.archiveControl.value;
+			const totalAmount = this.totalAmountControl.value;
 
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
@@ -133,6 +138,7 @@ export class CompletedWorkActsComponent {
 						UploadDateTo: uploadDateTo,
 						Additional: additional ? 1 : 0,
 						WithArchive: archive,
+						TotalAmount: totalAmount || null,
 						limit: this.limit,
 						offset,
 					};
@@ -172,6 +178,7 @@ export class CompletedWorkActsComponent {
 	protected readonly FormControl = FormControl;
 	protected readonly Colors = Colors;
 	protected readonly Permissions = Permissions;
+	protected readonly InputType = InputType;
 	constructor() {
 		this.headerFilterService.init(completedWorkActsFilter);
 
@@ -306,6 +313,27 @@ export class CompletedWorkActsComponent {
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
 							Additional: value,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.offset$.next(0);
+				})
+			)
+		);
+
+		const totalAmountFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('totalAmount');
+
+		this.totalAmountControl.setValue(totalAmountFromQuery);
+
+		toSignal(
+			this.totalAmountControl.valueChanges.pipe(
+				tap((value) => {
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							TotalAmount: value,
 						},
 						queryParamsHandling: 'merge',
 					});
