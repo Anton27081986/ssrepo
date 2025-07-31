@@ -19,6 +19,20 @@ export class CompletedWorkActsApiService {
 	public getWorkActsList(
 		request: ICompletedActsFilter & Pagination
 	): Observable<IResponse<ICompletedWorkAct>> {
+		if (request.DateTo) {
+			const date = new Date(request.DateTo);
+
+			date.setDate(date.getDate() + 1);
+			request.DateTo = date.toISOString();
+		}
+
+		if (request.UploadDateTo) {
+			const date = new Date(request.UploadDateTo);
+
+			date.setDate(date.getDate() + 1);
+			request.UploadDateTo = date.toISOString();
+		}
+
 		return this.http.post<IResponse<ICompletedWorkAct>>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs`,
 			request

@@ -204,7 +204,7 @@ export class CompletedWorkActsComponent {
 						relativeTo: this.activatedRoute,
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
-							DateFrom: value ? value.toUTCString() : null,
+							DateFrom: value ? value.toISOString() : null,
 						},
 						queryParamsHandling: 'merge',
 					});
@@ -227,9 +227,7 @@ export class CompletedWorkActsComponent {
 						relativeTo: this.activatedRoute,
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
-							DateTo: value
-								? value.setDate(value.getDate() + 1)
-								: null,
+							DateTo: value ? value.toISOString() : null,
 						},
 						queryParamsHandling: 'merge',
 					});
@@ -252,7 +250,7 @@ export class CompletedWorkActsComponent {
 						relativeTo: this.activatedRoute,
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
-							UploadDateFrom: value ? value.toUTCString() : null,
+							UploadDateFrom: value ? value.toISOString() : null,
 						},
 						queryParamsHandling: 'merge',
 					});
@@ -275,9 +273,7 @@ export class CompletedWorkActsComponent {
 						relativeTo: this.activatedRoute,
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
-							UploadDateTo: value
-								? value.setDate(value.getDate() + 1)
-								: null,
+							UploadDateTo: value ? value.toISOString() : null,
 						},
 						queryParamsHandling: 'merge',
 					});
