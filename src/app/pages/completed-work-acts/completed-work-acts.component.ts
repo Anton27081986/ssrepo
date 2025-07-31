@@ -98,7 +98,7 @@ export class CompletedWorkActsComponent {
 	private readonly headerFilterService: HeaderFilterService =
 		inject(HeaderFilterService);
 
-	public limit = 10;
+	public limit = 20;
 	public offset$ = new BehaviorSubject<number>(0);
 	public itemTotal$ = new BehaviorSubject<number>(0);
 	public total = 0;
