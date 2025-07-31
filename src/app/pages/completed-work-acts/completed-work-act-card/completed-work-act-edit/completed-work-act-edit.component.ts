@@ -100,7 +100,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 	);
 
 	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
+		this.completedWorkActsFacade.actPermissions$,
 		{
 			initialValue: [],
 		}
