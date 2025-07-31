@@ -100,13 +100,15 @@ export class CompletedWorkActEditComponent implements OnInit {
 	);
 
 	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
+		this.completedWorkActsFacade.actPermissions$,
 		{
 			initialValue: [],
 		}
 	);
 
 	protected newDocuments: File[] = [];
+	protected oldDocumentsList: IFile[] =
+		this.completedWorkActsFacade.actAttachment.value;
 
 	protected finDocOrders: IFilterOption[] = [];
 
@@ -170,7 +172,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 			});
 	}
 
-	public ngOnInit() {
+	public ngOnInit(): void {
 		this.completedWorkActsFacade.finDocs$
 			.pipe(untilDestroyed(this))
 			.subscribe((docs) => {
@@ -186,14 +188,29 @@ export class CompletedWorkActEditComponent implements OnInit {
 								(item) => item.id === currentValue.id
 							);
 
+							const nameArr = currentValue.name.split('|');
+							const time = nameArr[2]
+								.slice(0, -9)
+								.trim()
+								.split('/');
+
+							nameArr[2] = ` ${[time[1], time[0], time[2]].join('.')} `;
+
 							if (selected) {
 								return [
 									...previousValue,
-									{ ...currentValue, checked: true },
+									{
+										...currentValue,
+										name: nameArr.join('|'),
+										checked: true,
+									},
 								];
 							}
 
-							return [...previousValue, currentValue];
+							return [
+								...previousValue,
+								{ ...currentValue, name: nameArr.join('|') },
+							];
 						},
 						[]
 					);
@@ -203,11 +220,12 @@ export class CompletedWorkActEditComponent implements OnInit {
 			});
 	}
 
-	protected switchMode() {
+	protected switchMode(): void {
+		this.completedWorkActsFacade.actAttachment.next(this.oldDocumentsList);
 		this.completedWorkActsFacade.switchMode();
 	}
 
-	protected onSave() {
+	protected onSave(): void {
 		this.editActForm.markAllAsTouched();
 
 		if (this.editActForm.controls.contract.value) {
@@ -285,13 +303,13 @@ export class CompletedWorkActEditComponent implements OnInit {
 		}
 	}
 
-	protected onApplicantUserSelect(id: number) {
+	protected onApplicantUserSelect(id: number): void {
 		if (id) {
 			this.editActForm.controls.applicantUserId.setValue(id);
 		}
 	}
 
-	protected onProviderContractorSelect(id: number) {
+	protected onProviderContractorSelect(id: number): void {
 		if (id) {
 			this.editActForm.controls.providerContractorId.setValue(id);
 			this.completedWorkActsFacade
@@ -310,14 +328,14 @@ export class CompletedWorkActEditComponent implements OnInit {
 		}
 	}
 
-	protected addFiles(event: Event) {
+	protected addFiles(event: Event): void {
 		const element = event.currentTarget as HTMLInputElement;
 
 		if (!element.files) {
 			return;
 		}
 
-		Array.from(element.files).forEach((file) => {
+		Array.from(element.files).forEach((file): void => {
 			const earlyLoaded = this.newDocuments.find(
 				(doc) => doc.name === file.name
 			);
@@ -328,17 +346,17 @@ export class CompletedWorkActEditComponent implements OnInit {
 		});
 	}
 
-	protected removeFileFromUploadList(fileName: string) {
+	protected removeFileFromUploadList(fileName: string): void {
 		this.newDocuments = this.newDocuments.filter(
 			(file) => file.name !== fileName
 		);
 	}
 
-	protected deleteFile(fileId: string) {
+	protected deleteFile(fileId: string): void {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 
-	protected onInputChange(event: any) {
+	protected onInputChange(event: any): void {
 		if (!event.target.value) {
 			const act = this.act();
 

@@ -41,7 +41,7 @@ export class CompletedWorkActsFacadeService {
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
 	public act$ = this.act.asObservable();
 
-	private readonly actAttachment = new BehaviorSubject<IFile[]>([]);
+	readonly actAttachment = new BehaviorSubject<IFile[]>([]);
 	public actAttachment$ = this.actAttachment.asObservable();
 
 	private readonly actStates = new BehaviorSubject<
@@ -81,6 +81,9 @@ export class CompletedWorkActsFacadeService {
 	private readonly permissions = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissions.asObservable();
 
+	private readonly actPermissions = new BehaviorSubject<string[]>([]);
+	public actPermissions$ = this.actPermissions.asObservable();
+
 	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public finDocs$ = this.finDocs.asObservable();
 
@@ -105,12 +108,12 @@ export class CompletedWorkActsFacadeService {
 		return this.actsApiService.getWorkActsList(request);
 	}
 
-	public getAct(id: string) {
+	public getAct(id: string): void {
 		this.actsApiService
 			.getWorkAct(id)
 			.pipe(
 				switchMap(({ data, permissions }) => {
-					this.permissions.next(permissions);
+					this.actPermissions.next(permissions);
 					this.act.next(data);
 					this.actAttachment.next(data.documents);
 
@@ -135,7 +138,9 @@ export class CompletedWorkActsFacadeService {
 						.pipe(untilDestroyed(this))
 						.subscribe();
 
-					this.finDocs.next(data.finDocOrders);
+					this.finDocs.next(
+						data.finDocOrders
+					);
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -154,7 +159,7 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
-	public updateAct(body: IUpdateAct) {
+	public updateAct(body: IUpdateAct): void {
 		this.actsApiService
 			.updateAct(this.act.value!.id, body)
 			.pipe(untilDestroyed(this))
@@ -164,7 +169,9 @@ export class CompletedWorkActsFacadeService {
 			});
 	}
 
-	public addSpecificationToAct(body: IAddSpecification) {
+	public addSpecificationToAct(
+		body: IAddSpecification
+	): Observable<ICompletedWorkActSpecification> {
 		return this.actsApiService
 			.addSpecification(this.act.value!.id, body)
 			.pipe(
@@ -175,7 +182,9 @@ export class CompletedWorkActsFacadeService {
 			);
 	}
 
-	public updateSpecification(body: IAddSpecification) {
+	public updateSpecification(
+		body: IAddSpecification
+	): Observable<ICompletedWorkActSpecification> {
 		return this.actsApiService
 			.updateSpecification(this.act.value!.id, body)
 			.pipe(
@@ -186,7 +195,7 @@ export class CompletedWorkActsFacadeService {
 			);
 	}
 
-	public deleteSpecification(specId: number) {
+	public deleteSpecification(specId: number): void {
 		this.actsApiService
 			.deleteSpecification(this.act.value!.id, specId)
 			.pipe(untilDestroyed(this))
@@ -195,7 +204,7 @@ export class CompletedWorkActsFacadeService {
 			});
 	}
 
-	public getActStates() {
+	public getActStates(): void {
 		this.actsApiService
 			.getActStates()
 			.pipe(
@@ -207,7 +216,7 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
-	public getCurrencies() {
+	public getCurrencies(): void {
 		this.actsApiService
 			.getCurrencies()
 			.pipe(
@@ -219,7 +228,7 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
-	public getBuUnits() {
+	public getBuUnits(): void {
 		this.actsApiService
 			.getBuUnits()
 			.pipe(
@@ -231,7 +240,9 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
-	public getContracts(id?: number) {
+	public getContracts(
+		id?: number
+	): Observable<IResponse<IDictionaryItemDto>> {
 		return this.searchFacade.getDictionaryCompletedActContracts(id).pipe(
 			tap((res) => {
 				this.contracts.next(res.items);
@@ -243,7 +254,7 @@ export class CompletedWorkActsFacadeService {
 	public getFinDocs(
 		providerContractorId: number,
 		externalActDate: string | null
-	) {
+	): void {
 		this.searchFacade
 			.getFinDocOrders(providerContractorId, externalActDate)
 			.pipe(
@@ -255,7 +266,7 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
-	public toArchiveAct() {
+	public toArchiveAct(): void {
 		if (this.act.value) {
 			const id = this.act.value.id;
 
@@ -269,7 +280,7 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public pullAct() {
+	public pullAct(): void {
 		if (this.act.value) {
 			const id = this.act.value.id;
 
@@ -283,7 +294,7 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public restoreAct() {
+	public restoreAct(): void {
 		if (this.act.value) {
 			const id = this.act.value.id;
 
@@ -297,7 +308,7 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public sendActToAdmin() {
+	public sendActToAdmin(): void {
 		if (this.act.value) {
 			const id = this.act.value.id;
 
@@ -311,7 +322,7 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public sendActToApplicant(comment: string) {
+	public sendActToApplicant(comment: string): void {
 		if (this.act.value) {
 			const id = this.act.value.id;
 
@@ -325,7 +336,7 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public returnActToApplicant(comment: string) {
+	public returnActToApplicant(comment: string): void {
 		if (this.act.value) {
 			const id = this.act.value.id;
 
@@ -339,7 +350,7 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public switchMode(act?: ICompletedWorkAct) {
+	public switchMode(act?: ICompletedWorkAct): void {
 		if (act) {
 			this.act.next(act);
 		}
@@ -347,24 +358,24 @@ export class CompletedWorkActsFacadeService {
 		this.isEditMode.next(!this.isEditMode.value);
 	}
 
-	public uploadFile(file: File) {
+	public uploadFile(file: File): Observable<IFile> {
 		return this.filesApiService.uploadFile(
 			FileBucketsEnum.Attachments,
 			file
 		);
 	}
 
-	public deleteFile(id: string) {
+	public deleteFile(id: string): void {
 		this.actAttachment.next(
 			this.actAttachment.value.filter((file) => file.id !== id)
 		);
 	}
 
-	public addFileToAct(actId: number, fileId: string) {
+	public addFileToAct(actId: number, fileId: string): Observable<string> {
 		return this.actsApiService.addDocumentToAct(actId, fileId);
 	}
 
-	public getPermissions() {
+	public getPermissions(): void {
 		this.permissionsApiService
 			.getPermissionClient(Permissions.COMPLETED_WORK_ACTS)
 			.pipe(
@@ -378,7 +389,9 @@ export class CompletedWorkActsFacadeService {
 			.subscribe();
 	}
 
-	public downloadReport(filter: (ICompletedActsFilter & Pagination) | null) {
+	public downloadReport(
+		filter: (ICompletedActsFilter & Pagination) | null
+	): Observable<Blob> {
 		return this.actsApiService.downloadReport(filter);
 	}
 }
