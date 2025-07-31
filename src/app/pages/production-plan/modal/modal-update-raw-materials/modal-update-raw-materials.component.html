@@ -29,7 +29,7 @@
 			[popoverTriggerFor]="list"
 			[text]="
 				selectedItem()
-					? selectedItem()?.name
+					? selectedItem()!.name
 					: 'Выберите вариант расчета'
 			"
 		></ss-lib-button>
@@ -43,7 +43,7 @@
 				*ngFor="let item of calcVariants()"
 				[selected]="item.id === selectedItem()?.id"
 				[label]="item.name"
-				(click)="selectedItem.set(item)"
+				(click)="selectCalcVariant(item)"
 			/>
 		</ss-lib-dropdown-list>
 	</div>
@@ -55,7 +55,7 @@
 			[style.width]="'262px'"
 			[type]="ButtonType.Secondary"
 			[text]="'Отменить'"
-			(close)="close()"
+			(click)="close()"
 		></ss-lib-button>
 		<ss-lib-button
 			[style.width]="'262px'"

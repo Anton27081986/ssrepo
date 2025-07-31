@@ -28,7 +28,14 @@ import { ICommentsItemDto } from '@app/core/models/production-plan/comments';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { NgFor, NgIf, DatePipe } from '@angular/common';
-import { switchMap, tap, debounceTime, distinctUntilChanged, Subject, takeUntil, BehaviorSubject } from 'rxjs';
+import {
+	tap,
+	debounceTime,
+	distinctUntilChanged,
+	Subject,
+	takeUntil,
+	BehaviorSubject,
+} from 'rxjs';
 import { OperationPlanItem } from '@app/core/models/production-plan/operation-plan';
 
 export interface AddCommentsModalData {
@@ -52,7 +59,9 @@ export interface AddCommentsModalData {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
 })
-export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AddCommentsModalComponent
+	implements OnInit, AfterViewInit, OnDestroy
+{
 	@Input()
 	public data!: OperationPlanItem;
 
@@ -78,7 +87,10 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestr
 	private singleLineHeight = 0;
 
 	private readonly destroy$ = new Subject<void>();
-	private readonly commentsSubject = new BehaviorSubject<ICommentsItemDto[]>([]);
+	private readonly commentsSubject = new BehaviorSubject<ICommentsItemDto[]>(
+		[]
+	);
+
 	private readonly inputSubject = new Subject<string>();
 
 	private readonly service = inject(OperationPlanService);
@@ -98,10 +110,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestr
 	private setupUserProfile(): void {
 		this.userService
 			.getUserProfile()
-			.pipe(
-				untilDestroyed(this),
-				takeUntil(this.destroy$)
-			)
+			.pipe(untilDestroyed(this), takeUntil(this.destroy$))
 			.subscribe((user) => {
 				this.currentUser = user;
 			});
@@ -110,10 +119,7 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestr
 	private setupCommentsSubscription(): void {
 		this.service
 			.comments$(this.data.id)
-			.pipe(
-				untilDestroyed(this),
-				takeUntil(this.destroy$)
-			)
+			.pipe(untilDestroyed(this), takeUntil(this.destroy$))
 			.subscribe((list) => {
 				this.comments = list.map((item) => ({
 					...item,
@@ -157,18 +163,20 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestr
 		}
 
 		this.inputSubject.next(text);
-		
+
 		this.autoHeight();
 		this.updateMultiLineFlag();
 	}
 
 	private updateMultiLineFlag(): void {
 		const currentHeight = this.editableDiv.nativeElement.scrollHeight;
+
 		this.isMultiLine = currentHeight > this.singleLineHeight + 1;
 	}
 
 	private autoHeight(): void {
 		const element = this.editableDiv.nativeElement;
+
 		element.style.height = 'auto';
 		element.style.height = `${element.scrollHeight}px`;
 	}
@@ -205,9 +213,9 @@ export class AddCommentsModalComponent implements OnInit, AfterViewInit, OnDestr
 					this.dropdownList.closed.emit();
 					this.scrollToBottom();
 				},
-				error: (error) => {
+				error: (error: unknown) => {
 					console.error('Error sending comment:', error);
-				}
+				},
 			});
 	}
 

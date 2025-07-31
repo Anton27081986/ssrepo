@@ -35,7 +35,9 @@
 											? addCommentsModal
 											: createCommentsModal
 									"
-									(click)="openCommentsModal(row, row.isComment)"
+									(click)="
+										openCommentsModal(row, row.isComment)
+									"
 								></ss-lib-button>
 							}
 							<ss-lib-dropdown-list
