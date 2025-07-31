@@ -75,9 +75,6 @@ export class CompletedWorkActsFacadeService {
 	private readonly isEditMode = new BehaviorSubject<boolean>(false);
 	public isEditMode$ = this.isEditMode.asObservable();
 
-	private readonly listPermissions = new BehaviorSubject<string[]>([]);
-	public listPermissions$ = this.listPermissions.asObservable();
-
 	private readonly permissions = new BehaviorSubject<string[]>([]);
 	public permissions$ = this.permissions.asObservable();
 
@@ -138,9 +135,7 @@ export class CompletedWorkActsFacadeService {
 						.pipe(untilDestroyed(this))
 						.subscribe();
 
-					this.finDocs.next(
-						data.finDocOrders
-					);
+					this.finDocs.next(data.finDocOrders);
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -350,9 +345,13 @@ export class CompletedWorkActsFacadeService {
 		}
 	}
 
-	public switchMode(act?: ICompletedWorkAct): void {
+	public switchMode(act?: ICompletedWorkAct | null): void {
 		if (act) {
 			this.act.next(act);
+		} else {
+			this.getContracts(this.act.value?.providerContractor.id)
+				.pipe(untilDestroyed(this))
+				.subscribe();
 		}
 
 		this.isEditMode.next(!this.isEditMode.value);

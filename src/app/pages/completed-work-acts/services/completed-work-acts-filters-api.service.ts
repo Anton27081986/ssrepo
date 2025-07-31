@@ -13,7 +13,7 @@ export class CompletedWorkActsFiltersApiService {
 		query: string,
 		ids: number[] = []
 	): Observable<IResponse<IDictionaryItemDto>> {
-		let params = new HttpParams().set('query', query || '0');
+		let params = new HttpParams().set('query', query || '1');
 
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
@@ -29,7 +29,7 @@ export class CompletedWorkActsFiltersApiService {
 		query: string,
 		ids: number[] = []
 	): Observable<IResponse<IDictionaryItemDto>> {
-		let params = new HttpParams().set('query', query || 'а');
+		let params = new HttpParams().set('query', query || '1');
 
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
