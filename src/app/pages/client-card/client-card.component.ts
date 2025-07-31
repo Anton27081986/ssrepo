@@ -15,6 +15,7 @@ import { TabsComponent } from '@app/shared/components/tabs/tabs.component';
 import { ClientCardContractorsComponent } from '@app/pages/client-card/client-card-basic/client-card-contractors/client-card-contractors.component';
 import { HistoryComponent } from '@app/widgets/history/history.component';
 import { CorrespondenceComponent } from '@app/widgets/correspondence/correspondence.component';
+import {CorrespondenceTypeEnum} from "@app/widgets/correspondence/correspondence-type-enum";
 
 @UntilDestroy()
 @Component({
@@ -161,4 +162,6 @@ export class ClientCardComponent implements OnInit {
 		this.clientCardListFacade.setClientId(null);
 		this.router.navigate([`/clients-list`]);
 	}
+
+    protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 }
