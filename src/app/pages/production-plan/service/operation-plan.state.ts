@@ -40,4 +40,32 @@ export class OperationPlanState {
 			Permissions.OPERATIONAL_PLAN_APPROVE_MATERIALS
 		);
 	}
+
+	public get getHasPermissionAddComments(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_ADD_COMMENTS
+		);
+	}
+
+	public get getHasPermissionUploadOneS(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_UPLOAD_ONE_S
+		);
+	}
+
+	public get getHasPermissionUploadWMS(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_UPLOAD_WMS
+		);
+	}
+
+	public get getHasPermissionOrderProduction(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_ORDER_PRODUCTION
+		);
+	}
 }

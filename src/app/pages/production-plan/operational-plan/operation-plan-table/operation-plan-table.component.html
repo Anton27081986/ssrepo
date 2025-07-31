@@ -4,6 +4,7 @@
 	(closed)="popupCloseEmit()"
 >
 	<ss-lib-button
+		*ngIf="operationPlanState.getHasPermissionOrderProduction"
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
 		[popoverTriggerFor]="orderAnOutfitList"
@@ -135,11 +136,17 @@
 									></ss-lib-utility-button>
 									<ss-lib-dropdown-list #listFunc>
 										<ss-lib-dropdown-item
+											*ngIf="
+												operationPlanState.getHasPermissionOrderProduction
+											"
 											[icon]="IconType.FilePreviewSearch"
 											[label]="'Заказ наряд'"
 											(click)="orderAnOutfit(column.id)"
 										></ss-lib-dropdown-item>
 										<ss-lib-dropdown-item
+											*ngIf="
+												operationPlanState.getHasPermissionUploadWMS
+											"
 											[icon]="IconType.FileUpload02"
 											[label]="'Выгрузить в WMS'"
 											(click)="uploadWMS(column.id)"

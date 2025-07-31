@@ -20,7 +20,9 @@
 							>
 								{{ getCellValue(row, column.id) }}
 							</ss-lib-text>
-							@if (operationPlanState.getHasPermissionEdit) {
+							@if (
+								operationPlanState.getHasPermissionAddComments
+							) {
 								<ss-lib-button
 									[class]="{
 										'comment-button': !row.isComment,
