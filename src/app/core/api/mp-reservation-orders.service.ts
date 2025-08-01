@@ -154,6 +154,12 @@ export class MpReservationOrdersApiService {
 		);
 	}
 
+	public rejectClarification(orderId: number): Observable<void> {
+		return this.http.delete<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
+		);
+	}
+
 	public getApproveClarification(
 		orderId: number,
 	): Observable<IApproveClarificationResponse> {
