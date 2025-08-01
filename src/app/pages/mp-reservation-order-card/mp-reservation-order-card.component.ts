@@ -232,6 +232,15 @@ export class MpReservationOrderCardComponent implements OnInit {
 			});
 	}
 
+	public rejectClarificationOrder(): void {
+		this.mpReservationOrderCardFacadeService
+			.rejectClarificationOrder()
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.mpReservationOrderCardFacadeService.reloadOrder();
+			});
+	}
+
 	public openPopupCancelActionRemove(isConfirm: boolean): void {
 		this.modalService.open(
 			MpReservationOrdersCardPopupCancelActionComponent,

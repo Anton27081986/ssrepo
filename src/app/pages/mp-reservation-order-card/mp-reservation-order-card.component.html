@@ -116,6 +116,17 @@
 				<snab-dropdown-item
 					*ngIf="
 						hasPermission(
+							Permissions.PERSONIFICATION_ORDER_AUTHOR_REJECT
+						)
+					"
+					[textContent]="'Отклонить уточнение'"
+					(click)="
+						$event.stopPropagation(); rejectClarificationOrder()
+					"
+				></snab-dropdown-item>
+				<snab-dropdown-item
+					*ngIf="
+						hasPermission(
 							Permissions.PERSONIFICATION_MUTMZ_CONFIRM_SUPPLY_ORDER_DELETION
 						)
 					"
