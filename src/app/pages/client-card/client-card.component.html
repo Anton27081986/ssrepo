@@ -38,5 +38,5 @@
 			[queryType]="queryType.UserCard"
 		></ss-history>
 	</div>
-	<ss-correspondence [objectId]="(client$ | async)?.id!"></ss-correspondence>
+	<ss-correspondence [objectId]="(client$ | async)?.id!" [type]="CorrespondenceTypeEnum.Clients"></ss-correspondence>
 </div>
