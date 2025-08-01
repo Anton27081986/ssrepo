@@ -138,9 +138,7 @@ export class CompletedWorkActsFacadeService {
 						.pipe(untilDestroyed(this))
 						.subscribe();
 
-					this.finDocs.next(
-						data.finDocOrders
-					);
+					this.finDocs.next(data.finDocOrders);
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -166,6 +164,15 @@ export class CompletedWorkActsFacadeService {
 			.subscribe((act) => {
 				this.switchMode(act);
 				this.actAttachment.next(act.documents);
+				this.actsApiService
+					.getSpecifications(act.id.toString(10))
+					.pipe(untilDestroyed(this))
+					.subscribe((specifications) => {
+						this.specifications.next(specifications.items);
+						this.specificationsTotalAmount.next(
+							specifications.totalAmount
+						);
+					});
 			});
 	}
 
