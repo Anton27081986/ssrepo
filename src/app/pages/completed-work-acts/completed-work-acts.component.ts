@@ -104,10 +104,6 @@ export class CompletedWorkActsComponent {
 	public total = 0;
 	public pageIndex = 1;
 
-	protected dateFrom$: BehaviorSubject<string | null> = new BehaviorSubject<
-		string | null
-	>(null);
-
 	protected items$: Observable<ICompletedWorkAct[]> = this.offset$.pipe(
 		switchMap((offset) => {
 			const dateFrom = this.dateFromControl.value;
@@ -187,7 +183,7 @@ export class CompletedWorkActsComponent {
 		toSignal(
 			this.headerFilterService.criteria$.pipe(
 				tap(() => {
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -210,7 +206,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -233,7 +229,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -256,7 +252,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -279,7 +275,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -300,7 +296,7 @@ export class CompletedWorkActsComponent {
 				},
 				queryParamsHandling: 'merge',
 			});
-			this.offset$.next(0);
+			this.resetPage();
 		}
 
 		toSignal(
@@ -314,7 +310,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -335,7 +331,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -358,7 +354,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -390,5 +386,10 @@ export class CompletedWorkActsComponent {
 	protected onPage(index: number): void {
 		this.pageIndex = index;
 		this.offset$.next((index - 1) * this.limit);
+	}
+
+	private resetPage(): void {
+		this.pageIndex = 1;
+		this.offset$.next(0);
 	}
 }

@@ -36,8 +36,6 @@ export class CompletedWorkActsFacadeService {
 		(ICompletedActsFilter & Pagination) | null
 	> = new BehaviorSubject<(ICompletedActsFilter & Pagination) | null>(null);
 
-	// old
-
 	private readonly act = new BehaviorSubject<ICompletedWorkAct | null>(null);
 	public act$ = this.act.asObservable();
 
