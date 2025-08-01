@@ -101,7 +101,7 @@ export class CompletedWorkActsFiltersApiService {
 		});
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/auth/users/search`,
+			`${environment.apiUrl}/api/company/dictionary/ApplicantUsers`,
 			{ params }
 		);
 	}
