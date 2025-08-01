@@ -143,7 +143,7 @@ export class DictionaryApiService {
 		}
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/OperationalPlanTovs`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/tovs`,
 			{ params }
 		);
 	}
