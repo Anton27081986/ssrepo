@@ -45,4 +45,14 @@
 	::ng-deep .ss-lib-table-canvas__pagination {
 		justify-content: flex-end;
 	}
+
+	app-completed-work-acts-table {
+		max-height: calc(100vh - 346px);
+	}
+
+	::ng-deep .ss-lib-table-canvas__selected~.ss-lib-table-canvas__table {
+		app-completed-work-acts-table {
+			max-height: calc(100vh - 415px);
+		}
+	}
 }
