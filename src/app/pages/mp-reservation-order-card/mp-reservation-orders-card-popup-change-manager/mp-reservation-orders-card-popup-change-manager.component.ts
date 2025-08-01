@@ -137,7 +137,7 @@ export class MpReservationOrdersCardPopupChangeManagerComponent {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.close();
-					void this.router.navigate(['mp-reservation-orders']);
+					this.mpReservationOrderCardFacadeService.reloadOrder();
 				});
 		} else {
 			return;
