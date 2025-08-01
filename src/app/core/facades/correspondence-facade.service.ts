@@ -137,6 +137,15 @@ export class CorrespondenceFacadeService {
 				.subscribe((res) => {
 					if (!this.selectedTopicSubject.value) {
 						this.totalMessagesSubject.next(res.total);
+					} else {
+						this.totalMessagesSubject.next(
+							this.topicsSubject.value.reduce(
+								(prev: number, curr) => {
+									return prev + curr.messageCount;
+								},
+								0
+							)
+						);
 					}
 
 					this.isLoadingSubject.next(false);
@@ -175,10 +184,11 @@ export class CorrespondenceFacadeService {
 		if (this.selectedTopicSubject.value !== subject) {
 			this.isLoadingSubject.next(true);
 			this.selectedTopicSubject.next(subject);
-			this.messagesSubject.next({ items: [], total: 0 });
-			this.loadMessages();
-			this.loadFiles();
 		}
+
+		this.messagesSubject.next({ items: [], total: 0 });
+		this.loadMessages();
+		this.loadFiles();
 	}
 
 	public setMessageVisibility(id: string, isPrivate: boolean) {
