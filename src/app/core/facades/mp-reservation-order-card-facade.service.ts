@@ -121,6 +121,12 @@ export class MpReservationOrderCardFacadeService {
 		);
 	}
 
+	public rejectClarificationOrder() {
+		return this.mpReservationOrdersApiService.rejectClarification(
+			this.activeOrder.value?.id!,
+		);
+	}
+
 	public getApproveClarification() {
 		return this.mpReservationOrdersApiService.getApproveClarification(
 			this.activeOrder.value?.id!
