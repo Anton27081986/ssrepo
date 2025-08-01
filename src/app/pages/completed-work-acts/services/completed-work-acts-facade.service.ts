@@ -29,8 +29,8 @@ import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/serv
 })
 export class CompletedWorkActsFacadeService {
 	public linkToInstruction = environment.production
-		? 'https://erp.ssnab.ru/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_a390d5da-6462-4fc0-b8a2-aeb21a9c3e36.docx'
-		: 'https://erp-dev.ssnab.it/api/static/general/2025/04/07/Инструкция._Реестр_актов_выполненных_работ_01b6e1dd-456d-4a1f-affd-891754889406.docx';
+		? 'https://erp-dev.ssnab.it/api/static/general/2025/06/04/Инструкция._Реестр_актов_выполненных_работ_01.06.25_(1)_881160e3-a794-4452-8650-c14eb45a5277.docx'
+		: 'https://erp.ssnab.ru/api/static/general/2025/06/04/Инструкция._Реестр_актов_выполненных_работ_01.06.25_(1)_6b4fb14f-984b-4f64-bafa-449f361e4347.docx';
 
 	public filterValueStore$: BehaviorSubject<
 		(ICompletedActsFilter & Pagination) | null
