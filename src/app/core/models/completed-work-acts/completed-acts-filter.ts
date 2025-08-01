@@ -8,7 +8,7 @@ export interface ICompletedActsFilter {
 	ProviderContractorId?: number;
 	ApplicantUserId?: number;
 	State?: number[];
-	TotalAmount?: number;
+	TotalAmount?: string;
 	WithArchive: boolean | null;
 	Additional: number | null;
 }
