@@ -59,7 +59,7 @@ import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 })
 export class CompletedWorkActEditComponent implements OnInit {
 	@Input()
-	specification: ICompletedWorkActSpecification | null = null;
+	public specification: ICompletedWorkActSpecification | null = null;
 
 	protected editActForm!: FormGroup<{
 		dateUpload: FormControl<string | null>;
@@ -110,6 +110,10 @@ export class CompletedWorkActEditComponent implements OnInit {
 	protected oldDocumentsList: IFile[] =
 		this.completedWorkActsFacade.actAttachment.value;
 
+	protected applicantUser: IDictionaryItemDto | undefined;
+	protected providerContractor: IDictionaryItemDto | undefined;
+	protected contract: IDictionaryItemDto | undefined;
+
 	protected finDocOrders: IFilterOption[] = [];
 
 	protected readonly Permissions = Permissions;
@@ -154,7 +158,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 						act.applicantUser?.id || null
 					);
 					this.editActForm.controls.providerContractorId.setValue(
-						act.providerContractor?.id
+						act.providerContractor?.id || null
 					);
 					this.editActForm.controls.contract.setValue(
 						act.contract || null
@@ -162,11 +166,23 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.editActForm.controls.currency.setValue(act.currency);
 					this.editActForm.controls.comment.setValue(act.comment);
 
-					if (act.providerContractor.id) {
+					if (act.providerContractor?.id) {
 						this.completedWorkActsFacade.getFinDocs(
 							act.providerContractor.id,
 							act.externalActDate
 						);
+					}
+
+					if (act.applicantUser) {
+						this.applicantUser = act.applicantUser;
+					}
+
+					if (act.providerContractor) {
+						this.providerContractor = act.providerContractor;
+					}
+
+					if (act.contract) {
+						this.contract = act.contract;
 					}
 				}
 			});
@@ -356,15 +372,19 @@ export class CompletedWorkActEditComponent implements OnInit {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 
-	protected onInputChange(event: any): void {
+	protected onInputChange(event: any, field: string): void {
 		if (!event.target.value) {
-			const act = this.act();
+			if (field === 'applicantUserId') {
+				this.applicantUser = undefined;
 
-			if (act) {
-				act.applicantUser = undefined;
+				this.editActForm.controls.applicantUserId.setValue(null);
 			}
 
-			this.editActForm.controls.applicantUserId.setValue(null);
+			if (field === 'providerContractorId') {
+				this.providerContractor = undefined;
+
+				this.editActForm.controls.providerContractorId.setValue(null);
+			}
 		}
 	}
 }

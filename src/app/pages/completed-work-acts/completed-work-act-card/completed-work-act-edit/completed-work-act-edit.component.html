@@ -98,7 +98,7 @@
 					<ss-search-input
 						searchType="user"
 						size="small"
-						[selectedItem]="act()?.applicantUser"
+						[selectedItem]="applicantUser"
 						[error]="
 							editActForm.controls.applicantUserId.touched &&
 							editActForm.controls.applicantUserId.errors
@@ -110,7 +110,12 @@
 						(click)="
 							editActForm.controls.applicantUserId.setErrors(null)
 						"
-						(input)="onInputChange($event)"
+						(input)="
+							onInputChange(
+								$event,
+								'applicantUserId'
+							)
+						"
 					>
 					</ss-search-input>
 				} @else {
@@ -152,7 +157,7 @@
 					<ss-search-input
 						searchType="contractor"
 						size="small"
-						[selectedItem]="act()?.providerContractor"
+						[selectedItem]="providerContractor"
 						[error]="
 							editActForm.controls.providerContractorId.touched &&
 							editActForm.controls.providerContractorId.errors
@@ -164,6 +169,12 @@
 						(click)="
 							editActForm.controls.providerContractorId.setErrors(
 								null
+							)
+						"
+                        (input)="
+							onInputChange(
+								$event,
+								'providerContractorId'
 							)
 						"
 					>
