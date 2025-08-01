@@ -32,6 +32,8 @@ import { DatePipe } from '@angular/common';
 import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { TableColumnConfig } from '@front-library/components/lib/components/table/models';
 
 @Component({
 	selector: 'app-completed-work-acts-table',
@@ -56,10 +58,14 @@ import { Router } from '@angular/router';
 })
 @UntilDestroy()
 export class CompletedWorkActsTableComponent {
+	private readonly storageName: string = 'CWA-table-config';
 	private readonly tableStateService = inject(SsTableState);
 
 	private readonly completedWorkActsFacade: CompletedWorkActsFacadeService =
 		inject(CompletedWorkActsFacadeService);
+
+	private readonly localStorageService: LocalStorageService =
+		inject(LocalStorageService);
 
 	private readonly router: Router = inject(Router);
 
@@ -80,10 +86,22 @@ export class CompletedWorkActsTableComponent {
 	protected readonly TextType = TextType;
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
+		const savedConfig: TableColumnConfig[] | null =
+			this.localStorageService.getItem<TableColumnConfig[] | null>(
+				this.storageName
+			);
+
 		effect(() => {
 			this.tableStateService.initialize(
 				this.actsItems(),
-				columnCompletedWorkActsConfigs
+				savedConfig || columnCompletedWorkActsConfigs
+			);
+		});
+
+		effect(() => {
+			this.localStorageService.setItem(
+				this.storageName,
+				this.tableStateService.visibleColumns()
 			);
 		});
 	}
