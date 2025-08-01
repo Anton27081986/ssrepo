@@ -116,7 +116,7 @@ export class CompletedWorkActsComponent {
 			const uploadDateTo = this.uploadDateToControl.value;
 			const additional = this.additionalControl.value;
 			const archive = this.archiveControl.value;
-			const totalAmount = this.totalAmountControl.value;
+			const totalAmount: string = this.totalAmountControl.value;
 
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
@@ -138,7 +138,9 @@ export class CompletedWorkActsComponent {
 						UploadDateTo: uploadDateTo,
 						Additional: additional ? 1 : 0,
 						WithArchive: archive,
-						TotalAmount: totalAmount || null,
+						TotalAmount: totalAmount
+							? totalAmount.replace(',', '.')
+							: null,
 						limit: this.limit,
 						offset,
 					};
@@ -318,7 +320,7 @@ export class CompletedWorkActsComponent {
 		);
 
 		const totalAmountFromQuery =
-			this.activatedRoute.snapshot.queryParamMap.get('totalAmount');
+			this.activatedRoute.snapshot.queryParamMap.get('TotalAmount');
 
 		this.totalAmountControl.setValue(totalAmountFromQuery);
 
