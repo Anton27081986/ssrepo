@@ -20,7 +20,9 @@
 							>
 								{{ getCellValue(row, column.id) }}
 							</ss-lib-text>
-							@if (operationPlanState.getHasPermissionEdit) {
+							@if (
+								operationPlanState.getHasPermissionAddComments
+							) {
 								<ss-lib-button
 									[class]="{
 										'comment-button': !row.isComment,
@@ -35,7 +37,9 @@
 											? addCommentsModal
 											: createCommentsModal
 									"
-									(click)="openCommentsRowId = row.id"
+									(click)="
+										openCommentsModal(row, row.isComment)
+									"
 								></ss-lib-button>
 							}
 							<ss-lib-dropdown-list

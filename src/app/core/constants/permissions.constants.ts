@@ -46,6 +46,10 @@ export const Permissions = {
 	OPERATIONAL_PLAN_EDIT: 'OperationalPlan.Edit',
 	OPERATIONAL_PLAN_APPROVE_MATERIALS: 'OperationalPlan.ApproveMaterials',
 	OPERATIONAL_PLAN_CALC_ROW_MATERIALS: 'OperationalPlan.CalcRowMaterials',
+	OPERATIONAL_PLAN_ADD_COMMENTS: 'OperationalPlan.AddComments',
+	OPERATIONAL_PLAN_UPLOAD_ONE_S: 'OperationalPlan.UploadOneS',
+	OPERATIONAL_PLAN_UPLOAD_WMS: 'OperationalPlan.UploadWMS',
+	OPERATIONAL_PLAN_ORDER_PRODUCTION: 'OperationalPlan.OrderProduction',
 	PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA:
 		'Personification.OrderAuthorViewData',
 	PERSONIFICATION_ORDER_AUTHOR_CREATE: 'Personification.OrderAuthorViewData',

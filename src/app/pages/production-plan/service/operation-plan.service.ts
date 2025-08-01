@@ -76,6 +76,7 @@ export class OperationPlanService {
 			const subject = new ReplaySubject<ICommentsItemDto[]>(1);
 
 			this.commentsCache.set(id, subject);
+
 			this.operationPlanApiService
 				.addComment(id)
 				.subscribe((list) => subject.next(list));

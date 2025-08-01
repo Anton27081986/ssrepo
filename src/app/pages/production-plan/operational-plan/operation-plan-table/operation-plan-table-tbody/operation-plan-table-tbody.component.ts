@@ -205,15 +205,21 @@ export class OperationPlanTableTbodyComponent {
 
 	protected openPostponePlanModal(
 		row: OperationPlanItem,
-		columnId: string
+		_columnId: string
 	): void {
-		const data = row.planDays!.find((day) =>
-			day.date.startsWith(columnId.slice(13))
-		);
+		const data = {
+			id: row.id,
+		};
 
-		if (data) {
-			this.popupService.openPostponePlanModal(data.id);
-		}
+		this.popupService.openPostponePlanModal(data.id);
+	}
+
+	// Метод для открытия модальных окон комментариев
+	protected openCommentsModal(
+		row: OperationPlanItem,
+		_isComment: boolean
+	): void {
+		this.openCommentsRowId = row.id;
 	}
 
 	public getCellValue(

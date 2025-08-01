@@ -85,7 +85,7 @@ export class OperationPlanFiltersApiService {
 		});
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
-			`${environment.apiUrl}/api/manufacturing/Dictionary/Tovs`,
+			`${environment.apiUrl}/api/manufacturing/Dictionary/OperationalPlanTovs`,
 			{ params }
 		);
 	}
