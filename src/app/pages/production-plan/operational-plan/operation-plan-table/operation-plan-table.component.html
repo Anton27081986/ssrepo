@@ -1,5 +1,5 @@
 <ss-lib-indicator-checklist-popup
-	[count]="getSelectedElemCount"
+	[count]="selectedCount()"
 	[total]="totalItems()"
 	(closed)="popupCloseEmit()"
 >
@@ -91,7 +91,7 @@
 								<ss-lib-checkbox
 									[formControl]="masterCheckboxCtrl"
 									[indeterminate]="
-										getMasterCheckboxIndeterminate()
+										isMasterCheckboxIndeterminate()
 									"
 								/>
 								<ss-lib-text
@@ -223,7 +223,7 @@
 										ss-lib-tooltip
 										[icon]="IconType.Info"
 										[position]="TooltipPosition.Top"
-										[tooltipText]="planTooltipText"
+										[tooltipText]="planTooltipText()"
 										(mouseenter)="
 											onPlanInfoEnter(subColumnId)
 										"

@@ -2,10 +2,11 @@ import {
 	ChangeDetectionStrategy,
 	ChangeDetectorRef,
 	Component,
+	computed,
 	effect,
 	inject,
 	input,
-	InputSignal,
+	signal,
 } from '@angular/core';
 import {
 	Align,
@@ -37,7 +38,8 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { tap } from 'rxjs';
+import { tap, debounceTime, switchMap } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
@@ -56,6 +58,7 @@ import {
 	OrderAnOutfitRequest,
 } from '@app/core/models/production-plan/order-an-outfit-request';
 import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-operation-plan-table',
@@ -93,33 +96,69 @@ export class OperationPlanTableComponent {
 	private readonly operationPlanService = inject(OperationPlanService);
 	protected readonly operationPlanState = inject(OperationPlanState);
 
-	public planItems: InputSignal<OperationPlanItem[]> = input.required();
-	public days: InputSignal<IDay[]> = input.required();
-	public total: InputSignal<number> = input.required();
-	public totalItems: InputSignal<number> = input.required();
-	public planTooltipText =
-		'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
+	// Inputs
+	public planItems = input.required<OperationPlanItem[]>();
+	public days = input.required<IDay[]>();
+	public total = input.required<number>();
+	public totalItems = input.required<number>();
 
-	public productionSectionIds: number[] | null = null;
+	// Signals
+	private readonly planInfoSubject = new Subject<string>();
+	private readonly planTooltipTextSignal = signal<string>(
+		'Чтобы проверить общее количество готовой продукции, примените фильтр по участку'
+	);
 
+	private readonly productionSectionIdsSignal = signal<number[] | null>(null);
+	private readonly popupVisibleSignal = signal<boolean>(false);
+
+	// Computed values
+	public readonly planTooltipText = this.planTooltipTextSignal.asReadonly();
+	public readonly productionSectionIds =
+		this.productionSectionIdsSignal.asReadonly();
+
+	public readonly popupVisible = this.popupVisibleSignal.asReadonly();
+
+	// Table state
 	public readonly visibleColumnsIds =
 		this.tableStateService.visibleColumnsIds;
 
 	public readonly data = this.tableStateService.data;
 	public readonly visibleColumns = this.tableStateService.visibleColumns;
-
 	public readonly masterCheckboxCtrl =
 		this.tableStateService.getMasterCheckboxCtrl();
 
 	public readonly rowCheckboxes = this.tableStateService.getRowCheckboxes();
 
+	// Computed selected count
+	public readonly selectedCount = toSignal(
+		this.rowCheckboxes.valueChanges.pipe(
+			map((value) => value.filter((ctrl) => ctrl).length)
+		),
+		{ initialValue: 0 }
+	);
+
+	// Computed master checkbox state
+	public readonly isMasterCheckboxIndeterminate = computed(() =>
+		this.tableStateService.isMasterCheckboxIndeterminate()
+	);
+
+	// Computed selected IDs
+	public readonly selectedIds = toSignal(
+		this.rowCheckboxes.valueChanges.pipe(
+			map((value) =>
+				this.data()
+					.map((row, idx) => (value[idx] ? row.id : null))
+					.filter((id): id is number => id !== null)
+			)
+		),
+		{ initialValue: [] as number[] }
+	);
+
+	// Constants
 	protected readonly Colors = Colors;
 	protected readonly TextWeight = TextWeight;
 	protected readonly TextType = TextType;
 	protected readonly Align = Align;
-
-	public popupVisible = false;
-
 	protected readonly ButtonType = ButtonType;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
@@ -127,66 +166,31 @@ export class OperationPlanTableComponent {
 	protected readonly TooltipPosition = TooltipPosition;
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
-		toSignal(
-			this.masterCheckboxCtrl.valueChanges.pipe(
-				tap((value: boolean | null) =>
-					this.tableStateService.onMasterCheckboxChange(value)
-				)
-			)
-		);
-
-		toSignal(
-			this.rowCheckboxes.valueChanges.pipe(
-				tap((value) => {
-					const count = value.filter((ctrl) => ctrl).length;
-
-					if (count > 0 && !this.popupVisible) {
-						this.popupVisible = true;
-					}
-
-					this.tableStateService.updateMasterCheckboxState();
-				})
-			)
-		);
-
-		effect(() => {
-			const columnOperPlanConfig = generateColumnOperationPlanConfig(
-				this.planItems(),
-				this.days()
-			);
-
-			this.tableStateService.initialize(
-				this.planItems(),
-				columnOperPlanConfig
-			);
-		});
-
-		this.operationPlanState.filterValueStore$.subscribe((filters) => {
-			if (filters?.productionSectionIds) {
-				this.productionSectionIds = filters.productionSectionIds;
-			} else {
-				this.productionSectionIds = null;
-			}
-		});
+		this.initializeCheckboxHandlers();
+		this.initializeTableConfig();
+		this.initializeFilterSubscription();
+		this.initializeTooltipDebouncing();
 	}
 
-	protected get getSelectedElemCount(): number {
-		return this.rowCheckboxes.value.filter((ctrl) => ctrl).length;
-	}
-
+	// Public methods
 	public isSubColumn(columnId: string): boolean {
-		return this.visibleColumns().some(
-			(column) =>
-				column.subColumns && column.subColumns.includes(columnId)
+		return this.visibleColumns().some((column) =>
+			column.subColumns?.includes(columnId)
 		);
-	}
-
-	public getMasterCheckboxIndeterminate(): boolean {
-		return this.tableStateService.isMasterCheckboxIndeterminate();
 	}
 
 	public formatColumnName(name: string): string {
-		if (name.match(/\d{2}-\d{2}$/)) {
+		// Проверяем, является ли name датой в формате MM-DD
+		const dateMatch = name.match(/^(\d{2})-(\d{2})$/);
+
+		if (dateMatch) {
+			return `${dateMatch[1]}.${dateMatch[2]}`;
+		}
+
+		// Проверяем, есть ли дата в конце строки (старый формат)
+		const endMatch = name.match(/\d{2}-\d{2}$/);
+
+		if (endMatch) {
 			const [, month, day] = name.split('-');
 
 			return `${month}.${day}`;
@@ -198,30 +202,34 @@ export class OperationPlanTableComponent {
 	public isWmsUpload(columnId: string): boolean {
 		return (
 			this.days().find((day) => day.day.startsWith(columnId))
-				?.isWmsUpload || false
+				?.isWmsUpload ?? false
 		);
 	}
 
 	public getSubColumnName(subColumnId: string): string {
-		if (subColumnId.startsWith('planQuantity')) {
-			return 'План';
+		if (subColumnId.startsWith('planQuantity-')) {
+			const date = subColumnId.slice(12); // Убираем 'planQuantity-' (12 символов)
+			const match = date.match(/^(\d{2})-(\d{2})$/);
+
+			return match ? `${match[1]}.${match[2]}` : 'План';
 		}
 
-		if (subColumnId.startsWith('factQuantity')) {
-			return 'Факт';
+		if (subColumnId.startsWith('factQuantity-')) {
+			const date = subColumnId.slice(12); // Убираем 'factQuantity-' (12 символов)
+			const match = date.match(/^(\d{2})-(\d{2})$/);
+
+			return match ? `${match[1]}.${match[2]}` : 'Факт';
 		}
 
 		return subColumnId;
 	}
 
 	public openCalculationOfRawMaterialsForCheckList(day: string): void {
-		const tovIds = this.getSelectedIds();
-
 		const param: UpdateRawMaterialsData = {
 			day,
 			weekId: this.operationPlanState.weekId$.value!,
-			total: tovIds.length,
-			tovIds,
+			total: this.selectedIds().length,
+			tovIds: this.selectedIds(),
 		};
 
 		this.operationPlanPopup.openCalculationOfRawMaterials(param);
@@ -230,9 +238,7 @@ export class OperationPlanTableComponent {
 	public openCalculationOfRawMaterialsForColumn(columnName: string): void {
 		const rawFilter: OperationPlanRequest & Pagination =
 			this.operationPlanState.filterValueStore$.value!;
-
 		const weekId = this.operationPlanState.weekId$.value!;
-
 		const data = this.days().find((day) =>
 			day.day.startsWith(columnName.slice(5))
 		)!;
@@ -247,15 +253,9 @@ export class OperationPlanTableComponent {
 		this.operationPlanPopup.openCalculationOfRawMaterials(param);
 	}
 
-	private getSelectedIds(): number[] {
-		return this.data()
-			.map((row, idx) => (this.rowCheckboxes.value[idx] ? row.id : null))
-			.filter((id): id is number => id !== null);
-	}
-
 	protected deleteItemsTov(): void {
 		this.operationPlanService
-			.deleteItemsTov(this.getSelectedIds())
+			.deleteItemsTov(this.selectedIds())
 			.pipe(untilDestroyed(this))
 			.subscribe();
 	}
@@ -268,7 +268,6 @@ export class OperationPlanTableComponent {
 		form.target = 'NewWindow';
 		form.id = 'ReceipTermsTree';
 
-		// Добавляем все параметры кроме linkToModule
 		Object.entries(params).forEach(([key, value]) => {
 			if (key === 'linkToModule') {
 				return;
@@ -278,13 +277,11 @@ export class OperationPlanTableComponent {
 
 			formInput.type = 'hidden';
 			formInput.name = key;
-			formInput.value =
-				value !== undefined && value !== null ? String(value) : '';
+			formInput.value = value?.toString() ?? '';
 			form.appendChild(formInput);
 		});
 
 		document.body.appendChild(form);
-
 		const features =
 			'resizable=yes,status=no,scroll=no,help=no,center=yes,width=460,height=200,menubar=no,directories=no,location=no,modal=yes';
 		const newWindow = window.open('', 'NewWindow', features);
@@ -299,6 +296,7 @@ export class OperationPlanTableComponent {
 	}
 
 	protected popupCloseEmit(): void {
+		this.popupVisibleSignal.set(false);
 		this.tableStateService.onMasterCheckboxChange(false);
 	}
 
@@ -306,9 +304,7 @@ export class OperationPlanTableComponent {
 		const data = this.days().find((day) =>
 			day.day.startsWith(columnId.slice(5))
 		)!;
-		const params: OrderAnOutfitRequest = {
-			date: data.day!,
-		};
+		const params: OrderAnOutfitRequest = { date: data.day! };
 
 		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
 			this.openOrderAnOutfit(item);
@@ -316,10 +312,9 @@ export class OperationPlanTableComponent {
 	}
 
 	protected orderAnOutfitForCheckList(day: IDay): void {
-		const ids = this.getSelectedIds();
 		const params: OrderAnOutfitRequest = {
 			date: day.day,
-			ids,
+			ids: this.selectedIds(),
 		};
 
 		this.operationPlanService.orderAnOutfit(params).subscribe((item) => {
@@ -353,22 +348,91 @@ export class OperationPlanTableComponent {
 	}
 
 	protected onPlanInfoEnter(date: string): void {
-		if (this.productionSectionIds) {
-			this.operationPlanService
-				.getPlanInfo(
-					this.operationPlanState.weekId$.value!,
-					date.slice(-10),
-					this.productionSectionIds
+		this.planInfoSubject.next(date);
+	}
+
+	// Private methods
+	private initializeCheckboxHandlers(): void {
+		toSignal(
+			this.masterCheckboxCtrl.valueChanges.pipe(
+				tap((value) =>
+					this.tableStateService.onMasterCheckboxChange(value)
 				)
-				.subscribe((res) => {
-					this.planTooltipText = `Всего по выбранным участкам  — ${
-						res.planDayTotalQuantity
-					}`;
-					this.changeDetectorRef.detectChanges();
-				});
-		} else {
-			this.planTooltipText =
-				'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
+			)
+		);
+
+		toSignal(
+			this.rowCheckboxes.valueChanges.pipe(
+				tap((value) => {
+					const count = value.filter((ctrl) => ctrl).length;
+
+					if (count > 0 && !this.popupVisibleSignal()) {
+						this.popupVisibleSignal.set(true);
+					} else if (count === 0) {
+						this.popupVisibleSignal.set(false);
+					}
+
+					this.tableStateService.updateMasterCheckboxState();
+				})
+			)
+		);
+	}
+
+	private initializeTableConfig(): void {
+		effect(() => {
+			const columnOperPlanConfig = generateColumnOperationPlanConfig(
+				this.planItems(),
+				this.days()
+			);
+
+			this.tableStateService.initialize(
+				this.planItems(),
+				columnOperPlanConfig
+			);
+		});
+	}
+
+	private initializeFilterSubscription(): void {
+		this.operationPlanState.filterValueStore$.subscribe((filters) => {
+			this.productionSectionIdsSignal.set(
+				filters?.productionSectionIds ?? null
+			);
+		});
+	}
+
+	private initializeTooltipDebouncing(): void {
+		this.planInfoSubject
+			.pipe(
+				debounceTime(300),
+				switchMap((date) => this.loadPlanInfo(date)),
+				untilDestroyed(this)
+			)
+			.subscribe();
+	}
+
+	private loadPlanInfo(date: string): Observable<void> {
+		if (!this.productionSectionIds()) {
+			this.planTooltipTextSignal.set(
+				'Чтобы проверить общее количество готовой продукции, примените фильтр по участку'
+			);
+
+			return of(undefined);
 		}
+
+		return this.operationPlanService
+			.getPlanInfo(
+				this.operationPlanState.weekId$.value!,
+				date.slice(-10),
+				this.productionSectionIds()!
+			)
+			.pipe(
+				tap((res) => {
+					this.planTooltipTextSignal.set(
+						`Всего по выбранным участкам  — ${res.planDayTotalQuantity}`
+					);
+					this.changeDetectorRef.detectChanges();
+				}),
+				switchMap(() => of(undefined))
+			);
 	}
 }
