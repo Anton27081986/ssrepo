@@ -85,16 +85,16 @@ export class CompletedWorkActsTableComponent {
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 
-	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
-		const savedConfig: TableColumnConfig[] | null =
-			this.localStorageService.getItem<TableColumnConfig[] | null>(
-				this.storageName
-			);
+	protected savedConfig: TableColumnConfig[] | null =
+		this.localStorageService.getItem<TableColumnConfig[] | null>(
+			this.storageName
+		);
 
+	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		effect(() => {
 			this.tableStateService.initialize(
 				this.actsItems(),
-				savedConfig || columnCompletedWorkActsConfigs
+				this.savedConfig || columnCompletedWorkActsConfigs
 			);
 		});
 
@@ -103,6 +103,8 @@ export class CompletedWorkActsTableComponent {
 				this.storageName,
 				this.tableStateService.visibleColumns()
 			);
+
+			this.savedConfig = [...this.tableStateService.visibleColumns()];
 		});
 	}
 
