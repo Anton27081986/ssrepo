@@ -93,23 +93,21 @@
 							? 'Обязательное поле'
 							: undefined
 					"
-                    (focusout)="
+					(focusout)="
 						resetValueControl(
 							$event,
 							addSpecificationForm.controls.projectId,
 							'project'
 						)
 					"
-                    (input)="
+					(input)="
 						resetValueControl(
 							$event,
 							addSpecificationForm.controls.projectId,
 							'project'
 						)
 					"
-					(select)="
-						onProjectSelect($event)
-					"
+					(select)="onProjectSelect($event)"
 					(click)="
 						addSpecificationForm.controls.projectId.setErrors(null)
 					"
@@ -173,11 +171,7 @@
 							'mySection'
 						)
 					"
-					(select)="
-						addSpecificationForm.controls.sectionId.setValue(
-							$event.id
-						)
-					"
+					(select)="onSectionSelect($event)"
 					(click)="
 						addSpecificationForm.controls.sectionId.setErrors(null)
 					"
