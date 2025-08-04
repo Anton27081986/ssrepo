@@ -137,8 +137,23 @@ export class CompletedWorkActsFacadeService {
 
 					return this.actsApiService.getSpecifications(id);
 				}),
-				tap((specifications) => {
-					this.specifications.next(specifications.items);
+				tap<{
+					totalAmount: number;
+					items: ICompletedWorkActSpecification[];
+				}>((specifications) => {
+					this.specifications.next(
+						specifications.items.map((item) => {
+							return {
+								...item,
+								faObject: item.faObject
+									? {
+											...item.faObject,
+											name: `${item.faObject?.name}, ${item.faAsset?.name || ''}`,
+										}
+									: undefined,
+							} as ICompletedWorkActSpecification;
+						})
+					);
 					this.specificationsTotalAmount.next(
 						specifications.totalAmount
 					);
