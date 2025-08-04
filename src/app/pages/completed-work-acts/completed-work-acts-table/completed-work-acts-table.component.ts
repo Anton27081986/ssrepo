@@ -10,9 +10,9 @@ import {
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	Align,
-	Colors,
+	Colors, IconType,
 	LinkComponent,
-	SsTableState,
+	SsTableState, StatusIconComponent,
 	TableCellDirective,
 	TableDirective,
 	TableHeadDirective,
@@ -38,20 +38,21 @@ import { TableColumnConfig } from '@front-library/components/lib/components/tabl
 @Component({
 	selector: 'app-completed-work-acts-table',
 	standalone: true,
-	imports: [
-		TableDirective,
-		TableHeadDirective,
-		TableThGroupComponent,
-		TextComponent,
-		ThComponent,
-		TableCellDirective,
-		TdComponent,
-		TrComponent,
-		DatePipe,
-		LinkComponent,
-		TooltipDirective,
-		NumWithSpacesPipe,
-	],
+    imports: [
+        TableDirective,
+        TableHeadDirective,
+        TableThGroupComponent,
+        TextComponent,
+        ThComponent,
+        TableCellDirective,
+        TdComponent,
+        TrComponent,
+        DatePipe,
+        LinkComponent,
+        TooltipDirective,
+        NumWithSpacesPipe,
+        StatusIconComponent,
+    ],
 	templateUrl: './completed-work-acts-table.component.html',
 	styleUrl: './completed-work-acts-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -117,4 +118,6 @@ export class CompletedWorkActsTableComponent {
 			window.open(url, '_blank');
 		}
 	}
+
+	protected readonly IconType = IconType;
 }
