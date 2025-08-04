@@ -16,8 +16,6 @@ import {
 	DropdownItemComponent,
 	DropdownListComponent,
 	ExtraSize,
-	HintComponent,
-	HintType,
 	IconComponent,
 	IconType,
 	PopoverTriggerForDirective,
@@ -76,7 +74,6 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 		TableHeadDirective,
 		DatePipe,
 		OperationPlanTableTbodyComponent,
-		HintComponent,
 		UtilityButtonComponent,
 		NgIf,
 		TooltipDirective,
@@ -123,7 +120,6 @@ export class OperationPlanTableComponent {
 	protected readonly ButtonType = ButtonType;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
-	protected readonly HintType = HintType;
 	protected readonly TooltipPosition = TooltipPosition;
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {

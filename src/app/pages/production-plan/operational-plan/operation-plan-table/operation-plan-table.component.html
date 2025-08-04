@@ -118,15 +118,15 @@
 									</ss-lib-text>
 
 									@if (isWmsUpload(column.name)) {
-										<ss-lib-hint
-											ss-lib-tooltip
-											[type]="HintType.Success"
-											[icon]="IconType.CheckCircle"
-											[position]="TooltipPosition.Top"
-											[tooltipText]="
-												'План выгружен в WMS'
-											"
-										></ss-lib-hint>
+<!--										<ss-lib-hint-->
+<!--											ss-lib-tooltip-->
+<!--											[type]="HintType.Success"-->
+<!--											[icon]="IconType.CheckCircle"-->
+<!--											[position]="TooltipPosition.Top"-->
+<!--											[tooltipText]="-->
+<!--												'План выгружен в WMS'-->
+<!--											"-->
+<!--										></ss-lib-hint>-->
 									}
 								</div>
 								<div class="item-day-utility">
@@ -219,15 +219,15 @@
 									{{ getSubColumnName(subColumnId) }}
 								</ss-lib-text>
 								@if (subColumnId.startsWith('planQuantity')) {
-									<ss-lib-hint
-										ss-lib-tooltip
-										[icon]="IconType.Info"
-										[position]="TooltipPosition.Top"
-										[tooltipText]="planTooltipText"
-										(mouseenter)="
-											onPlanInfoEnter(subColumnId)
-										"
-									></ss-lib-hint>
+<!--									<ss-lib-hint-->
+<!--										ss-lib-tooltip-->
+<!--										[icon]="IconType.Info"-->
+<!--										[position]="TooltipPosition.Top"-->
+<!--										[tooltipText]="planTooltipText"-->
+<!--										(mouseenter)="-->
+<!--											onPlanInfoEnter(subColumnId)-->
+<!--										"-->
+<!--									></ss-lib-hint>-->
 								}
 							</div>
 						</th>
