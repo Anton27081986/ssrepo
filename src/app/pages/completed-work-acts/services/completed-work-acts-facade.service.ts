@@ -19,7 +19,6 @@ import { catchError } from 'rxjs/operators';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Router } from '@angular/router';
-import { environment } from '@environments/environment';
 import { Pagination } from '@app/core/models/production-plan/operation-plan';
 import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-api.service';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
@@ -29,9 +28,8 @@ import { IFilterOption } from '@app/shared/components/filters/filters.component'
 	providedIn: 'root',
 })
 export class CompletedWorkActsFacadeService {
-	public linkToInstruction = environment.production
-		? 'https://erp-dev.ssnab.it/api/static/general/2025/06/04/Инструкция._Реестр_актов_выполненных_работ_01.06.25_(1)_881160e3-a794-4452-8650-c14eb45a5277.docx'
-		: 'https://erp.ssnab.ru/api/static/general/2025/06/04/Инструкция._Реестр_актов_выполненных_работ_01.06.25_(1)_6b4fb14f-984b-4f64-bafa-449f361e4347.docx';
+	public linkToInstruction =
+		'https://erp.ssnab.ru/api/static/general/2025/08/05/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F._%D0%A0%D0%B5%D0%B5%D1%81%D1%82%D1%80_%D0%B0%D0%BA%D1%82%D0%BE%D0%B2_%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%80%D0%B0%D0%B1%D0%BE%D1%82_07.08.25_e2c97bc9-ec2d-45aa-9e89-e601ef097829.docx';
 
 	public filterValueStore$: BehaviorSubject<
 		(ICompletedActsFilter & Pagination) | null
