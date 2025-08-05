@@ -396,7 +396,7 @@ export class CompletedWorkActsFacadeService {
 		if (act) {
 			this.act.next(act);
 		} else {
-			this.getContracts(this.act.value?.providerContractor.id)
+			this.getContracts(this.act?.value?.providerContractor?.id)
 				.pipe(untilDestroyed(this))
 				.subscribe();
 		}
