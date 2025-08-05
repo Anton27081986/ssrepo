@@ -24,7 +24,6 @@ import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
-import { MultiselectV2Component } from '@app/shared/components/multiselect-v2/multiselect-v2.component';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { MultiselectAutocompleteV2Component } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.component';
@@ -45,7 +44,6 @@ import { MultiselectAutocompleteV2Component } from '@app/shared/components/input
 		SearchInputComponent,
 		IconComponent,
 		SelectV2Component,
-		MultiselectV2Component,
 		TextareaComponent,
 		DatePipe,
 		NgIf,
