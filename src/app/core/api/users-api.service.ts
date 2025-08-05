@@ -13,11 +13,17 @@ export class UsersApiService {
 	constructor(private readonly http: HttpClient) {}
 
 	/** Поиск пользователей по ФИО */
-	public getUsersByFIO(title: string): Observable<any> {
+	public getUsersByFIO(title: string, filter?: number): Observable<any> {
+		let params = new HttpParams().set('query', title);
+
+		if (filter) {
+			params = params.set('filter', filter);
+		}
+
 		return this.http.get<any>(
 			`${environment.apiUrl}/api/auth/users/search`,
 			{
-				params: new HttpParams().set('query', title),
+				params,
 			}
 		);
 	}
