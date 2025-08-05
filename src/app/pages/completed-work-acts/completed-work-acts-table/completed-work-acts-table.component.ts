@@ -10,9 +10,11 @@ import {
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	Align,
-	Colors, IconType,
+	Colors,
+	IconType,
 	LinkComponent,
-	SsTableState, StatusIconComponent,
+	SsTableState,
+	StatusIconComponent,
 	TableCellDirective,
 	TableDirective,
 	TableHeadDirective,
@@ -29,7 +31,6 @@ import {
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { columnCompletedWorkActsConfigs } from '@app/pages/completed-work-acts/completed-work-acts-table/column-config';
 import { DatePipe } from '@angular/common';
-import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
@@ -38,21 +39,21 @@ import { TableColumnConfig } from '@front-library/components/lib/components/tabl
 @Component({
 	selector: 'app-completed-work-acts-table',
 	standalone: true,
-    imports: [
-        TableDirective,
-        TableHeadDirective,
-        TableThGroupComponent,
-        TextComponent,
-        ThComponent,
-        TableCellDirective,
-        TdComponent,
-        TrComponent,
-        DatePipe,
-        LinkComponent,
-        TooltipDirective,
-        NumWithSpacesPipe,
-        StatusIconComponent,
-    ],
+	imports: [
+		TableDirective,
+		TableHeadDirective,
+		TableThGroupComponent,
+		TextComponent,
+		ThComponent,
+		TableCellDirective,
+		TdComponent,
+		TrComponent,
+		DatePipe,
+		LinkComponent,
+		TooltipDirective,
+		NumWithSpacesPipe,
+		StatusIconComponent,
+	],
 	templateUrl: './completed-work-acts-table.component.html',
 	styleUrl: './completed-work-acts-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,9 +62,6 @@ import { TableColumnConfig } from '@front-library/components/lib/components/tabl
 export class CompletedWorkActsTableComponent {
 	private readonly storageName: string = 'CWA-table-config';
 	private readonly tableStateService = inject(SsTableState);
-
-	private readonly completedWorkActsFacade: CompletedWorkActsFacadeService =
-		inject(CompletedWorkActsFacadeService);
 
 	private readonly localStorageService: LocalStorageService =
 		inject(LocalStorageService);
@@ -91,6 +89,7 @@ export class CompletedWorkActsTableComponent {
 			this.storageName
 		);
 
+	protected readonly IconType = IconType;
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		effect(() => {
 			this.tableStateService.initialize(
@@ -111,6 +110,7 @@ export class CompletedWorkActsTableComponent {
 
 	public openAct(id: string): void {
 		if (id) {
+			this.localStorageService.setItem('returnUrl', this.router);
 			const url = this.router.serializeUrl(
 				this.router.createUrlTree(['completed-work-acts', `${id}`])
 			);
@@ -118,6 +118,4 @@ export class CompletedWorkActsTableComponent {
 			window.open(url, '_blank');
 		}
 	}
-
-	protected readonly IconType = IconType;
 }
