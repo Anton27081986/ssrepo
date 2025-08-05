@@ -22,6 +22,7 @@ import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { Pagination } from '@app/core/models/production-plan/operation-plan';
 import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-api.service';
+import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 @UntilDestroy()
 @Injectable({
@@ -79,7 +80,7 @@ export class CompletedWorkActsFacadeService {
 	private readonly actPermissions = new BehaviorSubject<string[]>([]);
 	public actPermissions$ = this.actPermissions.asObservable();
 
-	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public finDocs$ = this.finDocs.asObservable();
 
 	constructor(
@@ -132,8 +133,6 @@ export class CompletedWorkActsFacadeService {
 					this.getContracts(data.providerContractor?.id)
 						.pipe(untilDestroyed(this))
 						.subscribe();
-
-					this.finDocs.next(data.finDocOrders);
 
 					return this.actsApiService.getSpecifications(id);
 				}),
@@ -269,18 +268,44 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public getFinDocs(
-		providerContractorId: number,
+		providerContractorId: number | null,
 		externalActDate: string | null
 	): void {
-		this.searchFacade
-			.getFinDocOrders(providerContractorId, externalActDate)
-			.pipe(
-				tap((res) => {
-					this.finDocs.next(res.items);
-				}),
-				untilDestroyed(this)
-			)
-			.subscribe();
+		if (providerContractorId) {
+			this.searchFacade
+				.getFinDocOrders(providerContractorId, externalActDate)
+				.pipe(
+					tap((res) => {
+						const docs = res.items.reduce(
+							(
+								previousValue: IFilterOption[],
+								currentValue: IFilterOption
+							) => {
+								const nameArr = currentValue.name.split('|');
+								const time = nameArr[2]
+									.slice(0, -9)
+									.trim()
+									.split('/');
+
+								nameArr[2] = ` ${[time[1], time[0], time[2]].join('.')} `;
+
+								return [
+									...previousValue,
+									{
+										...currentValue,
+										name: nameArr.join('|'),
+									},
+								];
+							},
+							[]
+						);
+
+						this.finDocs.next(docs);
+					}),
+					untilDestroyed(this)
+				)
+				.subscribe();
+		}
 	}
 
 	public toArchiveAct(): void {
