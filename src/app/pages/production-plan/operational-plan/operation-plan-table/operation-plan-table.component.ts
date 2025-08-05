@@ -31,6 +31,8 @@ import {
 	TooltipDirective,
 	TooltipPosition,
 	IndicatorChecklistPopupComponent,
+	StatusIconComponent,
+	Status,
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
@@ -78,6 +80,7 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 		NgIf,
 		TooltipDirective,
 		IndicatorChecklistPopupComponent,
+		StatusIconComponent,
 	],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
@@ -150,7 +153,7 @@ export class OperationPlanTableComponent {
 				this.planItems(),
 				this.days()
 			);
-
+			console.log(columnOperPlanConfig);
 			this.tableStateService.initialize(
 				this.planItems(),
 				columnOperPlanConfig
@@ -367,4 +370,6 @@ export class OperationPlanTableComponent {
 				'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
 		}
 	}
+
+	protected readonly Status = Status;
 }
