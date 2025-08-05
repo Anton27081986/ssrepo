@@ -120,9 +120,22 @@ export class CompletedWorkActsComponent {
 						Object.entries(criteria).filter(([_, v]) => v !== null)
 					);
 
+					console.log(this.activatedRoute.snapshot.queryParams);
+
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
-						queryParams: this.activatedRoute.snapshot.queryParams,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							DateFrom: dateFrom,
+							DateTo: dateTo,
+							UploadDateFrom: uploadDateFrom,
+							UploadDateTo: uploadDateTo,
+							Additional: additional ? 1 : 0,
+							WithArchive: archive,
+							TotalAmount: totalAmount
+								? totalAmount.replace(',', '.')
+								: null,
+						},
 						queryParamsHandling: 'merge',
 					});
 

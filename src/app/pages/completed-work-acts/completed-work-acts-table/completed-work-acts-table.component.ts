@@ -110,7 +110,7 @@ export class CompletedWorkActsTableComponent {
 
 	public openAct(id: string): void {
 		if (id) {
-			this.localStorageService.setItem('returnUrl', this.router);
+			this.localStorageService.setItem('returnUrl', this.router.url);
 			const url = this.router.serializeUrl(
 				this.router.createUrlTree(['completed-work-acts', `${id}`])
 			);
