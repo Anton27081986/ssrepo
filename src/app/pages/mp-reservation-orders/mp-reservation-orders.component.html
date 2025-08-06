@@ -324,7 +324,7 @@
 							>
 								<div>
 									{{
-										prodDate.productionDate
+										prodDate.productionDate === emptyDate ? '-' : prodDate.productionDate
 											| date: 'dd.MM.yyyy'
 									}}
 								</div>
@@ -341,7 +341,7 @@
 							>
 								<div>
 									{{
-										provDate.provisionDate
+                                        provDate.provisionDate === emptyDate ? '-' : provDate.provisionDate
 											| date: 'dd.MM.yyyy'
 									}}
 								</div>

@@ -50,8 +50,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
-import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permissions';
 import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
+
+const EmptyDate = '0001-01-01T00:00:00'
 
 @UntilDestroy()
 @Component({
@@ -139,20 +140,26 @@ export class MpReservationOrderCardComponent implements OnInit {
 										2,
 									)
 								: '-',
-							productionDate: item.productionDate
-								? item.productionDate
-										.split('T')[0]
-										.split('-')
-										.reverse()
-										.join('.')
-								: '-',
-							provisionDate: item.provisionDate
-								? item.provisionDate
-										.split('T')[0]
-										.split('-')
-										.reverse()
-										.join('.')
-								: '-',
+							productionDate:
+								item.productionDate === EmptyDate
+									? '-'
+									: item.productionDate
+										? item.productionDate
+												.split('T')[0]
+												.split('-')
+												.reverse()
+												.join('.')
+										: '-',
+							provisionDate:
+								item.provisionDate === EmptyDate
+									? '-'
+									: item.provisionDate
+										? item.provisionDate
+												.split('T')[0]
+												.split('-')
+												.reverse()
+												.join('.')
+										: '-',
 						} as unknown as ITableItem;
 					}) || [],
 				);

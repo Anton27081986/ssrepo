@@ -58,6 +58,8 @@ export class MpReservationOrdersCardPopupChangeProvisionDateComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 
+	public readonly emptyDate = '0001-01-01T00:00:00';
+
 	public provisionDateForm: FormGroup<{
 		rows: FormArray<
 			FormGroup<{
