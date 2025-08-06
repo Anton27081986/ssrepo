@@ -10,50 +10,52 @@
 		</div>
 
 		<div class="production-plan__tabs">
-			<ss-lib-tabs
-				[tabs]="tabs"
-				[(activeTabIndex)]="activeTabIndex"
-				(changeIndexEmit)="changeTabIndex($event)"
-			></ss-lib-tabs>
+			<div class="production-plan__tabs-block">
+				<ss-lib-tabs
+					[tabs]="tabs"
+					[height]="50"
+					[(activeTabIndex)]="activeTabIndex"
+					(changeIndexEmit)="changeTabIndex($event)"
+				></ss-lib-tabs>
+			</div>
 
-			<ng-template #actions>
+			<div class="production-plan__tabs-buttons">
 				<ss-lib-button
 					[popoverTriggerFor]="listActions"
 					[iconPosition]="IconPosition.End"
 					[style.width]="'121px'"
 					[type]="ButtonType.Secondary"
-					[size]="ExtraSize.md"
+					[size]="ExtraSize.lg"
 					[text]="'Действия'"
 					[icon]="IconType.ChevronDown"
 				></ss-lib-button>
 				<ss-lib-button
 					*ngIf="operationPlanState.getHasPermissionEdit"
-					[style.width]="'220px'"
-					[size]="ExtraSize.md"
-					[text]="'Добавить полуфабрикат'"
+					[style.width]="'143px'"
+					[size]="ExtraSize.lg"
+					[text]="'Добавить ТП'"
 					[icon]="IconType.Plus"
 					(click)="addSemiManufactures()"
 				></ss-lib-button>
-
-				<ss-lib-dropdown-list #listActions>
-					<ss-lib-dropdown-item
-						*ngIf="operationPlanState.getHasPermissionUploadOneS"
-						[label]="'Выгрузить 1С'"
-						(click)="upload1C()"
-					/>
-					<ss-lib-dropdown-item
-						[label]="'Сводный отчет'"
-						(click)="downloadReport()"
-					/>
-					<ss-lib-dropdown-item
-						[label]="'Выгрузить Excel'"
-						(click)="downloadExel()"
-					/>
-				</ss-lib-dropdown-list>
-			</ng-template>
+			</div>
 		</div>
 	</div>
 	<div class="production-plan__body">
 		<router-outlet></router-outlet>
 	</div>
 </div>
+<ss-lib-dropdown-list #listActions>
+	<ss-lib-dropdown-item
+		*ngIf="operationPlanState.getHasPermissionUploadOneS"
+		[label]="'Выгрузить 1С'"
+		(click)="upload1C()"
+	/>
+	<ss-lib-dropdown-item
+		[label]="'Сводный отчет'"
+		(click)="downloadReport()"
+	/>
+	<ss-lib-dropdown-item
+		[label]="'Выгрузить Excel'"
+		(click)="downloadExel()"
+	/>
+</ss-lib-dropdown-list>
