@@ -1,10 +1,4 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	Input,
-	OnInit,
-	Signal,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import {
@@ -30,9 +24,9 @@ import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
-import { MultiselectV2Component } from '@app/shared/components/multiselect-v2/multiselect-v2.component';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { MultiselectAutocompleteV2Component } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.component';
 
 @UntilDestroy()
 @Component({
@@ -50,16 +44,20 @@ import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 		SearchInputComponent,
 		IconComponent,
 		SelectV2Component,
-		MultiselectV2Component,
 		TextareaComponent,
 		DatePipe,
 		NgIf,
 		NgForOf,
+		MultiselectAutocompleteV2Component,
 	],
 })
-export class CompletedWorkActEditComponent implements OnInit {
+export class CompletedWorkActEditComponent {
 	@Input()
 	public specification: ICompletedWorkActSpecification | null = null;
+
+	public finDocsQueryControl: FormControl<string | null> = new FormControl<
+		string | null
+	>(null);
 
 	protected editActForm!: FormGroup<{
 		dateUpload: FormControl<string | null>;
@@ -115,6 +113,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 	protected contract: IDictionaryItemDto | undefined;
 
 	protected finDocOrders: IFilterOption[] = [];
+	private isFinDocsLoaded = false;
 
 	protected readonly Permissions = Permissions;
 	constructor(
@@ -166,13 +165,6 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.editActForm.controls.currency.setValue(act.currency);
 					this.editActForm.controls.comment.setValue(act.comment);
 
-					if (act.providerContractor?.id) {
-						this.completedWorkActsFacade.getFinDocs(
-							act.providerContractor.id,
-							act.externalActDate
-						);
-					}
-
 					if (act.applicantUser) {
 						this.applicantUser = act.applicantUser;
 					}
@@ -186,54 +178,54 @@ export class CompletedWorkActEditComponent implements OnInit {
 					}
 				}
 			});
-	}
 
-	public ngOnInit(): void {
+		this.finDocsQueryControl.valueChanges.pipe().subscribe((query) => {
+			const checked = new Set(
+				(this.editActForm.value.finDocOrderIds || []).map((finDoc) =>
+					typeof finDoc === 'number' ? finDoc : finDoc.id
+				)
+			);
+
+			if (query) {
+				this.finDocOrders =
+					this.completedWorkActsFacade.finDocs.value.filter(
+						(doc) =>
+							![...checked].find((item) => item === doc.id) &&
+							doc.name.toLowerCase().includes(query.toLowerCase())
+					);
+			}
+		});
+
 		this.completedWorkActsFacade.finDocs$
 			.pipe(untilDestroyed(this))
 			.subscribe((docs) => {
 				if (docs) {
-					const checked = this.act()?.finDocOrders || [];
-
-					this.finDocOrders = docs.reduce(
-						(
-							previousValue: IFilterOption[],
-							currentValue: IFilterOption
-						) => {
-							const selected = checked.find(
-								(item) => item.id === currentValue.id
-							);
-
-							const nameArr = currentValue.name.split('|');
-							const time = nameArr[2]
-								.slice(0, -9)
-								.trim()
-								.split('/');
-
-							nameArr[2] = ` ${[time[1], time[0], time[2]].join('.')} `;
-
-							if (selected) {
-								return [
-									...previousValue,
-									{
-										...currentValue,
-										name: nameArr.join('|'),
-										checked: true,
-									},
-								];
-							}
-
-							return [
-								...previousValue,
-								{ ...currentValue, name: nameArr.join('|') },
-							];
-						},
-						[]
+					const checked = new Set(
+						(this.editActForm.value.finDocOrderIds || []).map(
+							(finDoc) =>
+								typeof finDoc === 'number' ? finDoc : finDoc.id
+						)
 					);
+
+					this.finDocOrders =
+						this.completedWorkActsFacade.finDocs.value.filter(
+							(doc) =>
+								![...checked].find((item) => item === doc.id)
+						);
 
 					this.ref.detectChanges();
 				}
 			});
+	}
+
+	public getFinDocs(): void {
+		if (!this.isFinDocsLoaded) {
+			this.completedWorkActsFacade.getFinDocs(
+				this.editActForm.controls.providerContractorId.value,
+				this.act()?.externalActDate || null
+			);
+			this.isFinDocsLoaded = true;
+		}
 	}
 
 	protected switchMode(): void {
@@ -282,20 +274,9 @@ export class CompletedWorkActEditComponent implements OnInit {
 			)
 		);
 
-		const updatedFinDocOrders = this.finDocOrders.map((order) => ({
-			...order,
-			checked: selectedFinDocIds.has(order.id),
-		}));
-
-		this.editActForm.controls.finDocOrderIds.setValue(
-			updatedFinDocOrders.filter((order) => order.checked)
-		);
-
 		const updatedAct: IUpdateAct = {
 			...this.editActForm.value,
-			finDocOrderIds: updatedFinDocOrders
-				.filter((order) => order.checked)
-				.map((order) => order.id),
+			finDocOrderIds: [...selectedFinDocIds],
 			contractId: this.editActForm.value.contract?.id,
 			currencyId: this.editActForm.value.currency?.id,
 			documentIds: this.documents().map((file) => file.id) || [],

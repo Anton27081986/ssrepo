@@ -235,8 +235,18 @@ export class SpecificationModalComponent {
 	protected onDeptSelect(dept: IDictionaryItemDto) {
 		if (dept.id) {
 			this.addSpecificationForm.controls.deptId.setValue(dept.id);
+			this.myDept = dept
 		} else if (this.myDept) {
 			this.addSpecificationForm.controls.deptId.setValue(this.myDept.id);
+		}
+	}
+
+	protected onSectionSelect(section: IDictionaryItemDto) {
+		if (section.id) {
+			this.addSpecificationForm.controls.sectionId.setValue(section.id);
+			this.mySection = section;
+		} else if (this.mySection) {
+			this.addSpecificationForm.controls.sectionId.setValue(this.mySection.id);
 		}
 	}
 

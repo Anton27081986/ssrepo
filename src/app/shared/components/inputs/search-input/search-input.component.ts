@@ -18,6 +18,7 @@ import { AsyncPipe, NgClass } from '@angular/common';
 
 export type searchType =
 	| 'user'
+	| 'user-applicant'
 	| 'user-dictionary'
 	| 'subsector'
 	| 'tovs'
@@ -95,42 +96,6 @@ export class SearchInputComponent {
 
 	@Input()
 	onlyActive = false;
-	//
-	// @Input()
-	// public disabled = false;
-	//
-	// @Input()
-	// public readonly = false;
-	//
-	// @Input()
-	// public label: string | undefined;
-	//
-	// @Input()
-	// public value = '';
-	//
-	// @Input()
-	// public data: string | undefined;
-	//
-	// @Input()
-	// public clear = false;
-	//
-	// @Input()
-	// public placeholder = 'Поиск';
-	//
-	// @Input()
-	// public error: string | undefined;
-	//
-	// @Input()
-	// public searchType: searchType;
-	//
-	// @Input()
-	// public clientId: number | undefined;
-	//
-	// @Input()
-	// selectedItem: IFilterOption | undefined;
-	//
-	// @Input()
-	// onlyActive = false;
 
 	@Output()
 	public select = new EventEmitter<any>();
@@ -169,6 +134,15 @@ export class SearchInputComponent {
 				case 'user':
 					this.searchFacade
 						.getUsers(query)
+						.pipe(untilDestroyed(this))
+						.subscribe((res) => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'user-applicant':
+					this.searchFacade
+						.getUsers(query, 3)
 						.pipe(untilDestroyed(this))
 						.subscribe((res) => {
 							this.found$.next(res.items);

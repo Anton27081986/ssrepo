@@ -19,6 +19,7 @@ import { CorrespondenceComponent } from '@app/widgets/correspondence/corresponde
 import { CompletedWorkActEditComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component';
 import { CompletedWorkActInfoComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component';
 import { CompletedWorkActSpecificationsComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
 
 @UntilDestroy()
 @Component({
@@ -66,6 +67,7 @@ export class CompletedWorkActCardComponent {
 	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly localStorageService: LocalStorageService,
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly modalService: ModalService,
 		private readonly router: Router
@@ -132,7 +134,13 @@ export class CompletedWorkActCardComponent {
 	}
 
 	public toActsList(): void {
-		this.router.navigate([`/completed-work-acts`]);
+		if (this.localStorageService.getItem<string>('returnUrl')) {
+			this.router.navigateByUrl(
+				this.localStorageService.getItem<string>('returnUrl') as string
+			);
+		} else {
+			this.router.navigate([`/completed-work-acts`]);
+		}
 	}
 
 	public hasActions(): boolean {

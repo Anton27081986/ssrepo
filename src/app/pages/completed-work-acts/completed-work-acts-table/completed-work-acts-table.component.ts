@@ -11,6 +11,7 @@ import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	Align,
 	Colors,
+	IconType,
 	LinkComponent,
 	SsTableState,
 	TableCellDirective,
@@ -29,7 +30,6 @@ import {
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { columnCompletedWorkActsConfigs } from '@app/pages/completed-work-acts/completed-work-acts-table/column-config';
 import { DatePipe } from '@angular/common';
-import { CompletedWorkActsFacadeService } from '@app/pages/completed-work-acts/services/completed-work-acts-facade.service';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '@app/core/services/local-storage.service';
@@ -61,9 +61,6 @@ export class CompletedWorkActsTableComponent {
 	private readonly storageName: string = 'CWA-table-config';
 	private readonly tableStateService = inject(SsTableState);
 
-	private readonly completedWorkActsFacade: CompletedWorkActsFacadeService =
-		inject(CompletedWorkActsFacadeService);
-
 	private readonly localStorageService: LocalStorageService =
 		inject(LocalStorageService);
 
@@ -90,6 +87,7 @@ export class CompletedWorkActsTableComponent {
 			this.storageName
 		);
 
+	protected readonly IconType = IconType;
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		effect(() => {
 			this.tableStateService.initialize(
@@ -110,6 +108,7 @@ export class CompletedWorkActsTableComponent {
 
 	public openAct(id: string): void {
 		if (id) {
+			this.localStorageService.setItem('returnUrl', this.router.url);
 			const url = this.router.serializeUrl(
 				this.router.createUrlTree(['completed-work-acts', `${id}`])
 			);

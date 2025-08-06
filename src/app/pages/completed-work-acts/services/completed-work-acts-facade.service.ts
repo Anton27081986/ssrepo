@@ -19,18 +19,17 @@ import { catchError } from 'rxjs/operators';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
 import { Router } from '@angular/router';
-import { environment } from '@environments/environment';
 import { Pagination } from '@app/core/models/production-plan/operation-plan';
 import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-api.service';
+import { IFilterOption } from '@app/shared/components/filters/filters.component';
 
 @UntilDestroy()
 @Injectable({
 	providedIn: 'root',
 })
 export class CompletedWorkActsFacadeService {
-	public linkToInstruction = environment.production
-		? 'https://erp-dev.ssnab.it/api/static/general/2025/06/04/Инструкция._Реестр_актов_выполненных_работ_01.06.25_(1)_881160e3-a794-4452-8650-c14eb45a5277.docx'
-		: 'https://erp.ssnab.ru/api/static/general/2025/06/04/Инструкция._Реестр_актов_выполненных_работ_01.06.25_(1)_6b4fb14f-984b-4f64-bafa-449f361e4347.docx';
+	public linkToInstruction =
+		'https://erp.ssnab.ru/api/static/general/2025/08/05/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F._%D0%A0%D0%B5%D0%B5%D1%81%D1%82%D1%80_%D0%B0%D0%BA%D1%82%D0%BE%D0%B2_%D0%B2%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%80%D0%B0%D0%B1%D0%BE%D1%82_07.08.25_e2c97bc9-ec2d-45aa-9e89-e601ef097829.docx';
 
 	public filterValueStore$: BehaviorSubject<
 		(ICompletedActsFilter & Pagination) | null
@@ -79,7 +78,7 @@ export class CompletedWorkActsFacadeService {
 	private readonly actPermissions = new BehaviorSubject<string[]>([]);
 	public actPermissions$ = this.actPermissions.asObservable();
 
-	private readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
+	readonly finDocs = new BehaviorSubject<IDictionaryItemDto[]>([]);
 	public finDocs$ = this.finDocs.asObservable();
 
 	constructor(
@@ -133,12 +132,25 @@ export class CompletedWorkActsFacadeService {
 						.pipe(untilDestroyed(this))
 						.subscribe();
 
-					this.finDocs.next(data.finDocOrders);
-
 					return this.actsApiService.getSpecifications(id);
 				}),
-				tap((specifications) => {
-					this.specifications.next(specifications.items);
+				tap<{
+					totalAmount: number;
+					items: ICompletedWorkActSpecification[];
+				}>((specifications) => {
+					this.specifications.next(
+						specifications.items.map((item) => {
+							return {
+								...item,
+								faObject: item.faObject
+									? {
+											...item.faObject,
+											name: `${item.faObject?.name}, ${item.faAsset?.name || ''}`,
+										}
+									: undefined,
+							} as ICompletedWorkActSpecification;
+						})
+					);
 					this.specificationsTotalAmount.next(
 						specifications.totalAmount
 					);
@@ -254,18 +266,44 @@ export class CompletedWorkActsFacadeService {
 	}
 
 	public getFinDocs(
-		providerContractorId: number,
+		providerContractorId: number | null,
 		externalActDate: string | null
 	): void {
-		this.searchFacade
-			.getFinDocOrders(providerContractorId, externalActDate)
-			.pipe(
-				tap((res) => {
-					this.finDocs.next(res.items);
-				}),
-				untilDestroyed(this)
-			)
-			.subscribe();
+		if (providerContractorId) {
+			this.searchFacade
+				.getFinDocOrders(providerContractorId, externalActDate)
+				.pipe(
+					tap((res) => {
+						const docs = res.items.reduce(
+							(
+								previousValue: IFilterOption[],
+								currentValue: IFilterOption
+							) => {
+								const nameArr = currentValue.name.split('|');
+								const time = nameArr[2]
+									.slice(0, -9)
+									.trim()
+									.split('/');
+
+								nameArr[2] = ` ${[time[1], time[0], time[2]].join('.')} `;
+
+								return [
+									...previousValue,
+									{
+										...currentValue,
+										name: nameArr.join('|'),
+									},
+								];
+							},
+							[]
+						);
+
+						this.finDocs.next(docs);
+					}),
+					untilDestroyed(this)
+				)
+				.subscribe();
+		}
 	}
 
 	public toArchiveAct(): void {
@@ -356,7 +394,7 @@ export class CompletedWorkActsFacadeService {
 		if (act) {
 			this.act.next(act);
 		} else {
-			this.getContracts(this.act.value?.providerContractor.id)
+			this.getContracts(this.act?.value?.providerContractor?.id)
 				.pipe(untilDestroyed(this))
 				.subscribe();
 		}

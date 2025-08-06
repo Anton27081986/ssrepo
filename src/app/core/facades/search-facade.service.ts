@@ -36,8 +36,8 @@ export class SearchFacadeService {
 			});
 	}
 
-	public getUsers(query: string) {
-		return this.usersApiService.getUsersByFIO(query);
+	public getUsers(query: string, filter?: number) {
+		return this.usersApiService.getUsersByFIO(query, filter);
 	}
 
 	public getRegions(
