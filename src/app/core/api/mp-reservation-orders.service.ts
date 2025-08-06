@@ -43,8 +43,8 @@ export class MpReservationOrdersApiService {
 
 	public getPersonificationById(
 		id: string,
-	): Observable<{ data: IMpReservationOrder }> {
-		return this.http.get<{ data: IMpReservationOrder }>(
+	): Observable<{ data: IMpReservationOrder, permissions: string[] }> {
+		return this.http.get<{ data: IMpReservationOrder, permissions: string[] }>(
 			`${environment.apiUrl}/api/manufacturing/personification/personification/${id}`,
 		);
 	}
@@ -151,6 +151,12 @@ export class MpReservationOrdersApiService {
 		return this.http.post<void>(
 			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
 			body,
+		);
+	}
+
+	public rejectClarification(orderId: number): Observable<void> {
+		return this.http.delete<void>(
+			`${environment.apiUrl}/api/manufacturing/Personification/Personification/${orderId}/alternatives`,
 		);
 	}
 

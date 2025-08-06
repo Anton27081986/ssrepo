@@ -2,13 +2,23 @@
   padding: 16px 12px;
   min-width: 80px;
   position: relative;
+  height: auto;
+}
+
+:host {
+  overflow-y: auto;
+  display: flex;
 }
 
 table {
   width: 100%;
-  overflow-y: auto;
-  max-height: calc(100vh - 413px);
   border-collapse: separate;
   border-spacing: 0;
   padding: 0 8px;
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
 }

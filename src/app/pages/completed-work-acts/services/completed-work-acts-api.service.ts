@@ -19,6 +19,20 @@ export class CompletedWorkActsApiService {
 	public getWorkActsList(
 		request: ICompletedActsFilter & Pagination
 	): Observable<IResponse<ICompletedWorkAct>> {
+		if (request.DateTo) {
+			const date = new Date(request.DateTo);
+
+			date.setDate(date.getDate() + 1);
+			request.DateTo = date.toISOString();
+		}
+
+		if (request.UploadDateTo) {
+			const date = new Date(request.UploadDateTo);
+
+			date.setDate(date.getDate() + 1);
+			request.UploadDateTo = date.toISOString();
+		}
+
 		return this.http.post<IResponse<ICompletedWorkAct>>(
 			`${environment.apiUrl}/api/company/CompletedWorkActs`,
 			request
@@ -185,98 +199,12 @@ export class CompletedWorkActsApiService {
 	}
 
 	public downloadReport(
-		filters: (ICompletedActsFilter & Pagination) | null
+		body: (ICompletedActsFilter & Pagination) | null
 	): Observable<Blob> {
-		let params = new HttpParams();
-
-		if (filters) {
-			if (filters.limit !== null && filters.limit !== undefined) {
-				params = params.set('limit', filters.limit);
-			}
-
-			if (filters.offset !== null && filters.offset !== undefined) {
-				params = params.set('offset', filters.offset);
-			}
-
-			if (filters.DateFrom !== null && filters.DateFrom !== undefined) {
-				params = params.set('DateFrom', filters.DateFrom);
-			}
-
-			if (filters.DateTo !== null && filters.DateTo !== undefined) {
-				params = params.set('DateTo', filters.DateTo);
-			}
-
-			if (
-				filters.UploadDateFrom !== null &&
-				filters.UploadDateFrom !== undefined
-			) {
-				params = params.set('UploadDateFrom', filters.UploadDateFrom);
-			}
-
-			if (
-				filters.UploadDateTo !== null &&
-				filters.UploadDateTo !== undefined
-			) {
-				params = params.set('UploadDateTo', filters.UploadDateTo);
-			}
-
-			if (filters.Id !== null && filters.Id !== undefined) {
-				params = params.set('Id', filters.Id);
-			}
-
-			if (filters.BuUnitId !== null && filters.BuUnitId !== undefined) {
-				params = params.set('BuUnitId', filters.BuUnitId);
-			}
-
-			if (filters.State !== null && filters.State !== undefined) {
-				filters.State.forEach((state) => {
-					params = params.append('State', state);
-				});
-			}
-
-			if (
-				filters.ProviderContractorId !== null &&
-				filters.ProviderContractorId !== undefined
-			) {
-				params = params.set(
-					'ProviderContractorId',
-					filters.ProviderContractorId
-				);
-			}
-
-			if (
-				filters.ApplicantUserId !== null &&
-				filters.ApplicantUserId !== undefined
-			) {
-				params = params.set('ApplicantUserId', filters.ApplicantUserId);
-			}
-
-			if (
-				filters.TotalAmount !== null &&
-				filters.TotalAmount !== undefined
-			) {
-				params = params.set('TotalAmount', filters.TotalAmount);
-			}
-
-			if (
-				filters.Additional !== null &&
-				filters.Additional !== undefined
-			) {
-				params = params.set('Additional', filters.Additional ? 1 : 0);
-			}
-
-			if (
-				filters.WithArchive !== null &&
-				filters.WithArchive !== undefined
-			) {
-				params = params.set('WithArchive', filters.WithArchive);
-			}
-		}
-
-		return this.http.get(
+		return this.http.post(
 			`${environment.apiUrl}/api/company/CompletedWorkActs/reports`,
+			body,
 			{
-				params,
 				responseType: 'blob',
 			}
 		);

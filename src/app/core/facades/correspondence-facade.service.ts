@@ -137,6 +137,15 @@ export class CorrespondenceFacadeService {
 				.subscribe((res) => {
 					if (!this.selectedTopicSubject.value) {
 						this.totalMessagesSubject.next(res.total);
+					} else {
+						this.totalMessagesSubject.next(
+							this.topicsSubject.value.reduce(
+								(prev: number, curr) => {
+									return prev + curr.messageCount;
+								},
+								0
+							)
+						);
 					}
 
 					this.isLoadingSubject.next(false);
@@ -175,10 +184,11 @@ export class CorrespondenceFacadeService {
 		if (this.selectedTopicSubject.value !== subject) {
 			this.isLoadingSubject.next(true);
 			this.selectedTopicSubject.next(subject);
-			this.messagesSubject.next({ items: [], total: 0 });
-			this.loadMessages();
-			this.loadFiles();
 		}
+
+		this.messagesSubject.next({ items: [], total: 0 });
+		this.loadMessages();
+		this.loadFiles();
 	}
 
 	public setMessageVisibility(id: string, isPrivate: boolean) {
@@ -270,6 +280,8 @@ export class CorrespondenceFacadeService {
 				return `${environment.apiUrl}/client-card/${this.objectId}`;
 			case CorrespondenceTypeEnum.Personifications:
 				return `${environment.apiUrl}/mp-reservation-orders/${this.objectId}`;
+			case CorrespondenceTypeEnum.CompletedWorkActs:
+				return `${environment.apiUrl}/completed-work-acts/${this.objectId}`;
 			default:
 				return '';
 		}

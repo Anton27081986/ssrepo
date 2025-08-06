@@ -1,10 +1,4 @@
-import {
-	ChangeDetectorRef,
-	Component,
-	Input,
-	OnInit,
-	Signal,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Input, Signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import {
@@ -30,9 +24,9 @@ import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { SelectV2Component } from '@app/shared/components/inputs/select-v2/select-v2.component';
-import { MultiselectV2Component } from '@app/shared/components/multiselect-v2/multiselect-v2.component';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
+import { MultiselectAutocompleteV2Component } from '@app/shared/components/inputs/multiselect-autocomplete-v2/multiselect-autocomplete-v2.component';
 
 @UntilDestroy()
 @Component({
@@ -50,16 +44,20 @@ import { CommonModule, DatePipe, NgForOf, NgIf } from '@angular/common';
 		SearchInputComponent,
 		IconComponent,
 		SelectV2Component,
-		MultiselectV2Component,
 		TextareaComponent,
 		DatePipe,
 		NgIf,
 		NgForOf,
+		MultiselectAutocompleteV2Component,
 	],
 })
-export class CompletedWorkActEditComponent implements OnInit {
+export class CompletedWorkActEditComponent {
 	@Input()
-	specification: ICompletedWorkActSpecification | null = null;
+	public specification: ICompletedWorkActSpecification | null = null;
+
+	public finDocsQueryControl: FormControl<string | null> = new FormControl<
+		string | null
+	>(null);
 
 	protected editActForm!: FormGroup<{
 		dateUpload: FormControl<string | null>;
@@ -100,15 +98,22 @@ export class CompletedWorkActEditComponent implements OnInit {
 	);
 
 	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
+		this.completedWorkActsFacade.actPermissions$,
 		{
 			initialValue: [],
 		}
 	);
 
 	protected newDocuments: File[] = [];
+	protected oldDocumentsList: IFile[] =
+		this.completedWorkActsFacade.actAttachment.value;
+
+	protected applicantUser: IDictionaryItemDto | undefined;
+	protected providerContractor: IDictionaryItemDto | undefined;
+	protected contract: IDictionaryItemDto | undefined;
 
 	protected finDocOrders: IFilterOption[] = [];
+	private isFinDocsLoaded = false;
 
 	protected readonly Permissions = Permissions;
 	constructor(
@@ -152,7 +157,7 @@ export class CompletedWorkActEditComponent implements OnInit {
 						act.applicantUser?.id || null
 					);
 					this.editActForm.controls.providerContractorId.setValue(
-						act.providerContractor?.id
+						act.providerContractor?.id || null
 					);
 					this.editActForm.controls.contract.setValue(
 						act.contract || null
@@ -160,54 +165,75 @@ export class CompletedWorkActEditComponent implements OnInit {
 					this.editActForm.controls.currency.setValue(act.currency);
 					this.editActForm.controls.comment.setValue(act.comment);
 
-					if (act.providerContractor.id) {
-						this.completedWorkActsFacade.getFinDocs(
-							act.providerContractor.id,
-							act.externalActDate
-						);
+					if (act.applicantUser) {
+						this.applicantUser = act.applicantUser;
+					}
+
+					if (act.providerContractor) {
+						this.providerContractor = act.providerContractor;
+					}
+
+					if (act.contract) {
+						this.contract = act.contract;
 					}
 				}
 			});
-	}
 
-	public ngOnInit() {
+		this.finDocsQueryControl.valueChanges.pipe().subscribe((query) => {
+			const checked = new Set(
+				(this.editActForm.value.finDocOrderIds || []).map((finDoc) =>
+					typeof finDoc === 'number' ? finDoc : finDoc.id
+				)
+			);
+
+			if (query) {
+				this.finDocOrders =
+					this.completedWorkActsFacade.finDocs.value.filter(
+						(doc) =>
+							![...checked].find((item) => item === doc.id) &&
+							doc.name.toLowerCase().includes(query.toLowerCase())
+					);
+			}
+		});
+
 		this.completedWorkActsFacade.finDocs$
 			.pipe(untilDestroyed(this))
 			.subscribe((docs) => {
 				if (docs) {
-					const checked = this.act()?.finDocOrders || [];
-
-					this.finDocOrders = docs.reduce(
-						(
-							previousValue: IFilterOption[],
-							currentValue: IFilterOption
-						) => {
-							const selected = checked.find(
-								(item) => item.id === currentValue.id
-							);
-
-							if (selected) {
-								return [
-									...previousValue,
-									{ ...currentValue, checked: true },
-								];
-							}
-
-							return [...previousValue, currentValue];
-						},
-						[]
+					const checked = new Set(
+						(this.editActForm.value.finDocOrderIds || []).map(
+							(finDoc) =>
+								typeof finDoc === 'number' ? finDoc : finDoc.id
+						)
 					);
+
+					this.finDocOrders =
+						this.completedWorkActsFacade.finDocs.value.filter(
+							(doc) =>
+								![...checked].find((item) => item === doc.id)
+						);
 
 					this.ref.detectChanges();
 				}
 			});
 	}
 
-	protected switchMode() {
+	public getFinDocs(): void {
+		if (!this.isFinDocsLoaded) {
+			this.completedWorkActsFacade.getFinDocs(
+				this.editActForm.controls.providerContractorId.value,
+				this.act()?.externalActDate || null
+			);
+			this.isFinDocsLoaded = true;
+		}
+	}
+
+	protected switchMode(): void {
+		this.completedWorkActsFacade.actAttachment.next(this.oldDocumentsList);
 		this.completedWorkActsFacade.switchMode();
 	}
 
-	protected onSave() {
+	protected onSave(): void {
 		this.editActForm.markAllAsTouched();
 
 		if (this.editActForm.controls.contract.value) {
@@ -248,20 +274,9 @@ export class CompletedWorkActEditComponent implements OnInit {
 			)
 		);
 
-		const updatedFinDocOrders = this.finDocOrders.map((order) => ({
-			...order,
-			checked: selectedFinDocIds.has(order.id),
-		}));
-
-		this.editActForm.controls.finDocOrderIds.setValue(
-			updatedFinDocOrders.filter((order) => order.checked)
-		);
-
 		const updatedAct: IUpdateAct = {
 			...this.editActForm.value,
-			finDocOrderIds: updatedFinDocOrders
-				.filter((order) => order.checked)
-				.map((order) => order.id),
+			finDocOrderIds: [...selectedFinDocIds],
 			contractId: this.editActForm.value.contract?.id,
 			currencyId: this.editActForm.value.currency?.id,
 			documentIds: this.documents().map((file) => file.id) || [],
@@ -285,13 +300,13 @@ export class CompletedWorkActEditComponent implements OnInit {
 		}
 	}
 
-	protected onApplicantUserSelect(id: number) {
+	protected onApplicantUserSelect(id: number): void {
 		if (id) {
 			this.editActForm.controls.applicantUserId.setValue(id);
 		}
 	}
 
-	protected onProviderContractorSelect(id: number) {
+	protected onProviderContractorSelect(id: number): void {
 		if (id) {
 			this.editActForm.controls.providerContractorId.setValue(id);
 			this.completedWorkActsFacade
@@ -310,14 +325,14 @@ export class CompletedWorkActEditComponent implements OnInit {
 		}
 	}
 
-	protected addFiles(event: Event) {
+	protected addFiles(event: Event): void {
 		const element = event.currentTarget as HTMLInputElement;
 
 		if (!element.files) {
 			return;
 		}
 
-		Array.from(element.files).forEach((file) => {
+		Array.from(element.files).forEach((file): void => {
 			const earlyLoaded = this.newDocuments.find(
 				(doc) => doc.name === file.name
 			);
@@ -328,25 +343,29 @@ export class CompletedWorkActEditComponent implements OnInit {
 		});
 	}
 
-	protected removeFileFromUploadList(fileName: string) {
+	protected removeFileFromUploadList(fileName: string): void {
 		this.newDocuments = this.newDocuments.filter(
 			(file) => file.name !== fileName
 		);
 	}
 
-	protected deleteFile(fileId: string) {
+	protected deleteFile(fileId: string): void {
 		this.completedWorkActsFacade.deleteFile(fileId);
 	}
 
-	protected onInputChange(event: any) {
+	protected onInputChange(event: any, field: string): void {
 		if (!event.target.value) {
-			const act = this.act();
+			if (field === 'applicantUserId') {
+				this.applicantUser = undefined;
 
-			if (act) {
-				act.applicantUser = undefined;
+				this.editActForm.controls.applicantUserId.setValue(null);
 			}
 
-			this.editActForm.controls.applicantUserId.setValue(null);
+			if (field === 'providerContractorId') {
+				this.providerContractor = undefined;
+
+				this.editActForm.controls.providerContractorId.setValue(null);
+			}
 		}
 	}
 }

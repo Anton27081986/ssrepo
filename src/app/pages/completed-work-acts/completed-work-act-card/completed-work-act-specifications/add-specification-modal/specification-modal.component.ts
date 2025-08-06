@@ -62,10 +62,12 @@ export class SpecificationModalComponent {
 		sum: FormControl<number | null>;
 	}>;
 
+	protected cost: IDictionaryItemDto | undefined;
+	protected faObject: IDictionaryItemDto | undefined;
 	protected user: IDictionaryItemDto | undefined;
 	protected myDept: IDictionaryItemDto | undefined;
 	protected mySection: IDictionaryItemDto | undefined;
-	protected defaultTovUnits: IDictionaryItemDto | undefined;
+	protected project: IDictionaryItemDto | undefined;
 
 	constructor(
 		@Inject(DIALOG_DATA) protected spec: ICompletedWorkActSpecification,
@@ -108,8 +110,11 @@ export class SpecificationModalComponent {
 			);
 			this.addSpecificationForm.controls.sum.setValue(spec.sum || null);
 
+			this.cost = spec.cost;
 			this.myDept = spec.dept;
 			this.mySection = spec.section;
+			this.faObject = spec.faObject;
+			this.project = spec.project;
 		} else if (this.act()) {
 			const user = this.act()?.applicantUser;
 
@@ -119,15 +124,30 @@ export class SpecificationModalComponent {
 		}
 	}
 
-	protected resetValueControlMySection(
+	protected resetValueControl(
 		event: any,
-		control: AbstractControl
+		control: AbstractControl,
+		field: string
 	): void {
 		control.markAsTouched();
 
 		if (!(event.target as HTMLInputElement).value) {
 			control.setValue(null);
-			this.mySection = undefined;
+
+			switch (field) {
+				case 'costId':
+					this.cost = undefined;
+					break;
+				case 'mySection':
+					this.mySection = undefined;
+					break;
+				case 'faObject':
+					this.faObject = undefined;
+					break;
+				case 'project':
+					this.project = undefined;
+					break;
+			}
 		}
 	}
 
@@ -179,6 +199,30 @@ export class SpecificationModalComponent {
 		}
 	}
 
+	protected onArticleSelect(cost: IDictionaryItemDto) {
+		if (cost.id) {
+			this.cost = cost;
+			this.addSpecificationForm.controls.costId.setValue(cost.id);
+			this.addSpecificationForm.controls.costId.setErrors(null);
+		}
+	}
+
+	protected onFaObjectSelect(faObject: IDictionaryItemDto) {
+		if (faObject.id) {
+			this.faObject = faObject;
+			this.addSpecificationForm.controls.faObjectId.setValue(faObject.id);
+			this.addSpecificationForm.controls.faObjectId.setErrors(null);
+		}
+	}
+
+	protected onProjectSelect(project: IDictionaryItemDto) {
+		if (project.id) {
+			this.project = project;
+			this.addSpecificationForm.controls.projectId.setValue(project.id);
+			this.addSpecificationForm.controls.projectId.setErrors(null);
+		}
+	}
+
 	protected onUserSelect(user: IDictionaryItemDto) {
 		if (user.id) {
 			this.user = user;
@@ -191,8 +235,18 @@ export class SpecificationModalComponent {
 	protected onDeptSelect(dept: IDictionaryItemDto) {
 		if (dept.id) {
 			this.addSpecificationForm.controls.deptId.setValue(dept.id);
+			this.myDept = dept
 		} else if (this.myDept) {
 			this.addSpecificationForm.controls.deptId.setValue(this.myDept.id);
+		}
+	}
+
+	protected onSectionSelect(section: IDictionaryItemDto) {
+		if (section.id) {
+			this.addSpecificationForm.controls.sectionId.setValue(section.id);
+			this.mySection = section;
+		} else if (this.mySection) {
+			this.addSpecificationForm.controls.sectionId.setValue(this.mySection.id);
 		}
 	}
 

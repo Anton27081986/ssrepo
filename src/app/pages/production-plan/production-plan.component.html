@@ -38,6 +38,7 @@
 
 				<ss-lib-dropdown-list #listActions>
 					<ss-lib-dropdown-item
+						*ngIf="operationPlanState.getHasPermissionUploadOneS"
 						[label]="'Выгрузить 1С'"
 						(click)="upload1C()"
 					/>

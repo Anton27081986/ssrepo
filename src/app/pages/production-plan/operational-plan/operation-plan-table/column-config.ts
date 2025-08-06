@@ -52,7 +52,7 @@ export const columnOperationPlanConfigs: TableColumnConfig[] = [
 		visible: true,
 	},
 	{
-		id: 'planEcomonicUser',
+		id: 'planEconomicUser',
 		name: 'Менеджер ПЭО',
 		showInDropdown: true,
 		showInHeader: true,

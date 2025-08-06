@@ -36,7 +36,7 @@ import { DatePipe, NgFor } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
-import { map } from 'rxjs';
+import { map, asyncScheduler } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ApproveMaterialRequest } from '@app/core/models/production-plan/approve-materials';
 
@@ -120,6 +120,33 @@ export class ApproveMaterialComponent implements OnInit {
 
 	protected close(): void {
 		this.popup.close();
+	}
+
+	protected selectCity(item: IDictionaryItemDto): void {
+		this.city.set(item);
+
+		// Ищем кнопку внутри модального окна и кликаем для закрытия popover
+		asyncScheduler.schedule(() => {
+			const modalContent = document.querySelector('.approve-material');
+
+			if (modalContent) {
+				const button = modalContent.querySelector(
+					'ss-lib-button[popoverTriggerFor="list"]'
+				) as HTMLElement;
+
+				if (button) {
+					button.click();
+				} else {
+					const anyButton = modalContent.querySelector(
+						'ss-lib-button'
+					) as HTMLElement;
+
+					if (anyButton) {
+						anyButton.click();
+					}
+				}
+			}
+		}, 0);
 	}
 
 	private formatDate(date: Date | null): string {

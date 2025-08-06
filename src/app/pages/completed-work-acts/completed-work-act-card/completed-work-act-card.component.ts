@@ -16,15 +16,10 @@ import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
 import { CorrespondenceComponent } from '@app/widgets/correspondence/correspondence.component';
-import {
-	CompletedWorkActEditComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component";
-import {
-	CompletedWorkActInfoComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component";
-import {
-	CompletedWorkActSpecificationsComponent
-} from "@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component";
+import { CompletedWorkActEditComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-edit/completed-work-act-edit.component';
+import { CompletedWorkActInfoComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-info/completed-work-act-info.component';
+import { CompletedWorkActSpecificationsComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-specifications/completed-work-act-specifications.component';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
 
 @UntilDestroy()
 @Component({
@@ -62,7 +57,7 @@ export class CompletedWorkActCardComponent {
 	);
 
 	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
+		this.completedWorkActsFacade.actPermissions$,
 		{
 			initialValue: [],
 		}
@@ -72,6 +67,7 @@ export class CompletedWorkActCardComponent {
 	protected readonly CorrespondenceTypeEnum = CorrespondenceTypeEnum;
 	constructor(
 		private readonly completedWorkActsFacade: CompletedWorkActsFacadeService,
+		private readonly localStorageService: LocalStorageService,
 		private readonly activatedRoute: ActivatedRoute,
 		private readonly modalService: ModalService,
 		private readonly router: Router
@@ -93,23 +89,23 @@ export class CompletedWorkActCardComponent {
 		});
 	}
 
-	public toArchiveAct() {
+	public toArchiveAct(): void {
 		this.completedWorkActsFacade.toArchiveAct();
 	}
 
-	public pullAct() {
+	public pullAct(): void {
 		this.completedWorkActsFacade.pullAct();
 	}
 
-	public restoreAct() {
+	public restoreAct(): void {
 		this.completedWorkActsFacade.restoreAct();
 	}
 
-	public sendActToAdmin() {
+	public sendActToAdmin(): void {
 		this.completedWorkActsFacade.sendActToAdmin();
 	}
 
-	public sendActToApplicant() {
+	public sendActToApplicant(): void {
 		this.modalService
 			.open(ReturnToApplicantModalComponent, {
 				data: { title: 'Отправить заявителю', okButton: 'Отправить' },
@@ -123,7 +119,7 @@ export class CompletedWorkActCardComponent {
 			});
 	}
 
-	public returnActToApplicant() {
+	public returnActToApplicant(): void {
 		this.modalService
 			.open(ReturnToApplicantModalComponent, {
 				data: { title: 'Вернуть заявителю', okButton: 'Вернуть' },
@@ -137,11 +133,17 @@ export class CompletedWorkActCardComponent {
 			});
 	}
 
-	public toActsList() {
-		this.router.navigate([`/completed-work-acts`]);
+	public toActsList(): void {
+		if (this.localStorageService.getItem<string>('returnUrl')) {
+			this.router.navigateByUrl(
+				this.localStorageService.getItem<string>('returnUrl') as string
+			);
+		} else {
+			this.router.navigate([`/completed-work-acts`]);
+		}
 	}
 
-	public hasActions() {
+	public hasActions(): boolean {
 		return (
 			this.permissions().includes(
 				Permissions.COMPLETED_WORK_ACTS_RESTORE

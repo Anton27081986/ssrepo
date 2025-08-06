@@ -84,6 +84,9 @@ export class MPReservationOrdersComponent implements OnInit {
 	protected readonly IconType = IconType;
 	protected readonly Colors = Colors;
 
+	protected pipeNumWithSpaces = new NumWithSpacesPipe();
+	public readonly emptyDate = '0001-01-01T00:00:00';
+
 	// Signals для реактивного состояния
 	protected readonly pageSize = signal(
 		MPReservationOrdersComponent.defaultPageSize
@@ -187,6 +190,13 @@ export class MPReservationOrdersComponent implements OnInit {
 
 	public ngOnInit(): void {
 		this.loadOrders();
+	}
+
+	public get hasPermissionMutmzChangeQueueOrder(): boolean {
+		return this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER,
+		);
 	}
 
 	protected downloadInstr(): void {

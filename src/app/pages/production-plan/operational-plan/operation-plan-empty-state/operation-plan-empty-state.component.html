@@ -27,7 +27,9 @@
 				</div>
 			</div>
 			<ss-lib-button
-				*ngIf="viewAddButton()"
+				*ngIf="
+					viewAddButton() && operationPlanState.getHasPermissionEdit
+				"
 				[text]="'Добавить полуфабрикат'"
 				(click)="addSemiManufactures()"
 			></ss-lib-button>

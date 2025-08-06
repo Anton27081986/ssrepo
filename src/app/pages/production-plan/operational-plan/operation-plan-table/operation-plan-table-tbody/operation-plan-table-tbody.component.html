@@ -20,7 +20,9 @@
 							>
 								{{ getCellValue(row, column.id) }}
 							</ss-lib-text>
-							@if (operationPlanState.getHasPermissionEdit) {
+							@if (
+								operationPlanState.getHasPermissionAddComments
+							) {
 								<ss-lib-button
 									[class]="{
 										'comment-button': !row.isComment,
@@ -35,7 +37,9 @@
 											? addCommentsModal
 											: createCommentsModal
 									"
-									(click)="openCommentsRowId = row.id"
+									(click)="
+										openCommentsModal(row, row.isComment)
+									"
 								></ss-lib-button>
 							}
 							<ss-lib-dropdown-list
@@ -80,6 +84,9 @@
 								getDayCell(row, column.id)?.isManufactoryOrder
 							) {
 								<ss-lib-button
+									*ngIf="
+										operationPlanState.getHasPermissionEdit
+									"
 									class="postpone-button"
 									[type]="ButtonType.Secondary"
 									[size]="ExtraSize.xxs"
@@ -91,27 +98,25 @@
 									"
 								></ss-lib-button>
 							}
-							@if (operationPlanState.getHasPermissionEdit) {
-								<input
-									#quantityInput
-									maxlength="10"
-									class="quantity-input"
-									[disabled]="
-										!operationPlanState.getHasPermissionEdit ||
-										(column.id.startsWith('planQuantity') &&
-											row.isPersonification)
-									"
-									[value]="getCellValue(row, column.id)"
-									(focusout)="
-										editPlanFact($event, row, column.id)
-									"
-									(keyup.enter)="quantityInput.blur()"
-									(input)="checkPlanFactValue($event)"
-								/>
-								<p class="quantity-fixer">
-									{{ getCellValue(row, column.id) }}
-								</p>
-							}
+							<input
+								#quantityInput
+								maxlength="10"
+								class="quantity-input"
+								[disabled]="
+									!operationPlanState.getHasPermissionEdit ||
+									(column.id.startsWith('planQuantity') &&
+										row.isPersonification)
+								"
+								[value]="getCellValue(row, column.id)"
+								(focusout)="
+									editPlanFact($event, row, column.id)
+								"
+								(keyup.enter)="quantityInput.blur()"
+								(input)="checkPlanFactValue($event)"
+							/>
+							<p class="quantity-fixer">
+								{{ getCellValue(row, column.id) }}
+							</p>
 						</div>
 					} @else {
 						<ss-lib-text

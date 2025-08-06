@@ -26,7 +26,7 @@
 					searchType="cost-article"
 					label="Статья"
 					placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.cost : undefined"
+					[selectedItem]="cost"
 					[error]="
 						addSpecificationForm.controls.costId.touched &&
 						addSpecificationForm.controls.costId.errors?.required
@@ -34,24 +34,27 @@
 							: undefined
 					"
 					(focusout)="
-						addSpecificationForm.controls.costId.markAsTouched()
+						resetValueControl(
+							$event,
+							addSpecificationForm.controls.costId,
+							'costId'
+						)
 					"
 					(input)="
-						addSpecificationForm.controls.costId.markAsTouched()
+						resetValueControl(
+							$event,
+							addSpecificationForm.controls.costId,
+							'costId'
+						)
 					"
-					(select)="
-						addSpecificationForm.controls.costId.setValue(
-							$event.id
-						);
-						addSpecificationForm.controls.costId.setErrors(null)
-					"
+					(select)="onArticleSelect($event)"
 				>
 				</ss-search-input>
 				<ss-search-input
 					searchType="fa-objects"
 					label="Объект ОС/НМА"
 					placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.faObject : undefined"
+					[selectedItem]="faObject"
 					[error]="
 						addSpecificationForm.controls.faObjectId.touched &&
 						addSpecificationForm.controls.faObjectId.errors
@@ -59,11 +62,21 @@
 							? 'Обязательное поле'
 							: undefined
 					"
-					(select)="
-						addSpecificationForm.controls.faObjectId.setValue(
-							$event.id
+					(focusout)="
+						resetValueControl(
+							$event,
+							addSpecificationForm.controls.faObjectId,
+							'faObject'
 						)
 					"
+					(input)="
+						resetValueControl(
+							$event,
+							addSpecificationForm.controls.faObjectId,
+							'faObject'
+						)
+					"
+					(select)="onFaObjectSelect($event)"
 					(click)="
 						addSpecificationForm.controls.faObjectId.setErrors(null)
 					"
@@ -73,18 +86,28 @@
 					searchType="projects"
 					label="Проект"
 					placeholder="Выберите из списка"
-					[selectedItem]="spec ? spec.project : undefined"
+					[selectedItem]="project"
 					[error]="
 						addSpecificationForm.controls.projectId.touched &&
 						addSpecificationForm.controls.projectId.errors?.required
 							? 'Обязательное поле'
 							: undefined
 					"
-					(select)="
-						addSpecificationForm.controls.projectId.setValue(
-							$event.id
+					(focusout)="
+						resetValueControl(
+							$event,
+							addSpecificationForm.controls.projectId,
+							'project'
 						)
 					"
+					(input)="
+						resetValueControl(
+							$event,
+							addSpecificationForm.controls.projectId,
+							'project'
+						)
+					"
+					(select)="onProjectSelect($event)"
 					(click)="
 						addSpecificationForm.controls.projectId.setErrors(null)
 					"
@@ -135,22 +158,20 @@
 							: undefined
 					"
 					(focusout)="
-						resetValueControlMySection(
+						resetValueControl(
 							$event,
-							addSpecificationForm.controls.sectionId
+							addSpecificationForm.controls.sectionId,
+							'mySection'
 						)
 					"
 					(input)="
-						resetValueControlMySection(
+						resetValueControl(
 							$event,
-							addSpecificationForm.controls.sectionId
+							addSpecificationForm.controls.sectionId,
+							'mySection'
 						)
 					"
-					(select)="
-						addSpecificationForm.controls.sectionId.setValue(
-							$event.id
-						)
-					"
+					(select)="onSectionSelect($event)"
 					(click)="
 						addSpecificationForm.controls.sectionId.setErrors(null)
 					"

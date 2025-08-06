@@ -36,7 +36,7 @@ export class CompletedWorkActInfoComponent {
 	);
 
 	public permissions: Signal<string[]> = toSignal(
-		this.completedWorkActsFacade.permissions$,
+		this.completedWorkActsFacade.actPermissions$,
 		{
 			initialValue: [],
 		}

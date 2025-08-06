@@ -4,6 +4,7 @@
 	(closed)="popupCloseEmit()"
 >
 	<ss-lib-button
+		*ngIf="operationPlanState.getHasPermissionOrderProduction"
 		[size]="ExtraSize.xs"
 		[type]="ButtonType.Ghost"
 		[popoverTriggerFor]="orderAnOutfitList"
@@ -117,15 +118,15 @@
 									</ss-lib-text>
 
 									@if (isWmsUpload(column.name)) {
-										<ss-lib-hint
+										<ss-lib-status-icon
 											ss-lib-tooltip
-											[type]="HintType.Success"
+											[type]="Status.Success"
 											[icon]="IconType.CheckCircle"
 											[position]="TooltipPosition.Top"
 											[tooltipText]="
 												'План выгружен в WMS'
 											"
-										></ss-lib-hint>
+										></ss-lib-status-icon>
 									}
 								</div>
 								<div class="item-day-utility">
@@ -135,11 +136,17 @@
 									></ss-lib-utility-button>
 									<ss-lib-dropdown-list #listFunc>
 										<ss-lib-dropdown-item
+											*ngIf="
+												operationPlanState.getHasPermissionOrderProduction
+											"
 											[icon]="IconType.FilePreviewSearch"
 											[label]="'Заказ наряд'"
 											(click)="orderAnOutfit(column.id)"
 										></ss-lib-dropdown-item>
 										<ss-lib-dropdown-item
+											*ngIf="
+												operationPlanState.getHasPermissionUploadWMS
+											"
 											[icon]="IconType.FileUpload02"
 											[label]="'Выгрузить в WMS'"
 											(click)="uploadWMS(column.id)"
@@ -212,7 +219,7 @@
 									{{ getSubColumnName(subColumnId) }}
 								</ss-lib-text>
 								@if (subColumnId.startsWith('planQuantity')) {
-									<ss-lib-hint
+									<ss-lib-status-icon
 										ss-lib-tooltip
 										[icon]="IconType.Info"
 										[position]="TooltipPosition.Top"
@@ -220,7 +227,7 @@
 										(mouseenter)="
 											onPlanInfoEnter(subColumnId)
 										"
-									></ss-lib-hint>
+									></ss-lib-status-icon>
 								}
 							</div>
 						</th>

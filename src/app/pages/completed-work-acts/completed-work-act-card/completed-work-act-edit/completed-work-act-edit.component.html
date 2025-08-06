@@ -96,9 +96,9 @@
 					)
 				) {
 					<ss-search-input
-						searchType="user"
+						searchType="user-applicant"
 						size="small"
-						[selectedItem]="act()?.applicantUser"
+						[selectedItem]="applicantUser"
 						[error]="
 							editActForm.controls.applicantUserId.touched &&
 							editActForm.controls.applicantUserId.errors
@@ -110,7 +110,7 @@
 						(click)="
 							editActForm.controls.applicantUserId.setErrors(null)
 						"
-						(input)="onInputChange($event)"
+						(input)="onInputChange($event, 'applicantUserId')"
 					>
 					</ss-search-input>
 				} @else {
@@ -152,7 +152,7 @@
 					<ss-search-input
 						searchType="contractor"
 						size="small"
-						[selectedItem]="act()?.providerContractor"
+						[selectedItem]="providerContractor"
 						[error]="
 							editActForm.controls.providerContractorId.touched &&
 							editActForm.controls.providerContractorId.errors
@@ -166,6 +166,7 @@
 								null
 							)
 						"
+						(input)="onInputChange($event, 'providerContractorId')"
 					>
 					</ss-search-input>
 				} @else {
@@ -193,15 +194,13 @@
 			</div>
 			<div class="content__column__item content__column__findocs">
 				<ss-text size="4">Заявки на оплату</ss-text>
-				<ss-multiselect-v2
-					[placeholder]="
-						finDocOrders.length
-							? 'Выберите заявки'
-							: 'Заявки отсутствуют'
-					"
+				<ss-multiselect-autocomplete-v2
+					[placeholder]="'Выберите заявки'"
 					[formControlName]="'finDocOrderIds'"
+					[queryControl]="finDocsQueryControl"
 					[options]="finDocOrders"
-				></ss-multiselect-v2>
+					(click)="getFinDocs()"
+				></ss-multiselect-autocomplete-v2>
 			</div>
 			<div
 				*ngIf="

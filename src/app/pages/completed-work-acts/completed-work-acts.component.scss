@@ -4,7 +4,6 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
 	padding: 0 16px;
 
 	.header {
@@ -44,5 +43,15 @@
 	}
 	::ng-deep .ss-lib-table-canvas__pagination {
 		justify-content: flex-end;
+	}
+
+	app-completed-work-acts-table {
+		max-height: calc(100vh - 346px);
+	}
+
+	::ng-deep .ss-lib-table-canvas__selected~.ss-lib-table-canvas__table {
+		app-completed-work-acts-table {
+			max-height: calc(100vh - 415px);
+		}
 	}
 }

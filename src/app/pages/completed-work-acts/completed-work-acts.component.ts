@@ -19,6 +19,8 @@ import {
 	HeaderFilterService,
 	IconPosition,
 	IconType,
+	InputComponent,
+	InputType,
 	SsTableState,
 	TextComponent,
 	TextType,
@@ -63,18 +65,29 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		ToggleComponent,
 		PaginationComponent,
 		FormsModule,
+		InputComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
 	providers: [HeaderFilterService, SsTableState],
 })
 export class CompletedWorkActsComponent {
-	public dateFromControl = new FormControl();
-	public dateToControl = new FormControl();
-	public uploadDateFromControl = new FormControl();
-	public uploadDateToControl = new FormControl();
+	public dateFromControl: FormControl<Date | null> =
+		new FormControl<Date | null>(null);
+
+	public dateToControl: FormControl<Date | null> =
+		new FormControl<Date | null>(null);
+
+	public uploadDateFromControl: FormControl<Date | null> =
+		new FormControl<Date | null>(null);
+
+	public uploadDateToControl: FormControl<Date | null> =
+		new FormControl<Date | null>(null);
+
 	public additionalControl = new FormControl();
+
 	public archiveControl = new FormControl();
+	public totalAmountControl = new FormControl();
 
 	private readonly router: Router = inject(Router);
 	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -85,15 +98,11 @@ export class CompletedWorkActsComponent {
 	private readonly headerFilterService: HeaderFilterService =
 		inject(HeaderFilterService);
 
-	public limit = 10;
+	public limit = 20;
 	public offset$ = new BehaviorSubject<number>(0);
 	public itemTotal$ = new BehaviorSubject<number>(0);
 	public total = 0;
 	public pageIndex = 1;
-
-	protected dateFrom$: BehaviorSubject<string | null> = new BehaviorSubject<
-		string | null
-	>(null);
 
 	protected items$: Observable<ICompletedWorkAct[]> = this.offset$.pipe(
 		switchMap((offset) => {
@@ -103,6 +112,7 @@ export class CompletedWorkActsComponent {
 			const uploadDateTo = this.uploadDateToControl.value;
 			const additional = this.additionalControl.value;
 			const archive = this.archiveControl.value;
+			const totalAmount: string = this.totalAmountControl.value;
 
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
@@ -112,7 +122,18 @@ export class CompletedWorkActsComponent {
 
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
-						queryParams: this.activatedRoute.snapshot.queryParams,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							DateFrom: dateFrom,
+							DateTo: dateTo,
+							UploadDateFrom: uploadDateFrom,
+							UploadDateTo: uploadDateTo,
+							Additional: additional ? 1 : 0,
+							WithArchive: archive,
+							TotalAmount: totalAmount
+								? totalAmount.replace(',', '.')
+								: null,
+						},
 						queryParamsHandling: 'merge',
 					});
 
@@ -124,6 +145,9 @@ export class CompletedWorkActsComponent {
 						UploadDateTo: uploadDateTo,
 						Additional: additional ? 1 : 0,
 						WithArchive: archive,
+						TotalAmount: totalAmount
+							? totalAmount.replace(',', '.')
+							: null,
 						limit: this.limit,
 						offset,
 					};
@@ -163,13 +187,14 @@ export class CompletedWorkActsComponent {
 	protected readonly FormControl = FormControl;
 	protected readonly Colors = Colors;
 	protected readonly Permissions = Permissions;
+	protected readonly InputType = InputType;
 	constructor() {
 		this.headerFilterService.init(completedWorkActsFilter);
 
 		toSignal(
 			this.headerFilterService.criteria$.pipe(
 				tap(() => {
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -177,24 +202,22 @@ export class CompletedWorkActsComponent {
 		const dateFromFromQuery =
 			this.activatedRoute.snapshot.queryParamMap.get('DateFrom');
 
-		if (dateFromFromQuery) {
-			this.dateFromControl.setValue(new Date(dateFromFromQuery));
-		}
+		this.dateFromControl.setValue(
+			dateFromFromQuery ? new Date(dateFromFromQuery) : null
+		);
 
 		toSignal(
 			this.dateFromControl.valueChanges.pipe(
 				tap((value) => {
-					if (value) {
-						void this.router.navigate([], {
-							relativeTo: this.activatedRoute,
-							queryParams: {
-								...this.activatedRoute.snapshot.queryParams,
-								DateFrom: new Date(value).toISOString(),
-							},
-							queryParamsHandling: 'merge',
-						});
-						this.offset$.next(0);
-					}
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							DateFrom: value ? value.toISOString() : null,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.resetPage();
 				})
 			)
 		);
@@ -202,24 +225,22 @@ export class CompletedWorkActsComponent {
 		const dateToFromQuery =
 			this.activatedRoute.snapshot.queryParamMap.get('DateTo');
 
-		if (dateToFromQuery) {
-			this.dateToControl.setValue(new Date(dateToFromQuery));
-		}
+		this.dateToControl.setValue(
+			dateToFromQuery ? new Date(dateToFromQuery) : null
+		);
 
 		toSignal(
 			this.dateToControl.valueChanges.pipe(
 				tap((value) => {
-					if (value) {
-						void this.router.navigate([], {
-							relativeTo: this.activatedRoute,
-							queryParams: {
-								...this.activatedRoute.snapshot.queryParams,
-								DateTo: new Date(value).toISOString(),
-							},
-							queryParamsHandling: 'merge',
-						});
-						this.offset$.next(0);
-					}
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							DateTo: value ? value.toISOString() : null,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.resetPage();
 				})
 			)
 		);
@@ -227,26 +248,22 @@ export class CompletedWorkActsComponent {
 		const uploadDateFromFromQuery =
 			this.activatedRoute.snapshot.queryParamMap.get('UploadDateFrom');
 
-		if (uploadDateFromFromQuery) {
-			this.uploadDateFromControl.setValue(
-				new Date(uploadDateFromFromQuery)
-			);
-		}
+		this.uploadDateFromControl.setValue(
+			uploadDateFromFromQuery ? new Date(uploadDateFromFromQuery) : null
+		);
 
 		toSignal(
 			this.uploadDateFromControl.valueChanges.pipe(
 				tap((value) => {
-					if (value) {
-						void this.router.navigate([], {
-							relativeTo: this.activatedRoute,
-							queryParams: {
-								...this.activatedRoute.snapshot.queryParams,
-								UploadDateFrom: new Date(value).toISOString(),
-							},
-							queryParamsHandling: 'merge',
-						});
-						this.offset$.next(0);
-					}
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							UploadDateFrom: value ? value.toISOString() : null,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.resetPage();
 				})
 			)
 		);
@@ -254,24 +271,22 @@ export class CompletedWorkActsComponent {
 		const uploadDateToFromQuery =
 			this.activatedRoute.snapshot.queryParamMap.get('UploadDateTo');
 
-		if (uploadDateToFromQuery) {
-			this.uploadDateToControl.setValue(new Date(uploadDateToFromQuery));
-		}
+		this.uploadDateToControl.setValue(
+			uploadDateToFromQuery ? new Date(uploadDateToFromQuery) : null
+		);
 
 		toSignal(
 			this.uploadDateToControl.valueChanges.pipe(
 				tap((value) => {
-					if (value) {
-						void this.router.navigate([], {
-							relativeTo: this.activatedRoute,
-							queryParams: {
-								...this.activatedRoute.snapshot.queryParams,
-								UploadDateTo: new Date(value).toISOString(),
-							},
-							queryParamsHandling: 'merge',
-						});
-						this.offset$.next(0);
-					}
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							UploadDateTo: value ? value.toISOString() : null,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.resetPage();
 				})
 			)
 		);
@@ -279,20 +294,8 @@ export class CompletedWorkActsComponent {
 		const additionalFromQuery =
 			this.activatedRoute.snapshot.queryParamMap.get('Additional');
 
-		if (additionalFromQuery === 'true' || additionalFromQuery === null) {
+		if (additionalFromQuery === '1' || additionalFromQuery === null) {
 			this.additionalControl.setValue(true);
-		}
-
-		if (additionalFromQuery === null) {
-			void this.router.navigate([], {
-				relativeTo: this.activatedRoute,
-				queryParams: {
-					...this.activatedRoute.snapshot.queryParams,
-					Additional: true,
-				},
-				queryParamsHandling: 'merge',
-			});
-			this.offset$.next(0);
 		}
 
 		toSignal(
@@ -302,11 +305,32 @@ export class CompletedWorkActsComponent {
 						relativeTo: this.activatedRoute,
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
-							Additional: value,
+							Additional: value ? 1 : 0,
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
+				})
+			)
+		);
+
+		const totalAmountFromQuery =
+			this.activatedRoute.snapshot.queryParamMap.get('TotalAmount');
+
+		this.totalAmountControl.setValue(totalAmountFromQuery);
+
+		toSignal(
+			this.totalAmountControl.valueChanges.pipe(
+				tap((value) => {
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							TotalAmount: value,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.resetPage();
 				})
 			)
 		);
@@ -329,7 +353,7 @@ export class CompletedWorkActsComponent {
 						},
 						queryParamsHandling: 'merge',
 					});
-					this.offset$.next(0);
+					this.resetPage();
 				})
 			)
 		);
@@ -361,5 +385,10 @@ export class CompletedWorkActsComponent {
 	protected onPage(index: number): void {
 		this.pageIndex = index;
 		this.offset$.next((index - 1) * this.limit);
+	}
+
+	private resetPage(): void {
+		this.pageIndex = 1;
+		this.offset$.next(0);
 	}
 }
