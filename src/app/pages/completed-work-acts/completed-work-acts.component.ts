@@ -120,8 +120,6 @@ export class CompletedWorkActsComponent {
 						Object.entries(criteria).filter(([_, v]) => v !== null)
 					);
 
-					console.log(this.activatedRoute.snapshot.queryParams);
-
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
 						queryParams: {
@@ -296,20 +294,8 @@ export class CompletedWorkActsComponent {
 		const additionalFromQuery =
 			this.activatedRoute.snapshot.queryParamMap.get('Additional');
 
-		if (additionalFromQuery === 'true' || additionalFromQuery === null) {
+		if (additionalFromQuery === '1' || additionalFromQuery === null) {
 			this.additionalControl.setValue(true);
-		}
-
-		if (additionalFromQuery === null) {
-			void this.router.navigate([], {
-				relativeTo: this.activatedRoute,
-				queryParams: {
-					...this.activatedRoute.snapshot.queryParams,
-					Additional: true,
-				},
-				queryParamsHandling: 'merge',
-			});
-			this.resetPage();
 		}
 
 		toSignal(
@@ -319,7 +305,7 @@ export class CompletedWorkActsComponent {
 						relativeTo: this.activatedRoute,
 						queryParams: {
 							...this.activatedRoute.snapshot.queryParams,
-							Additional: value,
+							Additional: value ? 1 : 0,
 						},
 						queryParamsHandling: 'merge',
 					});
