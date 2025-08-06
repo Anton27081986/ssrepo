@@ -1,9 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {
-	provideClientHydration,
-	withEventReplay,
-} from '@angular/platform-browser';
 import { AppInitializerProvider } from '@app/app-initializer.service';
 import {
 	MAT_DATE_LOCALE,
@@ -31,7 +27,6 @@ export const appConfig: ApplicationConfig = {
 			// DI-based interceptors must be explicitly enabled.
 			withInterceptorsFromDi()
 		),
-		provideClientHydration(withEventReplay()),
 		AppInitializerProvider,
 		// eslint-disable-next-line camelcase
 		{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },

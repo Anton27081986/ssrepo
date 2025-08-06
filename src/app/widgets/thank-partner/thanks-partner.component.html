@@ -51,7 +51,7 @@
 
 		@if (thankYouList().total) {
 			<div class="thanks-partner__grid-body">
-				@for (item of thankYouList().items; track item.id) {
+				@for (item of thankYouList().items; track $index) {
 					<app-thanks-partner-card
 						[thanksPartner]="item"
 						[class.thanks-partner__card-item]="

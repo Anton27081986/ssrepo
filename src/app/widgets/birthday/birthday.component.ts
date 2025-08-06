@@ -73,12 +73,10 @@ export class BirthdayComponent {
 	});
 
 	constructor() {
-		effect(
-			() =>
-				this.selectedTabName.set(
-					this.birthDays().length ? this.birthDays()[0].name! : ''
-				),
-			{ allowSignalWrites: true }
+		effect(() =>
+			this.selectedTabName.set(
+				this.birthDays().length ? this.birthDays()[0].name! : ''
+			)
 		);
 	}
 

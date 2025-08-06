@@ -116,12 +116,9 @@ export class HistoryComponent implements OnChanges, OnDestroy {
 			)
 			.subscribe();
 
-		effect(
-			() => {
-				this.mutableHistoryItems.set(this.historyItems());
-			},
-			{ allowSignalWrites: true }
-		);
+		effect((): void => {
+			this.mutableHistoryItems.set(this.historyItems());
+		});
 	}
 
 	public ngOnChanges(changes: SimpleChanges) {
