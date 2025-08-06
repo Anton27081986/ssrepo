@@ -85,6 +85,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	protected readonly Colors = Colors;
 
 	protected pipeNumWithSpaces = new NumWithSpacesPipe();
+	public readonly emptyDate = '0001-01-01T00:00:00';
 
 	// Signals для реактивного состояния
 	protected readonly pageSize = signal(
