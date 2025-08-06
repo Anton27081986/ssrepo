@@ -88,38 +88,29 @@ export class InputV2Component implements ControlValueAccessor {
 	private onTouched!: () => void;
 	protected readonly onfocus = onfocus;
 	constructor() {
-		effect(
-			() => {
-				this.mutableType.set(this.type());
-			},
-			{ allowSignalWrites: true }
-		);
+		effect(() => {
+			this.mutableType.set(this.type());
+		});
 
-		effect(
-			() => {
-				if (this.type() === 'password') {
-					this.updateIconsVisibility(
-						InputIconTypeEnum.Password,
-						'visible',
-						true
-					);
-				}
-			},
-			{ allowSignalWrites: true }
-		);
+		effect(() => {
+			if (this.type() === 'password') {
+				this.updateIconsVisibility(
+					InputIconTypeEnum.Password,
+					'visible',
+					true
+				);
+			}
+		});
 
-		effect(
-			() => {
-				if (this.type() === 'password') {
-					this.updateIconsVisibility(
-						InputIconTypeEnum.Password,
-						'iconName',
-						this.passwordIcon()
-					);
-				}
-			},
-			{ allowSignalWrites: true }
-		);
+		effect(() => {
+			if (this.type() === 'password') {
+				this.updateIconsVisibility(
+					InputIconTypeEnum.Password,
+					'iconName',
+					this.passwordIcon()
+				);
+			}
+		});
 	}
 
 	public writeValue(value: string): void {
