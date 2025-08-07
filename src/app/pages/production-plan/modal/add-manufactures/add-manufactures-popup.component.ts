@@ -11,7 +11,6 @@ import {
 import {
 	BadgeComponent,
 	ButtonComponent,
-	CheckboxComponent,
 	DividerComponent,
 	DropdownItemComponent,
 	DropdownListComponent,
@@ -83,7 +82,6 @@ export interface AddManufacturesPopup {
 		FieldCtrlDirective,
 		NgFor,
 		TextComponent,
-		CheckboxComponent,
 		DividerComponent,
 		NgIf,
 		DropdownItemComponent,

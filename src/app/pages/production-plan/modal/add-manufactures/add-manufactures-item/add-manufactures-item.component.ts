@@ -5,7 +5,6 @@ import {
 	InputSignal,
 } from '@angular/core';
 import {
-	ButtonComponent,
 	ButtonType,
 	CheckboxComponent,
 	ExtraSize,
@@ -21,12 +20,7 @@ import { ManufacturingSelectedTovs } from '@app/core/models/production-plan/manu
 @Component({
 	selector: 'app-add-manufactures-item',
 	standalone: true,
-	imports: [
-		ButtonComponent,
-		CheckboxComponent,
-		TextComponent,
-		ReactiveFormsModule,
-	],
+	imports: [CheckboxComponent, TextComponent, ReactiveFormsModule],
 	templateUrl: './add-manufactures-item.component.html',
 	styleUrl: './add-manufactures-item.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
