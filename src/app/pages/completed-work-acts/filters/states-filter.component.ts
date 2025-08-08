@@ -25,11 +25,7 @@ import { CheckboxFilterContextComponent } from '@app/pages/completed-work-acts/f
 		[(indeterminate)]="indeterminate"
 	></ss-lib-checkbox-filter-context>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		CheckboxFilterContextComponent,
-		CheckboxFilterContextComponent,
-		CheckboxFilterContextComponent,
-	],
+	imports: [CheckboxFilterContextComponent],
 })
 export class ActStatesFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
