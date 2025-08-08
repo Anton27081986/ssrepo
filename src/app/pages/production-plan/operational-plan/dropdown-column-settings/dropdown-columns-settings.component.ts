@@ -12,6 +12,7 @@ import {
 	DropdownGroupDirective,
 	DropdownItemComponent,
 	DropdownListComponent,
+	ExtraSize,
 	IconComponent,
 	IconType,
 	PopoverTriggerForDirective,
@@ -84,4 +85,6 @@ export class DropdownColumnsSettingsComponent {
 	public getControlForColumn(column: TableColumnConfig): FormControl {
 		return this.tableStateService.getControlForColumn(column);
 	}
+
+	protected readonly ExtraSize = ExtraSize;
 }

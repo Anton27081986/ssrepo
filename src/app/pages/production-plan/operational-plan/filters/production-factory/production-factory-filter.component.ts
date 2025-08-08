@@ -9,8 +9,8 @@ import { OperationPlanFiltersApiService } from '@app/pages/production-plan/servi
 import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { CheckboxFilterContextComponent } from '@app/pages/production-plan/blunt-components/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-production-factory-filter',

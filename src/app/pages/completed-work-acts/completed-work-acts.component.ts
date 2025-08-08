@@ -7,7 +7,6 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { CommonModule, NgIf } from '@angular/common';
-import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -15,6 +14,7 @@ import {
 	DatepickerComponent,
 	ExtraSize,
 	FieldCtrlDirective,
+	FiltersTriggerButtonComponent,
 	FormFieldComponent,
 	HeaderFilterService,
 	IconPosition,
@@ -29,7 +29,6 @@ import {
 	TooltipDirective,
 } from '@front-library/components';
 import { DropdownColumnsSettingsComponent } from '@app/pages/production-plan/operational-plan/dropdown-column-settings/dropdown-columns-settings.component';
-import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { Pagination } from '@app/core/models/production-plan/operation-plan';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,6 +39,7 @@ import { completedWorkActsFilter } from '@app/pages/completed-work-acts/filters/
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { FiltersTableCanvasComponent } from '@app/pages/production-plan/blunt-components/filters-table-pagination-canvas/filters-table-canvas.component';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -50,10 +50,8 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		ButtonComponent,
 		TooltipDirective,
 		NgIf,
-		FiltersTableCanvasComponent,
 		ButtonComponent,
 		DropdownColumnsSettingsComponent,
-		FiltersTriggerButtonComponent,
 		ButtonComponent,
 		CompletedWorkActsTableComponent,
 		TextComponent,
@@ -66,6 +64,8 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		PaginationComponent,
 		FormsModule,
 		InputComponent,
+		FiltersTableCanvasComponent,
+		FiltersTriggerButtonComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,

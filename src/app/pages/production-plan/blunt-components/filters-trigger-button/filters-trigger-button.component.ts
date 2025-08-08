@@ -4,6 +4,7 @@ import {
 	ButtonType,
 	DropdownItemComponent,
 	DropdownListComponent,
+	ExtraSize,
 	HeaderFilterService,
 	IconType,
 	IFilterItem,
@@ -41,4 +42,6 @@ export class FiltersTriggerButtonComponent {
 			this.filterService.addFilterMenu(filter);
 		}
 	}
+
+	protected readonly ExtraSize = ExtraSize;
 }
