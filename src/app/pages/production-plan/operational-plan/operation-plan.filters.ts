@@ -23,7 +23,7 @@ export const operationPlanFilter: IFilterItem[] = [
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.tovIds,
-		text: 'Наименование ГП',
+		text: 'Наименование ТП',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',

@@ -7,13 +7,11 @@ import {
 	type TemplateRef,
 } from '@angular/core';
 import { NgIf, NgTemplateOutlet } from '@angular/common';
-import {
-	FilterMenuComponent,
-	HeaderFilterService,
-} from '@front-library/components';
+import { HeaderFilterService } from '@front-library/components';
+import { FilterMenuComponent } from '@app/pages/production-plan/operational-plan/filter-menu/filter-menu.component';
 
 @Component({
-	selector: 'ss-lib-table-canvas',
+	selector: 'app-filters-table-canvas',
 	templateUrl: 'filters-table-canvas.component.html',
 	styleUrls: ['filters-table-canvas.component.scss'],
 	standalone: true,

@@ -1,0 +1,30 @@
+.ss-lib-dropdown-filter-group-items {
+  display: flex;
+  flex-direction: column;
+
+  &__item {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 8px;
+    border-radius: 8px;
+
+    &:hover {
+      background-color: var(--surface-action-hover-3);
+      cursor: pointer;
+    }
+
+    &-left {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+}
