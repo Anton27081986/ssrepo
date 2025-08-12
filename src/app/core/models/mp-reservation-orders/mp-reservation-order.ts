@@ -8,7 +8,7 @@ export interface IMpReservationOrder {
 	author: IDictionaryItemDto;
 	totalAmount: number;
 	tovUnit: string;
-	client: IDictionaryItemDto;
+	contractor: IDictionaryItemDto;
 	manager: IDictionaryItemDto | null;
 	dateFrom: string;
 	dateTo: string;
