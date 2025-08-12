@@ -115,7 +115,7 @@
 				fieldCtrl
 				[formControl]="totalAmountControl"
 				[type]="InputType.Number"
-                [min]="0"
+				[min]="0"
 			>
 			</ss-lib-input>
 		</ss-lib-form-field>
@@ -146,7 +146,7 @@
 	<ng-container *ngIf="itemTotal$ | async as itemTotal">
 		<ss-pagination
 			[pageSize]="limit"
-			[pageIndex]="pageIndex"
+			[pageIndex]="pageControl.value || 1"
 			[total]="total"
 			(changeIndex)="onPage($event)"
 		></ss-pagination>

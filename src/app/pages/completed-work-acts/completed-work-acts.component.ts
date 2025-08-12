@@ -87,7 +87,10 @@ export class CompletedWorkActsComponent {
 	public additionalControl = new FormControl();
 
 	public archiveControl = new FormControl();
+
 	public totalAmountControl = new FormControl();
+
+	public pageControl = new FormControl<number>(1);
 
 	private readonly router: Router = inject(Router);
 	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -102,7 +105,7 @@ export class CompletedWorkActsComponent {
 	public offset$ = new BehaviorSubject<number>(0);
 	public itemTotal$ = new BehaviorSubject<number>(0);
 	public total = 0;
-	public pageIndex = 1;
+	public isReload = true;
 
 	protected items$: Observable<ICompletedWorkAct[]> = this.offset$.pipe(
 		switchMap((offset) => {
@@ -357,6 +360,30 @@ export class CompletedWorkActsComponent {
 				})
 			)
 		);
+
+		const page = this.activatedRoute.snapshot.queryParamMap.get('page');
+
+		if (page) {
+			this.pageControl.setValue(parseInt(page, 10));
+			this.offset$.next((parseInt(page, 10) - 1) * this.limit);
+		}
+
+		toSignal(
+			this.pageControl.valueChanges.pipe(
+				tap((value) => {
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							page: value,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.offset$.next(((value || 1) - 1) * this.limit);
+					this.isReload = false;
+				})
+			)
+		);
 	}
 
 	public downloadInstruction(): void {
@@ -383,12 +410,21 @@ export class CompletedWorkActsComponent {
 	}
 
 	protected onPage(index: number): void {
-		this.pageIndex = index;
-		this.offset$.next((index - 1) * this.limit);
+		void this.router.navigate([], {
+			relativeTo: this.activatedRoute,
+			queryParams: {
+				...this.activatedRoute.snapshot.queryParams,
+				page: index,
+			},
+			queryParamsHandling: 'merge',
+		});
+		this.pageControl.setValue(index);
 	}
 
 	private resetPage(): void {
-		this.pageIndex = 1;
-		this.offset$.next(0);
+		if (!this.isReload) {
+			this.pageControl.setValue(1);
+			this.offset$.next(0);
+		}
 	}
 }
