@@ -78,7 +78,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	protected addOrdersForm: FormGroup<{
 		tov: FormControl<IDictionaryItemDto | null>;
-		client: FormControl<IDictionaryItemDto | null>;
+		contractor: FormControl<IDictionaryItemDto | null>;
 		positions: FormArray<
 			FormGroup<{
 				headerTitle: FormControl<string>;
@@ -103,7 +103,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 			tov: new FormControl<IDictionaryItemDto | null>(null, [
 				Validators.required,
 			]),
-			client: new FormControl<IDictionaryItemDto | null>(null, [
+			contractor: new FormControl<IDictionaryItemDto | null>(null, [
 				Validators.required,
 			]),
 			positions: new FormArray<
@@ -130,11 +130,11 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	public get accordionTitle(): string {
 		const tovName = this.addOrdersForm.controls.tov.value?.name ?? '';
-		const client = this.addOrdersForm.controls.client.value?.name ?? '';
+		const contractor = this.addOrdersForm.controls.contractor.value?.name ?? '';
 		const short =
 			tovName.length > 50 ? `${tovName.slice(0, 50)}...` : tovName;
 
-		return client ? `${short},\u00A0\u00A0\u00A0\u00A0${client}` : short;
+		return contractor ? `${short},\u00A0\u00A0\u00A0\u00A0${contractor}` : short;
 	}
 
 	// Геттер для доступа к FormArray позиций
@@ -144,7 +144,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	private createPositionGroup(): FormGroup<{
 		tovId: FormControl<number | null>;
-		clientId: FormControl<number | null>;
+		contractorId: FormControl<number | null>;
 		details: FormArray<
 			FormGroup<{
 				quantity: FormControl<number | null>;
@@ -156,13 +156,13 @@ export class MpReservationOrdersPopupAddOrderComponent {
 	}> {
 		// берём к текущему моменту выбранные вверху значения
 		const tov = this.addOrdersForm.controls.tov.value;
-		const client = this.addOrdersForm.controls.client.value;
+		const contractor = this.addOrdersForm.controls.contractor.value;
 
 		return new FormGroup({
 			headerTitle: new FormControl<string>(this.accordionTitle),
 			headerTovName: new FormControl<string>(tov?.name ?? ''),
 			tovId: new FormControl<number>(tov?.id ?? 0),
-			clientId: new FormControl<number>(client?.id ?? 0),
+			contractorId: new FormControl<number>(contractor?.id ?? 0),
 			details: new FormArray([this.createDetailGroup()]),
 		});
 	}
@@ -183,7 +183,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	// Сюда придет выбранный клиент
 	public onClientSelect(item: IDictionaryItemDto): void {
-		this.addOrdersForm.controls.client.setValue(item);
+		this.addOrdersForm.controls.contractor.setValue(item);
 	}
 
 	public getDetails(position: AbstractControl): FormArray {
@@ -245,7 +245,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	protected setErrorsControl(): void {
 		this.setErrorsIfNotControlValue(this.addOrdersForm.controls.tov);
-		this.setErrorsIfNotControlValue(this.addOrdersForm.controls.client);
+		this.setErrorsIfNotControlValue(this.addOrdersForm.controls.contractor);
 
 		const positions = this.addOrdersForm.get('positions') as FormArray;
 
@@ -283,7 +283,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 			(newAddOrdersForm) => {
 				const group = newAddOrdersForm as FormGroup;
 				const tovId = group.get('tovId')!.value;
-				const clientId = group.get('clientId')!.value;
+				const contractorId = group.get('contractorId')!.value;
 				const requests = (
 					group.get('details') as FormArray
 				).controls.map((newDetailsGroup) => {
@@ -296,7 +296,7 @@ export class MpReservationOrdersPopupAddOrderComponent {
 					};
 				});
 
-				return { tovId, clientId, orderRequests: requests };
+				return { tovId, contractorId, orderRequests: requests };
 			}
 		);
 

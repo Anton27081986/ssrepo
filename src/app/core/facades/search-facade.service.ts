@@ -89,6 +89,12 @@ export class SearchFacadeService {
 		return this.dictionaryApiService.getContractors(query, this.clientId);
 	}
 
+	public getContractorManufacturing(
+		query: string
+	): Observable<IResponse<IDictionaryItemDto>> {
+		return this.dictionaryApiService.getContractorsManufacturing(query, this.clientId);
+	}
+
 	public getPayerContractor(
 		query: string
 	): Observable<IResponse<IDictionaryItemDto>> {
@@ -245,6 +251,11 @@ export class SearchFacadeService {
 
 			case SearchTypeEnum.Contractor:
 				return this.getContractor(query).pipe(
+					map((data) => data.items)
+				);
+
+			case SearchTypeEnum.ContractorManufacturing:
+				return this.getContractorManufacturing(query).pipe(
 					map((data) => data.items)
 				);
 

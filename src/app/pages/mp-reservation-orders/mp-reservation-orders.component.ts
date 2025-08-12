@@ -180,10 +180,10 @@ export class MPReservationOrdersComponent implements OnInit {
 			placeholder: '',
 		},
 		{
-			name: 'clientId',
+			name: 'contractorId',
 			type: 'search-select',
-			searchType: 'client',
-			label: 'Клиент',
+			searchType: 'contractorManufacturing',
+			label: 'Контрагент',
 			placeholder: '',
 		},
 	]);

@@ -52,6 +52,29 @@ export class DictionaryApiService {
 		);
 	}
 
+	/** Список контрагентов из manufacturingApi */
+	public getContractorsManufacturing(
+		query?: string,
+		clientId?: number | null
+	): Observable<IResponse<IDictionaryItemDto>> {
+		let params = new HttpParams();
+
+		if (clientId !== null && clientId !== undefined) {
+			params = params.set('clientId', clientId);
+		}
+
+		if (query) {
+			params = params.set('query', query);
+		}
+
+		return this.http.get<IResponse<IDictionaryItemDto>>(
+			`${environment.apiUrl}/api/manufacturing/Dictionary/Contractors`,
+			{
+				params,
+			}
+		);
+	}
+
 	/** Список плательщиков */
 	public getPayerContractors(
 		query?: string
