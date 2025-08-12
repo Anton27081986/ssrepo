@@ -44,6 +44,7 @@ export type searchType =
 	| 'tov-units'
 	| 'tovGroups'
 	| 'personificationStatuses'
+	| 'contractorManufacturing'
 	| undefined;
 
 @UntilDestroy()
@@ -200,6 +201,15 @@ export class SearchInputComponent {
 				case 'contractor':
 					this.searchFacade
 						.getContractor(query)
+						.pipe(untilDestroyed(this))
+						.subscribe((res) => {
+							this.found$.next(res.items);
+							this.ref.detectChanges();
+						});
+					break;
+				case 'contractorManufacturing':
+					this.searchFacade
+						.getContractorManufacturing(query)
 						.pipe(untilDestroyed(this))
 						.subscribe((res) => {
 							this.found$.next(res.items);

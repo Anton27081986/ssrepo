@@ -7,6 +7,6 @@ export interface IMpReservationAddOrder {
 
 export interface IOrderItemsTypes {
 	tovId: number;
-	clientId: number;
+	contractorId: number;
 	orderRequests: IOrderRequests[];
 }
