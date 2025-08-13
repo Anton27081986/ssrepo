@@ -59,19 +59,19 @@
 					</div>
 					<div class="content__row-item-client">
 						<ss-search-input
-							searchType="client"
-							label="Клиент"
-							[placeholder]="'Выберите клиента'"
+							searchType="contractorManufacturing"
+							label="Контрагент"
+							[placeholder]="'Выберите контрагента'"
 							[error]="
-								addOrdersForm.controls.client.touched &&
-								addOrdersForm.controls.client.errors?.required
+								addOrdersForm.controls.contractor.touched &&
+								addOrdersForm.controls.contractor.errors?.required
 									? 'Обязательное поле'
 									: undefined
 							"
 							[reSizeHeightOptions]="true"
 							(select)="onClientSelect($event)"
 							(click)="
-								addOrdersForm.controls.client.setErrors(null)
+								addOrdersForm.controls.contractor.setErrors(null)
 							"
 						/>
 					</div>
