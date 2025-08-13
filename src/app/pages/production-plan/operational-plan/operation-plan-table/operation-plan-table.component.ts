@@ -153,7 +153,7 @@ export class OperationPlanTableComponent {
 				this.planItems(),
 				this.days()
 			);
-			console.log(columnOperPlanConfig);
+
 			this.tableStateService.initialize(
 				this.planItems(),
 				columnOperPlanConfig

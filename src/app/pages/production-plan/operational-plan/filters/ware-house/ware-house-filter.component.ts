@@ -5,12 +5,14 @@ import {
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
+import {
+	CheckboxFilterContextComponent,
+	HeaderFilterCheckboxItemAbstractComponent,
+} from '@front-library/components';
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-ware-house-filter',

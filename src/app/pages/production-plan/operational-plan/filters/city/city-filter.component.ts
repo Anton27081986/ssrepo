@@ -10,7 +10,7 @@ import { OperationPlanFiltersApiService } from '@app/pages/production-plan/servi
 import { map, Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
+import { CheckboxFilterContextComponent } from '@app/pages/production-plan/blunt-components/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-city-filter',

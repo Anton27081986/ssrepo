@@ -1,0 +1,56 @@
+<div class="checkbox-filter-context">
+	<div class="checkbox-filter-context__input">
+		<ss-lib-form-field
+			[icon]="IconType.Search"
+			[showBorder]="false"
+		>
+			<ss-lib-input
+				fieldCtrl
+				[formControl]="queryControl()"
+				[placeholder]="'Поиск...'"
+				[clearButton]="true"
+			/>
+		</ss-lib-form-field>
+	</div>
+	<div class="checkbox-filter-context__content">
+		<ng-container *ngIf="isLoader(); else content">
+			<ss-lib-spinner></ss-lib-spinner>
+		</ng-container>
+		<ng-template #content>
+			<ng-container *ngIf="items().length > 0; else noContent">
+				<ss-lib-dropdown-filter-item
+					*ngIf="trueCheckControlMap"
+					[text]="
+						queryControl().value?.trim()
+							? 'Очистить выбранное'
+							: 'Очистить все'
+					"
+					[control]="controlClearAll()"
+					[(indeterminate)]="indeterminate"
+				></ss-lib-dropdown-filter-item>
+
+				<ng-container *ngFor="let item of items(); let i = index">
+					<ss-lib-dropdown-filter-item
+						[text]="item.name"
+						[control]="controlsMap()[item.id]"
+					>
+					</ss-lib-dropdown-filter-item>
+				</ng-container>
+			</ng-container>
+			<ng-template #noContent>
+				<div class="checkbox-filter-context__no-content">
+					<ss-lib-text
+						[align]="Align.Center"
+						[color]="Colors.TextBody3"
+						[type]="TextType.BodySm"
+						[weight]="TextWeight.Regular"
+					>
+						По запросу
+						{{ queryControl().valueChanges | async }} ничего не
+						найдено. Попробуйте изменить запрос.
+					</ss-lib-text>
+				</div>
+			</ng-template>
+		</ng-template>
+	</div>
+</div>
