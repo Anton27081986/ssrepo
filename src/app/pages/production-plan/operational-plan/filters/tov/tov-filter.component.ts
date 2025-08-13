@@ -5,25 +5,49 @@ import {
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
+import {
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	InputComponent,
+	ScrollableBlockComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/blunt-components/checkbox-filter-context/checkbox-filter-context.component';
+import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-tov-filter',
 	standalone: true,
-	imports: [ReactiveFormsModule, AsyncPipe, CheckboxFilterContextComponent],
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="(items$ | async)!"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	imports: [
+		ReactiveFormsModule,
+		InputComponent,
+		DropdownItemComponent,
+		CheckboxComponent,
+		TextComponent,
+		AsyncPipe,
+		NgFor,
+		FormFieldComponent,
+		FieldCtrlDirective,
+		ScrollableBlockComponent,
+		ScrollbarComponent,
+		DividerComponent,
+		NgIf,
+	],
+	templateUrl: 'tov-filter.component.html',
+	styleUrls: ['tov-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TovFilterComponent
@@ -34,6 +58,9 @@ export class TovFilterComponent
 		OperationPlanFiltersApiService
 	);
 
+	protected operationPlanState: OperationPlanState =
+		inject(OperationPlanState);
+
 	constructor() {
 		super();
 	}
@@ -43,20 +70,39 @@ export class TovFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getTov(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getTov(
+				query,
+				this.mapIds(),
+				this.operationPlanState.weekId$.value!,
+				false
+			)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getTov('', ids).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getTov('', ids, this.operationPlanState.weekId$.value!, true)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
+
+	public mapIds(): number[] {
+		return this.viewSelectedItems$.value.map((item) => item.id);
+	}
+
+	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
+	protected readonly ExtraSize = ExtraSize;
 }

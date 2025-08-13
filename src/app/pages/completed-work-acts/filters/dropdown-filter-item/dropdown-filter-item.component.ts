@@ -7,10 +7,14 @@ import {
 	ModelSignal,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxComponent } from '../checkbox/checkbox.component';
-import { TextComponent } from '../text/text.component';
-import { rotateAnimation } from '../../core/animations';
-import { Colors, ExtraSize, TextType, TextWeight } from '../../shared/models';
+import {
+	CheckboxComponent,
+	Colors,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
+import { rotateAnimation } from '@app/core/animations';
 
 @Component({
 	selector: 'ss-lib-dropdown-filter-item',
@@ -26,12 +30,12 @@ export class DropdownFilterItemComponent {
 	public text: InputSignal<string> = input.required();
 	public isPaddingLeft: InputSignal<boolean> = input(false);
 	public indeterminate: ModelSignal<boolean> = model(false);
-	protected readonly Colors = Colors;
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
 
 	protected checkItem(): void {
 		this.control().setValue(!this.control().value);
 	}
+
+	protected readonly TextWeight = TextWeight;
+	protected readonly TextType = TextType;
+	protected readonly Colors = Colors;
 }

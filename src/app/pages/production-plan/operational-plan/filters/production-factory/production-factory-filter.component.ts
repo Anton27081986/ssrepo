@@ -8,24 +8,32 @@ import {
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/blunt-components/checkbox-filter-context/checkbox-filter-context.component';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import {
+	CheckboxComponent,
+	DropdownItemComponent,
+	InputComponent,
+	TextComponent,
+} from '@front-library/components';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, NgFor } from '@angular/common';
 
 @Component({
 	selector: 'app-production-factory-filter',
 	standalone: true,
-	styles: '',
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="itemsSignal()"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	styleUrl: 'production-factory-filter.component.scss',
+	templateUrl: 'production-factory-filter.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CheckboxFilterContextComponent],
+	imports: [
+		InputComponent,
+		ReactiveFormsModule,
+		DropdownItemComponent,
+		CheckboxComponent,
+		NgFor,
+		AsyncPipe,
+		TextComponent,
+	],
 })
 export class ProductionFactoryFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
@@ -33,11 +41,6 @@ export class ProductionFactoryFilterComponent
 {
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
 		OperationPlanFiltersApiService
-	);
-
-	protected readonly itemsSignal: Signal<IDictionaryItemDto[]> = toSignal(
-		this.items$,
-		{ initialValue: [] }
 	);
 
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
