@@ -20,6 +20,7 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		defaultValue: null,
 		field: CompletedWorkActsFiltersFields.ids,
 		text: 'Код',
+		defaultText: 'Выберите код',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -27,11 +28,16 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		},
 		valueComponent: ActIdsFilterComponent,
 		active: false,
+		records: {
+			width: '',
+			height: '',
+		},
 	},
 	{
 		defaultValue: null,
 		field: CompletedWorkActsFiltersFields.state,
 		text: 'Состояние',
+		defaultText: 'Выберите состояние',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -39,11 +45,16 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		},
 		valueComponent: ActStatesFilterComponent,
 		active: false,
+		records: {
+			width: '',
+			height: '',
+		},
 	},
 	{
 		defaultValue: null,
 		field: CompletedWorkActsFiltersFields.buUnitIds,
 		text: 'БЕ Плательщика',
+		defaultText: 'Выберите БЕ Плательщика',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -51,11 +62,16 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		},
 		valueComponent: ActBuUnitsFilterComponent,
 		active: false,
+		records: {
+			width: '',
+			height: '',
+		},
 	},
 	{
 		defaultValue: null,
 		field: CompletedWorkActsFiltersFields.providerContractorIds,
 		text: 'Поставщик услуг',
+		defaultText: 'Выберите поставщика услуг',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -63,11 +79,16 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		},
 		valueComponent: ActProviderContractorsFilterComponent,
 		active: false,
+		records: {
+			width: '',
+			height: '',
+		},
 	},
 	{
 		defaultValue: null,
 		field: CompletedWorkActsFiltersFields.applicantUserId,
 		text: 'Заявитель',
+		defaultText: 'Выберите заявителя',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -75,11 +96,16 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		},
 		valueComponent: ActApplicantsFilterComponent,
 		active: false,
+		records: {
+			width: '',
+			height: '',
+		},
 	},
 	{
 		defaultValue: null,
 		field: CompletedWorkActsFiltersFields.costIds,
 		text: 'Статья',
+		defaultText: 'Выберите статью',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -87,5 +113,9 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		},
 		valueComponent: ActCostsFilterComponent,
 		active: false,
+		records: {
+			width: '',
+			height: '',
+		},
 	},
 ];

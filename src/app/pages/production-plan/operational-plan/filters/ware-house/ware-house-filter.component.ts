@@ -5,27 +5,15 @@ import {
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import {
-	CheckboxFilterContextComponent,
-	HeaderFilterCheckboxItemAbstractComponent,
-} from '@front-library/components';
+import { IDictionaryItemDto } from '@front-library/components';
 import { map, Observable } from 'rxjs';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-ware-house-filter',
 	standalone: true,
-	imports: [ReactiveFormsModule, AsyncPipe, CheckboxFilterContextComponent],
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="(items$ | async)!"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	imports: [],
+	template: '',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WareHouseFilterComponent
