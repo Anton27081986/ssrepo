@@ -14,7 +14,6 @@ import {
 	DatepickerComponent,
 	ExtraSize,
 	FieldCtrlDirective,
-	FiltersTriggerButtonComponent,
 	FormFieldComponent,
 	HeaderFilterService,
 	IconPosition,
@@ -40,6 +39,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/blunt-components/filters-table-pagination-canvas/filters-table-canvas.component';
+import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-components/filters-trigger-button/filters-trigger-button.component';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -65,6 +65,7 @@ import { FiltersTableCanvasComponent } from '@app/pages/production-plan/blunt-co
 		FormsModule,
 		InputComponent,
 		FiltersTableCanvasComponent,
+		FiltersTriggerButtonComponent,
 		FiltersTriggerButtonComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,

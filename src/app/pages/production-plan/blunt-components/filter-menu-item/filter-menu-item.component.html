@@ -5,7 +5,11 @@
 		[icon]="IconType.FilterLines"
 		[popoverTriggerFor]="contextFilter"
 		[type]="ButtonType.Secondary"
-		[text]="filter().text + ': ' + valueSelected()"
+		[text]="
+			valueSelected() !== '0'
+				? filter().text + valueSelected()
+				: filter().defaultText
+		"
 	>
 		<ss-lib-icon
 			[color]="Colors.IconAction2"
@@ -27,7 +31,8 @@
 
 <ss-lib-dropdown-list
 	#contextFilter
-	[width]="'348px'"
+	[width]="filter().records.width"
+	[height]="filter().records.height"
 >
 	<ng-container
 		[ngComponentOutlet]="filter().valueComponent"

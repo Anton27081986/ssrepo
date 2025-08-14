@@ -1,0 +1,17 @@
+.manager-tmz-filter {
+  display: flex;
+  flex-direction: column;
+
+  &__content {
+    height: 420px;
+  }
+}
+
+ss-lib-form-field {
+  --shadow-xs: none;
+  --border-radius-md: none;
+  --border-secondary: none;
+  --border-focus: none;
+  border-bottom: 1px solid var(--border-primary);
+  --app-custom-field-container-padding: 3px 8px 4px 16px;
+}
