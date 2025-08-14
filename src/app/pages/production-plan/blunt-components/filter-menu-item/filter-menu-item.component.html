@@ -7,10 +7,8 @@
 		[type]="ButtonType.Secondary"
 		[text]="
 			valueSelected() !== '0'
-				? filter().text + ': ' + valueSelected()
-				: 'Выберите ' +
-					filter().text.charAt(0).toLowerCase() +
-					filter().text.slice(1)
+				? filter().text + valueSelected()
+				: filter().defaultText
 		"
 	>
 		<ss-lib-icon
@@ -33,7 +31,8 @@
 
 <ss-lib-dropdown-list
 	#contextFilter
-	[width]="'682px'"
+	[width]="filter().records.width"
+	[height]="filter().records.height"
 >
 	<ng-container
 		[ngComponentOutlet]="filter().valueComponent"

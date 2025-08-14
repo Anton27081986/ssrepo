@@ -3,21 +3,12 @@ import {
 	Component,
 	inject,
 	OnInit,
-	Signal,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
-import {
-	CheckboxComponent,
-	DropdownItemComponent,
-	InputComponent,
-	TextComponent,
-} from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, NgFor } from '@angular/common';
 
 @Component({
 	selector: 'app-production-factory-filter',
@@ -25,15 +16,7 @@ import { AsyncPipe, NgFor } from '@angular/common';
 	styleUrl: 'production-factory-filter.component.scss',
 	templateUrl: 'production-factory-filter.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [
-		InputComponent,
-		ReactiveFormsModule,
-		DropdownItemComponent,
-		CheckboxComponent,
-		NgFor,
-		AsyncPipe,
-		TextComponent,
-	],
+	imports: [ReactiveFormsModule],
 })
 export class ProductionFactoryFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>

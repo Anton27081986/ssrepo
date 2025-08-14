@@ -45,6 +45,8 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 
 	public indeterminate: ModelSignal<boolean> = model(false);
 
+	public indeterminateText: ModelSignal<string> = model('Очистить все');
+
 	protected constructor() {
 		super();
 
@@ -63,9 +65,23 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 			this.controlsClearAll.valueChanges.pipe(
 				tap(() => {
 					this.indeterminate.set(false);
+					if (this.queryControl.value?.trim()) {
+					}
 				})
 			)
 		);
+
+		toSignal(
+			this.viewSelectedItems$.pipe(
+				tap((item) => {
+					item.length
+						? this.indeterminate.set(true)
+						: this.indeterminate.set(false);
+				})
+			)
+		);
+
+		toSignal(this.queryControl.valueChanges.pipe(tap((val) => {})));
 	}
 
 	// Фильтруем выбранные элементы по поисковому запросу
@@ -129,20 +145,6 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 		}
 	}
 
-	private calcIndeterminate(): void {
-		const trueCount = 0;
-
-		if (trueCount === 0) {
-			this.indeterminate.set(false);
-			this.controlsClearAll.setValue(false, { emitEvent: false });
-
-			return;
-		}
-
-		this.indeterminate.set(true);
-		this.controlsClearAll.setValue(false, { emitEvent: false });
-	}
-
 	public search$(searchTerm: string | null): Observable<T[]> {
 		return this.getList$(searchTerm ?? '');
 	}
@@ -161,14 +163,6 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 				)
 			)
 			.subscribe();
-	}
-
-	private initSelectedIds(value: IFilterCriterionType): number[] {
-		if (Array.isArray(value)) {
-			return value;
-		}
-
-		return [];
 	}
 
 	public ngOnDestroy(): void {

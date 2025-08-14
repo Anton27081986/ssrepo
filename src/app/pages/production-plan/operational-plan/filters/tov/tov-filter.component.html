@@ -10,8 +10,24 @@
 			[formControl]="queryControl"
 		></ss-lib-input>
 	</ss-lib-form-field>
-	<ss-lib-scrollbar>
+	<ss-lib-scrollbar *ngIf="(items$ | async)?.length">
 		<div class="tov-filter__content">
+			<ss-lib-dropdown-item
+				*ngIf="indeterminate()"
+				(click)="controlsClearAll.setValue(true)"
+			>
+				<ss-lib-checkbox
+					[indeterminate]="indeterminate()"
+					[formControl]="controlsClearAll"
+				></ss-lib-checkbox>
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Medium"
+					[color]="Colors.TextAction2"
+					>{{ indeterminateText() }}
+				</ss-lib-text>
+			</ss-lib-dropdown-item>
+
 			<ss-lib-dropdown-item
 				(click)="unSelectedItem(item)"
 				*ngFor="let item of viewSelectedItems$ | async"

@@ -1,11 +1,16 @@
 .tov-filter {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 
    &__content {
-     height: 420px;
+     height: 410px;
    }
 }
+ss-lib-divider {
+  padding: 4px 0;
+}
+
 
 ss-lib-form-field {
   --shadow-xs: none;
