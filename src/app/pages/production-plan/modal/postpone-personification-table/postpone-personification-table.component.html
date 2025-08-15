@@ -11,7 +11,6 @@
 				<th
 					*ssHead="column"
 					ssTh
-					[class.width-column-inputs]="isInputColumn(column)"
 				>
 					<ss-lib-text
 						[color]="Colors.TextBody2"
@@ -36,40 +35,15 @@
 				<td
 					*ssCell="column"
 					ssTd
-					[class.width-column-inputs]="isInputColumn(column)"
 				>
 					<ng-container [ngSwitch]="column">
-						<ss-lib-form-field
-							*ngSwitchCase="'countForPostpone'"
-							fieldCtrl
-							[showValidationFieldIcon]="true"
-						>
-							<ss-lib-input
-								fieldCtrl
-								required
-								[size]="ExtraSize.md"
-								[formControl]="item.countForPostpone"
-								[max]="item.quantity"
-								[min]="0"
-								[type]="InputType.Number"
-							></ss-lib-input>
-						</ss-lib-form-field>
-
-						<ss-lib-form-field
-							*ngSwitchCase="'productionDateControl'"
-							fieldCtrl
-							[showValidationFieldIcon]="true"
-							[errorText]="
-								'Необходимо выбрать дату не ранее исходной'
-							"
-						>
-							<ss-lib-datepicker
-								fieldCtrl
-								required
-								[formControl]="item.productionDateControl"
-								[min]="item.originalProductionDate"
-							></ss-lib-datepicker>
-						</ss-lib-form-field>
+						<ng-container *ngSwitchCase="'orderId'">
+							<ss-lib-link
+								[text]="'#' + item.orderId"
+								[linkAppearance]="LinkAppearance.Standalone"
+								(click)="openOrder(item.linkToDetail)"
+							></ss-lib-link>
+						</ng-container>
 						<ng-container *ngSwitchDefault>
 							<ss-lib-text
 								[color]="Colors.TextBody2"
