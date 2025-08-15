@@ -25,6 +25,8 @@ import {
 	FieldCtrlDirective,
 	InputType,
 	ExtraSize,
+	LinkComponent,
+	LinkAppearance,
 } from '@front-library/components';
 import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -50,6 +52,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 		FieldCtrlDirective,
 		NgSwitchCase,
 		NgSwitchDefault,
+		LinkComponent,
 	],
 	templateUrl: './postpone-personification-table.component.html',
 	styleUrl: './postpone-personification-table.component.scss',
@@ -66,14 +69,9 @@ export class PostponePersonificationTableComponent {
 	protected readonly TextType = TextType;
 	protected readonly InputType = InputType;
 	protected readonly ExtraSize = ExtraSize;
+	protected readonly LinkAppearance = LinkAppearance;
 
-	public readonly columns = [
-		'orderId',
-		'customerUser',
-		'quantity',
-		'countForPostpone',
-		'productionDateControl',
-	] as const;
+	public readonly columns = ['orderId', 'customerUser', 'quantity'] as const;
 
 	public getColumnName(columnId: string): string {
 		switch (columnId) {
@@ -83,10 +81,6 @@ export class PostponePersonificationTableComponent {
 				return 'Заказчик';
 			case 'quantity':
 				return 'Количество';
-			case 'countForPostpone':
-				return 'Кол-во для переноса';
-			case 'productionDateControl':
-				return 'Перенести на дату';
 			default:
 				return columnId;
 		}
@@ -97,8 +91,6 @@ export class PostponePersonificationTableComponent {
 		column: keyof TransferProductionPlanMap
 	): string | number {
 		switch (column) {
-			case 'orderId':
-				return item.orderId;
 			case 'customerUser':
 				return item.customerUser.name;
 			case 'quantity':
@@ -108,9 +100,7 @@ export class PostponePersonificationTableComponent {
 		}
 	}
 
-	public isInputColumn(column: (typeof this.columns)[number]): boolean {
-		return (
-			column === 'countForPostpone' || column === 'productionDateControl'
-		);
+	protected openOrder(link: string): void {
+		window.open(link, '_blank');
 	}
 }

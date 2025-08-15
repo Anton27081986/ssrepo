@@ -12,7 +12,7 @@ export function generateColumnOperationPlanConfig(
 	const baseColumns: TableColumnConfig[] = [
 		{
 			id: 'tov',
-			name: 'Готовая продукция (ГП)',
+			name: 'Товарная позиция (ТП)',
 			showInDropdown: false,
 			showInHeader: true,
 			visible: true,

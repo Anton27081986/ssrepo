@@ -188,7 +188,7 @@ export class OperationPlanTableComponent {
 		if (name.match(/\d{2}-\d{2}$/)) {
 			const [, month, day] = name.split('-');
 
-			return `${month}.${day}`;
+			return `${day}.${month}`;
 		}
 
 		return name;

@@ -205,13 +205,15 @@ export class OperationPlanTableTbodyComponent {
 
 	protected openPostponePlanModal(
 		row: OperationPlanItem,
-		_columnId: string
+		columnId: string
 	): void {
-		const data = {
-			id: row.id,
-		};
+		const day = this.getDayCell(row, columnId);
 
-		this.popupService.openPostponePlanModal(data.id);
+		if (!day) {
+			return;
+		}
+
+		this.popupService.openPostponePlanModal(day.id, day.date);
 	}
 
 	// Метод для открытия модальных окон комментариев

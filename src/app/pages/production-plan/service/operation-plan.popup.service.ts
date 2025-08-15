@@ -56,10 +56,10 @@ export class OperationPlanPopupService {
 		);
 	}
 
-	public openPostponePlanModal(id: number): ModalRef {
+	public openPostponePlanModal(id: number, date: string): ModalRef {
 		return this.popup.openRightSidePage<PostponeSidePageData>(
 			PostponePersonificationSidePageComponent,
-			{ id },
+			{ id, date },
 			'860px'
 		);
 	}
