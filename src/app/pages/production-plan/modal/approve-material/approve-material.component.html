@@ -8,7 +8,7 @@
 		'Согласование сырья за ' + (data.dataStart | date: 'd MMMM y')
 	"
 	[descriptionHeader]="
-		'Выберите период согласования сырья и город для выбранных ГП.'
+		'Выберите период согласования сырья и город для выбранных ТП.'
 	"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
@@ -87,7 +87,7 @@
 		<ss-lib-button
 			[style.width]="'262px'"
 			[type]="ButtonType.Primary"
-			[text]="'Рассчитать для ' + data.total + ' ГП'"
+			[text]="'Рассчитать для ' + data.total + ' ТП'"
 			(click)="approveMaterial()"
 		></ss-lib-button>
 	</div>
