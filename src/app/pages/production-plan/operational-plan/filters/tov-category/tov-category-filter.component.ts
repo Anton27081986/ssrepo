@@ -10,24 +10,12 @@ import { Observable, map } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/blunt-components/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-tov-category-filter',
 	standalone: true,
-	imports: [
-		ReactiveFormsModule,
-		CommonModule,
-		CheckboxFilterContextComponent,
-	],
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="(items$ | async)!"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	imports: [ReactiveFormsModule, CommonModule],
+	template: ``,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TovCategoryFilterComponent

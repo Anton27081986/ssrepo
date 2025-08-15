@@ -10,7 +10,6 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {
 	Align,
 	Colors,
-	DropdownFilterItemComponent,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	IconType,
@@ -22,6 +21,7 @@ import {
 } from '@front-library/components';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { DropdownFilterItemComponent } from '@app/pages/completed-work-acts/filters/dropdown-filter-item/dropdown-filter-item.component';
 
 @Component({
 	selector: 'ss-lib-checkbox-filter-context',
