@@ -18,6 +18,7 @@
 						>
 							<ss-lib-checkbox
 								[formControl]="getRowCheckboxControl(idxRow)"
+								(click)="$event.stopPropagation()"
 							></ss-lib-checkbox>
 							<ss-lib-text
 								class="item-tov__text"
@@ -38,6 +39,7 @@
 										hidden: !row.isComment,
 									}"
 									[size]="ExtraSize.xxs"
+									(click)="$event.stopPropagation()"
 								>
 									<ss-lib-action-bar-item
 										class="tov-link"
