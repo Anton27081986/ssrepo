@@ -44,6 +44,7 @@ export const Permissions = {
 	OPERATIONAL_PLAN_ACCESS: 'OperationalPlan.Access',
 	OPERATIONAL_PLAN_ADMIN: 'OperationalPlan.Admin',
 	OPERATIONAL_PLAN_EDIT: 'OperationalPlan.Edit',
+	OPERATIONAL_PLAN_VIEW_ORDER: 'OperationalPlan.ViewOrder',
 	OPERATIONAL_PLAN_APPROVE_MATERIALS: 'OperationalPlan.ApproveMaterials',
 	OPERATIONAL_PLAN_CALC_ROW_MATERIALS: 'OperationalPlan.CalcRowMaterials',
 	OPERATIONAL_PLAN_ADD_COMMENTS: 'OperationalPlan.AddComments',

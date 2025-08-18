@@ -20,6 +20,10 @@ import {
 	AddCommentsModalComponent,
 	AddCommentsModalData,
 } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
+import {
+	PostponePersonificationSidePageComponent,
+	PostponeSidePageData,
+} from '@app/pages/production-plan/modal/postpone-personification-side-page/postpone-personification-side-page.component';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanPopupService {
@@ -49,6 +53,14 @@ export class OperationPlanPopupService {
 			{ id },
 			false,
 			'449px'
+		);
+	}
+
+	public openPostponePlanModal(id: number, date: string): ModalRef {
+		return this.popup.openRightSidePage<PostponeSidePageData>(
+			PostponePersonificationSidePageComponent,
+			{ id, date },
+			'860px'
 		);
 	}
 
