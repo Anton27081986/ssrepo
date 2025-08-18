@@ -36,8 +36,6 @@ import {
 } from 'rxjs';
 import { ProductionPlanResponse } from '@app/core/utils/response';
 import { operationPlanFilter } from '@app/pages/production-plan/operational-plan/operation-plan.filters';
-import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
-import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
 import { IconPosition } from '@front-components/components';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { OperationPlanTableComponent } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table.component';
@@ -49,6 +47,8 @@ import { OperationPlanEmptyStateComponent } from '@app/pages/production-plan/ope
 import { Router, ActivatedRoute } from '@angular/router';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { OperationPlanRootService } from '@app/pages/production-plan/service/operation-plan.root.service';
+import { FiltersTableCanvasComponent } from '@app/pages/production-plan/blunt-components/filters-table-pagination-canvas/filters-table-canvas.component';
+import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-components/filters-trigger-button/filters-trigger-button.component';
 
 @Component({
 	selector: 'app-operation-plan',
@@ -56,7 +56,6 @@ import { OperationPlanRootService } from '@app/pages/production-plan/service/ope
 	imports: [
 		ButtonComponent,
 		FiltersTableCanvasComponent,
-		FiltersTriggerButtonComponent,
 		DropdownItemComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
@@ -69,6 +68,7 @@ import { OperationPlanRootService } from '@app/pages/production-plan/service/ope
 		DropdownColumnsSettingsComponent,
 		OperationPlanEmptyStateComponent,
 		LoadPaginationComponent,
+		FiltersTriggerButtonComponent,
 	],
 	templateUrl: './operational-plan.component.html',
 	styleUrl: './operational-plan.component.scss',

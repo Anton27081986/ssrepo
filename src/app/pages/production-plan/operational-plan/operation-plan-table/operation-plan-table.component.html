@@ -1,44 +1,44 @@
-<ss-lib-indicator-checklist-popup
-	[count]="getSelectedElemCount"
-	[total]="totalItems()"
-	(closed)="popupCloseEmit()"
->
-	<ss-lib-button
-		*ngIf="operationPlanState.getHasPermissionOrderProduction"
-		[size]="ExtraSize.xs"
-		[type]="ButtonType.Ghost"
-		[popoverTriggerFor]="orderAnOutfitList"
-		[text]="'Заказ наряд'"
-	>
-		<ss-lib-icon
-			[width]="'20'"
-			[height]="'20'"
-			[icon]="IconType.ChevronDown"
-		></ss-lib-icon>
-	</ss-lib-button>
-	<ss-lib-button
-		*ngIf="operationPlanState.getHasPermissionCalcRowMaterials"
-		[icon]="IconType.FilePreviewSearch"
-		[size]="ExtraSize.xs"
-		[type]="ButtonType.Ghost"
-		[popoverTriggerFor]="calcProd"
-		[text]="'Рассчитать сырье'"
-	>
-		<ss-lib-icon
-			[width]="'20'"
-			[height]="'20'"
-			[icon]="IconType.ChevronDown"
-		></ss-lib-icon>
-	</ss-lib-button>
-	<ss-lib-button
-		*ngIf="operationPlanState.getHasPermissionEdit"
-		[icon]="IconType.Trash"
-		[size]="ExtraSize.xs"
-		[type]="ButtonType.Ghost"
-		[text]="'Удалить'"
-		(click)="deleteItemsTov()"
-	></ss-lib-button>
-</ss-lib-indicator-checklist-popup>
+<!--<ss-lib-indicator-checklist-popup-->
+<!--	[count]="getSelectedElemCount"-->
+<!--	[total]="totalItems()"-->
+<!--	(closed)="popupCloseEmit()"-->
+<!--&gt;-->
+<!--	<ss-lib-button-->
+<!--		*ngIf="operationPlanState.getHasPermissionOrderProduction"-->
+<!--		[size]="ExtraSize.xs"-->
+<!--		[type]="ButtonType.Ghost"-->
+<!--		[popoverTriggerFor]="orderAnOutfitList"-->
+<!--		[text]="'Заказ наряд'"-->
+<!--	>-->
+<!--		<ss-lib-icon-->
+<!--			[width]="'20'"-->
+<!--			[height]="'20'"-->
+<!--			[icon]="IconType.ChevronDown"-->
+<!--		></ss-lib-icon>-->
+<!--	</ss-lib-button>-->
+<!--	<ss-lib-button-->
+<!--		*ngIf="operationPlanState.getHasPermissionCalcRowMaterials"-->
+<!--		[icon]="IconType.FilePreviewSearch"-->
+<!--		[size]="ExtraSize.xs"-->
+<!--		[type]="ButtonType.Ghost"-->
+<!--		[popoverTriggerFor]="calcProd"-->
+<!--		[text]="'Рассчитать сырье'"-->
+<!--	>-->
+<!--		<ss-lib-icon-->
+<!--			[width]="'20'"-->
+<!--			[height]="'20'"-->
+<!--			[icon]="IconType.ChevronDown"-->
+<!--		></ss-lib-icon>-->
+<!--	</ss-lib-button>-->
+<!--	<ss-lib-button-->
+<!--		*ngIf="operationPlanState.getHasPermissionEdit"-->
+<!--		[icon]="IconType.Trash"-->
+<!--		[size]="ExtraSize.xs"-->
+<!--		[type]="ButtonType.Ghost"-->
+<!--		[text]="'Удалить'"-->
+<!--		(click)="deleteItemsTov()"-->
+<!--	></ss-lib-button>-->
+<!--</ss-lib-indicator-checklist-popup>-->
 
 <ss-lib-dropdown-list
 	#calcProd
@@ -203,11 +203,7 @@
 						>
 							<div
 								class="td-subcolumn"
-								[style.justify-content]="
-									subColumnId.startsWith('planQuantity')
-										? 'flex-start'
-										: 'flex-end'
-								"
+								[style.justify-content]="'flex-end'"
 							>
 								<ss-lib-text
 									[color]="Colors.TextBody2"

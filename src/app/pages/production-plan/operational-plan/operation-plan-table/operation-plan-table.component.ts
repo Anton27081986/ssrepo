@@ -30,7 +30,6 @@ import {
 	UtilityButtonComponent,
 	TooltipDirective,
 	TooltipPosition,
-	IndicatorChecklistPopupComponent,
 	StatusIconComponent,
 	Status,
 } from '@front-library/components';
@@ -79,7 +78,6 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 		UtilityButtonComponent,
 		NgIf,
 		TooltipDirective,
-		IndicatorChecklistPopupComponent,
 		StatusIconComponent,
 	],
 	templateUrl: './operation-plan-table.component.html',
@@ -153,7 +151,7 @@ export class OperationPlanTableComponent {
 				this.planItems(),
 				this.days()
 			);
-			console.log(columnOperPlanConfig);
+
 			this.tableStateService.initialize(
 				this.planItems(),
 				columnOperPlanConfig

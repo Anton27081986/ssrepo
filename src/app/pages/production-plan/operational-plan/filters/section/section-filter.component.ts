@@ -7,7 +7,6 @@ import {
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
 	Align,
-	DropdownFilterItemComponent,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	HeaderFilterCheckboxItemAbstractComponent,
@@ -20,7 +19,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
-import { DropdownFilterGroupItemsComponent } from '@app/pages/production-plan/component-and-service-for-lib/dropdown-filter-group-items/dropdown-filter-group-items.component';
 import { FilterSectionParentItems } from '@app/core/models/production-plan/filter-section-dto';
 
 @Component({
@@ -31,12 +29,9 @@ import { FilterSectionParentItems } from '@app/core/models/production-plan/filte
 		FormFieldComponent,
 		InputComponent,
 		ReactiveFormsModule,
-		NgFor,
 		AsyncPipe,
 		TextComponent,
 		NgIf,
-		DropdownFilterGroupItemsComponent,
-		DropdownFilterItemComponent,
 		SpinnerComponent,
 	],
 	templateUrl: '/section-filter.component.html',

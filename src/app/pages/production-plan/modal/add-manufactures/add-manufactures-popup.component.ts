@@ -11,7 +11,6 @@ import {
 import {
 	BadgeComponent,
 	ButtonComponent,
-	CheckboxComponent,
 	DividerComponent,
 	DropdownItemComponent,
 	DropdownListComponent,
@@ -56,6 +55,7 @@ import {
 	AddToVRequest,
 	toVRequest,
 } from '@app/core/models/production-plan/add-tov-request';
+import { AddManufacturesItemComponent } from '@app/pages/production-plan/modal/add-manufactures/add-manufactures-item/add-manufactures-item.component';
 
 export enum TovEventEnum {
 	default = 0,
@@ -82,7 +82,6 @@ export interface AddManufacturesPopup {
 		FieldCtrlDirective,
 		NgFor,
 		TextComponent,
-		CheckboxComponent,
 		DividerComponent,
 		NgIf,
 		DropdownItemComponent,
@@ -92,6 +91,7 @@ export interface AddManufacturesPopup {
 		SpinnerComponent,
 		ReactiveFormsModule,
 		NgTemplateOutlet,
+		AddManufacturesItemComponent,
 	],
 	templateUrl: './add-manufactures-popup.component.html',
 	styleUrl: './add-manufactures-popup.component.scss',
@@ -138,6 +138,9 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		[]
 	);
 
+	protected selectedViewTov: WritableSignal<ManufacturingSelectedTovs[]> =
+		signal([]);
+
 	protected tov: Signal<ManufacturingSelectedTovs[]> = toSignal(
 		this.tovEvent.pipe(
 			switchMap((event) => {
@@ -159,6 +162,8 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					}
 				}
 
+				this.filterSelectedTov(query);
+
 				if (event === TovEventEnum.changePage) {
 					this.isLoader.set(true);
 				}
@@ -173,6 +178,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					this.offset()
 				);
 			}),
+			debounceTime(500),
 			map((tov) => {
 				this.total = tov.total;
 
@@ -208,11 +214,19 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	constructor() {
 		toSignal(
 			this.queryControl.valueChanges.pipe(
-				debounceTime(1000),
+				debounceTime(500),
 				tap((_value) => {
 					this.offset.set(0);
 					this.tovEvent.next(TovEventEnum.changeQuery);
 				})
+			)
+		);
+	}
+
+	private filterSelectedTov(query: string) {
+		this.selectedViewTov.set(
+			this.selectedTov().filter((item) =>
+				item.tov.name.toLowerCase().includes(query.toLowerCase())
 			)
 		);
 	}
@@ -231,7 +245,8 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 					if (
 						elemItem.scrollHeight -
 							elemItem.clientHeight -
-							elemItem.scrollTop ===
+							elemItem.scrollTop -
+							100 <=
 						0
 					) {
 						this.offset.set(this.offset() + this.limit);
@@ -267,14 +282,20 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 				const sub = this.operationPlanService
 					.addGp(params)
-					.subscribe(() => this.popup.close());
+					.subscribe(() => {
+						this.sharedService.openToast({
+							type: ToastTypeEnum.Success,
+							text: 'Выбранные ТП успешно добавлены',
+						});
+						this.popup.close();
+					});
 
 				this.subscriptions.push(sub);
 			}
 		} else {
 			this.sharedService.openToast({
 				type: ToastTypeEnum.Error,
-				text: 'выберите элементы',
+				text: 'Выберите элементы',
 			});
 		}
 	}
@@ -286,51 +307,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 	}
 
 	protected close(): void {
-		// if (this.selectedTov().length > 0) {
-		// 	this.isVisibleModal.set(false);
-		// 	const confirmModal = this.confirmIfCloseForm();
-		//
-		// 	const sub1 = confirmModal.afterSubmit$
-		// 		.pipe(
-		// 			take(1),
-		// 			tap(() => {
-		// 				this.popup.close();
-		// 			}),
-		// 		)
-		// 		.subscribe();
-		// 	this.subscriptions.push(sub1);
-		//
-		// 	const sub2 = confirmModal.afterClosed$
-		// 		.pipe(
-		// 			take(1),
-		// 			tap(() => {
-		// 				this.isVisibleModal.set(true);
-		// 			}),
-		// 		)
-		// 		.subscribe();
-		// 	this.subscriptions.push(sub2);
-		// } else {
-		// 	this.popup.close();
-		// }
 		this.popup.close();
-	}
-
-	public confirmIfCloseForm(): ModalRef {
-		return this.sharedService.openConfirmModal(
-			{
-				title: 'Выйти без сохранения ?',
-				description: 'Все изменения будут утеряны.',
-				badgeProps: {
-					icon: IconType.Alert,
-					status: Status.Warning,
-				},
-				apply: {
-					text: 'Выйти',
-				},
-				cancelText: 'Остаться',
-			},
-			false
-		);
 	}
 
 	protected addTovSelected(tov: ManufacturingSelectedTovs): void {
@@ -346,7 +323,18 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 		arrTov.push(cloneTov);
 
+		const elem = document.getElementsByClassName(
+			'ss-lib-popup-global-scrolled'
+		);
+
+		const elemItem = elem.item(0);
+
+		if (elemItem) {
+			elemItem.scrollTop = 0;
+		}
+
 		this.selectedTov.set(arrTov);
+		this.selectedViewTov.set(arrTov);
 	}
 
 	protected removeTovSelected(tov: ManufacturingSelectedTovs): void {
@@ -357,10 +345,26 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		);
 
 		this.selectedTov.set(arrTov);
+		this.filterSelectedTov(this.queryControl.value!);
 	}
 
 	protected deleteSelected(): void {
-		this.selectedTov.set([]);
+		const query = this.queryControl.value;
+		if (query && query.trim() !== '') {
+			const selectedTovArr = this.selectedTov();
+			const selectedViewTovArr = this.selectedViewTov();
+
+			const filtered = selectedTovArr.filter(
+				(item) =>
+					!selectedViewTovArr.some((v) => v.tov.id === item.tov.id)
+			);
+
+			this.selectedTov.set(filtered);
+			this.selectedViewTov.set([]);
+		} else {
+			this.selectedTov.set([]);
+			this.selectedViewTov.set([]);
+		}
 	}
 
 	protected selectOpt(

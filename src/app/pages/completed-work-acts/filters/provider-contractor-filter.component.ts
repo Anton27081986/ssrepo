@@ -8,9 +8,9 @@ import {
 import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFiltersApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-filters-api.service';
+import { CheckboxFilterContextComponent } from '@app/pages/completed-work-acts/filters/checkbox-filter-context/checkbox-filter-context.component';
 
 @Component({
 	selector: 'app-act-provider-contractors-filter',
@@ -25,7 +25,7 @@ import { CompletedWorkActsFiltersApiService } from '@app/pages/completed-work-ac
 		[(indeterminate)]="indeterminate"
 	></ss-lib-checkbox-filter-context>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CheckboxFilterContextComponent],
+	imports: [CheckboxFilterContextComponent, CheckboxFilterContextComponent],
 })
 export class ActProviderContractorsFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
