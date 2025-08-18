@@ -1,0 +1,63 @@
+<table
+	ssTable
+	class="postpone-table"
+	[hasBorderRadius]="true"
+	[showCellBorders]="false"
+	[columns]="columns"
+>
+	<thead>
+		<tr ssThGroup>
+			<ng-container *ngFor="let column of columns">
+				<th
+					*ssHead="column"
+					ssTh
+				>
+					<ss-lib-text
+						[color]="Colors.TextBody2"
+						[weight]="TextWeight.Semibold"
+						[type]="TextType.BodyXs"
+						[align]="Align.Center"
+						[isEllipsis]="true"
+					>
+						{{ getColumnName(column) }}
+					</ss-lib-text>
+				</th>
+			</ng-container>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr
+			*ngFor="let item of data"
+			ssTr
+		>
+			<ng-container *ngFor="let column of columns">
+				<td
+					*ssCell="column"
+					ssTd
+				>
+					<ng-container [ngSwitch]="column">
+						<ng-container *ngSwitchCase="'orderId'">
+							<ss-lib-link
+								[text]="'#' + item.orderId"
+								[linkAppearance]="LinkAppearance.Standalone"
+								(click)="openOrder(item.linkToDetail)"
+							></ss-lib-link>
+						</ng-container>
+						<ng-container *ngSwitchDefault>
+							<ss-lib-text
+								[color]="Colors.TextBody2"
+								[weight]="TextWeight.Regular"
+								[type]="TextType.BodySm"
+								[align]="Align.Center"
+								[isEllipsis]="true"
+							>
+								{{ getCellValue(item, column) }}
+							</ss-lib-text>
+						</ng-container>
+					</ng-container>
+				</td>
+			</ng-container>
+		</tr>
+	</tbody>
+</table>

@@ -2,7 +2,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	effect,
-	inject,
+	inject, Input,
 	input,
 	InputSignal,
 } from '@angular/core';
@@ -75,8 +75,9 @@ export class OperationalPlanTableQuantityCellComponent {
 	protected readonly operationPlanState = inject(OperationPlanState);
 
 	public hasUtilityAccess: InputSignal<boolean> = input<boolean>(false);
-	public hasPostponeAccess: InputSignal<boolean> = input<boolean>(false);
+	public hasViewAccess: InputSignal<boolean> = input<boolean>(false);
 	public hasQuantityEditAccess: InputSignal<boolean> = input<boolean>(false);
+	public hasTransferAccess: InputSignal<boolean> = input<boolean>(false);
 	public row: InputSignal<OperationPlanItem> = input.required();
 	public columnId: InputSignal<string> = input.required();
 	public value: InputSignal<string | number> = input.required();
@@ -284,7 +285,7 @@ export class OperationalPlanTableQuantityCellComponent {
 		return '';
 	}
 
-	public transferPlan() {
+	public transferPlan(): void {
 		this.postponeDateControl.markAllAsTouched();
 
 		if (this.postponeDateControl.errors) {
@@ -330,6 +331,18 @@ export class OperationalPlanTableQuantityCellComponent {
 			input.value = `${start},${end}`;
 		} else {
 			input.value = value;
+		}
+	}
+
+	public getDay(): PlanDays | null {
+		return this.getDayCell(this.row(), this.columnId());
+	}
+
+	public openPostponeModal(): void {
+		const day = this.getDay();
+
+		if (day?.id && day?.date) {
+			this.popupService.openPostponePlanModal(day.id, day.date);
 		}
 	}
 }

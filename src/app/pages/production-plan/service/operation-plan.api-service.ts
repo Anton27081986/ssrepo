@@ -64,7 +64,7 @@ export class OperationPlanApiService {
 		productionPlanDayId: number
 	): Observable<IResponse<TransferProductionPlanFromBackend>> {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
+			`${environment.apiUrl}/api/manufacturing/ProvisionDetails`,
 			{ params: { productionPlanDayId } }
 		);
 	}

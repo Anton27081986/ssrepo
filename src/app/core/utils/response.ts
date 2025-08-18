@@ -1,4 +1,5 @@
 import { IDay } from '@app/core/models/production-plan/operation-plan';
+import {IDictionaryItemDto} from "@front-components/components";
 
 export interface IResponse<T> {
 	isExtendedMode?: boolean;
@@ -10,6 +11,7 @@ export interface IResponse<T> {
 	weekCount?: number;
 	clientOfferId?: string;
 	totalQuantity?: number;
+	tov?: IDictionaryItemDto;
 }
 
 export interface Currency {

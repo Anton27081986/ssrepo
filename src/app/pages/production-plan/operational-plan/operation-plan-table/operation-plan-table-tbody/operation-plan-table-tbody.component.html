@@ -11,15 +11,27 @@
 						<div
 							class="item-tov"
 							(click)="
-								getRowCheckboxControl(idxRow).setValue(
-									!getRowCheckboxControl(idxRow).value
-								)
+								operationPlanState.getHasPermissionOrderProduction ||
+								operationPlanState.getHasPermissionCalcRowMaterials ||
+								operationPlanState.getHasPermissionEdit
+									? getRowCheckboxControl(idxRow).setValue(
+											!getRowCheckboxControl(idxRow).value
+										)
+									: $event.preventDefault()
 							"
 						>
-							<ss-lib-checkbox
-								[formControl]="getRowCheckboxControl(idxRow)"
-								(click)="$event.stopPropagation()"
-							></ss-lib-checkbox>
+							@if (
+								operationPlanState.getHasPermissionOrderProduction ||
+								operationPlanState.getHasPermissionCalcRowMaterials ||
+								operationPlanState.getHasPermissionEdit
+							) {
+								<ss-lib-checkbox
+									[formControl]="
+										getRowCheckboxControl(idxRow)
+									"
+									(click)="$event.stopPropagation()"
+								></ss-lib-checkbox>
+							}
 							<ss-lib-text
 								class="item-tov__text"
 								[lineClampCount]="3"
@@ -119,18 +131,20 @@
 						<app-operation-plan-table-quantity-cell
 							[hasUtilityAccess]="
 								column.id.startsWith('planQuantity') &&
-								!row.isPersonification
-							"
-							[hasPostponeAccess]="
-								!!(
-									operationPlanState.getHasPermissionEdit &&
-									getDayCell(row, column.id)
-										?.isManufactoryOrder
-								)
+								!!getDayCell(row, column.id)
+									?.isManufactoryOrder &&
+								(operationPlanState.getHasPermissionChangeOrder ||
+									operationPlanState.getHasPermissionTransferOrder ||
+									operationPlanState.getHasPermissionViewOrder)
 							"
 							[hasQuantityEditAccess]="
-								operationPlanState.getHasPermissionEdit &&
-								!row.isPersonification
+								operationPlanState.getHasPermissionChangeOrder
+							"
+							[hasTransferAccess]="
+								operationPlanState.getHasPermissionTransferOrder
+							"
+							[hasViewAccess]="
+								operationPlanState.getHasPermissionViewOrder
 							"
 							[value]="getCellValue(row, column.id)"
 							[row]="row"
