@@ -8,12 +8,21 @@
 					class="item-td"
 				>
 					@if (column.id === 'tov') {
-						<div class="item-tov">
+						<div
+							class="item-tov"
+							(click)="
+								getRowCheckboxControl(idxRow).setValue(
+									!getRowCheckboxControl(idxRow).value
+								)
+							"
+						>
 							<ss-lib-checkbox
 								[formControl]="getRowCheckboxControl(idxRow)"
 							></ss-lib-checkbox>
 							<ss-lib-text
 								class="item-tov__text"
+								[lineClampCount]="3"
+								[isLineClamp]="true"
 								[type]="TextType.BodySm"
 								[weight]="TextWeight.Regular"
 								[align]="Align.Start"
@@ -43,7 +52,7 @@
 										"
 									/>
 									<ss-lib-action-bar-item
-                                            class="comment"
+										class="comment"
 										ss-lib-tooltip
 										[leftIconConfig]="{
 											icon: IconType.Message,
