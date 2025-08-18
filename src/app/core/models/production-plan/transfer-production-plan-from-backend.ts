@@ -25,8 +25,7 @@ export interface TransferProductionPlanMap {
 }
 
 export interface TransferProductionPlanPatch {
+	productionDate: string | number | null;
+	quantity: string | number | null;
 	id: number;
-	orderId: number;
-	quantity: number;
-	productionDate: string;
 }

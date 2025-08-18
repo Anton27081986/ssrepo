@@ -116,11 +116,11 @@ export class OperationPlanApiService {
 	}
 
 	public transferProductionPlan(
-		params: TransferProductionPlanPatch[]
+		body: TransferProductionPlanPatch
 	): Observable<void> {
-		return this.http.patch<void>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
-			params
+		return this.http.post<void>(
+			`${environment.apiUrl}/api/manufacturing/ProvisionDetails/TransferPlan`,
+			body
 		);
 	}
 
@@ -225,6 +225,16 @@ export class OperationPlanApiService {
 		return this.http.patch<OperationPlanItem>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
 			{ ...params }
+		);
+	}
+
+	public changePlan(
+		id: number,
+		quantity: string | number | null
+	): Observable<OperationPlanItem> {
+		return this.http.patch<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/ProvisionDetails/ChangeQuantity`,
+			{ id, quantity }
 		);
 	}
 
