@@ -12,13 +12,13 @@ import { IUserDto } from '@app/core/models/awards/user-dto';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { IAttachmentDto } from '@app/core/models/notifications/attachment-dto';
 import { ThankColleagueFacadeService } from '@app/core/facades/thanks-colleague-facade.service';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
 import { IconComponent } from '@app/shared/components/icon/icon.component';
 import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
 import { ChipsUserSearchComponent } from '@app/shared/components/inputs/chips-user-search/chips-user-search.component';
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
+import {SharedPopupService, ToastTypeEnum} from "@front-library/components";
 
 @UntilDestroy()
 @Component({
@@ -50,7 +50,7 @@ export class AddThanksColleagueModalComponent {
 		private readonly modalRef: ModalRef,
 		private readonly _formBuilder: FormBuilder,
 		protected readonly facade: ThankColleagueFacadeService,
-		private readonly notificationService: NotificationToastService
+		private readonly sharedPopupService: SharedPopupService,
 	) {
 		this.formGroup = this._formBuilder.group<AddVictoryForm>({
 			note: this._formBuilder.nonNullable.control(
@@ -77,10 +77,10 @@ export class AddThanksColleagueModalComponent {
 				.addThanksForColleague(this.formGroup.value)
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
-					this.notificationService.addToast(
-						'Благодарность уже добавлена на главный экран',
-						'ok'
-					);
+					this.sharedPopupService.openToast({
+						text: 'Благодарность уже добавлена на главный экран',
+						type: ToastTypeEnum.Success,
+					});
 					this.facade.resetThanks();
 					this.close();
 				});
