@@ -21,18 +21,38 @@ input::-webkit-inner-spin-button {
 	margin: 0;
 }
 
-.comment-button {
+.hidden {
 	transition: all 0.5s ease;
 	opacity: 0;
 }
 
 .item-td:hover {
-	.comment-button {
+	.hidden {
 		opacity: 100%;
 	}
 
 	.quantity-button {
 		opacity: 100%;
+	}
+}
+
+.actions {
+	position: relative;
+}
+
+.tov-link {
+	transition: all 0.5s ease;
+	position: absolute;
+	left: -4px;
+}
+
+.comment {
+	z-index: 1;
+}
+
+.actions:hover {
+	.tov-link {
+		left: -28px
 	}
 }
 

@@ -23,24 +23,51 @@
 							@if (
 								operationPlanState.getHasPermissionAddComments
 							) {
-								<ss-lib-button
+								<ss-lib-action-bar
+									class="actions"
 									[class]="{
-										'comment-button': !row.isComment,
+										hidden: !row.isComment,
 									}"
-									[text]="row.commentCount"
-									[iconPosition]="IconPosition.Start"
-									[icon]="IconType.Message"
-									[size]="ExtraSize.xs"
-									[type]="ButtonType.Secondary"
-									[popoverTriggerFor]="
-										row.isComment
-											? addCommentsModal
-											: createCommentsModal
-									"
-									(click)="
-										openCommentsModal(row, row.isComment)
-									"
-								></ss-lib-button>
+									[size]="ExtraSize.xxs"
+								>
+									<ss-lib-action-bar-item
+										class="tov-link"
+										ss-lib-tooltip
+										[leftIconConfig]="{
+											icon: IconType.LinkExternal01,
+										}"
+										[tooltipText]="'Перейти к карточке ТП'"
+										[position]="TooltipPosition.Top"
+										(click)="
+											openTovLink(row.tov.linkToDetail)
+										"
+									/>
+									<ss-lib-action-bar-item
+                                            class="comment"
+										ss-lib-tooltip
+										[leftIconConfig]="{
+											icon: IconType.Message,
+										}"
+										[text]="row.commentCount"
+										[popoverTriggerFor]="
+											row.isComment
+												? addCommentsModal
+												: createCommentsModal
+										"
+										[tooltipText]="
+											row.isComment
+												? 'Посмотреть комментарии'
+												: 'Добавить комментарий'
+										"
+										[position]="TooltipPosition.Top"
+										(click)="
+											openCommentsModal(
+												row,
+												row.isComment
+											)
+										"
+									/>
+								</ss-lib-action-bar>
 							}
 							<ss-lib-dropdown-list
 								#createCommentsModal

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject, Signal } from '@angular/core';
+import { Component, inject, Signal } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 import {
 	OperationPlanItem,
@@ -6,8 +6,6 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import {
 	Align,
-	ButtonComponent,
-	ButtonType,
 	CheckboxComponent,
 	IconPosition,
 	DropdownListComponent,
@@ -21,6 +19,11 @@ import {
 	TextType,
 	TextWeight,
 	TrComponent,
+	ActionBarComponent,
+	ActionBarItemComponent,
+	Colors,
+	TooltipDirective,
+	TooltipPosition,
 } from '@front-library/components';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
@@ -73,14 +76,15 @@ export const BASE_COLUMN_MAP: Record<
 		TableCellDirective,
 		TrComponent,
 		AddCommentsModalComponent,
-		ButtonComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
-		ButtonComponent,
 		CreateCommentsModalComponent,
 		NgIf,
 		OverlayModule,
 		OperationalPlanTableQuantityCellComponent,
+		ActionBarComponent,
+		ActionBarItemComponent,
+		TooltipDirective,
 	],
 	templateUrl: './operation-plan-table-tbody.component.html',
 	styleUrl: './operation-plan-table-tbody.component.scss',
@@ -102,10 +106,11 @@ export class OperationPlanTableTbodyComponent {
 	protected readonly Align = Align;
 	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
-	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
 
+	protected readonly Colors = Colors;
+	protected readonly TooltipPosition = TooltipPosition;
 	public getRowCheckboxControl(index: number): FormControl {
 		return this.tableStateService.getRowCheckboxControl(index);
 	}
@@ -198,5 +203,11 @@ export class OperationPlanTableTbodyComponent {
 		}
 
 		return null;
+	}
+
+	public openTovLink(url?: string | null) {
+		if (url) {
+			window.open(url);
+		}
 	}
 }
