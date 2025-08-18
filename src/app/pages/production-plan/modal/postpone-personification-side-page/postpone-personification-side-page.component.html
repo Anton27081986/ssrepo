@@ -1,0 +1,87 @@
+<ss-lib-right-side-page-popup
+	[badgeProps]="{
+		icon: IconType.FilePreviewSearch,
+		size: ExtraSize.lg,
+		shape: Shape.Square,
+	}"
+	[titleHeader]="headerTextAndDate"
+	[descriptionHeader]="'Проверьте количество плана по каждому заказу'"
+	[contentRef]="contentRef"
+	(closeEmit)="close()"
+>
+</ss-lib-right-side-page-popup>
+
+<ng-template #contentRef>
+	<div class="tp-card__header">
+		<ss-lib-text
+			[type]="TextType.BodySm"
+			[weight]="TextWeight.Semibold"
+			>ТП</ss-lib-text
+		>
+		<ss-lib-link
+			[text]="'Перейти к карточке ТП'"
+			[icon]="IconType.LinkExternal01"
+			[iconPosition]="IconPosition.End"
+			[linkAppearance]="LinkAppearance.Standalone"
+			(click)="openCard()"
+		></ss-lib-link>
+	</div>
+	<div class="tp-card">
+		<div class="tp-card__left">
+			<div class="tp-card__icon">
+				<ss-lib-icon
+					[icon]="IconType.Package"
+					[width]="'24'"
+					[height]="'24'"
+				></ss-lib-icon>
+			</div>
+		</div>
+		<div class="tp-card__center">
+			<ss-lib-text
+				[type]="TextType.BodySm"
+				[weight]="TextWeight.Medium"
+			>
+				{{ tovName || '—' }}
+			</ss-lib-text>
+		</div>
+		<div class="tp-card__right"></div>
+	</div>
+	<div class="table-label">
+		<div class="table-label__title">
+			<ss-lib-text
+				[color]="Colors.TextBody2"
+				[weight]="TextWeight.Semibold"
+				[type]="TextType.BodySm"
+				[isEllipsis]="true"
+			>
+				Заказы по ТП
+			</ss-lib-text>
+		</div>
+		<div class="table-label__plan">
+			<ss-lib-text
+				[type]="TextType.BodySm"
+				[weight]="TextWeight.Medium"
+			>
+				План:
+			</ss-lib-text>
+			<ss-lib-icon
+				[icon]="IconType.Calendar"
+				[width]="'16'"
+				[height]="'16'"
+				[color]="Colors.IconSuccess"
+			></ss-lib-icon>
+			<ss-lib-text
+				[type]="TextType.BodySm"
+				[weight]="TextWeight.Regular"
+				[color]="Colors.IconSuccess"
+			>
+				{{ totalQuantityCalc }}
+			</ss-lib-text>
+		</div>
+	</div>
+	<ng-container *ngIf="personificationRes() as item">
+		<app-postpone-personification-table
+			[data]="item.items"
+		></app-postpone-personification-table>
+	</ng-container>
+</ng-template>

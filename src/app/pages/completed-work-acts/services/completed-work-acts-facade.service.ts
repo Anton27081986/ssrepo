@@ -12,7 +12,6 @@ import {
 	FileBucketsEnum,
 	FilesApiService,
 } from '@app/core/api/files.api.service';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { SearchFacadeService } from '@app/core/facades/search-facade.service';
 import { IFile } from '@app/core/models/files/file';
 import { catchError } from 'rxjs/operators';
@@ -22,6 +21,7 @@ import { Router } from '@angular/router';
 import { Pagination } from '@app/core/models/production-plan/operation-plan';
 import { CompletedWorkActsApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-api.service';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
+import {SharedPopupService, ToastTypeEnum} from "@front-library/components";
 
 @UntilDestroy()
 @Injectable({
@@ -84,10 +84,9 @@ export class CompletedWorkActsFacadeService {
 	constructor(
 		private readonly actsApiService: CompletedWorkActsApiService,
 		private readonly filesApiService: FilesApiService,
-		private readonly noticeService: NotificationToastService,
 		private readonly searchFacade: SearchFacadeService,
 		private readonly permissionsApiService: PermissionsApiService,
-		private readonly notificationService: NotificationToastService,
+		private readonly sharedPopupService: SharedPopupService,
 		private readonly router: Router
 	) {
 		this.getActStates();
@@ -119,10 +118,10 @@ export class CompletedWorkActsFacadeService {
 						this.router
 							.navigate(['completed-work-acts'])
 							.then(() => {
-								this.notificationService.addToast(
-									`Доступ к акту ${id} ограничен`,
-									'warning'
-								);
+								this.sharedPopupService.openToast({
+									text: `Доступ к акту ${id} ограничен`,
+									type: ToastTypeEnum.Default,
+								});
 							});
 
 						return NEVER;
@@ -315,7 +314,10 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
-					this.noticeService.addToast('Акт отправлен в архив', 'ok');
+					this.sharedPopupService.openToast({
+						text: 'Акт отправлен в архив',
+						type: ToastTypeEnum.Success,
+					});
 				});
 		}
 	}
@@ -329,7 +331,10 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
-					this.noticeService.addToast('Акт проведен', 'ok');
+					this.sharedPopupService.openToast({
+						text: 'Акт проведен',
+						type: ToastTypeEnum.Success,
+					});
 				});
 		}
 	}
@@ -343,7 +348,10 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
-					this.noticeService.addToast('Акт восстановлен', 'ok');
+					this.sharedPopupService.openToast({
+						text: 'Акт восстановлен',
+						type: ToastTypeEnum.Success,
+					});
 				});
 		}
 	}
@@ -357,7 +365,10 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
-					this.noticeService.addToast('Акт отправлен', 'ok');
+					this.sharedPopupService.openToast({
+						text: 'Акт отправлен',
+						type: ToastTypeEnum.Success,
+					});
 				});
 		}
 	}
@@ -371,7 +382,10 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
-					this.noticeService.addToast('Акт отправлен', 'ok');
+					this.sharedPopupService.openToast({
+						text: 'Акт отправлен',
+						type: ToastTypeEnum.Success,
+					});
 				});
 		}
 	}
@@ -385,7 +399,10 @@ export class CompletedWorkActsFacadeService {
 				.pipe(untilDestroyed(this))
 				.subscribe(() => {
 					this.getAct(id.toString());
-					this.noticeService.addToast('Акт возвращен', 'ok');
+					this.sharedPopupService.openToast({
+						text: 'Акт возвращен',
+						type: ToastTypeEnum.Success,
+					});
 				});
 		}
 	}

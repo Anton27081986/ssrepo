@@ -1,0 +1,98 @@
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+	NgFor,
+	DatePipe,
+	NgSwitch,
+	NgSwitchCase,
+	NgSwitchDefault,
+} from '@angular/common';
+import {
+	TableDirective,
+	TableHeadDirective,
+	TableThGroupComponent,
+	TableCellDirective,
+	TrComponent,
+	TdComponent,
+	TextComponent,
+	ThComponent,
+	Colors,
+	TextWeight,
+	Align,
+	TextType,
+	InputType,
+	ExtraSize,
+	LinkComponent,
+	LinkAppearance,
+} from '@front-library/components';
+import { TransferProductionPlanMap } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
+import { ReactiveFormsModule } from '@angular/forms';
+
+@Component({
+	selector: 'app-postpone-personification-table',
+	standalone: true,
+	imports: [
+		NgFor,
+		TableDirective,
+		TableHeadDirective,
+		TableThGroupComponent,
+		TableCellDirective,
+		TrComponent,
+		TdComponent,
+		TextComponent,
+		ThComponent,
+		NgSwitch,
+		ReactiveFormsModule,
+		NgSwitchCase,
+		NgSwitchDefault,
+		LinkComponent,
+	],
+	templateUrl: './postpone-personification-table.component.html',
+	styleUrl: './postpone-personification-table.component.scss',
+	providers: [DatePipe],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class PostponePersonificationTableComponent {
+	@Input()
+	public data!: TransferProductionPlanMap[];
+
+	protected readonly Colors = Colors;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Align = Align;
+	protected readonly TextType = TextType;
+	protected readonly InputType = InputType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly LinkAppearance = LinkAppearance;
+
+	public readonly columns = ['orderId', 'customerUser', 'quantity'] as const;
+
+	public getColumnName(columnId: string): string {
+		switch (columnId) {
+			case 'orderId':
+				return 'Номер заказа';
+			case 'customerUser':
+				return 'Заказчик';
+			case 'quantity':
+				return 'Количество';
+			default:
+				return columnId;
+		}
+	}
+
+	public getCellValue(
+		item: TransferProductionPlanMap,
+		column: keyof TransferProductionPlanMap
+	): string | number {
+		switch (column) {
+			case 'customerUser':
+				return item.customerUser.name;
+			case 'quantity':
+				return item.quantity;
+			default:
+				return '';
+		}
+	}
+
+	protected openOrder(link: string): void {
+		window.open(link, '_blank');
+	}
+}

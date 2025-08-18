@@ -34,8 +34,6 @@ import {
 } from '@front-components/components';
 import { ModalService } from '@app/core/modal/modal.service';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
-import { NotificationType } from '@front-components/components/lib/models/enums';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { CardComponent } from '@app/shared/components/card/card.component';
 import { SsDividerComponent } from '@app/shared/components/ss-divider/ss-divider.component';
 import { SearchInputV2Component } from '@app/shared/components/inputs/search-input-v2/search-input-v2.component';
@@ -43,6 +41,7 @@ import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2
 import { AsyncPipe, CommonModule, NgForOf, NgIf } from '@angular/common';
 import { EmptyPlaceholderComponent } from '@app/shared/components/empty-placeholder/empty-placeholder.component';
 import { ExcessIncomeUpdateTovGroupTrComponent } from '@app/pages/excess-income/excess-income-update-snd-client-popover/excess-income-update-tov-group-tr/excess-income-update-tov-group-tr.component';
+import {SharedPopupService, ToastTypeEnum} from "@front-library/components";
 
 export interface ExcessIncomeUpdateSndClientPopoverData {
 	client: ExcessIncomeClient;
@@ -133,7 +132,7 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 		protected readonly state: ExcessIncomeUpdateTovGroupState,
 		private readonly excessIncomeService: ExcessIncomeService,
 		private readonly modalService: ModalService,
-		private readonly toastService: NotificationToastService,
+		private readonly sharedPopupService: SharedPopupService,
 		@Inject(DIALOG_DATA)
 		protected readonly data: ExcessIncomeUpdateSndClientPopoverData
 	) {
@@ -237,7 +236,10 @@ export class ExcessIncomeUpdateSndClientPopoverComponent {
 			.subscribe(() => {
 				this.modalRef.close();
 				this.state.tovGroups$.next([]);
-				this.toastService.addToast('СНД,% успешно установлены', 'ok');
+				this.sharedPopupService.openToast({
+					text: 'СНД,% успешно установлены',
+					type: ToastTypeEnum.Success,
+				});
 			});
 	}
 }

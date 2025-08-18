@@ -8,12 +8,6 @@ import {
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import {
-	AbstractControl,
-	FormControl,
-	ValidatorFn,
-	Validators,
-} from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
@@ -169,45 +163,15 @@ export class OperationPlanService {
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
-			countForPostpone: new FormControl<number | null>(0, [
-				Validators.required,
-				Validators.min(0),
-				Validators.max(item.quantity),
-			]),
-			productionDateControl: new FormControl<Date | null>(
-				new Date(item.productionDate),
-				{
-					nonNullable: true,
-					validators: [
-						Validators.required,
-						this.minOriginalDateValidator(
-							new Date(item.productionDate)
-						),
-					],
-				}
-			),
-			originalProductionDate: new Date(item.productionDate),
+			linkToDetail: item.linkToDetail,
 		}));
 
 		return {
 			items: mappedItems,
 			total: input.total,
 			totalQuantity: input.totalQuantity,
-			linkToModule: input.linkToModule,
-		};
-	}
-
-	private minOriginalDateValidator(origDate: Date): ValidatorFn {
-		return (control: AbstractControl<Date | null>) => {
-			const controlValue = control.value;
-
-			if (!controlValue) {
-				return null;
-			}
-
-			return controlValue < origDate
-				? { dateTooEarly: { requiredDate: origDate } }
-				: null;
+			linkToModule: input.tov?.linkToDetail || '',
+			tov: input.tov,
 		};
 	}
 
