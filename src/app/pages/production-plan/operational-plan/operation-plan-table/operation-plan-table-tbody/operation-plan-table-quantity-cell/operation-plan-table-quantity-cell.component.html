@@ -9,7 +9,7 @@
 			[popoverTriggerFor]="utilityList"
 		></ss-lib-utility-button
 		><ss-lib-dropdown-list #utilityList>
-			@if (hasPostponeAccess()) {
+			@if (hasTransferAccess()) {
 				<ss-lib-dropdown-item
 					[icon]="IconType.CornerUpRight"
 					[label]="'Перенести количество'"
@@ -23,10 +23,11 @@
 					(click)="isChangeQuantityOpen = true"
 				></ss-lib-dropdown-item>
 			}
-			@if (operationPlanState.getHasPermissionOrderProduction) {
+			@if (hasViewAccess() && getDay()?.id) {
 				<ss-lib-dropdown-item
 					[icon]="IconType.FilePreviewSearch"
 					[label]="'Посмотреть заказы'"
+					(click)="openPostponeModal()"
 				></ss-lib-dropdown-item>
 			}
 		</ss-lib-dropdown-list>
@@ -119,20 +120,33 @@
 		</ng-template>
 	}
 </div>
-
-<input
-	#quantityInput
-	maxlength="10"
-	class="quantity-input"
-	[disabled]="
-		!operationPlanState.getHasPermissionEdit ||
-		(columnId().startsWith('planQuantity') && row().isPersonification)
-	"
-	[value]="getCellValue(row(), columnId())"
-	(focusout)="editPlanFact($event, row(), columnId())"
-	(keyup.enter)="quantityInput.blur()"
-	(input)="checkPlanFactValue($event)"
-/>
+<!--Edit пермишен на всё поле. Факт редактируется всегда, план - если isPersonification = false-->
+@if (columnId().startsWith('planQuantity')) {
+	<input
+		#quantityInput
+		maxlength="10"
+		class="quantity-input"
+		[disabled]="
+			!operationPlanState.getHasPermissionEdit || row().isPersonification
+		"
+		[value]="getCellValue(row(), columnId())"
+		(focusout)="editPlanFact($event, row(), columnId())"
+		(keyup.enter)="quantityInput.blur()"
+		(input)="checkPlanFactValue($event)"
+	/>
+}
+@if (columnId().startsWith('factQuantity')) {
+	<input
+		#quantityInput
+		maxlength="10"
+		class="quantity-input"
+		[disabled]="!operationPlanState.getHasPermissionEdit"
+		[value]="getCellValue(row(), columnId())"
+		(focusout)="editPlanFact($event, row(), columnId())"
+		(keyup.enter)="quantityInput.blur()"
+		(input)="checkPlanFactValue($event)"
+	/>
+}
 <p class="quantity-fixer">
 	{{ getCellValue(row(), columnId()) }}
 </p>
