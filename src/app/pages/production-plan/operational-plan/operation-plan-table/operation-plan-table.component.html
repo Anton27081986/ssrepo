@@ -1,44 +1,47 @@
-<!--<ss-lib-indicator-checklist-popup-->
-<!--	[count]="getSelectedElemCount"-->
-<!--	[total]="totalItems()"-->
-<!--	(closed)="popupCloseEmit()"-->
-<!--&gt;-->
-<!--	<ss-lib-button-->
-<!--		*ngIf="operationPlanState.getHasPermissionOrderProduction"-->
-<!--		[size]="ExtraSize.xs"-->
-<!--		[type]="ButtonType.Ghost"-->
-<!--		[popoverTriggerFor]="orderAnOutfitList"-->
-<!--		[text]="'Заказ наряд'"-->
-<!--	>-->
-<!--		<ss-lib-icon-->
-<!--			[width]="'20'"-->
-<!--			[height]="'20'"-->
-<!--			[icon]="IconType.ChevronDown"-->
-<!--		></ss-lib-icon>-->
-<!--	</ss-lib-button>-->
-<!--	<ss-lib-button-->
-<!--		*ngIf="operationPlanState.getHasPermissionCalcRowMaterials"-->
-<!--		[icon]="IconType.FilePreviewSearch"-->
-<!--		[size]="ExtraSize.xs"-->
-<!--		[type]="ButtonType.Ghost"-->
-<!--		[popoverTriggerFor]="calcProd"-->
-<!--		[text]="'Рассчитать сырье'"-->
-<!--	>-->
-<!--		<ss-lib-icon-->
-<!--			[width]="'20'"-->
-<!--			[height]="'20'"-->
-<!--			[icon]="IconType.ChevronDown"-->
-<!--		></ss-lib-icon>-->
-<!--	</ss-lib-button>-->
-<!--	<ss-lib-button-->
-<!--		*ngIf="operationPlanState.getHasPermissionEdit"-->
-<!--		[icon]="IconType.Trash"-->
-<!--		[size]="ExtraSize.xs"-->
-<!--		[type]="ButtonType.Ghost"-->
-<!--		[text]="'Удалить'"-->
-<!--		(click)="deleteItemsTov()"-->
-<!--	></ss-lib-button>-->
-<!--</ss-lib-indicator-checklist-popup>-->
+@if (getSelectedElemCount) {
+	<ss-lib-action-bar
+		[showClose]="true"
+		(closed)="popupCloseEmit()"
+	>
+		<ss-lib-action-bar-item
+			[type]="ActionBarItemType.Info"
+			[leftIconConfig]="{
+				icon: IconType.CheckCircle,
+				color: Colors.IconInformation,
+			}"
+			[text]="
+				`Выбрано элементов: ${getSelectedElemCount} из ${totalItems()}`
+			"
+		/>
+		<ss-lib-action-bar-item
+			[leftIconConfig]="{
+				icon: IconType.FileSearch02,
+			}"
+			[rightIconConfig]="{
+				icon: IconType.ChevronDown,
+			}"
+			[text]="'Заказ наряд'"
+			[popoverTriggerFor]="orderAnOutfitList"
+		/>
+		<ss-lib-action-bar-item
+			[leftIconConfig]="{
+				icon: IconType.FilePreviewSearch,
+			}"
+			[rightIconConfig]="{
+				icon: IconType.ChevronDown,
+			}"
+			[text]="'Рассчитать сырье'"
+			[popoverTriggerFor]="calcProd"
+		/>
+		<ss-lib-action-bar-item
+			[leftIconConfig]="{
+				icon: IconType.Trash,
+			}"
+			[text]="'Удалить'"
+			(click)="deleteItemsTov()"
+		/>
+	</ss-lib-action-bar>
+}
 
 <ss-lib-dropdown-list
 	#calcProd
