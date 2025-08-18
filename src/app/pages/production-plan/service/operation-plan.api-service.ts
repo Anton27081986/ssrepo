@@ -232,7 +232,7 @@ export class OperationPlanApiService {
 		id: number,
 		quantity: string | number | null
 	): Observable<OperationPlanItem> {
-		return this.http.patch<OperationPlanItem>(
+		return this.http.post<OperationPlanItem>(
 			`${environment.apiUrl}/api/manufacturing/ProvisionDetails/ChangeQuantity`,
 			{ id, quantity }
 		);
