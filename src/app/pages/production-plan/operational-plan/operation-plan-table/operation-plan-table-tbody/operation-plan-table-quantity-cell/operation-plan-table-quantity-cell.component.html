@@ -1,0 +1,138 @@
+<div
+	#quantity="cdkOverlayOrigin"
+	cdkOverlayOrigin
+>
+	@if (hasUtilityAccess()) {
+		<ss-lib-utility-button
+			class="quantity-button"
+			[style.opacity]="{ isPostponeOpen: 100 }"
+			[popoverTriggerFor]="utilityList"
+		></ss-lib-utility-button
+		><ss-lib-dropdown-list #utilityList>
+			@if (hasPostponeAccess()) {
+				<ss-lib-dropdown-item
+					[icon]="IconType.CornerUpRight"
+					[label]="'Перенести количество'"
+					(click)="isPostponeOpen = true"
+				></ss-lib-dropdown-item>
+			}
+			@if (hasQuantityEditAccess()) {
+				<ss-lib-dropdown-item
+					[icon]="IconType.Edit"
+					[label]="'Изменить количество'"
+					(click)="isChangeQuantityOpen = true"
+				></ss-lib-dropdown-item>
+			}
+			@if (operationPlanState.getHasPermissionOrderProduction) {
+				<ss-lib-dropdown-item
+					[icon]="IconType.FilePreviewSearch"
+					[label]="'Посмотреть заказы'"
+				></ss-lib-dropdown-item>
+			}
+		</ss-lib-dropdown-list>
+		<ng-template
+			cdkConnectedOverlay
+			[cdkConnectedOverlayOrigin]="quantity"
+			[cdkConnectedOverlayOpen]="isChangeQuantityOpen"
+			[cdkConnectedOverlayPositions]="positionPairs"
+			[cdkConnectedOverlayBackdropClass]="'no-backdrop'"
+			[cdkConnectedOverlayHasBackdrop]="true"
+			(detach)="isChangeQuantityOpen = false"
+			(backdropClick)="isChangeQuantityOpen = false"
+		>
+			<div class="change-quantity">
+				<div class="change-quantity__info">
+					<div class="change-quantity__info__header">
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[color]="Colors.TextBody2"
+							>Изменение количества плана </ss-lib-text
+						><ss-lib-status-icon
+							ss-lib-tooltip
+							[type]="Status.Default"
+							[icon]="IconType.Info"
+							[position]="TooltipPosition.Top"
+							[tooltipText]="
+								'Изменение плана повлияет на количество в заказах ТМЗ'
+							"
+						></ss-lib-status-icon>
+					</div>
+					<ss-lib-number-picker
+						fieldCtrl
+						[formControl]="quantityInputControl"
+					></ss-lib-number-picker>
+				</div>
+				<ss-lib-button
+					[size]="ExtraSize.lg"
+					[text]="'Изменить количество'"
+					(click)="changePlan()"
+				></ss-lib-button>
+			</div>
+		</ng-template>
+
+		<ng-template
+			cdkConnectedOverlay
+			[cdkConnectedOverlayOrigin]="quantity"
+			[cdkConnectedOverlayOpen]="isPostponeOpen"
+			[cdkConnectedOverlayPositions]="positionPairs"
+			[cdkConnectedOverlayHasBackdrop]="true"
+			[cdkConnectedOverlayBackdropClass]="'no-backdrop'"
+			(detach)="isPostponeOpen = false"
+			(backdropClick)="isPostponeOpen = false"
+		>
+			<div class="postpone">
+				<div class="postpone__info">
+					<div class="postpone__info__item">
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[color]="Colors.TextBody2"
+							>Кол-во для переноса
+						</ss-lib-text>
+						<ss-lib-number-picker
+							fieldCtrl
+							[formControl]="quantityInputControl"
+							[size]="ExtraSize.md"
+						></ss-lib-number-picker>
+					</div>
+					<div class="postpone__info__item">
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[color]="Colors.TextBody2"
+							>Дата для переноса
+						</ss-lib-text>
+						<ss-lib-form-field>
+							<ss-lib-datepicker
+								fieldCtrl
+								[formControl]="postponeDateControl"
+							></ss-lib-datepicker>
+						</ss-lib-form-field>
+					</div>
+				</div>
+				<ss-lib-button
+					[size]="ExtraSize.lg"
+					[icon]="IconType.CornerUpRight"
+					[iconPosition]="IconPosition.Start"
+					[text]="'Перенести количество'"
+					(click)="transferPlan()"
+				></ss-lib-button>
+			</div>
+		</ng-template>
+	}
+</div>
+
+<input
+	#quantityInput
+	maxlength="10"
+	class="quantity-input"
+	[disabled]="
+		!operationPlanState.getHasPermissionEdit ||
+		(columnId().startsWith('planQuantity') && row().isPersonification)
+	"
+	[value]="getCellValue(row(), columnId())"
+	(focusout)="editPlanFact($event, row(), columnId())"
+	(keyup.enter)="quantityInput.blur()"
+	(input)="checkPlanFactValue($event)"
+/>
+<p class="quantity-fixer">
+	{{ getCellValue(row(), columnId()) }}
+</p>

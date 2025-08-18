@@ -6,6 +6,10 @@ import { IResponse } from '@app/core/utils/response';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { FilterSectionDto } from '@app/core/models/production-plan/filter-section-dto';
 
+export interface AvatarDictionaryItemDto extends IDictionaryItemDto {
+	avatarUrl: string | null;
+}
+
 @Injectable({ providedIn: 'root' })
 export class OperationPlanFiltersApiService {
 	private readonly http: HttpClient = inject(HttpClient);
@@ -13,14 +17,14 @@ export class OperationPlanFiltersApiService {
 	public getPlanEconomicUser(
 		query: string,
 		ids: number[] = []
-	): Observable<IResponse<IDictionaryItemDto>> {
+	): Observable<IResponse<AvatarDictionaryItemDto>> {
 		let params = new HttpParams().set('query', query);
 
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
 		});
 
-		return this.http.get<IResponse<IDictionaryItemDto>>(
+		return this.http.get<IResponse<AvatarDictionaryItemDto>>(
 			`${environment.apiUrl}/api/manufacturing/Dictionary/PlanEconomicUsers`,
 			{ params }
 		);
@@ -29,14 +33,14 @@ export class OperationPlanFiltersApiService {
 	public getProductManagerUser(
 		query: string,
 		ids: number[] = []
-	): Observable<IResponse<IDictionaryItemDto>> {
+	): Observable<IResponse<AvatarDictionaryItemDto>> {
 		let params = new HttpParams().set('query', query);
 
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
 		});
 
-		return this.http.get<IResponse<IDictionaryItemDto>>(
+		return this.http.get<IResponse<AvatarDictionaryItemDto>>(
 			`${environment.apiUrl}/api/manufacturing/Dictionary/ProductManagerUsers`,
 			{ params }
 		);
@@ -76,13 +80,19 @@ export class OperationPlanFiltersApiService {
 
 	public getTov(
 		query: string,
-		ids: number[] = []
+		ids: number[] = [],
+		weekId: number,
+		onlyIds: boolean
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams().set('query', query);
 
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
 		});
+
+		params = params.set('weekId', weekId);
+
+		params = params.set('onlyIds', onlyIds);
 
 		return this.http.get<IResponse<IDictionaryItemDto>>(
 			`${environment.apiUrl}/api/manufacturing/Dictionary/OperationalPlanTovs`,

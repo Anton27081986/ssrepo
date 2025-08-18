@@ -23,7 +23,8 @@ export const operationPlanFilter: IFilterItem[] = [
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.tovIds,
-		text: 'Наименование ГП',
+		text: 'Наименование ТП: ',
+		defaultText: 'Выберите наименование ТП',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -31,11 +32,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: TovFilterComponent,
 		active: false,
+		records: {
+			width: '680px',
+			height: '460px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.productionFactoryIds,
-		text: 'Производство',
+		text: 'Производство: ',
+		defaultText: 'Выберите производство',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -43,11 +49,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: ProductionFactoryFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.planEconomicUserIds,
-		text: 'Менеджер ПЭО',
+		text: 'Менеджер ПЭО: ',
+		defaultText: 'Выберите менеджера ПЭО',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -55,11 +66,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: PlanEconomicUserFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.productManagerUserIds,
-		text: 'Менеджер ТМЗ',
+		text: 'Менеджер ТМЗ: ',
+		defaultText: 'Выберите менеджера ТМЗ',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -67,11 +83,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: ManagerTmzFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.warehouseIds,
-		text: 'Склады',
+		text: 'Склады: ',
+		defaultText: 'Выберите склад',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -79,11 +100,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: WareHouseFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.cityIds,
-		text: 'Город',
+		text: 'Город: ',
+		defaultText: 'Выберите город',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -91,11 +117,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: CityFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.tovCategoryIds,
-		text: 'Категория',
+		text: 'Категория: ',
+		defaultText: 'Выберите категорию',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -103,11 +134,16 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: TovCategoryFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 	{
 		defaultValue: null,
 		field: OperationPlanFiltersFields.productionSectionIds,
-		text: 'Участок',
+		text: 'Участок: ',
+		defaultText: 'Выберите участок',
 		queryParamConfig: {
 			mapTo: (value: IFilterCriterionType) =>
 				Array.isArray(value) ? value.join(',') : '',
@@ -115,5 +151,9 @@ export const operationPlanFilter: IFilterItem[] = [
 		},
 		valueComponent: SectionFilterComponent,
 		active: false,
+		records: {
+			width: '400px',
+			height: '400px',
+		},
 	},
 ];

@@ -1,10 +1,10 @@
-<ss-lib-table-canvas
+<app-filters-table-canvas
 	[tableRef]="tableRef"
 	[leftFiltersRef]="leftFiltersRef"
 	[rightFiltersRef]="rightFiltersRef"
 	[paginationRef]="paginationRef ?? null"
 >
-</ss-lib-table-canvas>
+</app-filters-table-canvas>
 
 <ng-template #tableRef>
 	<ng-container *ngIf="items$ | async as items">
@@ -51,6 +51,7 @@
 			[popoverTriggerFor]="listActions"
 			[type]="ButtonType.Secondary"
 			[text]="(activeWeek$ | async)?.name"
+			[size]="ExtraSize.lg"
 		>
 			<ss-lib-icon
 				[icon]="IconType.ChevronDown"

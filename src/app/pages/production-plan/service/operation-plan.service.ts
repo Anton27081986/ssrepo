@@ -116,41 +116,15 @@ export class OperationPlanService {
 	}
 
 	public transferProductionPlan(
-		params: TransferProductionPlanMap[]
+		params: TransferProductionPlanPatch
 	): Observable<void> {
-		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
-			const date = item.productionDateControl.value;
-			const productionDate = date
-				? [
-						date.getFullYear(),
-						String(date.getMonth() + 1).padStart(2, '0'),
-						String(date.getDate()).padStart(2, '0'),
-					].join('-')
-				: '';
-
-			// Normalize quantity value (comma to dot)
-			const rawQuantity = item.countForPostpone.value!;
-			const normalizedQuantity = Number(
-				String(rawQuantity).replace(',', '.')
-			);
-
-			return {
-				id: item.id,
-				orderId: item.orderId,
-				quantity: normalizedQuantity,
-				productionDate,
-			};
-		});
-
-		return this.operationPlanApiService
-			.transferProductionPlan(mapParams)
-			.pipe(
-				tap(() => {
-					this.operationPlanRootService.event$.next({
-						type: OperationPlanEventEnum.operationPlanAdd,
-					});
-				})
-			);
+		return this.operationPlanApiService.transferProductionPlan(params).pipe(
+			tap(() => {
+				this.operationPlanRootService.event$.next({
+					type: OperationPlanEventEnum.operationPlanAdd,
+				});
+			})
+		);
 	}
 
 	public upload1C(weekId: number): Observable<LinkToModule> {
@@ -295,6 +269,13 @@ export class OperationPlanService {
 		params: UpdatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.operationPlanApiService.updatePlanFact(rowId, params);
+	}
+
+	public changePlan(
+		id: number,
+		quantity: string | number | null
+	): Observable<OperationPlanItem> {
+		return this.operationPlanApiService.changePlan(id, quantity);
 	}
 
 	public uploadWMS(date: string): Observable<LinkToModule> {

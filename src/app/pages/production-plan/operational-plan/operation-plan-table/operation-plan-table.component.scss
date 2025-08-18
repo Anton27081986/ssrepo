@@ -72,3 +72,10 @@ thead tr th:first-child {
 ss-lib-hint {
 	cursor: pointer;
 }
+
+ss-lib-action-bar {
+	position: absolute;
+	top: 18px;
+	left: 24px;
+	z-index: 9;
+}
