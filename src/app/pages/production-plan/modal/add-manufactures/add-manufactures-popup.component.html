@@ -5,11 +5,12 @@
 		shape: Shape.Square,
 	}"
 	[class.add-manufactures-popup--visibility]="!isVisibleModal()"
-	[titleHeader]="'Добавление полуфабриката'"
-	[descriptionHeader]="'Добавьте полуфабрикат(ы) в планирование на неделю.'"
+	[titleHeader]="'Добавление ТП'"
+	[descriptionHeader]="'Добавьте товарную позицию в планирование на неделю.'"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
 	[stickyRef]="stickyRef"
+	[paddingContent]="'14px 24px 0 24px'"
 	(closeEmit)="close()"
 >
 </ss-lib-modal>
@@ -21,14 +22,18 @@
 				fieldCtrl
 				[formControl]="queryControl"
 				[placeholder]="'Введите название полуфабриката...'"
-				[clearButton]="true"
 			/>
 		</ss-lib-form-field>
 		<ss-lib-button
-			*ngIf="selectedTov().length"
+			*ngIf="selectedViewTov().length"
 			class="add-manufactures-popup__clear-button"
-			[type]="ButtonType.TextPrimary"
-			[text]="'Очистить выбор'"
+			[type]="ButtonType.TextSecondary"
+			[text]="
+				queryControl.value?.trim()
+					? 'Очистить выбранные'
+					: 'Очистить все'
+			"
+			[size]="ExtraSize.sm"
 			(click)="deleteSelected()"
 		></ss-lib-button>
 	</div>
@@ -37,88 +42,26 @@
 <ng-template #contentRef>
 	<div class="add-manufactures-popup">
 		<div
-			*ngIf="selectedTov().length"
-			class="add-manufactures-popup__selected"
+			*ngIf="selectedViewTov().length"
+			class="add-manufactures-popup__items"
 		>
-			<div
-				*ngFor="let selectedItem of selectedTov()"
-				class="add-manufactures-popup__item"
-			>
-				<div class="add-manufactures-popup__item-left">
-					<ss-lib-checkbox
-						[formControl]="selectedItem.selected"
+			<ng-container *ngFor="let selectedItem of selectedViewTov()">
+				<div class="add-manufactures-popup__item-selected">
+					<app-add-manufactures-item
+						[item]="selectedItem"
 						(click)="removeTovSelected(selectedItem)"
-					></ss-lib-checkbox>
-					<ss-lib-text
-						[type]="TextType.BodySm"
-						[weight]="TextWeight.Regular"
-					>
-						{{ selectedItem.tov.name }}
-					</ss-lib-text>
-				</div>
-				<div class="add-manufactures-popup__item-right">
-					<ss-lib-button
-						[justifyContent]="JustifyContent.SpaceBetween"
-						[iconPosition]="IconPosition.End"
-						[icon]="IconType.ChevronDown"
-						[popoverTriggerFor]="listActions"
-						[size]="ExtraSize.xs"
-						[type]="ButtonType.Secondary"
-						[text]="
-							selectedItem.selectedSection
-								? selectedItem.selectedSection.name
-								: 'Выберите участок'
-						"
-					></ss-lib-button>
-					<ss-lib-dropdown-list
-						#listActions
-						[width]="'354px'"
-					>
-						<ss-lib-dropdown-item
-							*ngFor="let section of selectedItem.section"
-							[selected]="
-								section.id === selectedItem.selectedSection?.id
-							"
-							[label]="section.name"
-							(click)="selectOpt(selectedItem, section)"
-						/>
-					</ss-lib-dropdown-list>
-				</div>
-			</div>
-			<ss-lib-divider></ss-lib-divider>
-		</div>
-		<ng-container *ngIf="!isLoaderMain(); else loaderMain">
-			<div
-				*ngIf="tov().length; else empty"
-				class="add-manufactures-popup__items"
-			>
-				<div
-					*ngFor="let item of tov()"
-					class="add-manufactures-popup__item"
-				>
-					<div class="add-manufactures-popup__item-left">
-						<ss-lib-checkbox
-							[formControl]="item.selected"
-							(click)="addTovSelected(item)"
-						></ss-lib-checkbox>
-						<ss-lib-text
-							[type]="TextType.BodySm"
-							[weight]="TextWeight.Regular"
-						>
-							{{ item.tov.name }}
-						</ss-lib-text>
-					</div>
-					<div class="add-manufactures-popup__item-right">
+					></app-add-manufactures-item>
+					<div [style.width]="'354px'">
 						<ss-lib-button
 							[justifyContent]="JustifyContent.SpaceBetween"
 							[iconPosition]="IconPosition.End"
 							[icon]="IconType.ChevronDown"
 							[popoverTriggerFor]="listActions"
-							[size]="ExtraSize.xs"
+							[size]="ExtraSize.sm"
 							[type]="ButtonType.Secondary"
 							[text]="
-								item.selectedSection
-									? item.selectedSection.name
+								selectedItem.selectedSection
+									? selectedItem.selectedSection.name
 									: 'Выберите участок'
 							"
 						></ss-lib-button>
@@ -127,14 +70,38 @@
 							[width]="'354px'"
 						>
 							<ss-lib-dropdown-item
-								*ngFor="let section of item.section"
+								*ngFor="let section of selectedItem.section"
 								[selected]="
-									section.id === item.selectedSection?.id
+									section.id ===
+									selectedItem.selectedSection?.id
 								"
 								[label]="section.name"
-								(click)="selectOpt(item, section)"
+								(click)="selectOpt(selectedItem, section)"
 							/>
 						</ss-lib-dropdown-list>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+		<ss-lib-divider
+			[style.padding]="'10px 0'"
+			*ngIf="selectedViewTov().length"
+		></ss-lib-divider>
+
+		<ng-container *ngIf="!isLoaderMain(); else loaderMain">
+			<div
+				*ngIf="tov().length; else empty"
+				class="add-manufactures-popup__items"
+			>
+				<div
+					*ngFor="let item of tov()"
+					[style.padding]="'1px 0'"
+				>
+					<div class="add-manufactures-popup__item">
+						<app-add-manufactures-item
+							[item]="item"
+							(click)="addTovSelected(item)"
+						></app-add-manufactures-item>
 					</div>
 				</div>
 			</div>
@@ -189,12 +156,18 @@
 			[style.width]="'430px'"
 			[type]="ButtonType.Secondary"
 			[text]="'Отменить'"
+			[size]="ExtraSize.xl"
 			(click)="close()"
 		></ss-lib-button>
 		<ss-lib-button
 			[justifyContent]="JustifyContent.Center"
 			[style.width]="'430px'"
-			[text]="'Добавить'"
+			[text]="
+				'Добавить ' +
+				(selectedTov().length ? selectedTov().length : '') +
+				' ТП'
+			"
+			[size]="ExtraSize.xl"
 			(click)="add()"
 		></ss-lib-button>
 	</div>

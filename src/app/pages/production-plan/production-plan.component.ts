@@ -1,16 +1,21 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	inject,
+} from '@angular/core';
 import {
 	ButtonComponent,
+	ButtonType,
+	DropdownItemComponent,
+	DropdownListComponent,
+	ExtraSize,
+	IconType,
+	PopoverTriggerForDirective,
 	TabsComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
-	IconType,
-	ExtraSize,
-	ButtonType,
-	PopoverTriggerForDirective,
-	DropdownListComponent,
-	DropdownItemComponent,
 } from '@front-library/components';
 import { IconPosition } from '@front-components/components';
 import { RouterOutlet } from '@angular/router';
@@ -20,6 +25,8 @@ import { OperationPlanService } from '@app/pages/production-plan/service/operati
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab';
 import { NgIf } from '@angular/common';
+import { timer, take } from 'rxjs';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 @Component({
 	selector: 'app-plan-days',
@@ -39,6 +46,7 @@ import { NgIf } from '@angular/common';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	providers: [OperationPlanState],
 })
+@UntilDestroy()
 export class ProductionPlanComponent {
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
@@ -54,6 +62,19 @@ export class ProductionPlanComponent {
 			text: 'Журнал расчета сырья',
 			isDisabled: false,
 			isVisible: true,
+			icon: IconType.LinkExternal01,
+		},
+		{
+			text: 'Недельный план ТМЗ',
+			isDisabled: false,
+			isVisible: true,
+			icon: IconType.LinkExternal01,
+		},
+		{
+			text: 'Недельный расчет сырья',
+			isDisabled: false,
+			isVisible: true,
+			icon: IconType.LinkExternal01,
 		},
 	];
 
@@ -66,25 +87,53 @@ export class ProductionPlanComponent {
 	protected operationPlanState: OperationPlanState =
 		inject(OperationPlanState);
 
+	protected changeRef: ChangeDetectorRef = inject(ChangeDetectorRef);
+
 	private readonly weekId$ = this.operationPlanState.weekId$;
 
 	private readonly productionPlanService: OperationPlanService =
 		inject(OperationPlanService);
 
-	protected changeTabIndex(index: number): void {
-		if (index === 1) {
-			// Костыль пока не появится модуль Журнал расчета сырья
-			if (environment.production) {
-				window.open(
-					'https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx'
-				);
-				window.location.reload();
-			} else {
-				window.open(' https://ssnab.it/Ss/Mfs/Plan/PlanDaysRaw.aspx');
-				window.location.reload();
-			}
+	// Конфигурация действий для вкладок (индекс -> действие)
+	protected tabActions: Array<null | {
+		prodUrl: string;
+		devUrl: string;
+		resetTab: boolean;
+	}> = [
+		null, // 0 — локальная вкладка, ничего не делаем
+		{
+			prodUrl: 'https://cisp.ssnab.ru/Ss/Mfs/Plan/PlanDaysRaw.aspx',
+			devUrl: 'https://ssnab.it/Ss/Mfs/Plan/PlanDaysRaw.aspx',
+			resetTab: true,
+		},
+		{
+			prodUrl: 'https://cisp.ssnab.ru/pmt/#!/mfsorders/planMTMZ',
+			devUrl: 'https://test.ssnab.ru/pmt/#!/mfsorders/planMTMZ',
+			resetTab: true,
+		},
+		{
+			prodUrl: 'https://cisp.ssnab.ru/pmt/#!/mfsorders/planMPO',
+			devUrl: 'https://test.ssnab.ru/pmt/#!/mfsorders/planMPO',
+			resetTab: true,
+		},
+	];
 
-			this.activeTabIndex = 0;
+	protected changeTabIndex(index: number): void {
+		const action = this.tabActions[index];
+
+		if (action) {
+			const url = environment.production ? action.prodUrl : action.devUrl;
+
+			timer(250)
+				.pipe(take(1), untilDestroyed(this))
+				.subscribe(() => {
+					if (action.resetTab) {
+						this.activeTabIndex = 0;
+						this.changeRef.detectChanges();
+					}
+				}); // возвращает в 0 таб , так как временно клик по табу это переход по ссылке
+
+			window.open(url, '_blank');
 		} else {
 			this.activeTabIndex = index;
 		}

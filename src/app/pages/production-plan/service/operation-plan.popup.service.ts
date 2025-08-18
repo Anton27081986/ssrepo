@@ -5,10 +5,6 @@ import {
 	AddManufacturesPopupComponent,
 } from '@app/pages/production-plan/modal/add-manufactures/add-manufactures-popup.component';
 import {
-	PostponePersonificationSidePageComponent,
-	PostponeSidePageData,
-} from '@app/pages/production-plan/modal/postpone-personification-side-page/postpone-personification-side-page.component';
-import {
 	ModalUpdateRawMaterialsComponent,
 	UpdateRawMaterialsData,
 } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
@@ -53,14 +49,6 @@ export class OperationPlanPopupService {
 			{ id },
 			false,
 			'449px'
-		);
-	}
-
-	public openPostponePlanModal(id: number): ModalRef {
-		return this.popup.openRightSidePage<PostponeSidePageData>(
-			PostponePersonificationSidePageComponent,
-			{ id },
-			'860px'
 		);
 	}
 
