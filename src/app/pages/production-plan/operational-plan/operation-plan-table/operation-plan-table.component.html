@@ -13,33 +13,39 @@
 				`Выбрано элементов: ${getSelectedElemCount} из ${totalItems()}`
 			"
 		/>
-		<ss-lib-action-bar-item
-			[leftIconConfig]="{
-				icon: IconType.FileSearch02,
-			}"
-			[rightIconConfig]="{
-				icon: IconType.ChevronDown,
-			}"
-			[text]="'Заказ наряд'"
-			[popoverTriggerFor]="orderAnOutfitList"
-		/>
-		<ss-lib-action-bar-item
-			[leftIconConfig]="{
-				icon: IconType.FilePreviewSearch,
-			}"
-			[rightIconConfig]="{
-				icon: IconType.ChevronDown,
-			}"
-			[text]="'Рассчитать сырье'"
-			[popoverTriggerFor]="calcProd"
-		/>
-		<ss-lib-action-bar-item
-			[leftIconConfig]="{
-				icon: IconType.Trash,
-			}"
-			[text]="'Удалить'"
-			(click)="deleteItemsTov()"
-		/>
+		@if (operationPlanState.getHasPermissionOrderProduction) {
+			<ss-lib-action-bar-item
+				[leftIconConfig]="{
+					icon: IconType.FileSearch02,
+				}"
+				[rightIconConfig]="{
+					icon: IconType.ChevronDown,
+				}"
+				[text]="'Заказ наряд'"
+				[popoverTriggerFor]="orderAnOutfitList"
+			/>
+		}
+		@if (operationPlanState.getHasPermissionCalcRowMaterials) {
+			<ss-lib-action-bar-item
+				[leftIconConfig]="{
+					icon: IconType.FilePreviewSearch,
+				}"
+				[rightIconConfig]="{
+					icon: IconType.ChevronDown,
+				}"
+				[text]="'Рассчитать сырье'"
+				[popoverTriggerFor]="calcProd"
+			/>
+		}
+		@if (operationPlanState.getHasPermissionEdit) {
+			<ss-lib-action-bar-item
+				[leftIconConfig]="{
+					icon: IconType.Trash,
+				}"
+				[text]="'Удалить'"
+				(click)="deleteItemsTov()"
+			/>
+		}
 	</ss-lib-action-bar>
 }
 
@@ -91,12 +97,18 @@
 					>
 						@if (column.id === 'tov') {
 							<div class="td-column">
-								<ss-lib-checkbox
-									[formControl]="masterCheckboxCtrl"
-									[indeterminate]="
-										getMasterCheckboxIndeterminate()
-									"
-								/>
+								@if (
+									operationPlanState.getHasPermissionOrderProduction ||
+									operationPlanState.getHasPermissionCalcRowMaterials ||
+									operationPlanState.getHasPermissionEdit
+								) {
+									<ss-lib-checkbox
+										[formControl]="masterCheckboxCtrl"
+										[indeterminate]="
+											getMasterCheckboxIndeterminate()
+										"
+									/>
+								}
 								<ss-lib-text
 									[color]="Colors.TextBody2"
 									[weight]="TextWeight.Semibold"
@@ -132,52 +144,65 @@
 										></ss-lib-status-icon>
 									}
 								</div>
-								<div class="item-day-utility">
-									<ss-lib-utility-button
-										[popoverTriggerFor]="listFunc"
-										[icon]="IconType.KebabMenuDots"
-									></ss-lib-utility-button>
-									<ss-lib-dropdown-list #listFunc>
-										<ss-lib-dropdown-item
-											*ngIf="
-												operationPlanState.getHasPermissionOrderProduction
-											"
-											[icon]="IconType.FilePreviewSearch"
-											[label]="'Заказ наряд'"
-											(click)="orderAnOutfit(column.id)"
-										></ss-lib-dropdown-item>
-										<ss-lib-dropdown-item
-											*ngIf="
-												operationPlanState.getHasPermissionUploadWMS
-											"
-											[icon]="IconType.FileUpload02"
-											[label]="'Выгрузить в WMS'"
-											(click)="uploadWMS(column.id)"
-										></ss-lib-dropdown-item>
-										<ss-lib-dropdown-item
-											*ngIf="
-												operationPlanState.getHasPermissionApproveMaterials
-											"
-											[icon]="IconType.FileCheck"
-											[label]="'Согласовать сырье'"
-											(click)="
-												openApproveMaterials(column.id)
-											"
-										></ss-lib-dropdown-item>
-										<ss-lib-dropdown-item
-											*ngIf="
-												operationPlanState.getHasPermissionCalcRowMaterials
-											"
-											[icon]="IconType.FileSearch02"
-											[label]="'Рассчитать сырье'"
-											(click)="
-												openCalculationOfRawMaterialsForColumn(
-													column.id
-												)
-											"
-										></ss-lib-dropdown-item>
-									</ss-lib-dropdown-list>
-								</div>
+								@if (
+									operationPlanState.getHasPermissionOrderProduction ||
+									operationPlanState.getHasPermissionUploadWMS ||
+									operationPlanState.getHasPermissionApproveMaterials ||
+									operationPlanState.getHasPermissionCalcRowMaterials
+								) {
+									<div class="item-day-utility">
+										<ss-lib-utility-button
+											[popoverTriggerFor]="listFunc"
+											[icon]="IconType.KebabMenuDots"
+										></ss-lib-utility-button>
+										<ss-lib-dropdown-list #listFunc>
+											<ss-lib-dropdown-item
+												*ngIf="
+													operationPlanState.getHasPermissionOrderProduction
+												"
+												[icon]="
+													IconType.FilePreviewSearch
+												"
+												[label]="'Заказ наряд'"
+												(click)="
+													orderAnOutfit(column.id)
+												"
+											></ss-lib-dropdown-item>
+											<ss-lib-dropdown-item
+												*ngIf="
+													operationPlanState.getHasPermissionUploadWMS
+												"
+												[icon]="IconType.FileUpload02"
+												[label]="'Выгрузить в WMS'"
+												(click)="uploadWMS(column.id)"
+											></ss-lib-dropdown-item>
+											<ss-lib-dropdown-item
+												*ngIf="
+													operationPlanState.getHasPermissionApproveMaterials
+												"
+												[icon]="IconType.FileCheck"
+												[label]="'Согласовать сырье'"
+												(click)="
+													openApproveMaterials(
+														column.id
+													)
+												"
+											></ss-lib-dropdown-item>
+											<ss-lib-dropdown-item
+												*ngIf="
+													operationPlanState.getHasPermissionCalcRowMaterials
+												"
+												[icon]="IconType.FileSearch02"
+												[label]="'Рассчитать сырье'"
+												(click)="
+													openCalculationOfRawMaterialsForColumn(
+														column.id
+													)
+												"
+											></ss-lib-dropdown-item>
+										</ss-lib-dropdown-list>
+									</div>
+								}
 							</div>
 						} @else {
 							<div class="td-column">

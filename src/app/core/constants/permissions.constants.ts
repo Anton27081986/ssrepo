@@ -51,6 +51,9 @@ export const Permissions = {
 	OPERATIONAL_PLAN_UPLOAD_ONE_S: 'OperationalPlan.UploadOneS',
 	OPERATIONAL_PLAN_UPLOAD_WMS: 'OperationalPlan.UploadWMS',
 	OPERATIONAL_PLAN_ORDER_PRODUCTION: 'OperationalPlan.OrderProduction',
+	OPERATIONAL_PLAN_ORDER_CHANGE: 'OperationalPlan.ChangeOrder',
+	OPERATIONAL_PLAN_ORDER_TRANSFER: 'OperationalPlan.TransferOrder',
+	OPERATIONAL_PLAN_ORDER_VIEW: 'OperationalPlan.ViewOrder',
 	PERSONIFICATION_ORDER_AUTHOR_VIEW_DATA:
 		'Personification.OrderAuthorViewData',
 	PERSONIFICATION_ORDER_AUTHOR_CREATE: 'Personification.OrderAuthorViewData',

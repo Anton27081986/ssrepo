@@ -68,4 +68,24 @@ export class OperationPlanState {
 			Permissions.OPERATIONAL_PLAN_ORDER_PRODUCTION
 		);
 	}
+
+	public get getHasPermissionChangeOrder(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_ORDER_CHANGE
+		);
+	}
+
+	public get getHasPermissionTransferOrder(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_ORDER_TRANSFER
+		);
+	}
+	public get getHasPermissionViewOrder(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_ORDER_VIEW
+		);
+	}
 }

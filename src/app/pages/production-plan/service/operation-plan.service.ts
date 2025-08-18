@@ -8,12 +8,6 @@ import {
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import {
-	AbstractControl,
-	FormControl,
-	ValidatorFn,
-	Validators,
-} from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
