@@ -2,6 +2,7 @@
 	<ss-lib-form-field
 		[icon]="IconType.Search"
 		[clearButton]="true"
+		[clearButtonSize]="ExtraSize.xs"
 	>
 		<ss-lib-input
 			[size]="ExtraSize.md"
@@ -10,7 +11,7 @@
 			[formControl]="queryControl"
 		></ss-lib-input>
 	</ss-lib-form-field>
-	<ss-lib-scrollbar *ngIf="(items$ | async)?.length">
+	<ss-lib-scrollbar>
 		<div class="tov-filter__content">
 			<ss-lib-dropdown-item
 				*ngIf="indeterminate()"
@@ -40,9 +41,12 @@
 					>{{ item.item.name }}
 				</ss-lib-text>
 			</ss-lib-dropdown-item>
-			<ss-lib-divider
+			<div
 				*ngIf="(selectedItems$ | async)?.length"
-			></ss-lib-divider>
+				class="tov-filter-divider"
+			>
+				<ss-lib-divider></ss-lib-divider>
+			</div>
 			<ss-lib-dropdown-item
 				(click)="selectedItem(item)"
 				*ngFor="let item of unSelectedItems$ | async"

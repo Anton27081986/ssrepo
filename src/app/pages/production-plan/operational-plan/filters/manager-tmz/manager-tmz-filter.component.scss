@@ -1,9 +1,14 @@
 .manager-tmz-filter {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 
   &__content {
-    height: 420px;
+    height: 350px;
+  }
+
+  &-divider {
+    padding: 4px 16px;
   }
 }
 
