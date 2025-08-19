@@ -152,6 +152,18 @@ export class ChipsSearchComponent {
 					}
 
 					break;
+				case 'contractorManufacturing':
+					if (query) {
+						this.searchFacade
+							.getContractorManufacturing(query)
+							.pipe(untilDestroyed(this))
+							.subscribe((res) => {
+								this.found = res.items;
+								this.ref.detectChanges();
+							});
+					}
+
+					break;
 				case 'personificationStatuses':
 					this.searchFacade
 						.getPersonificationStatuses(query)

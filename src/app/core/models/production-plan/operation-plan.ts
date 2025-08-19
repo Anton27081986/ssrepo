@@ -1,7 +1,9 @@
+import {IDictionaryItemDto} from "@front-library/components";
+
 export interface OperationPlanItem {
 	id: number;
 	weekId: number;
-	tov: IName;
+	tov: IDictionaryItemDto;
 	tovCategory: IName;
 	productionSection: IName;
 	optimalBatch: number;

@@ -37,19 +37,37 @@
 						<div class="content-row">
 							<snab-text
 								[type]="TextType.Title"
-								[weight]="TextWeight.Regular"
+								[weight]="TextWeight.Semibold"
 							>
 								Менеджер продаж:
-								{{ inProductionForm.controls.manager.value }}
+								{{ order()!.manager?.name }}
 							</snab-text>
 						</div>
 						<div class="content-row">
 							<snab-text
 								[type]="TextType.Title"
-								[weight]="TextWeight.Regular"
+								[weight]="TextWeight.Semibold"
 							>
 								Количество:
-								{{ inProductionForm.controls.quantity.value }}
+								{{ order()!.totalAmount }}
+							</snab-text>
+						</div>
+						<div class="content-row">
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Semibold"
+							>
+								Кратность упаковки:
+								{{ order()!.muptiplicityPack }}
+							</snab-text>
+						</div>
+						<div class="content-row">
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Semibold"
+							>
+								Оптимальная партия:
+								{{ order()!.optimalBatch }}
 							</snab-text>
 						</div>
 					</div>
@@ -168,7 +186,7 @@
 				<snab-button
 					text="Разместить"
 					[size]="Size.Large"
-					(click)="placeOrder()"
+					(click)="openPopupApproveAction()"
 				></snab-button>
 			</div>
 		</ng-template>

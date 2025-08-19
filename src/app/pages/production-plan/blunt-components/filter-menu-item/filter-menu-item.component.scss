@@ -1,0 +1,12 @@
+.filter-menu-item {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+}
+
+ss-lib-button.btn-clear {
+  &:not(:active):not(:hover):not(:focus-visible) {
+    --icon-action-2: var(--icon-disabled) !important;
+  }
+}

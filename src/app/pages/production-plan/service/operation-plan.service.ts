@@ -8,12 +8,6 @@ import {
 	TransferProductionPlanMap,
 	TransferProductionPlanPatch,
 } from '@app/core/models/production-plan/transfer-production-plan-from-backend';
-import {
-	AbstractControl,
-	FormControl,
-	ValidatorFn,
-	Validators,
-} from '@angular/forms';
 import { IResponse, ProductionPlanResponse } from '@app/core/utils/response';
 import { AddToVRequest } from '@app/core/models/production-plan/add-tov-request';
 import {
@@ -116,41 +110,15 @@ export class OperationPlanService {
 	}
 
 	public transferProductionPlan(
-		params: TransferProductionPlanMap[]
+		params: TransferProductionPlanPatch
 	): Observable<void> {
-		const mapParams: TransferProductionPlanPatch[] = params.map((item) => {
-			const date = item.productionDateControl.value;
-			const productionDate = date
-				? [
-						date.getFullYear(),
-						String(date.getMonth() + 1).padStart(2, '0'),
-						String(date.getDate()).padStart(2, '0'),
-					].join('-')
-				: '';
-
-			// Normalize quantity value (comma to dot)
-			const rawQuantity = item.countForPostpone.value!;
-			const normalizedQuantity = Number(
-				String(rawQuantity).replace(',', '.')
-			);
-
-			return {
-				id: item.id,
-				orderId: item.orderId,
-				quantity: normalizedQuantity,
-				productionDate,
-			};
-		});
-
-		return this.operationPlanApiService
-			.transferProductionPlan(mapParams)
-			.pipe(
-				tap(() => {
-					this.operationPlanRootService.event$.next({
-						type: OperationPlanEventEnum.operationPlanAdd,
-					});
-				})
-			);
+		return this.operationPlanApiService.transferProductionPlan(params).pipe(
+			tap(() => {
+				this.operationPlanRootService.event$.next({
+					type: OperationPlanEventEnum.operationPlanAdd,
+				});
+			})
+		);
 	}
 
 	public upload1C(weekId: number): Observable<LinkToModule> {
@@ -195,45 +163,15 @@ export class OperationPlanService {
 			orderId: item.orderId,
 			customerUser: item.customerUser,
 			quantity: item.quantity,
-			countForPostpone: new FormControl<number | null>(0, [
-				Validators.required,
-				Validators.min(0),
-				Validators.max(item.quantity),
-			]),
-			productionDateControl: new FormControl<Date | null>(
-				new Date(item.productionDate),
-				{
-					nonNullable: true,
-					validators: [
-						Validators.required,
-						this.minOriginalDateValidator(
-							new Date(item.productionDate)
-						),
-					],
-				}
-			),
-			originalProductionDate: new Date(item.productionDate),
+			linkToDetail: item.linkToDetail,
 		}));
 
 		return {
 			items: mappedItems,
 			total: input.total,
 			totalQuantity: input.totalQuantity,
-			linkToModule: input.linkToModule,
-		};
-	}
-
-	private minOriginalDateValidator(origDate: Date): ValidatorFn {
-		return (control: AbstractControl<Date | null>) => {
-			const controlValue = control.value;
-
-			if (!controlValue) {
-				return null;
-			}
-
-			return controlValue < origDate
-				? { dateTooEarly: { requiredDate: origDate } }
-				: null;
+			linkToModule: input.tov?.linkToDetail || '',
+			tov: input.tov,
 		};
 	}
 
@@ -295,6 +233,13 @@ export class OperationPlanService {
 		params: UpdatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.operationPlanApiService.updatePlanFact(rowId, params);
+	}
+
+	public changePlan(
+		id: number,
+		quantity: string | number | null
+	): Observable<OperationPlanItem> {
+		return this.operationPlanApiService.changePlan(id, quantity);
 	}
 
 	public uploadWMS(date: string): Observable<LinkToModule> {

@@ -9,14 +9,12 @@ import {
 } from '@angular/core';
 import {
 	Align,
-	ButtonComponent,
 	ButtonType,
 	CheckboxComponent,
 	Colors,
 	DropdownItemComponent,
 	DropdownListComponent,
 	ExtraSize,
-	IconComponent,
 	IconType,
 	PopoverTriggerForDirective,
 	SsTableState,
@@ -30,9 +28,8 @@ import {
 	UtilityButtonComponent,
 	TooltipDirective,
 	TooltipPosition,
-	IndicatorChecklistPopupComponent,
 	StatusIconComponent,
-	Status,
+	Status, ActionBarComponent, ActionBarItemComponent, ActionBarItemType,
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
@@ -55,33 +52,32 @@ import {
 	OrderAnOutfit,
 	OrderAnOutfitRequest,
 } from '@app/core/models/production-plan/order-an-outfit-request';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-operation-plan-table',
 	standalone: true,
-	imports: [
-		ButtonComponent,
-		DropdownItemComponent,
-		PopoverTriggerForDirective,
-		DropdownListComponent,
-		NgFor,
-		IconComponent,
-		TableDirective,
-		TableThGroupComponent,
-		ThComponent,
-		CheckboxComponent,
-		ReactiveFormsModule,
-		TextComponent,
-		TableHeadDirective,
-		DatePipe,
-		OperationPlanTableTbodyComponent,
-		UtilityButtonComponent,
-		NgIf,
-		TooltipDirective,
-		IndicatorChecklistPopupComponent,
-		StatusIconComponent,
-	],
+    imports: [
+        DropdownItemComponent,
+        PopoverTriggerForDirective,
+        DropdownListComponent,
+        NgFor,
+        TableDirective,
+        TableThGroupComponent,
+        ThComponent,
+        CheckboxComponent,
+        ReactiveFormsModule,
+        TextComponent,
+        TableHeadDirective,
+        DatePipe,
+        OperationPlanTableTbodyComponent,
+        UtilityButtonComponent,
+        NgIf,
+        TooltipDirective,
+        StatusIconComponent,
+        ActionBarComponent,
+        ActionBarItemComponent,
+    ],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -153,7 +149,7 @@ export class OperationPlanTableComponent {
 				this.planItems(),
 				this.days()
 			);
-			console.log(columnOperPlanConfig);
+
 			this.tableStateService.initialize(
 				this.planItems(),
 				columnOperPlanConfig
@@ -188,7 +184,7 @@ export class OperationPlanTableComponent {
 		if (name.match(/\d{2}-\d{2}$/)) {
 			const [, month, day] = name.split('-');
 
-			return `${month}.${day}`;
+			return `${day}.${month}`;
 		}
 
 		return name;
@@ -372,4 +368,5 @@ export class OperationPlanTableComponent {
 	}
 
 	protected readonly Status = Status;
+	protected readonly ActionBarItemType = ActionBarItemType;
 }

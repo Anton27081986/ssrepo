@@ -5,25 +5,46 @@ import {
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
+import {
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	IDictionaryItemDto,
+	InputComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 import { map, Observable } from 'rxjs';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-ware-house-filter',
 	standalone: true,
-	imports: [ReactiveFormsModule, AsyncPipe, CheckboxFilterContextComponent],
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="(items$ | async)!"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	imports: [
+		FormFieldComponent,
+		InputComponent,
+		FieldCtrlDirective,
+		ScrollbarComponent,
+		DropdownItemComponent,
+		CheckboxComponent,
+		ReactiveFormsModule,
+		TextComponent,
+		AsyncPipe,
+		DividerComponent,
+		NgIf,
+		NgFor,
+	],
+	templateUrl: 'ware-house-filter.component.html',
+	styleUrls: ['./ware-house-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WareHouseFilterComponent
@@ -60,4 +81,10 @@ export class WareHouseFilterComponent
 			})
 		);
 	}
+
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
 }

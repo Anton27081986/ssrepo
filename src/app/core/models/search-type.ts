@@ -7,6 +7,7 @@ export enum SearchTypeEnum {
 	PersonificationStatuses = 'personificationStatuses',
 	Region = 'region',
 	Contractor = 'contractor',
+	ContractorManufacturing = 'contractorManufacturing',
 	Client = 'client',
 	Technologist = 'technologist',
 	Contract = 'contract',

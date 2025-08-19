@@ -1,0 +1,48 @@
+<div class="city-filter">
+	<ss-lib-form-field
+		[icon]="IconType.Search"
+		[clearButton]="true"
+	>
+		<ss-lib-input
+			[size]="ExtraSize.md"
+			fieldCtrl
+			[placeholder]="'Поиск'"
+			[formControl]="queryControl"
+		></ss-lib-input>
+	</ss-lib-form-field>
+
+	<ss-lib-scrollbar>
+		<div class="city-filter__content">
+			<ss-lib-dropdown-item
+				(click)="unSelectedItem(item)"
+				*ngFor="let item of viewSelectedItems$ | async"
+			>
+				<ss-lib-checkbox [formControl]="item.control"></ss-lib-checkbox>
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Medium"
+					[color]="Colors.TextAction2"
+					>{{ item.item.name }}
+				</ss-lib-text>
+			</ss-lib-dropdown-item>
+			<div
+				*ngIf="(selectedItems$ | async)?.length"
+				class="city-filter-divider"
+			>
+				<ss-lib-divider></ss-lib-divider>
+			</div>
+			<ss-lib-dropdown-item
+				(click)="selectedItem(item)"
+				*ngFor="let item of unSelectedItems$ | async"
+			>
+				<ss-lib-checkbox [formControl]="item.control"></ss-lib-checkbox>
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Medium"
+					[color]="Colors.TextAction2"
+					>{{ item.item.name }}
+				</ss-lib-text>
+			</ss-lib-dropdown-item>
+		</div>
+	</ss-lib-scrollbar>
+</div>

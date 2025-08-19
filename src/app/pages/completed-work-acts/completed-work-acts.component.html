@@ -27,13 +27,13 @@
 	></ss-lib-button>
 </div>
 <div class="content">
-	<ss-lib-table-canvas
+	<app-filters-table-canvas
 		[tableRef]="tableRef"
 		[leftFiltersRef]="leftFiltersRef"
 		[rightFiltersRef]="rightFiltersRef"
 		[paginationRef]="paginationRef ?? null"
 	>
-	</ss-lib-table-canvas>
+	</app-filters-table-canvas>
 </div>
 
 <ng-template #tableRef>
@@ -50,10 +50,8 @@
 </ng-template>
 
 <ng-template #rightFiltersRef>
-	<!--    <ng-container *ngIf="hasCustomFilters()">-->
 	<app-dropdown-columns-settings></app-dropdown-columns-settings>
 	<app-filters-trigger-button></app-filters-trigger-button>
-	<!--    </ng-container>-->
 </ng-template>
 
 <ng-template #leftFiltersRef>

@@ -33,41 +33,27 @@
 		}
 	}
 
-	&__selected {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	&__item {
-		display: flex;
-		flex-wrap: nowrap;
-		justify-content: space-between;
-		align-items: center;
-		padding: 3px 1px;
-		gap: 16px;
-	}
-
-	&__item-left {
-		display: flex;
-		flex-wrap: nowrap;
-		align-items: center;
-		gap: 8px;
-	}
-
-	&__item-right {
-		display: flex;
-
-		ss-lib-button {
-			width: 354px;
-		}
-	}
-
 	&__items {
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
-		padding-top: 10px;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+	}
+
+	&__item-selected {
+		display: flex;
+		gap: 12px;
+		flex-wrap: nowrap;
+		align-items: center;
+		padding: 1px 0;
+
+		app-add-manufactures-item {
+			max-width: 506px;
+		}
 	}
 
 	&__actions {
@@ -87,4 +73,8 @@
 ss-lib-spinner {
 	padding-top: 10px;
 	margin: auto;
+}
+
+app-add-manufactures-item {
+	width: 100%;
 }

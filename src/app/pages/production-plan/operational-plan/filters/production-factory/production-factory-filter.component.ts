@@ -3,29 +3,49 @@ import {
 	Component,
 	inject,
 	OnInit,
-	Signal,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import {
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	InputComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 
 @Component({
 	selector: 'app-production-factory-filter',
 	standalone: true,
-	styles: '',
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="itemsSignal()"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	styleUrl: 'production-factory-filter.component.scss',
+	templateUrl: 'production-factory-filter.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CheckboxFilterContextComponent],
+	imports: [
+		ReactiveFormsModule,
+		AsyncPipe,
+		CheckboxComponent,
+		FormFieldComponent,
+		InputComponent,
+		FieldCtrlDirective,
+		ScrollbarComponent,
+		DropdownItemComponent,
+		NgIf,
+		TextComponent,
+		DividerComponent,
+		NgFor,
+	],
 })
 export class ProductionFactoryFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
@@ -33,11 +53,6 @@ export class ProductionFactoryFilterComponent
 {
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
 		OperationPlanFiltersApiService
-	);
-
-	protected readonly itemsSignal: Signal<IDictionaryItemDto[]> = toSignal(
-		this.items$,
-		{ initialValue: [] }
 	);
 
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -66,4 +81,10 @@ export class ProductionFactoryFilterComponent
 			})
 		);
 	}
+
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
 }

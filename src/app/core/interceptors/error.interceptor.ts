@@ -9,15 +9,15 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthenticationService } from '@app/core/services/authentication.service';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { Notifications } from '@app/core/constants/notifications.constants';
 import { Router } from '@angular/router';
+import { SharedPopupService, ToastTypeEnum } from '@front-library/components';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 	constructor(
 		private readonly authenticationService: AuthenticationService,
-		private readonly notificationToastService: NotificationToastService,
+		private readonly sharedPopupService: SharedPopupService,
 		private readonly route: Router
 	) {}
 
@@ -45,34 +45,32 @@ export class ErrorInterceptor implements HttpInterceptor {
 								this.authenticationService.logout();
 							}
 
-							this.notificationToastService.addToast(
-								err.error?.title ||
+							this.sharedPopupService.openToast({
+								text:
+									err.error?.title ||
 									Notifications.SERVER_ERROR_UNAUTHORIZED,
-								'warning',
-								err.status
-							);
+								type: ToastTypeEnum.Default,
+							});
 						} else if (err.error.errors) {
 							for (const field in err.error.errors) {
-								this.notificationToastService.addToast(
-									err.error.errors[field][0],
-									'warning',
-									err.status
-								);
+								this.sharedPopupService.openToast({
+									text: err.error.errors[field][0],
+									type: ToastTypeEnum.Default,
+								});
 							}
 						} else {
-							this.notificationToastService.addToast(
-								err.error.title,
-								'warning',
-								err.status
-							);
+							this.sharedPopupService.openToast({
+								text: err.error.title,
+								type: ToastTypeEnum.Default,
+							});
 						}
 					}
 
 					if (Math.floor(err.status / 100) === 5) {
-						this.notificationToastService.addToast(
-							Notifications.SERVER_ERROR_NOTIFICATION_TEXT,
-							'error'
-						);
+						this.sharedPopupService.openToast({
+							text: Notifications.SERVER_ERROR_NOTIFICATION_TEXT,
+							type: ToastTypeEnum.Error,
+						});
 					}
 				}
 

@@ -1,7 +1,7 @@
 export interface CreatePlanFactRequest {
 	planDate: string;
-	planQuantity?: string | null;
-	factQuantity?: string | null;
+	planQuantity?: string | number | null;
+	factQuantity?: string | number | null;
 }
 
 export interface UpdatePlanFactRequest {
