@@ -19,7 +19,6 @@ import { ClientProposalsSendCloudPopoverComponent } from '@app/pages/client-prop
 import { ModalService } from '@app/core/modal/modal.service';
 import { AtWorkModalComponent } from '@app/pages/client-proposals-page/at-work-modal/at-work-modal.component';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import {
 	TooltipPosition,
 	TooltipTheme,
@@ -37,6 +36,7 @@ import { ClientProposalsTableVgpComponent } from '@app/pages/client-proposals-pa
 import { SettingsViewColumnComponent } from '@app/pages/client-proposals-page/settings-view-column/settings-view-column.component';
 import { NoticeComponent } from '@app/shared/components/notice/notice.component';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
+import {SharedPopupService, ToastTypeEnum} from "@front-library/components";
 
 export interface IClientProposalsCriteriaForm {
 	vgpIds: FormControl<number[] | null>;
@@ -122,7 +122,7 @@ export class ClientProposalsCardComponent {
 		protected readonly clientProposalsFacadeService: ClientProposalsFacadeService,
 		protected readonly checkListStateService: CheckFileListStateService,
 		private readonly modalService: ModalService,
-		private readonly notificationToastService: NotificationToastService
+		private readonly sharedPopupService: SharedPopupService,
 	) {
 		this.clientProposalsFacadeService.clientId$
 			.pipe(untilDestroyed(this))
@@ -413,10 +413,10 @@ export class ClientProposalsCardComponent {
 					this.clientProposalsFacadeService.blockForProposalSubject$.next(
 						false
 					);
-					this.notificationToastService.addToast(
-						'Данные успешно отправлены для создания задач(и) в ЛК МП',
-						'ok'
-					);
+					this.sharedPopupService.openToast({
+						text: 'Данные успешно отправлены для создания задач(и) в ЛК МП',
+						type: ToastTypeEnum.Success,
+					});
 				}
 			});
 	}

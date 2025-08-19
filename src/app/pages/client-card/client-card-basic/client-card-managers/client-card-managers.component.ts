@@ -26,7 +26,7 @@ import { SelectComponent } from '@app/shared/components/select/select.component'
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import { UserInfoPopupComponent } from '@app/shared/components/user-info-popup/user-info-popup.component';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
+import {SharedPopupService, ToastTypeEnum} from "@front-library/components";
 
 enum OperationStatuses {
 	Add,
@@ -84,7 +84,7 @@ export class ClientCardManagersComponent implements OnInit {
 
 	constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly notificationService: NotificationToastService,
+		private readonly sharedPopupService: SharedPopupService,
 		private readonly userFacadeService: UserFacadeService,
 		private readonly cdr: ChangeDetectorRef,
 		private readonly modalService: ModalService
@@ -176,7 +176,10 @@ export class ClientCardManagersComponent implements OnInit {
 
 		this.clientCardListFacade.getManagers();
 
-		this.notificationService.addToast('Сохранено', 'ok');
+		this.sharedPopupService.openToast({
+			text: 'Сохранено',
+			type: ToastTypeEnum.Success,
+		});
 		this.isEditing = false;
 	}
 

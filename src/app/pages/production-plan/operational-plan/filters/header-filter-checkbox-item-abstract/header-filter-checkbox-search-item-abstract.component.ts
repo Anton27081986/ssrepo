@@ -13,11 +13,7 @@ import {
 	FilterCheckboxItem,
 	HeaderFilterCheckboxSearchAbstractComponent,
 } from '../header-filter-checkbox-abstract/header-filter-checkbox-abstract.component';
-import {
-	HeaderFilterService,
-	IFilterCriterionType,
-	IId,
-} from '@front-library/components';
+import { HeaderFilterService, IId } from '@front-library/components';
 
 @Component({
 	template: ``,
@@ -53,7 +49,13 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 		toSignal(
 			this.items$.pipe(
 				tap((items) => {
-					this.unSelectedItems$.next(items);
+					const selectedIds = new Set(
+						this.selectedItems$.value.map((s) => s.id)
+					);
+					const onlyUnselected = items.filter(
+						(item) => !selectedIds.has(item.id)
+					);
+					this.unSelectedItems$.next(onlyUnselected);
 
 					const query = this.queryControl.value;
 					this.searchSelectedItem(query);
@@ -66,6 +68,46 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 				tap(() => {
 					this.indeterminate.set(false);
 					if (this.queryControl.value?.trim()) {
+						const view = this.viewSelectedItems$.value;
+						if (view.length) {
+							// сбрасываем чекбоксы у всех видимых выбранных
+							view.forEach((v) => v.control.setValue(false));
+							const remaining = this.selectedItems$.value.filter(
+								(item) => !view.some((v) => v.id === item.id)
+							);
+							this.selectedItems$.next(remaining);
+							// возвращаем удаленные в unSelectedItems без дублей
+							const currentUnselected =
+								this.unSelectedItems$.value;
+							const merged = [...currentUnselected];
+							view.forEach((item) => {
+								if (!merged.some((u) => u.id === item.id)) {
+									merged.unshift(item);
+								}
+							});
+							this.unSelectedItems$.next(merged);
+						}
+						this.viewSelectedItems$.next([]);
+					} else {
+						// сбрасываем чекбоксы у всех выбранных
+						this.selectedItems$.value.forEach((s) =>
+							s.control.setValue(false)
+						);
+						// возвращаем все выбранные обратно в unSelectedItems без дублей
+						const toReturn = this.selectedItems$.value;
+						if (toReturn.length) {
+							const currentUnselected =
+								this.unSelectedItems$.value;
+							const merged = [...currentUnselected];
+							toReturn.forEach((item) => {
+								if (!merged.some((u) => u.id === item.id)) {
+									merged.push(item);
+								}
+							});
+							this.unSelectedItems$.next(merged);
+						}
+						this.selectedItems$.next([]);
+						this.viewSelectedItems$.next([]);
 					}
 				})
 			)
@@ -81,27 +123,59 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 			)
 		);
 
-		toSignal(this.queryControl.valueChanges.pipe(tap((val) => {})));
+		toSignal(
+			this.queryControl.valueChanges.pipe(
+				tap((val) => {
+					if (val?.trim()) {
+						this.indeterminateText.set('Очистить выбранные');
+					} else {
+						this.indeterminateText.set('Очистить все');
+					}
+				})
+			)
+		);
+	}
+
+	// Возвращает текст, по которому выполняется поиск, для одного элемента
+	protected getItemSearchText(entry: FilterCheckboxItem<T>): string {
+		const raw: unknown = entry.item;
+		const name = (raw as { name?: unknown }).name;
+
+		return typeof name === 'string' ? name : '';
+	}
+
+	// Нормализует строку для корректного поиска (регистр, пробелы, диакритика, ё/е)
+	private normalizeSearch(text: string): string {
+		return text
+			.normalize('NFD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/ё/g, 'е')
+			.toLowerCase()
+			.trim()
+			.replace(/\s+/g, ' ');
 	}
 
 	// Фильтруем выбранные элементы по поисковому запросу
 	public searchSelectedItem(query: string | null): void {
 		const selectedItems = this.selectedItems$.value;
 
-		if (query?.trim()) {
-			const filteredSelected = selectedItems.filter((item) => {
-				const searchQuery = query.toLowerCase().trim();
+		const normalizedQuery = this.normalizeSearch(query ?? '');
 
-				// Поиск только по свойству name
-				if ('name' in item.item && typeof item.item.name === 'string') {
-					return item.item.name.toLowerCase().includes(searchQuery);
-				}
-				return false;
-			});
-			this.viewSelectedItems$.next(filteredSelected);
-		} else {
+		if (!normalizedQuery) {
 			this.viewSelectedItems$.next(selectedItems);
+			return;
 		}
+
+		const tokens = normalizedQuery.split(' ');
+
+		const filtered = selectedItems.filter((entry) => {
+			const text = this.normalizeSearch(this.getItemSearchText(entry));
+			if (!text) return false;
+
+			return tokens.every((t) => text.includes(t));
+		});
+
+		this.viewSelectedItems$.next(filtered);
 	}
 
 	// Добавление элементы в список выбранных

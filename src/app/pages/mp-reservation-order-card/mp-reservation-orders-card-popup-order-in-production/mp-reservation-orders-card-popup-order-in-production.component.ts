@@ -77,8 +77,6 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	);
 
 	public inProductionForm!: FormGroup<{
-		quantity: FormControl<number | null>;
-		manager: FormControl<string | null>;
 		dates: FormArray<
 			FormGroup<{
 				productionDate: FormControl<string | null>;
@@ -94,13 +92,6 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		private readonly facade: MpReservationOrderCardFacadeService
 	) {
 		this.inProductionForm = new FormGroup({
-			manager: new FormControl<string>(this.order()!.author.name, [
-				Validators.required,
-			]),
-			quantity: new FormControl<number | null>(
-				this.order()!.totalAmount,
-				[Validators.required]
-			),
 			dates: new FormArray<
 				FormGroup<{
 					productionDate: FormControl<string | null>;
@@ -170,9 +161,30 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 			.addDetails(detailsList)
 			.pipe(untilDestroyed(this))
 			.subscribe(() => {
-				this.facade.reloadOrder();
 				this.modalRef.close();
-				window.location.reload();
+				this.facade.reloadOrder();
+			});
+	}
+
+	public openPopupApproveAction(): void {
+		this.modalService
+			.open(NoticeDialogComponent, {
+				data: {
+					header: 'Вы уверены, что хотите совершить действие?',
+					text: '  ',
+					type: 'Warning',
+					buttonOk: 'Отмена',
+					buttonCancel: 'Подтвердить',
+				},
+			})
+			.afterClosed()
+			.pipe(untilDestroyed(this))
+			.subscribe((status) => {
+				if (!status) {
+					this.placeOrder()
+				} else {
+					this.modalRef.close();
+				}
 			});
 	}
 

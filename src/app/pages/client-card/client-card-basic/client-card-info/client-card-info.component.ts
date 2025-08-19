@@ -17,7 +17,6 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IUserProfile } from '@app/core/models/user-profile';
 import { UserFacadeService } from '@app/core/facades/user-facade.service';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { NotificationToastService } from '@app/core/services/notification-toast.service';
 import { LoaderComponent } from '@app/shared/components/loader/loader.component';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { HeadlineComponent } from '@app/shared/components/typography/headline/headline.component';
@@ -32,6 +31,7 @@ import { SearchInputComponent } from '@app/shared/components/inputs/search-input
 import { TextareaComponent } from '@app/shared/components/textarea/textarea.component';
 import { ButtonComponent } from '@app/shared/components/buttons/button/button.component';
 import { ReplacePipe } from '@app/shared/pipe/replace.pipe';
+import {SharedPopupService, ToastTypeEnum} from "@front-library/components";
 
 @UntilDestroy()
 @Component({
@@ -89,7 +89,7 @@ export class ClientCardInfoComponent implements OnInit {
 
 	constructor(
 		public readonly clientCardListFacade: ClientsCardFacadeService,
-		private readonly notificationService: NotificationToastService,
+		private readonly sharedPopupService: SharedPopupService,
 		private readonly userFacadeService: UserFacadeService
 	) {
 		this.client$ = this.clientCardListFacade.client$;
@@ -178,7 +178,10 @@ export class ClientCardInfoComponent implements OnInit {
 
 		this.infoForm.controls.comment.setValue(null);
 
-		this.notificationService.addToast('Сохранено', 'ok');
+		this.sharedPopupService.openToast({
+			text: 'Сохранено',
+			type: ToastTypeEnum.Success,
+		});
 		this.isEditing = false;
 	}
 
