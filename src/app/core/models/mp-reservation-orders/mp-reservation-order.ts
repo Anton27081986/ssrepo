@@ -17,6 +17,8 @@ export interface IMpReservationOrder {
 	provision: IProvisionType;
 	stockBalance: number;
 	orderRequests: IOrderRequests[];
+	optimalBatch: number;
+	muptiplicityPack: number;
 }
 
 export interface IProvisionType {

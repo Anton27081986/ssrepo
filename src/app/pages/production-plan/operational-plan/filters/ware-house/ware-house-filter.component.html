@@ -1,4 +1,4 @@
-<div class="production-factory-filter">
+<div class="ware-house-filter">
 	<ss-lib-form-field
 		[icon]="IconType.Search"
 		[clearButton]="true"
@@ -12,7 +12,7 @@
 		></ss-lib-input>
 	</ss-lib-form-field>
 	<ss-lib-scrollbar>
-		<div class="production-factory-filter__content">
+		<div class="ware-house-filter__content">
 			<ss-lib-dropdown-item
 				*ngIf="indeterminate()"
 				(click)="controlsClearAll.setValue(true)"
@@ -41,11 +41,10 @@
 					>{{ item.item.name }}
 				</ss-lib-text>
 			</ss-lib-dropdown-item>
-			<div
-				*ngIf="(selectedItems$ | async)?.length"
-				class="production-factory-filter-divider"
-			>
-				<ss-lib-divider></ss-lib-divider>
+			<div class="ware-house-filter-divider">
+				<ss-lib-divider
+					*ngIf="(selectedItems$ | async)?.length"
+				></ss-lib-divider>
 			</div>
 			<ss-lib-dropdown-item
 				(click)="selectedItem(item)"

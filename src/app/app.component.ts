@@ -14,7 +14,6 @@ import {
 	trigger,
 } from '@angular/animations';
 import { RouterOutlet } from '@angular/router';
-import { NotificationToastComponent } from '@app/widgets/notification-toast/notification-toast.component';
 import { CommonModule } from '@angular/common';
 
 @UntilDestroy()
@@ -38,7 +37,7 @@ import { CommonModule } from '@angular/common';
 			]),
 		]),
 	],
-	imports: [CommonModule, RouterOutlet, NotificationToastComponent],
+	imports: [CommonModule, RouterOutlet],
 	standalone: true,
 })
 export class AppComponent implements OnInit {

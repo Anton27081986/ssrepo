@@ -9,14 +9,12 @@ import {
 } from '@angular/core';
 import {
 	Align,
-	ButtonComponent,
 	ButtonType,
 	CheckboxComponent,
 	Colors,
 	DropdownItemComponent,
 	DropdownListComponent,
 	ExtraSize,
-	IconComponent,
 	IconType,
 	PopoverTriggerForDirective,
 	SsTableState,
@@ -30,7 +28,6 @@ import {
 	UtilityButtonComponent,
 	TooltipDirective,
 	TooltipPosition,
-	IndicatorChecklistPopupComponent,
 	StatusIconComponent,
 	Status,
 } from '@front-library/components';
@@ -55,18 +52,15 @@ import {
 	OrderAnOutfit,
 	OrderAnOutfitRequest,
 } from '@app/core/models/production-plan/order-an-outfit-request';
-import { NgFor, NgIf, DatePipe } from '@angular/common';
+import { NgIf } from '@angular/common';
 
 @Component({
 	selector: 'app-operation-plan-table',
 	standalone: true,
 	imports: [
-		ButtonComponent,
 		DropdownItemComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
-		NgFor,
-		IconComponent,
 		TableDirective,
 		TableThGroupComponent,
 		ThComponent,
@@ -74,12 +68,10 @@ import { NgFor, NgIf, DatePipe } from '@angular/common';
 		ReactiveFormsModule,
 		TextComponent,
 		TableHeadDirective,
-		DatePipe,
 		OperationPlanTableTbodyComponent,
 		UtilityButtonComponent,
 		NgIf,
 		TooltipDirective,
-		IndicatorChecklistPopupComponent,
 		StatusIconComponent,
 	],
 	templateUrl: './operation-plan-table.component.html',

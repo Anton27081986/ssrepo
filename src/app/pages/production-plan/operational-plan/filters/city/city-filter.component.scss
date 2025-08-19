@@ -1,14 +1,14 @@
-.tov-filter {
+.city-filter {
   display: flex;
   flex-direction: column;
   gap: 4px;
 
-   &__content {
-     height: 410px;
-   }
+  &__content {
+    height: 410px;
+  }
 
   &-divider {
-   padding: 4px 16px;
+    padding: 4px 16px;
   }
 }
 
