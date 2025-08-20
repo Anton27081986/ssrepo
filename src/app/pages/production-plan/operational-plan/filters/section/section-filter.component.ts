@@ -16,7 +16,7 @@ import {
 } from '@front-library/components';
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
 import { FilterSectionParentItems } from '@app/core/models/production-plan/filter-section-dto';

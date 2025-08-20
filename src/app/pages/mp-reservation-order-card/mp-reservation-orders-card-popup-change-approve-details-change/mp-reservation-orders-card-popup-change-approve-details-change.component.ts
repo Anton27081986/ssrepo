@@ -22,9 +22,6 @@ import { IApproveChangeRow } from '@app/core/models/mp-reservation-orders/mp-res
 import { MpReservationOrdersCardPopupApproveDetailsChangeTrComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-approve-details-change-tr/mp-reservation-orders-card-popup-approve-details-change-tr.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { IApproveChangeData } from '@app/core/models/mp-reservation-orders/mp-reservation-order-approve-details-change';
-import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
-import { untilDestroyed } from '@ngneat/until-destroy';
-import { ModalService } from '@app/core/modal/modal.service';
 
 @Component({
 	selector:
@@ -63,8 +60,7 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 	constructor(
 		@Inject(DIALOG_DATA) private readonly data: IApproveChangeData,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
-		private readonly modalService: ModalService
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
 	) {
 		this.items = this.data.oldItems.map((oldItem, idx) => {
 			const newItem = this.data.newItems[idx] ?? {

@@ -55,6 +55,11 @@ export class CityFilterComponent
 		OperationPlanFiltersApiService
 	);
 
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
+	protected readonly IconType = IconType;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -81,10 +86,4 @@ export class CityFilterComponent
 			})
 		);
 	}
-
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
-	protected readonly Colors = Colors;
-	protected readonly IconType = IconType;
 }

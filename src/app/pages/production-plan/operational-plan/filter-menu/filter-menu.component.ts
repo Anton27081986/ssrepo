@@ -21,6 +21,9 @@ import { FilterMenuItemComponent } from '@app/pages/production-plan/blunt-compon
 export class FilterMenuComponent {
 	protected filterService: HeaderFilterService = inject(HeaderFilterService);
 
+	protected readonly ButtonType = ButtonType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly IconPosition = IconPosition;
 	protected get checkActiveFilter(): boolean {
 		return this.filterService.menuFilterItems.length > 0;
 	}
@@ -28,8 +31,4 @@ export class FilterMenuComponent {
 	protected clearAll(): void {
 		this.filterService.removeFilterAllMenu();
 	}
-
-	protected readonly ButtonType = ButtonType;
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly IconPosition = IconPosition;
 }

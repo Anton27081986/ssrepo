@@ -9,10 +9,6 @@ import {
 	UpdateRawMaterialsData,
 } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
 import {
-	CommentsModalComponent,
-	CreateCommentsModalData,
-} from '@app/pages/production-plan/modal/comments-modal/comments-modal.component';
-import {
 	ApproveMaterialComponent,
 	ApproveMaterialData,
 } from '@app/pages/production-plan/modal/approve-material/approve-material.component';

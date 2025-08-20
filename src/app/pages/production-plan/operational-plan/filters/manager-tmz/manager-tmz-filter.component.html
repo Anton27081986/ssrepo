@@ -4,8 +4,8 @@
 		[clearButton]="true"
 	>
 		<ss-lib-input
-			[size]="ExtraSize.md"
 			fieldCtrl
+			[size]="ExtraSize.md"
 			[placeholder]="'Поиск'"
 			[formControl]="queryControl"
 		></ss-lib-input>
@@ -29,8 +29,8 @@
 				</ss-lib-text>
 			</ss-lib-dropdown-item>
 			<ss-lib-dropdown-item
-				(click)="unSelectedItem(item)"
 				*ngFor="let item of viewSelectedItems$ | async"
+				(click)="unSelectedItem(item)"
 			>
 				<ss-lib-checkbox [formControl]="item.control"></ss-lib-checkbox>
 				<ss-lib-avatar
@@ -51,8 +51,8 @@
 				<ss-lib-divider></ss-lib-divider>
 			</div>
 			<ss-lib-dropdown-item
-				(click)="selectedItem(item)"
 				*ngFor="let item of unSelectedItems$ | async"
+				(click)="selectedItem(item)"
 			>
 				<ss-lib-checkbox [formControl]="item.control"></ss-lib-checkbox>
 				<ss-lib-avatar

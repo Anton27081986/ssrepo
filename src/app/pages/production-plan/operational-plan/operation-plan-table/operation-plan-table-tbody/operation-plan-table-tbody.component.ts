@@ -112,9 +112,7 @@ export class OperationPlanTableTbodyComponent {
 	}
 
 	// Метод для открытия модальных окон комментариев
-	protected openCommentsModal(
-		row: OperationPlanItem
-	): void {
+	protected openCommentsModal(row: OperationPlanItem): void {
 		this.openCommentsRowId = row.id;
 	}
 
@@ -200,7 +198,7 @@ export class OperationPlanTableTbodyComponent {
 		return null;
 	}
 
-	public openTovLink(url?: string | null) {
+	public openTovLink(url?: string | null): void {
 		if (url) {
 			window.open(url);
 		}

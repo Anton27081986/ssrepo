@@ -195,7 +195,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	public get hasPermissionMutmzChangeQueueOrder(): boolean {
 		return this.permissionService.hasPermission(
 			ModulesWithPermissionsEnum.MpReservationOrders,
-			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER,
+			Permissions.PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER
 		);
 	}
 

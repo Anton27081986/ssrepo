@@ -16,7 +16,7 @@ import {
 import { NgForOf } from '@angular/common';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { IWarehouseStockDto } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
-import {DIALOG_DATA} from "@app/core/modal/modal-tokens";
+import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 
 @UntilDestroy()
 @Component({
@@ -51,11 +51,13 @@ export class MpReservationOrdersPopupRemnantsDetailsComponent {
 	constructor(
 		@Inject(DIALOG_DATA) orderId: number,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService,
+		private readonly mpReservationOrdersFacadeService: MpReservationOrdersFacadeService
 	) {
 		this.mpReservationOrdersFacadeService
 			.getAllStockBalance(orderId)
-			.subscribe((remnants) => (this.remnants = remnants));
+			.subscribe((remnants) => {
+				this.remnants = remnants;
+			});
 	}
 
 	public close(): void {

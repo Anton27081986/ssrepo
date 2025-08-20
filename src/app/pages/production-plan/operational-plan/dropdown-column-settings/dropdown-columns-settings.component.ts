@@ -66,6 +66,7 @@ export class DropdownColumnsSettingsComponent {
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
+	protected readonly ExtraSize = ExtraSize;
 	protected onDropdownItemDrop(
 		event: CdkDragDrop<TableColumnConfig[]>
 	): void {
@@ -85,6 +86,4 @@ export class DropdownColumnsSettingsComponent {
 	public getControlForColumn(column: TableColumnConfig): FormControl {
 		return this.tableStateService.getControlForColumn(column);
 	}
-
-	protected readonly ExtraSize = ExtraSize;
 }
