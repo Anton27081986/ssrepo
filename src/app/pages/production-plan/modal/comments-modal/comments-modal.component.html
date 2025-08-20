@@ -1,0 +1,76 @@
+@if (comments.length) {
+	<div
+		#commentsEl
+		class="comments-list"
+	>
+		@for (comment of comments; track comment.id) {
+			<div class="comments-list__item">
+				<ss-lib-avatar
+					class="comments-list__item__avatar"
+					[src]="comment.author.avatarUrl || ''"
+					[size]="ExtraSize.xs"
+				></ss-lib-avatar>
+				<ss-lib-divider
+					class="comments-list__item__connector"
+					[orientation]="Orientation.Vertical"
+				></ss-lib-divider>
+				<div class="comments-list__item__content">
+					<div class="comments-list__item__content__header">
+						<div class="comments-list__item__content__header__top">
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Medium"
+								[color]="Colors.TextBody"
+							>
+								{{ comment.author.name }}
+							</ss-lib-text>
+							<ss-lib-text
+								[type]="TextType.BodyXs"
+								[weight]="TextWeight.Regular"
+								[color]="Colors.TextBody3"
+							>
+								{{
+									comment.createdDateObj
+										| date
+											: "dd MMMM yyyy 'в' HH:mm"
+											: 'ru-RU'
+								}}
+							</ss-lib-text>
+						</div>
+						<ss-lib-text
+							[type]="TextType.BodyXs"
+							[weight]="TextWeight.Regular"
+							[color]="Colors.TextBody3"
+							>{{ comment.author.position }}</ss-lib-text
+						>
+					</div>
+					<ss-lib-text [type]="TextType.BodySm">
+						{{ comment.note }}
+					</ss-lib-text>
+				</div>
+			</div>
+		}
+	</div>
+	<ss-lib-divider></ss-lib-divider>
+}
+<div class="new-comment">
+	<ss-lib-avatar
+		[src]="currentUser?.avatarUrl ?? ''"
+		[size]="ExtraSize.xs"
+	></ss-lib-avatar>
+	<div
+		#editable
+		class="new-comment__input"
+		contenteditable="true"
+		[attr.data-placeholder]="'Добавить комментарий…'"
+		(input)="setValue($event)"
+	></div>
+</div>
+<ss-lib-button
+	class="send-comment-button"
+	[disabled]="!inputControl.value"
+	[size]="ExtraSize.xxs"
+	[icon]="IconType.ArrowUp"
+	[iconPosition]="IconPosition.OnlyIcon"
+	(click)="sendComment()"
+></ss-lib-button>

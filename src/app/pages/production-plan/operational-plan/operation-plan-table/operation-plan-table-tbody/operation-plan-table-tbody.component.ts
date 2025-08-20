@@ -26,10 +26,8 @@ import {
 	TooltipPosition,
 } from '@front-library/components';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { AddCommentsModalComponent } from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
-import { CreateCommentsModalComponent } from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
-import { NgIf } from '@angular/common';
+import { CommentsModalComponent } from '@app/pages/production-plan/modal/comments-modal/comments-modal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { OperationalPlanTableQuantityCellComponent } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-quantity-cell/operation-plan-table-quantity-cell.component';
 
@@ -75,11 +73,9 @@ export const BASE_COLUMN_MAP: Record<
 		TextComponent,
 		TableCellDirective,
 		TrComponent,
-		AddCommentsModalComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
-		CreateCommentsModalComponent,
-		NgIf,
+		CommentsModalComponent,
 		OverlayModule,
 		OperationalPlanTableQuantityCellComponent,
 		ActionBarComponent,
@@ -117,8 +113,7 @@ export class OperationPlanTableTbodyComponent {
 
 	// Метод для открытия модальных окон комментариев
 	protected openCommentsModal(
-		row: OperationPlanItem,
-		_isComment: boolean
+		row: OperationPlanItem
 	): void {
 		this.openCommentsRowId = row.id;
 	}
