@@ -72,44 +72,26 @@
 											icon: IconType.Message,
 										}"
 										[text]="row.commentCount"
-										[popoverTriggerFor]="
-											row.isComment
-												? addCommentsModal
-												: createCommentsModal
-										"
+										[popoverTriggerFor]="commentsModal"
 										[tooltipText]="
 											row.isComment
 												? 'Посмотреть комментарии'
 												: 'Добавить комментарий'
 										"
 										[position]="TooltipPosition.Top"
-										(click)="
-											openCommentsModal(
-												row,
-												row.isComment
-											)
-										"
+										(click)="openCommentsModal(row)"
 									/>
 								</ss-lib-action-bar>
 							}
 							<ss-lib-dropdown-list
-								#createCommentsModal
+								#commentsModal
 								[height]="'100%'"
-								[width]="'449px'"
 							>
-								<app-create-comments-modal
-									[data]="row"
-								></app-create-comments-modal>
-							</ss-lib-dropdown-list>
-							<ss-lib-dropdown-list
-								#addCommentsModal
-								[height]="'100%'"
-								[width]="'449px'"
-							>
-								<app-add-comments-modal
-									*ngIf="openCommentsRowId === row.id"
-									[data]="row"
-								></app-add-comments-modal>
+								@if (openCommentsRowId === row.id) {
+									<app-comments-modal
+										[data]="row"
+									></app-comments-modal>
+								}
 							</ss-lib-dropdown-list>
 						</div>
 					} @else if (
