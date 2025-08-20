@@ -181,7 +181,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 			.pipe(untilDestroyed(this))
 			.subscribe((status) => {
 				if (!status) {
-					this.placeOrder()
+					this.placeOrder();
 				} else {
 					this.modalRef.close();
 				}

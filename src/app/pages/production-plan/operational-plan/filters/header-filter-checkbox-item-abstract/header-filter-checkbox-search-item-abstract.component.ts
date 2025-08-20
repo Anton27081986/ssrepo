@@ -9,11 +9,11 @@ import {
 import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { HeaderFilterService, IId } from '@front-library/components';
 import {
 	FilterCheckboxItem,
 	HeaderFilterCheckboxSearchAbstractComponent,
 } from '../header-filter-checkbox-abstract/header-filter-checkbox-abstract.component';
-import { HeaderFilterService, IId } from '@front-library/components';
 
 @Component({
 	template: ``,
@@ -55,9 +55,11 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 					const onlyUnselected = items.filter(
 						(item) => !selectedIds.has(item.id)
 					);
+
 					this.unSelectedItems$.next(onlyUnselected);
 
 					const query = this.queryControl.value;
+
 					this.searchSelectedItem(query);
 				})
 			)
@@ -67,19 +69,23 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 			this.controlsClearAll.valueChanges.pipe(
 				tap(() => {
 					this.indeterminate.set(false);
+
 					if (this.queryControl.value?.trim()) {
 						const view = this.viewSelectedItems$.value;
+
 						if (view.length) {
 							// сбрасываем чекбоксы у всех видимых выбранных
 							view.forEach((v) => v.control.setValue(false));
 							const remaining = this.selectedItems$.value.filter(
 								(item) => !view.some((v) => v.id === item.id)
 							);
+
 							this.selectedItems$.next(remaining);
 							// возвращаем удаленные в unSelectedItems без дублей
 							const currentUnselected =
 								this.unSelectedItems$.value;
 							const merged = [...currentUnselected];
+
 							view.forEach((item) => {
 								if (!merged.some((u) => u.id === item.id)) {
 									merged.unshift(item);
@@ -87,6 +93,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 							});
 							this.unSelectedItems$.next(merged);
 						}
+
 						this.viewSelectedItems$.next([]);
 					} else {
 						// сбрасываем чекбоксы у всех выбранных
@@ -95,10 +102,12 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 						);
 						// возвращаем все выбранные обратно в unSelectedItems без дублей
 						const toReturn = this.selectedItems$.value;
+
 						if (toReturn.length) {
 							const currentUnselected =
 								this.unSelectedItems$.value;
 							const merged = [...currentUnselected];
+
 							toReturn.forEach((item) => {
 								if (!merged.some((u) => u.id === item.id)) {
 									merged.push(item);
@@ -106,6 +115,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 							});
 							this.unSelectedItems$.next(merged);
 						}
+
 						this.selectedItems$.next([]);
 						this.viewSelectedItems$.next([]);
 					}
@@ -148,7 +158,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 	private normalizeSearch(text: string): string {
 		return text
 			.normalize('NFD')
-			.replace(/[\u0300-\u036f]/g, '')
+			.replace(/[\u0300-\u036F]/g, '')
 			.replace(/ё/g, 'е')
 			.toLowerCase()
 			.trim()
@@ -163,6 +173,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 
 		if (!normalizedQuery) {
 			this.viewSelectedItems$.next(selectedItems);
+
 			return;
 		}
 
@@ -170,7 +181,10 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 
 		const filtered = selectedItems.filter((entry) => {
 			const text = this.normalizeSearch(this.getItemSearchText(entry));
-			if (!text) return false;
+
+			if (!text) {
+				return false;
+			}
 
 			return tokens.every((t) => text.includes(t));
 		});

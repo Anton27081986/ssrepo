@@ -64,14 +64,17 @@
 							[placeholder]="'Выберите контрагента'"
 							[error]="
 								addOrdersForm.controls.contractor.touched &&
-								addOrdersForm.controls.contractor.errors?.required
+								addOrdersForm.controls.contractor.errors
+									?.required
 									? 'Обязательное поле'
 									: undefined
 							"
 							[reSizeHeightOptions]="true"
 							(select)="onClientSelect($event)"
 							(click)="
-								addOrdersForm.controls.contractor.setErrors(null)
+								addOrdersForm.controls.contractor.setErrors(
+									null
+								)
 							"
 						/>
 					</div>

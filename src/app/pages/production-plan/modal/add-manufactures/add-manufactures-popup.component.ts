@@ -34,7 +34,6 @@ import {
 	JustifyContent,
 	Colors,
 	Align,
-	Status,
 } from '@front-library/components';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { ManufacturingSelectedTovs } from '@app/core/models/production-plan/manufacturing-tovs';
@@ -223,7 +222,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	private filterSelectedTov(query: string) {
+	private filterSelectedTov(query: string): void {
 		this.selectedViewTov.set(
 			this.selectedTov().filter((item) =>
 				item.tov.name.toLowerCase().includes(query.toLowerCase())
@@ -350,6 +349,7 @@ export class AddManufacturesPopupComponent implements OnInit, OnDestroy {
 
 	protected deleteSelected(): void {
 		const query = this.queryControl.value;
+
 		if (query && query.trim() !== '') {
 			const selectedTovArr = this.selectedTov();
 			const selectedViewTovArr = this.selectedViewTov();

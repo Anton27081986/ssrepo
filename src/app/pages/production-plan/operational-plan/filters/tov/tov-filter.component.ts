@@ -59,6 +59,13 @@ export class TovFilterComponent
 	protected operationPlanState: OperationPlanState =
 		inject(OperationPlanState);
 
+	protected readonly IconType = IconType;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
+	protected readonly ExtraSize = ExtraSize;
+
+	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
@@ -97,10 +104,4 @@ export class TovFilterComponent
 	public mapIds(): number[] {
 		return this.viewSelectedItems$.value.map((item) => item.id);
 	}
-
-	protected readonly IconType = IconType;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
-	protected readonly Colors = Colors;
-	protected readonly ExtraSize = ExtraSize;
 }

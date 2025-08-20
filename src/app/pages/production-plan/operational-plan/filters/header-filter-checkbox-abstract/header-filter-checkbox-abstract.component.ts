@@ -41,7 +41,7 @@ export abstract class HeaderFilterCheckboxSearchAbstractComponent<
 
 	public isLoader: WritableSignal<boolean> = signal(false);
 
-	protected items$: Observable<FilterCheckboxItem<T>[]> = merge(
+	protected items$: Observable<Array<FilterCheckboxItem<T>>> = merge(
 		of(null),
 		this.queryControl.valueChanges
 	).pipe(
@@ -67,12 +67,12 @@ export abstract class HeaderFilterCheckboxSearchAbstractComponent<
 
 	public abstract searchActive$(ids: number[]): Observable<T[]>;
 
-	public mapFilterItems(items: T[]): FilterCheckboxItem<T>[] {
+	public mapFilterItems(items: T[]): Array<FilterCheckboxItem<T>> {
 		return items.map((item) => {
 			return {
 				id: item.id,
 				control: new FormControl(false),
-				item: item,
+				item,
 			};
 		});
 	}

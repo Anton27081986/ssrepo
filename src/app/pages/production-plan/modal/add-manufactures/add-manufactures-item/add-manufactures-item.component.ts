@@ -28,6 +28,7 @@ import { ManufacturingSelectedTovs } from '@app/core/models/production-plan/manu
 export class AddManufacturesItemComponent {
 	public readonly item: InputSignal<ManufacturingSelectedTovs> =
 		input.required();
+
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly TextType = TextType;

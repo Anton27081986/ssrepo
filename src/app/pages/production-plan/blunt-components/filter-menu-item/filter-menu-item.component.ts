@@ -54,6 +54,11 @@ export class FilterMenuItemComponent {
 
 	public valueSelected: WritableSignal<string> = signal('0');
 
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly IconPosition = IconPosition;
+	protected readonly IconType = IconType;
+	protected readonly ButtonType = ButtonType;
+	protected readonly Colors = Colors;
 	constructor() {
 		toSignal(
 			this.headerFilterService.criteria$.pipe(
@@ -80,10 +85,4 @@ export class FilterMenuItemComponent {
 		filter.active = false;
 		this.headerFilterService.removeFilterMenu(filter);
 	}
-
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly IconPosition = IconPosition;
-	protected readonly IconType = IconType;
-	protected readonly ButtonType = ButtonType;
-	protected readonly Colors = Colors;
 }

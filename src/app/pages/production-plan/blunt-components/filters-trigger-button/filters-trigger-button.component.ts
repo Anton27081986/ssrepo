@@ -36,12 +36,11 @@ export class FiltersTriggerButtonComponent {
 	protected readonly IconType = IconType;
 	protected readonly IconPosition = IconPosition;
 	protected readonly ButtonType = ButtonType;
+	protected readonly ExtraSize = ExtraSize;
 	protected addFilterMenu(filter: IFilterItem): void {
 		if (!filter.active) {
 			filter.active = true;
 			this.filterService.addFilterMenu(filter);
 		}
 	}
-
-	protected readonly ExtraSize = ExtraSize;
 }

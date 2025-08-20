@@ -2,7 +2,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	effect,
-	inject, Input,
+	inject,
 	input,
 	InputSignal,
 } from '@angular/core';
@@ -138,6 +138,7 @@ export class OperationalPlanTableQuantityCellComponent {
 		row: OperationPlanItem,
 		columnId: string
 	): void {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const input = event.target as HTMLInputElement;
 		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
 		const oldValue =
@@ -317,6 +318,7 @@ export class OperationalPlanTableQuantityCellComponent {
 	}
 
 	public checkPlanFactValue(event: Event): void {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const input = event.target as HTMLInputElement;
 
 		const value = input.value.replace(/[^0-9.,]/g, '');

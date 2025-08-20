@@ -17,10 +17,10 @@ import {
 	ButtonType,
 	Colors,
 	DividerComponent,
-	DropdownListComponent,
 	ExtraSize,
 	IconPosition,
-	IconType, Orientation,
+	IconType,
+	Orientation,
 	TextComponent,
 	TextType,
 	TextWeight,
@@ -85,6 +85,7 @@ export class CommentsModalComponent implements AfterViewChecked {
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
 	protected readonly TextType = TextType;
+	protected readonly Orientation = Orientation;
 	constructor() {
 		this.userService
 			.getUserProfile()
@@ -147,6 +148,4 @@ export class CommentsModalComponent implements AfterViewChecked {
 				// this.dropdownList.closed.emit();
 			});
 	}
-
-	protected readonly Orientation = Orientation;
 }

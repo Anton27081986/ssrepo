@@ -52,7 +52,7 @@ import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
 import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 
-const EmptyDate = '0001-01-01T00:00:00'
+const EmptyDate = '0001-01-01T00:00:00';
 
 @UntilDestroy()
 @Component({
@@ -95,14 +95,14 @@ export class MpReservationOrderCardComponent implements OnInit {
 	public pipeNumWithSpaces = new NumWithSpacesPipe();
 
 	public permissionService: PermissionsFacadeService = inject(
-		PermissionsFacadeService,
+		PermissionsFacadeService
 	);
 
 	public order: Signal<IMpReservationOrder | null> = toSignal(
 		this.mpReservationOrderCardFacadeService.activeOrder$,
 		{
 			initialValue: null,
-		},
+		}
 	);
 
 	public volumes: WritableSignal<ITableItem[]> = signal([]);
@@ -111,7 +111,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 		private readonly modalService: ModalService,
 		private readonly activatedRoute: ActivatedRoute,
-		protected readonly router: Router,
+		protected readonly router: Router
 	) {
 		effect(() => {
 			if (this.order()?.provision) {
@@ -120,7 +120,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 						return {
 							amount: this.pipeNumWithSpaces.numberWithSpaces(
 								item.amount,
-								2,
+								2
 							),
 							requestedProvisionDate: item.requestedProvisionDate
 								.split('T')[0]
@@ -128,7 +128,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 								.reverse()
 								.join('.'),
 						} as unknown as ITableItem;
-					}),
+					})
 				);
 
 				this.procuring.set(
@@ -137,31 +137,15 @@ export class MpReservationOrderCardComponent implements OnInit {
 							manufacturingAmount: item.manufacturingAmount
 								? this.pipeNumWithSpaces.numberWithSpaces(
 										item.manufacturingAmount,
-										2,
+										2
 									)
 								: '-',
-							productionDate:
-								item.productionDate === EmptyDate
-									? '-'
-									: item.productionDate
-										? item.productionDate
-												.split('T')[0]
-												.split('-')
-												.reverse()
-												.join('.')
-										: '-',
-							provisionDate:
-								item.provisionDate === EmptyDate
-									? '-'
-									: item.provisionDate
-										? item.provisionDate
-												.split('T')[0]
-												.split('-')
-												.reverse()
-												.join('.')
-										: '-',
+							productionDate: this.formatDate(
+								item.productionDate
+							),
+							provisionDate: this.formatDate(item.provisionDate),
 						} as unknown as ITableItem;
-					}) || [],
+					}) || []
 				);
 			}
 		});
@@ -196,7 +180,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 			MpReservationOrdersCardPopupRejectOrderComponent,
 			{
 				data: this.order()?.id,
-			},
+			}
 		);
 	}
 
@@ -208,13 +192,13 @@ export class MpReservationOrderCardComponent implements OnInit {
 
 	public openPopupOrderApproval(): void {
 		this.modalService.open(
-			MpReservationOrdersCardPopupOrderApprovalComponent,
+			MpReservationOrdersCardPopupOrderApprovalComponent
 		);
 	}
 
 	public openPopupOrderInProduction(): void {
 		this.modalService.open(
-			MpReservationOrdersCardPopupOrderInProductionComponent,
+			MpReservationOrdersCardPopupOrderInProductionComponent
 		);
 	}
 
@@ -226,7 +210,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					id: this.order()?.id,
 					provisionDetails: this.order()?.provision.provisionDetails,
 				},
-			},
+			}
 		);
 	}
 
@@ -253,7 +237,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 			MpReservationOrdersCardPopupCancelActionComponent,
 			{
 				data: isConfirm,
-			},
+			}
 		);
 	}
 
@@ -266,7 +250,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					tov: this.order()?.tov,
 					id: this.order()?.id,
 				},
-			},
+			}
 		);
 	}
 
@@ -279,7 +263,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					tov: this.order()?.tov,
 					id: this.order()?.id,
 				},
-			},
+			}
 		);
 	}
 
@@ -298,7 +282,7 @@ export class MpReservationOrderCardComponent implements OnInit {
 					MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent,
 					{
 						data: { oldItems, newItems, tov, id },
-					},
+					}
 				);
 			});
 	}
@@ -313,7 +297,15 @@ export class MpReservationOrderCardComponent implements OnInit {
 					id: this.order()?.id,
 					manager: this.order()?.manager,
 				},
-			},
+			}
 		);
+	}
+
+	private formatDate(date: string | undefined): string {
+		if (!date || date === EmptyDate) {
+			return '-';
+		}
+
+		return date.split('T')[0].split('-').reverse().join('.');
 	}
 }

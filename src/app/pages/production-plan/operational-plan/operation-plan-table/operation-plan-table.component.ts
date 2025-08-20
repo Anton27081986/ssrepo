@@ -29,7 +29,10 @@ import {
 	TooltipDirective,
 	TooltipPosition,
 	StatusIconComponent,
-	Status, ActionBarComponent, ActionBarItemComponent, ActionBarItemType,
+	Status,
+	ActionBarComponent,
+	ActionBarItemComponent,
+	ActionBarItemType,
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
@@ -57,27 +60,27 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 @Component({
 	selector: 'app-operation-plan-table',
 	standalone: true,
-    imports: [
-        DropdownItemComponent,
-        PopoverTriggerForDirective,
-        DropdownListComponent,
-        NgFor,
-        TableDirective,
-        TableThGroupComponent,
-        ThComponent,
-        CheckboxComponent,
-        ReactiveFormsModule,
-        TextComponent,
-        TableHeadDirective,
-        DatePipe,
-        OperationPlanTableTbodyComponent,
-        UtilityButtonComponent,
-        NgIf,
-        TooltipDirective,
-        StatusIconComponent,
-        ActionBarComponent,
-        ActionBarItemComponent,
-    ],
+	imports: [
+		DropdownItemComponent,
+		PopoverTriggerForDirective,
+		DropdownListComponent,
+		NgFor,
+		TableDirective,
+		TableThGroupComponent,
+		ThComponent,
+		CheckboxComponent,
+		ReactiveFormsModule,
+		TextComponent,
+		TableHeadDirective,
+		DatePipe,
+		OperationPlanTableTbodyComponent,
+		UtilityButtonComponent,
+		NgIf,
+		TooltipDirective,
+		StatusIconComponent,
+		ActionBarComponent,
+		ActionBarItemComponent,
+	],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -121,6 +124,8 @@ export class OperationPlanTableComponent {
 	protected readonly IconType = IconType;
 	protected readonly TooltipPosition = TooltipPosition;
 
+	protected readonly Status = Status;
+	protected readonly ActionBarItemType = ActionBarItemType;
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		toSignal(
 			this.masterCheckboxCtrl.valueChanges.pipe(
@@ -366,7 +371,4 @@ export class OperationPlanTableComponent {
 				'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
 		}
 	}
-
-	protected readonly Status = Status;
-	protected readonly ActionBarItemType = ActionBarItemType;
 }

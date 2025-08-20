@@ -55,6 +55,11 @@ export class ProductionFactoryFilterComponent
 		OperationPlanFiltersApiService
 	);
 
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -81,10 +86,4 @@ export class ProductionFactoryFilterComponent
 			})
 		);
 	}
-
-	protected readonly IconType = IconType;
-	protected readonly ExtraSize = ExtraSize;
-	protected readonly TextType = TextType;
-	protected readonly TextWeight = TextWeight;
-	protected readonly Colors = Colors;
 }

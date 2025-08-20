@@ -82,6 +82,7 @@ export class OperationPlanState {
 			Permissions.OPERATIONAL_PLAN_ORDER_TRANSFER
 		);
 	}
+
 	public get getHasPermissionViewOrder(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,

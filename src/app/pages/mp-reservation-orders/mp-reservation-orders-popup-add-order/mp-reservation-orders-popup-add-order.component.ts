@@ -130,11 +130,14 @@ export class MpReservationOrdersPopupAddOrderComponent {
 
 	public get accordionTitle(): string {
 		const tovName = this.addOrdersForm.controls.tov.value?.name ?? '';
-		const contractor = this.addOrdersForm.controls.contractor.value?.name ?? '';
+		const contractor =
+			this.addOrdersForm.controls.contractor.value?.name ?? '';
 		const short =
 			tovName.length > 50 ? `${tovName.slice(0, 50)}...` : tovName;
 
-		return contractor ? `${short},\u00A0\u00A0\u00A0\u00A0${contractor}` : short;
+		return contractor
+			? `${short},\u00A0\u00A0\u00A0\u00A0${contractor}`
+			: short;
 	}
 
 	// Геттер для доступа к FormArray позиций
