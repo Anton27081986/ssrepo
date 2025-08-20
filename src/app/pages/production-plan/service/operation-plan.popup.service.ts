@@ -9,17 +9,13 @@ import {
 	UpdateRawMaterialsData,
 } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
 import {
-	CreateCommentsModalComponent,
+	CommentsModalComponent,
 	CreateCommentsModalData,
-} from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
+} from '@app/pages/production-plan/modal/comments-modal/comments-modal.component';
 import {
 	ApproveMaterialComponent,
 	ApproveMaterialData,
 } from '@app/pages/production-plan/modal/approve-material/approve-material.component';
-import {
-	AddCommentsModalComponent,
-	AddCommentsModalData,
-} from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
 import {
 	PostponePersonificationSidePageComponent,
 	PostponeSidePageData,
@@ -35,24 +31,6 @@ export class OperationPlanPopupService {
 			{ weekId },
 			true,
 			'920px'
-		);
-	}
-
-	public openCreateCommentsModal(id: number): ModalRef {
-		return this.popup.openModal<CreateCommentsModalData>(
-			CreateCommentsModalComponent,
-			{ id },
-			false,
-			'449px'
-		);
-	}
-
-	public openAddCommentsModal(id: number): ModalRef {
-		return this.popup.openModal<AddCommentsModalData>(
-			AddCommentsModalComponent,
-			{ id },
-			false,
-			'449px'
 		);
 	}
 
