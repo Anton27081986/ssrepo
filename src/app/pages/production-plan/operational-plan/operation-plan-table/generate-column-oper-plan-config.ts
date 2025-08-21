@@ -67,6 +67,13 @@ export function generateColumnOperationPlanConfig(
 			showInHeader: true,
 			visible: true,
 		},
+		{
+			id: 'productManagerUserPlanQuantity',
+			name: 'План ТМЗ',
+			showInDropdown: true,
+			showInHeader: true,
+			visible: true,
+		},
 	];
 
 	// Собираем уникальные даты из planDays
@@ -150,6 +157,7 @@ export function generateColumnOperationPlanConfig(
 			showInHeader: true,
 			visible: true,
 		},
+
 	];
 
 	return [...baseColumns, weekColumn, ...dateColumns, ...summaryColumns];

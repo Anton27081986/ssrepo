@@ -1,4 +1,4 @@
-import {IDictionaryItemDto} from "@front-library/components";
+import { IDictionaryItemDto } from '@front-library/components';
 
 export interface OperationPlanItem {
 	id: number;
@@ -19,6 +19,7 @@ export interface OperationPlanItem {
 	weekPlanQuantity: number;
 	weekFactQuantity: number;
 	commentCount: string;
+	productManagerUserPlanQuantity: number;
 }
 
 export interface IName {
