@@ -45,6 +45,7 @@ import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto
 import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
 import { FilterSectionDto } from '@app/core/models/production-plan/filter-section-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { SectionFilterState } from '@app/pages/production-plan/operational-plan/filters/section/section-filter.state';
 
 @UntilDestroy()
 @Component({
@@ -68,6 +69,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 	templateUrl: '/section-filter.component.html',
 	styleUrl: 'section-filter.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [SectionFilterState],
 })
 export class SectionFilterComponent implements OnInit {
 	public field: InputSignal<string> = input.required();
@@ -92,9 +94,9 @@ export class SectionFilterComponent implements OnInit {
 
 	protected sections$: Observable<FilterSectionDto>;
 
-	protected treeNode: Observable<TreeNode[]>;
+	protected treeNode$: Observable<TreeNode[]>;
 
-	protected node: Observable<IDictionaryItemDto[]>;
+	protected node$: Observable<IDictionaryItemDto[]>;
 
 	protected readonly Align = Align;
 
@@ -116,7 +118,7 @@ export class SectionFilterComponent implements OnInit {
 			})
 		);
 
-		this.treeNode = this.sections$.pipe(
+		this.treeNode$ = this.sections$.pipe(
 			map((value) => {
 				return value.parentItems.map((item) => {
 					const controls: {
@@ -132,7 +134,7 @@ export class SectionFilterComponent implements OnInit {
 			})
 		);
 
-		this.node = this.sections$.pipe(
+		this.node$ = this.sections$.pipe(
 			map((value) => {
 				return value.items;
 			})
@@ -219,7 +221,7 @@ export class SectionFilterComponent implements OnInit {
 	}
 
 	public getList$(query: string): Observable<FilterSectionDto> {
-		return this.filterApiService.getProductionSection(query);
+		return this.filterApiService.getProductionSection(query, [], false);
 	}
 
 	protected readonly Colors = Colors;

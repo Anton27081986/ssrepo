@@ -13,32 +13,32 @@
 
 	<ss-lib-scrollbar>
 		<div class="section-filter__content">
-			<ng-container *ngFor="let tree of selectedTreeNode">
-				<ss-lib-dropdown-item>
-					<div class="dropdown-item-tree">
-						<div class="dropdown-item-tree__left">
-							<ss-lib-checkbox
-								[formControl]="tree.controlCheckOrClearAll"
-								[indeterminate]="tree.indeterminate()"
-							></ss-lib-checkbox>
-							<ss-lib-text>{{ tree.parent.name }} </ss-lib-text>
-						</div>
-						<ss-lib-icon
-							(click)="tree.expanded = !tree.expanded"
-							[width]="'16'"
-							[height]="'16'"
-							[icon]="IconType.ChevronDown"
-						></ss-lib-icon>
-					</div>
-				</ss-lib-dropdown-item>
-			</ng-container>
+			<!--			<ng-container *ngFor="let tree of selectedTreeNode">-->
+			<!--				<ss-lib-dropdown-item>-->
+			<!--					<div class="dropdown-item-tree">-->
+			<!--						<div class="dropdown-item-tree__left">-->
+			<!--							<ss-lib-checkbox-->
+			<!--								[formControl]="tree.controlCheckOrClearAll"-->
+			<!--								[indeterminate]="tree.indeterminate()"-->
+			<!--							></ss-lib-checkbox>-->
+			<!--							<ss-lib-text>{{ tree.parent.name }} </ss-lib-text>-->
+			<!--						</div>-->
+			<!--						<ss-lib-icon-->
+			<!--							(click)="tree.expanded = !tree.expanded"-->
+			<!--							[width]="'16'"-->
+			<!--							[height]="'16'"-->
+			<!--							[icon]="IconType.ChevronDown"-->
+			<!--						></ss-lib-icon>-->
+			<!--					</div>-->
+			<!--				</ss-lib-dropdown-item>-->
+			<!--			</ng-container>-->
 
-			<ss-lib-dropdown-item *ngFor="let node of selectedNode">
-				<ss-lib-checkbox
-					[formControl]="controlsMap[node.id]"
-				></ss-lib-checkbox>
-				<ss-lib-text>{{ node.name }}</ss-lib-text>
-			</ss-lib-dropdown-item>
+			<!--			<ss-lib-dropdown-item *ngFor="let node of selectedNode">-->
+			<!--				<ss-lib-checkbox-->
+			<!--					[formControl]="controlsMap[node.id]"-->
+			<!--				></ss-lib-checkbox>-->
+			<!--				<ss-lib-text>{{ node.name }}</ss-lib-text>-->
+			<!--			</ss-lib-dropdown-item>-->
 
 			<ng-container *ngIf="treeNode$ | async as treeNode">
 				<ng-container *ngIf="treeNode.length > 0; else noContent">
