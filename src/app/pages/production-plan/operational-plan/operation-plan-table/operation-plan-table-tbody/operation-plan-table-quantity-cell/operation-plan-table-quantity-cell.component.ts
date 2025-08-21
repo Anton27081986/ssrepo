@@ -82,6 +82,8 @@ export class OperationalPlanTableQuantityCellComponent {
 	public columnId: InputSignal<string> = input.required();
 	public value: InputSignal<string | number> = input.required();
 
+	public readonly minDate: Date = new Date();
+
 	public quantityInputControl = new FormControl<string | number | null>(null);
 	public postponeDateControl = new FormControl<string | number | null>(
 		null,
