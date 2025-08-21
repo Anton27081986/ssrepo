@@ -4,8 +4,13 @@ import {
 	inject,
 	OnInit,
 } from '@angular/core';
-import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
+	AvatarDictionaryItemDto,
+	OperationPlanFiltersApiService,
+} from '@app/pages/production-plan/service/operation-plan.filters-api-service';
+import {
+	Align,
+	AvatarComponent,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -42,13 +47,14 @@ import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production
 		DividerComponent,
 		NgIf,
 		NgFor,
+		AvatarComponent,
 	],
 	templateUrl: 'plan-economic-user-filter.component.html',
 	styleUrls: ['plan-economic-user-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanEconomicUserFilterComponent
-	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
+	extends HeaderFilterCheckboxItemAbstractComponent<AvatarDictionaryItemDto>
 	implements OnInit
 {
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
@@ -64,18 +70,22 @@ export class PlanEconomicUserFilterComponent
 		super.ngOnInit();
 	}
 
-	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getPlanEconomicUser(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+	public override getList$(
+		query: string
+	): Observable<AvatarDictionaryItemDto[]> {
+		return this.filterApiService
+			.getPlanEconomicUser(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
-	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getPlanEconomicUser('', ids).pipe(
+	): Observable<AvatarDictionaryItemDto[]> {
+		return this.filterApiService.getPlanEconomicUser('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})
@@ -87,4 +97,5 @@ export class PlanEconomicUserFilterComponent
 	protected readonly Colors = Colors;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
+	protected readonly Align = Align;
 }

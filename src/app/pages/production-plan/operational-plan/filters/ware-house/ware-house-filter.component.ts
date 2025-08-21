@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
+	Align,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -65,17 +66,19 @@ export class WareHouseFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getWarehouse(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getWarehouse(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getWarehouse('', ids).pipe(
+		return this.filterApiService.getWarehouse('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})
@@ -87,4 +90,5 @@ export class WareHouseFilterComponent
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 }

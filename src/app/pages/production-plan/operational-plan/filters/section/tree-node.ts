@@ -22,19 +22,16 @@ export class TreeNode {
 
 	constructor(
 		parent: IDictionaryItemDto,
-		items: IDictionaryItemDto[],
+		child: IDictionaryItemDto[],
 		controlsMap: {
 			[id: string]: FormControl<boolean | null>;
 		}
 	) {
 		this.parent = parent;
-		this.children = items.filter(
-			(item: IDictionaryItemDto) => parent.id === item.parentId
-		);
+		this.children = child;
+		this.controls = controlsMap;
 
 		this.children.forEach((item) => {
-			this.controls[item.id] = controlsMap[item.id];
-
 			if (this.controls[item.id].value) {
 				this.expanded = true;
 			}
@@ -80,7 +77,7 @@ export class TreeNode {
 	private calcIndeterminate(): void {
 		const totalCount = this.getTotalControlsCount();
 		const trueCount = this.getTrueControlsCount();
-
+		console.log(totalCount, trueCount);
 		if (trueCount === 0) {
 			this.indeterminate.set(false);
 			this.controlCheckOrClearAll.setValue(false, { emitEvent: false });

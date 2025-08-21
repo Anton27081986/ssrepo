@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 import {
+	Align,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -62,17 +63,19 @@ export class TovCategoryFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getTovCategory(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getTovCategory(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getTovCategory('', ids).pipe(
+		return this.filterApiService.getTovCategory('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})
@@ -84,4 +87,5 @@ export class TovCategoryFilterComponent
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 }

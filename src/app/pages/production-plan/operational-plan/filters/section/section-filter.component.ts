@@ -2,25 +2,51 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	inject,
+	input,
+	InputSignal,
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
 	Align,
+	CheckboxComponent,
+	Colors,
+	DropdownItemComponent,
+	ExtraSize,
 	FieldCtrlDirective,
 	FormFieldComponent,
-	HeaderFilterCheckboxItemAbstractComponent,
+	HeaderFilterService,
+	IconComponent,
+	IconType,
 	InputComponent,
+	ScrollbarComponent,
 	SpinnerComponent,
 	TextComponent,
+	TextType,
+	TextWeight,
 } from '@front-library/components';
-import { map, Observable } from 'rxjs';
-import { ReactiveFormsModule } from '@angular/forms';
+import {
+	map,
+	NEVER,
+	Observable,
+	of,
+	shareReplay,
+	switchMap,
+	merge,
+	tap,
+	BehaviorSubject,
+	Subscription,
+	take,
+	combineLatest,
+} from 'rxjs';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
-import { FilterSectionParentItems } from '@app/core/models/production-plan/filter-section-dto';
+import { FilterSectionDto } from '@app/core/models/production-plan/filter-section-dto';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-section-filter',
 	standalone: true,
@@ -33,104 +59,172 @@ import { FilterSectionParentItems } from '@app/core/models/production-plan/filte
 		TextComponent,
 		NgIf,
 		SpinnerComponent,
+		DropdownItemComponent,
+		CheckboxComponent,
+		NgFor,
+		ScrollbarComponent,
+		IconComponent,
 	],
 	templateUrl: '/section-filter.component.html',
 	styleUrl: 'section-filter.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SectionFilterComponent
-	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
-	implements OnInit
-{
+export class SectionFilterComponent implements OnInit {
+	public field: InputSignal<string> = input.required();
+
+	private readonly headerFilterService: HeaderFilterService =
+		inject(HeaderFilterService);
+
+	protected readonly selectedIds$ = new BehaviorSubject<number[]>([]);
+
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
 		OperationPlanFiltersApiService
 	);
 
-	protected treeNode$!: Observable<TreeNode[]>;
+	public controlsMap: {
+		[id: string]: FormControl<boolean | null>;
+	} = {};
 
-	protected node: IDictionaryItemDto[] = [];
+	protected readonly queryControl: FormControl<null | string> =
+		new FormControl(null);
+
+	protected subscription: Subscription = new Subscription();
+
+	protected sections$: Observable<FilterSectionDto>;
+
+	protected treeNode: Observable<TreeNode[]>;
+
+	protected node: Observable<IDictionaryItemDto[]>;
 
 	protected readonly Align = Align;
 
-	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
-		super();
-	}
+		this.sections$ = merge(of(''), this.queryControl.valueChanges).pipe(
+			switchMap((value) => {
+				if (value === null) {
+					return NEVER;
+				}
 
-	public get trueCheckControlMap(): boolean {
-		return (
-			Object.values(this.currentControlsMap).some(
-				(control) => control.value === true
-			) && this.indeterminate()
+				return this.getList$(value);
+			}),
+			tap((value) => {
+				this.resolveControls(value);
+			}),
+			shareReplay({
+				bufferSize: 1,
+				refCount: true,
+			})
 		);
-	}
 
-	public override ngOnInit(): void {
-		super.ngOnInit();
-		this.treeNode$ = this.items$.pipe(
-			map((items) => {
-				const node: TreeNode[] = [];
+		this.treeNode = this.sections$.pipe(
+			map((value) => {
+				return value.parentItems.map((item) => {
+					const controls: {
+						[id: string]: FormControl<boolean | null>;
+					} = {};
 
-				items.forEach((parent) => {
-					if (!parent.parentId) {
-						node.push(
-							new TreeNode(parent, items, this.currentControlsMap)
-						);
-					}
+					item.childs.forEach((item) => {
+						controls[item.id] = this.controlsMap[item.id];
+					});
+
+					return new TreeNode(item.data, item.childs, controls);
 				});
-
-				return node;
 			})
 		);
-	}
 
-	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getProductionSection(query).pipe(
+		this.node = this.sections$.pipe(
 			map((value) => {
-				const flat: IDictionaryItemDto[] = [];
-
-				value.parentItems.forEach(
-					(parent: FilterSectionParentItems) => {
-						// Добавляем родителя (date)
-						flat.push(parent.data);
-						// Добавляем детей с parentId = parent.date.id
-						parent.childs.forEach((child: IDictionaryItemDto) => {
-							flat.push({
-								...child,
-								parentId: parent.data.id,
-							});
-						});
-					}
-				);
-				this.node = value.items;
-
-				return [...flat, ...value.items];
+				return value.items;
 			})
 		);
+
+		combineLatest([this.selectedIds$, this.sections$])
+			.pipe(take(1))
+			.subscribe(([ids, sections]) => {
+				if (ids.length) {
+					ids.forEach((id) => {
+						let control = this.controlsMap[id];
+
+						if (control) {
+							const checked =
+								this.selectedIds$.value.includes(id);
+
+							control.setValue(checked);
+						}
+					});
+				}
+			});
 	}
 
-	public override searchActive$(
-		ids: number[]
-	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getProductionSection('', ids).pipe(
-			map((value) => {
-				const flat: IDictionaryItemDto[] = [];
+	public ngOnInit(): void {
+		const filter = this.headerFilterService.getFilter(this.field());
+		this.selectedIds$.next(filter.value ?? []);
 
-				value.parentItems.forEach(
-					(parent: FilterSectionParentItems) => {
-						flat.push(parent.data);
-						parent.childs.forEach((child: IDictionaryItemDto) => {
-							flat.push({
-								...child,
-								parentId: parent.data.id,
-							});
-						});
+		this.selectedIds$.value.forEach((id) => {});
+
+		this.selectedIds$
+			.pipe(
+				tap((value) => {
+					this.headerFilterService.setValueItemFilter(
+						value,
+						this.field()
+					);
+				})
+			)
+			.subscribe();
+	}
+
+	protected resolveControls(value: FilterSectionDto) {
+		for (const item of value.items) {
+			const id = item.id.toString();
+
+			this.controlsMap[id] = this.resolveControl(item.id);
+		}
+
+		for (const item of value.parentItems) {
+			item.childs.forEach((val) => {
+				const id = val.id.toString();
+
+				this.controlsMap[id] = this.resolveControl(val.id);
+			});
+		}
+	}
+
+	protected resolveControl(id: number): FormControl<boolean | null> {
+		let control = this.controlsMap[id];
+		if (!control) {
+			control = new FormControl<boolean | null>(false);
+
+			control.valueChanges.pipe(untilDestroyed(this)).subscribe((val) => {
+				const currentIds = [...this.selectedIds$.value];
+
+				if (val) {
+					if (!currentIds.includes(Number(id))) {
+						this.selectedIds$.next([id, ...currentIds]);
 					}
-				);
-				this.node = value.items;
+				} else {
+					const index = currentIds.indexOf(id);
 
-				return [...flat, ...value.items];
-			})
-		);
+					if (index !== -1) {
+						currentIds.splice(index, 1);
+						this.selectedIds$.next(currentIds);
+					}
+				}
+			});
+
+			this.controlsMap[id] = control;
+		}
+
+		return control;
 	}
+
+	public getList$(query: string): Observable<FilterSectionDto> {
+		return this.filterApiService.getProductionSection(query);
+	}
+
+	protected readonly Colors = Colors;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
 }

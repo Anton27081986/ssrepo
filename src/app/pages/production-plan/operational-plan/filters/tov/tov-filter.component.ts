@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
+	Align,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -71,7 +72,7 @@ export class TovFilterComponent
 		return this.filterApiService
 			.getTov(
 				query,
-				this.mapIds(),
+				this.mapViewSelectedIds(),
 				this.operationPlanState.weekId$.value!,
 				false
 			)
@@ -94,13 +95,10 @@ export class TovFilterComponent
 			);
 	}
 
-	public mapIds(): number[] {
-		return this.viewSelectedItems$.value.map((item) => item.id);
-	}
-
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
 	protected readonly ExtraSize = ExtraSize;
+	protected readonly Align = Align;
 }
