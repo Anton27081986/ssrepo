@@ -61,6 +61,7 @@
 					<ss-lib-number-picker
 						fieldCtrl
 						[formControl]="quantityInputControl"
+						[step]="10"
 					></ss-lib-number-picker>
 				</div>
 				<ss-lib-button
@@ -93,6 +94,7 @@
 							fieldCtrl
 							[formControl]="quantityInputControl"
 							[size]="ExtraSize.md"
+							[step]="10"
 						></ss-lib-number-picker>
 					</div>
 					<div class="postpone__info__item">
@@ -104,6 +106,7 @@
 						<ss-lib-form-field>
 							<ss-lib-datepicker
 								fieldCtrl
+								[min]="minDate"
 								[formControl]="postponeDateControl"
 							></ss-lib-datepicker>
 						</ss-lib-form-field>
