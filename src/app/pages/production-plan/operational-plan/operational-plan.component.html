@@ -21,10 +21,10 @@
 			<ng-container *ngIf="!hasCustomFilters()">
 				<app-operation-plan-empty-state
 					[viewAddButton]="true"
-					[title]="'ГП и полуфабрикатов ещё нет'"
+					[title]="'ТП ещё нет'"
 					[description]="
-						'Здесь будет отображаться планирование ГП и полуфабрикатов на неделю. ' +
-						'Нажмите на «Добавить полфуабрикат», чтобы добавить новый.'
+						'Здесь будет отображаться планирование ТП на неделю. ' +
+						'Нажмите на «Добавить ТП», чтобы добавить новый.'
 					"
 					[icon]="IconType.PackagePlus"
 				></app-operation-plan-empty-state>
@@ -52,6 +52,7 @@
 			[type]="ButtonType.Secondary"
 			[text]="(activeWeek$ | async)?.name"
 			[size]="ExtraSize.lg"
+			(isPopoverOpenEmit)="dropdownWeekIsOpen.set($event)"
 		>
 			<ss-lib-icon
 				[icon]="IconType.ChevronDown"
@@ -63,6 +64,8 @@
 			#listActions
 			[height]="'274px'"
 			[width]="'236px'"
+			[scrollOnOpen]="true"
+			[isOpen]="dropdownWeekIsOpen()"
 		>
 			<ss-lib-dropdown-item
 				*ngFor="let week of weeks"
