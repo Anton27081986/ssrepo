@@ -6,6 +6,7 @@
 					*ssCell="column.id"
 					ssTd
 					class="item-td"
+					[class.hover]="isHoveredColumn(column.id)"
 				>
 					@if (column.id === 'tov') {
 						<div
