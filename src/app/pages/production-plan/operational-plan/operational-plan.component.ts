@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
 	Align,
 	ButtonComponent,
@@ -89,7 +89,7 @@ export class OperationalPlanComponent {
 
 	public offset$ = new BehaviorSubject<number>(0);
 	public itemTotal$ = new BehaviorSubject<number>(0);
-
+	public dropdownWeekIsOpen = signal<boolean>(false);
 	protected activeWeek$: BehaviorSubject<IDictionaryItemDto | null> =
 		new BehaviorSubject<IDictionaryItemDto | null>(null);
 
