@@ -84,10 +84,12 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [SsTableState],
 })
 @UntilDestroy()
 export class OperationPlanTableComponent {
 	private readonly tableStateService = inject(SsTableState);
+
 	private readonly operationPlanPopup = inject(OperationPlanPopupService);
 	private readonly operationPlanService = inject(OperationPlanService);
 	protected readonly operationPlanState = inject(OperationPlanState);
@@ -370,5 +372,9 @@ export class OperationPlanTableComponent {
 			this.planTooltipText =
 				'Чтобы проверить общее количество готовой продукции, примените фильтр по участку';
 		}
+	}
+
+	public setHoveredColumn(columnId: string | null): void {
+		this.tableStateService.setHoveredColumn(columnId);
 	}
 }

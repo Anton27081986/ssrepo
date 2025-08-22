@@ -203,4 +203,8 @@ export class OperationPlanTableTbodyComponent {
 			window.open(url);
 		}
 	}
+
+	public isHoveredColumn(columnId: string): boolean {
+		return this.tableStateService.isHoveredColumn(columnId);
+	}
 }
