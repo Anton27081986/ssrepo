@@ -121,7 +121,7 @@ export class OperationalPlanTableQuantityCellComponent {
 		if (this.columnId().startsWith('plan')) {
 			if (oldValue?.id) {
 				this.operationPlanService
-					.changePlan(oldValue.id, newValue)
+					.changePlan(this.row().id, oldValue.id, newValue)
 					.subscribe((r: OperationPlanItem) => {
 						this.row().weekPlanQuantity = r.weekPlanQuantity;
 						this.row().monthPlanQuantity = r.monthPlanQuantity;
@@ -305,7 +305,7 @@ export class OperationalPlanTableQuantityCellComponent {
 
 		if (oldValue) {
 			this.operationPlanService
-				.transferProductionPlan({
+				.transferProductionPlan(this.row().id, {
 					id: oldValue.id,
 					productionDate: this.postponeDateControl.value,
 					quantity: this.quantityInputControl.value,
