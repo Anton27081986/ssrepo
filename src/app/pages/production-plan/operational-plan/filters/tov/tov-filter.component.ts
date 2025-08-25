@@ -57,9 +57,6 @@ export class TovFilterComponent
 		OperationPlanFiltersApiService
 	);
 
-	protected operationPlanState: OperationPlanState =
-		inject(OperationPlanState);
-
 	constructor() {
 		super();
 	}
@@ -70,12 +67,7 @@ export class TovFilterComponent
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService
-			.getTov(
-				query,
-				this.mapViewSelectedIds(),
-				this.operationPlanState.weekId$.value!,
-				false
-			)
+			.getTov(query, this.mapViewSelectedIds(), false)
 			.pipe(
 				map((value) => {
 					return value.items;
@@ -86,13 +78,11 @@ export class TovFilterComponent
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService
-			.getTov('', ids, this.operationPlanState.weekId$.value!, true)
-			.pipe(
-				map((value) => {
-					return value.items;
-				})
-			);
+		return this.filterApiService.getTov('', ids, true).pipe(
+			map((value) => {
+				return value.items;
+			})
+		);
 	}
 
 	protected readonly IconType = IconType;

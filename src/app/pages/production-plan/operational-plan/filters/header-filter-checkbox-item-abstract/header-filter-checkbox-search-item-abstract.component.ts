@@ -94,7 +94,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 							const merged = [...currentUnselected];
 							toReturn.forEach((item) => {
 								if (!merged.some((u) => u.id === item.id)) {
-									merged.push(item);
+									merged.unshift(item);
 								}
 							});
 							this.unSelectedItems$.next(merged);

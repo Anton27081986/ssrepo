@@ -13,93 +13,55 @@
 
 	<ss-lib-scrollbar>
 		<div class="section-filter__content">
-			<!--			<ng-container *ngFor="let tree of selectedTreeNode">-->
-			<!--				<ss-lib-dropdown-item>-->
-			<!--					<div class="dropdown-item-tree">-->
-			<!--						<div class="dropdown-item-tree__left">-->
-			<!--							<ss-lib-checkbox-->
-			<!--								[formControl]="tree.controlCheckOrClearAll"-->
-			<!--								[indeterminate]="tree.indeterminate()"-->
-			<!--							></ss-lib-checkbox>-->
-			<!--							<ss-lib-text>{{ tree.parent.name }} </ss-lib-text>-->
-			<!--						</div>-->
-			<!--						<ss-lib-icon-->
-			<!--							(click)="tree.expanded = !tree.expanded"-->
-			<!--							[width]="'16'"-->
-			<!--							[height]="'16'"-->
-			<!--							[icon]="IconType.ChevronDown"-->
-			<!--						></ss-lib-icon>-->
-			<!--					</div>-->
-			<!--				</ss-lib-dropdown-item>-->
-			<!--			</ng-container>-->
-
-			<!--			<ss-lib-dropdown-item *ngFor="let node of selectedNode">-->
-			<!--				<ss-lib-checkbox-->
-			<!--					[formControl]="controlsMap[node.id]"-->
-			<!--				></ss-lib-checkbox>-->
-			<!--				<ss-lib-text>{{ node.name }}</ss-lib-text>-->
-			<!--			</ss-lib-dropdown-item>-->
-
-			<ng-container *ngIf="treeNode$ | async as treeNode">
-				<ng-container *ngIf="treeNode.length > 0; else noContent">
-					<ng-container *ngFor="let tree of treeNode">
-						<ss-lib-dropdown-item>
-							<div class="dropdown-item-tree">
-								<div class="dropdown-item-tree__left">
-									<ss-lib-checkbox
-										[formControl]="
-											tree.controlCheckOrClearAll
-										"
-										[indeterminate]="tree.indeterminate()"
-									></ss-lib-checkbox>
-									<ss-lib-text
-										>{{ tree.parent.name }}
-									</ss-lib-text>
-								</div>
-								<ss-lib-icon
-									(click)="tree.expanded = !tree.expanded"
-									[width]="'16'"
-									[height]="'16'"
-									[icon]="IconType.ChevronDown"
-								></ss-lib-icon>
-							</div>
-						</ss-lib-dropdown-item>
-						<ng-container *ngIf="tree.expanded">
-							<ss-lib-dropdown-item
-								class="dropdown-item-tree__child"
-								*ngFor="let node of tree.children"
-							>
-								<ss-lib-checkbox
-									[formControl]="controlsMap[node.id]"
-								></ss-lib-checkbox>
-								<ss-lib-text>{{ node.name }}</ss-lib-text>
-							</ss-lib-dropdown-item>
-						</ng-container>
-					</ng-container>
+			<!--			выбранный список-->
+			<ng-container *ngFor="let item of selectedItems()">
+				<!--	выбранный список c иеархией  -->
+				<ng-container *ngIf="item.children?.length; else notChildren">
+					<app-section-group-dropdown-item
+						[expanded]="true"
+						[sectionItem]="item"
+						(toggleEmit)="toggleSelectionChildren($event, item)"
+						(toggleParentEmit)="toggleParent($event, true)"
+					></app-section-group-dropdown-item>
 				</ng-container>
-			</ng-container>
-			<ng-template #noContent>
-				<div class="section-filter-no-content">
-					<ss-lib-text
-						[align]="Align.Center"
-						[color]="Colors.TextBody3"
-						[type]="TextType.BodySm"
-						[weight]="TextWeight.Regular"
-					>
-						По запросу
-						{{ queryControl.valueChanges | async }} ничего не
-						найдено. Попробуйте изменить запрос.
-					</ss-lib-text>
-				</div>
-			</ng-template>
 
-			<ng-container *ngIf="node$ | async">
-				<ss-lib-dropdown-item *ngFor="let node of node$ | async">
-					<ss-lib-checkbox
-						[formControl]="controlsMap[node.id]"
-					></ss-lib-checkbox>
-					<ss-lib-text>{{ node.name }}</ss-lib-text>
-				</ss-lib-dropdown-item>
+				<!--	выбранный список без иеархии  -->
+				<ng-template #notChildren>
+					<ss-lib-dropdown-item
+						(click)="toggleSelectionNotChildren(item)"
+					>
+						<ss-lib-checkbox
+							[formControl]="item.control"
+						></ss-lib-checkbox>
+						<ss-lib-text>{{ item.name }}</ss-lib-text>
+					</ss-lib-dropdown-item>
+				</ng-template>
+			</ng-container>
+
+			<ss-lib-divider *ngIf="selectedItems().length"></ss-lib-divider>
+
+			<!--	общий список  -->
+			<ng-container *ngFor="let item of items()">
+				<!--				общий список с иеархией-->
+				<ng-container *ngIf="item.children?.length; else notChildren">
+					<app-section-group-dropdown-item
+						[expanded]="false"
+						[sectionItem]="item"
+						(toggleEmit)="toggleSelectionChildren($event, item)"
+						(toggleParentEmit)="toggleParent($event, false)"
+					></app-section-group-dropdown-item>
+				</ng-container>
+				<!--				общий список без иеархии-->
+				<ng-template #notChildren>
+					<ss-lib-dropdown-item
+						(click)="removeSelectionNotChildren(item)"
+					>
+						<ss-lib-checkbox
+							[formControl]="item.control"
+						></ss-lib-checkbox>
+						<ss-lib-text>{{ item.name }}</ss-lib-text>
+					</ss-lib-dropdown-item>
+				</ng-template>
 			</ng-container>
 		</div>
 	</ss-lib-scrollbar>

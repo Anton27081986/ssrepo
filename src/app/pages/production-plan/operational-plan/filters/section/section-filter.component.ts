@@ -1,51 +1,51 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
+	effect,
 	inject,
 	input,
 	InputSignal,
 	OnInit,
+	signal,
+	WritableSignal,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
-	Align,
 	CheckboxComponent,
 	Colors,
+	DividerComponent,
 	DropdownItemComponent,
 	ExtraSize,
 	FieldCtrlDirective,
 	FormFieldComponent,
 	HeaderFilterService,
-	IconComponent,
 	IconType,
 	InputComponent,
 	ScrollbarComponent,
-	SpinnerComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
 } from '@front-library/components';
 import {
+	BehaviorSubject,
 	map,
-	NEVER,
-	Observable,
 	of,
-	shareReplay,
 	switchMap,
 	merge,
 	tap,
-	BehaviorSubject,
-	Subscription,
-	take,
-	combineLatest,
+	debounceTime,
 } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { TreeNode } from '@app/pages/production-plan/operational-plan/filters/section/tree-node';
-import { FilterSectionDto } from '@app/core/models/production-plan/filter-section-dto';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { SectionFilterState } from '@app/pages/production-plan/operational-plan/filters/section/section-filter.state';
+import { SectionGroupDropdownItemComponent } from '@app/pages/production-plan/operational-plan/filters/section/section-group-dropdown-item/section-group-dropdown-item.component';
+
+export interface SectionItem {
+	id: number;
+	name: string;
+	control: FormControl<boolean | null>;
+	children: SectionItem[] | null;
+}
 
 @UntilDestroy()
 @Component({
@@ -56,20 +56,19 @@ import { SectionFilterState } from '@app/pages/production-plan/operational-plan/
 		FormFieldComponent,
 		InputComponent,
 		ReactiveFormsModule,
-		AsyncPipe,
 		TextComponent,
 		NgIf,
-		SpinnerComponent,
 		DropdownItemComponent,
-		CheckboxComponent,
 		NgFor,
 		ScrollbarComponent,
-		IconComponent,
+		DividerComponent,
+		SectionGroupDropdownItemComponent,
+		CheckboxComponent,
+		AsyncPipe,
 	],
-	templateUrl: '/section-filter.component.html',
+	templateUrl: './section-filter.component.html',
 	styleUrl: 'section-filter.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [SectionFilterState],
 })
 export class SectionFilterComponent implements OnInit {
 	public field: InputSignal<string> = input.required();
@@ -77,156 +76,330 @@ export class SectionFilterComponent implements OnInit {
 	private readonly headerFilterService: HeaderFilterService =
 		inject(HeaderFilterService);
 
-	protected readonly selectedIds$ = new BehaviorSubject<number[]>([]);
-
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
 		OperationPlanFiltersApiService
 	);
 
-	public controlsMap: {
-		[id: string]: FormControl<boolean | null>;
-	} = {};
+	protected readonly selectedIds$ = new BehaviorSubject<number[]>([]);
 
 	protected readonly queryControl: FormControl<null | string> =
 		new FormControl(null);
-
-	protected subscription: Subscription = new Subscription();
-
-	protected sections$: Observable<FilterSectionDto>;
-
-	protected treeNode$: Observable<TreeNode[]>;
-
-	protected node$: Observable<IDictionaryItemDto[]>;
-
-	protected readonly Align = Align;
-
-	constructor() {
-		this.sections$ = merge(of(''), this.queryControl.valueChanges).pipe(
-			switchMap((value) => {
-				if (value === null) {
-					return NEVER;
-				}
-
-				return this.getList$(value);
-			}),
-			tap((value) => {
-				this.resolveControls(value);
-			}),
-			shareReplay({
-				bufferSize: 1,
-				refCount: true,
-			})
-		);
-
-		this.treeNode$ = this.sections$.pipe(
-			map((value) => {
-				return value.parentItems.map((item) => {
-					const controls: {
-						[id: string]: FormControl<boolean | null>;
-					} = {};
-
-					item.childs.forEach((item) => {
-						controls[item.id] = this.controlsMap[item.id];
-					});
-
-					return new TreeNode(item.data, item.childs, controls);
-				});
-			})
-		);
-
-		this.node$ = this.sections$.pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
-
-		combineLatest([this.selectedIds$, this.sections$])
-			.pipe(take(1))
-			.subscribe(([ids, sections]) => {
-				if (ids.length) {
-					ids.forEach((id) => {
-						let control = this.controlsMap[id];
-
-						if (control) {
-							const checked =
-								this.selectedIds$.value.includes(id);
-
-							control.setValue(checked);
-						}
-					});
-				}
-			});
-	}
-
-	public ngOnInit(): void {
-		const filter = this.headerFilterService.getFilter(this.field());
-		this.selectedIds$.next(filter.value ?? []);
-
-		this.selectedIds$.value.forEach((id) => {});
-
-		this.selectedIds$
-			.pipe(
-				tap((value) => {
-					this.headerFilterService.setValueItemFilter(
-						value,
-						this.field()
-					);
-				})
-			)
-			.subscribe();
-	}
-
-	protected resolveControls(value: FilterSectionDto) {
-		for (const item of value.items) {
-			const id = item.id.toString();
-
-			this.controlsMap[id] = this.resolveControl(item.id);
-		}
-
-		for (const item of value.parentItems) {
-			item.childs.forEach((val) => {
-				const id = val.id.toString();
-
-				this.controlsMap[id] = this.resolveControl(val.id);
-			});
-		}
-	}
-
-	protected resolveControl(id: number): FormControl<boolean | null> {
-		let control = this.controlsMap[id];
-		if (!control) {
-			control = new FormControl<boolean | null>(false);
-
-			control.valueChanges.pipe(untilDestroyed(this)).subscribe((val) => {
-				const currentIds = [...this.selectedIds$.value];
-
-				if (val) {
-					if (!currentIds.includes(Number(id))) {
-						this.selectedIds$.next([id, ...currentIds]);
-					}
-				} else {
-					const index = currentIds.indexOf(id);
-
-					if (index !== -1) {
-						currentIds.splice(index, 1);
-						this.selectedIds$.next(currentIds);
-					}
-				}
-			});
-
-			this.controlsMap[id] = control;
-		}
-
-		return control;
-	}
-
-	public getList$(query: string): Observable<FilterSectionDto> {
-		return this.filterApiService.getProductionSection(query, [], false);
-	}
 
 	protected readonly Colors = Colors;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
+
+	public items: WritableSignal<SectionItem[]> = signal([]);
+
+	public selectedItems: WritableSignal<SectionItem[]> = signal([]);
+
+	ngOnInit() {
+		const filter = this.headerFilterService.getFilter(this.field());
+
+		if (filter.value?.length) {
+			this.filterApiService
+				.getProductionSection('', filter.value, true)
+				.pipe(
+					map((val) => {
+						const itemsMap = val.items.map((item) => {
+							return {
+								id: item.id,
+								name: item.name,
+								control: new FormControl<boolean>(false),
+								children: null,
+							};
+						});
+
+						const mapParentItems = val.parentItems.map((item) => {
+							return {
+								id: item.data.id,
+								name: item.data.name,
+								control: new FormControl<boolean>(false),
+								children: item.childs.map((item) => {
+									return {
+										id: item.id,
+										name: item.name,
+										control: new FormControl<boolean>(
+											false
+										),
+									};
+								}),
+							};
+						});
+						return [...mapParentItems, ...itemsMap];
+					})
+				)
+				.subscribe((val) => {
+					this.selectedItems.set(val as SectionItem[]);
+					this.updateSelectedIds();
+				});
+		}
+
+		merge(of(''), this.queryControl.valueChanges)
+			.pipe(
+				debounceTime(500),
+				switchMap((query) => {
+					const ids: number[] = this.selectedItems().flatMap(
+						(item) => {
+							if (item.children) {
+								item.control.setValue(true);
+								return item.children.map((child) => {
+									child.control.setValue(true);
+									return child.id;
+								});
+							} else {
+								item.control.setValue(true);
+								return [item.id];
+							}
+						}
+					);
+					return this.filterApiService.getProductionSection(
+						query ?? '',
+						ids,
+						false
+					);
+				}),
+				map((value) => {
+					const itemsMap = value.items.map((item) => {
+						return {
+							id: item.id,
+							name: item.name,
+							control: new FormControl<boolean>(false),
+							children: null,
+						};
+					});
+
+					const mapParentItems = value.parentItems.map((item) => {
+						return {
+							id: item.data.id,
+							name: item.data.name,
+							control: new FormControl<boolean>(false),
+							children: item.childs.map((item) => {
+								return {
+									id: item.id,
+									name: item.name,
+									control: new FormControl<boolean>(false),
+								};
+							}),
+						};
+					});
+					return [...mapParentItems, ...itemsMap];
+				}),
+				tap((value) => {
+					this.items.set(value as SectionItem[]);
+				}),
+				untilDestroyed(this)
+			)
+			.subscribe();
+
+		this.selectedIds$.pipe(untilDestroyed(this)).subscribe((ids) => {
+			this.headerFilterService.setValueItemFilter(ids, this.field());
+		});
+	}
+
+	protected toggleSelectionNotChildren(item: SectionItem): void {
+		const isSelected = this.selectedItems().some(
+			(selected) => selected.id === item.id
+		);
+
+		if (isSelected) {
+			// Снять выбор: убрать из выбранных и вернуть в общий список (если его там нет)
+			this.selectedItems.set(
+				this.selectedItems().filter(
+					(selected) => selected.id !== item.id
+				)
+			);
+
+			const existsInItems = this.items().some((i) => i.id === item.id);
+
+			if (!existsInItems) {
+				this.items.set([
+					...this.items(),
+					{
+						id: item.id,
+						name: item.name,
+						children: null,
+						control: new FormControl<boolean>(false),
+					},
+				]);
+			} else {
+				// Добавить в выбранные и удалить из общего списка
+				this.selectedItems.set([...this.selectedItems(), item]);
+				this.items.set(this.items().filter((i) => i.id !== item.id));
+			}
+		}
+		this.updateSelectedIds();
+	}
+
+	protected removeSelectionNotChildren(item: SectionItem): void {
+		const isSelected = this.selectedItems().some(
+			(selected) => selected.id === item.id
+		);
+		if (isSelected) {
+			// Удалить из выбранных и вернуть в общий список
+			this.selectedItems.set(
+				this.selectedItems().filter(
+					(selected) => selected.id !== item.id
+				)
+			);
+
+			const existsInItems = this.items().some((i) => i.id === item.id);
+
+			if (!existsInItems) {
+				this.items.set([
+					{
+						id: item.id,
+						name: item.name,
+						children: null,
+						control: new FormControl<boolean>(false),
+					},
+					...this.items(),
+				]);
+			}
+		} else {
+			// Добавить в выбранные и удалить из общего списка
+			this.selectedItems.set([item, ...this.selectedItems()]);
+			this.items.set(this.items().filter((i) => i.id !== item.id));
+		}
+
+		this.updateSelectedIds();
+	}
+
+	protected toggleSelectionChildren(
+		target: SectionItem,
+		parent: SectionItem
+	): void {
+		const isSelected = this.selectedItems().some((selected) =>
+			selected.children!.some((child) => child.id === target.id)
+		);
+
+		if (!isSelected) {
+			this.addSelectionChildren(target, parent);
+		} else {
+			this.removeSelectionChildren(target, parent);
+		}
+
+		this.updateSelectedIds();
+	}
+
+	private addSelectionChildren(target: SectionItem, parent: SectionItem) {
+		const selected = this.selectedItems();
+
+		const parentSelected = this.selectedItems().find(
+			(selected) => selected.id === parent.id
+		);
+		if (parentSelected) {
+			parentSelected.children!.unshift(target);
+		} else {
+			const newObj = {
+				id: parent.id,
+				name: parent.name,
+				control: new FormControl<boolean>(false),
+				children: [target],
+			};
+			this.selectedItems.set([newObj, ...selected]);
+		}
+
+		parent.children = parent.children!.filter(
+			(item) => item.id !== target.id
+		);
+
+		if (parent.children.length === 0) {
+			this.items.set(
+				this.items().filter((item) => item.id !== parent.id)
+			);
+		}
+	}
+
+	private removeSelectionChildren(target: SectionItem, parent: SectionItem) {
+		const items = this.items();
+
+		const parentTarget = this.items().find(
+			(selected) => selected.id === parent.id
+		);
+
+		if (parentTarget) {
+			parentTarget.children!.unshift(target);
+		} else {
+			const newObj = {
+				id: parent.id,
+				name: parent.name,
+				control: new FormControl<boolean>(false),
+				children: [target],
+			};
+			this.items.set([newObj, ...items]);
+		}
+
+		parent.children = parent.children!.filter(
+			(item) => item.id !== target.id
+		);
+
+		if (parent.children.length === 0) {
+			this.selectedItems.set(
+				this.selectedItems().filter((item) => item.id !== parent.id)
+			);
+		}
+	}
+
+	protected updateSelectedIds() {
+		const ids: number[] = this.selectedItems().flatMap((item) => {
+			if (item.children) {
+				item.control.setValue(true);
+				return item.children.map((child) => {
+					child.control.setValue(true);
+					return child.id;
+				});
+			} else {
+				item.control.setValue(true);
+				return [item.id];
+			}
+		});
+		this.selectedIds$.next(ids);
+
+		this.items().forEach((item) => {
+			item.control.setValue(false);
+			if (item.children) {
+				item.children.forEach((it) => it.control.setValue(false));
+			}
+		});
+	}
+
+	protected toggleParent(parent: SectionItem, remove: boolean) {
+		if (remove) {
+			const parentTarget = this.items().find(
+				(selected) => selected.id === parent.id
+			);
+			if (parentTarget) {
+				parentTarget.children = [
+					...(parent.children ?? []),
+					...(parentTarget.children ?? []),
+				];
+			} else {
+				this.items.set([parent, ...this.items()]);
+			}
+			this.selectedItems.set(
+				this.selectedItems().filter((item) => item.id !== parent.id)
+			);
+		} else {
+			const parentTarget = this.selectedItems().find(
+				(selected) => selected.id === parent.id
+			);
+
+			if (parentTarget) {
+				parentTarget.children = [
+					...(parent.children ?? []),
+					...(parentTarget.children ?? []),
+				];
+			} else {
+				this.selectedItems.set([parent, ...this.selectedItems()]);
+			}
+
+			this.items.set(
+				this.items().filter((item) => item.id !== parent.id)
+			);
+		}
+		this.updateSelectedIds();
+	}
 }

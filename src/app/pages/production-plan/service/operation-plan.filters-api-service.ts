@@ -93,7 +93,6 @@ export class OperationPlanFiltersApiService {
 	public getTov(
 		query: string,
 		ids: number[] = [],
-		weekId: number,
 		onlyIds: boolean
 	): Observable<IResponse<IDictionaryItemDto>> {
 		let params = new HttpParams().set('query', query);
@@ -101,8 +100,6 @@ export class OperationPlanFiltersApiService {
 		ids.forEach((id) => {
 			params = params.append('ids', id.toString());
 		});
-
-		params = params.set('weekId', weekId);
 
 		params = params.set('onlyIds', onlyIds);
 
