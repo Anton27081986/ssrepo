@@ -57,6 +57,10 @@
 						*ngFor="let item of unSelectedItems"
 					>
 						<ss-lib-checkbox></ss-lib-checkbox>
+						<ss-lib-avatar
+							[size]="ExtraSize.xs"
+							[src]="item.item.avatarUrl ?? ''"
+						></ss-lib-avatar>
 						<ss-lib-text
 							[type]="TextType.BodySm"
 							[weight]="TextWeight.Medium"
