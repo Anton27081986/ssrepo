@@ -6,7 +6,6 @@ import {
 	signal,
 	Signal,
 	WritableSignal,
-	ChangeDetectorRef,
 } from '@angular/core';
 import {
 	ButtonComponent,
@@ -31,7 +30,7 @@ import {
 import { DatePipe, NgFor } from '@angular/common';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { EMPTY, map, asyncScheduler } from 'rxjs';
+import { EMPTY, map } from 'rxjs';
 import {
 	OperationPlanRequest,
 	Pagination,
@@ -70,7 +69,6 @@ export interface UpdateRawMaterialsData {
 export class ModalUpdateRawMaterialsComponent {
 	private readonly operationPlanService = inject(OperationPlanService);
 	private readonly sharedService = inject(SharedPopupService);
-	private readonly cdr = inject(ChangeDetectorRef);
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
 	protected readonly Shape = Shape;
@@ -105,36 +103,6 @@ export class ModalUpdateRawMaterialsComponent {
 
 	protected close(): void {
 		this.popup.close();
-	}
-
-	protected selectCalcVariant(item: IDictionaryItemDto): void {
-		this.selectedItem.set(item);
-
-		asyncScheduler.schedule(() => {
-			const modalContent = document.querySelector(
-				'.modal-update-raw-materials'
-			);
-
-			if (modalContent) {
-				const button = modalContent.querySelector(
-					'ss-lib-button[popoverTriggerFor="list"]'
-				) as HTMLElement;
-
-				if (button) {
-					button.click();
-				} else {
-					const anyButton = modalContent.querySelector(
-						'ss-lib-button'
-					) as HTMLElement;
-
-					if (anyButton) {
-						anyButton.click();
-					}
-				}
-			}
-		}, 0);
-
-		this.cdr.detectChanges();
 	}
 
 	protected updateRawMaterial(): void {

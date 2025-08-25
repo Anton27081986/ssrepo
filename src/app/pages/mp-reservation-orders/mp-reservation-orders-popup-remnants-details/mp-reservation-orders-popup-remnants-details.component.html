@@ -27,63 +27,65 @@
 		</ng-template>
 		<ng-template #body>
 			<div class="content">
-                <div class="table-container">
-				<table class="remnants-table">
-					<thead>
-						<tr>
-							<th>
-								<snab-text
-									[type]="TextType.Title"
-									[weight]="TextWeight.Semibold"
-									>Количество
-								</snab-text>
-							</th>
-							<th>
-								<snab-text
-									[type]="TextType.Title"
-									[weight]="TextWeight.Semibold"
-									>Склад
-								</snab-text>
-							</th>
-							<th>
-								<snab-text
-									[type]="TextType.Title"
-									[weight]="TextWeight.Semibold"
-									>Оборотная ведомость по ТП
-								</snab-text>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let remnant of remnants">
-							<td>
-								<snab-text
-									[type]="TextType.Body"
-									[weight]="TextWeight.Regular"
-									>{{ remnant.warehouse.name }}
-								</snab-text>
-							</td>
-							<td>
-								<snab-text
-									[type]="TextType.Body"
-									[weight]="TextWeight.Regular"
-									>{{ remnant.amount }}
-								</snab-text>
-							</td>
-							<td>
-								<snab-link
-									class="link"
-									[type]="TextType.Body"
-									[text]="'Ссылка'"
-									(click)="
-										openDetailsLink(remnant.linkToDetail)
-									"
-								></snab-link>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-                    </div>
+				<div class="table-container">
+					<table class="remnants-table">
+						<thead>
+							<tr>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold"
+										>Количество
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold"
+										>Склад
+									</snab-text>
+								</th>
+								<th>
+									<snab-text
+										[type]="TextType.Title"
+										[weight]="TextWeight.Semibold"
+										>Оборотная ведомость по ТП
+									</snab-text>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let remnant of remnants">
+								<td>
+									<snab-text
+										[type]="TextType.Body"
+										[weight]="TextWeight.Regular"
+										>{{ remnant.warehouse.name }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-text
+										[type]="TextType.Body"
+										[weight]="TextWeight.Regular"
+										>{{ remnant.amount }}
+									</snab-text>
+								</td>
+								<td>
+									<snab-link
+										class="link"
+										[type]="TextType.Body"
+										[text]="'Ссылка'"
+										(click)="
+											openDetailsLink(
+												remnant.linkToDetail
+											)
+										"
+									></snab-link>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</ng-template>
 	</snab-card>

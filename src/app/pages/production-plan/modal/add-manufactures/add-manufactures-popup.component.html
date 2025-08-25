@@ -21,7 +21,7 @@
 			<ss-lib-input
 				fieldCtrl
 				[formControl]="queryControl"
-				[placeholder]="'Введите название полуфабриката...'"
+				[placeholder]="'Введите название товарной позиции...'"
 			/>
 		</ss-lib-form-field>
 		<ss-lib-button
@@ -84,8 +84,8 @@
 			</ng-container>
 		</div>
 		<ss-lib-divider
-			[style.padding]="'10px 0'"
 			*ngIf="selectedViewTov().length"
+			[style.padding]="'10px 0'"
 		></ss-lib-divider>
 
 		<ng-container *ngIf="!isLoaderMain(); else loaderMain">

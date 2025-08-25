@@ -2,7 +2,7 @@ import {
 	ChangeDetectorRef,
 	Component,
 	effect,
-	inject, Input,
+	inject,
 	input,
 	InputSignal,
 } from '@angular/core';
@@ -82,6 +82,8 @@ export class OperationalPlanTableQuantityCellComponent {
 	public columnId: InputSignal<string> = input.required();
 	public value: InputSignal<string | number> = input.required();
 
+	public readonly minDate: Date = new Date();
+
 	public quantityInputControl = new FormControl<string | number | null>(null);
 	public postponeDateControl = new FormControl<string | number | null>(
 		null,
@@ -138,6 +140,7 @@ export class OperationalPlanTableQuantityCellComponent {
 		row: OperationPlanItem,
 		columnId: string
 	): void {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const input = event.target as HTMLInputElement;
 		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
 		const oldValue =
@@ -317,6 +320,7 @@ export class OperationalPlanTableQuantityCellComponent {
 	}
 
 	public checkPlanFactValue(event: Event): void {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const input = event.target as HTMLInputElement;
 
 		const value = input.value.replace(/[^0-9.,]/g, '');

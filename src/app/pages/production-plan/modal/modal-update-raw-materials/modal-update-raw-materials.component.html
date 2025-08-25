@@ -10,8 +10,8 @@
 	[descriptionHeader]="'Выберите вариант расчета сырья для выбранных ТП'"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
-	(closeEmit)="close()"
 	[paddingContent]="'24px'"
+	(closeEmit)="close()"
 >
 </ss-lib-modal>
 
@@ -30,7 +30,7 @@
 			[popoverTriggerFor]="list"
 			[text]="
 				selectedItem()
-					? selectedItem()!.name
+					? selectedItem()?.name
 					: 'Выберите вариант расчета'
 			"
 		></ss-lib-button>
@@ -44,7 +44,7 @@
 				*ngFor="let item of calcVariants()"
 				[selected]="item.id === selectedItem()?.id"
 				[label]="item.name"
-				(click)="selectCalcVariant(item)"
+				(click)="selectedItem.set(item)"
 			/>
 		</ss-lib-dropdown-list>
 	</div>

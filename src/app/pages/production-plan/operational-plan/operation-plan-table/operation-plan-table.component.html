@@ -94,6 +94,8 @@
 							column.subColumns ? column.subColumns.length : null
 						"
 						[resizable]="true"
+						(mouseenter)="setHoveredColumn(column.id)"
+						(mouseleave)="setHoveredColumn(null)"
 					>
 						@if (column.id === 'tov') {
 							<div class="td-column">
@@ -228,6 +230,8 @@
 						<th
 							*ssHead="subColumnId"
 							ssTh
+							(mouseenter)="setHoveredColumn(column.id)"
+							(mouseleave)="setHoveredColumn(null)"
 						>
 							<div
 								class="td-subcolumn"

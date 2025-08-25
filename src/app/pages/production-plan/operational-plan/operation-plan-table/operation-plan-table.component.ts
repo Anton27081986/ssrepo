@@ -29,7 +29,10 @@ import {
 	TooltipDirective,
 	TooltipPosition,
 	StatusIconComponent,
-	Status, ActionBarComponent, ActionBarItemComponent, ActionBarItemType,
+	Status,
+	ActionBarComponent,
+	ActionBarItemComponent,
+	ActionBarItemType,
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { generateColumnOperationPlanConfig } from '@app/pages/production-plan/operational-plan/operation-plan-table/generate-column-oper-plan-config';
@@ -57,34 +60,36 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 @Component({
 	selector: 'app-operation-plan-table',
 	standalone: true,
-    imports: [
-        DropdownItemComponent,
-        PopoverTriggerForDirective,
-        DropdownListComponent,
-        NgFor,
-        TableDirective,
-        TableThGroupComponent,
-        ThComponent,
-        CheckboxComponent,
-        ReactiveFormsModule,
-        TextComponent,
-        TableHeadDirective,
-        DatePipe,
-        OperationPlanTableTbodyComponent,
-        UtilityButtonComponent,
-        NgIf,
-        TooltipDirective,
-        StatusIconComponent,
-        ActionBarComponent,
-        ActionBarItemComponent,
-    ],
+	imports: [
+		DropdownItemComponent,
+		PopoverTriggerForDirective,
+		DropdownListComponent,
+		NgFor,
+		TableDirective,
+		TableThGroupComponent,
+		ThComponent,
+		CheckboxComponent,
+		ReactiveFormsModule,
+		TextComponent,
+		TableHeadDirective,
+		DatePipe,
+		OperationPlanTableTbodyComponent,
+		UtilityButtonComponent,
+		NgIf,
+		TooltipDirective,
+		StatusIconComponent,
+		ActionBarComponent,
+		ActionBarItemComponent,
+	],
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
+	providers: [SsTableState],
 })
 @UntilDestroy()
 export class OperationPlanTableComponent {
 	private readonly tableStateService = inject(SsTableState);
+
 	private readonly operationPlanPopup = inject(OperationPlanPopupService);
 	private readonly operationPlanService = inject(OperationPlanService);
 	protected readonly operationPlanState = inject(OperationPlanState);
@@ -121,6 +126,8 @@ export class OperationPlanTableComponent {
 	protected readonly IconType = IconType;
 	protected readonly TooltipPosition = TooltipPosition;
 
+	protected readonly Status = Status;
+	protected readonly ActionBarItemType = ActionBarItemType;
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		toSignal(
 			this.masterCheckboxCtrl.valueChanges.pipe(
@@ -367,6 +374,7 @@ export class OperationPlanTableComponent {
 		}
 	}
 
-	protected readonly Status = Status;
-	protected readonly ActionBarItemType = ActionBarItemType;
+	public setHoveredColumn(columnId: string | null): void {
+		this.tableStateService.setHoveredColumn(columnId);
+	}
 }

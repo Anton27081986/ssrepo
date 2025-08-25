@@ -228,7 +228,11 @@
 					<td>
 						<snab-link
 							[type]="TextType.Body"
-							[text]="pipeNumWithSpaces.numberWithSpaces(order.totalAmount)"
+							[text]="
+								pipeNumWithSpaces.numberWithSpaces(
+									order.totalAmount
+								)
+							"
 							(click)="openPopupTotalAmount(order)"
 						></snab-link>
 					</td>
@@ -308,7 +312,11 @@
 					<td>
 						<snab-link
 							[type]="TextType.Body"
-							[text]="pipeNumWithSpaces.numberWithSpaces(order.stockBalance)"
+							[text]="
+								pipeNumWithSpaces.numberWithSpaces(
+									order.stockBalance
+								)
+							"
 							(click)="
 								openPopupStockBalanceDetailsOrder(order.id)
 							"
@@ -324,8 +332,10 @@
 							>
 								<div>
 									{{
-										prodDate.productionDate === emptyDate ? '-' : prodDate.productionDate
-											| date: 'dd.MM.yyyy'
+										prodDate.productionDate === emptyDate
+											? '-'
+											: (prodDate.productionDate
+												| date: 'dd.MM.yyyy')
 									}}
 								</div>
 							</ng-container>
@@ -341,8 +351,10 @@
 							>
 								<div>
 									{{
-                                        provDate.provisionDate === emptyDate ? '-' : provDate.provisionDate
-											| date: 'dd.MM.yyyy'
+										provDate.provisionDate === emptyDate
+											? '-'
+											: (provDate.provisionDate
+												| date: 'dd.MM.yyyy')
 									}}
 								</div>
 							</ng-container>

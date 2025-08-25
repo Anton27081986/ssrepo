@@ -134,12 +134,6 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	}
 
 	public placeOrder(): void {
-		this.inProductionForm.markAllAsTouched();
-
-		if (!this.inProductionForm.valid) {
-			return;
-		}
-
 		const detailsList: IProvisionDetailsTypes[] = this.dates.controls.map(
 			(group) => {
 				const { productionDate, provisionDate, manufacturingAmount } =
@@ -167,6 +161,12 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	}
 
 	public openPopupApproveAction(): void {
+		this.inProductionForm.markAllAsTouched();
+
+		if (!this.inProductionForm.valid) {
+			return;
+		}
+
 		this.modalService
 			.open(NoticeDialogComponent, {
 				data: {
@@ -181,7 +181,7 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 			.pipe(untilDestroyed(this))
 			.subscribe((status) => {
 				if (!status) {
-					this.placeOrder()
+					this.placeOrder();
 				} else {
 					this.modalRef.close();
 				}

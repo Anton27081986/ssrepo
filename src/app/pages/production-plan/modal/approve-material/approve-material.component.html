@@ -58,7 +58,7 @@
 				[icon]="IconType.ChevronDown"
 				[type]="ButtonType.Secondary"
 				[popoverTriggerFor]="list"
-				[text]="city() ? city()!.name : 'Выберите город'"
+				[text]="city() ? city()?.name : 'Выберите город'"
 			></ss-lib-button>
 
 			<ss-lib-dropdown-list
@@ -69,7 +69,7 @@
 					*ngFor="let item of cities()"
 					[selected]="item.id === city()?.id"
 					[label]="item.name"
-					(click)="selectCity(item)"
+					(click)="city.set(item)"
 				/>
 			</ss-lib-dropdown-list>
 		</div>

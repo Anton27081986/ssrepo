@@ -63,8 +63,12 @@
 							<td>
 								<snab-text [type]="TextType.Body">
 									{{
-										data.provisionDetails[i].productionDate === emptyDate ? '-' : data.provisionDetails[i].productionDate
-											| date: 'dd.MM.yyyy'
+										data.provisionDetails[i]
+											.productionDate === emptyDate
+											? '-'
+											: (data.provisionDetails[i]
+													.productionDate
+												| date: 'dd.MM.yyyy')
 									}}
 								</snab-text>
 							</td>
@@ -89,7 +93,7 @@
 				></snab-button>
 				<snab-button
 					text="Изменить"
-                    [disabled]="data.provisionDetails.length === 0"
+					[disabled]="data.provisionDetails.length === 0"
 					[size]="Size.Large"
 					(click)="confirmChange()"
 				></snab-button>

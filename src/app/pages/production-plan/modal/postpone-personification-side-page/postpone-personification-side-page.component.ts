@@ -75,20 +75,33 @@ export class PostponePersonificationSidePageComponent {
 
 	protected get headerTextAndDate(): string {
 		const currentDate = this.popup.data.date;
-		if (!currentDate) return 'Заказ';
+
+		if (!currentDate) {
+			return 'Заказ';
+		}
+
 		const [yyyy, mm, dd] = currentDate.slice(0, 10).split('-');
+
 		return `Заказ на ${dd}.${mm}.${yyyy}`;
 	}
 
 	protected get tovName(): string {
 		const resp = this.personificationRes();
-		if (!resp || resp.items.length === 0) return '';
+
+		if (!resp || resp.items.length === 0) {
+			return '';
+		}
+
 		return resp.tov?.name || '';
 	}
 
 	protected get linkToDetailTov(): string {
 		const resp = this.personificationRes();
-		if (!resp || resp.items.length === 0) return '';
+
+		if (!resp || resp.items.length === 0) {
+			return '';
+		}
+
 		return resp.linkToModule;
 	}
 
