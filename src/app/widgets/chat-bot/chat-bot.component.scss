@@ -186,6 +186,8 @@
 		&__subsectors {
 			display: flex;
 			gap: 16px;
+			max-width: 768px;
+			flex-wrap: wrap;
 
 			&__item {
 				cursor: pointer;
