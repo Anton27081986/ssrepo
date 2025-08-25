@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MpReservationOrdersApiService } from '@app/core/api/mp-reservation-orders.service';
-import { BehaviorSubject, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import {
 	IMpReservationOrder,
@@ -26,14 +26,16 @@ export class MpReservationOrderCardFacadeService {
 
 	private readonly activeOrder =
 		new BehaviorSubject<IMpReservationOrder | null>(null);
+
 	public activeOrder$ = this.activeOrder.asObservable();
 
-	private readonly permissions =
-		new BehaviorSubject<string[]>([]);
+	private readonly permissions = new BehaviorSubject<string[]>([]);
+
 	public permissions$ = this.permissions.asObservable();
 
 	private readonly warehouseBalanceSubject =
 		new BehaviorSubject<IWarehouseBalanceResponse | null>(null);
+
 	public readonly warehouseBalance$ =
 		this.warehouseBalanceSubject.asObservable();
 
@@ -123,7 +125,7 @@ export class MpReservationOrderCardFacadeService {
 
 	public rejectClarificationOrder() {
 		return this.mpReservationOrdersApiService.rejectClarification(
-			this.activeOrder.value?.id!,
+			this.activeOrder.value?.id!
 		);
 	}
 
@@ -151,12 +153,15 @@ export class MpReservationOrderCardFacadeService {
 			.subscribe();
 	}
 
-	public dispatchToQueue(orderId: number, dispatches: IDispatchDto[]): void {
+	public dispatchToQueue(
+		orderId: number,
+		dispatches: IDispatchDto[]
+	): Observable<void> {
 		const payload: IDispatchesRequest = { dispatches };
 
-		this.mpReservationOrdersApiService
-			.createTransferInvoice(orderId, payload)
-			.pipe(untilDestroyed(this))
-			.subscribe();
+		return this.mpReservationOrdersApiService.createTransferInvoice(
+			orderId,
+			payload
+		);
 	}
 }

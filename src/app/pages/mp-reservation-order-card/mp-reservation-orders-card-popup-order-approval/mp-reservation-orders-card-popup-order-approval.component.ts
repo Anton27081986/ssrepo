@@ -28,6 +28,7 @@ import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reserv
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IWarehouseStockDto } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
+import { SharedPopupService, ToastTypeEnum } from '@front-library/components';
 
 @UntilDestroy()
 @Component({
@@ -89,7 +90,8 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 
 	constructor(
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
+		private readonly sharedPopupService: SharedPopupService
 	) {
 		const orderId = this.order()!.id;
 
@@ -158,12 +160,19 @@ export class MpReservationOrdersCardPopupOrderApprovalComponent {
 			return;
 		}
 
-		this.mpReservationOrderCardFacadeService.dispatchToQueue(
-			orderId,
-			dispatches
-		);
-		this.close();
-		this.mpReservationOrderCardFacadeService.reloadOrder();
+		this.mpReservationOrderCardFacadeService
+			.dispatchToQueue(orderId, dispatches)
+			.pipe(untilDestroyed(this))
+			.subscribe(() => {
+				this.sharedPopupService.openToast({
+					text: 'Пожалуйста, подождите. Идёт обработка заказа',
+					type: ToastTypeEnum.Default,
+				});
+				setTimeout(() => {
+					this.mpReservationOrderCardFacadeService.reloadOrder();
+				}, 3000);
+				this.close();
+			});
 	}
 
 	public close(): void {
