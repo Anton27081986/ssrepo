@@ -3,11 +3,12 @@ import { AuthenticationService } from '@app/core/services/authentication.service
 import { MenuApiService } from '@app/core/api/menu-api.service';
 import { MainMenuStoreService } from '@app/core/states/main-menu-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { BehaviorSubject, filter, forkJoin, map, tap } from 'rxjs';
+import { BehaviorSubject, filter, forkJoin, map, Observable, tap } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { IMenuItemDto } from '@app/core/models/company/menu-item-dto';
 import { PermissionsApiService } from '@app/core/api/permissions-api.service';
+import { IUserProfile } from '@app/core/models/user-profile';
 
 @UntilDestroy()
 @Injectable({
@@ -27,19 +28,20 @@ export class MainMenuFacadeService {
 		this.init();
 	}
 
-	public init() {
+	public init(): void {
 		this.authenticationService.user$
 			.pipe(
-				tap(() => {
-					this.permissionsApiService
-						.getPermissionClient('AiAssistant')
-						.pipe(untilDestroyed(this))
-						.subscribe((permissions) => {
-							this.aiPermission.next(
-								permissions.items.includes('AiAssistant.Access')
-							);
-						});
-				}),
+				// AI-Permissions
+				// tap(() => {
+				// 	this.permissionsApiService
+				// 		.getPermissionClient('AiAssistant')
+				// 		.pipe(untilDestroyed(this))
+				// 		.subscribe((permissions) => {
+				// 			this.aiPermission.next(
+				// 				permissions.items.includes('AiAssistant.Access')
+				// 			);
+				// 		});
+				// }),
 				filter((x) => x !== null),
 				switchMap(() => {
 					const favoriteMenu$ = this.menuApiService.getFavoriteMenu();
@@ -79,15 +81,15 @@ export class MainMenuFacadeService {
 			});
 	}
 
-	public getMainMenu() {
+	public getMainMenu(): Observable<IMenuItemDto[] | null> {
 		return this.mainMenuStoreService.getMainMenu();
 	}
 
-	public getUserProfile() {
+	public getUserProfile(): Observable<IUserProfile | null> {
 		return this.userProfileStoreService.userProfile$;
 	}
 
-	public addFavoriteItem(item: IMenuItemDto) {
+	public addFavoriteItem(item: IMenuItemDto): void {
 		this.menuApiService
 			.addItemToFavoriteMenu(item!.id!)
 			.pipe(untilDestroyed(this))
@@ -105,7 +107,7 @@ export class MainMenuFacadeService {
 			});
 	}
 
-	public getFavoriteItems() {
+	public getFavoriteItems(): Observable<IMenuItemDto[] | null> {
 		return this.mainMenuStoreService.getFavoriteMainMenu();
 	}
 }

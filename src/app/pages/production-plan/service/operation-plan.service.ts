@@ -98,21 +98,11 @@ export class OperationPlanService {
 		);
 	}
 
-	public sendComment(
-		id: number,
-		body: ISendComment
-	): Observable<{ isComment: boolean; commentCount: string }> {
-		return this.operationPlanApiService.sendComment(id, body);
-	}
-
-	public addComment(id: number): Observable<ICommentsItemDto[]> {
-		return this.operationPlanApiService.addComment(id);
-	}
-
 	public transferProductionPlan(
+		rowId: number,
 		params: TransferProductionPlanPatch
 	): Observable<void> {
-		return this.operationPlanApiService.transferProductionPlan(params).pipe(
+		return this.operationPlanApiService.transferProductionPlan(rowId, params).pipe(
 			tap(() => {
 				this.operationPlanRootService.event$.next({
 					type: OperationPlanEventEnum.operationPlanAdd,
@@ -236,10 +226,11 @@ export class OperationPlanService {
 	}
 
 	public changePlan(
+		rowId: number,
 		id: number,
 		quantity: string | number | null
 	): Observable<OperationPlanItem> {
-		return this.operationPlanApiService.changePlan(id, quantity);
+		return this.operationPlanApiService.changePlan(rowId, id, quantity);
 	}
 
 	public uploadWMS(date: string): Observable<LinkToModule> {

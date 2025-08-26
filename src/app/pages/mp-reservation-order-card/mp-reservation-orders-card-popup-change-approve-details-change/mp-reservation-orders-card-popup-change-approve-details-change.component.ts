@@ -60,7 +60,7 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 	constructor(
 		@Inject(DIALOG_DATA) private readonly data: IApproveChangeData,
 		private readonly modalRef: ModalRef,
-		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService
+		private readonly mpReservationOrderCardFacadeService: MpReservationOrderCardFacadeService,
 	) {
 		this.items = this.data.oldItems.map((oldItem, idx) => {
 			const newItem = this.data.newItems[idx] ?? {
@@ -89,9 +89,9 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 	public approveClarification(): void {
 		this.mpReservationOrderCardFacadeService
 			.approveClarification()
-			.subscribe();
-		this.modalRef.close();
-		this.mpReservationOrderCardFacadeService.reloadOrder();
-		window.location.reload();
+			.subscribe(() => {
+				this.modalRef.close();
+				this.mpReservationOrderCardFacadeService.reloadOrder();
+			});
 	}
 }
