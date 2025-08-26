@@ -102,13 +102,15 @@ export class OperationPlanService {
 		rowId: number,
 		params: TransferProductionPlanPatch
 	): Observable<void> {
-		return this.operationPlanApiService.transferProductionPlan(rowId, params).pipe(
-			tap(() => {
-				this.operationPlanRootService.event$.next({
-					type: OperationPlanEventEnum.operationPlanAdd,
-				});
-			})
-		);
+		return this.operationPlanApiService
+			.transferProductionPlan(rowId, params)
+			.pipe(
+				tap(() => {
+					this.operationPlanRootService.event$.next({
+						type: OperationPlanEventEnum.operationPlanAdd,
+					});
+				})
+			);
 	}
 
 	public upload1C(weekId: number): Observable<LinkToModule> {

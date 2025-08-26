@@ -157,7 +157,6 @@ export function generateColumnOperationPlanConfig(
 			showInHeader: true,
 			visible: true,
 		},
-
 	];
 
 	return [...baseColumns, weekColumn, ...dateColumns, ...summaryColumns];

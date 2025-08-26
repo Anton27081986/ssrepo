@@ -1,0 +1,30 @@
+<ss-lib-dropdown-item (click)="toggleParent()">
+	<div class="section-group-dropdown-item">
+		<div class="section-group-dropdown-item__left">
+			<ss-lib-checkbox
+				[formControl]="sectionItem().control"
+			></ss-lib-checkbox>
+			<ss-lib-text>{{ sectionItem().name }}</ss-lib-text>
+		</div>
+		<ss-lib-icon
+			[width]="'16'"
+			[height]="'16'"
+			[color]="Colors.IconAction2"
+			[icon]="IconType.ChevronDown"
+			(click)="
+				writableExpanded.set(!writableExpanded());
+				$event.stopPropagation()
+			"
+		></ss-lib-icon>
+	</div>
+</ss-lib-dropdown-item>
+<ng-container *ngIf="writableExpanded()">
+	<ss-lib-dropdown-item
+		*ngFor="let childItem of sectionItem().children"
+		class="section-group-dropdown-item__child"
+		(click)="toggleItemEmit(childItem)"
+	>
+		<ss-lib-checkbox [formControl]="childItem.control"></ss-lib-checkbox>
+		<ss-lib-text>{{ childItem.name }}</ss-lib-text>
+	</ss-lib-dropdown-item>
+</ng-container>

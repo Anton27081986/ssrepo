@@ -5,6 +5,7 @@ import {
 	OnInit,
 } from '@angular/core';
 import {
+	Align,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -60,6 +61,7 @@ export class CityFilterComponent
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
 	protected readonly IconType = IconType;
+	protected readonly Align = Align;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -70,17 +72,19 @@ export class CityFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getCities(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getCities(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getCities('', ids).pipe(
+		return this.filterApiService.getCities('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})

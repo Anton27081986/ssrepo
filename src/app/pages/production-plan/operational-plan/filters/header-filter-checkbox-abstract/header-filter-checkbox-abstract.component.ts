@@ -46,7 +46,7 @@ export abstract class HeaderFilterCheckboxSearchAbstractComponent<
 		this.queryControl.valueChanges
 	).pipe(
 		tap(() => this.isLoader.set(true)),
-		debounceTime(1000),
+		debounceTime(500),
 		switchMap((value) => {
 			return this.search$(value).pipe(
 				map((items) => {

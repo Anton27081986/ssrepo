@@ -48,16 +48,8 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 
 		toSignal(
 			this.items$.pipe(
-				tap((items) => {
-					const selectedIds = new Set(
-						this.selectedItems$.value.map((s) => s.id)
-					);
-					const onlyUnselected = items.filter(
-						(item) => !selectedIds.has(item.id)
-					);
-
-					this.unSelectedItems$.next(onlyUnselected);
-
+				tap((value) => {
+					this.checkUniqElement(value);
 					const query = this.queryControl.value;
 
 					this.searchSelectedItem(query);
@@ -110,7 +102,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 
 							toReturn.forEach((item) => {
 								if (!merged.some((u) => u.id === item.id)) {
-									merged.push(item);
+									merged.unshift(item);
 								}
 							});
 							this.unSelectedItems$.next(merged);
@@ -144,6 +136,51 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 				})
 			)
 		);
+	}
+
+	public ngOnInit(): void {
+		const filter = this.headerFilterService.getFilter(this.field());
+
+		if (filter.value) {
+			this.searchActive$(filter.value).subscribe((value) => {
+				const mapValue = this.mapFilterItems(value);
+
+				// eslint-disable-next-line @typescript-eslint/no-shadow
+				mapValue.forEach((value) => {
+					value.control.setValue(true);
+				});
+				this.selectedItems$.next(mapValue);
+			});
+		}
+
+		this.selectedItems$
+			.pipe(
+				map((items) => {
+					return items.map((item) => item.id);
+				}),
+				tap((value) =>
+					this.headerFilterService.setValueItemFilter(
+						value,
+						this.field()
+					)
+				)
+			)
+			.subscribe();
+	}
+
+	private checkUniqElement(items: Array<FilterCheckboxItem<T>>): void {
+		if (this.selectedItems$.value.length) {
+			const selectedIds = new Set(
+				this.selectedItems$.value.map((s) => s.id)
+			);
+			const onlyUnselected = items.filter(
+				(item) => !selectedIds.has(item.id)
+			);
+
+			this.unSelectedItems$.next(onlyUnselected);
+		} else {
+			this.unSelectedItems$.next(items);
+		}
 	}
 
 	// Возвращает текст, по которому выполняется поиск, для одного элемента
@@ -237,23 +274,11 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 		return this.getList$(searchTerm ?? '');
 	}
 
-	public ngOnInit(): void {
-		this.selectedItems$
-			.pipe(
-				map((items) => {
-					return items.map((item) => item.id);
-				}),
-				tap((value) =>
-					this.headerFilterService.setValueItemFilter(
-						value,
-						this.field()
-					)
-				)
-			)
-			.subscribe();
-	}
-
 	public ngOnDestroy(): void {
 		this.subscribers.forEach((sub) => sub.unsubscribe());
+	}
+
+	public mapViewSelectedIds(): number[] {
+		return this.viewSelectedItems$.value.map((item) => item.id);
 	}
 }

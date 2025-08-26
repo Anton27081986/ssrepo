@@ -10,6 +10,7 @@ import {
 } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { map, Observable } from 'rxjs';
 import {
+	Align,
 	AvatarComponent,
 	CheckboxComponent,
 	Colors,
@@ -64,6 +65,7 @@ export class ManagerTmzFilterComponent
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -76,17 +78,19 @@ export class ManagerTmzFilterComponent
 	public override getList$(
 		query: string
 	): Observable<AvatarDictionaryItemDto[]> {
-		return this.filterApiService.getProductManagerUser(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getProductManagerUser(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<AvatarDictionaryItemDto[]> {
-		return this.filterApiService.getProductManagerUser('', ids).pipe(
+		return this.filterApiService.getProductManagerUser('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})
