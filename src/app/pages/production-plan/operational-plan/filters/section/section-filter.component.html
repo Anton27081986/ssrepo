@@ -38,7 +38,10 @@
 				</ng-template>
 			</ng-container>
 
-			<ss-lib-divider *ngIf="selectedItems().length"></ss-lib-divider>
+			<ss-lib-divider
+				class="divider"
+				*ngIf="selectedItems().length"
+			></ss-lib-divider>
 
 			<!--	общий список  -->
 			<ng-container *ngFor="let item of items()">
