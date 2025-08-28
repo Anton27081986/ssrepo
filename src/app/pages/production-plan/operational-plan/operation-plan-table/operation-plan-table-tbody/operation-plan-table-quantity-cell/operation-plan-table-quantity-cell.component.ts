@@ -1,10 +1,10 @@
 import {
 	ChangeDetectorRef,
 	Component,
-	effect,
 	inject,
 	input,
 	InputSignal,
+	OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -70,7 +70,7 @@ import { delay } from 'rxjs/operators';
 	],
 	standalone: true,
 })
-export class OperationalPlanTableQuantityCellComponent {
+export class OperationalPlanTableQuantityCellComponent implements OnInit {
 	private readonly popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService
 	);
@@ -90,14 +90,10 @@ export class OperationalPlanTableQuantityCellComponent {
 	public columnId: InputSignal<string> = input.required();
 	public value: InputSignal<string | number> = input.required();
 
-	public readonly minDate: Date = new Date();
+	public minDate!: Date;
 
-	public quantityInputControl = new FormControl<string | number | null>(null);
-	public postponeDateControl = new FormControl<string | number | null>(
-		null,
-		Validators.required,
-		dateNotInPastValidator(this.minDate)
-	);
+	public quantityInputControl!: FormControl<number | null>;
+	public postponeDateControl!: FormControl<Date | null>;
 
 	protected isChangeQuantityOpen = false;
 	protected isPostponeOpen = false;
@@ -119,10 +115,18 @@ export class OperationalPlanTableQuantityCellComponent {
 	protected readonly Status = Status;
 	protected readonly Colors = Colors;
 	protected readonly IconPosition = IconPosition;
-	constructor() {
-		effect(() => {
-			this.quantityInputControl.setValue(this.value());
-		});
+
+	public ngOnInit() {
+		this.minDate = new Date(this.getDay()?.date!);
+		this.minDate.setDate(this.minDate.getDate() + 1);
+		this.quantityInputControl = new FormControl<number | null>(
+			+this.value()
+		);
+		this.postponeDateControl = new FormControl<Date | null>(
+			null,
+			Validators.required,
+			dateNotInPastValidator(this.minDate)
+		);
 	}
 
 	protected changePlan(): void {
@@ -318,7 +322,9 @@ export class OperationalPlanTableQuantityCellComponent {
 			this.operationPlanService
 				.transferProductionPlan(this.row().id, {
 					id: oldValue.id,
-					productionDate: this.postponeDateControl.value,
+					productionDate: this.getFormatDate(
+						this.postponeDateControl.value?.toString()!
+					).toString()!,
 					quantity: this.quantityInputControl.value,
 				})
 				.pipe()
@@ -326,6 +332,22 @@ export class OperationalPlanTableQuantityCellComponent {
 					this.isPostponeOpen = false;
 				});
 		}
+	}
+
+	public getFormatDate(dateStr: string): string {
+		// Создаем объект Date
+		const date = new Date(dateStr);
+
+		// Получаем день, месяц и год
+		const day = date.getDate();
+		const month = date.getMonth() + 1; // месяцы с 0, добавляем 1
+		const year = date.getFullYear();
+
+		// Форматируем с добавлением ведущих нулей для дня и месяца
+		const formattedDay = day.toString().padStart(2, '0');
+		const formattedMonth = month.toString().padStart(2, '0');
+
+		return `${year}-${formattedMonth}-${formattedDay}`;
 	}
 
 	public checkPlanFactValue(event: Event): void {
@@ -366,23 +388,18 @@ export function dateNotInPastValidator(targetDate: Date): AsyncValidatorFn {
 	): Observable<{ [key: string]: true } | null> => {
 		const selectedDate = control.value as Date;
 
-		// Проверка наличия даты
 		if (!selectedDate) {
 			return of(null);
 		}
 
-		// Симуляция асинхронной проверки (например, запрос к серверу)
 		return of(selectedDate).pipe(
-			delay(300), // задержка для имитации асинхронной операции
+			delay(100),
 			map((date) => {
 				const selectedTime = new Date(date).setHours(0, 0, 0, 0);
 				const targetTime = new Date(targetDate).setHours(0, 0, 0, 0);
 
 				if (selectedTime < targetTime) {
-					// Дата в прошлом — перезаписываем значение и возвращаем ошибку
-
-					// Обновляем control с новой датой (например, текущей датой)
-					control.setValue(new Date());
+					control.setValue(targetDate);
 
 					return { dateInPast: true };
 				}
