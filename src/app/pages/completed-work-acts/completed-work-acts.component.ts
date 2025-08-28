@@ -118,7 +118,9 @@ export class CompletedWorkActsComponent {
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
 					const filterParams = Object.fromEntries(
-						Object.entries(criteria).filter(([_, v]) => v !== null)
+						Object.entries(criteria).filter(
+							([_, v]) => v !== null && v.length
+						)
 					);
 
 					void this.router.navigate([], {

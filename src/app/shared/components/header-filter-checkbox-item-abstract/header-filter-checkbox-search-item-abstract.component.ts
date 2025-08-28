@@ -160,7 +160,7 @@ export abstract class HeaderFilterCheckboxItemAbstractComponent<T extends IId>
 				}),
 				tap((value) =>
 					this.headerFilterService.setValueItemFilter(
-						value,
+						value.length ? value : null,
 						this.field()
 					)
 				)

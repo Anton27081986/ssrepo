@@ -1,14 +1,14 @@
-.ware-house-filter {
+.provider-contractor-filter {
   display: flex;
   flex-direction: column;
   gap: 4px;
 
-   &__content {
-     height: 345px;
-   }
+  &__content {
+    height: 345px;
+  }
 
   &-divider {
-   padding: 4px 16px;
+    padding: 4px 16px;
   }
 
   &-no-content {
