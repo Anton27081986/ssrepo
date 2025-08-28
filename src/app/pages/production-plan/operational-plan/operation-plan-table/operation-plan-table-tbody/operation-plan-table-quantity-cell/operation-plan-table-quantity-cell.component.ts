@@ -36,8 +36,16 @@ import { OperationPlanPopupService } from '@app/pages/production-plan/service/op
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	AbstractControl,
+	AsyncValidatorFn,
+	FormControl,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { BASE_COLUMN_MAP } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-tbody.component';
+import { map, Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-operation-plan-table-quantity-cell',
@@ -87,7 +95,8 @@ export class OperationalPlanTableQuantityCellComponent {
 	public quantityInputControl = new FormControl<string | number | null>(null);
 	public postponeDateControl = new FormControl<string | number | null>(
 		null,
-		Validators.required
+		Validators.required,
+		dateNotInPastValidator(this.minDate)
 	);
 
 	protected isChangeQuantityOpen = false;
@@ -349,4 +358,36 @@ export class OperationalPlanTableQuantityCellComponent {
 			this.popupService.openPostponePlanModal(day.id, day.date);
 		}
 	}
+}
+
+export function dateNotInPastValidator(targetDate: Date): AsyncValidatorFn {
+	return (
+		control: AbstractControl
+	): Observable<{ [key: string]: true } | null> => {
+		const selectedDate = control.value as Date;
+
+		// Проверка наличия даты
+		if (!selectedDate) {
+			return of(null);
+		}
+
+		// Симуляция асинхронной проверки (например, запрос к серверу)
+		return of(selectedDate).pipe(
+			delay(300), // задержка для имитации асинхронной операции
+			map((date) => {
+				const selectedTime = new Date(date).setHours(0, 0, 0, 0);
+				const targetTime = new Date(targetDate).setHours(0, 0, 0, 0);
+
+				if (selectedTime < targetTime) {
+					// Дата в прошлом — перезаписываем значение и возвращаем ошибку
+
+					// Обновляем control с новой датой (например, текущей датой)
+					control.setValue(new Date());
+
+					return { dateInPast: true };
+				}
+				return null;
+			})
+		);
+	};
 }
