@@ -123,7 +123,7 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 			+this.value()
 		);
 		this.postponeDateControl = new FormControl<Date | null>(
-			null,
+			this.minDate,
 			Validators.required,
 			dateNotInPastValidator(this.minDate)
 		);
