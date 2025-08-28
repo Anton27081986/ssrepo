@@ -3,29 +3,50 @@ import {
 	Component,
 	inject,
 	OnInit,
-	Signal,
 } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { CompletedWorkActsFiltersApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-filters-api.service';
-import { CheckboxFilterContextComponent } from '@app/pages/completed-work-acts/filters/checkbox-filter-context/checkbox-filter-context.component';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import {
+	Align,
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	InputComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-	selector: 'app-act-provider-contractors-filter',
+	selector: 'app-act-provider-contractor-filter',
+	templateUrl: './provider-contractor-filter.component.html',
+	styleUrls: ['./provider-contractor-filter.component.scss'],
 	standalone: true,
-	styles: '',
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="itemsSignal()"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CheckboxFilterContextComponent, CheckboxFilterContextComponent],
+	imports: [
+		AsyncPipe,
+		FormFieldComponent,
+		ScrollbarComponent,
+		InputComponent,
+		FieldCtrlDirective,
+		DropdownItemComponent,
+		CheckboxComponent,
+		TextComponent,
+		DividerComponent,
+		ReactiveFormsModule,
+		NgIf,
+		NgFor,
+	],
 })
 export class ActProviderContractorsFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
@@ -34,12 +55,6 @@ export class ActProviderContractorsFilterComponent
 	private readonly filterApiService: CompletedWorkActsFiltersApiService =
 		inject(CompletedWorkActsFiltersApiService);
 
-	protected readonly itemsSignal: Signal<IDictionaryItemDto[]> = toSignal(
-		this.items$,
-		{ initialValue: [] }
-	);
-
-	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
@@ -65,4 +80,11 @@ export class ActProviderContractorsFilterComponent
 			})
 		);
 	}
+
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 }
