@@ -1,10 +1,10 @@
 import { IFilterCriterionType, IFilterItem } from '@front-library/components';
-import { ActCostsFilterComponent } from '@app/pages/completed-work-acts/filters/costs-filter.component';
-import { ActIdsFilterComponent } from '@app/pages/completed-work-acts/filters/ids-filter.component';
-import { ActStatesFilterComponent } from '@app/pages/completed-work-acts/filters/states-filter.component';
-import { ActBuUnitsFilterComponent } from '@app/pages/completed-work-acts/filters/buunits-filter.component';
-import { ActProviderContractorsFilterComponent } from '@app/pages/completed-work-acts/filters/provider-contractor-filter.component';
-import { ActApplicantsFilterComponent } from '@app/pages/completed-work-acts/filters/applicant-filter.component';
+import { ActCostsFilterComponent } from '@app/pages/completed-work-acts/filters/costs/costs-filter.component';
+import { ActIdsFilterComponent } from '@app/pages/completed-work-acts/filters/act-ids/act-ids-filter.component';
+import { ActStatesFilterComponent } from '@app/pages/completed-work-acts/filters/states-filter/states-filter.component';
+import { ActBuUnitsFilterComponent } from '@app/pages/completed-work-acts/filters/buunits/buunits-filter.component';
+import { ActProviderContractorsFilterComponent } from '@app/pages/completed-work-acts/filters/provider-contractor/provider-contractor-filter.component';
+import { ActApplicantsFilterComponent } from '@app/pages/completed-work-acts/filters/applicant/applicant-filter.component';
 
 export enum CompletedWorkActsFiltersFields {
 	ids = 'ids',
@@ -29,8 +29,8 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		valueComponent: ActIdsFilterComponent,
 		active: false,
 		records: {
-			width: '',
-			height: '',
+			width: '400px',
+			height: '400px',
 		},
 	},
 	{
@@ -46,8 +46,8 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		valueComponent: ActStatesFilterComponent,
 		active: false,
 		records: {
-			width: '',
-			height: '',
+			width: '400px',
+			height: '400px',
 		},
 	},
 	{
@@ -63,8 +63,8 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		valueComponent: ActBuUnitsFilterComponent,
 		active: false,
 		records: {
-			width: '',
-			height: '',
+			width: '400px',
+			height: '400px',
 		},
 	},
 	{
@@ -80,8 +80,8 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		valueComponent: ActProviderContractorsFilterComponent,
 		active: false,
 		records: {
-			width: '',
-			height: '',
+			width: '400px',
+			height: '400px',
 		},
 	},
 	{
@@ -97,8 +97,8 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		valueComponent: ActApplicantsFilterComponent,
 		active: false,
 		records: {
-			width: '',
-			height: '',
+			width: '400px',
+			height: '400px',
 		},
 	},
 	{
@@ -114,8 +114,8 @@ export const completedWorkActsFilter: IFilterItem[] = [
 		valueComponent: ActCostsFilterComponent,
 		active: false,
 		records: {
-			width: '',
-			height: '',
+			width: '400px',
+			height: '400px',
 		},
 	},
 ];

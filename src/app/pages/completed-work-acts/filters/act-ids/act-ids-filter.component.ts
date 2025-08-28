@@ -3,29 +3,50 @@ import {
 	Component,
 	inject,
 	OnInit,
-	Signal,
 } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { toSignal } from '@angular/core/rxjs-interop';
+import {
+	Align,
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	InputComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 import { CompletedWorkActsFiltersApiService } from '@app/pages/completed-work-acts/services/completed-work-acts-filters-api.service';
-import { CheckboxFilterContextComponent } from '@app/pages/completed-work-acts/filters/checkbox-filter-context/checkbox-filter-context.component';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-act-ids-filter',
 	standalone: true,
-	styles: '',
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="itemsSignal()"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	styleUrl: 'act-ids-filter.component.scss',
+	templateUrl: 'act-ids-filter.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	imports: [CheckboxFilterContextComponent],
+	imports: [
+		AsyncPipe,
+		CheckboxComponent,
+		FormFieldComponent,
+		InputComponent,
+		FieldCtrlDirective,
+		ScrollbarComponent,
+		DropdownItemComponent,
+		DividerComponent,
+		TextComponent,
+		ReactiveFormsModule,
+		NgIf,
+		NgFor,
+	],
 })
 export class ActIdsFilterComponent
 	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
@@ -34,12 +55,6 @@ export class ActIdsFilterComponent
 	private readonly filterApiService: CompletedWorkActsFiltersApiService =
 		inject(CompletedWorkActsFiltersApiService);
 
-	protected readonly itemsSignal: Signal<IDictionaryItemDto[]> = toSignal(
-		this.items$,
-		{ initialValue: [] }
-	);
-
-	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
 	}
@@ -65,4 +80,11 @@ export class ActIdsFilterComponent
 			})
 		);
 	}
+
+	protected readonly Align = Align;
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
 }
