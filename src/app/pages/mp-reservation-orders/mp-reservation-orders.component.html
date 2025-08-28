@@ -19,9 +19,9 @@
 			(click)="openPopupAddOrder()"
 		></snab-button>
 		<snab-button
+			*ngIf="selectedOrderIds().size"
 			text="Назначить дату обеспечения"
 			[size]="Size.Large"
-			[disabled]="!selectedOrderIds().size"
 			(click)="openPopupDateProvision()"
 		></snab-button>
 		<snab-button
