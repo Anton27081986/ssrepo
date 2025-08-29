@@ -35,8 +35,7 @@ import { AppRoutes } from '@app/common/routes';
 import { SignInComponent } from '@auth/sign-in/sign-in.component';
 import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
-import { ProductionPlanComponent } from '@app/pages/production-plan/production-plan.component';
-import { OperationalPlanComponent } from '@app/pages/production-plan/operational-plan/operational-plan.component';
+// Production plan components загружаются через lazy loading
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
 import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
@@ -211,14 +210,13 @@ export const routes: Routes = [
 			{
 				path: 'production-plan',
 				canActivate: [operationPlanPermissionGuard],
-				component: ProductionPlanComponent,
-				children: [
-					{
-						path: 'operational-plan',
-						component: OperationalPlanComponent,
-					},
-					{ path: '**', redirectTo: 'operational-plan' },
-				],
+				loadChildren: async () =>
+					import('@app/pages/production-plan').then(
+						(m) => m.PRODUCTION_PLAN_ROUTES
+					),
+				data: {
+					preload: false, // Загружается по требованию (специфичная роль)
+				},
 			},
 			{
 				path: 'mp-reservation-orders',
