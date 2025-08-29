@@ -16,8 +16,7 @@ import { OrderWidgetsComponent } from '@app/pages/profile/order-widgets/order-wi
 import { NotificationsComponent } from '@app/pages/profile/notifications/notifications.component';
 import { FriendlyAccountsPageComponent } from '@app/pages/profile/friendly-accounts-page/friendly-accounts-page.component';
 import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounting/raw-material-accounting.component';
-import { CompletedWorkActsComponent } from '@app/pages/completed-work-acts/completed-work-acts.component';
-import { CompletedWorkActCardComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-card.component';
+// Completed work acts components загружаются через lazy loading
 // Clients dictionary components загружаются через lazy loading
 import { InviteComponent } from '@app/pages/invite/invite.component';
 import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
@@ -240,22 +239,13 @@ export const routes: Routes = [
 			},
 			{
 				path: 'completed-work-acts',
-				children: [
-					{
-						path: '',
-						component: CompletedWorkActsComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-					{
-						path: ':id',
-						component: CompletedWorkActCardComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-				],
+				loadChildren: async () =>
+					import('@app/pages/completed-work-acts').then(
+						(m) => m.COMPLETED_WORK_ACTS_ROUTES
+					),
+				data: {
+					preload: false, // Загружается по требованию
+				},
 			},
 		],
 	},
