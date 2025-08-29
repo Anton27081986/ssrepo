@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+	ActionBarComponent,
+	ActionBarItemComponent,
 	ButtonComponent,
 	Colors,
 	DatepickerComponent,
@@ -26,7 +28,6 @@ import {
 	TextType,
 	TooltipDirective,
 	TooltipPosition,
-	UtilityButtonComponent,
 } from '@front-library/components';
 import {
 	OperationPlanItem,
@@ -34,7 +35,7 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
-import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import {
 	AbstractControl,
@@ -53,7 +54,6 @@ import { delay } from 'rxjs/operators';
 	styleUrls: ['./operation-plan-table-quantity-cell.component.scss'],
 	imports: [
 		CommonModule,
-		UtilityButtonComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
 		DropdownItemComponent,
@@ -67,6 +67,8 @@ import { delay } from 'rxjs/operators';
 		FieldCtrlDirective,
 		FormFieldComponent,
 		DatepickerComponent,
+		ActionBarComponent,
+		ActionBarItemComponent,
 	],
 	standalone: true,
 })
@@ -95,19 +97,6 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 	public quantityInputControl!: FormControl<number | null>;
 	public postponeDateControl!: FormControl<Date | null>;
 
-	protected isChangeQuantityOpen = false;
-	protected isPostponeOpen = false;
-
-	protected positionPairs: ConnectionPositionPair[] = [
-		{
-			offsetY: 180,
-			originX: 'end',
-			originY: 'bottom',
-			overlayX: 'center',
-			overlayY: 'bottom',
-		},
-	];
-
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
@@ -120,7 +109,7 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 		this.minDate = new Date(this.getDay()?.date!);
 		this.minDate.setDate(this.minDate.getDate() + 1);
 		this.quantityInputControl = new FormControl<number | null>(
-			+this.value()
+			Number(this.value())
 		);
 		this.postponeDateControl = new FormControl<Date | null>(
 			this.minDate,
@@ -141,7 +130,6 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 						this.row().weekPlanQuantity = r.weekPlanQuantity;
 						this.row().monthPlanQuantity = r.monthPlanQuantity;
 						this.row().planDays = r.planDays;
-						this.isChangeQuantityOpen = false;
 						this.changeDetectorRef.detectChanges();
 					});
 			}
@@ -328,8 +316,11 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 					quantity: this.quantityInputControl.value,
 				})
 				.pipe()
-				.subscribe(() => {
-					this.isPostponeOpen = false;
+				.subscribe((r: OperationPlanItem) => {
+					this.row().weekPlanQuantity = r.weekPlanQuantity;
+					this.row().monthPlanQuantity = r.monthPlanQuantity;
+					this.row().planDays = r.planDays;
+					this.changeDetectorRef.detectChanges();
 				});
 		}
 	}
@@ -403,6 +394,7 @@ export function dateNotInPastValidator(targetDate: Date): AsyncValidatorFn {
 
 					return { dateInPast: true };
 				}
+
 				return null;
 			})
 		);

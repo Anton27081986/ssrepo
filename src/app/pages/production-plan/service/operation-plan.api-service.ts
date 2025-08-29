@@ -118,8 +118,8 @@ export class OperationPlanApiService {
 	public transferProductionPlan(
 		rowId: number,
 		body: TransferProductionPlanPatch
-	): Observable<void> {
-		return this.http.post<void>(
+	): Observable<OperationPlanItem> {
+		return this.http.post<OperationPlanItem>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/ProvisionDetails/TransferPlan`,
 			body
 		);
