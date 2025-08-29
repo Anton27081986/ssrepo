@@ -46,6 +46,7 @@ export const BASE_COLUMN_MAP: Record<
 		| 'weekFactQuantity'
 		| 'monthPlanQuantity'
 		| 'monthFactQuantity'
+		| 'productManagerUserPlanQuantity'
 	>,
 	(row: OperationPlanItem) => string | number
 > = {
@@ -61,6 +62,7 @@ export const BASE_COLUMN_MAP: Record<
 	weekFactQuantity: (row) => row.weekFactQuantity,
 	monthPlanQuantity: (row) => row.monthPlanQuantity,
 	monthFactQuantity: (row) => row.monthFactQuantity,
+	productManagerUserPlanQuantity: (row) => row.productManagerUserPlanQuantity,
 };
 
 @Component({
