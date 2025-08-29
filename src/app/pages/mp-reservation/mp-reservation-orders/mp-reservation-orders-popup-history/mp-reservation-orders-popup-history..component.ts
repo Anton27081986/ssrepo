@@ -17,7 +17,7 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { IResponse } from '@app/core/utils/response';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import { IHistoryRow } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history.model';
+import { IHistoryRow } from './mp-reservation-orders-popup-history.model';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 
 @UntilDestroy()

@@ -5,7 +5,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
+import { IOrderReorderRequest } from './draggable-order-row.model';
 
 @Directive({
 	selector: '[ssDraggableOrderRow]',

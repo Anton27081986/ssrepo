@@ -37,8 +37,7 @@ import { ResetPasswordComponent } from '@auth/reset-password/reset-password.comp
 // Production plan components загружаются через lazy loading
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
-import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
-import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
+// MP reservation components загружаются через lazy loading
 import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
 
 export const routes: Routes = [
@@ -220,22 +219,13 @@ export const routes: Routes = [
 			{
 				path: 'mp-reservation-orders',
 				canActivate: [mpReservationOrdersPermissionsGuard],
-				children: [
-					{
-						path: '',
-						component: MPReservationOrdersComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-					{
-						path: ':id',
-						component: MpReservationOrderCardComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-				],
+				loadChildren: async () =>
+					import('@app/pages/mp-reservation').then(
+						(m) => m.MP_RESERVATION_ROUTES
+					),
+				data: {
+					preload: false, // Загружается по требованию (специфичные права)
+				},
 			},
 			{
 				path: 'completed-work-acts',

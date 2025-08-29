@@ -19,7 +19,7 @@ import { NgForOf } from '@angular/common';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { IApproveChangeRow } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
-import { MpReservationOrdersCardPopupApproveDetailsChangeTrComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-approve-details-change-tr/mp-reservation-orders-card-popup-approve-details-change-tr.component';
+import { MpReservationOrdersCardPopupApproveDetailsChangeTrComponent } from './mp-reservation-orders-card-popup-approve-details-change-tr/mp-reservation-orders-card-popup-approve-details-change-tr.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { IApproveChangeData } from '@app/core/models/mp-reservation-orders/mp-reservation-order-approve-details-change';
 
