@@ -19,14 +19,7 @@ import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounti
 // Completed work acts components загружаются через lazy loading
 // Clients dictionary components загружаются через lazy loading
 import { InviteComponent } from '@app/pages/invite/invite.component';
-import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
-import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
-import { ClientProposalsBusinessTripsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-bisiness-trips-tab/client-proposals-business-trips-tab.component';
-import { ClientProposalsDevelopmentTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-development-tab/client-proposals-development-tab.component';
-import { ClientProposalsNewsLineTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-news-line-tab/client-proposals-news-line-tab.component';
-import { ClientProposalsTradeListTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-trade-list-tab/client-proposals-trade-list-tab.component';
-import { ClientProposalsSamplesTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-samples-tab/client-proposals-samples-tab.component';
-import { ClientProposalsContractorsTabComponent } from '@app/pages/client-proposals-page/client-proposals-tabs/client-proposals-contractors-tab/client-proposals-contractors-tab.component';
+// Client proposals components загружаются через lazy loading
 import { ExcessIncomePageComponent } from '@app/pages/excess-income/excess-income-page/excess-income-page.component';
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
 import { AuthComponent } from '@auth/auth.component';
@@ -154,46 +147,13 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'client-proposals-page',
-				component: ClientProposalsPageComponent,
-				children: [
-					{
-						path: ':clientId',
-						component: ClientProposalsInfoComponent,
-						data: {
-							animation: 'animation',
-						},
-						children: [
-							{
-								path: 'business-trips',
-								component:
-									ClientProposalsBusinessTripsTabComponent,
-							},
-							{
-								path: 'development',
-								component:
-									ClientProposalsDevelopmentTabComponent,
-							},
-							{
-								path: 'news-line',
-								component: ClientProposalsNewsLineTabComponent,
-							},
-							{
-								path: 'trade-list',
-								component: ClientProposalsTradeListTabComponent,
-							},
-							{
-								path: 'samples',
-								component: ClientProposalsSamplesTabComponent,
-							},
-							{
-								path: 'contractors',
-								component:
-									ClientProposalsContractorsTabComponent,
-							},
-							{ path: '**', redirectTo: 'contractors' },
-						],
-					},
-				],
+				loadChildren: async () =>
+					import('@app/pages/client-proposals-page').then(
+						(m) => m.CLIENT_PROPOSALS_PAGE_ROUTES
+					),
+				data: {
+					preload: false, // Загружается по требованию
+				},
 			},
 		],
 	},
@@ -213,7 +173,7 @@ export const routes: Routes = [
 						(m) => m.PRODUCTION_PLAN_ROUTES
 					),
 				data: {
-					preload: false, // Загружается по требованию (специфичная роль)
+					preload: false,
 				},
 			},
 			{
@@ -224,7 +184,7 @@ export const routes: Routes = [
 						(m) => m.MP_RESERVATION_ROUTES
 					),
 				data: {
-					preload: false, // Загружается по требованию (специфичные права)
+					preload: false,
 				},
 			},
 			{
@@ -234,7 +194,7 @@ export const routes: Routes = [
 						(m) => m.COMPLETED_WORK_ACTS_ROUTES
 					),
 				data: {
-					preload: false, // Загружается по требованию
+					preload: false,
 				},
 			},
 		],
