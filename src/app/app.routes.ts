@@ -18,17 +18,7 @@ import { FriendlyAccountsPageComponent } from '@app/pages/profile/friendly-accou
 import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounting/raw-material-accounting.component';
 import { CompletedWorkActsComponent } from '@app/pages/completed-work-acts/completed-work-acts.component';
 import { CompletedWorkActCardComponent } from '@app/pages/completed-work-acts/completed-work-act-card/completed-work-act-card.component';
-import { ClientsListPageComponent } from '@app/pages/clients-list-page/clients-list-page.component';
-import { ClientCardComponent } from '@app/pages/client-card/client-card.component';
-import { ClientCardBasicComponent } from '@app/pages/client-card/client-card-basic/client-card-basic.component';
-import { ClientSaleRequestsComponent } from '@app/pages/client-card/client-sale-requests/client-sale-requests.component';
-import { ClientRequestSamplesComponent } from '@app/pages/client-card/client-request-samples/client-request-samples.component';
-import { ClientCardNewProductsComponent } from '@app/pages/client-card/client-card-new-products/client-card-new-products.component';
-import { ClientCardReturnRequestsComponent } from '@app/pages/client-card/client-card-return-requests/client-card-return-requests.component';
-import { ClientCardLostProductsComponent } from '@app/pages/client-card/client-card-lost-products/client-card-lost-products.component';
-import { ClientCardContractsComponent } from '@app/pages/client-card/client-card-contracts/client-card-contracts.component';
-import { ClientCardBusinessTripsComponent } from '@app/pages/client-card/client-card-bisiness-trips/client-card-business-trips.component';
-import { ClientCardBirthdaysComponent } from '@app/pages/client-card/client-card-birthdays/client-card-birthdays.component';
+// Clients dictionary components загружаются через lazy loading
 import { InviteComponent } from '@app/pages/invite/invite.component';
 import { ClientProposalsPageComponent } from '@app/pages/client-proposals-page/client-proposals-page/client-proposals-page.component';
 import { ClientProposalsInfoComponent } from '@app/pages/client-proposals-page/client-proposals-info/client-proposals-info.component';
@@ -133,56 +123,23 @@ export const routes: Routes = [
 		},
 		children: [
 			{
+				path: 'clients-dictionary',
+				loadChildren: async () =>
+					import('@app/pages/clients-dictionary').then(
+						(m) => m.CLIENTS_DICTIONARY_ROUTES
+					),
+				data: {
+					preload: true, // Предзагрузка для часто используемого модуля
+				},
+			},
+			// Редиректы для обратной совместимости
+			{
 				path: 'clients-list',
-				component: ClientsListPageComponent,
+				redirectTo: 'clients-dictionary/list',
 			},
 			{
-				path: 'client-card',
-				children: [
-					{
-						path: ':id',
-						component: ClientCardComponent,
-						children: [
-							{
-								path: 'basic',
-								component: ClientCardBasicComponent,
-							},
-							{
-								path: 'sales',
-								component: ClientSaleRequestsComponent,
-							},
-							{
-								path: 'samples',
-								component: ClientRequestSamplesComponent,
-							},
-							{
-								path: 'gntpr',
-								component: ClientCardNewProductsComponent,
-							},
-							{
-								path: 'refund',
-								component: ClientCardReturnRequestsComponent,
-							},
-							{
-								path: 'pkp',
-								component: ClientCardLostProductsComponent,
-							},
-							{
-								path: 'contracts',
-								component: ClientCardContractsComponent,
-							},
-							{
-								path: 'business-trips',
-								component: ClientCardBusinessTripsComponent,
-							},
-							{
-								path: 'birthdays',
-								component: ClientCardBirthdaysComponent,
-							},
-							{ path: '**', redirectTo: 'basic' },
-						],
-					},
-				],
+				path: 'client-card/:id',
+				redirectTo: 'clients-dictionary/card/:id',
 			},
 			{
 				path: 'invite',
