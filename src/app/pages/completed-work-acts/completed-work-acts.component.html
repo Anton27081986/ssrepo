@@ -3,8 +3,9 @@
 		[type]="TextType.HeadingXs"
 		[weight]="TextWeight.Medium"
 	>
-		Реестр актов выполненных работ </ss-lib-text
-	><ss-lib-button
+		Реестр актов выполненных работ
+	</ss-lib-text>
+	<ss-lib-button
 		ss-lib-tooltip
 		[tooltipText]="'Скачать инструкцию'"
 		[iconPosition]="IconPosition.OnlyIcon"
@@ -12,8 +13,8 @@
 		[size]="ExtraSize.xxs"
 		[icon]="IconType.FilePreviewSearch"
 		(click)="downloadInstruction()"
-	></ss-lib-button
-	><ss-lib-button
+	></ss-lib-button>
+	<ss-lib-button
 		*ngIf="
 			permissions().includes(Permissions.COMPLETED_WORK_ACTS_PRINT_REPORT)
 		"
@@ -45,7 +46,32 @@
 				[actsItems]="items"
 			></app-completed-work-acts-table>
 		</ng-container>
-		<ng-template #empty> </ng-template>
+		<ng-template #empty>
+			<ng-container *ngIf="!hasCustomFilters()">
+				<div class="completed-work-acts__empty">
+					<ss-lib-empty-state
+						[badge]="{ icon: IconType.ImagePlus }"
+						[title]="'Актов выполненных работ ещё нет'"
+						[description]="
+							'Здесь будут отображаться акты выполненных работ'
+						"
+					>
+					</ss-lib-empty-state>
+				</div>
+			</ng-container>
+			<ng-container *ngIf="hasCustomFilters()">
+				<div class="completed-work-acts__empty">
+					<ss-lib-empty-state
+						[badge]="{ icon: IconType.Search }"
+						[title]="'По вашему запросу ничего не найдено.'"
+						[description]="
+							'Попробуйте изменить критерии запроса или настройки фильтров.'
+						"
+					>
+					</ss-lib-empty-state>
+				</div>
+			</ng-container>
+		</ng-template>
 	</ng-container>
 </ng-template>
 
@@ -67,15 +93,15 @@
 				<ss-lib-datepicker
 					fieldCtrl
 					[formControl]="dateFromControl"
-				></ss-lib-datepicker
-			></ss-lib-form-field>
+				></ss-lib-datepicker>
+			</ss-lib-form-field>
 			-
 			<ss-lib-form-field>
 				<ss-lib-datepicker
 					fieldCtrl
 					[formControl]="dateToControl"
-				></ss-lib-datepicker
-			></ss-lib-form-field>
+				></ss-lib-datepicker>
+			</ss-lib-form-field>
 		</div>
 	</div>
 	<div class="date-range">
@@ -90,15 +116,15 @@
 				<ss-lib-datepicker
 					fieldCtrl
 					[formControl]="uploadDateFromControl"
-				></ss-lib-datepicker
-			></ss-lib-form-field>
+				></ss-lib-datepicker>
+			</ss-lib-form-field>
 			-
 			<ss-lib-form-field>
 				<ss-lib-datepicker
 					fieldCtrl
 					[formControl]="uploadDateToControl"
-				></ss-lib-datepicker
-			></ss-lib-form-field>
+				></ss-lib-datepicker>
+			</ss-lib-form-field>
 		</div>
 	</div>
 	<div class="date-range">

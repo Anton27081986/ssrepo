@@ -12,6 +12,7 @@ import {
 	ButtonType,
 	Colors,
 	DatepickerComponent,
+	EmptyStateComponent,
 	ExtraSize,
 	FieldCtrlDirective,
 	FormFieldComponent,
@@ -40,6 +41,7 @@ import { PaginationComponent } from '@app/shared/components/pagination/paginatio
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FiltersTableCanvasComponent } from '@app/pages/production-plan/blunt-components/filters-table-pagination-canvas/filters-table-canvas.component';
 import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-components/filters-trigger-button/filters-trigger-button.component';
+import { Size } from '@front-components/components';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -50,9 +52,7 @@ import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-
 		ButtonComponent,
 		TooltipDirective,
 		NgIf,
-		ButtonComponent,
 		DropdownColumnsSettingsComponent,
-		ButtonComponent,
 		CompletedWorkActsTableComponent,
 		TextComponent,
 		TooltipDirective,
@@ -67,6 +67,7 @@ import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-
 		FiltersTableCanvasComponent,
 		FiltersTriggerButtonComponent,
 		FiltersTriggerButtonComponent,
+		EmptyStateComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
@@ -180,6 +181,22 @@ export class CompletedWorkActsComponent {
 			initialValue: [],
 		}
 	);
+
+	public hasCustomFilters(): boolean {
+		const filters = this.completedWorkActsFacade.filterValueStore$.value;
+
+		if (!filters) {
+			return false;
+		}
+
+		if (this.total > 0) {
+			return true;
+		}
+
+		return Object.keys(filters).some(
+			(key) => !['limit', 'offset'].includes(key)
+		);
+	}
 
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
@@ -394,4 +411,6 @@ export class CompletedWorkActsComponent {
 		this.pageIndex = 1;
 		this.offset$.next(0);
 	}
+
+	protected readonly Size = Size;
 }
