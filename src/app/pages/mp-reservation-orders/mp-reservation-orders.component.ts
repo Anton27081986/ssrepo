@@ -20,6 +20,7 @@ import {
 	TextWeight,
 	TooltipDirective,
 } from '@front-components/components';
+import { IconType as IconTypeFrontLib } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
@@ -46,6 +47,7 @@ import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permis
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FilterBuilder } from '@app/core/utils/filter-builder.util';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { EmptyStateComponent } from '@front-library/components';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -68,6 +70,7 @@ import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-r
 		IconComponent,
 		TagV2Component,
 		NumWithSpacesPipe,
+		EmptyStateComponent,
 	],
 })
 export class MPReservationOrdersComponent implements OnInit {
@@ -83,6 +86,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 	protected readonly Colors = Colors;
+	protected readonly IconTypeFrontLib = IconTypeFrontLib;
 
 	protected pipeNumWithSpaces = new NumWithSpacesPipe();
 	public readonly emptyDate = '0001-01-01T00:00:00';
