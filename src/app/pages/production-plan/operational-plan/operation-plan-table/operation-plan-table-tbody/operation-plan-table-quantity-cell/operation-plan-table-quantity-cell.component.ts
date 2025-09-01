@@ -35,7 +35,7 @@ import {
 } from '@app/core/models/production-plan/operation-plan';
 import { OperationPlanPopupService } from '@app/pages/production-plan/service/operation-plan.popup.service';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
 import {
 	AbstractControl,
@@ -46,7 +46,7 @@ import {
 } from '@angular/forms';
 import { BASE_COLUMN_MAP } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-tbody.component';
 import { map, Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-operation-plan-table-quantity-cell',
@@ -88,14 +88,29 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 	public hasViewAccess: InputSignal<boolean> = input<boolean>(false);
 	public hasQuantityEditAccess: InputSignal<boolean> = input<boolean>(false);
 	public hasTransferAccess: InputSignal<boolean> = input<boolean>(false);
-	public row: InputSignal<OperationPlanItem> = input.required();
 	public columnId: InputSignal<string> = input.required();
 	public value: InputSignal<string | number> = input.required();
+
+	public row: InputSignal<OperationPlanItem> = input.required();
 
 	public minDate!: Date;
 
 	public quantityInputControl!: FormControl<number | null>;
 	public postponeDateControl!: FormControl<Date | null>;
+
+	protected isChangeQuantityOpen = false;
+	protected isPostponeOpen = false;
+	protected isChangedDisabled = false;
+
+	protected positionPairs: ConnectionPositionPair[] = [
+		{
+			offsetY: 200,
+			originX: 'end',
+			originY: 'bottom',
+			overlayX: 'center',
+			overlayY: 'bottom',
+		},
+	];
 
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
@@ -124,8 +139,55 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 
 		if (this.columnId().startsWith('plan')) {
 			if (oldValue?.id) {
+				this.isChangedDisabled = true;
+				this.isChangeQuantityOpen = false;
 				this.operationPlanService
 					.changePlan(this.row().id, oldValue.id, newValue)
+					.pipe(
+						catchError((err: unknown) => {
+							this.isChangedDisabled = false;
+							throw err;
+						})
+					)
+					.subscribe((r: OperationPlanItem) => {
+						this.row().weekPlanQuantity = r.weekPlanQuantity;
+						this.row().monthPlanQuantity = r.monthPlanQuantity;
+						this.row().planDays = r.planDays;
+						this.isChangedDisabled = false;
+						this.changeDetectorRef.detectChanges();
+					});
+			}
+		}
+	}
+
+	protected editPlanFact(event: Event, columnId: string): void {
+		// eslint-disable-next-line @typescript-eslint/no-shadow
+		const input = event.target as HTMLInputElement;
+		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
+		const oldValue =
+			this.getDayCell(this.row(), columnId.replace('fact', 'plan')) ||
+			this.getDayCell(this.row(), columnId.replace('plan', 'fact'));
+
+		if (columnId.startsWith('plan')) {
+			if (oldValue?.id) {
+				this.operationPlanService
+					.updatePlanFact(this.row().id, {
+						id: oldValue.id,
+						planQuantity: newValue,
+						factQuantity: oldValue.factQuantity,
+					})
+					.subscribe((r: OperationPlanItem) => {
+						this.row().weekPlanQuantity = r.weekPlanQuantity;
+						this.row().monthPlanQuantity = r.monthPlanQuantity;
+						this.row().planDays = r.planDays;
+						this.changeDetectorRef.detectChanges();
+					});
+			} else if (newValue) {
+				this.operationPlanService
+					.setPlanFact(this.row().id, {
+						planDate: new Date(columnId.slice(-10)).toISOString(),
+						planQuantity: newValue,
+					})
 					.subscribe((r: OperationPlanItem) => {
 						this.row().weekPlanQuantity = r.weekPlanQuantity;
 						this.row().monthPlanQuantity = r.monthPlanQuantity;
@@ -134,73 +196,33 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 					});
 			}
 		}
-	}
-
-	protected editPlanFact(
-		event: Event,
-		row: OperationPlanItem,
-		columnId: string
-	): void {
-		// eslint-disable-next-line @typescript-eslint/no-shadow
-		const input = event.target as HTMLInputElement;
-		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
-		const oldValue =
-			this.getDayCell(row, columnId.replace('fact', 'plan')) ||
-			this.getDayCell(row, columnId.replace('plan', 'fact'));
-
-		if (columnId.startsWith('plan')) {
-			if (oldValue?.id) {
-				this.operationPlanService
-					.updatePlanFact(row.id, {
-						id: oldValue.id,
-						planQuantity: newValue,
-						factQuantity: oldValue.factQuantity,
-					})
-					.subscribe((r: OperationPlanItem) => {
-						row.weekPlanQuantity = r.weekPlanQuantity;
-						row.monthPlanQuantity = r.monthPlanQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
-					});
-			} else if (newValue) {
-				this.operationPlanService
-					.setPlanFact(row.id, {
-						planDate: new Date(columnId.slice(-10)).toISOString(),
-						planQuantity: newValue,
-					})
-					.subscribe((r: OperationPlanItem) => {
-						row.weekPlanQuantity = r.weekPlanQuantity;
-						row.monthPlanQuantity = r.monthPlanQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
-					});
-			}
-		}
 
 		if (columnId.startsWith('fact')) {
 			if (oldValue?.id) {
 				this.operationPlanService
-					.updatePlanFact(row.id, {
+					.updatePlanFact(this.row().id, {
 						id: oldValue.id,
 						factQuantity: newValue,
 						planQuantity: oldValue.planQuantity,
 					})
 					.subscribe((r: OperationPlanItem) => {
-						row.weekFactQuantity = r.weekFactQuantity;
-						row.monthFactQuantity = r.monthFactQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+						this.row().weekFactQuantity = r.weekFactQuantity;
+						this.row().monthFactQuantity = r.monthFactQuantity;
+						this.row().planDays = r.planDays;
+						setTimeout(() => {
+							this.changeDetectorRef.detectChanges();
+						}, 1000);
 					});
 			} else if (newValue) {
 				this.operationPlanService
-					.setPlanFact(row.id, {
+					.setPlanFact(this.row().id, {
 						planDate: new Date(columnId.slice(-10)).toISOString(),
 						factQuantity: newValue,
 					})
 					.subscribe((r: OperationPlanItem) => {
-						row.weekFactQuantity = r.weekFactQuantity;
-						row.monthFactQuantity = r.monthFactQuantity;
-						row.planDays = r.planDays;
+						this.row().weekFactQuantity = r.weekFactQuantity;
+						this.row().monthFactQuantity = r.monthFactQuantity;
+						this.row().planDays = r.planDays;
 						this.changeDetectorRef.detectChanges();
 					});
 			}
@@ -307,6 +329,8 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 			);
 
 		if (oldValue) {
+			this.isChangedDisabled = true;
+			this.isPostponeOpen = false;
 			this.operationPlanService
 				.transferProductionPlan(this.row().id, {
 					id: oldValue.id,
@@ -315,12 +339,14 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 					).toString()!,
 					quantity: this.quantityInputControl.value,
 				})
-				.pipe()
-				.subscribe((r: OperationPlanItem) => {
-					this.row().weekPlanQuantity = r.weekPlanQuantity;
-					this.row().monthPlanQuantity = r.monthPlanQuantity;
-					this.row().planDays = r.planDays;
-					this.changeDetectorRef.detectChanges();
+				.pipe(
+					catchError((err: unknown) => {
+						this.isChangedDisabled = false;
+						throw err;
+					})
+				)
+				.subscribe(() => {
+					this.isChangedDisabled = false;
 				});
 		}
 	}

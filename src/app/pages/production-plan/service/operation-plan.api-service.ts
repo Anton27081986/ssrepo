@@ -224,7 +224,7 @@ export class OperationPlanApiService {
 		params: UpdatePlanFactRequest
 	): Observable<OperationPlanItem> {
 		return this.http.patch<OperationPlanItem>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/ProvisionDetails/PlanFacts`,
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
 			{ ...params }
 		);
 	}
