@@ -9,7 +9,7 @@ import {
 } from '@app/core/guards';
 import { MainPageComponent } from '@app/pages/main-page/main-page.component';
 // Profile components загружаются через lazy loading
-import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounting/raw-material-accounting.component';
+// Raw material accounting components загружаются через lazy loading
 // Completed work acts components загружаются через lazy loading
 // Clients dictionary components загружаются через lazy loading
 import { InviteComponent } from '@app/pages/invite/invite.component';
@@ -53,16 +53,13 @@ export const routes: Routes = [
 			{
 				path: 'raw-material-accounting',
 				canActivate: [procurementsPermissionsGuard],
-				children: [
-					{
-						path: ':id',
-						component: RawMaterialAccountingComponent,
-					},
-					{
-						path: '',
-						component: RawMaterialAccountingComponent,
-					},
-				],
+				loadChildren: async () =>
+					import('./pages/raw-material-accounting').then(
+						(m) => m.RAW_MATERIAL_ACCOUNTING_ROUTES
+					),
+				data: {
+					preload: false, // Загружается только при необходимости
+				},
 			},
 		],
 	},
