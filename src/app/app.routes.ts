@@ -16,11 +16,7 @@ import { InviteComponent } from '@app/pages/invite/invite.component';
 // Client proposals components загружаются через lazy loading
 // Excess income components загружаются через lazy loading
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
-import { AuthComponent } from '@auth/auth.component';
-import { AppRoutes } from '@app/common/routes';
-import { SignInComponent } from '@auth/sign-in/sign-in.component';
-import { ForgotPasswordComponent } from '@auth/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from '@auth/reset-password/reset-password.component';
+// Auth components загружаются через lazy loading
 // Production plan components загружаются через lazy loading
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
@@ -194,28 +190,11 @@ export const routes: Routes = [
 	},
 	{
 		path: 'auth',
+		loadChildren: async () =>
+			import('./pages/auth').then((m) => m.AUTH_ROUTES),
 		data: {
-			animation: 'animation',
+			preload: false, // Загружается только при необходимости
 		},
-		component: AuthComponent,
-		children: [
-			{
-				path: AppRoutes.signIn,
-				component: SignInComponent,
-				pathMatch: 'full',
-			},
-			{
-				path: AppRoutes.forgotPassword,
-				component: ForgotPasswordComponent,
-				pathMatch: 'full',
-			},
-			{
-				path: AppRoutes.resetPassword,
-				component: ResetPasswordComponent,
-				pathMatch: 'full',
-			},
-			{ path: '**', redirectTo: AppRoutes.signIn },
-		],
 	},
 	{ path: '**', redirectTo: '' },
 ];
