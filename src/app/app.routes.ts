@@ -14,7 +14,7 @@ import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounti
 // Clients dictionary components загружаются через lazy loading
 import { InviteComponent } from '@app/pages/invite/invite.component';
 // Client proposals components загружаются через lazy loading
-import { ExcessIncomePageComponent } from '@app/pages/excess-income/excess-income-page/excess-income-page.component';
+// Excess income components загружаются через lazy loading
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
 import { AuthComponent } from '@auth/auth.component';
 import { AppRoutes } from '@app/common/routes';
@@ -44,7 +44,7 @@ export const routes: Routes = [
 			{
 				path: 'profile',
 				canActivate: [AuthGuard],
-				loadChildren: () =>
+				loadChildren: async () =>
 					import('./pages/profile').then((m) => m.PROFILE_ROUTES),
 				data: {
 					preload: false, // Загружается только при необходимости
@@ -171,7 +171,13 @@ export const routes: Routes = [
 		children: [
 			{
 				path: 'excess-income-page',
-				component: ExcessIncomePageComponent,
+				loadChildren: async () =>
+					import('./pages/excess-income').then(
+						(m) => m.EXCESS_INCOME_ROUTES
+					),
+				data: {
+					preload: false, // Загружается только при необходимости
+				},
 			},
 		],
 	},
