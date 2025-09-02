@@ -8,13 +8,7 @@ import {
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
 import { MainPageComponent } from '@app/pages/main-page/main-page.component';
-import { ProfileComponent } from '@app/pages/profile/profile.component';
-import { SettingsComponent } from '@app/pages/profile/settings/settings.component';
-import { ChangePasswordComponent } from '@app/pages/profile/change-password/change-password.component';
-import { MyMenuComponent } from '@app/pages/profile/my-menu/my-menu.component';
-import { OrderWidgetsComponent } from '@app/pages/profile/order-widgets/order-widgets.component';
-import { NotificationsComponent } from '@app/pages/profile/notifications/notifications.component';
-import { FriendlyAccountsPageComponent } from '@app/pages/profile/friendly-accounts-page/friendly-accounts-page.component';
+// Profile components загружаются через lazy loading
 import { RawMaterialAccountingComponent } from '@app/pages/raw-material-accounting/raw-material-accounting.component';
 // Completed work acts components загружаются через lazy loading
 // Clients dictionary components загружаются через lazy loading
@@ -50,43 +44,11 @@ export const routes: Routes = [
 			{
 				path: 'profile',
 				canActivate: [AuthGuard],
-				component: ProfileComponent,
-				children: [
-					{
-						path: 'settings',
-						component: SettingsComponent,
-						title: 'Основная информация',
-					},
-					{
-						path: 'change-password',
-						component: ChangePasswordComponent,
-						title: 'Основная информация',
-					},
-					{
-						path: 'friendly-accounts',
-						component: FriendlyAccountsPageComponent,
-					},
-					{
-						path: 'my-menu',
-						component: MyMenuComponent,
-						title: 'Основная информация',
-					},
-					{
-						path: 'order-widgets',
-						component: OrderWidgetsComponent,
-						title: 'Основная информация',
-					},
-					{
-						path: 'notifications',
-						component: NotificationsComponent,
-						title: 'Основная информация',
-					},
-					// {
-					// 	path: 'recovery-password',
-					// 	component: RecoveryPasswordComponent,
-					// 	title: 'Основная информация',
-					// },
-				],
+				loadChildren: () =>
+					import('./pages/profile').then((m) => m.PROFILE_ROUTES),
+				data: {
+					preload: false, // Загружается только при необходимости
+				},
 			},
 			{
 				path: 'raw-material-accounting',
