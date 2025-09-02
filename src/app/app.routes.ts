@@ -12,7 +12,7 @@ import { MainPageComponent } from '@app/pages/main-page/main-page.component';
 // Raw material accounting components загружаются через lazy loading
 // Completed work acts components загружаются через lazy loading
 // Clients dictionary components загружаются через lazy loading
-import { InviteComponent } from '@app/pages/invite/invite.component';
+// Invite components загружаются через lazy loading
 // Client proposals components загружаются через lazy loading
 // Excess income components загружаются через lazy loading
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
@@ -88,7 +88,11 @@ export const routes: Routes = [
 			},
 			{
 				path: 'invite',
-				component: InviteComponent,
+				loadChildren: async () =>
+					import('./pages/invite').then((m) => m.INVITE_ROUTES),
+				data: {
+					preload: false, // Загружается только при необходимости
+				},
 			},
 		],
 	},
