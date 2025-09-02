@@ -1,4 +1,4 @@
-import { Component, Signal } from '@angular/core';
+import { Component, OnInit, Signal } from '@angular/core';
 import { ModalRef } from '@app/core/modal/modal.ref';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';
@@ -9,24 +9,7 @@ import {
 	ReactiveFormsModule,
 	Validators,
 } from '@angular/forms';
-import {
-	ButtonComponent,
-	ButtonType,
-	IconType,
-	IconPosition,
-	Size,
-	TextComponent,
-	TextType,
-	TextWeight,
-	CardComponent,
-	InputComponent,
-	TooltipTheme,
-	TooltipPosition,
-	InputType,
-	FieldCtrlDirective,
-	FormFieldComponent,
-} from '@front-components/components';
-import { DateTimePickerComponent } from '@app/shared/components/inputs/date-time-picker/date-time-picker.component';
+import { CardComponent } from '@front-components/components';
 import { NgForOf } from '@angular/common';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
@@ -35,6 +18,21 @@ import {
 	IProvisionDetailsTypes,
 } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { toSignal } from '@angular/core/rxjs-interop';
+import {
+	ButtonComponent,
+	ButtonType,
+	DatepickerComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconPosition,
+	IconType,
+	InputComponent,
+	InputType,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 
 @UntilDestroy()
 @Component({
@@ -46,29 +44,22 @@ import { toSignal } from '@angular/core/rxjs-interop';
 	],
 	standalone: true,
 	imports: [
-		CardComponent,
-		ButtonComponent,
-		TextComponent,
 		InputComponent,
 		NgForOf,
-		DateTimePickerComponent,
 		ReactiveFormsModule,
-		CardComponent,
-		FieldCtrlDirective,
 		FormFieldComponent,
+		FormFieldComponent,
+		InputComponent,
+		CardComponent,
+		TextComponent,
+		ButtonComponent,
+		FieldCtrlDirective,
+		DatepickerComponent,
 	],
 })
-export class MpReservationOrdersCardPopupOrderInProductionComponent {
-	protected readonly ButtonType = ButtonType;
-	protected readonly Size = Size;
-	protected readonly TextWeight = TextWeight;
-	protected readonly TextType = TextType;
-	protected readonly IconPosition = IconPosition;
-	protected readonly IconType = IconType;
-	protected readonly TooltipTheme = TooltipTheme;
-	protected readonly TooltipPosition = TooltipPosition;
-	protected readonly InputType = InputType;
-
+export class MpReservationOrdersCardPopupOrderInProductionComponent
+	implements OnInit
+{
 	public order: Signal<IMpReservationOrder | null> = toSignal(
 		this.facade.activeOrder$,
 		{
@@ -79,23 +70,34 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	public inProductionForm!: FormGroup<{
 		dates: FormArray<
 			FormGroup<{
-				productionDate: FormControl<string | null>;
-				provisionDate: FormControl<string | null>;
+				productionDate: FormControl<Date | null>;
+				provisionDate: FormControl<Date | null>;
 				manufacturingAmount: FormControl<number | null>;
 			}>
 		>;
 	}>;
 
+	public minDate = new Date();
+
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly ButtonType = ButtonType;
+	protected readonly IconType = IconType;
+	protected readonly IconPosition = IconPosition;
+	protected readonly InputType = InputType;
+	protected readonly ExtraSize = ExtraSize;
 	constructor(
 		private readonly modalService: ModalService,
 		private readonly modalRef: ModalRef,
 		private readonly facade: MpReservationOrderCardFacadeService
-	) {
+	) {}
+
+	ngOnInit() {
 		this.inProductionForm = new FormGroup({
 			dates: new FormArray<
 				FormGroup<{
-					productionDate: FormControl<string | null>;
-					provisionDate: FormControl<string | null>;
+					productionDate: FormControl<Date | null>;
+					provisionDate: FormControl<Date | null>;
 					manufacturingAmount: FormControl<number | null>;
 				}>
 			>([]),
@@ -103,8 +105,20 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 		this.addDatesRow();
 	}
 
-	public get dates(): FormArray {
-		return this.inProductionForm.get('dates') as FormArray;
+	public get dates(): FormArray<
+		FormGroup<{
+			productionDate: FormControl<Date | null>;
+			provisionDate: FormControl<Date | null>;
+			manufacturingAmount: FormControl<number | null>;
+		}>
+	> {
+		return this.inProductionForm.get('dates') as FormArray<
+			FormGroup<{
+				productionDate: FormControl<Date | null>;
+				provisionDate: FormControl<Date | null>;
+				manufacturingAmount: FormControl<number | null>;
+			}>
+		>;
 	}
 
 	private createDatesGroup(): FormGroup {
@@ -136,18 +150,13 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 	public placeOrder(): void {
 		const detailsList: IProvisionDetailsTypes[] = this.dates.controls.map(
 			(group) => {
-				const { productionDate, provisionDate, manufacturingAmount } =
-					group.value as {
-						productionDate: string;
-						provisionDate: string;
-						manufacturingAmount: number;
-					};
-
 				return {
-					productionDate,
-					provisionDate,
-					manufacturingAmount,
-				};
+					productionDate: this.formatDate(
+						group.value.productionDate!
+					),
+					provisionDate: this.formatDate(group.value.provisionDate!),
+					manufacturingAmount: group.value.manufacturingAmount,
+				} as IProvisionDetailsTypes;
 			}
 		);
 
@@ -206,5 +215,17 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent {
 					this.modalRef.close();
 				}
 			});
+	}
+
+	private formatDate(date: Date | null): string {
+		if (!date) {
+			return '';
+		}
+
+		const year = date.getFullYear();
+		const month = (date.getMonth() + 1).toString().padStart(2, '0');
+		const day = date.getDate().toString().padStart(2, '0');
+
+		return `${year}-${month}-${day}`;
 	}
 }
