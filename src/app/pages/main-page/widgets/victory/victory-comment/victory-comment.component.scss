@@ -1,0 +1,32 @@
+.victory-comment {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__actions {
+		display: flex;
+		gap: 8px;
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+	}
+
+	&__note {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__createDate {
+		display: flex;
+		justify-content: flex-end;
+	}
+}
+

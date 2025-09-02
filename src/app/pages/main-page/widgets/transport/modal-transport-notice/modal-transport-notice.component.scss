@@ -1,0 +1,40 @@
+.modal-transport-notice {
+	height: 373px;
+	width: 284px;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 16px 10px;
+
+		.title {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+
+	.card {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		padding: 16px;
+
+		.dates {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+
+		.label {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+
+	.footer {
+		padding: 16px 16px 0;
+	}
+}
+
