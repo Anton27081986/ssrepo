@@ -1,10 +1,10 @@
 import {
-	ChangeDetectorRef,
 	Component,
 	inject,
 	input,
 	InputSignal,
 	OnInit,
+	Signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -22,6 +22,7 @@ import {
 	IconType,
 	NumberPickerComponent,
 	PopoverTriggerForDirective,
+	SsTableState,
 	Status,
 	StatusIconComponent,
 	TextComponent,
@@ -45,9 +46,11 @@ import {
 	Validators,
 } from '@angular/forms';
 import { BASE_COLUMN_MAP } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-tbody.component';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable, of, tap } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-operation-plan-table-quantity-cell',
 	templateUrl: './operation-plan-table-quantity-cell.component.html',
@@ -77,8 +80,11 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 		OperationPlanPopupService
 	);
 
-	private readonly changeDetectorRef: ChangeDetectorRef =
-		inject(ChangeDetectorRef);
+	private readonly tableStateService =
+		inject<SsTableState<OperationPlanItem>>(SsTableState);
+
+	public data: Signal<OperationPlanItem[] | undefined> =
+		this.tableStateService.data;
 
 	private readonly operationPlanService = inject(OperationPlanService);
 
@@ -143,18 +149,29 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 				this.isChangeQuantityOpen = false;
 				this.operationPlanService
 					.changePlan(this.row().id, oldValue.id, newValue)
-					.pipe(
-						catchError((err: unknown) => {
-							this.isChangedDisabled = false;
-							throw err;
-						})
-					)
-					.subscribe((r: OperationPlanItem) => {
-						this.row().weekPlanQuantity = r.weekPlanQuantity;
-						this.row().monthPlanQuantity = r.monthPlanQuantity;
-						this.row().planDays = r.planDays;
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
 						this.isChangedDisabled = false;
-						this.changeDetectorRef.detectChanges();
 					});
 			}
 		}
@@ -176,11 +193,29 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 						planQuantity: newValue,
 						factQuantity: oldValue.factQuantity,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						this.row().weekPlanQuantity = r.weekPlanQuantity;
-						this.row().monthPlanQuantity = r.monthPlanQuantity;
-						this.row().planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			} else if (newValue) {
 				this.operationPlanService
@@ -188,11 +223,29 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 						planDate: new Date(columnId.slice(-10)).toISOString(),
 						planQuantity: newValue,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						this.row().weekPlanQuantity = r.weekPlanQuantity;
-						this.row().monthPlanQuantity = r.monthPlanQuantity;
-						this.row().planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			}
 		}
@@ -205,13 +258,29 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 						factQuantity: newValue,
 						planQuantity: oldValue.planQuantity,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						this.row().weekFactQuantity = r.weekFactQuantity;
-						this.row().monthFactQuantity = r.monthFactQuantity;
-						this.row().planDays = r.planDays;
-						setTimeout(() => {
-							this.changeDetectorRef.detectChanges();
-						}, 1000);
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			} else if (newValue) {
 				this.operationPlanService
@@ -219,11 +288,29 @@ export class OperationalPlanTableQuantityCellComponent implements OnInit {
 						planDate: new Date(columnId.slice(-10)).toISOString(),
 						factQuantity: newValue,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						this.row().weekFactQuantity = r.weekFactQuantity;
-						this.row().monthFactQuantity = r.monthFactQuantity;
-						this.row().planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			}
 		}

@@ -97,7 +97,8 @@
 					} @else if (
 						column.id === 'optimalBatch' ||
 						column.id.startsWith('week') ||
-						column.id.startsWith('month')
+						column.id.startsWith('month') ||
+						column.id === 'productManagerUserPlanQuantity'
 					) {
 						<ss-lib-text
 							[type]="TextType.BodySm"
