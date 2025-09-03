@@ -11,10 +11,6 @@ import { MainPageComponent } from '@app/pages/main-page/main-page.component';
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
-import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
-import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
-import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
-import {ContractorsDictionaryComponent} from "@app/pages/contractors-dictionary/contractors-dictionary.component";
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -36,7 +32,7 @@ export const routes: Routes = [
 				loadChildren: async () =>
 					import('./pages/profile').then((m) => m.PROFILE_ROUTES),
 				data: {
-					preload: false, // Загружается только при необходимости
+					preload: false,
 				},
 			},
 			{
@@ -47,7 +43,7 @@ export const routes: Routes = [
 						(m) => m.RAW_MATERIAL_ACCOUNTING_ROUTES
 					),
 				data: {
-					preload: false, // Загружается только при необходимости
+					preload: false,
 				},
 			},
 		],
@@ -67,7 +63,7 @@ export const routes: Routes = [
 						(m) => m.CLIENTS_DICTIONARY_ROUTES
 					),
 				data: {
-					preload: true, // Предзагрузка для часто используемого модуля
+					preload: true,
 				},
 			},
 			// Редиректы для обратной совместимости
@@ -84,7 +80,7 @@ export const routes: Routes = [
 				loadChildren: async () =>
 					import('./pages/invite').then((m) => m.INVITE_ROUTES),
 				data: {
-					preload: false, // Загружается только при необходимости
+					preload: false,
 				},
 			},
 		],
@@ -104,7 +100,7 @@ export const routes: Routes = [
 						(m) => m.CLIENT_PROPOSALS_PAGE_ROUTES
 					),
 				data: {
-					preload: false, // Загружается по требованию
+					preload: false,
 				},
 			},
 		],
@@ -135,20 +131,18 @@ export const routes: Routes = [
 						(m) => m.MP_RESERVATION_ROUTES
 					),
 				data: {
-					preload: false, // Загружается только при необходимости
+					preload: false,
 				},
 			},
 			{
 				path: 'contractors-dictionary',
-				children: [
-					{
-						path: '',
-						component: ContractorsDictionaryComponent,
-						data: {
-							animation: 'animation',
-						},
-					},
-				],
+				loadChildren: async () =>
+					import('@app/pages/contractors-dictionary').then(
+						(m) => m.CONTRACTORS_DICTIONARY_ROUTES
+					),
+				data: {
+					preload: false,
+				},
 			},
 			{
 				path: 'completed-work-acts',
@@ -177,7 +171,7 @@ export const routes: Routes = [
 						(m) => m.EXCESS_INCOME_ROUTES
 					),
 				data: {
-					preload: false, // Загружается только при необходимости
+					preload: false,
 				},
 			},
 		],
@@ -201,7 +195,7 @@ export const routes: Routes = [
 		loadChildren: async () =>
 			import('./pages/auth').then((m) => m.AUTH_ROUTES),
 		data: {
-			preload: false, // Загружается только при необходимости
+			preload: false,
 		},
 	},
 	{ path: '**', redirectTo: '' },
