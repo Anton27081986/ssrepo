@@ -52,6 +52,7 @@ import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-p
 import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
 import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
 import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
+import {ContractorsDictionaryComponent} from "@app/pages/contractors-dictionary/contractors-dictionary.component";
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -277,6 +278,18 @@ export const routes: Routes = [
 					{
 						path: ':id',
 						component: MpReservationOrderCardComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+				],
+			},
+			{
+				path: 'contractors-dictionary',
+				children: [
+					{
+						path: '',
+						component: ContractorsDictionaryComponent,
 						data: {
 							animation: 'animation',
 						},
