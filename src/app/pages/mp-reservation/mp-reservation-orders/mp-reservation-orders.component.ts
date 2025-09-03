@@ -281,6 +281,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	public goToOrderCard(orderId: number): void {
 		const urlTree = this.router.createUrlTree([
 			'mp-reservation-orders',
+			'orders',
 			orderId,
 		]);
 		const url = this.router.serializeUrl(urlTree);
