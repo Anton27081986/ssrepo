@@ -11,6 +11,10 @@ import { MainPageComponent } from '@app/pages/main-page/main-page.component';
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
+import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
+import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
+import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
+import {ContractorsDictionaryComponent} from "@app/pages/contractors-dictionary/contractors-dictionary.component";
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -133,6 +137,18 @@ export const routes: Routes = [
 				data: {
 					preload: false, // Загружается только при необходимости
 				},
+			},
+			{
+				path: 'contractors-dictionary',
+				children: [
+					{
+						path: '',
+						component: ContractorsDictionaryComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+				],
 			},
 			{
 				path: 'completed-work-acts',
