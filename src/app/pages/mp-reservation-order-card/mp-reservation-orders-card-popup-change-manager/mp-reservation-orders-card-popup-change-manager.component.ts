@@ -28,7 +28,7 @@ import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/m
 import { SearchInputComponent } from '@app/shared/components/inputs/search-input/search-input.component';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { IReservationOrderChangeProvisionDetails } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
-import { MpReservationOrdersCardPopupChangeManagerTrComponent } from './mp-reservation-orders-card-popup-change-manager-tr/mp-reservation-orders-card-popup-change-manager-tr.component';
+import { MpReservationOrdersCardPopupChangeManagerTrComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-manager/mp-reservation-orders-card-popup-change-manager-tr/mp-reservation-orders-card-popup-change-manager-tr.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Router } from '@angular/router';

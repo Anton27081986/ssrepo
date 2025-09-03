@@ -24,8 +24,8 @@ import { DialogComponent } from '@app/shared/components/dialog/dialog.component'
 import { TooltipTheme } from '@app/shared/components/tooltip/tooltip.enums';
 import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservation-orders-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { DraggableOrderRowDirective } from './draggable-order-row.directive/draggable-order-row.directive';
-import { IOrderReorderRequest } from './draggable-order-row.directive/draggable-order-row.model';
+import { DraggableOrderRowDirective } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.directive';
+import { IOrderReorderRequest } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/draggable-order-row.directive/draggable-order-row.model';
 import { IQueueOrderDto } from '@app/core/models/mp-reservation-orders/mp-reservation-queue-order';
 import {
 	IconComponent,

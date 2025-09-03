@@ -10,8 +10,8 @@ import {
 } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { IChangeTrackerItemDto } from '@app/core/models/change-tracker/change-tracker-item-dto';
-import { IClarifyOrder } from '@app/pages/mp-reservation/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
-import { IApproveClarificationResponse } from '@app/pages/mp-reservation/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.models';
+import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
+import { IApproveClarificationResponse } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.models';
 import {
 	IQueueOrderDto,
 	IQueueReorderPosition,

@@ -33,24 +33,24 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { Permissions } from '@app/core/constants/permissions.constants';
-import { MpReservationOrdersCardPopupRejectOrderComponent } from './mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
+import { MpReservationOrdersCardPopupRejectOrderComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-reject-order/mp-reservation-orders-card-popup-reject-order.component';
 import { ModalService } from '@app/core/modal/modal.service';
-import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from './mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
+import { MpReservationOrdersCardPopupChangeProvisionDateComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-date/mp-reservation-orders-card-popup-change-provision-date.component';
 import { DatePipe, NgIf } from '@angular/common';
-import { MpReservationOrdersCardPopupQualificationComponent } from './mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.component';
-import { MpReservationOrdersCardPopupChangeProvisionDetailsComponent } from './mp-reservation-orders-card-popup-change-provision-details/mp-reservation-orders-card-popup-change-provision-details.component';
-import { MpReservationOrdersCardPopupChangeManagerComponent } from './mp-reservation-orders-card-popup-change-manager/mp-reservation-orders-card-popup-change-manager.component';
-import { MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent } from './mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.component';
-import { MpReservationOrdersCardPopupOrderInProductionComponent } from './mp-reservation-orders-card-popup-order-in-production/mp-reservation-orders-card-popup-order-in-production.component';
-import { MpReservationOrdersCardPopupOrderApprovalComponent } from './mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component';
+import { MpReservationOrdersCardPopupQualificationComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.component';
+import { MpReservationOrdersCardPopupChangeProvisionDetailsComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-details/mp-reservation-orders-card-popup-change-provision-details.component';
+import { MpReservationOrdersCardPopupChangeManagerComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-manager/mp-reservation-orders-card-popup-change-manager.component';
+import { MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-approve-details-change/mp-reservation-orders-card-popup-change-approve-details-change.component';
+import { MpReservationOrdersCardPopupOrderInProductionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-in-production/mp-reservation-orders-card-popup-order-in-production.component';
+import { MpReservationOrdersCardPopupOrderApprovalComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-order-approval/mp-reservation-orders-card-popup-order-approval.component';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { CorrespondenceTypeEnum } from '@app/widgets/correspondence/correspondence-type-enum';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MpReservationOrdersCardPopupCancelActionComponent } from './mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
+import { MpReservationOrdersCardPopupCancelActionComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-cancel-action/mp-reservation-orders-card-popup-cancel-action.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
 import { PermissionsFacadeService } from '@app/core/facades/permissions-facade.service';
-import { MpReservationOrdersPopupHistoryComponent } from '../mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
+import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
 
 const EmptyDate = '0001-01-01T00:00:00';
 

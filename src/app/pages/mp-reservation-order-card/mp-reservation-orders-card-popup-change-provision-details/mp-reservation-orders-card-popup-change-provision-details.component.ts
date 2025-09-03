@@ -19,7 +19,7 @@ import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IProvisionDetailsTypes } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { IReservationOrderChangeProvisionDetails } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-provision-details';
-import { MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent } from './mp-reservation-orders-card-popup-change-provision-details-tr/mp-reservation-orders-card-popup-change-provision-details-tr.component';
+import { MpReservationOrdersCardPopupChangeProvisionDetailsTrComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-change-provision-details/mp-reservation-orders-card-popup-change-provision-details-tr/mp-reservation-orders-card-popup-change-provision-details-tr.component';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { ModalService } from '@app/core/modal/modal.service';

@@ -20,6 +20,7 @@ import {
 	TextWeight,
 	TooltipDirective,
 } from '@front-components/components';
+import { IconType as IconTypeFrontLib } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
@@ -31,13 +32,13 @@ import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservati
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalService } from '@app/core/modal/modal.service';
-import { MpReservationOrdersPopupDateProvisionComponent } from './mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component';
+import { MpReservationOrdersPopupDateProvisionComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component';
 import { Router } from '@angular/router';
-import { MpReservationOrdersPopupHistoryComponent } from './mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
-import { MpReservationOrdersPopupRemnantsDetailsComponent } from './mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
-import { MpReservationOrdersPopupAddOrderComponent } from './mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
-import { MpReservationOrdersPopupTotalAmountComponent } from './mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
-import { MpReservationOrdersPopupChangeQueueComponent } from './mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
+import { MpReservationOrdersPopupHistoryComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
+import { MpReservationOrdersPopupRemnantsDetailsComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
+import { MpReservationOrdersPopupAddOrderComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
+import { MpReservationOrdersPopupTotalAmountComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
+import { MpReservationOrdersPopupChangeQueueComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
@@ -46,6 +47,7 @@ import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permis
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FilterBuilder } from '@app/core/utils/filter-builder.util';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
+import { EmptyStateComponent } from '@front-library/components';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -68,6 +70,7 @@ import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-r
 		IconComponent,
 		TagV2Component,
 		NumWithSpacesPipe,
+		EmptyStateComponent,
 	],
 })
 export class MPReservationOrdersComponent implements OnInit {
@@ -83,6 +86,7 @@ export class MPReservationOrdersComponent implements OnInit {
 	protected readonly IconPosition = IconPosition;
 	protected readonly IconType = IconType;
 	protected readonly Colors = Colors;
+	protected readonly IconTypeFrontLib = IconTypeFrontLib;
 
 	protected pipeNumWithSpaces = new NumWithSpacesPipe();
 	public readonly emptyDate = '0001-01-01T00:00:00';

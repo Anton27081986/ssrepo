@@ -8,20 +8,12 @@ import {
 	proposalsPermissionsGuard,
 } from '@app/core/guards';
 import { MainPageComponent } from '@app/pages/main-page/main-page.component';
-// Profile components загружаются через lazy loading
-// Raw material accounting components загружаются через lazy loading
-// Completed work acts components загружаются через lazy loading
-// Clients dictionary components загружаются через lazy loading
-// Invite components загружаются через lazy loading
-// Client proposals components загружаются через lazy loading
-// Excess income components загружаются через lazy loading
 import { NotPermissionPageComponent } from '@app/pages/not-permission-page/not-permission-page.component';
-// Auth components загружаются через lazy loading
-// Production plan components загружаются через lazy loading
 import { FrontLibraryLayoutComponent } from '@app/shared/layouts/front-library-layout/front-library-layout.component';
 import { operationPlanPermissionGuard } from '@app/core/guards/production-plan-permission.guard';
-// MP reservation components загружаются через lazy loading
 import { mpReservationOrdersPermissionsGuard } from '@app/core/guards/mp-reservation-orders';
+import { MPReservationOrdersComponent } from '@app/pages/mp-reservation-orders/mp-reservation-orders.component';
+import { MpReservationOrderCardComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-order-card.component';
 
 export const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: '' },
@@ -138,13 +130,22 @@ export const routes: Routes = [
 			{
 				path: 'mp-reservation-orders',
 				canActivate: [mpReservationOrdersPermissionsGuard],
-				loadChildren: async () =>
-					import('@app/pages/mp-reservation').then(
-						(m) => m.MP_RESERVATION_ROUTES
-					),
-				data: {
-					preload: false,
-				},
+				children: [
+					{
+						path: '',
+						component: MPReservationOrdersComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+					{
+						path: ':id',
+						component: MpReservationOrderCardComponent,
+						data: {
+							animation: 'animation',
+						},
+					},
+				],
 			},
 			{
 				path: 'completed-work-acts',

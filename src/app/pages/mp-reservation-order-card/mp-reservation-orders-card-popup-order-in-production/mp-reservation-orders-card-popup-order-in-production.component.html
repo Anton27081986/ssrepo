@@ -1,0 +1,167 @@
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
+	<snab-card
+		class="in-production-form"
+		[headerRef]="header"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(mousedown)="$event.stopPropagation()"
+	>
+		<ng-template #header>
+			<div class="header">
+				<ss-lib-text
+					[type]="TextType.HeadingXs"
+					[weight]="TextWeight.Semibold"
+				>
+					Размещение в производстве
+				</ss-lib-text>
+				<ss-lib-button
+					[type]="ButtonType.Ghost"
+					[icon]="IconType.Close"
+					[iconPosition]="IconPosition.OnlyIcon"
+					(click)="close()"
+				></ss-lib-button>
+			</div>
+		</ng-template>
+
+		<ng-template #body>
+			<form
+				class="content"
+				[formGroup]="inProductionForm"
+			>
+				<div class="content-header">
+					<div class="content-text">
+						<div class="content-row">
+							<ss-lib-text [weight]="TextWeight.Semibold">
+								Менеджер продаж:
+								{{ order()!.manager?.name }}
+							</ss-lib-text>
+						</div>
+						<div class="content-row">
+							<ss-lib-text [weight]="TextWeight.Semibold">
+								Количество:
+								{{ order()!.totalAmount }}
+							</ss-lib-text>
+						</div>
+						<div class="content-row">
+							<ss-lib-text [weight]="TextWeight.Semibold">
+								Кратность упаковки:
+								{{ order()!.muptiplicityPack }}
+							</ss-lib-text>
+						</div>
+						<div class="content-row">
+							<ss-lib-text [weight]="TextWeight.Semibold">
+								Оптимальная партия:
+								{{ order()!.optimalBatch }}
+							</ss-lib-text>
+						</div>
+					</div>
+					<div class="content-button">
+						<ss-lib-button
+							text="Добавить даты"
+							style="margin-left: auto"
+							[size]="ExtraSize.lg"
+							(click)="addDatesRow()"
+						></ss-lib-button>
+					</div>
+				</div>
+				<table class="dates-table">
+					<thead>
+						<tr>
+							<th>
+								<ss-lib-text [weight]="TextWeight.Semibold">
+									Дата производства
+								</ss-lib-text>
+							</th>
+							<th>
+								<ss-lib-text [weight]="TextWeight.Semibold">
+									Дата обеспечения
+								</ss-lib-text>
+							</th>
+							<th>
+								<ss-lib-text [weight]="TextWeight.Semibold"
+									>Кол-во (факт)</ss-lib-text
+								>
+							</th>
+							<th>
+								<ss-lib-text [weight]="TextWeight.Semibold"
+									>Действия</ss-lib-text
+								>
+							</th>
+						</tr>
+					</thead>
+					<tbody formArrayName="dates">
+						<tr
+							*ngFor="let row of dates.controls; let i = index"
+							[formGroupName]="i"
+						>
+							<td>
+								<ss-lib-form-field
+									[errorText]="'Неверно заполнено поле'"
+								>
+									<ss-lib-datepicker
+										fieldCtrl
+										[min]="minDate"
+										[formControl]="
+											row.controls.productionDate
+										"
+									></ss-lib-datepicker
+								></ss-lib-form-field>
+							</td>
+							<td>
+								<ss-lib-form-field
+									[errorText]="'Неверно заполнено поле'"
+								>
+									<ss-lib-datepicker
+										fieldCtrl
+										[min]="minDate"
+										[formControl]="
+											row.controls.provisionDate
+										"
+									></ss-lib-datepicker
+								></ss-lib-form-field>
+							</td>
+							<td>
+								<ss-lib-form-field
+									[errorText]="'Неверно заполнено поле'"
+								>
+									<ss-lib-input
+										fieldCtrl
+										formControlName="manufacturingAmount"
+										[type]="InputType.Number"
+										[size]="ExtraSize.md"
+									></ss-lib-input>
+								</ss-lib-form-field>
+							</td>
+							<td class="row-basket">
+								<ss-lib-button
+									[type]="ButtonType.Ghost"
+									[size]="ExtraSize.lg"
+									[icon]="IconType.Trash"
+									(click)="removeDatesRow(i)"
+								></ss-lib-button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<ss-lib-button
+					text="Отмена"
+					[type]="ButtonType.Secondary"
+					[size]="ExtraSize.lg"
+					(click)="openPopupCancelAction()"
+				></ss-lib-button>
+				<ss-lib-button
+					text="Разместить"
+					[size]="ExtraSize.lg"
+					(click)="openPopupApproveAction()"
+				></ss-lib-button>
+			</div>
+		</ng-template>
+	</snab-card>
+</div>
