@@ -92,7 +92,9 @@ export class MpReservationOrdersCardPopupOrderInProductionComponent
 		private readonly facade: MpReservationOrderCardFacadeService
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
+		this.minDate.setDate(this.minDate.getDate() + 1);
+
 		this.inProductionForm = new FormGroup({
 			dates: new FormArray<
 				FormGroup<{
