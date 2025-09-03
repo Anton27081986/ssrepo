@@ -1,6 +1,6 @@
 /**
  * Barrel export для Raw Material Accounting модуля
- * 
+ *
  * Экспортирует роуты для lazy loading и основные компоненты модуля
  */
 

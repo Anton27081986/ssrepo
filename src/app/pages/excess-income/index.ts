@@ -1,6 +1,6 @@
 /**
  * Barrel export для Excess Income модуля
- * 
+ *
  * Экспортирует роуты для lazy loading и основные компоненты модуля
  */
 

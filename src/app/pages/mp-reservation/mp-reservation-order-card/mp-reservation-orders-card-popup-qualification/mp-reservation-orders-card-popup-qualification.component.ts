@@ -22,7 +22,7 @@ import {
 } from '@front-components/components';
 import { TableV2Component } from '@app/shared/components/ss-table-v2/ss-table-v2.component';
 import { NgForOf } from '@angular/common';
-import { MpReservationOrdersCardPopupQualificationTrComponent } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification-tr/mp-reservation-orders-card-popup-qualification-tr.component';
+import { MpReservationOrdersCardPopupQualificationTrComponent } from './mp-reservation-orders-card-popup-qualification-tr/mp-reservation-orders-card-popup-qualification-tr.component';
 import { DIALOG_DATA } from '@app/core/modal/modal-tokens';
 import { IOrderRequests } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { IOrderChangeQualification } from '@app/core/models/mp-reservation-orders/mp-reservation-order-change-qualification';
@@ -30,7 +30,7 @@ import { SearchInputComponent } from '@app/shared/components/inputs/search-input
 import { IFilterOption } from '@app/shared/components/filters/filters.component';
 import { MpReservationOrderCardFacadeService } from '@app/core/facades/mp-reservation-order-card-facade.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
+import { IClarifyOrder } from './mp-reservation-orders-card-popup-qualification.models';
 import { NoticeDialogComponent } from '@app/shared/components/notice-dialog/notice-dialog.component';
 import { ModalService } from '@app/core/modal/modal.service';
 

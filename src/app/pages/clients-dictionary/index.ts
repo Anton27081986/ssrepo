@@ -3,7 +3,10 @@ export { CLIENTS_DICTIONARY_ROUTES } from './clients-dictionary.routes';
 
 // Компоненты списка клиентов
 export { ClientsListPageComponent } from './clients-list-page/clients-list-page.component';
-export type { IClientTableItem, TableState } from './clients-list-page/clients-list-page.component';
+export type {
+	IClientTableItem,
+	TableState,
+} from './clients-list-page/clients-list-page.component';
 
 // Компоненты карточки клиента
 export { ClientCardComponent } from './client-card/client-card.component';

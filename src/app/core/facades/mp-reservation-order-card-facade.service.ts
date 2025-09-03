@@ -8,7 +8,7 @@ import {
 } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
-import { IClarifyOrder } from '@app/pages/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
+import { IClarifyOrder } from '@app/pages/mp-reservation/mp-reservation-order-card/mp-reservation-orders-card-popup-qualification/mp-reservation-orders-card-popup-qualification.models';
 import { IWarehouseBalanceResponse } from '@app/core/models/mp-reservation-orders/mp-reservation-warehouse-stock';
 import {
 	IDispatchDto,
