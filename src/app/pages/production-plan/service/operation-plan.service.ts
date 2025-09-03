@@ -101,7 +101,7 @@ export class OperationPlanService {
 	public transferProductionPlan(
 		rowId: number,
 		params: TransferProductionPlanPatch
-	): Observable<void> {
+	): Observable<OperationPlanItem> {
 		return this.operationPlanApiService
 			.transferProductionPlan(rowId, params)
 			.pipe(
