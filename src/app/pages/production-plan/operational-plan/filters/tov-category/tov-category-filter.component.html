@@ -41,23 +41,40 @@
 					>{{ item.item.name }}
 				</ss-lib-text>
 			</ss-lib-dropdown-item>
-			<div class="tov-category-filter-divider">
-				<ss-lib-divider
-					*ngIf="(selectedItems$ | async)?.length"
-				></ss-lib-divider>
-			</div>
-			<ss-lib-dropdown-item
-				*ngFor="let item of unSelectedItems$ | async"
-				(click)="selectedItem(item)"
+			<div
+				*ngIf="(viewSelectedItems$ | async)?.length"
+				class="tov-category-filter-divider"
 			>
-				<ss-lib-checkbox></ss-lib-checkbox>
-				<ss-lib-text
-					[type]="TextType.BodySm"
-					[weight]="TextWeight.Medium"
-					[color]="Colors.TextAction2"
-					>{{ item.item.name }}
-				</ss-lib-text>
-			</ss-lib-dropdown-item>
+				<ss-lib-divider></ss-lib-divider>
+			</div>
+			<ng-container *ngIf="unSelectedItems$ | async as unSelectedItems">
+				<ng-container *ngIf="unSelectedItems.length; else empty">
+					<ss-lib-dropdown-item
+						*ngFor="let item of unSelectedItems"
+						(click)="selectedItem(item)"
+					>
+						<ss-lib-checkbox></ss-lib-checkbox>
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Medium"
+							[color]="Colors.TextAction2"
+							>{{ item.item.name }}
+						</ss-lib-text>
+					</ss-lib-dropdown-item>
+				</ng-container>
+				<ng-template #empty>
+					<div class="tov-filter-no-content">
+						<ss-lib-text
+							[align]="Align.Center"
+							[color]="Colors.TextBody3"
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Regular"
+							>По запросу «{{ queryControl.value }}» ничего не
+							найдено. Попробуйте изменить запрос.
+						</ss-lib-text>
+					</div>
+				</ng-template>
+			</ng-container>
 		</div>
 	</ss-lib-scrollbar>
 </div>

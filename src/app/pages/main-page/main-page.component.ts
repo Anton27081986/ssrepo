@@ -3,16 +3,16 @@ import { first } from 'rxjs';
 import { UserProfileStoreService } from '@app/core/states/user-profile-store.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { environment } from '@environments/environment';
-import { AuctionSalesComponent } from '@app/widgets/auction-sales/auction-sales.component';
-import { ThanksColleagueComponent } from '@app/widgets/thank-colleague/thanks-colleague.component';
-import { AddressBookComponent } from '@app/widgets/address-book/address-book.component';
-import { BirthdayComponent } from '@app/widgets/birthday/birthday.component';
+import { AuctionSalesComponent } from './widgets/auction-sales/auction-sales.component';
+import { ThanksColleagueComponent } from './widgets/thank-colleague/thanks-colleague.component';
+import { AddressBookComponent } from './widgets/address-book/address-book.component';
+import { BirthdayComponent } from './widgets/birthday/birthday.component';
 import { CommonModule, NgIf } from '@angular/common';
-import { ExchangeRatesComponent } from '@app/widgets/exchange-rates/exchange-rates.component';
-import { RatingComponent } from '@app/widgets/rating/rating.component';
-import { VictoryComponent } from '@app/widgets/victory/victory.component';
-import { ThanksPartnerComponent } from '@app/widgets/thank-partner/thanks-partner.component';
-import { TransportComponent } from '@app/widgets/transport/transport.component';
+import { ExchangeRatesComponent } from './widgets/exchange-rates/exchange-rates.component';
+import { RatingComponent } from './widgets/rating/rating.component';
+import { VictoryComponent } from './widgets/victory/victory.component';
+import { ThanksPartnerComponent } from './widgets/thank-partner/thanks-partner.component';
+import { TransportComponent } from './widgets/transport/transport.component';
 
 @UntilDestroy()
 @Component({

@@ -84,7 +84,7 @@ import { DatePipe, NgFor, NgIf } from '@angular/common';
 	templateUrl: './operation-plan-table.component.html',
 	styleUrl: './operation-plan-table.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	providers: [SsTableState],
+	providers: [],
 })
 @UntilDestroy()
 export class OperationPlanTableComponent {

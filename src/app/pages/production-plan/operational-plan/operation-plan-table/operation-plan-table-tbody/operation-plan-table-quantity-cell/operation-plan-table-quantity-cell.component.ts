@@ -1,13 +1,15 @@
 import {
-	ChangeDetectorRef,
 	Component,
-	effect,
 	inject,
 	input,
 	InputSignal,
+	OnInit,
+	Signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+	ActionBarComponent,
+	ActionBarItemComponent,
 	ButtonComponent,
 	Colors,
 	DatepickerComponent,
@@ -20,13 +22,13 @@ import {
 	IconType,
 	NumberPickerComponent,
 	PopoverTriggerForDirective,
+	SsTableState,
 	Status,
 	StatusIconComponent,
 	TextComponent,
 	TextType,
 	TooltipDirective,
 	TooltipPosition,
-	UtilityButtonComponent,
 } from '@front-library/components';
 import {
 	OperationPlanItem,
@@ -36,16 +38,25 @@ import { OperationPlanPopupService } from '@app/pages/production-plan/service/op
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { ConnectionPositionPair, OverlayModule } from '@angular/cdk/overlay';
 import { OperationPlanService } from '@app/pages/production-plan/service/operation-plan.service';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+	AbstractControl,
+	AsyncValidatorFn,
+	FormControl,
+	ReactiveFormsModule,
+	Validators,
+} from '@angular/forms';
 import { BASE_COLUMN_MAP } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-tbody.component';
+import { map, Observable, of, tap } from 'rxjs';
+import { catchError, delay } from 'rxjs/operators';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
 	selector: 'app-operation-plan-table-quantity-cell',
 	templateUrl: './operation-plan-table-quantity-cell.component.html',
 	styleUrls: ['./operation-plan-table-quantity-cell.component.scss'],
 	imports: [
 		CommonModule,
-		UtilityButtonComponent,
 		PopoverTriggerForDirective,
 		DropdownListComponent,
 		DropdownItemComponent,
@@ -59,16 +70,21 @@ import { BASE_COLUMN_MAP } from '@app/pages/production-plan/operational-plan/ope
 		FieldCtrlDirective,
 		FormFieldComponent,
 		DatepickerComponent,
+		ActionBarComponent,
+		ActionBarItemComponent,
 	],
 	standalone: true,
 })
-export class OperationalPlanTableQuantityCellComponent {
+export class OperationalPlanTableQuantityCellComponent implements OnInit {
 	private readonly popupService: OperationPlanPopupService = inject(
 		OperationPlanPopupService
 	);
 
-	private readonly changeDetectorRef: ChangeDetectorRef =
-		inject(ChangeDetectorRef);
+	private readonly tableStateService =
+		inject<SsTableState<OperationPlanItem>>(SsTableState);
+
+	public data: Signal<OperationPlanItem[] | undefined> =
+		this.tableStateService.data;
 
 	private readonly operationPlanService = inject(OperationPlanService);
 
@@ -78,24 +94,23 @@ export class OperationalPlanTableQuantityCellComponent {
 	public hasViewAccess: InputSignal<boolean> = input<boolean>(false);
 	public hasQuantityEditAccess: InputSignal<boolean> = input<boolean>(false);
 	public hasTransferAccess: InputSignal<boolean> = input<boolean>(false);
-	public row: InputSignal<OperationPlanItem> = input.required();
 	public columnId: InputSignal<string> = input.required();
 	public value: InputSignal<string | number> = input.required();
 
-	public readonly minDate: Date = new Date();
+	public row: InputSignal<OperationPlanItem> = input.required();
 
-	public quantityInputControl = new FormControl<string | number | null>(null);
-	public postponeDateControl = new FormControl<string | number | null>(
-		null,
-		Validators.required
-	);
+	public minDate!: Date;
+
+	public quantityInputControl!: FormControl<number | null>;
+	public postponeDateControl!: FormControl<Date | null>;
 
 	protected isChangeQuantityOpen = false;
 	protected isPostponeOpen = false;
+	protected isChangedDisabled = false;
 
 	protected positionPairs: ConnectionPositionPair[] = [
 		{
-			offsetY: 180,
+			offsetY: 200,
 			originX: 'end',
 			originY: 'bottom',
 			overlayX: 'center',
@@ -110,10 +125,18 @@ export class OperationalPlanTableQuantityCellComponent {
 	protected readonly Status = Status;
 	protected readonly Colors = Colors;
 	protected readonly IconPosition = IconPosition;
-	constructor() {
-		effect(() => {
-			this.quantityInputControl.setValue(this.value());
-		});
+
+	public ngOnInit() {
+		this.minDate = new Date(this.getDay()?.date!);
+		this.minDate.setDate(this.minDate.getDate() + 1);
+		this.quantityInputControl = new FormControl<number | null>(
+			Number(this.value())
+		);
+		this.postponeDateControl = new FormControl<Date | null>(
+			this.minDate,
+			Validators.required,
+			dateNotInPastValidator(this.minDate)
+		);
 	}
 
 	protected changePlan(): void {
@@ -122,56 +145,107 @@ export class OperationalPlanTableQuantityCellComponent {
 
 		if (this.columnId().startsWith('plan')) {
 			if (oldValue?.id) {
+				this.isChangedDisabled = true;
+				this.isChangeQuantityOpen = false;
 				this.operationPlanService
-					.changePlan(oldValue.id, newValue)
-					.subscribe((r: OperationPlanItem) => {
-						this.row().weekPlanQuantity = r.weekPlanQuantity;
-						this.row().monthPlanQuantity = r.monthPlanQuantity;
-						this.row().planDays = r.planDays;
-						this.isChangeQuantityOpen = false;
-						this.changeDetectorRef.detectChanges();
+					.changePlan(this.row().id, oldValue.id, newValue)
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			}
 		}
 	}
 
-	protected editPlanFact(
-		event: Event,
-		row: OperationPlanItem,
-		columnId: string
-	): void {
+	protected editPlanFact(event: Event, columnId: string): void {
 		// eslint-disable-next-line @typescript-eslint/no-shadow
 		const input = event.target as HTMLInputElement;
 		const newValue = input.value.replace(' ', '').replace(',', '.') || null;
 		const oldValue =
-			this.getDayCell(row, columnId.replace('fact', 'plan')) ||
-			this.getDayCell(row, columnId.replace('plan', 'fact'));
+			this.getDayCell(this.row(), columnId.replace('fact', 'plan')) ||
+			this.getDayCell(this.row(), columnId.replace('plan', 'fact'));
 
 		if (columnId.startsWith('plan')) {
 			if (oldValue?.id) {
 				this.operationPlanService
-					.updatePlanFact(row.id, {
+					.updatePlanFact(this.row().id, {
 						id: oldValue.id,
 						planQuantity: newValue,
 						factQuantity: oldValue.factQuantity,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						row.weekPlanQuantity = r.weekPlanQuantity;
-						row.monthPlanQuantity = r.monthPlanQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			} else if (newValue) {
 				this.operationPlanService
-					.setPlanFact(row.id, {
+					.setPlanFact(this.row().id, {
 						planDate: new Date(columnId.slice(-10)).toISOString(),
 						planQuantity: newValue,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						row.weekPlanQuantity = r.weekPlanQuantity;
-						row.monthPlanQuantity = r.monthPlanQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			}
 		}
@@ -179,28 +253,64 @@ export class OperationalPlanTableQuantityCellComponent {
 		if (columnId.startsWith('fact')) {
 			if (oldValue?.id) {
 				this.operationPlanService
-					.updatePlanFact(row.id, {
+					.updatePlanFact(this.row().id, {
 						id: oldValue.id,
 						factQuantity: newValue,
 						planQuantity: oldValue.planQuantity,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						row.weekFactQuantity = r.weekFactQuantity;
-						row.monthFactQuantity = r.monthFactQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			} else if (newValue) {
 				this.operationPlanService
-					.setPlanFact(row.id, {
+					.setPlanFact(this.row().id, {
 						planDate: new Date(columnId.slice(-10)).toISOString(),
 						factQuantity: newValue,
 					})
-					.subscribe((r: OperationPlanItem) => {
-						row.weekFactQuantity = r.weekFactQuantity;
-						row.monthFactQuantity = r.monthFactQuantity;
-						row.planDays = r.planDays;
-						this.changeDetectorRef.detectChanges();
+					.pipe(untilDestroyed(this))
+					.subscribe((r) => {
+						const items = this.data();
+
+						if (items) {
+							const isChanged = items.find((row, index) => {
+								if (row.id === this.row().id) {
+									items[index] = r;
+
+									return true;
+								}
+
+								return false;
+							});
+
+							if (isChanged) {
+								this.tableStateService.initialize(items, [
+									...this.tableStateService.visibleColumns(),
+								]);
+							}
+						}
+
+						this.isChangedDisabled = false;
 					});
 			}
 		}
@@ -306,17 +416,42 @@ export class OperationalPlanTableQuantityCellComponent {
 			);
 
 		if (oldValue) {
+			this.isChangedDisabled = true;
+			this.isPostponeOpen = false;
 			this.operationPlanService
-				.transferProductionPlan({
+				.transferProductionPlan(this.row().id, {
 					id: oldValue.id,
-					productionDate: this.postponeDateControl.value,
+					productionDate: this.getFormatDate(
+						this.postponeDateControl.value?.toString()!
+					).toString()!,
 					quantity: this.quantityInputControl.value,
 				})
-				.pipe()
+				.pipe(
+					catchError((err: unknown) => {
+						this.isChangedDisabled = false;
+						throw err;
+					})
+				)
 				.subscribe(() => {
-					this.isPostponeOpen = false;
+					this.isChangedDisabled = false;
 				});
 		}
+	}
+
+	public getFormatDate(dateStr: string): string {
+		// Создаем объект Date
+		const date = new Date(dateStr);
+
+		// Получаем день, месяц и год
+		const day = date.getDate();
+		const month = date.getMonth() + 1; // месяцы с 0, добавляем 1
+		const year = date.getFullYear();
+
+		// Форматируем с добавлением ведущих нулей для дня и месяца
+		const formattedDay = day.toString().padStart(2, '0');
+		const formattedMonth = month.toString().padStart(2, '0');
+
+		return `${year}-${formattedMonth}-${formattedDay}`;
 	}
 
 	public checkPlanFactValue(event: Event): void {
@@ -349,4 +484,32 @@ export class OperationalPlanTableQuantityCellComponent {
 			this.popupService.openPostponePlanModal(day.id, day.date);
 		}
 	}
+}
+
+export function dateNotInPastValidator(targetDate: Date): AsyncValidatorFn {
+	return (
+		control: AbstractControl
+	): Observable<{ [key: string]: true } | null> => {
+		const selectedDate = control.value as Date;
+
+		if (!selectedDate) {
+			return of(null);
+		}
+
+		return of(selectedDate).pipe(
+			delay(100),
+			map((date) => {
+				const selectedTime = new Date(date).setHours(0, 0, 0, 0);
+				const targetTime = new Date(targetDate).setHours(0, 0, 0, 0);
+
+				if (selectedTime < targetTime) {
+					control.setValue(targetDate);
+
+					return { dateInPast: true };
+				}
+
+				return null;
+			})
+		);
+	};
 }

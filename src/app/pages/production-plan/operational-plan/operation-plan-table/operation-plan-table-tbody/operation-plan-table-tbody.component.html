@@ -47,7 +47,6 @@
 								operationPlanState.getHasPermissionAddComments
 							) {
 								<ss-lib-action-bar
-									class="actions"
 									[class]="{
 										hidden: !row.isComment,
 									}"
@@ -98,7 +97,8 @@
 					} @else if (
 						column.id === 'optimalBatch' ||
 						column.id.startsWith('week') ||
-						column.id.startsWith('month')
+						column.id.startsWith('month') ||
+						column.id === 'productManagerUserPlanQuantity'
 					) {
 						<ss-lib-text
 							[type]="TextType.BodySm"

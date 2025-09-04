@@ -6,20 +6,13 @@ import {
 	ViewChild,
 } from '@angular/core';
 import {
-	AvatarComponent,
 	ButtonComponent,
 	ButtonType,
-	CardComponent,
 	Colors,
-	ExtendedSize,
-	FieldCtrlDirective,
-	FormFieldComponent,
 	IconComponent,
 	IconPosition,
 	IconType,
-	InputComponent,
 	Size,
-	TextareaComponent,
 	TextComponent,
 	TextType,
 	TextWeight,
@@ -108,7 +101,6 @@ export class ChatBotComponent {
 	protected readonly TextWeight = TextWeight;
 	protected readonly ButtonType = ButtonType;
 	protected readonly IconPosition = IconPosition;
-	protected readonly ExtendedSize = ExtendedSize;
 	protected readonly ChatBotMessageTypeEnum = ChatBotMessageTypeEnum;
 	protected readonly Colors = Colors;
 	protected readonly Size = Size;
@@ -149,7 +141,7 @@ export class ChatBotComponent {
 			});
 	}
 
-	protected loadMoreMessages() {
+	protected loadMoreMessages(): void {
 		if (
 			this.messagesElement.nativeElement.scrollHeight -
 				this.messagesElement.nativeElement.offsetHeight +
@@ -163,7 +155,7 @@ export class ChatBotComponent {
 		}
 	}
 
-	public selectSubsector(subsector: IDictionaryItemDto) {
+	public selectSubsector(subsector: IDictionaryItemDto): void {
 		this.botFacade.setActiveSubsector(subsector);
 	}
 
@@ -189,7 +181,7 @@ export class ChatBotComponent {
 			});
 	}
 
-	public close() {
+	public close(): void {
 		this.botFacade.toggleBot();
 		this.questionForm.controls.question.setValue(null);
 	}

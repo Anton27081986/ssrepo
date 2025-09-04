@@ -37,24 +37,8 @@ input::-webkit-inner-spin-button {
 	}
 }
 
-.actions {
-	position: relative;
-}
-
-.tov-link {
-	transition: all 0.5s ease;
-	position: absolute;
-	left: -5px;
-}
-
 .comment {
 	z-index: 1;
-}
-
-.actions:hover {
-	.tov-link {
-		left: -28px
-	}
 }
 
 tr td:first-child {

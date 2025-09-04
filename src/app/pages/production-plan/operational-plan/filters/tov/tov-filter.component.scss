@@ -10,6 +10,17 @@
   &-divider {
    padding: 4px 16px;
   }
+
+  &-no-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 16px;
+
+    ss-lib-text {
+      width: 316px;
+    }
+  }
 }
 
 ss-lib-form-field {

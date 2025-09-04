@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
+	Align,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -23,9 +24,8 @@ import {
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-tov-filter',
@@ -56,14 +56,12 @@ export class TovFilterComponent
 		OperationPlanFiltersApiService
 	);
 
-	protected operationPlanState: OperationPlanState =
-		inject(OperationPlanState);
-
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
 	protected readonly ExtraSize = ExtraSize;
+	protected readonly Align = Align;
 
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
@@ -76,12 +74,7 @@ export class TovFilterComponent
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
 		return this.filterApiService
-			.getTov(
-				query,
-				this.mapIds(),
-				this.operationPlanState.weekId$.value!,
-				false
-			)
+			.getTov(query, this.mapViewSelectedIds(), false)
 			.pipe(
 				map((value) => {
 					return value.items;
@@ -92,16 +85,10 @@ export class TovFilterComponent
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService
-			.getTov('', ids, this.operationPlanState.weekId$.value!, true)
-			.pipe(
-				map((value) => {
-					return value.items;
-				})
-			);
-	}
-
-	public mapIds(): number[] {
-		return this.viewSelectedItems$.value.map((item) => item.id);
+		return this.filterApiService.getTov('', ids, true).pipe(
+			map((value) => {
+				return value.items;
+			})
+		);
 	}
 }

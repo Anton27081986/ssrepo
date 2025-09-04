@@ -13,7 +13,7 @@ export function generateColumnOperationPlanConfig(
 		{
 			id: 'tov',
 			name: 'Товарная позиция (ТП)',
-			showInDropdown: false,
+			showInDropdown: true,
 			showInHeader: true,
 			visible: true,
 			stickyColumn: true,
@@ -157,7 +157,6 @@ export function generateColumnOperationPlanConfig(
 			showInHeader: true,
 			visible: true,
 		},
-
 	];
 
 	return [...baseColumns, weekColumn, ...dateColumns, ...summaryColumns];

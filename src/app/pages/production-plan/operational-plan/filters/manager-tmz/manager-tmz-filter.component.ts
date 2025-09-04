@@ -10,6 +10,7 @@ import {
 } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { map, Observable } from 'rxjs';
 import {
+	Align,
 	AvatarComponent,
 	CheckboxComponent,
 	Colors,
@@ -27,7 +28,7 @@ import {
 } from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-manager-tmz-filter',
@@ -64,6 +65,7 @@ export class ManagerTmzFilterComponent
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -76,17 +78,19 @@ export class ManagerTmzFilterComponent
 	public override getList$(
 		query: string
 	): Observable<AvatarDictionaryItemDto[]> {
-		return this.filterApiService.getProductManagerUser(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getProductManagerUser(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<AvatarDictionaryItemDto[]> {
-		return this.filterApiService.getProductManagerUser('', ids).pipe(
+		return this.filterApiService.getProductManagerUser('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})

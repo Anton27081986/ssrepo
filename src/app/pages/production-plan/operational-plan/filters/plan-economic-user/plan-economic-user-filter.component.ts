@@ -4,8 +4,13 @@ import {
 	inject,
 	OnInit,
 } from '@angular/core';
-import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import {
+	AvatarDictionaryItemDto,
+	OperationPlanFiltersApiService,
+} from '@app/pages/production-plan/service/operation-plan.filters-api-service';
+import {
+	Align,
+	AvatarComponent,
 	CheckboxComponent,
 	Colors,
 	DividerComponent,
@@ -22,9 +27,8 @@ import {
 } from '@front-library/components';
 import { map, Observable } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
 import { AsyncPipe, NgFor, NgIf } from '@angular/common';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production-plan/operational-plan/filters/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-plan-economic-user-filter',
@@ -42,13 +46,14 @@ import { HeaderFilterCheckboxItemAbstractComponent } from '@app/pages/production
 		DividerComponent,
 		NgIf,
 		NgFor,
+		AvatarComponent,
 	],
 	templateUrl: 'plan-economic-user-filter.component.html',
 	styleUrls: ['plan-economic-user-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlanEconomicUserFilterComponent
-	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
+	extends HeaderFilterCheckboxItemAbstractComponent<AvatarDictionaryItemDto>
 	implements OnInit
 {
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
@@ -60,6 +65,7 @@ export class PlanEconomicUserFilterComponent
 	protected readonly Colors = Colors;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly IconType = IconType;
+	protected readonly Align = Align;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -69,18 +75,22 @@ export class PlanEconomicUserFilterComponent
 		super.ngOnInit();
 	}
 
-	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getPlanEconomicUser(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+	public override getList$(
+		query: string
+	): Observable<AvatarDictionaryItemDto[]> {
+		return this.filterApiService
+			.getPlanEconomicUser(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
-	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getPlanEconomicUser('', ids).pipe(
+	): Observable<AvatarDictionaryItemDto[]> {
+		return this.filterApiService.getPlanEconomicUser('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})

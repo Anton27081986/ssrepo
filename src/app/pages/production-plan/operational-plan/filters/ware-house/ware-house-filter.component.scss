@@ -4,11 +4,22 @@
   gap: 4px;
 
    &__content {
-     height: 350px;
+     height: 345px;
    }
 
   &-divider {
    padding: 4px 16px;
+  }
+
+  &-no-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 16px;
+
+    ss-lib-text {
+      width: 316px;
+    }
   }
 }
 
