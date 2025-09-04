@@ -22,7 +22,7 @@ export const PRODUCTION_PLAN_ROUTES: Routes = [
 			{
 				path: 'operational-plan',
 				component: OperationalPlanComponent,
-				title: 'Операционный план',
+				title: 'Оперативный план',
 			},
 			{
 				path: '',
