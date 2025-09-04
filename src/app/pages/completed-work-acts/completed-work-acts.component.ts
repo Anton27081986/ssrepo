@@ -7,12 +7,12 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ICompletedWorkAct } from '@app/core/models/completed-work-acts/completed-work-act';
 import { CommonModule, NgIf } from '@angular/common';
-import { FiltersTableCanvasComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-table-pagination-canvas/filters-table-canvas.component';
 import {
 	ButtonComponent,
 	ButtonType,
 	Colors,
 	DatepickerComponent,
+	EmptyStateComponent,
 	ExtraSize,
 	FieldCtrlDirective,
 	FormFieldComponent,
@@ -29,7 +29,6 @@ import {
 	TooltipDirective,
 } from '@front-library/components';
 import { DropdownColumnsSettingsComponent } from '@app/pages/production-plan/operational-plan/dropdown-column-settings/dropdown-columns-settings.component';
-import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/component-and-service-for-lib/filters-trigger-button/filters-trigger-button.component';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { Pagination } from '@app/core/models/production-plan/operation-plan';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -40,6 +39,9 @@ import { completedWorkActsFilter } from '@app/pages/completed-work-acts/filters/
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { Permissions } from '@app/core/constants/permissions.constants';
+import { FiltersTableCanvasComponent } from '@app/pages/production-plan/blunt-components/filters-table-pagination-canvas/filters-table-canvas.component';
+import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-components/filters-trigger-button/filters-trigger-button.component';
+import { Size } from '@front-components/components';
 
 @Component({
 	selector: 'ss-completed-work-acts',
@@ -50,11 +52,7 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		ButtonComponent,
 		TooltipDirective,
 		NgIf,
-		FiltersTableCanvasComponent,
-		ButtonComponent,
 		DropdownColumnsSettingsComponent,
-		FiltersTriggerButtonComponent,
-		ButtonComponent,
 		CompletedWorkActsTableComponent,
 		TextComponent,
 		TooltipDirective,
@@ -66,6 +64,10 @@ import { Permissions } from '@app/core/constants/permissions.constants';
 		PaginationComponent,
 		FormsModule,
 		InputComponent,
+		FiltersTableCanvasComponent,
+		FiltersTriggerButtonComponent,
+		FiltersTriggerButtonComponent,
+		EmptyStateComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	standalone: true,
@@ -87,7 +89,10 @@ export class CompletedWorkActsComponent {
 	public additionalControl = new FormControl();
 
 	public archiveControl = new FormControl();
+
 	public totalAmountControl = new FormControl();
+
+	public pageControl = new FormControl<number>(1);
 
 	private readonly router: Router = inject(Router);
 	private readonly activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -102,7 +107,7 @@ export class CompletedWorkActsComponent {
 	public offset$ = new BehaviorSubject<number>(0);
 	public itemTotal$ = new BehaviorSubject<number>(0);
 	public total = 0;
-	public pageIndex = 1;
+	public isReload = true;
 
 	protected items$: Observable<ICompletedWorkAct[]> = this.offset$.pipe(
 		switchMap((offset) => {
@@ -117,7 +122,9 @@ export class CompletedWorkActsComponent {
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
 					const filterParams = Object.fromEntries(
-						Object.entries(criteria).filter(([_, v]) => v !== null)
+						Object.entries(criteria).filter(
+							([_, v]) => v !== null && v.length
+						)
 					);
 
 					void this.router.navigate([], {
@@ -177,6 +184,22 @@ export class CompletedWorkActsComponent {
 			initialValue: [],
 		}
 	);
+
+	public hasCustomFilters(): boolean {
+		const filters = this.completedWorkActsFacade.filterValueStore$.value;
+
+		if (!filters) {
+			return false;
+		}
+
+		if (this.total > 0) {
+			return true;
+		}
+
+		return Object.keys(filters).some(
+			(key) => !['limit', 'offset'].includes(key)
+		);
+	}
 
 	protected readonly IconType = IconType;
 	protected readonly TextType = TextType;
@@ -357,6 +380,30 @@ export class CompletedWorkActsComponent {
 				})
 			)
 		);
+
+		const page = this.activatedRoute.snapshot.queryParamMap.get('page');
+
+		if (page) {
+			this.pageControl.setValue(parseInt(page, 10));
+			this.offset$.next((parseInt(page, 10) - 1) * this.limit);
+		}
+
+		toSignal(
+			this.pageControl.valueChanges.pipe(
+				tap((value) => {
+					void this.router.navigate([], {
+						relativeTo: this.activatedRoute,
+						queryParams: {
+							...this.activatedRoute.snapshot.queryParams,
+							page: value,
+						},
+						queryParamsHandling: 'merge',
+					});
+					this.offset$.next(((value || 1) - 1) * this.limit);
+					this.isReload = false;
+				})
+			)
+		);
 	}
 
 	public downloadInstruction(): void {
@@ -383,12 +430,23 @@ export class CompletedWorkActsComponent {
 	}
 
 	protected onPage(index: number): void {
-		this.pageIndex = index;
-		this.offset$.next((index - 1) * this.limit);
+		void this.router.navigate([], {
+			relativeTo: this.activatedRoute,
+			queryParams: {
+				...this.activatedRoute.snapshot.queryParams,
+				page: index,
+			},
+			queryParamsHandling: 'merge',
+		});
+		this.pageControl.setValue(index);
 	}
 
 	private resetPage(): void {
-		this.pageIndex = 1;
-		this.offset$.next(0);
+		if (!this.isReload) {
+			this.pageControl.setValue(1);
+			this.offset$.next(0);
+		}
 	}
+
+	protected readonly Size = Size;
 }

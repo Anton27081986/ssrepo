@@ -12,6 +12,7 @@ import {
 	DropdownGroupDirective,
 	DropdownItemComponent,
 	DropdownListComponent,
+	ExtraSize,
 	IconComponent,
 	IconType,
 	PopoverTriggerForDirective,
@@ -65,6 +66,7 @@ export class DropdownColumnsSettingsComponent {
 	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
 	protected readonly Colors = Colors;
+	protected readonly ExtraSize = ExtraSize;
 	protected onDropdownItemDrop(
 		event: CdkDragDrop<TableColumnConfig[]>
 	): void {

@@ -33,8 +33,7 @@
 							"node_modules/@front-library/components/lib/shared/styles/_variables/_brand.scss",
 							"node_modules/@front-library/components/lib/shared/styles/custom-variables.scss",
 							"node_modules/@front-library/components/lib/shared/styles/mixins/text.scss",
-							"node_modules/@front-library/components/lib/shared/styles/overlay.scss",
-							"node_modules/@front-library/components/lib/shared/styles/table.scss"
+							"node_modules/@front-library/components/lib/shared/styles/overlay.scss"
 						],
 						"scripts": [],
 						"allowedCommonJsDependencies": [
@@ -71,6 +70,7 @@
 							"extractLicenses": false,
 							"sourceMap": true,
 							"namedChunks": true,
+							"outputHashing": "all",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
@@ -79,6 +79,7 @@
 							]
 						},
 						"staging": {
+							"outputHashing": "all",
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",

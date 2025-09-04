@@ -1,0 +1,33 @@
+.plan-economic-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  &__content {
+    height: 345px;
+  }
+
+  &-divider {
+    padding: 4px 16px;
+  }
+
+  &-no-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 16px;
+
+    ss-lib-text {
+      width: 316px;
+    }
+  }
+}
+
+ss-lib-form-field {
+  --shadow-xs: none;
+  --border-radius-md: none;
+  --border-secondary: none;
+  --border-focus: none;
+  border-bottom: 1px solid var(--border-primary);
+  --app-custom-field-container-padding: 3px 8px 4px 16px;
+}

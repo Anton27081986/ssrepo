@@ -63,6 +63,7 @@
 	min-width: 74px;
 	align-items: center;
 	width: 100%;
+	justify-content: flex-end;
 }
 
 thead tr th:first-child {
@@ -71,4 +72,11 @@ thead tr th:first-child {
 
 ss-lib-hint {
 	cursor: pointer;
+}
+
+ss-lib-action-bar {
+	position: absolute;
+	top: 18px;
+	left: 24px;
+	z-index: 9;
 }

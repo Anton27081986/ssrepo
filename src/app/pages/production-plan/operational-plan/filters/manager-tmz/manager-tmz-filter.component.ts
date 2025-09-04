@@ -4,36 +4,68 @@ import {
 	inject,
 	OnInit,
 } from '@angular/core';
-import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
+import {
+	AvatarDictionaryItemDto,
+	OperationPlanFiltersApiService,
+} from '@app/pages/production-plan/service/operation-plan.filters-api-service';
 import { map, Observable } from 'rxjs';
-import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
-import { AsyncPipe } from '@angular/common';
+import {
+	Align,
+	AvatarComponent,
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	InputComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
 
 @Component({
 	selector: 'app-manager-tmz-filter',
 	standalone: true,
-	imports: [AsyncPipe, ReactiveFormsModule, CheckboxFilterContextComponent],
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="(items$ | async)!"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	imports: [
+		ReactiveFormsModule,
+		AsyncPipe,
+		CheckboxComponent,
+		DividerComponent,
+		FormFieldComponent,
+		InputComponent,
+		FieldCtrlDirective,
+		ScrollbarComponent,
+		DropdownItemComponent,
+		NgForOf,
+		TextComponent,
+		NgIf,
+		AvatarComponent,
+	],
+	templateUrl: 'manager-tmz-filter.component.html',
+	styleUrls: ['manager-tmz-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManagerTmzFilterComponent
-	extends HeaderFilterCheckboxItemAbstractComponent<IDictionaryItemDto>
+	extends HeaderFilterCheckboxItemAbstractComponent<AvatarDictionaryItemDto>
 	implements OnInit
 {
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
 		OperationPlanFiltersApiService
 	);
 
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
 		super();
@@ -43,18 +75,22 @@ export class ManagerTmzFilterComponent
 		super.ngOnInit();
 	}
 
-	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getProductManagerUser(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+	public override getList$(
+		query: string
+	): Observable<AvatarDictionaryItemDto[]> {
+		return this.filterApiService
+			.getProductManagerUser(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
-	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getProductManagerUser('', ids).pipe(
+	): Observable<AvatarDictionaryItemDto[]> {
+		return this.filterApiService.getProductManagerUser('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})

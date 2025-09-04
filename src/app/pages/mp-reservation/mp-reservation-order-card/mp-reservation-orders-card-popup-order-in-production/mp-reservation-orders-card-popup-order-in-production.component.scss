@@ -1,0 +1,85 @@
+@use 'src/styles/colors.scss' as *;
+@use 'sass:color';
+
+.in-production-form {
+	width: 965px;
+	max-height: 836px;
+	display: flex;
+	flex-direction: column;
+	background: color.adjust($island-outline, $lightness: 40%);
+	border-radius: var(--radius-xl-3);
+}
+
+.wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	padding: var(--padding-l);
+	overflow: auto;
+	max-height: 560px;
+}
+
+.content-text {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.content-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.content-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+}
+
+.dates-table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: center;
+
+	thead {
+		background-color: color.adjust($island-outline, $lightness: 40%);
+	}
+
+	th {
+		background-color: #eef2ff;
+	}
+
+	th,
+	td {
+		padding: 8px;
+		border-bottom: 1px solid $island-outline;
+		vertical-align: top;
+		text-align: left;
+	}
+}
+
+.row-basket {
+	text-align: center;
+}
+
+.footer {
+	display: flex;
+	padding: var(--padding-l);
+	justify-content: flex-end;
+	gap: 20px;
+}

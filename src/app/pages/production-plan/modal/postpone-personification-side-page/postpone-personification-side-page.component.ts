@@ -6,12 +6,14 @@ import {
 } from '@angular/core';
 import {
 	Align,
-	ButtonComponent,
 	ButtonType,
 	Colors,
 	ExtraSize,
 	IconComponent,
+	IconPosition,
 	IconType,
+	LinkAppearance,
+	LinkComponent,
 	ModalRef,
 	RightSidePagePopupComponent,
 	Shape,
@@ -24,11 +26,11 @@ import { TransferProductionPlanMap } from '@app/core/models/production-plan/tran
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NgIf } from '@angular/common';
 import { IResponse } from '@app/core/utils/response';
-import { tap } from 'rxjs';
 import { PostponePersonificationTableComponent } from '@app/pages/production-plan/modal/postpone-personification-table/postpone-personification-table.component';
 
 export interface PostponeSidePageData {
 	id: number;
+	date: string;
 }
 
 @Component({
@@ -37,24 +39,27 @@ export interface PostponeSidePageData {
 	imports: [
 		RightSidePagePopupComponent,
 		NgIf,
-		TextComponent,
-		ButtonComponent,
 		PostponePersonificationTableComponent,
+		TextComponent,
+		TextComponent,
 		IconComponent,
+		LinkComponent,
 	],
 	templateUrl: './postpone-personification-side-page.component.html',
 	styleUrl: './postpone-personification-side-page.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostponePersonificationSidePageComponent {
-	protected readonly TextType = TextType;
 	protected readonly TextWeight = TextWeight;
+	protected readonly TextType = TextType;
 	protected readonly IconType = IconType;
 	protected readonly ExtraSize = ExtraSize;
 	protected readonly Shape = Shape;
 	protected readonly ButtonType = ButtonType;
 	protected readonly Colors = Colors;
 	protected readonly Align = Align;
+	protected readonly IconPosition = IconPosition;
+	protected readonly LinkAppearance = LinkAppearance;
 
 	private readonly popup: ModalRef<PostponeSidePageData> = inject(
 		ModalRef<PostponeSidePageData>
@@ -68,26 +73,36 @@ export class PostponePersonificationSidePageComponent {
 			initialValue: null,
 		});
 
-	protected get totalQuantityForTransferCalc(): number | null {
-		const personificationRes = this.personificationRes();
+	protected get headerTextAndDate(): string {
+		const currentDate = this.popup.data.date;
 
-		if (personificationRes) {
-			return personificationRes.items.reduce((sum, item) => {
-				const value = item.countForPostpone.value;
-
-				if (value === null || value === undefined) {
-					return sum;
-				}
-
-				// Normalize comma to dot and convert to number
-				const normalizedValue = String(value).replace(',', '.');
-				const numValue = Number(normalizedValue);
-
-				return sum + (Number.isNaN(numValue) ? 0 : numValue);
-			}, 0);
+		if (!currentDate) {
+			return 'Заказ';
 		}
 
-		return null;
+		const [yyyy, mm, dd] = currentDate.slice(0, 10).split('-');
+
+		return `Заказ на ${dd}.${mm}.${yyyy}`;
+	}
+
+	protected get tovName(): string {
+		const resp = this.personificationRes();
+
+		if (!resp || resp.items.length === 0) {
+			return '';
+		}
+
+		return resp.tov?.name || '';
+	}
+
+	protected get linkToDetailTov(): string {
+		const resp = this.personificationRes();
+
+		if (!resp || resp.items.length === 0) {
+			return '';
+		}
+
+		return resp.linkToModule;
 	}
 
 	protected get totalQuantityCalc(): number | null {
@@ -103,45 +118,11 @@ export class PostponePersonificationSidePageComponent {
 		return null;
 	}
 
-	protected get totalForButtonTransfer(): string {
-		return `Перенести ${this.totalQuantityForTransferCalc} едениц`;
+	protected openCard(): void {
+		window.open(this.linkToDetailTov, '_blank');
 	}
 
 	protected close(): void {
 		this.popup.close();
-	}
-
-	protected transferProductionPlan(): void {
-		const personificationRes = this.personificationRes();
-
-		if (
-			personificationRes?.items.some(
-				(item) =>
-					item.countForPostpone.invalid ||
-					item.productionDateControl.invalid
-			)
-		) {
-			return;
-		}
-
-		const changedItems = personificationRes?.items.filter(
-			(item) =>
-				item.countForPostpone.dirty || item.productionDateControl.dirty
-		);
-
-		if (changedItems?.length === 0) {
-			return;
-		}
-
-		if (personificationRes) {
-			this.service
-				.transferProductionPlan(changedItems!)
-				.pipe(
-					tap(() => {
-						this.close();
-					})
-				)
-				.subscribe();
-		}
 	}
 }

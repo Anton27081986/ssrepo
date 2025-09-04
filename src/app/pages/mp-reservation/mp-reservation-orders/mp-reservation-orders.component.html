@@ -1,0 +1,403 @@
+<div class="app-mp-reservation-orders__header">
+	<snab-text
+		[type]="TextType.Headline"
+		[weight]="TextWeight.Semibold"
+	>
+		Заказы резервирования МР.
+	</snab-text>
+	<div class="app-mp-reservation-orders__header-filter">
+		<snab-button
+			*ngIf="hasPermissionMutmzChangeQueueOrder"
+			text="Порядок заказов"
+			[size]="Size.Large"
+			(click)="openPopupChangeQueueOrders()"
+		></snab-button>
+		<snab-button
+			*ngIf="hasPermissionAddOrder()"
+			text="Добавить заказ"
+			[size]="Size.Large"
+			(click)="openPopupAddOrder()"
+		></snab-button>
+		<snab-button
+			*ngIf="selectedOrderIds().size"
+			text="Назначить дату обеспечения"
+			[size]="Size.Large"
+			(click)="openPopupDateProvision()"
+		></snab-button>
+		<snab-button
+			[type]="ButtonType.Outline"
+			[size]="Size.Large"
+			[iconPosition]="IconPosition.OnlyIcon"
+			[icon]="IconType.FileNotFound"
+			(click)="downloadInstr()"
+		></snab-button>
+		<ss-dropdown-button
+			title="Фильтры"
+			[isDropdownVisible]="!isLoader()"
+		>
+			<ss-filters
+				[isFiltersVisible]="!isLoader()"
+				[filters]="filters()"
+				(filtersChange)="onFiltersChange($event)"
+				(applyFilter)="getFilteredOrders(true)"
+			></ss-filters>
+		</ss-dropdown-button>
+	</div>
+</div>
+<div class="app-mp-reservation-orders__body">
+	<ng-container *ngIf="orders() as orderList">
+		<ng-container *ngIf="orderList.items.length; else empty">
+			<table class="table">
+				<thead class="table__thead table__thead__sticky">
+					<tr>
+						<th>
+							<input
+								type="checkbox"
+								[checked]="isAllSelected()"
+								(change)="toggleSelectAll($event)"
+							/>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Код заказа
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Статус
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Дата заказа
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Заказчик
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								ТП
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Контрагент
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Кол-во
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Ед. изм.
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Обеспечение
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								МУТМЗ
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Остатки
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Дата производства
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								Дата обеспечения
+							</snab-text>
+						</th>
+						<th>
+							<snab-text
+								[type]="TextType.Title"
+								[weight]="TextWeight.Medium"
+							>
+								История изменений по заявке
+							</snab-text>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let order of orders()?.items">
+						<td>
+							<input
+								type="checkbox"
+								[checked]="selectedOrderIds().has(order.id)"
+								(change)="onCheckboxChange($event, order.id)"
+							/>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[text]="order.id.toString()"
+								(click)="goToOrderCard(order.id)"
+							>
+								{{ order.id }}
+							</snab-link>
+						</td>
+						<td>
+							<snab-text
+								[type]="TextType.Body"
+								[weight]="TextWeight.Semibold"
+							>
+								{{ order.status.name }}
+							</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">
+								{{ order.dateCreated | date: 'dd.MM.yyyy' }}
+							</snab-text>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[text]="order.author.name!"
+								[url]="order.author.linkToDetail || ''"
+							></snab-link>
+						</td>
+						<td>
+							<snab-link
+								class="link-tov-name"
+								snab-tooltip
+								[url]="order.tov.linkToDetail || ''"
+								[type]="TextType.Body"
+								[text]="order.tov.name!"
+								[tooltipText]="order.tov.name"
+							></snab-link>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[url]="order.contractor.linkToDetail || ''"
+								[text]="order.contractor.name"
+							></snab-link>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[text]="
+									pipeNumWithSpaces.numberWithSpaces(
+										order.totalAmount
+									)
+								"
+								(click)="openPopupTotalAmount(order)"
+							></snab-link>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body"
+								>{{ order.tovUnit }}
+							</snab-text>
+						</td>
+						<td class="table-td-provision">
+							<ss-tag-v2
+								snab-tooltip
+								state="warning"
+								class="table-td-provision__label"
+								[tooltipText]="'Моя персонификация'"
+							>
+								<snab-icon
+									[color]="Colors.WarningLight"
+									[icon]="IconType.Unlock"
+								></snab-icon>
+								{{
+									order.provision.toProvide || '-'
+										| numWithSpaces: 1
+								}}
+							</ss-tag-v2>
+							<ss-tag-v2
+								snab-tooltip
+								state="success"
+								class="table-td-provision__label"
+								[tooltipText]="'Свободно'"
+							>
+								<snab-icon
+									[color]="Colors.PositiveHeavy"
+									[icon]="IconType.Check"
+								></snab-icon>
+								{{
+									order.provision.provisionAvailable || '-'
+										| numWithSpaces: 1
+								}}
+							</ss-tag-v2>
+							<ss-tag-v2
+								snab-tooltip
+								state="info"
+								class="table-td-provision__label"
+								[tooltipText]="'В производстве'"
+							>
+								<snab-icon
+									[color]="Colors.InfoHeavy"
+									[icon]="IconType.Refresh"
+								></snab-icon>
+								{{
+									order.provision.manufacturing || '-'
+										| numWithSpaces: 1
+								}}
+							</ss-tag-v2>
+							<ss-tag-v2
+								snab-tooltip
+								state="danger"
+								class="table-td-provision__label"
+								[tooltipText]="'Не может быть обеспечено'"
+							>
+								<snab-icon
+									[color]="Colors.DangerHeavy"
+									[icon]="IconType.Error"
+								></snab-icon>
+								{{
+									order.provision.provisionUnavailable || '-'
+										| numWithSpaces: 1
+								}}
+							</ss-tag-v2>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[text]="order.manager?.name!"
+							></snab-link>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[text]="
+									pipeNumWithSpaces.numberWithSpaces(
+										order.stockBalance
+									)
+								"
+								(click)="
+									openPopupStockBalanceDetailsOrder(order.id)
+								"
+							></snab-link>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">
+								<ng-container
+									*ngFor="
+										let prodDate of order.provision
+											?.provisionDetails
+									"
+								>
+									<div>
+										{{
+											prodDate.productionDate ===
+											emptyDate
+												? '-'
+												: (prodDate.productionDate
+													| date: 'dd.MM.yyyy')
+										}}
+									</div>
+								</ng-container>
+							</snab-text>
+						</td>
+						<td>
+							<snab-text [type]="TextType.Body">
+								<ng-container
+									*ngFor="
+										let provDate of order.provision
+											?.provisionDetails
+									"
+								>
+									<div>
+										{{
+											provDate.provisionDate === emptyDate
+												? '-'
+												: (provDate.provisionDate
+													| date: 'dd.MM.yyyy')
+										}}
+									</div>
+								</ng-container>
+							</snab-text>
+						</td>
+						<td>
+							<snab-link
+								[type]="TextType.Body"
+								[text]="'История'"
+								(click)="openPopupHistoryOrder(order.id)"
+							></snab-link>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</ng-container>
+		<ng-template #empty>
+			<div class="app-mp-reservation-orders__empty">
+				<ss-lib-empty-state
+					[badge]="{ icon: IconTypeFrontLib.ImagePlus }"
+					[title]="'Заказов еще нет'"
+					[description]="
+						'Здесь будут заказы. Нажмите на «Добавить заказ», чтобы добавить новый.'
+					"
+				>
+					<snab-button
+						*ngIf="hasPermissionAddOrder()"
+						text="Добавить заказ"
+						[size]="Size.Large"
+						(click)="openPopupAddOrder()"
+					></snab-button>
+				</ss-lib-empty-state>
+			</div>
+		</ng-template>
+		<div class="pagination">
+			<ss-pagination
+				[total]="orderList.total"
+				[pageSize]="pageSize()"
+				[pageIndex]="pageIndex()"
+				(changeIndex)="ordersTableIndexChange($event)"
+			></ss-pagination>
+		</div>
+	</ng-container>
+</div>

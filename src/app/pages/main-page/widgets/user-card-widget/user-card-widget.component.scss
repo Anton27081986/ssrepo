@@ -1,0 +1,72 @@
+@use '../../../../../styles/colors' as *;
+
+.user-card-widget {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	width: 390px;
+	height: 290px;
+	position: relative;
+
+	&__card {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+
+	&__description {
+		display: flex;
+		max-height: 130px;
+		height: 130px;
+		overflow: auto;
+	}
+
+	&__created {
+		display: flex;
+		align-items: flex-end;
+	}
+
+	&__actions {
+		display: flex;
+		gap: 6px;
+	}
+
+	&__card-action {
+		width: 62px;
+		height: 36px;
+		border: 1px solid #e4e8ea;
+		border-radius: 8px;
+		display: flex;
+		gap: 8px;
+		flex-wrap: nowrap;
+		background-color: #f2f3f7;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	&__members {
+		position: absolute;
+		left: 10px;
+		top: 10px;
+	}
+
+	&__share {
+		cursor: pointer;
+	}
+
+	&__isExtendedMode {
+		position: relative;
+	}
+
+	&__actions-block {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+:host-context(.dark) .user-card-widget__card-action {
+	background-color: $dark-background;
+	border: 1px solid $white;
+}
+

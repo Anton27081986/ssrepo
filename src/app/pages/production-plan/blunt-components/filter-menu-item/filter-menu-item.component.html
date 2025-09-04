@@ -1,0 +1,41 @@
+<div class="filter-menu-item">
+	<ss-lib-button
+		[size]="ExtraSize.sm"
+		[iconPosition]="IconPosition.Start"
+		[icon]="IconType.FilterLines"
+		[popoverTriggerFor]="contextFilter"
+		[type]="ButtonType.Secondary"
+		[text]="
+			valueSelected() !== '0'
+				? filter().text + ': ' + valueSelected()
+				: filter().defaultText
+		"
+	>
+		<ss-lib-icon
+			[color]="Colors.IconAction2"
+			[icon]="IconType.ChevronDown"
+			[width]="'20'"
+			[height]="'20'"
+		>
+		</ss-lib-icon>
+	</ss-lib-button>
+	<ss-lib-button
+		class="btn-clear"
+		[size]="ExtraSize.sm"
+		[type]="ButtonType.TextSecondary"
+		[icon]="IconType.Close"
+		[iconPosition]="IconPosition.OnlyIcon"
+		(click)="removeFilter(filter())"
+	></ss-lib-button>
+</div>
+
+<ss-lib-dropdown-list
+	#contextFilter
+	[width]="filter().records.width"
+	[height]="filter().records.height"
+>
+	<ng-container
+		[ngComponentOutlet]="filter().valueComponent"
+		[ngComponentOutletInputs]="{ field: filter().field }"
+	></ng-container>
+</ss-lib-dropdown-list>

@@ -5,25 +5,17 @@ import {
 	AddManufacturesPopupComponent,
 } from '@app/pages/production-plan/modal/add-manufactures/add-manufactures-popup.component';
 import {
-	PostponePersonificationSidePageComponent,
-	PostponeSidePageData,
-} from '@app/pages/production-plan/modal/postpone-personification-side-page/postpone-personification-side-page.component';
-import {
 	ModalUpdateRawMaterialsComponent,
 	UpdateRawMaterialsData,
 } from '@app/pages/production-plan/modal/modal-update-raw-materials/modal-update-raw-materials.component';
-import {
-	CreateCommentsModalComponent,
-	CreateCommentsModalData,
-} from '@app/pages/production-plan/modal/create-comments-modal/create-comments-modal.component';
 import {
 	ApproveMaterialComponent,
 	ApproveMaterialData,
 } from '@app/pages/production-plan/modal/approve-material/approve-material.component';
 import {
-	AddCommentsModalComponent,
-	AddCommentsModalData,
-} from '@app/pages/production-plan/modal/add-comments-modal/add-comments-modal.component';
+	PostponePersonificationSidePageComponent,
+	PostponeSidePageData,
+} from '@app/pages/production-plan/modal/postpone-personification-side-page/postpone-personification-side-page.component';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanPopupService {
@@ -38,28 +30,10 @@ export class OperationPlanPopupService {
 		);
 	}
 
-	public openCreateCommentsModal(id: number): ModalRef {
-		return this.popup.openModal<CreateCommentsModalData>(
-			CreateCommentsModalComponent,
-			{ id },
-			false,
-			'449px'
-		);
-	}
-
-	public openAddCommentsModal(id: number): ModalRef {
-		return this.popup.openModal<AddCommentsModalData>(
-			AddCommentsModalComponent,
-			{ id },
-			false,
-			'449px'
-		);
-	}
-
-	public openPostponePlanModal(id: number): ModalRef {
+	public openPostponePlanModal(id: number, date: string): ModalRef {
 		return this.popup.openRightSidePage<PostponeSidePageData>(
 			PostponePersonificationSidePageComponent,
-			{ id },
+			{ id, date },
 			'860px'
 		);
 	}

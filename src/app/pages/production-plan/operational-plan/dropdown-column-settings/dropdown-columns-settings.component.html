@@ -4,6 +4,7 @@
 	[icon]="IconType.FilterLines"
 	[text]="'Отображение'"
 	[popoverTriggerFor]="dropdownColumn"
+	[size]="ExtraSize.lg"
 ></ss-lib-button>
 
 <ss-lib-dropdown-list
@@ -21,9 +22,13 @@
 				(cdkDropListDropped)="onDropdownItemDrop($event)"
 			>
 				@for (column of dropdownColumnsVisible(); track column) {
+					@let isSticky = !!column?.stickyColumn;
+
 					<ss-lib-dropdown-item
 						cdkDrag
 						class="draggable-item"
+						[cdkDragDisabled]="isSticky"
+						[isDisabled]="isSticky"
 					>
 						<div class="column-item__content">
 							<div class="column-item__content_label">

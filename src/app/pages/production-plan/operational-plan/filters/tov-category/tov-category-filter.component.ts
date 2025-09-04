@@ -5,12 +5,27 @@ import {
 	OnInit,
 } from '@angular/core';
 import { OperationPlanFiltersApiService } from '@app/pages/production-plan/service/operation-plan.filters-api-service';
-import { HeaderFilterCheckboxItemAbstractComponent } from '@front-library/components';
 import { Observable, map } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { IDictionaryItemDto } from '@app/core/models/company/dictionary-item-dto';
-import { CheckboxFilterContextComponent } from '@app/pages/production-plan/component-and-service-for-lib/checkbox-filter-context/checkbox-filter-context.component';
+import { HeaderFilterCheckboxItemAbstractComponent } from '@app/shared/components/header-filter-checkbox-item-abstract/header-filter-checkbox-search-item-abstract.component';
+import {
+	Align,
+	CheckboxComponent,
+	Colors,
+	DividerComponent,
+	DropdownItemComponent,
+	ExtraSize,
+	FieldCtrlDirective,
+	FormFieldComponent,
+	IconType,
+	InputComponent,
+	ScrollbarComponent,
+	TextComponent,
+	TextType,
+	TextWeight,
+} from '@front-library/components';
 
 @Component({
 	selector: 'app-tov-category-filter',
@@ -18,16 +33,17 @@ import { CheckboxFilterContextComponent } from '@app/pages/production-plan/compo
 	imports: [
 		ReactiveFormsModule,
 		CommonModule,
-		CheckboxFilterContextComponent,
+		FormFieldComponent,
+		InputComponent,
+		FieldCtrlDirective,
+		ScrollbarComponent,
+		DropdownItemComponent,
+		CheckboxComponent,
+		TextComponent,
+		DividerComponent,
 	],
-	template: ` <ss-lib-checkbox-filter-context
-		[queryControl]="queryControl"
-		[controlClearAll]="controlsClearAll"
-		[items]="(items$ | async)!"
-		[isLoader]="isLoader()"
-		[controlsMap]="currentControlsMap"
-		[(indeterminate)]="indeterminate"
-	></ss-lib-checkbox-filter-context>`,
+	templateUrl: `tov-category-filter.component.html`,
+	styleUrls: [`tov-category-filter.component.scss`],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TovCategoryFilterComponent
@@ -37,6 +53,13 @@ export class TovCategoryFilterComponent
 	private readonly filterApiService: OperationPlanFiltersApiService = inject(
 		OperationPlanFiltersApiService
 	);
+
+	protected readonly IconType = IconType;
+	protected readonly ExtraSize = ExtraSize;
+	protected readonly TextType = TextType;
+	protected readonly TextWeight = TextWeight;
+	protected readonly Colors = Colors;
+	protected readonly Align = Align;
 
 	// eslint-disable-next-line @typescript-eslint/no-useless-constructor
 	constructor() {
@@ -48,17 +71,19 @@ export class TovCategoryFilterComponent
 	}
 
 	public override getList$(query: string): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getTovCategory(query).pipe(
-			map((value) => {
-				return value.items;
-			})
-		);
+		return this.filterApiService
+			.getTovCategory(query, this.mapViewSelectedIds(), false)
+			.pipe(
+				map((value) => {
+					return value.items;
+				})
+			);
 	}
 
 	public override searchActive$(
 		ids: number[]
 	): Observable<IDictionaryItemDto[]> {
-		return this.filterApiService.getTovCategory('', ids).pipe(
+		return this.filterApiService.getTovCategory('', ids, true).pipe(
 			map((value) => {
 				return value.items;
 			})

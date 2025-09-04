@@ -1,9 +1,0 @@
-:host {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
-	grid-gap: 16px;
-}
-
-:host > app-rating-team-tab {
-	text-align: center;
-}

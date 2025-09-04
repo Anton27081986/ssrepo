@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { TypeCup } from '@app/widgets/rating/rating-team-tab/rating-team-tab.component';
+import { TypeCup } from '@app/pages/main-page/widgets/rating/rating-team-tab/rating-team-tab.component';
 import { IProjectDto } from './project-dto';
 import { IDistributorDto } from './distributor-dto';
 import { ITeamDto } from './team-dto';

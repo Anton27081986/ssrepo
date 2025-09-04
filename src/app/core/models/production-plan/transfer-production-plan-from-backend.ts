@@ -1,12 +1,11 @@
 import { FormControl } from '@angular/forms';
+import { IDictionaryItemDto } from '@front-components/components';
 
 export interface TransferProductionPlanFromBackend {
 	id: number;
 	orderId: number;
-	customerUser: {
-		id: number;
-		name: string;
-	};
+	linkToDetail: string;
+	customerUser: IDictionaryItemDto;
 	quantity: number;
 	productionDate: string;
 }
@@ -14,19 +13,13 @@ export interface TransferProductionPlanFromBackend {
 export interface TransferProductionPlanMap {
 	id: number;
 	orderId: number;
-	customerUser: {
-		id: number;
-		name: string;
-	};
+	customerUser: IDictionaryItemDto;
 	quantity: number;
-	countForPostpone: FormControl<number | null>;
-	productionDateControl: FormControl<Date | null>;
-	originalProductionDate: Date;
+	linkToDetail: string;
 }
 
 export interface TransferProductionPlanPatch {
+	productionDate: string | number | null;
+	quantity: string | number | null;
 	id: number;
-	orderId: number;
-	quantity: number;
-	productionDate: string;
 }

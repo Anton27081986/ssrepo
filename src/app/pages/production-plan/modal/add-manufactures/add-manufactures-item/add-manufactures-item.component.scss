@@ -1,0 +1,16 @@
+.app-add-manufactures-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--surface-action-hover-3);
+    border-radius: 6px;
+  }
+
+  &:active {
+    background-color: var(--surface-action-pressed-3);
+  }
+}

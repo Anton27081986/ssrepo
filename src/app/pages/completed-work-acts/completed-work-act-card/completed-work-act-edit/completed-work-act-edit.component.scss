@@ -73,7 +73,7 @@
 				flex-direction: column;
 				overflow-y: auto;
 				overflow-x: hidden;
-				mix-width: 15vw;
+				min-width: 15vw;
 				max-height: 210px;
 
 				&__item {

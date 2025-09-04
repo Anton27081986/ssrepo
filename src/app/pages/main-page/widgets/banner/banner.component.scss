@@ -1,0 +1,14 @@
+:host {
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+	border-radius: 1rem;
+}
+
+.carousel-item {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+	display: block;
+}
+

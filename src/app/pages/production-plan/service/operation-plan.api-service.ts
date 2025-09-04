@@ -64,7 +64,7 @@ export class OperationPlanApiService {
 		productionPlanDayId: number
 	): Observable<IResponse<TransferProductionPlanFromBackend>> {
 		return this.http.get<IResponse<TransferProductionPlanFromBackend>>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
+			`${environment.apiUrl}/api/manufacturing/ProvisionDetails`,
 			{ params: { productionPlanDayId } }
 		);
 	}
@@ -116,11 +116,12 @@ export class OperationPlanApiService {
 	}
 
 	public transferProductionPlan(
-		params: TransferProductionPlanPatch[]
-	): Observable<void> {
-		return this.http.patch<void>(
-			`${environment.apiUrl}/api/manufacturing/OperationalPlans/TransferProductionPlans`,
-			params
+		rowId: number,
+		body: TransferProductionPlanPatch
+	): Observable<OperationPlanItem> {
+		return this.http.post<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/ProvisionDetails/TransferPlan`,
+			body
 		);
 	}
 
@@ -225,6 +226,17 @@ export class OperationPlanApiService {
 		return this.http.patch<OperationPlanItem>(
 			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/PlanFacts`,
 			{ ...params }
+		);
+	}
+
+	public changePlan(
+		rowId: number,
+		id: number,
+		quantity: string | number | null
+	): Observable<OperationPlanItem> {
+		return this.http.post<OperationPlanItem>(
+			`${environment.apiUrl}/api/manufacturing/OperationalPlans/${rowId}/ProvisionDetails/ChangeQuantity`,
+			{ id, quantity }
 		);
 	}
 

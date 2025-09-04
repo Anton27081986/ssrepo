@@ -1,68 +1,71 @@
 <div class="section-filter">
-	<div class="section-filter__input">
-		<ss-lib-form-field
-			[icon]="IconType.Search"
-			[showBorder]="false"
-		>
-			<ss-lib-input
-				fieldCtrl
-				[formControl]="queryControl"
-				[placeholder]="'Введите название полуфабриката...'"
-				[clearButton]="true"
-			/>
-		</ss-lib-form-field>
-	</div>
+	<ss-lib-form-field
+		[icon]="IconType.Search"
+		[clearButton]="true"
+		[clearButtonSize]="ExtraSize.xs"
+	>
+		<ss-lib-input
+			fieldCtrl
+			[formControl]="queryControl"
+			[placeholder]="'Поиск'"
+		/>
+	</ss-lib-form-field>
 
-	<div class="section-filter__content">
-		<ng-container *ngIf="isLoader(); else content">
-			<ss-lib-spinner></ss-lib-spinner>
-		</ng-container>
-		<ng-template #content>
-			<ng-container *ngIf="treeNode$ | async as nodes">
-				<ng-container *ngIf="nodes.length > 0; else noContent">
-					<ss-lib-dropdown-filter-item
-						*ngIf="trueCheckControlMap"
-						[text]="
-							queryControl.value?.trim()
-								? 'Очистить выбранное'
-								: 'Очистить все'
-						"
-						[control]="controlsClearAll"
-						[(indeterminate)]="indeterminate"
-					></ss-lib-dropdown-filter-item>
-
-					<ss-lib-dropdown-group-filter-items
-						*ngFor="let node of nodes"
-						[treeNode]="node"
-					>
-						<ss-lib-dropdown-filter-item
-							*ngFor="let child of node.children"
-							[isPaddingLeft]="true"
-							[text]="child.name"
-							[control]="currentControlsMap[child.id]"
-						></ss-lib-dropdown-filter-item>
-					</ss-lib-dropdown-group-filter-items>
-					<ss-lib-dropdown-filter-item
-						*ngFor="let item of node"
-						[text]="item.name"
-						[control]="currentControlsMap[item.id]"
-					></ss-lib-dropdown-filter-item>
+	<ss-lib-scrollbar>
+		<div class="section-filter__content">
+			<!--			выбранный список-->
+			<ng-container *ngFor="let item of selectedItems()">
+				<!--	выбранный список c иеархией  -->
+				<ng-container *ngIf="item.children?.length; else notChildren">
+					<app-section-group-dropdown-item
+						[expanded]="true"
+						[sectionItem]="item"
+						(toggleEmit)="toggleSelectionChildren($event, item)"
+						(toggleParentEmit)="toggleParent($event, true)"
+					></app-section-group-dropdown-item>
 				</ng-container>
-				<ng-template #noContent>
-					<div class="section-filter__no-content">
-						<ss-lib-text
-							[align]="Align.Center"
-							[color]="Colors.TextBody3"
-							[type]="TextType.BodySm"
-							[weight]="TextWeight.Regular"
-						>
-							По запросу
-							{{ queryControl.valueChanges | async }} ничего не
-							найдено. Попробуйте изменить запрос.
-						</ss-lib-text>
-					</div>
+
+				<!--	выбранный список без иеархии  -->
+				<ng-template #notChildren>
+					<ss-lib-dropdown-item
+						(click)="toggleSelectionNotChildren(item)"
+					>
+						<ss-lib-checkbox
+							[formControl]="item.control"
+						></ss-lib-checkbox>
+						<ss-lib-text>{{ item.name }}</ss-lib-text>
+					</ss-lib-dropdown-item>
 				</ng-template>
 			</ng-container>
-		</ng-template>
-	</div>
+
+			<ss-lib-divider
+				*ngIf="selectedItems().length"
+				class="divider"
+			></ss-lib-divider>
+
+			<!--	общий список  -->
+			<ng-container *ngFor="let item of items()">
+				<!--				общий список с иеархией-->
+				<ng-container *ngIf="item.children?.length; else notChildren">
+					<app-section-group-dropdown-item
+						[expanded]="false"
+						[sectionItem]="item"
+						(toggleEmit)="toggleSelectionChildren($event, item)"
+						(toggleParentEmit)="toggleParent($event, false)"
+					></app-section-group-dropdown-item>
+				</ng-container>
+				<!--				общий список без иеархии-->
+				<ng-template #notChildren>
+					<ss-lib-dropdown-item
+						(click)="removeSelectionNotChildren(item)"
+					>
+						<ss-lib-checkbox
+							[formControl]="item.control"
+						></ss-lib-checkbox>
+						<ss-lib-text>{{ item.name }}</ss-lib-text>
+					</ss-lib-dropdown-item>
+				</ng-template>
+			</ng-container>
+		</div>
+	</ss-lib-scrollbar>
 </div>

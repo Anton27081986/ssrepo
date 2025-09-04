@@ -1,7 +1,9 @@
+import { IDictionaryItemDto } from '@front-library/components';
+
 export interface OperationPlanItem {
 	id: number;
 	weekId: number;
-	tov: IName;
+	tov: IDictionaryItemDto;
 	tovCategory: IName;
 	productionSection: IName;
 	optimalBatch: number;
@@ -17,6 +19,7 @@ export interface OperationPlanItem {
 	weekPlanQuantity: number;
 	weekFactQuantity: number;
 	commentCount: string;
+	productManagerUserPlanQuantity: number;
 }
 
 export interface IName {

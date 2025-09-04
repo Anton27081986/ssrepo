@@ -54,4 +54,14 @@
 			max-height: calc(100vh - 415px);
 		}
 	}
+
+	.completed-work-acts {
+
+		&__empty {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 60vh;
+		}
+	}
 }

@@ -1,0 +1,79 @@
+<div class="city-filter">
+	<ss-lib-form-field
+		[icon]="IconType.Search"
+		[clearButton]="true"
+	>
+		<ss-lib-input
+			fieldCtrl
+			[size]="ExtraSize.md"
+			[placeholder]="'Поиск'"
+			[formControl]="queryControl"
+		></ss-lib-input>
+	</ss-lib-form-field>
+
+	<ss-lib-scrollbar>
+		<div class="city-filter__content">
+			<ss-lib-dropdown-item
+				*ngIf="indeterminate()"
+				(click)="controlsClearAll.setValue(true)"
+			>
+				<ss-lib-checkbox
+					[indeterminate]="indeterminate()"
+					[formControl]="controlsClearAll"
+				></ss-lib-checkbox>
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Medium"
+					[color]="Colors.TextAction2"
+					>{{ indeterminateText() }}
+				</ss-lib-text>
+			</ss-lib-dropdown-item>
+			<ss-lib-dropdown-item
+				*ngFor="let item of viewSelectedItems$ | async"
+				(click)="unSelectedItem(item)"
+			>
+				<ss-lib-checkbox [formControl]="item.control"></ss-lib-checkbox>
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Medium"
+					[color]="Colors.TextAction2"
+					>{{ item.item.name }}
+				</ss-lib-text>
+			</ss-lib-dropdown-item>
+			<div
+				*ngIf="(viewSelectedItems$ | async)?.length"
+				class="city-filter-divider"
+			>
+				<ss-lib-divider></ss-lib-divider>
+			</div>
+			<ng-container *ngIf="unSelectedItems$ | async as unSelectedItems">
+				<ng-container *ngIf="unSelectedItems.length; else empty">
+					<ss-lib-dropdown-item
+						*ngFor="let item of unSelectedItems"
+						(click)="selectedItem(item)"
+					>
+						<ss-lib-checkbox></ss-lib-checkbox>
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Medium"
+							[color]="Colors.TextAction2"
+							>{{ item.item.name }}
+						</ss-lib-text>
+					</ss-lib-dropdown-item>
+				</ng-container>
+				<ng-template #empty>
+					<div class="tov-filter-no-content">
+						<ss-lib-text
+							[align]="Align.Center"
+							[color]="Colors.TextBody3"
+							[type]="TextType.BodySm"
+							[weight]="TextWeight.Regular"
+							>По запросу «{{ queryControl.value }}» ничего не
+							найдено. Попробуйте изменить запрос.
+						</ss-lib-text>
+					</div>
+				</ng-template>
+			</ng-container>
+		</div>
+	</ss-lib-scrollbar>
+</div>

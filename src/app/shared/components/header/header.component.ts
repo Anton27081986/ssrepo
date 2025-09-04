@@ -2,10 +2,8 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	input,
-	Input,
 	InputSignal,
 	OnInit,
-	Signal,
 } from '@angular/core';
 import { AppRoutes } from '@app/common/routes';
 import { Observable } from 'rxjs';
@@ -85,7 +83,7 @@ export class HeaderComponent implements OnInit {
 		this.profilePopup$ = this.userStateService.windowProfile$;
 	}
 
-	protected getSearchGlobal(found: IDictionaryItemDto) {
+	protected getSearchGlobal(found: IDictionaryItemDto): void {
 		if (found.linkToDetail) {
 			const link = document.createElement('a');
 

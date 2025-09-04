@@ -1,0 +1,168 @@
+@if (columnId().startsWith('planQuantity')) {
+	<div
+		#quantity="cdkOverlayOrigin"
+		cdkOverlayOrigin
+	>
+		@if (hasUtilityAccess()) {
+			<ss-lib-action-bar
+				class="quantity-button"
+				[style.opacity]="{ isPostponeOpen: 100 }"
+				[size]="ExtraSize.xxs"
+				(click)="$event.stopPropagation()"
+			>
+				<ss-lib-action-bar-item
+					[leftIconConfig]="{
+						icon: IconType.KebabMenuDots,
+					}"
+					[popoverTriggerFor]="utilityList"
+				/> </ss-lib-action-bar
+			><ss-lib-dropdown-list #utilityList>
+				@if (hasTransferAccess()) {
+					<ss-lib-dropdown-item
+						[icon]="IconType.CornerUpRight"
+						[label]="'Перенести количество'"
+						[isDisabled]="isChangedDisabled"
+						(click)="isPostponeOpen = true"
+					></ss-lib-dropdown-item>
+				}
+				@if (hasQuantityEditAccess()) {
+					<ss-lib-dropdown-item
+						[icon]="IconType.Edit"
+						[label]="'Изменить количество'"
+						[isDisabled]="isChangedDisabled"
+						(click)="isChangeQuantityOpen = true"
+					></ss-lib-dropdown-item>
+				}
+				@if (hasViewAccess() && getDay()?.id) {
+					<ss-lib-dropdown-item
+						[icon]="IconType.FilePreviewSearch"
+						[label]="'Посмотреть заказы'"
+						(click)="openPostponeModal()"
+					></ss-lib-dropdown-item>
+				}
+			</ss-lib-dropdown-list>
+
+			<ng-template
+				cdkConnectedOverlay
+				[cdkConnectedOverlayOrigin]="quantity"
+				[cdkConnectedOverlayOpen]="isChangeQuantityOpen"
+				[cdkConnectedOverlayPositions]="positionPairs"
+				[cdkConnectedOverlayBackdropClass]="'no-backdrop'"
+				[cdkConnectedOverlayHasBackdrop]="true"
+				(detach)="isChangeQuantityOpen = false"
+				(backdropClick)="isChangeQuantityOpen = false"
+			>
+				<div class="change-quantity">
+					<div class="change-quantity__info">
+						<div class="change-quantity__info__header">
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[color]="Colors.TextBody2"
+								>Изменение количества плана </ss-lib-text
+							><ss-lib-status-icon
+								ss-lib-tooltip
+								[type]="Status.Default"
+								[icon]="IconType.Info"
+								[position]="TooltipPosition.Top"
+								[tooltipText]="
+									'Изменение плана повлияет на количество в заказах ТМЗ'
+								"
+							></ss-lib-status-icon>
+						</div>
+						<ss-lib-number-picker
+							fieldCtrl
+							[formControl]="quantityInputControl"
+							[step]="10"
+						></ss-lib-number-picker>
+					</div>
+					<ss-lib-button
+						[size]="ExtraSize.lg"
+						[text]="'Изменить количество'"
+						(click)="changePlan()"
+					></ss-lib-button>
+				</div>
+			</ng-template>
+
+			<ng-template
+				cdkConnectedOverlay
+				[cdkConnectedOverlayOrigin]="quantity"
+				[cdkConnectedOverlayOpen]="isPostponeOpen"
+				[cdkConnectedOverlayPositions]="positionPairs"
+				[cdkConnectedOverlayHasBackdrop]="true"
+				[cdkConnectedOverlayBackdropClass]="'no-backdrop'"
+				(detach)="isPostponeOpen = false"
+				(backdropClick)="isPostponeOpen = false"
+			>
+				<div class="postpone">
+					<div class="postpone__info">
+						<div class="postpone__info__item">
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[color]="Colors.TextBody2"
+								>Кол-во для переноса
+							</ss-lib-text>
+							<ss-lib-number-picker
+								fieldCtrl
+								[formControl]="quantityInputControl"
+								[size]="ExtraSize.md"
+								[step]="10"
+							></ss-lib-number-picker>
+						</div>
+						<div class="postpone__info__item">
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[color]="Colors.TextBody2"
+								>Дата для переноса
+							</ss-lib-text>
+							<ss-lib-form-field>
+								<ss-lib-datepicker
+									fieldCtrl
+									[min]="minDate"
+									[formControl]="postponeDateControl"
+								></ss-lib-datepicker>
+							</ss-lib-form-field>
+						</div>
+					</div>
+					<ss-lib-button
+						[size]="ExtraSize.lg"
+						[icon]="IconType.CornerUpRight"
+						[iconPosition]="IconPosition.Start"
+						[text]="'Перенести количество'"
+						(click)="transferPlan()"
+					></ss-lib-button>
+				</div>
+			</ng-template>
+		}
+	</div>
+	<input
+		#quantityInput
+		maxlength="10"
+		class="quantity-input"
+		[class.plan]="hasUtilityAccess()"
+		[disabled]="
+			!operationPlanState.getHasPermissionEdit || row().isPersonification
+		"
+		[value]="getCellValue(row(), columnId())"
+		(focusout)="editPlanFact($event, columnId())"
+		(keyup.enter)="quantityInput.blur()"
+		(input)="checkPlanFactValue($event)"
+	/>
+	<p class="quantity-fixer plan">
+		{{ getCellValue(row(), columnId()) }}
+	</p>
+}
+@if (columnId().startsWith('factQuantity')) {
+	<input
+		#quantityInput
+		maxlength="10"
+		class="quantity-input"
+		[disabled]="!operationPlanState.getHasPermissionEdit"
+		[value]="getCellValue(row(), columnId())"
+		(focusout)="editPlanFact($event, columnId())"
+		(keyup.enter)="quantityInput.blur()"
+		(input)="checkPlanFactValue($event)"
+	/>
+	<p class="quantity-fixer">
+		{{ getCellValue(row(), columnId()) }}
+	</p>
+}

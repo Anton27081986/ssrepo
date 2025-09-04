@@ -1,0 +1,63 @@
+:host {
+	display: flex;
+	gap: 24px;
+}
+
+:host > ss-card {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	gap: 10px;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 16px;
+
+		.title {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+	}
+
+	.divider {
+		padding: 4px 0;
+	}
+
+	.rates {
+		display: grid;
+		grid-template-columns: 2fr 1fr 1fr;
+		row-gap: 12px;
+		column-gap: 16px;
+		padding: 0 16px 16px;
+
+		.column {
+			.item {
+				height: 100%;
+				display: flex;
+				align-items: center;
+				padding: 8px;
+				border: 1px solid #e4e8ea;
+				border-radius: 10px;
+
+				font-size: 13px;
+				font-weight: 500;
+				line-height: 19px;
+			}
+		}
+	}
+}
+
+.controls {
+	max-width: 240px;
+
+	&-item {
+		cursor: pointer;
+	}
+}
+
+.text-complementary {
+	color: #4d4d4d !important;
+}
+

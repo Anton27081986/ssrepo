@@ -6,14 +6,37 @@
 					*ssCell="column.id"
 					ssTd
 					class="item-td"
+					[class.hover]="isHoveredColumn(column.id)"
 				>
 					@if (column.id === 'tov') {
-						<div class="item-tov">
-							<ss-lib-checkbox
-								[formControl]="getRowCheckboxControl(idxRow)"
-							></ss-lib-checkbox>
+						<div
+							class="item-tov"
+							(click)="
+								operationPlanState.getHasPermissionOrderProduction ||
+								operationPlanState.getHasPermissionCalcRowMaterials ||
+								operationPlanState.getHasPermissionEdit
+									? getRowCheckboxControl(idxRow).setValue(
+											!getRowCheckboxControl(idxRow).value
+										)
+									: $event.preventDefault()
+							"
+						>
+							@if (
+								operationPlanState.getHasPermissionOrderProduction ||
+								operationPlanState.getHasPermissionCalcRowMaterials ||
+								operationPlanState.getHasPermissionEdit
+							) {
+								<ss-lib-checkbox
+									[formControl]="
+										getRowCheckboxControl(idxRow)
+									"
+									(click)="$event.stopPropagation()"
+								></ss-lib-checkbox>
+							}
 							<ss-lib-text
 								class="item-tov__text"
+								[lineClampCount]="3"
+								[isLineClamp]="true"
 								[type]="TextType.BodySm"
 								[weight]="TextWeight.Regular"
 								[align]="Align.Start"
@@ -23,49 +46,59 @@
 							@if (
 								operationPlanState.getHasPermissionAddComments
 							) {
-								<ss-lib-button
+								<ss-lib-action-bar
 									[class]="{
-										'comment-button': !row.isComment,
+										hidden: !row.isComment,
 									}"
-									[text]="row.commentCount"
-									[iconPosition]="IconPosition.Start"
-									[icon]="IconType.Message"
-									[size]="ExtraSize.xs"
-									[type]="ButtonType.Secondary"
-									[popoverTriggerFor]="
-										row.isComment
-											? addCommentsModal
-											: createCommentsModal
-									"
-									(click)="
-										openCommentsModal(row, row.isComment)
-									"
-								></ss-lib-button>
+									[size]="ExtraSize.xxs"
+									(click)="$event.stopPropagation()"
+								>
+									<ss-lib-action-bar-item
+										class="tov-link"
+										ss-lib-tooltip
+										[leftIconConfig]="{
+											icon: IconType.LinkExternal01,
+										}"
+										[tooltipText]="'Перейти к карточке ТП'"
+										[position]="TooltipPosition.Top"
+										(click)="
+											openTovLink(row.tov.linkToDetail)
+										"
+									/>
+									<ss-lib-action-bar-item
+										class="comment"
+										ss-lib-tooltip
+										[leftIconConfig]="{
+											icon: IconType.Message,
+										}"
+										[text]="row.commentCount"
+										[popoverTriggerFor]="commentsModal"
+										[tooltipText]="
+											row.isComment
+												? 'Посмотреть комментарии'
+												: 'Добавить комментарий'
+										"
+										[position]="TooltipPosition.Top"
+										(click)="openCommentsModal(row)"
+									/>
+								</ss-lib-action-bar>
 							}
 							<ss-lib-dropdown-list
-								#createCommentsModal
+								#commentsModal
 								[height]="'100%'"
-								[width]="'449px'"
 							>
-								<app-create-comments-modal
-									[data]="row"
-								></app-create-comments-modal>
-							</ss-lib-dropdown-list>
-							<ss-lib-dropdown-list
-								#addCommentsModal
-								[height]="'100%'"
-								[width]="'449px'"
-							>
-								<app-add-comments-modal
-									*ngIf="openCommentsRowId === row.id"
-									[data]="row"
-								></app-add-comments-modal>
+								@if (openCommentsRowId === row.id) {
+									<app-comments-modal
+										[data]="row"
+									></app-comments-modal>
+								}
 							</ss-lib-dropdown-list>
 						</div>
 					} @else if (
 						column.id === 'optimalBatch' ||
 						column.id.startsWith('week') ||
-						column.id.startsWith('month')
+						column.id.startsWith('month') ||
+						column.id === 'productManagerUserPlanQuantity'
 					) {
 						<ss-lib-text
 							[type]="TextType.BodySm"
@@ -78,46 +111,28 @@
 						column.id.startsWith('planQuantity') ||
 						column.id.startsWith('factQuantity')
 					) {
-						<div class="plan-fact-wrapper">
-							@if (
+						<app-operation-plan-table-quantity-cell
+							[hasUtilityAccess]="
 								column.id.startsWith('planQuantity') &&
-								getDayCell(row, column.id)?.isManufactoryOrder
-							) {
-								<ss-lib-button
-									*ngIf="
-										operationPlanState.getHasPermissionEdit
-									"
-									class="postpone-button"
-									[type]="ButtonType.Secondary"
-									[size]="ExtraSize.xxs"
-									[iconPosition]="IconPosition.OnlyIcon"
-									[icon]="IconType.CornerUpRight"
-									(click)="
-										openPostponePlanModal(row, column.id);
-										$event.stopPropagation()
-									"
-								></ss-lib-button>
-							}
-							<input
-								#quantityInput
-								maxlength="10"
-								class="quantity-input"
-								[disabled]="
-									!operationPlanState.getHasPermissionEdit ||
-									(column.id.startsWith('planQuantity') &&
-										row.isPersonification)
-								"
-								[value]="getCellValue(row, column.id)"
-								(focusout)="
-									editPlanFact($event, row, column.id)
-								"
-								(keyup.enter)="quantityInput.blur()"
-								(input)="checkPlanFactValue($event)"
-							/>
-							<p class="quantity-fixer">
-								{{ getCellValue(row, column.id) }}
-							</p>
-						</div>
+								!!getDayCell(row, column.id)
+									?.isManufactoryOrder &&
+								(operationPlanState.getHasPermissionChangeOrder ||
+									operationPlanState.getHasPermissionTransferOrder ||
+									operationPlanState.getHasPermissionViewOrder)
+							"
+							[hasQuantityEditAccess]="
+								operationPlanState.getHasPermissionChangeOrder
+							"
+							[hasTransferAccess]="
+								operationPlanState.getHasPermissionTransferOrder
+							"
+							[hasViewAccess]="
+								operationPlanState.getHasPermissionViewOrder
+							"
+							[value]="getCellValue(row, column.id)"
+							[row]="row"
+							[columnId]="column.id"
+						></app-operation-plan-table-quantity-cell>
 					} @else {
 						<ss-lib-text
 							[type]="TextType.BodySm"

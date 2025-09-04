@@ -1,16 +1,52 @@
 .section-filter {
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+	gap: 4px;
 
 	&__content {
-		padding: 4px 6px;
-		height: 274px;
-		overflow: auto;
+		height: 340px;
 	}
 
-	&__no-content {
-		height: 274px;
+	&-no-content {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		padding: 20px 16px;
+
+		ss-lib-text {
+			width: 316px;
+		}
 	}
+}
+
+.dropdown-item-tree {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: nowrap;
+	width: 100%;
+	align-items: center;
+
+	&__left {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__child {
+		padding-left: 34px;
+	}
+}
+
+.divider {
+	padding: 4px 16px;
+}
+
+ss-lib-form-field {
+	--shadow-xs: none;
+	--border-radius-md: none;
+	--border-secondary: none;
+	--border-focus: none;
+	border-bottom: 1px solid var(--border-primary);
+	--app-custom-field-container-padding: 3px 8px 4px 16px;
 }

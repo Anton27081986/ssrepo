@@ -1,0 +1,17 @@
+.section-group-dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  &__left {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  &__child {
+    padding-left: 34px;
+  }
+}

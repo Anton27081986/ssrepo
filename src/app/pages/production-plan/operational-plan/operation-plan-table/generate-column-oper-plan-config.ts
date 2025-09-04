@@ -12,8 +12,8 @@ export function generateColumnOperationPlanConfig(
 	const baseColumns: TableColumnConfig[] = [
 		{
 			id: 'tov',
-			name: 'Готовая продукция (ГП)',
-			showInDropdown: false,
+			name: 'Товарная позиция (ТП)',
+			showInDropdown: true,
 			showInHeader: true,
 			visible: true,
 			stickyColumn: true,
@@ -63,6 +63,13 @@ export function generateColumnOperationPlanConfig(
 		{
 			id: 'planEconomicUser',
 			name: 'Менеджер ПЭО',
+			showInDropdown: true,
+			showInHeader: true,
+			visible: true,
+		},
+		{
+			id: 'productManagerUserPlanQuantity',
+			name: 'План ТМЗ',
 			showInDropdown: true,
 			showInHeader: true,
 			visible: true,

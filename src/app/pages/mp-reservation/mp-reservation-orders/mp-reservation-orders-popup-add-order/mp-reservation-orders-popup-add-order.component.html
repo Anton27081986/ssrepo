@@ -1,0 +1,236 @@
+<div
+	class="wrapper"
+	(mousedown)="close()"
+>
+	<snab-card
+		class="add-orders-form"
+		[headerRef]="header"
+		[bodyRef]="body"
+		[footerRef]="footer"
+		(mousedown)="$event.stopPropagation()"
+	>
+		<ng-template #header>
+			<div class="header">
+				<snab-text
+					[type]="TextType.Headline"
+					[weight]="TextWeight.Semibold"
+				>
+					Создать заказ
+				</snab-text>
+				<snab-button
+					[type]="ButtonType.Flat"
+					[size]="Size.Large"
+					[icon]="IconType.ClearLarge"
+					[iconPosition]="IconPosition.OnlyIcon"
+					(click)="close()"
+				>
+				</snab-button>
+			</div>
+		</ng-template>
+		<ng-template #body>
+			<div class="author-label">
+				<snab-text
+					[type]="TextType.Title"
+					[weight]="TextWeight.Regular"
+				>
+					Автор: {{ currentUser?.name }}
+				</snab-text>
+			</div>
+			<form
+				class="content"
+				[formGroup]="addOrdersForm"
+			>
+				<div class="content__row">
+					<div class="content__row-item-tov">
+						<ss-search-input
+							searchType="tovsManufacturing"
+							label="ТП"
+							[placeholder]="'Выберите товарную позицию'"
+							[error]="
+								addOrdersForm.controls.tov.touched &&
+								addOrdersForm.controls.tov.errors?.required
+									? 'Обязательное поле'
+									: undefined
+							"
+							[reSizeHeightOptions]="true"
+							(select)="onTovSelect($event)"
+							(click)="addOrdersForm.controls.tov.setErrors(null)"
+						/>
+					</div>
+					<div class="content__row-item-client">
+						<ss-search-input
+							searchType="contractorManufacturing"
+							label="Контрагент"
+							[placeholder]="'Выберите контрагента'"
+							[error]="
+								addOrdersForm.controls.contractor.touched &&
+								addOrdersForm.controls.contractor.errors
+									?.required
+									? 'Обязательное поле'
+									: undefined
+							"
+							[reSizeHeightOptions]="true"
+							(select)="onClientSelect($event)"
+							(click)="
+								addOrdersForm.controls.contractor.setErrors(
+									null
+								)
+							"
+						/>
+					</div>
+					<div class="content__row-item-add-button">
+						<snab-button
+							text="Добавить ТП"
+							[size]="Size.Large"
+							(click)="addPosition()"
+						></snab-button>
+					</div>
+				</div>
+				<div
+					formArrayName="positions"
+					class="content__table-list"
+				>
+					<div
+						*ngFor="
+							let position of positions.controls;
+							let posIndex = index
+						"
+						[formGroupName]="posIndex"
+					>
+						<ss-accordion
+							[isExpanded]="true"
+							[headerRef]="title"
+							[isMpReservationOrders]="true"
+							(addRowPosition)="addDetailRow(posIndex)"
+							(removePosition)="removePosition(posIndex)"
+						>
+							<ng-template #title>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Medium"
+									[tooltip]="
+										position.get('headerTovName')?.value ??
+										''
+									"
+									[theme]="TooltipTheme.MAIN"
+								>
+									{{ position.get('headerTitle')?.value }}
+								</snab-text>
+							</ng-template>
+							<ng-template
+								[ngTemplateOutlet]="accordionContent"
+								[ngTemplateOutletContext]="{
+									position: position,
+									posIndex: posIndex,
+								}"
+							>
+							</ng-template>
+						</ss-accordion>
+					</div>
+				</div>
+			</form>
+		</ng-template>
+		<ng-template #footer>
+			<div class="footer">
+				<snab-button
+					text="Отмена"
+					[type]="ButtonType.Secondary"
+					[size]="Size.Large"
+					(click)="close()"
+				></snab-button>
+				<snab-button
+					text="Создать заказ"
+					[size]="Size.Large"
+					(click)="createOrder()"
+				></snab-button>
+			</div>
+		</ng-template>
+	</snab-card>
+</div>
+
+<ng-template
+	#accordionContent
+	let-position="position"
+	let-posIndex="posIndex"
+>
+	<ng-container [formGroup]="position">
+		<ng-container *ngIf="position.get('details').controls.length > 0">
+			<div class="table-container">
+				<table class="details-table">
+					<thead>
+						<tr>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Количество (план)
+								</snab-text>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Желаемая дата обеспечения
+								</snab-text>
+							</th>
+							<th>
+								<snab-text
+									[type]="TextType.Title"
+									[weight]="TextWeight.Semibold"
+									>Действия
+								</snab-text>
+							</th>
+						</tr>
+					</thead>
+					<tbody formArrayName="details">
+						<tr
+							*ngFor="
+								let detail of getDetails(position).controls;
+								let detailIndex = index
+							"
+							[formGroupName]="detailIndex"
+						>
+							<td>
+								<snab-form-field [size]="Size.Large">
+									<snab-input
+										fieldCtrl
+										placeholder="Введите количество"
+										formControlName="quantity"
+										[type]="InputType.Number"
+										[onlyPositiveValue]="true"
+									></snab-input>
+								</snab-form-field>
+							</td>
+							<td>
+								<ss-date-time-picker
+									formControlName="date"
+									[showTime]="false"
+									[error]="
+										detail.get('date')?.touched &&
+										detail.get('date')?.errors?.required
+											? 'Обязательное поле'
+											: undefined
+									"
+									(click)="
+										detail.get('date')?.setErrors(null)
+									"
+								>
+								</ss-date-time-picker>
+							</td>
+							<td>
+								<snab-button
+									[type]="ButtonType.Flat"
+									[size]="Size.Large"
+									[icon]="IconType.Trash"
+									(click)="
+										removeDetailRow(posIndex, detailIndex)
+									"
+								></snab-button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</ng-container>
+	</ng-container>
+</ng-template>

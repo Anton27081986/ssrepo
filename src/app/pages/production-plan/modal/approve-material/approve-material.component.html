@@ -8,10 +8,11 @@
 		'Согласование сырья за ' + (data.dataStart | date: 'd MMMM y')
 	"
 	[descriptionHeader]="
-		'Выберите период согласования сырья и город для выбранных ГП.'
+		'Выберите период согласования сырья и город для выбранных ТП.'
 	"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
+	[paddingContent]="'24px'"
 	(closeEmit)="close()"
 >
 </ss-lib-modal>
@@ -57,7 +58,7 @@
 				[icon]="IconType.ChevronDown"
 				[type]="ButtonType.Secondary"
 				[popoverTriggerFor]="list"
-				[text]="city() ? city()!.name : 'Выберите город'"
+				[text]="city() ? city()?.name : 'Выберите город'"
 			></ss-lib-button>
 
 			<ss-lib-dropdown-list
@@ -68,7 +69,7 @@
 					*ngFor="let item of cities()"
 					[selected]="item.id === city()?.id"
 					[label]="item.name"
-					(click)="selectCity(item)"
+					(click)="city.set(item)"
 				/>
 			</ss-lib-dropdown-list>
 		</div>
@@ -86,7 +87,7 @@
 		<ss-lib-button
 			[style.width]="'262px'"
 			[type]="ButtonType.Primary"
-			[text]="'Рассчитать для ' + data.total + ' ГП'"
+			[text]="'Рассчитать для ' + data.total + ' ТП'"
 			(click)="approveMaterial()"
 		></ss-lib-button>
 	</div>
