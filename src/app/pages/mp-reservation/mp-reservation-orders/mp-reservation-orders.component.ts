@@ -20,7 +20,10 @@ import {
 	TextWeight,
 	TooltipDirective,
 } from '@front-components/components';
-import { IconType as IconTypeFrontLib } from '@front-library/components';
+import {
+	EmptyStateComponent,
+	IconType as IconTypeFrontLib,
+} from '@front-library/components';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgForOf, NgIf } from '@angular/common';
 import { DropdownButtonComponent } from '@app/shared/components/buttons/dropdown-button/dropdown-button.component';
@@ -32,13 +35,7 @@ import { MpReservationOrdersFacadeService } from '@app/core/facades/mp-reservati
 import { PaginationComponent } from '@app/shared/components/pagination/pagination.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalService } from '@app/core/modal/modal.service';
-import { MpReservationOrdersPopupDateProvisionComponent } from './mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component';
 import { Router } from '@angular/router';
-import { MpReservationOrdersPopupHistoryComponent } from './mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
-import { MpReservationOrdersPopupRemnantsDetailsComponent } from './mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
-import { MpReservationOrdersPopupAddOrderComponent } from './mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
-import { MpReservationOrdersPopupTotalAmountComponent } from './mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
-import { MpReservationOrdersPopupChangeQueueComponent } from './mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
 import { IMpReservationAddOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-add-order';
 import { TagV2Component } from '@app/shared/components/tag-v2/tag-v2.component';
 import { NumWithSpacesPipe } from '@app/core/pipes/num-with-spaces.pipe';
@@ -47,7 +44,12 @@ import { ModulesWithPermissionsEnum } from '@app/core/models/modules-with-permis
 import { Permissions } from '@app/core/constants/permissions.constants';
 import { FilterBuilder } from '@app/core/utils/filter-builder.util';
 import { IMpReservationOrder } from '@app/core/models/mp-reservation-orders/mp-reservation-order';
-import { EmptyStateComponent } from '@front-library/components';
+import { MpReservationOrdersPopupChangeQueueComponent } from './mp-reservation-orders-popup-change-queue/mp-reservation-orders-popup-change-queue.component';
+import { MpReservationOrdersPopupTotalAmountComponent } from './mp-reservation-orders-popup-total-amount/mp-reservation-orders-popup-total-amount.component';
+import { MpReservationOrdersPopupAddOrderComponent } from './mp-reservation-orders-popup-add-order/mp-reservation-orders-popup-add-order.component';
+import { MpReservationOrdersPopupRemnantsDetailsComponent } from './mp-reservation-orders-popup-remnants-details/mp-reservation-orders-popup-remnants-details..component';
+import { MpReservationOrdersPopupHistoryComponent } from './mp-reservation-orders-popup-history/mp-reservation-orders-popup-history..component';
+import { MpReservationOrdersPopupDateProvisionComponent } from './mp-reservation-orders-popup-date-provision/mp-reservation-orders-popup-date-provision.component';
 
 @Component({
 	selector: 'app-mp-reservation-orders',
@@ -75,8 +77,11 @@ import { EmptyStateComponent } from '@front-library/components';
 })
 export class MPReservationOrdersComponent implements OnInit {
 	private static readonly defaultPageSize = 10;
-	private static readonly instructionFileLink =
-		'https://erp.ssnab.ru/api/static/general/2025/02/14/Инструкция_Управление_СНД_59605308-9107-4c29-8a42-89143dfde87c.docx';
+	private static readonly orderAuthorInstructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2025/09/05/Инструкция_Реестр_персонификации_заказов_МП_Автор_заказа_4f1f6933-c815-4556-8cce-02405e094a7c.docx';
+
+	private static readonly mpManagerInstructionFileLink =
+		'https://erp.ssnab.ru/api/static/general/2025/09/05/Инструкция_Реестр_персонификации_заказов_МП_Менеджер_ТМЗ_4961a014-bfa3-4bd2-96c5-f21736c02384.docx';
 
 	// Protected readonly для template access
 	protected readonly TextType = TextType;
@@ -206,7 +211,12 @@ export class MPReservationOrdersComponent implements OnInit {
 	protected downloadInstr(): void {
 		const link = document.createElement('a');
 
-		link.href = MPReservationOrdersComponent.instructionFileLink;
+		link.href = !this.permissionService.hasPermission(
+			ModulesWithPermissionsEnum.MpReservationOrders,
+			Permissions.PERSONIFICATION_MUTMZ_VIEW_DATA
+		)
+			? MPReservationOrdersComponent.orderAuthorInstructionFileLink
+			: MPReservationOrdersComponent.mpManagerInstructionFileLink;
 		link.click();
 	}
 
