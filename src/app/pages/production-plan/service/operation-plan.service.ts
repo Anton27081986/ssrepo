@@ -34,6 +34,7 @@ import {
 	CreatePlanFactRequest,
 	UpdatePlanFactRequest,
 } from '@app/core/models/production-plan/plan-fact-request';
+import { TypeTotalPlans } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table.component';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanService {
@@ -241,13 +242,15 @@ export class OperationPlanService {
 
 	public getPlanInfo(
 		weekId: number,
-		date: string,
-		productionSectionIds: number[]
+		date: string | null,
+		productionSectionIds: number[],
+		type: TypeTotalPlans
 	): Observable<{ planDayTotalQuantity: number }> {
 		return this.operationPlanApiService.getPlanInfo(
 			weekId,
 			date,
-			productionSectionIds
+			productionSectionIds,
+			type
 		);
 	}
 }

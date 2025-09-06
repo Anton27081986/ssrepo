@@ -57,6 +57,12 @@ import {
 } from '@app/core/models/production-plan/order-an-outfit-request';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
 
+export enum TypeTotalPlans {
+	Day = 1,
+	Week = 2,
+	Month = 3,
+}
+
 @Component({
 	selector: 'app-operation-plan-table',
 	standalone: true,
@@ -128,6 +134,7 @@ export class OperationPlanTableComponent {
 
 	protected readonly Status = Status;
 	protected readonly ActionBarItemType = ActionBarItemType;
+
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {
 		toSignal(
 			this.masterCheckboxCtrl.valueChanges.pipe(
@@ -354,13 +361,22 @@ export class OperationPlanTableComponent {
 			});
 	}
 
-	protected onPlanInfoEnter(date: string): void {
+	protected onPlanInfoEnter(column: string): void {
+		let type: TypeTotalPlans = TypeTotalPlans.Day;
+
+		if (column === 'weekFactQuantity') {
+			type = TypeTotalPlans.Week;
+		} else if (column === 'monthFactQuantity') {
+			type = TypeTotalPlans.Month;
+		}
+
 		if (this.productionSectionIds) {
 			this.operationPlanService
 				.getPlanInfo(
 					this.operationPlanState.weekId$.value!,
-					date.slice(-10),
-					this.productionSectionIds
+					type === TypeTotalPlans.Day ? column.slice(-10) : null,
+					this.productionSectionIds,
+					type
 				)
 				.subscribe((res) => {
 					this.planTooltipText = `Всего по выбранным участкам  — ${

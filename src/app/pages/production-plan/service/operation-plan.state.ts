@@ -20,6 +20,13 @@ export class OperationPlanState {
 
 	public permissionsFacadeService = inject(PermissionsFacadeService);
 
+	public get getHasPermissionAdd(): boolean {
+		return this.permissionsFacadeService.hasPermission(
+			ModulesWithPermissionsEnum.OperationalPlan,
+			Permissions.OPERATIONAL_PLAN_ADD
+		);
+	}
+
 	public get getHasPermissionEdit(): boolean {
 		return this.permissionsFacadeService.hasPermission(
 			ModulesWithPermissionsEnum.OperationalPlan,

@@ -9,38 +9,39 @@
 	[descriptionHeader]="'Добавьте товарную позицию в планирование на неделю.'"
 	[contentRef]="contentRef"
 	[actionsRef]="actionRef"
-	[stickyRef]="stickyRef"
-	[paddingContent]="'14px 24px 0 24px'"
 	(closeEmit)="close()"
 >
 </ss-lib-modal>
 
-<ng-template #stickyRef>
-	<div class="add-manufactures-popup__sticky">
-		<ss-lib-form-field [icon]="IconType.Search">
-			<ss-lib-input
-				fieldCtrl
-				[formControl]="queryControl"
-				[placeholder]="'Введите название товарной позиции...'"
-			/>
-		</ss-lib-form-field>
-		<ss-lib-button
-			*ngIf="selectedViewTov().length"
-			class="add-manufactures-popup__clear-button"
-			[type]="ButtonType.TextSecondary"
-			[text]="
-				queryControl.value?.trim()
-					? 'Очистить выбранные'
-					: 'Очистить все'
-			"
-			[size]="ExtraSize.sm"
-			(click)="deleteSelected()"
-		></ss-lib-button>
-	</div>
-</ng-template>
-
 <ng-template #contentRef>
 	<div class="add-manufactures-popup">
+		<div class="add-manufactures-popup__sticky">
+			<div class="add-manufactures-popup__sticky-block">
+				<ss-lib-form-field
+					[clearButton]="true"
+					[icon]="IconType.Search"
+				>
+					<ss-lib-input
+						fieldCtrl
+						[formControl]="queryControl"
+						[placeholder]="'Введите название товарной позиции...'"
+					/>
+				</ss-lib-form-field>
+				<ss-lib-button
+					*ngIf="selectedViewTov().length"
+					class="add-manufactures-popup__clear-button"
+					[type]="ButtonType.TextSecondary"
+					[text]="
+						queryControl.value?.trim()
+							? 'Очистить выбранные'
+							: 'Очистить все'
+					"
+					[size]="ExtraSize.sm"
+					(click)="deleteSelected()"
+				></ss-lib-button>
+			</div>
+			<ss-lib-divider></ss-lib-divider>
+		</div>
 		<div
 			*ngIf="selectedViewTov().length"
 			class="add-manufactures-popup__items"
@@ -83,10 +84,7 @@
 				</div>
 			</ng-container>
 		</div>
-		<ss-lib-divider
-			*ngIf="selectedViewTov().length"
-			[style.padding]="'10px 0'"
-		></ss-lib-divider>
+		<ss-lib-divider *ngIf="selectedViewTov().length"></ss-lib-divider>
 
 		<ng-container *ngIf="!isLoaderMain(); else loaderMain">
 			<div
