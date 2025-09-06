@@ -28,8 +28,9 @@
 			</div>
 			<ss-lib-button
 				*ngIf="
-					viewAddButton() && operationPlanState.getHasPermissionEdit
+					viewAddButton() && operationPlanState.getHasPermissionAdd
 				"
+				[size]="ExtraSize.xl"
 				[text]="'Добавить ТП'"
 				(click)="addSemiManufactures()"
 			></ss-lib-button>
