@@ -364,9 +364,9 @@ export class OperationPlanTableComponent {
 	protected onPlanInfoEnter(column: string): void {
 		let type: TypeTotalPlans = TypeTotalPlans.Day;
 
-		if (column === 'weekFactQuantity') {
+		if (column === 'weekPlanQuantity') {
 			type = TypeTotalPlans.Week;
-		} else if (column === 'monthFactQuantity') {
+		} else if (column === 'monthPlanQuantity') {
 			type = TypeTotalPlans.Month;
 		}
 
