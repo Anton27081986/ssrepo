@@ -30,8 +30,12 @@
 	<form class="manager__body">
 		<div class="manager__body__info">
 			<div class="manager__body__info__item">
-				<snab-text [weight]="TextWeight.Semibold">ТП:</snab-text>
+				<snab-text [weight]="TextWeight.Semibold">Старая ТП:</snab-text>
 				<snab-text>{{ tov?.name }}</snab-text>
+			</div>
+			<div class="manager__body__info__item">
+				<snab-text [weight]="TextWeight.Semibold">Новая ТП:</snab-text>
+				<snab-text>{{ newTov?.name }}</snab-text>
 			</div>
 		</div>
 		<ss-table-v2>
