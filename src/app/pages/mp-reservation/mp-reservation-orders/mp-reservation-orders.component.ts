@@ -189,6 +189,12 @@ export class MPReservationOrdersComponent implements OnInit {
 			placeholder: '',
 		},
 		{
+			name: 'provisionDateFrom-provisionDateTo',
+			type: 'date-range',
+			label: 'Дата обеспечения',
+			placeholder: '',
+		},
+		{
 			name: 'contractorId',
 			type: 'search-select',
 			searchType: 'contractorManufacturing',
