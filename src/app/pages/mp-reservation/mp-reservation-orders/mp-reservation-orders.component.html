@@ -311,17 +311,17 @@
 							></snab-link>
 						</td>
 						<td>
-							<snab-link
-								[type]="TextType.Body"
-								[text]="
+                            <snab-link
+                                    [type]="TextType.Body"
+                                    [text]="order.stockBalance ?
 									pipeNumWithSpaces.numberWithSpaces(
 										order.stockBalance
-									)
+									) : ' '
 								"
-								(click)="
+                                    (click)="
 									openPopupStockBalanceDetailsOrder(order.id)
 								"
-							></snab-link>
+                            ></snab-link>
 						</td>
 						<td>
 							<snab-text [type]="TextType.Body">
