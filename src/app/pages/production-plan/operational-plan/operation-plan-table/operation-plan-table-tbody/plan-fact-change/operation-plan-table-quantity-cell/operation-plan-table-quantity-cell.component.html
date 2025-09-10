@@ -1,0 +1,75 @@
+@if (columnIdSignal().startsWith('planQuantity')) {
+	<div>
+		@if (hasUtilityAccess()) {
+			<ss-lib-action-bar
+				class="quantity-button"
+				#popoverBtn
+				[style.opacity]="{ isPostponeOpen: 100 }"
+				[size]="ExtraSize.xxs"
+				(click)="$event.stopPropagation()"
+			>
+				<ss-lib-action-bar-item
+					[leftIconConfig]="{
+						icon: IconType.KebabMenuDots,
+					}"
+					[popoverTriggerFor]="utilityList"
+				/>
+			</ss-lib-action-bar>
+			<ss-lib-dropdown-list #utilityList>
+				@if (hasTransferAccess()) {
+					<ss-lib-dropdown-item
+						[icon]="IconType.CornerUpRight"
+						[label]="'Перенести количество'"
+						(click)="openPostponeQuantityPopover()"
+					></ss-lib-dropdown-item>
+				}
+				@if (hasQuantityEditAccess()) {
+					<ss-lib-dropdown-item
+						[icon]="IconType.Edit"
+						[label]="'Изменить количество'"
+						(click)="openChangeQuantity()"
+					></ss-lib-dropdown-item>
+				}
+				@if (hasViewAccess() && getDay()?.id) {
+					<ss-lib-dropdown-item
+						[icon]="IconType.FilePreviewSearch"
+						[label]="'Посмотреть заказы'"
+						(click)="openPostponeModal()"
+					></ss-lib-dropdown-item>
+				}
+			</ss-lib-dropdown-list>
+		}
+	</div>
+	<input
+		#quantityInput
+		maxlength="10"
+		class="quantity-input"
+		[class.plan]="hasUtilityAccess()"
+		[disabled]="
+			!operationPlanState.getHasPermissionEdit ||
+			rowSignal().isPersonification
+		"
+		[value]="getCellValue(rowSignal(), columnIdSignal())"
+		(focusout)="editPlanFact($event, columnIdSignal())"
+		(keyup.enter)="quantityInput.blur()"
+		(input)="checkPlanFactValue($event)"
+	/>
+	<p class="quantity-fixer plan">
+		{{ getCellValue(rowSignal(), columnIdSignal()) }}
+	</p>
+}
+@if (columnIdSignal().startsWith('factQuantity')) {
+	<input
+		#quantityInput
+		maxlength="10"
+		class="quantity-input"
+		[disabled]="!operationPlanState.getHasPermissionEdit"
+		[value]="getCellValue(rowSignal(), columnIdSignal())"
+		(focusout)="editPlanFact($event, columnIdSignal())"
+		(keyup.enter)="quantityInput.blur()"
+		(input)="checkPlanFactValue($event)"
+	/>
+	<p class="quantity-fixer">
+		{{ getCellValue(rowSignal(), columnIdSignal()) }}
+	</p>
+}
