@@ -38,11 +38,18 @@ import {
 	Validators,
 } from '@angular/forms';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { InputType } from '@front-components/components';
+import {
+	ButtonComponent,
+	ButtonType,
+	IconType,
+	InputType,
+} from '@front-components/components';
+import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 export enum QualificationTrRowItemField {
 	amount = 'amount',
 	requestedProvisionDate = 'requestedProvisionDate',
+	action = 'action',
 }
 
 @UntilDestroy()
@@ -66,6 +73,8 @@ export enum QualificationTrRowItemField {
 		DateTimePickerComponent,
 		FormsModule,
 		ReactiveFormsModule,
+		IconComponent,
+		ButtonComponent,
 	],
 	standalone: true,
 })
@@ -74,6 +83,8 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 {
 	protected readonly TooltipTheme = TooltipTheme;
 	protected readonly TooltipPosition = TooltipPosition;
+	protected readonly IconType = IconType;
+	protected readonly ButtonType = ButtonType;
 	protected readonly Number = Number;
 
 	protected readonly QualificationTrRowItemField =
@@ -83,9 +94,10 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 
 	@Input({ required: true })
 	public item!: IOrderChangeQualification;
-
 	@Input()
 	public defaultCols: IStoreTableBaseColumn[] = [];
+	@Input()
+	public canRemove = true;
 
 	protected viewMaximise$: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
@@ -95,6 +107,9 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 
 	@Output()
 	public checkForm: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+	@Output()
+	public removeRow = new EventEmitter<void>();
 
 	public qualificationTrForm!: FormGroup<{
 		amount: FormControl<number>;
@@ -128,6 +143,15 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 					{
 						id: QualificationTrRowItemField.requestedProvisionDate,
 						title: 'Желаемая дата',
+						order: 2,
+						show: true,
+						colspan: 1,
+						rowspan: 1,
+						display: true,
+					},
+					{
+						id: QualificationTrRowItemField.action,
+						title: 'Действие',
 						order: 2,
 						show: true,
 						colspan: 1,
@@ -168,6 +192,10 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 				this.content.nativeElement.scrollHeight > 200
 			);
 		}
+	}
+
+	public removeRowClick(): void {
+		if (this.canRemove) this.removeRow.emit();
 	}
 
 	// showText(text: string[], title?: string) {
