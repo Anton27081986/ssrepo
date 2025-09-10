@@ -1,0 +1,90 @@
+:host {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.contractor-card {
+  width: 1600px;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl-2);
+    padding: 24px 24px 0 24px;
+    background-color: var(--surface-primary);
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-m);
+
+      &__profile {
+        display: flex;
+        justify-content: space-between;
+
+        &__contractor {
+          display: flex;
+          height: fit-content;
+          gap: var(--gap-l);
+
+          &__description {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+        }
+
+        &__manager {
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-xs);
+
+          &__card {
+            display: flex;
+            gap: var(--gap-m);
+          }
+        }
+      }
+    }
+
+    &__controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--gap-s);
+    }
+  }
+
+  &__notifications {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl-6);
+    padding: var(--padding-xl-2);
+  }
+
+  &__notification {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-l);
+    border-left: 8px solid var(--border-tertiary);
+    padding: var(--padding-xl-4) var(--padding-l);
+    background-color: #D8DDE2;
+    border-radius: 0 var(--radius-xl-2) var(--radius-xl-2) 0;
+
+
+    &__header {
+      display: flex;
+      gap: var(--gap-m);
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl-6);
+    padding: var(--padding-xl-2);
+  }
+}

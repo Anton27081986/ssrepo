@@ -1,0 +1,160 @@
+<div class="contractor-card">
+	<header class="contractor-card__header">
+		<div class="contractor-card__header__info">
+			<ss-lib-text
+				[type]="TextType.BodyLg"
+				[weight]="TextWeight.Semibold"
+				>Card #{{ contractorId }}</ss-lib-text
+			>
+			<div class="contractor-card__header__info__profile">
+				<div class="contractor-card__header__info__profile__contractor">
+					<ss-lib-badge
+						[badgeProps]="{
+							size: ExtraSize.lg,
+							icon: IconType.User01,
+						}"
+					></ss-lib-badge>
+					<div
+						class="contractor-card__header__info__profile__contractor__description"
+					>
+						<ss-lib-text
+							[type]="TextType.BodySm"
+							[color]="Colors.TextBody3"
+							>Карточка контрагента</ss-lib-text
+						>
+						<ss-lib-tag [text]="'Черновик'" />
+					</div>
+				</div>
+				<div class="contractor-card__header__info__profile__manager">
+					<ss-lib-text
+						[type]="TextType.BodySm"
+						[color]="Colors.TextBody3"
+						>Дата создания: 17.08.2025</ss-lib-text
+					>
+					<div
+						class="contractor-card__header__info__profile__manager__card"
+					>
+						<ss-lib-avatar
+							[src]="
+								'https://erp-dev.ssnab.it/api/static/user-avatars/9590248/1.png'
+							"
+						></ss-lib-avatar>
+						<div
+							class="contractor-card__header__info__profile__manager__card__description"
+						>
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Medium"
+								>Руденко О.В.</ss-lib-text
+							>
+							<ss-lib-text
+								[type]="TextType.BodySm"
+								[color]="Colors.TextBody3"
+								>Базовый менеджер</ss-lib-text
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="contractor-card__header__controls">
+			<ss-lib-button
+				[type]="ButtonType.Secondary"
+				[text]="'Перейти'"
+				[icon]="IconType.ChevronDown"
+				[iconPosition]="IconPosition.End"
+				[popoverTriggerFor]="redirectList"
+				><ss-lib-dropdown-list #redirectList>
+					<ss-lib-dropdown-item
+						[label]="'Неоплаченный товар покупателей'"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Реестр долгов по документам'"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Товарная ведомость по клиенту'"
+					/>
+					<ss-lib-dropdown-item [label]="'Выписка по покупателю'" />
+					<ss-lib-dropdown-item [label]="'Выписка по поставщику'" />
+					<ss-lib-dropdown-item [label]="'Модель клиента'" />
+					<ss-lib-dropdown-item
+						[label]="'Регламент справочника КА'"
+					/>
+				</ss-lib-dropdown-list>
+			</ss-lib-button>
+			<ss-lib-button
+				[type]="ButtonType.Secondary"
+				[text]="'Действия'"
+				[icon]="IconType.ChevronDown"
+				[iconPosition]="IconPosition.End"
+				[popoverTriggerFor]="utilityList"
+				><ss-lib-dropdown-list #utilityList>
+					<ss-lib-dropdown-item
+						[label]="'Создать заявку на продажу'"
+						[icon]="IconType.Message"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Создать заявку на оплату'"
+						[icon]="IconType.Message"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Создать доп. соглашение'"
+						[icon]="IconType.Message"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Запросить Бонус БН'"
+						[icon]="IconType.Message"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Отправить на согласование'"
+						[icon]="IconType.Edit"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Восстановить из архива'"
+						[icon]="IconType.FileUpload02"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Архивировать'"
+						[icon]="IconType.Save"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Завизировать'"
+						[icon]="IconType.Eye"
+					/>
+					<ss-lib-dropdown-item
+						[label]="'Отклонить'"
+						[icon]="IconType.Close"
+					/>
+				</ss-lib-dropdown-list>
+			</ss-lib-button>
+			<ss-lib-button
+				[type]="ButtonType.Secondary"
+				[text]="'Редактировать информацию'"
+			></ss-lib-button>
+		</div>
+	</header>
+	<div class="contractor-card__notifications">
+		<div class="contractor-card__notification">
+			<div class="contractor-card__notification__header">
+				<ss-lib-icon [icon]="IconType.Alert" />
+				<ss-lib-text [weight]="TextWeight.Medium"
+					>Дата вывода из [кредитного статуса] = "Передано в юр.
+					отдел".</ss-lib-text
+				>
+			</div>
+			<div class="contractor-card__notification__content">
+				<ss-lib-text [type]="TextType.BodySm"
+					>Он должен 500 мультов</ss-lib-text
+				>
+			</div>
+		</div>
+	</div>
+	<div class="contractor-card__content">
+		<ss-lib-tabs
+			[tabs]="tabs"
+			[activeTabIndex]="indexTab"
+			(changeIndexEmit)="changeTab($event)"
+		/>
+	</div>
+	<router-outlet></router-outlet>
+</div>
