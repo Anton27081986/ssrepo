@@ -29,7 +29,7 @@ export class RatingTeamUsersState {
 		new BehaviorSubject<boolean>(false);
 
 	public limit = 8;
-	public pageSize = 6;
+	public pageSize = 8;
 	public pageIndex = 1;
 
 	constructor(
@@ -49,7 +49,7 @@ export class RatingTeamUsersState {
 			this.offset$,
 		]).pipe(
 			tap(() => this.isLoading$.next(true)),
-			debounceTime(2000),
+			debounceTime(500),
 			filterTruthy(),
 			switchMap(([walker, offset]) => {
 				if (!this.ratingTeamsStateService.week$.value) {
