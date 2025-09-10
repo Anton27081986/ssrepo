@@ -17,7 +17,7 @@ export const CONTRACTORS_DICTIONARY_ROUTES: Routes = [
 		},
 		children: [
 			{
-				path: 'card',
+				path: 'contractor',
 				children: CONTRACTOR_CARD_ROUTES,
 			},
 		],
