@@ -6,7 +6,9 @@ export interface MpReservationFilter {
 	statusIds?: number[];
 	dateFrom?: string;
 	dateTo?: string;
-	clientIds?: number[];
+	provisionDateFrom?: string;
+	provisionDateTo?: string;
+	contractorIds?: number[];
 	limit: number;
 	offset: number;
 }
