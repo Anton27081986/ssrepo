@@ -49,13 +49,17 @@ export class FilterBuilder {
 						this.processSearchSelectArrayFilter(filter.value);
 					break;
 
-				case 'clientId':
-					preparedFilter.clientIds = 
+				case 'contractorId':
+					preparedFilter.contractorIds =
 						this.processSearchSelectArrayFilter(filter.value);
 					break;
 
 				case 'dateCreatedFrom-dateCreatedTo':
 					this.processDateRangeFilterForMpReservation(filter, preparedFilter);
+					break;
+
+				case 'provisionDateFrom-provisionDateTo':
+					this.processProvisionDateFilterForMpReservation(filter, preparedFilter);
 					break;
 
 				default:
@@ -123,6 +127,23 @@ export class FilterBuilder {
 
 			if (toDate) {
 				preparedFilter.dateTo = this.formatDateForApi(toDate.trim(), true);
+			}
+		}
+	}
+
+	private static processProvisionDateFilterForMpReservation(
+		filter: IFilter,
+		preparedFilter: MpReservationFilter
+	): void {
+		if (typeof filter.value === 'string') {
+			const [fromDate, toDate] = filter.value.split('-');
+
+			if (fromDate) {
+				preparedFilter.provisionDateFrom = this.formatDateForApi(fromDate.trim());
+			}
+
+			if (toDate) {
+				preparedFilter.provisionDateTo = this.formatDateForApi(toDate.trim(), true);
 			}
 		}
 	}
