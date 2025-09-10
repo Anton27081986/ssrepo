@@ -32,6 +32,7 @@ import {
 	ICommentsItemDto,
 	ISendComment,
 } from '@app/core/models/production-plan/comments';
+import { TypeTotalPlans } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table.component';
 
 @Injectable({ providedIn: 'root' })
 export class OperationPlanApiService {
@@ -249,13 +250,17 @@ export class OperationPlanApiService {
 
 	public getPlanInfo(
 		weekId: number,
-		date: string,
-		productionSectionIds: number[]
+		date: string | null,
+		productionSectionIds: number[],
+		type: TypeTotalPlans
 	): Observable<{ planDayTotalQuantity: number }> {
 		let params = new HttpParams();
 
 		params = params.set('WeekId', weekId.toString());
-		params = params.set('Date', date);
+		if (date) {
+			params = params.set('Date', date);
+		}
+		params = params.set('Type', type);
 		productionSectionIds.forEach((val) => {
 			params = params.append('ProductionSectionsIds', val);
 		});

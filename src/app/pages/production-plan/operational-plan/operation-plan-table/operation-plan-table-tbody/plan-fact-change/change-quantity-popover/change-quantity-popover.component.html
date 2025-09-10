@@ -1,0 +1,29 @@
+<div class="change-quantity">
+	<div class="change-quantity__info">
+		<div class="change-quantity__info__header">
+			<ss-lib-text
+				[type]="TextType.BodySm"
+				[color]="Colors.TextBody2"
+				>Изменение количества плана
+			</ss-lib-text>
+			<ss-lib-status-icon
+				ss-lib-tooltip
+				[type]="Status.Default"
+				[icon]="IconType.Info"
+				[position]="TooltipPosition.Top"
+				[tooltipText]="
+					'Изменение плана повлияет на количество в заказах ТМЗ'
+				"
+			></ss-lib-status-icon>
+		</div>
+		<ss-lib-number-picker
+			fieldCtrl
+			[formControl]="quantityInputControl"
+		></ss-lib-number-picker>
+	</div>
+	<ss-lib-button
+		[size]="ExtraSize.lg"
+		[text]="'Изменить количество'"
+		(click)="changePlan()"
+	></ss-lib-button>
+</div>

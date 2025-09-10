@@ -277,11 +277,12 @@ export class MpReservationOrderCardComponent implements OnInit {
 			.pipe(untilDestroyed(this))
 			.subscribe((response) => {
 				const newItems = response.provisionRequests;
+				const newTov = response.tov;
 
 				this.modalService.open(
 					MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent,
 					{
-						data: { oldItems, newItems, tov, id },
+						data: { oldItems, newItems, tov, newTov, id },
 					}
 				);
 			});

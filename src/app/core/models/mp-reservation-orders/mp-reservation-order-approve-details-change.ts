@@ -4,6 +4,7 @@ import { IDictionaryItemDto } from '@front-components/components';
 export interface IApproveChangeData {
 	oldItems: IOrderRequests[];
 	newItems: Array<{ requestedProvisionDate: string; amount: number }>;
+	newTov: IDictionaryItemDto;
 	tov: IDictionaryItemDto;
 	id: number;
 }

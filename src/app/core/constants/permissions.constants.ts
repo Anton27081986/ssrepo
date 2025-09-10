@@ -43,6 +43,7 @@ export const Permissions = {
 	EXCESS_INCOME_EDIT_COMMENT: 'Snd.EditComment',
 	OPERATIONAL_PLAN_ACCESS: 'OperationalPlan.Access',
 	OPERATIONAL_PLAN_ADMIN: 'OperationalPlan.Admin',
+	OPERATIONAL_PLAN_ADD: 'OperationalPlan.Add',
 	OPERATIONAL_PLAN_EDIT: 'OperationalPlan.Edit',
 	OPERATIONAL_PLAN_VIEW_ORDER: 'OperationalPlan.ViewOrder',
 	OPERATIONAL_PLAN_APPROVE_MATERIALS: 'OperationalPlan.ApproveMaterials',
@@ -89,7 +90,8 @@ export const Permissions = {
 	PERSONIFICATION_MUTMZ_CLARIFY: 'Personification.MutmzClarify',
 
 	PERSONIFICATION_MUTMZ_CHANGE_QUANTITY: 'Personification.ChangeQuantity',
-	PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER: 'Personification.MutmzChangeQueueOrder',
+	PERSONIFICATION_MUTMZ_CHANGE_QUEUE_ORDER:
+		'Personification.MutmzChangeQueueOrder',
 } as const;
 
 export type PermissionType = (typeof Permissions)[keyof typeof Permissions];

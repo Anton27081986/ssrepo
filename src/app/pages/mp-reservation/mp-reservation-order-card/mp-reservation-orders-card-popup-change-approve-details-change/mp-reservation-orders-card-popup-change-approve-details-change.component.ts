@@ -55,6 +55,7 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 
 	protected items: IApproveChangeRow[] = [];
 	protected tov?: IFilterOption;
+	protected newTov?: IFilterOption;
 	protected manager?: IDictionaryItemDto;
 
 	constructor(
@@ -75,6 +76,11 @@ export class MpReservationOrdersCardPopupChangeApproveDetailsChangeComponent {
 				newAmount: newItem.amount,
 			};
 		});
+		this.newTov = {
+			id: Number(data.newTov.id),
+			name: data.newTov.name,
+			checked: true,
+		};
 		this.tov = {
 			id: Number(data.tov.id),
 			name: data.tov.name,

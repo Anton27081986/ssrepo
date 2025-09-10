@@ -34,7 +34,8 @@ export class OperationPlanPopupService {
 		return this.popup.openRightSidePage<PostponeSidePageData>(
 			PostponePersonificationSidePageComponent,
 			{ id, date },
-			'860px'
+			'860px',
+			false
 		);
 	}
 

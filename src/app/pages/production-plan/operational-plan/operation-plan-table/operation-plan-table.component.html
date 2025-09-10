@@ -206,6 +206,28 @@
 									</div>
 								}
 							</div>
+						} @else if (
+							column.id === 'weekPlanQuantity' ||
+							column.id === 'monthPlanQuantity'
+						) {
+							<div class="td-column">
+								<ss-lib-text
+									[color]="Colors.TextBody2"
+									[weight]="TextWeight.Semibold"
+									[type]="TextType.BodyXs"
+									[align]="Align.Center"
+									[isEllipsis]="true"
+								>
+									{{ formatColumnName(column.name) }}
+								</ss-lib-text>
+								<ss-lib-status-icon
+									ss-lib-tooltip
+									[icon]="IconType.Info"
+									[position]="TooltipPosition.Top"
+									[tooltipText]="planTooltipText"
+									(mouseenter)="onPlanInfoEnter(column.id)"
+								></ss-lib-status-icon>
+							</div>
 						} @else {
 							<div class="td-column">
 								<ss-lib-text

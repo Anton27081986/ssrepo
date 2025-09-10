@@ -1,0 +1,40 @@
+:host:hover {
+  .quantity-button {
+    opacity: 100;
+  }
+}
+
+.quantity-button {
+  transition: all 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: calc(50% - 12px);
+  display: inline-flex;
+}
+
+.change-quantity {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-page);
+  border-radius: 8px;
+  box-shadow: var(--shadow-xl);
+  padding: 24px;
+  gap: 20px;
+  border: 1px solid var(--border-primary);
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    ss-lib-number-picker {
+      width: 100%;
+    }
+  }
+}
