@@ -1,0 +1,44 @@
+<div class="postpone">
+	<div class="postpone__info">
+		<div class="postpone__info__item">
+			<ss-lib-text
+				[type]="TextType.BodySm"
+				[color]="Colors.TextBody2"
+				>Кол-во для переноса
+			</ss-lib-text>
+			<ss-lib-number-picker
+				fieldCtrl
+				[formControl]="quantityControl"
+				[size]="ExtraSize.md"
+				[max]="oldValue.planQuantity"
+				[step]="1"
+			></ss-lib-number-picker>
+		</div>
+		<div class="postpone__info__item">
+			<ss-lib-text
+				[type]="TextType.BodySm"
+				[color]="Colors.TextBody2"
+				>Дата для переноса
+			</ss-lib-text>
+			<ss-lib-form-field>
+				<ss-lib-datepicker
+					fieldCtrl
+					[min]="minDate"
+					[formControl]="postponeDateControl"
+				></ss-lib-datepicker>
+			</ss-lib-form-field>
+		</div>
+	</div>
+	<ss-lib-button
+		[size]="ExtraSize.lg"
+		[icon]="IconType.CornerUpRight"
+		[iconPosition]="IconPosition.Start"
+		[text]="'Перенести количество'"
+		(click)="transferPlan()"
+	></ss-lib-button>
+	<div
+		class="overlay-loader"
+		*ngIf="isLoader()"
+	></div>
+	<ss-lib-spinner *ngIf="isLoader()"></ss-lib-spinner>
+</div>

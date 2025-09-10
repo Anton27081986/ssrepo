@@ -130,8 +130,8 @@
 								operationPlanState.getHasPermissionViewOrder
 							"
 							[value]="getCellValue(row, column.id)"
-							[row]="row"
-							[columnId]="column.id"
+							[rowSignal]="row"
+							[columnIdSignal]="column.id"
 						></app-operation-plan-table-quantity-cell>
 					} @else {
 						<ss-lib-text

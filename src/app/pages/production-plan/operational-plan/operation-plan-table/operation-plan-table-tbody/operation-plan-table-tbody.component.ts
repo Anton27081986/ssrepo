@@ -29,7 +29,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { OperationPlanState } from '@app/pages/production-plan/service/operation-plan.state';
 import { CommentsModalComponent } from '@app/pages/production-plan/modal/comments-modal/comments-modal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { OperationalPlanTableQuantityCellComponent } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/operation-plan-table-quantity-cell/operation-plan-table-quantity-cell.component';
+import { OperationalPlanTableQuantityCellComponent } from '@app/pages/production-plan/operational-plan/operation-plan-table/operation-plan-table-tbody/plan-fact-change/operation-plan-table-quantity-cell/operation-plan-table-quantity-cell.component';
 
 export const BASE_COLUMN_MAP: Record<
 	keyof Pick<

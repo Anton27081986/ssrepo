@@ -1,88 +1,93 @@
 .add-manufactures-popup {
-	position: relative;
-	min-height: 378px;
-	display: flex;
-	flex-direction: column;
+  position: relative;
+  min-height: 378px;
+  display: flex;
+  flex-direction: column;
 
-	&__sticky {
-		position: sticky;
-		top: 0;
-		background: var(--surface-primary);
+  &__sticky {
+    position: sticky;
+    top: 0;
+    background: var(--surface-primary);
+    padding-top: 20px;
 
-		&-block {
-			display: flex;
-			gap: 6px;
-			flex-direction: column;
-			padding-bottom: 12px;
-		}
-	}
+    &-block {
+      display: flex;
+      gap: 6px;
+      flex-direction: column;
+      padding-bottom: 12px;
+    }
+  }
 
-	&--visibility {
-		visibility: hidden;
-	}
+  &--visibility {
+    visibility: hidden;
+  }
 
-	&__empty-state {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		gap: 16px;
-		margin: auto;
+  &__empty-state {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: auto;
 
-		&__text {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			text-align: center;
-			align-items: center;
-			gap: 4px;
-			max-width: 374px;
-		}
-	}
+    &__text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      gap: 4px;
+      max-width: 374px;
+    }
+  }
 
-	&__items {
-		display: flex;
-		flex-direction: column;
-		gap: 6px;
-		padding: 10px 0;
-	}
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 0;
+  }
 
-	&__item {
-		display: flex;
-		align-items: center;
-	}
+  &__item {
+    display: flex;
+    align-items: center;
+  }
 
-	&__item-selected {
-		display: flex;
-		gap: 12px;
-		flex-wrap: nowrap;
-		align-items: center;
-		padding: 1px 0;
+  &__item-selected {
+    display: flex;
+    gap: 12px;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 1px 0;
 
-		app-add-manufactures-item {
-			max-width: 506px;
-		}
-	}
+    app-add-manufactures-item {
+      max-width: 506px;
+    }
+  }
 
-	&__actions {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: 12px;
-	}
+  &__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
 
-	&__clear-button {
-		display: flex;
-		justify-content: start;
-		width: 110px;
-	}
+  &__clear-button {
+    display: flex;
+    justify-content: start;
+    width: 110px;
+  }
 }
 
 ss-lib-spinner {
-	padding-top: 10px;
-	margin: auto;
+  padding-top: 10px;
+  margin: auto;
 }
 
 app-add-manufactures-item {
-	width: 100%;
+  width: 100%;
+}
+
+::ng-deep .ss-lib-modal__body { // для добавления отступа к input  при скроле вниз(если есть идеи как сделать лучше  пишите....)
+  padding-top: 0 !important;
 }
