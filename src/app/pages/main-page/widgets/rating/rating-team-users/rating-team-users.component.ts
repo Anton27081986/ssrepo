@@ -98,13 +98,10 @@ export class RatingTeamUsersComponent {
 			});
 	}
 
-	public nzPageIndexChange($event: number) {
-		if ($event === 1) {
-			this.offset$.next(0);
-		} else {
-			this.offset$.next(this.pageSize * $event - this.pageSize);
-		}
-
+	public nzPageIndexChange($event: number): void {
 		this.pageIndex = $event;
+		const offset = $event === 1 ? 0 : this.pageSize * ($event - 1);
+
+		this.offset$.next(offset);
 	}
 }
