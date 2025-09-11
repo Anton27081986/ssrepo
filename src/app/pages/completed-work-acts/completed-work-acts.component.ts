@@ -374,23 +374,14 @@ export class CompletedWorkActsComponent {
 			this.archiveControl.valueChanges.pipe(
 				tap((value) => {
 					let query = { ...this.activatedRoute.snapshot.queryParams };
-					const filters =
-						this.completedWorkActsFacade.filterValueStore$.value;
 					if (value) {
 						query = {
 							...query,
 							WithArchive: 1,
 						};
-
-						if (filters) {
-							filters.WithArchive = true;
-						}
 					} else {
-						const { Additional, ...rest } = query;
+						const { WithArchive, ...rest } = query;
 						query = rest;
-						if (filters) {
-							filters.WithArchive = false;
-						}
 					}
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
