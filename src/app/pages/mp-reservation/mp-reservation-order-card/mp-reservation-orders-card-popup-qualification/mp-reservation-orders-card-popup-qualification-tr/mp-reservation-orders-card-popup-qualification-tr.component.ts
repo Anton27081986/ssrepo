@@ -44,7 +44,6 @@ import {
 	IconType,
 	InputType,
 } from '@front-components/components';
-import { IconComponent } from '@app/shared/components/icon/icon.component';
 
 export enum QualificationTrRowItemField {
 	amount = 'amount',
@@ -73,7 +72,6 @@ export enum QualificationTrRowItemField {
 		DateTimePickerComponent,
 		FormsModule,
 		ReactiveFormsModule,
-		IconComponent,
 		ButtonComponent,
 	],
 	standalone: true,
@@ -197,15 +195,4 @@ export class MpReservationOrdersCardPopupQualificationTrComponent
 	public removeRowClick(): void {
 		if (this.canRemove) this.removeRow.emit();
 	}
-
-	// showText(text: string[], title?: string) {
-	// 	this.modalService.open(TableFullCellComponent, {
-	// 		data: {
-	// 			cell: text.map((item) => {
-	// 				return { text: item };
-	// 			}),
-	// 			title,
-	// 		},
-	// 	});
-	// }
 }
