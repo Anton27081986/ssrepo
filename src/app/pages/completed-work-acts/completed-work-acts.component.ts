@@ -118,12 +118,6 @@ export class CompletedWorkActsComponent {
 
 			return this.headerFilterService.criteria$.pipe(
 				switchMap((criteria) => {
-					const filterParams = Object.fromEntries(
-						Object.entries(criteria).filter(
-							([_, v]) => v !== null && v.length
-						)
-					);
-
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
 						queryParams: {
@@ -132,8 +126,8 @@ export class CompletedWorkActsComponent {
 							DateTo: dateTo,
 							UploadDateFrom: uploadDateFrom,
 							UploadDateTo: uploadDateTo,
-							Additional: additional ? 1 : 0,
-							WithArchive: archive,
+							...(additional ? { Additional: 1 } : {}),
+							...(archive ? { WithArchive: archive } : {}),
 							TotalAmount: totalAmount
 								? totalAmount.replace(',', '.')
 								: null,
@@ -142,13 +136,13 @@ export class CompletedWorkActsComponent {
 					});
 
 					const valueWithPagination = {
-						...filterParams,
+						...criteria,
 						DateFrom: dateFrom,
 						DateTo: dateTo,
 						UploadDateFrom: uploadDateFrom,
 						UploadDateTo: uploadDateTo,
-						Additional: additional ? 1 : 0,
-						WithArchive: archive,
+						...(additional ? { Additional: 1 } : {}),
+						...(archive ? { WithArchive: archive } : {}),
 						TotalAmount: totalAmount
 							? totalAmount.replace(',', '.')
 							: null,
@@ -156,8 +150,14 @@ export class CompletedWorkActsComponent {
 						offset,
 					};
 
+					const filterParams = Object.fromEntries(
+						Object.entries(valueWithPagination).filter(([_, v]) => {
+							return !(v === null || v === undefined);
+						})
+					);
+
 					this.completedWorkActsFacade.filterValueStore$.next(
-						valueWithPagination as ICompletedActsFilter & Pagination
+						filterParams as ICompletedActsFilter & Pagination
 					);
 
 					return this.completedWorkActsFacade.getWorkActsList(
@@ -321,13 +321,21 @@ export class CompletedWorkActsComponent {
 		toSignal(
 			this.additionalControl.valueChanges.pipe(
 				tap((value) => {
+					let query = { ...this.activatedRoute.snapshot.queryParams };
+
+					if (value) {
+						query = {
+							...query,
+							Additional: 1,
+						};
+					} else {
+						const { Additional, ...rest } = query;
+						query = rest;
+					}
+
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
-						queryParams: {
-							...this.activatedRoute.snapshot.queryParams,
-							Additional: value ? 1 : 0,
-						},
-						queryParamsHandling: 'merge',
+						queryParams: query,
 					});
 					this.resetPage();
 				})
@@ -365,13 +373,28 @@ export class CompletedWorkActsComponent {
 		toSignal(
 			this.archiveControl.valueChanges.pipe(
 				tap((value) => {
+					let query = { ...this.activatedRoute.snapshot.queryParams };
+					const filters =
+						this.completedWorkActsFacade.filterValueStore$.value;
+					if (value) {
+						query = {
+							...query,
+							WithArchive: 1,
+						};
+
+						if (filters) {
+							filters.WithArchive = true;
+						}
+					} else {
+						const { Additional, ...rest } = query;
+						query = rest;
+						if (filters) {
+							filters.WithArchive = false;
+						}
+					}
 					void this.router.navigate([], {
 						relativeTo: this.activatedRoute,
-						queryParams: {
-							...this.activatedRoute.snapshot.queryParams,
-							WithArchive: value,
-						},
-						queryParamsHandling: 'merge',
+						queryParams: query,
 					});
 					this.resetPage();
 				})
