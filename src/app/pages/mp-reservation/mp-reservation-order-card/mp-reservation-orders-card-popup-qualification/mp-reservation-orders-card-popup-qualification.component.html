@@ -48,11 +48,20 @@
 			>
 			</ss-search-input>
 		}
+		<snab-button
+			class="qualification__add-row"
+			text="Добавить"
+			[size]="Size.Large"
+            [disabled]="items.length >= MAX_ROWS"
+			(click)="addRow()"
+		></snab-button>
 		<ss-table-v2>
 			<tr
-				*ngFor="let item of items"
+				*ngFor="let item of items; let i = index; trackBy: trackByItem"
 				mp-reservation-orders-card-popup-qualification-tr
 				[item]="item"
+                [canRemove]="items.length > 1"
+                (removeRow)="removeRow(i)"
 			></tr>
 		</ss-table-v2>
 	</form>
