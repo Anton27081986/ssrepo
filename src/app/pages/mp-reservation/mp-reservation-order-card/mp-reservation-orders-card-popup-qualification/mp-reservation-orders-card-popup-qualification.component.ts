@@ -69,6 +69,8 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 	protected readonly IconType = IconType;
 	protected readonly IconPosition = IconPosition;
 
+	public readonly MAX_ROWS = 10;
+
 	protected items: IOrderChangeQualification[] = [];
 	protected tov?: IFilterOption;
 	protected id?: number;
@@ -107,6 +109,33 @@ export class MpReservationOrdersCardPopupQualificationComponent {
 			),
 		});
 	}
+
+	private createEmptyItem(): IOrderChangeQualification {
+		return {
+			amount: 0,
+			requestedProvisionDate: '',
+			errors: {}
+		};
+	}
+
+	public addRow(): void {
+		if (this.items.length >= this.MAX_ROWS) {
+			return;
+		}
+		this.items = [...this.items, this.createEmptyItem()];
+	}
+
+	public removeRow(index: number): void {
+		if (this.items.length <= 1) {
+			return;
+		}
+		this.items = this.items.filter((_, i) => i !== index);
+	}
+
+	public trackByItem(index: number): number {
+		return index;
+	}
+
 
 	public onTovSelect(item: IDictionaryItemDto): void {
 		this.tov = {

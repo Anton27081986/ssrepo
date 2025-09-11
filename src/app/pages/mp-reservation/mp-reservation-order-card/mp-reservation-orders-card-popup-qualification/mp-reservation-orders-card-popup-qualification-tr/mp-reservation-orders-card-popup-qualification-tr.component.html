@@ -45,6 +45,20 @@
 					</div>
 				</ng-container>
 
+				<ng-container
+					*ngSwitchCase="QualificationTrRowItemField.action"
+				>
+					<div class="hc-table-td__content">
+						<snab-button
+							[type]="ButtonType.Flat"
+							[icon]="IconType.Trash"
+                            [disabled]="!canRemove"
+                            (click)="removeRowClick()"
+						>
+						</snab-button>
+					</div>
+				</ng-container>
+
 				<ng-container *ngSwitchDefault>
 					<div
 						class="hc-table-td__content hc-table-td__content--center"
