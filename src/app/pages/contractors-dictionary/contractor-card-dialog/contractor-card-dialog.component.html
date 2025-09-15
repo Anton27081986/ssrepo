@@ -15,7 +15,11 @@
 		{
 			type: TagType.Dot,
 			text: 'Ожидает визы',
-			dotColor: Colors.IconWarning,
+			colorConfig: {
+				dotColor: Colors.IconWarning,
+				textColor: Colors.TextWarningHover,
+				borderColor: Colors.BorderWarning,
+			},
 		},
 	]"
 	(closeEmit)="close()"
