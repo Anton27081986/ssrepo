@@ -1,0 +1,20 @@
+<div class="notification-wrapper">
+	<div class="notification">
+		<div class="notification__header">
+			<ss-lib-icon [icon]="IconType.Alert" />
+
+			<ss-lib-text
+				[type]="TextType.BodyXl"
+				[weight]="TextWeight.Medium"
+			>
+				{{ title() }}
+			</ss-lib-text>
+		</div>
+
+		<div class="notification__content">
+			<ss-lib-text [type]="TextType.BodySm">
+				{{ description() }}
+			</ss-lib-text>
+		</div>
+	</div>
+</div>
