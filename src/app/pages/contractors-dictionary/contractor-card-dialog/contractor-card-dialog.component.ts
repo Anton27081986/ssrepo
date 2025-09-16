@@ -21,6 +21,8 @@ import { IContractorCardSidePageData } from '@app/pages/contractors-dictionary/m
 import { NgOptimizedImage } from '@angular/common';
 import { InfoSectionComponent } from '@app/pages/contractors-dictionary/info-section/info-section.component';
 import { InfoRowComponent } from '@app/pages/contractors-dictionary/info-row/info-row.component';
+import { ContractorsDictionaryService } from '@app/pages/contractors-dictionary/services/contractors-dictionary.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
 	selector: 'app-contractor-card-dialog',
@@ -42,8 +44,16 @@ import { InfoRowComponent } from '@app/pages/contractors-dictionary/info-row/inf
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContractorCardDialogComponent {
+	private readonly contractorsDictionaryService = inject(
+		ContractorsDictionaryService
+	);
+
 	private readonly popup: ModalRef<IContractorCardSidePageData> = inject(
 		ModalRef<IContractorCardSidePageData>
+	);
+
+	protected quickViewData = toSignal(
+		this.contractorsDictionaryService.quickView(this.popup.data.id)
 	);
 
 	protected readonly IconType = IconType;
@@ -54,6 +64,14 @@ export class ContractorCardDialogComponent {
 	protected readonly Colors = Colors;
 	protected readonly TextType = TextType;
 	protected readonly TagType = TagType;
+
+	protected get titleHeader(): string {
+		return `КДВ ГРУПП #${this.popup.data.id}`;
+	}
+
+	protected booleanAnswer(value: boolean): string {
+		return value ? 'Да' : 'Нет';
+	}
 
 	protected close(): void {
 		this.popup.close();
