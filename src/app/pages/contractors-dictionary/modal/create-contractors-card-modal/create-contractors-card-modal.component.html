@@ -1,0 +1,493 @@
+<ss-lib-modal
+	[badgeProps]="{
+		icon: IconType.PackagePlus,
+		size: ExtraSize.lg,
+		shape: Shape.Square,
+	}"
+	[titleHeader]="'Создание карточки контрагента ' + (draftNumber() || '')"
+	[descriptionHeader]="'Черновик'"
+	[contentRef]="contentRef"
+	[actionsRef]="actionsRef"
+	(closeEmit)="onClose()"
+>
+</ss-lib-modal>
+<ng-template #contentRef>
+	<section class="block">
+		<ss-lib-text
+			[type]="TextType.BodyMd"
+			[weight]="TextWeight.Semibold"
+		>
+			Официальная информация
+		</ss-lib-text>
+
+		<div class="grid g2">
+			<ss-lib-form-field [label]="'Полное наименование'">
+				<ss-lib-input
+					fieldCtrl
+					[size]="ExtraSize.md"
+					[formControl]="form.controls.fullName"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-form-field [label]="'Краткое наименование'">
+				<ss-lib-input
+					fieldCtrl
+					[size]="ExtraSize.md"
+					[formControl]="form.controls.shortName"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field
+				class="col-2"
+				[label]="'Юридический адрес'"
+			>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.legalAddress"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-form-field [label]="'Дата основания'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.foundingDate"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'ИНН'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.inn"
+					[readOnly]="true"
+				></ss-lib-input>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'КПП'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.kpp"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'ОГРН'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.ogrn"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'ФИО ГД'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.ceoFio"
+				/>
+			</ss-lib-form-field>
+			<div class="select-field">
+				<ss-lib-form-field
+					[label]="'Должность ГД'"
+					[icon]="IconType.ChevronDown"
+				>
+					<ss-lib-select
+						fieldCtrl
+						[formControl]="form.controls.ceoPosition"
+						[popoverTriggerFor]="dropdownCeoPosition"
+					>
+						<ss-lib-dropdown-list #dropdownCeoPosition>
+							@for (
+								item of dictionaries.positions;
+								track item.id
+							) {
+								<ss-lib-dropdown-item
+									[value]="item"
+								></ss-lib-dropdown-item>
+							}
+						</ss-lib-dropdown-list>
+					</ss-lib-select>
+				</ss-lib-form-field>
+			</div>
+
+			<ss-lib-form-field [label]="'ОКВЭД'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.okved"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Доп. ОКВЭД'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.okvedExtra"
+				/>
+			</ss-lib-form-field>
+		</div>
+	</section>
+
+	<!-- Общая информация -->
+	<section class="block">
+		<ss-lib-text
+			[type]="TextType.BodyMd"
+			[weight]="TextWeight.Semibold"
+		>
+			Общая информация
+		</ss-lib-text>
+
+		<div class="grid g2">
+			<div class="select-field">
+				<ss-lib-form-field
+					[label]="'Клиент'"
+					[icon]="IconType.ChevronDown"
+				>
+					<ss-lib-select
+						fieldCtrl
+						[formControl]="form.controls.client"
+						[popoverTriggerFor]="dropdownClient"
+					>
+						<ss-lib-dropdown-list #dropdownClient>
+							@for (item of dictionaries.clients; track item.id) {
+								<ss-lib-dropdown-item
+									[value]="item"
+								></ss-lib-dropdown-item>
+							}
+						</ss-lib-dropdown-list>
+					</ss-lib-select>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field [label]="'Регион'">
+					<ss-lib-input
+						fieldCtrl
+						[formControl]="form.controls.region"
+					>
+					</ss-lib-input>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field [label]="'Категория'">
+					<ss-lib-input
+						fieldCtrl
+						[formControl]="form.controls.category"
+					>
+					</ss-lib-input>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field [label]="'Подотрасль'">
+					<ss-lib-input
+						fieldCtrl
+						[formControl]="form.controls.subSector"
+					>
+					</ss-lib-input>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field
+					[label]="'Кредитный статус'"
+					[icon]="IconType.ChevronDown"
+				>
+					<ss-lib-select
+						fieldCtrl
+						[formControl]="form.controls.creditStatus"
+						[popoverTriggerFor]="dropdownCreditStatus"
+					>
+						<ss-lib-dropdown-list #dropdownCreditStatus>
+							@for (
+								item of dictionaries.creditStatuses;
+								track item.id
+							) {
+								<ss-lib-dropdown-item
+									[value]="item"
+								></ss-lib-dropdown-item>
+							}
+						</ss-lib-dropdown-list>
+					</ss-lib-select>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field
+					[label]="'Уровень по технологии'"
+					[icon]="IconType.ChevronDown"
+				>
+					<ss-lib-select
+						fieldCtrl
+						[formControl]="form.controls.techLevel"
+						[popoverTriggerFor]="dropdownTechLevel"
+					>
+						<ss-lib-dropdown-list #dropdownTechLevel>
+							@for (
+								item of dictionaries.techLevels;
+								track item.id
+							) {
+								<ss-lib-dropdown-item
+									[value]="item"
+								></ss-lib-dropdown-item>
+							}
+						</ss-lib-dropdown-list>
+					</ss-lib-select>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field [label]="'Страна'">
+					<ss-lib-input
+						fieldCtrl
+						[formControl]="form.controls.country"
+					>
+					</ss-lib-input>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="select-field">
+				<ss-lib-form-field [label]="'Группа'">
+					<ss-lib-input
+						fieldCtrl
+						[formControl]="form.controls.group"
+					>
+					</ss-lib-input>
+				</ss-lib-form-field>
+			</div>
+
+			<div class="row toggle-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Поставщик STOP</ss-lib-text
+				>
+				<ss-lib-toggle></ss-lib-toggle>
+			</div>
+		</div>
+	</section>
+
+	<!-- Дополнительная информация -->
+	<section class="block">
+		<ss-lib-text
+			[type]="TextType.BodyMd"
+			[weight]="TextWeight.Semibold"
+		>
+			Дополнительная информация
+		</ss-lib-text>
+
+		<div class="grid g2">
+			<ss-lib-form-field
+				class="col-2"
+				[label]="'Адрес производства'"
+			>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.productionAddress"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field
+				class="col-2"
+				[label]="'Адрес грузополучателя/грузоотправителя'"
+			>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.shipToAddress"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field
+				class="col-2"
+				[label]="'Адрес корреспонденции'"
+			>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.corrAddress"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Торговые площадки (им)'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.marketplaces"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Заметки'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.notes"
+				/>
+			</ss-lib-form-field>
+
+			<div class="row toggle-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Бонус БН</ss-lib-text
+				><ss-lib-toggle />
+			</div>
+			<div class="row toggle-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>ПМП</ss-lib-text
+				><ss-lib-toggle />
+			</div>
+			<div class="row toggle-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Прикладывать сертификаты анализа</ss-lib-text
+				><ss-lib-toggle />
+			</div>
+			<div class="row toggle-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>ЧЗ</ss-lib-text
+				><ss-lib-toggle />
+			</div>
+			<div class="row toggle-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>ЭДО</ss-lib-text
+				><ss-lib-toggle />
+			</div>
+			<ss-lib-form-field [label]="'ID ЭДО'">
+				<ss-lib-input
+					fieldCtrl
+					class="col-2"
+					[formControl]="form.controls.edoId"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-form-field [label]="'Уполномоченное лицо (ФИО)'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.authorizedFio"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Уполномоченное лицо (Должность)'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.authorizedPosition"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Главный бухгалтер'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.chiefAccountant"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Кассир'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.cashier"
+				/>
+			</ss-lib-form-field>
+			<div class="row number-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Кол-во работников по КА</ss-lib-text
+				>
+				<ss-lib-number-picker
+					[formControl]="form.controls.employeesByKA"
+				></ss-lib-number-picker>
+			</div>
+			<div class="row number-row">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Кол-во работников по клиенту</ss-lib-text
+				>
+				<ss-lib-number-picker
+					[formControl]="form.controls.employeesByClient"
+				></ss-lib-number-picker>
+			</div>
+
+			<ss-lib-form-field [label]="'Сайт'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.site"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Факс'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.fax"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Телефон'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.phone"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field [label]="'Эл.почта'">
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.email"
+				/>
+			</ss-lib-form-field>
+			<ss-lib-form-field
+				class="col-2"
+				[label]="'Нюансы оформления'"
+			>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.designNuances"
+				/>
+			</ss-lib-form-field>
+		</div>
+
+		<!-- Образец сложного оформления -->
+		<div class="grid g2 mt-16">
+			<div class="row toggle-row mt-16">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Образец сложного оформления</ss-lib-text
+				>
+				<ss-lib-toggle />
+			</div>
+		</div>
+		<div class="upload-area">
+			<ss-lib-files-upload
+				[allowedFormatsList]="[
+					FileFormats.JPEG,
+					FileFormats.PNG,
+					FileFormats.PDF,
+					FileFormats.DOC,
+					FileFormats.DOCX,
+				]"
+			></ss-lib-files-upload>
+		</div>
+
+		<!-- Особые условия -->
+		<div class="grid g2 mt-16">
+			<div class="row toggle-row mt-16">
+				<ss-lib-text
+					[type]="TextType.BodySm"
+					[weight]="TextWeight.Semibold"
+					>Особые условия</ss-lib-text
+				>
+				<ss-lib-toggle></ss-lib-toggle>
+			</div>
+		</div>
+		<ss-lib-form-field>
+			<ss-lib-textarea
+				fieldCtrl
+				[formControl]="form.controls.specialTermsText"
+			></ss-lib-textarea>
+		</ss-lib-form-field>
+		<ss-lib-form-field [label]="'Комментарий'">
+			<ss-lib-textarea
+				fieldCtrl
+				[formControl]="form.controls.comment"
+			></ss-lib-textarea>
+		</ss-lib-form-field>
+	</section>
+</ng-template>
+
+<ng-template #actionsRef>
+	<div class="actions-buttons">
+		<ss-lib-button
+			[type]="ButtonType.Secondary"
+			[text]="'Вернуться'"
+			(click)="onClose()"
+		></ss-lib-button>
+		<ss-lib-button
+			[text]="'Сохранить черновик'"
+			(click)="onSaveDraft()"
+		></ss-lib-button>
+	</div>
+</ng-template>

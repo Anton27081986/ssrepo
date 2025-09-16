@@ -1,0 +1,61 @@
+.block {
+	margin-bottom: 24px;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+}
+.g2 {
+	grid-template-columns: 1fr 1fr;
+}
+.col-2 {
+	grid-column: 1 / -1;
+}
+
+.row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	width: 100%;
+}
+
+.mt-16 {
+	margin-top: 16px;
+}
+.ml-8 {
+	margin-left: 8px;
+}
+
+.toggle-row {
+	justify-content: space-between;
+}
+.toggle-row ss-lib-toggle {
+	margin-left: auto;
+	flex-shrink: 0;
+}
+
+.number-row {
+	justify-content: space-between;
+}
+.number-row ss-lib-number-picker {
+	width: 150px; /* требуемая ширина */
+	flex: 0 0 150px; /* фиксируем, чтобы не тянулся */
+}
+
+.select-field {
+	display: block;
+	width: 100%;
+}
+
+.upload-area {
+	margin-top: 12px;
+}
+
+.actions-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+}
