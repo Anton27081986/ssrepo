@@ -1,5 +1,3 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { ContractorCardDialogComponent } from '@app/pages/contractors-dictionary/contractor-card-dialog/contractor-card-dialog.component';
 import {
 	ButtonComponent,
@@ -8,9 +6,11 @@ import {
 	SharedPopupService,
 } from '@front-library/components';
 import { IContractorCardSidePageData } from '@app/pages/contractors-dictionary/models/contractor-card-side-page-data';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-	selector: 'contractors-dictionary',
+	selector: 'app-contractors-dictionary',
 	templateUrl: './contractors-dictionary.component.html',
 	styleUrls: ['./contractors-dictionary.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
