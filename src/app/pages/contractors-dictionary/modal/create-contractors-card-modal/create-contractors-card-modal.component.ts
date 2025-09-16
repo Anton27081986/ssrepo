@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -26,6 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ModalRef } from '@front-library/components';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import {IContractorCardSidePageData} from "@app/pages/contractors-dictionary/models/contractor-card-side-page-data";
+import {IAddContractorsCardModalData} from "@app/pages/contractors-dictionary/models/add-contractors-card-modal-data";
 
 @UntilDestroy()
 @Component({
@@ -61,7 +63,11 @@ export class CreateContractorsCardModalComponent {
 	protected readonly ButtonType = ButtonType;
 	protected readonly FileFormats = FileFormats;
 
-	draftNumber = signal<string | null>(null);
+	private readonly popup: ModalRef<IAddContractorsCardModalData> = inject(
+		ModalRef<IAddContractorsCardModalData>
+	);
+
+	cardNumber = signal<number | null>(this.popup.data.id);
 
 	// TODO: подставить реальные словари из сервиса/фасада
 	dictionaries = {
@@ -149,10 +155,6 @@ export class CreateContractorsCardModalComponent {
 		private readonly modalRef: ModalRef,
 		private fb: FormBuilder
 	) {}
-
-	onSampleFilesChange(files: File[]) {
-		this.form.controls.sampleFiles.setValue(files);
-	}
 
 	onSaveDraft() {
 		if (this.form.invalid) {

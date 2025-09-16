@@ -1,8 +1,4 @@
-// import { ChangeDetectionStrategy, Component } from '@angular/core';
-// import {ButtonComponent, ButtonType, ExtraSize, IconType} from "@front-library/components";
 import { ContractorsDictionaryPopupService } from '@app/pages/contractors-dictionary/services/contactors-dictionary.popup.service';
-// import {IconPosition} from "@front-components/components";
-// import {RouterOutlet} from "@angular/router";
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ContractorCardDialogComponent } from '@app/pages/contractors-dictionary/contractor-card-dialog/contractor-card-dialog.component';
@@ -31,17 +27,16 @@ export class ContractorsDictionaryComponent {
 	protected readonly IconPosition = IconPosition;
 	protected readonly ExtraSize = ExtraSize;
 
+	private readonly popup = inject(SharedPopupService);
+
 	constructor(
 		private contractorsDictionaryPopupService: ContractorsDictionaryPopupService
 	) {}
 
 	onCreateCounterparty(): void {
-		this.contractorsDictionaryPopupService.openCreateContractorsCardModal(
-			'TEST  MODAL'
-		);
+		this.contractorsDictionaryPopupService.openCreateContractorsCardModal();
 	}
 
-	private readonly popup = inject(SharedPopupService);
 	public contractorCardDialog(): ModalRef {
 		return this.popup.openRightSidePage<IContractorCardSidePageData>(
 			ContractorCardDialogComponent,
