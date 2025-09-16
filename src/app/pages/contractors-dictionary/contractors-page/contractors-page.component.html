@@ -1,0 +1,36 @@
+<div class="contractors-page">
+	<div class="contractors-page__header">
+		<ss-lib-text
+			[type]="TextType.HeadingXs"
+			[weight]="TextWeight.Semibold"
+			>Справочник контрагентов
+		</ss-lib-text>
+		<div class="contractors-page__header-right">
+			<ss-lib-button
+				[size]="ExtraSize.lg"
+				[type]="ButtonType.Secondary"
+				[text]="'Отчет по клиетам'"
+			></ss-lib-button>
+			<ss-lib-button
+				[size]="ExtraSize.lg"
+				[type]="ButtonType.Primary"
+				[text]="'Создать карточку'"
+				[icon]="IconType.Plus"
+			></ss-lib-button>
+		</div>
+	</div>
+	<ss-lib-divider></ss-lib-divider>
+	<div class="contractors-page__header">
+		<ss-lib-tabs
+			[height]="40"
+			[tabs]="tabs"
+		></ss-lib-tabs>
+		<div class="contractors-page__header-right">
+			<app-dropdown-columns-settings></app-dropdown-columns-settings>
+			<app-filters-trigger-button></app-filters-trigger-button>
+		</div>
+	</div>
+	<div class="contractors-page__body">
+		<app-contractors-table [items]="items()"></app-contractors-table>
+	</div>
+</div>

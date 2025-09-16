@@ -1,0 +1,28 @@
+.contractors-page {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 32px 24px;
+    align-items: center;
+
+    ss-lib-tabs {
+      width: 100%;
+    }
+
+    ss-lib-text {
+      padding-bottom: 8px;
+    }
+
+    &-right {
+      display: flex;
+      gap: 12px;
+    }
+  }
+
+  &__body {
+    padding: 0 24px;
+  }
+}
