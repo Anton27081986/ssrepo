@@ -9,7 +9,6 @@ import {
 import {
 	Align,
 	Colors,
-	DividerComponent,
 	DropdownItemComponent,
 	DropdownListComponent,
 	IconType,
@@ -47,7 +46,6 @@ import { TableColumnConfig } from '@front-library/components/lib/components/tabl
 		DropdownListComponent,
 		DropdownItemComponent,
 		PopoverTriggerForDirective,
-		DividerComponent,
 	],
 })
 export class ContractorsTableComponent {

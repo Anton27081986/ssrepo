@@ -1,0 +1,573 @@
+<ss-lib-right-side-page-popup
+	[badgeProps]="{
+		icon: IconType.User01,
+		size: ExtraSize.lg,
+		shape: Shape.Square,
+	}"
+	[titleHeader]="'КДВ ГРУПП #17681'"
+	[descriptionHeader]="'Карточка контрагента'"
+	[contentRef]="contentRef"
+	[tags]="[
+		{
+			type: TagType.Default,
+			text: 'Принят к учёту',
+		},
+		{
+			type: TagType.Dot,
+			text: 'Ожидает визы',
+			colorConfig: {
+				dotColor: Colors.IconWarning,
+				textColor: Colors.TextWarningHover,
+				borderColor: Colors.BorderWarning,
+			},
+		},
+	]"
+	(closeEmit)="close()"
+>
+</ss-lib-right-side-page-popup>
+
+<ng-template #contentRef>
+	<div class="contractor-card">
+		<ss-lib-link
+			[text]="'Перейти на страницу карточки'"
+			[icon]="IconType.LinkExternal01"
+			[iconPosition]="IconPosition.End"
+			[linkAppearance]="LinkAppearance.Standalone"
+			(click)="openCard()"
+		></ss-lib-link>
+
+		<app-notification
+			[title]="'Кредитный статус: передано в юр. отдел'"
+			[description]="'Задолженность: 500 млн'"
+		/>
+
+		<app-notification
+			[title]="'Дата вывода из статуса: передано в юр. отдел'"
+			[description]="'Задолженность: 500 млн'"
+		/>
+
+		<ss-lib-accordion>
+			<ss-lib-accordion-item [title]="'Официальная информация'">
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Полное наименование*
+						</ss-lib-text>
+
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Общество с ограниченной ответственностью «Строитель»
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Краткое наименование*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							ООО «Строитель»
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Юридический адрес*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							456601, Россия, Челябинская область, город Копейск,
+							улица Борьбы, д. 63, пом.2
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Наименование на англ.
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							LUSH
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							ИНН/УНП/БИН*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							3458790650975
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+			</ss-lib-accordion-item>
+		</ss-lib-accordion>
+
+		<ss-lib-accordion>
+			<ss-lib-accordion-item [title]="'Общая информация'">
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Клиент
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							+Данон
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Группа*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Поставщики сырья
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Категория*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							К2
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Подотрасль
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Масложировая
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Страна*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Индия
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Кредитный статус
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Передано в СКБ
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-icon
+							label
+							[icon]="IconType.Alert"
+						/>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Поставщики STOP
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+			</ss-lib-accordion-item>
+		</ss-lib-accordion>
+
+		<ss-lib-accordion>
+			<ss-lib-accordion-item [title]="'Дополнительная информация'">
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Адрес грузополучателя/отправителя*
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							603065, г. Нижний Новгород, ул. Дьяконова, д. 7/3,
+							кв. 72
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Адрес производства
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							603065, г. Нижний Новгород, ул. Дьяконова, д. 7/3,
+							кв. 72
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Образец сложного оформления
+						</ss-lib-text>
+						<img
+							value
+							ngSrc="assets/images/files/xls-file.svg"
+							height="40"
+							width="40"
+							alt=""
+						/>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Нюансы оформления
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Выбирать адрес в соответствии с Меркурий! ЧЗ (они)
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Адрес корреспонденции
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							617735, Пермский Край, Куединский, с Большой Гондыр,
+							ул. Ленина, д. 28
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-icon
+							label
+							[icon]="IconType.CheckCircle"
+						/>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							ЭДО
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							ID 2BEf13dd45c905c46eb8ceada675a66741a
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-icon
+							label
+							[icon]="IconType.CheckCircle"
+						/>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							ЧЗ
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-icon
+							label
+							[icon]="IconType.CheckCircle"
+						/>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Прикладывать сертификаты анализа
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Сертификаты анализа
+						</ss-lib-text>
+						<img
+							value
+							ngSrc="assets/images/files/xls-file.svg"
+							height="40"
+							width="40"
+							alt=""
+						/>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Заметки
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							Контрагент извлечён из архива через форму
+							восстановления.
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Торговые площадки (им)
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							MILLGRI
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Количество работников
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							567
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Кол-во работников по клиенту
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							33390
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							E-mail
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							tuda-suda&#64;mail.ru
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+
+				<app-info-section>
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Сайт
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							www.oildeluxe.com
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Факс
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							272-64-65
+						</ss-lib-text>
+					</app-info-row>
+
+					<app-info-row>
+						<ss-lib-text
+							label
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody4"
+						>
+							Телефон
+						</ss-lib-text>
+						<ss-lib-text
+							value
+							[type]="TextType.BodyMd"
+							[color]="Colors.TextBody"
+						>
+							7-918-500-45-60
+						</ss-lib-text>
+					</app-info-row>
+				</app-info-section>
+			</ss-lib-accordion-item>
+		</ss-lib-accordion>
+	</div>
+</ng-template>
