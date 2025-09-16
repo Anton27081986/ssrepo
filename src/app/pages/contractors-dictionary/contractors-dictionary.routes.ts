@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { CONTRACTOR_CARD_ROUTES } from '@app/pages/contractors-dictionary/contractor-card/contractor-card.routes';
+import { ContractorsPageComponent } from '@app/pages/contractors-dictionary/contractors-page/contractors-page.component';
 
 /**
  * Все компоненты загружаются через lazy loading для оптимизации производительности
@@ -19,6 +20,10 @@ export const CONTRACTORS_DICTIONARY_ROUTES: Routes = [
 			{
 				path: 'contractor',
 				children: CONTRACTOR_CARD_ROUTES,
+			},
+			{
+				path: 'contractors',
+				component: ContractorsPageComponent,
 			},
 		],
 	},

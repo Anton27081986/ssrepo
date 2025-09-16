@@ -11,10 +11,12 @@
 			</ss-lib-text>
 		</div>
 
-		<div class="notification__content">
-			<ss-lib-text [type]="TextType.BodySm">
-				{{ description() }}
-			</ss-lib-text>
-		</div>
+		@if (description()) {
+			<div class="notification__content">
+				<ss-lib-text [type]="TextType.BodySm">
+					{{ description() }}
+				</ss-lib-text>
+			</div>
+		}
 	</div>
 </div>

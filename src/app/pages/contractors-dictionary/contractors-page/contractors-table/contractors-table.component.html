@@ -1,0 +1,237 @@
+<table
+	ssTable
+	class="contractors-table"
+	[hasBorderRadius]="true"
+	[showCellBorders]="false"
+	[columns]="visibleColumnsIds()"
+>
+	<colgroup>
+		@for (column of visibleColumns(); track column.id) {
+			<col
+				[style.width]="column.width"
+				[style.min-width]="column?.minWidth"
+			/>
+		}
+	</colgroup>
+	<thead>
+		<tr ssThGroup>
+			@for (column of visibleColumns(); track column) {
+				<th ssTh>
+					<div class="td-column">
+						<ss-lib-text
+							[color]="Colors.TextBody2"
+							[weight]="TextWeight.Semibold"
+							[type]="TextType.BodyXs"
+							[align]="Align.Center"
+							[isEllipsis]="true"
+						>
+							{{ column.name }}
+						</ss-lib-text>
+					</div>
+				</th>
+			}
+		</tr>
+	</thead>
+	<tbody>
+		@for (row of data(); track row; let idxRow = $index) {
+			<tr ssTr>
+				@for (column of visibleColumns(); track column.id) {
+					<td
+						*ssCell="ColumnIdEnum.Code"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.code }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.ShortName"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.shortName }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Client"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.client.name }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Category"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.category }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Inn"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.inn }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Status"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.status.name }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Group"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.group }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Country"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.country }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.BusinessManager"
+						ssTd
+					>
+						<div class="td-column"></div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.BusinessManager"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.businessManager.name }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Edo"
+						ssTd
+					>
+						<div class="td-column">
+							<ss-lib-text
+								[lineClampCount]="3"
+								[isLineClamp]="true"
+								[type]="TextType.BodySm"
+								[weight]="TextWeight.Regular"
+								[align]="Align.Start"
+							>
+								{{ row.edo }}
+							</ss-lib-text>
+						</div>
+					</td>
+					<td
+						*ssCell="ColumnIdEnum.Actions"
+						ssTd
+					>
+						<div class="td-column td-column--center">
+							<ss-lib-utility-button
+								[icon]="IconType.KebabMenuDots"
+								[popoverTriggerFor]="dropdown1"
+							></ss-lib-utility-button>
+
+							<ss-lib-dropdown-list #dropdown1>
+								<ss-lib-dropdown-item
+									[label]="'Завизировать'"
+									[icon]="IconType.Edit"
+								/>
+
+								<ss-lib-dropdown-item
+									[label]="'Посмотреть карточку КА'"
+									[icon]="IconType.FilePreviewSearch"
+								/>
+
+								<ss-lib-dropdown-item
+									[label]="'Отклонить'"
+									[icon]="IconType.Trash"
+								/>
+							</ss-lib-dropdown-list>
+						</div>
+					</td>
+				}
+			</tr>
+		}
+	</tbody>
+</table>
