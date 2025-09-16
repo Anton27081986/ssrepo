@@ -25,7 +25,7 @@ export class ContractorsDictionaryComponent {
 	public contractorCardDialog(): ModalRef {
 		return this.popup.openRightSidePage<IContractorCardSidePageData>(
 			ContractorCardDialogComponent,
-			{ id: 1235 },
+			{ id: 1 },
 			'820px',
 			false
 		);
