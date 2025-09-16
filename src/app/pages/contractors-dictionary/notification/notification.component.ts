@@ -10,6 +10,7 @@ import {
 @Component({
 	selector: 'app-notification',
 	imports: [IconComponent, TextComponent],
+	standalone: true,
 	templateUrl: './notification.component.html',
 	styleUrl: './notification.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
