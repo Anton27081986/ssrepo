@@ -1,0 +1,124 @@
+<ss-lib-modal
+	[badgeProps]="{
+		icon: IconType.PackagePlus,
+		size: ExtraSize.lg,
+		shape: Shape.Square,
+	}"
+	[titleHeader]="'Создание карточки контрагента ' + (cardNumber() || '')"
+	[descriptionHeader]="'Черновик'"
+	[contentRef]="contentRef"
+	[actionsRef]="actionsRef"
+	(closeEmit)="onClose()"
+>
+</ss-lib-modal>
+<ng-template #contentRef>
+	<section class="block">
+		<ss-lib-text
+			[type]="TextType.BodyMd"
+			[weight]="TextWeight.Semibold"
+			>Официальная информация</ss-lib-text
+		>
+
+		<div class="form-grid">
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Полное наименование*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[size]="ExtraSize.md"
+					[formControl]="form.controls.fullName"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Краткое наименование*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[size]="ExtraSize.md"
+					[formControl]="form.controls.shortName"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Юридический адрес</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.legalAddress"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>ИНН*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.inn"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>ОГРНИП</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.ogrn"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>ОКВЭД</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.okved"
+				/>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Доп. ОКВЭД</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.okvedExtra"
+				/>
+			</ss-lib-form-field>
+		</div>
+	</section>
+</ng-template>
+
+<ng-template #actionsRef>
+	<div class="actions-buttons">
+		<ss-lib-button
+			[type]="ButtonType.Secondary"
+			[text]="'Вернуться'"
+			(click)="onClose()"
+		></ss-lib-button>
+		<ss-lib-button
+			[text]="'Сохранить черновик'"
+			(click)="onSaveDraft()"
+		></ss-lib-button>
+	</div>
+</ng-template>
