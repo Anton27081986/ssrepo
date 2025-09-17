@@ -1,4 +1,9 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	inject,
+	signal,
+} from '@angular/core';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -26,8 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ModalRef } from '@front-library/components';
 import { UntilDestroy } from '@ngneat/until-destroy';
-import {IContractorCardSidePageData} from "@app/pages/contractors-dictionary/models/contractor-card-side-page-data";
-import {IAddContractorsCardModalData} from "@app/pages/contractors-dictionary/models/add-contractors-card-modal-data";
+import { IContractorCardSidePageData } from '@app/pages/contractors-dictionary/models/contractor-card-side-page-data';
+import { IAddContractorsCardModalData } from '@app/pages/contractors-dictionary/models/add-contractors-card-modal-data';
 
 @UntilDestroy()
 @Component({
@@ -80,7 +85,10 @@ export class CreateContractorsCardModalComponent {
 			{ id: 2, name: 'Киндер' },
 		],
 		regions: ['Республика Карелия'],
-		categories: ['К3'],
+		categories: [
+			{ id: 1, name: 'Категория 1' },
+			{ id: 2, name: 'Категория 2' },
+		],
 		subSectors: ['масложировая'],
 		creditStatuses: [
 			{ id: 1, name: 'Положительный' },
