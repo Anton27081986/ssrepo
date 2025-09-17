@@ -107,6 +107,141 @@
 			</ss-lib-form-field>
 		</div>
 	</section>
+	<section class="block">
+		<ss-lib-text
+			[type]="TextType.BodyMd"
+			[weight]="TextWeight.Semibold"
+			>Общая информация</ss-lib-text
+		>
+
+		<div class="form-grid">
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Клиент</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-select
+					fieldCtrl
+					[formControl]="form.controls.client"
+					[popoverTriggerFor]="dropdownClient"
+				>
+					<ss-lib-dropdown-list #dropdownClient>
+						@for (item of dictionaries.clients; track item.id) {
+							<ss-lib-dropdown-item
+								[value]="item"
+							></ss-lib-dropdown-item>
+						}
+					</ss-lib-dropdown-list>
+				</ss-lib-select>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Группа*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.group"
+				></ss-lib-input>
+			</ss-lib-form-field>
+
+			<!-- Категория — SELECT -->
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Категория*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-select
+					fieldCtrl
+					[formControl]="form.controls.category"
+					[popoverTriggerFor]="dropdownCategory"
+				>
+					<ss-lib-dropdown-list #dropdownCategory>
+						@for (item of dictionaries.categories; track item.id) {
+							<ss-lib-dropdown-item
+								[value]="item"
+							></ss-lib-dropdown-item>
+						}
+					</ss-lib-dropdown-list>
+				</ss-lib-select>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Подотрасль</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.subSector"
+				></ss-lib-input>
+			</ss-lib-form-field>
+
+			<!-- Кредитный статус — SELECT -->
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Кредитный статус</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-select
+					fieldCtrl
+					[formControl]="form.controls.creditStatus"
+					[popoverTriggerFor]="dropdownCreditStatus"
+				>
+					<ss-lib-dropdown-list #dropdownCreditStatus>
+						@for (
+							item of dictionaries.creditStatuses;
+							track item.id
+						) {
+							<ss-lib-dropdown-item
+								[value]="item"
+							></ss-lib-dropdown-item>
+						}
+					</ss-lib-dropdown-list>
+				</ss-lib-select>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Страна*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.country"
+				></ss-lib-input>
+			</ss-lib-form-field>
+
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Регион*</ss-lib-text
+			>
+			<ss-lib-form-field>
+				<ss-lib-input
+					fieldCtrl
+					[formControl]="form.controls.region"
+				></ss-lib-input>
+			</ss-lib-form-field>
+
+			<!-- Тумблер STOP -->
+			<ss-lib-text
+				class="label"
+				[type]="TextType.BodyMd"
+				>Поставщики STOP</ss-lib-text
+			>
+			<div class="toggle-cell">
+				<ss-lib-toggle></ss-lib-toggle>
+			</div>
+		</div>
+	</section>
 </ng-template>
 
 <ng-template #actionsRef>
