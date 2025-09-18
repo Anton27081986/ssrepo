@@ -7,7 +7,7 @@ import {
 import { ContractorsService } from '@app/pages/contractors-dictionary/services/contractors.service';
 import { ContractorsItemDto } from '@app/pages/contractors-dictionary/models/contractors-item-dto';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 import {
 	ButtonComponent,
 	ButtonType,
@@ -24,6 +24,13 @@ import { ContractorsTableComponent } from '@app/pages/contractors-dictionary/con
 import { DropdownColumnsSettingsComponent } from '@app/pages/production-plan/operational-plan/dropdown-column-settings/dropdown-columns-settings.component';
 import { FiltersTriggerButtonComponent } from '@app/pages/production-plan/blunt-components/filters-trigger-button/filters-trigger-button.component';
 import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab';
+import { AsyncPipe } from '@angular/common';
+
+export enum TabContractorsEnum {
+	ALL = 0,
+	IsArchived = 1,
+	MyVisa = 2,
+}
 
 @Component({
 	selector: 'app-contractors-page',
@@ -40,19 +47,32 @@ import { Tab } from '@front-library/components/lib/shared/models/interfaces/tab'
 		DropdownColumnsSettingsComponent,
 		FiltersTriggerButtonComponent,
 		TabsComponent,
+		AsyncPipe,
 	],
 })
 export class ContractorsPageComponent {
 	private service: ContractorsService = inject(ContractorsService);
+	protected activeTabIndex$: BehaviorSubject<TabContractorsEnum> =
+		new BehaviorSubject<TabContractorsEnum>(0);
+
+	protected activeTabIndex: number = 0;
 
 	protected items: Signal<ContractorsItemDto[]> = toSignal(
-		this.service.getContractors().pipe(
-			map((res) => {
-				return res.items;
+		this.activeTabIndex$.pipe(
+			switchMap((value) => {
+				return this.service.getContractors({ quickFilter: value }).pipe(
+					map((res) => {
+						return res.items;
+					})
+				);
 			})
 		),
 		{ initialValue: [] }
 	);
+
+	protected changeTabIndex(index: TabContractorsEnum): void {
+		this.activeTabIndex$.next(index);
+	}
 
 	protected tabs: Tab[] = [
 		{

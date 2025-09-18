@@ -24,6 +24,8 @@
 		<ss-lib-tabs
 			[height]="40"
 			[tabs]="tabs"
+			[(activeTabIndex)]="activeTabIndex"
+			(changeIndexEmit)="changeTabIndex($event)"
 		></ss-lib-tabs>
 		<div class="contractors-page__header-right">
 			<app-dropdown-columns-settings></app-dropdown-columns-settings>
